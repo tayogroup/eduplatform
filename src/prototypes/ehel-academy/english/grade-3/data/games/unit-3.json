@@ -5,7 +5,7 @@
   "unitId": "eng-g03-t01-u03",
   "title": "Time and Daily Life Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -20,30 +20,60 @@
           "choices": [
             "ground",
             "half",
-            "manage"
+            "secondly"
           ],
           "answer": "ground",
           "explanation": "ground: The surface of the earth that you walk on."
         },
         {
-          "prompt": "Which word means: To wake means to stop sleeping and open your eyes.",
+          "prompt": "Which word means: Moving your body on purpose to keep it fit and strong.",
           "choices": [
             "ground",
             "half",
-            "wake"
+            "exercise"
           ],
-          "answer": "wake",
-          "explanation": "wake: To wake means to stop sleeping and open your eyes."
+          "answer": "exercise",
+          "explanation": "exercise: Moving your body on purpose to keep it fit and strong."
+        },
+        {
+          "prompt": "Which word means: A tap is a handle that controls water flowing out of a pipe.",
+          "choices": [
+            "half",
+            "tap",
+            "ground"
+          ],
+          "answer": "tap",
+          "explanation": "tap: A tap is a handle that controls water flowing out of a pipe."
         },
         {
           "prompt": "Which word means: Proudly means in a way that shows you feel happy and pleased about something you did.",
           "choices": [
-            "half",
             "proudly",
-            "ground"
+            "ground",
+            "half"
           ],
           "answer": "proudly",
           "explanation": "proudly: Proudly means in a way that shows you feel happy and pleased about something you did."
+        },
+        {
+          "prompt": "Which word means: If you mean to do something, you plan to do it.",
+          "choices": [
+            "ground",
+            "half",
+            "mean"
+          ],
+          "answer": "mean",
+          "explanation": "mean: If you mean to do something, you plan to do it."
+        },
+        {
+          "prompt": "Which word means: One of four equal parts of something.",
+          "choices": [
+            "half",
+            "quarter",
+            "ground"
+          ],
+          "answer": "quarter",
+          "explanation": "quarter: One of four equal parts of something."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To stretch means to reach your arms or legs out to feel less stiff.",
-          "answer": "stretch"
+          "clue": "Something a doctor or nurse gives you to help you feel better when you are ill.",
+          "answer": "medicine"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A lamp is a light you can switch on to see in the dark.",
+          "answer": "lamp"
         },
         {
           "prompt": "Build the word that matches the clue.",
           "clue": "Proudly means in a way that shows you feel happy and pleased about something you did.",
           "answer": "proudly"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "If something fits, it is the right size or shape for something else.",
+          "answer": "fits"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The whole amount when you add everything together.",
+          "answer": "total"
         }
       ]
     },
@@ -97,30 +142,74 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "ready.",
-            "are",
-            "you",
-            "so",
-            "beforehand",
-            "bag",
-            "your",
-            "Pack"
+            "pool.",
+            "the",
+            "across",
+            "right",
+            "swim",
+            "to",
+            "able",
+            "is",
+            "Maya"
           ],
-          "answer": "Pack your bag beforehand so you are ready."
+          "answer": "Maya is able to swim right across the pool."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "mornings.",
+            "week.",
+            "busy",
+            "a",
+            "for",
+            "ahead",
+            "plan",
+            "to",
+            "helps",
+            "It"
+          ],
+          "answer": "It helps to plan ahead for a busy week."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "morning.",
             "cool",
-            "on",
+            "a",
+            "for",
+            "perfect",
+            "is",
             "jacket",
             "light",
-            "a",
-            "wears",
-            "Idris"
+            "A"
           ],
-          "answer": "Idris wears a light jacket on cool mornings."
+          "answer": "A light jacket is perfect for a cool morning."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "mine.",
+            "is",
+            "one",
+            "that",
+            "and",
+            "yours,",
+            "is",
+            "calendar",
+            "This"
+          ],
+          "answer": "This calendar is yours, and that one is mine."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "well.",
+            "very",
+            "Sami",
+            "fits",
+            "hat",
+            "This"
+          ],
+          "answer": "This hat fits Sami very well."
         }
       ]
     },
@@ -133,301 +222,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "How many minutes make one hour?",
+          "prompt": "What does the word calendar mean?",
           "choices": [
-            "Twenty-four.",
-            "One hundred.",
-            "Sixty.",
-            "Three hundred and sixty-five."
+            "A short rest from school or work.",
+            "A chart showing the days, weeks and months of one year.",
+            "A length of time that lasts sixty minutes.",
+            "A period of one hundred years that historians like to write about."
           ],
-          "answer": "Sixty.",
-          "explanation": "An hour is sixty minutes. Twenty-four is the hours in one day and three hundred and sixty-five is the days in one year."
+          "answer": "A chart showing the days, weeks and months of one year.",
+          "explanation": "A calendar is the chart itself. The other three describe a holiday, an hour and a century."
         },
         {
-          "prompt": "Which sentence uses the Past Simple correctly?",
+          "prompt": "How many months does one full year have?",
           "choices": [
-            "Last year we goed to the beach.",
-            "Last year we go to the beach.",
-            "Last year we are going to the beach very early in the morning.",
-            "Last year we went to the beach."
+            "Ten months.",
+            "Seven months.",
+            "Twelve months.",
+            "One hundred months altogether."
           ],
-          "answer": "Last year we went to the beach.",
-          "explanation": "Go is irregular, so its past form is went. Goed does not exist, and the other two are present forms."
+          "answer": "Twelve months.",
+          "explanation": "The reading The Twelve Months states it directly: one year has twelve months."
         },
         {
-          "prompt": "Which one of these sentences is an imperative?",
+          "prompt": "In ‘The Twelve Months’, when does the school year begin and end?",
           "choices": [
-            "I prepare my calendar every Sunday.",
-            "Prepare your calendar.",
-            "She prepared her calendar last night.",
-            "Are you preparing your calendar this evening?"
+            "It begins in January and ends in November.",
+            "It begins in March and ends in December.",
+            "It begins in June and ends in August.",
+            "It begins in September and finishes at the end of the following June."
           ],
-          "answer": "Prepare your calendar.",
-          "explanation": "An imperative starts with the base verb and has no subject in front of it."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What does Idris do at 6 o’clock? What does he do at 1 o’clock?",
-          "choices": [
-            "At 6 o’clock he wakes up and gets ready. At 1 o’clock he eats lunch.",
-            "January is named first and December is named last.",
-            "They watched the sky, the moon and the trees."
-          ],
-          "answer": "At 6 o’clock he wakes up and gets ready. At 1 o’clock he eats lunch.",
-          "explanation": "The text sets out Idris’s day hour by hour, so both times are stated directly."
+          "answer": "It begins in January and ends in November.",
+          "explanation": "The text says the school year begins in January and ends in November, so December falls outside it."
         },
-        {
-          "prompt": "The school year does not fill the whole calendar. Between which two months does it run?",
-          "choices": [
-            "January is named first and December is named last.",
-            "She feels amazed, and the words that show it are: Amal’s eyes grew wide.",
-            "It runs from January to November."
-          ],
-          "answer": "It runs from January to November.",
-          "explanation": "The text says the school year begins in January and ends in November, so December sits outside it."
-        },
-        {
-          "prompt": "Grandma Hana says people had no printed calendars a century ago. What did they watch instead of one?",
-          "choices": [
-            "She means that long stretches of time pass more quickly than we expect.",
-            "They watched the sky, the moon and the trees.",
-            "It runs from January to November."
-          ],
-          "answer": "They watched the sky, the moon and the trees.",
-          "explanation": "Grandma Hana names all three natural signs when she explains how people once told the time of year."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — My Daily Routine",
-          "target": "At ______ o’clock, I ______."
-        },
-        {
-          "prompt": "Speaking 3 — When Is It?",
-          "target": "It is in ______."
-        },
-        {
-          "prompt": "Speaking 5 — Explain and Respond",
-          "target": "The calendar helps us plan."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "paint.",
-            "the",
-            "over",
-            "knock",
-            "to",
-            "mean",
-            "not",
-            "did",
-            "Sami"
-          ],
-          "answer": "Sami did not mean to knock over the paint."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "today?",
-            "classroom",
-            "the",
-            "sweeping",
-            "is",
-            "Who"
-          ],
-          "answer": "Who is sweeping the classroom today?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "colour.",
-            "different",
-            "a",
-            "square",
-            "every",
-            "coloured",
-            "Sami"
-          ],
-          "answer": "Sami coloured every square a different colour."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'neighbour' mean in this unit?",
-          "choices": [
-            "A neighbour is a person who lives near you.",
-            "The surface of the earth that you walk on.",
-            "One of two equal parts of something."
-          ],
-          "answer": "A neighbour is a person who lives near you.",
-          "explanation": "neighbour: A neighbour is a person who lives near you."
-        },
-        {
-          "prompt": "What does 'sky' mean in this unit?",
-          "choices": [
-            "The surface of the earth that you walk on.",
-            "One of two equal parts of something.",
-            "The sky is the space above the earth where you see clouds, the sun, and stars."
-          ],
-          "answer": "The sky is the space above the earth where you see clouds, the sun, and stars.",
-          "explanation": "sky: The sky is the space above the earth where you see clouds, the sun, and stars."
-        },
-        {
-          "prompt": "What does 'half' mean in this unit?",
-          "choices": [
-            "To be able to do something, even if it is difficult.",
-            "One of two equal parts of something.",
-            "The surface of the earth that you walk on."
-          ],
-          "answer": "One of two equal parts of something.",
-          "explanation": "half: One of two equal parts of something."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'rivers'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Rivers is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'July'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "July is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'normal'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Normal is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "pound",
-              "To hit something hard, again and again."
-            ],
-            [
-              "journey",
-              "A trip from one place to another."
-            ],
-            [
-              "ancient",
-              "Very old, belonging to a time long before ours."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "wash",
-              "To wash means to clean something with water."
-            ],
-            [
-              "yard",
-              "A yard is an open space next to a house."
-            ],
-            [
-              "jacket",
-              "A jacket is a short coat you wear to stay warm."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "heart",
-              "A heart is the shape people draw to mean love, or the organ inside your chest that pumps blood."
-            ],
-            [
-              "hung",
-              "Hung means put something up so that it hangs from a point above."
-            ],
-            [
-              "May",
-              "The fifth month of the year, which comes between April and June."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which month is sung straight after September in ‘The Months Song’?",
           "choices": [
@@ -464,13 +290,512 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What does Idris do at 6 o’clock? What does he do at 1 o’clock?",
+          "choices": [
+            "At 6 o’clock he wakes up and gets ready. At 1 o’clock he eats lunch.",
+            "January is named first and December is named last.",
+            "They watched the sky, the moon and the trees."
+          ],
+          "answer": "At 6 o’clock he wakes up and gets ready. At 1 o’clock he eats lunch.",
+          "explanation": "The text sets out Idris’s day hour by hour, so both times are stated directly."
+        },
+        {
+          "prompt": "Idris names two meals in his day. Which meals are they, and when does he eat them?",
+          "choices": [
+            "It runs from January to November.",
+            "She feels amazed, and the words that show it are: Amal’s eyes grew wide.",
+            "He eats breakfast at 7 o’clock and lunch at 1 o’clock."
+          ],
+          "answer": "He eats breakfast at 7 o’clock and lunch at 1 o’clock.",
+          "explanation": "Only breakfast and lunch are given times; the evening is spent reading, not eating."
+        },
+        {
+          "prompt": "The school year does not fill the whole calendar. Between which two months does it run?",
+          "choices": [
+            "She means that long stretches of time pass more quickly than we expect.",
+            "It runs from January to November.",
+            "October is sung after September, and May is sung before June."
+          ],
+          "answer": "It runs from January to November.",
+          "explanation": "The text says the school year begins in January and ends in November, so December sits outside it."
+        },
+        {
+          "prompt": "What task does Teacher Yasmin set the class once Amal has answered her question?",
+          "choices": [
+            "She asks every learner to make a calendar showing what they do each month.",
+            "October is sung after September, and May is sung before June.",
+            "It tells us that April arrives earlier in the year than May does."
+          ],
+          "answer": "She asks every learner to make a calendar showing what they do each month.",
+          "explanation": "Teacher Yasmin says: Now let us each make a calendar that shows what we do each month."
+        },
+        {
+          "prompt": "Grandma Hana says people had no printed calendars a century ago. What did they watch instead of one?",
+          "choices": [
+            "She asks every learner to make a calendar showing what they do each month.",
+            "At 6 o’clock he wakes up and gets ready. At 1 o’clock he eats lunch.",
+            "They watched the sky, the moon and the trees."
+          ],
+          "answer": "They watched the sky, the moon and the trees.",
+          "explanation": "Grandma Hana names all three natural signs when she explains how people once told the time of year."
+        },
+        {
+          "prompt": "Grandma Hana says that a century goes faster than you think. What is she telling Amal about time?",
+          "choices": [
+            "He eats breakfast at 7 o’clock and lunch at 1 o’clock.",
+            "She means that long stretches of time pass more quickly than we expect.",
+            "They watched the sky, the moon and the trees."
+          ],
+          "answer": "She means that long stretches of time pass more quickly than we expect.",
+          "explanation": "This meaning is implied rather than stated, so the answer has to be worked out from what she says."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — My Daily Routine",
+          "target": "At ______ o’clock, I ______."
+        },
+        {
+          "prompt": "Speaking 2 — Past, Present and Future",
+          "target": "Last holiday, I ______."
+        },
+        {
+          "prompt": "Speaking 3 — When Is It?",
+          "target": "It is in ______."
+        },
+        {
+          "prompt": "Speaking 4 — Vocabulary Expert Interview",
+          "target": "How many minutes are in one hour?"
+        },
+        {
+          "prompt": "Speaking 5 — Explain and Respond",
+          "target": "The calendar helps us plan."
+        },
+        {
+          "prompt": "Speaking 6 — One-Minute Unit Talk",
+          "target": "This hat fits Sami very well."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "century.",
+            "whole",
+            "one",
+            "showing",
+            "timeline",
+            "a",
+            "drew",
+            "Amal"
+          ],
+          "answer": "Amal drew a timeline showing one whole century."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "school.",
+            "after",
+            "walk",
+            "regular",
+            "a",
+            "takes",
+            "Nora"
+          ],
+          "answer": "Nora takes a regular walk after school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "neighbour?",
+            "closest",
+            "your",
+            "is",
+            "Who"
+          ],
+          "answer": "Who is your closest neighbour?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Sami?",
+            "jacket,",
+            "your",
+            "is",
+            "Where"
+          ],
+          "answer": "Where is your jacket, Sami?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "again.",
+            "fingers",
+            "his",
+            "on",
+            "paint",
+            "has",
+            "Sami"
+          ],
+          "answer": "Sami has paint on his fingers again."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "June.",
+            "every",
+            "boat",
+            "the",
+            "in",
+            "out",
+            "him",
+            "takes",
+            "grandfather",
+            "His"
+          ],
+          "answer": "His grandfather takes him out in the boat every June."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'half' mean in this unit?",
+          "choices": [
+            "One of two equal parts of something.",
+            "The surface of the earth that you walk on.",
+            "The word you use to give your second reason or step."
+          ],
+          "answer": "One of two equal parts of something.",
+          "explanation": "half: One of two equal parts of something."
+        },
+        {
+          "prompt": "What does 'clock' mean in this unit?",
+          "choices": [
+            "The surface of the earth that you walk on.",
+            "One of two equal parts of something.",
+            "A clock is a machine that shows what time it is."
+          ],
+          "answer": "A clock is a machine that shows what time it is.",
+          "explanation": "clock: A clock is a machine that shows what time it is."
+        },
+        {
+          "prompt": "What does 'hot' mean in this unit?",
+          "choices": [
+            "One of two equal parts of something.",
+            "Hot means having a high temperature.",
+            "The surface of the earth that you walk on."
+          ],
+          "answer": "Hot means having a high temperature.",
+          "explanation": "hot: Hot means having a high temperature."
+        },
+        {
+          "prompt": "What does 'yours' mean in this unit?",
+          "choices": [
+            "Yours means the thing that belongs to you.",
+            "The surface of the earth that you walk on.",
+            "One of two equal parts of something."
+          ],
+          "answer": "Yours means the thing that belongs to you.",
+          "explanation": "yours: Yours means the thing that belongs to you."
+        },
+        {
+          "prompt": "What does 'March' mean in this unit?",
+          "choices": [
+            "The surface of the earth that you walk on.",
+            "One of two equal parts of something.",
+            "The third month of the year, when heavy rains often arrive."
+          ],
+          "answer": "The third month of the year, when heavy rains often arrive.",
+          "explanation": "March: The third month of the year, when heavy rains often arrive."
+        },
+        {
+          "prompt": "What does 'continue' mean in this unit?",
+          "choices": [
+            "One of two equal parts of something.",
+            "To keep going without stopping.",
+            "The surface of the earth that you walk on."
+          ],
+          "answer": "To keep going without stopping.",
+          "explanation": "continue: To keep going without stopping."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'secondly'?",
+          "choices": [
+            "Adverb",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adverb",
+          "explanation": "Secondly is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'properly'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adverb"
+          ],
+          "answer": "Adverb",
+          "explanation": "Properly is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'jacket'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Jacket is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'moon'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Moon is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'October'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "October is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'repeat'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Repeat is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "pound",
+              "To hit something hard, again and again."
+            ],
+            [
+              "meanwhile",
+              "At the same time as something else is happening."
+            ],
+            [
+              "healthy",
+              "Strong and well, because you eat good food and stay active."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "danger",
+              "Danger means that something might hurt you."
+            ],
+            [
+              "brush",
+              "To brush means to clean something using a brush with short lines."
+            ],
+            [
+              "arrive",
+              "To arrive means to reach a place after travelling."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "enjoying",
+              "Enjoying means feeling happy while doing or having something."
+            ],
+            [
+              "golden",
+              "Golden means having a bright yellow colour like gold."
+            ],
+            [
+              "birthdays",
+              "Birthdays are the days each year when people celebrate the date they were born."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "heart",
+              "A heart is the shape people draw to mean love, or the organ inside your chest that pumps blood."
+            ],
+            [
+              "thought",
+              "Thought means you used your mind to think carefully about something."
+            ],
+            [
+              "kite",
+              "A kite is a light toy that flies in the wind on the end of a long string."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "boat",
+              "A boat is a small vehicle that travels across water."
+            ],
+            [
+              "August",
+              "The eighth month of the year, and a common time for family travel."
+            ],
+            [
+              "future",
+              "The time that has not happened yet, coming after today."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "total",
+              "The whole amount when you add everything together."
+            ],
+            [
+              "manage",
+              "To be able to do something, even if it is difficult."
+            ],
+            [
+              "modern",
+              "Belonging to the present time, not to long ago."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does the word century mean?",
+          "choices": [
+            "A period of one hundred years.",
+            "A time when you stop school to rest.",
+            "The time that has not happened yet.",
+            "A chart on the wall that helps a family plan the whole year."
+          ],
+          "answer": "A period of one hundred years.",
+          "explanation": "Grandma Hana uses century to mean one hundred years. The others describe a holiday, the future and a calendar."
+        },
+        {
+          "prompt": "How many minutes make one hour?",
+          "choices": [
+            "Twenty-four.",
+            "One hundred.",
+            "Sixty.",
+            "Three hundred and sixty-five."
+          ],
+          "answer": "Sixty.",
+          "explanation": "An hour is sixty minutes. Twenty-four is the hours in one day and three hundred and sixty-five is the days in one year."
+        },
+        {
+          "prompt": "Which sentence uses the Past Simple correctly?",
+          "choices": [
+            "Last year we goed to the beach.",
+            "Last year we go to the beach.",
+            "Last year we are going to the beach very early in the morning.",
+            "Last year we went to the beach."
+          ],
+          "answer": "Last year we went to the beach.",
+          "explanation": "Go is irregular, so its past form is went. Goed does not exist, and the other two are present forms."
+        },
+        {
+          "prompt": "Which one of these sentences is an imperative?",
+          "choices": [
+            "I prepare my calendar every Sunday.",
+            "Prepare your calendar.",
+            "She prepared her calendar last night.",
+            "Are you preparing your calendar this evening?"
+          ],
+          "answer": "Prepare your calendar.",
+          "explanation": "An imperative starts with the base verb and has no subject in front of it."
+        },
+        {
+          "prompt": "In Amal’s poem, which line says that time is something everyone must share?",
+          "choices": [
+            "The months go fast, the hours too.",
+            "The future is coming, it’s all brand new.",
+            "Look at the past, remember it well.",
+            "Time is a story we all must tell."
+          ],
+          "answer": "Time is a story we all must tell.",
+          "explanation": "The closing line calls time a story we all must tell, which makes it something shared by everyone."
+        },
         {
           "prompt": "What does the word calendar mean?",
           "choices": [
@@ -481,28 +806,78 @@
           ],
           "answer": "A chart showing the days, weeks and months of one year.",
           "explanation": "A calendar is the chart itself. The other three describe a holiday, an hour and a century."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which one of these sentences is an imperative?",
+          "choices": [
+            "I prepare my calendar every Sunday.",
+            "Prepare your calendar.",
+            "She prepared her calendar last night.",
+            "Are you preparing your calendar this evening?"
+          ],
+          "answer": "Prepare your calendar.",
+          "explanation": "An imperative starts with the base verb and has no subject in front of it."
         },
         {
-          "prompt": "How many months does one full year have?",
+          "prompt": "In Amal’s poem, which line says that time is something everyone must share?",
           "choices": [
-            "Ten months.",
-            "Seven months.",
-            "Twelve months.",
-            "One hundred months altogether."
+            "The months go fast, the hours too.",
+            "The future is coming, it’s all brand new.",
+            "Look at the past, remember it well.",
+            "Time is a story we all must tell."
           ],
-          "answer": "Twelve months.",
-          "explanation": "The reading The Twelve Months states it directly: one year has twelve months."
+          "answer": "Time is a story we all must tell.",
+          "explanation": "The closing line calls time a story we all must tell, which makes it something shared by everyone."
         },
         {
-          "prompt": "In ‘The Twelve Months’, when does the school year begin and end?",
+          "prompt": "Which word means: Strong and well, because you eat good food and stay active.",
           "choices": [
-            "It begins in January and ends in November.",
-            "It begins in March and ends in December.",
-            "It begins in June and ends in August.",
-            "It begins in September and finishes at the end of the following June."
+            "healthy",
+            "ground",
+            "half"
           ],
-          "answer": "It begins in January and ends in November.",
-          "explanation": "The text says the school year begins in January and ends in November, so December falls outside it."
+          "answer": "healthy",
+          "explanation": "healthy: Strong and well, because you eat good food and stay active."
+        },
+        {
+          "prompt": "Which word means: Hot means having a high temperature.",
+          "choices": [
+            "ground",
+            "half",
+            "hot"
+          ],
+          "answer": "hot",
+          "explanation": "hot: Hot means having a high temperature."
+        },
+        {
+          "prompt": "What type of word is 'kite'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Kite is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'continue'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Continue is used as a verb in this dictionary sense."
         }
       ]
     }

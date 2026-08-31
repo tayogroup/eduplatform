@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t03-u09",
   "title": "The Digital World and Future Innovation Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The importance of something, or how much it matters.",
           "choices": [
             "significance",
-            "networked",
-            "substitution"
+            "cybersecurity",
+            "denotation"
           ],
           "answer": "significance",
           "explanation": "significance: The importance of something, or how much it matters."
         },
         {
-          "prompt": "Which word means: Made up of many connected parts and therefore difficult to understand fully.",
+          "prompt": "Which word means: A strong feeling of caring about someone else's suffering and wanting to help them.",
           "choices": [
             "significance",
-            "networked",
-            "complex"
+            "cybersecurity",
+            "compassion"
+          ],
+          "answer": "compassion",
+          "explanation": "compassion: A strong feeling of caring about someone else's suffering and wanting to help them."
+        },
+        {
+          "prompt": "Which word means: Made up of many connected parts and therefore difficult to understand fully.",
+          "choices": [
+            "cybersecurity",
+            "complex",
+            "significance"
           ],
           "answer": "complex",
           "explanation": "complex: Made up of many connected parts and therefore difficult to understand fully."
         },
         {
-          "prompt": "Which word means: Careful to avoid danger or mistakes, especially after something has gone wrong.",
+          "prompt": "Which word means: A short way of saying 'could not', showing that something was impossible to do.",
           "choices": [
-            "networked",
-            "cautious",
+            "couldn't",
+            "significance",
+            "cybersecurity"
+          ],
+          "answer": "couldn't",
+          "explanation": "couldn't: A short way of saying 'could not', showing that something was impossible to do."
+        },
+        {
+          "prompt": "Which word means: A short way of saying 'I have', usually before describing something you own or have done.",
+          "choices": [
+            "significance",
+            "cybersecurity",
+            "i've"
+          ],
+          "answer": "i've",
+          "explanation": "i've: A short way of saying 'I have', usually before describing something you own or have done."
+        },
+        {
+          "prompt": "Which word means: Basic or simple; not fully developed.",
+          "choices": [
+            "cybersecurity",
+            "rudimentary",
             "significance"
           ],
-          "answer": "cautious",
-          "explanation": "cautious: Careful to avoid danger or mistakes, especially after something has gone wrong."
+          "answer": "rudimentary",
+          "explanation": "rudimentary: Basic or simple; not fully developed."
         }
       ]
     },
@@ -57,18 +87,33 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Using a physical feature, such as a fingerprint, to identify someone.",
-          "answer": "biometric"
+          "clue": "Leaving out words that the reader can supply from context.",
+          "answer": "ellipsis"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A pale yellowish-white colour, like the top layer of fresh milk.",
-          "answer": "cream"
+          "clue": "To have started doing something, usually used after has, have, or had.",
+          "answer": "begun"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Combining sound, pictures, video, and text together, especially in a presentation.",
-          "answer": "multimedia"
+          "clue": "Asked for something to be sent or brought, usually by paying for it.",
+          "answer": "ordered"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Forming an idea or plan in your mind, often as the first step to writing or building something.",
+          "answer": "conceiving"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "One single part of a television, radio, or podcast series.",
+          "answer": "episode"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Good enough for what is needed; sufficient.",
+          "answer": "adequate"
         }
       ]
     },
@@ -101,20 +146,57 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "students.",
-            "the",
-            "interview",
-            "to",
-            "came",
-            "station",
-            "radio",
-            "regional",
-            "a",
-            "from",
-            "journalist",
-            "A"
+            "preparation.",
+            "is",
+            "it",
+            "before",
+            "everything",
+            "decisive;",
+            "is",
+            "scene",
+            "final",
+            "The"
           ],
-          "answer": "A journalist from a regional radio station came to interview the students."
+          "answer": "The final scene is decisive; everything before it is preparation."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "dry.",
+            "too",
+            "becoming",
+            "was",
+            "field",
+            "a",
+            "whenever",
+            "team",
+            "the",
+            "warned",
+            "sensor",
+            "moisture",
+            "soil",
+            "The"
+          ],
+          "answer": "The soil moisture sensor warned the team whenever a field was becoming too dry."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "lap.",
+            "her",
+            "on",
+            "resting",
+            "sketchpad",
+            "her",
+            "with",
+            "armrest",
+            "bench's",
+            "the",
+            "astride",
+            "sat",
+            "Amal"
+          ],
+          "answer": "Amal sat astride the bench's armrest with her sketchpad resting on her lap."
         },
         {
           "prompt": "Build the complete model sentence.",
@@ -135,6 +217,24 @@
             "The"
           ],
           "answer": "The science club designed an experiment to test how plants grow in the dark."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "podcast.",
+            "school",
+            "small",
+            "a",
+            "on",
+            "guesting",
+            "try",
+            "to",
+            "agreed",
+            "author",
+            "famous",
+            "The"
+          ],
+          "answer": "The famous author agreed to try guesting on a small school podcast."
         }
       ]
     },
@@ -147,311 +247,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Shadows in the Feed, part 2': She spoke about the need to _____ misinformation and to give people space to explain.",
+          "prompt": "What does 'agitate' mean?",
           "choices": [
-            "agitate",
-            "conceive",
-            "recognise",
-            "eccentric"
+            "To come together from different directions to meet at one point.",
+            "To make someone feel worried or upset.",
+            "To make something known for the first time; to bring something new.",
+            "To show or make something known that was hidden or secret."
           ],
-          "answer": "recognise",
-          "explanation": "The text says: She spoke about the need to recognise misinformation and to give people space to explain."
+          "answer": "To make someone feel worried or upset.",
+          "explanation": "The loud notification sound began to agitate the students during the coding test."
         },
         {
-          "prompt": "Choose the missing word from 'Smart Farms and Digital Dreams': The students decided to _____ basic coding skills and build a simple weather-monitoring app.",
+          "prompt": "What does 'conceive' mean?",
           "choices": [
-            "introduce",
-            "reveal",
-            "recognise",
-            "acquire"
+            "To make something known for the first time; to bring something new.",
+            "To see or hear something and know what it is; to identify.",
+            "To show or make something known that was hidden or secret.",
+            "To think of or create an idea or plan in your mind."
           ],
-          "answer": "acquire",
-          "explanation": "The text says: The students decided to acquire basic coding skills and build a simple weather-monitoring app."
+          "answer": "To think of or create an idea or plan in your mind.",
+          "explanation": "The team conceived a clever plan to build a weather-monitoring app."
         },
         {
-          "prompt": "Choose the missing word from 'Shadows in the Feed, part 2': \"It was difficult to _____ what to omit,\" Amal said.",
+          "prompt": "What does 'converge' mean?",
           "choices": [
-            "converge",
-            "introduce",
-            "reveal",
-            "determine"
+            "To come together from different directions to meet at one point.",
+            "To get or gain something, usually by effort or learning.",
+            "To see or hear something and know what it is; to identify.",
+            "To show or make something known that was hidden or secret."
           ],
-          "answer": "determine",
-          "explanation": "The text says: \"It was difficult to determine what to omit,\" Amal said."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What problem did the students notice that local farmers were facing?",
-          "choices": [
-            "They noticed that rainfall had become unpredictable, so crops failed and food prices grew worse every season, leaving many families struggling.",
-            "Among the network logs she found a timestamp proving Zane had emailed a teacher minutes before the crash describing a wireless experiment, which showed he had not been hacking.",
-            "It connects to her discovery that clarity doesn't come in a rush but arrives slowly, piece by piece, so working carefully and step by step is how the truth is built."
-          ],
-          "answer": "They noticed that rainfall had become unpredictable, so crops failed and food prices grew worse every season, leaving many families struggling.",
-          "explanation": "In the paragraph about the students' plan, the text says many families were struggling because rainfall had become unpredictable, so crops failed and food prices grew worse every season."
+          "answer": "To come together from different directions to meet at one point.",
+          "explanation": "Students from three schools converged at the robotics competition."
         },
-        {
-          "prompt": "How did Mr. Rohan help the students get started with their project?",
-          "choices": [
-            "It connects to her discovery that clarity doesn't come in a rush but arrives slowly, piece by piece, so working carefully and step by step is how the truth is built.",
-            "They noticed that rainfall had become unpredictable, so crops failed and food prices grew worse every season, leaving many families struggling.",
-            "Their teacher, Mr. Rohan, introduced them to rudimentary electronics — small sensors that could measure temperature, humidity and soil moisture."
-          ],
-          "answer": "Their teacher, Mr. Rohan, introduced them to rudimentary electronics — small sensors that could measure temperature, humidity and soil moisture.",
-          "explanation": "The text says their teacher, Mr. Rohan, introduced them to rudimentary electronics — small sensors that could measure temperature, humidity and soil moisture, which became the heart of their app."
-        },
-        {
-          "prompt": "What evidence did Amal find in the IT server room, and why was it important?",
-          "choices": [
-            "Their teacher, Mr. Rohan, introduced them to rudimentary electronics — small sensors that could measure temperature, humidity and soil moisture.",
-            "Among the network logs she found a timestamp proving Zane had emailed a teacher minutes before the crash describing a wireless experiment, which showed he had not been hacking.",
-            "They noticed that rainfall had become unpredictable, so crops failed and food prices grew worse every season, leaving many families struggling."
-          ],
-          "answer": "Among the network logs she found a timestamp proving Zane had emailed a teacher minutes before the crash describing a wireless experiment, which showed he had not been hacking.",
-          "explanation": "In the server room Amal found, among the network logs, a timestamp proving Zane had emailed a teacher minutes before the crash describing a wireless experiment, so his work was an experiment, not a hack."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "The significance of the result was clear only after the second trial."
-        },
-        {
-          "prompt": "Speaking 3: Five-Minute Unit Talk",
-          "target": "A journalist from a regional radio station came to interview the students."
-        },
-        {
-          "prompt": "Speaking 5: Report What They Said",
-          "target": "She said that she loved using her tablet for drawing."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "judges.",
-            "the",
-            "impressed",
-            "presentation",
-            "the",
-            "during",
-            "demeanour",
-            "calm",
-            "Her"
-          ],
-          "answer": "Her calm demeanour during the presentation impressed the judges."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "patience.",
-            "and",
-            "testing",
-            "careful",
-            "of",
-            "months",
-            "only",
-            "involved,",
-            "magic",
-            "no",
-            "was",
-            "There"
-          ],
-          "answer": "There was no magic involved, only months of careful testing and patience."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "out.",
-            "came",
-            "truth",
-            "the",
-            "before",
-            "hacker",
-            "a",
-            "was",
-            "Zane",
-            "assumed",
-            "Everyone"
-          ],
-          "answer": "Everyone assumed Zane was a hacker before the truth came out."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'cranes' mean in this unit?",
-          "choices": [
-            "Tall machines used on building sites to lift and move heavy materials.",
-            "The importance of something, or how much it matters.",
-            "Connected to other computers so information can be shared."
-          ],
-          "answer": "Tall machines used on building sites to lift and move heavy materials.",
-          "explanation": "cranes: Tall machines used on building sites to lift and move heavy materials."
-        },
-        {
-          "prompt": "What does 'episode' mean in this unit?",
-          "choices": [
-            "The importance of something, or how much it matters.",
-            "Connected to other computers so information can be shared.",
-            "One single part of a television, radio, or podcast series."
-          ],
-          "answer": "One single part of a television, radio, or podcast series.",
-          "explanation": "episode: One single part of a television, radio, or podcast series."
-        },
-        {
-          "prompt": "What does 'networked' mean in this unit?",
-          "choices": [
-            "Replacing a word or phrase with a shorter one to avoid repeating it.",
-            "Connected to other computers so information can be shared.",
-            "The importance of something, or how much it matters."
-          ],
-          "answer": "Connected to other computers so information can be shared.",
-          "explanation": "networked: Connected to other computers so information can be shared."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'crash'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Crash is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'present'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Present is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'moisture'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Moisture is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "stability",
-              "The quality of staying steady and not changing unexpectedly."
-            ],
-            [
-              "periodic",
-              "Happening at regular intervals, or arranged in repeating patterns."
-            ],
-            [
-              "temperature",
-              "How hot or cold something is, usually shown as a number on a scale."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "magic",
-              "A special power that seems to make impossible things happen, often used to describe something that feels amazing."
-            ],
-            [
-              "ostracised",
-              "Deliberately left out or excluded from a group by other people."
-            ],
-            [
-              "timestamp",
-              "A record showing the exact date and time that something happened."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "glad",
-              "Feeling happy or pleased about something."
-            ],
-            [
-              "rarest",
-              "Most unusual or hardest to find, when compared with everything else."
-            ],
-            [
-              "ostracise",
-              "To exclude someone from a group or society."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'introduce' mean?",
           "choices": [
@@ -488,34 +315,42 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'agitate' mean?",
+          "prompt": "What problem did the students notice that local farmers were facing?",
           "choices": [
-            "To come together from different directions to meet at one point.",
-            "To make someone feel worried or upset.",
-            "To make something known for the first time; to bring something new.",
-            "To show or make something known that was hidden or secret."
+            "They noticed that rainfall had become unpredictable, so crops failed and food prices grew worse every season, leaving many families struggling.",
+            "It connects to her discovery that clarity doesn't come in a rush but arrives slowly, piece by piece, so working carefully and step by step is how the truth is built.",
+            "Their teacher, Mr. Rohan, introduced them to rudimentary electronics — small sensors that could measure temperature, humidity and soil moisture."
           ],
-          "answer": "To make someone feel worried or upset.",
-          "explanation": "The loud notification sound began to agitate the students during the coding test."
+          "answer": "They noticed that rainfall had become unpredictable, so crops failed and food prices grew worse every season, leaving many families struggling.",
+          "explanation": "In the paragraph about the students' plan, the text says many families were struggling because rainfall had become unpredictable, so crops failed and food prices grew worse every season."
         },
         {
-          "prompt": "What does 'conceive' mean?",
+          "prompt": "How did Mr. Rohan help the students get started with their project?",
           "choices": [
-            "To make something known for the first time; to bring something new.",
-            "To see or hear something and know what it is; to identify.",
-            "To show or make something known that was hidden or secret.",
-            "To think of or create an idea or plan in your mind."
+            "They noticed that rainfall had become unpredictable, so crops failed and food prices grew worse every season, leaving many families struggling.",
+            "It connects to her discovery that clarity doesn't come in a rush but arrives slowly, piece by piece, so working carefully and step by step is how the truth is built.",
+            "Their teacher, Mr. Rohan, introduced them to rudimentary electronics — small sensors that could measure temperature, humidity and soil moisture."
           ],
-          "answer": "To think of or create an idea or plan in your mind.",
-          "explanation": "The team conceived a clever plan to build a weather-monitoring app."
+          "answer": "Their teacher, Mr. Rohan, introduced them to rudimentary electronics — small sensors that could measure temperature, humidity and soil moisture.",
+          "explanation": "The text says their teacher, Mr. Rohan, introduced them to rudimentary electronics — small sensors that could measure temperature, humidity and soil moisture, which became the heart of their app."
+        },
+        {
+          "prompt": "The story ends with Amal saying, 'We do it right. Step by step. No shortcuts.' How does this connect to what she learned about clarity?",
+          "choices": [
+            "They noticed that rainfall had become unpredictable, so crops failed and food prices grew worse every season, leaving many families struggling.",
+            "It connects to her discovery that clarity doesn't come in a rush but arrives slowly, piece by piece, so working carefully and step by step is how the truth is built.",
+            "Their teacher, Mr. Rohan, introduced them to rudimentary electronics — small sensors that could measure temperature, humidity and soil moisture."
+          ],
+          "answer": "It connects to her discovery that clarity doesn't come in a rush but arrives slowly, piece by piece, so working carefully and step by step is how the truth is built.",
+          "explanation": "Right after that line the text says Amal understood that clarity 'doesn't always come in a rush. Sometimes it comes slowly, piece by piece'. Doing things step by step is how she reached the truth about Zane."
         },
         {
           "prompt": "What does 'converge' mean?",
@@ -527,6 +362,579 @@
           ],
           "answer": "To come together from different directions to meet at one point.",
           "explanation": "Students from three schools converged at the robotics competition."
+        },
+        {
+          "prompt": "What does 'introduce' mean?",
+          "choices": [
+            "To find out or decide something after thinking about it.",
+            "To get or gain something, usually by effort or learning.",
+            "To make something known for the first time; to bring something new.",
+            "To see or hear something and know what it is; to identify."
+          ],
+          "answer": "To make something known for the first time; to bring something new.",
+          "explanation": "The teacher introduced us to a new coding language this term."
+        },
+        {
+          "prompt": "What does 'reveal' mean?",
+          "choices": [
+            "Speaking in a direct, honest way without trying to be polite; also: not sharp.",
+            "To find out or decide something after thinking about it.",
+            "To get or gain something, usually by effort or learning.",
+            "To show or make something known that was hidden or secret."
+          ],
+          "answer": "To show or make something known that was hidden or secret.",
+          "explanation": "The data analysis revealed that the sensor was sending incorrect readings."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Vocabulary Expert Interview",
+          "target": "The significance of the result was clear only after the second trial."
+        },
+        {
+          "prompt": "Speaking 2: How One Device Changed My Day",
+          "target": "If I did not have it, I would..."
+        },
+        {
+          "prompt": "Speaking 3: Five-Minute Unit Talk",
+          "target": "The soil moisture sensor warned the team whenever a field was becoming too dry."
+        },
+        {
+          "prompt": "Speaking 4: Debate — Should Schools Ban Mobile Phones?",
+          "target": "Debate the question with a partner: one of you argues for the ban and one against."
+        },
+        {
+          "prompt": "Speaking 5: Report What They Said",
+          "target": "She said that she loved using her tablet for drawing."
+        },
+        {
+          "prompt": "Speaking 6: Radio Interview Role-Play",
+          "target": "Role-play the radio interview from this unit: one of you is the interviewer and the other answers as a coding-club member."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "it.",
+            "explain",
+            "to",
+            "teacher",
+            "their",
+            "asked",
+            "students",
+            "the",
+            "so",
+            "obscure,",
+            "was",
+            "message",
+            "error",
+            "The"
+          ],
+          "answer": "The error message was obscure, so the students asked their teacher to explain it."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "theft.",
+            "of",
+            "kinds",
+            "many",
+            "than",
+            "more",
+            "costs",
+            "now",
+            "Cybercrime"
+          ],
+          "answer": "Cybercrime now costs more than many kinds of theft."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "start.",
+            "the",
+            "at",
+            "doubters",
+            "loud",
+            "few",
+            "a",
+            "attract",
+            "to",
+            "seems",
+            "invention",
+            "great",
+            "Every"
+          ],
+          "answer": "Every great invention seems to attract a few loud doubters at the start."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "it.",
+            "against",
+            "leaned",
+            "someone",
+            "time",
+            "every",
+            "creaked",
+            "armrest",
+            "wooden",
+            "old",
+            "The"
+          ],
+          "answer": "The old wooden armrest creaked every time someone leaned against it."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "system.",
+            "the",
+            "of",
+            "hack",
+            "a",
+            "not",
+            "experiment,",
+            "wireless",
+            "simple",
+            "a",
+            "described",
+            "message",
+            "The"
+          ],
+          "answer": "The message described a simple wireless experiment, not a hack of the system."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "life?",
+            "student",
+            "about",
+            "podcast",
+            "new",
+            "my",
+            "on",
+            "guesting",
+            "consider",
+            "you",
+            "Would"
+          ],
+          "answer": "Would you consider guesting on my new podcast about student life?"
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'cybersecurity' mean in this unit?",
+          "choices": [
+            "Keeping computers and data safe from attack.",
+            "The importance of something, or how much it matters.",
+            "The plain dictionary meaning of a word."
+          ],
+          "answer": "Keeping computers and data safe from attack.",
+          "explanation": "cybersecurity: Keeping computers and data safe from attack."
+        },
+        {
+          "prompt": "What does 'possibilities' mean in this unit?",
+          "choices": [
+            "The importance of something, or how much it matters.",
+            "Keeping computers and data safe from attack.",
+            "Things that could happen or could be done in the future."
+          ],
+          "answer": "Things that could happen or could be done in the future.",
+          "explanation": "possibilities: Things that could happen or could be done in the future."
+        },
+        {
+          "prompt": "What does 'edged' mean in this unit?",
+          "choices": [
+            "Keeping computers and data safe from attack.",
+            "Formed a border or line along the side of something.",
+            "The importance of something, or how much it matters."
+          ],
+          "answer": "Formed a border or line along the side of something.",
+          "explanation": "edged: Formed a border or line along the side of something."
+        },
+        {
+          "prompt": "What does 'wireless' mean in this unit?",
+          "choices": [
+            "Working without wires, usually by sending signals through the air.",
+            "The importance of something, or how much it matters.",
+            "Keeping computers and data safe from attack."
+          ],
+          "answer": "Working without wires, usually by sending signals through the air.",
+          "explanation": "wireless: Working without wires, usually by sending signals through the air."
+        },
+        {
+          "prompt": "What does 'rarest' mean in this unit?",
+          "choices": [
+            "The importance of something, or how much it matters.",
+            "Keeping computers and data safe from attack.",
+            "Most unusual or hardest to find, when compared with everything else."
+          ],
+          "answer": "Most unusual or hardest to find, when compared with everything else.",
+          "explanation": "rarest: Most unusual or hardest to find, when compared with everything else."
+        },
+        {
+          "prompt": "What does 'omit' mean in this unit?",
+          "choices": [
+            "Keeping computers and data safe from attack.",
+            "To leave out or not include something.",
+            "The importance of something, or how much it matters."
+          ],
+          "answer": "To leave out or not include something.",
+          "explanation": "omit: To leave out or not include something."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'denotation'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Denotation is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'temperature'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Temperature is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'armrest'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Armrest is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'misunderstood'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Misunderstood is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'recognise'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Recognise is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'geolocation'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Geolocation is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "stability",
+              "The quality of staying steady and not changing unexpectedly."
+            ],
+            [
+              "satire",
+              "Writing that mocks something in order to criticise it."
+            ],
+            [
+              "concrete",
+              "Made of a hard grey building material, or describing something solid and definite."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "inclusion",
+              "Making sure everyone is welcomed and able to take part."
+            ],
+            [
+              "unpredictable",
+              "Not able to be known or guessed in advance because it keeps changing."
+            ],
+            [
+              "station",
+              "A building or place set up for a particular purpose, such as broadcasting or collecting information."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "magic",
+              "A special power that seems to make impossible things happen, often used to describe something that feels amazing."
+            ],
+            [
+              "cranes",
+              "Tall machines used on building sites to lift and move heavy materials."
+            ],
+            [
+              "preferred",
+              "Liked one thing more than another, or chose it instead of something else."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "tracing",
+              "Following the path or history of something carefully, step by step, to understand it."
+            ],
+            [
+              "overloaded",
+              "Put too much pressure, weight, or power onto something so that it stopped working properly."
+            ],
+            [
+              "glad",
+              "Feeling happy or pleased about something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "episode",
+              "One single part of a television, radio, or podcast series."
+            ],
+            [
+              "converge",
+              "To come together from different directions to meet at one point."
+            ],
+            [
+              "fugitive",
+              "A person who is running away from the police or trying to escape."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "ease",
+              "Noun: comfort or freedom from worry. Verb: to make something less difficult."
+            ],
+            [
+              "blockchain",
+              "A shared record of transactions that is very hard to alter."
+            ],
+            [
+              "cybercrime",
+              "Criminal activity carried out using computers or networks."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Smart Farms and Digital Dreams': In recent years, digital technology has begun to _____ new possibilities for communities across East Africa.",
+          "choices": [
+            "conceive",
+            "reveal",
+            "eccentric",
+            "agitate"
+          ],
+          "answer": "reveal",
+          "explanation": "The text says: In recent years, digital technology has begun to reveal new possibilities for communities across East Africa."
+        },
+        {
+          "prompt": "Choose the missing word from 'Shadows in the Feed, part 2': She spoke about the need to _____ misinformation and to give people space to explain.",
+          "choices": [
+            "agitate",
+            "conceive",
+            "recognise",
+            "eccentric"
+          ],
+          "answer": "recognise",
+          "explanation": "The text says: She spoke about the need to recognise misinformation and to give people space to explain."
+        },
+        {
+          "prompt": "Choose the missing word from 'Smart Farms and Digital Dreams': The students decided to _____ basic coding skills and build a simple weather-monitoring app.",
+          "choices": [
+            "introduce",
+            "reveal",
+            "recognise",
+            "acquire"
+          ],
+          "answer": "acquire",
+          "explanation": "The text says: The students decided to acquire basic coding skills and build a simple weather-monitoring app."
+        },
+        {
+          "prompt": "Choose the missing word from 'Shadows in the Feed, part 2': \"It was difficult to _____ what to omit,\" Amal said.",
+          "choices": [
+            "converge",
+            "introduce",
+            "reveal",
+            "determine"
+          ],
+          "answer": "determine",
+          "explanation": "The text says: \"It was difficult to determine what to omit,\" Amal said."
+        },
+        {
+          "prompt": "Choose the missing word from 'Shadows in the Feed, part 1': Later, she spoke with her tech club mentor, Mr. Tariq, a patient, _____ man who ran a small robotics lab on the school's second floor.",
+          "choices": [
+            "reveal",
+            "blunt",
+            "converge",
+            "introduce"
+          ],
+          "answer": "blunt",
+          "explanation": "The text says: Later, she spoke with her tech club mentor, Mr. Tariq, a patient, blunt man who ran a small robotics lab on the school's second floor."
+        },
+        {
+          "prompt": "What does 'agitate' mean?",
+          "choices": [
+            "To come together from different directions to meet at one point.",
+            "To make someone feel worried or upset.",
+            "To make something known for the first time; to bring something new.",
+            "To show or make something known that was hidden or secret."
+          ],
+          "answer": "To make someone feel worried or upset.",
+          "explanation": "The loud notification sound began to agitate the students during the coding test."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Shadows in the Feed, part 2': \"It was difficult to _____ what to omit,\" Amal said.",
+          "choices": [
+            "converge",
+            "introduce",
+            "reveal",
+            "determine"
+          ],
+          "answer": "determine",
+          "explanation": "The text says: \"It was difficult to determine what to omit,\" Amal said."
+        },
+        {
+          "prompt": "Choose the missing word from 'Shadows in the Feed, part 1': Later, she spoke with her tech club mentor, Mr. Tariq, a patient, _____ man who ran a small robotics lab on the school's second floor.",
+          "choices": [
+            "reveal",
+            "blunt",
+            "converge",
+            "introduce"
+          ],
+          "answer": "blunt",
+          "explanation": "The text says: Later, she spoke with her tech club mentor, Mr. Tariq, a patient, blunt man who ran a small robotics lab on the school's second floor."
+        },
+        {
+          "prompt": "Which word means: Made of a hard grey building material, or describing something solid and definite.",
+          "choices": [
+            "concrete",
+            "significance",
+            "cybersecurity"
+          ],
+          "answer": "concrete",
+          "explanation": "concrete: Made of a hard grey building material, or describing something solid and definite."
+        },
+        {
+          "prompt": "Which word means: Formed a border or line along the side of something.",
+          "choices": [
+            "significance",
+            "cybersecurity",
+            "edged"
+          ],
+          "answer": "edged",
+          "explanation": "edged: Formed a border or line along the side of something."
+        },
+        {
+          "prompt": "What type of word is 'congratulated'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Congratulated is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'omit'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Omit is used as a verb in this dictionary sense."
         }
       ]
     }

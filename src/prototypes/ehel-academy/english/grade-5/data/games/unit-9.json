@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t03-u09",
   "title": "Lights, Camera, Action… Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Ready to attack or argue; forceful and hostile.",
           "choices": [
             "aggressive",
-            "hyperlink",
-            "wireless"
+            "incidentally",
+            "replace"
           ],
           "answer": "aggressive",
           "explanation": "aggressive: Ready to attack or argue; forceful and hostile."
         },
         {
-          "prompt": "Which word means: A flat board with a clip at the top for holding papers.",
+          "prompt": "Which word means: A length of time with a beginning and an end.",
           "choices": [
             "aggressive",
-            "hyperlink",
-            "clipboard"
+            "incidentally",
+            "period"
           ],
-          "answer": "clipboard",
-          "explanation": "clipboard: A flat board with a clip at the top for holding papers."
+          "answer": "period",
+          "explanation": "period: A length of time with a beginning and an end."
         },
         {
-          "prompt": "Which word means: Cradled means held something gently and protectively, as if in a cradle.",
+          "prompt": "Which word means: To bend your body forward from the waist, often to thank an audience.",
           "choices": [
-            "hyperlink",
-            "cradled",
+            "incidentally",
+            "bow",
             "aggressive"
           ],
-          "answer": "cradled",
-          "explanation": "cradled: Cradled means held something gently and protectively, as if in a cradle."
+          "answer": "bow",
+          "explanation": "bow: To bend your body forward from the waist, often to thank an audience."
+        },
+        {
+          "prompt": "Which word means: Helping means giving support or assistance to someone who needs it.",
+          "choices": [
+            "helping",
+            "aggressive",
+            "incidentally"
+          ],
+          "answer": "helping",
+          "explanation": "helping: Helping means giving support or assistance to someone who needs it."
+        },
+        {
+          "prompt": "Which word means: POV is short for point of view, the angle from which a camera or a story shows a scene.",
+          "choices": [
+            "aggressive",
+            "incidentally",
+            "POV"
+          ],
+          "answer": "POV",
+          "explanation": "POV: POV is short for point of view, the angle from which a camera or a story shows a scene."
+        },
+        {
+          "prompt": "Which word means: Changing a piece of work to improve or correct it.",
+          "choices": [
+            "incidentally",
+            "editing",
+            "aggressive"
+          ],
+          "answer": "editing",
+          "explanation": "editing: Changing a piece of work to improve or correct it."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The soft, thick hair that covers the body of many animals.",
-          "answer": "fur"
+          "clue": "Happening once every week.",
+          "answer": "weekly"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Wrapped means covered or folded something around an object completely.",
-          "answer": "wrapped"
+          "clue": "Moves slowly and gently, carried along by the wind or by water.",
+          "answer": "drifts"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Helping means giving support or assistance to someone who needs it.",
+          "answer": "helping"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "POV is short for point of view, the angle from which a camera or a story shows a scene.",
+          "answer": "pov"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The physical parts of a computer that you can touch.",
+          "answer": "hardware"
         }
       ]
     },
@@ -99,32 +144,73 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "saved.",
-            "already",
-            "was",
-            "file",
+            "chapter.",
             "the",
-            "Incidentally,"
+            "of",
+            "summary",
+            "a",
+            "Write"
           ],
-          "answer": "Incidentally, the file was already saved."
+          "answer": "Write a summary of the chapter."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "fence.",
+            "morning.",
+            "that",
+            "grove",
+            "bamboo",
             "the",
-            "by",
-            "pile",
-            "tidy",
-            "a",
-            "into",
-            "leaves",
-            "fallen",
-            "the",
-            "raked",
-            "Adam"
+            "covered",
+            "mist",
+            "Thin"
           ],
-          "answer": "Adam raked the fallen leaves into a tidy pile by the fence."
+          "answer": "Thin mist covered the bamboo grove that morning."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "feeding.",
+            "morning",
+            "the",
+            "with",
+            "Talia",
+            "assist",
+            "to",
+            "offered",
+            "Sami"
+          ],
+          "answer": "Sami offered to assist Talia with the morning feeding."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "notebook.",
+            "research",
+            "her",
+            "in",
+            "injury",
+            "animal's",
+            "the",
+            "noted",
+            "Talia"
+          ],
+          "answer": "Talia noted the animal's injury in her research notebook."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "eyes.",
+            "Amal's",
+            "from",
+            "shot",
+            "POV",
+            "a",
+            "used",
+            "film",
+            "The"
+          ],
+          "answer": "The film used a POV shot from Amal's eyes."
         }
       ]
     },
@@ -137,311 +223,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does the word 'abnormal' mean?",
+          "prompt": "What does the word 'nook' mean?",
           "choices": [
-            "Not normal or usual",
-            "Strong and long-lasting",
-            "Plenty of something",
-            "Related to a father"
+            "A small, cosy corner where you can hide",
+            "A refusal to believe something is true",
+            "A long, narrow cut or channel in a surface",
+            "A book of instructions for a machine"
           ],
-          "answer": "Not normal or usual",
-          "explanation": "The prefix ab- reverses normal, which is why Sami calls the twisted prints abnormal."
+          "answer": "A small, cosy corner where you can hide",
+          "explanation": "A nook is a sheltered corner, which is why Kobi chose one as his sleeping place."
         },
         {
-          "prompt": "In a film script, what does CUT TO: tell the audience?",
+          "prompt": "In “The Forest Guardians”, which punctuation mark follows each character's name?",
           "choices": [
-            "The camera moves closer to the actor",
-            "The actor must whisper the next line",
-            "The scene is filmed from above",
-            "The film jumps to a new scene"
+            "A full stop",
+            "A colon",
+            "A speech mark",
+            "A dash"
           ],
-          "answer": "The film jumps to a new scene",
-          "explanation": "CUT TO: marks a sudden change of scene, unlike ZOOM, which only changes the distance."
+          "answer": "A colon",
+          "explanation": "The colon separates the speaker from the words spoken, so speech marks are never needed."
         },
         {
-          "prompt": "Choose the missing word from “Nookwatch: The Forest Mission”, part 2. He will need ____ rest and a new capsule shelter closer to the main path.",
+          "prompt": "Which of these compound nouns is written in the hyphenated form?",
           "choices": [
-            "edible",
-            "fertile",
-            "ample",
-            "informal"
+            "toothbrush",
+            "bus stop",
+            "close-up",
+            "woodland"
           ],
-          "answer": "ample",
-          "explanation": "Talia says Kobi needs ample rest, meaning more than enough time to heal."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In “The Forest Guardians”, what does Talia say is missing from its sleeping nook?",
-          "choices": [
-            "Kobi, the centre's oldest lemur, is missing from his sleeping nook.",
-            "The character's name is written in capital letters and is followed by a colon.",
-            "Here neutral means refusing to take sides, which Amal now believes is impossible."
-          ],
-          "answer": "Kobi, the centre's oldest lemur, is missing from his sleeping nook.",
-          "explanation": "Talia announces the problem straight after she welcomes the students, naming Kobi as the oldest lemur."
+          "answer": "close-up",
+          "explanation": "Close-up always carries its hyphen; toothbrush and woodland are closed, and bus stop is open."
         },
-        {
-          "prompt": "In the film script version, which camera movement reveals the wooden Nookwatch sign?",
-          "choices": [
-            "The character's name is written in capital letters and is followed by a colon.",
-            "Kobi will need ample rest and a new capsule shelter closer to the main path.",
-            "The camera pans slowly to the right until the wooden sign is revealed."
-          ],
-          "answer": "The camera pans slowly to the right until the wooden sign is revealed.",
-          "explanation": "PAN is the slow horizontal sweep, so the sign appears gradually instead of in a sudden cut."
-        },
-        {
-          "prompt": "Amal says you cannot stay neutral once you have seen the animals up close. What does neutral mean here?",
-          "choices": [
-            "Because she says laws, culture and survival are all connected in the question.",
-            "Here neutral means refusing to take sides, which Amal now believes is impossible.",
-            "The camera pans slowly to the right until the wooden sign is revealed."
-          ],
-          "answer": "Here neutral means refusing to take sides, which Amal now believes is impossible.",
-          "explanation": "The surrounding words about feeling things as real and urgent give neutral its meaning here."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Read the Script Aloud",
-          "target": "An aggressive tone loses an argument you could have won."
-        },
-        {
-          "prompt": "Speaking 3: The Director's Chair",
-          "target": "You are the director and your partner is the actor."
-        },
-        {
-          "prompt": "Speaking 5: Choral Reading of the Narrator",
-          "target": "The Narrator speaks straight to the audience, so the lines need clear, even pacing."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "lived.",
-            "insects",
-            "where",
-            "bark",
-            "its",
-            "in",
-            "grooves",
-            "deep",
-            "had",
-            "tree",
-            "old",
-            "The"
-          ],
-          "answer": "The old tree had deep grooves in its bark where insects lived."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "lemur.",
-            "sleeping",
-            "a",
-            "revealing",
-            "cloth,",
-            "the",
-            "back",
-            "pulled",
-            "Talia"
-          ],
-          "answer": "Talia pulled back the cloth, revealing a sleeping lemur."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "connected.",
-            "are",
-            "animals",
-            "woodland's",
-            "the",
-            "how",
-            "showing",
-            "poster",
-            "a",
-            "drew",
-            "Amal"
-          ],
-          "answer": "Amal drew a poster showing how the woodland's animals are connected."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'kindness' mean in this unit?",
-          "choices": [
-            "Being gentle, caring and helpful towards other people or animals.",
-            "Ready to attack or argue; forceful and hostile.",
-            "A word or image you click to jump to another page."
-          ],
-          "answer": "Being gentle, caring and helpful towards other people or animals.",
-          "explanation": "kindness: Being gentle, caring and helpful towards other people or animals."
-        },
-        {
-          "prompt": "What does 'biodiversity' mean in this unit?",
-          "choices": [
-            "Ready to attack or argue; forceful and hostile.",
-            "A word or image you click to jump to another page.",
-            "Biodiversity is the wide variety of plants and animals living in one place."
-          ],
-          "answer": "Biodiversity is the wide variety of plants and animals living in one place.",
-          "explanation": "biodiversity: Biodiversity is the wide variety of plants and animals living in one place."
-        },
-        {
-          "prompt": "What does 'hyperlink' mean in this unit?",
-          "choices": [
-            "Working without wires, by sending signals through the air.",
-            "A word or image you click to jump to another page.",
-            "Ready to attack or argue; forceful and hostile."
-          ],
-          "answer": "A word or image you click to jump to another page.",
-          "explanation": "hyperlink: A word or image you click to jump to another page."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'refilled'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Refilled is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'ample'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Ample is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'multimedia'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Multimedia is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "argument",
-              "A reason or set of reasons given to support an idea."
-            ],
-            [
-              "security",
-              "Protection against harm, theft or unwanted access."
-            ],
-            [
-              "malware",
-              "Software written to damage or break into a computer."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "stems",
-              "The long, thin parts of plants that hold up leaves and flowers."
-            ],
-            [
-              "scans",
-              "Looks quickly and carefully over something, searching for details."
-            ],
-            [
-              "raked",
-              "Raked means gathered or smoothed something, such as leaves, using a rake."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "gold",
-              "Gold is a valuable yellow metal, and the word can also describe that bright colour."
-            ],
-            [
-              "rescued",
-              "Rescued means saved someone or something from danger or harm."
-            ],
-            [
-              "pouch",
-              "A small bag or pocket, sometimes on an animal, used to carry things."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which camera direction sweeps the view slowly across a scene?",
           "choices": [
@@ -478,13 +291,529 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "In “The Forest Guardians”, what does Talia say is missing from its sleeping nook?",
+          "choices": [
+            "Kobi, the centre's oldest lemur, is missing from his sleeping nook.",
+            "The character's name is written in capital letters and is followed by a colon.",
+            "Here neutral means refusing to take sides, which Amal now believes is impossible."
+          ],
+          "answer": "Kobi, the centre's oldest lemur, is missing from his sleeping nook.",
+          "explanation": "Talia announces the problem straight after she welcomes the students, naming Kobi as the oldest lemur."
+        },
+        {
+          "prompt": "Talia describes Kobi's fur as soft as a woven textile. What does that comparison tell you about his coat?",
+          "choices": [
+            "The camera pans slowly to the right until the wooden sign is revealed.",
+            "Kobi will need ample rest and a new capsule shelter closer to the main path.",
+            "It tells us his coat is thick and smooth, like cloth woven from fine threads."
+          ],
+          "answer": "It tells us his coat is thick and smooth, like cloth woven from fine threads.",
+          "explanation": "A textile is woven, so the comparison makes the reader picture a smooth, closely made surface."
+        },
+        {
+          "prompt": "In the film script version, which camera movement reveals the wooden Nookwatch sign?",
+          "choices": [
+            "Because she says laws, culture and survival are all connected in the question.",
+            "The camera pans slowly to the right until the wooden sign is revealed.",
+            "They came for a one-week project to observe, assist and report on animal behaviour."
+          ],
+          "answer": "The camera pans slowly to the right until the wooden sign is revealed.",
+          "explanation": "PAN is the slow horizontal sweep, so the sign appears gradually instead of in a sudden cut."
+        },
+        {
+          "prompt": "What did Sami read in the guidebook before the group searched behind the capsule shelter?",
+          "choices": [
+            "The guidebook said that lemurs love to climb but rarely travel far alone.",
+            "They came for a one-week project to observe, assist and report on animal behaviour.",
+            "Their verse names maternal love and paternal guard as the two kinds of care."
+          ],
+          "answer": "The guidebook said that lemurs love to climb but rarely travel far alone.",
+          "explanation": "The detail matters because a hiding place near the habitat is now far more likely."
+        },
+        {
+          "prompt": "Amal says you cannot stay neutral once you have seen the animals up close. What does neutral mean here?",
+          "choices": [
+            "The guidebook said that lemurs love to climb but rarely travel far alone.",
+            "Kobi, the centre's oldest lemur, is missing from his sleeping nook.",
+            "Here neutral means refusing to take sides, which Amal now believes is impossible."
+          ],
+          "answer": "Here neutral means refusing to take sides, which Amal now believes is impossible.",
+          "explanation": "The surrounding words about feeling things as real and urgent give neutral its meaning here."
+        },
+        {
+          "prompt": "Why does Teacher Yasmin call the argument about hunting traps a constitutional debate?",
+          "choices": [
+            "It tells us his coat is thick and smooth, like cloth woven from fine threads.",
+            "Because she says laws, culture and survival are all connected in the question.",
+            "She suspects that another creature was beside Kobi when he left the nook."
+          ],
+          "answer": "Because she says laws, culture and survival are all connected in the question.",
+          "explanation": "Calling it constitutional lifts the argument from personal opinion to the rules a whole country agrees to follow."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Read the Script Aloud",
+          "target": "An aggressive tone loses an argument you could have won."
+        },
+        {
+          "prompt": "Speaking 2: Perform Your Own Scene",
+          "target": "Thin mist covered the bamboo grove that morning."
+        },
+        {
+          "prompt": "Speaking 3: The Director's Chair",
+          "target": "You are the director and your partner is the actor."
+        },
+        {
+          "prompt": "Speaking 4: Film or Stage?",
+          "target": "Sami offered to assist Talia with the morning feeding."
+        },
+        {
+          "prompt": "Speaking 5: Choral Reading of the Narrator",
+          "target": "The Narrator speaks straight to the audience, so the lines need clear, even pacing."
+        },
+        {
+          "prompt": "Speaking 6: Sound Effects for a Forest Scene",
+          "target": "Film scripts name the sounds an audience will hear."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "eat.",
+            "can",
+            "you",
+            "algorithm",
+            "an",
+            "is",
+            "recipe",
+            "A"
+          ],
+          "answer": "A recipe is an algorithm you can eat."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "else.",
+            "somewhere",
+            "work",
+            "your",
+            "of",
+            "backup",
+            "a",
+            "Keep"
+          ],
+          "answer": "Keep a backup of your work somewhere else."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Kobi.",
+            "for",
+            "small",
+            "too",
+            "far",
+            "look",
+            "prints",
+            "These"
+          ],
+          "answer": "These prints look far too small for Kobi."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "animals.",
+            "the",
+            "among",
+            "illness",
+            "or",
+            "food",
+            "dropped",
+            "prints,",
+            "for",
+            "looked",
+            "Sami"
+          ],
+          "answer": "Sami looked for prints, dropped food or illness among the animals."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "find.",
+            "could",
+            "they",
+            "materials",
+            "whatever",
+            "reuse",
+            "would",
+            "team",
+            "the",
+            "said",
+            "Talia"
+          ],
+          "answer": "Talia said the team would reuse whatever materials they could find."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rain.",
+            "heavy",
+            "and",
+            "wind",
+            "from",
+            "animals",
+            "shy",
+            "shelter",
+            "can",
+            "bamboo",
+            "of",
+            "grove",
+            "A"
+          ],
+          "answer": "A grove of bamboo can shelter shy animals from wind and heavy rain."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'incidentally' mean in this unit?",
+          "choices": [
+            "Used to add something not directly connected.",
+            "Ready to attack or argue; forceful and hostile.",
+            "To put a new thing in place of an old one."
+          ],
+          "answer": "Used to add something not directly connected.",
+          "explanation": "incidentally: Used to add something not directly connected."
+        },
+        {
+          "prompt": "What does 'position' mean in this unit?",
+          "choices": [
+            "Ready to attack or argue; forceful and hostile.",
+            "Used to add something not directly connected.",
+            "Position means the exact place where something is, or where it is located."
+          ],
+          "answer": "Position means the exact place where something is, or where it is located.",
+          "explanation": "position: Position means the exact place where something is, or where it is located."
+        },
+        {
+          "prompt": "What does 'aerial' mean in this unit?",
+          "choices": [
+            "Used to add something not directly connected.",
+            "Seen or filmed from high up in the air, looking down.",
+            "Ready to attack or argue; forceful and hostile."
+          ],
+          "answer": "Seen or filmed from high up in the air, looking down.",
+          "explanation": "aerial: Seen or filmed from high up in the air, looking down."
+        },
+        {
+          "prompt": "What does 'wrapped' mean in this unit?",
+          "choices": [
+            "Wrapped means covered or folded something around an object completely.",
+            "Ready to attack or argue; forceful and hostile.",
+            "Used to add something not directly connected."
+          ],
+          "answer": "Wrapped means covered or folded something around an object completely.",
+          "explanation": "wrapped: Wrapped means covered or folded something around an object completely."
+        },
+        {
+          "prompt": "What does 'manual' mean in this unit?",
+          "choices": [
+            "Ready to attack or argue; forceful and hostile.",
+            "Used to add something not directly connected.",
+            "A book that gives instructions on how to do something."
+          ],
+          "answer": "A book that gives instructions on how to do something.",
+          "explanation": "manual: A book that gives instructions on how to do something."
+        },
+        {
+          "prompt": "What does 'processor' mean in this unit?",
+          "choices": [
+            "Used to add something not directly connected.",
+            "The part of a computer that does the calculating.",
+            "Ready to attack or argue; forceful and hostile."
+          ],
+          "answer": "The part of a computer that does the calculating.",
+          "explanation": "processor: The part of a computer that does the calculating."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'replace'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Replace is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'downstage'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adverb"
+          ],
+          "answer": "Adverb",
+          "explanation": "Downstage is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'dropped'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Dropped is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'connected'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Connected is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'critical'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Critical is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'wireless'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Wireless is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "argument",
+              "A reason or set of reasons given to support an idea."
+            ],
+            [
+              "publish",
+              "To print or share writing so that others can read it."
+            ],
+            [
+              "introduction",
+              "The first part, where you say what it is about."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "monthly",
+              "Happening once every month."
+            ],
+            [
+              "clearing",
+              "An open space inside a forest where there are no trees."
+            ],
+            [
+              "prints",
+              "Marks left on the ground by feet or paws as they press down."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "drifts",
+              "Moves slowly and gently, carried along by the wind or by water."
+            ],
+            [
+              "assist",
+              "To help someone with a task or a job."
+            ],
+            [
+              "raked",
+              "Raked means gathered or smoothed something, such as leaves, using a rake."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "gentle",
+              "Gentle means kind, soft, and careful, without being rough."
+            ],
+            [
+              "bush",
+              "A bush is a plant with many woody stems, smaller than a tree."
+            ],
+            [
+              "performed",
+              "Performed means acted, played, or presented something in front of an audience."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "woodland",
+              "An area of land covered with trees and plants."
+            ],
+            [
+              "ample",
+              "More than enough; plenty of something."
+            ],
+            [
+              "constitutional",
+              "Related to the system of rules that a country follows."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "homepage",
+              "The first page you reach on a website."
+            ],
+            [
+              "spreadsheet",
+              "A document that organises numbers into rows and columns."
+            ],
+            [
+              "format",
+              "The way something is arranged or the kind of file it is."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence writes its compound noun correctly?",
+          "choices": [
+            "I keep my tooth brush in the cup board.",
+            "We walked into the bambooforest.",
+            "She brought a first-aid kit to the camp.",
+            "The guide book showed the wild life reserve."
+          ],
+          "answer": "She brought a first-aid kit to the camp.",
+          "explanation": "First-aid is hyphenated, while toothbrush, cupboard, guidebook and wildlife are closed and bamboo forest is open."
+        },
+        {
+          "prompt": "What does the word 'abnormal' mean?",
+          "choices": [
+            "Not normal or usual",
+            "Strong and long-lasting",
+            "Plenty of something",
+            "Related to a father"
+          ],
+          "answer": "Not normal or usual",
+          "explanation": "The prefix ab- reverses normal, which is why Sami calls the twisted prints abnormal."
+        },
+        {
+          "prompt": "In a film script, what does CUT TO: tell the audience?",
+          "choices": [
+            "The camera moves closer to the actor",
+            "The actor must whisper the next line",
+            "The scene is filmed from above",
+            "The film jumps to a new scene"
+          ],
+          "answer": "The film jumps to a new scene",
+          "explanation": "CUT TO: marks a sudden change of scene, unlike ZOOM, which only changes the distance."
+        },
+        {
+          "prompt": "Choose the missing word from “Nookwatch: The Forest Mission”, part 2. He will need ____ rest and a new capsule shelter closer to the main path.",
+          "choices": [
+            "edible",
+            "fertile",
+            "ample",
+            "informal"
+          ],
+          "answer": "ample",
+          "explanation": "Talia says Kobi needs ample rest, meaning more than enough time to heal."
+        },
+        {
+          "prompt": "Choose the missing word from “Nookwatch: The Forest Mission”, part 3. Some people are in ____ about the harm they cause.",
+          "choices": [
+            "textile",
+            "denial",
+            "dimple",
+            "groove"
+          ],
+          "answer": "denial",
+          "explanation": "Denial names a refusal to believe something true, which is what Talia describes about the traps."
+        },
         {
           "prompt": "What does the word 'nook' mean?",
           "choices": [
@@ -495,28 +824,78 @@
           ],
           "answer": "A small, cosy corner where you can hide",
           "explanation": "A nook is a sheltered corner, which is why Kobi chose one as his sleeping place."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from “Nookwatch: The Forest Mission”, part 2. He will need ____ rest and a new capsule shelter closer to the main path.",
+          "choices": [
+            "edible",
+            "fertile",
+            "ample",
+            "informal"
+          ],
+          "answer": "ample",
+          "explanation": "Talia says Kobi needs ample rest, meaning more than enough time to heal."
         },
         {
-          "prompt": "In “The Forest Guardians”, which punctuation mark follows each character's name?",
+          "prompt": "Choose the missing word from “Nookwatch: The Forest Mission”, part 3. Some people are in ____ about the harm they cause.",
           "choices": [
-            "A full stop",
-            "A colon",
-            "A speech mark",
-            "A dash"
+            "textile",
+            "denial",
+            "dimple",
+            "groove"
           ],
-          "answer": "A colon",
-          "explanation": "The colon separates the speaker from the words spoken, so speech marks are never needed."
+          "answer": "denial",
+          "explanation": "Denial names a refusal to believe something true, which is what Talia describes about the traps."
         },
         {
-          "prompt": "Which of these compound nouns is written in the hyphenated form?",
+          "prompt": "Which word means: The first part, where you say what it is about.",
           "choices": [
-            "toothbrush",
-            "bus stop",
-            "close-up",
-            "woodland"
+            "introduction",
+            "aggressive",
+            "incidentally"
           ],
-          "answer": "close-up",
-          "explanation": "Close-up always carries its hyphen; toothbrush and woodland are closed, and bus stop is open."
+          "answer": "introduction",
+          "explanation": "introduction: The first part, where you say what it is about."
+        },
+        {
+          "prompt": "Which word means: Seen or filmed from high up in the air, looking down.",
+          "choices": [
+            "aggressive",
+            "incidentally",
+            "aerial"
+          ],
+          "answer": "aerial",
+          "explanation": "aerial: Seen or filmed from high up in the air, looking down."
+        },
+        {
+          "prompt": "What type of word is 'performed'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Performed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'processor'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Processor is used as a noun in this dictionary sense."
         }
       ]
     }

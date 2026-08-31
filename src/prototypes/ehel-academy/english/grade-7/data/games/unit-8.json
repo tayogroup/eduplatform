@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t03-u08",
   "title": "Media, Technology, and News Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A skill, quality, or certificate that makes someone suitable for a job.",
           "choices": [
             "qualification",
-            "intelligence",
-            "correlative"
+            "subordinating",
+            "investor"
           ],
           "answer": "qualification",
           "explanation": "qualification: A skill, quality, or certificate that makes someone suitable for a job."
         },
         {
-          "prompt": "Which word means: Closed, or made to stop operating.",
+          "prompt": "Which word means: The trace a person or activity leaves behind.",
           "choices": [
             "qualification",
-            "intelligence",
-            "shut"
+            "subordinating",
+            "footprint"
           ],
-          "answer": "shut",
-          "explanation": "shut: Closed, or made to stop operating."
+          "answer": "footprint",
+          "explanation": "footprint: The trace a person or activity leaves behind."
         },
         {
-          "prompt": "Which word means: Made something free of dirt, mess, or rubbish by washing or tidying it.",
+          "prompt": "Which word means: Not in, at or to any place; not found anywhere.",
           "choices": [
-            "intelligence",
-            "cleaned",
+            "subordinating",
+            "nowhere",
             "qualification"
           ],
-          "answer": "cleaned",
-          "explanation": "cleaned: Made something free of dirt, mess, or rubbish by washing or tidying it."
+          "answer": "nowhere",
+          "explanation": "nowhere: Not in, at or to any place; not found anywhere."
+        },
+        {
+          "prompt": "Which word means: A person who is second in charge and can act for the leader when needed.",
+          "choices": [
+            "deputy",
+            "qualification",
+            "subordinating"
+          ],
+          "answer": "deputy",
+          "explanation": "deputy: A person who is second in charge and can act for the leader when needed."
+        },
+        {
+          "prompt": "Which word means: A plan that shows when particular things will happen or be done.",
+          "choices": [
+            "qualification",
+            "subordinating",
+            "schedule"
+          ],
+          "answer": "schedule",
+          "explanation": "schedule: A plan that shows when particular things will happen or be done."
+        },
+        {
+          "prompt": "Which word means: To give something to someone for a specific purpose.",
+          "choices": [
+            "subordinating",
+            "allocate",
+            "qualification"
+          ],
+          "answer": "allocate",
+          "explanation": "allocate: To give something to someone for a specific purpose."
         }
       ]
     },
@@ -57,18 +87,33 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The art of using language to persuade.",
-          "answer": "rhetoric"
+          "clue": "An image or figure standing for a person online.",
+          "answer": "avatar"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A girl or woman who has the same parents as another person.",
-          "answer": "sister"
+          "clue": "The combining of several sources or ideas into one whole.",
+          "answer": "synthesis"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Taking turns in a set order, so a task passes regularly from one person to the next.",
-          "answer": "rotating"
+          "clue": "A short, well-known saying that expresses a piece of traditional wisdom.",
+          "answer": "proverb"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Used to say something seems true based on what you have heard, though not fully certain.",
+          "answer": "apparently"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Had an effect on how someone thought, decided, or behaved.",
+          "answer": "influenced"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To ask someone for advice or information.",
+          "answer": "consult"
         }
       ]
     },
@@ -103,34 +148,88 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "sign.",
-            "warning",
-            "a",
-            "often",
-            "is",
-            "source",
-            "named",
-            "no",
-            "with",
-            "story",
-            "A"
+            "year.",
+            "last",
+            "domain",
+            "own",
+            "its",
+            "registered",
+            "school",
+            "The"
           ],
-          "answer": "A story with no named source is often a warning sign."
+          "answer": "The school registered its own domain last year."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "fortnight.",
-            "each",
-            "classes",
+            "word.",
+            "single",
+            "a",
+            "publishing",
+            "before",
+            "weeks",
+            "two",
+            "for",
+            "story",
             "the",
-            "between",
-            "rotated",
-            "duty",
-            "cleaning",
+            "researched",
+            "journalist",
             "The"
           ],
-          "answer": "The cleaning duty rotated between the classes each fortnight."
+          "answer": "The journalist researched the story for two weeks before publishing a single word."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "rumour.",
+            "the",
+            "about",
+            "directly",
+            "administrator",
+            "the",
+            "asked",
+            "and",
+            "office",
+            "school",
+            "the",
+            "visited",
+            "They"
+          ],
+          "answer": "They visited the school office and asked the administrator directly about the rumour."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "students.",
+            "the",
+            "to",
+            "listened",
+            "and",
+            "chair",
+            "his",
+            "in",
+            "back",
+            "leaned",
+            "He"
+          ],
+          "answer": "He leaned back in his chair and listened to the students."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "followers.",
+            "as",
+            "act",
+            "than",
+            "more",
+            "do",
+            "could",
+            "students",
+            "that",
+            "insisted",
+            "Zara"
+          ],
+          "answer": "Zara insisted that students could do more than act as followers."
         }
       ]
     },
@@ -143,37 +242,70 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Duty of Truth, part 1': Everyone was talking about the new rule that had been posted _____ on the school notice board.",
+          "prompt": "What does 'industrious' mean?",
           "choices": [
-            "abruptly",
-            "mandatory",
-            "chronic",
-            "copious"
+            "Not taking care of something you should, causing problems.",
+            "Hardworking and productive.",
+            "Very large in amount or number.",
+            "To ask someone for advice or information."
           ],
-          "answer": "abruptly",
-          "explanation": "The text says: Everyone was talking about the new rule that had been posted abruptly on the school notice board."
+          "answer": "Hardworking and productive.",
+          "explanation": "The industrious students organised events and tutored others."
         },
         {
-          "prompt": "Choose the missing word from 'The Duty of Truth, part 2': \"Actually, the student records _____ that Form 3 cleaned more consecutively than other forms.\"",
+          "prompt": "What does 'exonerated' mean?",
           "choices": [
-            "convince",
-            "organise",
-            "contribute",
-            "indicate"
+            "Likely to do something or to be affected by something.",
+            "Having the right to do or receive something.",
+            "A change or addition to a law or document.",
+            "To be declared not guilty of a crime or blame."
           ],
-          "answer": "indicate",
-          "explanation": "The text says: \"Actually, the student records indicate that Form 3 cleaned more consecutively than other forms.\""
+          "answer": "To be declared not guilty of a crime or blame.",
+          "explanation": "After the new evidence was found, the boy was exonerated."
         },
         {
-          "prompt": "Choose the missing word from 'Media Literacy: Reading the News with Care': In the digital age, that skill has become a _____, not a luxury.",
+          "prompt": "What does 'hybrid' mean?",
           "choices": [
+            "Something made by combining two different things.",
+            "A part or piece of something larger.",
+            "The process of growing or improving something.",
+            "Something that is very important and must be done or had."
+          ],
+          "answer": "Something made by combining two different things.",
+          "explanation": "A hybrid car uses both electricity and petrol to run."
+        },
+        {
+          "prompt": "What does 'allocate' mean?",
+          "choices": [
+            "A person chosen to represent others; to give a task to someone.",
+            "To arrange things in a neat and orderly way.",
+            "To give something to someone for a specific purpose.",
+            "A disagreement or conflict between people or groups."
+          ],
+          "answer": "To give something to someone for a specific purpose.",
+          "explanation": "The teacher will allocate time for each student to present."
+        },
+        {
+          "prompt": "What does 'copious' mean?",
+          "choices": [
+            "Something that lasts a long time and is difficult to fix.",
+            "Very large in amount or number.",
+            "Suddenly and unexpectedly.",
+            "Happening one after another without any breaks."
+          ],
+          "answer": "Very large in amount or number.",
+          "explanation": "She took copious notes during the lecture."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Duty of Truth, part 1': She was the _____ between the student council and the school board — a role that required calm thinking and strong communication.",
+          "choices": [
+            "delegate",
+            "amendment",
             "liaison",
-            "necessity",
-            "opposition",
-            "delegate"
+            "opposition"
           ],
-          "answer": "necessity",
-          "explanation": "The text says: In the digital age, that skill has become a necessity, not a luxury."
+          "answer": "liaison",
+          "explanation": "The text says: She was the liaison between the student council and the school board — a role that required calm thinking and strong communication."
         }
       ]
     },
@@ -214,242 +346,18 @@
           ],
           "answer": "The school held a hearing and reviewed testimonies, the boy was exonerated, and it turned out that a loose screw, not a student, had caused the damage.",
           "explanation": "The text says they held a hearing, testimonies were reviewed and the boy was exonerated, because 'a loose screw had caused the damage'. Zara had insisted, 'You can't punish someone on what's alleged.'"
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Debate: Digital Media Ethics",
-          "target": "A debate is a structured discussion in which two sides argue for and against a statement."
         },
         {
-          "prompt": "Speaking 3: Vocabulary Expert Interview",
-          "target": "A story with no named source is often a warning sign."
-        },
-        {
-          "prompt": "Speaking 5: Five-Minute Unit Talk",
-          "target": "The cleaning duty rotated between the classes each fortnight."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "exonerated.",
-            "was",
-            "boy",
-            "the",
-            "found,",
-            "was",
-            "evidence",
-            "new",
-            "the",
-            "After"
-          ],
-          "answer": "After the new evidence was found, the boy was exonerated."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "immediately.",
-            "rumour",
-            "the",
-            "believed",
-            "she",
-            "and",
-            "sister,",
-            "younger",
-            "Rohan's",
-            "is",
-            "Tia"
-          ],
-          "answer": "Tia is Rohan's younger sister, and she believed the rumour immediately."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "rule.",
-            "cleaning",
-            "the",
-            "to",
-            "opposed",
-            "were",
-            "students",
-            "why",
-            "asked",
-            "member",
-            "board",
-            "senior",
-            "A"
-          ],
-          "answer": "A senior board member asked why students were opposed to the cleaning rule."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'searched' mean in this unit?",
+          "prompt": "What does 'hybrid' mean?",
           "choices": [
-            "Looked carefully in order to find something.",
-            "A skill, quality, or certificate that makes someone suitable for a job.",
-            "A machine's ability to perform tasks that would need human thought."
+            "Something made by combining two different things.",
+            "A part or piece of something larger.",
+            "The process of growing or improving something.",
+            "Something that is very important and must be done or had."
           ],
-          "answer": "Looked carefully in order to find something.",
-          "explanation": "searched: Looked carefully in order to find something."
+          "answer": "Something made by combining two different things.",
+          "explanation": "A hybrid car uses both electricity and petrol to run."
         },
-        {
-          "prompt": "What does 'testimonies' mean in this unit?",
-          "choices": [
-            "A skill, quality, or certificate that makes someone suitable for a job.",
-            "A machine's ability to perform tasks that would need human thought.",
-            "Statements people give, especially describing what they saw or know, often used as evidence."
-          ],
-          "answer": "Statements people give, especially describing what they saw or know, often used as evidence.",
-          "explanation": "testimonies: Statements people give, especially describing what they saw or know, often used as evidence."
-        },
-        {
-          "prompt": "What does 'intelligence' mean in this unit?",
-          "choices": [
-            "Describing a pair of words that work together in a sentence.",
-            "A machine's ability to perform tasks that would need human thought.",
-            "A skill, quality, or certificate that makes someone suitable for a job."
-          ],
-          "answer": "A machine's ability to perform tasks that would need human thought.",
-          "explanation": "intelligence: A machine's ability to perform tasks that would need human thought."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'input'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Input is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'organise'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Organise is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'tries'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Tries is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "representation",
-              "The way something or someone is shown or described."
-            ],
-            [
-              "sanction",
-              "A penalty imposed to make a country or person obey."
-            ],
-            [
-              "removes",
-              "Takes something away or gets rid of it."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "sister",
-              "A girl or woman who has the same parents as another person."
-            ],
-            [
-              "spotting",
-              "Noticing or recognising something, often something hidden or hard to see."
-            ],
-            [
-              "leaned",
-              "Moved or rested your body at an angle, often against or away from something."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "democratic",
-              "Based on fair discussion where decisions are made together, not by just one person."
-            ],
-            [
-              "justice",
-              "Fairness in the way people are treated, especially by rules, laws, or those in charge."
-            ],
-            [
-              "delegate",
-              "A person chosen to represent others; to give a task to someone."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'allocate' mean?",
           "choices": [
@@ -471,7 +379,414 @@
           ],
           "answer": "Very large in amount or number.",
           "explanation": "She took copious notes during the lecture."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Debate: Digital Media Ethics",
+          "target": "A debate is a structured discussion in which two sides argue for and against a statement."
         },
+        {
+          "prompt": "Speaking 2: Role-Play Interview",
+          "target": "The school registered its own domain last year."
+        },
+        {
+          "prompt": "Speaking 3: Vocabulary Expert Interview",
+          "target": "The journalist researched the story for two weeks before publishing a single word."
+        },
+        {
+          "prompt": "Speaking 4: Explain and Respond",
+          "target": "They visited the school office and asked the administrator directly about the rumour."
+        },
+        {
+          "prompt": "Speaking 5: Five-Minute Unit Talk",
+          "target": "He leaned back in his chair and listened to the students."
+        },
+        {
+          "prompt": "Speaking 6: Mock News Broadcast",
+          "target": "Zara insisted that students could do more than act as followers."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rules.",
+            "school",
+            "new",
+            "the",
+            "to",
+            "opposition",
+            "strong",
+            "was",
+            "There"
+          ],
+          "answer": "There was strong opposition to the new school rules."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "place.",
+            "the",
+            "and",
+            "date",
+            "the",
+            "gave",
+            "metadata",
+            "photograph's",
+            "The"
+          ],
+          "answer": "The photograph's metadata gave the date and the place."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "news.",
+            "fake",
+            "against",
+            "herself",
+            "defend",
+            "her",
+            "help",
+            "that",
+            "questions",
+            "simple",
+            "three",
+            "learned",
+            "Imani"
+          ],
+          "answer": "Imani learned three simple questions that help her defend herself against fake news."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "group.",
+            "messaging",
+            "class",
+            "the",
+            "through",
+            "quickly",
+            "spread",
+            "rumour",
+            "the",
+            "about",
+            "News"
+          ],
+          "answer": "News about the rumour spread quickly through the class messaging group."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "biweekly.",
+            "rotated",
+            "or",
+            "forms,",
+            "all",
+            "across",
+            "shared",
+            "is",
+            "duty",
+            "the",
+            "that",
+            "suggest",
+            "We"
+          ],
+          "answer": "We suggest that the duty is shared across all forms, or rotated biweekly."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "policy.",
+            "new",
+            "the",
+            "about",
+            "board",
+            "the",
+            "with",
+            "regularly",
+            "corresponded",
+            "They"
+          ],
+          "answer": "They corresponded regularly with the board about the new policy."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'subordinating' mean in this unit?",
+          "choices": [
+            "Describing a word that makes one clause depend on another.",
+            "A skill, quality, or certificate that makes someone suitable for a job.",
+            "A person who puts money into something to earn more later."
+          ],
+          "answer": "Describing a word that makes one clause depend on another.",
+          "explanation": "subordinating: Describing a word that makes one clause depend on another."
+        },
+        {
+          "prompt": "What does 'annotation' mean in this unit?",
+          "choices": [
+            "A skill, quality, or certificate that makes someone suitable for a job.",
+            "Describing a word that makes one clause depend on another.",
+            "A note added to a text to explain or comment on it."
+          ],
+          "answer": "A note added to a text to explain or comment on it.",
+          "explanation": "annotation: A note added to a text to explain or comment on it."
+        },
+        {
+          "prompt": "What does 'supposedly' mean in this unit?",
+          "choices": [
+            "Describing a word that makes one clause depend on another.",
+            "According to what people say, although it may not be true.",
+            "A skill, quality, or certificate that makes someone suitable for a job."
+          ],
+          "answer": "According to what people say, although it may not be true.",
+          "explanation": "supposedly: According to what people say, although it may not be true."
+        },
+        {
+          "prompt": "What does 'petition' mean in this unit?",
+          "choices": [
+            "A written request signed by many people, asking someone in charge to make a change.",
+            "A skill, quality, or certificate that makes someone suitable for a job.",
+            "Describing a word that makes one clause depend on another."
+          ],
+          "answer": "A written request signed by many people, asking someone in charge to make a change.",
+          "explanation": "petition: A written request signed by many people, asking someone in charge to make a change."
+        },
+        {
+          "prompt": "What does 'alleged' mean in this unit?",
+          "choices": [
+            "A skill, quality, or certificate that makes someone suitable for a job.",
+            "Describing a word that makes one clause depend on another.",
+            "Said to be true or to have happened, though it has not yet been proven."
+          ],
+          "answer": "Said to be true or to have happened, though it has not yet been proven.",
+          "explanation": "alleged: Said to be true or to have happened, though it has not yet been proven."
+        },
+        {
+          "prompt": "What does 'chronic' mean in this unit?",
+          "choices": [
+            "Describing a word that makes one clause depend on another.",
+            "Something that lasts a long time and is difficult to fix.",
+            "A skill, quality, or certificate that makes someone suitable for a job."
+          ],
+          "answer": "Something that lasts a long time and is difficult to fix.",
+          "explanation": "chronic: Something that lasts a long time and is difficult to fix."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'investor'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Investor is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'television'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Television is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'systematically'?",
+          "choices": [
+            "Verb",
+            "Adverb",
+            "Noun"
+          ],
+          "answer": "Adverb",
+          "explanation": "Systematically is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'alternate'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Alternate is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'mop'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Mop is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'euphemism'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Euphemism is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "representation",
+              "The way something or someone is shown or described."
+            ],
+            [
+              "councillor",
+              "A person elected to serve on a local council."
+            ],
+            [
+              "cyberbullying",
+              "Using messages or posts online to hurt or frighten somebody."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "claim",
+              "To say that something is true, or to ask for something you believe is yours."
+            ],
+            [
+              "transition",
+              "A change from one state or stage to another."
+            ],
+            [
+              "removes",
+              "Takes something away or gets rid of it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "proverb",
+              "A short, well-known saying that expresses a piece of traditional wisdom."
+            ],
+            [
+              "signature",
+              "A person's name written by hand in their own particular style, used to show approval."
+            ],
+            [
+              "messaging",
+              "The sending and receiving of written messages, usually using phones or computers."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "emergency",
+              "A sudden, serious situation that needs quick action or an immediate decision."
+            ],
+            [
+              "drafted",
+              "Wrote an early or first version of something, like a letter, plan, or speech."
+            ],
+            [
+              "allocation",
+              "The act of giving out or assigning something, such as tasks or money, in a set way."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "influenced",
+              "Had an effect on how someone thought, decided, or behaved."
+            ],
+            [
+              "regularly",
+              "Happening often, at evenly spaced times, rather than only once in a while."
+            ],
+            [
+              "convince",
+              "To persuade someone to believe or do something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "consult",
+              "To ask someone for advice or information."
+            ],
+            [
+              "necessity",
+              "Something that is very important and must be done or had."
+            ],
+            [
+              "open-source",
+              "Describing software whose code anyone may read and change."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
         {
           "prompt": "Choose the missing word from 'The Duty of Truth, part 1': She was the _____ between the student council and the school board — a role that required calm thinking and strong communication.",
           "choices": [
@@ -482,6 +797,61 @@
           ],
           "answer": "liaison",
           "explanation": "The text says: She was the liaison between the student council and the school board — a role that required calm thinking and strong communication."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Duty of Truth, part 1': Everyone was talking about the new rule that had been posted _____ on the school notice board.",
+          "choices": [
+            "abruptly",
+            "mandatory",
+            "chronic",
+            "copious"
+          ],
+          "answer": "abruptly",
+          "explanation": "The text says: Everyone was talking about the new rule that had been posted abruptly on the school notice board."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Duty of Truth, part 2': \"Actually, the student records _____ that Form 3 cleaned more consecutively than other forms.\"",
+          "choices": [
+            "convince",
+            "organise",
+            "contribute",
+            "indicate"
+          ],
+          "answer": "indicate",
+          "explanation": "The text says: \"Actually, the student records indicate that Form 3 cleaned more consecutively than other forms.\""
+        },
+        {
+          "prompt": "Choose the missing word from 'Media Literacy: Reading the News with Care': In the digital age, that skill has become a _____, not a luxury.",
+          "choices": [
+            "liaison",
+            "necessity",
+            "opposition",
+            "delegate"
+          ],
+          "answer": "necessity",
+          "explanation": "The text says: In the digital age, that skill has become a necessity, not a luxury."
+        },
+        {
+          "prompt": "Choose the missing word from 'Breaking News at Kilima Academy': They included three pieces of evidence: a quote from the administrator, a link to the official inspection results, and an _____ of why the video was not trustworthy.",
+          "choices": [
+            "influence",
+            "development",
+            "necessity",
+            "explanation"
+          ],
+          "answer": "explanation",
+          "explanation": "The text says: They included three pieces of evidence: a quote from the administrator, a link to the official inspection results, and an explanation of why the video was not trustworthy."
+        },
+        {
+          "prompt": "What does 'industrious' mean?",
+          "choices": [
+            "Not taking care of something you should, causing problems.",
+            "Hardworking and productive.",
+            "Very large in amount or number.",
+            "To ask someone for advice or information."
+          ],
+          "answer": "Hardworking and productive.",
+          "explanation": "The industrious students organised events and tutored others."
         }
       ]
     },
@@ -494,37 +864,66 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'industrious' mean?",
+          "prompt": "Choose the missing word from 'Media Literacy: Reading the News with Care': In the digital age, that skill has become a _____, not a luxury.",
           "choices": [
-            "Not taking care of something you should, causing problems.",
-            "Hardworking and productive.",
-            "Very large in amount or number.",
-            "To ask someone for advice or information."
+            "liaison",
+            "necessity",
+            "opposition",
+            "delegate"
           ],
-          "answer": "Hardworking and productive.",
-          "explanation": "The industrious students organised events and tutored others."
+          "answer": "necessity",
+          "explanation": "The text says: In the digital age, that skill has become a necessity, not a luxury."
         },
         {
-          "prompt": "What does 'exonerated' mean?",
+          "prompt": "Choose the missing word from 'Breaking News at Kilima Academy': They included three pieces of evidence: a quote from the administrator, a link to the official inspection results, and an _____ of why the video was not trustworthy.",
           "choices": [
-            "Likely to do something or to be affected by something.",
-            "Having the right to do or receive something.",
-            "A change or addition to a law or document.",
-            "To be declared not guilty of a crime or blame."
+            "influence",
+            "development",
+            "necessity",
+            "explanation"
           ],
-          "answer": "To be declared not guilty of a crime or blame.",
-          "explanation": "After the new evidence was found, the boy was exonerated."
+          "answer": "explanation",
+          "explanation": "The text says: They included three pieces of evidence: a quote from the administrator, a link to the official inspection results, and an explanation of why the video was not trustworthy."
         },
         {
-          "prompt": "What does 'hybrid' mean?",
+          "prompt": "Which word means: A collection of related information gathered for study.",
           "choices": [
-            "Something made by combining two different things.",
-            "A part or piece of something larger.",
-            "The process of growing or improving something.",
-            "Something that is very important and must be done or had."
+            "dataset",
+            "qualification",
+            "subordinating"
           ],
-          "answer": "Something made by combining two different things.",
-          "explanation": "A hybrid car uses both electricity and petrol to run."
+          "answer": "dataset",
+          "explanation": "dataset: A collection of related information gathered for study."
+        },
+        {
+          "prompt": "Which word means: According to what people say, although it may not be true.",
+          "choices": [
+            "qualification",
+            "subordinating",
+            "supposedly"
+          ],
+          "answer": "supposedly",
+          "explanation": "supposedly: According to what people say, although it may not be true."
+        },
+        {
+          "prompt": "What type of word is 'unjust'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Unjust is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'chronic'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Chronic is used as an adjective in this dictionary sense."
         }
       ]
     }

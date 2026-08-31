@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t02-u05",
   "title": "Tell Me How Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: To say what is wrong or bad about something.",
           "choices": [
             "criticise",
-            "comprehend",
-            "outline"
+            "apply",
+            "increase"
           ],
           "answer": "criticise",
           "explanation": "criticise: To say what is wrong or bad about something."
         },
         {
-          "prompt": "Which word means: Better than every other one of its kind.",
+          "prompt": "Which word means: To tell someone what you think they should do.",
           "choices": [
             "criticise",
-            "comprehend",
-            "best"
+            "apply",
+            "advise"
           ],
-          "answer": "best",
-          "explanation": "best: Better than every other one of its kind."
+          "answer": "advise",
+          "explanation": "advise: To tell someone what you think they should do."
         },
         {
-          "prompt": "Which word means: A tool with thin pointed prongs used for eating or serving food.",
+          "prompt": "Which word means: Meals or types of food that are prepared and served in a particular way.",
           "choices": [
-            "comprehend",
-            "fork",
+            "apply",
+            "dishes",
             "criticise"
           ],
-          "answer": "fork",
-          "explanation": "fork: A tool with thin pointed prongs used for eating or serving food."
+          "answer": "dishes",
+          "explanation": "dishes: Meals or types of food that are prepared and served in a particular way."
+        },
+        {
+          "prompt": "Which word means: To leave something in water for a while so it becomes softer.",
+          "choices": [
+            "soak",
+            "criticise",
+            "apply"
+          ],
+          "answer": "soak",
+          "explanation": "soak: To leave something in water for a while so it becomes softer."
+        },
+        {
+          "prompt": "Which word means: Strong feelings, such as happiness, sadness or fear, that people experience.",
+          "choices": [
+            "criticise",
+            "apply",
+            "emotions"
+          ],
+          "answer": "emotions",
+          "explanation": "emotions: Strong feelings, such as happiness, sadness or fear, that people experience."
+        },
+        {
+          "prompt": "Which word means: To come together as a group or team.",
+          "choices": [
+            "apply",
+            "unite",
+            "criticise"
+          ],
+          "answer": "unite",
+          "explanation": "unite: To come together as a group or team."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Meals or types of food that are prepared and served in a particular way.",
-          "answer": "dishes"
+          "clue": "To disagree with someone, or to give reasons for a view.",
+          "answer": "argue"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A tool with thin pointed prongs used for eating or serving food.",
-          "answer": "fork"
+          "clue": "Small grains from a plant that are cooked and eaten as food.",
+          "answer": "rice"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Washed clean with water to remove dirt or extra particles.",
+          "answer": "rinsed"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The sound a person makes when speaking, or the opinions they express.",
+          "answer": "voice"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To go into a place where you are not wanted.",
+          "answer": "intrude"
         }
       ]
     },
@@ -100,35 +145,72 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "sentence.",
-            "conditional",
-            "a",
-            "of",
-            "example",
-            "an",
-            "is",
-            "melts\"",
-            "it",
-            "ice,",
-            "heat",
+            "map?",
+            "this",
+            "on",
+            "village",
+            "the",
+            "locate",
             "you",
-            "\"If"
+            "Can"
           ],
-          "answer": "\"If you heat ice, it melts\" is an example of a conditional sentence."
+          "answer": "Can you locate the village on this map?"
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "cook.",
-            "to",
-            "meal",
-            "favourite",
-            "her",
-            "is",
-            "dish",
-            "This"
+            "them.",
+            "chop",
+            "you",
+            "before",
+            "vegetables",
+            "the",
+            "Rinse"
           ],
-          "answer": "This dish is her favourite meal to cook."
+          "answer": "Rinse the vegetables before you chop them."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "oil.",
+            "plain",
+            "than",
+            "flavour",
+            "richer",
+            "a",
+            "rice",
+            "the",
+            "gives",
+            "Ghee"
+          ],
+          "answer": "Ghee gives the rice a richer flavour than plain oil."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "bitter.",
+            "very",
+            "taste",
+            "can",
+            "garlic",
+            "Burnt"
+          ],
+          "answer": "Burnt garlic can taste very bitter."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "emotions.",
+            "own",
+            "our",
+            "understand",
+            "us",
+            "help",
+            "can",
+            "memories",
+            "Our"
+          ],
+          "answer": "Our memories can help us understand our own emotions."
         }
       ]
     },
@@ -141,306 +223,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "According to “How to Make Bariis”, what happens if you lift the lid while the rice simmers?",
+          "prompt": "Which sentence is a correct zero conditional?",
           "choices": [
-            "The rice browns and sticks to the base of the pot",
-            "The spices lose their colour",
-            "The onion begins to burn",
-            "The steam escapes and the rice stays hard"
+            "If you heat ice, it will melt.",
+            "If you heat ice, it melts.",
+            "If you heated ice, it melts.",
+            "If you will heat ice, it melts."
           ],
-          "answer": "The steam escapes and the rice stays hard",
-          "explanation": "Step 7 states the consequence directly, because the trapped steam is what actually cooks the grains."
+          "answer": "If you heat ice, it melts.",
+          "explanation": "The zero conditional puts the present simple in both halves, so no form of will and no past tense belongs there."
         },
         {
-          "prompt": "In “The Memory Wall”, why does Leo feel nervous at the start?",
+          "prompt": "In a zero conditional, which tense do both halves of the sentence use?",
           "choices": [
-            "He worries that he cannot remember anything exciting",
-            "He does not like his new classroom timetable",
-            "He has forgotten his pencil case at home",
-            "He would rather draw pictures than write about himself"
+            "Present simple",
+            "Past simple",
+            "Present perfect",
+            "Future with will"
           ],
-          "answer": "He worries that he cannot remember anything exciting",
-          "explanation": "Leo asks that question aloud in part 1; wanting to draw instead is Nora's reaction, not his."
+          "answer": "Present simple",
+          "explanation": "The result is a permanent fact rather than a prediction, so both clauses stay in the present simple."
         },
         {
-          "prompt": "Nora stands at the fringe of the growing crowd. What does “fringe” mean there?",
+          "prompt": "Which of these sentences is a first conditional rather than a zero conditional?",
           "choices": [
-            "The centre of it",
-            "The noise it made",
-            "The person leading it",
-            "The outer edge of it"
+            "If it rains, the ground gets wet.",
+            "If you heat metal, it expands.",
+            "If we leave now, we will be early.",
+            "If the temperature drops below zero, water freezes."
           ],
-          "answer": "The outer edge of it",
-          "explanation": "Fringe names a border or outer edge, which is why Nora can watch the crowd without being inside it."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In “What Makes Instructions Work”, which five parts does every strong set of instructions share?",
-          "choices": [
-            "They share the title, the opening paragraph, the materials list, the numbered steps and the tips section.",
-            "It soaks in cold water for at least fifteen minutes, which softens the grains so they cook evenly.",
-            "He feels nervous, and the proof is his question, “What if I cannot remember anything exciting?”"
-          ],
-          "answer": "They share the title, the opening paragraph, the materials list, the numbered steps and the tips section.",
-          "explanation": "The second paragraph names each part in turn and gives every one of them its own job."
+          "answer": "If we leave now, we will be early.",
+          "explanation": "Only this sentence predicts one particular future occasion, and the word will in the main clause is the giveaway."
         },
-        {
-          "prompt": "Why does the bariis recipe warn you not to lift the lid while the rice is simmering?",
-          "choices": [
-            "It soaks in cold water for at least fifteen minutes, which softens the grains so they cook evenly.",
-            "It means he paused before pinning his writing up, because he was unsure whether his memory was good enough.",
-            "Lifting the lid lets the steam escape, and the steam is what cooks the rice, so the grains stay hard."
-          ],
-          "answer": "Lifting the lid lets the steam escape, and the steam is what cooks the rice, so the grains stay hard.",
-          "explanation": "Step 7 states the cause and effect as a zero conditional, which is why the warning is a fact rather than a guess."
-        },
-        {
-          "prompt": "Nora tells Leo not to hesitate at the wall. What does “hesitate” mean at that moment in part 2?",
-          "choices": [
-            "She means that working your way through a hard emotion takes real courage, so it deserves a place on the wall.",
-            "It means he paused before pinning his writing up, because he was unsure whether his memory was good enough.",
-            "The drained rice is added to the pot and stirred gently for two minutes until every grain is coated."
-          ],
-          "answer": "It means he paused before pinning his writing up, because he was unsure whether his memory was good enough.",
-          "explanation": "The narrator says a few pupils paused or hesitated, so the surrounding sentence supplies the meaning."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: The Instruction Game (Pairs)",
-          "target": "It is easier to criticise a plan than to improve it."
-        },
-        {
-          "prompt": "Speaking 3: Interview About Daily Routines (Pairs)",
-          "target": "\"If you heat ice, it melts\" is an example of a conditional sentence."
-        },
-        {
-          "prompt": "Speaking 5: Read the Recipe Aloud",
-          "target": "This dish is her favourite meal to cook."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "clearly.",
-            "ideas",
-            "their",
-            "communicate",
-            "writers",
-            "Good"
-          ],
-          "answer": "Good writers communicate their ideas clearly."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "ready.",
-            "everything",
-            "putting",
-            "means",
-            "which",
-            "place,",
-            "en",
-            "mise",
-            "preparation",
-            "this",
-            "call",
-            "Cooks"
-          ],
-          "answer": "Cooks call this preparation mise en place, which means putting everything ready."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "plate.",
-            "big",
-            "one",
-            "on",
-            "neatly",
-            "arranged",
-            "was",
-            "rice",
-            "The"
-          ],
-          "answer": "The rice was arranged neatly on one big plate."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'basmati' mean in this unit?",
-          "choices": [
-            "Describing a type of long-grain rice known for its fragrant smell.",
-            "To say what is wrong or bad about something.",
-            "To understand something fully."
-          ],
-          "answer": "Describing a type of long-grain rice known for its fragrant smell.",
-          "explanation": "basmati: Describing a type of long-grain rice known for its fragrant smell."
-        },
-        {
-          "prompt": "What does 'emotions' mean in this unit?",
-          "choices": [
-            "To say what is wrong or bad about something.",
-            "To understand something fully.",
-            "Strong feelings, such as happiness, sadness or fear, that people experience."
-          ],
-          "answer": "Strong feelings, such as happiness, sadness or fear, that people experience.",
-          "explanation": "emotions: Strong feelings, such as happiness, sadness or fear, that people experience."
-        },
-        {
-          "prompt": "What does 'comprehend' mean in this unit?",
-          "choices": [
-            "To describe the main points without the detail.",
-            "To understand something fully.",
-            "To say what is wrong or bad about something."
-          ],
-          "answer": "To understand something fully.",
-          "explanation": "comprehend: To understand something fully."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'dish'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Dish is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'indicate'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Indicate is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'tips'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Tips is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "interrupt",
-              "To stop somebody in the middle of what they are doing."
-            ],
-            [
-              "emphasise",
-              "To make something seem important by saying it clearly or strongly."
-            ],
-            [
-              "texts",
-              "Pieces of writing, especially ones studied or read for a particular purpose."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "dishes",
-              "Meals or types of food that are prepared and served in a particular way."
-            ],
-            [
-              "garlic",
-              "A strong-smelling bulb used to add flavour to cooking."
-            ],
-            [
-              "fifteen",
-              "The number after fourteen and before sixteen."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "clove",
-              "A small dried flower bud used as a strong-smelling spice in cooking."
-            ],
-            [
-              "shine",
-              "To give out a bright light, or to show great skill or ability."
-            ],
-            [
-              "convince",
-              "To make someone believe that something is true."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Where does the comma go in a conditional sentence?",
           "choices": [
@@ -477,13 +291,530 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "In “What Makes Instructions Work”, which five parts does every strong set of instructions share?",
+          "choices": [
+            "They share the title, the opening paragraph, the materials list, the numbered steps and the tips section.",
+            "It soaks in cold water for at least fifteen minutes, which softens the grains so they cook evenly.",
+            "He feels nervous, and the proof is his question, “What if I cannot remember anything exciting?”"
+          ],
+          "answer": "They share the title, the opening paragraph, the materials list, the numbered steps and the tips section.",
+          "explanation": "The second paragraph names each part in turn and gives every one of them its own job."
+        },
+        {
+          "prompt": "How long should the rinsed rice soak before it is cooked, and why?",
+          "choices": [
+            "The drained rice is added to the pot and stirred gently for two minutes until every grain is coated.",
+            "It means he paused before pinning his writing up, because he was unsure whether his memory was good enough.",
+            "It soaks in cold water for at least fifteen minutes, which softens the grains so they cook evenly."
+          ],
+          "answer": "It soaks in cold water for at least fifteen minutes, which softens the grains so they cook evenly.",
+          "explanation": "Step 2 gives both the time and the reason, so a complete answer needs the fifteen minutes and the softening."
+        },
+        {
+          "prompt": "Why does the bariis recipe warn you not to lift the lid while the rice is simmering?",
+          "choices": [
+            "She means that working your way through a hard emotion takes real courage, so it deserves a place on the wall.",
+            "Lifting the lid lets the steam escape, and the steam is what cooks the rice, so the grains stay hard.",
+            "The drained rice is added to the pot and stirred gently for two minutes until every grain is coated."
+          ],
+          "answer": "Lifting the lid lets the steam escape, and the steam is what cooks the rice, so the grains stay hard.",
+          "explanation": "Step 7 states the cause and effect as a zero conditional, which is why the warning is a fact rather than a guess."
+        },
+        {
+          "prompt": "What six words had been written above the strip of brown paper on the Memory Wall?",
+          "choices": [
+            "The words were “If you remember it, write it.”",
+            "Lifting the lid lets the steam escape, and the steam is what cooks the rice, so the grains stay hard.",
+            "Nobody threw it away; the class turned it into a book to share with next year's pupils."
+          ],
+          "answer": "The words were “If you remember it, write it.”",
+          "explanation": "The opening paragraph of part 1 quotes the invitation that started the whole project."
+        },
+        {
+          "prompt": "Nora tells Leo not to hesitate at the wall. What does “hesitate” mean at that moment in part 2?",
+          "choices": [
+            "Rinsing washes the extra starch away, so the grains cook separately instead of sticking into one lump.",
+            "The feeling was pride, caused by the visiting author praising his memory in front of the whole class.",
+            "It means he paused before pinning his writing up, because he was unsure whether his memory was good enough."
+          ],
+          "answer": "It means he paused before pinning his writing up, because he was unsure whether his memory was good enough.",
+          "explanation": "The narrator says a few pupils paused or hesitated, so the surrounding sentence supplies the meaning."
+        },
+        {
+          "prompt": "What happened to the Memory Wall in the week after it came down?",
+          "choices": [
+            "They share the title, the opening paragraph, the materials list, the numbered steps and the tips section.",
+            "Nobody threw it away; the class turned it into a book to share with next year's pupils.",
+            "The words were “If you remember it, write it.”"
+          ],
+          "answer": "Nobody threw it away; the class turned it into a book to share with next year's pupils.",
+          "explanation": "Part 3 ends with the wall becoming a book, which is why Teacher Yasmin says the class built something real."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: The Instruction Game (Pairs)",
+          "target": "It is easier to criticise a plan than to improve it."
+        },
+        {
+          "prompt": "Speaking 2: Explain a Process (Individual Presentation)",
+          "target": "Can you locate the village on this map?"
+        },
+        {
+          "prompt": "Speaking 3: Interview About Daily Routines (Pairs)",
+          "target": "Rinse the vegetables before you chop them."
+        },
+        {
+          "prompt": "Speaking 4: Group Instruction Challenge (Small Groups)",
+          "target": "Ghee gives the rice a richer flavour than plain oil."
+        },
+        {
+          "prompt": "Speaking 5: Read the Recipe Aloud",
+          "target": "Burnt garlic can taste very bitter."
+        },
+        {
+          "prompt": "Speaking 6: Talk About a Memory",
+          "target": "Our memories can help us understand our own emotions."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "cocoon.",
+            "its",
+            "from",
+            "emerge",
+            "will",
+            "butterfly",
+            "A"
+          ],
+          "answer": "A butterfly will emerge from its cocoon."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "question.",
+            "your",
+            "formulate",
+            "to",
+            "moment",
+            "a",
+            "Take"
+          ],
+          "answer": "Take a moment to formulate your question."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "cooks.",
+            "rice",
+            "the",
+            "while",
+            "inside",
+            "steam",
+            "the",
+            "keeps",
+            "lid",
+            "tight",
+            "The"
+          ],
+          "answer": "The tight lid keeps the steam inside while the rice cooks."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "pot.",
+            "the",
+            "inside",
+            "trapped",
+            "steam",
+            "the",
+            "all",
+            "kept",
+            "lid",
+            "tight",
+            "The"
+          ],
+          "answer": "The tight lid kept all the steam trapped inside the pot."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "boils.",
+            "water",
+            "the",
+            "once",
+            "go",
+            "will",
+            "it",
+            "as",
+            "far",
+            "as",
+            "heat",
+            "the",
+            "Lower"
+          ],
+          "answer": "Lower the heat as far as it will go once the water boils."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hard.",
+            "is",
+            "it",
+            "when",
+            "even",
+            "answer,",
+            "honest",
+            "an",
+            "gives",
+            "always",
+            "Amal"
+          ],
+          "answer": "Amal always gives an honest answer, even when it is hard."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'apply' mean in this unit?",
+          "choices": [
+            "To use a rule or an idea in a real situation.",
+            "To say what is wrong or bad about something.",
+            "To grow bigger in size or number."
+          ],
+          "answer": "To use a rule or an idea in a real situation.",
+          "explanation": "apply: To use a rule or an idea in a real situation."
+        },
+        {
+          "prompt": "What does 'influence' mean in this unit?",
+          "choices": [
+            "To say what is wrong or bad about something.",
+            "To use a rule or an idea in a real situation.",
+            "The power to change how someone thinks or acts."
+          ],
+          "answer": "The power to change how someone thinks or acts.",
+          "explanation": "influence: The power to change how someone thinks or acts."
+        },
+        {
+          "prompt": "What does 'below' mean in this unit?",
+          "choices": [
+            "To use a rule or an idea in a real situation.",
+            "In a lower position than something else, further down.",
+            "To say what is wrong or bad about something."
+          ],
+          "answer": "In a lower position than something else, further down.",
+          "explanation": "below: In a lower position than something else, further down."
+        },
+        {
+          "prompt": "What does 'drain' mean in this unit?",
+          "choices": [
+            "To let a liquid flow away from something, leaving it dry.",
+            "To say what is wrong or bad about something.",
+            "To use a rule or an idea in a real situation."
+          ],
+          "answer": "To let a liquid flow away from something, leaving it dry.",
+          "explanation": "drain: To let a liquid flow away from something, leaving it dry."
+        },
+        {
+          "prompt": "What does 'adding' mean in this unit?",
+          "choices": [
+            "To say what is wrong or bad about something.",
+            "To use a rule or an idea in a real situation.",
+            "Putting something extra together with what is already there."
+          ],
+          "answer": "Putting something extra together with what is already there.",
+          "explanation": "adding: Putting something extra together with what is already there."
+        },
+        {
+          "prompt": "What does 'allocate' mean in this unit?",
+          "choices": [
+            "To use a rule or an idea in a real situation.",
+            "To give something out for a particular purpose.",
+            "To say what is wrong or bad about something."
+          ],
+          "answer": "To give something out for a particular purpose.",
+          "explanation": "allocate: To give something out for a particular purpose."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'increase'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Increase is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'numbered'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Numbered is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'chopped'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Chopped is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'lower'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Lower is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'author'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Author is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'derive'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Derive is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "interrupt",
+              "To stop somebody in the middle of what they are doing."
+            ],
+            [
+              "encourage",
+              "To support someone or give them confidence."
+            ],
+            [
+              "expand",
+              "To grow larger, or to make something larger."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "complain",
+              "To say that you are unhappy about something."
+            ],
+            [
+              "leaflet",
+              "A printed sheet of paper that gives information or instructions about something."
+            ],
+            [
+              "zero",
+              "The number nought, used here as part of a grammar term for facts that are always true."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "rice",
+              "Small grains from a plant that are cooked and eaten as food."
+            ],
+            [
+              "tablespoons",
+              "Units used to measure a certain amount of a liquid or food, using a large spoon."
+            ],
+            [
+              "tight",
+              "Fitted closely, with no gaps or loose space."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "least",
+              "The smallest amount needed, often used in the phrase at least."
+            ],
+            [
+              "base",
+              "The bottom part of something, on which the rest of it rests."
+            ],
+            [
+              "traditionally",
+              "In a way that follows customs and habits passed down over many years."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "nervous",
+              "Feeling worried or a little afraid about something that is about to happen."
+            ],
+            [
+              "emerged",
+              "Came out or became known after being hidden or unclear."
+            ],
+            [
+              "convince",
+              "To make someone believe that something is true."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "intrude",
+              "To go into a place where you are not wanted."
+            ],
+            [
+              "compile",
+              "To collect information together into one place."
+            ],
+            [
+              "implement",
+              "To put a plan or decision into action."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which of these signals the order of the steps in a procedure?",
+          "choices": [
+            "measure carefully",
+            "after that",
+            "golden brown",
+            "sieve"
+          ],
+          "answer": "after that",
+          "explanation": "After that is a time connective, whereas the others name an action, a colour and a piece of equipment."
+        },
+        {
+          "prompt": "According to “How to Make Bariis”, what happens if you lift the lid while the rice simmers?",
+          "choices": [
+            "The rice browns and sticks to the base of the pot",
+            "The spices lose their colour",
+            "The onion begins to burn",
+            "The steam escapes and the rice stays hard"
+          ],
+          "answer": "The steam escapes and the rice stays hard",
+          "explanation": "Step 7 states the consequence directly, because the trapped steam is what actually cooks the grains."
+        },
+        {
+          "prompt": "In “The Memory Wall”, why does Leo feel nervous at the start?",
+          "choices": [
+            "He worries that he cannot remember anything exciting",
+            "He does not like his new classroom timetable",
+            "He has forgotten his pencil case at home",
+            "He would rather draw pictures than write about himself"
+          ],
+          "answer": "He worries that he cannot remember anything exciting",
+          "explanation": "Leo asks that question aloud in part 1; wanting to draw instead is Nora's reaction, not his."
+        },
+        {
+          "prompt": "Nora stands at the fringe of the growing crowd. What does “fringe” mean there?",
+          "choices": [
+            "The centre of it",
+            "The noise it made",
+            "The person leading it",
+            "The outer edge of it"
+          ],
+          "answer": "The outer edge of it",
+          "explanation": "Fringe names a border or outer edge, which is why Nora can watch the crowd without being inside it."
+        },
+        {
+          "prompt": "Choose the missing word: “Do not ______ that you already know the answer without checking.”",
+          "choices": [
+            "combine",
+            "assume",
+            "migrate",
+            "inhale"
+          ],
+          "answer": "assume",
+          "explanation": "To assume is to treat something as true without proof, which is exactly what checking prevents."
+        },
         {
           "prompt": "Which sentence is a correct zero conditional?",
           "choices": [
@@ -494,28 +825,78 @@
           ],
           "answer": "If you heat ice, it melts.",
           "explanation": "The zero conditional puts the present simple in both halves, so no form of will and no past tense belongs there."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Nora stands at the fringe of the growing crowd. What does “fringe” mean there?",
+          "choices": [
+            "The centre of it",
+            "The noise it made",
+            "The person leading it",
+            "The outer edge of it"
+          ],
+          "answer": "The outer edge of it",
+          "explanation": "Fringe names a border or outer edge, which is why Nora can watch the crowd without being inside it."
         },
         {
-          "prompt": "In a zero conditional, which tense do both halves of the sentence use?",
+          "prompt": "Choose the missing word: “Do not ______ that you already know the answer without checking.”",
           "choices": [
-            "Present simple",
-            "Past simple",
-            "Present perfect",
-            "Future with will"
+            "combine",
+            "assume",
+            "migrate",
+            "inhale"
           ],
-          "answer": "Present simple",
-          "explanation": "The result is a permanent fact rather than a prediction, so both clauses stay in the present simple."
+          "answer": "assume",
+          "explanation": "To assume is to treat something as true without proof, which is exactly what checking prevents."
         },
         {
-          "prompt": "Which of these sentences is a first conditional rather than a zero conditional?",
+          "prompt": "Which word means: To give one thing and receive another in return.",
           "choices": [
-            "If it rains, the ground gets wet.",
-            "If you heat metal, it expands.",
-            "If we leave now, we will be early.",
-            "If the temperature drops below zero, water freezes."
+            "exchange",
+            "criticise",
+            "apply"
           ],
-          "answer": "If we leave now, we will be early.",
-          "explanation": "Only this sentence predicts one particular future occasion, and the word will in the main clause is the giveaway."
+          "answer": "exchange",
+          "explanation": "exchange: To give one thing and receive another in return."
+        },
+        {
+          "prompt": "Which word means: In a lower position than something else, further down.",
+          "choices": [
+            "criticise",
+            "apply",
+            "below"
+          ],
+          "answer": "below",
+          "explanation": "below: In a lower position than something else, further down."
+        },
+        {
+          "prompt": "What type of word is 'plate'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Plate is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'allocate'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Allocate is used as a verb in this dictionary sense."
         }
       ]
     }

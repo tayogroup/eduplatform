@@ -5,7 +5,7 @@
   "unitId": "eng-g02-t03-u08",
   "title": "Home, Sweet Home Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The word that people call you when they talk to you.",
           "choices": [
             "name",
-            "garden",
-            "towel"
+            "theme",
+            "floor"
           ],
           "answer": "name",
           "explanation": "name: The word that people call you when they talk to you."
         },
         {
-          "prompt": "Which word means: Lonely means feeling sad because you are alone.",
+          "prompt": "Which word means: Whose asks which person something belongs to.",
           "choices": [
             "name",
-            "garden",
-            "lonely"
+            "theme",
+            "whose"
           ],
-          "answer": "lonely",
-          "explanation": "lonely: Lonely means feeling sad because you are alone."
+          "answer": "whose",
+          "explanation": "whose: Whose asks which person something belongs to."
         },
         {
-          "prompt": "Which word means: A piece of furniture with doors and shelves, used to store things.",
+          "prompt": "Which word means: A river is a large, natural stream of water that flows to the sea.",
           "choices": [
-            "garden",
-            "cupboard",
+            "theme",
+            "river",
             "name"
           ],
-          "answer": "cupboard",
-          "explanation": "cupboard: A piece of furniture with doors and shelves, used to store things."
+          "answer": "river",
+          "explanation": "river: A river is a large, natural stream of water that flows to the sea."
+        },
+        {
+          "prompt": "Which word means: Foods made with pastry, often filled with fruit or vegetables, then baked.",
+          "choices": [
+            "pies",
+            "name",
+            "theme"
+          ],
+          "answer": "pies",
+          "explanation": "pies: Foods made with pastry, often filled with fruit or vegetables, then baked."
+        },
+        {
+          "prompt": "Which word means: A small house built up in the branches of a tree.",
+          "choices": [
+            "name",
+            "theme",
+            "tree house"
+          ],
+          "answer": "tree house",
+          "explanation": "tree house: A small house built up in the branches of a tree."
+        },
+        {
+          "prompt": "Which word means: A house built high on wooden poles above water or wet ground.",
+          "choices": [
+            "theme",
+            "stilt house",
+            "name"
+          ],
+          "answer": "stilt house",
+          "explanation": "stilt house: A house built high on wooden poles above water or wet ground."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To pack means to put things neatly into a bag or a box.",
-          "answer": "pack"
+          "clue": "Own means belonging to you and to nobody else.",
+          "answer": "own"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Loved very much, or used to speak kindly to someone.",
-          "answer": "dear"
+          "clue": "The colourful part of a plant that makes new seeds.",
+          "answer": "flower"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To want something very much, even if it might not happen.",
+          "answer": "wish"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A soft, smooth substance, like the material bees use to build a honeycomb.",
+          "answer": "wax"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A wall is the side of a room or a building.",
+          "answer": "wall"
         }
       ]
     },
@@ -99,36 +144,65 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "classroom.",
+            "it.",
+            "found",
+            "nobody",
+            "that",
+            "far",
+            "so",
+            "ball",
             "the",
-            "into",
-            "walked",
-            "uniform",
-            "blue",
-            "a",
-            "in",
-            "woman",
-            "tall",
-            "a",
-            "lunch,",
-            "before",
-            "Just"
+            "threw",
+            "elephant",
+            "The"
           ],
-          "answer": "Just before lunch, a tall woman in a blue uniform walked into the classroom."
+          "answer": "The elephant threw the ball so far that nobody found it."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "bed.",
-            "the",
-            "on",
-            "pillow",
-            "clean",
-            "a",
-            "put",
+            "hungry.",
+            "very",
+            "was",
             "She"
           ],
-          "answer": "She put a clean pillow on the bed."
+          "answer": "She was very hungry."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "garden.",
+            "the",
+            "across",
+            "hopped",
+            "rabbit",
+            "The"
+          ],
+          "answer": "The rabbit hopped across the garden."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "welcoming.",
+            "and",
+            "bright",
+            "felt",
+            "house",
+            "The"
+          ],
+          "answer": "The house felt bright and welcoming."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "themselves.",
+            "game",
+            "the",
+            "made",
+            "children",
+            "The"
+          ],
+          "answer": "The children made the game themselves."
         }
       ]
     },
@@ -141,303 +215,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "In which room do people cook the family meal?",
+          "prompt": "Which word means a home where bees live and make honey?",
           "choices": [
-            "The bedroom",
-            "The bathroom",
-            "The kitchen",
-            "The living room"
+            "hive",
+            "broom",
+            "ladder",
+            "wardrobe"
           ],
-          "answer": "The kitchen",
-          "explanation": "The kitchen is the room where food is cooked. People sleep in the bedroom, wash in the bathroom and rest in the living room."
+          "answer": "hive",
+          "explanation": "Bees build a hive and store their honey inside it. A broom, a ladder and a wardrobe are things at home, not animal homes."
         },
         {
-          "prompt": "In “Helping Hands at Home”, what surprise had Father built in the garden?",
+          "prompt": "In “Different Kinds of Homes”, what are adobe houses built from?",
           "choices": [
-            "A tree house",
-            "A stone wall",
-            "A flower bed",
-            "A new kitchen"
+            "Glass and steel",
+            "Mud and dry grass",
+            "Wood and rope",
+            "Brick and paint"
           ],
-          "answer": "A tree house",
-          "explanation": "Father built a tree house under the big tree, with walls, a small roof and a tiny window."
+          "answer": "Mud and dry grass",
+          "explanation": "The text says people build adobe houses from mud and dry grass, and that the thick walls keep them cool."
         },
         {
-          "prompt": "What does the word rug mean?",
+          "prompt": "Which of these things would you find in a bathroom?",
           "choices": [
-            "A soft mat that covers part of the floor.",
-            "A basin where you wash with water.",
-            "A long, soft seat for two or three people.",
-            "An opening in a wall with glass that lets light in."
+            "sofa",
+            "nest",
+            "sink",
+            "ladder"
           ],
-          "answer": "A soft mat that covers part of the floor.",
-          "explanation": "A rug lies on the floor. The other three options describe a sink, a sofa and a window."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Which three animal homes does the poem name, and which animal lives in each one?",
-          "choices": [
-            "A nest is for a bird, a hive is for a bee, and a hole is for a rabbit.",
-            "A set of rooms that is part of a big building.",
-            "Grandma Hana is coming, and she will stay for one whole week."
-          ],
-          "answer": "A nest is for a bird, a hive is for a bee, and a hole is for a rabbit.",
-          "explanation": "Lines one, two and three each name one animal and its home, so read them in order to collect all three pairs."
+          "answer": "sink",
+          "explanation": "A bathroom has a sink and a toilet for washing. A sofa belongs in the living room, a nest is a bird's home, and a ladder is not a bathroom thing."
         },
-        {
-          "prompt": "In hot, wet places, why do people build their houses high on stilts?",
-          "choices": [
-            "A set of rooms that is part of a big building.",
-            "Amal made her bed and put her clean clothes in the wardrobe. Idris picked up his toys from under the bed and put them in the toy box.",
-            "So that the air can blow underneath the house."
-          ],
-          "answer": "So that the air can blow underneath the house.",
-          "explanation": "The text gives the reason straight after the fact, using the word so, which signals why something is done."
-        },
-        {
-          "prompt": "In the bedroom, what job did Amal do and what job did Idris do?",
-          "choices": [
-            "A tree house, with walls, a small roof and a tiny window.",
-            "Amal made her bed and put her clean clothes in the wardrobe. Idris picked up his toys from under the bed and put them in the toy box.",
-            "They are built from mud and dry grass, and the thick mud walls keep the rooms cool."
-          ],
-          "answer": "Amal made her bed and put her clean clothes in the wardrobe. Idris picked up his toys from under the bed and put them in the toy box.",
-          "explanation": "Both jobs are in the paragraph that begins “First, they went to the bedroom.”, one after the other."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Describe a Kind of Home",
-          "target": "This is a ______."
-        },
-        {
-          "prompt": "Speaking Game — My Home Tour",
-          "target": "This is my ______."
-        },
-        {
-          "prompt": "Speaking 5 — Where Does It Belong?",
-          "target": "It is under the bed."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "hole.",
-            "its",
-            "into",
-            "ran",
-            "rabbit",
-            "The"
-          ],
-          "answer": "The rabbit ran into its hole."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "weekend.",
-            "all",
-            "garden",
-            "the",
-            "in",
-            "father",
-            "his",
-            "helped",
-            "Idris"
-          ],
-          "answer": "Idris helped his father in the garden all weekend."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "floor.",
-            "fifth",
-            "the",
-            "on",
-            "flat",
-            "a",
-            "in",
-            "lives",
-            "Leo"
-          ],
-          "answer": "Leo lives in a flat on the fifth floor."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'rabbit' mean in this unit?",
-          "choices": [
-            "A small furry animal with long ears that lives in a hole in the ground.",
-            "The word that people call you when they talk to you.",
-            "A garden is a piece of ground where people grow plants, flowers or vegetables."
-          ],
-          "answer": "A small furry animal with long ears that lives in a hole in the ground.",
-          "explanation": "rabbit: A small furry animal with long ears that lives in a hole in the ground."
-        },
-        {
-          "prompt": "What does 'flat' mean in this unit?",
-          "choices": [
-            "The word that people call you when they talk to you.",
-            "A garden is a piece of ground where people grow plants, flowers or vegetables.",
-            "A set of rooms to live in inside a bigger building."
-          ],
-          "answer": "A set of rooms to live in inside a bigger building.",
-          "explanation": "flat: A set of rooms to live in inside a bigger building."
-        },
-        {
-          "prompt": "What does 'garden' mean in this unit?",
-          "choices": [
-            "A towel is cloth you use to dry yourself.",
-            "A garden is a piece of ground where people grow plants, flowers or vegetables.",
-            "The word that people call you when they talk to you."
-          ],
-          "answer": "A garden is a piece of ground where people grow plants, flowers or vegetables.",
-          "explanation": "garden: A garden is a piece of ground where people grow plants, flowers or vegetables."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'welcoming'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Welcoming is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'tidy my room'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Tidy my room is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'basket'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Basket is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "late",
-              "Late means after the time you should have come."
-            ],
-            [
-              "stairs",
-              "Stairs are steps that take you up or down inside a building."
-            ],
-            [
-              "bowl",
-              "A bowl is a round, deep dish for holding food."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "off",
-              "Off means away from, or not switched on."
-            ],
-            [
-              "floods",
-              "To cover a place with water, usually after very heavy rain."
-            ],
-            [
-              "pies",
-              "Foods made with pastry, often filled with fruit or vegetables, then baked."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "drips",
-              "To let small drops of liquid fall, one at a time."
-            ],
-            [
-              "hive",
-              "A home where bees live together and make their honey."
-            ],
-            [
-              "make my bed",
-              "To pull the sheets flat and tidy the cover on your bed."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "The lamp is ____ the two books.",
           "choices": [
@@ -474,13 +283,516 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Which three animal homes does the poem name, and which animal lives in each one?",
+          "choices": [
+            "A nest is for a bird, a hive is for a bee, and a hole is for a rabbit.",
+            "A set of rooms that is part of a big building.",
+            "Grandma Hana is coming, and she will stay for one whole week."
+          ],
+          "answer": "A nest is for a bird, a hive is for a bee, and a hole is for a rabbit.",
+          "explanation": "Lines one, two and three each name one animal and its home, so read them in order to collect all three pairs."
+        },
+        {
+          "prompt": "The text says many people in cities live in flats. What exactly is a flat?",
+          "choices": [
+            "They are built from mud and dry grass, and the thick mud walls keep the rooms cool.",
+            "Amal made her bed and put her clean clothes in the wardrobe. Idris picked up his toys from under the bed and put them in the toy box.",
+            "A set of rooms that is part of a big building."
+          ],
+          "answer": "A set of rooms that is part of a big building.",
+          "explanation": "The text gives the meaning of the word flat right after it uses it."
+        },
+        {
+          "prompt": "In hot, wet places, why do people build their houses high on stilts?",
+          "choices": [
+            "A tree house, with walls, a small roof and a tiny window.",
+            "So that the air can blow underneath the house.",
+            "They are built from mud and dry grass, and the thick mud walls keep the rooms cool."
+          ],
+          "answer": "So that the air can blow underneath the house.",
+          "explanation": "The text gives the reason straight after the fact, using the word so, which signals why something is done."
+        },
+        {
+          "prompt": "Theo says his tree house is like a small house in a tree. Which three parts make it like a house?",
+          "choices": [
+            "It has walls, a roof and a small window.",
+            "So that the air can blow underneath the house.",
+            "A place where a family helps each other, not just walls and a roof."
+          ],
+          "answer": "It has walls, a roof and a small window.",
+          "explanation": "Theo lists the three parts together, and they are the same parts that any house has."
+        },
+        {
+          "prompt": "In the bedroom, what job did Amal do and what job did Idris do?",
+          "choices": [
+            "Theo's father built it, and it is in their garden.",
+            "Any two real jobs named in full sentences, such as “At home, I set the table.” and “At home, I sweep the floor.”",
+            "Amal made her bed and put her clean clothes in the wardrobe. Idris picked up his toys from under the bed and put them in the toy box."
+          ],
+          "answer": "Amal made her bed and put her clean clothes in the wardrobe. Idris picked up his toys from under the bed and put them in the toy box.",
+          "explanation": "Both jobs are in the paragraph that begins “First, they went to the bedroom.”, one after the other."
+        },
+        {
+          "prompt": "What did Grandma Hana say a home really is?",
+          "choices": [
+            "She felt very glad. Any reason grounded in the story, such as the house looked lovely, Grandma was happy, or the family worked as a team.",
+            "A place where a family helps each other, not just walls and a roof.",
+            "He climbs a ladder."
+          ],
+          "answer": "A place where a family helps each other, not just walls and a roof.",
+          "explanation": "Grandma Hana says this after she hugs the children, and it is the lesson of the whole story."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Describe a Kind of Home",
+          "target": "This is a ______."
+        },
+        {
+          "prompt": "Speaking 2 — Describe a Room",
+          "target": "This is the ______."
+        },
+        {
+          "prompt": "Speaking Game — My Home Tour",
+          "target": "This is my ______."
+        },
+        {
+          "prompt": "Speaking 4 — Homes Around the World",
+          "target": "The rabbit hopped across the garden."
+        },
+        {
+          "prompt": "Speaking 5 — Where Does It Belong?",
+          "target": "It is under the bed."
+        },
+        {
+          "prompt": "Speaking 6 — My Helping Hands Plan",
+          "target": "On Monday I will set the table."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "sink.",
+            "the",
+            "in",
+            "dishes",
+            "dirty",
+            "the",
+            "put",
+            "I"
+          ],
+          "answer": "I put the dirty dishes in the sink."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "flat.",
+            "the",
+            "to",
+            "up",
+            "stairs",
+            "twelve",
+            "are",
+            "There"
+          ],
+          "answer": "There are twelve stairs up to the flat."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "fence.",
+            "old",
+            "the",
+            "near",
+            "rabbit",
+            "a",
+            "saw",
+            "Amal"
+          ],
+          "answer": "Amal saw a rabbit near the old fence."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "tomorrow.",
+            "for",
+            "pies",
+            "vegetable",
+            "cooking",
+            "was",
+            "Mother"
+          ],
+          "answer": "Mother was cooking vegetable pies for tomorrow."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "long.",
+            "day",
+            "all",
+            "humming",
+            "was",
+            "hive",
+            "The"
+          ],
+          "answer": "The hive was humming all day long."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "sofa.",
+            "the",
+            "under",
+            "toys",
+            "lost",
+            "his",
+            "found",
+            "Idris"
+          ],
+          "answer": "Idris found his lost toys under the sofa."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'theme' mean in this unit?",
+          "choices": [
+            "The theme is the main idea in a story or a poem.",
+            "The word that people call you when they talk to you.",
+            "The floor is the flat part of a room that you walk on."
+          ],
+          "answer": "The theme is the main idea in a story or a poem.",
+          "explanation": "theme: The theme is the main idea in a story or a poem."
+        },
+        {
+          "prompt": "What does 'grass' mean in this unit?",
+          "choices": [
+            "The word that people call you when they talk to you.",
+            "The theme is the main idea in a story or a poem.",
+            "Grass is the green plant that covers the ground."
+          ],
+          "answer": "Grass is the green plant that covers the ground.",
+          "explanation": "grass: Grass is the green plant that covers the ground."
+        },
+        {
+          "prompt": "What does 'rabbit' mean in this unit?",
+          "choices": [
+            "The theme is the main idea in a story or a poem.",
+            "A small furry animal with long ears that lives in a hole in the ground.",
+            "The word that people call you when they talk to you."
+          ],
+          "answer": "A small furry animal with long ears that lives in a hole in the ground.",
+          "explanation": "rabbit: A small furry animal with long ears that lives in a hole in the ground."
+        },
+        {
+          "prompt": "What does 'soap' mean in this unit?",
+          "choices": [
+            "Something you use with water to wash your hands and body clean.",
+            "The word that people call you when they talk to you.",
+            "The theme is the main idea in a story or a poem."
+          ],
+          "answer": "Something you use with water to wash your hands and body clean.",
+          "explanation": "soap: Something you use with water to wash your hands and body clean."
+        },
+        {
+          "prompt": "What does 'dining room' mean in this unit?",
+          "choices": [
+            "The word that people call you when they talk to you.",
+            "The theme is the main idea in a story or a poem.",
+            "A room where people sit at a table to eat meals."
+          ],
+          "answer": "A room where people sit at a table to eat meals.",
+          "explanation": "dining room: A room where people sit at a table to eat meals."
+        },
+        {
+          "prompt": "What does 'stairs' mean in this unit?",
+          "choices": [
+            "The theme is the main idea in a story or a poem.",
+            "Stairs are steps that take you up or down inside a building.",
+            "The word that people call you when they talk to you."
+          ],
+          "answer": "Stairs are steps that take you up or down inside a building.",
+          "explanation": "stairs: Stairs are steps that take you up or down inside a building."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'floor'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Floor is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'spoon'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Spoon is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'floods'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Floods is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'bath'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Bath is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sink'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Sink is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'bottle'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Bottle is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "late",
+              "Late means after the time you should have come."
+            ],
+            [
+              "garden",
+              "A garden is a piece of ground where people grow plants, flowers or vegetables."
+            ],
+            [
+              "ball",
+              "A ball is a round object that you can throw, kick or bounce."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "nor",
+              "Nor is used after neither to join a second thing."
+            ],
+            [
+              "plate",
+              "A plate is a flat dish you eat your food from."
+            ],
+            [
+              "rain",
+              "Water that falls from the clouds in drops."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "farm",
+              "A place where a farmer grows crops or keeps animals."
+            ],
+            [
+              "blow",
+              "To push air out of your mouth, or to move because the wind is pushing it."
+            ],
+            [
+              "wish",
+              "To want something very much, even if it might not happen."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "dear",
+              "Loved very much, or used to speak kindly to someone."
+            ],
+            [
+              "cooker",
+              "A machine in the kitchen used for cooking food."
+            ],
+            [
+              "themselves",
+              "Used to say that people did something on their own, without help."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "hive",
+              "A home where bees live together and make their honey."
+            ],
+            [
+              "sofa",
+              "A long, soft seat made for two or three people."
+            ],
+            [
+              "sweep the floor",
+              "To clean the floor by brushing the dust away with a broom."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "skyscraper",
+              "A very tall building in a city, with many floors."
+            ],
+            [
+              "towel",
+              "A towel is cloth you use to dry yourself."
+            ],
+            [
+              "pack",
+              "To pack means to put things neatly into a bag or a box."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence talks about the future in the right way?",
+          "choices": [
+            "I will to sweep the floor.",
+            "I will sweeping the floor.",
+            "I will sweep the floor.",
+            "I sweep will the floor."
+          ],
+          "answer": "I will sweep the floor.",
+          "explanation": "After will we use the plain verb, with no to and no -ing, and will always comes before the verb."
+        },
+        {
+          "prompt": "In which room do people cook the family meal?",
+          "choices": [
+            "The bedroom",
+            "The bathroom",
+            "The kitchen",
+            "The living room"
+          ],
+          "answer": "The kitchen",
+          "explanation": "The kitchen is the room where food is cooked. People sleep in the bedroom, wash in the bathroom and rest in the living room."
+        },
+        {
+          "prompt": "In “Helping Hands at Home”, what surprise had Father built in the garden?",
+          "choices": [
+            "A tree house",
+            "A stone wall",
+            "A flower bed",
+            "A new kitchen"
+          ],
+          "answer": "A tree house",
+          "explanation": "Father built a tree house under the big tree, with walls, a small roof and a tiny window."
+        },
+        {
+          "prompt": "What does the word rug mean?",
+          "choices": [
+            "A soft mat that covers part of the floor.",
+            "A basin where you wash with water.",
+            "A long, soft seat for two or three people.",
+            "An opening in a wall with glass that lets light in."
+          ],
+          "answer": "A soft mat that covers part of the floor.",
+          "explanation": "A rug lies on the floor. The other three options describe a sink, a sofa and a window."
+        },
+        {
+          "prompt": "Which job means putting the plates and cups ready for a meal?",
+          "choices": [
+            "sweep the floor",
+            "wash the dishes",
+            "make my bed",
+            "set the table"
+          ],
+          "answer": "set the table",
+          "explanation": "Setting the table means laying out the plates, cups and spoons before people eat."
+        },
         {
           "prompt": "Which word means a home where bees live and make honey?",
           "choices": [
@@ -491,28 +803,78 @@
           ],
           "answer": "hive",
           "explanation": "Bees build a hive and store their honey inside it. A broom, a ladder and a wardrobe are things at home, not animal homes."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does the word rug mean?",
+          "choices": [
+            "A soft mat that covers part of the floor.",
+            "A basin where you wash with water.",
+            "A long, soft seat for two or three people.",
+            "An opening in a wall with glass that lets light in."
+          ],
+          "answer": "A soft mat that covers part of the floor.",
+          "explanation": "A rug lies on the floor. The other three options describe a sink, a sofa and a window."
         },
         {
-          "prompt": "In “Different Kinds of Homes”, what are adobe houses built from?",
+          "prompt": "Which job means putting the plates and cups ready for a meal?",
           "choices": [
-            "Glass and steel",
-            "Mud and dry grass",
-            "Wood and rope",
-            "Brick and paint"
+            "sweep the floor",
+            "wash the dishes",
+            "make my bed",
+            "set the table"
           ],
-          "answer": "Mud and dry grass",
-          "explanation": "The text says people build adobe houses from mud and dry grass, and that the thick walls keep them cool."
+          "answer": "set the table",
+          "explanation": "Setting the table means laying out the plates, cups and spoons before people eat."
         },
         {
-          "prompt": "Which of these things would you find in a bathroom?",
+          "prompt": "Which word means: A ball is a round object that you can throw, kick or bounce.",
           "choices": [
-            "sofa",
-            "nest",
-            "sink",
-            "ladder"
+            "ball",
+            "name",
+            "theme"
           ],
-          "answer": "sink",
-          "explanation": "A bathroom has a sink and a toilet for washing. A sofa belongs in the living room, a nest is a bird's home, and a ladder is not a bathroom thing."
+          "answer": "ball",
+          "explanation": "ball: A ball is a round object that you can throw, kick or bounce."
+        },
+        {
+          "prompt": "Which word means: A small furry animal with long ears that lives in a hole in the ground.",
+          "choices": [
+            "name",
+            "theme",
+            "rabbit"
+          ],
+          "answer": "rabbit",
+          "explanation": "rabbit: A small furry animal with long ears that lives in a hole in the ground."
+        },
+        {
+          "prompt": "What type of word is 'humming'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Humming is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'stairs'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Stairs is used as a noun in this dictionary sense."
         }
       ]
     }

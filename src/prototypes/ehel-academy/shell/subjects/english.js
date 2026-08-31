@@ -579,6 +579,13 @@ const listNames = (items, key = "title") => {
 };
 // How many challenges a game holds, as a phrase, or "a few things" when the pack
 // is not uniform — the guide must not promise a number that only some games keep.
+// The stars a game needs for mastery, as a phrase, straight from the pack.
+function gameMasteryWord() {
+  const score = gamePack?.masteryScore;
+  if (!score) return "enough stars";
+  return `${["no", "one", "two", "three", "four", "five", "six"][score] || score} star${score === 1 ? "" : "s"}`;
+}
+
 function gameRoundCountWord() {
   const counts = new Set((gamePack?.games || []).map((game) => game.rounds.length));
   if (counts.size !== 1) return "a few things";
@@ -722,7 +729,10 @@ const SECTION_GUIDES = {
       "Press Listen if you want to hear the question, and Hint if you get stuck.",
       "Play every game once. You can play again as many times as you like.",
     ],
-    finish: "When you have played them all, press “I have played them all”. If you win two stars in every game, this part finishes by itself.",
+    // The mastery bar is read from the pack, not written here. It said "two"
+    // as a literal and the packs moved to four on 2026-09-01 — a sentence that
+    // tells a child the wrong number of stars is worse than one that omits it.
+    finish: `When you have played them all, press “I have played them all”. If you win ${gameMasteryWord()} in every game, this part finishes by itself.`,
   } : {
     steps: [
       `There are ${gamePack?.games?.length ?? "several"} games. Press a game to open it.`,

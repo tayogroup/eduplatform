@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t02-u05",
   "title": "Outdoor Adventures and Environmental Protection Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The finding of something that was not known before.",
           "choices": [
             "discovery",
-            "empirical",
-            "stretched"
+            "gerund",
+            "negotiate"
           ],
           "answer": "discovery",
           "explanation": "discovery: The finding of something that was not known before."
         },
         {
-          "prompt": "Which word means: Filtered means passed a liquid through something to remove dirt or unwanted particles.",
+          "prompt": "Which word means: Relying on something or someone else.",
           "choices": [
             "discovery",
-            "empirical",
-            "filtered"
+            "gerund",
+            "dependent"
           ],
-          "answer": "filtered",
-          "explanation": "filtered: Filtered means passed a liquid through something to remove dirt or unwanted particles."
+          "answer": "dependent",
+          "explanation": "dependent: Relying on something or someone else."
         },
         {
-          "prompt": "Which word means: A short way of saying \"we would\" or \"we had\", often used in everyday speech.",
+          "prompt": "Which word means: The variety of plants, animals, and other living things found in an area.",
           "choices": [
-            "empirical",
-            "we'd",
+            "gerund",
+            "biodiversity",
             "discovery"
           ],
-          "answer": "we'd",
-          "explanation": "we'd: A short way of saying \"we would\" or \"we had\", often used in everyday speech."
+          "answer": "biodiversity",
+          "explanation": "biodiversity: The variety of plants, animals, and other living things found in an area."
+        },
+        {
+          "prompt": "Which word means: Booked means arranged in advance to use or reserve something, such as a place or ticket.",
+          "choices": [
+            "booked",
+            "discovery",
+            "gerund"
+          ],
+          "answer": "booked",
+          "explanation": "booked: Booked means arranged in advance to use or reserve something, such as a place or ticket."
+        },
+        {
+          "prompt": "Which word means: A plan or purpose that someone has in mind before they act.",
+          "choices": [
+            "discovery",
+            "gerund",
+            "intention"
+          ],
+          "answer": "intention",
+          "explanation": "intention: A plan or purpose that someone has in mind before they act."
+        },
+        {
+          "prompt": "Which word means: To accept or admit that something is true, or to recognise that you have received something.",
+          "choices": [
+            "gerund",
+            "acknowledge",
+            "discovery"
+          ],
+          "answer": "acknowledge",
+          "explanation": "acknowledge: To accept or admit that something is true, or to recognise that you have received something."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Nature is the physical world of plants, animals, rivers and forests that people did not make.",
-          "answer": "nature"
+          "clue": "The value that appears most often in a set of numbers.",
+          "answer": "mode"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A plan or purpose that someone has in mind before they act.",
-          "answer": "intention"
+          "clue": "Set up or created something so that it becomes lasting or official.",
+          "answer": "established"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A marked area of ground used for playing games such as netball, basketball or tennis.",
+          "answer": "court"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To say sorry to someone for something you did wrong.",
+          "answer": "apologise"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To show how something works or to prove something clearly.",
+          "answer": "demonstrate"
         }
       ]
     },
@@ -99,38 +144,80 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "region.",
-            "this",
-            "in",
-            "season",
-            "dry",
-            "the",
-            "during",
-            "sharply",
-            "decreases",
-            "Rainfall"
+            "here.",
+            "people",
+            "most",
+            "employs",
+            "sector",
+            "farming",
+            "The"
           ],
-          "answer": "Rainfall decreases sharply during the dry season in this region."
+          "answer": "The farming sector employs most people here."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "term.",
+            "ridge.",
             "the",
-            "of",
-            "rest",
-            "the",
-            "for",
-            "suffer",
-            "would",
-            "department",
-            "science",
-            "the",
-            "projector,",
-            "the",
-            "Without"
+            "along",
+            "trees",
+            "old",
+            "several",
+            "through",
+            "cut",
+            "had",
+            "Loggers"
           ],
-          "answer": "Without the projector, the science department would suffer for the rest of the term."
+          "answer": "Loggers had cut through several old trees along the ridge."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "inside.",
+            "carefully",
+            "seedling",
+            "a",
+            "placing",
+            "before",
+            "hole",
+            "a",
+            "dug",
+            "student",
+            "Each"
+          ],
+          "answer": "Each student dug a hole before placing a seedling carefully inside."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "friends.",
+            "closest",
+            "his",
+            "of",
+            "several",
+            "surprised",
+            "Prefect",
+            "Head",
+            "for",
+            "nomination",
+            "His"
+          ],
+          "answer": "His nomination for Head Prefect surprised several of his closest friends."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "winner.",
+            "a",
+            "choosing",
+            "before",
+            "project",
+            "every",
+            "evaluated",
+            "judges",
+            "The"
+          ],
+          "answer": "The judges evaluated every project before choosing a winner."
         }
       ]
     },
@@ -143,312 +230,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the correct form: The river ______ by industrial waste last year.",
+          "prompt": "What does 'acknowledge' mean?",
           "choices": [
-            "polluted",
-            "is polluted",
-            "was polluting",
-            "was polluted"
+            "A serious effort or attempt to do something.",
+            "To accept or admit that something is true, or to recognise that you have received something.",
+            "To create or start something that is meant to last.",
+            "To show how something works or to prove something clearly."
           ],
-          "answer": "was polluted",
-          "explanation": "The time phrase 'last year' places the action in the past, so the past passive 'was polluted' is needed."
+          "answer": "To accept or admit that something is true, or to recognise that you have received something.",
+          "explanation": "I want to acknowledge that you did a great job on your project."
         },
         {
-          "prompt": "Choose the correct form: Endangered animals must ______ by law.",
+          "prompt": "What does 'mitigate' mean?",
           "choices": [
-            "protect",
-            "be protected",
-            "protecting",
-            "to protect"
+            "To communicate or express a message, feeling or idea.",
+            "To become smaller or less in amount, size or strength.",
+            "To break a rule or law, or to limit someone's rights.",
+            "To make something less severe, harmful or serious."
           ],
-          "answer": "be protected",
-          "explanation": "After a modal verb such as must, the passive always uses be plus the past participle: must be protected."
+          "answer": "To make something less severe, harmful or serious.",
+          "explanation": "Building a dam will mitigate the damage caused by future floods."
         },
         {
-          "prompt": "Choose the correct form: She is interested in ______ about renewable energy.",
+          "prompt": "What does 'relinquish' mean?",
           "choices": [
-            "learn",
-            "to learn",
-            "learning",
-            "to learning"
+            "To give up or let go of something, especially power or a right.",
+            "To treat someone or something in a cruel or unfair way, making them powerless.",
+            "To give up or leave something or someone behind.",
+            "To copy someone or something in order to be like them."
           ],
-          "answer": "learning",
-          "explanation": "A verb that follows a preposition such as 'in' must take the -ing form, so 'interested in learning' is correct."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Where did Amal's class go on their expedition, and how long did the bus journey take?",
-          "choices": [
-            "They went to the Boni National Reserve, one of Kenya's least-visited protected forests, and the bus journey took three hours.",
-            "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream.",
-            "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still working."
-          ],
-          "answer": "They went to the Boni National Reserve, one of Kenya's least-visited protected forests, and the bus journey took three hours.",
-          "explanation": "The opening tells you the class was beginning a two-day expedition to the Boni National Reserve, one of Kenya's least-visited protected forests, and the text then says the journey took three hours by bus."
+          "answer": "To give up or let go of something, especially power or a right.",
+          "explanation": "She decided to relinquish her position as club president at the end of the year."
         },
-        {
-          "prompt": "How did the students take care of the environment at their campsite?",
-          "choices": [
-            "Trees along the bank have been cut down, and without tree roots the soil erodes and the river becomes shallower.",
-            "Performing the copyrighted play without permission would have broken copyright law, so Jamal persuaded the group to collaborate on an original play about school life.",
-            "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream."
-          ],
-          "answer": "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream.",
-          "explanation": "Look at the paragraph about setting up camp: the students collected firewood that had already fallen, did not break any living branches, and filtered water from the stream, so they harmed nothing living."
-        },
-        {
-          "prompt": "What did the anonymous note under Jamal's pillow say, and what did he discover because of it?",
-          "choices": [
-            "He believed that true leadership is about growth rather than power, so he stepped down early to let a new leader take over with fresh ideas.",
-            "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still working.",
-            "Trees along the bank have been cut down, and without tree roots the soil erodes and the river becomes shallower."
-          ],
-          "answer": "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still working.",
-          "explanation": "You must join the note's message to the discovery scene that closes part 1: the projector was moved, not stolen."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Describe Your Ideal Outdoor Adventure",
-          "target": "The discovery of the nesting site changed the whole survey."
-        },
-        {
-          "prompt": "Speaking 3: Retell the River Report",
-          "target": "Listen while an adult or your AI tutor reads Daniel's river report from the Eco-Club Field Reports aloud."
-        },
-        {
-          "prompt": "Speaking 5: Five-Minute Unit Talk",
-          "target": "Without the projector, the science department would suffer for the rest of the term."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "safest.",
-            "is",
-            "location",
-            "which",
-            "evaluate",
-            "to",
-            "need",
-            "we",
-            "campsite,",
-            "a",
-            "choosing",
-            "Before"
-          ],
-          "answer": "Before choosing a campsite, we need to evaluate which location is safest."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "branches.",
-            "living",
-            "any",
-            "breaking",
-            "without",
-            "firewood",
-            "fallen",
-            "collected",
-            "Daniel"
-          ],
-          "answer": "Daniel collected fallen firewood without breaking any living branches."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "campus.",
-            "on",
-            "somewhere",
-            "infringed",
-            "been",
-            "had",
-            "rule",
-            "serious",
-            "a",
-            "that",
-            "agreed",
-            "Jamal"
-          ],
-          "answer": "Jamal agreed that a serious rule had been infringed somewhere on campus."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'report' mean in this unit?",
-          "choices": [
-            "A report is a written account describing what someone did, saw, or found out.",
-            "The finding of something that was not known before.",
-            "Based on what has been observed or measured."
-          ],
-          "answer": "A report is a written account describing what someone did, saw, or found out.",
-          "explanation": "report: A report is a written account describing what someone did, saw, or found out."
-        },
-        {
-          "prompt": "What does 'clashed' mean in this unit?",
-          "choices": [
-            "The finding of something that was not known before.",
-            "Based on what has been observed or measured.",
-            "To strongly disagree or come into conflict with someone else."
-          ],
-          "answer": "To strongly disagree or come into conflict with someone else.",
-          "explanation": "clashed: To strongly disagree or come into conflict with someone else."
-        },
-        {
-          "prompt": "What does 'empirical' mean in this unit?",
-          "choices": [
-            "Extended over a distance, or reached out further than usual.",
-            "Based on what has been observed or measured.",
-            "The finding of something that was not known before."
-          ],
-          "answer": "Based on what has been observed or measured.",
-          "explanation": "empirical: Based on what has been observed or measured."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'sincerely'?",
-          "choices": [
-            "Adverb",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adverb",
-          "explanation": "Sincerely is used as an adverb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'devastate'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Devastate is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'species'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Species is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "flexibility",
-              "The ability to change easily to suit new conditions."
-            ],
-            [
-              "least",
-              "Used to show the smallest amount, extent, or degree of something, often when comparing things."
-            ],
-            [
-              "deforestation",
-              "The cutting down and clearing of large areas of forest."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "beans",
-              "Beans are small seeds from certain plants that people cook and eat as food."
-            ],
-            [
-              "acacia",
-              "An acacia is a tree with thorny branches that often grows in dry, warm regions."
-            ],
-            [
-              "clever",
-              "Quick to understand, learn and solve problems; intelligent."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "intention",
-              "A plan or purpose that someone has in mind before they act."
-            ],
-            [
-              "sheets",
-              "Flat pieces of paper, especially the ones used for writing, printing or answering questions."
-            ],
-            [
-              "significant",
-              "Important or meaningful; large enough to have an effect."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'tarnish' mean?",
           "choices": [
@@ -485,13 +298,531 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Where did Amal's class go on their expedition, and how long did the bus journey take?",
+          "choices": [
+            "They went to the Boni National Reserve, one of Kenya's least-visited protected forests, and the bus journey took three hours.",
+            "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream.",
+            "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still working."
+          ],
+          "answer": "They went to the Boni National Reserve, one of Kenya's least-visited protected forests, and the bus journey took three hours.",
+          "explanation": "The opening tells you the class was beginning a two-day expedition to the Boni National Reserve, one of Kenya's least-visited protected forests, and the text then says the journey took three hours by bus."
+        },
+        {
+          "prompt": "What damage did Amal notice along the edge of the trail?",
+          "choices": [
+            "Trees along the bank have been cut down, and without tree roots the soil erodes and the river becomes shallower.",
+            "Performing the copyrighted play without permission would have broken copyright law, so Jamal persuaded the group to collaborate on an original play about school life.",
+            "She noticed that several large trees had been cut down illegally, leaving pale, raw stumps surrounded by scattered branches."
+          ],
+          "answer": "She noticed that several large trees had been cut down illegally, leaving pale, raw stumps surrounded by scattered branches.",
+          "explanation": "You must locate the description of the logging damage and recognise that Amal names it deforestation."
+        },
+        {
+          "prompt": "How did the students take care of the environment at their campsite?",
+          "choices": [
+            "He believed that true leadership is about growth rather than power, so he stepped down early to let a new leader take over with fresh ideas.",
+            "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream.",
+            "They are going to return to plant fifty mangrove seedlings along the riverbank; Daniel uses going to because it is a plan the club has already decided."
+          ],
+          "answer": "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream.",
+          "explanation": "Look at the paragraph about setting up camp: the students collected firewood that had already fallen, did not break any living branches, and filtered water from the stream, so they harmed nothing living."
+        },
+        {
+          "prompt": "What is the eco-club going to do next month, and which future form does Daniel use to say so?",
+          "choices": [
+            "They are going to return to plant fifty mangrove seedlings along the riverbank; Daniel uses going to because it is a plan the club has already decided.",
+            "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still working.",
+            "They went to the Boni National Reserve, one of Kenya's least-visited protected forests, and the bus journey took three hours."
+          ],
+          "answer": "They are going to return to plant fifty mangrove seedlings along the riverbank; Daniel uses going to because it is a plan the club has already decided.",
+          "explanation": "Daniel's report ends: 'We are going to return next month to plant fifty mangrove seedlings along the riverbank.' He uses going to because the club has already decided on this plan."
+        },
+        {
+          "prompt": "What did the anonymous note under Jamal's pillow say, and what did he discover because of it?",
+          "choices": [
+            "Performing the copyrighted play without permission would have broken copyright law, so Jamal persuaded the group to collaborate on an original play about school life.",
+            "She noticed that several large trees had been cut down illegally, leaving pale, raw stumps surrounded by scattered branches.",
+            "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still working."
+          ],
+          "answer": "The note said the projector was hidden behind the old library, and there Jamal found the missing device wrapped in a sack, still working.",
+          "explanation": "You must join the note's message to the discovery scene that closes part 1: the projector was moved, not stolen."
+        },
+        {
+          "prompt": "Why did the drama group end up writing their own play instead of performing the famous playwright's work?",
+          "choices": [
+            "They collected only firewood that had already fallen, did not break any living branches, and filtered water from the stream.",
+            "Performing the copyrighted play without permission would have broken copyright law, so Jamal persuaded the group to collaborate on an original play about school life.",
+            "He believed that true leadership is about growth rather than power, so he stepped down early to let a new leader take over with fresh ideas."
+          ],
+          "answer": "Performing the copyrighted play without permission would have broken copyright law, so Jamal persuaded the group to collaborate on an original play about school life.",
+          "explanation": "You must connect the teacher's copyright warning with Jamal's insistence that copying must be avoided."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Describe Your Ideal Outdoor Adventure",
+          "target": "The discovery of the nesting site changed the whole survey."
+        },
+        {
+          "prompt": "Speaking 2: Environmental Debate",
+          "target": "The farming sector employs most people here."
+        },
+        {
+          "prompt": "Speaking 3: Retell the River Report",
+          "target": "Listen while an adult or your AI tutor reads Daniel's river report from the Eco-Club Field Reports aloud."
+        },
+        {
+          "prompt": "Speaking 4: Compare Two Campsites",
+          "target": "Each student dug a hole before placing a seedling carefully inside."
+        },
+        {
+          "prompt": "Speaking 5: Five-Minute Unit Talk",
+          "target": "His nomination for Head Prefect surprised several of his closest friends."
+        },
+        {
+          "prompt": "Speaking 6: Vocabulary Expert Interview",
+          "target": "The judges evaluated every project before choosing a winner."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "project.",
+            "your",
+            "on",
+            "job",
+            "great",
+            "a",
+            "did",
+            "you",
+            "that",
+            "acknowledge",
+            "to",
+            "want",
+            "I"
+          ],
+          "answer": "I want to acknowledge that you did a great job on your project."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "finding.",
+            "the",
+            "replicate",
+            "not",
+            "could",
+            "team",
+            "Another"
+          ],
+          "answer": "Another team could not replicate the finding."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "suffers.",
+            "ecosystem",
+            "entire",
+            "the",
+            "removed,",
+            "are",
+            "trees",
+            "When"
+          ],
+          "answer": "When trees are removed, the entire ecosystem suffers."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "wildlife.",
+            "harm",
+            "and",
+            "river",
+            "the",
+            "into",
+            "wash",
+            "can",
+            "trail",
+            "the",
+            "along",
+            "Litter"
+          ],
+          "answer": "Litter along the trail can wash into the river and harm wildlife."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "speech.",
+            "campaign",
+            "his",
+            "during",
+            "calm",
+            "stay",
+            "Jamal",
+            "helped",
+            "preparation",
+            "Good"
+          ],
+          "answer": "Good preparation helped Jamal stay calm during his campaign speech."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "first.",
+            "listened",
+            "had",
+            "everyone",
+            "if",
+            "avoided",
+            "been",
+            "have",
+            "could",
+            "argument",
+            "The"
+          ],
+          "answer": "The argument could have been avoided if everyone had listened first."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'gerund' mean in this unit?",
+          "choices": [
+            "An -ing form of a verb used as a noun.",
+            "The finding of something that was not known before.",
+            "To discuss something in order to reach an agreement."
+          ],
+          "answer": "An -ing form of a verb used as a noun.",
+          "explanation": "gerund: An -ing form of a verb used as a noun."
+        },
+        {
+          "prompt": "What does 'guardians' mean in this unit?",
+          "choices": [
+            "The finding of something that was not known before.",
+            "An -ing form of a verb used as a noun.",
+            "People who protect and take responsibility for something important."
+          ],
+          "answer": "People who protect and take responsibility for something important.",
+          "explanation": "guardians: People who protect and take responsibility for something important."
+        },
+        {
+          "prompt": "What does 'collected' mean in this unit?",
+          "choices": [
+            "An -ing form of a verb used as a noun.",
+            "Collected means gathered items together from different places into one group.",
+            "The finding of something that was not known before."
+          ],
+          "answer": "Collected means gathered items together from different places into one group.",
+          "explanation": "collected: Collected means gathered items together from different places into one group."
+        },
+        {
+          "prompt": "What does 'higher' mean in this unit?",
+          "choices": [
+            "Greater in amount, level, importance or position than something else.",
+            "The finding of something that was not known before.",
+            "An -ing form of a verb used as a noun."
+          ],
+          "answer": "Greater in amount, level, importance or position than something else.",
+          "explanation": "higher: Greater in amount, level, importance or position than something else."
+        },
+        {
+          "prompt": "What does 'concern' mean in this unit?",
+          "choices": [
+            "The finding of something that was not known before.",
+            "An -ing form of a verb used as a noun.",
+            "A feeling of worry about a problem, or the problem itself."
+          ],
+          "answer": "A feeling of worry about a problem, or the problem itself.",
+          "explanation": "concern: A feeling of worry about a problem, or the problem itself."
+        },
+        {
+          "prompt": "What does 'infringe' mean in this unit?",
+          "choices": [
+            "An -ing form of a verb used as a noun.",
+            "To break a rule or law, or to limit someone's rights.",
+            "The finding of something that was not known before."
+          ],
+          "answer": "To break a rule or law, or to limit someone's rights.",
+          "explanation": "infringe: To break a rule or law, or to limit someone's rights."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'negotiate'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Negotiate is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'perches'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Perches is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'roots'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Roots is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'effort'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Effort is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'flame'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Flame is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'embellish'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Embellish is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "flexibility",
+              "The ability to change easily to suit new conditions."
+            ],
+            [
+              "elaborate",
+              "Very detailed, complicated, and carefully planned, often with decorative extra touches."
+            ],
+            [
+              "import",
+              "To bring goods in from another country to sell."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "comprehensive",
+              "Covering everything that is relevant, leaving nothing out."
+            ],
+            [
+              "tall",
+              "Having a greater height than average, or higher than most other things nearby."
+            ],
+            [
+              "surrounded",
+              "Was or were positioned all around something, enclosing it on every side."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "document",
+              "To record information, often in writing or photographs, as evidence or for later reference."
+            ],
+            [
+              "nature",
+              "Nature is the physical world of plants, animals, rivers and forests that people did not make."
+            ],
+            [
+              "identified",
+              "Identified means recognised and correctly named something after careful observation."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "flapped",
+              "Flapped means moved quickly up and down or from side to side, like a flag in the wind."
+            ],
+            [
+              "action",
+              "The process of actually doing something, rather than just planning, talking or thinking about it."
+            ],
+            [
+              "staffroom",
+              "A room in a school where teachers rest, eat and prepare for lessons."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "publicly",
+              "In a way that is done openly, in front of other people rather than secretly."
+            ],
+            [
+              "clashed",
+              "To strongly disagree or come into conflict with someone else."
+            ],
+            [
+              "extended",
+              "To make something last longer in time, or reach further in distance."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "demonstrate",
+              "To show how something works or to prove something clearly."
+            ],
+            [
+              "augment",
+              "To make something bigger, better or stronger by adding to it."
+            ],
+            [
+              "ecosystem-based",
+              "Working with a whole habitat rather than one species at a time."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Guardians of the Green': Protecting the forest is not one person's job — it requires ______.",
+          "choices": [
+            "collaboration",
+            "deforestation",
+            "biodiversity",
+            "sustainability"
+          ],
+          "answer": "collaboration",
+          "explanation": "Ranger Tariq explains that protecting the forest requires collaboration, because it is not one person's job."
+        },
+        {
+          "prompt": "Choose the correct form: The river ______ by industrial waste last year.",
+          "choices": [
+            "polluted",
+            "is polluted",
+            "was polluting",
+            "was polluted"
+          ],
+          "answer": "was polluted",
+          "explanation": "The time phrase 'last year' places the action in the past, so the past passive 'was polluted' is needed."
+        },
+        {
+          "prompt": "Choose the correct form: Endangered animals must ______ by law.",
+          "choices": [
+            "protect",
+            "be protected",
+            "protecting",
+            "to protect"
+          ],
+          "answer": "be protected",
+          "explanation": "After a modal verb such as must, the passive always uses be plus the past participle: must be protected."
+        },
+        {
+          "prompt": "Choose the correct form: She is interested in ______ about renewable energy.",
+          "choices": [
+            "learn",
+            "to learn",
+            "learning",
+            "to learning"
+          ],
+          "answer": "learning",
+          "explanation": "A verb that follows a preposition such as 'in' must take the -ing form, so 'interested in learning' is correct."
+        },
+        {
+          "prompt": "Choose the correct form: We ______ the national park next Saturday — the bus is already booked.",
+          "choices": [
+            "visit",
+            "are visiting",
+            "were visiting",
+            "going visit"
+          ],
+          "answer": "are visiting",
+          "explanation": "A booked trip is a fixed arrangement, so the present continuous 'are visiting' is the best future form."
+        },
         {
           "prompt": "What does 'acknowledge' mean?",
           "choices": [
@@ -502,28 +833,78 @@
           ],
           "answer": "To accept or admit that something is true, or to recognise that you have received something.",
           "explanation": "I want to acknowledge that you did a great job on your project."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the correct form: She is interested in ______ about renewable energy.",
+          "choices": [
+            "learn",
+            "to learn",
+            "learning",
+            "to learning"
+          ],
+          "answer": "learning",
+          "explanation": "A verb that follows a preposition such as 'in' must take the -ing form, so 'interested in learning' is correct."
         },
         {
-          "prompt": "What does 'mitigate' mean?",
+          "prompt": "Choose the correct form: We ______ the national park next Saturday — the bus is already booked.",
           "choices": [
-            "To communicate or express a message, feeling or idea.",
-            "To become smaller or less in amount, size or strength.",
-            "To break a rule or law, or to limit someone's rights.",
-            "To make something less severe, harmful or serious."
+            "visit",
+            "are visiting",
+            "were visiting",
+            "going visit"
           ],
-          "answer": "To make something less severe, harmful or serious.",
-          "explanation": "Building a dam will mitigate the damage caused by future floods."
+          "answer": "are visiting",
+          "explanation": "A booked trip is a fixed arrangement, so the present continuous 'are visiting' is the best future form."
         },
         {
-          "prompt": "What does 'relinquish' mean?",
+          "prompt": "Which word means: To make goods in large amounts, usually with machines.",
           "choices": [
-            "To give up or let go of something, especially power or a right.",
-            "To treat someone or something in a cruel or unfair way, making them powerless.",
-            "To give up or leave something or someone behind.",
-            "To copy someone or something in order to be like them."
+            "manufacture",
+            "discovery",
+            "gerund"
           ],
-          "answer": "To give up or let go of something, especially power or a right.",
-          "explanation": "She decided to relinquish her position as club president at the end of the year."
+          "answer": "manufacture",
+          "explanation": "manufacture: To make goods in large amounts, usually with machines."
+        },
+        {
+          "prompt": "Which word means: Collected means gathered items together from different places into one group.",
+          "choices": [
+            "discovery",
+            "gerund",
+            "collected"
+          ],
+          "answer": "collected",
+          "explanation": "collected: Collected means gathered items together from different places into one group."
+        },
+        {
+          "prompt": "What type of word is 'theft'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Theft is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'infringe'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Infringe is used as a verb in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g02-t02-u05",
   "title": "Let's Measure Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A park is a green place outside with grass and trees where you can play.",
           "choices": [
             "park",
-            "compare",
-            "centre"
+            "add",
+            "enough"
           ],
           "answer": "park",
           "explanation": "park: A park is a green place outside with grass and trees where you can play."
         },
         {
-          "prompt": "Which word means: Drawing over the lines of a shape with a finger or pencil.",
+          "prompt": "Which word means: A snake is a long animal with no legs that slides along the ground.",
           "choices": [
             "park",
-            "compare",
-            "tracing"
+            "add",
+            "snake"
           ],
-          "answer": "tracing",
-          "explanation": "tracing: Drawing over the lines of a shape with a finger or pencil."
+          "answer": "snake",
+          "explanation": "snake: A snake is a long animal with no legs that slides along the ground."
         },
         {
-          "prompt": "Which word means: Fourteen is the number 14, which is one more than thirteen.",
+          "prompt": "Which word means: Came together in one place, as a group.",
           "choices": [
-            "compare",
-            "fourteen",
+            "add",
+            "gathered",
             "park"
           ],
-          "answer": "fourteen",
-          "explanation": "fourteen: Fourteen is the number 14, which is one more than thirteen."
+          "answer": "gathered",
+          "explanation": "gathered: Came together in one place, as a group."
+        },
+        {
+          "prompt": "Which word means: A measurement is a number that tells you the size, length or amount of something.",
+          "choices": [
+            "measurement",
+            "park",
+            "add"
+          ],
+          "answer": "measurement",
+          "explanation": "measurement: A measurement is a number that tells you the size, length or amount of something."
+        },
+        {
+          "prompt": "Which word means: The number 80, which is eight groups of ten ones.",
+          "choices": [
+            "park",
+            "add",
+            "eighty"
+          ],
+          "answer": "eighty",
+          "explanation": "eighty: The number 80, which is eight groups of ten ones."
+        },
+        {
+          "prompt": "Which word means: A bigger unit of length that is one hundred centimetres long.",
+          "choices": [
+            "add",
+            "metre",
+            "park"
+          ],
+          "answer": "metre",
+          "explanation": "metre: A bigger unit of length that is one hundred centimetres long."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A shelf or stand where books are kept and lined up.",
-          "answer": "bookshelf"
+          "clue": "A snake is a long animal with no legs that slides along the ground.",
+          "answer": "snake"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To argue means to disagree with someone and talk crossly about it.",
-          "answer": "argue"
+          "clue": "In a lower place than something else.",
+          "answer": "below"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A heel is the back part of your foot, under your ankle.",
+          "answer": "heel"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The number 90, which is nine groups of ten ones.",
+          "answer": "ninety"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A kilogram is used to measure how heavy something is.",
+          "answer": "kilogram"
         }
       ]
     },
@@ -96,148 +141,58 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "winter.",
-            "this",
-            "garden",
+            "hill.",
             "the",
-            "in",
-            "birds",
-            "fewer",
-            "are",
-            "There"
+            "on",
+            "grass",
+            "eats",
+            "goat",
+            "The"
           ],
-          "answer": "There are fewer birds in the garden this winter."
+          "answer": "The goat eats grass on the hill."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "sky.",
-            "night",
+            "table.",
             "the",
-            "filled",
-            "stars",
-            "thousand",
-            "A"
+            "on",
+            "ruler",
+            "the",
+            "placed",
+            "Amal"
           ],
-          "answer": "A thousand stars filled the night sky."
-        }
-      ]
-    },
-    {
-      "id": "language-choice",
-      "type": "choice",
-      "icon": "list-filter",
-      "title": "Language Choice",
-      "skill": "Grammar and usage",
-      "description": "Choose the form that makes the unit language accurate.",
-      "rounds": [
-        {
-          "prompt": "Which sentence compares the two animals correctly?",
-          "choices": [
-            "A snake is longer than a worm.",
-            "A snake is more long than a worm.",
-            "A snake is long than a worm.",
-            "A snake is longest than a worm."
-          ],
-          "answer": "A snake is longer than a worm.",
-          "explanation": "Short describing words take -er rather than more, and a comparison of two things always needs than after the -er word."
+          "answer": "Amal placed the ruler on the table."
         },
         {
-          "prompt": "Which sentence uses is or are correctly?",
-          "choices": [
-            "There is ten circles on the chart.",
-            "There are one clock on the wall.",
-            "There are ten circles on the chart.",
-            "There is many circles on the chart."
-          ],
-          "answer": "There are ten circles on the chart.",
-          "explanation": "Ten is more than one, so the sentence needs are. There is only fits a single thing, such as one clock."
-        },
-        {
-          "prompt": "Choose the correct word: “I have ______ hands.”",
-          "choices": [
-            "too",
-            "two",
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "village.",
+            "the",
             "to",
-            "ate"
+            "messenger",
+            "a",
+            "sent",
+            "king",
+            "The"
           ],
-          "answer": "two",
-          "explanation": "Two is the number 2. Too means also, to is a joining word, and ate is the past form of eat."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What shape is the sun in this text, and what shape is the door?",
-          "choices": [
-            "The sun is a circle and the door is a rectangle.",
-            "Little fingers.",
-            "A new reading corner, with a mat long enough for six friends to sit on."
-          ],
-          "answer": "The sun is a circle and the door is a rectangle.",
-          "explanation": "Amal says the sun is a circle, and Leo says the door is a rectangle because two of its sides are longer than the other two."
+          "answer": "The king sent a messenger to the village."
         },
         {
-          "prompt": "How far did Leo jump?",
-          "choices": [
-            "Little fingers.",
-            "Leo's feet are big and Amal's feet are small, so the same floor took a different number of feet.",
-            "He jumped 45 centimetres."
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "you.",
+            "into",
+            "bumped",
+            "I",
+            "sorry",
+            "am",
+            "I"
           ],
-          "answer": "He jumped 45 centimetres.",
-          "explanation": "The text says Leo is measuring how far he can jump, and gives the exact number in centimetres."
+          "answer": "I am sorry I bumped into you."
         },
         {
-          "prompt": "What did Teacher Yasmin say they should use instead, and how many centimetres are in one metre?",
-          "choices": [
-            "Leo's feet are big and Amal's feet are small, so the same floor took a different number of feet.",
-            "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
-            "There are one hundred fingers in the air."
-          ],
-          "answer": "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
-          "explanation": "Teacher Yasmin names the two tools, then gives the number when she hands over the metre stick."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Count in Tens",
-          "target": "Is there a park near your house?"
-        },
-        {
-          "prompt": "Speaking Game — Bigger, Longer, Taller",
-          "target": "This pencil is longer than that pencil."
-        },
-        {
-          "prompt": "Speaking 5 - Shape and Pattern Talk",
-          "target": "It goes circle, square, circle, square."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
+          "prompt": "Build the complete model sentence.",
           "tokens": [
             "sky.",
             "the",
@@ -250,186 +205,50 @@
             "The"
           ],
           "answer": "The sun looks like a circle in the sky."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "shapes?",
-            "of",
-            "number",
-            "total",
-            "the",
-            "is",
-            "What"
-          ],
-          "answer": "What is the total number of shapes?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "garden.",
-            "the",
-            "in",
-            "shapes",
-            "round",
-            "for",
-            "hunting",
-            "went",
-            "Kiki"
-          ],
-          "answer": "Kiki went hunting for round shapes in the garden."
         }
       ]
     },
     {
-      "id": "definition-dash",
+      "id": "language-choice",
       "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
+      "icon": "list-filter",
+      "title": "Language Choice",
+      "skill": "Grammar and usage",
+      "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'starting' mean in this unit?",
+          "prompt": "How many tens are there in one hundred?",
           "choices": [
-            "The place or point where something begins.",
-            "A park is a green place outside with grass and trees where you can play.",
-            "To compare means to look at two things to see how they differ."
+            "five",
+            "ten",
+            "twenty",
+            "one hundred"
           ],
-          "answer": "The place or point where something begins.",
-          "explanation": "starting: The place or point where something begins."
+          "answer": "ten",
+          "explanation": "One hundred is made of ten groups of ten, so the answer is ten. Five, twenty and one hundred are all real numbers, but none of them counts the tens."
         },
         {
-          "prompt": "What does 'less' mean in this unit?",
+          "prompt": "Which number word comes straight after seventy when you count in tens?",
           "choices": [
-            "A park is a green place outside with grass and trees where you can play.",
-            "To compare means to look at two things to see how they differ.",
-            "Less means a smaller amount of something."
+            "sixty",
+            "seventeen",
+            "ninety",
+            "eighty"
           ],
-          "answer": "Less means a smaller amount of something.",
-          "explanation": "less: Less means a smaller amount of something."
+          "answer": "eighty",
+          "explanation": "Counting in tens runs seventy, eighty, ninety. Sixty comes earlier, seventeen is not a ten, and ninety comes one step later."
         },
         {
-          "prompt": "What does 'compare' mean in this unit?",
+          "prompt": "Which shape has no corners and no straight sides?",
           "choices": [
-            "The centre is the point right in the middle.",
-            "To compare means to look at two things to see how they differ.",
-            "A park is a green place outside with grass and trees where you can play."
+            "circle",
+            "square",
+            "triangle",
+            "rectangle"
           ],
-          "answer": "To compare means to look at two things to see how they differ.",
-          "explanation": "compare: To compare means to look at two things to see how they differ."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'footstep'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Footstep is used as a noun in this dictionary sense."
+          "answer": "circle",
+          "explanation": "A circle is completely round. The other three shapes are all built from straight sides that meet at corners."
         },
-        {
-          "prompt": "What type of word is 'weight'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Weight is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'understand'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Understand is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "card",
-              "A card is a stiff piece of paper you write on or play with."
-            ],
-            [
-              "difficult",
-              "Difficult means hard to do."
-            ],
-            [
-              "point",
-              "To point means to show where something is by using your finger or another object."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "repeats",
-              "Happens again in the same way, over and over."
-            ],
-            [
-              "ago",
-              "In the past, before now."
-            ],
-            [
-              "thousand",
-              "A thousand is the number 1,000, which is ten groups of one hundred."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "argued",
-              "Argued means people disagreed with each other and spoke about it crossly."
-            ],
-            [
-              "thirty",
-              "The number 30, which is three groups of ten ones."
-            ],
-            [
-              "length",
-              "How long something is from one end to the other end."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "How many sides does a triangle have?",
           "choices": [
@@ -466,13 +285,520 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What shape is the sun in this text, and what shape is the door?",
+          "choices": [
+            "The sun is a circle and the door is a rectangle.",
+            "Little fingers.",
+            "A new reading corner, with a mat long enough for six friends to sit on."
+          ],
+          "answer": "The sun is a circle and the door is a rectangle.",
+          "explanation": "Amal says the sun is a circle, and Leo says the door is a rectangle because two of its sides are longer than the other two."
+        },
+        {
+          "prompt": "How many fingers are in the air at the end of the song?",
+          "choices": [
+            "Little fingers.",
+            "Leo's feet are big and Amal's feet are small, so the same floor took a different number of feet.",
+            "There are one hundred fingers in the air."
+          ],
+          "answer": "There are one hundred fingers in the air.",
+          "explanation": "The last line of the song reaches one hundred, which is the biggest number in the whole song."
+        },
+        {
+          "prompt": "How far did Leo jump?",
+          "choices": [
+            "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
+            "He jumped 45 centimetres.",
+            "There are one hundred fingers in the air."
+          ],
+          "answer": "He jumped 45 centimetres.",
+          "explanation": "The text says Leo is measuring how far he can jump, and gives the exact number in centimetres."
+        },
+        {
+          "prompt": "Why does the text say a ruler is better than measuring with our own feet?",
+          "choices": [
+            "Because a ruler and a metre stick are the same for everyone, but feet are all different sizes.",
+            "Ten children.",
+            "The big basket of cushions was heavy, and Maya ran to help Sami carry it."
+          ],
+          "answer": "Because a ruler and a metre stick are the same for everyone, but feet are all different sizes.",
+          "explanation": "The last sentence gives the reason: the tool is the same for everyone, so the answer never changes."
+        },
+        {
+          "prompt": "What did Teacher Yasmin say they should use instead, and how many centimetres are in one metre?",
+          "choices": [
+            "She is counting shapes on a chart, and she counts fifty shapes altogether.",
+            "The red ribbon, because it was longer than the green one.",
+            "A ruler and a metre stick, and there are one hundred centimetres in one metre."
+          ],
+          "answer": "A ruler and a metre stick, and there are one hundred centimetres in one metre.",
+          "explanation": "Teacher Yasmin names the two tools, then gives the number when she hands over the metre stick."
+        },
+        {
+          "prompt": "Why did Amal say it was not fair for Theo to sit down first, and what did Theo do next?",
+          "choices": [
+            "The red ribbon, because it was longer than the green one.",
+            "Being tall does not mean you go first. Theo thought about it, said sorry and made room for everyone.",
+            "He jumped 45 centimetres."
+          ],
+          "answer": "Being tall does not mean you go first. Theo thought about it, said sorry and made room for everyone.",
+          "explanation": "Amal answers Theo gently rather than crossly, and Theo changes his mind straight afterwards."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Count in Tens",
+          "target": "Is there a park near your house?"
+        },
+        {
+          "prompt": "Speaking 2 — Name and Describe Shapes",
+          "target": "This is a triangle."
+        },
+        {
+          "prompt": "Speaking Game — Bigger, Longer, Taller",
+          "target": "This pencil is longer than that pencil."
+        },
+        {
+          "prompt": "Speaking 4 - Measurement Detective",
+          "target": "Be a measurement detective in your own home."
+        },
+        {
+          "prompt": "Speaking 5 - Shape and Pattern Talk",
+          "target": "It goes circle, square, circle, square."
+        },
+        {
+          "prompt": "Speaking 6 - How Many Survey",
+          "target": "How many windows are there? There are seven windows."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "wall.",
+            "to",
+            "wall",
+            "from",
+            "metres",
+            "three",
+            "is",
+            "corner",
+            "reading",
+            "The"
+          ],
+          "answer": "The reading corner is three metres from wall to wall."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "book.",
+            "your",
+            "into",
+            "words",
+            "these",
+            "Copy"
+          ],
+          "answer": "Copy these words into your book."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "floor.",
+            "the",
+            "on",
+            "line",
+            "starting",
+            "the",
+            "from",
+            "jumped",
+            "He"
+          ],
+          "answer": "He jumped from the starting line on the floor."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "tomorrow.",
+            "school",
+            "to",
+            "kite",
+            "his",
+            "bring",
+            "might",
+            "Sami"
+          ],
+          "answer": "Sami might bring his kite to school tomorrow."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "seeds.",
+            "some",
+            "at",
+            "pecked",
+            "chick",
+            "tiny",
+            "The"
+          ],
+          "answer": "The tiny chick pecked at some seeds."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "square.",
+            "perfect",
+            "a",
+            "is",
+            "floor",
+            "kitchen",
+            "the",
+            "on",
+            "tile",
+            "Each"
+          ],
+          "answer": "Each tile on the kitchen floor is a perfect square."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'add' mean in this unit?",
+          "choices": [
+            "To put something extra together with something else.",
+            "A park is a green place outside with grass and trees where you can play.",
+            "Enough means as much as is needed for something."
+          ],
+          "answer": "To put something extra together with something else.",
+          "explanation": "add: To put something extra together with something else."
+        },
+        {
+          "prompt": "What does 'tracing' mean in this unit?",
+          "choices": [
+            "A park is a green place outside with grass and trees where you can play.",
+            "To put something extra together with something else.",
+            "Drawing over the lines of a shape with a finger or pencil."
+          ],
+          "answer": "Drawing over the lines of a shape with a finger or pencil.",
+          "explanation": "tracing: Drawing over the lines of a shape with a finger or pencil."
+        },
+        {
+          "prompt": "What does 'caused' mean in this unit?",
+          "choices": [
+            "To put something extra together with something else.",
+            "Made something happen, especially something that was not planned.",
+            "A park is a green place outside with grass and trees where you can play."
+          ],
+          "answer": "Made something happen, especially something that was not planned.",
+          "explanation": "caused: Made something happen, especially something that was not planned."
+        },
+        {
+          "prompt": "What does 'worked' mean in this unit?",
+          "choices": [
+            "Worked means someone did a job or task, often using effort.",
+            "A park is a green place outside with grass and trees where you can play.",
+            "To put something extra together with something else."
+          ],
+          "answer": "Worked means someone did a job or task, often using effort.",
+          "explanation": "worked: Worked means someone did a job or task, often using effort."
+        },
+        {
+          "prompt": "What does 'triangle' mean in this unit?",
+          "choices": [
+            "A park is a green place outside with grass and trees where you can play.",
+            "To put something extra together with something else.",
+            "A shape with three straight sides and three pointed corners."
+          ],
+          "answer": "A shape with three straight sides and three pointed corners.",
+          "explanation": "triangle: A shape with three straight sides and three pointed corners."
+        },
+        {
+          "prompt": "What does 'compare' mean in this unit?",
+          "choices": [
+            "To put something extra together with something else.",
+            "To compare means to look at two things to see how they differ.",
+            "A park is a green place outside with grass and trees where you can play."
+          ],
+          "answer": "To compare means to look at two things to see how they differ.",
+          "explanation": "compare: To compare means to look at two things to see how they differ."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'enough'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Enough is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'stall'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Stall is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'messenger'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Messenger is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'tricky'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Tricky is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'height'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Height is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'different'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Different is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "card",
+              "A card is a stiff piece of paper you write on or play with."
+            ],
+            [
+              "back",
+              "Back means returning to a place, or doing something in return."
+            ],
+            [
+              "animal",
+              "An animal is a living thing that moves about, like a cat or a bird."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "example",
+              "One thing that shows what a group of things is like."
+            ],
+            [
+              "passing",
+              "Going by something as it moves along."
+            ],
+            [
+              "kneeling",
+              "Resting on your knees on the ground."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "medium",
+              "Not big and not small, but in between."
+            ],
+            [
+              "often",
+              "Many times; happening again and again."
+            ],
+            [
+              "finally",
+              "Finally means after a long time, at the very end."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "heel",
+              "A heel is the back part of your foot, under your ankle."
+            ],
+            [
+              "hunting",
+              "Hunting means looking carefully for something."
+            ],
+            [
+              "twenty",
+              "The number 20, which is two groups of ten ones."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "one hundred",
+              "The number 100, which is ten whole groups of ten ones."
+            ],
+            [
+              "ruler",
+              "A flat tool with marks on it for measuring and drawing straight lines."
+            ],
+            [
+              "short",
+              "Not long; it measures only a little from one end to the other."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "kilogram",
+              "A kilogram is used to measure how heavy something is."
+            ],
+            [
+              "difficult",
+              "Difficult means hard to do."
+            ],
+            [
+              "include",
+              "To include means to make something one part of a group."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "How many centimetres are there in one metre?",
+          "choices": [
+            "ten",
+            "fifty",
+            "ninety",
+            "one hundred"
+          ],
+          "answer": "one hundred",
+          "explanation": "Teacher Yasmin tells the class that one metre is always one hundred centimetres long."
+        },
+        {
+          "prompt": "Which sentence compares the two animals correctly?",
+          "choices": [
+            "A snake is longer than a worm.",
+            "A snake is more long than a worm.",
+            "A snake is long than a worm.",
+            "A snake is longest than a worm."
+          ],
+          "answer": "A snake is longer than a worm.",
+          "explanation": "Short describing words take -er rather than more, and a comparison of two things always needs than after the -er word."
+        },
+        {
+          "prompt": "Which sentence uses is or are correctly?",
+          "choices": [
+            "There is ten circles on the chart.",
+            "There are one clock on the wall.",
+            "There are ten circles on the chart.",
+            "There is many circles on the chart."
+          ],
+          "answer": "There are ten circles on the chart.",
+          "explanation": "Ten is more than one, so the sentence needs are. There is only fits a single thing, such as one clock."
+        },
+        {
+          "prompt": "Choose the correct word: “I have ______ hands.”",
+          "choices": [
+            "too",
+            "two",
+            "to",
+            "ate"
+          ],
+          "answer": "two",
+          "explanation": "Two is the number 2. Too means also, to is a joining word, and ate is the past form of eat."
+        },
+        {
+          "prompt": "What does the word weight mean?",
+          "choices": [
+            "How long something is from end to end.",
+            "A design that repeats again and again.",
+            "A flat tool for drawing straight lines.",
+            "How heavy or how light something is."
+          ],
+          "answer": "How heavy or how light something is.",
+          "explanation": "Weight tells us how heavy something feels. The other three options describe length, a pattern and a ruler."
+        },
         {
           "prompt": "How many tens are there in one hundred?",
           "choices": [
@@ -483,28 +809,78 @@
           ],
           "answer": "ten",
           "explanation": "One hundred is made of ten groups of ten, so the answer is ten. Five, twenty and one hundred are all real numbers, but none of them counts the tens."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the correct word: “I have ______ hands.”",
+          "choices": [
+            "too",
+            "two",
+            "to",
+            "ate"
+          ],
+          "answer": "two",
+          "explanation": "Two is the number 2. Too means also, to is a joining word, and ate is the past form of eat."
         },
         {
-          "prompt": "Which number word comes straight after seventy when you count in tens?",
+          "prompt": "What does the word weight mean?",
           "choices": [
-            "sixty",
-            "seventeen",
-            "ninety",
-            "eighty"
+            "How long something is from end to end.",
+            "A design that repeats again and again.",
+            "A flat tool for drawing straight lines.",
+            "How heavy or how light something is."
           ],
-          "answer": "eighty",
-          "explanation": "Counting in tens runs seventy, eighty, ninety. Sixty comes earlier, seventeen is not a ten, and ninety comes one step later."
+          "answer": "How heavy or how light something is.",
+          "explanation": "Weight tells us how heavy something feels. The other three options describe length, a pattern and a ruler."
         },
         {
-          "prompt": "Which shape has no corners and no straight sides?",
+          "prompt": "Which word means: An animal is a living thing that moves about, like a cat or a bird.",
           "choices": [
-            "circle",
-            "square",
-            "triangle",
-            "rectangle"
+            "animal",
+            "park",
+            "add"
           ],
-          "answer": "circle",
-          "explanation": "A circle is completely round. The other three shapes are all built from straight sides that meet at corners."
+          "answer": "animal",
+          "explanation": "animal: An animal is a living thing that moves about, like a cat or a bird."
+        },
+        {
+          "prompt": "Which word means: Made something happen, especially something that was not planned.",
+          "choices": [
+            "park",
+            "add",
+            "caused"
+          ],
+          "answer": "caused",
+          "explanation": "caused: Made something happen, especially something that was not planned."
+        },
+        {
+          "prompt": "What type of word is 'twenty'?",
+          "choices": [
+            "Number",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Number",
+          "explanation": "Twenty is used as a number in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'compare'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Compare is used as a verb in this dictionary sense."
         }
       ]
     }

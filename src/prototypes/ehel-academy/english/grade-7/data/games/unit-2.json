@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t01-u02",
   "title": "Celebrations and Festivals Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The act of giving out or assigning something, such as tasks or money, in a set way.",
           "choices": [
             "allocation",
-            "deliberate",
-            "coloured"
+            "combustion",
+            "kinetic"
           ],
           "answer": "allocation",
           "explanation": "allocation: The act of giving out or assigning something, such as tasks or money, in a set way."
         },
         {
-          "prompt": "Which word means: Magnificent means extremely impressive, beautiful or grand.",
+          "prompt": "Which word means: Mangoes are sweet, juicy tropical fruits with orange or yellow flesh.",
           "choices": [
             "allocation",
-            "deliberate",
-            "magnificent"
+            "combustion",
+            "mangoes"
           ],
-          "answer": "magnificent",
-          "explanation": "magnificent: Magnificent means extremely impressive, beautiful or grand."
+          "answer": "mangoes",
+          "explanation": "mangoes: Mangoes are sweet, juicy tropical fruits with orange or yellow flesh."
         },
         {
-          "prompt": "Which word means: The leader or person in charge of a group, school, or organisation.",
+          "prompt": "Which word means: A calendar is a system that divides the year into days, weeks and months.",
           "choices": [
-            "deliberate",
-            "head",
+            "combustion",
+            "calendar",
             "allocation"
           ],
-          "answer": "head",
-          "explanation": "head: The leader or person in charge of a group, school, or organisation."
+          "answer": "calendar",
+          "explanation": "calendar: A calendar is a system that divides the year into days, weeks and months."
+        },
+        {
+          "prompt": "Which word means: A boy or man who shares the same parents as another person.",
+          "choices": [
+            "brother",
+            "allocation",
+            "combustion"
+          ],
+          "answer": "brother",
+          "explanation": "brother: A boy or man who shares the same parents as another person."
+        },
+        {
+          "prompt": "Which word means: Strong feelings such as joy, anger, or sadness.",
+          "choices": [
+            "allocation",
+            "combustion",
+            "emotions"
+          ],
+          "answer": "emotions",
+          "explanation": "emotions: Strong feelings such as joy, anger, or sadness."
+        },
+        {
+          "prompt": "Which word means: Having a special charm that attracts and inspires people.",
+          "choices": [
+            "combustion",
+            "charismatic",
+            "allocation"
+          ],
+          "answer": "charismatic",
+          "explanation": "charismatic: Having a special charm that attracts and inspires people."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Treasured means considered very precious and cared for deeply.",
-          "answer": "treasured"
+          "clue": "Coloured describes something that has colour, especially bright or noticeable colour.",
+          "answer": "coloured"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An organised effort by a group of people to collect something or achieve a goal.",
-          "answer": "drive"
+          "clue": "A drum is a musical instrument played by hitting its tight surface with hands or sticks.",
+          "answer": "drum"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A flat piece of woven material placed on a floor.",
+          "answer": "mat"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To make something by putting parts or materials together.",
+          "answer": "build"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Kind and generous; wanting to help others.",
+          "answer": "benevolent"
         }
       ]
     },
@@ -97,31 +142,92 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "community.",
-            "the",
-            "in",
-            "generation",
-            "every",
-            "to",
-            "enjoyment",
-            "bring",
-            "Festivals"
+            "generations.",
+            "through",
+            "down",
+            "passed",
+            "are",
+            "dusk,",
+            "at",
+            "bonfires",
+            "lighting",
+            "as",
+            "such",
+            "customs,",
+            "Long-held"
           ],
-          "answer": "Festivals bring enjoyment to every generation in the community."
+          "answer": "Long-held customs, such as lighting bonfires at dusk, are passed down through generations."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "Friday.",
-            "before",
-            "forms",
-            "their",
-            "in",
-            "hand",
-            "must",
-            "Students"
+            "on.",
+            "went",
+            "morning",
+            "the",
+            "as",
+            "road",
+            "the",
+            "along",
+            "appearing",
+            "kept",
+            "stalls",
+            "New"
           ],
-          "answer": "Students must hand in their forms before Friday."
+          "answer": "New stalls kept appearing along the road as the morning went on."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "homework.",
+            "his",
+            "finish",
+            "could",
+            "brother",
+            "her",
+            "so",
+            "lamp",
+            "small",
+            "a",
+            "lit",
+            "She"
+          ],
+          "answer": "She lit a small lamp so her brother could finish his homework."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "school.",
+            "to",
+            "walk",
+            "muddy",
+            "the",
+            "before",
+            "boots",
+            "his",
+            "don",
+            "to",
+            "had",
+            "Adam"
+          ],
+          "answer": "Adam had to don his boots before the muddy walk to school."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "class.",
+            "the",
+            "reminded",
+            "teacher",
+            "the",
+            "guilty,",
+            "proven",
+            "until",
+            "innocent",
+            "is",
+            "He"
+          ],
+          "answer": "He is innocent until proven guilty, the teacher reminded the class."
         }
       ]
     },
@@ -134,309 +240,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Hero of Kitale, part 1': Students whispered about how _____ she seemed.",
+          "prompt": "What does 'benevolent' mean?",
           "choices": [
-            "industrious",
-            "determined",
-            "diligent",
-            "enthusiastic"
+            "Having a strong desire to achieve something and not giving up.",
+            "Kind and generous; wanting to help others.",
+            "Showing great excitement and interest about something.",
+            "Working hard and being careful to do things well."
           ],
-          "answer": "determined",
-          "explanation": "The text says: Students whispered about how determined she seemed."
+          "answer": "Kind and generous; wanting to help others.",
+          "explanation": "The benevolent woman donated food to the homeless shelter."
         },
         {
-          "prompt": "Choose the missing word from 'Festivals That Bring Us Together, part 2': Children listen attentively, and many feel inspired to be more _____ and kind in their daily lives.",
+          "prompt": "What does 'charismatic' mean?",
           "choices": [
-            "diligent",
-            "enthusiastic",
-            "industrious",
-            "intrepid"
+            "Hard-working and very dedicated to tasks.",
+            "Having a special charm that attracts and inspires people.",
+            "Showing great excitement and interest about something.",
+            "Working hard and being careful to do things well."
           ],
-          "answer": "diligent",
-          "explanation": "The text says: Children listen attentively, and many feel inspired to be more diligent and kind in their daily lives."
+          "answer": "Having a special charm that attracts and inspires people.",
+          "explanation": "The charismatic leader inspired everyone to work together for a better school."
         },
         {
-          "prompt": "Choose the missing word from 'Festivals That Bring Us Together, part 2': The atmosphere is both solemn and _____, a mixture of deep respect and pure celebration.",
+          "prompt": "What does 'determined' mean?",
           "choices": [
-            "benevolent",
-            "charismatic",
-            "determined",
-            "enthusiastic"
+            "Brave and not afraid of danger or difficulty.",
+            "Hard-working and very dedicated to tasks.",
+            "Having a strong desire to achieve something and not giving up.",
+            "Showing great excitement and interest about something."
           ],
-          "answer": "enthusiastic",
-          "explanation": "The text says: The atmosphere is both solemn and enthusiastic, a mixture of deep respect and pure celebration."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to part 1, what are three different things that festivals can mark or celebrate?",
-          "choices": [
-            "Festivals can mark the changing seasons, honour long-held customs, or celebrate harvests, victories and the memory of important people.",
-            "The town had broken water taps, rising food prices, and a school library whose roof had fallen in during the last rainy season.",
-            "The narrow streets come alive with lanterns, drums and the chanting of Swahili poetry, men perform traditional stick dances, and women prepare elaborate, sweet-scented dishes."
-          ],
-          "answer": "Festivals can mark the changing seasons, honour long-held customs, or celebrate harvests, victories and the memory of important people.",
-          "explanation": "The opening paragraph lists these purposes directly, so you practise locating stated information."
+          "answer": "Having a strong desire to achieve something and not giving up.",
+          "explanation": "She was determined to finish her homework before going out to play."
         },
-        {
-          "prompt": "What three problems had Imani's town faced before the election was announced?",
-          "choices": [
-            "Suspicion falls on Kian, a quiet new student, and he is cleared when the motorcycle is found abandoned near the river the next day.",
-            "She wants Imani to accept the scholarship to the leadership camp in Nairobi because talents that could help others should not be kept at home.",
-            "The town had broken water taps, rising food prices, and a school library whose roof had fallen in during the last rainy season."
-          ],
-          "answer": "The town had broken water taps, rising food prices, and a school library whose roof had fallen in during the last rainy season.",
-          "explanation": "You must retrieve all three details from one early paragraph rather than stopping at the first."
-        },
-        {
-          "prompt": "What evidence does part 1 give that preparations for the harvest festival begin long before the day itself?",
-          "choices": [
-            "Festivals can mark the changing seasons, honour long-held customs, or celebrate harvests, victories and the memory of important people.",
-            "Weeks in advance, families clean their homes, market stalls fill with sacks of maize and baskets of mangoes, and tailors work late into the night making new clothes.",
-            "Suspicion falls on Kian, a quiet new student, and he is cleared when the motorcycle is found abandoned near the river the next day."
-          ],
-          "answer": "Weeks in advance, families clean their homes, market stalls fill with sacks of maize and baskets of mangoes, and tailors work late into the night making new clothes.",
-          "explanation": "You select supporting details from the preparation paragraph instead of describing the festival morning."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Compare Two Festivals",
-          "target": "Both festivals are celebrated in ..."
-        },
-        {
-          "prompt": "Speaking 3: Festival Poster Pitch",
-          "target": "Imagine you are organising a community festival."
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "differences.",
-            "their",
-            "reconcile",
-            "to",
-            "tried",
-            "and",
-            "talked",
-            "they",
-            "argument,",
-            "their",
-            "After"
-          ],
-          "answer": "After their argument, they talked and tried to reconcile their differences."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "calendar.",
-            "their",
-            "on",
-            "date",
-            "festival",
-            "the",
-            "marks",
-            "family",
-            "Every"
-          ],
-          "answer": "Every family marks the festival date on their calendar."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "lion.",
-            "a",
-            "of",
-            "spirit",
-            "the",
-            "has",
-            "Zara",
-            "said",
-            "Yasmin",
-            "Teacher"
-          ],
-          "answer": "Teacher Yasmin said Zara has the spirit of a lion."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'emphasising' mean in this unit?",
-          "choices": [
-            "Giving special importance to something so that people notice it clearly.",
-            "The act of giving out or assigning something, such as tasks or money, in a set way.",
-            "Done on purpose, after thought."
-          ],
-          "answer": "Giving special importance to something so that people notice it clearly.",
-          "explanation": "emphasising: Giving special importance to something so that people notice it clearly."
-        },
-        {
-          "prompt": "What does 'motorcycle' mean in this unit?",
-          "choices": [
-            "The act of giving out or assigning something, such as tasks or money, in a set way.",
-            "Done on purpose, after thought.",
-            "A two-wheeled vehicle powered by an engine, ridden by sitting astride it."
-          ],
-          "answer": "A two-wheeled vehicle powered by an engine, ridden by sitting astride it.",
-          "explanation": "motorcycle: A two-wheeled vehicle powered by an engine, ridden by sitting astride it."
-        },
-        {
-          "prompt": "What does 'deliberate' mean in this unit?",
-          "choices": [
-            "Coloured describes something that has colour, especially bright or noticeable colour.",
-            "Done on purpose, after thought.",
-            "The act of giving out or assigning something, such as tasks or money, in a set way."
-          ],
-          "answer": "Done on purpose, after thought.",
-          "explanation": "deliberate: Done on purpose, after thought."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'hardware'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Hardware is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'tenacious'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Tenacious is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'reconciled'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Reconciled is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "applicability",
-              "How far something can be usefully applied to a situation."
-            ],
-            [
-              "eagerly",
-              "Eagerly means with great excitement and enthusiasm, as if you cannot wait for something."
-            ],
-            [
-              "cardamom",
-              "Cardamom is a fragrant spice used in cooking and in drinks like tea."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "drum",
-              "A drum is a musical instrument played by hitting its tight surface with hands or sticks."
-            ],
-            [
-              "lit",
-              "Set something on fire, or made something bright with light."
-            ],
-            [
-              "believed",
-              "Felt certain that something was true or trustworthy."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "drive",
-              "An organised effort by a group of people to collect something or achieve a goal."
-            ],
-            [
-              "article",
-              "A piece of writing on a particular subject, published in a newspaper or magazine."
-            ],
-            [
-              "intrepid",
-              "Brave and not afraid of danger or difficulty."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'diligent' mean?",
           "choices": [
@@ -473,13 +308,538 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "According to part 1, what are three different things that festivals can mark or celebrate?",
+          "choices": [
+            "Festivals can mark the changing seasons, honour long-held customs, or celebrate harvests, victories and the memory of important people.",
+            "The town had broken water taps, rising food prices, and a school library whose roof had fallen in during the last rainy season.",
+            "Weeks in advance, families clean their homes, market stalls fill with sacks of maize and baskets of mangoes, and tailors work late into the night making new clothes."
+          ],
+          "answer": "Festivals can mark the changing seasons, honour long-held customs, or celebrate harvests, victories and the memory of important people.",
+          "explanation": "The opening paragraph lists these purposes directly, so you practise locating stated information."
+        },
+        {
+          "prompt": "In which month is the Festival of Rivers celebrated, and what change in the land does it mark?",
+          "choices": [
+            "Suspicion falls on Kian, a quiet new student, and he is cleared when the motorcycle is found abandoned near the river the next day.",
+            "She wants Imani to accept the scholarship to the leadership camp in Nairobi because talents that could help others should not be kept at home.",
+            "It is celebrated in January, and it marks the end of the cold season and the return of the melting streams."
+          ],
+          "answer": "It is celebrated in January, and it marks the end of the cold season and the return of the melting streams.",
+          "explanation": "The answer sits in the first sentences of part 2, rewarding careful literal reading."
+        },
+        {
+          "prompt": "What three problems had Imani's town faced before the election was announced?",
+          "choices": [
+            "Festivals can mark the changing seasons, honour long-held customs, or celebrate harvests, victories and the memory of important people.",
+            "The town had broken water taps, rising food prices, and a school library whose roof had fallen in during the last rainy season.",
+            "Weeks in advance, families clean their homes, market stalls fill with sacks of maize and baskets of mangoes, and tailors work late into the night making new clothes."
+          ],
+          "answer": "The town had broken water taps, rising food prices, and a school library whose roof had fallen in during the last rainy season.",
+          "explanation": "You must retrieve all three details from one early paragraph rather than stopping at the first."
+        },
+        {
+          "prompt": "Who falls under suspicion when the teacher's motorcycle is stolen, and how is his innocence proven?",
+          "choices": [
+            "Suspicion falls on Kian, a quiet new student, and he is cleared when the motorcycle is found abandoned near the river the next day.",
+            "She wants Imani to accept the scholarship to the leadership camp in Nairobi because talents that could help others should not be kept at home.",
+            "It is celebrated in January, and it marks the end of the cold season and the return of the melting streams."
+          ],
+          "answer": "Suspicion falls on Kian, a quiet new student, and he is cleared when the motorcycle is found abandoned near the river the next day.",
+          "explanation": "This question checks that you follow the accusation and its resolution across several paragraphs."
+        },
+        {
+          "prompt": "What evidence does part 1 give that preparations for the harvest festival begin long before the day itself?",
+          "choices": [
+            "Festivals can mark the changing seasons, honour long-held customs, or celebrate harvests, victories and the memory of important people.",
+            "The town had broken water taps, rising food prices, and a school library whose roof had fallen in during the last rainy season.",
+            "Weeks in advance, families clean their homes, market stalls fill with sacks of maize and baskets of mangoes, and tailors work late into the night making new clothes."
+          ],
+          "answer": "Weeks in advance, families clean their homes, market stalls fill with sacks of maize and baskets of mangoes, and tailors work late into the night making new clothes.",
+          "explanation": "You select supporting details from the preparation paragraph instead of describing the festival morning."
+        },
+        {
+          "prompt": "Why does Imani's mother tell her, “Your light is not meant to stay hidden”?",
+          "choices": [
+            "Suspicion falls on Kian, a quiet new student, and he is cleared when the motorcycle is found abandoned near the river the next day.",
+            "She wants Imani to accept the scholarship to the leadership camp in Nairobi because talents that could help others should not be kept at home.",
+            "It is celebrated in January, and it marks the end of the cold season and the return of the melting streams."
+          ],
+          "answer": "She wants Imani to accept the scholarship to the leadership camp in Nairobi because talents that could help others should not be kept at home.",
+          "explanation": "You interpret a figurative line by connecting it to the decision Imani faces that evening."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Compare Two Festivals",
+          "target": "Both festivals are celebrated in ..."
+        },
+        {
+          "prompt": "Speaking 2: Poetry Performance",
+          "target": "Long-held customs, such as lighting bonfires at dusk, are passed down through generations."
+        },
+        {
+          "prompt": "Speaking 3: Festival Poster Pitch",
+          "target": "Imagine you are organising a community festival."
+        },
+        {
+          "prompt": "Speaking 4: Festival Interview",
+          "target": "She lit a small lamp so her brother could finish his homework."
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Adam had to don his boots before the muddy walk to school."
+        },
+        {
+          "prompt": "Speaking 6: Five-Minute Unit Talk",
+          "target": "He is innocent until proven guilty, the teacher reminded the class."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "class.",
+            "in",
+            "best",
+            "my",
+            "try",
+            "to",
+            "me",
+            "encourages",
+            "always",
+            "teacher",
+            "My"
+          ],
+          "answer": "My teacher always encourages me to try my best in class."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "laughter.",
+            "and",
+            "music",
+            "with",
+            "fill",
+            "to",
+            "begins",
+            "square",
+            "the",
+            "autumn",
+            "Every"
+          ],
+          "answer": "Every autumn the square begins to fill with music and laughter."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "together.",
+            "community",
+            "the",
+            "bring",
+            "to",
+            "is",
+            "ceremony",
+            "the",
+            "of",
+            "point",
+            "real",
+            "The"
+          ],
+          "answer": "The real point of the ceremony is to bring the community together."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Dabshid.",
+            "of",
+            "start",
+            "the",
+            "mark",
+            "to",
+            "hills",
+            "the",
+            "across",
+            "lit",
+            "were",
+            "Bonfires"
+          ],
+          "answer": "Bonfires were lit across the hills to mark the start of Dabshid."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "begins.",
+            "match",
+            "the",
+            "before",
+            "helmet",
+            "a",
+            "don",
+            "must",
+            "player",
+            "Every"
+          ],
+          "answer": "Every player must don a helmet before the match begins."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "students.",
+            "between",
+            "arguments",
+            "settling",
+            "when",
+            "fair",
+            "be",
+            "to",
+            "tried",
+            "always",
+            "Yasmin",
+            "Teacher"
+          ],
+          "answer": "Teacher Yasmin always tried to be fair when settling arguments between students."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'combustion' mean in this unit?",
+          "choices": [
+            "The process of burning, which gives out heat and light.",
+            "The act of giving out or assigning something, such as tasks or money, in a set way.",
+            "To do with movement, or the energy a moving thing has."
+          ],
+          "answer": "The process of burning, which gives out heat and light.",
+          "explanation": "combustion: The process of burning, which gives out heat and light."
+        },
+        {
+          "prompt": "What does 'happy' mean in this unit?",
+          "choices": [
+            "The act of giving out or assigning something, such as tasks or money, in a set way.",
+            "The process of burning, which gives out heat and light.",
+            "Happy means feeling pleased, cheerful, or full of joy."
+          ],
+          "answer": "Happy means feeling pleased, cheerful, or full of joy.",
+          "explanation": "happy: Happy means feeling pleased, cheerful, or full of joy."
+        },
+        {
+          "prompt": "What does 'water' mean in this unit?",
+          "choices": [
+            "The process of burning, which gives out heat and light.",
+            "Water is the clear liquid that fills rivers, lakes and seas and that all living things need.",
+            "The act of giving out or assigning something, such as tasks or money, in a set way."
+          ],
+          "answer": "Water is the clear liquid that fills rivers, lakes and seas and that all living things need.",
+          "explanation": "water: Water is the clear liquid that fills rivers, lakes and seas and that all living things need."
+        },
+        {
+          "prompt": "What does 'library' mean in this unit?",
+          "choices": [
+            "A place where books are kept for people to read or borrow.",
+            "The act of giving out or assigning something, such as tasks or money, in a set way.",
+            "The process of burning, which gives out heat and light."
+          ],
+          "answer": "A place where books are kept for people to read or borrow.",
+          "explanation": "library: A place where books are kept for people to read or borrow."
+        },
+        {
+          "prompt": "What does 'busy' mean in this unit?",
+          "choices": [
+            "The act of giving out or assigning something, such as tasks or money, in a set way.",
+            "The process of burning, which gives out heat and light.",
+            "Having a lot to do, with little free time to spare."
+          ],
+          "answer": "Having a lot to do, with little free time to spare.",
+          "explanation": "busy: Having a lot to do, with little free time to spare."
+        },
+        {
+          "prompt": "What does 'zealous' mean in this unit?",
+          "choices": [
+            "The process of burning, which gives out heat and light.",
+            "Very enthusiastic and eager about something.",
+            "The act of giving out or assigning something, such as tasks or money, in a set way."
+          ],
+          "answer": "Very enthusiastic and eager about something.",
+          "explanation": "zealous: Very enthusiastic and eager about something."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'kinetic'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Kinetic is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'while'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Conjunction"
+          ],
+          "answer": "Conjunction",
+          "explanation": "While is used as a conjunction in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'emphasising'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Emphasising is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'tree'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Tree is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'article'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Article is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'authentic'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Authentic is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "applicability",
+              "How far something can be usefully applied to a situation."
+            ],
+            [
+              "excretion",
+              "The removal of waste the body has produced."
+            ],
+            [
+              "vulnerable",
+              "Able to be easily hurt or harmed, either physically or emotionally."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "rise",
+              "To rise means to get up or move upward, such as getting out of bed early."
+            ],
+            [
+              "rice",
+              "Rice is a grain that is cooked and eaten as food, often as part of a main meal."
+            ],
+            [
+              "prepare",
+              "Prepare means to get something ready before it is needed."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "magnificent",
+              "Magnificent means extremely impressive, beautiful or grand."
+            ],
+            [
+              "narrow",
+              "Narrow means having a small distance from one side to the other."
+            ],
+            [
+              "dusk",
+              "The time of day just before night, when light is fading."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "straw",
+              "Dried stalks of grain, often used for weaving or bedding."
+            ],
+            [
+              "largest",
+              "Biggest in size or amount compared with others."
+            ],
+            [
+              "usual",
+              "Happening or done most of the time; normal or ordinary."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "garden",
+              "An area of land, often near a home or school, used for growing plants and vegetables."
+            ],
+            [
+              "fair",
+              "Treating people equally and making decisions that are just and reasonable."
+            ],
+            [
+              "tough",
+              "Difficult to deal with, or strong enough to survive hard conditions."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "diligent",
+              "Working hard and being careful to do things well."
+            ],
+            [
+              "clamour",
+              "A loud noise or outcry, especially from a crowd."
+            ],
+            [
+              "cadence",
+              "The rhythm and rise and fall of a voice or a line."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Hero of Kitale, part 1': Her teacher, Mr. Tariq, was a _____ man who believed in youth leadership.",
+          "choices": [
+            "charismatic",
+            "legendary",
+            "meticulous",
+            "paragon"
+          ],
+          "answer": "charismatic",
+          "explanation": "The text says: Her teacher, Mr. Tariq, was a charismatic man who believed in youth leadership."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Hero of Kitale, part 1': Students whispered about how _____ she seemed.",
+          "choices": [
+            "industrious",
+            "determined",
+            "diligent",
+            "enthusiastic"
+          ],
+          "answer": "determined",
+          "explanation": "The text says: Students whispered about how determined she seemed."
+        },
+        {
+          "prompt": "Choose the missing word from 'Festivals That Bring Us Together, part 2': Children listen attentively, and many feel inspired to be more _____ and kind in their daily lives.",
+          "choices": [
+            "diligent",
+            "enthusiastic",
+            "industrious",
+            "intrepid"
+          ],
+          "answer": "diligent",
+          "explanation": "The text says: Children listen attentively, and many feel inspired to be more diligent and kind in their daily lives."
+        },
+        {
+          "prompt": "Choose the missing word from 'Festivals That Bring Us Together, part 2': The atmosphere is both solemn and _____, a mixture of deep respect and pure celebration.",
+          "choices": [
+            "benevolent",
+            "charismatic",
+            "determined",
+            "enthusiastic"
+          ],
+          "answer": "enthusiastic",
+          "explanation": "The text says: The atmosphere is both solemn and enthusiastic, a mixture of deep respect and pure celebration."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Hero of Kitale, part 1': Her friend Jamal, who was _____, helped carry donated books every Friday.",
+          "choices": [
+            "intrepid",
+            "industrious",
+            "diligent",
+            "enthusiastic"
+          ],
+          "answer": "industrious",
+          "explanation": "The text says: Her friend Jamal, who was industrious, helped carry donated books every Friday."
+        },
         {
           "prompt": "What does 'benevolent' mean?",
           "choices": [
@@ -490,28 +850,78 @@
           ],
           "answer": "Kind and generous; wanting to help others.",
           "explanation": "The benevolent woman donated food to the homeless shelter."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Festivals That Bring Us Together, part 2': The atmosphere is both solemn and _____, a mixture of deep respect and pure celebration.",
+          "choices": [
+            "benevolent",
+            "charismatic",
+            "determined",
+            "enthusiastic"
+          ],
+          "answer": "enthusiastic",
+          "explanation": "The text says: The atmosphere is both solemn and enthusiastic, a mixture of deep respect and pure celebration."
         },
         {
-          "prompt": "What does 'charismatic' mean?",
+          "prompt": "Choose the missing word from 'The Hero of Kitale, part 1': Her friend Jamal, who was _____, helped carry donated books every Friday.",
           "choices": [
-            "Hard-working and very dedicated to tasks.",
-            "Having a special charm that attracts and inspires people.",
-            "Showing great excitement and interest about something.",
-            "Working hard and being careful to do things well."
+            "intrepid",
+            "industrious",
+            "diligent",
+            "enthusiastic"
           ],
-          "answer": "Having a special charm that attracts and inspires people.",
-          "explanation": "The charismatic leader inspired everyone to work together for a better school."
+          "answer": "industrious",
+          "explanation": "The text says: Her friend Jamal, who was industrious, helped carry donated books every Friday."
         },
         {
-          "prompt": "What does 'determined' mean?",
+          "prompt": "Which word means: Not as much as is needed.",
           "choices": [
-            "Brave and not afraid of danger or difficulty.",
-            "Hard-working and very dedicated to tasks.",
-            "Having a strong desire to achieve something and not giving up.",
-            "Showing great excitement and interest about something."
+            "insufficient",
+            "allocation",
+            "combustion"
           ],
-          "answer": "Having a strong desire to achieve something and not giving up.",
-          "explanation": "She was determined to finish her homework before going out to play."
+          "answer": "insufficient",
+          "explanation": "insufficient: Not as much as is needed."
+        },
+        {
+          "prompt": "Which word means: Water is the clear liquid that fills rivers, lakes and seas and that all living things need.",
+          "choices": [
+            "allocation",
+            "combustion",
+            "water"
+          ],
+          "answer": "water",
+          "explanation": "water: Water is the clear liquid that fills rivers, lakes and seas and that all living things need."
+        },
+        {
+          "prompt": "What type of word is 'braids'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Braids is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'zealous'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Zealous is used as an adjective in this dictionary sense."
         }
       ]
     }

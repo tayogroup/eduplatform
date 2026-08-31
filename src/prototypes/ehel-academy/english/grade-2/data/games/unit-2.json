@@ -5,7 +5,7 @@
   "unitId": "eng-g02-t01-u02",
   "title": "Good Neighbours and Jobs Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: One of the seven parts of a week.",
           "choices": [
             "day",
-            "shopkeeper",
-            "pass"
+            "doctor",
+            "work"
           ],
           "answer": "day",
           "explanation": "day: One of the seven parts of a week."
         },
         {
-          "prompt": "Which word means: Wear means to have clothes or equipment on your body.",
+          "prompt": "Which word means: Trapped means stuck somewhere and unable to get out.",
           "choices": [
             "day",
-            "shopkeeper",
-            "wear"
+            "doctor",
+            "trapped"
           ],
-          "answer": "wear",
-          "explanation": "wear: Wear means to have clothes or equipment on your body."
+          "answer": "trapped",
+          "explanation": "trapped: Trapped means stuck somewhere and unable to get out."
         },
         {
-          "prompt": "Which word means: A friendly word for your mother.",
+          "prompt": "Which word means: Remember means to keep something in your mind and think of it again.",
           "choices": [
-            "shopkeeper",
-            "mum",
+            "doctor",
+            "remember",
             "day"
           ],
-          "answer": "mum",
-          "explanation": "mum: A friendly word for your mother."
+          "answer": "remember",
+          "explanation": "remember: Remember means to keep something in your mind and think of it again."
+        },
+        {
+          "prompt": "Which word means: A word you use to talk about you, and only you, doing something.",
+          "choices": [
+            "myself",
+            "day",
+            "doctor"
+          ],
+          "answer": "myself",
+          "explanation": "myself: A word you use to talk about you, and only you, doing something."
+        },
+        {
+          "prompt": "Which word means: A place where a farmer grows crops or keeps animals.",
+          "choices": [
+            "day",
+            "doctor",
+            "farm"
+          ],
+          "answer": "farm",
+          "explanation": "farm: A place where a farmer grows crops or keeps animals."
+        },
+        {
+          "prompt": "Which word means: Showing someone how to do something so that they can learn it.",
+          "choices": [
+            "doctor",
+            "teaching",
+            "day"
+          ],
+          "answer": "teaching",
+          "explanation": "teaching: Showing someone how to do something so that they can learn it."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Wear means to have clothes or equipment on your body.",
-          "answer": "wear"
+          "clue": "Safety means being free from danger or harm.",
+          "answer": "safety"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Full of people, noise or things happening.",
-          "answer": "busy"
+          "clue": "Everything means all the things there are, with nothing left out.",
+          "answer": "everything"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A word you use to talk about you, and only you, doing something.",
+          "answer": "myself"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A place where a farmer grows crops or keeps animals.",
+          "answer": "farm"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Making plants get bigger by giving them water, sunlight and care.",
+          "answer": "growing"
         }
       ]
     },
@@ -96,30 +141,66 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "danger.",
-            "is",
-            "there",
-            "when",
-            "help",
-            "to",
-            "hurry",
-            "Firefighters"
+            "engine.",
+            "fire",
+            "the",
+            "by",
+            "Leila",
+            "met",
+            "Amal"
           ],
-          "answer": "Firefighters hurry to help when there is danger."
+          "answer": "Amal met Leila by the fire engine."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "scared.",
-            "feels",
-            "she",
-            "when",
-            "training",
-            "her",
-            "trusts",
-            "Leila"
+            "eyes.",
+            "Nora's",
+            "over",
+            "wobbled",
+            "helmet",
+            "The"
           ],
-          "answer": "Leila trusts her training when she feels scared."
+          "answer": "The helmet wobbled over Nora's eyes."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "Leila.",
+            "asked",
+            "Amal",
+            "scared?",
+            "ever",
+            "you",
+            "Are"
+          ],
+          "answer": "Are you ever scared? Amal asked Leila."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "day.",
+            "every",
+            "school",
+            "to",
+            "bicycle",
+            "his",
+            "rides",
+            "Theo"
+          ],
+          "answer": "Theo rides his bicycle to school every day."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "morning.",
+            "every",
+            "together",
+            "breakfast",
+            "eat",
+            "We"
+          ],
+          "answer": "We eat breakfast together every morning."
         }
       ]
     },
@@ -132,302 +213,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "In the story, how many passengers does Amal count on Nadia's bus?",
+          "prompt": "What does the word neighbour mean?",
           "choices": [
-            "Two",
-            "Five",
-            "Seven",
-            "Ten"
+            "A person who puts out fires and rescues people.",
+            "A person who owns a shop and sells things.",
+            "A person who lives near you.",
+            "A hard hat that protects the head."
           ],
-          "answer": "Ten",
-          "explanation": "Amal counts all the way from one to ten, then says that there are ten people on the bus."
+          "answer": "A person who lives near you.",
+          "explanation": "A neighbour lives close to your home. The other options describe a firefighter, a shopkeeper and a helmet."
         },
         {
-          "prompt": "In the story, what does Karim use to reach the high glass?",
+          "prompt": "The ______ uses a long pole to reach the high windows.",
           "choices": [
-            "A ladder and a rope",
-            "A long pole",
-            "A hose and a bucket of water",
-            "A tractor and some seeds"
-          ],
-          "answer": "A long pole",
-          "explanation": "The story says Karim used a long pole. A hose belongs to the firefighters, and a tractor belongs to a farmer."
-        },
-        {
-          "prompt": "The bus driver wears a blue ______ to work every day.",
-          "choices": [
+            "window cleaner",
             "helmet",
-            "tractor",
             "uniform",
-            "stethoscope"
+            "busy market square"
           ],
-          "answer": "uniform",
-          "explanation": "A uniform is the set of clothes worn for a job. A helmet is worn by firefighters, and a tractor and a stethoscope are not clothes."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
+          "answer": "window cleaner",
+          "explanation": "Only a person can use a pole. A helmet and a uniform are clothing, and a market square is a place."
+        },
         {
-          "prompt": "What two jobs does the text say firefighters do?",
+          "prompt": "Which piece of equipment helps a firefighter breathe fresh air inside smoke?",
           "choices": [
-            "They put out fires, and they rescue people who are trapped inside burning buildings.",
-            "The mask lets her breathe fresh air inside the smoke, and the gloves let her hold hot things without burning her hands.",
-            "She counts ten passengers."
+            "A badge",
+            "A tractor",
+            "A whistle",
+            "A mask"
           ],
-          "answer": "They put out fires, and they rescue people who are trapped inside burning buildings.",
-          "explanation": "Both jobs are named in the text, one after the other."
+          "answer": "A mask",
+          "explanation": "The mask covers the nose and mouth. A badge and a whistle belong to a police officer, and a tractor belongs to a farmer."
         },
-        {
-          "prompt": "What does the poem say the neighbours are doing?",
-          "choices": [
-            "The mask lets her breathe fresh air inside the smoke, and the gloves let her hold hot things without burning her hands.",
-            "Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face.",
-            "The neighbours are helping other neighbours."
-          ],
-          "answer": "The neighbours are helping other neighbours.",
-          "explanation": "Line two of the poem says that neighbours are helping neighbours."
-        },
-        {
-          "prompt": "Which four pieces of equipment do the two firefighters wear in the story?",
-          "choices": [
-            "Karim brought water, Nadia swept the floor, Rami carried the heavy boxes, and the two firefighters helped clean the shop.",
-            "Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face.",
-            "Grandmas, grandpas, mums, dads and children."
-          ],
-          "answer": "Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face.",
-          "explanation": "One long sentence lists three items, and the sentence after it adds Leila's mask."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Describe a Job",
-          "target": "Every school day begins with the register."
-        },
-        {
-          "prompt": "Speaking Game — Who Am I?",
-          "target": "Play this guessing game with an adult, a friend, or the AI tutor if you are on your own."
-        },
-        {
-          "prompt": "Speaking 5 — What Is Happening Now?",
-          "target": "Describe six actions in the neighbourhood picture, one after the other."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "field.",
-            "green",
-            "the",
-            "across",
-            "walked",
-            "farmer",
-            "The"
-          ],
-          "answer": "The farmer walked across the green field."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "coat.",
-            "his",
-            "without",
-            "house",
-            "the",
-            "left",
-            "Theo"
-          ],
-          "answer": "Theo left the house without his coat."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "mother.",
-            "her",
-            "said",
-            "fire,”",
-            "the",
-            "out",
-            "putting",
-            "are",
-            "“They"
-          ],
-          "answer": "“They are putting out the fire,” said her mother."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'tried' mean in this unit?",
-          "choices": [
-            "Tried means made an attempt to do something.",
-            "One of the seven parts of a week.",
-            "A person who owns or looks after a shop and sells things."
-          ],
-          "answer": "Tried means made an attempt to do something.",
-          "explanation": "tried: Tried means made an attempt to do something."
-        },
-        {
-          "prompt": "What does 'brought' mean in this unit?",
-          "choices": [
-            "One of the seven parts of a week.",
-            "A person who owns or looks after a shop and sells things.",
-            "Carried something to a place, or took something along."
-          ],
-          "answer": "Carried something to a place, or took something along.",
-          "explanation": "brought: Carried something to a place, or took something along."
-        },
-        {
-          "prompt": "What does 'shopkeeper' mean in this unit?",
-          "choices": [
-            "To pass means to go by, or to hand something to someone.",
-            "A person who owns or looks after a shop and sells things.",
-            "One of the seven parts of a week."
-          ],
-          "answer": "A person who owns or looks after a shop and sells things.",
-          "explanation": "shopkeeper: A person who owns or looks after a shop and sells things."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'training'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Training is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'reporter'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Reporter is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'most'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Most is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "tray",
-              "A flat container used for carrying or holding things."
-            ],
-            [
-              "village",
-              "A village is a small group of houses and streets, smaller than a town."
-            ],
-            [
-              "many",
-              "Many means a large number of people or things."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "hot",
-              "Hot means having a very high temperature."
-            ],
-            [
-              "left",
-              "Left means went away from a place."
-            ],
-            [
-              "forward",
-              "Forward means towards the front, in the direction ahead."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "passengers",
-              "People who travel in a car, bus, train or plane, but do not drive it."
-            ],
-            [
-              "raced",
-              "Ran or moved somewhere as fast as possible."
-            ],
-            [
-              "window cleaner",
-              "A person whose job is to clean the windows of houses and shops."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which of these questions asks about an action?",
           "choices": [
@@ -464,13 +281,517 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What two jobs does the text say firefighters do?",
+          "choices": [
+            "They put out fires, and they rescue people who are trapped inside burning buildings.",
+            "The mask lets her breathe fresh air inside the smoke, and the gloves let her hold hot things without burning her hands.",
+            "She counts ten passengers."
+          ],
+          "answer": "They put out fires, and they rescue people who are trapped inside burning buildings.",
+          "explanation": "Both jobs are named in the text, one after the other."
+        },
+        {
+          "prompt": "Why does a firefighter need a mask, and why does she need gloves?",
+          "choices": [
+            "Grandmas, grandpas, mums, dads and children.",
+            "Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face.",
+            "The mask lets her breathe fresh air inside the smoke, and the gloves let her hold hot things without burning her hands."
+          ],
+          "answer": "The mask lets her breathe fresh air inside the smoke, and the gloves let her hold hot things without burning her hands.",
+          "explanation": "The text gives both reasons: fresh air for the mask, and hot things for the gloves."
+        },
+        {
+          "prompt": "What does the poem say the neighbours are doing?",
+          "choices": [
+            "Karim brought water, Nadia swept the floor, Rami carried the heavy boxes, and the two firefighters helped clean the shop.",
+            "The neighbours are helping other neighbours.",
+            "Grandmas, grandpas, mums, dads and children."
+          ],
+          "answer": "The neighbours are helping other neighbours.",
+          "explanation": "Line two of the poem says that neighbours are helping neighbours."
+        },
+        {
+          "prompt": "What is Karim's job, and what does he use to reach the high glass?",
+          "choices": [
+            "Karim is a window cleaner, and he uses a long pole to reach the high glass.",
+            "The neighbours are helping other neighbours.",
+            "Because the helpers had already done their own paid jobs that day, and they chose to help him only out of kindness."
+          ],
+          "answer": "Karim is a window cleaner, and he uses a long pole to reach the high glass.",
+          "explanation": "Amal names his job from her window, and the next paragraph names his long pole."
+        },
+        {
+          "prompt": "Which four pieces of equipment do the two firefighters wear in the story?",
+          "choices": [
+            "The words in my neighbourhood are repeated. A new line could be: There are helpers waving in my neighbourhood.",
+            "He means that anyone can notice a need and help kindly, and that helping does not have to be part of a paid job.",
+            "Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face."
+          ],
+          "answer": "Helmets on their heads, heavy boots on their feet, thick gloves on their hands, and a mask on Leila's face.",
+          "explanation": "One long sentence lists three items, and the sentence after it adds Leila's mask."
+        },
+        {
+          "prompt": "Why did Omar call helping him the kindest job of all?",
+          "choices": [
+            "Two honest examples, one in each direction, such as: I carry the shopping for the family next door, and they water our plants when we are away.",
+            "Because the helpers had already done their own paid jobs that day, and they chose to help him only out of kindness.",
+            "Amal lives on Warta Street, and the market stands close to her home."
+          ],
+          "answer": "Because the helpers had already done their own paid jobs that day, and they chose to help him only out of kindness.",
+          "explanation": "Omar contrasts their important jobs with the free choice they made to help one old shopkeeper."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Describe a Job",
+          "target": "Every school day begins with the register."
+        },
+        {
+          "prompt": "Speaking 2 — Ask and Answer About a Picture",
+          "target": "Amal met Leila by the fire engine."
+        },
+        {
+          "prompt": "Speaking Game — Who Am I?",
+          "target": "Play this guessing game with an adult, a friend, or the AI tutor if you are on your own."
+        },
+        {
+          "prompt": "Speaking 4 — Who and What Detective",
+          "target": "Are you ever scared? Amal asked Leila."
+        },
+        {
+          "prompt": "Speaking 5 — What Is Happening Now?",
+          "target": "Describe six actions in the neighbourhood picture, one after the other."
+        },
+        {
+          "prompt": "Speaking 6 — Be a Good Neighbour",
+          "target": "Role-play meeting a neighbour who needs help."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "mother.",
+            "her",
+            "find",
+            "child",
+            "lost",
+            "the",
+            "helped",
+            "officer",
+            "The"
+          ],
+          "answer": "The officer helped the lost child find her mother."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "class.",
+            "her",
+            "with",
+            "station",
+            "the",
+            "visited",
+            "Amal"
+          ],
+          "answer": "Amal visited the station with her class."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "question.",
+            "her",
+            "ask",
+            "to",
+            "time",
+            "enough",
+            "had",
+            "Amal"
+          ],
+          "answer": "Amal had enough time to ask her question."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "engine.",
+            "fire",
+            "the",
+            "on",
+            "ride",
+            "to",
+            "love",
+            "would",
+            "Amal"
+          ],
+          "answer": "Amal would love to ride on the fire engine."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "market.",
+            "the",
+            "behind",
+            "rising",
+            "smoke",
+            "saw",
+            "Amal"
+          ],
+          "answer": "Amal saw smoke rising behind the market."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "lesson.",
+            "the",
+            "in",
+            "answer",
+            "every",
+            "knew",
+            "Zuri"
+          ],
+          "answer": "Zuri knew every answer in the lesson."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'doctor' mean in this unit?",
+          "choices": [
+            "A person who helps people who are ill and makes them better.",
+            "One of the seven parts of a week.",
+            "Work means the tasks or jobs that people do."
+          ],
+          "answer": "A person who helps people who are ill and makes them better.",
+          "explanation": "doctor: A person who helps people who are ill and makes them better."
+        },
+        {
+          "prompt": "What does 'hot' mean in this unit?",
+          "choices": [
+            "One of the seven parts of a week.",
+            "A person who helps people who are ill and makes them better.",
+            "Hot means having a very high temperature."
+          ],
+          "answer": "Hot means having a very high temperature.",
+          "explanation": "hot: Hot means having a very high temperature."
+        },
+        {
+          "prompt": "What does 'dads' mean in this unit?",
+          "choices": [
+            "A person who helps people who are ill and makes them better.",
+            "Dads is another word for fathers.",
+            "One of the seven parts of a week."
+          ],
+          "answer": "Dads is another word for fathers.",
+          "explanation": "dads: Dads is another word for fathers."
+        },
+        {
+          "prompt": "What does 'passengers' mean in this unit?",
+          "choices": [
+            "People who travel in a car, bus, train or plane, but do not drive it.",
+            "One of the seven parts of a week.",
+            "A person who helps people who are ill and makes them better."
+          ],
+          "answer": "People who travel in a car, bus, train or plane, but do not drive it.",
+          "explanation": "passengers: People who travel in a car, bus, train or plane, but do not drive it."
+        },
+        {
+          "prompt": "What does 'selling' mean in this unit?",
+          "choices": [
+            "One of the seven parts of a week.",
+            "A person who helps people who are ill and makes them better.",
+            "Giving something to someone in exchange for money, right now."
+          ],
+          "answer": "Giving something to someone in exchange for money, right now.",
+          "explanation": "selling: Giving something to someone in exchange for money, right now."
+        },
+        {
+          "prompt": "What does 'shopkeeper' mean in this unit?",
+          "choices": [
+            "A person who helps people who are ill and makes them better.",
+            "A person who owns or looks after a shop and sells things.",
+            "One of the seven parts of a week."
+          ],
+          "answer": "A person who owns or looks after a shop and sells things.",
+          "explanation": "shopkeeper: A person who owns or looks after a shop and sells things."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'work'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Work is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'last'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adverb"
+          ],
+          "answer": "Adverb",
+          "explanation": "Last is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fight'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Fight is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'bicycle'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Bicycle is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'notepad'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Notepad is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'village'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Village is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "tray",
+              "A flat container used for carrying or holding things."
+            ],
+            [
+              "call",
+              "To shout, or to phone someone to ask for help."
+            ],
+            [
+              "station",
+              "A station is a building where people like firefighters keep their vehicles and equipment."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "safety",
+              "Safety means being free from danger or harm."
+            ],
+            [
+              "mouth",
+              "Your mouth is the part of your face used for eating, drinking and talking."
+            ],
+            [
+              "wobbled",
+              "Wobbled means moved unsteadily from side to side."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "taught",
+              "Taught means showed or explained something so another person could learn it."
+            ],
+            [
+              "alarm",
+              "An alarm is a device that makes a loud sound to warn people of danger."
+            ],
+            [
+              "always",
+              "At every time, with no exceptions at all."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "loved",
+              "Liked or cared about someone or something very much."
+            ],
+            [
+              "cheered",
+              "Shouted happily to show you were pleased about something."
+            ],
+            [
+              "kindest",
+              "The most caring and gentle, more than anyone or anything else."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "lesson",
+              "A time when a teacher helps children learn something."
+            ],
+            [
+              "mostly",
+              "Almost all of the time, or almost completely."
+            ],
+            [
+              "helmet",
+              "A hard hat that protects your head from knocks and falling things."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "growing",
+              "Making plants get bigger by giving them water, sunlight and care."
+            ],
+            [
+              "team",
+              "A team is a group of people who work together."
+            ],
+            [
+              "send",
+              "Send means to make something travel or go to a place."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which is the correct -ing form of the verb drive?",
+          "choices": [
+            "driving",
+            "driveing",
+            "drived",
+            "drivving"
+          ],
+          "answer": "driving",
+          "explanation": "Drive ends in a silent e, so the e is dropped before -ing. Drived is not a word, and the v is never doubled."
+        },
+        {
+          "prompt": "In the story, how many passengers does Amal count on Nadia's bus?",
+          "choices": [
+            "Two",
+            "Five",
+            "Seven",
+            "Ten"
+          ],
+          "answer": "Ten",
+          "explanation": "Amal counts all the way from one to ten, then says that there are ten people on the bus."
+        },
+        {
+          "prompt": "In the story, what does Karim use to reach the high glass?",
+          "choices": [
+            "A ladder and a rope",
+            "A long pole",
+            "A hose and a bucket of water",
+            "A tractor and some seeds"
+          ],
+          "answer": "A long pole",
+          "explanation": "The story says Karim used a long pole. A hose belongs to the firefighters, and a tractor belongs to a farmer."
+        },
+        {
+          "prompt": "The bus driver wears a blue ______ to work every day.",
+          "choices": [
+            "helmet",
+            "tractor",
+            "uniform",
+            "stethoscope"
+          ],
+          "answer": "uniform",
+          "explanation": "A uniform is the set of clothes worn for a job. A helmet is worn by firefighters, and a tractor and a stethoscope are not clothes."
+        },
+        {
+          "prompt": "What does the word rescuing mean?",
+          "choices": [
+            "Selling bread and fruit in a small shop",
+            "Making plants get bigger with water and sun",
+            "Cleaning the high windows with a long pole",
+            "Saving someone from danger"
+          ],
+          "answer": "Saving someone from danger",
+          "explanation": "Rescuing means bringing someone out of danger. The other options describe a shopkeeper, a farmer and a window cleaner."
+        },
         {
           "prompt": "What does the word neighbour mean?",
           "choices": [
@@ -481,28 +802,78 @@
           ],
           "answer": "A person who lives near you.",
           "explanation": "A neighbour lives close to your home. The other options describe a firefighter, a shopkeeper and a helmet."
-        },
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
         {
-          "prompt": "The ______ uses a long pole to reach the high windows.",
+          "prompt": "The bus driver wears a blue ______ to work every day.",
           "choices": [
-            "window cleaner",
             "helmet",
+            "tractor",
             "uniform",
-            "busy market square"
+            "stethoscope"
           ],
-          "answer": "window cleaner",
-          "explanation": "Only a person can use a pole. A helmet and a uniform are clothing, and a market square is a place."
+          "answer": "uniform",
+          "explanation": "A uniform is the set of clothes worn for a job. A helmet is worn by firefighters, and a tractor and a stethoscope are not clothes."
         },
         {
-          "prompt": "Which piece of equipment helps a firefighter breathe fresh air inside smoke?",
+          "prompt": "What does the word rescuing mean?",
           "choices": [
-            "A badge",
-            "A tractor",
-            "A whistle",
-            "A mask"
+            "Selling bread and fruit in a small shop",
+            "Making plants get bigger with water and sun",
+            "Cleaning the high windows with a long pole",
+            "Saving someone from danger"
           ],
-          "answer": "A mask",
-          "explanation": "The mask covers the nose and mouth. A badge and a whistle belong to a police officer, and a tractor belongs to a farmer."
+          "answer": "Saving someone from danger",
+          "explanation": "Rescuing means bringing someone out of danger. The other options describe a shopkeeper, a farmer and a window cleaner."
+        },
+        {
+          "prompt": "Which word means: A station is a building where people like firefighters keep their vehicles and equipment.",
+          "choices": [
+            "station",
+            "day",
+            "doctor"
+          ],
+          "answer": "station",
+          "explanation": "station: A station is a building where people like firefighters keep their vehicles and equipment."
+        },
+        {
+          "prompt": "Which word means: Dads is another word for fathers.",
+          "choices": [
+            "day",
+            "doctor",
+            "dads"
+          ],
+          "answer": "dads",
+          "explanation": "dads: Dads is another word for fathers."
+        },
+        {
+          "prompt": "What type of word is 'kindest'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Kindest is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'shopkeeper'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Shopkeeper is used as a noun in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g02-t03-u07",
   "title": "The World Around Us Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A boat is something people use to travel or sail across water.",
           "choices": [
             "boat",
-            "branch",
-            "save"
+            "grow",
+            "without"
           ],
           "answer": "boat",
           "explanation": "boat: A boat is something people use to travel or sail across water."
         },
         {
-          "prompt": "Which word means: Since means from a time in the past until now.",
+          "prompt": "Which word means: At the back of something, or further back than something else.",
           "choices": [
             "boat",
-            "branch",
-            "since"
+            "grow",
+            "behind"
           ],
-          "answer": "since",
-          "explanation": "since: Since means from a time in the past until now."
+          "answer": "behind",
+          "explanation": "behind: At the back of something, or further back than something else."
         },
         {
-          "prompt": "Which word means: To fold means to bend something over onto itself, like paper or cloth.",
+          "prompt": "Which word means: Carbon is part of the name of a gas that trees take in from the air.",
           "choices": [
-            "branch",
-            "fold",
+            "grow",
+            "carbon",
             "boat"
           ],
-          "answer": "fold",
-          "explanation": "fold: To fold means to bend something over onto itself, like paper or cloth."
+          "answer": "carbon",
+          "explanation": "carbon: Carbon is part of the name of a gas that trees take in from the air."
+        },
+        {
+          "prompt": "Which word means: Petals are the soft, colourful parts of a flower.",
+          "choices": [
+            "petals",
+            "boat",
+            "grow"
+          ],
+          "answer": "petals",
+          "explanation": "petals: Petals are the soft, colourful parts of a flower."
+        },
+        {
+          "prompt": "Which word means: Giving water to plants so that they do not dry out.",
+          "choices": [
+            "boat",
+            "grow",
+            "watering"
+          ],
+          "answer": "watering",
+          "explanation": "watering: Giving water to plants so that they do not dry out."
+        },
+        {
+          "prompt": "Which word means: A material is what something is made from.",
+          "choices": [
+            "grow",
+            "material",
+            "boat"
+          ],
+          "answer": "material",
+          "explanation": "material: A material is what something is made from."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Although means even though something else is true.",
-          "answer": "although"
+          "clue": "Beside means next to something or someone.",
+          "answer": "beside"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Petals are the soft, colourful parts of a flower.",
-          "answer": "petals"
+          "clue": "Dioxide is part of the name of a gas that plants breathe in.",
+          "answer": "dioxide"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Agrees means says yes to the same idea as someone else.",
+          "answer": "agrees"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Giving water to plants so that they do not dry out.",
+          "answer": "watering"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Metal is a hard, shiny material used to make things like tools and coins.",
+          "answer": "metal"
         }
       ]
     },
@@ -97,18 +142,29 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "sweet.",
-            "are",
-            "mangoes",
+            "sunflowers.",
+            "tall",
             "the",
-            "when",
-            "June,",
-            "in",
-            "is",
-            "birthday",
-            "Amal's"
+            "above",
+            "floated",
+            "butterfly",
+            "A"
           ],
-          "answer": "Amal's birthday is in June, when the mangoes are sweet."
+          "answer": "A butterfly floated above the tall sunflowers."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "trees.",
+            "young",
+            "the",
+            "down",
+            "cut",
+            "not",
+            "do",
+            "Please"
+          ],
+          "answer": "Please do not cut down the young trees."
         },
         {
           "prompt": "Build the complete model sentence.",
@@ -125,6 +181,34 @@
             "Trees"
           ],
           "answer": "Trees take in a small amount of gas each day."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "face.",
+            "Amal's",
+            "on",
+            "nice",
+            "felt",
+            "air",
+            "fresh",
+            "The"
+          ],
+          "answer": "The fresh air felt nice on Amal's face."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "soil.",
+            "the",
+            "under",
+            "roots",
+            "little",
+            "the",
+            "sees",
+            "Amal"
+          ],
+          "answer": "Amal sees the little roots under the soil."
         }
       ]
     },
@@ -137,306 +221,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does the flower of a plant make?",
+          "prompt": "Which word means rubbish that people drop on the ground in public places?",
           "choices": [
-            "New seeds",
-            "Fresh soil",
-            "Cold rain",
-            "Bright sunlight"
+            "sunshine",
+            "litter",
+            "oxygen",
+            "branch"
           ],
-          "answer": "New seeds",
-          "explanation": "A flower makes the seeds that grow into new plants. Soil, rain and sunlight are not made by any flower."
+          "answer": "litter",
+          "explanation": "Litter is dropped rubbish. Sunshine is light from the sun, oxygen is a gas, and a branch is part of a tree."
         },
         {
-          "prompt": "According to “Plants and Clean Air”, which gas do plants give out?",
+          "prompt": "What does recycling do?",
           "choices": [
-            "Carbon dioxide",
-            "Smoke",
-            "Oxygen",
-            "Steam"
+            "It waters a plant so that it grows.",
+            "It counts the birds in a garden.",
+            "It measures how tall a tree is.",
+            "It turns used things into something new."
           ],
-          "answer": "Oxygen",
-          "explanation": "Plants take in carbon dioxide and give out oxygen, which is the gas that we breathe."
+          "answer": "It turns used things into something new.",
+          "explanation": "Recycling makes used paper, glass or plastic into something new to use again. The other three describe completely different jobs."
         },
         {
-          "prompt": "Look at the picture: Nora ______ the flowers right now.",
+          "prompt": "Which of these makes food for a plant using sunlight?",
           "choices": [
-            "watering",
-            "are watering",
-            "is watering",
-            "am watering"
+            "The green leaves",
+            "The brown soil",
+            "The clean air",
+            "The falling rain"
           ],
-          "answer": "is watering",
-          "explanation": "Nora is one person, so she takes is, and the verb keeps its -ing ending."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What is Mother Earth Day?",
-          "choices": [
-            "It is a special day when people all around the world show that they care about our planet.",
-            "It keeps the Earth clean and safe for animals.",
-            "A lot of nice fresh air."
-          ],
-          "answer": "It is a special day when people all around the world show that they care about our planet.",
-          "explanation": "The very first sentence of the text explains what the day is and who takes part in it."
+          "answer": "The green leaves",
+          "explanation": "Leaves use sunlight to make the plant's food. Soil, air and rain are around the plant, but they are not parts of it."
         },
-        {
-          "prompt": "What is Sami’s father doing, and who is helping him?",
-          "choices": [
-            "It keeps the Earth clean and safe for animals.",
-            "They found litter: old bags and papers lying in the soil.",
-            "He is planting trees, and his uncle is helping him."
-          ],
-          "answer": "He is planting trees, and his uncle is helping him.",
-          "explanation": "The family text names both the action and the helper."
-        },
-        {
-          "prompt": "What did the children do with the paper they picked up, and why is that good for the Earth?",
-          "choices": [
-            "They found litter: old bags and papers lying in the soil.",
-            "They put it in a box for recycling. Nora explains that when we recycle paper, fewer trees are cut down.",
-            "Their green leaves clean the dirty air, so the air we breathe stays good."
-          ],
-          "answer": "They put it in a box for recycling. Nora explains that when we recycle paper, fewer trees are cut down.",
-          "explanation": "Nora gives the reason in the line she speaks just after the litter is collected."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Talk About Environmental Actions",
-          "target": "This person is ______."
-        },
-        {
-          "prompt": "Speaking 3 — Say Thank You to Nature",
-          "target": "I’m glad that ______."
-        },
-        {
-          "prompt": "Speaking 5 — Earth-Care Reporter",
-          "target": "Today we are ______."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Saturday.",
-            "on",
-            "stream",
-            "the",
-            "to",
-            "down",
-            "walked",
-            "class",
-            "The"
-          ],
-          "answer": "The class walked down to the stream on Saturday."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "soil.",
-            "the",
-            "in",
-            "digging",
-            "after",
-            "dirty",
-            "were",
-            "hands",
-            "Adam's"
-          ],
-          "answer": "Adam's hands were dirty after digging in the soil."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "litter.",
-            "up",
-            "picking",
-            "morning",
-            "the",
-            "spent",
-            "Adam",
-            "and",
-            "Amal"
-          ],
-          "answer": "Amal and Adam spent the morning picking up litter."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'families' mean in this unit?",
-          "choices": [
-            "Families are groups of people, like parents and children, who live together.",
-            "A boat is something people use to travel or sail across water.",
-            "A branch is a part of a tree that grows out from the trunk."
-          ],
-          "answer": "Families are groups of people, like parents and children, who live together.",
-          "explanation": "families: Families are groups of people, like parents and children, who live together."
-        },
-        {
-          "prompt": "What does 'dried' mean in this unit?",
-          "choices": [
-            "A boat is something people use to travel or sail across water.",
-            "A branch is a part of a tree that grows out from the trunk.",
-            "Dried means became dry after losing water or moisture."
-          ],
-          "answer": "Dried means became dry after losing water or moisture.",
-          "explanation": "dried: Dried means became dry after losing water or moisture."
-        },
-        {
-          "prompt": "What does 'branch' mean in this unit?",
-          "choices": [
-            "To save means to keep something so you do not lose or waste it.",
-            "A branch is a part of a tree that grows out from the trunk.",
-            "A boat is something people use to travel or sail across water."
-          ],
-          "answer": "A branch is a part of a tree that grows out from the trunk.",
-          "explanation": "branch: A branch is a part of a tree that grows out from the trunk."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'ourselves'?",
-          "choices": [
-            "Pronoun",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Pronoun",
-          "explanation": "Ourselves is used as a pronoun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'leaves'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Leaves is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'return'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Return is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "soap",
-              "Something you use with water to wash your hands and body clean."
-            ],
-            [
-              "metal",
-              "Metal is a hard, shiny material used to make things like tools and coins."
-            ],
-            [
-              "leave",
-              "Leave means to go away from a place, or to let something stay."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "unless",
-              "Unless means it will only happen if something else does not."
-            ],
-            [
-              "dirty",
-              "Dirty means covered in mud, dust or waste, not clean."
-            ],
-            [
-              "moss",
-              "Moss is a soft, green plant that grows on walls, rocks or trees."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "agrees",
-              "Agrees means says yes to the same idea as someone else."
-            ],
-            [
-              "cared",
-              "Cared means looked after someone or something and wanted them to be well."
-            ],
-            [
-              "stem",
-              "The main part of a plant that holds up the leaves."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Amal put the tiny ______ into the soil, and months later they grew into trees.",
           "choices": [
@@ -473,13 +289,516 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What is Mother Earth Day?",
+          "choices": [
+            "It is a special day when people all around the world show that they care about our planet.",
+            "It keeps the Earth clean and safe for animals.",
+            "A lot of nice fresh air."
+          ],
+          "answer": "It is a special day when people all around the world show that they care about our planet.",
+          "explanation": "The very first sentence of the text explains what the day is and who takes part in it."
+        },
+        {
+          "prompt": "Why does the text say plants are very important for our planet?",
+          "choices": [
+            "It keeps the Earth clean and safe for animals.",
+            "They found litter: old bags and papers lying in the soil.",
+            "Their green leaves clean the dirty air, so the air we breathe stays good."
+          ],
+          "answer": "Their green leaves clean the dirty air, so the air we breathe stays good.",
+          "explanation": "The text names the job that green leaves do for the whole planet."
+        },
+        {
+          "prompt": "What is Sami’s father doing, and who is helping him?",
+          "choices": [
+            "They put it in a box for recycling. Nora explains that when we recycle paper, fewer trees are cut down.",
+            "He is planting trees, and his uncle is helping him.",
+            "Their green leaves clean the dirty air, so the air we breathe stays good."
+          ],
+          "answer": "He is planting trees, and his uncle is helping him.",
+          "explanation": "The family text names both the action and the helper."
+        },
+        {
+          "prompt": "Which two colours does the poem name, and what is each colour for?",
+          "choices": [
+            "Blue is for the sky and green is for the Earth.",
+            "They take in carbon dioxide and give out oxygen.",
+            "People had cut the trees down for wood, so the sun dried the earth and the river grew small."
+          ],
+          "answer": "Blue is for the sky and green is for the Earth.",
+          "explanation": "The first two lines of the poem pair one colour with one thing each."
+        },
+        {
+          "prompt": "What did the children do with the paper they picked up, and why is that good for the Earth?",
+          "choices": [
+            "Because they help the Earth breathe, in the way that our lungs help us breathe.",
+            "She gave her a handful of small seeds and said that little things can make a big difference.",
+            "They put it in a box for recycling. Nora explains that when we recycle paper, fewer trees are cut down."
+          ],
+          "answer": "They put it in a box for recycling. Nora explains that when we recycle paper, fewer trees are cut down.",
+          "explanation": "Nora gives the reason in the line she speaks just after the litter is collected."
+        },
+        {
+          "prompt": "How did the village change after the children planted the trees?",
+          "choices": [
+            "She gave her a handful of small seeds and said that little things can make a big difference.",
+            "A row of little trees grew along the river bank, birds began to visit again, and the air smelled fresh and clean.",
+            "He is planting trees, and his uncle is helping him."
+          ],
+          "answer": "A row of little trees grew along the river bank, birds began to visit again, and the air smelled fresh and clean.",
+          "explanation": "The paragraph where the whole village comes to look lists three changes together."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Talk About Environmental Actions",
+          "target": "This person is ______."
+        },
+        {
+          "prompt": "Speaking 2 — Name the Parts of a Plant",
+          "target": "These are the ______."
+        },
+        {
+          "prompt": "Speaking 3 — Say Thank You to Nature",
+          "target": "I’m glad that ______."
+        },
+        {
+          "prompt": "Speaking 4 — Plant Guide",
+          "target": "Be the guide for a two-minute plant tour at home, in a park or at school."
+        },
+        {
+          "prompt": "Speaking 5 — Earth-Care Reporter",
+          "target": "Today we are ______."
+        },
+        {
+          "prompt": "Speaking 6 — Thank-You Circle",
+          "target": "I’m thankful for ______."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "appeared.",
+            "stem",
+            "green",
+            "first",
+            "the",
+            "when",
+            "happy",
+            "felt",
+            "Adam"
+          ],
+          "answer": "Adam felt happy when the first green stem appeared."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "autumn.",
+            "in",
+            "colour",
+            "change",
+            "leaves",
+            "The"
+          ],
+          "answer": "The leaves change colour in autumn."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "trees.",
+            "new",
+            "plant",
+            "to",
+            "together",
+            "worked",
+            "Families"
+          ],
+          "answer": "Families worked together to plant new trees."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Theo?",
+            "moss,",
+            "soft",
+            "touched",
+            "ever",
+            "you",
+            "Have"
+          ],
+          "answer": "Have you ever touched soft moss, Theo?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "trees.",
+            "plant",
+            "helped",
+            "village",
+            "the",
+            "in",
+            "family",
+            "Every"
+          ],
+          "answer": "Every family in the village helped plant trees."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "river.",
+            "the",
+            "beside",
+            "tree",
+            "young",
+            "a",
+            "planting",
+            "is",
+            "Amal"
+          ],
+          "answer": "Amal is planting a young tree beside the river."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'grow' mean in this unit?",
+          "choices": [
+            "To grow means to get bigger.",
+            "A boat is something people use to travel or sail across water.",
+            "Without means not having something with you."
+          ],
+          "answer": "To grow means to get bigger.",
+          "explanation": "grow: To grow means to get bigger."
+        },
+        {
+          "prompt": "What does 'near' mean in this unit?",
+          "choices": [
+            "A boat is something people use to travel or sail across water.",
+            "To grow means to get bigger.",
+            "Near means not far away, close to something."
+          ],
+          "answer": "Near means not far away, close to something.",
+          "explanation": "near: Near means not far away, close to something."
+        },
+        {
+          "prompt": "What does 'scale' mean in this unit?",
+          "choices": [
+            "To grow means to get bigger.",
+            "Scale means how big or small something is.",
+            "A boat is something people use to travel or sail across water."
+          ],
+          "answer": "Scale means how big or small something is.",
+          "explanation": "scale: Scale means how big or small something is."
+        },
+        {
+          "prompt": "What does 'river' mean in this unit?",
+          "choices": [
+            "A river is a large, natural stream of water that flows to the sea.",
+            "A boat is something people use to travel or sail across water.",
+            "To grow means to get bigger."
+          ],
+          "answer": "A river is a large, natural stream of water that flows to the sea.",
+          "explanation": "river: A river is a large, natural stream of water that flows to the sea."
+        },
+        {
+          "prompt": "What does 'stem' mean in this unit?",
+          "choices": [
+            "A boat is something people use to travel or sail across water.",
+            "To grow means to get bigger.",
+            "The main part of a plant that holds up the leaves."
+          ],
+          "answer": "The main part of a plant that holds up the leaves.",
+          "explanation": "stem: The main part of a plant that holds up the leaves."
+        },
+        {
+          "prompt": "What does 'save' mean in this unit?",
+          "choices": [
+            "To grow means to get bigger.",
+            "To save means to keep something so you do not lose or waste it.",
+            "A boat is something people use to travel or sail across water."
+          ],
+          "answer": "To save means to keep something so you do not lose or waste it.",
+          "explanation": "save: To save means to keep something so you do not lose or waste it."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'without'?",
+          "choices": [
+            "Preposition",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Preposition",
+          "explanation": "Without is used as a preposition in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'beaches'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Beaches is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'ourselves'?",
+          "choices": [
+            "Verb",
+            "Pronoun",
+            "Noun"
+          ],
+          "answer": "Pronoun",
+          "explanation": "Ourselves is used as a pronoun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'weeds'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Weeds is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'water'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Water is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'build'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Build is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "soap",
+              "Something you use with water to wash your hands and body clean."
+            ],
+            [
+              "paper",
+              "Paper is the thin material we write and draw on."
+            ],
+            [
+              "above",
+              "In a higher place than something else, without touching it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "between",
+              "In the middle of two other things, with one on each side."
+            ],
+            [
+              "idea",
+              "An idea is a thought or plan that you think of in your mind."
+            ],
+            [
+              "hard",
+              "Hard means difficult, or done with a lot of effort and energy."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "oxygen",
+              "Oxygen is a gas in the air that people and animals need to breathe."
+            ],
+            [
+              "moss",
+              "Moss is a soft, green plant that grows on walls, rocks or trees."
+            ],
+            [
+              "aunt",
+              "An aunt is the sister of your mother or father, or your uncle's wife."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "nice",
+              "Nice means pleasant, kind, or good in a simple, friendly way."
+            ],
+            [
+              "difference",
+              "A difference is a change or a way that something is not the same as before."
+            ],
+            [
+              "stream",
+              "A stream is a small, narrow river of water flowing across the land."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "litter",
+              "Rubbish that people drop on the ground in public places."
+            ],
+            [
+              "seeds",
+              "Tiny plant parts that can grow into brand new plants."
+            ],
+            [
+              "root",
+              "The root is the part of a plant that grows down under the soil."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "wood",
+              "Wood is the hard material that comes from a tree."
+            ],
+            [
+              "change",
+              "To change means to make something different."
+            ],
+            [
+              "safe",
+              "Safe means not in any danger."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which of these actions keeps our environment clean and safe for animals?",
+          "choices": [
+            "Dropping a bottle on the path",
+            "Leaving the tap running all day",
+            "Burning rubbish beside the road",
+            "Picking up litter in the park"
+          ],
+          "answer": "Picking up litter in the park",
+          "explanation": "Picking up litter keeps parks and streets safe for animals. The other three choices leave harm behind them."
+        },
+        {
+          "prompt": "What does the flower of a plant make?",
+          "choices": [
+            "New seeds",
+            "Fresh soil",
+            "Cold rain",
+            "Bright sunlight"
+          ],
+          "answer": "New seeds",
+          "explanation": "A flower makes the seeds that grow into new plants. Soil, rain and sunlight are not made by any flower."
+        },
+        {
+          "prompt": "According to “Plants and Clean Air”, which gas do plants give out?",
+          "choices": [
+            "Carbon dioxide",
+            "Smoke",
+            "Oxygen",
+            "Steam"
+          ],
+          "answer": "Oxygen",
+          "explanation": "Plants take in carbon dioxide and give out oxygen, which is the gas that we breathe."
+        },
+        {
+          "prompt": "Look at the picture: Nora ______ the flowers right now.",
+          "choices": [
+            "watering",
+            "are watering",
+            "is watering",
+            "am watering"
+          ],
+          "answer": "is watering",
+          "explanation": "Nora is one person, so she takes is, and the verb keeps its -ing ending."
+        },
+        {
+          "prompt": "Which sentence uses the word appreciate correctly?",
+          "choices": [
+            "I appreciate for the tall trees.",
+            "I appreciate the tall trees.",
+            "I am appreciate the tall trees.",
+            "I appreciate to the tall trees."
+          ],
+          "answer": "I appreciate the tall trees.",
+          "explanation": "Appreciate goes straight to the thing, with no for, no to and no extra helping word."
+        },
         {
           "prompt": "Which word means rubbish that people drop on the ground in public places?",
           "choices": [
@@ -490,28 +809,78 @@
           ],
           "answer": "litter",
           "explanation": "Litter is dropped rubbish. Sunshine is light from the sun, oxygen is a gas, and a branch is part of a tree."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Look at the picture: Nora ______ the flowers right now.",
+          "choices": [
+            "watering",
+            "are watering",
+            "is watering",
+            "am watering"
+          ],
+          "answer": "is watering",
+          "explanation": "Nora is one person, so she takes is, and the verb keeps its -ing ending."
         },
         {
-          "prompt": "What does recycling do?",
+          "prompt": "Which sentence uses the word appreciate correctly?",
           "choices": [
-            "It waters a plant so that it grows.",
-            "It counts the birds in a garden.",
-            "It measures how tall a tree is.",
-            "It turns used things into something new."
+            "I appreciate for the tall trees.",
+            "I appreciate the tall trees.",
+            "I am appreciate the tall trees.",
+            "I appreciate to the tall trees."
           ],
-          "answer": "It turns used things into something new.",
-          "explanation": "Recycling makes used paper, glass or plastic into something new to use again. The other three describe completely different jobs."
+          "answer": "I appreciate the tall trees.",
+          "explanation": "Appreciate goes straight to the thing, with no for, no to and no extra helping word."
         },
         {
-          "prompt": "Which of these makes food for a plant using sunlight?",
+          "prompt": "Which word means: Therefore means for that reason.",
           "choices": [
-            "The green leaves",
-            "The brown soil",
-            "The clean air",
-            "The falling rain"
+            "therefore",
+            "boat",
+            "grow"
           ],
-          "answer": "The green leaves",
-          "explanation": "Leaves use sunlight to make the plant's food. Soil, air and rain are around the plant, but they are not parts of it."
+          "answer": "therefore",
+          "explanation": "therefore: Therefore means for that reason."
+        },
+        {
+          "prompt": "Which word means: Scale means how big or small something is.",
+          "choices": [
+            "boat",
+            "grow",
+            "scale"
+          ],
+          "answer": "scale",
+          "explanation": "scale: Scale means how big or small something is."
+        },
+        {
+          "prompt": "What type of word is 'stream'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Stream is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'save'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Save is used as a verb in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t03-u10",
   "title": "My English Voice: Grade 5 Capstone Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The way a word is said.",
           "choices": [
             "pronunciation",
-            "economy",
-            "tax"
+            "notably",
+            "article"
           ],
           "answer": "pronunciation",
           "explanation": "pronunciation: The way a word is said."
         },
         {
-          "prompt": "Which word means: Keeping clean in order to stay healthy.",
+          "prompt": "Which word means: A short part added to the front of a word.",
           "choices": [
             "pronunciation",
-            "economy",
-            "hygiene"
+            "notably",
+            "prefix"
           ],
-          "answer": "hygiene",
-          "explanation": "hygiene: Keeping clean in order to stay healthy."
+          "answer": "prefix",
+          "explanation": "prefix: A short part added to the front of a word."
         },
         {
-          "prompt": "Which word means: A large group of lands and peoples ruled by one government.",
+          "prompt": "Which word means: An old story handed down, which may not be true.",
           "choices": [
-            "economy",
-            "empire",
+            "notably",
+            "legend",
             "pronunciation"
           ],
-          "answer": "empire",
-          "explanation": "empire: A large group of lands and peoples ruled by one government."
+          "answer": "legend",
+          "explanation": "legend: An old story handed down, which may not be true."
+        },
+        {
+          "prompt": "Which word means: Done too quickly, without stopping to think it through carefully.",
+          "choices": [
+            "hasty",
+            "pronunciation",
+            "notably"
+          ],
+          "answer": "hasty",
+          "explanation": "hasty: Done too quickly, without stopping to think it through carefully."
+        },
+        {
+          "prompt": "Which word means: The ability to learn, understand and think carefully about things.",
+          "choices": [
+            "pronunciation",
+            "notably",
+            "intelligence"
+          ],
+          "answer": "intelligence",
+          "explanation": "intelligence: The ability to learn, understand and think carefully about things."
+        },
+        {
+          "prompt": "Which word means: A tube that carries blood away from the heart.",
+          "choices": [
+            "notably",
+            "artery",
+            "pronunciation"
+          ],
+          "answer": "artery",
+          "explanation": "artery: A tube that carries blood away from the heart."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Keeping clean in order to stay healthy.",
-          "answer": "hygiene"
+          "clue": "The marks we use in writing, like full stops and commas.",
+          "answer": "punctuation"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A large group of lands and peoples ruled by one government.",
-          "answer": "empire"
+          "clue": "An answer or reaction to something.",
+          "answer": "response"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Extremely angry, so angry that staying calm is very hard.",
+          "answer": "furious"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A written agreement between two or more people or groups.",
+          "answer": "contract"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The movement of blood around the body.",
+          "answer": "circulation"
         }
       ]
     },
@@ -95,29 +140,84 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "evening.",
-            "each",
-            "gate",
+            "real.",
+            "felt",
+            "friends",
+            "two",
             "the",
-            "locking",
-            "include",
-            "duties",
-            "Her"
+            "between",
+            "dialogue",
+            "The"
           ],
-          "answer": "Her duties include locking the gate each evening."
+          "answer": "The dialogue between the two friends felt real."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "year.",
-            "this",
-            "mild",
-            "comparatively",
+            "one.",
+            "memorable",
+            "a",
+            "into",
+            "sentence",
+            "dull",
+            "a",
+            "lift",
+            "can",
+            "synonym",
+            "sharper",
+            "a",
+            "Choosing"
+          ],
+          "answer": "Choosing a sharper synonym can lift a dull sentence into a memorable one."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "thoughtful.",
             "was",
-            "winter",
+            "question",
+            "the",
+            "to",
+            "response",
+            "Her"
+          ],
+          "answer": "Her response to the question was thoughtful."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "wall.",
+            "storehouse",
+            "the",
+            "behind",
+            "hidden",
+            "boxes",
+            "the",
+            "expose",
+            "helped",
+            "witness",
+            "young",
             "The"
           ],
-          "answer": "The winter was comparatively mild this year."
+          "answer": "The young witness helped expose the boxes hidden behind the storehouse wall."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "unfair.",
+            "feels",
+            "rule",
+            "a",
+            "when",
+            "grow",
+            "can",
+            "unrest",
+            "how",
+            "showed",
+            "story",
+            "The"
+          ],
+          "answer": "The story showed how unrest can grow when a rule feels unfair."
         }
       ]
     },
@@ -130,316 +230,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'hasty' mean?",
+          "prompt": "What does 'coal' mean?",
           "choices": [
-            "Having plenty of room, so nothing feels crowded",
-            "Unwilling, or feeling unsure about doing something",
-            "Done too quickly, without stopping to think carefully",
-            "A special document that grants certain rights or rules to a whole group"
+            "A small soft bag that holds little things",
+            "A hard black rock that people burn for heat and energy",
+            "Areas or parts of a country that share something in common together",
+            "A problem that people discuss and try to solve"
           ],
-          "answer": "Done too quickly, without stopping to think carefully",
-          "explanation": "A hasty route once led the explorers into danger."
+          "answer": "A hard black rock that people burn for heat and energy",
+          "explanation": "Coal is a black rock we burn to make heat and electricity."
         },
         {
-          "prompt": "What does 'reluctant' mean?",
+          "prompt": "What does 'pouch' mean?",
           "choices": [
-            "Unwilling, or feeling unsure about doing something",
-            "A restless mood when people are unhappy and protest",
-            "To uncover something hidden, or make a fact known",
-            "Belonging to a city or busy town"
+            "A very large area of land that is ruled by one single government",
+            "A written rule that guides a group's choices",
+            "A restless mood when people feel unhappy",
+            "A small soft bag or pocket used to hold little things"
           ],
-          "answer": "Unwilling, or feeling unsure about doing something",
-          "explanation": "Sami was reluctant to sign until he had read every line."
+          "answer": "A small soft bag or pocket used to hold little things",
+          "explanation": "A pouch is a small bag; the family carried a paper inside a worn pouch."
         },
         {
-          "prompt": "Choose the missing word from 'Review text 1: The Silence After the Rumble, part 3': Suddenly, she _____ a boy her age.",
+          "prompt": "What does 'independence' mean?",
           "choices": [
-            "persuaded",
-            "encountered",
-            "exposed",
-            "communicated"
+            "To share information or ideas with other people",
+            "A group of words that someone has said or written",
+            "Being able to look after yourself and make your own choices",
+            "Surprising and sudden, because it was not planned or predicted at all"
           ],
-          "answer": "encountered",
-          "explanation": "The text says: Suddenly, she encountered a boy her age. To encounter is to meet by chance."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What does Amal understand about her role by the end of the passage?",
-          "choices": [
-            "She understands that opening the courthouse doors each morning is important, because without her nothing there can begin.",
-            "The group leader's figures show hundreds of cups are used each week and none are recycled, so the waste is a real issue.",
-            "She says no, the storm was part of the journey, and it led to a well that had never been recorded before."
-          ],
-          "answer": "She understands that opening the courthouse doors each morning is important, because without her nothing there can begin.",
-          "explanation": "The passage ends with Amal seeing that she opens the court, so justice starts on time each day."
+          "answer": "Being able to look after yourself and make your own choices",
+          "explanation": "Independence means making your own choices, as Amal did at the court."
         },
-        {
-          "prompt": "What does Sami say before the friends agree to sign anything?",
-          "choices": [
-            "The group leader's figures show hundreds of cups are used each week and none are recycled, so the waste is a real issue.",
-            "The author says Leo has honoured the old tradition of passing stories on by memory, and this time Leo feels pride instead of fear.",
-            "He says he would rather research it first, because nobody should sign anything they have not read."
-          ],
-          "answer": "He says he would rather research it first, because nobody should sign anything they have not read.",
-          "explanation": "Sami insists on reading and researching before signing, which shows careful, independent thinking."
-        },
-        {
-          "prompt": "How does Amal answer the judge who asks whether the storm was a mistake?",
-          "choices": [
-            "The class turns it into a book that will be shared with next year's pupils.",
-            "She says no, the storm was part of the journey, and it led to a well that had never been recorded before.",
-            "He says he would rather research it first, because nobody should sign anything they have not read."
-          ],
-          "answer": "She says no, the storm was part of the journey, and it led to a well that had never been recorded before.",
-          "explanation": "Amal tells the judge the storm was part of the journey and produced a valuable discovery."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Portfolio choice conference",
-          "target": "Explain three portfolio choices and support each choice with a specific example."
-        },
-        {
-          "prompt": "Vocabulary in context",
-          "target": "Her duties include locking the gate each evening."
-        },
-        {
-          "prompt": "Question-and-answer practice",
-          "target": "Answer six audience questions in complete, relevant sentences."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Exhibition.",
-            "the",
-            "at",
-            "speak",
-            "to",
-            "turn",
-            "her",
-            "before",
-            "just",
-            "anxious",
-            "felt",
-            "Amal"
-          ],
-          "answer": "Amal felt anxious just before her turn to speak at the Exhibition."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "help.",
-            "judge's",
-            "the",
-            "needed",
-            "who",
-            "boy",
-            "a",
-            "encountered",
-            "she",
-            "steps",
-            "court",
-            "the",
-            "At"
-          ],
-          "answer": "At the court steps she encountered a boy who needed the judge's help."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "weeks.",
-            "for",
-            "ignored",
-            "were",
-            "letters",
-            "the",
-            "when",
-            "began",
-            "town",
-            "the",
-            "in",
-            "Unrest"
-          ],
-          "answer": "Unrest in the town began when the letters were ignored for weeks."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'toxic' mean in this unit?",
-          "choices": [
-            "Poisonous, and harmful to living things.",
-            "The way a word is said.",
-            "The system by which a country makes and uses its money."
-          ],
-          "answer": "Poisonous, and harmful to living things.",
-          "explanation": "toxic: Poisonous, and harmful to living things."
-        },
-        {
-          "prompt": "What does 'reluctant' mean in this unit?",
-          "choices": [
-            "The way a word is said.",
-            "The system by which a country makes and uses its money.",
-            "Unwilling, or feeling unsure about doing something."
-          ],
-          "answer": "Unwilling, or feeling unsure about doing something.",
-          "explanation": "reluctant: Unwilling, or feeling unsure about doing something."
-        },
-        {
-          "prompt": "What does 'economy' mean in this unit?",
-          "choices": [
-            "Money people pay to the government to fund public services.",
-            "The system by which a country makes and uses its money.",
-            "The way a word is said."
-          ],
-          "answer": "The system by which a country makes and uses its money.",
-          "explanation": "economy: The system by which a country makes and uses its money."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'coal'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Coal is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'local'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Local is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'duties'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Duties is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "vegetable",
-              "A plant such as a carrot or a bean that people eat."
-            ],
-            [
-              "profit",
-              "The money left after all the costs are paid."
-            ],
-            [
-              "duties",
-              "Things a person is expected or required to do."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "infection",
-              "A sickness caused by germs that can spread."
-            ],
-            [
-              "earthquake",
-              "A sudden violent shaking of the ground."
-            ],
-            [
-              "coal",
-              "A hard black rock that people dig up and burn to make heat and energy."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "lobby",
-              "A large open area inside a building where people wait or meet."
-            ],
-            [
-              "communicate",
-              "To share information, ideas or feelings with other people."
-            ],
-            [
-              "local",
-              "Belonging to the small area near where you live."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'issue' mean?",
           "choices": [
@@ -476,13 +298,531 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What does Amal understand about her role by the end of the passage?",
+          "choices": [
+            "She understands that opening the courthouse doors each morning is important, because without her nothing there can begin.",
+            "The group leader's figures show hundreds of cups are used each week and none are recycled, so the waste is a real issue.",
+            "She says no, the storm was part of the journey, and it led to a well that had never been recorded before."
+          ],
+          "answer": "She understands that opening the courthouse doors each morning is important, because without her nothing there can begin.",
+          "explanation": "The passage ends with Amal seeing that she opens the court, so justice starts on time each day."
+        },
+        {
+          "prompt": "Which detail shows that Amal helps the visiting family straight away?",
+          "choices": [
+            "He says he would rather research it first, because nobody should sign anything they have not read.",
+            "The author says Leo has honoured the old tradition of passing stories on by memory, and this time Leo feels pride instead of fear.",
+            "She does not hesitate; she leads the family inside and fills the water jug on the judge's bench."
+          ],
+          "answer": "She does not hesitate; she leads the family inside and fills the water jug on the judge's bench.",
+          "explanation": "The text says Amal did not hesitate and led the family in, showing she acts quickly and kindly."
+        },
+        {
+          "prompt": "What does Sami say before the friends agree to sign anything?",
+          "choices": [
+            "The class turns it into a book that will be shared with next year's pupils.",
+            "He says he would rather research it first, because nobody should sign anything they have not read.",
+            "She says that a team which works well together is the most powerful kind of constitution."
+          ],
+          "answer": "He says he would rather research it first, because nobody should sign anything they have not read.",
+          "explanation": "Sami insists on reading and researching before signing, which shows careful, independent thinking."
+        },
+        {
+          "prompt": "What does the cracked charter come to mean to the class by the end?",
+          "choices": [
+            "It becomes a lesson that even a crack, or fracture, can lead to a stronger foundation.",
+            "She says that a team which works well together is the most powerful kind of constitution.",
+            "Keeping her daily promise to unlock the court, and helping the anxious boy's family, help Amal see herself as a leader."
+          ],
+          "answer": "It becomes a lesson that even a crack, or fracture, can lead to a stronger foundation.",
+          "explanation": "The passage closes by saying the cracked charter now means that a fracture can build something stronger."
+        },
+        {
+          "prompt": "How does Amal answer the judge who asks whether the storm was a mistake?",
+          "choices": [
+            "It becomes a lesson that even a crack, or fracture, can lead to a stronger foundation.",
+            "She understands that opening the courthouse doors each morning is important, because without her nothing there can begin.",
+            "She says no, the storm was part of the journey, and it led to a well that had never been recorded before."
+          ],
+          "answer": "She says no, the storm was part of the journey, and it led to a well that had never been recorded before.",
+          "explanation": "Amal tells the judge the storm was part of the journey and produced a valuable discovery."
+        },
+        {
+          "prompt": "What happens to the Memory Wall after it is taken down?",
+          "choices": [
+            "She does not hesitate; she leads the family inside and fills the water jug on the judge's bench.",
+            "The class turns it into a book that will be shared with next year's pupils.",
+            "He admits he was too forceful, and that Amal's slower, more careful plan was wiser and led to a profitable find."
+          ],
+          "answer": "The class turns it into a book that will be shared with next year's pupils.",
+          "explanation": "The passage says the wall was not thrown away but made into a book for future pupils."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Portfolio choice conference",
+          "target": "The pronunciation of \"yacht\" surprises everyone."
+        },
+        {
+          "prompt": "Fluent reading rehearsal",
+          "target": "The dialogue between the two friends felt real."
+        },
+        {
+          "prompt": "Vocabulary in context",
+          "target": "Choosing a sharper synonym can lift a dull sentence into a memorable one."
+        },
+        {
+          "prompt": "Three-minute presentation",
+          "target": "Her response to the question was thoughtful."
+        },
+        {
+          "prompt": "Question-and-answer practice",
+          "target": "The young witness helped expose the boxes hidden behind the storehouse wall."
+        },
+        {
+          "prompt": "Final capstone presentation",
+          "target": "The story showed how unrest can grow when a rule feels unfair."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "match.",
+            "first",
+            "the",
+            "before",
+            "contract",
+            "team",
+            "the",
+            "signed",
+            "player",
+            "Every"
+          ],
+          "answer": "Every player signed the team contract before the first match."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "dug.",
+            "be",
+            "may",
+            "well",
+            "a",
+            "deep",
+            "how",
+            "limits",
+            "regulation",
+            "A"
+          ],
+          "answer": "A regulation limits how deep a well may be dug."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "cell.",
+            "living",
+            "every",
+            "in",
+            "happens",
+            "Respiration"
+          ],
+          "answer": "Respiration happens in every living cell."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "help.",
+            "judge's",
+            "the",
+            "needed",
+            "who",
+            "boy",
+            "a",
+            "encountered",
+            "she",
+            "steps",
+            "court",
+            "the",
+            "At"
+          ],
+          "answer": "At the court steps she encountered a boy who needed the judge's help."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "normal.",
+            "is",
+            "that",
+            "and",
+            "audience,",
+            "an",
+            "before",
+            "anxious",
+            "feel",
+            "learners",
+            "Many"
+          ],
+          "answer": "Many learners feel anxious before an audience, and that is normal."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "cars.",
+            "than",
+            "it",
+            "on",
+            "goats",
+            "more",
+            "have",
+            "may",
+            "road",
+            "rural",
+            "A"
+          ],
+          "answer": "A rural road may have more goats on it than cars."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'notably' mean in this unit?",
+          "choices": [
+            "In a way worth pointing out; especially.",
+            "The way a word is said.",
+            "A small word such as a, an or the, used before a noun."
+          ],
+          "answer": "In a way worth pointing out; especially.",
+          "explanation": "notably: In a way worth pointing out; especially."
+        },
+        {
+          "prompt": "What does 'speech' mean in this unit?",
+          "choices": [
+            "The way a word is said.",
+            "In a way worth pointing out; especially.",
+            "A talk given out loud to a group of people."
+          ],
+          "answer": "A talk given out loud to a group of people.",
+          "explanation": "speech: A talk given out loud to a group of people."
+        },
+        {
+          "prompt": "What does 'statement' mean in this unit?",
+          "choices": [
+            "In a way worth pointing out; especially.",
+            "Something said or written clearly to express a fact, idea or opinion.",
+            "The way a word is said."
+          ],
+          "answer": "Something said or written clearly to express a fact, idea or opinion.",
+          "explanation": "statement: Something said or written clearly to express a fact, idea or opinion."
+        },
+        {
+          "prompt": "What does 'communicate' mean in this unit?",
+          "choices": [
+            "To share information, ideas or feelings with other people.",
+            "The way a word is said.",
+            "In a way worth pointing out; especially."
+          ],
+          "answer": "To share information, ideas or feelings with other people.",
+          "explanation": "communicate: To share information, ideas or feelings with other people."
+        },
+        {
+          "prompt": "What does 'economy' mean in this unit?",
+          "choices": [
+            "The way a word is said.",
+            "In a way worth pointing out; especially.",
+            "The system by which a country makes and uses its money."
+          ],
+          "answer": "The system by which a country makes and uses its money.",
+          "explanation": "economy: The system by which a country makes and uses its money."
+        },
+        {
+          "prompt": "What does 'hygiene' mean in this unit?",
+          "choices": [
+            "In a way worth pointing out; especially.",
+            "Keeping clean in order to stay healthy.",
+            "The way a word is said."
+          ],
+          "answer": "Keeping clean in order to stay healthy.",
+          "explanation": "hygiene: Keeping clean in order to stay healthy."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'article'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Article is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'nonfiction'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Nonfiction is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'encounter'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Encounter is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'unrest'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Unrest is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'salary'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Salary is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'photosynthesis'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Photosynthesis is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "vegetable",
+              "A plant such as a carrot or a bean that people eat."
+            ],
+            [
+              "adverb",
+              "A word that tells you how something is done."
+            ],
+            [
+              "glossary",
+              "A word list at the back of a book with meanings."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "punctuation",
+              "The marks we use in writing, like full stops and commas."
+            ],
+            [
+              "vocabulary",
+              "All the words a person knows and uses."
+            ],
+            [
+              "definition",
+              "A statement that explains the meaning of a word."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "scene",
+              "One part of a play or story, set in one place."
+            ],
+            [
+              "pouch",
+              "A small soft bag or pocket used to hold and protect little things."
+            ],
+            [
+              "expose",
+              "To uncover something hidden, or to make an unknown fact known to everyone."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "furious",
+              "Extremely angry, so angry that staying calm is very hard."
+            ],
+            [
+              "persuade",
+              "To make someone agree by giving them good reasons."
+            ],
+            [
+              "urban",
+              "Belonging to a city or busy town rather than the countryside."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "opportunity",
+              "A chance to do something worth doing."
+            ],
+            [
+              "profit",
+              "The money left after all the costs are paid."
+            ],
+            [
+              "policy",
+              "A plan or rule that helps people decide what to do."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "digestive",
+              "To do with breaking food down inside the body."
+            ],
+            [
+              "organ",
+              "A part of the body that does a particular job."
+            ],
+            [
+              "flood",
+              "A great overflow of water onto normally dry land."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does 'lobby' mean?",
+          "choices": [
+            "Done too quickly, without thinking it through",
+            "A large open area inside a building where people wait",
+            "To make someone agree by giving good reasons",
+            "The ability to learn, to understand and to think about things carefully"
+          ],
+          "answer": "A large open area inside a building where people wait",
+          "explanation": "The class met the curator in the museum lobby."
+        },
+        {
+          "prompt": "What does 'hasty' mean?",
+          "choices": [
+            "Having plenty of room, so nothing feels crowded",
+            "Unwilling, or feeling unsure about doing something",
+            "Done too quickly, without stopping to think carefully",
+            "A special document that grants certain rights or rules to a whole group"
+          ],
+          "answer": "Done too quickly, without stopping to think carefully",
+          "explanation": "A hasty route once led the explorers into danger."
+        },
+        {
+          "prompt": "What does 'reluctant' mean?",
+          "choices": [
+            "Unwilling, or feeling unsure about doing something",
+            "A restless mood when people are unhappy and protest",
+            "To uncover something hidden, or make a fact known",
+            "Belonging to a city or busy town"
+          ],
+          "answer": "Unwilling, or feeling unsure about doing something",
+          "explanation": "Sami was reluctant to sign until he had read every line."
+        },
+        {
+          "prompt": "Choose the missing word from 'Review text 1: The Silence After the Rumble, part 3': Suddenly, she _____ a boy her age.",
+          "choices": [
+            "persuaded",
+            "encountered",
+            "exposed",
+            "communicated"
+          ],
+          "answer": "encountered",
+          "explanation": "The text says: Suddenly, she encountered a boy her age. To encounter is to meet by chance."
+        },
+        {
+          "prompt": "Choose the missing word from 'Review text 3: The Cracked Charter, part 3': “And that’s the most powerful kind of _____.” As they left, the cracked charter remained in its case.",
+          "choices": [
+            "independence",
+            "citizenship",
+            "policy",
+            "constitution"
+          ],
+          "answer": "constitution",
+          "explanation": "The text says: And that’s the most powerful kind of constitution."
+        },
         {
           "prompt": "What does 'coal' mean?",
           "choices": [
@@ -493,28 +833,78 @@
           ],
           "answer": "A hard black rock that people burn for heat and energy",
           "explanation": "Coal is a black rock we burn to make heat and electricity."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Review text 1: The Silence After the Rumble, part 3': Suddenly, she _____ a boy her age.",
+          "choices": [
+            "persuaded",
+            "encountered",
+            "exposed",
+            "communicated"
+          ],
+          "answer": "encountered",
+          "explanation": "The text says: Suddenly, she encountered a boy her age. To encounter is to meet by chance."
         },
         {
-          "prompt": "What does 'pouch' mean?",
+          "prompt": "Choose the missing word from 'Review text 3: The Cracked Charter, part 3': “And that’s the most powerful kind of _____.” As they left, the cracked charter remained in its case.",
           "choices": [
-            "A very large area of land that is ruled by one single government",
-            "A written rule that guides a group's choices",
-            "A restless mood when people feel unhappy",
-            "A small soft bag or pocket used to hold little things"
+            "independence",
+            "citizenship",
+            "policy",
+            "constitution"
           ],
-          "answer": "A small soft bag or pocket used to hold little things",
-          "explanation": "A pouch is a small bag; the family carried a paper inside a worn pouch."
+          "answer": "constitution",
+          "explanation": "The text says: And that’s the most powerful kind of constitution."
         },
         {
-          "prompt": "What does 'independence' mean?",
+          "prompt": "Which word means: Stories about people and events that are invented, not real.",
           "choices": [
-            "To share information or ideas with other people",
-            "A group of words that someone has said or written",
-            "Being able to look after yourself and make your own choices",
-            "Surprising and sudden, because it was not planned or predicted at all"
+            "fiction",
+            "pronunciation",
+            "notably"
           ],
-          "answer": "Being able to look after yourself and make your own choices",
-          "explanation": "Independence means making your own choices, as Amal did at the court."
+          "answer": "fiction",
+          "explanation": "fiction: Stories about people and events that are invented, not real."
+        },
+        {
+          "prompt": "Which word means: Something said or written clearly to express a fact, idea or opinion.",
+          "choices": [
+            "pronunciation",
+            "notably",
+            "statement"
+          ],
+          "answer": "statement",
+          "explanation": "statement: Something said or written clearly to express a fact, idea or opinion."
+        },
+        {
+          "prompt": "What type of word is 'local'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Local is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'hygiene'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Hygiene is used as a noun in this dictionary sense."
         }
       ]
     }

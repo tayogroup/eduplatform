@@ -5,7 +5,7 @@
   "unitId": "eng-g02-t03-u09",
   "title": "Let's Explore the City! Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A bike has two wheels and you ride it by pushing the pedals.",
           "choices": [
             "bike",
-            "market",
-            "screen"
+            "phone",
+            "always"
           ],
           "answer": "bike",
           "explanation": "bike: A bike has two wheels and you ride it by pushing the pedals."
         },
         {
-          "prompt": "Which word means: At every time, with no exceptions at all.",
+          "prompt": "Which word means: Pick means to choose something, or to take it up with your fingers.",
           "choices": [
             "bike",
-            "market",
-            "always"
+            "phone",
+            "pick"
           ],
-          "answer": "always",
-          "explanation": "always: At every time, with no exceptions at all."
+          "answer": "pick",
+          "explanation": "pick: Pick means to choose something, or to take it up with your fingers."
         },
         {
-          "prompt": "Which word means: Excuse means to politely get someone's attention, or to forgive a small mistake.",
+          "prompt": "Which word means: A schedule is a plan that shows what will happen and when.",
           "choices": [
-            "market",
-            "excuse",
+            "phone",
+            "schedule",
             "bike"
           ],
-          "answer": "excuse",
-          "explanation": "excuse: Excuse means to politely get someone's attention, or to forgive a small mistake."
+          "answer": "schedule",
+          "explanation": "schedule: A schedule is a plan that shows what will happen and when."
+        },
+        {
+          "prompt": "Which word means: Studied means looked at something very carefully to understand it.",
+          "choices": [
+            "studied",
+            "bike",
+            "phone"
+          ],
+          "answer": "studied",
+          "explanation": "studied: Studied means looked at something very carefully to understand it."
+        },
+        {
+          "prompt": "Which word means: Anything means any thing at all, no matter what it is.",
+          "choices": [
+            "bike",
+            "phone",
+            "anything"
+          ],
+          "answer": "anything",
+          "explanation": "anything: Anything means any thing at all, no matter what it is."
+        },
+        {
+          "prompt": "Which word means: A building where you can read books and borrow them to take home.",
+          "choices": [
+            "phone",
+            "library",
+            "bike"
+          ],
+          "answer": "library",
+          "explanation": "library: A building where you can read books and borrow them to take home."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Sometimes means now and then, but not always.",
-          "answer": "sometimes"
+          "clue": "Live means to have your home somewhere.",
+          "answer": "live"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A daughter is a girl or woman who is someone's child.",
-          "answer": "daughter"
+          "clue": "Funny means something that makes you laugh or smile.",
+          "answer": "funny"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A navigator is a person who reads maps and helps guide the way.",
+          "answer": "navigator"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Anything means any thing at all, no matter what it is.",
+          "answer": "anything"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A station is a building where people like firefighters keep their vehicles and equipment.",
+          "answer": "station"
         }
       ]
     },
@@ -96,28 +141,69 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "Leo?",
-            "day,",
-            "special",
-            "a",
-            "today",
-            "Is"
+            "teacher.",
+            "her",
+            "ask",
+            "will",
+            "Amal"
           ],
-          "answer": "Is today a special day, Leo?"
+          "answer": "Amal will ask her teacher."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "bay.",
+            "soil.",
             "the",
-            "cross",
-            "boat",
-            "small",
-            "a",
-            "watched",
-            "They"
+            "in",
+            "digging",
+            "after",
+            "dirty",
+            "were",
+            "hands",
+            "Adam's"
           ],
-          "answer": "They watched a small boat cross the bay."
+          "answer": "Adam's hands were dirty after digging in the soil."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "now.",
+            "fish",
+            "the",
+            "see",
+            "to",
+            "ready",
+            "I'm"
+          ],
+          "answer": "I'm ready to see the fish now."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "flight.",
+            "the",
+            "before",
+            "map",
+            "the",
+            "studied",
+            "Leo"
+          ],
+          "answer": "Leo studied the map before the flight."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "tunnel.",
+            "dark",
+            "the",
+            "in",
+            "scary",
+            "bit",
+            "a",
+            "was",
+            "It"
+          ],
+          "answer": "It was a bit scary in the dark tunnel."
         }
       ]
     },
@@ -130,300 +216,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence uses the present simple correctly?",
+          "prompt": "What does the word library mean?",
           "choices": [
-            "The ferry take people across the river.",
-            "The ferry takes people across the river.",
-            "The ferry taking people across the river.",
-            "The ferry taked people across the river."
+            "A boat that carries people and cars across water.",
+            "A building where you can read books and borrow them to take home.",
+            "All the cars, buses and lorries moving on the roads.",
+            "A sea animal with eight long arms and no bones at all."
           ],
-          "answer": "The ferry takes people across the river.",
-          "explanation": "One ferry is an it, so the verb needs the -s ending: takes. The other three leave out the -s, use an -ing form, or invent a past form."
+          "answer": "A building where you can read books and borrow them to take home.",
+          "explanation": "A library is full of books to read and to borrow. The other three options describe a ferry, traffic and an octopus."
         },
         {
-          "prompt": "Which sentence talks about the future?",
+          "prompt": "Which word means a large building with many different shops inside it?",
           "choices": [
-            "Tomorrow we will ride the ferry.",
-            "Yesterday we went to the aquarium.",
-            "We ate fruit at the market.",
-            "Last week we saw the sharks."
+            "shopping centre",
+            "penguin",
+            "helicopter",
+            "directions"
           ],
-          "answer": "Tomorrow we will ride the ferry.",
-          "explanation": "Tomorrow and will both point forward. The other three sentences use the past verbs went, ate and saw."
+          "answer": "shopping centre",
+          "explanation": "A shopping centre holds many shops under one roof. A penguin is a bird, a helicopter flies, and directions are words that tell you the way."
         },
         {
-          "prompt": "Your friend says, “I like the library.” Which reply agrees politely?",
+          "prompt": "Which of these travels below the city streets?",
           "choices": [
-            "I don't.",
-            "I no like it.",
-            "Why do you?",
-            "I do too!"
+            "the ferry",
+            "the Ferris wheel",
+            "the helicopter",
+            "the underground"
           ],
-          "answer": "I do too!",
-          "explanation": "“I do too!” agrees. “I don't.” disagrees, “I no like it.” is not correct English, and “Why do you?” asks a question instead of giving an opinion."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What does the poem tell you to look around at when you stand at the zebra crossing?",
-          "choices": [
-            "City places and city faces.",
-            "Places, faces and laces.",
-            "They took the bus into the city."
-          ],
-          "answer": "City places and city faces.",
-          "explanation": "Two lines of the poem begin with the same words, “Look around at”, and then name city places and city faces."
+          "answer": "the underground",
+          "explanation": "The underground runs through tunnels below the streets. The ferry travels on water, the Ferris wheel turns in a park, and the helicopter flies above the city."
         },
-        {
-          "prompt": "The schedule calls one animal clever and another one hungry. Which animal is which?",
-          "choices": [
-            "Places, faces and laces.",
-            "She smelled fresh bread and sweet mangoes, and people were buying fish, fruit and bright cloth.",
-            "The octopus is clever and the shark is hungry."
-          ],
-          "answer": "The octopus is clever and the shark is hungry.",
-          "explanation": "Each line ends with a describing word in brackets, so “They're clever!” belongs to the octopus and “They're hungry!” belongs to the shark."
-        },
-        {
-          "prompt": "Who did the children meet near the shopping centre, and what was his problem?",
-          "choices": [
-            "She smelled fresh bread and sweet mangoes, and people were buying fish, fruit and bright cloth.",
-            "An old man who was lost and needed to find the hospital, because his daughter was there with a new baby.",
-            "Because the words are shouted, and shouting shows there is only a short, safe moment left to cross."
-          ],
-          "answer": "An old man who was lost and needed to find the hospital, because his daughter was there with a new baby.",
-          "explanation": "The old man holds a map, turns it around, and then explains that he is lost."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Talk About City Places",
-          "target": "This is a / an ______."
-        },
-        {
-          "prompt": "Speaking Game — Mystery Animal",
-          "target": "It is ______ and ______."
-        },
-        {
-          "prompt": "Speaking 5 — Aquarium Expert",
-          "target": "An octopus has eight arms."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "carry.",
-            "to",
-            "heavy",
-            "quite",
-            "was",
-            "bag",
-            "The"
-          ],
-          "answer": "The bag was quite heavy to carry."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "aquarium.",
-            "the",
-            "leave",
-            "to",
-            "want",
-            "didn't",
-            "Adam"
-          ],
-          "answer": "Adam didn't want to leave the aquarium."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Adam.",
-            "with",
-            "market",
-            "the",
-            "explore",
-            "will",
-            "I"
-          ],
-          "answer": "I will explore the market with Adam."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'keeper' mean in this unit?",
-          "choices": [
-            "A keeper is a person whose job is to look after animals.",
-            "A bike has two wheels and you ride it by pushing the pedals.",
-            "A busy place where people buy and sell food and other things."
-          ],
-          "answer": "A keeper is a person whose job is to look after animals.",
-          "explanation": "keeper: A keeper is a person whose job is to look after animals."
-        },
-        {
-          "prompt": "What does 'bit' mean in this unit?",
-          "choices": [
-            "A bike has two wheels and you ride it by pushing the pedals.",
-            "A busy place where people buy and sell food and other things.",
-            "A bit means a small amount of something."
-          ],
-          "answer": "A bit means a small amount of something.",
-          "explanation": "bit: A bit means a small amount of something."
-        },
-        {
-          "prompt": "What does 'market' mean in this unit?",
-          "choices": [
-            "A screen is the flat part of a computer that shows pictures and words.",
-            "A busy place where people buy and sell food and other things.",
-            "A bike has two wheels and you ride it by pushing the pedals."
-          ],
-          "answer": "A busy place where people buy and sell food and other things.",
-          "explanation": "market: A busy place where people buy and sell food and other things."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'we'll'?",
-          "choices": [
-            "Phrase",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Phrase",
-          "explanation": "We'll is used as a phrase in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'straight ahead'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Phrase"
-          ],
-          "answer": "Phrase",
-          "explanation": "Straight ahead is used as a phrase in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'patient'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Patient is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "hope",
-              "To hope means to wish that something good will happen."
-            ],
-            [
-              "church",
-              "A church is a building where Christians go to pray."
-            ],
-            [
-              "upset",
-              "Upset means feeling sad or worried about something."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "never",
-              "Never means not at any time."
-            ],
-            [
-              "didn't",
-              "Didn't is a short way of saying did not."
-            ],
-            [
-              "shaped",
-              "Shaped means having a certain form or outline, like a circle or a wave."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "stranger",
-              "A stranger is a person you have never met before."
-            ],
-            [
-              "drop",
-              "Drop means to let something fall from your hand."
-            ],
-            [
-              "directions",
-              "Words that tell you which way to go."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "We took the ____ across the river to the other side.",
           "choices": [
@@ -460,13 +284,513 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What does the poem tell you to look around at when you stand at the zebra crossing?",
+          "choices": [
+            "City places and city faces.",
+            "Places, faces and laces.",
+            "They took the bus into the city."
+          ],
+          "answer": "City places and city faces.",
+          "explanation": "Two lines of the poem begin with the same words, “Look around at”, and then name city places and city faces."
+        },
+        {
+          "prompt": "The last line is written in capital letters with exclamation marks. Why do you think the poet wrote it that way?",
+          "choices": [
+            "Places, faces and laces.",
+            "She smelled fresh bread and sweet mangoes, and people were buying fish, fruit and bright cloth.",
+            "Because the words are shouted, and shouting shows there is only a short, safe moment left to cross."
+          ],
+          "answer": "Because the words are shouted, and shouting shows there is only a short, safe moment left to cross.",
+          "explanation": "Capital letters and exclamation marks show a loud, urgent voice, and “Hurry up!” tells you the person must move quickly."
+        },
+        {
+          "prompt": "The schedule calls one animal clever and another one hungry. Which animal is which?",
+          "choices": [
+            "An old man who was lost and needed to find the hospital, because his daughter was there with a new baby.",
+            "The octopus is clever and the shark is hungry.",
+            "Because the words are shouted, and shouting shows there is only a short, safe moment left to cross."
+          ],
+          "answer": "The octopus is clever and the shark is hungry.",
+          "explanation": "Each line ends with a describing word in brackets, so “They're clever!” belongs to the octopus and “They're hungry!” belongs to the shark."
+        },
+        {
+          "prompt": "Leo's dad says, “I like shopping.” What does Leo reply, and what does his reply tell you?",
+          "choices": [
+            "Leo replies, “I don't!”, which tells you that he does not enjoy shopping.",
+            "Four shows: the octopus, the penguin, the shark and the turtle.",
+            "Walk straight ahead to the traffic light, then turn left, then walk to the next street, where the hospital stands on the right."
+          ],
+          "answer": "Leo replies, “I don't!”, which tells you that he does not enjoy shopping.",
+          "explanation": "“I don't.” is the polite way to disagree, so father and son enjoy different things."
+        },
+        {
+          "prompt": "What did Amal smell at the market, and what were people buying there?",
+          "choices": [
+            "The Penguin Feeding starts at 11:00 and Turtle Time starts at 2:00.",
+            "Because the old man said that his legs were slow and the traffic was scary, so he still needed help.",
+            "She smelled fresh bread and sweet mangoes, and people were buying fish, fruit and bright cloth."
+          ],
+          "answer": "She smelled fresh bread and sweet mangoes, and people were buying fish, fruit and bright cloth.",
+          "explanation": "The market paragraph names what people bought and then what Amal smelled."
+        },
+        {
+          "prompt": "Adam had already given clear directions. Why did the children decide to walk with the old man as well?",
+          "choices": [
+            "That an octopus has eight arms, and that a turtle carries a hard shell.",
+            "Because the old man said that his legs were slow and the traffic was scary, so he still needed help.",
+            "The octopus is clever and the shark is hungry."
+          ],
+          "answer": "Because the old man said that his legs were slow and the traffic was scary, so he still needed help.",
+          "explanation": "The old man thanks them but still looks worried, and his two reasons show that directions alone were not enough."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Talk About City Places",
+          "target": "This is a / an ______."
+        },
+        {
+          "prompt": "Speaking 2 — I Like, I Don't Like",
+          "target": "Amal will ask her teacher."
+        },
+        {
+          "prompt": "Speaking Game — Mystery Animal",
+          "target": "It is ______ and ______."
+        },
+        {
+          "prompt": "Speaking 4 — City Guide",
+          "target": "Walk straight ahead to the traffic light."
+        },
+        {
+          "prompt": "Speaking 5 — Aquarium Expert",
+          "target": "An octopus has eight arms."
+        },
+        {
+          "prompt": "Speaking 6 — Yesterday and Tomorrow",
+          "target": "Tomorrow I will ______."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "market.",
+            "the",
+            "to",
+            "directions",
+            "us",
+            "gave",
+            "woman",
+            "kind",
+            "A"
+          ],
+          "answer": "A kind woman gave us directions to the market."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "said.",
+            "she",
+            "world,”",
+            "English",
+            "my",
+            "to",
+            "“Welcome"
+          ],
+          "answer": "“Welcome to my English world,” she said."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "subject.",
+            "favourite",
+            "Amal's",
+            "is",
+            "English"
+          ],
+          "answer": "English is Amal's favourite subject."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Leo.",
+            "at",
+            "smiled",
+            "pilot",
+            "The"
+          ],
+          "answer": "The pilot smiled at Leo."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "need.",
+            "in",
+            "stranger",
+            "a",
+            "helps",
+            "person",
+            "kind",
+            "A"
+          ],
+          "answer": "A kind person helps a stranger in need."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "floors.",
+            "three",
+            "on",
+            "shops",
+            "fifty",
+            "has",
+            "centre",
+            "shopping",
+            "The"
+          ],
+          "answer": "The shopping centre has fifty shops on three floors."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'phone' mean in this unit?",
+          "choices": [
+            "A phone is what you use to talk to someone far away.",
+            "A bike has two wheels and you ride it by pushing the pedals.",
+            "At every time, with no exceptions at all."
+          ],
+          "answer": "A phone is what you use to talk to someone far away.",
+          "explanation": "phone: A phone is what you use to talk to someone far away."
+        },
+        {
+          "prompt": "What does 'walk' mean in this unit?",
+          "choices": [
+            "A bike has two wheels and you ride it by pushing the pedals.",
+            "A phone is what you use to talk to someone far away.",
+            "To walk means to move on your feet at a normal speed."
+          ],
+          "answer": "To walk means to move on your feet at a normal speed.",
+          "explanation": "walk: To walk means to move on your feet at a normal speed."
+        },
+        {
+          "prompt": "What does 'swam' mean in this unit?",
+          "choices": [
+            "A phone is what you use to talk to someone far away.",
+            "Swam means moved through water using arms and legs, or fins.",
+            "A bike has two wheels and you ride it by pushing the pedals."
+          ],
+          "answer": "Swam means moved through water using arms and legs, or fins.",
+          "explanation": "swam: Swam means moved through water using arms and legs, or fins."
+        },
+        {
+          "prompt": "What does 'buying' mean in this unit?",
+          "choices": [
+            "Buying means giving money to get something you want.",
+            "A bike has two wheels and you ride it by pushing the pedals.",
+            "A phone is what you use to talk to someone far away."
+          ],
+          "answer": "Buying means giving money to get something you want.",
+          "explanation": "buying: Buying means giving money to get something you want."
+        },
+        {
+          "prompt": "What does 'ferry' mean in this unit?",
+          "choices": [
+            "A bike has two wheels and you ride it by pushing the pedals.",
+            "A phone is what you use to talk to someone far away.",
+            "A boat that carries people and cars across water."
+          ],
+          "answer": "A boat that carries people and cars across water.",
+          "explanation": "ferry: A boat that carries people and cars across water."
+        },
+        {
+          "prompt": "What does 'world' mean in this unit?",
+          "choices": [
+            "A phone is what you use to talk to someone far away.",
+            "The world is the Earth and everywhere and everyone on it.",
+            "A bike has two wheels and you ride it by pushing the pedals."
+          ],
+          "answer": "The world is the Earth and everywhere and everyone on it.",
+          "explanation": "world: The world is the Earth and everywhere and everyone on it."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'always'?",
+          "choices": [
+            "Adverb",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adverb",
+          "explanation": "Always is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'dirty'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Dirty is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'we're'?",
+          "choices": [
+            "Verb",
+            "Phrase",
+            "Noun"
+          ],
+          "answer": "Phrase",
+          "explanation": "We're is used as a phrase in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'rode'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Rode is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'directions'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Directions is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'disappointed'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Disappointed is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "hope",
+              "To hope means to wish that something good will happen."
+            ],
+            [
+              "story",
+              "A story tells you about things that happen to somebody."
+            ],
+            [
+              "ask",
+              "Ask means to say a question to someone."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "read",
+              "Read means to look at written words and understand what they say."
+            ],
+            [
+              "slow",
+              "Slow means not moving very fast."
+            ],
+            [
+              "full",
+              "Full means there is no more room inside."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "fish",
+              "A fish is an animal that lives in water and breathes through gills."
+            ],
+            [
+              "buckling",
+              "Buckling means fastening a strap or belt to hold something safely in place."
+            ],
+            [
+              "boat",
+              "A boat is something people use to travel or sail across water."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "navigator",
+              "A navigator is a person who reads maps and helps guide the way."
+            ],
+            [
+              "stranger",
+              "A stranger is a person you have never met before."
+            ],
+            [
+              "bit",
+              "A bit means a small amount of something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "lead",
+              "Lead means to go first and show others the way."
+            ],
+            [
+              "bus",
+              "A long vehicle that carries many people along the road."
+            ],
+            [
+              "turtle",
+              "A slow sea animal with a hard shell on its back."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "mosque",
+              "A mosque is a building where Muslims go to pray."
+            ],
+            [
+              "bored",
+              "Bored means you have nothing interesting to do."
+            ],
+            [
+              "perfect",
+              "Perfect means so good that nothing needs changing."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "How many arms does an octopus have?",
+          "choices": [
+            "Two",
+            "Six",
+            "Eight",
+            "Twelve"
+          ],
+          "answer": "Eight",
+          "explanation": "Reading 2 and the library book in the story both say that an octopus has eight arms."
+        },
+        {
+          "prompt": "Which sentence uses the present simple correctly?",
+          "choices": [
+            "The ferry take people across the river.",
+            "The ferry takes people across the river.",
+            "The ferry taking people across the river.",
+            "The ferry taked people across the river."
+          ],
+          "answer": "The ferry takes people across the river.",
+          "explanation": "One ferry is an it, so the verb needs the -s ending: takes. The other three leave out the -s, use an -ing form, or invent a past form."
+        },
+        {
+          "prompt": "Which sentence talks about the future?",
+          "choices": [
+            "Tomorrow we will ride the ferry.",
+            "Yesterday we went to the aquarium.",
+            "We ate fruit at the market.",
+            "Last week we saw the sharks."
+          ],
+          "answer": "Tomorrow we will ride the ferry.",
+          "explanation": "Tomorrow and will both point forward. The other three sentences use the past verbs went, ate and saw."
+        },
+        {
+          "prompt": "Your friend says, “I like the library.” Which reply agrees politely?",
+          "choices": [
+            "I don't.",
+            "I no like it.",
+            "Why do you?",
+            "I do too!"
+          ],
+          "answer": "I do too!",
+          "explanation": "“I do too!” agrees. “I don't.” disagrees, “I no like it.” is not correct English, and “Why do you?” asks a question instead of giving an opinion."
+        },
+        {
+          "prompt": "Adam told the lost man to walk straight ahead. What does straight ahead mean?",
+          "choices": [
+            "Turn left at the corner.",
+            "Go back the way you came.",
+            "Go forward without turning.",
+            "Cross the road at the crossing."
+          ],
+          "answer": "Go forward without turning.",
+          "explanation": "Straight ahead means keep going forward and do not turn to the left or the right."
+        },
         {
           "prompt": "What does the word library mean?",
           "choices": [
@@ -477,28 +801,78 @@
           ],
           "answer": "A building where you can read books and borrow them to take home.",
           "explanation": "A library is full of books to read and to borrow. The other three options describe a ferry, traffic and an octopus."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Your friend says, “I like the library.” Which reply agrees politely?",
+          "choices": [
+            "I don't.",
+            "I no like it.",
+            "Why do you?",
+            "I do too!"
+          ],
+          "answer": "I do too!",
+          "explanation": "“I do too!” agrees. “I don't.” disagrees, “I no like it.” is not correct English, and “Why do you?” asks a question instead of giving an opinion."
         },
         {
-          "prompt": "Which word means a large building with many different shops inside it?",
+          "prompt": "Adam told the lost man to walk straight ahead. What does straight ahead mean?",
           "choices": [
-            "shopping centre",
-            "penguin",
-            "helicopter",
-            "directions"
+            "Turn left at the corner.",
+            "Go back the way you came.",
+            "Go forward without turning.",
+            "Cross the road at the crossing."
           ],
-          "answer": "shopping centre",
-          "explanation": "A shopping centre holds many shops under one roof. A penguin is a bird, a helicopter flies, and directions are words that tell you the way."
+          "answer": "Go forward without turning.",
+          "explanation": "Straight ahead means keep going forward and do not turn to the left or the right."
         },
         {
-          "prompt": "Which of these travels below the city streets?",
+          "prompt": "Which word means: Ask means to say a question to someone.",
           "choices": [
-            "the ferry",
-            "the Ferris wheel",
-            "the helicopter",
-            "the underground"
+            "ask",
+            "bike",
+            "phone"
           ],
-          "answer": "the underground",
-          "explanation": "The underground runs through tunnels below the streets. The ferry travels on water, the Ferris wheel turns in a park, and the helicopter flies above the city."
+          "answer": "ask",
+          "explanation": "ask: Ask means to say a question to someone."
+        },
+        {
+          "prompt": "Which word means: Swam means moved through water using arms and legs, or fins.",
+          "choices": [
+            "bike",
+            "phone",
+            "swam"
+          ],
+          "answer": "swam",
+          "explanation": "swam: Swam means moved through water using arms and legs, or fins."
+        },
+        {
+          "prompt": "What type of word is 'bit'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Bit is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'world'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "World is used as a noun in this dictionary sense."
         }
       ]
     }

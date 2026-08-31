@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t01-u03",
   "title": "Reflections Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: To make somebody feel awkward or ashamed.",
           "choices": [
             "embarrass",
-            "constructive",
-            "ideal"
+            "average",
+            "property"
           ],
           "answer": "embarrass",
           "explanation": "embarrass: To make somebody feel awkward or ashamed."
         },
         {
-          "prompt": "Which word means: Sleeps lightly for a short time, without meaning to fall fully asleep.",
+          "prompt": "Which word means: A shiny, pale grey-white colour, like the metal silver.",
           "choices": [
             "embarrass",
-            "constructive",
-            "dozes"
+            "average",
+            "silver"
           ],
-          "answer": "dozes",
-          "explanation": "dozes: Sleeps lightly for a short time, without meaning to fall fully asleep."
+          "answer": "silver",
+          "explanation": "silver: A shiny, pale grey-white colour, like the metal silver."
         },
         {
-          "prompt": "Which word means: Thought that something would happen before it did.",
+          "prompt": "Which word means: Followed exactly and allowing no exceptions or changes.",
           "choices": [
-            "constructive",
-            "expected",
+            "average",
+            "strict",
             "embarrass"
           ],
-          "answer": "expected",
-          "explanation": "expected: Thought that something would happen before it did."
+          "answer": "strict",
+          "explanation": "strict: Followed exactly and allowing no exceptions or changes."
+        },
+        {
+          "prompt": "Which word means: Feeling or showing strong displeasure about something.",
+          "choices": [
+            "angry",
+            "embarrass",
+            "average"
+          ],
+          "answer": "angry",
+          "explanation": "angry: Feeling or showing strong displeasure about something."
+        },
+        {
+          "prompt": "Which word means: A piece of writing that gives facts and information about a topic.",
+          "choices": [
+            "embarrass",
+            "average",
+            "report"
+          ],
+          "answer": "report",
+          "explanation": "report: A piece of writing that gives facts and information about a topic."
+        },
+        {
+          "prompt": "Which word means: Objects made by people a long time ago.",
+          "choices": [
+            "average",
+            "artefacts",
+            "embarrass"
+          ],
+          "answer": "artefacts",
+          "explanation": "artefacts: Objects made by people a long time ago."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The name of the school that created this course and its poetry collection.",
-          "answer": "ehel"
+          "clue": "So pleasing that it makes you smile straight away.",
+          "answer": "delightful"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Covered with flat, hard pieces called tiles, often arranged in a pattern.",
-          "answer": "tiled"
+          "clue": "A group of lines forming one section of a poem, like a paragraph.",
+          "answer": "stanza"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Clothes, sheets, and other items that need washing or have just been washed.",
+          "answer": "laundry"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Moved the head up and down to show agreement or understanding.",
+          "answer": "nodded"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Wanting to win or be better than others.",
+          "answer": "competitive"
         }
       ]
     },
@@ -101,34 +146,75 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "swim.",
+            "meals.",
+            "week's",
+            "the",
+            "for",
+            "plan",
+            "detailed",
             "a",
-            "after",
-            "fur",
-            "its",
-            "off",
-            "water",
-            "shakes",
-            "dog",
-            "little",
-            "The"
+            "wrote",
+            "She"
           ],
-          "answer": "The little dog shakes water off its fur after a swim."
+          "answer": "She wrote a detailed plan for the week's meals."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "sky.",
-            "the",
-            "across",
-            "clouds",
-            "the",
-            "pushing",
-            "was",
-            "wind",
-            "The"
+            "lunch.",
+            "after",
+            "chair",
+            "his",
+            "in",
+            "dozes",
+            "often",
+            "Grandpa"
           ],
-          "answer": "The wind was pushing the clouds across the sky."
+          "answer": "Grandpa often dozes in his chair after lunch."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "web.",
+            "spider's",
+            "the",
+            "on",
+            "rested",
+            "dew",
+            "of",
+            "drops",
+            "Cool"
+          ],
+          "answer": "Cool drops of dew rested on the spider's web."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "secret.",
+            "hidden",
+            "a",
+            "have",
+            "to",
+            "charter",
+            "the",
+            "expected",
+            "Nobody"
+          ],
+          "answer": "Nobody expected the charter to have a hidden secret."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "progress.",
+            "town's",
+            "a",
+            "stop",
+            "never",
+            "should",
+            "block",
+            "One"
+          ],
+          "answer": "One block should never stop a town's progress."
         }
       ]
     },
@@ -141,312 +227,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "In 'The Cracked Charter', why was the stamp on the town charter surprising?",
+          "prompt": "Which sentence contains a metaphor?",
           "choices": [
-            "It had been printed in gold ink by the curator.",
-            "It belonged to the regional capital, not the town.",
-            "It showed the date the museum first opened its doors.",
-            "It had been drawn by one of the visiting architects."
+            "The river is a silver traveller.",
+            "The river runs quickly past our town.",
+            "The river is as cold as ice.",
+            "The river flooded the low fields in April."
           ],
-          "answer": "It belonged to the regional capital, not the town.",
-          "explanation": "Teacher Yasmin recognises the symbol as legislative and explains that it came from the regional capital."
+          "answer": "The river is a silver traveller.",
+          "explanation": "A metaphor states that one thing is another. The third option uses as, so it is a simile, and the others are literal."
         },
         {
-          "prompt": "Which sentence contains a simile?",
+          "prompt": "How many syllables must the second line of a haiku have?",
           "choices": [
-            "The wind rattled every door in the neighbourhood.",
-            "The wind is an angry visitor.",
-            "The old acacia tree trembled and bent.",
-            "Sheets of laundry flew like startled birds."
+            "Three",
+            "Five",
+            "Seven",
+            "Nine"
           ],
-          "answer": "Sheets of laundry flew like startled birds.",
-          "explanation": "Only this option uses like. The second option is a metaphor, and the other two describe events literally."
+          "answer": "Seven",
+          "explanation": "A haiku follows a five, seven, five pattern, so the middle line is the longest of the three."
         },
         {
-          "prompt": "What does the word 'artefacts' mean?",
+          "prompt": "Which word means a break or crack in something hard?",
           "choices": [
-            "Rules that explain how a country or club works.",
-            "People who design buildings and bridges.",
-            "Objects made by people a long time ago.",
-            "A large area where visitors wait."
+            "posture",
+            "fracture",
+            "vulture",
+            "miniature"
           ],
-          "answer": "Objects made by people a long time ago.",
-          "explanation": "The other options define constitution, architects and lobby, which the story also uses but with different meanings."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In 'The River', the poet writes that the river is a silver traveller. Is that a simile or a metaphor, and how can you tell?",
-          "choices": [
-            "It is a metaphor, because the poet says the river is a traveller instead of comparing it with like or as.",
-            "It is figurative, because the dew drops are not really rings; their round shine is compared with jewellery.",
-            "She means a disagreement broke the council's unity, just as a crack breaks a page in two."
-          ],
-          "answer": "It is a metaphor, because the poet says the river is a traveller instead of comparing it with like or as.",
-          "explanation": "A simile needs the words like or as. This line states the comparison directly, which makes it a metaphor."
+          "answer": "fracture",
+          "explanation": "Posture is how you hold your body, a vulture is a bird, and a miniature is a very small copy of something."
         },
-        {
-          "prompt": "What does Mina do when the wind reaches the house, and what question does she ask her older sister?",
-          "choices": [
-            "It is figurative, because the dew drops are not really rings; their round shine is compared with jewellery.",
-            "He feared tension would spread like an infection, but Nora said fear of expansion cannot justify silencing people.",
-            "Mina hides under the table with her eyes wide open and asks whether the wind is angry."
-          ],
-          "answer": "Mina hides under the table with her eyes wide open and asks whether the wind is angry.",
-          "explanation": "Her hiding shows fear before she speaks, so the action and the question together prove how frightened she is."
-        },
-        {
-          "prompt": "What does the curator mean when she says the town council had a fracture in trust?",
-          "choices": [
-            "A vulture cleans up after other animals rather than guarding, so an eagle is the more accurate image.",
-            "She means a disagreement broke the council's unity, just as a crack breaks a page in two.",
-            "Mina hides under the table with her eyes wide open and asks whether the wind is angry."
-          ],
-          "answer": "She means a disagreement broke the council's unity, just as a crack breaks a page in two.",
-          "explanation": "The curator borrows a physical word for a feeling, which is exactly how figurative language works."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Choral Verse Performance",
-          "target": "He did not mean to embarrass her in front of the class."
-        },
-        {
-          "prompt": "Speaking 3: Present Your Own Poem",
-          "target": "When your haiku or simile poem is finished, present it to an audience if one is available: your family, a study partner or your adult helper."
-        },
-        {
-          "prompt": "Speaking 5: Haiku Dictation and Read-Back",
-          "target": "If an adult helper is nearby, ask them to read one of the three haiku aloud at a steady pace."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "test.",
-            "big",
-            "the",
-            "before",
-            "room",
-            "the",
-            "in",
-            "tension",
-            "of",
-            "lot",
-            "a",
-            "was",
-            "There"
-          ],
-          "answer": "There was a lot of tension in the room before the big test."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "competition.",
-            "poetry",
-            "the",
-            "in",
-            "place",
-            "second",
-            "in",
-            "finished",
-            "Sami"
-          ],
-          "answer": "Sami finished in second place in the poetry competition."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "town.",
-            "old",
-            "the",
-            "in",
-            "neighbours",
-            "between",
-            "unity",
-            "about",
-            "spoke",
-            "Yasmin",
-            "Teacher"
-          ],
-          "answer": "Teacher Yasmin spoke about unity between neighbours in the old town."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'nature' mean in this unit?",
-          "choices": [
-            "The natural world, including plants, animals, weather and landscapes.",
-            "To make somebody feel awkward or ashamed.",
-            "Helpful, and meant to improve rather than to knock down."
-          ],
-          "answer": "The natural world, including plants, animals, weather and landscapes.",
-          "explanation": "nature: The natural world, including plants, animals, weather and landscapes."
-        },
-        {
-          "prompt": "What does 'researched' mean in this unit?",
-          "choices": [
-            "To make somebody feel awkward or ashamed.",
-            "Helpful, and meant to improve rather than to knock down.",
-            "Studied a topic carefully to find out facts about it."
-          ],
-          "answer": "Studied a topic carefully to find out facts about it.",
-          "explanation": "researched: Studied a topic carefully to find out facts about it."
-        },
-        {
-          "prompt": "What does 'constructive' mean in this unit?",
-          "choices": [
-            "The best or most perfect for a purpose.",
-            "Helpful, and meant to improve rather than to knock down.",
-            "To make somebody feel awkward or ashamed."
-          ],
-          "answer": "Helpful, and meant to improve rather than to knock down.",
-          "explanation": "constructive: Helpful, and meant to improve rather than to knock down."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'wide'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Wide is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'tradition'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Tradition is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'rains'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Rains is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "marvellous",
-              "Extremely good, in a way that causes wonder."
-            ],
-            [
-              "dramatic",
-              "Sudden and striking, or to do with plays."
-            ],
-            [
-              "argues",
-              "Disagrees with someone, often speaking in a firm or heated way."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "stitching",
-              "Moving quickly in and out, like a needle sewing thread through cloth."
-            ],
-            [
-              "clap",
-              "To hit your hands together quickly to make a sound, often to keep a beat."
-            ],
-            [
-              "startled",
-              "Suddenly surprised or shocked by something unexpected."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "original",
-              "The first or earliest version of something, not a copy."
-            ],
-            [
-              "symbolic",
-              "Representing something else, especially an idea or feeling, rather than being only what it looks like."
-            ],
-            [
-              "comprehension",
-              "Understanding what you read or hear."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Complete the sentence correctly: 'A haiku is ______ than a ballad.'",
           "choices": [
@@ -483,13 +295,524 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "In 'The River', the poet writes that the river is a silver traveller. Is that a simile or a metaphor, and how can you tell?",
+          "choices": [
+            "It is a metaphor, because the poet says the river is a traveller instead of comparing it with like or as.",
+            "It is figurative, because the dew drops are not really rings; their round shine is compared with jewellery.",
+            "She means a disagreement broke the council's unity, just as a crack breaks a page in two."
+          ],
+          "answer": "It is a metaphor, because the poet says the river is a traveller instead of comparing it with like or as.",
+          "explanation": "A simile needs the words like or as. This line states the comparison directly, which makes it a metaphor."
+        },
+        {
+          "prompt": "Count the syllables in each line of the penguin haiku. Does it follow the five, seven, five pattern?",
+          "choices": [
+            "Mina hides under the table with her eyes wide open and asks whether the wind is angry.",
+            "He feared tension would spread like an infection, but Nora said fear of expansion cannot justify silencing people.",
+            "Yes. Penguins, black and white has five syllables, March across the frozen sea has seven, and Small and patient kings has five."
+          ],
+          "answer": "Yes. Penguins, black and white has five syllables, March across the frozen sea has seven, and Small and patient kings has five.",
+          "explanation": "Clapping each line is the quickest way to check a haiku, because one clap marks one vowel sound."
+        },
+        {
+          "prompt": "What does Mina do when the wind reaches the house, and what question does she ask her older sister?",
+          "choices": [
+            "A vulture cleans up after other animals rather than guarding, so an eagle is the more accurate image.",
+            "Mina hides under the table with her eyes wide open and asks whether the wind is angry.",
+            "Sami noticed a fracture, a line running right through the middle of the page."
+          ],
+          "answer": "Mina hides under the table with her eyes wide open and asks whether the wind is angry.",
+          "explanation": "Her hiding shows fear before she speaks, so the action and the question together prove how frightened she is."
+        },
+        {
+          "prompt": "What did Sami notice about the charter inside the glass case?",
+          "choices": [
+            "Sami noticed a fracture, a line running right through the middle of the page.",
+            "The symbol was legislative and belonged to the regional capital, so it should not have been on their town charter.",
+            "It is a metaphor, because the poet says the river is a traveller instead of comparing it with like or as."
+          ],
+          "answer": "Sami noticed a fracture, a line running right through the middle of the page.",
+          "explanation": "The word fracture means a break or crack, and Sami is the first character to name it aloud."
+        },
+        {
+          "prompt": "What does the curator mean when she says the town council had a fracture in trust?",
+          "choices": [
+            "The symbol was legislative and belonged to the regional capital, so it should not have been on their town charter.",
+            "Yes. Penguins, black and white has five syllables, March across the frozen sea has seven, and Small and patient kings has five.",
+            "She means a disagreement broke the council's unity, just as a crack breaks a page in two."
+          ],
+          "answer": "She means a disagreement broke the council's unity, just as a crack breaks a page in two.",
+          "explanation": "The curator borrows a physical word for a feeling, which is exactly how figurative language works."
+        },
+        {
+          "prompt": "What did the old mayor fear about a bigger hall, and why did Nora call that a weak argument?",
+          "choices": [
+            "It is figurative, because the dew drops are not really rings; their round shine is compared with jewellery.",
+            "He feared tension would spread like an infection, but Nora said fear of expansion cannot justify silencing people.",
+            "She means a disagreement broke the council's unity, just as a crack breaks a page in two."
+          ],
+          "answer": "He feared tension would spread like an infection, but Nora said fear of expansion cannot justify silencing people.",
+          "explanation": "The mayor's worry is an opinion rather than evidence, which is why Nora is able to challenge it."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Choral Verse Performance",
+          "target": "He did not mean to embarrass her in front of the class."
+        },
+        {
+          "prompt": "Speaking 2: Interview the Poet",
+          "target": "Imagine you can interview the poet who wrote 'The River'."
+        },
+        {
+          "prompt": "Speaking 3: Present Your Own Poem",
+          "target": "When your haiku or simile poem is finished, present it to an audience if one is available: your family, a study partner or your adult helper."
+        },
+        {
+          "prompt": "Speaking 4: Compare Two Readings",
+          "target": "Cool drops of dew rested on the spider's web."
+        },
+        {
+          "prompt": "Speaking 5: Haiku Dictation and Read-Back",
+          "target": "If an adult helper is nearby, ask them to read one of the three haiku aloud at a steady pace."
+        },
+        {
+          "prompt": "Speaking 6: Debate the Cracked Charter",
+          "target": "One block should never stop a town's progress."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "'unhappy'.",
+            "is",
+            "'sad'",
+            "for",
+            "synonym",
+            "A"
+          ],
+          "answer": "A synonym for 'sad' is 'unhappy'."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "cold.",
+            "that",
+            "for",
+            "inadequate",
+            "proved",
+            "blanket",
+            "One"
+          ],
+          "answer": "One blanket proved inadequate for that cold."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "puppy.",
+            "the",
+            "to",
+            "spoke",
+            "he",
+            "when",
+            "voice",
+            "gentler",
+            "a",
+            "used",
+            "Sami"
+          ],
+          "answer": "Sami used a gentler voice when he spoke to the puppy."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "ice.",
+            "the",
+            "on",
+            "penguins",
+            "of",
+            "picture",
+            "a",
+            "painted",
+            "haiku",
+            "The"
+          ],
+          "answer": "The haiku painted a picture of penguins on the ice."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "document.",
+            "original",
+            "the",
+            "truly",
+            "was",
+            "this",
+            "whether",
+            "wondered",
+            "Sami"
+          ],
+          "answer": "Sami wondered whether this was truly the original document."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "aloud.",
+            "charter",
+            "the",
+            "read",
+            "he",
+            "while",
+            "straight",
+            "back",
+            "his",
+            "kept",
+            "Sami"
+          ],
+          "answer": "Sami kept his back straight while he read the charter aloud."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'average' mean in this unit?",
+          "choices": [
+            "The usual or ordinary amount, not high and not low.",
+            "To make somebody feel awkward or ashamed.",
+            "A quality that a material or substance has."
+          ],
+          "answer": "The usual or ordinary amount, not high and not low.",
+          "explanation": "average: The usual or ordinary amount, not high and not low."
+        },
+        {
+          "prompt": "What does 'rains' mean in this unit?",
+          "choices": [
+            "To make somebody feel awkward or ashamed.",
+            "The usual or ordinary amount, not high and not low.",
+            "Periods of heavy rainfall, especially over several days."
+          ],
+          "answer": "Periods of heavy rainfall, especially over several days.",
+          "explanation": "rains: Periods of heavy rainfall, especially over several days."
+        },
+        {
+          "prompt": "What does 'sea' mean in this unit?",
+          "choices": [
+            "The usual or ordinary amount, not high and not low.",
+            "A large area of salt water, smaller than an ocean, that covers part of the Earth.",
+            "To make somebody feel awkward or ashamed."
+          ],
+          "answer": "A large area of salt water, smaller than an ocean, that covers part of the Earth.",
+          "explanation": "sea: A large area of salt water, smaller than an ocean, that covers part of the Earth."
+        },
+        {
+          "prompt": "What does 'mother' mean in this unit?",
+          "choices": [
+            "A woman who has a child, or the woman who raises and cares for you.",
+            "To make somebody feel awkward or ashamed.",
+            "The usual or ordinary amount, not high and not low."
+          ],
+          "answer": "A woman who has a child, or the woman who raises and cares for you.",
+          "explanation": "mother: A woman who has a child, or the woman who raises and cares for you."
+        },
+        {
+          "prompt": "What does 'suggest' mean in this unit?",
+          "choices": [
+            "To make somebody feel awkward or ashamed.",
+            "The usual or ordinary amount, not high and not low.",
+            "To offer an idea or plan for someone to think about."
+          ],
+          "answer": "To offer an idea or plan for someone to think about.",
+          "explanation": "suggest: To offer an idea or plan for someone to think about."
+        },
+        {
+          "prompt": "What does 'trustworthiness' mean in this unit?",
+          "choices": [
+            "The usual or ordinary amount, not high and not low.",
+            "The quality of being someone others can rely on.",
+            "To make somebody feel awkward or ashamed."
+          ],
+          "answer": "The quality of being someone others can rely on.",
+          "explanation": "trustworthiness: The quality of being someone others can rely on."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'property'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Property is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'willow'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Willow is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'dew'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Dew is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'yellow'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Yellow is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'legislative'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Legislative is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'controversial'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Controversial is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "marvellous",
+              "Extremely good, in a way that causes wonder."
+            ],
+            [
+              "ingredient",
+              "Something you use to make food or a dish."
+            ],
+            [
+              "proper",
+              "Correct, or done in the right way."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "whispers",
+              "Speaks very quietly, so only someone close by can hear."
+            ],
+            [
+              "arch",
+              "A curved structure, often forming the top of a doorway, bridge or gateway."
+            ],
+            [
+              "stitching",
+              "Moving quickly in and out, like a needle sewing thread through cloth."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "second",
+              "Coming after the first in order or position."
+            ],
+            [
+              "orange",
+              "Having a bright colour between red and yellow, like a ripe orange fruit."
+            ],
+            [
+              "hurling",
+              "Throwing something with great force."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "pushing",
+              "Using force to move something away from you."
+            ],
+            [
+              "museum",
+              "A building where old and interesting objects are kept and shown to the public."
+            ],
+            [
+              "nearly",
+              "Almost, but not completely or exactly."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "symbolic",
+              "Representing something else, especially an idea or feeling, rather than being only what it looks like."
+            ],
+            [
+              "eagle",
+              "A large, powerful bird that often stands for strength or freedom."
+            ],
+            [
+              "tradition",
+              "A way of doing things passed down through generations."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "metaphor",
+              "Saying one thing is another to compare them."
+            ],
+            [
+              "considerable",
+              "Large enough to matter; a good deal of something."
+            ],
+            [
+              "educational",
+              "Helping people to learn something."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does the word 'legislative' mean?",
+          "choices": [
+            "Working together with others.",
+            "A break or crack in something hard.",
+            "Related to making laws or rules.",
+            "The way you hold your body."
+          ],
+          "answer": "Related to making laws or rules.",
+          "explanation": "The other three options define collaborative, fracture and posture, which are all different unit words."
+        },
+        {
+          "prompt": "In 'The Cracked Charter', why was the stamp on the town charter surprising?",
+          "choices": [
+            "It had been printed in gold ink by the curator.",
+            "It belonged to the regional capital, not the town.",
+            "It showed the date the museum first opened its doors.",
+            "It had been drawn by one of the visiting architects."
+          ],
+          "answer": "It belonged to the regional capital, not the town.",
+          "explanation": "Teacher Yasmin recognises the symbol as legislative and explains that it came from the regional capital."
+        },
+        {
+          "prompt": "Which sentence contains a simile?",
+          "choices": [
+            "The wind rattled every door in the neighbourhood.",
+            "The wind is an angry visitor.",
+            "The old acacia tree trembled and bent.",
+            "Sheets of laundry flew like startled birds."
+          ],
+          "answer": "Sheets of laundry flew like startled birds.",
+          "explanation": "Only this option uses like. The second option is a metaphor, and the other two describe events literally."
+        },
+        {
+          "prompt": "What does the word 'artefacts' mean?",
+          "choices": [
+            "Rules that explain how a country or club works.",
+            "People who design buildings and bridges.",
+            "Objects made by people a long time ago.",
+            "A large area where visitors wait."
+          ],
+          "answer": "Objects made by people a long time ago.",
+          "explanation": "The other options define constitution, architects and lobby, which the story also uses but with different meanings."
+        },
+        {
+          "prompt": "Which sentence corrects the mistake in 'She is more taller than her sister'?",
+          "choices": [
+            "She is taller than her sister.",
+            "She is more tall than her sister.",
+            "She is the tallest than her sister.",
+            "She is more taller as her sister."
+          ],
+          "answer": "She is taller than her sister.",
+          "explanation": "Tall is a one-syllable adjective, so -er alone is enough. Adding more as well marks the comparison twice."
+        },
         {
           "prompt": "Which sentence contains a metaphor?",
           "choices": [
@@ -500,28 +823,78 @@
           ],
           "answer": "The river is a silver traveller.",
           "explanation": "A metaphor states that one thing is another. The third option uses as, so it is a simile, and the others are literal."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What does the word 'artefacts' mean?",
+          "choices": [
+            "Rules that explain how a country or club works.",
+            "People who design buildings and bridges.",
+            "Objects made by people a long time ago.",
+            "A large area where visitors wait."
+          ],
+          "answer": "Objects made by people a long time ago.",
+          "explanation": "The other options define constitution, architects and lobby, which the story also uses but with different meanings."
         },
         {
-          "prompt": "How many syllables must the second line of a haiku have?",
+          "prompt": "Which sentence corrects the mistake in 'She is more taller than her sister'?",
           "choices": [
-            "Three",
-            "Five",
-            "Seven",
-            "Nine"
+            "She is taller than her sister.",
+            "She is more tall than her sister.",
+            "She is the tallest than her sister.",
+            "She is more taller as her sister."
           ],
-          "answer": "Seven",
-          "explanation": "A haiku follows a five, seven, five pattern, so the middle line is the longest of the three."
+          "answer": "She is taller than her sister.",
+          "explanation": "Tall is a one-syllable adjective, so -er alone is enough. Adding more as well marks the comparison twice."
         },
         {
-          "prompt": "Which word means a break or crack in something hard?",
+          "prompt": "Which word means: Useful and sensible in real life, not just in theory.",
           "choices": [
-            "posture",
-            "fracture",
-            "vulture",
-            "miniature"
+            "practical",
+            "embarrass",
+            "average"
           ],
-          "answer": "fracture",
-          "explanation": "Posture is how you hold your body, a vulture is a bird, and a miniature is a very small copy of something."
+          "answer": "practical",
+          "explanation": "practical: Useful and sensible in real life, not just in theory."
+        },
+        {
+          "prompt": "Which word means: A large area of salt water, smaller than an ocean, that covers part of the Earth.",
+          "choices": [
+            "embarrass",
+            "average",
+            "sea"
+          ],
+          "answer": "sea",
+          "explanation": "sea: A large area of salt water, smaller than an ocean, that covers part of the Earth."
+        },
+        {
+          "prompt": "What type of word is 'sketch'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Sketch is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'trustworthiness'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Trustworthiness is used as a noun in this dictionary sense."
         }
       ]
     }

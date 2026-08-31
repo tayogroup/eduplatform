@@ -5,7 +5,7 @@
   "unitId": "eng-g01-t03-u10",
   "title": "My First English World Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Happy means you feel good and want to smile.",
           "choices": [
             "happy",
-            "today",
-            "five"
+            "five",
+            "hello"
           ],
           "answer": "happy",
           "explanation": "happy: Happy means you feel good and want to smile."
         },
         {
-          "prompt": "Which word means: To do something kind that makes things easier for someone.",
+          "prompt": "Which word means: Drawn means made a picture using a pencil or crayon.",
           "choices": [
             "happy",
-            "today",
-            "help"
+            "five",
+            "drawn"
           ],
-          "answer": "help",
-          "explanation": "help: To do something kind that makes things easier for someone."
+          "answer": "drawn",
+          "explanation": "drawn: Drawn means made a picture using a pencil or crayon."
         },
         {
-          "prompt": "Which word means: Finally means at last, after everything else is done.",
+          "prompt": "Which word means: A pattern is something that repeats, like red, blue, red, blue.",
           "choices": [
-            "today",
-            "finally",
+            "five",
+            "pattern",
             "happy"
           ],
-          "answer": "finally",
-          "explanation": "finally: Finally means at last, after everything else is done."
+          "answer": "pattern",
+          "explanation": "pattern: A pattern is something that repeats, like red, blue, red, blue."
+        },
+        {
+          "prompt": "Which word means: A shape with four straight sides that are all the same.",
+          "choices": [
+            "square",
+            "happy",
+            "five"
+          ],
+          "answer": "square",
+          "explanation": "square: A shape with four straight sides that are all the same."
+        },
+        {
+          "prompt": "Which word means: A smooth white board the teacher writes on at school.",
+          "choices": [
+            "happy",
+            "five",
+            "whiteboard"
+          ],
+          "answer": "whiteboard",
+          "explanation": "whiteboard: A smooth white board the teacher writes on at school."
+        },
+        {
+          "prompt": "Which word means: Morning is the early part of the day, soon after you wake up.",
+          "choices": [
+            "five",
+            "morning",
+            "happy"
+          ],
+          "answer": "morning",
+          "explanation": "morning: Morning is the early part of the day, soon after you wake up."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Into means going to the inside of something.",
-          "answer": "into"
+          "clue": "Colourful means having lots of bright colours.",
+          "answer": "colourful"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A reflection is thinking back about what you did and learned.",
-          "answer": "reflection"
+          "clue": "A sentence is a group of words that tells us something and makes sense.",
+          "answer": "sentence"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A big farm animal that gives us milk.",
+          "answer": "cow"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The man who looks after you and loves you at home.",
+          "answer": "father"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The afternoon is the time of day between midday and evening.",
+          "answer": "afternoon"
         }
       ]
     },
@@ -93,26 +138,60 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "Amal.",
-            "said",
-            "helping,\"",
-            "for",
-            "you",
-            "\"Thank"
+            "lessons.",
+            "her",
+            "remember",
+            "to",
+            "wanted",
+            "Amal"
           ],
-          "answer": "\"Thank you for helping,\" said Amal."
+          "answer": "Amal wanted to remember her lessons."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
             "work.",
+            "her",
             "of",
-            "pieces",
-            "favourite",
-            "three",
-            "Choose"
+            "proud",
+            "felt",
+            "Amal"
           ],
-          "answer": "Choose three favourite pieces of work."
+          "answer": "Amal felt proud of her work."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "book.",
+            "her",
+            "finished",
+            "Amal",
+            "Finally,"
+          ],
+          "answer": "Finally, Amal finished her book."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "bread.",
+            "warm",
+            "sells",
+            "shop",
+            "The"
+          ],
+          "answer": "The shop sells warm bread."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "Theo.",
+            "to",
+            "ball",
+            "the",
+            "throw",
+            "I"
+          ],
+          "answer": "I throw the ball to Theo."
         }
       ]
     },
@@ -125,298 +204,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which one is an animal that lives on a farm?",
+          "prompt": "Which word completes the sentence: My name ___ Maya.",
           "choices": [
-            "pencil",
-            "river",
-            "goat",
-            "bus"
+            "is",
+            "am",
+            "be",
+            "are"
           ],
-          "answer": "goat",
-          "explanation": "A goat is a farm animal; a bus, a pencil and a river are not animals."
+          "answer": "is",
+          "explanation": "My name is one thing, so we use is; are is for more than one and am only goes with I."
         },
         {
-          "prompt": "Which body part helps you hear the school bell?",
+          "prompt": "Which word completes the sentence: I ___ hop on one foot.",
           "choices": [
-            "eyes",
-            "hands",
-            "nose",
-            "ears"
+            "is",
+            "can",
+            "the",
+            "are"
           ],
-          "answer": "ears",
-          "explanation": "We hear with our ears; eyes see, hands touch and the nose smells."
+          "answer": "can",
+          "explanation": "Can tells what you are able to do; is and are do not go with I hop, and the is not a doing word."
         },
         {
-          "prompt": "Which sentence tells a safe thing to do in the town?",
+          "prompt": "Which one is a complete sentence?",
           "choices": [
-            "Stop at the red light.",
-            "Run into the road.",
-            "Drop litter on the path.",
-            "Push people at the bus stop."
+            "cat this",
+            "a cat",
+            "This is a cat.",
+            "is cat"
           ],
-          "answer": "Stop at the red light.",
-          "explanation": "Stopping at a red light keeps you safe; the other actions are dangerous or unkind."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Where did Amal find her letters and family pictures?",
-          "choices": [
-            "In her learning folder",
-            "They clapped",
-            "Labels and short patterns"
-          ],
-          "answer": "In her learning folder",
-          "explanation": "Amal opened her learning folder and found all her work from the year."
+          "answer": "This is a cat.",
+          "explanation": "It starts with a capital letter, makes sense and ends with a full stop; the others are just groups of words."
         },
-        {
-          "prompt": "How many favourite pieces must you choose?",
-          "choices": [
-            "They clapped",
-            "The family page",
-            "Three"
-          ],
-          "answer": "Three",
-          "explanation": "The first step says, 'Choose three favourite pieces.'"
-        },
-        {
-          "prompt": "What two things do you add to your book pages?",
-          "choices": [
-            "'This is my mum. I love my family.'",
-            "Labels and short patterns",
-            "Three"
-          ],
-          "answer": "Labels and short patterns",
-          "explanation": "The steps say, 'Add labels and short patterns.'"
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Capstone speaking 1",
-          "target": "Practise the opening of your show-and-tell."
-        },
-        {
-          "prompt": "Capstone speaking 3",
-          "target": "Show a favourite page and say why you chose it."
-        },
-        {
-          "prompt": "Capstone speaking 5",
-          "target": "Describe one picture from your folder in two ways."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "chair.",
-            "little",
-            "my",
-            "on",
-            "sit",
-            "I"
-          ],
-          "answer": "I sit on my little chair."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "water.",
-            "with",
-            "experiments",
-            "fun",
-            "did",
-            "We"
-          ],
-          "answer": "We did fun experiments with water."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "bedtime.",
-            "at",
-            "me",
-            "with",
-            "reads",
-            "mother",
-            "My"
-          ],
-          "answer": "My mother reads with me at bedtime."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'folder' mean in this unit?",
-          "choices": [
-            "A folder is a flat cover that keeps your papers safe together.",
-            "Happy means you feel good and want to smile.",
-            "Today means this day, the one we are in now."
-          ],
-          "answer": "A folder is a flat cover that keeps your papers safe together.",
-          "explanation": "folder: A folder is a flat cover that keeps your papers safe together."
-        },
-        {
-          "prompt": "What does 'square' mean in this unit?",
-          "choices": [
-            "Happy means you feel good and want to smile.",
-            "Today means this day, the one we are in now.",
-            "A shape with four straight sides that are all the same."
-          ],
-          "answer": "A shape with four straight sides that are all the same.",
-          "explanation": "square: A shape with four straight sides that are all the same."
-        },
-        {
-          "prompt": "What does 'today' mean in this unit?",
-          "choices": [
-            "The number 5. It is how many fingers are on one hand.",
-            "Today means this day, the one we are in now.",
-            "Happy means you feel good and want to smile."
-          ],
-          "answer": "Today means this day, the one we are in now.",
-          "explanation": "today: Today means this day, the one we are in now."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'pattern'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Pattern is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'whiteboard'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Whiteboard is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'worried'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Worried is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "kind",
-              "Kind means you are gentle and helpful to other people."
-            ],
-            [
-              "night",
-              "Night is the time of day when it is dark outside."
-            ],
-            [
-              "excited",
-              "Excited means you feel very happy about something coming soon."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "into",
-              "Into means going to the inside of something."
-            ],
-            [
-              "experiments",
-              "Experiments are tests we do to find out how something works."
-            ],
-            [
-              "label",
-              "A label is a short word or name written next to a picture."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "reflection",
-              "A reflection is thinking back about what you did and learned."
-            ],
-            [
-              "shop",
-              "A place where people sell food, clothes or toys."
-            ],
-            [
-              "cat",
-              "A soft pet with whiskers that purrs and chases mice."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which word names a colour?",
           "choices": [
@@ -453,13 +272,508 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Where did Amal find her letters and family pictures?",
+          "choices": [
+            "In her learning folder",
+            "They clapped",
+            "Labels and short patterns"
+          ],
+          "answer": "In her learning folder",
+          "explanation": "Amal opened her learning folder and found all her work from the year."
+        },
+        {
+          "prompt": "What is the name of Amal's new book?",
+          "choices": [
+            "Three",
+            "The family page",
+            "My First English World"
+          ],
+          "answer": "My First English World",
+          "explanation": "Amal made a new book called My First English World."
+        },
+        {
+          "prompt": "How many favourite pieces must you choose?",
+          "choices": [
+            "'This is my mum. I love my family.'",
+            "Three",
+            "Six"
+          ],
+          "answer": "Three",
+          "explanation": "The first step says, 'Choose three favourite pieces.'"
+        },
+        {
+          "prompt": "How long is your show-and-tell?",
+          "choices": [
+            "One minute",
+            "Six",
+            "To read more words"
+          ],
+          "answer": "One minute",
+          "explanation": "The steps say to practise a one-minute show-and-tell."
+        },
+        {
+          "prompt": "What two things do you add to your book pages?",
+          "choices": [
+            "One minute",
+            "In her learning folder",
+            "Labels and short patterns"
+          ],
+          "answer": "Labels and short patterns",
+          "explanation": "The steps say, 'Add labels and short patterns.'"
+        },
+        {
+          "prompt": "What does the learner say about her mum?",
+          "choices": [
+            "My First English World",
+            "'This is my mum. I love my family.'",
+            "Labels and short patterns"
+          ],
+          "answer": "'This is my mum. I love my family.'",
+          "explanation": "When the teacher asks what she can say, the learner says those two lines."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Capstone speaking 1",
+          "target": "Adam is happy today."
+        },
+        {
+          "prompt": "Capstone speaking 2",
+          "target": "Rehearse your two best skills while a partner listens."
+        },
+        {
+          "prompt": "Capstone speaking 3",
+          "target": "Show a favourite page and say why you chose it."
+        },
+        {
+          "prompt": "Capstone speaking 4",
+          "target": "Hold up three pictures from your folder and name them clearly."
+        },
+        {
+          "prompt": "Capstone speaking 5",
+          "target": "Describe one picture from your folder in two ways."
+        },
+        {
+          "prompt": "Capstone speaking 6",
+          "target": "I throw the ball to Theo."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "tomorrow.",
+            "farm",
+            "the",
+            "to",
+            "go",
+            "will",
+            "We"
+          ],
+          "answer": "We will go to the farm tomorrow."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Adam.",
+            "said",
+            "sorry,\"",
+            "am",
+            "\"I"
+          ],
+          "answer": "\"I am sorry,\" said Adam."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "water.",
+            "with",
+            "experiments",
+            "fun",
+            "did",
+            "We"
+          ],
+          "answer": "We did fun experiments with water."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "aloud.",
+            "sentence",
+            "first",
+            "the",
+            "read",
+            "Sami"
+          ],
+          "answer": "Sami read the first sentence aloud."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bedtime.",
+            "at",
+            "me",
+            "with",
+            "reads",
+            "mother",
+            "My"
+          ],
+          "answer": "My mother reads with me at bedtime."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "roof.",
+            "the",
+            "on",
+            "rain",
+            "the",
+            "hear",
+            "We"
+          ],
+          "answer": "We hear the rain on the roof."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'five' mean in this unit?",
+          "choices": [
+            "The number 5. It is how many fingers are on one hand.",
+            "Happy means you feel good and want to smile.",
+            "Hello is a friendly word we say when we meet someone."
+          ],
+          "answer": "The number 5. It is how many fingers are on one hand.",
+          "explanation": "five: The number 5. It is how many fingers are on one hand."
+        },
+        {
+          "prompt": "What does 'experiments' mean in this unit?",
+          "choices": [
+            "Happy means you feel good and want to smile.",
+            "The number 5. It is how many fingers are on one hand.",
+            "Experiments are tests we do to find out how something works."
+          ],
+          "answer": "Experiments are tests we do to find out how something works.",
+          "explanation": "experiments: Experiments are tests we do to find out how something works."
+        },
+        {
+          "prompt": "What does 'tell' mean in this unit?",
+          "choices": [
+            "The number 5. It is how many fingers are on one hand.",
+            "Tell means to say something to another person using words.",
+            "Happy means you feel good and want to smile."
+          ],
+          "answer": "Tell means to say something to another person using words.",
+          "explanation": "tell: Tell means to say something to another person using words."
+        },
+        {
+          "prompt": "What does 'water' mean in this unit?",
+          "choices": [
+            "The clear drink we need every day to stay healthy.",
+            "Happy means you feel good and want to smile.",
+            "The number 5. It is how many fingers are on one hand."
+          ],
+          "answer": "The clear drink we need every day to stay healthy.",
+          "explanation": "water: The clear drink we need every day to stay healthy."
+        },
+        {
+          "prompt": "What does 'chick' mean in this unit?",
+          "choices": [
+            "Happy means you feel good and want to smile.",
+            "The number 5. It is how many fingers are on one hand.",
+            "A baby bird that has just come out of its egg."
+          ],
+          "answer": "A baby bird that has just come out of its egg.",
+          "explanation": "chick: A baby bird that has just come out of its egg."
+        },
+        {
+          "prompt": "What does 'seven' mean in this unit?",
+          "choices": [
+            "The number 5. It is how many fingers are on one hand.",
+            "The number 7. It comes after six and before eight.",
+            "Happy means you feel good and want to smile."
+          ],
+          "answer": "The number 7. It comes after six and before eight.",
+          "explanation": "seven: The number 7. It comes after six and before eight."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'hello'?",
+          "choices": [
+            "Interjection",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Interjection",
+          "explanation": "Hello is used as an interjection in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'celebration'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Celebration is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'finally'?",
+          "choices": [
+            "Verb",
+            "Adverb",
+            "Noun"
+          ],
+          "answer": "Adverb",
+          "explanation": "Finally is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'roll'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Roll is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'kind'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Kind is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'excited'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Excited is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "three",
+              "The number 3. It comes after two and before four."
+            ],
+            [
+              "please",
+              "Please is a kind word we use when we ask for something."
+            ],
+            [
+              "week",
+              "A week is seven days, from Monday to Sunday."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "numbers",
+              "Numbers are words or signs like one, two and three that tell us how many."
+            ],
+            [
+              "favourite",
+              "Favourite means the one you like best."
+            ],
+            [
+              "choose",
+              "Choose means to pick the one you want."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "saying",
+              "Saying means speaking words out loud."
+            ],
+            [
+              "finally",
+              "Finally means at last, after everything else is done."
+            ],
+            [
+              "apple",
+              "A round, crunchy fruit that is red or green."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "see",
+              "To look at something and know it with your own eyes."
+            ],
+            [
+              "mum",
+              "A warm, friendly name that children use for their own mother."
+            ],
+            [
+              "bus",
+              "A long vehicle that carries many people to town."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "throw",
+              "To send something through the air with your hand."
+            ],
+            [
+              "school",
+              "The building where you learn to read, write and count."
+            ],
+            [
+              "now",
+              "Now means at this moment, not later."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "evening",
+              "The part of the day before night, when the sun sets."
+            ],
+            [
+              "tired",
+              "Tired means you need to rest or sleep."
+            ],
+            [
+              "welcome",
+              "Welcome is a friendly word you say to greet someone."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which word is an action you do in a ball game?",
+          "choices": [
+            "hospital",
+            "bounce",
+            "triangle",
+            "water"
+          ],
+          "answer": "bounce",
+          "explanation": "Bounce is an action with a ball; a hospital is a place, water is a liquid and a triangle is a shape."
+        },
+        {
+          "prompt": "Which one is an animal that lives on a farm?",
+          "choices": [
+            "pencil",
+            "river",
+            "goat",
+            "bus"
+          ],
+          "answer": "goat",
+          "explanation": "A goat is a farm animal; a bus, a pencil and a river are not animals."
+        },
+        {
+          "prompt": "Which body part helps you hear the school bell?",
+          "choices": [
+            "eyes",
+            "hands",
+            "nose",
+            "ears"
+          ],
+          "answer": "ears",
+          "explanation": "We hear with our ears; eyes see, hands touch and the nose smells."
+        },
+        {
+          "prompt": "Which sentence tells a safe thing to do in the town?",
+          "choices": [
+            "Stop at the red light.",
+            "Run into the road.",
+            "Drop litter on the path.",
+            "Push people at the bus stop."
+          ],
+          "answer": "Stop at the red light.",
+          "explanation": "Stopping at a red light keeps you safe; the other actions are dangerous or unkind."
+        },
+        {
+          "prompt": "What should you do before you show your capstone project to the class?",
+          "choices": [
+            "Rub out all the words.",
+            "Practise it and check it.",
+            "Hide every page.",
+            "Skip the reflection."
+          ],
+          "answer": "Practise it and check it.",
+          "explanation": "Practising and checking helps you share your best work; the other choices would spoil it."
+        },
         {
           "prompt": "Which word completes the sentence: My name ___ Maya.",
           "choices": [
@@ -470,28 +784,78 @@
           ],
           "answer": "is",
           "explanation": "My name is one thing, so we use is; are is for more than one and am only goes with I."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence tells a safe thing to do in the town?",
+          "choices": [
+            "Stop at the red light.",
+            "Run into the road.",
+            "Drop litter on the path.",
+            "Push people at the bus stop."
+          ],
+          "answer": "Stop at the red light.",
+          "explanation": "Stopping at a red light keeps you safe; the other actions are dangerous or unkind."
         },
         {
-          "prompt": "Which word completes the sentence: I ___ hop on one foot.",
+          "prompt": "What should you do before you show your capstone project to the class?",
           "choices": [
-            "is",
-            "can",
-            "the",
-            "are"
+            "Rub out all the words.",
+            "Practise it and check it.",
+            "Hide every page.",
+            "Skip the reflection."
           ],
-          "answer": "can",
-          "explanation": "Can tells what you are able to do; is and are do not go with I hop, and the is not a doing word."
+          "answer": "Practise it and check it.",
+          "explanation": "Practising and checking helps you share your best work; the other choices would spoil it."
         },
         {
-          "prompt": "Which one is a complete sentence?",
+          "prompt": "Which word means: Should tells you what is the right thing to do.",
           "choices": [
-            "cat this",
-            "a cat",
-            "This is a cat.",
-            "is cat"
+            "should",
+            "happy",
+            "five"
           ],
-          "answer": "This is a cat.",
-          "explanation": "It starts with a capital letter, makes sense and ends with a full stop; the others are just groups of words."
+          "answer": "should",
+          "explanation": "should: Should tells you what is the right thing to do."
+        },
+        {
+          "prompt": "Which word means: Tell means to say something to another person using words.",
+          "choices": [
+            "happy",
+            "five",
+            "tell"
+          ],
+          "answer": "tell",
+          "explanation": "tell: Tell means to say something to another person using words."
+        },
+        {
+          "prompt": "What type of word is 'bus'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Bus is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'seven'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Number"
+          ],
+          "answer": "Number",
+          "explanation": "Seven is used as a number in this dictionary sense."
         }
       ]
     }

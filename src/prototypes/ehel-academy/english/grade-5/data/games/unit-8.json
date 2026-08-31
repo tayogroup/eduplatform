@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t03-u08",
   "title": "Share Your Views Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A job that needs long training or study.",
           "choices": [
             "profession",
-            "competitor",
-            "opponent"
+            "latitude",
+            "prove"
           ],
           "answer": "profession",
           "explanation": "profession: A job that needs long training or study."
         },
         {
-          "prompt": "Which word means: The ability to focus your full attention on one thing.",
+          "prompt": "Which word means: Very bad, unpleasant or shocking.",
           "choices": [
             "profession",
-            "competitor",
-            "concentration"
+            "latitude",
+            "awful"
           ],
-          "answer": "concentration",
-          "explanation": "concentration: The ability to focus your full attention on one thing."
+          "answer": "awful",
+          "explanation": "awful: Very bad, unpleasant or shocking."
         },
         {
-          "prompt": "Which word means: A room, especially a large or enclosed one found deep inside a building or cave.",
+          "prompt": "Which word means: To take food into your mouth and swallow it.",
           "choices": [
-            "competitor",
-            "chamber",
+            "latitude",
+            "eat",
             "profession"
           ],
-          "answer": "chamber",
-          "explanation": "chamber: A room, especially a large or enclosed one found deep inside a building or cave."
+          "answer": "eat",
+          "explanation": "eat: To take food into your mouth and swallow it."
+        },
+        {
+          "prompt": "Which word means: Curved shapes that wind round and round a central point.",
+          "choices": [
+            "spirals",
+            "profession",
+            "latitude"
+          ],
+          "answer": "spirals",
+          "explanation": "spirals: Curved shapes that wind round and round a central point."
+        },
+        {
+          "prompt": "Which word means: Showing feelings or ideas clearly and powerfully through words, art or expression.",
+          "choices": [
+            "profession",
+            "latitude",
+            "expressive"
+          ],
+          "answer": "expressive",
+          "explanation": "expressive: Showing feelings or ideas clearly and powerfully through words, art or expression."
+        },
+        {
+          "prompt": "Which word means: A person whose job is to give expert advice.",
+          "choices": [
+            "latitude",
+            "adviser",
+            "profession"
+          ],
+          "answer": "adviser",
+          "explanation": "adviser: A person whose job is to give expert advice."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A small container or wrapped parcel that holds something.",
-          "answer": "packet"
+          "clue": "Very bad, unpleasant or shocking.",
+          "answer": "awful"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Lines, symbols or patterns drawn or carved onto a surface.",
-          "answer": "markings"
+          "clue": "To take food into your mouth and swallow it.",
+          "answer": "eat"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "In a truthful way, or used to show that something is really true.",
+          "answer": "honestly"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Walked a long way, especially over hills or rough countryside.",
+          "answer": "hiked"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A person who represents their country in another country.",
+          "answer": "ambassador"
         }
       ]
     },
@@ -98,35 +143,82 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "bed.",
-            "garden",
+            "works.",
+            "pump",
             "the",
-            "of",
-            "edge",
-            "the",
-            "along",
-            "seeds",
-            "planted",
-            "We"
+            "how",
+            "illustrate",
+            "will",
+            "diagram",
+            "A"
           ],
-          "answer": "We planted seeds along the edge of the garden bed."
+          "answer": "A diagram will illustrate how the pump works."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "day.",
-            "first",
-            "very",
-            "their",
-            "on",
-            "Sandalwood",
-            "Team",
-            "formed",
-            "Nora",
-            "and",
-            "Amal"
+            "spring.",
+            "next",
+            "by",
+            "open",
+            "could",
+            "garden",
+            "the",
+            "poster,",
+            "the",
+            "to",
+            "According"
           ],
-          "answer": "Amal and Nora formed Team Sandalwood on their very first day."
+          "answer": "According to the poster, the garden could open by next spring."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "minds.",
+            "readers'",
+            "in",
+            "stick",
+            "idea",
+            "main",
+            "the",
+            "make",
+            "to",
+            "repetition",
+            "used",
+            "writer",
+            "The"
+          ],
+          "answer": "The writer used repetition to make the main idea stick in readers' minds."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "louder.",
+            "sound",
+            "whisper",
+            "every",
+            "made",
+            "echo",
+            "chamber's",
+            "The"
+          ],
+          "answer": "The chamber's echo made every whisper sound louder."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "chalk.",
+            "in",
+            "stone",
+            "the",
+            "on",
+            "names",
+            "their",
+            "wrote",
+            "team",
+            "The"
+          ],
+          "answer": "The team wrote their names on the stone in chalk."
         }
       ]
     },
@@ -139,308 +231,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "In The Hall of One Step, what does the carved phrase say about power?",
+          "prompt": "Which sentence from the school garden poster is a fact rather than an opinion?",
           "choices": [
-            "Power belongs to the tallest building.",
-            "Power grows out of wealth and trade.",
-            "Power is not in height; one step is a phase.",
-            "Power is measured by counting the steps."
+            "The patch of land sits behind the science block.",
+            "A garden would make our school more magnificent.",
+            "The garden is the best idea for our school this year.",
+            "Gardening is far more enjoyable than reading indoors."
           ],
-          "answer": "Power is not in height; one step is a phase.",
-          "explanation": "The carving separates power from height entirely, which is why Nora reads the hall as a place built for thinking."
+          "answer": "The patch of land sits behind the science block.",
+          "explanation": "Only the first statement can be checked by walking outside; the other three describe what somebody feels."
         },
         {
-          "prompt": "Which modal verb makes the strongest recommendation in a persuasive letter?",
+          "prompt": "Which word names the study of how living bodies work?",
           "choices": [
-            "might",
-            "could",
-            "may",
-            "must"
+            "telegraph",
+            "ceremony",
+            "physiology",
+            "descent"
           ],
-          "answer": "must",
-          "explanation": "Must states an obligation, while might, could and may only offer a possibility."
+          "answer": "physiology",
+          "explanation": "Physiology studies how bodies function; a telegraph sends messages, a ceremony marks an event and a descent is a way down."
         },
         {
-          "prompt": "Which sentence uses formal register for a letter to the headteacher?",
+          "prompt": "Which sentence uses the present perfect correctly?",
           "choices": [
-            "We can't wait for the garden to be ready!",
-            "I am writing to request a garden behind the science block.",
-            "You guys should totally come along on Friday.",
-            "It's gonna be the best thing our school has ever done."
+            "She have finished her poster.",
+            "She has finished her poster.",
+            "She has finish her poster.",
+            "She have finish her poster."
           ],
-          "answer": "I am writing to request a garden behind the science block.",
-          "explanation": "Formal register avoids contractions and slang, so only the second option suits a letter to a headteacher."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In “Save Our School Garden!”, what does the writer say the patch behind the science block looks like now?",
-          "choices": [
-            "The writer says it is only dust and stones, with nothing growing on it.",
-            "Each class donates soil or seeds, teachers give one hour a week, and parents lend tools or farming experience.",
-            "They think it could be the entrance, even though Nora warns it might only be a goat trap."
-          ],
-          "answer": "The writer says it is only dust and stones, with nothing growing on it.",
-          "explanation": "The opening paragraph contrasts today's dust and stones with the imagined garden of vegetables, herbs and flowers."
+          "answer": "She has finished her poster.",
+          "explanation": "She takes has, and the verb must be the past participle finished, so only the second option is correct."
         },
-        {
-          "prompt": "The text claims emotive language works better than numbers. What reason does it give?",
-          "choices": [
-            "Each class donates soil or seeds, teachers give one hour a week, and parents lend tools or farming experience.",
-            "She says the hall was built for thinking, and that its makers taught that every stage of life is a phase.",
-            "It says feelings stay in the memory far longer than numbers do."
-          ],
-          "answer": "It says feelings stay in the memory far longer than numbers do.",
-          "explanation": "The reason is about memory, not truth, which is why the text still insists that evidence must sit beside the feeling."
-        },
-        {
-          "prompt": "How does Nora explain the carved phrase “Power is not in height. One step is a phase.”?",
-          "choices": [
-            "She says understanding is never finished: it is hard work, it changes, and still it lasts.",
-            "She says the hall was built for thinking, and that its makers taught that every stage of life is a phase.",
-            "A fact can be checked and proved, while an opinion is only what somebody believes or feels."
-          ],
-          "answer": "She says the hall was built for thinking, and that its makers taught that every stage of life is a phase.",
-          "explanation": "Nora reads the carving as an idea about growth rather than architecture, which reframes the whole legend."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: One Minute to Persuade",
-          "target": "Medicine is a profession that takes years to enter."
-        },
-        {
-          "prompt": "Speaking 3: Spot the Technique",
-          "target": "Save Our School Garden!"
-        },
-        {
-          "prompt": "Speaking 5: Interview the Expert",
-          "target": "Amal and Nora formed Team Sandalwood on their very first day."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "play.",
-            "to",
-            "place",
-            "great",
-            "a",
-            "is",
-            "park",
-            "central",
-            "The"
-          ],
-          "answer": "The central park is a great place to play."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "guess.",
-            "simple",
-            "a",
-            "than",
-            "weight",
-            "more",
-            "carries",
-            "opinion",
-            "expert",
-            "An"
-          ],
-          "answer": "An expert opinion carries more weight than a simple guess."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "inside.",
-            "poem",
-            "the",
-            "read",
-            "to",
-            "carefully",
-            "envelope",
-            "the",
-            "opened",
-            "Amal"
-          ],
-          "answer": "Amal opened the envelope carefully to read the poem inside."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'emotive' mean in this unit?",
-          "choices": [
-            "Describing words chosen to make readers feel strong emotions.",
-            "A job that needs long training or study.",
-            "A person or team taking part in a contest."
-          ],
-          "answer": "Describing words chosen to make readers feel strong emotions.",
-          "explanation": "emotive: Describing words chosen to make readers feel strong emotions."
-        },
-        {
-          "prompt": "What does 'ache' mean in this unit?",
-          "choices": [
-            "A job that needs long training or study.",
-            "A person or team taking part in a contest.",
-            "A continuous dull pain in part of the body, or a strong feeling of longing."
-          ],
-          "answer": "A continuous dull pain in part of the body, or a strong feeling of longing.",
-          "explanation": "ache: A continuous dull pain in part of the body, or a strong feeling of longing."
-        },
-        {
-          "prompt": "What does 'competitor' mean in this unit?",
-          "choices": [
-            "A person who competes or argues against you.",
-            "A person or team taking part in a contest.",
-            "A job that needs long training or study."
-          ],
-          "answer": "A person or team taking part in a contest.",
-          "explanation": "competitor: A person or team taking part in a contest."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'investigation'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Investigation is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'scarce'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Scarce is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'anyhow'?",
-          "choices": [
-            "Verb",
-            "Adverb",
-            "Noun"
-          ],
-          "answer": "Adverb",
-          "explanation": "Anyhow is used as an adverb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "business",
-              "An organisation that makes or sells things for money."
-            ],
-            [
-              "director",
-              "A person who is in charge of an organisation or a film."
-            ],
-            [
-              "commerce",
-              "The buying and selling of goods on a large scale."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "packet",
-              "A small container or wrapped parcel that holds something."
-            ],
-            [
-              "safest",
-              "Causing the least danger or harm, more than anything else being compared."
-            ],
-            [
-              "ramps",
-              "Sloped surfaces that let people or things move between different levels instead of using stairs."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "makers",
-              "People who made or built something, especially something skilfully crafted."
-            ],
-            [
-              "doorway",
-              "The opening in a wall where a door is, forming an entrance to a room or building."
-            ],
-            [
-              "decent",
-              "Good enough to accept, though not the very best."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Complete the sentence: Amal has lived in Lomi ______ 2021.",
           "choices": [
@@ -477,13 +299,527 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "In “Save Our School Garden!”, what does the writer say the patch behind the science block looks like now?",
+          "choices": [
+            "The writer says it is only dust and stones, with nothing growing on it.",
+            "Each class donates soil or seeds, teachers give one hour a week, and parents lend tools or farming experience.",
+            "They think it could be the entrance, even though Nora warns it might only be a goat trap."
+          ],
+          "answer": "The writer says it is only dust and stones, with nothing growing on it.",
+          "explanation": "The opening paragraph contrasts today's dust and stones with the imagined garden of vegetables, herbs and flowers."
+        },
+        {
+          "prompt": "What exactly does the poster ask each class, each teacher and each parent to do?",
+          "choices": [
+            "A fact can be checked and proved, while an opinion is only what somebody believes or feels.",
+            "She says the hall was built for thinking, and that its makers taught that every stage of life is a phase.",
+            "Each class donates soil or seeds, teachers give one hour a week, and parents lend tools or farming experience."
+          ],
+          "answer": "Each class donates soil or seeds, teachers give one hour a week, and parents lend tools or farming experience.",
+          "explanation": "The call to action is split by audience, so every reader knows the one thing that is being asked of them."
+        },
+        {
+          "prompt": "The text claims emotive language works better than numbers. What reason does it give?",
+          "choices": [
+            "She says understanding is never finished: it is hard work, it changes, and still it lasts.",
+            "It says feelings stay in the memory far longer than numbers do.",
+            "A fact can be checked and proved, while an opinion is only what somebody believes or feels."
+          ],
+          "answer": "It says feelings stay in the memory far longer than numbers do.",
+          "explanation": "The reason is about memory, not truth, which is why the text still insists that evidence must sit beside the feeling."
+        },
+        {
+          "prompt": "Nora says the courtyard feels like a ceremony that ended before anyone tidied up. What does that comparison suggest?",
+          "choices": [
+            "It suggests the site is silent and abandoned, with broken stones and tools still lying about.",
+            "It says feelings stay in the memory far longer than numbers do.",
+            "He said few pupils had ever explained the layers of an ancient site so clearly."
+          ],
+          "answer": "It suggests the site is silent and abandoned, with broken stones and tools still lying about.",
+          "explanation": "The simile does two jobs: it captures the stillness and it hints that people really did gather there once."
+        },
+        {
+          "prompt": "How does Nora explain the carved phrase “Power is not in height. One step is a phase.”?",
+          "choices": [
+            "She tells them to research the site, ask questions and come back with evidence.",
+            "She means the descent into the tunnel was itself part of the learning, not just a way in.",
+            "She says the hall was built for thinking, and that its makers taught that every stage of life is a phase."
+          ],
+          "answer": "She says the hall was built for thinking, and that its makers taught that every stage of life is a phase.",
+          "explanation": "Nora reads the carving as an idea about growth rather than architecture, which reframes the whole legend."
+        },
+        {
+          "prompt": "What did the visiting geographer admire about the class presentation?",
+          "choices": [
+            "The writer says it is only dust and stones, with nothing growing on it.",
+            "He said few pupils had ever explained the layers of an ancient site so clearly.",
+            "It suggests the site is silent and abandoned, with broken stones and tools still lying about."
+          ],
+          "answer": "He said few pupils had ever explained the layers of an ancient site so clearly.",
+          "explanation": "His praise is about explanation rather than discovery, which matches the unit's focus on sharing a view well."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: One Minute to Persuade",
+          "target": "Medicine is a profession that takes years to enter."
+        },
+        {
+          "prompt": "Speaking 2: Thirty Seconds Each Way",
+          "target": "A diagram will illustrate how the pump works."
+        },
+        {
+          "prompt": "Speaking 3: Spot the Technique",
+          "target": "Save Our School Garden!"
+        },
+        {
+          "prompt": "Speaking 4: Oral Review with Note Cards",
+          "target": "It was more exciting than the first film."
+        },
+        {
+          "prompt": "Speaking 5: Interview the Expert",
+          "target": "The chamber's echo made every whisper sound louder."
+        },
+        {
+          "prompt": "Speaking 6: Question Time on the Hall of One Step",
+          "target": "The team wrote their names on the stone in chalk."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hemispheres.",
+            "two",
+            "into",
+            "Earth",
+            "the",
+            "divides",
+            "equator",
+            "The"
+          ],
+          "answer": "The equator divides the Earth into two hemispheres."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "ahead.",
+            "months",
+            "six",
+            "hall",
+            "the",
+            "booked",
+            "organiser",
+            "The"
+          ],
+          "answer": "The organiser booked the hall six months ahead."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "food.",
+            "growing",
+            "and",
+            "farming",
+            "about",
+            "deal",
+            "great",
+            "a",
+            "knows",
+            "father",
+            "Omar's"
+          ],
+          "answer": "Omar's father knows a great deal about farming and growing food."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "contractions.",
+            "avoid",
+            "should",
+            "headteacher",
+            "the",
+            "to",
+            "letter",
+            "formal",
+            "A"
+          ],
+          "answer": "A formal letter to the headteacher should avoid contractions."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "wall.",
+            "chamber",
+            "the",
+            "on",
+            "markings",
+            "strange",
+            "the",
+            "photographed",
+            "Amal"
+          ],
+          "answer": "Amal photographed the strange markings on the chamber wall."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "take.",
+            "should",
+            "I",
+            "medicine",
+            "the",
+            "about",
+            "note",
+            "careful",
+            "a",
+            "wrote",
+            "physician",
+            "The"
+          ],
+          "answer": "The physician wrote a careful note about the medicine I should take."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'latitude' mean in this unit?",
+          "choices": [
+            "How far north or south a place is from the middle of Earth.",
+            "A job that needs long training or study.",
+            "To show with facts that something is true."
+          ],
+          "answer": "How far north or south a place is from the middle of Earth.",
+          "explanation": "latitude: How far north or south a place is from the middle of Earth."
+        },
+        {
+          "prompt": "What does 'primary' mean in this unit?",
+          "choices": [
+            "A job that needs long training or study.",
+            "How far north or south a place is from the middle of Earth.",
+            "First in importance or order; the main one."
+          ],
+          "answer": "First in importance or order; the main one.",
+          "explanation": "primary: First in importance or order; the main one."
+        },
+        {
+          "prompt": "What does 'scientist' mean in this unit?",
+          "choices": [
+            "How far north or south a place is from the middle of Earth.",
+            "A person who studies the world through careful research and experiments.",
+            "A job that needs long training or study."
+          ],
+          "answer": "A person who studies the world through careful research and experiments.",
+          "explanation": "scientist: A person who studies the world through careful research and experiments."
+        },
+        {
+          "prompt": "What does 'echo' mean in this unit?",
+          "choices": [
+            "A sound that bounces back off a hard surface and is heard again a little later.",
+            "A job that needs long training or study.",
+            "How far north or south a place is from the middle of Earth."
+          ],
+          "answer": "A sound that bounces back off a hard surface and is heard again a little later.",
+          "explanation": "echo: A sound that bounces back off a hard surface and is heard again a little later."
+        },
+        {
+          "prompt": "What does 'geographer' mean in this unit?",
+          "choices": [
+            "A job that needs long training or study.",
+            "How far north or south a place is from the middle of Earth.",
+            "A person who studies maps, landscapes and the Earth's features."
+          ],
+          "answer": "A person who studies maps, landscapes and the Earth's features.",
+          "explanation": "geographer: A person who studies maps, landscapes and the Earth's features."
+        },
+        {
+          "prompt": "What does 'contractor' mean in this unit?",
+          "choices": [
+            "How far north or south a place is from the middle of Earth.",
+            "A person or firm hired to do a particular job.",
+            "A job that needs long training or study."
+          ],
+          "answer": "A person or firm hired to do a particular job.",
+          "explanation": "contractor: A person or firm hired to do a particular job."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'prove'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Prove is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'seeds'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Seeds is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'contractions'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Contractions is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'judging'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Judging is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'physical'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Physical is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'investor'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Investor is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "business",
+              "An organisation that makes or sells things for money."
+            ],
+            [
+              "region",
+              "A large area of a country or of the world."
+            ],
+            [
+              "product",
+              "The answer you get when you multiply numbers."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "cultural",
+              "Connected with the customs, arts and beliefs shared by a group of people."
+            ],
+            [
+              "imagine",
+              "To form a picture or idea of something in your mind."
+            ],
+            [
+              "donate",
+              "To give something, such as money or goods, to help others."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "rhetorical",
+              "Describing a question asked to make a point, not to get an answer."
+            ],
+            [
+              "repetition",
+              "Saying or writing the same word or phrase again for effect."
+            ],
+            [
+              "weakens",
+              "Makes something less strong or less convincing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "staircase",
+              "A set of steps, usually inside a building, used to go up or down."
+            ],
+            [
+              "makers",
+              "People who made or built something, especially something skilfully crafted."
+            ],
+            [
+              "ache",
+              "A continuous dull pain in part of the body, or a strong feeling of longing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "chalk",
+              "A soft white or coloured substance used for writing or drawing, often on a blackboard."
+            ],
+            [
+              "innocent",
+              "Not guilty of doing anything wrong."
+            ],
+            [
+              "descent",
+              "The act of going down from a higher place."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "applicant",
+              "A person who formally asks for a job or a place."
+            ],
+            [
+              "director",
+              "A person who is in charge of an organisation or a film."
+            ],
+            [
+              "specialist",
+              "A person with deep knowledge of one particular subject."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which line from the story is a simile?",
+          "choices": [
+            "Ideas moved like a telegraph, quiet but fast.",
+            "The hall stood magnificent and tall.",
+            "Amal held up her sketch.",
+            "Birds circled above them."
+          ],
+          "answer": "Ideas moved like a telegraph, quiet but fast.",
+          "explanation": "A simile compares two unlike things with like or as, and only the first line makes that comparison."
+        },
+        {
+          "prompt": "In The Hall of One Step, what does the carved phrase say about power?",
+          "choices": [
+            "Power belongs to the tallest building.",
+            "Power grows out of wealth and trade.",
+            "Power is not in height; one step is a phase.",
+            "Power is measured by counting the steps."
+          ],
+          "answer": "Power is not in height; one step is a phase.",
+          "explanation": "The carving separates power from height entirely, which is why Nora reads the hall as a place built for thinking."
+        },
+        {
+          "prompt": "Which modal verb makes the strongest recommendation in a persuasive letter?",
+          "choices": [
+            "might",
+            "could",
+            "may",
+            "must"
+          ],
+          "answer": "must",
+          "explanation": "Must states an obligation, while might, could and may only offer a possibility."
+        },
+        {
+          "prompt": "Which sentence uses formal register for a letter to the headteacher?",
+          "choices": [
+            "We can't wait for the garden to be ready!",
+            "I am writing to request a garden behind the science block.",
+            "You guys should totally come along on Friday.",
+            "It's gonna be the best thing our school has ever done."
+          ],
+          "answer": "I am writing to request a garden behind the science block.",
+          "explanation": "Formal register avoids contractions and slang, so only the second option suits a letter to a headteacher."
+        },
+        {
+          "prompt": "Which word means exact and accurate rather than vague?",
+          "choices": [
+            "innocent",
+            "scarce",
+            "precise",
+            "decent"
+          ],
+          "answer": "precise",
+          "explanation": "Precise describes exact detail; innocent means not guilty, scarce means hard to find and decent means merely good enough."
+        },
         {
           "prompt": "Which sentence from the school garden poster is a fact rather than an opinion?",
           "choices": [
@@ -494,28 +830,78 @@
           ],
           "answer": "The patch of land sits behind the science block.",
           "explanation": "Only the first statement can be checked by walking outside; the other three describe what somebody feels."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence uses formal register for a letter to the headteacher?",
+          "choices": [
+            "We can't wait for the garden to be ready!",
+            "I am writing to request a garden behind the science block.",
+            "You guys should totally come along on Friday.",
+            "It's gonna be the best thing our school has ever done."
+          ],
+          "answer": "I am writing to request a garden behind the science block.",
+          "explanation": "Formal register avoids contractions and slang, so only the second option suits a letter to a headteacher."
         },
         {
-          "prompt": "Which word names the study of how living bodies work?",
+          "prompt": "Which word means exact and accurate rather than vague?",
           "choices": [
-            "telegraph",
-            "ceremony",
-            "physiology",
-            "descent"
+            "innocent",
+            "scarce",
+            "precise",
+            "decent"
           ],
-          "answer": "physiology",
-          "explanation": "Physiology studies how bodies function; a telegraph sends messages, a ceremony marks an event and a descent is a way down."
+          "answer": "precise",
+          "explanation": "Precise describes exact detail; innocent means not guilty, scarce means hard to find and decent means merely good enough."
         },
         {
-          "prompt": "Which sentence uses the present perfect correctly?",
+          "prompt": "Which word means: The amount left over after dividing.",
           "choices": [
-            "She have finished her poster.",
-            "She has finished her poster.",
-            "She has finish her poster.",
-            "She have finish her poster."
+            "remainder",
+            "profession",
+            "latitude"
           ],
-          "answer": "She has finished her poster.",
-          "explanation": "She takes has, and the verb must be the past participle finished, so only the second option is correct."
+          "answer": "remainder",
+          "explanation": "remainder: The amount left over after dividing."
+        },
+        {
+          "prompt": "Which word means: A person who studies the world through careful research and experiments.",
+          "choices": [
+            "profession",
+            "latitude",
+            "scientist"
+          ],
+          "answer": "scientist",
+          "explanation": "scientist: A person who studies the world through careful research and experiments."
+        },
+        {
+          "prompt": "What type of word is 'connecting'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Connecting is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'contractor'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Contractor is used as a noun in this dictionary sense."
         }
       ]
     }

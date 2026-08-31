@@ -5,7 +5,7 @@
   "unitId": "eng-g02-t02-u04",
   "title": "The Big Sky Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The brightness that lets us see things.",
           "choices": [
             "light",
-            "spring",
-            "discover"
+            "during",
+            "bring"
           ],
           "answer": "light",
           "explanation": "light: The brightness that lets us see things."
         },
         {
-          "prompt": "Which word means: A clock is a machine that shows us what time it is.",
+          "prompt": "Which word means: A shape with four straight sides that are all the same length.",
           "choices": [
             "light",
-            "spring",
-            "clock"
+            "during",
+            "square"
           ],
-          "answer": "clock",
-          "explanation": "clock: A clock is a machine that shows us what time it is."
+          "answer": "square",
+          "explanation": "square: A shape with four straight sides that are all the same length."
         },
         {
-          "prompt": "Which word means: Stopped something from moving or passing through.",
+          "prompt": "Which word means: Peeking means looking at something quickly or secretly, often from behind something.",
           "choices": [
-            "spring",
-            "blocked",
+            "during",
+            "peeking",
             "light"
           ],
-          "answer": "blocked",
-          "explanation": "blocked: Stopped something from moving or passing through."
+          "answer": "peeking",
+          "explanation": "peeking: Peeking means looking at something quickly or secretly, often from behind something."
+        },
+        {
+          "prompt": "Which word means: Light in colour, not bright or strong.",
+          "choices": [
+            "pale",
+            "light",
+            "during"
+          ],
+          "answer": "pale",
+          "explanation": "pale: Light in colour, not bright or strong."
+        },
+        {
+          "prompt": "Which word means: Any person at all, no matter who.",
+          "choices": [
+            "light",
+            "during",
+            "anybody"
+          ],
+          "answer": "anybody",
+          "explanation": "anybody: Any person at all, no matter who."
+        },
+        {
+          "prompt": "Which word means: Thunder is the loud noise you hear in the sky during a storm.",
+          "choices": [
+            "during",
+            "thunder",
+            "light"
+          ],
+          "answer": "thunder",
+          "explanation": "thunder: Thunder is the loud noise you hear in the sky during a storm."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A number tells us how many things there are or which one comes next.",
-          "answer": "number"
+          "clue": "A shape with three straight sides and three pointed corners.",
+          "answer": "triangle"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Started to happen or started to do something.",
-          "answer": "began"
+          "clue": "Rooftops are the tops of houses and buildings.",
+          "answer": "rooftops"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To give food to a person or an animal.",
+          "answer": "feed"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The star that gives Earth light and heat in the day.",
+          "answer": "sun"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Lightning is a bright flash of light in the sky during a storm.",
+          "answer": "lightning"
         }
       ]
     },
@@ -97,34 +142,74 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "disappeared.",
-            "almost",
-            "has",
-            "shadow",
-            "my",
-            "and",
-            "feet,",
-            "my",
-            "at",
-            "down",
-            "look",
-            "I"
+            "is.",
+            "he",
+            "tall",
+            "how",
+            "show",
+            "to",
+            "straight",
+            "up",
+            "stood",
+            "Theo"
           ],
-          "answer": "I look down at my feet, and my shadow has almost disappeared."
+          "answer": "Theo stood up straight to show how tall he is."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "map.",
-            "old",
+            "path.",
             "the",
-            "on",
-            "spot",
-            "a",
-            "found",
-            "Amal"
+            "across",
+            "stretched",
+            "shadow",
+            "The"
           ],
-          "answer": "Amal found a spot on the old map."
+          "answer": "The shadow stretched across the path."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "yours.",
+            "not",
+            "mine,",
+            "is",
+            "shadow",
+            "That"
+          ],
+          "answer": "That shadow is mine, not yours."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "anyway.",
+            "stars",
+            "the",
+            "count",
+            "to",
+            "tried",
+            "Amal",
+            "but",
+            "late,",
+            "was",
+            "It"
+          ],
+          "answer": "It was late, but Amal tried to count the stars anyway."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "heat.",
+            "and",
+            "light",
+            "of",
+            "source",
+            "a",
+            "is",
+            "sun",
+            "The"
+          ],
+          "answer": "The sun is a source of light and heat."
         }
       ]
     },
@@ -137,301 +222,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Yesterday I ____ at the moon for a long time.",
+          "prompt": "What does the word shadow mean?",
           "choices": [
-            "look",
-            "looks",
-            "looked",
-            "looking"
-          ],
-          "answer": "looked",
-          "explanation": "Yesterday tells us the action is already finished, so the verb adds -ed. Look and looks are present forms, and looking needs a helping word."
-        },
-        {
-          "prompt": "The sky is full of grey clouds and we cannot see the sun. What is the weather like?",
-          "choices": [
-            "sunny",
-            "orange",
-            "midday",
-            "cloudy"
-          ],
-          "answer": "cloudy",
-          "explanation": "Cloudy means many clouds cover the sky and hide the sun. Orange is a colour, midday is a time, and sunny is the opposite of what the question describes."
-        },
-        {
-          "prompt": "The compound word sunrise is made from two little words. Which two?",
-          "choices": [
-            "sun + rise",
-            "sea + side",
-            "rain + coat",
-            "moon + light"
-          ],
-          "answer": "sun + rise",
-          "explanation": "Sunrise splits into sun and rise. The other three joins make seaside, raincoat and moonlight."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "The poet writes about his shadow as if it were a person. Which little word does he use instead of “it”?",
-          "choices": [
-            "Him.",
-            "From the heels up to the head, which is his whole body.",
-            "It was pale and pink."
-          ],
-          "answer": "Him.",
-          "explanation": "The poem says “what can be the use of him”, so the shadow is called him, not it."
-        },
-        {
-          "prompt": "When is the shadow on a sundial short, and when is it long?",
-          "choices": [
-            "From the heels up to the head, which is his whole body.",
-            "In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short.",
-            "It is short at midday, and it is long in the morning and long again in the evening."
-          ],
-          "answer": "It is short at midday, and it is long in the morning and long again in the evening.",
-          "explanation": "Three sentences in the middle of the text give the three times of day."
-        },
-        {
-          "prompt": "Why was Amal's shadow long in the morning but short at midday?",
-          "choices": [
-            "It disappeared for a moment, because the cloud blocked the light.",
-            "In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short.",
-            "It jumps before him, so it seems to jump into bed first."
-          ],
-          "answer": "In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short.",
-          "explanation": "Adam explains the rule twice, once for the morning and once for midday."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Describe the Sky",
-          "target": "It is the ______."
-        },
-        {
-          "prompt": "Speaking Game — Shadow Play",
-          "target": "My hands are making a shadow."
-        },
-        {
-          "prompt": "Speaking 5 — Shadow Scientist",
-          "target": "Be a scientist and explain why we have day and night."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "breakfast.",
-            "eat",
-            "we",
-            "morning",
-            "the",
-            "In"
-          ],
-          "answer": "In the morning we eat breakfast."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "aloud.",
-            "story",
-            "the",
-            "read",
-            "to",
-            "adult",
-            "an",
-            "asked",
-            "Amal"
-          ],
-          "answer": "Amal asked an adult to read the story aloud."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "space?",
-            "about",
-            "curious",
-            "so",
-            "Zuri",
-            "is",
-            "Why"
-          ],
-          "answer": "Why is Zuri so curious about space?"
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'stretching' mean in this unit?",
-          "choices": [
-            "Stretching means becoming longer or reaching further out.",
-            "The brightness that lets us see things.",
-            "The season between winter and summer, when flowers begin to grow."
-          ],
-          "answer": "Stretching means becoming longer or reaching further out.",
-          "explanation": "stretching: Stretching means becoming longer or reaching further out."
-        },
-        {
-          "prompt": "What does 'slipped' mean in this unit?",
-          "choices": [
-            "The brightness that lets us see things.",
-            "The season between winter and summer, when flowers begin to grow.",
-            "Moved away quietly and quickly, or slid without meaning to."
-          ],
-          "answer": "Moved away quietly and quickly, or slid without meaning to.",
-          "explanation": "slipped: Moved away quietly and quickly, or slid without meaning to."
-        },
-        {
-          "prompt": "What does 'spring' mean in this unit?",
-          "choices": [
-            "To find or learn something new.",
-            "The season between winter and summer, when flowers begin to grow.",
+            "The time when the sun goes down in the evening.",
+            "White or grey shapes in the sky made of tiny drops of water.",
+            "A dark shape made when something blocks the light.",
             "The brightness that lets us see things."
           ],
-          "answer": "The season between winter and summer, when flowers begin to grow.",
-          "explanation": "spring: The season between winter and summer, when flowers begin to grow."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
+          "answer": "A dark shape made when something blocks the light.",
+          "explanation": "A shadow needs something solid to stop the light. The other three choices describe sunset, clouds and light."
+        },
         {
-          "prompt": "What type of word is 'spinning'?",
+          "prompt": "Which of these gives Earth its light and heat in the day?",
           "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
+            "the sun",
+            "the evening",
+            "a raincoat",
+            "grey"
           ],
-          "answer": "Verb",
-          "explanation": "Spinning is used as a verb in this dictionary sense."
+          "answer": "the sun",
+          "explanation": "The sun is the star closest to us, and it gives Earth both light and heat. Evening is a time, a raincoat is clothing, and grey is a colour."
         },
         {
-          "prompt": "What type of word is 'day'?",
+          "prompt": "Which of these is the time when your part of Earth faces away from the sun?",
           "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
+            "a cloud",
+            "night",
+            "a source",
+            "windy"
           ],
-          "answer": "Noun",
-          "explanation": "Day is used as a noun in this dictionary sense."
+          "answer": "night",
+          "explanation": "When your part of Earth has turned away from the sun, it is night. A cloud is a sky object, a source is where something comes from, and windy describes the weather."
         },
-        {
-          "prompt": "What type of word is 'describe'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Describe is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "high",
-              "Far above the ground or above another level."
-            ],
-            [
-              "heat",
-              "Heat is how warm something is."
-            ],
-            [
-              "interesting",
-              "Interesting means it makes you want to know more."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "hour",
-              "An hour is a unit of time made up of sixty minutes."
-            ],
-            [
-              "rooftops",
-              "Rooftops are the tops of houses and buildings."
-            ],
-            [
-              "spot",
-              "A small mark or place that you can point to."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "anyway",
-              "Despite what was just said, or no matter what happens."
-            ],
-            [
-              "cold",
-              "Having a low temperature, not warm at all."
-            ],
-            [
-              "star",
-              "A tiny point of light in the night sky. The sun is a star."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "The sun is a ____ of light and heat.",
           "choices": [
@@ -468,13 +290,516 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "The poet writes about his shadow as if it were a person. Which little word does he use instead of “it”?",
+          "choices": [
+            "Him.",
+            "From the heels up to the head, which is his whole body.",
+            "It was pale and pink."
+          ],
+          "answer": "Him.",
+          "explanation": "The poem says “what can be the use of him”, so the shadow is called him, not it."
+        },
+        {
+          "prompt": "The poem says the shadow is “very, very like me”. From where to where is it like the poet?",
+          "choices": [
+            "It jumps before him, so it seems to jump into bed first.",
+            "In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short.",
+            "From the heels up to the head, which is his whole body."
+          ],
+          "answer": "From the heels up to the head, which is his whole body.",
+          "explanation": "Line three gives the two ends: the heels at the bottom and the head at the top."
+        },
+        {
+          "prompt": "When is the shadow on a sundial short, and when is it long?",
+          "choices": [
+            "It disappeared for a moment, because the cloud blocked the light.",
+            "It is short at midday, and it is long in the morning and long again in the evening.",
+            "It jumps before him, so it seems to jump into bed first."
+          ],
+          "answer": "It is short at midday, and it is long in the morning and long again in the evening.",
+          "explanation": "Three sentences in the middle of the text give the three times of day."
+        },
+        {
+          "prompt": "According to the text, what makes it day where you live, and what makes it night?",
+          "choices": [
+            "It is day when your part of Earth faces the sun, and night when your part turns away from the sun.",
+            "A shadow.",
+            "Her grandmother, Grandma Hana."
+          ],
+          "answer": "It is day when your part of Earth faces the sun, and night when your part turns away from the sun.",
+          "explanation": "The text gives both halves in two sentences that begin with the word when."
+        },
+        {
+          "prompt": "Why was Amal's shadow long in the morning but short at midday?",
+          "choices": [
+            "It is short at midday, and it is long in the morning and long again in the evening.",
+            "The moon has no light of its own. The sun shines on it, and the moon gives that light back to us at night.",
+            "In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short."
+          ],
+          "answer": "In the morning the sun was low, so her shadow was long. At midday the sun was high, so her shadow was short.",
+          "explanation": "Adam explains the rule twice, once for the morning and once for midday."
+        },
+        {
+          "prompt": "Why does the moon shine, according to Grandma Hana?",
+          "choices": [
+            "Any personal answer that names something in nature and gives one reason for choosing it.",
+            "The moon has no light of its own. The sun shines on it, and the moon gives that light back to us at night.",
+            "Both tell the time. A clock uses hands that point at numbers, while a sundial uses a moving shadow and needs sunlight."
+          ],
+          "answer": "The moon has no light of its own. The sun shines on it, and the moon gives that light back to us at night.",
+          "explanation": "Grandma Hana answers Amal's question in the paragraph just after the moon rises."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Describe the Sky",
+          "target": "It is the ______."
+        },
+        {
+          "prompt": "Speaking 2 — Explain How a Shadow Forms",
+          "target": "A shadow forms when something blocks the light."
+        },
+        {
+          "prompt": "Speaking Game — Shadow Play",
+          "target": "My hands are making a shadow."
+        },
+        {
+          "prompt": "Speaking 4 — Sky Watch Report",
+          "target": "Watch the sky three times in one day and report what you saw."
+        },
+        {
+          "prompt": "Speaking 5 — Shadow Scientist",
+          "target": "Be a scientist and explain why we have day and night."
+        },
+        {
+          "prompt": "Speaking 6 — Weather Presenter",
+          "target": "Good morning. Here is today's weather."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "path.",
+            "sandy",
+            "the",
+            "on",
+            "long",
+            "grow",
+            "shadow",
+            "her",
+            "watched",
+            "Amal"
+          ],
+          "answer": "Amal watched her shadow grow long on the sandy path."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "amazing.",
+            "is",
+            "wheel",
+            "Ferris",
+            "the",
+            "from",
+            "view",
+            "The"
+          ],
+          "answer": "The view from the Ferris wheel is amazing."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "seven.",
+            "number",
+            "the",
+            "past",
+            "stretched",
+            "shadow",
+            "Amal's"
+          ],
+          "answer": "Amal's shadow stretched past the number seven."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "mine.",
+            "was",
+            "stone",
+            "strange",
+            "the",
+            "said",
+            "Amal"
+          ],
+          "answer": "Amal said the strange stone was mine."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "anyway?",
+            "outside",
+            "go",
+            "you",
+            "did",
+            "Why"
+          ],
+          "answer": "Why did you go outside anyway?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "sun.",
+            "the",
+            "is",
+            "light",
+            "of",
+            "source",
+            "biggest",
+            "Our"
+          ],
+          "answer": "Our biggest source of light is the sun."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'during' mean in this unit?",
+          "choices": [
+            "During means all through the time that something happens.",
+            "The brightness that lets us see things.",
+            "Bring means to take something with you to a place."
+          ],
+          "answer": "During means all through the time that something happens.",
+          "explanation": "during: During means all through the time that something happens."
+        },
+        {
+          "prompt": "What does 'metal' mean in this unit?",
+          "choices": [
+            "The brightness that lets us see things.",
+            "During means all through the time that something happens.",
+            "Metal is a hard, shiny material used to make things like tools and coins."
+          ],
+          "answer": "Metal is a hard, shiny material used to make things like tools and coins.",
+          "explanation": "metal: Metal is a hard, shiny material used to make things like tools and coins."
+        },
+        {
+          "prompt": "What does 'underneath' mean in this unit?",
+          "choices": [
+            "During means all through the time that something happens.",
+            "Underneath means directly below or under something.",
+            "The brightness that lets us see things."
+          ],
+          "answer": "Underneath means directly below or under something.",
+          "explanation": "underneath: Underneath means directly below or under something."
+        },
+        {
+          "prompt": "What does 'anyway' mean in this unit?",
+          "choices": [
+            "Despite what was just said, or no matter what happens.",
+            "The brightness that lets us see things.",
+            "During means all through the time that something happens."
+          ],
+          "answer": "Despite what was just said, or no matter what happens.",
+          "explanation": "anyway: Despite what was just said, or no matter what happens."
+        },
+        {
+          "prompt": "What does 'evening' mean in this unit?",
+          "choices": [
+            "The brightness that lets us see things.",
+            "During means all through the time that something happens.",
+            "The part of the day before night, when the sun sets."
+          ],
+          "answer": "The part of the day before night, when the sun sets.",
+          "explanation": "evening: The part of the day before night, when the sun sets."
+        },
+        {
+          "prompt": "What does 'autumn' mean in this unit?",
+          "choices": [
+            "During means all through the time that something happens.",
+            "Autumn is the season when leaves fall from the trees.",
+            "The brightness that lets us see things."
+          ],
+          "answer": "Autumn is the season when leaves fall from the trees.",
+          "explanation": "autumn: Autumn is the season when leaves fall from the trees."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'bring'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Bring is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'point'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Point is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fetched'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Fetched is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'beauty'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Beauty is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'night'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Night is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'notice'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Notice is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "high",
+              "Far above the ground or above another level."
+            ],
+            [
+              "almost",
+              "Almost means very nearly, but not quite."
+            ],
+            [
+              "small",
+              "Little in size; it does not take up much space."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "line",
+              "A line is a long thin mark. It can be straight or curved."
+            ],
+            [
+              "number",
+              "A number tells us how many things there are or which one comes next."
+            ],
+            [
+              "barely",
+              "Barely means only just, or almost not at all."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "giant",
+              "Giant means extremely large or much bigger than normal."
+            ],
+            [
+              "copies",
+              "Copies means makes or does exactly the same thing as something else."
+            ],
+            [
+              "rising",
+              "Moving upward, like the sun going up in the sky."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "hid",
+              "Went somewhere so that nobody could see you."
+            ],
+            [
+              "curious",
+              "Wanting to learn or find out about something."
+            ],
+            [
+              "rain",
+              "Water that falls from the clouds in drops."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "source",
+              "The place where something comes from."
+            ],
+            [
+              "cloud",
+              "White or grey shapes in the sky made of tiny drops of water."
+            ],
+            [
+              "sunny",
+              "Bright with plenty of sunshine and very few clouds."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "rainbow",
+              "An arc of many colours that appears in the sky after rain."
+            ],
+            [
+              "energy",
+              "The power you get from food and rest to play and learn."
+            ],
+            [
+              "strange",
+              "Strange means unusual or not what you would normally expect."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence is written correctly in the present simple?",
+          "choices": [
+            "The sun rise in the east.",
+            "The sun rises in the east.",
+            "The sun rising in the east.",
+            "The sun to rise in the east."
+          ],
+          "answer": "The sun rises in the east.",
+          "explanation": "The sun is an “it”, so its verb takes -s. The other three sentences have the wrong verb form."
+        },
+        {
+          "prompt": "Yesterday I ____ at the moon for a long time.",
+          "choices": [
+            "look",
+            "looks",
+            "looked",
+            "looking"
+          ],
+          "answer": "looked",
+          "explanation": "Yesterday tells us the action is already finished, so the verb adds -ed. Look and looks are present forms, and looking needs a helping word."
+        },
+        {
+          "prompt": "The sky is full of grey clouds and we cannot see the sun. What is the weather like?",
+          "choices": [
+            "sunny",
+            "orange",
+            "midday",
+            "cloudy"
+          ],
+          "answer": "cloudy",
+          "explanation": "Cloudy means many clouds cover the sky and hide the sun. Orange is a colour, midday is a time, and sunny is the opposite of what the question describes."
+        },
+        {
+          "prompt": "The compound word sunrise is made from two little words. Which two?",
+          "choices": [
+            "sun + rise",
+            "sea + side",
+            "rain + coat",
+            "moon + light"
+          ],
+          "answer": "sun + rise",
+          "explanation": "Sunrise splits into sun and rise. The other three joins make seaside, raincoat and moonlight."
+        },
+        {
+          "prompt": "At midday the sun is high above you. What is your shadow like?",
+          "choices": [
+            "long and thin, stretching across the ground",
+            "orange and bright, like an evening sky",
+            "short, right under your feet",
+            "wet and cold, like a rain cloud"
+          ],
+          "answer": "short, right under your feet",
+          "explanation": "A high sun makes a short shadow that hides under your feet. Long shadows belong to the morning and the evening, and shadows are never orange or wet."
+        },
         {
           "prompt": "What does the word shadow mean?",
           "choices": [
@@ -485,28 +810,78 @@
           ],
           "answer": "A dark shape made when something blocks the light.",
           "explanation": "A shadow needs something solid to stop the light. The other three choices describe sunset, clouds and light."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "The compound word sunrise is made from two little words. Which two?",
+          "choices": [
+            "sun + rise",
+            "sea + side",
+            "rain + coat",
+            "moon + light"
+          ],
+          "answer": "sun + rise",
+          "explanation": "Sunrise splits into sun and rise. The other three joins make seaside, raincoat and moonlight."
         },
         {
-          "prompt": "Which of these gives Earth its light and heat in the day?",
+          "prompt": "At midday the sun is high above you. What is your shadow like?",
           "choices": [
-            "the sun",
-            "the evening",
-            "a raincoat",
-            "grey"
+            "long and thin, stretching across the ground",
+            "orange and bright, like an evening sky",
+            "short, right under your feet",
+            "wet and cold, like a rain cloud"
           ],
-          "answer": "the sun",
-          "explanation": "The sun is the star closest to us, and it gives Earth both light and heat. Evening is a time, a raincoat is clothing, and grey is a colour."
+          "answer": "short, right under your feet",
+          "explanation": "A high sun makes a short shadow that hides under your feet. Long shadows belong to the morning and the evening, and shadows are never orange or wet."
         },
         {
-          "prompt": "Which of these is the time when your part of Earth faces away from the sun?",
+          "prompt": "Which word means: Little in size; it does not take up much space.",
           "choices": [
-            "a cloud",
-            "night",
-            "a source",
-            "windy"
+            "small",
+            "light",
+            "during"
           ],
-          "answer": "night",
-          "explanation": "When your part of Earth has turned away from the sun, it is night. A cloud is a sky object, a source is where something comes from, and windy describes the weather."
+          "answer": "small",
+          "explanation": "small: Little in size; it does not take up much space."
+        },
+        {
+          "prompt": "Which word means: Underneath means directly below or under something.",
+          "choices": [
+            "light",
+            "during",
+            "underneath"
+          ],
+          "answer": "underneath",
+          "explanation": "underneath: Underneath means directly below or under something."
+        },
+        {
+          "prompt": "What type of word is 'rain'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Rain is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'autumn'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Autumn is used as a noun in this dictionary sense."
         }
       ]
     }

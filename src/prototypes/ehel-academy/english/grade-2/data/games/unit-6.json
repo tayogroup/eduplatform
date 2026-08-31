@@ -5,7 +5,7 @@
   "unitId": "eng-g02-t02-u06",
   "title": "All About Bugs Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: To move your body around so that you face another way.",
           "choices": [
             "turn",
-            "cover",
-            "pretty"
+            "rock",
+            "towards"
           ],
           "answer": "turn",
           "explanation": "turn: To move your body around so that you face another way."
         },
         {
-          "prompt": "Which word means: Closely means paying very careful attention to something.",
+          "prompt": "Which word means: Feet are the parts of your body at the end of your legs that you stand on.",
           "choices": [
             "turn",
-            "cover",
-            "closely"
+            "rock",
+            "feet"
           ],
-          "answer": "closely",
-          "explanation": "closely: Closely means paying very careful attention to something."
+          "answer": "feet",
+          "explanation": "feet: Feet are the parts of your body at the end of your legs that you stand on."
         },
         {
-          "prompt": "Which word means: Pulling means moving something towards you by holding and tugging it.",
+          "prompt": "Which word means: Rubbed means moved something back and forth against a surface.",
           "choices": [
-            "cover",
-            "pulling",
+            "rock",
+            "rubbed",
             "turn"
           ],
-          "answer": "pulling",
-          "explanation": "pulling: Pulling means moving something towards you by holding and tugging it."
+          "answer": "rubbed",
+          "explanation": "rubbed: Rubbed means moved something back and forth against a surface."
+        },
+        {
+          "prompt": "Which word means: Calm means quiet and peaceful, without worry or fuss.",
+          "choices": [
+            "calm",
+            "turn",
+            "rock"
+          ],
+          "answer": "calm",
+          "explanation": "calm: Calm means quiet and peaceful, without worry or fuss."
+        },
+        {
+          "prompt": "Which word means: A small animal with eight legs that spins webs to catch insects.",
+          "choices": [
+            "turn",
+            "rock",
+            "spider"
+          ],
+          "answer": "spider",
+          "explanation": "spider: A small animal with eight legs that spins webs to catch insects."
+        },
+        {
+          "prompt": "Which word means: To gather things together and bring them to one place.",
+          "choices": [
+            "rock",
+            "collect",
+            "turn"
+          ],
+          "answer": "collect",
+          "explanation": "collect: To gather things together and bring them to one place."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Closely means paying very careful attention to something.",
-          "answer": "closely"
+          "clue": "Feet are the parts of your body at the end of your legs that you stand on.",
+          "answer": "feet"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Pulling means moving something towards you by holding and tugging it.",
-          "answer": "pulling"
+          "clue": "Clicking means making short, sharp sounds one after another.",
+          "answer": "clicking"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Calm means quiet and peaceful, without worry or fuss.",
+          "answer": "calm"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A small animal with eight legs that spins webs to catch insects.",
+          "answer": "spider"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To cover means to put something over the top of it.",
+          "answer": "cover"
         }
       ]
     },
@@ -100,28 +145,71 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "grass.",
-            "tall",
-            "the",
-            "among",
-            "hid",
-            "rabbit",
-            "The"
+            "body.",
+            "your",
+            "of",
+            "part",
+            "a",
+            "to",
+            "Point"
           ],
-          "answer": "The rabbit hid among the tall grass."
+          "answer": "Point to a part of your body."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "grass.",
+            "windowsill.",
             "the",
-            "into",
-            "quietly",
-            "settled",
-            "cricket",
+            "along",
+            "crawled",
+            "beetle",
             "The"
           ],
-          "answer": "The cricket settled quietly into the grass."
+          "answer": "The beetle crawled along the windowsill."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "jar.",
+            "the",
+            "on",
+            "back",
+            "lid",
+            "the",
+            "put",
+            "Nora"
+          ],
+          "answer": "Nora put the lid back on the jar."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "hands.",
+            "both",
+            "with",
+            "ball",
+            "the",
+            "catches",
+            "goalkeeper",
+            "The"
+          ],
+          "answer": "The goalkeeper catches the ball with both hands."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "path.",
+            "wet",
+            "the",
+            "on",
+            "worms",
+            "saw",
+            "we",
+            "rain,",
+            "the",
+            "After"
+          ],
+          "answer": "After the rain, we saw worms on the wet path."
         }
       ]
     },
@@ -134,301 +222,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence uses the simple present tense correctly?",
+          "prompt": "Which of these is a small animal with eight legs that spins a web?",
           "choices": [
-            "A spider spin a web.",
-            "A spider spins a web.",
-            "A spider spinning a web.",
-            "A spiders spin a web."
+            "cricket",
+            "nectar",
+            "spider",
+            "anthill"
           ],
-          "answer": "A spider spins a web.",
-          "explanation": "There is only one spider, so the verb takes an s. The other sentences leave the s off, have no helping word, or add the s to the naming word instead."
+          "answer": "spider",
+          "explanation": "A spider has eight legs and spins a web. A cricket is a six-legged insect, nectar is a sweet drink and an anthill is a home."
         },
         {
-          "prompt": "Choose the correct verb for this fact: “Bees ______ honey.”",
+          "prompt": "Which insect collects nectar from flowers and makes honey?",
           "choices": [
-            "making",
-            "makes",
-            "made",
-            "make"
-          ],
-          "answer": "make",
-          "explanation": "Bees is more than one, so the verb stays plain. Makes belongs with one bee, made is the past, and making needs a helping word."
-        },
-        {
-          "prompt": "Which question asks about the place where spiders live?",
-          "choices": [
-            "What do spiders eat?",
-            "Where do spiders live?",
-            "How do spiders spin a web?",
-            "Why do spiders hide?"
-          ],
-          "answer": "Where do spiders live?",
-          "explanation": "Where always asks about a place. What asks about a thing, How asks about a way of doing something, and Why asks for a reason."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "How many legs do all insects have, and what are their three main body parts called?",
-          "choices": [
-            "Six legs. The three main body parts are the head, the thorax and the abdomen.",
-            "The bug is on the speaker, because the poem says, “There's a bug on me.”",
-            "To feel and to smell."
-          ],
-          "answer": "Six legs. The three main body parts are the head, the thorax and the abdomen.",
-          "explanation": "The text gives both answers, one after the other."
-        },
-        {
-          "prompt": "What was in Grandpa's pocket, and where had he found it?",
-          "choices": [
-            "The bug is on the speaker, because the poem says, “There's a bug on me.”",
-            "Stay calm and do not wave your arms, and then the bee will leave you alone.",
-            "A cricket, and he found it under a stone in the garden."
-          ],
-          "answer": "A cricket, and he found it under a stone in the garden.",
-          "explanation": "Grandpa answers Nora's first question with both the creature and the place he found it."
-        },
-        {
-          "prompt": "Adam told Amal how to stay safe near the bee. What did he tell her to do?",
-          "choices": [
-            "She counted its legs one by one and found eight, and insects have only six.",
-            "Stay calm and do not wave your arms, and then the bee will leave you alone.",
-            "“I don't know.” Nobody in the poem can say where the bug went."
-          ],
-          "answer": "Stay calm and do not wave your arms, and then the bee will leave you alone.",
-          "explanation": "Adam answers Amal's worried question about stinging with two clear pieces of advice."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Name and Describe a Bug",
-          "target": "This is a ______."
-        },
-        {
-          "prompt": "Speaking Game — Bug Riddles",
-          "target": "It has six legs. It can fly. It makes honey."
-        },
-        {
-          "prompt": "Speaking 5 — My Garden Tour",
-          "target": "Here is a bee. It collects nectar and it makes honey."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "nectar.",
-            "collecting",
-            "flowers",
-            "the",
-            "around",
-            "buzzed",
+            "web",
             "bee",
-            "The"
+            "above",
+            "crawl"
           ],
-          "answer": "The bee buzzed around the flowers collecting nectar."
+          "answer": "bee",
+          "explanation": "A bee collects nectar and makes honey. A web is what a spider spins, above is a position word and crawl is an action word."
         },
         {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "leaf.",
-            "a",
-            "under",
-            "bug",
-            "a",
-            "found",
-            "Leo"
-          ],
-          "answer": "Leo found a bug under a leaf."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "puddles.",
-            "muddy",
-            "in",
-            "stamp",
-            "to",
-            "likes",
-            "Adam"
-          ],
-          "answer": "Adam likes to stamp in muddy puddles."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'sunshine' mean in this unit?",
+          "prompt": "How many legs does every insect have?",
           "choices": [
-            "Sunshine is the warm, bright light that comes from the sun.",
-            "To move your body around so that you face another way.",
-            "To cover means to put something over the top of it."
+            "two",
+            "eight",
+            "six",
+            "none"
           ],
-          "answer": "Sunshine is the warm, bright light that comes from the sun.",
-          "explanation": "sunshine: Sunshine is the warm, bright light that comes from the sun."
+          "answer": "six",
+          "explanation": "All insects have six legs. Two legs belong to a bird, eight legs belong to a spider, and a worm is the creature with no legs."
         },
-        {
-          "prompt": "What does 'buzz' mean in this unit?",
-          "choices": [
-            "To move your body around so that you face another way.",
-            "To cover means to put something over the top of it.",
-            "A buzz is the low humming sound a bee or fly makes."
-          ],
-          "answer": "A buzz is the low humming sound a bee or fly makes.",
-          "explanation": "buzz: A buzz is the low humming sound a bee or fly makes."
-        },
-        {
-          "prompt": "What does 'cover' mean in this unit?",
-          "choices": [
-            "Pretty means nice or lovely to look at.",
-            "To cover means to put something over the top of it.",
-            "To move your body around so that you face another way."
-          ],
-          "answer": "To cover means to put something over the top of it.",
-          "explanation": "cover: To cover means to put something over the top of it."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'hear'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Hear is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'on'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Position"
-          ],
-          "answer": "Position",
-          "explanation": "On is used as a position in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'busy'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Busy is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "hurt",
-              "To hurt means to feel pain, or to cause pain."
-            ],
-            [
-              "curious",
-              "Wanting to learn or find out about something."
-            ],
-            [
-              "Earth",
-              "Our planet. It turns round, which gives us day and night."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "abdomen",
-              "The abdomen is the back part of an insect's body, behind the thorax."
-            ],
-            [
-              "grandpa",
-              "Grandpa is another word for your mother's or father's father."
-            ],
-            [
-              "forever",
-              "Forever means for all time, without ever stopping or ending."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "leave",
-              "Leave means to go away from a place or to let something stay where it is."
-            ],
-            [
-              "chance",
-              "A chance is a moment when it is possible for something to happen."
-            ],
-            [
-              "web",
-              "The net of thin silk that a spider spins to catch insects."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Why is a spider not an insect?",
           "choices": [
@@ -465,13 +290,517 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "How many legs do all insects have, and what are their three main body parts called?",
+          "choices": [
+            "Six legs. The three main body parts are the head, the thorax and the abdomen.",
+            "The bug is on the speaker, because the poem says, “There's a bug on me.”",
+            "To feel and to smell."
+          ],
+          "answer": "Six legs. The three main body parts are the head, the thorax and the abdomen.",
+          "explanation": "The text gives both answers, one after the other."
+        },
+        {
+          "prompt": "In the poem, where is the bug at the start?",
+          "choices": [
+            "“I don't know.” Nobody in the poem can say where the bug went.",
+            "Stay calm and do not wave your arms, and then the bee will leave you alone.",
+            "The bug is on the speaker, because the poem says, “There's a bug on me.”"
+          ],
+          "answer": "The bug is on the speaker, because the poem says, “There's a bug on me.”",
+          "explanation": "Line two of the poem tells you exactly where the bug is sitting."
+        },
+        {
+          "prompt": "What was in Grandpa's pocket, and where had he found it?",
+          "choices": [
+            "She counted its legs one by one and found eight, and insects have only six.",
+            "A cricket, and he found it under a stone in the garden.",
+            "“I don't know.” Nobody in the poem can say where the bug went."
+          ],
+          "answer": "A cricket, and he found it under a stone in the garden.",
+          "explanation": "Grandpa answers Nora's first question with both the creature and the place he found it."
+        },
+        {
+          "prompt": "At the start of the story, what did Amal do when a bee buzzed near her, and what did she do when she saw a spider?",
+          "choices": [
+            "She ran away from the bee, and she covered her eyes when she saw the spider.",
+            "A cricket, and he found it under a stone in the garden.",
+            "A worm has no legs but it is a good little animal, because worms crawl through the soil and help plants grow strong."
+          ],
+          "answer": "She ran away from the bee, and she covered her eyes when she saw the spider.",
+          "explanation": "The second paragraph gives both reactions in two short sentences, one for each creature."
+        },
+        {
+          "prompt": "Adam told Amal how to stay safe near the bee. What did he tell her to do?",
+          "choices": [
+            "Because she loves its chirping sound.",
+            "She began afraid of bugs and ended calling them her little friends. Watching them closely with Adam, and having each creature explained, helped her change.",
+            "Stay calm and do not wave your arms, and then the bee will leave you alone."
+          ],
+          "answer": "Stay calm and do not wave your arms, and then the bee will leave you alone.",
+          "explanation": "Adam answers Amal's worried question about stinging with two clear pieces of advice."
+        },
+        {
+          "prompt": "What reason did Amal give Mina for not stepping on the worm?",
+          "choices": [
+            "Any kind, practical idea, such as stepping around a worm on the path, leaving a web alone, or moving a spider outside in a cup.",
+            "A worm has no legs but it is a good little animal, because worms crawl through the soil and help plants grow strong.",
+            "It needs to stay warm, it needs small pieces of fruit and vegetables, and it needs a little dish of water."
+          ],
+          "answer": "A worm has no legs but it is a good little animal, because worms crawl through the soil and help plants grow strong.",
+          "explanation": "Amal calls out to Mina and then gives a reason, which shows how much she has learned."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Name and Describe a Bug",
+          "target": "This is a ______."
+        },
+        {
+          "prompt": "Speaking 2 — Where Is the Bug?",
+          "target": "The butterfly is on the flower."
+        },
+        {
+          "prompt": "Speaking Game — Bug Riddles",
+          "target": "It has six legs. It can fly. It makes honey."
+        },
+        {
+          "prompt": "Speaking 4 — Bug Scientist",
+          "target": "Be a scientist who explains how to tell an insect from other small animals."
+        },
+        {
+          "prompt": "Speaking 5 — My Garden Tour",
+          "target": "Here is a bee. It collects nectar and it makes honey."
+        },
+        {
+          "prompt": "Speaking 6 — Bug Question Circle",
+          "target": "How does a spider catch its food?"
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "spring.",
+            "the",
+            "in",
+            "north",
+            "fly",
+            "birds",
+            "The"
+          ],
+          "answer": "The birds fly north in the spring."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hill.",
+            "the",
+            "of",
+            "top",
+            "the",
+            "to",
+            "walked",
+            "We"
+          ],
+          "answer": "We walked to the top of the hill."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "stone.",
+            "the",
+            "under",
+            "crawled",
+            "ant",
+            "An"
+          ],
+          "answer": "An ant crawled under the stone."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "air.",
+            "for",
+            "lid",
+            "the",
+            "in",
+            "holes",
+            "poked",
+            "Grandpa"
+          ],
+          "answer": "Grandpa poked holes in the lid for air."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "sister.",
+            "little",
+            "his",
+            "of",
+            "proud",
+            "was",
+            "Adam"
+          ],
+          "answer": "Adam was proud of his little sister."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "web.",
+            "its",
+            "of",
+            "middle",
+            "the",
+            "in",
+            "quietly",
+            "waited",
+            "spider",
+            "garden",
+            "A"
+          ],
+          "answer": "A garden spider waited quietly in the middle of its web."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'rock' mean in this unit?",
+          "choices": [
+            "A rock is a hard, heavy piece of stone.",
+            "To move your body around so that you face another way.",
+            "Towards means in the direction of someone or something."
+          ],
+          "answer": "A rock is a hard, heavy piece of stone.",
+          "explanation": "rock: A rock is a hard, heavy piece of stone."
+        },
+        {
+          "prompt": "What does 'thorax' mean in this unit?",
+          "choices": [
+            "To move your body around so that you face another way.",
+            "A rock is a hard, heavy piece of stone.",
+            "The thorax is the middle part of an insect's body, between its head and abdomen."
+          ],
+          "answer": "The thorax is the middle part of an insect's body, between its head and abdomen.",
+          "explanation": "thorax: The thorax is the middle part of an insect's body, between its head and abdomen."
+        },
+        {
+          "prompt": "What does 'dish' mean in this unit?",
+          "choices": [
+            "A rock is a hard, heavy piece of stone.",
+            "A dish is a small, shallow container used to hold food or water.",
+            "To move your body around so that you face another way."
+          ],
+          "answer": "A dish is a small, shallow container used to hold food or water.",
+          "explanation": "dish: A dish is a small, shallow container used to hold food or water."
+        },
+        {
+          "prompt": "What does 'catches' mean in this unit?",
+          "choices": [
+            "Catches means grabs or holds something that is moving or falling.",
+            "To move your body around so that you face another way.",
+            "A rock is a hard, heavy piece of stone."
+          ],
+          "answer": "Catches means grabs or holds something that is moving or falling.",
+          "explanation": "catches: Catches means grabs or holds something that is moving or falling."
+        },
+        {
+          "prompt": "What does 'anthill' mean in this unit?",
+          "choices": [
+            "To move your body around so that you face another way.",
+            "A rock is a hard, heavy piece of stone.",
+            "The home that ants build, often with many rooms under the ground."
+          ],
+          "answer": "The home that ants build, often with many rooms under the ground.",
+          "explanation": "anthill: The home that ants build, often with many rooms under the ground."
+        },
+        {
+          "prompt": "What does 'clever' mean in this unit?",
+          "choices": [
+            "A rock is a hard, heavy piece of stone.",
+            "Quick to learn new things and to solve problems.",
+            "To move your body around so that you face another way."
+          ],
+          "answer": "Quick to learn new things and to solve problems.",
+          "explanation": "clever: Quick to learn new things and to solve problems."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'towards'?",
+          "choices": [
+            "Position",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Position",
+          "explanation": "Towards is used as a position in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'type'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Type is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'forever'?",
+          "choices": [
+            "Verb",
+            "Adverb",
+            "Noun"
+          ],
+          "answer": "Adverb",
+          "explanation": "Forever is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'log'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Log is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'above'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Position"
+          ],
+          "answer": "Position",
+          "explanation": "Above is used as a position in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'wild'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Wild is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "hurt",
+              "To hurt means to feel pain, or to cause pain."
+            ],
+            [
+              "against",
+              "Against means touching something, or on the other side of it."
+            ],
+            [
+              "watch",
+              "Watch means to look at something for a while."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "taste",
+              "To use your tongue to know if food is sweet or salty."
+            ],
+            [
+              "holding",
+              "Holding means carrying or keeping something in your hands."
+            ],
+            [
+              "there's",
+              "There's is a short way to say 'there is'."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "pet",
+              "A pet is an animal that people keep and care for at home."
+            ],
+            [
+              "lid",
+              "A lid is the cover that fits on top of a jar or box."
+            ],
+            [
+              "wet",
+              "Wet means covered or soaked with water."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "breath",
+              "Breath is the air you take in and let out when you breathe."
+            ],
+            [
+              "buzz",
+              "A buzz is the low humming sound a bee or fly makes."
+            ],
+            [
+              "fuss",
+              "A fuss is a lot of unnecessary worry, complaining or excitement about something small."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "insect",
+              "A small animal with six legs, three body parts and often wings."
+            ],
+            [
+              "in",
+              "Inside something else, with walls or sides all around it."
+            ],
+            [
+              "spin",
+              "To make thread or a web by twisting fine silk."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "cover",
+              "To cover means to put something over the top of it."
+            ],
+            [
+              "lucky",
+              "Lucky means good things happen to you."
+            ],
+            [
+              "forest",
+              "A big area with many trees."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence tells you that the ant has gone inside its home?",
+          "choices": [
+            "The ant is on the anthill.",
+            "The ant is above the anthill.",
+            "The ant is in the anthill.",
+            "The ant is in front of the anthill."
+          ],
+          "answer": "The ant is in the anthill.",
+          "explanation": "In means inside. On means touching the top, above means higher up, and in front of means just before it."
+        },
+        {
+          "prompt": "Which sentence uses the simple present tense correctly?",
+          "choices": [
+            "A spider spin a web.",
+            "A spider spins a web.",
+            "A spider spinning a web.",
+            "A spiders spin a web."
+          ],
+          "answer": "A spider spins a web.",
+          "explanation": "There is only one spider, so the verb takes an s. The other sentences leave the s off, have no helping word, or add the s to the naming word instead."
+        },
+        {
+          "prompt": "Choose the correct verb for this fact: “Bees ______ honey.”",
+          "choices": [
+            "making",
+            "makes",
+            "made",
+            "make"
+          ],
+          "answer": "make",
+          "explanation": "Bees is more than one, so the verb stays plain. Makes belongs with one bee, made is the past, and making needs a helping word."
+        },
+        {
+          "prompt": "Which question asks about the place where spiders live?",
+          "choices": [
+            "What do spiders eat?",
+            "Where do spiders live?",
+            "How do spiders spin a web?",
+            "Why do spiders hide?"
+          ],
+          "answer": "Where do spiders live?",
+          "explanation": "Where always asks about a place. What asks about a thing, How asks about a way of doing something, and Why asks for a reason."
+        },
+        {
+          "prompt": "What does the word antennae mean?",
+          "choices": [
+            "The net of thin silk that a spider spins to catch insects.",
+            "The home that ants build under the ground.",
+            "The body parts that some insects use for flying.",
+            "The two thin parts on an insect's head that help it feel and smell."
+          ],
+          "answer": "The two thin parts on an insect's head that help it feel and smell.",
+          "explanation": "Antennae sit on the head and help an insect feel and smell. The other three options describe a web, an anthill and wings."
+        },
         {
           "prompt": "Which of these is a small animal with eight legs that spins a web?",
           "choices": [
@@ -482,28 +811,78 @@
           ],
           "answer": "spider",
           "explanation": "A spider has eight legs and spins a web. A cricket is a six-legged insect, nectar is a sweet drink and an anthill is a home."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which question asks about the place where spiders live?",
+          "choices": [
+            "What do spiders eat?",
+            "Where do spiders live?",
+            "How do spiders spin a web?",
+            "Why do spiders hide?"
+          ],
+          "answer": "Where do spiders live?",
+          "explanation": "Where always asks about a place. What asks about a thing, How asks about a way of doing something, and Why asks for a reason."
         },
         {
-          "prompt": "Which insect collects nectar from flowers and makes honey?",
+          "prompt": "What does the word antennae mean?",
           "choices": [
-            "web",
-            "bee",
-            "above",
-            "crawl"
+            "The net of thin silk that a spider spins to catch insects.",
+            "The home that ants build under the ground.",
+            "The body parts that some insects use for flying.",
+            "The two thin parts on an insect's head that help it feel and smell."
           ],
-          "answer": "bee",
-          "explanation": "A bee collects nectar and makes honey. A web is what a spider spins, above is a position word and crawl is an action word."
+          "answer": "The two thin parts on an insect's head that help it feel and smell.",
+          "explanation": "Antennae sit on the head and help an insect feel and smell. The other three options describe a web, an anthill and wings."
         },
         {
-          "prompt": "How many legs does every insect have?",
+          "prompt": "Which word means: Watch means to look at something for a while.",
           "choices": [
-            "two",
-            "eight",
-            "six",
-            "none"
+            "watch",
+            "turn",
+            "rock"
           ],
-          "answer": "six",
-          "explanation": "All insects have six legs. Two legs belong to a bird, eight legs belong to a spider, and a worm is the creature with no legs."
+          "answer": "watch",
+          "explanation": "watch: Watch means to look at something for a while."
+        },
+        {
+          "prompt": "Which word means: A dish is a small, shallow container used to hold food or water.",
+          "choices": [
+            "turn",
+            "rock",
+            "dish"
+          ],
+          "answer": "dish",
+          "explanation": "dish: A dish is a small, shallow container used to hold food or water."
+        },
+        {
+          "prompt": "What type of word is 'fuss'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Fuss is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'clever'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Clever is used as an adjective in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g06-t02-u06",
   "title": "People and Work Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A notice or message made to persuade people to buy or support something.",
           "choices": [
             "advertisement",
-            "treaty",
-            "briefcases"
+            "consumer",
+            "essay"
           ],
           "answer": "advertisement",
           "explanation": "advertisement: A notice or message made to persuade people to buy or support something."
         },
         {
-          "prompt": "Which word means: Disagreements or arguments between two or more people.",
+          "prompt": "Which word means: A word placed after a number to show the exact hour on a clock.",
           "choices": [
             "advertisement",
-            "treaty",
-            "disputes"
+            "consumer",
+            "o'clock"
           ],
-          "answer": "disputes",
-          "explanation": "disputes: Disagreements or arguments between two or more people."
+          "answer": "o'clock",
+          "explanation": "o'clock: A word placed after a number to show the exact hour on a clock."
         },
         {
-          "prompt": "Which word means: Names given to a person's job, a book, or a piece of work.",
+          "prompt": "Which word means: The number that comes after nineteen and before twenty-one.",
           "choices": [
-            "treaty",
-            "titles",
+            "consumer",
+            "twenty",
             "advertisement"
           ],
-          "answer": "titles",
-          "explanation": "titles: Names given to a person's job, a book, or a piece of work."
+          "answer": "twenty",
+          "explanation": "twenty: The number that comes after nineteen and before twenty-one."
+        },
+        {
+          "prompt": "Which word means: Usual or expected, the way something happens most of the time.",
+          "choices": [
+            "normal",
+            "advertisement",
+            "consumer"
+          ],
+          "answer": "normal",
+          "explanation": "normal: Usual or expected, the way something happens most of the time."
+        },
+        {
+          "prompt": "Which word means: To believe something is true without having full proof of it.",
+          "choices": [
+            "advertisement",
+            "consumer",
+            "assume"
+          ],
+          "answer": "assume",
+          "explanation": "assume: To believe something is true without having full proof of it."
+        },
+        {
+          "prompt": "Which word means: Doing something in a way that saves time and energy.",
+          "choices": [
+            "consumer",
+            "efficient",
+            "advertisement"
+          ],
+          "answer": "efficient",
+          "explanation": "efficient: Doing something in a way that saves time and energy."
         }
       ]
     },
@@ -57,18 +87,33 @@
       "rounds": [
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An agreement between groups to work together for a shared purpose.",
-          "answer": "alliance"
+          "clue": "For that reason; in this way.",
+          "answer": "thus"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Small, fried pastries filled with meat or vegetables, popular as a snack.",
-          "answer": "sambusas"
+          "clue": "A person trained in law who gives advice and represents people in court.",
+          "answer": "lawyer"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An object, such as a box or jar, used for holding or storing something.",
-          "answer": "container"
+          "clue": "The different foods or items combined together to make a dish.",
+          "answer": "ingredients"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A starchy root vegetable that is cooked and eaten in many parts of the world.",
+          "answer": "cassava"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Responsible for breaking a rule or committing a crime.",
+          "answer": "guilty"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A job that requires special training or education.",
+          "answer": "profession"
         }
       ]
     },
@@ -97,35 +142,83 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shoulder.",
-            "his",
-            "in",
-            "pain",
-            "sharp",
-            "a",
-            "described",
-            "patient",
-            "The"
+            "thing.",
+            "living",
+            "every",
+            "to",
+            "vital",
+            "is",
+            "Water"
           ],
-          "answer": "The patient described a sharp pain in his shoulder."
+          "answer": "Water is vital to every living thing."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "food.",
-            "unsafe",
-            "selling",
-            "of",
-            "her",
-            "accused",
-            "officials",
-            "after",
-            "arrested",
-            "was",
-            "Dina",
-            "Mama"
+            "began.",
+            "meeting",
+            "the",
+            "before",
+            "documents",
+            "the",
+            "studied",
+            "lawyer",
+            "The"
           ],
-          "answer": "Mama Dina was arrested after officials accused her of selling unsafe food."
+          "answer": "The lawyer studied the documents before the meeting began."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "page.",
+            "station's",
+            "the",
+            "on",
+            "appeared",
+            "it",
+            "before",
+            "twice",
+            "post",
+            "every",
+            "checked",
+            "Tariq"
+          ],
+          "answer": "Tariq checked every post twice before it appeared on the station's page."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "everyone.",
+            "to",
+            "equally",
+            "apply",
+            "should",
+            "penalty",
+            "the",
+            "that",
+            "argued",
+            "prosecution",
+            "The"
+          ],
+          "answer": "The prosecution argued that the penalty should apply equally to everyone."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "courtroom.",
+            "the",
+            "in",
+            "speech",
+            "political",
+            "avoid",
+            "to",
+            "witness",
+            "the",
+            "asked",
+            "prosecution",
+            "The"
+          ],
+          "answer": "The prosecution asked the witness to avoid political speech in the courtroom."
         }
       ]
     },
@@ -138,314 +231,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Four Professions, One Town': He reads figures and facts aloud, adds his own _____, and invites guests to share their views.",
+          "prompt": "What does 'wisdom' mean?",
           "choices": [
-            "observation",
-            "script",
-            "commentary",
-            "text"
+            "The ability to make good choices and decisions based on knowledge and experience.",
+            "A spoken or written explanation or discussion about something.",
+            "The act of watching something carefully to learn more about it.",
+            "The written words in a book, article, or message."
           ],
-          "answer": "commentary",
-          "explanation": "The text says: He reads figures and facts aloud, adds his own commentary, and invites guests to share their views."
+          "answer": "The ability to make good choices and decisions based on knowledge and experience.",
+          "explanation": "My grandmother has a lot of wisdom because she has lived for many years and learned many things."
         },
         {
-          "prompt": "Choose the missing word from 'Four Professions, One Town': Now she treats patients, reads test results, and gives careful _____ reports to her team.",
+          "prompt": "What does 'script' mean?",
           "choices": [
-            "wisdom",
-            "defence",
-            "legal",
-            "observation"
+            "A short description or title that explains a picture or a video.",
+            "A written text for a play, film, or show that tells what the characters say and do.",
+            "A spoken or written explanation or discussion about something.",
+            "The act of watching something carefully to learn more about it."
           ],
-          "answer": "observation",
-          "explanation": "The text says: Now she treats patients, reads test results, and gives careful observation reports to her team."
+          "answer": "A written text for a play, film, or show that tells what the characters say and do.",
+          "explanation": "The actors read their lines from the script during the rehearsal."
         },
         {
-          "prompt": "Choose the missing word from 'Four Professions, One Town': Tariq also writes _____ for the station’s social media pages, making sure every post is accurate and clear.",
+          "prompt": "What does 'text' mean?",
           "choices": [
-            "captions",
-            "tuition",
-            "commodity",
-            "profession"
+            "A short description or title that explains a picture or a video.",
+            "Numbers or shapes that represent something.",
+            "The written words in a book, article, or message.",
+            "The act of watching something carefully to learn more about it."
           ],
-          "answer": "captions",
-          "explanation": "The text says: Tariq also writes captions for the station’s social media pages, making sure every post is accurate and clear."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In which city does the passage say hundreds of people set off to work each morning?",
-          "choices": [
-            "Hargeisa, an East African city, where hundreds of people set off to work each morning.",
-            "They went on a field trip to observe a real court case and learn how rights, laws and profession roles work in society.",
-            "She says the officer entered without asking, that she never gave her consent, and that he touched her pots with gloves still dirty from the last stall."
-          ],
-          "answer": "Hargeisa, an East African city, where hundreds of people set off to work each morning.",
-          "explanation": "The first paragraph states that every morning in the East African city of Hargeisa, hundreds of people set off to work."
+          "answer": "The written words in a book, article, or message.",
+          "explanation": "I read the text in my English book to learn new words."
         },
-        {
-          "prompt": "What was the judge's final verdict in Mama Dina's case?",
-          "choices": [
-            "They went on a field trip to observe a real court case and learn how rights, laws and profession roles work in society.",
-            "She argues it matters because unfair bias means the inspection may not have been fair, and she calls for fairer integration rather than segregation.",
-            "The judge dropped the penalty because the evidence was incomplete and the officer's observation lacked protocol, so Mama Dina was free to return to her profession."
-          ],
-          "answer": "The judge dropped the penalty because the evidence was incomplete and the officer's observation lacked protocol, so Mama Dina was free to return to her profession.",
-          "explanation": "The judge reads that the evidence was incomplete and the officer's observation lacked protocol, so the penalty is dropped and Mama Dina is free to return to her profession."
-        },
-        {
-          "prompt": "What reasons does Mama Dina give for saying the inspection of her stall was unfair?",
-          "choices": [
-            "The passage says all four share responsibility, dedication and a desire to serve their community, and it ends with advice to encourage the reader to find work they love.",
-            "She says the officer entered without asking, that she never gave her consent, and that he touched her pots with gloves still dirty from the last stall.",
-            "The judge dropped the penalty because the evidence was incomplete and the officer's observation lacked protocol, so Mama Dina was free to return to her profession."
-          ],
-          "answer": "She says the officer entered without asking, that she never gave her consent, and that he touched her pots with gloves still dirty from the last stall.",
-          "explanation": "In her testimony Mama Dina states that the officer entered without asking, that she never gave consent, and that his gloves were still dirty from the previous stall."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Career Interview Role-Play",
-          "target": "In this activity, one person plays the role of a worker and the other plays the role of a journalist."
-        },
-        {
-          "prompt": "Speaking 3: Career Day Speech",
-          "target": "Imagine your school is holding a Career Day and you have been asked to speak about one profession."
-        },
-        {
-          "prompt": "Speaking 5: Four-Minute Unit Talk",
-          "target": "Mama Dina was arrested after officials accused her of selling unsafe food."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "together.",
-            "learn",
-            "everyone",
-            "helps",
-            "class",
-            "our",
-            "into",
-            "students",
-            "new",
-            "of",
-            "integration",
-            "The"
-          ],
-          "answer": "The integration of new students into our class helps everyone learn together."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "carefully.",
-            "ingredients",
-            "his",
-            "prepare",
-            "to",
-            "dawn",
-            "before",
-            "wakes",
-            "Omar"
-          ],
-          "answer": "Omar wakes before dawn to prepare his ingredients carefully."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "see.",
-            "to",
-            "court",
-            "whole",
-            "the",
-            "for",
-            "container",
-            "the",
-            "up",
-            "hold",
-            "officer",
-            "the",
-            "watched",
-            "Amal"
-          ],
-          "answer": "Amal watched the officer hold up the container for the whole court to see."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'experience' mean in this unit?",
-          "choices": [
-            "Knowledge or skill that you gain by doing something over a period of time.",
-            "A notice or message made to persuade people to buy or support something.",
-            "A formal written agreement between countries."
-          ],
-          "answer": "Knowledge or skill that you gain by doing something over a period of time.",
-          "explanation": "experience: Knowledge or skill that you gain by doing something over a period of time."
-        },
-        {
-          "prompt": "What does 'don' mean in this unit?",
-          "choices": [
-            "A notice or message made to persuade people to buy or support something.",
-            "A formal written agreement between countries.",
-            "To put on a piece of clothing."
-          ],
-          "answer": "To put on a piece of clothing.",
-          "explanation": "don: To put on a piece of clothing."
-        },
-        {
-          "prompt": "What does 'treaty' mean in this unit?",
-          "choices": [
-            "Bags with handles that professionals use to carry papers and documents to work.",
-            "A formal written agreement between countries.",
-            "A notice or message made to persuade people to buy or support something."
-          ],
-          "answer": "A formal written agreement between countries.",
-          "explanation": "treaty: A formal written agreement between countries."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'banana'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Banana is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'segregation'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Segregation is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'commentator'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Commentator is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "classification",
-              "The sorting of things into groups by what they have in common."
-            ],
-            [
-              "mediation",
-              "The settling of a dispute with the help of a neutral person."
-            ],
-            [
-              "seam",
-              "The line where two pieces of cloth are joined together by sewing."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "courtrooms",
-              "Rooms where legal trials take place in front of a judge."
-            ],
-            [
-              "views",
-              "A person's opinions or beliefs about a particular subject."
-            ],
-            [
-              "courthouse",
-              "A building that contains courtrooms, where legal trials and hearings take place."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "bailiff",
-              "A court official who keeps order and announces people during a trial."
-            ],
-            [
-              "targeted",
-              "Deliberately chose someone or something for special, often unfair, attention."
-            ],
-            [
-              "defence",
-              "The action of protecting someone or something from harm or danger."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'commentary' mean?",
           "choices": [
@@ -482,13 +299,531 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "In which city does the passage say hundreds of people set off to work each morning?",
+          "choices": [
+            "Hargeisa, an East African city, where hundreds of people set off to work each morning.",
+            "They went on a field trip to observe a real court case and learn how rights, laws and profession roles work in society.",
+            "She says the officer entered without asking, that she never gave her consent, and that he touched her pots with gloves still dirty from the last stall."
+          ],
+          "answer": "Hargeisa, an East African city, where hundreds of people set off to work each morning.",
+          "explanation": "The first paragraph states that every morning in the East African city of Hargeisa, hundreds of people set off to work."
+        },
+        {
+          "prompt": "What is Doctor Sarah's profession, and where does she begin her shift each day?",
+          "choices": [
+            "The judge dropped the penalty because the evidence was incomplete and the officer's observation lacked protocol, so Mama Dina was free to return to her profession.",
+            "She argues it matters because unfair bias means the inspection may not have been fair, and she calls for fairer integration rather than segregation.",
+            "She is a physician, and she begins her shift at the local hospital at seven o'clock."
+          ],
+          "answer": "She is a physician, and she begins her shift at the local hospital at seven o'clock.",
+          "explanation": "The text says a physician named Doctor Sarah begins her shift at the local hospital at seven o'clock."
+        },
+        {
+          "prompt": "What was the judge's final verdict in Mama Dina's case?",
+          "choices": [
+            "The passage says all four share responsibility, dedication and a desire to serve their community, and it ends with advice to encourage the reader to find work they love.",
+            "The judge dropped the penalty because the evidence was incomplete and the officer's observation lacked protocol, so Mama Dina was free to return to her profession.",
+            "It suggests that some professions rely on a person's knowledge, skills and character rather than on tools or equipment."
+          ],
+          "answer": "The judge dropped the penalty because the evidence was incomplete and the officer's observation lacked protocol, so Mama Dina was free to return to her profession.",
+          "explanation": "The judge reads that the evidence was incomplete and the officer's observation lacked protocol, so the penalty is dropped and Mama Dina is free to return to her profession."
+        },
+        {
+          "prompt": "The passage says some workers carry 'nothing but their knowledge and determination.' What does this suggest about the different jobs people do?",
+          "choices": [
+            "It suggests that some professions rely on a person's knowledge, skills and character rather than on tools or equipment.",
+            "It shows that a valuable profession does not always need a formal qualification, but it always needs dedication and hard work.",
+            "Hargeisa, an East African city, where hundreds of people set off to work each morning."
+          ],
+          "answer": "It suggests that some professions rely on a person's knowledge, skills and character rather than on tools or equipment.",
+          "explanation": "The writer contrasts workers who carry briefcases or toolboxes with those who carry only knowledge and determination, implying that not all valuable work needs physical tools."
+        },
+        {
+          "prompt": "What reasons does Mama Dina give for saying the inspection of her stall was unfair?",
+          "choices": [
+            "It shows that a valuable profession does not always need a formal qualification, but it always needs dedication and hard work.",
+            "She is a physician, and she begins her shift at the local hospital at seven o'clock.",
+            "She says the officer entered without asking, that she never gave her consent, and that he touched her pots with gloves still dirty from the last stall."
+          ],
+          "answer": "She says the officer entered without asking, that she never gave her consent, and that he touched her pots with gloves still dirty from the last stall.",
+          "explanation": "In her testimony Mama Dina states that the officer entered without asking, that she never gave consent, and that his gloves were still dirty from the previous stall."
+        },
+        {
+          "prompt": "The food safety commentator says women vendors 'are targeted more.' Why does she argue this point matters to the case?",
+          "choices": [
+            "They went on a field trip to observe a real court case and learn how rights, laws and profession roles work in society.",
+            "She argues it matters because unfair bias means the inspection may not have been fair, and she calls for fairer integration rather than segregation.",
+            "She says the officer entered without asking, that she never gave her consent, and that he touched her pots with gloves still dirty from the last stall."
+          ],
+          "answer": "She argues it matters because unfair bias means the inspection may not have been fair, and she calls for fairer integration rather than segregation.",
+          "explanation": "The commentator links the case to a wider pattern of women vendors being targeted, arguing that the community needs fair integration, not bias or segregation."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Career Interview Role-Play",
+          "target": "In this activity, one person plays the role of a worker and the other plays the role of a journalist."
+        },
+        {
+          "prompt": "Speaking 2: Job Description Guessing Game",
+          "target": "In this game, one person describes a job without naming the profession, and the listener must guess it."
+        },
+        {
+          "prompt": "Speaking 3: Career Day Speech",
+          "target": "Imagine your school is holding a Career Day and you have been asked to speak about one profession."
+        },
+        {
+          "prompt": "Speaking 4: Listen and Report",
+          "target": "Tariq checked every post twice before it appeared on the station's page."
+        },
+        {
+          "prompt": "Speaking 5: Four-Minute Unit Talk",
+          "target": "The prosecution argued that the penalty should apply equally to everyone."
+        },
+        {
+          "prompt": "Speaking 6: Report a Worker's Words",
+          "target": "The prosecution asked the witness to avoid political speech in the courtroom."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shop.",
+            "the",
+            "at",
+            "buy",
+            "to",
+            "need",
+            "I",
+            "items",
+            "of",
+            "list",
+            "a",
+            "have",
+            "I"
+          ],
+          "answer": "I have a list of items I need to buy at the shop."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "weekdays.",
+            "on",
+            "o'clock",
+            "eight",
+            "at",
+            "starts",
+            "always",
+            "School"
+          ],
+          "answer": "School always starts at eight o'clock on weekdays."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "office.",
+            "tidy",
+            "small,",
+            "a",
+            "in",
+            "clients",
+            "her",
+            "meets",
+            "Amara"
+          ],
+          "answer": "Amara meets her clients in a small, tidy office."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "decision.",
+            "a",
+            "reached",
+            "judge",
+            "the",
+            "before",
+            "days",
+            "three",
+            "lasted",
+            "trial",
+            "The"
+          ],
+          "answer": "The trial lasted three days before the judge reached a decision."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "before.",
+            "heard",
+            "never",
+            "had",
+            "she",
+            "titles",
+            "job",
+            "several",
+            "down",
+            "wrote",
+            "Amal"
+          ],
+          "answer": "Amal wrote down several job titles she had never heard before."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "incomplete.",
+            "strangely",
+            "seemed",
+            "report",
+            "officer's",
+            "the",
+            "that",
+            "noticed",
+            "Amal"
+          ],
+          "answer": "Amal noticed that the officer's report seemed strangely incomplete."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'consumer' mean in this unit?",
+          "choices": [
+            "A person who buys or uses things.",
+            "A notice or message made to persuade people to buy or support something.",
+            "A piece of writing that argues or explains one idea."
+          ],
+          "answer": "A person who buys or uses things.",
+          "explanation": "consumer: A person who buys or uses things."
+        },
+        {
+          "prompt": "What does 'craft' mean in this unit?",
+          "choices": [
+            "A notice or message made to persuade people to buy or support something.",
+            "A person who buys or uses things.",
+            "A skill used to make things carefully, often learned over a long time."
+          ],
+          "answer": "A skill used to make things carefully, often learned over a long time.",
+          "explanation": "craft: A skill used to make things carefully, often learned over a long time."
+        },
+        {
+          "prompt": "What does 'station' mean in this unit?",
+          "choices": [
+            "A person who buys or uses things.",
+            "A building or place set up for a particular purpose, such as broadcasting programmes or catching trains.",
+            "A notice or message made to persuade people to buy or support something."
+          ],
+          "answer": "A building or place set up for a particular purpose, such as broadcasting programmes or catching trains.",
+          "explanation": "station: A building or place set up for a particular purpose, such as broadcasting programmes or catching trains."
+        },
+        {
+          "prompt": "What does 'served' mean in this unit?",
+          "choices": [
+            "Gave out food or drinks to people, or carried out a duty or role.",
+            "A notice or message made to persuade people to buy or support something.",
+            "A person who buys or uses things."
+          ],
+          "answer": "Gave out food or drinks to people, or carried out a duty or role.",
+          "explanation": "served: Gave out food or drinks to people, or carried out a duty or role."
+        },
+        {
+          "prompt": "What does 'filed' mean in this unit?",
+          "choices": [
+            "A notice or message made to persuade people to buy or support something.",
+            "A person who buys or uses things.",
+            "Moved forward one after another in a line, in an orderly way."
+          ],
+          "answer": "Moved forward one after another in a line, in an orderly way.",
+          "explanation": "filed: Moved forward one after another in a line, in an orderly way."
+        },
+        {
+          "prompt": "What does 'allies' mean in this unit?",
+          "choices": [
+            "A person who buys or uses things.",
+            "Friends or partners who help each other.",
+            "A notice or message made to persuade people to buy or support something."
+          ],
+          "answer": "Friends or partners who help each other.",
+          "explanation": "allies: Friends or partners who help each other."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'essay'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Essay is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fees'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Fees is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'media'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Media is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'continuous'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Continuous is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'mattered'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Mattered is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'institution'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Institution is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "classification",
+              "The sorting of things into groups by what they have in common."
+            ],
+            [
+              "democracy",
+              "A system where people vote to choose their leaders."
+            ],
+            [
+              "universal",
+              "True or shared everywhere, by everyone."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "driver",
+              "A person who operates a vehicle such as a car, bus or lorry."
+            ],
+            [
+              "explaining",
+              "Making something clear or easier to understand for someone else."
+            ],
+            [
+              "settle",
+              "To bring a disagreement or problem to an end by reaching an agreement."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "prepare",
+              "To get something ready before it is needed."
+            ],
+            [
+              "views",
+              "A person's opinions or beliefs about a particular subject."
+            ],
+            [
+              "clutching",
+              "Holding something tightly, often because it feels important or precious."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "cassava",
+              "A starchy root vegetable that is cooked and eaten in many parts of the world."
+            ],
+            [
+              "prosecution",
+              "The lawyers in a trial who try to prove that someone broke the law."
+            ],
+            [
+              "gloves",
+              "Coverings worn on the hands to protect them or keep them clean."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "court",
+              "A place where a judge decides whether someone has broken the law."
+            ],
+            [
+              "lacked",
+              "Did not have enough of something that was needed."
+            ],
+            [
+              "figures",
+              "Numbers or shapes that represent something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "centuries",
+              "Long periods of time, each one lasting one hundred years."
+            ],
+            [
+              "diplomacy",
+              "The managing of relations between countries by discussion."
+            ],
+            [
+              "municipality",
+              "A town or district with its own local government."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Four Professions, One Town': He writes a _____ for each broadcast, choosing his words carefully so that listeners can understand the day’s events.",
+          "choices": [
+            "text",
+            "script",
+            "commentary",
+            "observation"
+          ],
+          "answer": "script",
+          "explanation": "The text says: He writes a script for each broadcast, choosing his words carefully so that listeners can understand the day’s events."
+        },
+        {
+          "prompt": "Choose the missing word from 'Four Professions, One Town': He reads figures and facts aloud, adds his own _____, and invites guests to share their views.",
+          "choices": [
+            "observation",
+            "script",
+            "commentary",
+            "text"
+          ],
+          "answer": "commentary",
+          "explanation": "The text says: He reads figures and facts aloud, adds his own commentary, and invites guests to share their views."
+        },
+        {
+          "prompt": "Choose the missing word from 'Four Professions, One Town': Now she treats patients, reads test results, and gives careful _____ reports to her team.",
+          "choices": [
+            "wisdom",
+            "defence",
+            "legal",
+            "observation"
+          ],
+          "answer": "observation",
+          "explanation": "The text says: Now she treats patients, reads test results, and gives careful observation reports to her team."
+        },
+        {
+          "prompt": "Choose the missing word from 'Four Professions, One Town': Tariq also writes _____ for the station’s social media pages, making sure every post is accurate and clear.",
+          "choices": [
+            "captions",
+            "tuition",
+            "commodity",
+            "profession"
+          ],
+          "answer": "captions",
+          "explanation": "The text says: Tariq also writes captions for the station’s social media pages, making sure every post is accurate and clear."
+        },
+        {
+          "prompt": "Choose the missing word from 'Voices in the Courtroom, part 1': “She said the officer didn’t have her _____ to test her pots,” Amal insisted.",
+          "choices": [
+            "commentary",
+            "consent",
+            "script",
+            "text"
+          ],
+          "answer": "consent",
+          "explanation": "The text says: “She said the officer didn’t have her consent to test her pots,” Amal insisted."
+        },
         {
           "prompt": "What does 'wisdom' mean?",
           "choices": [
@@ -499,28 +834,78 @@
           ],
           "answer": "The ability to make good choices and decisions based on knowledge and experience.",
           "explanation": "My grandmother has a lot of wisdom because she has lived for many years and learned many things."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Four Professions, One Town': Tariq also writes _____ for the station’s social media pages, making sure every post is accurate and clear.",
+          "choices": [
+            "captions",
+            "tuition",
+            "commodity",
+            "profession"
+          ],
+          "answer": "captions",
+          "explanation": "The text says: Tariq also writes captions for the station’s social media pages, making sure every post is accurate and clear."
         },
         {
-          "prompt": "What does 'script' mean?",
+          "prompt": "Choose the missing word from 'Voices in the Courtroom, part 1': “She said the officer didn’t have her _____ to test her pots,” Amal insisted.",
           "choices": [
-            "A short description or title that explains a picture or a video.",
-            "A written text for a play, film, or show that tells what the characters say and do.",
-            "A spoken or written explanation or discussion about something.",
-            "The act of watching something carefully to learn more about it."
+            "commentary",
+            "consent",
+            "script",
+            "text"
           ],
-          "answer": "A written text for a play, film, or show that tells what the characters say and do.",
-          "explanation": "The actors read their lines from the script during the rehearsal."
+          "answer": "consent",
+          "explanation": "The text says: “She said the officer didn’t have her consent to test her pots,” Amal insisted."
         },
         {
-          "prompt": "What does 'text' mean?",
+          "prompt": "Which word means: Not expected to happen or be true; improbable.",
           "choices": [
-            "A short description or title that explains a picture or a video.",
-            "Numbers or shapes that represent something.",
-            "The written words in a book, article, or message.",
-            "The act of watching something carefully to learn more about it."
+            "unlikely",
+            "advertisement",
+            "consumer"
           ],
-          "answer": "The written words in a book, article, or message.",
-          "explanation": "I read the text in my English book to learn new words."
+          "answer": "unlikely",
+          "explanation": "unlikely: Not expected to happen or be true; improbable."
+        },
+        {
+          "prompt": "Which word means: A building or place set up for a particular purpose, such as broadcasting programmes or catching trains.",
+          "choices": [
+            "advertisement",
+            "consumer",
+            "station"
+          ],
+          "answer": "station",
+          "explanation": "station: A building or place set up for a particular purpose, such as broadcasting programmes or catching trains."
+        },
+        {
+          "prompt": "What type of word is 'dirty'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Dirty is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'allies'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Allies is used as a noun in this dictionary sense."
         }
       ]
     }

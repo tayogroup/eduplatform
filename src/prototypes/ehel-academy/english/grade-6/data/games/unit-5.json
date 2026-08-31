@@ -5,7 +5,7 @@
   "unitId": "eng-g06-t02-u05",
   "title": "Money Matters Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Giving up something important or valuable for the sake of something else.",
           "choices": [
             "sacrifice",
-            "production",
-            "sample"
+            "accomplish",
+            "collaborate"
           ],
           "answer": "sacrifice",
           "explanation": "sacrifice: Giving up something important or valuable for the sake of something else."
         },
         {
-          "prompt": "Which word means: To look at two or more things closely to see how they are different or alike.",
+          "prompt": "Which word means: Talks with a seller to try to get a lower or fairer price.",
           "choices": [
             "sacrifice",
-            "production",
-            "compare"
+            "accomplish",
+            "bargains"
           ],
-          "answer": "compare",
-          "explanation": "compare: To look at two or more things closely to see how they are different or alike."
+          "answer": "bargains",
+          "explanation": "bargains: Talks with a seller to try to get a lower or fairer price."
         },
         {
-          "prompt": "Which word means: Turned over suddenly, or moved as if turning over, often used to describe a nervous feeling.",
+          "prompt": "Which word means: Able to be used, found, or reached when you need it.",
           "choices": [
-            "production",
-            "flipped",
+            "accomplish",
+            "available",
             "sacrifice"
           ],
-          "answer": "flipped",
-          "explanation": "flipped: Turned over suddenly, or moved as if turning over, often used to describe a nervous feeling."
+          "answer": "available",
+          "explanation": "available: Able to be used, found, or reached when you need it."
+        },
+        {
+          "prompt": "Which word means: The parts of the body, one on each side of the head, used for hearing.",
+          "choices": [
+            "ears",
+            "sacrifice",
+            "accomplish"
+          ],
+          "answer": "ears",
+          "explanation": "ears: The parts of the body, one on each side of the head, used for hearing."
+        },
+        {
+          "prompt": "Which word means: In a forceful or angry way that can seem threatening to others.",
+          "choices": [
+            "sacrifice",
+            "accomplish",
+            "aggressively"
+          ],
+          "answer": "aggressively",
+          "explanation": "aggressively: In a forceful or angry way that can seem threatening to others."
+        },
+        {
+          "prompt": "Which word means: Not liked or enjoyed by many people.",
+          "choices": [
+            "accomplish",
+            "unpopular",
+            "sacrifice"
+          ],
+          "answer": "unpopular",
+          "explanation": "unpopular: Not liked or enjoyed by many people."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "At a low cost, without spending very much money.",
-          "answer": "cheaply"
+          "clue": "Talks with a seller to try to get a lower or fairer price.",
+          "answer": "bargains"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The part of your body where food goes after you swallow it, often mentioned when you feel nervous.",
-          "answer": "stomach"
+          "clue": "Feeling or showing thanks for something you have received.",
+          "answer": "grateful"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A piece of furniture for one person to sit on, usually with a back and four legs.",
+          "answer": "chair"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Things that people do for enjoyment, exercise, or a particular purpose.",
+          "answer": "activities"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Not able to be used or not present.",
+          "answer": "unavailable"
         }
       ]
     },
@@ -100,35 +145,91 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "community.",
-            "your",
-            "strengthening",
-            "of",
-            "way",
-            "one",
-            "is",
-            "have",
+            "improve.",
+            "might",
             "you",
             "what",
-            "Sharing"
+            "on",
+            "reflect",
+            "to",
+            "moment",
+            "a",
+            "take",
+            "exam,",
+            "difficult",
+            "the",
+            "After"
           ],
-          "answer": "Sharing what you have is one way of strengthening your community."
+          "answer": "After the difficult exam, take a moment to reflect on what you might improve."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "mentioned.",
-            "name",
-            "her",
-            "heard",
-            "she",
-            "when",
-            "up",
-            "perked",
-            "ears",
-            "Amal's"
+            "notebooks.",
+            "and",
+            "sweets,",
+            "pencils,",
+            "sells",
+            "school",
+            "near",
+            "shop",
+            "little",
+            "The"
           ],
-          "answer": "Amal's ears perked up when she heard her name mentioned."
+          "answer": "The little shop near school sells pencils, sweets, and notebooks."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "school.",
+            "at",
+            "night",
+            "first",
+            "Amal's",
+            "on",
+            "cold",
+            "but",
+            "clean",
+            "were",
+            "dormitories",
+            "The"
+          ],
+          "answer": "The dormitories were clean but cold on Amal's first night at school."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "spoke.",
+            "she",
+            "before",
+            "chest",
+            "her",
+            "in",
+            "rise",
+            "heat",
+            "strange",
+            "a",
+            "felt",
+            "Amal"
+          ],
+          "answer": "Amal felt a strange heat rise in her chest before she spoke."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "outings.",
+            "school",
+            "the",
+            "for",
+            "shoes",
+            "new",
+            "afford",
+            "not",
+            "could",
+            "students",
+            "Several"
+          ],
+          "answer": "Several students could not afford new shoes for the school outings."
         }
       ]
     },
@@ -141,311 +242,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Money, Markets, and Making Good Choices': A grandmother bargains _____ for a fair price on vegetables.",
+          "prompt": "What does 'humble' mean?",
           "choices": [
-            "meagre",
-            "sensitive",
-            "uncomfortable",
-            "firmly"
+            "Easily affected by things around you, like feelings or physical things.",
+            "In a strong and steady way; not easily moved or changed.",
+            "Not enough; very small in amount or quality.",
+            "Not thinking that you are better than others; modest."
           ],
-          "answer": "firmly",
-          "explanation": "The text says: A grandmother bargains firmly for a fair price on vegetables."
+          "answer": "Not thinking that you are better than others; modest.",
+          "explanation": "Even though he won the race, he remained humble and thanked his friends for their support."
         },
         {
-          "prompt": "Choose the missing word from 'The Notice Board, part 2': \"I felt _____ when I arrived too.",
+          "prompt": "What does 'eagerly' mean?",
           "choices": [
-            "firmly",
-            "uncomfortable",
-            "sensitive",
-            "meagre"
+            "Easily affected by things around you, like feelings or physical things.",
+            "Feeling uneasy or not relaxed.",
+            "In a strong and steady way; not easily moved or changed.",
+            "In a way that shows you really want to do something."
           ],
-          "answer": "sensitive",
-          "explanation": "The text says: \"I felt sensitive when I arrived too."
+          "answer": "In a way that shows you really want to do something.",
+          "explanation": "She eagerly opened her birthday presents."
         },
         {
-          "prompt": "Choose the missing word from 'The Notice Board, part 1': She felt a little _____, like a chair with one short leg.",
+          "prompt": "What does 'meagre' mean?",
           "choices": [
-            "eagerly",
-            "uncomfortable",
-            "aggressive",
-            "humble"
+            "Easily affected by things around you, like feelings or physical things.",
+            "Feeling uneasy or not relaxed.",
+            "Not enough; very small in amount or quality.",
+            "Something that is not certain or may not be true."
           ],
-          "answer": "uncomfortable",
-          "explanation": "The text says: She felt a little uncomfortable, like a chair with one short leg."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "The passage says \"Money is a tool.\" What does this mean?",
-          "choices": [
-            "It means that money is not good or bad by itself; what matters is how a person chooses to use it.",
-            "He saves most of his pocket money in a tin under his bed instead of spending it all at once.",
-            "Even though she whispered that she did not belong, something small but substantial inside her told her to speak, so she wrote her name in shaky handwriting."
-          ],
-          "answer": "It means that money is not good or bad by itself; what matters is how a person chooses to use it.",
-          "explanation": "The passage says money is not good or bad on its own; what matters is how we use it. So calling money a tool means the person using it decides whether it does good."
+          "answer": "Not enough; very small in amount or quality.",
+          "explanation": "The meal was meagre, with only a small piece of bread and a little bit of soup."
         },
-        {
-          "prompt": "In the conversation, what does Sami do with his pocket money instead of spending it all?",
-          "choices": [
-            "She told him to teach himself to wait, and to buy something only if he still wanted it after three days.",
-            "She said that kindness should be a rule and not a suggestion, and that some rules feel unavoidable but are still unconstitutional because they go against fairness.",
-            "He saves most of his pocket money in a tin under his bed instead of spending it all at once."
-          ],
-          "answer": "He saves most of his pocket money in a tin under his bed instead of spending it all at once.",
-          "explanation": "Sami tells Maya he gets a small amount each week but does not spend it all; he says, 'I save most of it in a tin under my bed.'"
-        },
-        {
-          "prompt": "Why did Amal decide to write her name on the notice board, even though she felt she did not belong?",
-          "choices": [
-            "It means that money is not good or bad by itself; what matters is how a person chooses to use it.",
-            "Even though she whispered that she did not belong, something small but substantial inside her told her to speak, so she wrote her name in shaky handwriting.",
-            "She told him to teach himself to wait, and to buy something only if he still wanted it after three days."
-          ],
-          "answer": "Even though she whispered that she did not belong, something small but substantial inside her told her to speak, so she wrote her name in shaky handwriting.",
-          "explanation": "Amal whispered 'I don't belong', but the story says something inside her, small but substantial, told her to speak, so she wrote her name in shaky handwriting anyway."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Explain a Money Word",
-          "target": "The quietest essay in the pile was also the most sincere."
-        },
-        {
-          "prompt": "Speaking 3: My Saving Plan Talk",
-          "target": "Sharing what you have is one way of strengthening your community."
-        },
-        {
-          "prompt": "Speaking 5: At the Market Role-Play",
-          "target": "Role-play a market scene in which one person is the shopper with limited money and the other is the stallholder."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "strangers.",
-            "at",
-            "loudly",
-            "barked",
-            "and",
-            "aggressive",
-            "was",
-            "dog",
-            "The"
-          ],
-          "answer": "The dog was aggressive and barked loudly at strangers."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "fortune.",
-            "a",
-            "owning",
-            "than",
-            "more",
-            "matter",
-            "can",
-            "well",
-            "income",
-            "small",
-            "a",
-            "Managing"
-          ],
-          "answer": "Managing a small income well can matter more than owning a fortune."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "ended.",
-            "finally",
-            "exam",
-            "the",
-            "when",
-            "relief",
-            "of",
-            "sigh",
-            "a",
-            "breathed",
-            "Nora"
-          ],
-          "answer": "Nora breathed a sigh of relief when the exam finally ended."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'responsibility' mean in this unit?",
-          "choices": [
-            "A duty or task that you are expected to look after and be accountable for.",
-            "Giving up something important or valuable for the sake of something else.",
-            "The process of making or creating something."
-          ],
-          "answer": "A duty or task that you are expected to look after and be accountable for.",
-          "explanation": "responsibility: A duty or task that you are expected to look after and be accountable for."
-        },
-        {
-          "prompt": "What does 'adapted' mean in this unit?",
-          "choices": [
-            "Giving up something important or valuable for the sake of something else.",
-            "The process of making or creating something.",
-            "Changed in order to suit new conditions or circumstances."
-          ],
-          "answer": "Changed in order to suit new conditions or circumstances.",
-          "explanation": "adapted: Changed in order to suit new conditions or circumstances."
-        },
-        {
-          "prompt": "What does 'production' mean in this unit?",
-          "choices": [
-            "A small amount of something taken to study or test the rest of it.",
-            "The process of making or creating something.",
-            "Giving up something important or valuable for the sake of something else."
-          ],
-          "answer": "The process of making or creating something.",
-          "explanation": "production: The process of making or creating something."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'leg'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Leg is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'extensive'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Extensive is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'phone'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Phone is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "achievement",
-              "Something that has been accomplished through effort and skill."
-            ],
-            [
-              "substantial",
-              "Large in amount or importance."
-            ],
-            [
-              "nice",
-              "Pleasant, enjoyable, or good to have, though not always necessary."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "sells",
-              "Gives something to someone else in exchange for money."
-            ],
-            [
-              "neither",
-              "Not one and not the other, when talking about two people or things."
-            ],
-            [
-              "bare",
-              "Empty, plain, or without any decoration."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "didn't",
-              "A short way of writing 'did not', used to say something failed to happen in the past."
-            ],
-            [
-              "tone",
-              "The way something is said, which shows a certain feeling or attitude."
-            ],
-            [
-              "aggressive",
-              "Someone who is very forceful or ready to fight."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'firmly' mean?",
           "choices": [
@@ -482,13 +310,533 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "The passage says \"Money is a tool.\" What does this mean?",
+          "choices": [
+            "It means that money is not good or bad by itself; what matters is how a person chooses to use it.",
+            "He saves most of his pocket money in a tin under his bed instead of spending it all at once.",
+            "Even though she whispered that she did not belong, something small but substantial inside her told her to speak, so she wrote her name in shaky handwriting."
+          ],
+          "answer": "It means that money is not good or bad by itself; what matters is how a person chooses to use it.",
+          "explanation": "The passage says money is not good or bad on its own; what matters is how we use it. So calling money a tool means the person using it decides whether it does good."
+        },
+        {
+          "prompt": "According to the passage, what three parts could you divide your pocket money into?",
+          "choices": [
+            "She told him to teach himself to wait, and to buy something only if he still wanted it after three days.",
+            "She said that kindness should be a rule and not a suggestion, and that some rules feel unavoidable but are still unconstitutional because they go against fairness.",
+            "You could divide it into one part for saving, one part for spending on things you need or enjoy, and one part for giving to charity or helping your family."
+          ],
+          "answer": "You could divide it into one part for saving, one part for spending on things you need or enjoy, and one part for giving to charity or helping your family.",
+          "explanation": "Look at the paragraph about budgets: it says you could divide pocket money into one part for saving, one part for spending on things you need or enjoy, and one part for giving to charity or helping your family."
+        },
+        {
+          "prompt": "In the conversation, what does Sami do with his pocket money instead of spending it all?",
+          "choices": [
+            "It means that money is not good or bad by itself; what matters is how a person chooses to use it.",
+            "He saves most of his pocket money in a tin under his bed instead of spending it all at once.",
+            "Even though she whispered that she did not belong, something small but substantial inside her told her to speak, so she wrote her name in shaky handwriting."
+          ],
+          "answer": "He saves most of his pocket money in a tin under his bed instead of spending it all at once.",
+          "explanation": "Sami tells Maya he gets a small amount each week but does not spend it all; he says, 'I save most of it in a tin under my bed.'"
+        },
+        {
+          "prompt": "What advice did Sami's grandmother give him about buying things?",
+          "choices": [
+            "She told him to teach himself to wait, and to buy something only if he still wanted it after three days.",
+            "She said that kindness should be a rule and not a suggestion, and that some rules feel unavoidable but are still unconstitutional because they go against fairness.",
+            "You could divide it into one part for saving, one part for spending on things you need or enjoy, and one part for giving to charity or helping your family."
+          ],
+          "answer": "She told him to teach himself to wait, and to buy something only if he still wanted it after three days.",
+          "explanation": "Sami repeats his grandmother's words: 'Teach yourself to wait. If you still want it after three days, then buy it.' That is why he now saves more patiently."
+        },
+        {
+          "prompt": "Why did Amal decide to write her name on the notice board, even though she felt she did not belong?",
+          "choices": [
+            "It means that money is not good or bad by itself; what matters is how a person chooses to use it.",
+            "He saves most of his pocket money in a tin under his bed instead of spending it all at once.",
+            "Even though she whispered that she did not belong, something small but substantial inside her told her to speak, so she wrote her name in shaky handwriting."
+          ],
+          "answer": "Even though she whispered that she did not belong, something small but substantial inside her told her to speak, so she wrote her name in shaky handwriting.",
+          "explanation": "Amal whispered 'I don't belong', but the story says something inside her, small but substantial, told her to speak, so she wrote her name in shaky handwriting anyway."
+        },
+        {
+          "prompt": "What did Amal say in her speech that made the room go silent?",
+          "choices": [
+            "She told him to teach himself to wait, and to buy something only if he still wanted it after three days.",
+            "She said that kindness should be a rule and not a suggestion, and that some rules feel unavoidable but are still unconstitutional because they go against fairness.",
+            "You could divide it into one part for saving, one part for spending on things you need or enjoy, and one part for giving to charity or helping your family."
+          ],
+          "answer": "She said that kindness should be a rule and not a suggestion, and that some rules feel unavoidable but are still unconstitutional because they go against fairness.",
+          "explanation": "In her speech Amal said kindness should be a rule, not a suggestion, and that some rules feel unavoidable but are unconstitutional because they go against fairness. Straight after that, the text says the room was silent."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Explain a Money Word",
+          "target": "The quietest essay in the pile was also the most sincere."
+        },
+        {
+          "prompt": "Speaking 2: Needs and Wants Sort-Out",
+          "target": "After the difficult exam, take a moment to reflect on what you might improve."
+        },
+        {
+          "prompt": "Speaking 3: My Saving Plan Talk",
+          "target": "The little shop near school sells pencils, sweets, and notebooks."
+        },
+        {
+          "prompt": "Speaking 4: The Pocket Money Debate",
+          "target": "With a partner, debate whether children should receive pocket money."
+        },
+        {
+          "prompt": "Speaking 5: At the Market Role-Play",
+          "target": "Role-play a market scene in which one person is the shopper with limited money and the other is the stallholder."
+        },
+        {
+          "prompt": "Speaking 6: Present Your Opinion Essay",
+          "target": "Several students could not afford new shoes for the school outings."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "unavoidable.",
+            "is",
+            "inside",
+            "staying",
+            "rains,",
+            "it",
+            "If"
+          ],
+          "answer": "If it rains, staying inside is unavoidable."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "high.",
+            "is",
+            "March",
+            "in",
+            "rain",
+            "of",
+            "likelihood",
+            "The"
+          ],
+          "answer": "The likelihood of rain in March is high."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "one.",
+            "cheaper",
+            "the",
+            "than",
+            "longer",
+            "much",
+            "lasts",
+            "soap",
+            "of",
+            "brand",
+            "This"
+          ],
+          "answer": "This brand of soap lasts much longer than the cheaper one."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "school.",
+            "from",
+            "home",
+            "way",
+            "their",
+            "on",
+            "money",
+            "saving",
+            "about",
+            "talked",
+            "Maya",
+            "and",
+            "Sami"
+          ],
+          "answer": "Sami and Maya talked about saving money on their way home from school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "pan.",
+            "the",
+            "in",
+            "back",
+            "landed",
+            "and",
+            "air",
+            "the",
+            "in",
+            "neatly",
+            "flipped",
+            "pancake",
+            "The"
+          ],
+          "answer": "The pancake flipped neatly in the air and landed back in the pan."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Theo?",
+            "match,",
+            "big",
+            "the",
+            "before",
+            "flutter",
+            "heart",
+            "your",
+            "feel",
+            "you",
+            "Did"
+          ],
+          "answer": "Did you feel your heart flutter before the big match, Theo?"
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'accomplish' mean in this unit?",
+          "choices": [
+            "To succeed in doing something you set out to do.",
+            "Giving up something important or valuable for the sake of something else.",
+            "To work together with others on the same task."
+          ],
+          "answer": "To succeed in doing something you set out to do.",
+          "explanation": "accomplish: To succeed in doing something you set out to do."
+        },
+        {
+          "prompt": "What does 'contribution' mean in this unit?",
+          "choices": [
+            "Giving up something important or valuable for the sake of something else.",
+            "To succeed in doing something you set out to do.",
+            "Something you give, such as money or time, to help a shared goal."
+          ],
+          "answer": "Something you give, such as money or time, to help a shared goal.",
+          "explanation": "contribution: Something you give, such as money or time, to help a shared goal."
+        },
+        {
+          "prompt": "What does 'lovely' mean in this unit?",
+          "choices": [
+            "To succeed in doing something you set out to do.",
+            "Very pleasant, attractive, or enjoyable to experience or look at.",
+            "Giving up something important or valuable for the sake of something else."
+          ],
+          "answer": "Very pleasant, attractive, or enjoyable to experience or look at.",
+          "explanation": "lovely: Very pleasant, attractive, or enjoyable to experience or look at."
+        },
+        {
+          "prompt": "What does 'rolled' mean in this unit?",
+          "choices": [
+            "Turned over and over while moving, or turned your eyes upward to show annoyance.",
+            "Giving up something important or valuable for the sake of something else.",
+            "To succeed in doing something you set out to do."
+          ],
+          "answer": "Turned over and over while moving, or turned your eyes upward to show annoyance.",
+          "explanation": "rolled: Turned over and over while moving, or turned your eyes upward to show annoyance."
+        },
+        {
+          "prompt": "What does 'popular' mean in this unit?",
+          "choices": [
+            "Giving up something important or valuable for the sake of something else.",
+            "To succeed in doing something you set out to do.",
+            "Liked or admired by a great many people."
+          ],
+          "answer": "Liked or admired by a great many people.",
+          "explanation": "popular: Liked or admired by a great many people."
+        },
+        {
+          "prompt": "What does 'corporation' mean in this unit?",
+          "choices": [
+            "To succeed in doing something you set out to do.",
+            "A large company that the law treats as a single body.",
+            "Giving up something important or valuable for the sake of something else."
+          ],
+          "answer": "A large company that the law treats as a single body.",
+          "explanation": "corporation: A large company that the law treats as a single body."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'collaborate'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Collaborate is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'imagine'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Imagine is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'cold'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Cold is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'trembled'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Trembled is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'uncomfortable'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Uncomfortable is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sector'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Sector is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "achievement",
+              "Something that has been accomplished through effort and skill."
+            ],
+            [
+              "anticipate",
+              "To expect something and get ready for it."
+            ],
+            [
+              "establish",
+              "To create or start something meant to last."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "smart",
+              "Showing good sense and clever thinking, especially when making a decision."
+            ],
+            [
+              "generous",
+              "Willing to give freely and share what you have with others."
+            ],
+            [
+              "cheaply",
+              "At a low cost, without spending very much money."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "responsibility",
+              "A duty or task that you are expected to look after and be accountable for."
+            ],
+            [
+              "hugged",
+              "To put your arms around someone to show love, comfort, or greeting."
+            ],
+            [
+              "won't",
+              "A short way of saying will not, used when something will not happen or someone refuses to do it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "nominate",
+              "To formally suggest that someone should be chosen for a prize, role, or position."
+            ],
+            [
+              "flipped",
+              "Turned over suddenly, or moved as if turning over, often used to describe a nervous feeling."
+            ],
+            [
+              "winner",
+              "The person who succeeds or comes first in a competition."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "attend",
+              "To go to or be present at an event."
+            ],
+            [
+              "meagre",
+              "Not enough; very small in amount or quality."
+            ],
+            [
+              "extensive",
+              "Covering a large area or having a lot of something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "unavoidable",
+              "Something that cannot be avoided or stopped."
+            ],
+            [
+              "manufacture",
+              "To make goods in large amounts, usually with machines."
+            ],
+            [
+              "advantageous",
+              "Giving a benefit or putting you in a better position."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Notice Board, part 1': She unpacked her _____ belongings — two books, a tiny photo frame, and a borrowed jumper.",
+          "choices": [
+            "eagerly",
+            "meagre",
+            "aggressive",
+            "humble"
+          ],
+          "answer": "meagre",
+          "explanation": "The text says: She unpacked her meagre belongings — two books, a tiny photo frame, and a borrowed jumper."
+        },
+        {
+          "prompt": "Choose the missing word from 'Money, Markets, and Making Good Choices': A grandmother bargains _____ for a fair price on vegetables.",
+          "choices": [
+            "meagre",
+            "sensitive",
+            "uncomfortable",
+            "firmly"
+          ],
+          "answer": "firmly",
+          "explanation": "The text says: A grandmother bargains firmly for a fair price on vegetables."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Notice Board, part 2': \"I felt _____ when I arrived too.",
+          "choices": [
+            "firmly",
+            "uncomfortable",
+            "sensitive",
+            "meagre"
+          ],
+          "answer": "sensitive",
+          "explanation": "The text says: \"I felt sensitive when I arrived too."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Notice Board, part 1': She felt a little _____, like a chair with one short leg.",
+          "choices": [
+            "eagerly",
+            "uncomfortable",
+            "aggressive",
+            "humble"
+          ],
+          "answer": "uncomfortable",
+          "explanation": "The text says: She felt a little uncomfortable, like a chair with one short leg."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Notice Board, part 1': \"That's a _____ choice.\" Amal felt heat in her chest.",
+          "choices": [
+            "sensitive",
+            "uncomfortable",
+            "questionable",
+            "firmly"
+          ],
+          "answer": "questionable",
+          "explanation": "The text says: \"That's a questionable choice.\" Amal felt heat in her chest."
+        },
         {
           "prompt": "What does 'humble' mean?",
           "choices": [
@@ -499,28 +847,78 @@
           ],
           "answer": "Not thinking that you are better than others; modest.",
           "explanation": "Even though he won the race, he remained humble and thanked his friends for their support."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Notice Board, part 1': She felt a little _____, like a chair with one short leg.",
+          "choices": [
+            "eagerly",
+            "uncomfortable",
+            "aggressive",
+            "humble"
+          ],
+          "answer": "uncomfortable",
+          "explanation": "The text says: She felt a little uncomfortable, like a chair with one short leg."
         },
         {
-          "prompt": "What does 'eagerly' mean?",
+          "prompt": "Choose the missing word from 'The Notice Board, part 1': \"That's a _____ choice.\" Amal felt heat in her chest.",
           "choices": [
-            "Easily affected by things around you, like feelings or physical things.",
-            "Feeling uneasy or not relaxed.",
-            "In a strong and steady way; not easily moved or changed.",
-            "In a way that shows you really want to do something."
+            "sensitive",
+            "uncomfortable",
+            "questionable",
+            "firmly"
           ],
-          "answer": "In a way that shows you really want to do something.",
-          "explanation": "She eagerly opened her birthday presents."
+          "answer": "questionable",
+          "explanation": "The text says: \"That's a questionable choice.\" Amal felt heat in her chest."
         },
         {
-          "prompt": "What does 'meagre' mean?",
+          "prompt": "Which word means: To produce or create something.",
           "choices": [
-            "Easily affected by things around you, like feelings or physical things.",
-            "Feeling uneasy or not relaxed.",
-            "Not enough; very small in amount or quality.",
-            "Something that is not certain or may not be true."
+            "generate",
+            "sacrifice",
+            "accomplish"
           ],
-          "answer": "Not enough; very small in amount or quality.",
-          "explanation": "The meal was meagre, with only a small piece of bread and a little bit of soup."
+          "answer": "generate",
+          "explanation": "generate: To produce or create something."
+        },
+        {
+          "prompt": "Which word means: Very pleasant, attractive, or enjoyable to experience or look at.",
+          "choices": [
+            "sacrifice",
+            "accomplish",
+            "lovely"
+          ],
+          "answer": "lovely",
+          "explanation": "lovely: Very pleasant, attractive, or enjoyable to experience or look at."
+        },
+        {
+          "prompt": "What type of word is 'winner'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Winner is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'corporation'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Corporation is used as a noun in this dictionary sense."
         }
       ]
     }

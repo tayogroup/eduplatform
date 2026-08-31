@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t03-u09",
   "title": "Music as Universal Language Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Ready to work, or to do with day-to-day running.",
           "choices": [
             "operational",
-            "recalibrate",
-            "score"
+            "burnout",
+            "scaffold"
           ],
           "answer": "operational",
           "explanation": "operational: Ready to work, or to do with day-to-day running."
         },
         {
-          "prompt": "Which word means: Very noticeable, unusual, or impressive to look at.",
+          "prompt": "Which word means: Happening at regular intervals, or arranged in repeating patterns.",
           "choices": [
             "operational",
-            "recalibrate",
-            "striking"
+            "burnout",
+            "periodic"
           ],
-          "answer": "striking",
-          "explanation": "striking: Very noticeable, unusual, or impressive to look at."
+          "answer": "periodic",
+          "explanation": "periodic: Happening at regular intervals, or arranged in repeating patterns."
         },
         {
-          "prompt": "Which word means: Called out loudly, or shed tears from strong emotion.",
+          "prompt": "Which word means: Great exactness and accuracy in movement, speech, or timing.",
           "choices": [
-            "recalibrate",
-            "cried",
+            "burnout",
+            "precision",
             "operational"
           ],
-          "answer": "cried",
-          "explanation": "cried: Called out loudly, or shed tears from strong emotion."
+          "answer": "precision",
+          "explanation": "precision: Great exactness and accuracy in movement, speech, or timing."
+        },
+        {
+          "prompt": "Which word means: Having the most impressive, elaborate or costly quality; the superlative of the word rich.",
+          "choices": [
+            "richest",
+            "operational",
+            "burnout"
+          ],
+          "answer": "richest",
+          "explanation": "richest: Having the most impressive, elaborate or costly quality; the superlative of the word rich."
+        },
+        {
+          "prompt": "Which word means: On the part of the theatre where performers act in front of an audience.",
+          "choices": [
+            "operational",
+            "burnout",
+            "onstage"
+          ],
+          "answer": "onstage",
+          "explanation": "onstage: On the part of the theatre where performers act in front of an audience."
+        },
+        {
+          "prompt": "Which word means: Face a difficult person, situation, or feeling directly instead of avoiding it.",
+          "choices": [
+            "burnout",
+            "confront",
+            "operational"
+          ],
+          "answer": "confront",
+          "explanation": "confront: Face a difficult person, situation, or feeling directly instead of avoiding it."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Measured or arranged so that something happens at exactly the right moment.",
-          "answer": "timed"
+          "clue": "The original music written for a film, play, or other performance.",
+          "answer": "score"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Circular or curved shapes made by something bending back on itself.",
-          "answer": "loops"
+          "clue": "An object used by actors on stage to make a scene feel real.",
+          "answer": "prop"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The five movable parts at the end of each hand.",
+          "answer": "fingers"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Fell down suddenly, or gave way completely, often from exhaustion or emotion.",
+          "answer": "collapsed"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Small, quick downward movements of the head, often used to show approval.",
+          "answer": "nods"
         }
       ]
     },
@@ -97,39 +142,83 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "one.",
-            "week",
-            "of",
-            "goal",
+            "pattern.",
+            "week's",
             "the",
-            "not",
-            "was",
-            "perfection",
-            "that",
-            "cast",
-            "the",
-            "reminded",
-            "director",
-            "The"
+            "learns",
+            "thermostat",
+            "programmable",
+            "A"
           ],
-          "answer": "The director reminded the cast that perfection was not the goal of week one."
+          "answer": "A programmable thermostat learns the week's pattern."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "notes.",
-            "careful",
-            "taking",
-            "and",
-            "clipboard",
+            "words.",
+            "than",
+            "older",
+            "language",
             "a",
-            "holding",
-            "nearby,",
-            "stood",
-            "judge",
+            "in",
+            "beings",
+            "human",
+            "to",
+            "speaks",
+            "Music"
+          ],
+          "answer": "Music speaks to human beings in a language older than words."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "fails.",
+            "or",
+            "succeeds",
+            "experiment",
+            "the",
+            "whether",
+            "result,",
+            "every",
+            "records",
+            "scientist",
             "A"
           ],
-          "answer": "A judge stood nearby, holding a clipboard and taking careful notes."
+          "answer": "A scientist records every result, whether the experiment succeeds or fails."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "cast.",
+            "his",
+            "trusted",
+            "Rohan",
+            "but",
+            "risky,",
+            "felt",
+            "mask",
+            "the",
+            "without",
+            "Improvising"
+          ],
+          "answer": "Improvising without the mask felt risky, but Rohan trusted his cast."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "field.",
+            "the",
+            "onto",
+            "walked",
+            "players",
+            "the",
+            "as",
+            "clearly",
+            "spoke",
+            "announcer",
+            "The"
+          ],
+          "answer": "The announcer spoke clearly as the players walked onto the field."
         }
       ]
     },
@@ -142,314 +231,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': His fingers were _____, his face calm.",
+          "prompt": "What does 'havoc' mean?",
           "choices": [
-            "render",
-            "deft",
-            "notorious",
-            "havoc"
+            "A situation in which there is a lot of damage or confusion.",
+            "To arrange or use something in a certain way for a purpose.",
+            "To gather together courage, strength, or support for a specific purpose.",
+            "To make something become a certain way; to perform or deliver."
           ],
-          "answer": "deft",
-          "explanation": "The narrator contrasts Rohan's skilful, quick hands with his calm face; 'deft' means skilful and quick in movement."
+          "answer": "A situation in which there is a lot of damage or confusion.",
+          "explanation": "The storm caused havoc in the town, knocking down trees and power lines."
         },
         {
-          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': \"Only if we _____ it clearly,\" Rohan replied.",
+          "prompt": "What does 'deft' mean?",
           "choices": [
-            "notorious",
-            "havoc",
-            "deft",
-            "render"
+            "Skilful and quick in movement or action.",
+            "The way a person walks or moves on their feet.",
+            "To arrange or use something in a certain way for a purpose.",
+            "To gather together courage, strength, or support for a specific purpose."
           ],
-          "answer": "render",
-          "explanation": "Rohan means the team must perform the theme so the audience receives it; in theatre terms, to render is to perform or deliver."
+          "answer": "Skilful and quick in movement or action.",
+          "explanation": "The deft musician played the oud beautifully, impressing everyone in the audience."
         },
         {
-          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': Their piece, The Last _____, followed a young dancer who faked injuries to manipulate her team.",
+          "prompt": "What does 'render' mean?",
           "choices": [
-            "Deploy",
-            "Gait",
-            "Contortion",
-            "Muster"
+            "A twisting or bending of the body into unusual shapes.",
+            "The way a person walks or moves on their feet.",
+            "To arrange or use something in a certain way for a purpose.",
+            "To make something become a certain way; to perform or deliver."
           ],
-          "answer": "Contortion",
-          "explanation": "The play's title names a twisting of the body: a contortion bends the body into unusual shapes, which suits a story about a dancer."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to the passage, where does the word 'music' come from, and what did it originally mean?",
-          "choices": [
-            "It comes from the ancient Greek word 'mousike', meaning 'art of the Muses', the figures of inspiration in Greek mythology; the Arabic word 'musiqa' grew from the same root.",
-            "He has been mustering the courage to direct his own play; the passage says he 'had been mustering the courage to direct his own play for over a year'.",
-            "The lullaby that calms a baby who understands no words at all, and the stadium chant that unites thousands of strangers who may share no mother tongue."
-          ],
-          "answer": "It comes from the ancient Greek word 'mousike', meaning 'art of the Muses', the figures of inspiration in Greek mythology; the Arabic word 'musiqa' grew from the same root.",
-          "explanation": "Look at the paragraph about the history of the word. It says 'music' comes from the ancient Greek 'mousike', meaning 'art of the Muses', the figures of inspiration in Greek mythology, and that the Arabic 'musiqa' grew from the same root."
+          "answer": "To make something become a certain way; to perform or deliver.",
+          "explanation": "The artist will render a beautiful painting for the school art show."
         },
-        {
-          "prompt": "The writer claims music delivers its message without translation. Which two examples in the passage involve listeners who share no common words with the music?",
-          "choices": [
-            "It comes from the ancient Greek word 'mousike', meaning 'art of the Muses', the figures of inspiration in Greek mythology; the Arabic word 'musiqa' grew from the same root.",
-            "He has been mustering the courage to direct his own play; the passage says he 'had been mustering the courage to direct his own play for over a year'.",
-            "The lullaby that calms a baby who understands no words at all, and the stadium chant that unites thousands of strangers who may share no mother tongue."
-          ],
-          "answer": "The lullaby that calms a baby who understands no words at all, and the stadium chant that unites thousands of strangers who may share no mother tongue.",
-          "explanation": "The passage's examples include a lullaby that calms a baby who understands no words at all, and a stadium chant that unites strangers who may share no mother tongue. Those two involve no shared language, unlike the film-score example."
-        },
-        {
-          "prompt": "What has Rohan been doing for over a year, and which sentence in the passage tells you so?",
-          "choices": [
-            "It comes from the ancient Greek word 'mousike', meaning 'art of the Muses', the figures of inspiration in Greek mythology; the Arabic word 'musiqa' grew from the same root.",
-            "He has been mustering the courage to direct his own play; the passage says he 'had been mustering the courage to direct his own play for over a year'.",
-            "The lullaby that calms a baby who understands no words at all, and the stadium chant that unites thousands of strangers who may share no mother tongue."
-          ],
-          "answer": "He has been mustering the courage to direct his own play; the passage says he 'had been mustering the courage to direct his own play for over a year'.",
-          "explanation": "In the dressing-room scene the text says Rohan 'had been mustering the courage to direct his own play for over a year, and now the moment had finally materialised', so that sentence gives the answer."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Role-Play Interview with a Performer",
-          "target": "One of you is a journalist; the other is a young performer who has just won the regional drama final."
-        },
-        {
-          "prompt": "Speaking 3: Dramatic Reading",
-          "target": "The director reminded the cast that perfection was not the goal of week one."
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "happened.",
-            "what",
-            "about",
-            "lying",
-            "by",
-            "reputation",
-            "his",
-            "sully",
-            "to",
-            "want",
-            "not",
-            "did",
-            "He"
-          ],
-          "answer": "He did not want to sully his reputation by lying about what happened."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "clowns.",
-            "two",
-            "the",
-            "of",
-            "timing",
-            "comic",
-            "the",
-            "loved",
-            "audience",
-            "The"
-          ],
-          "answer": "The audience loved the comic timing of the two clowns."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "discovered.",
-            "was",
-            "mask",
-            "missing",
-            "the",
-            "after",
-            "silence",
-            "in",
-            "wallowed",
-            "room",
-            "whole",
-            "The"
-          ],
-          "answer": "The whole room wallowed in silence after the missing mask was discovered."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'criticises' mean in this unit?",
-          "choices": [
-            "Points out the faults or weaknesses in something, often to help it improve.",
-            "Ready to work, or to do with day-to-day running.",
-            "To adjust something so it measures or performs correctly again."
-          ],
-          "answer": "Points out the faults or weaknesses in something, often to help it improve.",
-          "explanation": "criticises: Points out the faults or weaknesses in something, often to help it improve."
-        },
-        {
-          "prompt": "What does 'rebuild' mean in this unit?",
-          "choices": [
-            "Ready to work, or to do with day-to-day running.",
-            "To adjust something so it measures or performs correctly again.",
-            "Build something again after it has been damaged, removed, or taken apart."
-          ],
-          "answer": "Build something again after it has been damaged, removed, or taken apart.",
-          "explanation": "rebuild: Build something again after it has been damaged, removed, or taken apart."
-        },
-        {
-          "prompt": "What does 'recalibrate' mean in this unit?",
-          "choices": [
-            "The original music written for a film, play, or other performance.",
-            "To adjust something so it measures or performs correctly again.",
-            "Ready to work, or to do with day-to-day running."
-          ],
-          "answer": "To adjust something so it measures or performs correctly again.",
-          "explanation": "recalibrate: To adjust something so it measures or performs correctly again."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'suspicious'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Suspicious is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'vulnerable'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Vulnerable is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'sincerity'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Sincerity is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "interdependence",
-              "A relationship in which each side relies on the other."
-            ],
-            [
-              "stallholder",
-              "A person who sells goods from a small stand, often at a market."
-            ],
-            [
-              "beings",
-              "Living creatures, especially when referring to people as a group."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "mask",
-              "A covering worn over the face to hide or change how someone looks."
-            ],
-            [
-              "richest",
-              "Having the most impressive, elaborate or costly quality; the superlative of the word rich."
-            ],
-            [
-              "sleek",
-              "Smooth, polished, and stylish in appearance."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "collapsed",
-              "Fell down suddenly, or gave way completely, often from exhaustion or emotion."
-            ],
-            [
-              "stress",
-              "A feeling of worry or pressure caused by difficult or demanding situations."
-            ],
-            [
-              "aloof",
-              "Not friendly or not interested in talking to others."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'muster' mean?",
           "choices": [
@@ -486,34 +299,32 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'havoc' mean?",
+          "prompt": "The writer claims music delivers its message without translation. Which two examples in the passage involve listeners who share no common words with the music?",
           "choices": [
-            "A situation in which there is a lot of damage or confusion.",
-            "To arrange or use something in a certain way for a purpose.",
-            "To gather together courage, strength, or support for a specific purpose.",
-            "To make something become a certain way; to perform or deliver."
+            "The lullaby that calms a baby who understands no words at all, and the stadium chant that unites thousands of strangers who may share no mother tongue.",
+            "He has been mustering the courage to direct his own play; the passage says he 'had been mustering the courage to direct his own play for over a year'.",
+            "A situation in which there is a lot of damage or confusion."
           ],
-          "answer": "A situation in which there is a lot of damage or confusion.",
-          "explanation": "The storm caused havoc in the town, knocking down trees and power lines."
+          "answer": "The lullaby that calms a baby who understands no words at all, and the stadium chant that unites thousands of strangers who may share no mother tongue.",
+          "explanation": "The passage's examples include a lullaby that calms a baby who understands no words at all, and a stadium chant that unites strangers who may share no mother tongue. Those two involve no shared language, unlike the film-score example."
         },
         {
-          "prompt": "What does 'deft' mean?",
+          "prompt": "What has Rohan been doing for over a year, and which sentence in the passage tells you so?",
           "choices": [
-            "Skilful and quick in movement or action.",
-            "The way a person walks or moves on their feet.",
-            "To arrange or use something in a certain way for a purpose.",
-            "To gather together courage, strength, or support for a specific purpose."
+            "The lullaby that calms a baby who understands no words at all, and the stadium chant that unites thousands of strangers who may share no mother tongue.",
+            "A situation in which there is a lot of damage or confusion.",
+            "He has been mustering the courage to direct his own play; the passage says he 'had been mustering the courage to direct his own play for over a year'."
           ],
-          "answer": "Skilful and quick in movement or action.",
-          "explanation": "The deft musician played the oud beautifully, impressing everyone in the audience."
+          "answer": "He has been mustering the courage to direct his own play; the passage says he 'had been mustering the courage to direct his own play for over a year'.",
+          "explanation": "In the dressing-room scene the text says Rohan 'had been mustering the courage to direct his own play for over a year, and now the moment had finally materialised', so that sentence gives the answer."
         },
         {
           "prompt": "What does 'render' mean?",
@@ -525,6 +336,582 @@
           ],
           "answer": "To make something become a certain way; to perform or deliver.",
           "explanation": "The artist will render a beautiful painting for the school art show."
+        },
+        {
+          "prompt": "What does 'muster' mean?",
+          "choices": [
+            "A twisting or bending of the body into unusual shapes.",
+            "The way a person walks or moves on their feet.",
+            "To gather together courage, strength, or support for a specific purpose.",
+            "To look at two or more things to see how they are similar or different."
+          ],
+          "answer": "To gather together courage, strength, or support for a specific purpose.",
+          "explanation": "The teacher asked us to muster our courage and speak in front of the class."
+        },
+        {
+          "prompt": "What does 'deploy' mean?",
+          "choices": [
+            "A twisting or bending of the body into unusual shapes.",
+            "Not friendly or not interested in talking to others.",
+            "To arrange or use something in a certain way for a purpose.",
+            "To look at two or more things to see how they are similar or different."
+          ],
+          "answer": "To arrange or use something in a certain way for a purpose.",
+          "explanation": "The teacher decided to deploy new teaching methods to help students learn better."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': \"Do not let this cause _____ in your head.\"",
+          "choices": [
+            "deft",
+            "havoc",
+            "aloof",
+            "notorious"
+          ],
+          "answer": "havoc",
+          "explanation": "Imani is calming Rohan after the mask disappears: 'Do not let this cause havoc in your head.' Havoc is a state of damage or confusion."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Role-Play Interview with a Performer",
+          "target": "One of you is a journalist; the other is a young performer who has just won the regional drama final."
+        },
+        {
+          "prompt": "Speaking 2: Group Discussion — Music Across Cultures",
+          "target": "A programmable thermostat learns the week's pattern."
+        },
+        {
+          "prompt": "Speaking 3: Dramatic Reading",
+          "target": "Music speaks to human beings in a language older than words."
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "A scientist records every result, whether the experiment succeeds or fails."
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Improvising without the mask felt risky, but Rohan trusted his cast."
+        },
+        {
+          "prompt": "Speaking 6: Six-Minute Unit Argument",
+          "target": "The announcer spoke clearly as the players walked onto the field."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "better.",
+            "learn",
+            "students",
+            "help",
+            "to",
+            "methods",
+            "teaching",
+            "new",
+            "deploy",
+            "to",
+            "decided",
+            "teacher",
+            "The"
+          ],
+          "answer": "The teacher decided to deploy new teaching methods to help students learn better."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "assembly.",
+            "school",
+            "every",
+            "at",
+            "sung",
+            "still",
+            "is",
+            "chant",
+            "old",
+            "The"
+          ],
+          "answer": "The old chant is still sung at every school assembly."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "built.",
+            "is",
+            "it",
+            "before",
+            "prop",
+            "every",
+            "sketch",
+            "to",
+            "likes",
+            "Maya"
+          ],
+          "answer": "Maya likes to sketch every prop before it is built."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "curtain.",
+            "stage",
+            "the",
+            "of",
+            "edge",
+            "the",
+            "decorated",
+            "butterflies",
+            "Painted"
+          ],
+          "answer": "Painted butterflies decorated the edge of the stage curtain."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "line.",
+            "first",
+            "her",
+            "before",
+            "just",
+            "speechless",
+            "almost",
+            "Imani",
+            "rendered",
+            "Nerves"
+          ],
+          "answer": "Nerves rendered Imani almost speechless just before her first line."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "script.",
+            "a",
+            "needed",
+            "nobody",
+            "that",
+            "smoothly",
+            "so",
+            "flowed",
+            "rehearsal",
+            "final",
+            "The"
+          ],
+          "answer": "The final rehearsal flowed so smoothly that nobody needed a script."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'burnout' mean in this unit?",
+          "choices": [
+            "Exhaustion caused by prolonged stress or overwork.",
+            "Ready to work, or to do with day-to-day running.",
+            "To support a learner with structure that is removed as they improve."
+          ],
+          "answer": "Exhaustion caused by prolonged stress or overwork.",
+          "explanation": "burnout: Exhaustion caused by prolonged stress or overwork."
+        },
+        {
+          "prompt": "What does 'crate' mean in this unit?",
+          "choices": [
+            "Ready to work, or to do with day-to-day running.",
+            "Exhaustion caused by prolonged stress or overwork.",
+            "A large box, often made of wood or plastic, used for carrying or storing goods."
+          ],
+          "answer": "A large box, often made of wood or plastic, used for carrying or storing goods.",
+          "explanation": "crate: A large box, often made of wood or plastic, used for carrying or storing goods."
+        },
+        {
+          "prompt": "What does 'perfection' mean in this unit?",
+          "choices": [
+            "Exhaustion caused by prolonged stress or overwork.",
+            "The state of being entirely correct, complete, and free from any fault.",
+            "Ready to work, or to do with day-to-day running."
+          ],
+          "answer": "The state of being entirely correct, complete, and free from any fault.",
+          "explanation": "perfection: The state of being entirely correct, complete, and free from any fault."
+        },
+        {
+          "prompt": "What does 'dressing' mean in this unit?",
+          "choices": [
+            "The act of getting ready by putting on clothes or a costume, especially before a performance.",
+            "Ready to work, or to do with day-to-day running.",
+            "Exhaustion caused by prolonged stress or overwork."
+          ],
+          "answer": "The act of getting ready by putting on clothes or a costume, especially before a performance.",
+          "explanation": "dressing: The act of getting ready by putting on clothes or a costume, especially before a performance."
+        },
+        {
+          "prompt": "What does 'racks' mean in this unit?",
+          "choices": [
+            "Ready to work, or to do with day-to-day running.",
+            "Exhaustion caused by prolonged stress or overwork.",
+            "Frames or stands used for holding or storing objects, such as clothes."
+          ],
+          "answer": "Frames or stands used for holding or storing objects, such as clothes.",
+          "explanation": "racks: Frames or stands used for holding or storing objects, such as clothes."
+        },
+        {
+          "prompt": "What does 'havoc' mean in this unit?",
+          "choices": [
+            "Exhaustion caused by prolonged stress or overwork.",
+            "A situation in which there is a lot of damage or confusion.",
+            "Ready to work, or to do with day-to-day running."
+          ],
+          "answer": "A situation in which there is a lot of damage or confusion.",
+          "explanation": "havoc: A situation in which there is a lot of damage or confusion."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'scaffold'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Scaffold is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'frightening'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Frightening is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'comic'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Comic is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'metaphor'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Metaphor is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'stunned'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Stunned is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'impudent'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Impudent is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "interdependence",
+              "A relationship in which each side relies on the other."
+            ],
+            [
+              "counterbalance",
+              "To offset something with an equal force on the other side."
+            ],
+            [
+              "compression",
+              "Making a file smaller so it takes less space to store or send."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "microbiology",
+              "The study of living things too small to see without a microscope."
+            ],
+            [
+              "comfort",
+              "A feeling of ease, relief, or reassurance, often given by something familiar."
+            ],
+            [
+              "needing",
+              "Requiring something in order to happen, work, or be complete."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "wordless",
+              "Without words; expressed or communicated through something other than speech."
+            ],
+            [
+              "prop",
+              "An object used by actors on stage to make a scene feel real."
+            ],
+            [
+              "accurately",
+              "In a correct and exact way, without mistakes."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "humblest",
+              "The simplest or plainest, showing no pride or grandness at all."
+            ],
+            [
+              "materialised",
+              "Became real or appeared suddenly after being expected or hoped for."
+            ],
+            [
+              "suspicious",
+              "Feeling or showing distrust that something may be wrong or dishonest."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "rendered",
+              "Caused someone or something to be in a particular state or condition."
+            ],
+            [
+              "rubbed",
+              "Pressed something firmly and moved it back and forth against a surface."
+            ],
+            [
+              "actor",
+              "A person who performs a role in a play, film, or television show."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "vulnerability",
+              "The state of being open to being hurt, whether physically or emotionally."
+            ],
+            [
+              "gait",
+              "The way a person walks or moves on their feet."
+            ],
+            [
+              "dissipate",
+              "To gradually disappear or become less strong."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': \"Do not let this cause _____ in your head.\"",
+          "choices": [
+            "deft",
+            "havoc",
+            "aloof",
+            "notorious"
+          ],
+          "answer": "havoc",
+          "explanation": "Imani is calming Rohan after the mask disappears: 'Do not let this cause havoc in your head.' Havoc is a state of damage or confusion."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': His fingers were _____, his face calm.",
+          "choices": [
+            "render",
+            "deft",
+            "notorious",
+            "havoc"
+          ],
+          "answer": "deft",
+          "explanation": "The narrator contrasts Rohan's skilful, quick hands with his calm face; 'deft' means skilful and quick in movement."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': \"Only if we _____ it clearly,\" Rohan replied.",
+          "choices": [
+            "notorious",
+            "havoc",
+            "deft",
+            "render"
+          ],
+          "answer": "render",
+          "explanation": "Rohan means the team must perform the theme so the audience receives it; in theatre terms, to render is to perform or deliver."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': Their piece, The Last _____, followed a young dancer who faked injuries to manipulate her team.",
+          "choices": [
+            "Deploy",
+            "Gait",
+            "Contortion",
+            "Muster"
+          ],
+          "answer": "Contortion",
+          "explanation": "The play's title names a twisting of the body: a contortion bends the body into unusual shapes, which suits a story about a dancer."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': \"They are _____ for dramatic openings.\"",
+          "choices": [
+            "gait",
+            "notorious",
+            "muster",
+            "deploy"
+          ],
+          "answer": "notorious",
+          "explanation": "Horizon East is famous for the wrong reasons; 'notorious' means well known for something bad or negative."
+        },
+        {
+          "prompt": "What does 'havoc' mean?",
+          "choices": [
+            "A situation in which there is a lot of damage or confusion.",
+            "To arrange or use something in a certain way for a purpose.",
+            "To gather together courage, strength, or support for a specific purpose.",
+            "To make something become a certain way; to perform or deliver."
+          ],
+          "answer": "A situation in which there is a lot of damage or confusion.",
+          "explanation": "The storm caused havoc in the town, knocking down trees and power lines."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': Their piece, The Last _____, followed a young dancer who faked injuries to manipulate her team.",
+          "choices": [
+            "Deploy",
+            "Gait",
+            "Contortion",
+            "Muster"
+          ],
+          "answer": "Contortion",
+          "explanation": "The play's title names a twisting of the body: a contortion bends the body into unusual shapes, which suits a story about a dancer."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Curtain Never Lies, Part 1': \"They are _____ for dramatic openings.\"",
+          "choices": [
+            "gait",
+            "notorious",
+            "muster",
+            "deploy"
+          ],
+          "answer": "notorious",
+          "explanation": "Horizon East is famous for the wrong reasons; 'notorious' means well known for something bad or negative."
+        },
+        {
+          "prompt": "Which word means: Turning coded information back into a readable form.",
+          "choices": [
+            "decryption",
+            "operational",
+            "burnout"
+          ],
+          "answer": "decryption",
+          "explanation": "decryption: Turning coded information back into a readable form."
+        },
+        {
+          "prompt": "Which word means: The state of being entirely correct, complete, and free from any fault.",
+          "choices": [
+            "operational",
+            "burnout",
+            "perfection"
+          ],
+          "answer": "perfection",
+          "explanation": "perfection: The state of being entirely correct, complete, and free from any fault."
+        },
+        {
+          "prompt": "What type of word is 'trunk'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Trunk is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'havoc'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Havoc is used as a noun in this dictionary sense."
         }
       ]
     }

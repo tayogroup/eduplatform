@@ -5,7 +5,7 @@
   "unitId": "eng-g01-t01-u01",
   "title": "Welcome to School Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A soft pet animal that says miaow and has long whiskers.",
           "choices": [
             "cat",
-            "van",
-            "jam"
+            "map",
+            "van"
           ],
           "answer": "cat",
           "explanation": "cat: A soft pet animal that says miaow and has long whiskers."
         },
         {
-          "prompt": "Which word means: A small word you use when you talk about yourself.",
+          "prompt": "Which word means: Sweet, sticky food made from fruit. We spread it on bread.",
           "choices": [
             "cat",
-            "van",
-            "I"
+            "map",
+            "jam"
           ],
-          "answer": "I",
-          "explanation": "I: A small word you use when you talk about yourself."
+          "answer": "jam",
+          "explanation": "jam: Sweet, sticky food made from fruit. We spread it on bread."
         },
         {
-          "prompt": "Which word means: Luck is when good things happen without you trying.",
+          "prompt": "Which word means: The number 1. It means just a single thing.",
           "choices": [
-            "van",
-            "luck",
+            "map",
+            "one",
             "cat"
           ],
-          "answer": "luck",
-          "explanation": "luck: Luck is when good things happen without you trying."
+          "answer": "one",
+          "explanation": "one: The number 1. It means just a single thing."
+        },
+        {
+          "prompt": "Which word means: The end is the last part of something.",
+          "choices": [
+            "end",
+            "cat",
+            "map"
+          ],
+          "answer": "end",
+          "explanation": "end: The end is the last part of something."
+        },
+        {
+          "prompt": "Which word means: A bench is a long seat for more than one person.",
+          "choices": [
+            "cat",
+            "map",
+            "bench"
+          ],
+          "answer": "bench",
+          "explanation": "bench: A bench is a long seat for more than one person."
+        },
+        {
+          "prompt": "Which word means: The darkest colour, like the night sky with no stars.",
+          "choices": [
+            "map",
+            "black",
+            "cat"
+          ],
+          "answer": "black",
+          "explanation": "black: The darkest colour, like the night sky with no stars."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Yes is the word we use to agree with something.",
-          "answer": "yes"
+          "clue": "A house is the building where a family lives.",
+          "answer": "house"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A bench is a long seat for more than one person.",
-          "answer": "bench"
+          "clue": "Wore means you had something on your body, like clothes.",
+          "answer": "wore"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Repeat means to say or do something again.",
+          "answer": "repeat"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Rang means a bell made a ringing sound.",
+          "answer": "rang"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The colour of soil, tree trunks and warm bread.",
+          "answer": "brown"
         }
       ]
     },
@@ -96,27 +141,65 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "book.",
-            "the",
-            "opens",
-            "teacher",
-            "The"
+            "bag.",
+            "her",
+            "in",
+            "book",
+            "her",
+            "puts",
+            "Amal"
           ],
-          "answer": "The teacher opens the book."
+          "answer": "Amal puts her book in her bag."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
             "teacher.",
-            "her",
-            "after",
-            "poem",
+            "my",
+            "with",
+            "reading",
+            "like",
+            "I"
+          ],
+          "answer": "I like reading with my teacher."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "board.",
             "the",
-            "repeat",
-            "will",
+            "on",
+            "name",
+            "her",
+            "wrote",
             "Amal"
           ],
-          "answer": "Amal will repeat the poem after her teacher."
+          "answer": "Amal wrote her name on the board."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "rules.",
+            "school",
+            "of",
+            "list",
+            "a",
+            "made",
+            "class",
+            "The"
+          ],
+          "answer": "The class made a list of school rules."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "o'clock.",
+            "nine",
+            "says",
+            "clock",
+            "The"
+          ],
+          "answer": "The clock says nine o'clock."
         }
       ]
     },
@@ -129,294 +212,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence tells someone how old you are?",
+          "prompt": "Which word names something you find in your classroom?",
           "choices": [
-            "I am six years old.",
-            "This is a chair.",
-            "I like red.",
-            "My name is Theo."
+            "cloud",
+            "river",
+            "whiteboard",
+            "camel"
           ],
-          "answer": "I am six years old.",
-          "explanation": "Only this sentence gives an age; the others give a name, name a thing, or tell what you like."
+          "answer": "whiteboard",
+          "explanation": "A whiteboard is in the classroom; a camel, a river and a cloud are all found outside."
         },
         {
-          "prompt": "Sami is holding up a pencil to show the class. What should he say?",
+          "prompt": "Which classroom thing do you sit on?",
           "choices": [
-            "This is a clock.",
-            "This is a pencil.",
-            "I am six years old.",
-            "My name is Sami."
+            "ruler",
+            "book",
+            "clock",
+            "chair"
           ],
-          "answer": "This is a pencil.",
-          "explanation": "He is showing a pencil, so he names that thing; the other sentences do not describe what he is holding."
+          "answer": "chair",
+          "explanation": "We sit on a chair; a book is for reading, a clock shows the time and a ruler helps us measure."
         },
         {
-          "prompt": "Which sentence tells something you are able to do?",
+          "prompt": "Which classroom thing tells you the time?",
           "choices": [
-            "My name is Maya.",
-            "This is a book.",
-            "I can read.",
-            "It is a pen."
+            "clock",
+            "door",
+            "crayon",
+            "table"
           ],
-          "answer": "I can read.",
-          "explanation": "The word can tells what you are able to do; the other sentences only name things or a person."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What is the name of the boy who smiles at Amal?",
-          "choices": [
-            "Adam",
-            "Quietly",
-            "Happy"
-          ],
-          "answer": "Adam",
-          "explanation": "The boy says, 'Hello, my name is Adam.'"
+          "answer": "clock",
+          "explanation": "A clock shows the time; a crayon colours, a table holds our work and a door opens and closes."
         },
-        {
-          "prompt": "Amal spoke softly. Does softly mean loudly or quietly?",
-          "choices": [
-            "They sang the alphabet song",
-            "My name is ___.",
-            "Quietly"
-          ],
-          "answer": "Quietly",
-          "explanation": "Amal says her name softly at the door, in a small quiet voice."
-        },
-        {
-          "prompt": "How did Amal feel when Adam asked to be her friend?",
-          "choices": [
-            "I can ___.",
-            "Happy",
-            "They sang the alphabet song"
-          ],
-          "answer": "Happy",
-          "explanation": "Amal says 'Yes!' to Adam and the story says she was happy now."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 - Listen and point",
-          "target": "Point to school things as an adult names them if one is nearby, or as the audio names them, then name them yourself."
-        },
-        {
-          "prompt": "Speaking 3 - Ask and answer",
-          "target": "The teacher opens the book."
-        },
-        {
-          "prompt": "Speaking 5 - Role-play",
-          "target": "Play teacher and pupil with a partner."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "pink.",
-            "soft",
-            "is",
-            "dress",
-            "Her"
-          ],
-          "answer": "Her dress is soft pink."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "first.",
-            "hand",
-            "his",
-            "raised",
-            "Sami"
-          ],
-          "answer": "Sami raised his hand first."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Amal.",
-            "to",
-            "next",
-            "stood",
-            "Sami"
-          ],
-          "answer": "Sami stood next to Amal."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'first' mean in this unit?",
-          "choices": [
-            "First means coming before every other one.",
-            "A soft pet animal that says miaow and has long whiskers.",
-            "A big car with lots of room for boxes or people."
-          ],
-          "answer": "First means coming before every other one.",
-          "explanation": "first: First means coming before every other one."
-        },
-        {
-          "prompt": "What does 'night' mean in this unit?",
-          "choices": [
-            "A soft pet animal that says miaow and has long whiskers.",
-            "A big car with lots of room for boxes or people.",
-            "Night is the time of day when it is dark outside."
-          ],
-          "answer": "Night is the time of day when it is dark outside.",
-          "explanation": "night: Night is the time of day when it is dark outside."
-        },
-        {
-          "prompt": "What does 'van' mean in this unit?",
-          "choices": [
-            "Sweet, sticky food made from fruit. We spread it on bread.",
-            "A big car with lots of room for boxes or people.",
-            "A soft pet animal that says miaow and has long whiskers."
-          ],
-          "answer": "A big car with lots of room for boxes or people.",
-          "explanation": "van: A big car with lots of room for boxes or people."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'while'?",
-          "choices": [
-            "Conjunction",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Conjunction",
-          "explanation": "While is used as a conjunction in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'friend'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Friend is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'class'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Class is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "hat",
-              "Something you wear on your head to keep warm or shady."
-            ],
-            [
-              "tap",
-              "A tap lets water come out when you turn it."
-            ],
-            [
-              "school",
-              "The place where children go to learn and play."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "and",
-              "This word joins two things together."
-            ],
-            [
-              "lady",
-              "A lady is a grown-up woman."
-            ],
-            [
-              "learned",
-              "Learned means you found out something new."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "shy",
-              "Shy means you feel a little nervous around new people."
-            ],
-            [
-              "crayon",
-              "A coloured wax stick that we use for colouring pictures."
-            ],
-            [
-              "teacher",
-              "A grown-up who helps you learn new things at school."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which word begins with the same sound as book?",
           "choices": [
@@ -453,13 +280,507 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What is the name of the boy who smiles at Amal?",
+          "choices": [
+            "Adam",
+            "Quietly",
+            "Happy"
+          ],
+          "answer": "Adam",
+          "explanation": "The boy says, 'Hello, my name is Adam.'"
+        },
+        {
+          "prompt": "How old does Amal tell her teacher she is?",
+          "choices": [
+            "They sang the alphabet song",
+            "My name is ___.",
+            "Six years old"
+          ],
+          "answer": "Six years old",
+          "explanation": "At the door Amal says, 'I am six years old.'"
+        },
+        {
+          "prompt": "Amal spoke softly. Does softly mean loudly or quietly?",
+          "choices": [
+            "I can ___.",
+            "Quietly",
+            "A green crayon"
+          ],
+          "answer": "Quietly",
+          "explanation": "Amal says her name softly at the door, in a small quiet voice."
+        },
+        {
+          "prompt": "What green thing did Amal find in the treasure hunt?",
+          "choices": [
+            "A green crayon",
+            "Happy",
+            "Adam"
+          ],
+          "answer": "A green crayon",
+          "explanation": "The teacher says 'Find something green!' and Amal finds a green crayon."
+        },
+        {
+          "prompt": "How did Amal feel when Adam asked to be her friend?",
+          "choices": [
+            "My name is ___.",
+            "Six years old",
+            "Happy"
+          ],
+          "answer": "Happy",
+          "explanation": "Amal says 'Yes!' to Adam and the story says she was happy now."
+        },
+        {
+          "prompt": "Which talk line do you use to tell somebody your name?",
+          "choices": [
+            "Quietly",
+            "My name is ___.",
+            "I can ___."
+          ],
+          "answer": "My name is ___.",
+          "explanation": "The third talk line is 'My name is ___.'"
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "Point to school things as an adult names them if one is nearby, or as the audio names them, then name them yourself."
+        },
+        {
+          "prompt": "Speaking 2 - Repeat the model",
+          "target": "An adult can hold up a school object and say its colour, or you can listen to the audio say it."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "I like reading with my teacher."
+        },
+        {
+          "prompt": "Speaking 4 - Picture talk",
+          "target": "Amal wrote her name on the board."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "Play teacher and pupil with a partner."
+        },
+        {
+          "prompt": "Speaking 6 - My confident turn",
+          "target": "The clock says nine o'clock."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "book.",
+            "a",
+            "reads",
+            "boy",
+            "The"
+          ],
+          "answer": "The boy reads a book."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bag.",
+            "my",
+            "in",
+            "apple",
+            "an",
+            "have",
+            "I"
+          ],
+          "answer": "I have an apple in my bag."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shoes.",
+            "new",
+            "his",
+            "wore",
+            "Sami"
+          ],
+          "answer": "Sami wore his new shoes."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shoe.",
+            "her",
+            "tied",
+            "Amal",
+            "while",
+            "waited",
+            "Sami"
+          ],
+          "answer": "Sami waited while Amal tied her shoe."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "zoo.",
+            "the",
+            "at",
+            "ostrich",
+            "an",
+            "saw",
+            "Sami"
+          ],
+          "answer": "Sami saw an ostrich at the zoo."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "black.",
+            "dark",
+            "is",
+            "sky",
+            "night",
+            "The"
+          ],
+          "answer": "The night sky is dark black."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'map' mean in this unit?",
+          "choices": [
+            "A drawing that shows you where places are.",
+            "A soft pet animal that says miaow and has long whiskers.",
+            "A big car with lots of room for boxes or people."
+          ],
+          "answer": "A drawing that shows you where places are.",
+          "explanation": "map: A drawing that shows you where places are."
+        },
+        {
+          "prompt": "What does 'school' mean in this unit?",
+          "choices": [
+            "A soft pet animal that says miaow and has long whiskers.",
+            "A drawing that shows you where places are.",
+            "The place where children go to learn and play."
+          ],
+          "answer": "The place where children go to learn and play.",
+          "explanation": "school: The place where children go to learn and play."
+        },
+        {
+          "prompt": "What does 'here' mean in this unit?",
+          "choices": [
+            "A drawing that shows you where places are.",
+            "This word means in this place, close to you.",
+            "A soft pet animal that says miaow and has long whiskers."
+          ],
+          "answer": "This word means in this place, close to you.",
+          "explanation": "here: This word means in this place, close to you."
+        },
+        {
+          "prompt": "What does 'while' mean in this unit?",
+          "choices": [
+            "While means at the same time as something else happens.",
+            "A soft pet animal that says miaow and has long whiskers.",
+            "A drawing that shows you where places are."
+          ],
+          "answer": "While means at the same time as something else happens.",
+          "explanation": "while: While means at the same time as something else happens."
+        },
+        {
+          "prompt": "What does 'night' mean in this unit?",
+          "choices": [
+            "A soft pet animal that says miaow and has long whiskers.",
+            "A drawing that shows you where places are.",
+            "Night is the time of day when it is dark outside."
+          ],
+          "answer": "Night is the time of day when it is dark outside.",
+          "explanation": "night: Night is the time of day when it is dark outside."
+        },
+        {
+          "prompt": "What does 'teacher' mean in this unit?",
+          "choices": [
+            "A drawing that shows you where places are.",
+            "A grown-up who helps you learn new things at school.",
+            "A soft pet animal that says miaow and has long whiskers."
+          ],
+          "answer": "A grown-up who helps you learn new things at school.",
+          "explanation": "teacher: A grown-up who helps you learn new things at school."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'van'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Van is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'a'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Article"
+          ],
+          "answer": "Article",
+          "explanation": "A is used as an article in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'kind'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Kind is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'poem'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Poem is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'ruler'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Ruler is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'write'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Write is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "hat",
+              "Something you wear on your head to keep warm or shady."
+            ],
+            [
+              "ran",
+              "Ran means moved fast on your legs, and it already happened."
+            ],
+            [
+              "tap",
+              "A tap lets water come out when you turn it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "house",
+              "A house is the building where a family lives."
+            ],
+            [
+              "pencil",
+              "A thin wooden stick we write and draw with."
+            ],
+            [
+              "I",
+              "A small word you use when you talk about yourself."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "no",
+              "This word means not any. It is the opposite of yes."
+            ],
+            [
+              "hello",
+              "Hello is a friendly word we say when we meet someone."
+            ],
+            [
+              "happy",
+              "Happy means you feel good and want to smile."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "asked",
+              "Asked means you spoke to find out something."
+            ],
+            [
+              "audio",
+              "Audio is sound that you can listen to, like a voice or music."
+            ],
+            [
+              "luck",
+              "Luck is when good things happen without you trying."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "counted",
+              "Counted means you said numbers one after another."
+            ],
+            [
+              "clock",
+              "A round face with hands that tells us the time."
+            ],
+            [
+              "green",
+              "The colour of grass and of leaves on a tree."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "pink",
+              "A light colour made from red and white, like a flower."
+            ],
+            [
+              "read",
+              "To look at words and understand what they say."
+            ],
+            [
+              "room",
+              "A space inside a house with walls, a floor and a door."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence tells someone your name?",
+          "choices": [
+            "I am six years old.",
+            "I can hop.",
+            "This is a book.",
+            "My name is Samira."
+          ],
+          "answer": "My name is Samira.",
+          "explanation": "Only this sentence gives a name; the others tell an age, point at a thing, or tell what you can do."
+        },
+        {
+          "prompt": "Which sentence tells someone how old you are?",
+          "choices": [
+            "I am six years old.",
+            "This is a chair.",
+            "I like red.",
+            "My name is Theo."
+          ],
+          "answer": "I am six years old.",
+          "explanation": "Only this sentence gives an age; the others give a name, name a thing, or tell what you like."
+        },
+        {
+          "prompt": "Sami is holding up a pencil to show the class. What should he say?",
+          "choices": [
+            "This is a clock.",
+            "This is a pencil.",
+            "I am six years old.",
+            "My name is Sami."
+          ],
+          "answer": "This is a pencil.",
+          "explanation": "He is showing a pencil, so he names that thing; the other sentences do not describe what he is holding."
+        },
+        {
+          "prompt": "Which sentence tells something you are able to do?",
+          "choices": [
+            "My name is Maya.",
+            "This is a book.",
+            "I can read.",
+            "It is a pen."
+          ],
+          "answer": "I can read.",
+          "explanation": "The word can tells what you are able to do; the other sentences only name things or a person."
+        },
+        {
+          "prompt": "Where should you put your book when the lesson has finished?",
+          "choices": [
+            "out of the window",
+            "on the floor",
+            "in the bin",
+            "on the shelf"
+          ],
+          "answer": "on the shelf",
+          "explanation": "We look after school things by putting books back on the shelf, not throwing them away."
+        },
         {
           "prompt": "Which word names something you find in your classroom?",
           "choices": [
@@ -470,28 +791,78 @@
           ],
           "answer": "whiteboard",
           "explanation": "A whiteboard is in the classroom; a camel, a river and a cloud are all found outside."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence tells something you are able to do?",
+          "choices": [
+            "My name is Maya.",
+            "This is a book.",
+            "I can read.",
+            "It is a pen."
+          ],
+          "answer": "I can read.",
+          "explanation": "The word can tells what you are able to do; the other sentences only name things or a person."
         },
         {
-          "prompt": "Which classroom thing do you sit on?",
+          "prompt": "Where should you put your book when the lesson has finished?",
           "choices": [
-            "ruler",
-            "book",
-            "clock",
-            "chair"
+            "out of the window",
+            "on the floor",
+            "in the bin",
+            "on the shelf"
           ],
-          "answer": "chair",
-          "explanation": "We sit on a chair; a book is for reading, a clock shows the time and a ruler helps us measure."
+          "answer": "on the shelf",
+          "explanation": "We look after school things by putting books back on the shelf, not throwing them away."
         },
         {
-          "prompt": "Which classroom thing tells you the time?",
+          "prompt": "Which word means: A tap lets water come out when you turn it.",
           "choices": [
-            "clock",
-            "door",
-            "crayon",
-            "table"
+            "tap",
+            "cat",
+            "map"
           ],
-          "answer": "clock",
-          "explanation": "A clock shows the time; a crayon colours, a table holds our work and a door opens and closes."
+          "answer": "tap",
+          "explanation": "tap: A tap lets water come out when you turn it."
+        },
+        {
+          "prompt": "Which word means: This word means in this place, close to you.",
+          "choices": [
+            "cat",
+            "map",
+            "here"
+          ],
+          "answer": "here",
+          "explanation": "here: This word means in this place, close to you."
+        },
+        {
+          "prompt": "What type of word is 'luck'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Luck is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'teacher'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Teacher is used as a noun in this dictionary sense."
         }
       ]
     }

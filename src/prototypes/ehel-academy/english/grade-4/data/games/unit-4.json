@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t02-u04",
   "title": "Community and Communication Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Not careful, so you make mistakes or break things.",
           "choices": [
             "careless",
-            "responsibility",
-            "revise"
+            "besides",
+            "artist"
           ],
           "answer": "careless",
           "explanation": "careless: Not careful, so you make mistakes or break things."
         },
         {
-          "prompt": "Which word means: In addition, and going further than that.",
+          "prompt": "Which word means: The leader of a country.",
           "choices": [
             "careless",
-            "responsibility",
-            "furthermore"
+            "besides",
+            "president"
           ],
-          "answer": "furthermore",
-          "explanation": "furthermore: In addition, and going further than that."
+          "answer": "president",
+          "explanation": "president: The leader of a country."
         },
         {
-          "prompt": "Which word means: Spun means turned round and round quickly.",
+          "prompt": "Which word means: To decide which one of several things you want.",
           "choices": [
-            "responsibility",
-            "spun",
+            "besides",
+            "choosing",
             "careless"
           ],
-          "answer": "spun",
-          "explanation": "spun: Spun means turned round and round quickly."
+          "answer": "choosing",
+          "explanation": "choosing: To decide which one of several things you want."
+        },
+        {
+          "prompt": "Which word means: A comic is a short, funny story told with pictures.",
+          "choices": [
+            "comic",
+            "careless",
+            "besides"
+          ],
+          "answer": "comic",
+          "explanation": "comic: A comic is a short, funny story told with pictures."
+        },
+        {
+          "prompt": "Which word means: A fact is something that is true and can be checked.",
+          "choices": [
+            "careless",
+            "besides",
+            "fact"
+          ],
+          "answer": "fact",
+          "explanation": "fact: A fact is something that is true and can be checked."
+        },
+        {
+          "prompt": "Which word means: The health, comfort and happiness of people.",
+          "choices": [
+            "besides",
+            "welfare",
+            "careless"
+          ],
+          "answer": "welfare",
+          "explanation": "welfare: The health, comfort and happiness of people."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A round object that turns to help a vehicle or cart move.",
-          "answer": "wheel"
+          "clue": "A person who studies science.",
+          "answer": "scientist"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A voice is the sound a person makes when they speak or sing.",
-          "answer": "voice"
+          "clue": "To decide which one of several things you want.",
+          "answer": "choosing"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A goat is a farm animal with horns that can climb steep places.",
+          "answer": "goat"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Eleven is the number after ten and before twelve.",
+          "answer": "eleven"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The health, comfort and happiness of people.",
+          "answer": "welfare"
         }
       ]
     },
@@ -97,32 +142,75 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "own.",
-            "its",
-            "of",
-            "voice",
-            "a",
-            "wind",
+            "plans.",
+            "her",
+            "draws",
+            "she",
+            "before",
+            "river",
             "the",
-            "gives",
-            "Personification"
+            "studies",
+            "engineer",
+            "town's",
+            "Our"
           ],
-          "answer": "Personification gives the wind a voice of its own."
+          "answer": "Our town's engineer studies the river before she draws her plans."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "box.",
-            "cardboard",
-            "a",
-            "into",
-            "books",
-            "old",
-            "the",
-            "packed",
-            "Amal"
+            "university.",
+            "at",
+            "medicine",
+            "studies",
+            "cousin",
+            "My"
           ],
-          "answer": "Amal packed the old books into a cardboard box."
+          "answer": "My cousin studies medicine at university."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "sale.",
+            "the",
+            "after",
+            "empty",
+            "completely",
+            "was",
+            "shed",
+            "old",
+            "The"
+          ],
+          "answer": "The old shed was completely empty after the sale."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "gate.",
+            "school",
+            "the",
+            "by",
+            "board",
+            "notice",
+            "the",
+            "placed",
+            "Maya"
+          ],
+          "answer": "Maya placed the notice board by the school gate."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "day.",
+            "every",
+            "practised",
+            "Amal",
+            "after",
+            "easier",
+            "became",
+            "Reading"
+          ],
+          "answer": "Reading became easier after Amal practised every day."
         }
       ]
     },
@@ -135,304 +223,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing words from “The Town Meeting”: ______ a reading room with many books.",
+          "prompt": "What does 'service' mean?",
           "choices": [
-            "There are",
-            "Is there",
-            "There is",
-            "Are there"
+            "A shape with a round edge all around.",
+            "The number of people in a place.",
+            "Help or work done for others.",
+            "To remove marks or mistakes."
           ],
-          "answer": "There is",
-          "explanation": "One reading room is a single thing, so the singular form there is opens the sentence."
+          "answer": "Help or work done for others.",
+          "explanation": "A service is help or work done for others, like the free book service in Reading 1."
         },
         {
-          "prompt": "Choose the correct word: How ______ information did you find about our town?",
+          "prompt": "What does 'knowledge' mean?",
           "choices": [
-            "few",
-            "many",
-            "number",
-            "much"
+            "Something more important than other things.",
+            "What you know or learn.",
+            "An amount or number of something.",
+            "To playfully annoy or make fun of someone."
           ],
-          "answer": "much",
-          "explanation": "Information cannot be counted one by one, so it takes much rather than many."
+          "answer": "What you know or learn.",
+          "explanation": "Knowledge is what you know or learn, which is why the library shelves are said to be packed with it."
         },
         {
-          "prompt": "Choose the correct verb form: My brother ______ football at the weekend.",
+          "prompt": "What does 'quantity' mean?",
           "choices": [
-            "play",
-            "plays",
-            "playing",
-            "played"
+            "An amount or number of something.",
+            "A place where something is.",
+            "To find or learn something new.",
+            "Stories that are made up and not real."
           ],
-          "answer": "plays",
-          "explanation": "My brother is a he, and the present simple adds s for he, she and it."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What new service did the librarian begin, and how often does she carry it out?",
-          "choices": [
-            "She began taking books to the villages by cart, and she does it every Thursday.",
-            "She asked the class to create a way to share information with the community.",
-            "She means the books and the readers matter far more than the plain white walls."
-          ],
-          "answer": "She began taking books to the villages by cart, and she does it every Thursday.",
-          "explanation": "The passage names the new service and then gives the day, so both facts sit side by side."
+          "answer": "An amount or number of something.",
+          "explanation": "Quantity answers the question “how much?” or “how many?”, so it names an amount."
         },
-        {
-          "prompt": "The librarian says her priority is to bring two things to everyone. What are they?",
-          "choices": [
-            "She asked the class to create a way to share information with the community.",
-            "He stopped teasing and called it high-quality work once he had actually read it.",
-            "Her priority is to bring information and good stories to everyone in the villages."
-          ],
-          "answer": "Her priority is to bring information and good stories to everyone in the villages.",
-          "explanation": "She states her priority inside the quotation marks, straight after she explains what a library really is."
-        },
-        {
-          "prompt": "Why does the librarian say that a library is not the building?",
-          "choices": [
-            "One reading room is singular, so it takes is, while many books is plural and takes are.",
-            "She means the books and the readers matter far more than the plain white walls.",
-            "Her priority is to bring information and good stories to everyone in the villages."
-          ],
-          "answer": "She means the books and the readers matter far more than the plain white walls.",
-          "explanation": "Her very next sentence explains the idea, naming the books and the people who read them."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Describe a Service in Your Community",
-          "target": "In my community, there is a / an ______."
-        },
-        {
-          "prompt": "Speaking 3: Twenty Questions: Guess the Job",
-          "target": "Play this game with your AI tutor or your family while an adult is nearby."
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one big idea from this unit, such as why a town needs a library service that travels."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "article.",
-            "the",
-            "for",
-            "fact",
-            "important",
-            "an",
-            "was",
-            "It"
-          ],
-          "answer": "It was an important fact for the article."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "paper.",
-            "the",
-            "see",
-            "to",
-            "desk",
-            "the",
-            "over",
-            "leaning",
-            "kept",
-            "Sami"
-          ],
-          "answer": "Sami kept leaning over the desk to see the paper."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "year.",
-            "this",
-            "old",
-            "years",
-            "twelve",
-            "is",
-            "Maya"
-          ],
-          "answer": "Maya is twelve years old this year."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'headline' mean in this unit?",
-          "choices": [
-            "The large title printed at the top of a newspaper story.",
-            "Not careful, so you make mistakes or break things.",
-            "A duty that you are expected to look after."
-          ],
-          "answer": "The large title printed at the top of a newspaper story.",
-          "explanation": "headline: The large title printed at the top of a newspaper story."
-        },
-        {
-          "prompt": "What does 'interviewed' mean in this unit?",
-          "choices": [
-            "Not careful, so you make mistakes or break things.",
-            "A duty that you are expected to look after.",
-            "Interviewed means asked someone questions to find out information."
-          ],
-          "answer": "Interviewed means asked someone questions to find out information.",
-          "explanation": "interviewed: Interviewed means asked someone questions to find out information."
-        },
-        {
-          "prompt": "What does 'responsibility' mean in this unit?",
-          "choices": [
-            "To go over work again to improve or learn it.",
-            "A duty that you are expected to look after.",
-            "Not careful, so you make mistakes or break things."
-          ],
-          "answer": "A duty that you are expected to look after.",
-          "explanation": "responsibility: A duty that you are expected to look after."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'scissors'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Scissors is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'quality'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Quality is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'debate'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Debate is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "agreement",
-              "When two or more people decide on the same thing."
-            ],
-            [
-              "mention",
-              "To speak or write about something briefly."
-            ],
-            [
-              "categorise",
-              "To sort things into groups by what they have in common."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "chapter",
-              "A numbered part of a book that tells one section of the story."
-            ],
-            [
-              "leaning",
-              "To bend your body to rest against something."
-            ],
-            [
-              "teased",
-              "Made playful, gentle jokes about someone in the past."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "teaching",
-              "Teaching means helping someone learn something new."
-            ],
-            [
-              "laugh",
-              "A laugh is the sound you make when something is funny."
-            ],
-            [
-              "priority",
-              "Something more important than other things."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'erase' mean?",
           "choices": [
@@ -469,13 +291,517 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What new service did the librarian begin, and how often does she carry it out?",
+          "choices": [
+            "She began taking books to the villages by cart, and she does it every Thursday.",
+            "She asked the class to create a way to share information with the community.",
+            "She means the books and the readers matter far more than the plain white walls."
+          ],
+          "answer": "She began taking books to the villages by cart, and she does it every Thursday.",
+          "explanation": "The passage names the new service and then gives the day, so both facts sit side by side."
+        },
+        {
+          "prompt": "What is Maya's weekly challenge, and what job does she hope to do one day?",
+          "choices": [
+            "Her priority is to bring information and good stories to everyone in the villages.",
+            "He stopped teasing and called it high-quality work once he had actually read it.",
+            "Her weekly challenge is the class newspaper, and she hopes to be a scientist one day."
+          ],
+          "answer": "Her weekly challenge is the class newspaper, and she hopes to be a scientist one day.",
+          "explanation": "The opening lines give her ambition first and then name the challenge she meets each week."
+        },
+        {
+          "prompt": "The librarian says her priority is to bring two things to everyone. What are they?",
+          "choices": [
+            "One reading room is singular, so it takes is, while many books is plural and takes are.",
+            "Her priority is to bring information and good stories to everyone in the villages.",
+            "The population was growing, because many new families had arrived in the neighbourhood."
+          ],
+          "answer": "Her priority is to bring information and good stories to everyone in the villages.",
+          "explanation": "She states her priority inside the quotation marks, straight after she explains what a library really is."
+        },
+        {
+          "prompt": "Which three sequence connectives does the speaker use to put the three rooms in order?",
+          "choices": [
+            "The speaker uses First, Then and Finally to put the three rooms in order.",
+            "The population was growing, because many new families had arrived in the neighbourhood.",
+            "She meant that what people learn matters more than the number of pages on the circle."
+          ],
+          "answer": "The speaker uses First, Then and Finally to put the three rooms in order.",
+          "explanation": "Each connective opens a new sentence and is followed by a comma, which marks the next step of the tour."
+        },
+        {
+          "prompt": "Why does the librarian say that a library is not the building?",
+          "choices": [
+            "The speaker uses First, Then and Finally to put the three rooms in order.",
+            "She began taking books to the villages by cart, and she does it every Thursday.",
+            "She means the books and the readers matter far more than the plain white walls."
+          ],
+          "answer": "She means the books and the readers matter far more than the plain white walls.",
+          "explanation": "Her very next sentence explains the idea, naming the books and the people who read them."
+        },
+        {
+          "prompt": "The speaker says there is a reading room but there are many books. Why does the verb change?",
+          "choices": [
+            "Her weekly challenge is the class newspaper, and she hopes to be a scientist one day.",
+            "One reading room is singular, so it takes is, while many books is plural and takes are.",
+            "They placed it near the school gate, because every parent and child walks past that spot."
+          ],
+          "answer": "One reading room is singular, so it takes is, while many books is plural and takes are.",
+          "explanation": "There is introduces a single thing, and there are introduces two or more, so the verb has to change."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Describe a Service in Your Community",
+          "target": "In my community, there is a / an ______."
+        },
+        {
+          "prompt": "Speaking 2: Give Clear Instructions",
+          "target": "Teach someone how to do a simple task — how to make tea, how to wash your hands, or how to send a message."
+        },
+        {
+          "prompt": "Speaking 3: Twenty Questions: Guess the Job",
+          "target": "Play this game with your AI tutor or your family while an adult is nearby."
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "What quantity of paper does the class need?"
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Maya placed the notice board by the school gate."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Unit Talk",
+          "target": "Reading became easier after Amal practised every day."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "divorce.",
+            "a",
+            "through",
+            "went",
+            "neighbours",
+            "Their"
+          ],
+          "answer": "Their neighbours went through a divorce."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "school.",
+            "to",
+            "journeys",
+            "about",
+            "asked",
+            "survey",
+            "Our"
+          ],
+          "answer": "Our survey asked about journeys to school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "stall.",
+            "market",
+            "the",
+            "on",
+            "wheel",
+            "broken",
+            "the",
+            "fixed",
+            "Karim"
+          ],
+          "answer": "Karim fixed the broken wheel on the market stall."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "years.",
+            "for",
+            "square",
+            "the",
+            "in",
+            "stalls",
+            "mended",
+            "has",
+            "Karim"
+          ],
+          "answer": "Karim has mended stalls in the square for years."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "ones.",
+            "younger",
+            "the",
+            "teaching",
+            "enjoyed",
+            "students",
+            "older",
+            "The"
+          ],
+          "answer": "The older students enjoyed teaching the younger ones."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "town.",
+            "the",
+            "about",
+            "fact",
+            "interesting",
+            "an",
+            "is",
+            "That"
+          ],
+          "answer": "That is an interesting fact about the town."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'besides' mean in this unit?",
+          "choices": [
+            "As well as; in addition to.",
+            "Not careful, so you make mistakes or break things.",
+            "A person who makes art, like drawings or paintings."
+          ],
+          "answer": "As well as; in addition to.",
+          "explanation": "besides: As well as; in addition to."
+        },
+        {
+          "prompt": "What does 'owner' mean in this unit?",
+          "choices": [
+            "Not careful, so you make mistakes or break things.",
+            "As well as; in addition to.",
+            "A person who something belongs to."
+          ],
+          "answer": "A person who something belongs to.",
+          "explanation": "owner: A person who something belongs to."
+        },
+        {
+          "prompt": "What does 'teasing' mean in this unit?",
+          "choices": [
+            "As well as; in addition to.",
+            "Making playful, gentle jokes about someone.",
+            "Not careful, so you make mistakes or break things."
+          ],
+          "answer": "Making playful, gentle jokes about someone.",
+          "explanation": "teasing: Making playful, gentle jokes about someone."
+        },
+        {
+          "prompt": "What does 'teaching' mean in this unit?",
+          "choices": [
+            "Teaching means helping someone learn something new.",
+            "Not careful, so you make mistakes or break things.",
+            "As well as; in addition to."
+          ],
+          "answer": "Teaching means helping someone learn something new.",
+          "explanation": "teaching: Teaching means helping someone learn something new."
+        },
+        {
+          "prompt": "What does 'priority' mean in this unit?",
+          "choices": [
+            "Not careful, so you make mistakes or break things.",
+            "As well as; in addition to.",
+            "Something more important than other things."
+          ],
+          "answer": "Something more important than other things.",
+          "explanation": "priority: Something more important than other things."
+        },
+        {
+          "prompt": "What does 'research' mean in this unit?",
+          "choices": [
+            "As well as; in addition to.",
+            "Careful study to find out about something.",
+            "Not careful, so you make mistakes or break things."
+          ],
+          "answer": "Careful study to find out about something.",
+          "explanation": "research: Careful study to find out about something."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'artist'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Artist is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'factory'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Factory is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'stacked'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Stacked is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'twelve'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Twelve is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'population'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Population is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'conclude'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Conclude is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "agreement",
+              "When two or more people decide on the same thing."
+            ],
+            [
+              "discover",
+              "To find or learn something new."
+            ],
+            [
+              "engineer",
+              "A person who designs or builds machines, roads, or buildings."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "soldier",
+              "A person who serves in the army."
+            ],
+            [
+              "law",
+              "A rule that everyone in a country or town must follow."
+            ],
+            [
+              "creaking",
+              "To make a slow, squeaking sound, like an old door or wooden wheel."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "onto",
+              "Moving to a position on top of something."
+            ],
+            [
+              "month",
+              "One of the twelve parts that make up a year."
+            ],
+            [
+              "scissors",
+              "A tool with two sharp blades, used for cutting paper or cloth."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "placed",
+              "Placed means put something carefully in a certain spot."
+            ],
+            [
+              "squeaky",
+              "Squeaky describes a high, sharp sound that something makes."
+            ],
+            [
+              "laugh",
+              "A laugh is the sound you make when something is funny."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "information",
+              "Facts or details about something."
+            ],
+            [
+              "plain",
+              "Simple, not fancy or decorated."
+            ],
+            [
+              "permission",
+              "Being allowed to do something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "mention",
+              "To speak or write about something briefly."
+            ],
+            [
+              "translate",
+              "To change words or writing from one language into another."
+            ],
+            [
+              "bibliography",
+              "A list of the books and sources used in a piece of work."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from “The Library That Came to Us”: Every Thursday, she loads books into a cart and travels to the villages to ______ them.",
+          "choices": [
+            "circular",
+            "deliver",
+            "thought",
+            "quality"
+          ],
+          "answer": "deliver",
+          "explanation": "Only an action word fits after to, and deliver means to bring something to a person or place."
+        },
+        {
+          "prompt": "Choose the missing words from “The Town Meeting”: ______ a reading room with many books.",
+          "choices": [
+            "There are",
+            "Is there",
+            "There is",
+            "Are there"
+          ],
+          "answer": "There is",
+          "explanation": "One reading room is a single thing, so the singular form there is opens the sentence."
+        },
+        {
+          "prompt": "Choose the correct word: How ______ information did you find about our town?",
+          "choices": [
+            "few",
+            "many",
+            "number",
+            "much"
+          ],
+          "answer": "much",
+          "explanation": "Information cannot be counted one by one, so it takes much rather than many."
+        },
+        {
+          "prompt": "Choose the correct verb form: My brother ______ football at the weekend.",
+          "choices": [
+            "play",
+            "plays",
+            "playing",
+            "played"
+          ],
+          "answer": "plays",
+          "explanation": "My brother is a he, and the present simple adds s for he, she and it."
+        },
+        {
+          "prompt": "Choose the missing connective: ______, share the finished page with your neighbours.",
+          "choices": [
+            "Because",
+            "Although",
+            "Suddenly",
+            "Finally"
+          ],
+          "answer": "Finally",
+          "explanation": "Sharing the page is the last step, so the sequence connective Finally opens it."
+        },
         {
           "prompt": "What does 'service' mean?",
           "choices": [
@@ -486,28 +812,78 @@
           ],
           "answer": "Help or work done for others.",
           "explanation": "A service is help or work done for others, like the free book service in Reading 1."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the correct verb form: My brother ______ football at the weekend.",
+          "choices": [
+            "play",
+            "plays",
+            "playing",
+            "played"
+          ],
+          "answer": "plays",
+          "explanation": "My brother is a he, and the present simple adds s for he, she and it."
         },
         {
-          "prompt": "What does 'knowledge' mean?",
+          "prompt": "Choose the missing connective: ______, share the finished page with your neighbours.",
           "choices": [
-            "Something more important than other things.",
-            "What you know or learn.",
-            "An amount or number of something.",
-            "To playfully annoy or make fun of someone."
+            "Because",
+            "Although",
+            "Suddenly",
+            "Finally"
           ],
-          "answer": "What you know or learn.",
-          "explanation": "Knowledge is what you know or learn, which is why the library shelves are said to be packed with it."
+          "answer": "Finally",
+          "explanation": "Sharing the page is the last step, so the sequence connective Finally opens it."
         },
         {
-          "prompt": "What does 'quantity' mean?",
+          "prompt": "Which word means: A person who designs or builds machines, roads, or buildings.",
           "choices": [
-            "An amount or number of something.",
-            "A place where something is.",
-            "To find or learn something new.",
-            "Stories that are made up and not real."
+            "engineer",
+            "careless",
+            "besides"
           ],
-          "answer": "An amount or number of something.",
-          "explanation": "Quantity answers the question “how much?” or “how many?”, so it names an amount."
+          "answer": "engineer",
+          "explanation": "engineer: A person who designs or builds machines, roads, or buildings."
+        },
+        {
+          "prompt": "Which word means: Making playful, gentle jokes about someone.",
+          "choices": [
+            "careless",
+            "besides",
+            "teasing"
+          ],
+          "answer": "teasing",
+          "explanation": "teasing: Making playful, gentle jokes about someone."
+        },
+        {
+          "prompt": "What type of word is 'laugh'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Laugh is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'research'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Research is used as a noun in this dictionary sense."
         }
       ]
     }

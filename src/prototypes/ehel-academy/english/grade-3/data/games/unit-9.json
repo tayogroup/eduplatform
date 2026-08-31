@@ -5,7 +5,7 @@
   "unitId": "eng-g03-t03-u09",
   "title": "Thinking, Feelings, and Imagination Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A game between two teams or two players.",
           "choices": [
             "match",
-            "produce",
-            "useful"
+            "better",
+            "something"
           ],
           "answer": "match",
           "explanation": "match: A game between two teams or two players."
         },
         {
-          "prompt": "Which word means: Almost the same as something else, but not exactly.",
+          "prompt": "Which word means: The world is the Earth and everywhere and everyone on it.",
           "choices": [
             "match",
-            "produce",
-            "similar"
+            "better",
+            "world"
           ],
-          "answer": "similar",
-          "explanation": "similar: Almost the same as something else, but not exactly."
+          "answer": "world",
+          "explanation": "world: The world is the Earth and everywhere and everyone on it."
         },
         {
-          "prompt": "Which word means: To choose what you will do after thinking about it.",
+          "prompt": "Which word means: If you placed something somewhere, you put it there carefully.",
           "choices": [
-            "produce",
-            "decide",
+            "better",
+            "placed",
             "match"
           ],
-          "answer": "decide",
-          "explanation": "decide: To choose what you will do after thinking about it."
+          "answer": "placed",
+          "explanation": "placed: If you placed something somewhere, you put it there carefully."
+        },
+        {
+          "prompt": "Which word means: An idea that you offer for other people to think about.",
+          "choices": [
+            "suggestion",
+            "match",
+            "better"
+          ],
+          "answer": "suggestion",
+          "explanation": "suggestion: An idea that you offer for other people to think about."
+        },
+        {
+          "prompt": "Which word means: Feeling frightened or worried about something.",
+          "choices": [
+            "match",
+            "better",
+            "scared"
+          ],
+          "answer": "scared",
+          "explanation": "scared: Feeling frightened or worried about something."
+        },
+        {
+          "prompt": "Which word means: To put a new thing in place of an old one.",
+          "choices": [
+            "better",
+            "replace",
+            "match"
+          ],
+          "answer": "replace",
+          "explanation": "replace: To put a new thing in place of an old one."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Some person, when you do not say exactly who.",
-          "answer": "somebody"
+          "clue": "A screen is the flat part of a computer that shows pictures and words.",
+          "answer": "screen"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Showing good sense and thinking carefully before you act.",
-          "answer": "sensible"
+          "clue": "If you are trusting someone, you believe they are honest and will treat your idea kindly.",
+          "answer": "trusting"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "An idea that you offer for other people to think about.",
+          "answer": "suggestion"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Feeling frightened or worried about something.",
+          "answer": "scared"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To put a new thing in place of an old one.",
+          "answer": "replace"
         }
       ]
     },
@@ -96,28 +141,78 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "evidence.",
-            "strong",
-            "were",
-            "footprints",
-            "muddy",
+            "children.",
+            "for",
+            "morning",
+            "Saturday",
+            "on",
+            "early",
+            "opens",
+            "library",
+            "town",
             "The"
           ],
-          "answer": "The muddy footprints were strong evidence."
+          "answer": "The town library opens early on Saturday morning for children."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "inside.",
-            "stayed",
-            "they",
-            "so",
-            "bad,",
-            "was",
-            "weather",
-            "The"
+            "plenty.",
+            "us",
+            "teach",
+            "still",
+            "can",
+            "prepositions",
+            "about",
+            "lesson",
+            "short",
+            "A"
           ],
-          "answer": "The weather was bad, so they stayed inside."
+          "answer": "A short lesson about prepositions can still teach us plenty."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "chosen.",
+            "was",
+            "idea",
+            "her",
+            "when",
+            "happiness",
+            "felt",
+            "Amal"
+          ],
+          "answer": "Amal felt happiness when her idea was chosen."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "garden.",
+            "the",
+            "for",
+            "suggestion",
+            "good",
+            "a",
+            "had",
+            "Maya"
+          ],
+          "answer": "Maya had a good suggestion for the garden."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "sea.",
+            "the",
+            "over",
+            "flying",
+            "picture",
+            "to",
+            "imagination",
+            "his",
+            "used",
+            "Sami"
+          ],
+          "answer": "Sami used his imagination to picture flying over the sea."
         }
       ]
     },
@@ -130,302 +225,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "In The Box of Ideas, Amal says: “That story has a strong ______.” Which word completes her line?",
+          "prompt": "Which meaning belongs to the word purpose?",
           "choices": [
-            "purpose",
-            "sense",
-            "reason",
-            "choice"
+            "The job that something is made for, or why a person does it.",
+            "A dark shape that appears when something blocks the sunlight.",
+            "The decision you make when you pick one thing from two or more.",
+            "Something that happened to you and stays inside your memory."
           ],
-          "answer": "reason",
-          "explanation": "Amal is talking about why the writer once felt hopeless, and the word for that cause is reason."
+          "answer": "The job that something is made for, or why a person does it.",
+          "explanation": "Sami does not know the purpose of his idea, which means he cannot say what job it is meant to do."
         },
         {
-          "prompt": "Sami said, “I can imagine flying.” Which sentence reports his words correctly?",
+          "prompt": "In The Box of Ideas at School, which word completes this line: “Imagine something ______,” I told him?",
           "choices": [
-            "Sami said I can imagine flying.",
-            "Sami said he can imagine flying.",
-            "Sami says that he could imagine flying.",
-            "Sami said he could imagine flying."
+            "quieter",
+            "better",
+            "louder",
+            "later"
           ],
-          "answer": "Sami said he could imagine flying.",
-          "explanation": "Reported speech moves I to he and can to could, while the reporting verb said stays in the past."
+          "answer": "better",
+          "explanation": "The narrator encourages Sami to picture a stronger idea, so the missing word is better."
         },
         {
-          "prompt": "In Feelings Are Not Bad or Good, why does the writer compare sadness with rain?",
+          "prompt": "Which one of these words is an abstract noun?",
           "choices": [
-            "To show that sadness is a feeling, just as rain is a kind of weather.",
-            "To warn readers that a rainy day will always make a child feel sad and lonely.",
-            "To explain how clouds and puddles are made in the sky.",
-            "To show that sadness lasts exactly as long as a rain shower."
+            "sadness",
+            "playground",
+            "teacher",
+            "umbrella"
           ],
-          "answer": "To show that sadness is a feeling, just as rain is a kind of weather.",
-          "explanation": "The text calls rain a kind of weather, so the comparison makes sadness ordinary rather than bad."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What did Teacher Yasmin bring into class, and what did she ask each child to add?",
-          "choices": [
-            "She brought a bright box called the Box of Ideas, and each child adds one idea to it.",
-            "The writer compares sadness with rain, showing that sadness is only one kind of feeling.",
-            "Because she is reporting what Sami said rather than speaking as Sami herself."
-          ],
-          "answer": "She brought a bright box called the Box of Ideas, and each child adds one idea to it.",
-          "explanation": "The opening two sentences name the box and state that every child will add one idea."
+          "answer": "sadness",
+          "explanation": "You cannot see or touch sadness, while a playground, a teacher and an umbrella can all be touched."
         },
-        {
-          "prompt": "What did Leo suggest for the class garden, and what reason did he give?",
-          "choices": [
-            "The writer compares sadness with rain, showing that sadness is only one kind of feeling.",
-            "He still felt unsure, and the story says he looked around but did not smile.",
-            "Leo suggested growing tomatoes, because the class can eat them at lunch."
-          ],
-          "answer": "Leo suggested growing tomatoes, because the class can eat them at lunch.",
-          "explanation": "Leo joins his suggestion to his reason with because, so the class hears why tomatoes are useful."
-        },
-        {
-          "prompt": "How did Sami feel after he folded his paper, and which detail shows it?",
-          "choices": [
-            "The paper about a father who was ill, because the writer shared a real and painful memory.",
-            "He still felt unsure, and the story says he looked around but did not smile.",
-            "Nora felt hopeless because her cat was lost, and her mother listened to her."
-          ],
-          "answer": "He still felt unsure, and the story says he looked around but did not smile.",
-          "explanation": "The narrator shows the feeling through his actions, and repeats it when Sami places the paper in the box."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Share an Idea",
-          "target": "I have an idea. I suggest we ______."
-        },
-        {
-          "prompt": "Speaking 3 — Imagine It!",
-          "target": "Imagine you can ______ (fly / talk to animals / be invisible)."
-        },
-        {
-          "prompt": "Speaking 5 — Explain and Respond",
-          "target": "Explain why sharing sadness can help a friend."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "plays.",
-            "music",
-            "whenever",
-            "dancing",
-            "loves",
-            "Maya"
-          ],
-          "answer": "Maya loves dancing whenever music plays."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "paper.",
-            "of",
-            "sheet",
-            "blank",
-            "a",
-            "up",
-            "held",
-            "Amal"
-          ],
-          "answer": "Amal held up a blank sheet of paper."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "story.",
-            "his",
-            "told",
-            "he",
-            "as",
-            "away",
-            "far",
-            "seemed",
-            "Sami"
-          ],
-          "answer": "Sami seemed far away as he told his story."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'dream' mean in this unit?",
-          "choices": [
-            "A dream is a picture or story that happens in your mind while you sleep.",
-            "A game between two teams or two players.",
-            "To make something."
-          ],
-          "answer": "A dream is a picture or story that happens in your mind while you sleep.",
-          "explanation": "dream: A dream is a picture or story that happens in your mind while you sleep."
-        },
-        {
-          "prompt": "What does 'glad' mean in this unit?",
-          "choices": [
-            "A game between two teams or two players.",
-            "To make something.",
-            "Feeling happy and pleased about something."
-          ],
-          "answer": "Feeling happy and pleased about something.",
-          "explanation": "glad: Feeling happy and pleased about something."
-        },
-        {
-          "prompt": "What does 'produce' mean in this unit?",
-          "choices": [
-            "Helpful, and good for doing a job.",
-            "To make something.",
-            "A game between two teams or two players."
-          ],
-          "answer": "To make something.",
-          "explanation": "produce: To make something."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'rush'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Rush is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'imagine'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Imagine is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'reason'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Reason is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "fetch",
-              "To go and bring something back."
-            ],
-            [
-              "report",
-              "A short paper or talk that tells about something."
-            ],
-            [
-              "wildlife",
-              "The wild animals and plants of a place."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "anybody",
-              "Any person at all, no matter who."
-            ],
-            [
-              "blank",
-              "Something blank has nothing written, drawn, or filled in on it yet."
-            ],
-            [
-              "locked",
-              "If something is locked, it is shut tightly, often with a key, or kept held in and not let out."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "suggestion",
-              "An idea that you offer for other people to think about."
-            ],
-            [
-              "dancing",
-              "Moving your body to music in a fun and lively way."
-            ],
-            [
-              "idea",
-              "A thought or plan that comes to you in your own mind."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Nora gave a sincere apology. What does sincere tell us about her?",
           "choices": [
@@ -462,13 +293,520 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What did Teacher Yasmin bring into class, and what did she ask each child to add?",
+          "choices": [
+            "She brought a bright box called the Box of Ideas, and each child adds one idea to it.",
+            "The writer compares sadness with rain, showing that sadness is only one kind of feeling.",
+            "Because she is reporting what Sami said rather than speaking as Sami herself."
+          ],
+          "answer": "She brought a bright box called the Box of Ideas, and each child adds one idea to it.",
+          "explanation": "The opening two sentences name the box and state that every child will add one idea."
+        },
+        {
+          "prompt": "What does the writer compare sadness with, and what does the comparison show?",
+          "choices": [
+            "Nora felt hopeless because her cat was lost, and her mother listened to her.",
+            "He still felt unsure, and the story says he looked around but did not smile.",
+            "The writer compares sadness with rain, showing that sadness is only one kind of feeling."
+          ],
+          "answer": "The writer compares sadness with rain, showing that sadness is only one kind of feeling.",
+          "explanation": "The text says rain is a kind of weather, so sadness is a kind of feeling rather than something bad."
+        },
+        {
+          "prompt": "What did Leo suggest for the class garden, and what reason did he give?",
+          "choices": [
+            "The paper about a father who was ill, because the writer shared a real and painful memory.",
+            "Leo suggested growing tomatoes, because the class can eat them at lunch.",
+            "Nora felt hopeless because her cat was lost, and her mother listened to her."
+          ],
+          "answer": "Leo suggested growing tomatoes, because the class can eat them at lunch.",
+          "explanation": "Leo joins his suggestion to his reason with because, so the class hears why tomatoes are useful."
+        },
+        {
+          "prompt": "Teacher Yasmin gives the class two instructions. What are they, and how do they help a discussion?",
+          "choices": [
+            "She says to suggest an idea and to allow everyone to speak, so every child gets a fair turn.",
+            "Leo suggested growing tomatoes, because the class can eat them at lunch.",
+            "He imagined flying over the sea and waving at his grandfather, and the class smiled while Amal clapped."
+          ],
+          "answer": "She says to suggest an idea and to allow everyone to speak, so every child gets a fair turn.",
+          "explanation": "Both instructions begin with a plain verb, and together they keep one voice from filling the whole discussion."
+        },
+        {
+          "prompt": "How did Sami feel after he folded his paper, and which detail shows it?",
+          "choices": [
+            "The word I becomes he, and the word can becomes could.",
+            "So the children can see how their own ideas and choices have grown.",
+            "He still felt unsure, and the story says he looked around but did not smile."
+          ],
+          "answer": "He still felt unsure, and the story says he looked around but did not smile.",
+          "explanation": "The narrator shows the feeling through his actions, and repeats it when Sami places the paper in the box."
+        },
+        {
+          "prompt": "What was Sami's own idea, and how did the class show what they thought of it?",
+          "choices": [
+            "She brought a bright box called the Box of Ideas, and each child adds one idea to it.",
+            "He imagined flying over the sea and waving at his grandfather, and the class smiled while Amal clapped.",
+            "She says to suggest an idea and to allow everyone to speak, so every child gets a fair turn."
+          ],
+          "answer": "He imagined flying over the sea and waving at his grandfather, and the class smiled while Amal clapped.",
+          "explanation": "The story quotes his paper and then gives the reaction, so we know the class valued his idea."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Share an Idea",
+          "target": "I have an idea. I suggest we ______."
+        },
+        {
+          "prompt": "Speaking 2 — Talk About Your Feelings",
+          "target": "Yesterday I felt ______ because ______."
+        },
+        {
+          "prompt": "Speaking 3 — Imagine It!",
+          "target": "Imagine you can ______ (fly / talk to animals / be invisible)."
+        },
+        {
+          "prompt": "Speaking 4 — Word Expert Interview",
+          "target": "Amal felt happiness when her idea was chosen."
+        },
+        {
+          "prompt": "Speaking 5 — Explain and Respond",
+          "target": "Maya had a good suggestion for the garden."
+        },
+        {
+          "prompt": "Speaking 6 — One-Minute Unit Talk",
+          "target": "Sami used his imagination to picture flying over the sea."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "homework.",
+            "my",
+            "after",
+            "play",
+            "to",
+            "me",
+            "allow",
+            "will",
+            "mother",
+            "My"
+          ],
+          "answer": "My mother will allow me to play after my homework."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "old.",
+            "very",
+            "and",
+            "valuable",
+            "is",
+            "ring",
+            "The"
+          ],
+          "answer": "The ring is valuable and very old."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "inside.",
+            "looked",
+            "and",
+            "box",
+            "the",
+            "opened",
+            "Amal"
+          ],
+          "answer": "Amal opened the box and looked inside."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "forever.",
+            "lasts",
+            "one",
+            "neither",
+            "and",
+            "go,",
+            "and",
+            "come",
+            "Both"
+          ],
+          "answer": "Both come and go, and neither one lasts forever."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Friday.",
+            "on",
+            "sunny",
+            "looked",
+            "weather",
+            "the",
+            "said",
+            "Maya"
+          ],
+          "answer": "Maya said the weather looked sunny on Friday."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "box.",
+            "the",
+            "seal",
+            "to",
+            "class",
+            "the",
+            "asked",
+            "Yasmin",
+            "Teacher"
+          ],
+          "answer": "Teacher Yasmin asked the class to seal the box."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'better' mean in this unit?",
+          "choices": [
+            "More good than before, or improved in some way.",
+            "A game between two teams or two players.",
+            "A thing you do not name exactly."
+          ],
+          "answer": "More good than before, or improved in some way.",
+          "explanation": "better: More good than before, or improved in some way."
+        },
+        {
+          "prompt": "What does 'surprised' mean in this unit?",
+          "choices": [
+            "A game between two teams or two players.",
+            "More good than before, or improved in some way.",
+            "Surprised means you did not expect what happened."
+          ],
+          "answer": "Surprised means you did not expect what happened.",
+          "explanation": "surprised: Surprised means you did not expect what happened."
+        },
+        {
+          "prompt": "What does 'happiness' mean in this unit?",
+          "choices": [
+            "More good than before, or improved in some way.",
+            "Happiness is the warm, glad feeling you have when something good happens.",
+            "A game between two teams or two players."
+          ],
+          "answer": "Happiness is the warm, glad feeling you have when something good happens.",
+          "explanation": "happiness: Happiness is the warm, glad feeling you have when something good happens."
+        },
+        {
+          "prompt": "What does 'seemed' mean in this unit?",
+          "choices": [
+            "Looked or felt like something, without you being completely sure.",
+            "A game between two teams or two players.",
+            "More good than before, or improved in some way."
+          ],
+          "answer": "Looked or felt like something, without you being completely sure.",
+          "explanation": "seemed: Looked or felt like something, without you being completely sure."
+        },
+        {
+          "prompt": "What does 'sense' mean in this unit?",
+          "choices": [
+            "A game between two teams or two players.",
+            "More good than before, or improved in some way.",
+            "A feeling inside you that helps you notice or understand something."
+          ],
+          "answer": "A feeling inside you that helps you notice or understand something.",
+          "explanation": "sense: A feeling inside you that helps you notice or understand something."
+        },
+        {
+          "prompt": "What does 'valuable' mean in this unit?",
+          "choices": [
+            "More good than before, or improved in some way.",
+            "Worth a lot of money, or very important.",
+            "A game between two teams or two players."
+          ],
+          "answer": "Worth a lot of money, or very important.",
+          "explanation": "valuable: Worth a lot of money, or very important."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'something'?",
+          "choices": [
+            "Pronoun",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Pronoun",
+          "explanation": "Something is used as a pronoun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'lesson'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Lesson is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'rush'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Rush is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'classmate'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Classmate is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'allow'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Allow is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'wildlife'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Wildlife is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "fetch",
+              "To go and bring something back."
+            ],
+            [
+              "everybody",
+              "Every single person."
+            ],
+            [
+              "library",
+              "A place where you can find and borrow books."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "keyboard",
+              "A keyboard is the set of keys you use to type."
+            ],
+            [
+              "special",
+              "Special means not ordinary, and different or important in a good way."
+            ],
+            [
+              "sure",
+              "When you are sure about something, you know it is true and you have no doubt."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "pleased",
+              "If you feel pleased, you feel happy and glad about something that happened."
+            ],
+            [
+              "cat",
+              "A cat is a small, furry animal that people often keep as a pet."
+            ],
+            [
+              "calmer",
+              "If you feel calmer, you feel more relaxed and less worried than before."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "sunny",
+              "Bright with lots of sunshine and clear skies."
+            ],
+            [
+              "leaned",
+              "Bent your body forward or to one side, often to look at something."
+            ],
+            [
+              "imagination",
+              "The part of your mind that makes pictures and ideas of things that are not really there."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "belongs",
+              "Is owned by someone, or is a proper part of a group."
+            ],
+            [
+              "hopeless",
+              "Feeling that nothing will get better, however hard you keep trying."
+            ],
+            [
+              "support",
+              "Something that holds another thing up and stops it from falling."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "test",
+              "A set of questions that shows what you have learned."
+            ],
+            [
+              "worst",
+              "The most bad of all."
+            ],
+            [
+              "topic",
+              "The subject or idea we talk or write about."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence uses its modal verb correctly?",
+          "choices": [
+            "He cans swim across the pool.",
+            "She will swims to the island.",
+            "They musts listen to the teacher.",
+            "We should help the new student."
+          ],
+          "answer": "We should help the new student.",
+          "explanation": "A modal verb never adds -s, and the verb after it stays plain, so should help is the correct pair."
+        },
+        {
+          "prompt": "In The Box of Ideas, Amal says: “That story has a strong ______.” Which word completes her line?",
+          "choices": [
+            "purpose",
+            "sense",
+            "reason",
+            "choice"
+          ],
+          "answer": "reason",
+          "explanation": "Amal is talking about why the writer once felt hopeless, and the word for that cause is reason."
+        },
+        {
+          "prompt": "Sami said, “I can imagine flying.” Which sentence reports his words correctly?",
+          "choices": [
+            "Sami said I can imagine flying.",
+            "Sami said he can imagine flying.",
+            "Sami says that he could imagine flying.",
+            "Sami said he could imagine flying."
+          ],
+          "answer": "Sami said he could imagine flying.",
+          "explanation": "Reported speech moves I to he and can to could, while the reporting verb said stays in the past."
+        },
+        {
+          "prompt": "In Feelings Are Not Bad or Good, why does the writer compare sadness with rain?",
+          "choices": [
+            "To show that sadness is a feeling, just as rain is a kind of weather.",
+            "To warn readers that a rainy day will always make a child feel sad and lonely.",
+            "To explain how clouds and puddles are made in the sky.",
+            "To show that sadness lasts exactly as long as a rain shower."
+          ],
+          "answer": "To show that sadness is a feeling, just as rain is a kind of weather.",
+          "explanation": "The text calls rain a kind of weather, so the comparison makes sadness ordinary rather than bad."
+        },
+        {
+          "prompt": "Which sentence joins its two ideas with the correct conjunction?",
+          "choices": [
+            "I enjoy thinking, or it helps me to learn new things.",
+            "It was raining, because we stayed inside.",
+            "I enjoy thinking because it helps me learn.",
+            "Do you want juice, so milk?"
+          ],
+          "answer": "I enjoy thinking because it helps me learn.",
+          "explanation": "Because gives a reason, so it is the right glue between enjoying thinking and learning something."
+        },
         {
           "prompt": "Which meaning belongs to the word purpose?",
           "choices": [
@@ -479,28 +817,78 @@
           ],
           "answer": "The job that something is made for, or why a person does it.",
           "explanation": "Sami does not know the purpose of his idea, which means he cannot say what job it is meant to do."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "In Feelings Are Not Bad or Good, why does the writer compare sadness with rain?",
+          "choices": [
+            "To show that sadness is a feeling, just as rain is a kind of weather.",
+            "To warn readers that a rainy day will always make a child feel sad and lonely.",
+            "To explain how clouds and puddles are made in the sky.",
+            "To show that sadness lasts exactly as long as a rain shower."
+          ],
+          "answer": "To show that sadness is a feeling, just as rain is a kind of weather.",
+          "explanation": "The text calls rain a kind of weather, so the comparison makes sadness ordinary rather than bad."
         },
         {
-          "prompt": "In The Box of Ideas at School, which word completes this line: “Imagine something ______,” I told him?",
+          "prompt": "Which sentence joins its two ideas with the correct conjunction?",
           "choices": [
-            "quieter",
+            "I enjoy thinking, or it helps me to learn new things.",
+            "It was raining, because we stayed inside.",
+            "I enjoy thinking because it helps me learn.",
+            "Do you want juice, so milk?"
+          ],
+          "answer": "I enjoy thinking because it helps me learn.",
+          "explanation": "Because gives a reason, so it is the right glue between enjoying thinking and learning something."
+        },
+        {
+          "prompt": "Which word means: A place where you can find and borrow books.",
+          "choices": [
+            "library",
+            "match",
+            "better"
+          ],
+          "answer": "library",
+          "explanation": "library: A place where you can find and borrow books."
+        },
+        {
+          "prompt": "Which word means: Happiness is the warm, glad feeling you have when something good happens.",
+          "choices": [
+            "match",
             "better",
-            "louder",
-            "later"
+            "happiness"
           ],
-          "answer": "better",
-          "explanation": "The narrator encourages Sami to picture a stronger idea, so the missing word is better."
+          "answer": "happiness",
+          "explanation": "happiness: Happiness is the warm, glad feeling you have when something good happens."
         },
         {
-          "prompt": "Which one of these words is an abstract noun?",
+          "prompt": "What type of word is 'imagination'?",
           "choices": [
-            "sadness",
-            "playground",
-            "teacher",
-            "umbrella"
+            "Noun",
+            "Verb",
+            "Adjective"
           ],
-          "answer": "sadness",
-          "explanation": "You cannot see or touch sadness, while a playground, a teacher and an umbrella can all be touched."
+          "answer": "Noun",
+          "explanation": "Imagination is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'valuable'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Valuable is used as an adjective in this dictionary sense."
         }
       ]
     }

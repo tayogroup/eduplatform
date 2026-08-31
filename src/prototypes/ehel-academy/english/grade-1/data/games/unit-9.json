@@ -5,7 +5,7 @@
   "unitId": "eng-g01-t03-u09",
   "title": "City Places Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A flag is a piece of cloth with a pattern that stands for a country.",
           "choices": [
             "flag",
-            "sand",
-            "give"
+            "step",
+            "sand"
           ],
           "answer": "flag",
           "explanation": "flag: A flag is a piece of cloth with a pattern that stands for a country."
         },
         {
-          "prompt": "Which word means: Covered with mud, dust or marks, needing a wash.",
+          "prompt": "Which word means: A light is a single signal that glows red, yellow or green.",
           "choices": [
             "flag",
-            "sand",
-            "dirty"
+            "step",
+            "light"
           ],
-          "answer": "dirty",
-          "explanation": "dirty: Covered with mud, dust or marks, needing a wash."
+          "answer": "light",
+          "explanation": "light: A light is a single signal that glows red, yellow or green."
         },
         {
-          "prompt": "Which word means: A city is a big town with many streets, buildings and people.",
+          "prompt": "Which word means: A spot is one particular place, like the exact place where you stand.",
           "choices": [
-            "sand",
-            "city",
+            "step",
+            "spot",
             "flag"
           ],
-          "answer": "city",
-          "explanation": "city: A city is a big town with many streets, buildings and people."
+          "answer": "spot",
+          "explanation": "spot: A spot is one particular place, like the exact place where you stand."
+        },
+        {
+          "prompt": "Which word means: A person who helps children learn new things at school.",
+          "choices": [
+            "teacher",
+            "flag",
+            "step"
+          ],
+          "answer": "teacher",
+          "explanation": "teacher: A person who helps children learn new things at school."
+        },
+        {
+          "prompt": "Which word means: Little in size, like a bird or a coin.",
+          "choices": [
+            "flag",
+            "step",
+            "small"
+          ],
+          "answer": "small",
+          "explanation": "small: Little in size, like a bird or a coin."
+        },
+        {
+          "prompt": "Which word means: To make something clean again using water and a little soap.",
+          "choices": [
+            "step",
+            "wash",
+            "flag"
+          ],
+          "answer": "wash",
+          "explanation": "wash: To make something clean again using water and a little soap."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "With no dirt on it, washed and fresh.",
-          "answer": "clean"
+          "clue": "A light is a single signal that glows red, yellow or green.",
+          "answer": "light"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Along means moving forward beside or through the length of something.",
-          "answer": "along"
+          "clue": "A spot is one particular place, like the exact place where you stand.",
+          "answer": "spot"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A person who helps you get better when you are ill.",
+          "answer": "doctor"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Ask means to say a question to someone.",
+          "answer": "ask"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Moving very quickly, so you get there in no time.",
+          "answer": "fast"
         }
       ]
     },
@@ -94,25 +139,63 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "curly.",
-            "and",
-            "short",
-            "is",
-            "hair",
+            "outside.",
+            "cold",
+            "are",
+            "hands",
             "My"
           ],
-          "answer": "My hair is short and curly."
+          "answer": "My hands are cold outside."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "girl.",
-            "polite",
+            "quiet.",
+            "and",
+            "calm",
+            "was",
+            "garden",
+            "The"
+          ],
+          "answer": "The garden was calm and quiet."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "down.",
+            "went",
+            "sun",
+            "the",
+            "as",
+            "gently",
+            "hummed",
+            "city",
+            "The"
+          ],
+          "answer": "The city hummed gently as the sun went down."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "friend.",
+            "kind",
+            "my",
+            "is",
+            "Maya"
+          ],
+          "answer": "Maya is my kind friend."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "building.",
+            "big",
             "a",
             "is",
-            "Amal"
+            "hospital",
+            "The"
           ],
-          "answer": "Amal is a polite girl."
+          "answer": "The hospital is a big building."
         }
       ]
     },
@@ -125,300 +208,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Who teaches the children at school?",
+          "prompt": "Which word names a place in a town?",
           "choices": [
-            "a teacher",
-            "a nurse",
-            "a pilot",
-            "a shopkeeper"
+            "pencil",
+            "wet",
+            "market",
+            "goat"
           ],
-          "answer": "a teacher",
-          "explanation": "A teacher works at school; a nurse works at a hospital, a shopkeeper at a shop and a pilot flies a plane."
+          "answer": "market",
+          "explanation": "A market is a place you can go to; a pencil is a thing, a goat is an animal and wet describes something."
         },
         {
-          "prompt": "The traffic light turns red. What must you do?",
+          "prompt": "Where do you go if you are very ill and need a doctor?",
           "choices": [
-            "Turn around.",
-            "Stop.",
-            "Go.",
-            "Run."
+            "the school",
+            "the park",
+            "the shop",
+            "the hospital"
           ],
-          "answer": "Stop.",
-          "explanation": "Red means stop and wait; green is the light that means go."
+          "answer": "the hospital",
+          "explanation": "Doctors and nurses work at the hospital; we go to the park to play, the shop to buy and the school to learn."
         },
         {
-          "prompt": "The park is right beside the school. Which sentence says this?",
+          "prompt": "Where do you go to borrow a book?",
           "choices": [
-            "The park is inside the school.",
-            "The school is in the park.",
-            "The park is next to the school.",
-            "The park is under the school."
+            "the library",
+            "the park",
+            "the bus stop",
+            "the market"
           ],
-          "answer": "The park is next to the school.",
-          "explanation": "Next to means beside; under, inside and in tell us something different."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What does the red traffic light mean in the story?",
-          "choices": [
-            "Stop",
-            "The doctor, Faduma",
-            "The library"
-          ],
-          "answer": "Stop",
-          "explanation": "Amal says, 'Red means stop,' and they wait at the big road."
+          "answer": "the library",
+          "explanation": "The library is where books are kept and borrowed; the market is for shopping, the park for playing and the bus stop for waiting."
         },
-        {
-          "prompt": "Who works at the hospital in Amal's town?",
-          "choices": [
-            "He said sorry and put it in the bin",
-            "The ___ is next to the ___.",
-            "The doctor, Faduma"
-          ],
-          "answer": "The doctor, Faduma",
-          "explanation": "Mum says the doctor, Faduma, works at the hospital and helps sick people."
-        },
-        {
-          "prompt": "Which quiet place did Amal and Mum visit last of all?",
-          "choices": [
-            "Stop",
-            "The library",
-            "He said sorry and put it in the bin"
-          ],
-          "answer": "The library",
-          "explanation": "The story says last of all they came to the library, quiet and calm."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 - Listen and point",
-          "target": "Point to town places as an adult names them if one is nearby, or as the audio names them, then name them on your own."
-        },
-        {
-          "prompt": "Speaking 3 - Ask and answer",
-          "target": "Ask and answer about the people who help your town."
-        },
-        {
-          "prompt": "Speaking 5 - Role-play",
-          "target": "Role-play a trip around your town."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "stop.",
-            "bus",
-            "the",
-            "at",
-            "quietly",
-            "wait",
-            "We"
-          ],
-          "answer": "We wait quietly at the bus stop."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "across.",
-            "walk",
-            "to",
-            "hand",
-            "Mum's",
-            "held",
-            "Amal"
-          ],
-          "answer": "Amal held Mum's hand to walk across."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "night.",
-            "all",
-            "hospital",
-            "the",
-            "in",
-            "work",
-            "Nurses"
-          ],
-          "answer": "Nurses work in the hospital all night."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'dry' mean in this unit?",
-          "choices": [
-            "Having no water on it at all, like sand in sunshine.",
-            "A flag is a piece of cloth with a pattern that stands for a country.",
-            "Sand is tiny bits of rock you find on a beach."
-          ],
-          "answer": "Having no water on it at all, like sand in sunshine.",
-          "explanation": "dry: Having no water on it at all, like sand in sunshine."
-        },
-        {
-          "prompt": "What does 'hospital' mean in this unit?",
-          "choices": [
-            "A flag is a piece of cloth with a pattern that stands for a country.",
-            "Sand is tiny bits of rock you find on a beach.",
-            "A big building where doctors and nurses help sick people."
-          ],
-          "answer": "A big building where doctors and nurses help sick people.",
-          "explanation": "hospital: A big building where doctors and nurses help sick people."
-        },
-        {
-          "prompt": "What does 'sand' mean in this unit?",
-          "choices": [
-            "Give means to hand something to someone.",
-            "Sand is tiny bits of rock you find on a beach.",
-            "A flag is a piece of cloth with a pattern that stands for a country."
-          ],
-          "answer": "Sand is tiny bits of rock you find on a beach.",
-          "explanation": "sand: Sand is tiny bits of rock you find on a beach."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'calm'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Calm is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'next to'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Position"
-          ],
-          "answer": "Position",
-          "explanation": "Next to is used as a position in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'walk'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Walk is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "stop",
-              "To finish moving and stay still in one place."
-            ],
-            [
-              "drink",
-              "To take water or milk into your mouth and swallow."
-            ],
-            [
-              "walk",
-              "To go somewhere on your own two feet."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "hard",
-              "Something hard does not bend when you press it."
-            ],
-            [
-              "lights",
-              "Lights are the coloured signals that tell cars and people when to stop or go."
-            ],
-            [
-              "calm",
-              "Calm means quiet and peaceful, without noise or worry."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "dong",
-              "Dong is the sound a big bell makes when it rings."
-            ],
-            [
-              "bus stop",
-              "The place where you wait for a bus to come."
-            ],
-            [
-              "next to",
-              "Right beside something, with nothing standing in between the two."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Where do you go to buy bread and milk?",
           "choices": [
@@ -455,13 +276,506 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What does the red traffic light mean in the story?",
+          "choices": [
+            "Stop",
+            "The doctor, Faduma",
+            "The library"
+          ],
+          "answer": "Stop",
+          "explanation": "Amal says, 'Red means stop,' and they wait at the big road."
+        },
+        {
+          "prompt": "How did Amal feel when Adam waved from the school gate?",
+          "choices": [
+            "He said sorry and put it in the bin",
+            "The ___ is next to the ___.",
+            "Happy, because she smiled and said hello back"
+          ],
+          "answer": "Happy, because she smiled and said hello back",
+          "explanation": "Adam calls 'Hello, Amal!' from the gate, Amal answers him and she smiled."
+        },
+        {
+          "prompt": "Who works at the hospital in Amal's town?",
+          "choices": [
+            "Stop",
+            "The doctor, Faduma",
+            "'Yes, please' and 'Thank you'"
+          ],
+          "answer": "The doctor, Faduma",
+          "explanation": "Mum says the doctor, Faduma, works at the hospital and helps sick people."
+        },
+        {
+          "prompt": "Omar called Amal polite. Which two polite words did she use?",
+          "choices": [
+            "'Yes, please' and 'Thank you'",
+            "The library",
+            "Stop"
+          ],
+          "answer": "'Yes, please' and 'Thank you'",
+          "explanation": "Amal says 'Yes, please' and 'Thank you' to the shopkeeper, Omar."
+        },
+        {
+          "prompt": "Which quiet place did Amal and Mum visit last of all?",
+          "choices": [
+            "The ___ is next to the ___.",
+            "Happy, because she smiled and said hello back",
+            "The library"
+          ],
+          "answer": "The library",
+          "explanation": "The story says last of all they came to the library, quiet and calm."
+        },
+        {
+          "prompt": "Which talk line tells where a place is?",
+          "choices": [
+            "The doctor, Faduma",
+            "The ___ is next to the ___.",
+            "Stop"
+          ],
+          "answer": "The ___ is next to the ___.",
+          "explanation": "'The ___ is next to the ___' is the position line in the talk lines."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "Point to town places as an adult names them if one is nearby, or as the audio names them, then name them on your own."
+        },
+        {
+          "prompt": "Speaking 2 - Repeat the model",
+          "target": "Copy the adult if one is nearby, or copy the audio model, then describe your own little map."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "Ask and answer about the people who help your town."
+        },
+        {
+          "prompt": "Speaking 4 - Picture talk",
+          "target": "Play traffic lights with a partner."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "Role-play a trip around your town."
+        },
+        {
+          "prompt": "Speaking 6 - My confident turn",
+          "target": "The hospital is a big building."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "languages.",
+            "two",
+            "speak",
+            "can",
+            "Amal"
+          ],
+          "answer": "Amal can speak two languages."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "quiet.",
+            "very",
+            "is",
+            "kitten",
+            "little",
+            "My"
+          ],
+          "answer": "My little kitten is very quiet."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "mango.",
+            "a",
+            "love",
+            "would",
+            "Amal"
+          ],
+          "answer": "Amal would love a mango."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "sit.",
+            "to",
+            "spot",
+            "sunny",
+            "a",
+            "found",
+            "Sami"
+          ],
+          "answer": "Sami found a sunny spot to sit."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "trees.",
+            "shady",
+            "tall",
+            "has",
+            "park",
+            "The"
+          ],
+          "answer": "The park has tall shady trees."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "park.",
+            "the",
+            "to",
+            "next",
+            "sits",
+            "school",
+            "Our"
+          ],
+          "answer": "Our school sits next to the park."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'step' mean in this unit?",
+          "choices": [
+            "A step is one movement of your foot when you walk.",
+            "A flag is a piece of cloth with a pattern that stands for a country.",
+            "Sand is tiny bits of rock you find on a beach."
+          ],
+          "answer": "A step is one movement of your foot when you walk.",
+          "explanation": "step: A step is one movement of your foot when you walk."
+        },
+        {
+          "prompt": "What does 'politely' mean in this unit?",
+          "choices": [
+            "A flag is a piece of cloth with a pattern that stands for a country.",
+            "A step is one movement of your foot when you walk.",
+            "Politely means in a kind and gentle way that shows good manners."
+          ],
+          "answer": "Politely means in a kind and gentle way that shows good manners.",
+          "explanation": "politely: Politely means in a kind and gentle way that shows good manners."
+        },
+        {
+          "prompt": "What does 'tower' mean in this unit?",
+          "choices": [
+            "A step is one movement of your foot when you walk.",
+            "A tower is a tall, narrow building that stands high above the ground.",
+            "A flag is a piece of cloth with a pattern that stands for a country."
+          ],
+          "answer": "A tower is a tall, narrow building that stands high above the ground.",
+          "explanation": "tower: A tower is a tall, narrow building that stands high above the ground."
+        },
+        {
+          "prompt": "What does 'neighbour' mean in this unit?",
+          "choices": [
+            "A person who lives in the house next to yours.",
+            "A flag is a piece of cloth with a pattern that stands for a country.",
+            "A step is one movement of your foot when you walk."
+          ],
+          "answer": "A person who lives in the house next to yours.",
+          "explanation": "neighbour: A person who lives in the house next to yours."
+        },
+        {
+          "prompt": "What does 'answer' mean in this unit?",
+          "choices": [
+            "A flag is a piece of cloth with a pattern that stands for a country.",
+            "A step is one movement of your foot when you walk.",
+            "An answer is what you say when someone asks you a question."
+          ],
+          "answer": "An answer is what you say when someone asks you a question.",
+          "explanation": "answer: An answer is what you say when someone asks you a question."
+        },
+        {
+          "prompt": "What does 'clean' mean in this unit?",
+          "choices": [
+            "A step is one movement of your foot when you walk.",
+            "With no dirt on it, washed and fresh.",
+            "A flag is a piece of cloth with a pattern that stands for a country."
+          ],
+          "answer": "With no dirt on it, washed and fresh.",
+          "explanation": "clean: With no dirt on it, washed and fresh."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'sand'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Sand is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'dropping'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Dropping is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'market'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Market is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'near'?",
+          "choices": [
+            "Position",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Position",
+          "explanation": "Near is used as a position in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'live'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Live is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'hard'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Hard is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "stop",
+              "To finish moving and stay still in one place."
+            ],
+            [
+              "nest",
+              "A little home birds make from sticks for their eggs."
+            ],
+            [
+              "cold",
+              "Something cold feels chilly, like ice or snow."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "selling",
+              "Selling means giving something to someone who pays money for it."
+            ],
+            [
+              "dropping",
+              "Dropping means letting something fall down by accident or on purpose."
+            ],
+            [
+              "freeze",
+              "Freeze means to stop moving all at once and stay very still."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "city",
+              "A city is a big town with many streets, buildings and people."
+            ],
+            [
+              "shop",
+              "A place in town where we buy food and things."
+            ],
+            [
+              "park",
+              "A green place in town with grass, trees and swings."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "shopkeeper",
+              "The person who sells you things inside a shop."
+            ],
+            [
+              "near",
+              "Close to something, only a short walk away."
+            ],
+            [
+              "green",
+              "The colour of grass, and of the light meaning go."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "ask",
+              "Ask means to say a question to someone."
+            ],
+            [
+              "give",
+              "Give means to hand something to someone."
+            ],
+            [
+              "speak",
+              "Speak means to say words out loud."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "fast",
+              "Moving very quickly, so you get there in no time."
+            ],
+            [
+              "hard",
+              "Something hard does not bend when you press it."
+            ],
+            [
+              "dry",
+              "Having no water on it at all, like sand in sunshine."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Who looks after you when you are ill in hospital?",
+          "choices": [
+            "a baker",
+            "a farmer",
+            "a driver",
+            "a doctor"
+          ],
+          "answer": "a doctor",
+          "explanation": "A doctor helps ill people; a farmer grows food, a driver drives and a baker makes bread."
+        },
+        {
+          "prompt": "Who teaches the children at school?",
+          "choices": [
+            "a teacher",
+            "a nurse",
+            "a pilot",
+            "a shopkeeper"
+          ],
+          "answer": "a teacher",
+          "explanation": "A teacher works at school; a nurse works at a hospital, a shopkeeper at a shop and a pilot flies a plane."
+        },
+        {
+          "prompt": "The traffic light turns red. What must you do?",
+          "choices": [
+            "Turn around.",
+            "Stop.",
+            "Go.",
+            "Run."
+          ],
+          "answer": "Stop.",
+          "explanation": "Red means stop and wait; green is the light that means go."
+        },
+        {
+          "prompt": "The park is right beside the school. Which sentence says this?",
+          "choices": [
+            "The park is inside the school.",
+            "The school is in the park.",
+            "The park is next to the school.",
+            "The park is under the school."
+          ],
+          "answer": "The park is next to the school.",
+          "explanation": "Next to means beside; under, inside and in tell us something different."
+        },
+        {
+          "prompt": "Which sentence tells where you are going?",
+          "choices": [
+            "Market I go to.",
+            "I go the market.",
+            "I market to go.",
+            "I go to the market."
+          ],
+          "answer": "I go to the market.",
+          "explanation": "We need the little word to before the place; the other sentences are missing it or muddled."
+        },
         {
           "prompt": "Which word names a place in a town?",
           "choices": [
@@ -472,28 +786,78 @@
           ],
           "answer": "market",
           "explanation": "A market is a place you can go to; a pencil is a thing, a goat is an animal and wet describes something."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "The park is right beside the school. Which sentence says this?",
+          "choices": [
+            "The park is inside the school.",
+            "The school is in the park.",
+            "The park is next to the school.",
+            "The park is under the school."
+          ],
+          "answer": "The park is next to the school.",
+          "explanation": "Next to means beside; under, inside and in tell us something different."
         },
         {
-          "prompt": "Where do you go if you are very ill and need a doctor?",
+          "prompt": "Which sentence tells where you are going?",
           "choices": [
-            "the school",
-            "the park",
-            "the shop",
-            "the hospital"
+            "Market I go to.",
+            "I go the market.",
+            "I market to go.",
+            "I go to the market."
           ],
-          "answer": "the hospital",
-          "explanation": "Doctors and nurses work at the hospital; we go to the park to play, the shop to buy and the school to learn."
+          "answer": "I go to the market.",
+          "explanation": "We need the little word to before the place; the other sentences are missing it or muddled."
         },
         {
-          "prompt": "Where do you go to borrow a book?",
+          "prompt": "Which word means: Bad means not good.",
           "choices": [
-            "the library",
-            "the park",
-            "the bus stop",
-            "the market"
+            "bad",
+            "flag",
+            "step"
           ],
-          "answer": "the library",
-          "explanation": "The library is where books are kept and borrowed; the market is for shopping, the park for playing and the bus stop for waiting."
+          "answer": "bad",
+          "explanation": "bad: Bad means not good."
+        },
+        {
+          "prompt": "Which word means: A tower is a tall, narrow building that stands high above the ground.",
+          "choices": [
+            "flag",
+            "step",
+            "tower"
+          ],
+          "answer": "tower",
+          "explanation": "tower: A tower is a tall, narrow building that stands high above the ground."
+        },
+        {
+          "prompt": "What type of word is 'red'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Red is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'clean'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Clean is used as a noun in this dictionary sense."
         }
       ]
     }

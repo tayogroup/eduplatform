@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t03-u09",
   "title": "Places, People, and Plans Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Different from what people expect, or not common at all.",
           "choices": [
             "unusual",
-            "equator",
-            "duration"
+            "considering",
+            "embarrassed"
           ],
           "answer": "unusual",
           "explanation": "unusual: Different from what people expect, or not common at all."
         },
         {
-          "prompt": "Which word means: The size of one part compared with the whole.",
+          "prompt": "Which word means: The wild animals and plants of a place.",
           "choices": [
             "unusual",
-            "equator",
-            "proportion"
+            "considering",
+            "wildlife"
           ],
-          "answer": "proportion",
-          "explanation": "proportion: The size of one part compared with the whole."
+          "answer": "wildlife",
+          "explanation": "wildlife: The wild animals and plants of a place."
         },
         {
-          "prompt": "Which word means: Coming after the third one in a list or order.",
+          "prompt": "Which word means: On the far side of something, or further than a certain point.",
           "choices": [
-            "equator",
-            "fourth",
+            "considering",
+            "beyond",
             "unusual"
           ],
-          "answer": "fourth",
-          "explanation": "fourth: Coming after the third one in a list or order."
+          "answer": "beyond",
+          "explanation": "beyond: On the far side of something, or further than a certain point."
+        },
+        {
+          "prompt": "Which word means: A short form of the two words used when asking about the location of something.",
+          "choices": [
+            "where's",
+            "unusual",
+            "considering"
+          ],
+          "answer": "where's",
+          "explanation": "where's: A short form of the two words used when asking about the location of something."
+        },
+        {
+          "prompt": "Which word means: Buildings where things are made, like clothes or toys.",
+          "choices": [
+            "unusual",
+            "considering",
+            "factories"
+          ],
+          "answer": "factories",
+          "explanation": "factories: Buildings where things are made, like clothes or toys."
+        },
+        {
+          "prompt": "Which word means: Belonging to the countryside, where there are farms and fields.",
+          "choices": [
+            "considering",
+            "rural",
+            "unusual"
+          ],
+          "answer": "rural",
+          "explanation": "rural: Belonging to the countryside, where there are farms and fields."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "When two halves of a shape match exactly.",
-          "answer": "symmetry"
+          "clue": "The wild animals and plants of a place.",
+          "answer": "wildlife"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Ours means something that belongs to us, not to somebody else.",
-          "answer": "ours"
+          "clue": "Large towns where many people live and work.",
+          "answer": "cities"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Knew who or what something was because you had seen it before.",
+          "answer": "recognised"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Something you pay to use for a short time.",
+          "answer": "hire"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A long period of history known for its own features.",
+          "answer": "era"
         }
       ]
     },
@@ -96,29 +141,71 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "kilograms.",
-            "two",
-            "is",
-            "rock",
-            "the",
-            "of",
-            "mass",
+            "successful.",
+            "very",
+            "was",
+            "concert",
             "The"
           ],
-          "answer": "The mass of the rock is two kilograms."
+          "answer": "The concert was very successful."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "arrives.",
-            "train",
+            "seen.",
+            "ever",
+            "had",
+            "Leo",
+            "building",
+            "tallest",
             "the",
-            "until",
-            "leaving",
-            "aren't",
+            "was",
+            "tower",
+            "office",
+            "The"
+          ],
+          "answer": "The office tower was the tallest building Leo had ever seen."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "capital!",
+            "the",
+            "to",
+            "trip",
+            "our",
+            "about",
+            "excited",
+            "so",
+            "I'm"
+          ],
+          "answer": "I'm so excited about our trip to the capital!"
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "running.",
+            "before",
+            "hair",
+            "her",
+            "back",
+            "tied",
+            "Amal"
+          ],
+          "answer": "Amal tied back her hair before running."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "mall.",
+            "the",
+            "at",
+            "shoes",
+            "new",
+            "bought",
             "We"
           ],
-          "answer": "We aren't leaving until the train arrives."
+          "answer": "We bought new shoes at the mall."
         }
       ]
     },
@@ -131,304 +218,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'A Trip to the Capital': First, we went to the big _____ and waited for the train.",
+          "prompt": "Which word means the imaginary line around the middle of the Earth?",
           "choices": [
-            "station",
-            "neighbourhood",
-            "hire",
-            "office"
-          ],
-          "answer": "station",
-          "explanation": "The text says they went to the big station and waited for the train there."
-        },
-        {
-          "prompt": "Choose the missing word from 'Living Near the Equator': Trains run on the _____, ships arrive at the coast, and factories make goods.",
-          "choices": [
-            "corridor",
-            "restaurant",
+            "horizon",
             "railway",
-            "entrance"
+            "entrance",
+            "equator"
           ],
-          "answer": "railway",
-          "explanation": "Trains travel on a railway; the other three options are places rather than tracks."
+          "answer": "equator",
+          "explanation": "The horizon is where sea meets sky, a railway is a track and an entrance is a doorway; only the equator circles the Earth."
         },
         {
-          "prompt": "Which line is a correct negative instruction for a busy building?",
+          "prompt": "What does the word 'customer' mean?",
           "choices": [
-            "Not run in the corridor.",
-            "You not run in the corridor.",
-            "Don't run in the corridor.",
-            "No running you in the long corridor."
+            "A person who buys something from a shop or business.",
+            "A machine that carries people up and down between floors.",
+            "The track that trains travel along.",
+            "The area around your home."
           ],
-          "answer": "Don't run in the corridor.",
-          "explanation": "A negative imperative starts with don't and then the base verb, with no subject in front."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
+          "answer": "A person who buys something from a shop or business.",
+          "explanation": "A customer is a person, while the other three options describe a machine, a track and a place."
+        },
         {
-          "prompt": "Where did the family go first, before the train arrived?",
+          "prompt": "Which sentence uses 'would like to' correctly?",
           "choices": [
-            "They went to the big station and waited there for the train.",
-            "The sentence is: Tourism brings many people to the capital, so the streets were full.",
-            "You take the lift to the second floor."
+            "I would like visit the museum.",
+            "I would like to visit the museum.",
+            "I would to like visit the museum.",
+            "I like would to visit the new museum."
           ],
-          "answer": "They went to the big station and waited there for the train.",
-          "explanation": "The second sentence of the text says they went to the big station and waited for the train."
+          "answer": "I would like to visit the museum.",
+          "explanation": "The pattern is would like to plus the base verb, so to must sit directly before visit."
         },
-        {
-          "prompt": "What do the factories make, and who are the goods for?",
-          "choices": [
-            "The sentence is: Tourism brings many people to the capital, so the streets were full.",
-            "You turn left and walk down the long corridor.",
-            "The factories make goods for the whole nation."
-          ],
-          "answer": "The factories make goods for the whole nation.",
-          "explanation": "The text pairs the trains and ships with the factories that supply the nation."
-        },
-        {
-          "prompt": "After the lift, which way do you turn to reach the bookshop?",
-          "choices": [
-            "They visited Mombasa, a special city by the ocean.",
-            "You turn left and walk down the long corridor.",
-            "The equator is the imaginary line around the middle of the Earth."
-          ],
-          "answer": "You turn left and walk down the long corridor.",
-          "explanation": "The directions give the turn and then the corridor before naming the shop near the entrance."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Invite a Friend",
-          "target": "Would you like to visit the museum with me?"
-        },
-        {
-          "prompt": "Speaking 3: Where Am I?",
-          "target": "Can you buy food there?"
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain why Noah said the museum teaches more than the mall does."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "summer.",
-            "every",
-            "coast",
-            "the",
-            "to",
-            "visitors",
-            "many",
-            "brings",
-            "Tourism"
-          ],
-          "answer": "Tourism brings many visitors to the coast every summer."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "track.",
-            "railway",
-            "the",
-            "beside",
-            "grew",
-            "maize",
-            "of",
-            "rows",
-            "Tall"
-          ],
-          "answer": "Tall rows of maize grew beside the railway track."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "hair!",
-            "grey",
-            "me",
-            "give",
-            "to",
-            "going",
-            "You're"
-          ],
-          "answer": "You're going to give me grey hair!"
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'separated' mean in this unit?",
-          "choices": [
-            "Moved apart from someone or something, or kept apart.",
-            "Different from what people expect, or not common at all.",
-            "The imaginary line around the middle of the Earth."
-          ],
-          "answer": "Moved apart from someone or something, or kept apart.",
-          "explanation": "separated: Moved apart from someone or something, or kept apart."
-        },
-        {
-          "prompt": "What does 'that's' mean in this unit?",
-          "choices": [
-            "Different from what people expect, or not common at all.",
-            "The imaginary line around the middle of the Earth.",
-            "A short form of the two words used to point out or explain something nearby."
-          ],
-          "answer": "A short form of the two words used to point out or explain something nearby.",
-          "explanation": "that's: A short form of the two words used to point out or explain something nearby."
-        },
-        {
-          "prompt": "What does 'equator' mean in this unit?",
-          "choices": [
-            "The length of time that something lasts.",
-            "The imaginary line around the middle of the Earth.",
-            "Different from what people expect, or not common at all."
-          ],
-          "answer": "The imaginary line around the middle of the Earth.",
-          "explanation": "equator: The imaginary line around the middle of the Earth."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'i'd'?",
-          "choices": [
-            "Phrase",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Phrase",
-          "explanation": "I'd is used as a phrase in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'factories'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Factories is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'currency'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Currency is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "preview",
-              "A look at something before it is finished or shown."
-            ],
-            [
-              "territory",
-              "An area of land that belongs to a person, group or country."
-            ],
-            [
-              "capacity",
-              "The amount that a container can hold."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "excluding",
-              "Not counting; leaving something out."
-            ],
-            [
-              "maize",
-              "A tall plant grown for its yellow grain, also called corn."
-            ],
-            [
-              "it's",
-              "A short way of saying 'it is' or 'it has'."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "okay",
-              "A word used to show that something is fine or agreed."
-            ],
-            [
-              "million",
-              "A very large number, equal to a thousand thousand."
-            ],
-            [
-              "office",
-              "A place where people work at desks."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sentence is a correct 'going to' plan?",
           "choices": [
@@ -465,13 +286,526 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Where did the family go first, before the train arrived?",
+          "choices": [
+            "They went to the big station and waited there for the train.",
+            "The sentence is: Tourism brings many people to the capital, so the streets were full.",
+            "You take the lift to the second floor."
+          ],
+          "answer": "They went to the big station and waited there for the train.",
+          "explanation": "The second sentence of the text says they went to the big station and waited for the train."
+        },
+        {
+          "prompt": "Which sentence tells you why the streets of the capital were so full?",
+          "choices": [
+            "The equator is the imaginary line around the middle of the Earth.",
+            "You turn left and walk down the long corridor.",
+            "The sentence is: Tourism brings many people to the capital, so the streets were full."
+          ],
+          "answer": "The sentence is: Tourism brings many people to the capital, so the streets were full.",
+          "explanation": "The word so joins the cause, tourism, to its result, the crowded streets."
+        },
+        {
+          "prompt": "What do the factories make, and who are the goods for?",
+          "choices": [
+            "They visited Mombasa, a special city by the ocean.",
+            "The factories make goods for the whole nation.",
+            "The equator is the imaginary line around the middle of the Earth."
+          ],
+          "answer": "The factories make goods for the whole nation.",
+          "explanation": "The text pairs the trains and ships with the factories that supply the nation."
+        },
+        {
+          "prompt": "Which words show that Nora and Leo feel excited about Saturday?",
+          "choices": [
+            "Nora says I'm so excited, and Leo answers Me too.",
+            "The factories make goods for the whole nation.",
+            "They crossed the road to another shop instead of waiting as they were told."
+          ],
+          "answer": "Nora says I'm so excited, and Leo answers Me too.",
+          "explanation": "Both speakers use short feeling phrases, so the excitement is stated rather than guessed."
+        },
+        {
+          "prompt": "After the lift, which way do you turn to reach the bookshop?",
+          "choices": [
+            "They are going to the museum first, and the restaurant afterwards.",
+            "Noah liked the museum best because it teaches more than the mall.",
+            "You turn left and walk down the long corridor."
+          ],
+          "answer": "You turn left and walk down the long corridor.",
+          "explanation": "The directions give the turn and then the corridor before naming the shop near the entrance."
+        },
+        {
+          "prompt": "Why did Amal and Noah end up lost near the office?",
+          "choices": [
+            "They went to the big station and waited there for the train.",
+            "They crossed the road to another shop instead of waiting as they were told.",
+            "Nora says I'm so excited, and Leo answers Me too."
+          ],
+          "answer": "They crossed the road to another shop instead of waiting as they were told.",
+          "explanation": "Noah suggests looking at the shop across the street, and the entrance they return to has a different sign."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Invite a Friend",
+          "target": "Would you like to visit the museum with me?"
+        },
+        {
+          "prompt": "Speaking 2: Tell Someone Your Plan",
+          "target": "On Saturday, I am going to ______."
+        },
+        {
+          "prompt": "Speaking 3: Where Am I?",
+          "target": "Can you buy food there?"
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "I'm so excited about our trip to the capital!"
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Amal tied back her hair before running."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Unit Talk",
+          "target": "We bought new shoes at the mall."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "country.",
+            "our",
+            "of",
+            "middle",
+            "the",
+            "through",
+            "straight",
+            "runs",
+            "equator",
+            "The"
+          ],
+          "answer": "The equator runs straight through the middle of our country."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "litres.",
+            "two",
+            "of",
+            "capacity",
+            "a",
+            "has",
+            "jug",
+            "The"
+          ],
+          "answer": "The jug has a capacity of two litres."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "city.",
+            "the",
+            "above",
+            "clouds",
+            "the",
+            "touch",
+            "to",
+            "seemed",
+            "tower",
+            "tall",
+            "The"
+          ],
+          "answer": "The tall tower seemed to touch the clouds above the city."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "work.",
+            "to",
+            "heading",
+            "passengers",
+            "with",
+            "packed",
+            "was",
+            "bus",
+            "The"
+          ],
+          "answer": "The bus was packed with passengers heading to work."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "family.",
+            "whole",
+            "his",
+            "for",
+            "souvenirs",
+            "bought",
+            "Noah"
+          ],
+          "answer": "Noah bought souvenirs for his whole family."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "coast.",
+            "green",
+            "the",
+            "to",
+            "north",
+            "dry",
+            "the",
+            "from",
+            "stretches",
+            "nation",
+            "Our"
+          ],
+          "answer": "Our nation stretches from the dry north to the green coast."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'considering' mean in this unit?",
+          "choices": [
+            "Taking something into account before you judge.",
+            "Different from what people expect, or not common at all.",
+            "Embarrassed means you feel shy because of something that happened."
+          ],
+          "answer": "Taking something into account before you judge.",
+          "explanation": "considering: Taking something into account before you judge."
+        },
+        {
+          "prompt": "What does 'clock' mean in this unit?",
+          "choices": [
+            "Different from what people expect, or not common at all.",
+            "Taking something into account before you judge.",
+            "A device that shows what time it is."
+          ],
+          "answer": "A device that shows what time it is.",
+          "explanation": "clock: A device that shows what time it is."
+        },
+        {
+          "prompt": "What does 'i'd' mean in this unit?",
+          "choices": [
+            "Taking something into account before you judge.",
+            "A short way of saying 'I would' or 'I had'.",
+            "Different from what people expect, or not common at all."
+          ],
+          "answer": "A short way of saying 'I would' or 'I had'.",
+          "explanation": "i'd: A short way of saying 'I would' or 'I had'."
+        },
+        {
+          "prompt": "What does 'pair' mean in this unit?",
+          "choices": [
+            "Two people or things that go together.",
+            "Different from what people expect, or not common at all.",
+            "Taking something into account before you judge."
+          ],
+          "answer": "Two people or things that go together.",
+          "explanation": "pair: Two people or things that go together."
+        },
+        {
+          "prompt": "What does 'hire' mean in this unit?",
+          "choices": [
+            "Different from what people expect, or not common at all.",
+            "Taking something into account before you judge.",
+            "Something you pay to use for a short time."
+          ],
+          "answer": "Something you pay to use for a short time.",
+          "explanation": "hire: Something you pay to use for a short time."
+        },
+        {
+          "prompt": "What does 'monthly' mean in this unit?",
+          "choices": [
+            "Taking something into account before you judge.",
+            "Happening once every month.",
+            "Different from what people expect, or not common at all."
+          ],
+          "answer": "Happening once every month.",
+          "explanation": "monthly: Happening once every month."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'embarrassed'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Embarrassed is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'asleep'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Asleep is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'badge'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Badge is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'knew'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Knew is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'compass'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Compass is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'currency'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Currency is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "preview",
+              "A look at something before it is finished or shown."
+            ],
+            [
+              "disappointed",
+              "Disappointed means sad because something did not happen as you hoped."
+            ],
+            [
+              "successful",
+              "Doing well, or getting what you hoped for."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "detail",
+              "A small fact or piece of information about something."
+            ],
+            [
+              "separated",
+              "Moved apart from someone or something, or kept apart."
+            ],
+            [
+              "highest",
+              "The tallest, or the greatest amount, compared with everything else."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "aren't",
+              "A short way of saying 'are not'."
+            ],
+            [
+              "distance",
+              "The amount of space between two places."
+            ],
+            [
+              "fourth",
+              "Coming after the third one in a list or order."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "hair",
+              "The soft strands that grow on a person's head."
+            ],
+            [
+              "signpost",
+              "A sign at the side of a road or path that shows directions."
+            ],
+            [
+              "nation",
+              "A country and all the people who live in it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "entrance",
+              "The door or gate where you go into a place."
+            ],
+            [
+              "horizon",
+              "The line far away where the land or sea meets the sky."
+            ],
+            [
+              "elevation",
+              "The height of a place above sea level."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "duration",
+              "The length of time that something lasts."
+            ],
+            [
+              "axis",
+              "A line that something turns around."
+            ],
+            [
+              "range",
+              "The difference between the smallest and largest values."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which tag completes the sentence? You're coming to the event, ______?",
+          "choices": [
+            "are you",
+            "aren't you",
+            "do they",
+            "haven't you"
+          ],
+          "answer": "aren't you",
+          "explanation": "The sentence is positive and uses are, so the tag must be the negative aren't you."
+        },
+        {
+          "prompt": "Choose the missing word from 'A Trip to the Capital': First, we went to the big _____ and waited for the train.",
+          "choices": [
+            "station",
+            "neighbourhood",
+            "hire",
+            "office"
+          ],
+          "answer": "station",
+          "explanation": "The text says they went to the big station and waited for the train there."
+        },
+        {
+          "prompt": "Choose the missing word from 'Living Near the Equator': Trains run on the _____, ships arrive at the coast, and factories make goods.",
+          "choices": [
+            "corridor",
+            "restaurant",
+            "railway",
+            "entrance"
+          ],
+          "answer": "railway",
+          "explanation": "Trains travel on a railway; the other three options are places rather than tracks."
+        },
+        {
+          "prompt": "Which line is a correct negative instruction for a busy building?",
+          "choices": [
+            "Not run in the corridor.",
+            "You not run in the corridor.",
+            "Don't run in the corridor.",
+            "No running you in the long corridor."
+          ],
+          "answer": "Don't run in the corridor.",
+          "explanation": "A negative imperative starts with don't and then the base verb, with no subject in front."
+        },
+        {
+          "prompt": "In 'The Day We Got Lost in Mombasa', where did the children finally find their uncle?",
+          "choices": [
+            "At the end of the corridor on the second floor",
+            "Beside the juice stand at the busy train station",
+            "Inside the museum beside the old maps and tools",
+            "On the fourth floor of the shopping mall"
+          ],
+          "answer": "At the end of the corridor on the second floor",
+          "explanation": "The hire stand worker sent them up in the lift, and the uncle stood at the end of the corridor."
+        },
         {
           "prompt": "Which word means the imaginary line around the middle of the Earth?",
           "choices": [
@@ -482,28 +816,78 @@
           ],
           "answer": "equator",
           "explanation": "The horizon is where sea meets sky, a railway is a track and an entrance is a doorway; only the equator circles the Earth."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which line is a correct negative instruction for a busy building?",
+          "choices": [
+            "Not run in the corridor.",
+            "You not run in the corridor.",
+            "Don't run in the corridor.",
+            "No running you in the long corridor."
+          ],
+          "answer": "Don't run in the corridor.",
+          "explanation": "A negative imperative starts with don't and then the base verb, with no subject in front."
         },
         {
-          "prompt": "What does the word 'customer' mean?",
+          "prompt": "In 'The Day We Got Lost in Mombasa', where did the children finally find their uncle?",
           "choices": [
-            "A person who buys something from a shop or business.",
-            "A machine that carries people up and down between floors.",
-            "The track that trains travel along.",
-            "The area around your home."
+            "At the end of the corridor on the second floor",
+            "Beside the juice stand at the busy train station",
+            "Inside the museum beside the old maps and tools",
+            "On the fourth floor of the shopping mall"
           ],
-          "answer": "A person who buys something from a shop or business.",
-          "explanation": "A customer is a person, while the other three options describe a machine, a track and a place."
+          "answer": "At the end of the corridor on the second floor",
+          "explanation": "The hire stand worker sent them up in the lift, and the uncle stood at the end of the corridor."
         },
         {
-          "prompt": "Which sentence uses 'would like to' correctly?",
+          "prompt": "Which word means: Doing well, or getting what you hoped for.",
           "choices": [
-            "I would like visit the museum.",
-            "I would like to visit the museum.",
-            "I would to like visit the museum.",
-            "I like would to visit the new museum."
+            "successful",
+            "unusual",
+            "considering"
           ],
-          "answer": "I would like to visit the museum.",
-          "explanation": "The pattern is would like to plus the base verb, so to must sit directly before visit."
+          "answer": "successful",
+          "explanation": "successful: Doing well, or getting what you hoped for."
+        },
+        {
+          "prompt": "Which word means: A short way of saying 'I would' or 'I had'.",
+          "choices": [
+            "unusual",
+            "considering",
+            "i'd"
+          ],
+          "answer": "i'd",
+          "explanation": "i'd: A short way of saying 'I would' or 'I had'."
+        },
+        {
+          "prompt": "What type of word is 'nation'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Nation is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'monthly'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Monthly is used as an adjective in this dictionary sense."
         }
       ]
     }

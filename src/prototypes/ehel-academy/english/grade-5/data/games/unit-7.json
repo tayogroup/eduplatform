@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t03-u07",
   "title": "Tell It Another Way Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The number 40, which is four groups of ten ones.",
           "choices": [
             "forty",
-            "inequality",
-            "obtuse"
+            "adapt",
+            "mineral"
           ],
           "answer": "forty",
           "explanation": "forty: The number 40, which is four groups of ten ones."
         },
         {
-          "prompt": "Which word means: Shone with small, quick flashes of light.",
+          "prompt": "Which word means: Polite ways of behaving towards other people.",
           "choices": [
             "forty",
-            "inequality",
-            "glinted"
+            "adapt",
+            "manners"
           ],
-          "answer": "glinted",
-          "explanation": "glinted: Shone with small, quick flashes of light."
+          "answer": "manners",
+          "explanation": "manners: Polite ways of behaving towards other people."
         },
         {
-          "prompt": "Which word means: Fixed something firmly in place using small pointed pieces of metal.",
+          "prompt": "Which word means: Moved or spread very quickly.",
           "choices": [
-            "inequality",
-            "nailed",
+            "adapt",
+            "raced",
             "forty"
           ],
-          "answer": "nailed",
-          "explanation": "nailed: Fixed something firmly in place using small pointed pieces of metal."
+          "answer": "raced",
+          "explanation": "raced: Moved or spread very quickly."
+        },
+        {
+          "prompt": "Which word means: A bright flowering plant whose dried petals are used to make a sweet pink drink.",
+          "choices": [
+            "hibiscus",
+            "forty",
+            "adapt"
+          ],
+          "answer": "hibiscus",
+          "explanation": "hibiscus: A bright flowering plant whose dried petals are used to make a sweet pink drink."
+        },
+        {
+          "prompt": "Which word means: A large, thin piece of cloth or paper used to cover or wrap something.",
+          "choices": [
+            "forty",
+            "adapt",
+            "sheet"
+          ],
+          "answer": "sheet",
+          "explanation": "sheet: A large, thin piece of cloth or paper used to cover or wrap something."
+        },
+        {
+          "prompt": "Which word means: Cared for somebody or something and helped it grow.",
+          "choices": [
+            "adapt",
+            "nurtured",
+            "forty"
+          ],
+          "answer": "nurtured",
+          "explanation": "nurtured: Cared for somebody or something and helped it grow."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Stacked or heaped up in a large amount.",
-          "answer": "piled"
+          "clue": "Pleasure and satisfaction in what you have achieved.",
+          "answer": "pride"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Fixed something firmly in place using small pointed pieces of metal.",
-          "answer": "nailed"
+          "clue": "Moving or acting with speed, often because of a rush.",
+          "answer": "hurrying"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The soft, coloured parts that grow around the centre of a flower.",
+          "answer": "petals"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A large, thin piece of cloth or paper used to cover or wrap something.",
+          "answer": "sheet"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Cared for somebody or something and helped it grow.",
+          "answer": "nurtured"
         }
       ]
     },
@@ -98,35 +143,85 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shelf.",
+            "lemur.",
+            "injured",
             "the",
-            "on",
-            "apricots",
-            "dried",
-            "of",
-            "jar",
-            "a",
-            "kept",
-            "Grandma"
+            "with",
+            "vet",
+            "the",
+            "assist",
+            "will",
+            "Amal"
           ],
-          "answer": "Grandma kept a jar of dried apricots on the shelf."
+          "answer": "Amal will assist the vet with the injured lemur."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "loved.",
-            "Sami",
-            "that",
-            "drink",
-            "pink",
-            "sweet",
+            "counter.",
+            "the",
+            "on",
+            "loaf",
+            "fresh",
             "a",
-            "made",
-            "petals",
-            "hibiscus",
+            "placed",
+            "baker",
             "The"
           ],
-          "answer": "The hibiscus petals made a sweet pink drink that Sami loved."
+          "answer": "The baker placed a fresh loaf on the counter."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "home.",
+            "came",
+            "dog",
+            "lost",
+            "the",
+            "when",
+            "relief",
+            "great",
+            "a",
+            "was",
+            "It"
+          ],
+          "answer": "It was a great relief when the lost dog came home."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "town.",
+            "whole",
+            "the",
+            "in",
+            "place",
+            "favourite",
+            "her",
+            "was",
+            "market",
+            "the",
+            "decided",
+            "Amal"
+          ],
+          "answer": "Amal decided the market was her favourite place in the whole town."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "arrived.",
+            "elders",
+            "the",
+            "before",
+            "fabric",
+            "of",
+            "sheet",
+            "a",
+            "under",
+            "waited",
+            "mural",
+            "The"
+          ],
+          "answer": "The mural waited under a sheet of fabric before the elders arrived."
         }
       ]
     },
@@ -139,312 +234,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which reply disagrees politely and gives a reason?",
+          "prompt": "Which word names a large picture painted straight onto a wall?",
           "choices": [
-            "I disagree with everything you said.",
-            "I see your point, but I think that the cat would notice more, because animals watch food.",
-            "That is wrong and you know it.",
-            "No, the hero's view is the only one."
-          ],
-          "answer": "I see your point, but I think that the cat would notice more, because animals watch food.",
-          "explanation": "It names the other view, states its own view and supplies a reason. The other replies dismiss the speaker or omit a reason."
-        },
-        {
-          "prompt": "A narrator who uses the words I, me and my is telling a story in which point of view?",
-          "choices": [
-            "First person",
-            "Third person",
-            "Past tense",
-            "Direct speech"
-          ],
-          "answer": "First person",
-          "explanation": "First-person narration uses I, me and my. Third person uses he, she and they, while tense and direct speech describe other features."
-        },
-        {
-          "prompt": "Choose the missing word from The Forgotten Mural, part 3: 'It belongs to the whole ______.'",
-          "choices": [
-            "urban",
-            "invasion",
+            "journal",
+            "mural",
             "festival",
             "continent"
           ],
-          "answer": "continent",
-          "explanation": "Amal is saying the mural belongs to far more than one school, so she names the whole landmass."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
+          "answer": "mural",
+          "explanation": "A journal is a private notebook, a festival is a public event and a continent is a landmass, so only mural names wall art."
+        },
         {
-          "prompt": "In Omar's account, how many days did the fishing boats come back with nothing?",
+          "prompt": "What does the word 'rural' describe?",
           "choices": [
-            "The fishing boats came back with nothing for nine days.",
-            "Amal says the fish eyes looked like tiny glass marbles.",
-            "It suggests the streets were wide and open, unlike the narrow lanes of their quiet village."
+            "Belonging to the countryside, not the city.",
+            "A time when one country controlled another country.",
+            "A large event with music, food and shared activities.",
+            "A book for private daily writing."
           ],
-          "answer": "The fishing boats came back with nothing for nine days.",
-          "explanation": "Omar states the length of the empty spell directly in his second sentence."
+          "answer": "Belonging to the countryside, not the city.",
+          "explanation": "Rural describes countryside places. The other options define colonial, festival and journal."
         },
         {
-          "prompt": "What did the class decide to do straight after Teacher Yasmin praised their presentation?",
+          "prompt": "Choose the missing word from Omar's account: 'My ______ dried up like a puddle in the midday sun.'",
           "choices": [
-            "Amal says the fish eyes looked like tiny glass marbles.",
-            "The flag matches no real country, so Daniel decided it must stand for a group's own dream.",
-            "They voted to paint a new mural on their own school wall."
-          ],
-          "answer": "They voted to paint a new mural on their own school wall.",
-          "explanation": "The vote follows the praise and the news that saving the old mural was impractical."
-        },
-        {
-          "prompt": "Daniel says the flag on the tunic may stand for an early independence group. What made him think so?",
-          "choices": [
-            "She promised that their mural would appear in the heritage newsletter.",
-            "The flag matches no real country, so Daniel decided it must stand for a group's own dream.",
-            "She asked them to investigate a hidden mural behind a wooden wall in the old federal hall."
-          ],
-          "answer": "The flag matches no real country, so Daniel decided it must stand for a group's own dream.",
-          "explanation": "He reasons from an absence of evidence: no country owns those colours, so the flag is symbolic."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Hot-Seating a Narrator",
-          "target": "One person sits in the hot seat and answers as a character from this unit."
-        },
-        {
-          "prompt": "Speaking 3: Retelling Race",
-          "target": "This is a fast game that shows how quickly you can switch between points of view."
-        },
-        {
-          "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "The hibiscus petals made a sweet pink drink that Sami loved."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "city.",
-            "coastal",
-            "the",
-            "of",
+            "surplus",
             "invasion",
-            "the",
-            "described",
-            "book",
-            "history",
-            "The"
+            "income",
+            "journal"
           ],
-          "answer": "The history book described the invasion of the coastal city."
+          "answer": "income",
+          "explanation": "Omar is describing money that stopped arriving during the nine empty days, so income fits the sentence."
         },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "all.",
-            "at",
-            "care",
-            "not",
-            "did",
-            "I",
-            "but",
-            "hoarse,",
-            "was",
-            "throat",
-            "my",
-            "midday",
-            "By"
-          ],
-          "answer": "By midday my throat was hoarse, but I did not care at all."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "built.",
-            "was",
-            "wall",
-            "the",
-            "before",
-            "town",
-            "the",
-            "described",
-            "entries",
-            "The"
-          ],
-          "answer": "The entries described the town before the wall was built."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'sticky' mean in this unit?",
-          "choices": [
-            "Covered with a substance that makes things stick to it.",
-            "The number 40, which is four groups of ten ones.",
-            "A statement that two amounts are not equal."
-          ],
-          "answer": "Covered with a substance that makes things stick to it.",
-          "explanation": "sticky: Covered with a substance that makes things stick to it."
-        },
-        {
-          "prompt": "What does 'appear' mean in this unit?",
-          "choices": [
-            "The number 40, which is four groups of ten ones.",
-            "A statement that two amounts are not equal.",
-            "To become visible, or to come into view where it could not be seen before."
-          ],
-          "answer": "To become visible, or to come into view where it could not be seen before.",
-          "explanation": "appear: To become visible, or to come into view where it could not be seen before."
-        },
-        {
-          "prompt": "What does 'inequality' mean in this unit?",
-          "choices": [
-            "An angle larger than a right angle but less than a straight one.",
-            "A statement that two amounts are not equal.",
-            "The number 40, which is four groups of ten ones."
-          ],
-          "answer": "A statement that two amounts are not equal.",
-          "explanation": "inequality: A statement that two amounts are not equal."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'skipped'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Skipped is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'contact'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Contact is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'sunrise'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Sunrise is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "thorough",
-              "Complete and careful, leaving nothing out."
-            ],
-            [
-              "prime",
-              "A number divisible only by itself and one."
-            ],
-            [
-              "stall",
-              "A small stand or table where a trader sells goods, often at a market."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "raced",
-              "Moved or spread very quickly."
-            ],
-            [
-              "smell",
-              "To notice something using your nose, or the scent something gives off."
-            ],
-            [
-              "sweet",
-              "Tasting like sugar or honey, rather than sour, salty or bitter."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "tunic",
-              "A simple, loose piece of clothing that hangs down from the shoulders to about the knees."
-            ],
-            [
-              "dancers",
-              "People who move their bodies to music, often as a performance."
-            ],
-            [
-              "festival",
-              "A special public event with music, food and activities that people share."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Choose the missing word from The Forgotten Mural, part 1: 'The centre was loud and ______, the opposite of their quiet village lanes.'",
           "choices": [
@@ -481,13 +302,535 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "In Omar's account, how many days did the fishing boats come back with nothing?",
+          "choices": [
+            "The fishing boats came back with nothing for nine days.",
+            "Amal says the fish eyes looked like tiny glass marbles.",
+            "It suggests the streets were wide and open, unlike the narrow lanes of their quiet village."
+          ],
+          "answer": "The fishing boats came back with nothing for nine days.",
+          "explanation": "Omar states the length of the empty spell directly in his second sentence."
+        },
+        {
+          "prompt": "What does Amal notice about the eyes of the fish on Omar's stall?",
+          "choices": [
+            "She asked them to investigate a hidden mural behind a wooden wall in the old federal hall.",
+            "The flag matches no real country, so Daniel decided it must stand for a group's own dream.",
+            "Amal says the fish eyes looked like tiny glass marbles."
+          ],
+          "answer": "Amal says the fish eyes looked like tiny glass marbles.",
+          "explanation": "Amal is close to the counter and describes what a child would look at first, so the eyes catch her attention."
+        },
+        {
+          "prompt": "What did the class decide to do straight after Teacher Yasmin praised their presentation?",
+          "choices": [
+            "She promised that their mural would appear in the heritage newsletter.",
+            "They voted to paint a new mural on their own school wall.",
+            "She asked them to investigate a hidden mural behind a wooden wall in the old federal hall."
+          ],
+          "answer": "They voted to paint a new mural on their own school wall.",
+          "explanation": "The vote follows the praise and the news that saving the old mural was impractical."
+        },
+        {
+          "prompt": "How does Amal feel on the walk home, and which detail in her account shows it?",
+          "choices": [
+            "She feels light and cheerful, because she skips ahead of her mother and hums a school song.",
+            "They voted to paint a new mural on their own school wall.",
+            "He means that ordinary people, including students, can shape decisions about their own community."
+          ],
+          "answer": "She feels light and cheerful, because she skips ahead of her mother and hums a school song.",
+          "explanation": "Skipping and humming are actions, not stated feelings, so the reader infers her mood from behaviour."
+        },
+        {
+          "prompt": "Daniel says the flag on the tunic may stand for an early independence group. What made him think so?",
+          "choices": [
+            "It shows that providing for his family matters to him more than an easy working life.",
+            "Omar was busy selling fish at his own stall, so he never saw the gift at the next stall.",
+            "The flag matches no real country, so Daniel decided it must stand for a group's own dream."
+          ],
+          "answer": "The flag matches no real country, so Daniel decided it must stand for a group's own dream.",
+          "explanation": "He reasons from an absence of evidence: no country owns those colours, so the flag is symbolic."
+        },
+        {
+          "prompt": "In his journal, Sami writes that political decisions are not only for leaders. What does he mean?",
+          "choices": [
+            "The fishing boats came back with nothing for nine days.",
+            "He means that ordinary people, including students, can shape decisions about their own community.",
+            "She feels light and cheerful, because she skips ahead of her mother and hums a school song."
+          ],
+          "answer": "He means that ordinary people, including students, can shape decisions about their own community.",
+          "explanation": "The class changed how their town remembers itself, which is the evidence behind Sami's claim."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Hot-Seating a Narrator",
+          "target": "One person sits in the hot seat and answers as a character from this unit."
+        },
+        {
+          "prompt": "Speaking 2: Opinion Debate",
+          "target": "A debate is a structured discussion in which two teams argue for and against one statement."
+        },
+        {
+          "prompt": "Speaking 3: Retelling Race",
+          "target": "This is a fast game that shows how quickly you can switch between points of view."
+        },
+        {
+          "prompt": "Speaking 4: Dramatic Reading of Two Voices",
+          "target": "Two speakers read the market accounts aloud, one after the other, to an audience."
+        },
+        {
+          "prompt": "Speaking 5: Vocabulary Expert Interview",
+          "target": "Amal decided the market was her favourite place in the whole town."
+        },
+        {
+          "prompt": "Speaking 6: Explain, Respond and Reconsider",
+          "target": "The mural waited under a sheet of fabric before the elders arrived."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "impractical.",
+            "is",
+            "summer",
+            "the",
+            "in",
+            "coat",
+            "heavy",
+            "a",
+            "Wearing"
+          ],
+          "answer": "Wearing a heavy coat in the summer is impractical."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "five.",
+            "of",
+            "quotient",
+            "a",
+            "gives",
+            "four",
+            "by",
+            "divided",
+            "Twenty"
+          ],
+          "answer": "Twenty divided by four gives a quotient of five."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "head.",
+            "my",
+            "in",
+            "sums",
+            "the",
+            "did",
+            "and",
+            "home",
+            "at",
+            "sat",
+            "I",
+            "evenings",
+            "Some"
+          ],
+          "answer": "Some evenings I sat at home and did the sums in my head."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "stall.",
+            "the",
+            "under",
+            "from",
+            "tail",
+            "fish",
+            "a",
+            "steal",
+            "to",
+            "tried",
+            "cat",
+            "The"
+          ],
+          "answer": "The cat tried to steal a fish tail from under the stall."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shoes.",
+            "no",
+            "and",
+            "tunic",
+            "plain",
+            "a",
+            "wore",
+            "mural",
+            "the",
+            "in",
+            "man",
+            "The"
+          ],
+          "answer": "The man in the mural wore a plain tunic and no shoes."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "era.",
+            "colonial",
+            "the",
+            "during",
+            "over",
+            "painted",
+            "were",
+            "stories",
+            "local",
+            "Many"
+          ],
+          "answer": "Many local stories were painted over during the colonial era."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'adapt' mean in this unit?",
+          "choices": [
+            "To change so that you fit a new place or situation.",
+            "The number 40, which is four groups of ten ones.",
+            "A hard natural substance found in the ground."
+          ],
+          "answer": "To change so that you fit a new place or situation.",
+          "explanation": "adapt: To change so that you fit a new place or situation."
+        },
+        {
+          "prompt": "What does 'honesty' mean in this unit?",
+          "choices": [
+            "The number 40, which is four groups of ten ones.",
+            "To change so that you fit a new place or situation.",
+            "Always telling the truth and not cheating."
+          ],
+          "answer": "Always telling the truth and not cheating.",
+          "explanation": "honesty: Always telling the truth and not cheating."
+        },
+        {
+          "prompt": "What does 'hoarse' mean in this unit?",
+          "choices": [
+            "To change so that you fit a new place or situation.",
+            "Sounding rough and croaky, usually from shouting or being unwell.",
+            "The number 40, which is four groups of ten ones."
+          ],
+          "answer": "Sounding rough and croaky, usually from shouting or being unwell.",
+          "explanation": "hoarse: Sounding rough and croaky, usually from shouting or being unwell."
+        },
+        {
+          "prompt": "What does 'resistance' mean in this unit?",
+          "choices": [
+            "The act of standing firm against something, such as unfair rules or control.",
+            "The number 40, which is four groups of ten ones.",
+            "To change so that you fit a new place or situation."
+          ],
+          "answer": "The act of standing firm against something, such as unfair rules or control.",
+          "explanation": "resistance: The act of standing firm against something, such as unfair rules or control."
+        },
+        {
+          "prompt": "What does 'urban' mean in this unit?",
+          "choices": [
+            "The number 40, which is four groups of ten ones.",
+            "To change so that you fit a new place or situation.",
+            "Belonging to a city or a busy town rather than the countryside."
+          ],
+          "answer": "Belonging to a city or a busy town rather than the countryside.",
+          "explanation": "urban: Belonging to a city or a busy town rather than the countryside."
+        },
+        {
+          "prompt": "What does 'decimal' mean in this unit?",
+          "choices": [
+            "To change so that you fit a new place or situation.",
+            "A number written with a point, such as 3.75.",
+            "The number 40, which is four groups of ten ones."
+          ],
+          "answer": "A number written with a point, such as 3.75.",
+          "explanation": "decimal: A number written with a point, such as 3.75."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'mineral'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Mineral is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'since'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Preposition"
+          ],
+          "answer": "Preposition",
+          "explanation": "Since is used as a preposition in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'clock'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Clock is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'wood'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Wood is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'revolutionary'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Revolutionary is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'polygon'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Polygon is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "thorough",
+              "Complete and careful, leaving nothing out."
+            ],
+            [
+              "force",
+              "A push or a pull that can move something."
+            ],
+            [
+              "apologise",
+              "To say sorry to someone for something you did wrong."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "pride",
+              "Pleasure and satisfaction in what you have achieved."
+            ],
+            [
+              "positive",
+              "Hopeful and good, rather than gloomy."
+            ],
+            [
+              "midday",
+              "The middle of the day, at twelve o'clock."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "hurrying",
+              "Moving or acting with speed, often because of a rush."
+            ],
+            [
+              "provide",
+              "To give someone something that they need."
+            ],
+            [
+              "cat",
+              "A small furry animal often kept as a pet."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "sweet",
+              "Tasting like sugar or honey, rather than sour, salty or bitter."
+            ],
+            [
+              "handed",
+              "Gave something to someone by passing it to them with the hand."
+            ],
+            [
+              "divided",
+              "Split into two or more separate parts or groups."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "silenced",
+              "Made someone or something quiet, or stopped it from being heard."
+            ],
+            [
+              "historical",
+              "Connected with real events and people from the past."
+            ],
+            [
+              "contact",
+              "Touching or communicating with somebody, or the act of getting in touch."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "thriving",
+              "Growing strongly and doing very well."
+            ],
+            [
+              "mean",
+              "The average found by adding values and dividing by how many."
+            ],
+            [
+              "acute",
+              "An angle smaller than a right angle."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence uses an opinion phrase correctly?",
+          "choices": [
+            "In my opinion that the mural should stay.",
+            "I think the that mural should stay.",
+            "I believe that the mural should stay.",
+            "I feel that cold about the mural."
+          ],
+          "answer": "I believe that the mural should stay.",
+          "explanation": "In my opinion takes a comma, that never follows the article, and I feel drops that before a physical feeling."
+        },
+        {
+          "prompt": "Which reply disagrees politely and gives a reason?",
+          "choices": [
+            "I disagree with everything you said.",
+            "I see your point, but I think that the cat would notice more, because animals watch food.",
+            "That is wrong and you know it.",
+            "No, the hero's view is the only one."
+          ],
+          "answer": "I see your point, but I think that the cat would notice more, because animals watch food.",
+          "explanation": "It names the other view, states its own view and supplies a reason. The other replies dismiss the speaker or omit a reason."
+        },
+        {
+          "prompt": "A narrator who uses the words I, me and my is telling a story in which point of view?",
+          "choices": [
+            "First person",
+            "Third person",
+            "Past tense",
+            "Direct speech"
+          ],
+          "answer": "First person",
+          "explanation": "First-person narration uses I, me and my. Third person uses he, she and they, while tense and direct speech describe other features."
+        },
+        {
+          "prompt": "Choose the missing word from The Forgotten Mural, part 3: 'It belongs to the whole ______.'",
+          "choices": [
+            "urban",
+            "invasion",
+            "festival",
+            "continent"
+          ],
+          "answer": "continent",
+          "explanation": "Amal is saying the mural belongs to far more than one school, so she names the whole landmass."
+        },
+        {
+          "prompt": "Which word names the idea that many different groups can live together well?",
+          "choices": [
+            "invasion",
+            "pluralism",
+            "synopsis",
+            "surplus"
+          ],
+          "answer": "pluralism",
+          "explanation": "An invasion is a takeover by force, a synopsis is a summary and a surplus is a leftover amount."
+        },
         {
           "prompt": "Which word names a large picture painted straight onto a wall?",
           "choices": [
@@ -498,28 +841,78 @@
           ],
           "answer": "mural",
           "explanation": "A journal is a private notebook, a festival is a public event and a continent is a landmass, so only mural names wall art."
-        },
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
         {
-          "prompt": "What does the word 'rural' describe?",
+          "prompt": "Choose the missing word from The Forgotten Mural, part 3: 'It belongs to the whole ______.'",
           "choices": [
-            "Belonging to the countryside, not the city.",
-            "A time when one country controlled another country.",
-            "A large event with music, food and shared activities.",
-            "A book for private daily writing."
-          ],
-          "answer": "Belonging to the countryside, not the city.",
-          "explanation": "Rural describes countryside places. The other options define colonial, festival and journal."
-        },
-        {
-          "prompt": "Choose the missing word from Omar's account: 'My ______ dried up like a puddle in the midday sun.'",
-          "choices": [
-            "surplus",
+            "urban",
             "invasion",
-            "income",
-            "journal"
+            "festival",
+            "continent"
           ],
-          "answer": "income",
-          "explanation": "Omar is describing money that stopped arriving during the nine empty days, so income fits the sentence."
+          "answer": "continent",
+          "explanation": "Amal is saying the mural belongs to far more than one school, so she names the whole landmass."
+        },
+        {
+          "prompt": "Which word names the idea that many different groups can live together well?",
+          "choices": [
+            "invasion",
+            "pluralism",
+            "synopsis",
+            "surplus"
+          ],
+          "answer": "pluralism",
+          "explanation": "An invasion is a takeover by force, a synopsis is a summary and a surplus is a leftover amount."
+        },
+        {
+          "prompt": "Which word means: To know that something is good and to be glad about it.",
+          "choices": [
+            "appreciate",
+            "forty",
+            "adapt"
+          ],
+          "answer": "appreciate",
+          "explanation": "appreciate: To know that something is good and to be glad about it."
+        },
+        {
+          "prompt": "Which word means: Sounding rough and croaky, usually from shouting or being unwell.",
+          "choices": [
+            "forty",
+            "adapt",
+            "hoarse"
+          ],
+          "answer": "hoarse",
+          "explanation": "hoarse: Sounding rough and croaky, usually from shouting or being unwell."
+        },
+        {
+          "prompt": "What type of word is 'divided'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Divided is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'decimal'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Decimal is used as a noun in this dictionary sense."
         }
       ]
     }

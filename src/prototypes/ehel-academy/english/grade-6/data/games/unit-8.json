@@ -5,7 +5,7 @@
   "unitId": "eng-g06-t03-u08",
   "title": "Entertainment and Media Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A way in which two things are not the same.",
           "choices": [
             "difference",
-            "pixel",
-            "assertion"
+            "diameter",
+            "fortunate"
           ],
           "answer": "difference",
           "explanation": "difference: A way in which two things are not the same."
         },
         {
-          "prompt": "Which word means: A sudden, surprising change in the direction of a story.",
+          "prompt": "Which word means: A person who competes or argues against you.",
           "choices": [
             "difference",
-            "pixel",
-            "twist"
+            "diameter",
+            "opponent"
           ],
-          "answer": "twist",
-          "explanation": "twist: A sudden, surprising change in the direction of a story."
+          "answer": "opponent",
+          "explanation": "opponent: A person who competes or argues against you."
         },
         {
-          "prompt": "Which word means: Strongly disagreed with something or actively worked against it.",
+          "prompt": "Which word means: Making someone feel encouraged or filled with a strong desire to do something.",
           "choices": [
-            "pixel",
-            "opposed",
+            "diameter",
+            "inspiring",
             "difference"
           ],
-          "answer": "opposed",
-          "explanation": "opposed: Strongly disagreed with something or actively worked against it."
+          "answer": "inspiring",
+          "explanation": "inspiring: Making someone feel encouraged or filled with a strong desire to do something."
+        },
+        {
+          "prompt": "Which word means: A consequence is a result or effect that happens because of an earlier action or event.",
+          "choices": [
+            "consequence",
+            "difference",
+            "diameter"
+          ],
+          "answer": "consequence",
+          "explanation": "consequence: A consequence is a result or effect that happens because of an earlier action or event."
+        },
+        {
+          "prompt": "Which word means: The state of being kept in prison, or the act of putting someone in prison.",
+          "choices": [
+            "difference",
+            "diameter",
+            "imprisonment"
+          ],
+          "answer": "imprisonment",
+          "explanation": "imprisonment: The state of being kept in prison, or the act of putting someone in prison."
+        },
+        {
+          "prompt": "Which word means: Related to the study of ancient cultures by looking at their buildings, tools, and objects.",
+          "choices": [
+            "diameter",
+            "archaeological",
+            "difference"
+          ],
+          "answer": "archaeological",
+          "explanation": "archaeological: Related to the study of ancient cultures by looking at their buildings, tools, and objects."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who makes films, often responsible for directing or producing them.",
-          "answer": "filmmaker"
+          "clue": "A person who competes or argues against you.",
+          "answer": "opponent"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Small broken pieces or parts left over from something larger that no longer exists whole.",
-          "answer": "fragments"
+          "clue": "Making someone feel encouraged or filled with a strong desire to do something.",
+          "answer": "inspiring"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A linguist is a person who studies languages and how they work.",
+          "answer": "linguist"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Spreading out from a central point into two or more separate parts, like the branches of a tree.",
+          "answer": "branching"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Related to electricity or using electricity.",
+          "answer": "electrical"
         }
       ]
     },
@@ -98,32 +143,82 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "years.",
-            "for",
-            "corner",
-            "the",
-            "in",
-            "idle",
-            "sat",
-            "radio",
-            "old",
-            "The"
+            "name.",
+            "by",
+            "thanked",
+            "was",
+            "contributor",
+            "Every"
           ],
-          "answer": "The old radio sat idle in the corner for years."
+          "answer": "Every contributor was thanked by name."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "interest.",
-            "great",
-            "with",
-            "discoveries",
-            "African",
-            "tracked",
-            "universities",
-            "International"
+            "sand.",
+            "desert",
+            "the",
+            "beneath",
+            "buried",
+            "scroll",
+            "ancient",
+            "an",
+            "uncovered",
+            "Archaeologists"
           ],
-          "answer": "International universities tracked African discoveries with great interest."
+          "answer": "Archaeologists uncovered an ancient scroll buried beneath the desert sand."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "made.",
+            "was",
+            "discovery",
+            "the",
+            "week",
+            "the",
+            "fourteen",
+            "turned",
+            "just",
+            "had",
+            "Sami"
+          ],
+          "answer": "Sami had just turned fourteen the week the discovery was made."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "bones.",
+            "old",
+            "from",
+            "ideas",
+            "big",
+            "building",
+            "against",
+            "warned",
+            "elder",
+            "An"
+          ],
+          "answer": "An elder warned against building big ideas from old bones."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "Ideas.",
+            "New",
+            "Fear",
+            "That",
+            "Systems",
+            "Memory:",
+            "Imprisoned",
+            "was",
+            "essay",
+            "his",
+            "for",
+            "title",
+            "Sami's"
+          ],
+          "answer": "Sami's title for his essay was Imprisoned Memory: Systems That Fear New Ideas."
         }
       ]
     },
@@ -136,310 +231,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence is written in the past simple passive?",
+          "prompt": "What does the word 'admiral' mean?",
           "choices": [
-            "The team discovered the scroll.",
-            "The team is still discovering the old scroll in the cemetery.",
-            "The scroll was discovered by the team.",
-            "The team will discover the scroll."
+            "A series of rulers from the same family over a long time.",
+            "A high-ranking naval officer who commands ships and sailors.",
+            "A short advertising message that tries to persuade you to buy a product or service.",
+            "An area outside a big city where people live in houses."
           ],
-          "answer": "The scroll was discovered by the team.",
-          "explanation": "The passive uses was or were with a past participle: was discovered."
+          "answer": "A high-ranking naval officer who commands ships and sailors.",
+          "explanation": "An admiral commands ships and sailors in the navy."
         },
         {
-          "prompt": "Which adverb of frequency means 'about half the time'?",
+          "prompt": "Which word means a series of rulers from the same family over a long time?",
           "choices": [
-            "frequently",
-            "usually",
-            "never",
-            "sometimes"
-          ],
-          "answer": "sometimes",
-          "explanation": "Sometimes means an action happens about half the time."
-        },
-        {
-          "prompt": "In the passage, what does a 'discerning viewer' do?",
-          "choices": [
-            "Believes every single message that is shown on the television screen.",
-            "Thinks carefully about what they watch.",
-            "Only watches cartoons and adverts.",
-            "Never watches any documentaries."
-          ],
-          "answer": "Thinks carefully about what they watch.",
-          "explanation": "The passage says a discerning viewer thinks carefully about what they watch."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What four ways of telling a story does the passage say might reach you in one week, and which of them is designed to make you want something?",
-          "choices": [
-            "A film, a television series, a documentary and an advert; the advert is designed to make you want something.",
-            "The scroll was found sealed in a jar, hidden deep in a cemetery from an ancient dynasty.",
-            "He said it was special because we do not know everything, which makes the story ours to explore."
-          ],
-          "answer": "A film, a television series, a documentary and an advert; the advert is designed to make you want something.",
-          "explanation": "The second paragraph lists the four forms and says the advert is the shortest story of all, designed to make you want something."
-        },
-        {
-          "prompt": "Why did the experts argue about the symbols on the scroll?",
-          "choices": [
-            "The scroll was found sealed in a jar, hidden deep in a cemetery from an ancient dynasty.",
-            "Like an ancient storyteller, a director decides how the tale unfolds, which characters we care about, and what feelings we carry away.",
-            "They argued because the symbols were unfamiliar and might point to a lost monarchy or a classical influence."
-          ],
-          "answer": "They argued because the symbols were unfamiliar and might point to a lost monarchy or a classical influence.",
-          "explanation": "The experts disagreed over whether the symbols showed a lost monarchy or a classical influence."
-        },
-        {
-          "prompt": "Why does the passage say that adverts are different from other forms of media?",
-          "choices": [
-            "Like an ancient storyteller, a director decides how the tale unfolds, which characters we care about, and what feelings we carry away.",
-            "Adverts are designed to persuade rather than to inform or tell a story: they use bright colours, catchy music and exciting images to make us want to buy something.",
-            "She meant that a legacy holds both good and bad, so we should not favour only one side."
-          ],
-          "answer": "Adverts are designed to persuade rather than to inform or tell a story: they use bright colours, catchy music and exciting images to make us want to buy something.",
-          "explanation": "The passage separates media that informs from a message that tries to sell."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Media Habits Interview",
-          "target": "With a partner, ask and answer five questions about your media habits."
-        },
-        {
-          "prompt": "Speaking 3: Documentary or Drama?",
-          "target": "Explain the difference between a documentary and a drama."
-        },
-        {
-          "prompt": "Speaking 5: Retell a Scene from the Story",
-          "target": "International universities tracked African discoveries with great interest."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "family.",
-            "our",
-            "about",
-            "stories",
-            "of",
+            "monarchy",
             "legacy",
-            "a",
-            "me",
-            "left",
-            "grandfather",
-            "My"
+            "dynasty",
+            "revival"
           ],
-          "answer": "My grandfather left me a legacy of stories about our family."
+          "answer": "dynasty",
+          "explanation": "A dynasty is a line of rulers from one family, such as the Ming dynasty."
         },
         {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "field.",
-            "quiet",
-            "the",
-            "across",
-            "drifted",
-            "traffic",
-            "distant",
-            "of",
-            "hum",
-            "The"
-          ],
-          "answer": "The hum of distant traffic drifted across the quiet field."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "outcome.",
-            "possible",
-            "every",
-            "showed",
-            "chart",
-            "the",
-            "on",
-            "paths",
-            "branching",
-            "The"
-          ],
-          "answer": "The branching paths on the chart showed every possible outcome."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'shovel' mean in this unit?",
+          "prompt": "What is an advert?",
           "choices": [
-            "A shovel is a tool with a long handle and a wide blade, used for digging or moving earth.",
-            "A way in which two things are not the same.",
-            "One of the tiny dots that together make a screen image."
+            "A short video or audio message that promotes a product.",
+            "An imagined perfect place where everyone lives happily and without any conflict.",
+            "A place where people are buried after they die.",
+            "An area outside a big city."
           ],
-          "answer": "A shovel is a tool with a long handle and a wide blade, used for digging or moving earth.",
-          "explanation": "shovel: A shovel is a tool with a long handle and a wide blade, used for digging or moving earth."
+          "answer": "A short video or audio message that promotes a product.",
+          "explanation": "An advert is an advertisement made to persuade you to buy something."
         },
-        {
-          "prompt": "What does 'imprisonment' mean in this unit?",
-          "choices": [
-            "A way in which two things are not the same.",
-            "One of the tiny dots that together make a screen image.",
-            "The state of being kept in prison, or the act of putting someone in prison."
-          ],
-          "answer": "The state of being kept in prison, or the act of putting someone in prison.",
-          "explanation": "imprisonment: The state of being kept in prison, or the act of putting someone in prison."
-        },
-        {
-          "prompt": "What does 'pixel' mean in this unit?",
-          "choices": [
-            "A strong statement that something is true.",
-            "One of the tiny dots that together make a screen image.",
-            "A way in which two things are not the same."
-          ],
-          "answer": "One of the tiny dots that together make a screen image.",
-          "explanation": "pixel: One of the tiny dots that together make a screen image."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'proof'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Proof is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'partial'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Partial is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'composer'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Composer is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "excitement",
-              "A strong feeling of eagerness about something happening."
-            ],
-            [
-              "plagiarism",
-              "Passing off someone else's work as your own."
-            ],
-            [
-              "series",
-              "A group of related television programmes or books released one after another."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "inspiring",
-              "Making someone feel encouraged or filled with a strong desire to do something."
-            ],
-            [
-              "tape",
-              "Tape is a long, narrow strip of material used to mark, fasten, or seal something."
-            ],
-            [
-              "sought",
-              "Sought means tried hard to find, get, or achieve something."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "adverbs",
-              "Words that describe how, when or where an action happens, such as often or usually."
-            ],
-            [
-              "candlelight",
-              "The soft light given off by a burning candle."
-            ],
-            [
-              "legacy",
-              "Something that is passed down from the past, like traditions, stories, or values."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which word means 'simple and without comfort or luxury'?",
           "choices": [
@@ -476,13 +299,530 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What four ways of telling a story does the passage say might reach you in one week, and which of them is designed to make you want something?",
+          "choices": [
+            "A film, a television series, a documentary and an advert; the advert is designed to make you want something.",
+            "The scroll was found sealed in a jar, hidden deep in a cemetery from an ancient dynasty.",
+            "She said history is often built from characteristics found in ruins, not from full stories."
+          ],
+          "answer": "A film, a television series, a documentary and an advert; the advert is designed to make you want something.",
+          "explanation": "The second paragraph lists the four forms and says the advert is the shortest story of all, designed to make you want something."
+        },
+        {
+          "prompt": "What did Sami's grandmother mean when she said a legacy includes light and shadow?",
+          "choices": [
+            "The scroll was found sealed in a jar, hidden deep in a cemetery from an ancient dynasty.",
+            "He said it was special because we do not know everything, which makes the story ours to explore.",
+            "She meant that a legacy holds both good and bad, so we should not favour only one side."
+          ],
+          "answer": "She meant that a legacy holds both good and bad, so we should not favour only one side.",
+          "explanation": "The grandmother warns Sami not to become partial and to show both the light and the shadow."
+        },
+        {
+          "prompt": "Why did the experts argue about the symbols on the scroll?",
+          "choices": [
+            "Like an ancient storyteller, a director decides how the tale unfolds, which characters we care about, and what feelings we carry away.",
+            "They argued because the symbols were unfamiliar and might point to a lost monarchy or a classical influence.",
+            "She meant that a legacy holds both good and bad, so we should not favour only one side."
+          ],
+          "answer": "They argued because the symbols were unfamiliar and might point to a lost monarchy or a classical influence.",
+          "explanation": "The experts disagreed over whether the symbols showed a lost monarchy or a classical influence."
+        },
+        {
+          "prompt": "How does the passage say a documentary is different from a drama?",
+          "choices": [
+            "A documentary uses real people, places and events, while a drama invents its characters.",
+            "Noticing the choices the director, editor and composer have made — enjoying the story while asking who made it and why.",
+            "Adverts are designed to persuade rather than to inform or tell a story: they use bright colours, catchy music and exciting images to make us want to buy something."
+          ],
+          "answer": "A documentary uses real people, places and events, while a drama invents its characters.",
+          "explanation": "The passage states that a documentary does not invent characters but uses real events to make us think."
+        },
+        {
+          "prompt": "The passage says a film director is \"a modern storyteller.\" In what ways is a director like an ancient storyteller?",
+          "choices": [
+            "Early stories taught lessons, preserved history, and brought communities together.",
+            "Completely held or fascinated by something. The clues are the sentences that follow: no one moved, no one spoke, and the story held them like a spell.",
+            "Like an ancient storyteller, a director decides how the tale unfolds, which characters we care about, and what feelings we carry away."
+          ],
+          "answer": "Like an ancient storyteller, a director decides how the tale unfolds, which characters we care about, and what feelings we carry away.",
+          "explanation": "The passage draws the comparison directly when it calls the director a modern storyteller."
+        },
+        {
+          "prompt": "spartan (paragraph 4) — The text says \"a spartan building with few resources.\" What does spartan suggest about the building?",
+          "choices": [
+            "Completely held or fascinated by something. The clues are the sentences that follow: no one moved, no one spoke, and the story held them like a spell.",
+            "That it is plain and bare, with very little in it. The phrase \"with few resources\" in the same sentence is the clue.",
+            "They argued because the symbols were unfamiliar and might point to a lost monarchy or a classical influence."
+          ],
+          "answer": "That it is plain and bare, with very little in it. The phrase \"with few resources\" in the same sentence is the clue.",
+          "explanation": "You infer the meaning from the phrase placed beside it."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Media Habits Interview",
+          "target": "With a partner, ask and answer five questions about your media habits."
+        },
+        {
+          "prompt": "Speaking 2: Present Your Film Review",
+          "target": "Every contributor was thanked by name."
+        },
+        {
+          "prompt": "Speaking 3: Documentary or Drama?",
+          "target": "Archaeologists uncovered an ancient scroll buried beneath the desert sand."
+        },
+        {
+          "prompt": "Speaking 4: The Screen-Time Debate",
+          "target": "Sami had just turned fourteen the week the discovery was made."
+        },
+        {
+          "prompt": "Speaking 5: Retell a Scene from the Story",
+          "target": "An elder warned against building big ideas from old bones."
+        },
+        {
+          "prompt": "Speaking 6: Vocabulary in Context",
+          "target": "Sami's title for his essay was Imprisoned Memory: Systems That Fear New Ideas."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "butter.",
+            "make",
+            "to",
+            "cream",
+            "the",
+            "churn",
+            "to",
+            "need",
+            "We"
+          ],
+          "answer": "We need to churn the cream to make butter."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "first.",
+            "objection",
+            "strongest",
+            "the",
+            "took",
+            "rebuttal",
+            "Her"
+          ],
+          "answer": "Her rebuttal took the strongest objection first."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "students.",
+            "inspiring",
+            "produces",
+            "resources",
+            "few",
+            "with",
+            "school",
+            "a",
+            "how",
+            "showed",
+            "documentary",
+            "The"
+          ],
+          "answer": "The documentary showed how a school with few resources produces inspiring students."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "carefully.",
+            "translation",
+            "the",
+            "of",
+            "line",
+            "every",
+            "checked",
+            "linguist",
+            "The"
+          ],
+          "answer": "The linguist checked every line of the translation carefully."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "traitor.",
+            "a",
+            "been",
+            "truly",
+            "had",
+            "he",
+            "whether",
+            "about",
+            "disagreed",
+            "later",
+            "History"
+          ],
+          "answer": "History later disagreed about whether he had truly been a traitor."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "years.",
+            "hundred",
+            "three",
+            "than",
+            "more",
+            "for",
+            "empire",
+            "the",
+            "ruled",
+            "dynasty",
+            "powerful",
+            "The"
+          ],
+          "answer": "The powerful dynasty ruled the empire for more than three hundred years."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'diameter' mean in this unit?",
+          "choices": [
+            "A straight line right across a circle through its centre.",
+            "A way in which two things are not the same.",
+            "Lucky, because something good has happened to you."
+          ],
+          "answer": "A straight line right across a circle through its centre.",
+          "explanation": "diameter: A straight line right across a circle through its centre."
+        },
+        {
+          "prompt": "What does 'company' mean in this unit?",
+          "choices": [
+            "A way in which two things are not the same.",
+            "A straight line right across a circle through its centre.",
+            "A business that makes or sells things."
+          ],
+          "answer": "A business that makes or sells things.",
+          "explanation": "company: A business that makes or sells things."
+        },
+        {
+          "prompt": "What does 'shown' mean in this unit?",
+          "choices": [
+            "A straight line right across a circle through its centre.",
+            "To display or present something so that people can see it.",
+            "A way in which two things are not the same."
+          ],
+          "answer": "To display or present something so that people can see it.",
+          "explanation": "shown: To display or present something so that people can see it."
+        },
+        {
+          "prompt": "What does 'reporter' mean in this unit?",
+          "choices": [
+            "A reporter is a person whose job is to find out about news events and write or talk about them.",
+            "A way in which two things are not the same.",
+            "A straight line right across a circle through its centre."
+          ],
+          "answer": "A reporter is a person whose job is to find out about news events and write or talk about them.",
+          "explanation": "reporter: A reporter is a person whose job is to find out about news events and write or talk about them."
+        },
+        {
+          "prompt": "What does 'tribute' mean in this unit?",
+          "choices": [
+            "A way in which two things are not the same.",
+            "A straight line right across a circle through its centre.",
+            "Something said, done or given to show respect and remembrance for a person or event."
+          ],
+          "answer": "Something said, done or given to show respect and remembrance for a person or event.",
+          "explanation": "tribute: Something said, done or given to show respect and remembrance for a person or event."
+        },
+        {
+          "prompt": "What does 'bandwidth' mean in this unit?",
+          "choices": [
+            "A straight line right across a circle through its centre.",
+            "How much data a connection can carry in a given time.",
+            "A way in which two things are not the same."
+          ],
+          "answer": "How much data a connection can carry in a given time.",
+          "explanation": "bandwidth: How much data a connection can carry in a given time."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'fortunate'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Fortunate is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'composer'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Composer is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fourteen'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Fourteen is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'placard'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Placard is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'classical'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Classical is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'pixel'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Pixel is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "excitement",
+              "A strong feeling of eagerness about something happening."
+            ],
+            [
+              "assess",
+              "To judge how good, big or serious something is."
+            ],
+            [
+              "campaigner",
+              "A person who works publicly to change something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "representative",
+              "A person chosen to speak or act on behalf of a group."
+            ],
+            [
+              "cinema",
+              "The art of making films, or a place where people go to watch them."
+            ],
+            [
+              "spell",
+              "A magical power or charm that seems to control or fascinate someone."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "catchy",
+              "Easy to remember and pleasant to listen to, especially describing music or a phrase."
+            ],
+            [
+              "arriving",
+              "Arriving means reaching a place, especially after a journey."
+            ],
+            [
+              "pre",
+              "Pre means before a particular time, event, or period."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "rebellion",
+              "A rebellion is an organised attempt by a group of people to fight against authority or change something by force."
+            ],
+            [
+              "timeline",
+              "A line or chart that shows events in the order they happened over time."
+            ],
+            [
+              "passive",
+              "A grammar form in which the subject receives the action instead of doing it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "threatening",
+              "Seeming likely to cause harm, danger, or a serious problem for someone or something."
+            ],
+            [
+              "apprentice",
+              "A young person who learns a trade or skill by working beside an experienced worker."
+            ],
+            [
+              "racial",
+              "Related to a person's race or ethnic background."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "churn",
+              "To mix or stir something very hard."
+            ],
+            [
+              "domain",
+              "The name that identifies a website, or an area of knowledge."
+            ],
+            [
+              "synthesis",
+              "The combining of several sources or ideas into one whole."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the correct word: The special effects in the film were ______.",
+          "choices": [
+            "amazing",
+            "amazed",
+            "amaze",
+            "amazement"
+          ],
+          "answer": "amazing",
+          "explanation": "The effects cause the feeling, so we use the -ing form: amazing."
+        },
+        {
+          "prompt": "Which sentence is written in the past simple passive?",
+          "choices": [
+            "The team discovered the scroll.",
+            "The team is still discovering the old scroll in the cemetery.",
+            "The scroll was discovered by the team.",
+            "The team will discover the scroll."
+          ],
+          "answer": "The scroll was discovered by the team.",
+          "explanation": "The passive uses was or were with a past participle: was discovered."
+        },
+        {
+          "prompt": "Which adverb of frequency means 'about half the time'?",
+          "choices": [
+            "frequently",
+            "usually",
+            "never",
+            "sometimes"
+          ],
+          "answer": "sometimes",
+          "explanation": "Sometimes means an action happens about half the time."
+        },
+        {
+          "prompt": "In the passage, what does a 'discerning viewer' do?",
+          "choices": [
+            "Believes every single message that is shown on the television screen.",
+            "Thinks carefully about what they watch.",
+            "Only watches cartoons and adverts.",
+            "Never watches any documentaries."
+          ],
+          "answer": "Thinks carefully about what they watch.",
+          "explanation": "The passage says a discerning viewer thinks carefully about what they watch."
+        },
+        {
+          "prompt": "In The Scroll of Umbara, where was the scroll hidden?",
+          "choices": [
+            "Sealed in a jar in an ancient cemetery.",
+            "On a high shelf in the far corner of the town library.",
+            "Inside a modern film studio.",
+            "Under the seat of a city bus."
+          ],
+          "answer": "Sealed in a jar in an ancient cemetery.",
+          "explanation": "Part one says the scroll was sealed in a jar, hidden in an ancient cemetery."
+        },
         {
           "prompt": "What does the word 'admiral' mean?",
           "choices": [
@@ -493,28 +833,78 @@
           ],
           "answer": "A high-ranking naval officer who commands ships and sailors.",
           "explanation": "An admiral commands ships and sailors in the navy."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "In the passage, what does a 'discerning viewer' do?",
+          "choices": [
+            "Believes every single message that is shown on the television screen.",
+            "Thinks carefully about what they watch.",
+            "Only watches cartoons and adverts.",
+            "Never watches any documentaries."
+          ],
+          "answer": "Thinks carefully about what they watch.",
+          "explanation": "The passage says a discerning viewer thinks carefully about what they watch."
         },
         {
-          "prompt": "Which word means a series of rulers from the same family over a long time?",
+          "prompt": "In The Scroll of Umbara, where was the scroll hidden?",
           "choices": [
-            "monarchy",
-            "legacy",
-            "dynasty",
-            "revival"
+            "Sealed in a jar in an ancient cemetery.",
+            "On a high shelf in the far corner of the town library.",
+            "Inside a modern film studio.",
+            "Under the seat of a city bus."
           ],
-          "answer": "dynasty",
-          "explanation": "A dynasty is a line of rulers from one family, such as the Ming dynasty."
+          "answer": "Sealed in a jar in an ancient cemetery.",
+          "explanation": "Part one says the scroll was sealed in a jar, hidden in an ancient cemetery."
         },
         {
-          "prompt": "What is an advert?",
+          "prompt": "Which word means: A person who is not in the armed forces or the police.",
           "choices": [
-            "A short video or audio message that promotes a product.",
-            "An imagined perfect place where everyone lives happily and without any conflict.",
-            "A place where people are buried after they die.",
-            "An area outside a big city."
+            "civilian",
+            "difference",
+            "diameter"
           ],
-          "answer": "A short video or audio message that promotes a product.",
-          "explanation": "An advert is an advertisement made to persuade you to buy something."
+          "answer": "civilian",
+          "explanation": "civilian: A person who is not in the armed forces or the police."
+        },
+        {
+          "prompt": "Which word means: To display or present something so that people can see it.",
+          "choices": [
+            "difference",
+            "diameter",
+            "shown"
+          ],
+          "answer": "shown",
+          "explanation": "shown: To display or present something so that people can see it."
+        },
+        {
+          "prompt": "What type of word is 'traitor'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Traitor is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'bandwidth'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Bandwidth is used as a noun in this dictionary sense."
         }
       ]
     }

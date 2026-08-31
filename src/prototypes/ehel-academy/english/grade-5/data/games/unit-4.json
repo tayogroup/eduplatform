@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t02-u04",
   "title": "Telling Timeless Tales Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Belonging to a country that is not your own.",
           "choices": [
             "foreign",
-            "symbolism",
-            "principal"
+            "volunteer",
+            "marriage"
           ],
           "answer": "foreign",
           "explanation": "foreign: Belonging to a country that is not your own."
         },
         {
-          "prompt": "Which word means: A short group of words that are often used together.",
+          "prompt": "Which word means: Tasting strongly of salt, the way sea water or a very seasoned snack does.",
           "choices": [
             "foreign",
-            "symbolism",
-            "phrase"
+            "volunteer",
+            "salty"
           ],
-          "answer": "phrase",
-          "explanation": "phrase: A short group of words that are often used together."
+          "answer": "salty",
+          "explanation": "salty: Tasting strongly of salt, the way sea water or a very seasoned snack does."
         },
         {
-          "prompt": "Which word means: To say that someone caused something bad to happen.",
+          "prompt": "Which word means: Confused someone because it was hard to understand.",
           "choices": [
-            "symbolism",
-            "blame",
+            "volunteer",
+            "puzzled",
             "foreign"
           ],
-          "answer": "blame",
-          "explanation": "blame: To say that someone caused something bad to happen."
+          "answer": "puzzled",
+          "explanation": "puzzled: Confused someone because it was hard to understand."
+        },
+        {
+          "prompt": "Which word means: Moving or happening very quickly.",
+          "choices": [
+            "fast",
+            "foreign",
+            "volunteer"
+          ],
+          "answer": "fast",
+          "explanation": "fast: Moving or happening very quickly."
+        },
+        {
+          "prompt": "Which word means: Showing or explaining something to a group of people.",
+          "choices": [
+            "foreign",
+            "volunteer",
+            "presenting"
+          ],
+          "answer": "presenting",
+          "explanation": "presenting: Showing or explaining something to a group of people."
+        },
+        {
+          "prompt": "Which word means: Something that can be thought of or pictured in your mind.",
+          "choices": [
+            "volunteer",
+            "imaginable",
+            "foreign"
+          ],
+          "answer": "imaginable",
+          "explanation": "imaginable: Something that can be thought of or pictured in your mind."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who listens, especially to a story or speech.",
-          "answer": "listener"
+          "clue": "To have something as one of its parts.",
+          "answer": "include"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Came back to join something again after being apart from it for a while.",
-          "answer": "rejoined"
+          "clue": "An act of choosing between two or more things.",
+          "answer": "choice"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Moved quickly and awkwardly, often using both hands and feet, especially because of danger.",
+          "answer": "scrambled"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The soft light given off by a lamp, especially at night.",
+          "answer": "lamplight"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Something that can be thought of or pictured in your mind.",
+          "answer": "imaginable"
         }
       ]
     },
@@ -98,34 +143,85 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "quest.",
-            "dangerous",
-            "a",
-            "on",
-            "hero",
-            "a",
-            "follows",
-            "usually",
-            "legend",
-            "A"
+            "school.",
+            "to",
+            "journeys",
+            "about",
+            "asked",
+            "survey",
+            "Our"
           ],
-          "answer": "A legend usually follows a hero on a dangerous quest."
+          "answer": "Our survey asked about journeys to school."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "laughing.",
-            "and",
-            "stories",
-            "sharing",
-            "rock,",
+            "Dunes.",
+            "Whispering",
             "the",
-            "under",
-            "sat",
-            "team",
+            "of",
+            "description",
+            "vivid",
+            "a",
+            "gives",
+            "tale",
+            "old",
             "The"
           ],
-          "answer": "The team sat under the rock, sharing stories and laughing."
+          "answer": "The old tale gives a vivid description of the Whispering Dunes."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "hurry.",
+            "a",
+            "in",
+            "was",
+            "group",
+            "the",
+            "when",
+            "decisions",
+            "hasty",
+            "made",
+            "often",
+            "Noah"
+          ],
+          "answer": "Noah often made hasty decisions when the group was in a hurry."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "arms.",
+            "tired",
+            "his",
+            "stretched",
+            "and",
+            "fire",
+            "the",
+            "by",
+            "pack",
+            "his",
+            "dropped",
+            "Noah"
+          ],
+          "answer": "Noah dropped his pack by the fire and stretched his tired arms."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "together.",
+            "tea",
+            "warm",
+            "sipped",
+            "team",
+            "the",
+            "night,",
+            "that",
+            "fire",
+            "the",
+            "Around"
+          ],
+          "answer": "Around the fire that night, the team sipped warm tea together."
         }
       ]
     },
@@ -138,313 +234,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Complete Amal's reply in \"The Hasty Route, part 2\": It was a ___ mistake. You wanted to save time.",
+          "prompt": "Which word describes a decision made too quickly, without thinking it through?",
           "choices": [
+            "glorious",
+            "hasty",
             "contagious",
-            "unreasonable",
-            "irritable",
-            "justifiable"
+            "reasonable"
           ],
-          "answer": "justifiable",
-          "explanation": "Amal judges the error fair and understandable, which is exactly what justifiable means."
+          "answer": "hasty",
+          "explanation": "Noah wanted to skip the first stop before anyone had checked the weather, and that was a hasty choice."
         },
         {
-          "prompt": "Which comparative form of reliable is correct?",
+          "prompt": "Which word means unwilling to do something, or unsure about doing it?",
           "choices": [
-            "reliabler",
-            "more reliable",
-            "most reliable",
-            "more reliabler"
+            "reluctant",
+            "prosperous",
+            "remarkable",
+            "significant"
           ],
-          "answer": "more reliable",
-          "explanation": "Adjectives of three or more syllables take more, and most would compare three things instead of two."
+          "answer": "reluctant",
+          "explanation": "Reluctant describes hesitation, while the other three describe wealth, surprise and importance."
         },
         {
-          "prompt": "Rewrite as an arranged plan: We plan to explore the caves next Friday.",
+          "prompt": "Which relative pronoun introduces a clause about a thing rather than a person?",
           "choices": [
-            "We explore the caves next Friday.",
-            "We will have explored the caves next Friday.",
-            "We are exploring the caves next Friday.",
-            "We explored the caves next Friday."
+            "who",
+            "whoever",
+            "which",
+            "when"
           ],
-          "answer": "We are exploring the caves next Friday.",
-          "explanation": "Present continuous, am or is or are plus the -ing form, states a plan that is already arranged."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to \"Myths and Legends: What Makes a Tale Timeless\", what does a myth set out to explain?",
-          "choices": [
-            "A myth explains something in nature, such as why the sun rises or why the sea tastes salty.",
-            "The guide had warned that sandstorms were common that day, so the shorter route was risky.",
-            "Noah says they should skip the stop and speaks forcefully, while Amal studies the clouds and repeats the guide's warning."
-          ],
-          "answer": "A myth explains something in nature, such as why the sun rises or why the sea tastes salty.",
-          "explanation": "The second paragraph names the purpose of a myth and then gives those examples straight afterwards."
+          "answer": "which",
+          "explanation": "Who introduces people, which introduces things, and that can introduce either."
         },
-        {
-          "prompt": "What did the team see carved around the rim of the ancient well?",
-          "choices": [
-            "The guide had warned that sandstorms were common that day, so the shorter route was risky.",
-            "She calls it a justifiable mistake and turns the group towards fixing it, which keeps them working instead of arguing.",
-            "They saw carvings of animals, carvings of maps, and a mysterious pattern that glittered faintly in the sun."
-          ],
-          "answer": "They saw carvings of animals, carvings of maps, and a mysterious pattern that glittered faintly in the sun.",
-          "explanation": "The sentence describing the approach to the well lists exactly those three things in order."
-        },
-        {
-          "prompt": "How does the writer show that Noah and Amal reach decisions differently in part 1?",
-          "choices": [
-            "She now treats the setback as useful, because the storm pushed them off-track and led them to a well nobody had recorded.",
-            "Noah says they should skip the stop and speaks forcefully, while Amal studies the clouds and repeats the guide's warning.",
-            "They saw carvings of animals, carvings of maps, and a mysterious pattern that glittered faintly in the sun."
-          ],
-          "answer": "Noah says they should skip the stop and speaks forcefully, while Amal studies the clouds and repeats the guide's warning.",
-          "explanation": "Placing the two reactions in the same scene sets up the unit's lesson about hasty and thoughtful choices."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Retell a Legend",
-          "target": "She is learning a foreign language at evening class."
-        },
-        {
-          "prompt": "Speaking 3: Dramatic Reading",
-          "target": "A legend usually follows a hero on a dangerous quest."
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain the difference between a myth and a legend to someone who has not read this unit."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "again.",
-            "filled",
-            "wells",
-            "the",
-            "after",
-            "long",
-            "Zara",
-            "to",
-            "grateful",
-            "stayed",
-            "village",
-            "whole",
-            "The"
-          ],
-          "answer": "The whole village stayed grateful to Zara long after the wells filled again."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "kitchen.",
-            "the",
-            "of",
-            "corner",
-            "the",
-            "in",
-            "quietly",
-            "hummed",
-            "fridge",
-            "old",
-            "The"
-          ],
-          "answer": "The old fridge hummed quietly in the corner of the kitchen."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "ridge.",
-            "the",
-            "beyond",
-            "from",
-            "coming",
-            "voices",
-            "hear",
-            "faintly",
-            "could",
-            "Amal"
-          ],
-          "answer": "Amal could faintly hear voices coming from beyond the ridge."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'choice' mean in this unit?",
-          "choices": [
-            "An act of choosing between two or more things.",
-            "Belonging to a country that is not your own.",
-            "Using an object or image to stand for a bigger idea."
-          ],
-          "answer": "An act of choosing between two or more things.",
-          "explanation": "choice: An act of choosing between two or more things."
-        },
-        {
-          "prompt": "What does 'collect' mean in this unit?",
-          "choices": [
-            "Belonging to a country that is not your own.",
-            "Using an object or image to stand for a bigger idea.",
-            "To gather several things together, usually to keep or study them."
-          ],
-          "answer": "To gather several things together, usually to keep or study them.",
-          "explanation": "collect: To gather several things together, usually to keep or study them."
-        },
-        {
-          "prompt": "What does 'symbolism' mean in this unit?",
-          "choices": [
-            "Main, or most important.",
-            "Using an object or image to stand for a bigger idea.",
-            "Belonging to a country that is not your own."
-          ],
-          "answer": "Using an object or image to stand for a bigger idea.",
-          "explanation": "symbolism: Using an object or image to stand for a bigger idea."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'noon'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Noon is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'dreadful'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Dreadful is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'fact'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Fact is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "stomach",
-              "The part of your body where food goes after you eat it."
-            ],
-            [
-              "mental",
-              "To do with the mind or with thinking."
-            ],
-            [
-              "gods",
-              "Powerful beings in myths who are believed to control parts of nature or human life."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "description",
-              "A piece of writing or speech that tells what something is like."
-            ],
-            [
-              "placing",
-              "Putting something or someone carefully in a particular position."
-            ],
-            [
-              "risks",
-              "Chances that something dangerous or unpleasant might happen."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "rejoined",
-              "Came back to join something again after being apart from it for a while."
-            ],
-            [
-              "presenting",
-              "Showing or explaining something to a group of people."
-            ],
-            [
-              "irritable",
-              "Easily annoyed or made angry."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sentence punctuates its defining relative clause correctly?",
           "choices": [
@@ -481,13 +302,532 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "According to \"Myths and Legends: What Makes a Tale Timeless\", what does a myth set out to explain?",
+          "choices": [
+            "A myth explains something in nature, such as why the sun rises or why the sea tastes salty.",
+            "The guide had warned that sandstorms were common that day, so the shorter route was risky.",
+            "Noah says they should skip the stop and speaks forcefully, while Amal studies the clouds and repeats the guide's warning."
+          ],
+          "answer": "A myth explains something in nature, such as why the sun rises or why the sea tastes salty.",
+          "explanation": "The second paragraph names the purpose of a myth and then gives those examples straight afterwards."
+        },
+        {
+          "prompt": "In the legend, why did the villagers suddenly need Zara's help?",
+          "choices": [
+            "They saw carvings of animals, carvings of maps, and a mysterious pattern that glittered faintly in the sun.",
+            "She calls it a justifiable mistake and turns the group towards fixing it, which keeps them working instead of arguing.",
+            "The wells that supplied the village had begun to fail one after another, so the water was running out."
+          ],
+          "answer": "The wells that supplied the village had begun to fail one after another, so the water was running out.",
+          "explanation": "The paragraph about the dry season states that the wells failed and that the phenomenon puzzled everyone."
+        },
+        {
+          "prompt": "What did the team see carved around the rim of the ancient well?",
+          "choices": [
+            "She now treats the setback as useful, because the storm pushed them off-track and led them to a well nobody had recorded.",
+            "They saw carvings of animals, carvings of maps, and a mysterious pattern that glittered faintly in the sun.",
+            "Amal writes that Route B was shorter, hotter and riskier than Route A."
+          ],
+          "answer": "They saw carvings of animals, carvings of maps, and a mysterious pattern that glittered faintly in the sun.",
+          "explanation": "The sentence describing the approach to the well lists exactly those three things in order."
+        },
+        {
+          "prompt": "What two questions does the information text tell you to ask when you meet a classic tale?",
+          "choices": [
+            "Ask whether the tale explains a natural event, and whether it follows a human hero on a quest.",
+            "Amal writes that Route B was shorter, hotter and riskier than Route A.",
+            "It means an unusual event that people notice but cannot explain, here the wells drying up one by one."
+          ],
+          "answer": "Ask whether the tale explains a natural event, and whether it follows a human hero on a quest.",
+          "explanation": "The closing paragraph gives one test for a myth and one test for a legend, in that order."
+        },
+        {
+          "prompt": "How does the writer show that Noah and Amal reach decisions differently in part 1?",
+          "choices": [
+            "Ask whether the tale explains a natural event, and whether it follows a human hero on a quest.",
+            "A myth explains something in nature, such as why the sun rises or why the sea tastes salty.",
+            "Noah says they should skip the stop and speaks forcefully, while Amal studies the clouds and repeats the guide's warning."
+          ],
+          "answer": "Noah says they should skip the stop and speaks forcefully, while Amal studies the clouds and repeats the guide's warning.",
+          "explanation": "Placing the two reactions in the same scene sets up the unit's lesson about hasty and thoughtful choices."
+        },
+        {
+          "prompt": "At the fair Amal says the storm was part of the journey. What does that answer reveal about how she now views the expedition?",
+          "choices": [
+            "The wells that supplied the village had begun to fail one after another, so the water was running out.",
+            "She now treats the setback as useful, because the storm pushed them off-track and led them to a well nobody had recorded.",
+            "It shows she is patient and reliable; she names the pool a mirage and tells her cousin to listen for the spring instead."
+          ],
+          "answer": "She now treats the setback as useful, because the storm pushed them off-track and led them to a well nobody had recorded.",
+          "explanation": "Her own report sentence about the storm and the unrecorded well supplies the evidence for that view."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Retell a Legend",
+          "target": "She is learning a foreign language at evening class."
+        },
+        {
+          "prompt": "Speaking 2: Group Discussion (or Partner Talk)",
+          "target": "Our survey asked about journeys to school."
+        },
+        {
+          "prompt": "Speaking 3: Dramatic Reading",
+          "target": "The old tale gives a vivid description of the Whispering Dunes."
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "Become the class expert on the five words of one vocabulary group."
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Noah dropped his pack by the fire and stretched his tired arms."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Unit Talk",
+          "target": "Around the fire that night, the team sipped warm tea together."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "wants.",
+            "hero",
+            "the",
+            "whatever",
+            "blocks",
+            "antagonist",
+            "The"
+          ],
+          "answer": "The antagonist blocks whatever the hero wants."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "sky.",
+            "night",
+            "the",
+            "in",
+            "appear",
+            "stars",
+            "the",
+            "why",
+            "explain",
+            "to",
+            "try",
+            "myths",
+            "Many"
+          ],
+          "answer": "Many myths try to explain why the stars appear in the night sky."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "lunchtime.",
+            "before",
+            "puzzle",
+            "every",
+            "finish",
+            "to",
+            "manage",
+            "Idris",
+            "and",
+            "Sami"
+          ],
+          "answer": "Sami and Idris manage to finish every puzzle before lunchtime."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "oasis.",
+            "the",
+            "of",
+            "edge",
+            "the",
+            "at",
+            "stood",
+            "once",
+            "dwelling",
+            "stone",
+            "small",
+            "A"
+          ],
+          "answer": "A small stone dwelling once stood at the edge of the oasis."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "wind.",
+            "desert",
+            "the",
+            "in",
+            "years",
+            "of",
+            "hundreds",
+            "survived",
+            "had",
+            "structure",
+            "old",
+            "The"
+          ],
+          "answer": "The old structure had survived hundreds of years in the desert wind."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "report.",
+            "final",
+            "the",
+            "of",
+            "copies",
+            "three",
+            "printed",
+            "Amal"
+          ],
+          "answer": "Amal printed three copies of the final report."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'volunteer' mean in this unit?",
+          "choices": [
+            "A person who helps without being paid.",
+            "Belonging to a country that is not your own.",
+            "The joining of two people as partners in law."
+          ],
+          "answer": "A person who helps without being paid.",
+          "explanation": "volunteer: A person who helps without being paid."
+        },
+        {
+          "prompt": "What does 'ago' mean in this unit?",
+          "choices": [
+            "Belonging to a country that is not your own.",
+            "A person who helps without being paid.",
+            "In the past, counting back from now."
+          ],
+          "answer": "In the past, counting back from now.",
+          "explanation": "ago: In the past, counting back from now."
+        },
+        {
+          "prompt": "What does 'hum' mean in this unit?",
+          "choices": [
+            "A person who helps without being paid.",
+            "A low, steady sound, like a quiet buzzing or murmuring noise.",
+            "Belonging to a country that is not your own."
+          ],
+          "answer": "A low, steady sound, like a quiet buzzing or murmuring noise.",
+          "explanation": "hum: A low, steady sound, like a quiet buzzing or murmuring noise."
+        },
+        {
+          "prompt": "What does 'died' mean in this unit?",
+          "choices": [
+            "Stopped completely, or came to an end, as with wind, sound, or light.",
+            "Belonging to a country that is not your own.",
+            "A person who helps without being paid."
+          ],
+          "answer": "Stopped completely, or came to an end, as with wind, sound, or light.",
+          "explanation": "died: Stopped completely, or came to an end, as with wind, sound, or light."
+        },
+        {
+          "prompt": "What does 'replied' mean in this unit?",
+          "choices": [
+            "Belonging to a country that is not your own.",
+            "A person who helps without being paid.",
+            "Said something as an answer to a question or comment."
+          ],
+          "answer": "Said something as an answer to a question or comment.",
+          "explanation": "replied: Said something as an answer to a question or comment."
+        },
+        {
+          "prompt": "What does 'climax' mean in this unit?",
+          "choices": [
+            "A person who helps without being paid.",
+            "The most exciting or important point of a story.",
+            "Belonging to a country that is not your own."
+          ],
+          "answer": "The most exciting or important point of a story.",
+          "explanation": "climax: The most exciting or important point of a story."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'marriage'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Marriage is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'teaching'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Teaching is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'thinker'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Thinker is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'structure'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Structure is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'reluctant'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Reluctant is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'simile'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Simile is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "stomach",
+              "The part of your body where food goes after you eat it."
+            ],
+            [
+              "culture",
+              "The way of life, food and stories a group shares."
+            ],
+            [
+              "recommend",
+              "To suggest that something is good or worth choosing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "include",
+              "To have something as one of its parts."
+            ],
+            [
+              "larger",
+              "Bigger in size or amount than something else."
+            ],
+            [
+              "classic",
+              "Widely known and admired for a long time as a traditional example of its kind."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "choice",
+              "An act of choosing between two or more things."
+            ],
+            [
+              "fingers",
+              "The five thin parts at the end of each hand."
+            ],
+            [
+              "skip",
+              "To leave out or not do a part of something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "supplies",
+              "Things that are needed and stored for later use, such as food, water, or equipment."
+            ],
+            [
+              "blame",
+              "To say that someone caused something bad to happen."
+            ],
+            [
+              "firestones",
+              "Small stones once used by travellers to strike sparks and start a fire."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "comfortable",
+              "Making you feel relaxed, safe, or at ease, without pain or difficulty."
+            ],
+            [
+              "contained",
+              "Had something inside, or included a particular fact or detail."
+            ],
+            [
+              "delightful",
+              "So pleasing that it makes you smile straight away."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "profitable",
+              "Making money or giving a good result."
+            ],
+            [
+              "mood",
+              "The feeling a piece of writing creates in the reader."
+            ],
+            [
+              "particular",
+              "One specific thing rather than any other."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Complete the line from \"The Hasty Route, part 1\": The team reached a small ridge where the air grew cooler and surprisingly ___.",
+          "choices": [
+            "dreadful",
+            "intolerable",
+            "pleasant",
+            "miserable"
+          ],
+          "answer": "pleasant",
+          "explanation": "Pleasant means nice and enjoyable, which fits air that has just grown cooler."
+        },
+        {
+          "prompt": "Complete Amal's reply in \"The Hasty Route, part 2\": It was a ___ mistake. You wanted to save time.",
+          "choices": [
+            "contagious",
+            "unreasonable",
+            "irritable",
+            "justifiable"
+          ],
+          "answer": "justifiable",
+          "explanation": "Amal judges the error fair and understandable, which is exactly what justifiable means."
+        },
+        {
+          "prompt": "Which comparative form of reliable is correct?",
+          "choices": [
+            "reliabler",
+            "more reliable",
+            "most reliable",
+            "more reliabler"
+          ],
+          "answer": "more reliable",
+          "explanation": "Adjectives of three or more syllables take more, and most would compare three things instead of two."
+        },
+        {
+          "prompt": "Rewrite as an arranged plan: We plan to explore the caves next Friday.",
+          "choices": [
+            "We explore the caves next Friday.",
+            "We will have explored the caves next Friday.",
+            "We are exploring the caves next Friday.",
+            "We explored the caves next Friday."
+          ],
+          "answer": "We are exploring the caves next Friday.",
+          "explanation": "Present continuous, am or is or are plus the -ing form, states a plan that is already arranged."
+        },
+        {
+          "prompt": "Which verb pairs naturally with the noun phrase a remarkable discovery?",
+          "choices": [
+            "make",
+            "do",
+            "put",
+            "throw"
+          ],
+          "answer": "make",
+          "explanation": "English pairs make with discovery and with decision, while challenge takes face and goal takes reach."
+        },
         {
           "prompt": "Which word describes a decision made too quickly, without thinking it through?",
           "choices": [
@@ -498,28 +838,78 @@
           ],
           "answer": "hasty",
           "explanation": "Noah wanted to skip the first stop before anyone had checked the weather, and that was a hasty choice."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Rewrite as an arranged plan: We plan to explore the caves next Friday.",
+          "choices": [
+            "We explore the caves next Friday.",
+            "We will have explored the caves next Friday.",
+            "We are exploring the caves next Friday.",
+            "We explored the caves next Friday."
+          ],
+          "answer": "We are exploring the caves next Friday.",
+          "explanation": "Present continuous, am or is or are plus the -ing form, states a plan that is already arranged."
         },
         {
-          "prompt": "Which word means unwilling to do something, or unsure about doing it?",
+          "prompt": "Which verb pairs naturally with the noun phrase a remarkable discovery?",
           "choices": [
-            "reluctant",
-            "prosperous",
-            "remarkable",
-            "significant"
+            "make",
+            "do",
+            "put",
+            "throw"
           ],
-          "answer": "reluctant",
-          "explanation": "Reluctant describes hesitation, while the other three describe wealth, surprise and importance."
+          "answer": "make",
+          "explanation": "English pairs make with discovery and with decision, while challenge takes face and goal takes reach."
         },
         {
-          "prompt": "Which relative pronoun introduces a clause about a thing rather than a person?",
+          "prompt": "Which word means: To tell a story, or to show how things connect.",
           "choices": [
-            "who",
-            "whoever",
-            "which",
-            "when"
+            "relate",
+            "foreign",
+            "volunteer"
           ],
-          "answer": "which",
-          "explanation": "Who introduces people, which introduces things, and that can introduce either."
+          "answer": "relate",
+          "explanation": "relate: To tell a story, or to show how things connect."
+        },
+        {
+          "prompt": "Which word means: A low, steady sound, like a quiet buzzing or murmuring noise.",
+          "choices": [
+            "foreign",
+            "volunteer",
+            "hum"
+          ],
+          "answer": "hum",
+          "explanation": "hum: A low, steady sound, like a quiet buzzing or murmuring noise."
+        },
+        {
+          "prompt": "What type of word is 'crushed'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Crushed is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'climax'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Climax is used as a noun in this dictionary sense."
         }
       ]
     }

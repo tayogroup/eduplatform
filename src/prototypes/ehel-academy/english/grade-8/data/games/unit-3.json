@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t01-u03",
   "title": "Community and Environment Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: How far two things can fairly be measured against each other.",
           "choices": [
             "comparability",
-            "civic",
-            "gradual"
+            "neural",
+            "normative"
           ],
           "answer": "comparability",
           "explanation": "comparability: How far two things can fairly be measured against each other."
         },
         {
-          "prompt": "Which word means: A lack of proper care or attention that causes something to become worse.",
+          "prompt": "Which word means: Following the length of something, such as a road, river or coast.",
           "choices": [
             "comparability",
-            "civic",
-            "neglect"
+            "neural",
+            "along"
           ],
-          "answer": "neglect",
-          "explanation": "neglect: A lack of proper care or attention that causes something to become worse."
+          "answer": "along",
+          "explanation": "along: Following the length of something, such as a road, river or coast."
         },
         {
-          "prompt": "Which word means: Moving steadily and continuously in one direction, often used to describe sound or waves.",
+          "prompt": "Which word means: Considered something carefully before making a decision.",
           "choices": [
-            "civic",
-            "rolling",
+            "neural",
+            "weighed",
             "comparability"
           ],
-          "answer": "rolling",
-          "explanation": "rolling: Moving steadily and continuously in one direction, often used to describe sound or waves."
+          "answer": "weighed",
+          "explanation": "weighed: Considered something carefully before making a decision."
+        },
+        {
+          "prompt": "Which word means: An overall understanding of a situation, or an actual drawing or photograph.",
+          "choices": [
+            "picture",
+            "comparability",
+            "neural"
+          ],
+          "answer": "picture",
+          "explanation": "picture: An overall understanding of a situation, or an actual drawing or photograph."
+        },
+        {
+          "prompt": "Which word means: To imagine something you hope for in the future, or to picture images while asleep.",
+          "choices": [
+            "comparability",
+            "neural",
+            "dream"
+          ],
+          "answer": "dream",
+          "explanation": "dream: To imagine something you hope for in the future, or to picture images while asleep."
+        },
+        {
+          "prompt": "Which word means: Hunger is the feeling of needing or wanting food.",
+          "choices": [
+            "neural",
+            "hunger",
+            "comparability"
+          ],
+          "answer": "hunger",
+          "explanation": "hunger: Hunger is the feeling of needing or wanting food."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Having the most activity or work; the superlative of busy.",
-          "answer": "busiest"
+          "clue": "The act of allowing or agreeing to something, often without questioning it.",
+          "answer": "acceptance"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Large fires built outdoors, often for warmth, celebration or storytelling.",
-          "answer": "bonfires"
+          "clue": "A lack of proper care or attention that causes something to become worse.",
+          "answer": "neglect"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Moved something towards yourself by gripping and drawing it in, or gathered it into a new position.",
+          "answer": "pulled"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Moving steadily and continuously in one direction, often used to describe sound or waves.",
+          "answer": "rolling"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A medal is a small metal disc given as an award for an achievement.",
+          "answer": "medal"
         }
       ]
     },
@@ -99,37 +144,89 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "ceremony.",
-            "small",
-            "a",
-            "with",
-            "clean-up",
-            "harbour",
-            "the",
-            "of",
-            "anniversary",
-            "the",
-            "marking",
-            "is",
-            "council",
+            "brands.",
+            "between",
+            "arbitrary",
+            "almost",
+            "are",
+            "labels",
+            "size",
             "The"
           ],
-          "answer": "The council is marking the anniversary of the harbour clean-up with a small ceremony."
+          "answer": "The size labels are almost arbitrary between brands."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "door.",
+            "beauty.",
+            "its",
+            "of",
+            "people",
+            "remind",
+            "to",
+            "bay",
             "the",
-            "towards",
-            "pointed",
-            "and",
-            "gently",
-            "Imani",
-            "nudged",
-            "Jamal"
+            "of",
+            "murals",
+            "commissioned",
+            "town",
+            "The"
           ],
-          "answer": "Jamal nudged Imani gently and pointed towards the door."
+          "answer": "The town commissioned murals of the bay to remind people of its beauty."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "memories.",
+            "own",
+            "her",
+            "of",
+            "full",
+            "three,",
+            "the",
+            "of",
+            "personal",
+            "most",
+            "the",
+            "was",
+            "letter",
+            "Tia's"
+          ],
+          "answer": "Tia's letter was the most personal of the three, full of her own memories."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "gallery.",
+            "the",
+            "around",
+            "slowly",
+            "moved",
+            "visitors",
+            "as",
+            "photograph",
+            "each",
+            "out",
+            "picked",
+            "Spotlights"
+          ],
+          "answer": "Spotlights picked out each photograph as visitors moved slowly around the gallery."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "pier.",
+            "the",
+            "along",
+            "rubbish",
+            "collect",
+            "to",
+            "grabbers",
+            "litter",
+            "carried",
+            "Volunteers"
+          ],
+          "answer": "Volunteers carried litter grabbers to collect rubbish along the pier."
         }
       ]
     },
@@ -142,314 +239,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from Rising Tide, part 2: \"I'd like to _____ this community,\" she said during a small ceremony.",
+          "prompt": "What does 'stifle' mean?",
           "choices": [
-            "articulate",
-            "commemorate",
-            "stifle",
-            "wane"
+            "To express thoughts and ideas clearly and effectively.",
+            "To make something happen faster; to hurry.",
+            "To remember and honour someone or something, often with a ceremony.",
+            "To stop something from happening or developing; to hold back."
           ],
-          "answer": "commemorate",
-          "explanation": "The story says: \"I'd like to commemorate this community,\" she said during a small ceremony."
+          "answer": "To stop something from happening or developing; to hold back.",
+          "explanation": "Stifle means to hold something back or stop it developing; in the story Imani tries to stifle her misgivings before the gallery opens."
         },
         {
-          "prompt": "Choose the missing word from Rising Tide, part 1: Jamal nudged her gently. \"You ready to be _____?\"",
+          "prompt": "What does 'wane' mean?",
           "choices": [
-            "advocate",
-            "articulate",
-            "commemorate",
-            "hasten"
+            "To become smaller, less strong, or less important over time.",
+            "To express thoughts and ideas clearly and effectively.",
+            "To make something happen faster; to hurry.",
+            "Verb: to publicly support or recommend. Noun: a person who supports a cause."
           ],
-          "answer": "articulate",
-          "explanation": "The story says: Jamal nudged her gently. \"You ready to be articulate?\" It is his way of telling Imani she can speak clearly."
+          "answer": "To become smaller, less strong, or less important over time.",
+          "explanation": "Wane describes something becoming smaller or weaker over time, like the city council's support in Rising Tide."
         },
         {
-          "prompt": "Choose the missing word from Rising Tide, part 2: She had become an _____ not by shouting, but by being steady, logical and rational.",
+          "prompt": "What does 'commemorate' mean?",
           "choices": [
-            "hasten",
-            "affix",
-            "advocate",
-            "articulate"
+            "To attach or stick something to another thing.",
+            "To make something happen faster; to hurry.",
+            "To remember and honour someone or something, often with a ceremony.",
+            "Verb: to publicly support or recommend. Noun: a person who supports a cause."
           ],
-          "answer": "advocate",
-          "explanation": "The story says: She had become an advocate not by shouting, but by being steady, logical and rational."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to the passage, where does most of the litter found in the sea begin its journey, and why does that finding matter?",
-          "choices": [
-            "Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too.",
-            "Coastal Rise is the youth group that Imani leads, and its mission is to clean up the polluted shoreline of Kilimo Bay.",
-            "The mural shows waves rising into hands that catch the light, with the words \"Protect what you rise from\" underneath; Imani smiles and says, \"That's the city I came from.\""
-          ],
-          "answer": "Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too.",
-          "explanation": "The text says: Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too."
+          "answer": "To remember and honour someone or something, often with a ceremony.",
+          "explanation": "Commemorate means to honour a memory publicly, exactly what the mayor offers to do for the community at the ceremony."
         },
-        {
-          "prompt": "What exactly is the council considering in the harbour proposal described at the start of the text?",
-          "choices": [
-            "The mural shows waves rising into hands that catch the light, with the words \"Protect what you rise from\" underneath; Imani smiles and says, \"That's the city I came from.\"",
-            "Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too.",
-            "Closing the harbour road to traffic on the first Saturday of every month so that volunteers can clear the debris that collects along the quay."
-          ],
-          "answer": "Closing the harbour road to traffic on the first Saturday of every month so that volunteers can clear the debris that collects along the quay.",
-          "explanation": "The introduction to the three voices sets out the proposal: \"On the first Saturday of every month, the harbour road would close to traffic so that volunteers can clear the debris that collects along the quay.\""
-        },
-        {
-          "prompt": "What is Coastal Rise, and what is its mission?",
-          "choices": [
-            "Closing the harbour road to traffic on the first Saturday of every month so that volunteers can clear the debris that collects along the quay.",
-            "Coastal Rise is the youth group that Imani leads, and its mission is to clean up the polluted shoreline of Kilimo Bay.",
-            "Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too."
-          ],
-          "answer": "Coastal Rise is the youth group that Imani leads, and its mission is to clean up the polluted shoreline of Kilimo Bay.",
-          "explanation": "The text says \"The youth group she led, Coastal Rise, had begun a campaign to clean the shoreline\", so Imani is the leader and cleaning up polluted Kilimo Bay is what the group exists to do."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Discussing the story",
-          "target": "The two surveys lack comparability because they asked different questions."
-        },
-        {
-          "prompt": "Speaking 3: Mini-speech",
-          "target": "The council is marking the anniversary of the harbour clean-up with a small ceremony."
-        },
-        {
-          "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "Jamal nudged Imani gently and pointed towards the door."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "day.",
-            "the",
-            "throughout",
-            "going",
-            "and",
-            "coming",
-            "sporadic,",
-            "was",
-            "rain",
-            "The"
-          ],
-          "answer": "The rain was sporadic, coming and going throughout the day."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "morning.",
-            "clean-up",
-            "every",
-            "for",
-            "equipment",
-            "other",
-            "and",
-            "sacks",
-            "gloves,",
-            "supplied",
-            "council",
-            "The"
-          ],
-          "answer": "The council supplied gloves, sacks and other equipment for every clean-up morning."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "long?",
-            "so",
-            "for",
-            "polluted",
-            "stayed",
-            "bay",
-            "the",
-            "why",
-            "reason",
-            "logical",
-            "a",
-            "there",
-            "Is"
-          ],
-          "answer": "Is there a logical reason why the bay stayed polluted for so long?"
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'personal' mean in this unit?",
-          "choices": [
-            "Belonging to or concerning a particular person; private or individual.",
-            "How far two things can fairly be measured against each other.",
-            "Relating to a city, town or the duties and rights of its citizens."
-          ],
-          "answer": "Belonging to or concerning a particular person; private or individual.",
-          "explanation": "personal: Belonging to or concerning a particular person; private or individual."
-        },
-        {
-          "prompt": "What does 'kids' mean in this unit?",
-          "choices": [
-            "How far two things can fairly be measured against each other.",
-            "Relating to a city, town or the duties and rights of its citizens.",
-            "Kids is an informal word for children."
-          ],
-          "answer": "Kids is an informal word for children.",
-          "explanation": "kids: Kids is an informal word for children."
-        },
-        {
-          "prompt": "What does 'civic' mean in this unit?",
-          "choices": [
-            "Happening slowly and steadily over time, rather than suddenly.",
-            "Relating to a city, town or the duties and rights of its citizens.",
-            "How far two things can fairly be measured against each other."
-          ],
-          "answer": "Relating to a city, town or the duties and rights of its citizens.",
-          "explanation": "civic: Relating to a city, town or the duties and rights of its citizens."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'except'?",
-          "choices": [
-            "Preposition",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Preposition",
-          "explanation": "Except is used as a preposition in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'exasperation'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Exasperation is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'galleries'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Galleries is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "contradiction",
-              "A statement or situation that conflicts with another."
-            ],
-            [
-              "torn",
-              "Ripped or pulled apart so that something is damaged."
-            ],
-            [
-              "gloves",
-              "Coverings worn on the hands to protect them."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "considering",
-              "Thinking carefully about something before making a decision."
-            ],
-            [
-              "trusting",
-              "Believing that someone or something is honest, reliable, or true."
-            ],
-            [
-              "shrugged",
-              "Raised and dropped the shoulders briefly to show that you do not know or do not mind something."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "affixed",
-              "Fixed or attached something firmly to another object."
-            ],
-            [
-              "coast",
-              "The coast is the land next to the sea."
-            ],
-            [
-              "affix",
-              "To attach or stick something to another thing."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'articulate' mean?",
           "choices": [
@@ -486,34 +307,42 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'stifle' mean?",
+          "prompt": "According to the passage, where does most of the litter found in the sea begin its journey, and why does that finding matter?",
           "choices": [
-            "To express thoughts and ideas clearly and effectively.",
-            "To make something happen faster; to hurry.",
-            "To remember and honour someone or something, often with a ceremony.",
-            "To stop something from happening or developing; to hold back."
+            "Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too.",
+            "Coastal Rise is the youth group that Imani leads, and its mission is to clean up the polluted shoreline of Kilimo Bay.",
+            "Closing the harbour road to traffic on the first Saturday of every month so that volunteers can clear the debris that collects along the quay."
           ],
-          "answer": "To stop something from happening or developing; to hold back.",
-          "explanation": "Stifle means to hold something back or stop it developing; in the story Imani tries to stifle her misgivings before the gallery opens."
+          "answer": "Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too.",
+          "explanation": "The text says: Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too."
         },
         {
-          "prompt": "What does 'wane' mean?",
+          "prompt": "What exactly is the council considering in the harbour proposal described at the start of the text?",
           "choices": [
-            "To become smaller, less strong, or less important over time.",
-            "To express thoughts and ideas clearly and effectively.",
-            "To make something happen faster; to hurry.",
-            "Verb: to publicly support or recommend. Noun: a person who supports a cause."
+            "Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too.",
+            "Coastal Rise is the youth group that Imani leads, and its mission is to clean up the polluted shoreline of Kilimo Bay.",
+            "Closing the harbour road to traffic on the first Saturday of every month so that volunteers can clear the debris that collects along the quay."
           ],
-          "answer": "To become smaller, less strong, or less important over time.",
-          "explanation": "Wane describes something becoming smaller or weaker over time, like the city council's support in Rising Tide."
+          "answer": "Closing the harbour road to traffic on the first Saturday of every month so that volunteers can clear the debris that collects along the quay.",
+          "explanation": "The introduction to the three voices sets out the proposal: \"On the first Saturday of every month, the harbour road would close to traffic so that volunteers can clear the debris that collects along the quay.\""
+        },
+        {
+          "prompt": "What is Coastal Rise, and what is its mission?",
+          "choices": [
+            "Most sea litter begins its journey on land; it matters because the problem starts in ordinary streets and markets, so the solution can start there too.",
+            "Coastal Rise is the youth group that Imani leads, and its mission is to clean up the polluted shoreline of Kilimo Bay.",
+            "Closing the harbour road to traffic on the first Saturday of every month so that volunteers can clear the debris that collects along the quay."
+          ],
+          "answer": "Coastal Rise is the youth group that Imani leads, and its mission is to clean up the polluted shoreline of Kilimo Bay.",
+          "explanation": "The text says \"The youth group she led, Coastal Rise, had begun a campaign to clean the shoreline\", so Imani is the leader and cleaning up polluted Kilimo Bay is what the group exists to do."
         },
         {
           "prompt": "What does 'commemorate' mean?",
@@ -525,6 +354,570 @@
           ],
           "answer": "To remember and honour someone or something, often with a ceremony.",
           "explanation": "Commemorate means to honour a memory publicly, exactly what the mayor offers to do for the community at the ceremony."
+        },
+        {
+          "prompt": "What does 'articulate' mean?",
+          "choices": [
+            "To attach or stick something to another thing.",
+            "To express thoughts and ideas clearly and effectively.",
+            "To make something easier or help it happen.",
+            "Verb: to publicly support or recommend. Noun: a person who supports a cause."
+          ],
+          "answer": "To express thoughts and ideas clearly and effectively.",
+          "explanation": "Articulate as a verb means to put ideas into clear, effective words, the skill Imani shows in her gallery speech."
+        },
+        {
+          "prompt": "Choose the missing word from Rising Tide, part 1: \"What if no one comes?\" she said quietly, trying to _____ her misgivings.",
+          "choices": [
+            "affix",
+            "facilitate",
+            "illuminate",
+            "stifle"
+          ],
+          "answer": "stifle",
+          "explanation": "The story says: \"What if no one comes?\" she said quietly, trying to stifle her misgivings."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Discussing the story",
+          "target": "The two surveys lack comparability because they asked different questions."
+        },
+        {
+          "prompt": "Speaking 2: The second conditional debate",
+          "target": "The size labels are almost arbitrary between brands."
+        },
+        {
+          "prompt": "Speaking 3: Mini-speech",
+          "target": "The town commissioned murals of the bay to remind people of its beauty."
+        },
+        {
+          "prompt": "Speaking 4: Role-play",
+          "target": "With your AI tutor playing one character, role-play one of these scenarios and stay in character for at least two minutes."
+        },
+        {
+          "prompt": "Speaking 5: Vocabulary Expert Interview",
+          "target": "Spotlights picked out each photograph as visitors moved slowly around the gallery."
+        },
+        {
+          "prompt": "Speaking 6: Explain and Respond",
+          "target": "Volunteers carried litter grabbers to collect rubbish along the pier."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "again.",
+            "cancelled",
+            "was",
+            "meeting",
+            "the",
+            "when",
+            "exasperation",
+            "in",
+            "sighed",
+            "She"
+          ],
+          "answer": "She sighed in exasperation when the meeting was cancelled again."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "events.",
+            "clean-up",
+            "two",
+            "first",
+            "the",
+            "during",
+            "exuberant",
+            "was",
+            "energy",
+            "Their"
+          ],
+          "answer": "Their energy was exuberant during the first two clean-up events."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "started.",
+            "officially",
+            "even",
+            "had",
+            "clean-up",
+            "the",
+            "before",
+            "quay",
+            "the",
+            "at",
+            "arrived",
+            "volunteers",
+            "Twenty"
+          ],
+          "answer": "Twenty volunteers arrived at the quay before the clean-up had even officially started."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "afternoon.",
+            "all",
+            "photographs",
+            "of",
+            "boxes",
+            "carrying",
+            "after",
+            "ached",
+            "shoulder",
+            "Imani's"
+          ],
+          "answer": "Imani's shoulder ached after carrying boxes of photographs all afternoon."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "stories.",
+            "her",
+            "hear",
+            "to",
+            "Friday",
+            "every",
+            "visited",
+            "grandmother",
+            "Imani's"
+          ],
+          "answer": "Imani's grandmother visited every Friday to hear her stories."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "medal.",
+            "her",
+            "receive",
+            "to",
+            "up",
+            "stepped",
+            "Imani",
+            "when",
+            "clapped",
+            "Everyone"
+          ],
+          "answer": "Everyone clapped when Imani stepped up to receive her medal."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'neural' mean in this unit?",
+          "choices": [
+            "To do with nerves or the nervous system.",
+            "How far two things can fairly be measured against each other.",
+            "Saying how things ought to be rather than how they are."
+          ],
+          "answer": "To do with nerves or the nervous system.",
+          "explanation": "neural: To do with nerves or the nervous system."
+        },
+        {
+          "prompt": "What does 'elsewhere' mean in this unit?",
+          "choices": [
+            "How far two things can fairly be measured against each other.",
+            "To do with nerves or the nervous system.",
+            "In, at, or to another place."
+          ],
+          "answer": "In, at, or to another place.",
+          "explanation": "elsewhere: In, at, or to another place."
+        },
+        {
+          "prompt": "What does 'chamber' mean in this unit?",
+          "choices": [
+            "To do with nerves or the nervous system.",
+            "A large room used for formal meetings, especially by an official body such as a council.",
+            "How far two things can fairly be measured against each other."
+          ],
+          "answer": "A large room used for formal meetings, especially by an official body such as a council.",
+          "explanation": "chamber: A large room used for formal meetings, especially by an official body such as a council."
+        },
+        {
+          "prompt": "What does 'remembered' mean in this unit?",
+          "choices": [
+            "Brought a fact, event or person back into your mind after a period of not thinking about it.",
+            "How far two things can fairly be measured against each other.",
+            "To do with nerves or the nervous system."
+          ],
+          "answer": "Brought a fact, event or person back into your mind after a period of not thinking about it.",
+          "explanation": "remembered: Brought a fact, event or person back into your mind after a period of not thinking about it."
+        },
+        {
+          "prompt": "What does 'crabs' mean in this unit?",
+          "choices": [
+            "How far two things can fairly be measured against each other.",
+            "To do with nerves or the nervous system.",
+            "Crabs are small sea creatures with a hard shell and pincers that live along the shore."
+          ],
+          "answer": "Crabs are small sea creatures with a hard shell and pincers that live along the shore.",
+          "explanation": "crabs: Crabs are small sea creatures with a hard shell and pincers that live along the shore."
+        },
+        {
+          "prompt": "What does 'imagining' mean in this unit?",
+          "choices": [
+            "To do with nerves or the nervous system.",
+            "Imagining means forming a picture or idea of something in your mind.",
+            "How far two things can fairly be measured against each other."
+          ],
+          "answer": "Imagining means forming a picture or idea of something in your mind.",
+          "explanation": "imagining: Imagining means forming a picture or idea of something in your mind."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'normative'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Normative is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'spectacular'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Spectacular is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'footpath'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Footpath is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'maybe'?",
+          "choices": [
+            "Adverb",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adverb",
+          "explanation": "Maybe is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'getting'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Getting is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'brandish'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Brandish is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "contradiction",
+              "A statement or situation that conflicts with another."
+            ],
+            [
+              "restorative-practice",
+              "Repairing harm by bringing those involved together to put it right."
+            ],
+            [
+              "capitalism",
+              "An economic system where people own businesses and make money by selling goods and services."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "torn",
+              "Ripped or pulled apart so that something is damaged."
+            ],
+            [
+              "pattern",
+              "A way something regularly happens or repeats, which can be noticed."
+            ],
+            [
+              "purpose",
+              "The reason something is done, or the aim behind an action."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "anniversaries",
+              "Dates that mark the return each year of an important past event."
+            ],
+            [
+              "gain",
+              "To get or receive something useful or wanted."
+            ],
+            [
+              "personal",
+              "Belonging to or concerning a particular person; private or individual."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "cracked",
+              "Broken or split, with lines or fractures running through it."
+            ],
+            [
+              "amateur",
+              "Describes someone who does an activity for enjoyment rather than as a paid, professional job."
+            ],
+            [
+              "frame",
+              "The border or edge that surrounds and holds a picture, or a single photograph itself."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "vanishing",
+              "Disappearing completely, often slowly or without being noticed."
+            ],
+            [
+              "mural",
+              "A mural is a large picture painted directly onto a wall."
+            ],
+            [
+              "i'm",
+              "I'm is a short way of saying I am."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "rainbow",
+              "A rainbow is a curved band of colours that appears in the sky after rain."
+            ],
+            [
+              "hasten",
+              "To make something happen faster; to hurry."
+            ],
+            [
+              "omniscient",
+              "Having complete knowledge or understanding of everything."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from Rising Tide, part 1: But progress had been sporadic, and support from the city council had started to _____.",
+          "choices": [
+            "wane",
+            "articulate",
+            "hasten",
+            "advocate"
+          ],
+          "answer": "wane",
+          "explanation": "The story says: But progress had been sporadic, and support from the city council had started to wane."
+        },
+        {
+          "prompt": "Choose the missing word from Rising Tide, part 2: \"I'd like to _____ this community,\" she said during a small ceremony.",
+          "choices": [
+            "articulate",
+            "commemorate",
+            "stifle",
+            "wane"
+          ],
+          "answer": "commemorate",
+          "explanation": "The story says: \"I'd like to commemorate this community,\" she said during a small ceremony."
+        },
+        {
+          "prompt": "Choose the missing word from Rising Tide, part 1: Jamal nudged her gently. \"You ready to be _____?\"",
+          "choices": [
+            "advocate",
+            "articulate",
+            "commemorate",
+            "hasten"
+          ],
+          "answer": "articulate",
+          "explanation": "The story says: Jamal nudged her gently. \"You ready to be articulate?\" It is his way of telling Imani she can speak clearly."
+        },
+        {
+          "prompt": "Choose the missing word from Rising Tide, part 2: She had become an _____ not by shouting, but by being steady, logical and rational.",
+          "choices": [
+            "hasten",
+            "affix",
+            "advocate",
+            "articulate"
+          ],
+          "answer": "advocate",
+          "explanation": "The story says: She had become an advocate not by shouting, but by being steady, logical and rational."
+        },
+        {
+          "prompt": "Choose the missing word from Rising Tide, part 1: The lighting was low, except for focused spotlights that seemed to _____ each frame.",
+          "choices": [
+            "hasten",
+            "advocate",
+            "illuminate",
+            "articulate"
+          ],
+          "answer": "illuminate",
+          "explanation": "The story says: The lighting was low, except for focused spotlights that seemed to illuminate each frame."
+        },
+        {
+          "prompt": "What does 'stifle' mean?",
+          "choices": [
+            "To express thoughts and ideas clearly and effectively.",
+            "To make something happen faster; to hurry.",
+            "To remember and honour someone or something, often with a ceremony.",
+            "To stop something from happening or developing; to hold back."
+          ],
+          "answer": "To stop something from happening or developing; to hold back.",
+          "explanation": "Stifle means to hold something back or stop it developing; in the story Imani tries to stifle her misgivings before the gallery opens."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from Rising Tide, part 2: She had become an _____ not by shouting, but by being steady, logical and rational.",
+          "choices": [
+            "hasten",
+            "affix",
+            "advocate",
+            "articulate"
+          ],
+          "answer": "advocate",
+          "explanation": "The story says: She had become an advocate not by shouting, but by being steady, logical and rational."
+        },
+        {
+          "prompt": "Choose the missing word from Rising Tide, part 1: The lighting was low, except for focused spotlights that seemed to _____ each frame.",
+          "choices": [
+            "hasten",
+            "advocate",
+            "illuminate",
+            "articulate"
+          ],
+          "answer": "illuminate",
+          "explanation": "The story says: The lighting was low, except for focused spotlights that seemed to illuminate each frame."
+        },
+        {
+          "prompt": "Which word means: Control of a whole market by a single seller.",
+          "choices": [
+            "monopoly",
+            "comparability",
+            "neural"
+          ],
+          "answer": "monopoly",
+          "explanation": "monopoly: Control of a whole market by a single seller."
+        },
+        {
+          "prompt": "Which word means: A large room used for formal meetings, especially by an official body such as a council.",
+          "choices": [
+            "comparability",
+            "neural",
+            "chamber"
+          ],
+          "answer": "chamber",
+          "explanation": "chamber: A large room used for formal meetings, especially by an official body such as a council."
+        },
+        {
+          "prompt": "What type of word is 'here's'?",
+          "choices": [
+            "Phrase",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Phrase",
+          "explanation": "Here's is used as a phrase in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'imagining'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Imagining is used as a verb in this dictionary sense."
         }
       ]
     }

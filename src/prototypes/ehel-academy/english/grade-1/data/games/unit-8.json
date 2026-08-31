@@ -5,7 +5,7 @@
   "unitId": "eng-g01-t03-u08",
   "title": "Wonderful Water Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A bird that swims on water and says quack.",
           "choices": [
             "duck",
-            "grass",
-            "fruit"
+            "queen",
+            "tree"
           ],
           "answer": "duck",
           "explanation": "duck: A bird that swims on water and says quack."
         },
         {
-          "prompt": "Which word means: A leaf is a flat green part that grows on a plant.",
+          "prompt": "Which word means: A cake is a sweet food we bake for special days.",
           "choices": [
             "duck",
-            "grass",
-            "leaf"
+            "queen",
+            "cake"
           ],
-          "answer": "leaf",
-          "explanation": "leaf: A leaf is a flat green part that grows on a plant."
+          "answer": "cake",
+          "explanation": "cake: A cake is a sweet food we bake for special days."
         },
         {
-          "prompt": "Which word means: A dream is the pictures and stories your mind makes while you sleep.",
+          "prompt": "Which word means: Grey is the colour between black and white, like rain clouds.",
           "choices": [
-            "grass",
-            "dream",
+            "queen",
+            "grey",
             "duck"
           ],
-          "answer": "dream",
-          "explanation": "dream: A dream is the pictures and stories your mind makes while you sleep."
+          "answer": "grey",
+          "explanation": "grey: Grey is the colour between black and white, like rain clouds."
+        },
+        {
+          "prompt": "Which word means: Splashing means water is moving and scattering about noisily.",
+          "choices": [
+            "splashing",
+            "duck",
+            "queen"
+          ],
+          "answer": "splashing",
+          "explanation": "splashing: Splashing means water is moving and scattering about noisily."
+        },
+        {
+          "prompt": "Which word means: Describes a bright day with warm sun and few clouds.",
+          "choices": [
+            "duck",
+            "queen",
+            "sunny"
+          ],
+          "answer": "sunny",
+          "explanation": "sunny: Describes a bright day with warm sun and few clouds."
+        },
+        {
+          "prompt": "Which word means: Hungry means you want something to eat.",
+          "choices": [
+            "queen",
+            "hungry",
+            "duck"
+          ],
+          "answer": "hungry",
+          "explanation": "hungry: Hungry means you want something to eat."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A tiny thing you plant so a new plant grows.",
-          "answer": "seed"
+          "clue": "The bright light we see in the night sky.",
+          "answer": "moon"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Facing means turning to look towards something or someone.",
-          "answer": "facing"
+          "clue": "A drip is one small drop of water falling slowly.",
+          "answer": "drip"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Splashing means water is moving and scattering about noisily.",
+          "answer": "splashing"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Describes weather when strong air pushes and moves things.",
+          "answer": "windy"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Thirsty means you want something to drink.",
+          "answer": "thirsty"
         }
       ]
     },
@@ -94,25 +139,63 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "tonight.",
-            "bright",
-            "is",
-            "moon",
-            "The"
+            "apple.",
+            "red",
+            "a",
+            "has",
+            "Adam"
           ],
-          "answer": "The moon is bright tonight."
+          "answer": "Adam has a red apple."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "low.",
-            "very",
-            "was",
-            "water",
-            "well",
+            "dark.",
+            "got",
+            "it",
+            "until",
+            "played",
+            "We"
+          ],
+          "answer": "We played until it got dark."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "trees.",
+            "the",
+            "past",
+            "gently",
+            "flowed",
+            "stream",
             "The"
           ],
-          "answer": "The well water was very low."
+          "answer": "The stream flowed gently past the trees."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "Sami.",
+            "on",
+            "lands",
+            "rain",
+            "of",
+            "drop",
+            "A"
+          ],
+          "answer": "A drop of rain lands on Sami."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "warm.",
+            "very",
+            "and",
+            "sunny",
+            "is",
+            "Today"
+          ],
+          "answer": "Today is sunny and very warm."
         }
       ]
     },
@@ -125,299 +208,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What falls from the clouds when it rains?",
+          "prompt": "Which word is a water word?",
           "choices": [
-            "leaves",
-            "sand",
-            "water",
-            "stones"
+            "rain",
+            "chair",
+            "book",
+            "shoe"
           ],
-          "answer": "water",
-          "explanation": "Rain is drops of water from the clouds; sand, leaves and stones do not fall from clouds."
+          "answer": "rain",
+          "explanation": "Rain is water falling from the clouds; a chair, a shoe and a book have nothing to do with water."
         },
         {
-          "prompt": "What do we use water for before we eat?",
+          "prompt": "Samira stood outside in the rain. How are her clothes now?",
           "choices": [
-            "reading",
-            "sleeping",
-            "writing",
-            "washing"
+            "hot",
+            "wet",
+            "dry",
+            "loud"
           ],
-          "answer": "washing",
-          "explanation": "We wash with clean water before we eat; writing, reading and sleeping do not need water."
+          "answer": "wet",
+          "explanation": "Rain makes clothes wet; dry is the opposite, and hot and loud do not describe rainy clothes."
         },
         {
-          "prompt": "Which is a good way to save water?",
+          "prompt": "Which word means the opposite of wet?",
           "choices": [
-            "Turn the tap off while you brush your teeth.",
-            "Leave the tap running all day.",
-            "Play with the hosepipe for hours.",
-            "Fill the bath right to the top."
+            "rain",
+            "drop",
+            "dry",
+            "float"
           ],
-          "answer": "Turn the tap off while you brush your teeth.",
-          "explanation": "Turning the tap off stops water being wasted; the other choices all waste a lot of water."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Who walked to the well with Amal every morning?",
-          "choices": [
-            "Her big brother, Adam",
-            "Not one drop",
-            "Because the well was getting low"
-          ],
-          "answer": "Her big brother, Adam",
-          "explanation": "Every morning Amal walked to the well with her big brother Adam."
+          "answer": "dry",
+          "explanation": "Dry is the opposite of wet; rain, drop and float are all still to do with water."
         },
-        {
-          "prompt": "Adam says water is precious. How much must they not waste?",
-          "choices": [
-            "It turned brown",
-            "It is rainy.",
-            "Not one drop"
-          ],
-          "answer": "Not one drop",
-          "explanation": "Adam says, 'Water is precious. We must not waste one drop.'"
-        },
-        {
-          "prompt": "Why did the whole village share the water?",
-          "choices": [
-            "We must not waste water.",
-            "Because the well was getting low",
-            "It turned brown"
-          ],
-          "answer": "Because the well was getting low",
-          "explanation": "Adam says the well is getting low, so everyone shares and is careful."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 - Listen and point",
-          "target": "Mime a job you need water for, then say it."
-        },
-        {
-          "prompt": "Speaking 3 - Ask and answer",
-          "target": "Ask and answer about living things that drink."
-        },
-        {
-          "prompt": "Speaking 5 - Role-play",
-          "target": "Role-play washing your hands carefully with a partner."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "clean.",
-            "are",
-            "they",
-            "until",
-            "hands",
-            "her",
-            "washes",
-            "Maya"
-          ],
-          "answer": "Maya washes her hands until they are clean."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "light?",
-            "or",
-            "heavy",
-            "bag",
-            "the",
-            "Is"
-          ],
-          "answer": "Is the bag heavy or light?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "puddle?",
-            "the",
-            "in",
-            "splashing",
-            "Sami",
-            "Is"
-          ],
-          "answer": "Is Sami splashing in the puddle?"
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'town' mean in this unit?",
-          "choices": [
-            "A place with many houses, shops and roads.",
-            "A bird that swims on water and says quack.",
-            "Grass is the green plant that covers the ground."
-          ],
-          "answer": "A place with many houses, shops and roads.",
-          "explanation": "town: A place with many houses, shops and roads."
-        },
-        {
-          "prompt": "What does 'sailed' mean in this unit?",
-          "choices": [
-            "A bird that swims on water and says quack.",
-            "Grass is the green plant that covers the ground.",
-            "Sailed means a boat moved smoothly along on the water."
-          ],
-          "answer": "Sailed means a boat moved smoothly along on the water.",
-          "explanation": "sailed: Sailed means a boat moved smoothly along on the water."
-        },
-        {
-          "prompt": "What does 'grass' mean in this unit?",
-          "choices": [
-            "Sweet food that grows on trees and plants, like apples.",
-            "Grass is the green plant that covers the ground.",
-            "A bird that swims on water and says quack."
-          ],
-          "answer": "Grass is the green plant that covers the ground.",
-          "explanation": "grass: Grass is the green plant that covers the ground."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'drip'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Drip is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'cloudy'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Cloudy is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'thirsty'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Thirsty is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "clock",
-              "A round face with hands that tells us the time."
-            ],
-            [
-              "bread",
-              "Bread is a soft food made from flour and baked."
-            ],
-            [
-              "hungry",
-              "Hungry means you want something to eat."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "soil",
-              "The brown earth on the ground where plants grow."
-            ],
-            [
-              "waste",
-              "To waste something means to use it carelessly and lose it."
-            ],
-            [
-              "grey",
-              "Grey is the colour between black and white, like rain clouds."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "forth",
-              "Forth means moving forward, the way we rock back and forth."
-            ],
-            [
-              "clean",
-              "With no dirt on it, washed and fresh."
-            ],
-            [
-              "cloudy",
-              "Describes a sky covered with grey or white clouds."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "A leaf stays on top of the water. What is the leaf doing?",
           "choices": [
@@ -454,13 +276,509 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Who walked to the well with Amal every morning?",
+          "choices": [
+            "Her big brother, Adam",
+            "Not one drop",
+            "Because the well was getting low"
+          ],
+          "answer": "Her big brother, Adam",
+          "explanation": "Every morning Amal walked to the well with her big brother Adam."
+        },
+        {
+          "prompt": "What did Amal and Adam carry to the well?",
+          "choices": [
+            "It turned brown",
+            "It is rainy.",
+            "An empty pot"
+          ],
+          "answer": "An empty pot",
+          "explanation": "The story says they carried an empty pot to the well."
+        },
+        {
+          "prompt": "Adam says water is precious. How much must they not waste?",
+          "choices": [
+            "We must not waste water.",
+            "Not one drop",
+            "Excited and happy: 'Rain! It is raining!'"
+          ],
+          "answer": "Not one drop",
+          "explanation": "Adam says, 'Water is precious. We must not waste one drop.'"
+        },
+        {
+          "prompt": "How did Amal feel when the rain came? What did she shout?",
+          "choices": [
+            "Excited and happy: 'Rain! It is raining!'",
+            "Because the well was getting low",
+            "Her big brother, Adam"
+          ],
+          "answer": "Excited and happy: 'Rain! It is raining!'",
+          "explanation": "Amal shouts, 'Rain! It is raining!' and the children dance outside."
+        },
+        {
+          "prompt": "Why did the whole village share the water?",
+          "choices": [
+            "It is rainy.",
+            "An empty pot",
+            "Because the well was getting low"
+          ],
+          "answer": "Because the well was getting low",
+          "explanation": "Adam says the well is getting low, so everyone shares and is careful."
+        },
+        {
+          "prompt": "Which talk line tells us about the weather?",
+          "choices": [
+            "Not one drop",
+            "It is rainy.",
+            "We must not waste water."
+          ],
+          "answer": "It is rainy.",
+          "explanation": "'It is rainy' is the weather line in the talk lines."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "Mime a job you need water for, then say it."
+        },
+        {
+          "prompt": "Speaking 2 - Repeat the model",
+          "target": "Adam has a red apple."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "Ask and answer about living things that drink."
+        },
+        {
+          "prompt": "Speaking 4 - Picture talk",
+          "target": "Drop things into a bowl of water and report what happens."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "Role-play washing your hands carefully with a partner."
+        },
+        {
+          "prompt": "Speaking 6 - My confident turn",
+          "target": "Today is sunny and very warm."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "us.",
+            "for",
+            "good",
+            "and",
+            "sweet",
+            "is",
+            "Fruit"
+          ],
+          "answer": "Fruit is sweet and good for us."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "soil.",
+            "warm",
+            "the",
+            "under",
+            "sleeps",
+            "seed",
+            "The"
+          ],
+          "answer": "The seed sleeps under the warm soil."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "stops.",
+            "rain",
+            "the",
+            "until",
+            "Wait"
+          ],
+          "answer": "Wait until the rain stops."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shallow?",
+            "or",
+            "deep",
+            "stream",
+            "the",
+            "Is"
+          ],
+          "answer": "Is the stream deep or shallow?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "book.",
+            "my",
+            "on",
+            "fell",
+            "water",
+            "of",
+            "drop",
+            "One"
+          ],
+          "answer": "One drop of water fell on my book."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "clothes.",
+            "wet",
+            "the",
+            "dry",
+            "days",
+            "Sunny"
+          ],
+          "answer": "Sunny days dry the wet clothes."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'queen' mean in this unit?",
+          "choices": [
+            "A woman who rules a country and wears a crown.",
+            "A bird that swims on water and says quack.",
+            "A tall plant with a wooden trunk, branches and green leaves."
+          ],
+          "answer": "A woman who rules a country and wears a crown.",
+          "explanation": "queen: A woman who rules a country and wears a crown."
+        },
+        {
+          "prompt": "What does 'carried' mean in this unit?",
+          "choices": [
+            "A bird that swims on water and says quack.",
+            "A woman who rules a country and wears a crown.",
+            "Carried means someone picked something up and moved it somewhere else."
+          ],
+          "answer": "Carried means someone picked something up and moved it somewhere else.",
+          "explanation": "carried: Carried means someone picked something up and moved it somewhere else."
+        },
+        {
+          "prompt": "What does 'falling' mean in this unit?",
+          "choices": [
+            "A woman who rules a country and wears a crown.",
+            "Falling means moving down from somewhere higher.",
+            "A bird that swims on water and says quack."
+          ],
+          "answer": "Falling means moving down from somewhere higher.",
+          "explanation": "falling: Falling means moving down from somewhere higher."
+        },
+        {
+          "prompt": "What does 'wet' mean in this unit?",
+          "choices": [
+            "Covered with water, the way your coat feels after rain.",
+            "A bird that swims on water and says quack.",
+            "A woman who rules a country and wears a crown."
+          ],
+          "answer": "Covered with water, the way your coat feels after rain.",
+          "explanation": "wet: Covered with water, the way your coat feels after rain."
+        },
+        {
+          "prompt": "What does 'fish' mean in this unit?",
+          "choices": [
+            "A bird that swims on water and says quack.",
+            "A woman who rules a country and wears a crown.",
+            "An animal with fins that swims and lives in water."
+          ],
+          "answer": "An animal with fins that swims and lives in water.",
+          "explanation": "fish: An animal with fins that swims and lives in water."
+        },
+        {
+          "prompt": "What does 'rain' mean in this unit?",
+          "choices": [
+            "A woman who rules a country and wears a crown.",
+            "Drops of water that fall down from grey clouds.",
+            "A bird that swims on water and says quack."
+          ],
+          "answer": "Drops of water that fall down from grey clouds.",
+          "explanation": "rain: Drops of water that fall down from grey clouds."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'tree'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Tree is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'washed'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Washed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'merrily'?",
+          "choices": [
+            "Verb",
+            "Adverb",
+            "Noun"
+          ],
+          "answer": "Adverb",
+          "explanation": "Merrily is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sink'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Sink is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'crocodile'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Crocodile is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'leaf'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Leaf is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "clock",
+              "A round face with hands that tells us the time."
+            ],
+            [
+              "milk",
+              "A white drink that comes from cows and goats."
+            ],
+            [
+              "apple",
+              "A round fruit that is sweet and crunchy. It can be red or green."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "who",
+              "This word asks about a person."
+            ],
+            [
+              "heavy",
+              "Heavy means something is hard to lift because it weighs a lot."
+            ],
+            [
+              "nobody",
+              "Nobody means not one single person at all."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "shouted",
+              "Shouted means someone said something very loudly."
+            ],
+            [
+              "merrily",
+              "Merrily means doing something in a happy, cheerful way."
+            ],
+            [
+              "followed",
+              "Followed means someone went behind or after another person or thing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "drop",
+              "One tiny round bit of water, smaller than your fingertip."
+            ],
+            [
+              "float",
+              "To stay on top of the water without sinking."
+            ],
+            [
+              "cook",
+              "To make food hot so we can eat it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "windy",
+              "Describes weather when strong air pushes and moves things."
+            ],
+            [
+              "whale",
+              "A huge sea animal that blows water high in the air."
+            ],
+            [
+              "fruit",
+              "Sweet food that grows on trees and plants, like apples."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "sky",
+              "The sky is the space above us where clouds and the sun are."
+            ],
+            [
+              "leaf",
+              "A leaf is a flat green part that grows on a plant."
+            ],
+            [
+              "farm",
+              "A place where people grow food and keep animals."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which of these needs water to stay alive?",
+          "choices": [
+            "a spoon",
+            "a plant",
+            "a chair",
+            "a rock"
+          ],
+          "answer": "a plant",
+          "explanation": "Plants are living and need water; a rock, a spoon and a chair are not alive."
+        },
+        {
+          "prompt": "What falls from the clouds when it rains?",
+          "choices": [
+            "leaves",
+            "sand",
+            "water",
+            "stones"
+          ],
+          "answer": "water",
+          "explanation": "Rain is drops of water from the clouds; sand, leaves and stones do not fall from clouds."
+        },
+        {
+          "prompt": "What do we use water for before we eat?",
+          "choices": [
+            "reading",
+            "sleeping",
+            "writing",
+            "washing"
+          ],
+          "answer": "washing",
+          "explanation": "We wash with clean water before we eat; writing, reading and sleeping do not need water."
+        },
+        {
+          "prompt": "Which is a good way to save water?",
+          "choices": [
+            "Turn the tap off while you brush your teeth.",
+            "Leave the tap running all day.",
+            "Play with the hosepipe for hours.",
+            "Fill the bath right to the top."
+          ],
+          "answer": "Turn the tap off while you brush your teeth.",
+          "explanation": "Turning the tap off stops water being wasted; the other choices all waste a lot of water."
+        },
+        {
+          "prompt": "Which sentence tells us about the weather?",
+          "choices": [
+            "I am rainy today.",
+            "It is rainy today.",
+            "Today rainy is.",
+            "The rainy is today."
+          ],
+          "answer": "It is rainy today.",
+          "explanation": "We say it is for the weather; the other sentences have the words muddled up."
+        },
         {
           "prompt": "Which word is a water word?",
           "choices": [
@@ -471,28 +789,78 @@
           ],
           "answer": "rain",
           "explanation": "Rain is water falling from the clouds; a chair, a shoe and a book have nothing to do with water."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which is a good way to save water?",
+          "choices": [
+            "Turn the tap off while you brush your teeth.",
+            "Leave the tap running all day.",
+            "Play with the hosepipe for hours.",
+            "Fill the bath right to the top."
+          ],
+          "answer": "Turn the tap off while you brush your teeth.",
+          "explanation": "Turning the tap off stops water being wasted; the other choices all waste a lot of water."
         },
         {
-          "prompt": "Samira stood outside in the rain. How are her clothes now?",
+          "prompt": "Which sentence tells us about the weather?",
           "choices": [
-            "hot",
-            "wet",
-            "dry",
-            "loud"
+            "I am rainy today.",
+            "It is rainy today.",
+            "Today rainy is.",
+            "The rainy is today."
           ],
-          "answer": "wet",
-          "explanation": "Rain makes clothes wet; dry is the opposite, and hot and loud do not describe rainy clothes."
+          "answer": "It is rainy today.",
+          "explanation": "We say it is for the weather; the other sentences have the words muddled up."
         },
         {
-          "prompt": "Which word means the opposite of wet?",
+          "prompt": "Which word means: A round fruit that is sweet and crunchy. It can be red or green.",
           "choices": [
-            "rain",
-            "drop",
-            "dry",
-            "float"
+            "apple",
+            "duck",
+            "queen"
           ],
-          "answer": "dry",
-          "explanation": "Dry is the opposite of wet; rain, drop and float are all still to do with water."
+          "answer": "apple",
+          "explanation": "apple: A round fruit that is sweet and crunchy. It can be red or green."
+        },
+        {
+          "prompt": "Which word means: Falling means moving down from somewhere higher.",
+          "choices": [
+            "duck",
+            "queen",
+            "falling"
+          ],
+          "answer": "falling",
+          "explanation": "falling: Falling means moving down from somewhere higher."
+        },
+        {
+          "prompt": "What type of word is 'cook'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Cook is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'rain'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Rain is used as a noun in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t01-u01",
   "title": "There’s a Lesson in That Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The sense inside you that tells you what is right and wrong.",
           "choices": [
             "conscience",
-            "misunderstanding",
-            "anthropomorphism"
+            "loyal",
+            "download"
           ],
           "answer": "conscience",
           "explanation": "conscience: The sense inside you that tells you what is right and wrong."
         },
         {
-          "prompt": "Which word means: To come together in one place, often as a group.",
+          "prompt": "Which word means: The features or characteristics that make a person, animal or thing what it is.",
           "choices": [
             "conscience",
-            "misunderstanding",
-            "gather"
+            "loyal",
+            "qualities"
           ],
-          "answer": "gather",
-          "explanation": "gather: To come together in one place, often as a group."
+          "answer": "qualities",
+          "explanation": "qualities: The features or characteristics that make a person, animal or thing what it is."
         },
         {
-          "prompt": "Which word means: The centre point of something, equally far from every side.",
+          "prompt": "Which word means: Respect is a feeling of admiration for someone because of their good qualities.",
           "choices": [
-            "misunderstanding",
-            "middle",
+            "loyal",
+            "respect",
             "conscience"
           ],
-          "answer": "middle",
-          "explanation": "middle: The centre point of something, equally far from every side."
+          "answer": "respect",
+          "explanation": "respect: Respect is a feeling of admiration for someone because of their good qualities."
+        },
+        {
+          "prompt": "Which word means: A long distance away in space or time.",
+          "choices": [
+            "far",
+            "conscience",
+            "loyal"
+          ],
+          "answer": "far",
+          "explanation": "far: A long distance away in space or time."
+        },
+        {
+          "prompt": "Which word means: A delivery is when something is brought and given to a person or place.",
+          "choices": [
+            "conscience",
+            "loyal",
+            "delivery"
+          ],
+          "answer": "delivery",
+          "explanation": "delivery: A delivery is when something is brought and given to a person or place."
+        },
+        {
+          "prompt": "Which word means: Belonging to the sea, or living and working in the ocean.",
+          "choices": [
+            "loyal",
+            "marine",
+            "conscience"
+          ],
+          "answer": "marine",
+          "explanation": "marine: Belonging to the sea, or living and working in the ocean."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To teach means to help someone learn a new skill or idea.",
-          "answer": "teach"
+          "clue": "To use words to give a clear picture of what someone or something is like.",
+          "answer": "describe"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Moved suddenly and violently from side to side or up and down.",
-          "answer": "shaken"
+          "clue": "Aesop was an ancient Greek storyteller famous for short tales called fables.",
+          "answer": "aesop"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Made a short, high sound, like the noise a small bird makes.",
+          "answer": "chirped"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Froze means stopped moving suddenly, often because of fear or surprise.",
+          "answer": "froze"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To meet somebody or something by chance, without planning it first.",
+          "answer": "encounter"
         }
       ]
     },
@@ -101,6 +146,22 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
+            "return.",
+            "to",
+            "boats",
+            "the",
+            "for",
+            "signal",
+            "a",
+            "waved",
+            "captain",
+            "The"
+          ],
+          "answer": "The captain waved a signal for the boats to return."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
             "tale.",
             "old",
             "the",
@@ -117,16 +178,47 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "valley.",
-            "green",
+            "well.",
             "the",
-            "through",
-            "gently",
-            "wound",
-            "river",
+            "buried",
+            "and",
+            "village",
+            "the",
+            "across",
+            "swept",
+            "sandstorm",
+            "fierce",
+            "A"
+          ],
+          "answer": "A fierce sandstorm swept across the village and buried the well."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "field.",
+            "quiet",
+            "the",
+            "over",
+            "low",
+            "swooped",
+            "eagle",
             "The"
           ],
-          "answer": "The river wound gently through the green valley."
+          "answer": "The eagle swooped low over the quiet field."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "kindness.",
+            "with",
+            "pupil",
+            "every",
+            "treats",
+            "always",
+            "Yasmin",
+            "Teacher"
+          ],
+          "answer": "Teacher Yasmin always treats every pupil with kindness."
         }
       ]
     },
@@ -139,308 +231,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Complete this sentence: My sister is keen ______ swimming.",
+          "prompt": "Which preposition completes this sentence: Jamal was proud ______ his own strength?",
           "choices": [
-            "at",
-            "for",
-            "with",
-            "on"
-          ],
-          "answer": "on",
-          "explanation": "Keen is one of the few adjectives that takes on, as in keen on football or keen on swimming."
-        },
-        {
-          "prompt": "In part 1 of “The Silence After the Rumble”, what actually caused the deep rumble that frightened Amal?",
-          "choices": [
-            "Another earthquake shaking the valley",
-            "Thunder from a passing storm",
-            "The courthouse roof falling in",
-            "A lorry passing the damaged road"
-          ],
-          "answer": "A lorry passing the damaged road",
-          "explanation": "Amal feared the ground was moving again, but the passage explains that a delivery lorry had driven too close to the damaged road."
-        },
-        {
-          "prompt": "Folklore means the traditional stories and customs of a group of people. Which of these is folklore?",
-          "choices": [
-            "A weather report on the radio",
-            "Anansi tales from West Africa",
-            "A shopping list on the table",
-            "A bus timetable at the station"
-          ],
-          "answer": "Anansi tales from West Africa",
-          "explanation": "Anansi tales have been passed down through generations of storytellers, while the other three are everyday written information."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In “What Makes a Fable?”, what name is given to the lesson at the end of a fable?",
-          "choices": [
-            "The lesson at the end of a fable is called the moral.",
-            "It names “The Tortoise and the Hare” and “The Boy Who Cried Wolf”.",
-            "It gives both animals real value, so the moral that no contribution is too small feels earned rather than sudden."
-          ],
-          "answer": "The lesson at the end of a fable is called the moral.",
-          "explanation": "The opening sentence states it directly: a fable teaches a lesson, and that lesson is called the moral."
-        },
-        {
-          "prompt": "In “The Camel and the Sparrow”, what did the villagers find when the misty dawn came after the sandstorm?",
-          "choices": [
-            "It names “The Tortoise and the Hare” and “The Boy Who Cried Wolf”.",
-            "She swept the steps and filled the water jug on the judge’s bench.",
-            "They found their homes in rubble, with walls crumbled, roofs blown away and the well buried under sand."
-          ],
-          "answer": "They found their homes in rubble, with walls crumbled, roofs blown away and the well buried under sand.",
-          "explanation": "The paragraph after the sandstorm lists the damage in order: crumbled walls, missing roofs, then the buried well."
-        },
-        {
-          "prompt": "In part 1 of “The Silence After the Rumble”, what two jobs did Amal do at the courthouse each morning?",
-          "choices": [
-            "She thinks the ground is shaking again, because an earthquake had damaged the town two years earlier.",
-            "She swept the steps and filled the water jug on the judge’s bench.",
-            "They all chose to teach through a short story with a lesson folded inside it."
-          ],
-          "answer": "She swept the steps and filled the water jug on the judge’s bench.",
-          "explanation": "Her role is described in one sentence, and both tasks sit side by side in it."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Talk About Stories That Teach",
-          "target": "His conscience would not let him keep the money he had found."
-        },
-        {
-          "prompt": "Speaking 3: The News Report Interview",
-          "target": "One of you is a reporter and the other is the village elder from the fable."
-        },
-        {
-          "prompt": "Speaking 5: Vocabulary in Conversation",
-          "target": "The river wound gently through the green valley."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "rooftops.",
-            "the",
-            "above",
-            "flew",
-            "birds",
             "of",
-            "flock",
-            "A"
+            "for",
+            "about",
+            "to"
           ],
-          "answer": "A flock of birds flew above the rooftops."
+          "answer": "of",
+          "explanation": "Proud always takes of, so we say proud of a person, a job or an achievement."
         },
         {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "patience.",
-            "children",
-            "younger",
-            "the",
-            "teach",
-            "would",
-            "story",
-            "the",
-            "hoped",
-            "Sami"
-          ],
-          "answer": "Sami hoped the story would teach the younger children patience."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "town.",
-            "the",
-            "in",
-            "standing",
-            "left",
-            "building",
-            "only",
-            "the",
-            "was",
-            "courthouse",
-            "The"
-          ],
-          "answer": "The courthouse was the only building left standing in the town."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'collecting' mean in this unit?",
+          "prompt": "Which word means broken pieces of stone and brick left after a building falls?",
           "choices": [
-            "Collecting means gathering things together, such as stories, coins or stamps.",
-            "The sense inside you that tells you what is right and wrong.",
-            "A failure to understand something correctly."
+            "pouch",
+            "rubble",
+            "nutrition",
+            "species"
           ],
-          "answer": "Collecting means gathering things together, such as stories, coins or stamps.",
-          "explanation": "collecting: Collecting means gathering things together, such as stories, coins or stamps."
+          "answer": "rubble",
+          "explanation": "Rubble is the wreckage itself. A pouch is a small bag, nutrition is the goodness in food, and a species is a group of similar living things."
         },
         {
-          "prompt": "What does 'climbed' mean in this unit?",
+          "prompt": "In “The Camel and the Sparrow”, what did Zara see from high above the village?",
           "choices": [
-            "The sense inside you that tells you what is right and wrong.",
-            "A failure to understand something correctly.",
-            "Climbed means went up something using your hands and feet, such as steps or a hill."
+            "A lorry passing on the damaged road",
+            "A market full of busy traders",
+            "A hidden stream behind the ridge",
+            "A courthouse with cracked steps"
           ],
-          "answer": "Climbed means went up something using your hands and feet, such as steps or a hill.",
-          "explanation": "climbed: Climbed means went up something using your hands and feet, such as steps or a hill."
+          "answer": "A hidden stream behind the ridge",
+          "explanation": "From the sky Zara spotted a thin green line to the east, which turned out to be the stream the village needed."
         },
-        {
-          "prompt": "What does 'misunderstanding' mean in this unit?",
-          "choices": [
-            "The idea of giving human feelings, thoughts or behaviour to an animal or an object.",
-            "A failure to understand something correctly.",
-            "The sense inside you that tells you what is right and wrong."
-          ],
-          "answer": "A failure to understand something correctly.",
-          "explanation": "misunderstanding: A failure to understand something correctly."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'matter'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Matter is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'pouch'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Pouch is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'around'?",
-          "choices": [
-            "Verb",
-            "Preposition",
-            "Noun"
-          ],
-          "answer": "Preposition",
-          "explanation": "Around is used as a preposition in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "definite",
-              "Certain and clearly decided, with no room for doubt."
-            ],
-            [
-              "stereotype",
-              "A fixed, over-simple idea about a whole group of people."
-            ],
-            [
-              "much",
-              "To a great degree, or by a large amount."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "while",
-              "While means during the same time as something else is happening."
-            ],
-            [
-              "morning",
-              "Morning is the early part of the day, before midday."
-            ],
-            [
-              "leave",
-              "To go away from a place, or to let something stay untouched."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "nearby",
-              "Close to a particular place, not far away at all."
-            ],
-            [
-              "anyway",
-              "Anyway means despite what has just been said, or in spite of any difficulties."
-            ],
-            [
-              "walk",
-              "Walk means to move along on foot at a normal speed."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What is the moral of “The Camel and the Sparrow”?",
           "choices": [
@@ -477,13 +299,528 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "In “What Makes a Fable?”, what name is given to the lesson at the end of a fable?",
+          "choices": [
+            "The lesson at the end of a fable is called the moral.",
+            "It names “The Tortoise and the Hare” and “The Boy Who Cried Wolf”.",
+            "It gives both animals real value, so the moral that no contribution is too small feels earned rather than sudden."
+          ],
+          "answer": "The lesson at the end of a fable is called the moral.",
+          "explanation": "The opening sentence states it directly: a fable teaches a lesson, and that lesson is called the moral."
+        },
+        {
+          "prompt": "Which two fables by Aesop does “Folklore Around the World” name?",
+          "choices": [
+            "They all chose to teach through a short story with a lesson folded inside it.",
+            "She swept the steps and filled the water jug on the judge’s bench.",
+            "It names “The Tortoise and the Hare” and “The Boy Who Cried Wolf”."
+          ],
+          "answer": "It names “The Tortoise and the Hare” and “The Boy Who Cried Wolf”.",
+          "explanation": "Both titles appear in the sentence about ancient Greece, where the text calls them known almost everywhere."
+        },
+        {
+          "prompt": "In “The Camel and the Sparrow”, what did the villagers find when the misty dawn came after the sandstorm?",
+          "choices": [
+            "She thinks the ground is shaking again, because an earthquake had damaged the town two years earlier.",
+            "They found their homes in rubble, with walls crumbled, roofs blown away and the well buried under sand.",
+            "They all chose to teach through a short story with a lesson folded inside it."
+          ],
+          "answer": "They found their homes in rubble, with walls crumbled, roofs blown away and the well buried under sand.",
+          "explanation": "The paragraph after the sandstorm lists the damage in order: crumbled walls, missing roofs, then the buried well."
+        },
+        {
+          "prompt": "Why could Zara find the hidden stream when nobody on the ground could?",
+          "choices": [
+            "She flew higher than any camel could reach, so from the sky she saw the thin green line behind the ridge.",
+            "They found their homes in rubble, with walls crumbled, roofs blown away and the well buried under sand.",
+            "He said he had seen the trader hide boxes behind the artificial wall in the storehouse."
+          ],
+          "answer": "She flew higher than any camel could reach, so from the sky she saw the thin green line behind the ridge.",
+          "explanation": "The fable links her height to her discovery: from up there she saw what nobody on the ground could see."
+        },
+        {
+          "prompt": "In part 1 of “The Silence After the Rumble”, what two jobs did Amal do at the courthouse each morning?",
+          "choices": [
+            "She feels a wave of anxiety, and the fable says she wondered whether she was simply too small to matter.",
+            "She now counts unlocking the doors as real work at the court, so she claims her role instead of shrinking it.",
+            "She swept the steps and filled the water jug on the judge’s bench."
+          ],
+          "answer": "She swept the steps and filled the water jug on the judge’s bench.",
+          "explanation": "Her role is described in one sentence, and both tasks sit side by side in it."
+        },
+        {
+          "prompt": "In part 2, what evidence did the boy of eleven give at the trial?",
+          "choices": [
+            "The lesson at the end of a fable is called the moral.",
+            "He said he had seen the trader hide boxes behind the artificial wall in the storehouse.",
+            "She flew higher than any camel could reach, so from the sky she saw the thin green line behind the ridge."
+          ],
+          "answer": "He said he had seen the trader hide boxes behind the artificial wall in the storehouse.",
+          "explanation": "The boy gives the only direct eyewitness account in the trial, and he names the exact hiding place."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Talk About Stories That Teach",
+          "target": "His conscience would not let him keep the money he had found."
+        },
+        {
+          "prompt": "Speaking 2: Role Play the Apology",
+          "target": "The captain waved a signal for the boats to return."
+        },
+        {
+          "prompt": "Speaking 3: The News Report Interview",
+          "target": "One of you is a reporter and the other is the village elder from the fable."
+        },
+        {
+          "prompt": "Speaking 4: Retell a Folktale Aloud",
+          "target": "A fierce sandstorm swept across the village and buried the well."
+        },
+        {
+          "prompt": "Speaking 5: Vocabulary in Conversation",
+          "target": "The eagle swooped low over the quiet field."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Talk on the Unit",
+          "target": "Teacher Yasmin always treats every pupil with kindness."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "street.",
+            "every",
+            "knows",
+            "and",
+            "town",
+            "the",
+            "of",
+            "native",
+            "a",
+            "is",
+            "She"
+          ],
+          "answer": "She is a native of the town and knows every street."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "loss.",
+            "his",
+            "about",
+            "sensitivity",
+            "real",
+            "with",
+            "spoke",
+            "She"
+          ],
+          "answer": "She spoke with real sensitivity about his loss."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "story.",
+            "the",
+            "in",
+            "behaviour",
+            "animal's",
+            "the",
+            "matches",
+            "moral",
+            "the",
+            "whether",
+            "Decide"
+          ],
+          "answer": "Decide whether the moral matches the animal's behaviour in the story."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "family.",
+            "his",
+            "warn",
+            "to",
+            "courtyard",
+            "the",
+            "across",
+            "ran",
+            "Sami"
+          ],
+          "answer": "Sami ran across the courtyard to warn his family."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "spoke.",
+            "Zara",
+            "after",
+            "head",
+            "great",
+            "his",
+            "lowered",
+            "Jamal"
+          ],
+          "answer": "Jamal lowered his great head after Zara spoke."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "paper.",
+            "folded",
+            "a",
+            "holding",
+            "front,",
+            "the",
+            "to",
+            "shuffled",
+            "man",
+            "accused",
+            "The"
+          ],
+          "answer": "The accused man shuffled to the front, holding a folded paper."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'loyal' mean in this unit?",
+          "choices": [
+            "Always being there for someone or something you care about.",
+            "The sense inside you that tells you what is right and wrong.",
+            "To copy a file from the internet onto your own device."
+          ],
+          "answer": "Always being there for someone or something you care about.",
+          "explanation": "loyal: Always being there for someone or something you care about."
+        },
+        {
+          "prompt": "What does 'proud' mean in this unit?",
+          "choices": [
+            "The sense inside you that tells you what is right and wrong.",
+            "Always being there for someone or something you care about.",
+            "Feeling pleased and satisfied about something you or someone else has achieved."
+          ],
+          "answer": "Feeling pleased and satisfied about something you or someone else has achieved.",
+          "explanation": "proud: Feeling pleased and satisfied about something you or someone else has achieved."
+        },
+        {
+          "prompt": "What does 'through' mean in this unit?",
+          "choices": [
+            "Always being there for someone or something you care about.",
+            "Through means moving from one side of something to the other.",
+            "The sense inside you that tells you what is right and wrong."
+          ],
+          "answer": "Through means moving from one side of something to the other.",
+          "explanation": "through: Through means moving from one side of something to the other."
+        },
+        {
+          "prompt": "What does 'reach' mean in this unit?",
+          "choices": [
+            "To arrive at a place, or to stretch out and touch something.",
+            "The sense inside you that tells you what is right and wrong.",
+            "Always being there for someone or something you care about."
+          ],
+          "answer": "To arrive at a place, or to stretch out and touch something.",
+          "explanation": "reach: To arrive at a place, or to stretch out and touch something."
+        },
+        {
+          "prompt": "What does 'anyway' mean in this unit?",
+          "choices": [
+            "The sense inside you that tells you what is right and wrong.",
+            "Always being there for someone or something you care about.",
+            "Anyway means despite what has just been said, or in spite of any difficulties."
+          ],
+          "answer": "Anyway means despite what has just been said, or in spite of any difficulties.",
+          "explanation": "anyway: Anyway means despite what has just been said, or in spite of any difficulties."
+        },
+        {
+          "prompt": "What does 'miracle' mean in this unit?",
+          "choices": [
+            "Always being there for someone or something you care about.",
+            "Something wonderful that happens and is very hard to explain.",
+            "The sense inside you that tells you what is right and wrong."
+          ],
+          "answer": "Something wonderful that happens and is very hard to explain.",
+          "explanation": "miracle: Something wonderful that happens and is very hard to explain."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'download'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Download is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'stand'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Stand is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fierce'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Fierce is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'head'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Head is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'searched'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Searched is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'diversity'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Diversity is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "definite",
+              "Certain and clearly decided, with no room for doubt."
+            ],
+            [
+              "application",
+              "A program you open on a phone or computer to do a job."
+            ],
+            [
+              "storage",
+              "Space where things or files are kept until they are needed."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "describe",
+              "To use words to give a clear picture of what someone or something is like."
+            ],
+            [
+              "behave",
+              "To act or do things in a particular way, good or bad."
+            ],
+            [
+              "behaviour",
+              "The way a person or animal acts, especially towards others."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "boy",
+              "A boy is a young male child or young man."
+            ],
+            [
+              "village",
+              "A village is a small group of houses and buildings in the countryside."
+            ],
+            [
+              "well",
+              "A well is a deep hole dug into the ground to reach water."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "sing",
+              "To make music using your voice."
+            ],
+            [
+              "eastern",
+              "Belonging to, or facing towards, the direction of the east."
+            ],
+            [
+              "shaken",
+              "Moved suddenly and violently from side to side or up and down."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "breathed",
+              "Breathed means took air into the lungs and let it out again."
+            ],
+            [
+              "week",
+              "A week is a period of seven days."
+            ],
+            [
+              "soft",
+              "Soft means gentle to touch, or quiet and not harsh."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "species",
+              "A group of living things that are alike and can have young together."
+            ],
+            [
+              "acceptance",
+              "Agreeing to something, or coming to terms with it."
+            ],
+            [
+              "misunderstanding",
+              "A failure to understand something correctly."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does the word urban mean?",
+          "choices": [
+            "Related to a city or town",
+            "Related to the countryside",
+            "Related to the sea or ocean",
+            "Made by people, not natural"
+          ],
+          "answer": "Related to a city or town",
+          "explanation": "Urban describes city life. Its opposite, rural, describes the countryside, while marine belongs to the sea and artificial means man-made."
+        },
+        {
+          "prompt": "Complete this sentence: My sister is keen ______ swimming.",
+          "choices": [
+            "at",
+            "for",
+            "with",
+            "on"
+          ],
+          "answer": "on",
+          "explanation": "Keen is one of the few adjectives that takes on, as in keen on football or keen on swimming."
+        },
+        {
+          "prompt": "In part 1 of “The Silence After the Rumble”, what actually caused the deep rumble that frightened Amal?",
+          "choices": [
+            "Another earthquake shaking the valley",
+            "Thunder from a passing storm",
+            "The courthouse roof falling in",
+            "A lorry passing the damaged road"
+          ],
+          "answer": "A lorry passing the damaged road",
+          "explanation": "Amal feared the ground was moving again, but the passage explains that a delivery lorry had driven too close to the damaged road."
+        },
+        {
+          "prompt": "Folklore means the traditional stories and customs of a group of people. Which of these is folklore?",
+          "choices": [
+            "A weather report on the radio",
+            "Anansi tales from West Africa",
+            "A shopping list on the table",
+            "A bus timetable at the station"
+          ],
+          "answer": "Anansi tales from West Africa",
+          "explanation": "Anansi tales have been passed down through generations of storytellers, while the other three are everyday written information."
+        },
+        {
+          "prompt": "Which feature belongs to a fable rather than to a long novel?",
+          "choices": [
+            "Many characters with complicated lives",
+            "Chapters that describe every room",
+            "One clear problem and a short plot",
+            "Magic that lasts for many pages"
+          ],
+          "answer": "One clear problem and a short plot",
+          "explanation": "A fable stays short and keeps to one problem, so nothing distracts the reader from the moral at the end."
+        },
         {
           "prompt": "Which preposition completes this sentence: Jamal was proud ______ his own strength?",
           "choices": [
@@ -494,28 +831,78 @@
           ],
           "answer": "of",
           "explanation": "Proud always takes of, so we say proud of a person, a job or an achievement."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Folklore means the traditional stories and customs of a group of people. Which of these is folklore?",
+          "choices": [
+            "A weather report on the radio",
+            "Anansi tales from West Africa",
+            "A shopping list on the table",
+            "A bus timetable at the station"
+          ],
+          "answer": "Anansi tales from West Africa",
+          "explanation": "Anansi tales have been passed down through generations of storytellers, while the other three are everyday written information."
         },
         {
-          "prompt": "Which word means broken pieces of stone and brick left after a building falls?",
+          "prompt": "Which feature belongs to a fable rather than to a long novel?",
           "choices": [
-            "pouch",
-            "rubble",
-            "nutrition",
-            "species"
+            "Many characters with complicated lives",
+            "Chapters that describe every room",
+            "One clear problem and a short plot",
+            "Magic that lasts for many pages"
           ],
-          "answer": "rubble",
-          "explanation": "Rubble is the wreckage itself. A pouch is a small bag, nutrition is the goodness in food, and a species is a group of similar living things."
+          "answer": "One clear problem and a short plot",
+          "explanation": "A fable stays short and keeps to one problem, so nothing distracts the reader from the moral at the end."
         },
         {
-          "prompt": "In “The Camel and the Sparrow”, what did Zara see from high above the village?",
+          "prompt": "Which word means: The name you choose to sign in with on a website.",
           "choices": [
-            "A lorry passing on the damaged road",
-            "A market full of busy traders",
-            "A hidden stream behind the ridge",
-            "A courthouse with cracked steps"
+            "username",
+            "conscience",
+            "loyal"
           ],
-          "answer": "A hidden stream behind the ridge",
-          "explanation": "From the sky Zara spotted a thin green line to the east, which turned out to be the stream the village needed."
+          "answer": "username",
+          "explanation": "username: The name you choose to sign in with on a website."
+        },
+        {
+          "prompt": "Which word means: Through means moving from one side of something to the other.",
+          "choices": [
+            "conscience",
+            "loyal",
+            "through"
+          ],
+          "answer": "through",
+          "explanation": "through: Through means moving from one side of something to the other."
+        },
+        {
+          "prompt": "What type of word is 'first'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "First is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'miracle'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Miracle is used as a noun in this dictionary sense."
         }
       ]
     }

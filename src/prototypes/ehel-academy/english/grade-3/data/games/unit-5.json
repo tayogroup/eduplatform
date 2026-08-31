@@ -5,7 +5,7 @@
   "unitId": "eng-g03-t02-u05",
   "title": "Actions and Activities Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: To look after somebody because you want them to be well.",
           "choices": [
             "care",
-            "belong",
-            "enter"
+            "instead",
+            "metre"
           ],
           "answer": "care",
           "explanation": "care: To look after somebody because you want them to be well."
         },
         {
-          "prompt": "Which word means: To have used a broom to push dirt and leaves away.",
+          "prompt": "Which word means: A plan is a set of steps you make before you start something.",
           "choices": [
             "care",
-            "belong",
-            "swept"
+            "instead",
+            "plan"
           ],
-          "answer": "swept",
-          "explanation": "swept: To have used a broom to push dirt and leaves away."
+          "answer": "plan",
+          "explanation": "plan: A plan is a set of steps you make before you start something."
         },
         {
-          "prompt": "Which word means: Was resting flat in one place, like something lying on the ground.",
+          "prompt": "Which word means: Feeling thankful for something kind that someone has done.",
           "choices": [
-            "belong",
-            "lay",
+            "instead",
+            "grateful",
             "care"
           ],
-          "answer": "lay",
-          "explanation": "lay: Was resting flat in one place, like something lying on the ground."
+          "answer": "grateful",
+          "explanation": "grateful: Feeling thankful for something kind that someone has done."
+        },
+        {
+          "prompt": "Which word means: To stop something or someone from moving past or getting through.",
+          "choices": [
+            "block",
+            "care",
+            "instead"
+          ],
+          "answer": "block",
+          "explanation": "block: To stop something or someone from moving past or getting through."
+        },
+        {
+          "prompt": "Which word means: The two long parts of your body between your shoulders and hands.",
+          "choices": [
+            "care",
+            "instead",
+            "arms"
+          ],
+          "answer": "arms",
+          "explanation": "arms: The two long parts of your body between your shoulders and hands."
+        },
+        {
+          "prompt": "Which word means: To work out an answer using numbers.",
+          "choices": [
+            "instead",
+            "calculate",
+            "care"
+          ],
+          "answer": "calculate",
+          "explanation": "calculate: To work out an answer using numbers."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Not fixed tightly in place and able to move or fall.",
-          "answer": "loose"
+          "clue": "To point means to show where something is by aiming your finger at it.",
+          "answer": "point"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "In a careful way, paying close attention to small details.",
-          "answer": "closely"
+          "clue": "Weighing more than something else.",
+          "answer": "heavier"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Smooth and level, with no bumps, curves, or lumps.",
+          "answer": "flat"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Hurt with a dull, steady pain that would not go away.",
+          "answer": "ached"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To sort things into groups that are alike.",
+          "answer": "classify"
         }
       ]
     },
@@ -99,29 +144,70 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "corridor.",
+            "classroom.",
             "the",
-            "down",
-            "running",
             "of",
-            "instead",
-            "walked",
-            "Nora"
+            "middle",
+            "the",
+            "in",
+            "sat",
+            "Sami"
           ],
-          "answer": "Nora walked instead of running down the corridor."
+          "answer": "Sami sat in the middle of the classroom."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "shake.",
-            "wall",
+            "juice.",
+            "cold",
+            "with",
+            "work",
+            "hard",
+            "our",
+            "celebrated",
+            "We"
+          ],
+          "answer": "We celebrated our hard work with cold juice."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "wall.",
             "the",
-            "made",
-            "wind",
-            "strong",
+            "near",
+            "sound",
+            "creaking",
+            "the",
+            "heard",
+            "Sami"
+          ],
+          "answer": "Sami heard the creaking sound near the wall."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "storm.",
+            "the",
+            "before",
+            "dark",
+            "turned",
+            "clouds",
             "The"
           ],
-          "answer": "The strong wind made the wall shake."
+          "answer": "The clouds turned dark before the storm."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "wall.",
+            "the",
+            "with",
+            "finished",
+            "nearly",
+            "are",
+            "We"
+          ],
+          "answer": "We are nearly finished with the wall."
         }
       ]
     },
@@ -134,301 +220,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "In Planning the Garden, why do the friends build a small fence?",
+          "prompt": "What does the word protect mean in this unit?",
           "choices": [
-            "To search for good seeds.",
-            "To protect the plants.",
-            "To celebrate the first flower.",
-            "To water the garden every day."
+            "To look carefully for something you have lost.",
+            "To finish a job so that nothing is left over.",
+            "To keep someone or something safe from harm.",
+            "To go from one place to another far away."
           ],
-          "answer": "To protect the plants.",
-          "explanation": "The plan states the purpose of the fence straight after the word to."
+          "answer": "To keep someone or something safe from harm.",
+          "explanation": "Protect is about safety, so the helmet in the example sentence keeps your head from harm."
         },
         {
-          "prompt": "Which question about a past journey is written correctly?",
+          "prompt": "In The Wall Behind the Garden, what did the class remove before they could build?",
           "choices": [
-            "Where you travelled last week?",
-            "Where travelled you last week?",
-            "Where did you travelled last week?",
-            "Where did you travel last week?"
+            "The old, broken fence.",
+            "The stone reading wall.",
+            "The tomatoes in the garden.",
+            "The sign about sharing words."
           ],
-          "answer": "Where did you travel last week?",
-          "explanation": "Past questions need the helping word did, and after did the verb goes back to its base form."
+          "answer": "The old, broken fence.",
+          "explanation": "Teacher Yasmin says the broken fence must go first, before any building starts."
         },
         {
-          "prompt": "Which of these things did the class do first when they made the wall?",
+          "prompt": "Which sentence uses the past simple correctly?",
           "choices": [
-            "They searched for smooth stones.",
-            "They celebrated with the town.",
-            "They discussed the design and colours.",
-            "They began to build the wall."
+            "Yesterday they build a house.",
+            "Yesterday they builds a house.",
+            "Yesterday they are build a house.",
+            "Yesterday they built a house."
           ],
-          "answer": "They searched for smooth stones.",
-          "explanation": "The story marks this step with First, and the other three follow it with Then, Next and later."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In A Busy Saturday, what did Adam remove from the yard?",
-          "choices": [
-            "Adam removed the old sticks from the yard.",
-            "She offered to help him carry his heavy basket.",
-            "The class started to build a new reading wall."
-          ],
-          "answer": "Adam removed the old sticks from the yard.",
-          "explanation": "The recount names Adam and the old sticks he took away."
+          "answer": "Yesterday they built a house.",
+          "explanation": "The time word yesterday shows the action is finished, and the past form of build is built."
         },
-        {
-          "prompt": "How many steps are in the garden plan, and what is step two?",
-          "choices": [
-            "She offered to help him carry his heavy basket.",
-            "They found a hole covered by stones and dry leaves.",
-            "There are four steps, and step two is to build a small fence."
-          ],
-          "answer": "There are four steps, and step two is to build a small fence.",
-          "explanation": "The speaker marks the steps with First, Then, After that and Finally."
-        },
-        {
-          "prompt": "What special project did Teacher Yasmin start in the school garden?",
-          "choices": [
-            "The sign said: “We built this wall to share words and protect dreams.”",
-            "The class started to build a new reading wall.",
-            "There are four steps, and step two is to build a small fence."
-          ],
-          "answer": "The class started to build a new reading wall.",
-          "explanation": "Teacher Yasmin names the project in her first speech of the story."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Tell What You Did",
-          "target": "Think of something you did yesterday or last week."
-        },
-        {
-          "prompt": "Speaking 3 — What Happened Next?",
-          "target": "Then it ran to the garden and ______."
-        },
-        {
-          "prompt": "Speaking 5 — Explain and Respond",
-          "target": "Why did they add more stones?"
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "wall.",
-            "the",
-            "into",
-            "stone",
-            "last",
-            "the",
-            "fitted",
-            "Sami"
-          ],
-          "answer": "Sami fitted the last stone into the wall."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "shop.",
-            "little",
-            "the",
-            "past",
-            "walked",
-            "We"
-          ],
-          "answer": "We walked past the little shop."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "enough.",
-            "strong",
-            "not",
-            "was",
-            "paint",
-            "the",
-            "said",
-            "Sami"
-          ],
-          "answer": "Sami said the paint was not strong enough."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'hiding' mean in this unit?",
-          "choices": [
-            "Keeping out of sight so that others cannot easily find you.",
-            "To look after somebody because you want them to be well.",
-            "To be a member of a group, or to have a proper place."
-          ],
-          "answer": "Keeping out of sight so that others cannot easily find you.",
-          "explanation": "hiding: Keeping out of sight so that others cannot easily find you."
-        },
-        {
-          "prompt": "What does 'completed' mean in this unit?",
-          "choices": [
-            "To look after somebody because you want them to be well.",
-            "To be a member of a group, or to have a proper place.",
-            "Finished doing something all the way to the very end."
-          ],
-          "answer": "Finished doing something all the way to the very end.",
-          "explanation": "completed: Finished doing something all the way to the very end."
-        },
-        {
-          "prompt": "What does 'belong' mean in this unit?",
-          "choices": [
-            "To go into a place.",
-            "To be a member of a group, or to have a proper place.",
-            "To look after somebody because you want them to be well."
-          ],
-          "answer": "To be a member of a group, or to have a proper place.",
-          "explanation": "belong: To be a member of a group, or to have a proper place."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'frame'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Frame is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'leaf'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Leaf is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'mark'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Mark is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "bear",
-              "A large, heavy wild animal with thick fur."
-            ],
-            [
-              "depend",
-              "To need somebody or something for help."
-            ],
-            [
-              "introduce",
-              "To bring in something new, or to make people known to each other."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "removed",
-              "To have taken something away from a place."
-            ],
-            [
-              "shop",
-              "A small building or room where things are sold."
-            ],
-            [
-              "shake",
-              "To move quickly from side to side or up and down."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "block",
-              "To stop something or someone from moving past or getting through."
-            ],
-            [
-              "shyly",
-              "In a quiet, nervous way, without much confidence."
-            ],
-            [
-              "anyway",
-              "Even though something might stop you, you do it all the same."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Choose the word that fits: The wall was weak, ______ we added more stones.",
           "choices": [
@@ -465,13 +288,517 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "In A Busy Saturday, what did Adam remove from the yard?",
+          "choices": [
+            "Adam removed the old sticks from the yard.",
+            "She offered to help him carry his heavy basket.",
+            "The class started to build a new reading wall."
+          ],
+          "answer": "Adam removed the old sticks from the yard.",
+          "explanation": "The recount names Adam and the old sticks he took away."
+        },
+        {
+          "prompt": "Which three time words show the order of the family's jobs on Saturday?",
+          "choices": [
+            "There are four steps, and step two is to build a small fence.",
+            "They found a hole covered by stones and dry leaves.",
+            "The family's jobs are ordered by First, Then and Finally."
+          ],
+          "answer": "The family's jobs are ordered by First, Then and Finally.",
+          "explanation": "Each new job in the recount opens with a time word, so the reader can follow the day."
+        },
+        {
+          "prompt": "How many steps are in the garden plan, and what is step two?",
+          "choices": [
+            "The sign said: “We built this wall to share words and protect dreams.”",
+            "There are four steps, and step two is to build a small fence.",
+            "They build the fence to protect the plants."
+          ],
+          "answer": "There are four steps, and step two is to build a small fence.",
+          "explanation": "The speaker marks the steps with First, Then, After that and Finally."
+        },
+        {
+          "prompt": "What happened to the wall yesterday, and what caused it?",
+          "choices": [
+            "The wall began to shake because the wind blew hard.",
+            "They build the fence to protect the plants.",
+            "He called it a gift because it gives other people new ideas."
+          ],
+          "answer": "The wall began to shake because the wind blew hard.",
+          "explanation": "The speaker joins the two events in one sentence, so the wind is the cause."
+        },
+        {
+          "prompt": "What special project did Teacher Yasmin start in the school garden?",
+          "choices": [
+            "The wall began to shake because the wind blew hard.",
+            "Adam removed the old sticks from the yard.",
+            "The class started to build a new reading wall."
+          ],
+          "answer": "The class started to build a new reading wall.",
+          "explanation": "Teacher Yasmin names the project in her first speech of the story."
+        },
+        {
+          "prompt": "What did the sign on the finished wall say?",
+          "choices": [
+            "The family's jobs are ordered by First, Then and Finally.",
+            "The sign said: “We built this wall to share words and protect dreams.”",
+            "The words I think show that the opinion is polite."
+          ],
+          "answer": "The sign said: “We built this wall to share words and protect dreams.”",
+          "explanation": "The exact words are quoted in the story, so the answer can be copied carefully."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Tell What You Did",
+          "target": "Think of something you did yesterday or last week."
+        },
+        {
+          "prompt": "Speaking 2 — Share a Polite Opinion",
+          "target": "I think ______ because ______."
+        },
+        {
+          "prompt": "Speaking 3 — What Happened Next?",
+          "target": "Then it ran to the garden and ______."
+        },
+        {
+          "prompt": "Speaking 4 — Vocabulary Expert Interview",
+          "target": "Sami heard the creaking sound near the wall."
+        },
+        {
+          "prompt": "Speaking 5 — Explain and Respond",
+          "target": "Why did they add more stones?"
+        },
+        {
+          "prompt": "Speaking 6 — One-Minute Unit Talk",
+          "target": "We are nearly finished with the wall."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "words.",
+            "new",
+            "these",
+            "to",
+            "rule",
+            "spelling",
+            "the",
+            "Apply"
+          ],
+          "answer": "Apply the spelling rule to these new words."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "river.",
+            "the",
+            "of",
+            "size",
+            "the",
+            "increase",
+            "will",
+            "rain",
+            "The"
+          ],
+          "answer": "The rain will increase the size of the river."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "wall.",
+            "the",
+            "finishing",
+            "celebrated",
+            "class",
+            "The"
+          ],
+          "answer": "The class celebrated finishing the wall."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "wind.",
+            "the",
+            "in",
+            "creaking",
+            "kept",
+            "gate",
+            "old",
+            "The"
+          ],
+          "answer": "The old gate kept creaking in the wind."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "up.",
+            "picked",
+            "wind",
+            "the",
+            "as",
+            "dark",
+            "grew",
+            "sky",
+            "The"
+          ],
+          "answer": "The sky grew dark as the wind picked up."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "done.",
+            "nearly",
+            "was",
+            "fence",
+            "the",
+            "said",
+            "Dad"
+          ],
+          "answer": "Dad said the fence was nearly done."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'instead' mean in this unit?",
+          "choices": [
+            "In the place of something else, as another choice.",
+            "To look after somebody because you want them to be well.",
+            "A unit of length equal to one hundred centimetres."
+          ],
+          "answer": "In the place of something else, as another choice.",
+          "explanation": "instead: In the place of something else, as another choice."
+        },
+        {
+          "prompt": "What does 'fallen' mean in this unit?",
+          "choices": [
+            "To look after somebody because you want them to be well.",
+            "In the place of something else, as another choice.",
+            "Having dropped down from a higher place, like a leaf falling from a tree."
+          ],
+          "answer": "Having dropped down from a higher place, like a leaf falling from a tree.",
+          "explanation": "fallen: Having dropped down from a higher place, like a leaf falling from a tree."
+        },
+        {
+          "prompt": "What does 'decided' mean in this unit?",
+          "choices": [
+            "In the place of something else, as another choice.",
+            "To have made a choice about what to do.",
+            "To look after somebody because you want them to be well."
+          ],
+          "answer": "To have made a choice about what to do.",
+          "explanation": "decided: To have made a choice about what to do."
+        },
+        {
+          "prompt": "What does 'dark' mean in this unit?",
+          "choices": [
+            "Having very little or no light.",
+            "To look after somebody because you want them to be well.",
+            "In the place of something else, as another choice."
+          ],
+          "answer": "Having very little or no light.",
+          "explanation": "dark: Having very little or no light."
+        },
+        {
+          "prompt": "What does 'leaf' mean in this unit?",
+          "choices": [
+            "To look after somebody because you want them to be well.",
+            "In the place of something else, as another choice.",
+            "A flat, thin, usually green part that grows on a plant."
+          ],
+          "answer": "A flat, thin, usually green part that grows on a plant.",
+          "explanation": "leaf: A flat, thin, usually green part that grows on a plant."
+        },
+        {
+          "prompt": "What does 'develop' mean in this unit?",
+          "choices": [
+            "In the place of something else, as another choice.",
+            "To grow or become better over time.",
+            "To look after somebody because you want them to be well."
+          ],
+          "answer": "To grow or become better over time.",
+          "explanation": "develop: To grow or become better over time."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'metre'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Metre is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'searched'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Searched is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'grabbed'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Grabbed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'singing'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Singing is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'remove'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Remove is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'explore'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Explore is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "bear",
+              "A large, heavy wild animal with thick fur."
+            ],
+            [
+              "otherwise",
+              "If not, then something else will happen."
+            ],
+            [
+              "different",
+              "Different means not the same as something else."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "understand",
+              "To know what something means or why something happens."
+            ],
+            [
+              "flower",
+              "The colourful part of a plant that often smells nice."
+            ],
+            [
+              "shopkeeper",
+              "A person who owns or looks after a small shop."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "lifted",
+              "To have picked something up and moved it higher."
+            ],
+            [
+              "shake",
+              "To move quickly from side to side or up and down."
+            ],
+            [
+              "pairs",
+              "Two things or people that go together, like two hands working as a team."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "discussed",
+              "Talked about something with other people to share ideas and opinions."
+            ],
+            [
+              "touch",
+              "A small extra part added at the end to finish something nicely."
+            ],
+            [
+              "offered",
+              "Gave help, or gave something to someone, in a kind way."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "nearly",
+              "Almost, but not quite finished or complete."
+            ],
+            [
+              "build",
+              "To make something by putting parts together."
+            ],
+            [
+              "accept",
+              "To say yes to something you are offered."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "communicate",
+              "To share information or ideas with someone."
+            ],
+            [
+              "enter",
+              "To go into a place."
+            ],
+            [
+              "introduce",
+              "To bring in something new, or to make people known to each other."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which verb means to grow or become better over time?",
+          "choices": [
+            "escape",
+            "complete",
+            "develop",
+            "listen"
+          ],
+          "answer": "develop",
+          "explanation": "Develop describes slow change, which is why a town or a skill can develop."
+        },
+        {
+          "prompt": "In Planning the Garden, why do the friends build a small fence?",
+          "choices": [
+            "To search for good seeds.",
+            "To protect the plants.",
+            "To celebrate the first flower.",
+            "To water the garden every day."
+          ],
+          "answer": "To protect the plants.",
+          "explanation": "The plan states the purpose of the fence straight after the word to."
+        },
+        {
+          "prompt": "Which question about a past journey is written correctly?",
+          "choices": [
+            "Where you travelled last week?",
+            "Where travelled you last week?",
+            "Where did you travelled last week?",
+            "Where did you travel last week?"
+          ],
+          "answer": "Where did you travel last week?",
+          "explanation": "Past questions need the helping word did, and after did the verb goes back to its base form."
+        },
+        {
+          "prompt": "Which of these things did the class do first when they made the wall?",
+          "choices": [
+            "They searched for smooth stones.",
+            "They celebrated with the town.",
+            "They discussed the design and colours.",
+            "They began to build the wall."
+          ],
+          "answer": "They searched for smooth stones.",
+          "explanation": "The story marks this step with First, and the other three follow it with Then, Next and later."
+        },
+        {
+          "prompt": "Which sentence shares an opinion politely?",
+          "choices": [
+            "Group work is boring!",
+            "Nobody enjoys group work.",
+            "I think group work is fun.",
+            "Group work always wastes our time."
+          ],
+          "answer": "I think group work is fun.",
+          "explanation": "The words I think turn a strong statement into a personal opinion others can disagree with kindly."
+        },
         {
           "prompt": "What does the word protect mean in this unit?",
           "choices": [
@@ -482,28 +809,78 @@
           ],
           "answer": "To keep someone or something safe from harm.",
           "explanation": "Protect is about safety, so the helmet in the example sentence keeps your head from harm."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which of these things did the class do first when they made the wall?",
+          "choices": [
+            "They searched for smooth stones.",
+            "They celebrated with the town.",
+            "They discussed the design and colours.",
+            "They began to build the wall."
+          ],
+          "answer": "They searched for smooth stones.",
+          "explanation": "The story marks this step with First, and the other three follow it with Then, Next and later."
         },
         {
-          "prompt": "In The Wall Behind the Garden, what did the class remove before they could build?",
+          "prompt": "Which sentence shares an opinion politely?",
           "choices": [
-            "The old, broken fence.",
-            "The stone reading wall.",
-            "The tomatoes in the garden.",
-            "The sign about sharing words."
+            "Group work is boring!",
+            "Nobody enjoys group work.",
+            "I think group work is fun.",
+            "Group work always wastes our time."
           ],
-          "answer": "The old, broken fence.",
-          "explanation": "Teacher Yasmin says the broken fence must go first, before any building starts."
+          "answer": "I think group work is fun.",
+          "explanation": "The words I think turn a strong statement into a personal opinion others can disagree with kindly."
         },
         {
-          "prompt": "Which sentence uses the past simple correctly?",
+          "prompt": "Which word means: Different means not the same as something else.",
           "choices": [
-            "Yesterday they build a house.",
-            "Yesterday they builds a house.",
-            "Yesterday they are build a house.",
-            "Yesterday they built a house."
+            "different",
+            "care",
+            "instead"
           ],
-          "answer": "Yesterday they built a house.",
-          "explanation": "The time word yesterday shows the action is finished, and the past form of build is built."
+          "answer": "different",
+          "explanation": "different: Different means not the same as something else."
+        },
+        {
+          "prompt": "Which word means: To have made a choice about what to do.",
+          "choices": [
+            "care",
+            "instead",
+            "decided"
+          ],
+          "answer": "decided",
+          "explanation": "decided: To have made a choice about what to do."
+        },
+        {
+          "prompt": "What type of word is 'offered'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Offered is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'develop'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Develop is used as a verb in this dictionary sense."
         }
       ]
     }

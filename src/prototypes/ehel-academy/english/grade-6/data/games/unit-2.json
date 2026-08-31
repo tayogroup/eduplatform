@@ -5,7 +5,7 @@
   "unitId": "eng-g06-t01-u02",
   "title": "Sports and Health Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Uncomfortable or a little difficult, especially with other people.",
           "choices": [
             "awkward",
-            "self-discipline",
-            "exercise"
+            "ecosystem",
+            "carbon"
           ],
           "answer": "awkward",
           "explanation": "awkward: Uncomfortable or a little difficult, especially with other people."
         },
         {
-          "prompt": "Which word means: A quick response of the body or mind to something that happens.",
+          "prompt": "Which word means: Something a person does that involves movement or effort.",
           "choices": [
             "awkward",
-            "self-discipline",
-            "reaction"
+            "ecosystem",
+            "activity"
           ],
-          "answer": "reaction",
-          "explanation": "reaction: A quick response of the body or mind to something that happens."
+          "answer": "activity",
+          "explanation": "activity: Something a person does that involves movement or effort."
         },
         {
-          "prompt": "Which word means: Keeps happening or going on without coming to a stop.",
+          "prompt": "Which word means: The number that comes after ten and before twelve.",
           "choices": [
-            "self-discipline",
-            "continues",
+            "ecosystem",
+            "eleven",
             "awkward"
           ],
-          "answer": "continues",
-          "explanation": "continues: Keeps happening or going on without coming to a stop."
+          "answer": "eleven",
+          "explanation": "eleven: The number that comes after ten and before twelve."
+        },
+        {
+          "prompt": "Which word means: To make the edge or difference between two things unclear.",
+          "choices": [
+            "blur",
+            "awkward",
+            "ecosystem"
+          ],
+          "answer": "blur",
+          "explanation": "blur: To make the edge or difference between two things unclear."
+        },
+        {
+          "prompt": "Which word means: The amount of rain that falls on a place over a period of time.",
+          "choices": [
+            "awkward",
+            "ecosystem",
+            "rainfall"
+          ],
+          "answer": "rainfall",
+          "explanation": "rainfall: The amount of rain that falls on a place over a period of time."
+        },
+        {
+          "prompt": "Which word means: Words or actions that stir people up to rebel against their government or rulers.",
+          "choices": [
+            "ecosystem",
+            "sedition",
+            "awkward"
+          ],
+          "answer": "sedition",
+          "explanation": "sedition: Words or actions that stir people up to rebel against their government or rulers."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "People who have won a competition or are the very best at something.",
-          "answer": "champions"
+          "clue": "To move your body on purpose so that you become fitter and stronger.",
+          "answer": "exercise"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Making something happen, especially something bad or unexpected.",
-          "answer": "causing"
+          "clue": "The number that comes after ten and before twelve.",
+          "answer": "eleven"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A part of the body that tightens and relaxes to create movement.",
+          "answer": "muscle"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To examine something carefully to make sure it is correct, safe or working well.",
+          "answer": "check"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Made a soft, dry sound, like leaves or paper moving together.",
+          "answer": "rustled"
         }
       ]
     },
@@ -97,33 +142,85 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "midday.",
-            "at",
-            "outside",
-            "train",
-            "to",
-            "hot",
-            "too",
-            "was",
-            "It"
+            "kilometres.",
+            "two",
+            "almost",
+            "is",
+            "stadium",
+            "the",
+            "and",
+            "school",
+            "the",
+            "between",
+            "distance",
+            "The"
           ],
-          "answer": "It was too hot to train outside at midday."
+          "answer": "The distance between the school and the stadium is almost two kilometres."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "incredible.",
-            "was",
-            "water",
-            "released",
-            "plants",
+            "hot.",
+            "turns",
+            "weather",
             "the",
-            "which",
-            "at",
-            "rate",
+            "when",
+            "water",
+            "extra",
+            "need",
+            "Athletes"
+          ],
+          "answer": "Athletes need extra water when the weather turns hot."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "preference.",
+            "personal",
+            "a",
+            "just",
+            "really",
+            "is",
+            "food",
+            "favourite",
+            "a",
+            "Choosing"
+          ],
+          "answer": "Choosing a favourite food is really just a personal preference."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "gently.",
+            "branches",
+            "top",
+            "tree's",
+            "fig",
+            "the",
+            "stirred",
+            "wind",
             "The"
           ],
-          "answer": "The rate at which the plants released water was incredible."
+          "answer": "The wind stirred the fig tree's top branches gently."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "hall.",
+            "school",
+            "the",
+            "for",
+            "Speaks'",
+            "Still",
+            "Forest",
+            "'The",
+            "titled",
+            "poster",
+            "a",
+            "built",
+            "Amal"
+          ],
+          "answer": "Amal built a poster titled 'The Forest Still Speaks' for the school hall."
         }
       ]
     },
@@ -136,309 +233,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the correct rewrite of 'Unless you don't hurry, we will be late.'",
+          "prompt": "Which word means 'to slowly become worse in quality'?",
           "choices": [
-            "Unless you hurry, we will be late.",
-            "Unless you don't hurry, we will be late.",
-            "If you don't hurry, we won't be late.",
-            "Unless you will hurry, we will be late."
+            "restoration",
+            "deteriorate",
+            "renewable",
+            "efficient"
           ],
-          "answer": "Unless you hurry, we will be late.",
-          "explanation": "'Unless' already means 'if not', so adding another negative or 'will' after it is wrong."
+          "answer": "deteriorate",
+          "explanation": "'Deteriorate' means to decline or grow worse; the others describe repair, reuse or working well."
         },
         {
-          "prompt": "What does the word 'transpiration' mean?",
+          "prompt": "What does the word 'ecosystem' mean?",
           "choices": [
-            "The death of a large, exploding star",
-            "The way plants release water through their leaves",
-            "A serious disease that spreads quickly and makes people ill",
-            "The feeling of a rough or smooth surface"
+            "A huge explosion when a star dies",
+            "A three-dimensional artwork made from stone or clay",
+            "A community of living things that depend on each other",
+            "Energy that travels as heat or light"
           ],
-          "answer": "The way plants release water through their leaves",
-          "explanation": "Transpiration is how plants lose water through their leaves; the distractors define supernova, plague and texture."
+          "answer": "A community of living things that depend on each other",
+          "explanation": "An ecosystem is a web of living things and their surroundings; the distractors define supernova, sculpture and radiation."
         },
         {
-          "prompt": "Which sentence uses a modal verb to give advice in the First Conditional?",
+          "prompt": "Which sentence is a correct First Conditional?",
           "choices": [
-            "If it snows, we will stay home.",
-            "If it snows, we might stay home.",
-            "If it snows, we should wear warm clothes.",
-            "If it snows, we can stay home."
+            "If it rains, we will cancel the match.",
+            "If it will rain, we will cancel the match.",
+            "If it rains, we cancelled the match.",
+            "If it rained, we will cancel the match."
           ],
-          "answer": "If it snows, we should wear warm clothes.",
-          "explanation": "'Should' gives advice, while 'will', 'might' and 'can' show certainty, possibility and permission."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to the passage, what happens to your heart if you train regularly?",
-          "choices": [
-            "It becomes stronger and more efficient, pumping more blood with each beat, so it works less hard at rest.",
-            "Opinions often use words like 'best', 'worst', 'should' or 'I think'.",
-            "Posters, a display, a written report and a painted model of the forest's root system."
-          ],
-          "answer": "It becomes stronger and more efficient, pumping more blood with each beat, so it works less hard at rest.",
-          "explanation": "The text states that regular training makes the heart stronger and more efficient."
+          "answer": "If it rains, we will cancel the match.",
+          "explanation": "The if-clause needs the present simple and the result needs 'will' plus the base verb; the others break that pattern."
         },
-        {
-          "prompt": "Why might a company use propaganda in an advertisement?",
-          "choices": [
-            "Opinions often use words like 'best', 'worst', 'should' or 'I think'.",
-            "It agrees to ban further clearing near the grove and funds clean-up crews and radiation containment.",
-            "To share only the facts that make its product look good while hiding the rest."
-          ],
-          "answer": "To share only the facts that make its product look good while hiding the rest.",
-          "explanation": "The text explains that propaganda hides one side to make a product look better."
-        },
-        {
-          "prompt": "What does Amal create to help people care about the forest?",
-          "choices": [
-            "She means that protecting and restoring the forest starts when people believe change is possible and choose to act.",
-            "Posters, a display, a written report and a painted model of the forest's root system.",
-            "To share only the facts that make its product look good while hiding the rest."
-          ],
-          "answer": "Posters, a display, a written report and a painted model of the forest's root system.",
-          "explanation": "Part 2 describes the posters, display, report and root-system model Amal makes."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Sports Interview Role-Play",
-          "target": "There was an awkward silence after the whistle."
-        },
-        {
-          "prompt": "Speaking 3: Fact or Opinion Listening Game",
-          "target": "Your teacher or, with an adult present, your AI tutor will read out statements about sport, health and the environment."
-        },
-        {
-          "prompt": "Speaking 5: Science and Tradition Discussion",
-          "target": "In a small group, discuss the story 'When the Leaves Stop Speaking'."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "texture.",
-            "their",
-            "of",
-            "because",
-            "different",
-            "completely",
-            "feel",
-            "glass",
-            "and",
-            "Wool"
-          ],
-          "answer": "Wool and glass feel completely different because of their texture."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "talent.",
-            "raw",
-            "than",
-            "more",
-            "matters",
-            "discipline",
-            "that",
-            "say",
-            "often",
-            "champions",
-            "World"
-          ],
-          "answer": "World champions often say that discipline matters more than raw talent."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "question.",
-            "Amal's",
-            "answering",
-            "before",
-            "slowly",
-            "beard",
-            "his",
-            "stroked",
-            "He"
-          ],
-          "answer": "He stroked his beard slowly before answering Amal's question."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'health' mean in this unit?",
-          "choices": [
-            "The condition of your body and mind, and how well it is working.",
-            "Uncomfortable or a little difficult, especially with other people.",
-            "Making yourself do what you planned, even when you would rather not."
-          ],
-          "answer": "The condition of your body and mind, and how well it is working.",
-          "explanation": "health: The condition of your body and mind, and how well it is working."
-        },
-        {
-          "prompt": "What does 'loud' mean in this unit?",
-          "choices": [
-            "Uncomfortable or a little difficult, especially with other people.",
-            "Making yourself do what you planned, even when you would rather not.",
-            "Producing a lot of noise, or easily heard."
-          ],
-          "answer": "Producing a lot of noise, or easily heard.",
-          "explanation": "loud: Producing a lot of noise, or easily heard."
-        },
-        {
-          "prompt": "What does 'self-discipline' mean in this unit?",
-          "choices": [
-            "To move your body on purpose so that you become fitter and stronger.",
-            "Making yourself do what you planned, even when you would rather not.",
-            "Uncomfortable or a little difficult, especially with other people."
-          ],
-          "answer": "Making yourself do what you planned, even when you would rather not.",
-          "explanation": "self-discipline: Making yourself do what you planned, even when you would rather not."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'light'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Light is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'texture'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Texture is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'lentils'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Lentils is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "bruise",
-              "A dark mark on the skin where it has been struck."
-            ],
-            [
-              "adaptable",
-              "Able to change easily to suit a new situation."
-            ],
-            [
-              "diet",
-              "The usual food and drink a person has."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "concentration",
-              "The ability to keep your full attention on one thing without being distracted."
-            ],
-            [
-              "fair",
-              "Treating people equally and in a way that is right and reasonable."
-            ],
-            [
-              "soil",
-              "The loose top layer of earth in which plants grow and take root."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "involve",
-              "To include something as a necessary part of a situation."
-            ],
-            [
-              "floating",
-              "Staying on the surface of a liquid or moving gently through the air without sinking."
-            ],
-            [
-              "observation",
-              "The act of watching something carefully to notice details and learn about it."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "In the First Conditional, which tense belongs in the if-clause?",
           "choices": [
@@ -475,13 +301,532 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "According to the passage, what happens to your heart if you train regularly?",
+          "choices": [
+            "It becomes stronger and more efficient, pumping more blood with each beat, so it works less hard at rest.",
+            "Opinions often use words like 'best', 'worst', 'should' or 'I think'.",
+            "Posters, a display, a written report and a painted model of the forest's root system."
+          ],
+          "answer": "It becomes stronger and more efficient, pumping more blood with each beat, so it works less hard at rest.",
+          "explanation": "The text states that regular training makes the heart stronger and more efficient."
+        },
+        {
+          "prompt": "The writer ends by saying, 'if you take care of your body today, it will take care of you tomorrow.' Is this a fact or an opinion, and how can you tell?",
+          "choices": [
+            "To share only the facts that make its product look good while hiding the rest.",
+            "It agrees to ban further clearing near the grove and funds clean-up crews and radiation containment.",
+            "It is an opinion, because it is a belief about the future that cannot be measured or proven."
+          ],
+          "answer": "It is an opinion, because it is a belief about the future that cannot be measured or proven.",
+          "explanation": "This closing line expresses a view rather than a testable, measurable fact."
+        },
+        {
+          "prompt": "Why might a company use propaganda in an advertisement?",
+          "choices": [
+            "She means that protecting and restoring the forest starts when people believe change is possible and choose to act.",
+            "To share only the facts that make its product look good while hiding the rest.",
+            "It means 'Power of Nature', and it is the protected forest grove that the village cares for."
+          ],
+          "answer": "To share only the facts that make its product look good while hiding the rest.",
+          "explanation": "The text explains that propaganda hides one side to make a product look better."
+        },
+        {
+          "prompt": "What does the grove's name, 'Nguvu Wa Asili', mean, and what is it?",
+          "choices": [
+            "It means 'Power of Nature', and it is the protected forest grove that the village cares for.",
+            "Radiation leaking from a forgotten machine buried during the old wars, or a bacterial plague.",
+            "It becomes stronger and more efficient, pumping more blood with each beat, so it works less hard at rest."
+          ],
+          "answer": "It means 'Power of Nature', and it is the protected forest grove that the village cares for.",
+          "explanation": "The text translates the name and describes the grove the villagers protect."
+        },
+        {
+          "prompt": "What does Amal create to help people care about the forest?",
+          "choices": [
+            "Radiation leaking from a forgotten machine buried during the old wars, or a bacterial plague.",
+            "It is an opinion, because it is a belief about the future that cannot be measured or proven.",
+            "Posters, a display, a written report and a painted model of the forest's root system."
+          ],
+          "answer": "Posters, a display, a written report and a painted model of the forest's root system.",
+          "explanation": "Part 2 describes the posters, display, report and root-system model Amal makes."
+        },
+        {
+          "prompt": "What decision does the council make at the end of part 2?",
+          "choices": [
+            "Opinions often use words like 'best', 'worst', 'should' or 'I think'.",
+            "It agrees to ban further clearing near the grove and funds clean-up crews and radiation containment.",
+            "Posters, a display, a written report and a painted model of the forest's root system."
+          ],
+          "answer": "It agrees to ban further clearing near the grove and funds clean-up crews and radiation containment.",
+          "explanation": "The final paragraph states the council's ban and new funding."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Sports Interview Role-Play",
+          "target": "There was an awkward silence after the whistle."
+        },
+        {
+          "prompt": "Speaking 2: Health Advice Presentation",
+          "target": "The distance between the school and the stadium is almost two kilometres."
+        },
+        {
+          "prompt": "Speaking 3: Fact or Opinion Listening Game",
+          "target": "Your teacher or, with an adult present, your AI tutor will read out statements about sport, health and the environment."
+        },
+        {
+          "prompt": "Speaking 4: Sports Commentary Performance",
+          "target": "Using the sports commentary you wrote in the Writing Workshop, perform it aloud as if you were a live commentator on radio or television."
+        },
+        {
+          "prompt": "Speaking 5: Science and Tradition Discussion",
+          "target": "In a small group, discuss the story 'When the Leaves Stop Speaking'."
+        },
+        {
+          "prompt": "Speaking 6: First Conditional Chain",
+          "target": "Play a First Conditional chain with a partner."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "lands.",
+            "many",
+            "from",
+            "music",
+            "with",
+            "square",
+            "the",
+            "filled",
+            "festival",
+            "multicultural",
+            "A"
+          ],
+          "answer": "A multicultural festival filled the square with music from many lands."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "night.",
+            "last",
+            "rain",
+            "heavy",
+            "the",
+            "after",
+            "muddy",
+            "were",
+            "pitches",
+            "The"
+          ],
+          "answer": "The pitches were muddy after the heavy rain last night."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "race?",
+            "long",
+            "a",
+            "during",
+            "injury",
+            "avoid",
+            "runners",
+            "can",
+            "How"
+          ],
+          "answer": "How can runners avoid injury during a long race?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "article.",
+            "newspaper",
+            "same",
+            "very",
+            "the",
+            "in",
+            "appear",
+            "might",
+            "statements",
+            "Both"
+          ],
+          "answer": "Both statements might appear in the very same newspaper article."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "arrived.",
+            "scientists",
+            "the",
+            "before",
+            "long",
+            "peace",
+            "of",
+            "place",
+            "a",
+            "was",
+            "It"
+          ],
+          "answer": "It was a place of peace long before the scientists arrived."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "months.",
+            "for",
+            "unknown",
+            "remained",
+            "changes",
+            "leaf",
+            "the",
+            "of",
+            "cause",
+            "exact",
+            "The"
+          ],
+          "answer": "The exact cause of the leaf changes remained unknown for months."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'ecosystem' mean in this unit?",
+          "choices": [
+            "A community of living things and their surroundings that all depend on each other.",
+            "Uncomfortable or a little difficult, especially with other people.",
+            "A basic element found in all living things and in materials like coal and diamonds."
+          ],
+          "answer": "A community of living things and their surroundings that all depend on each other.",
+          "explanation": "ecosystem: A community of living things and their surroundings that all depend on each other."
+        },
+        {
+          "prompt": "What does 'train' mean in this unit?",
+          "choices": [
+            "Uncomfortable or a little difficult, especially with other people.",
+            "A community of living things and their surroundings that all depend on each other.",
+            "To practise regularly so that you become fitter or better at something."
+          ],
+          "answer": "To practise regularly so that you become fitter or better at something.",
+          "explanation": "train: To practise regularly so that you become fitter or better at something."
+        },
+        {
+          "prompt": "What does 'cooperate' mean in this unit?",
+          "choices": [
+            "A community of living things and their surroundings that all depend on each other.",
+            "To work together with other people to achieve something.",
+            "Uncomfortable or a little difficult, especially with other people."
+          ],
+          "answer": "To work together with other people to achieve something.",
+          "explanation": "cooperate: To work together with other people to achieve something."
+        },
+        {
+          "prompt": "What does 'light' mean in this unit?",
+          "choices": [
+            "The brightness that lets people see, or something that shines and glows.",
+            "Uncomfortable or a little difficult, especially with other people.",
+            "A community of living things and their surroundings that all depend on each other."
+          ],
+          "answer": "The brightness that lets people see, or something that shines and glows.",
+          "explanation": "light: The brightness that lets people see, or something that shines and glows."
+        },
+        {
+          "prompt": "What does 'describe' mean in this unit?",
+          "choices": [
+            "Uncomfortable or a little difficult, especially with other people.",
+            "A community of living things and their surroundings that all depend on each other.",
+            "To give a detailed account of something in words."
+          ],
+          "answer": "To give a detailed account of something in words.",
+          "explanation": "describe: To give a detailed account of something in words."
+        },
+        {
+          "prompt": "What does 'environmental' mean in this unit?",
+          "choices": [
+            "A community of living things and their surroundings that all depend on each other.",
+            "Connected to the natural world and how human actions affect it.",
+            "Uncomfortable or a little difficult, especially with other people."
+          ],
+          "answer": "Connected to the natural world and how human actions affect it.",
+          "explanation": "environmental: Connected to the natural world and how human actions affect it."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'carbon'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Carbon is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fish'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Fish is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'statement'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Statement is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'edges'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Edges is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'unknown'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Unknown is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'antibody'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Antibody is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "bruise",
+              "A dark mark on the skin where it has been struck."
+            ],
+            [
+              "satellite",
+              "A satellite is a machine sent into space that circles the Earth and sends back information."
+            ],
+            [
+              "evolution",
+              "The slow change of living things over very long periods."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "involves",
+              "Includes something as a necessary part of it."
+            ],
+            [
+              "diet",
+              "The usual food and drink a person has."
+            ],
+            [
+              "unwell",
+              "Not feeling well, or slightly ill."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "champions",
+              "People who have won a competition or are the very best at something."
+            ],
+            [
+              "kinds",
+              "Different types or sorts of something."
+            ],
+            [
+              "article",
+              "A piece of writing about a particular subject, usually published in a newspaper or magazine."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "nature",
+              "The physical world, including plants, animals, and the land, that exists without human help."
+            ],
+            [
+              "incredible",
+              "So amazing or extraordinary that it is difficult to believe."
+            ],
+            [
+              "causing",
+              "Making something happen, especially something bad or unexpected."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "above",
+              "In a position higher than something else."
+            ],
+            [
+              "following",
+              "Coming next, straight after something else in time."
+            ],
+            [
+              "shadows",
+              "Dark shapes made when something blocks light."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "sculpture",
+              "A solid, three-dimensional artwork shaped from materials like stone, clay or metal."
+            ],
+            [
+              "mollusc",
+              "A soft-bodied animal, usually with a shell, such as a snail, clam or mussel."
+            ],
+            [
+              "transfer",
+              "To move something from one place, person or form to another."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does the word 'renewable' describe?",
+          "choices": [
+            "Something dangerous that gives off energy",
+            "Something that spreads fear and lies",
+            "Something that can be replaced or used again",
+            "Something you cannot see through at all"
+          ],
+          "answer": "Something that can be replaced or used again",
+          "explanation": "Renewable resources, like sun and wind, can be used again; the distractors describe radioactive, propaganda and opaque things."
+        },
+        {
+          "prompt": "Choose the correct rewrite of 'Unless you don't hurry, we will be late.'",
+          "choices": [
+            "Unless you hurry, we will be late.",
+            "Unless you don't hurry, we will be late.",
+            "If you don't hurry, we won't be late.",
+            "Unless you will hurry, we will be late."
+          ],
+          "answer": "Unless you hurry, we will be late.",
+          "explanation": "'Unless' already means 'if not', so adding another negative or 'will' after it is wrong."
+        },
+        {
+          "prompt": "What does the word 'transpiration' mean?",
+          "choices": [
+            "The death of a large, exploding star",
+            "The way plants release water through their leaves",
+            "A serious disease that spreads quickly and makes people ill",
+            "The feeling of a rough or smooth surface"
+          ],
+          "answer": "The way plants release water through their leaves",
+          "explanation": "Transpiration is how plants lose water through their leaves; the distractors define supernova, plague and texture."
+        },
+        {
+          "prompt": "Which sentence uses a modal verb to give advice in the First Conditional?",
+          "choices": [
+            "If it snows, we will stay home.",
+            "If it snows, we might stay home.",
+            "If it snows, we should wear warm clothes.",
+            "If it snows, we can stay home."
+          ],
+          "answer": "If it snows, we should wear warm clothes.",
+          "explanation": "'Should' gives advice, while 'will', 'might' and 'can' show certainty, possibility and permission."
+        },
+        {
+          "prompt": "Which of these statements is an opinion, not a fact?",
+          "choices": [
+            "The body loses water through sweat during exercise.",
+            "Children need about nine to eleven hours of sleep.",
+            "Bacteria are too small to see without a microscope.",
+            "Football is the best sport in the whole world."
+          ],
+          "answer": "Football is the best sport in the whole world.",
+          "explanation": "'Best' signals a personal view; the other three statements can be checked and proven."
+        },
         {
           "prompt": "Which word means 'to slowly become worse in quality'?",
           "choices": [
@@ -492,28 +837,78 @@
           ],
           "answer": "deteriorate",
           "explanation": "'Deteriorate' means to decline or grow worse; the others describe repair, reuse or working well."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence uses a modal verb to give advice in the First Conditional?",
+          "choices": [
+            "If it snows, we will stay home.",
+            "If it snows, we might stay home.",
+            "If it snows, we should wear warm clothes.",
+            "If it snows, we can stay home."
+          ],
+          "answer": "If it snows, we should wear warm clothes.",
+          "explanation": "'Should' gives advice, while 'will', 'might' and 'can' show certainty, possibility and permission."
         },
         {
-          "prompt": "What does the word 'ecosystem' mean?",
+          "prompt": "Which of these statements is an opinion, not a fact?",
           "choices": [
-            "A huge explosion when a star dies",
-            "A three-dimensional artwork made from stone or clay",
-            "A community of living things that depend on each other",
-            "Energy that travels as heat or light"
+            "The body loses water through sweat during exercise.",
+            "Children need about nine to eleven hours of sleep.",
+            "Bacteria are too small to see without a microscope.",
+            "Football is the best sport in the whole world."
           ],
-          "answer": "A community of living things that depend on each other",
-          "explanation": "An ecosystem is a web of living things and their surroundings; the distractors define supernova, sculpture and radiation."
+          "answer": "Football is the best sport in the whole world.",
+          "explanation": "'Best' signals a personal view; the other three statements can be checked and proven."
         },
         {
-          "prompt": "Which sentence is a correct First Conditional?",
+          "prompt": "Which word means: A feature that helps a living thing survive where it lives.",
           "choices": [
-            "If it rains, we will cancel the match.",
-            "If it will rain, we will cancel the match.",
-            "If it rains, we cancelled the match.",
-            "If it rained, we will cancel the match."
+            "adaptation",
+            "awkward",
+            "ecosystem"
           ],
-          "answer": "If it rains, we will cancel the match.",
-          "explanation": "The if-clause needs the present simple and the result needs 'will' plus the base verb; the others break that pattern."
+          "answer": "adaptation",
+          "explanation": "adaptation: A feature that helps a living thing survive where it lives."
+        },
+        {
+          "prompt": "Which word means: To work together with other people to achieve something.",
+          "choices": [
+            "awkward",
+            "ecosystem",
+            "cooperate"
+          ],
+          "answer": "cooperate",
+          "explanation": "cooperate: To work together with other people to achieve something."
+        },
+        {
+          "prompt": "What type of word is 'involve'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Involve is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'environmental'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Environmental is used as an adjective in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t03-u10",
   "title": "My English Voice: Grade 8 Capstone Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Checking that something is true or has been done correctly.",
           "choices": [
             "verification",
-            "binomial",
-            "colon"
+            "speculate",
+            "denominator-based"
           ],
           "answer": "verification",
           "explanation": "verification: Checking that something is true or has been done correctly."
         },
         {
-          "prompt": "Which word means: A person who lives near another person, often in the next house or street.",
+          "prompt": "Which word means: An indirect reference to another work, person or event.",
           "choices": [
             "verification",
-            "binomial",
-            "neighbour"
+            "speculate",
+            "allusion"
           ],
-          "answer": "neighbour",
-          "explanation": "neighbour: A person who lives near another person, often in the next house or street."
+          "answer": "allusion",
+          "explanation": "allusion: An indirect reference to another work, person or event."
         },
         {
-          "prompt": "Which word means: Carrying or supporting weight, responsibility, or meaning.",
+          "prompt": "Which word means: The way text, pictures and other elements are arranged on a page.",
           "choices": [
-            "binomial",
-            "bearing",
+            "speculate",
+            "layout",
             "verification"
           ],
-          "answer": "bearing",
-          "explanation": "bearing: Carrying or supporting weight, responsibility, or meaning."
+          "answer": "layout",
+          "explanation": "layout: The way text, pictures and other elements are arranged on a page."
+        },
+        {
+          "prompt": "Which word means: A person who designs, builds or fixes machines, structures or systems.",
+          "choices": [
+            "engineer",
+            "verification",
+            "speculate"
+          ],
+          "answer": "engineer",
+          "explanation": "engineer: A person who designs, builds or fixes machines, structures or systems."
+        },
+        {
+          "prompt": "Which word means: Left or pulled out of something, such as a competition or a place.",
+          "choices": [
+            "verification",
+            "speculate",
+            "withdrew"
+          ],
+          "answer": "withdrew",
+          "explanation": "withdrew: Left or pulled out of something, such as a competition or a place."
+        },
+        {
+          "prompt": "Which word means: A strong feeling of enthusiasm and eagerness.",
+          "choices": [
+            "speculate",
+            "zeal",
+            "verification"
+          ],
+          "answer": "zeal",
+          "explanation": "zeal: A strong feeling of enthusiasm and eagerness."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Extremely impressive or bright, often in a way that overwhelms the observer.",
-          "answer": "dazzling"
+          "clue": "To prove that a statement is wrong.",
+          "answer": "refute"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A sudden event that causes serious harm, damage, or difficulty.",
-          "answer": "disaster"
+          "clue": "The exact words someone said or wrote, repeated by another person.",
+          "answer": "quotation"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Great honour, praise, or fame that comes from an impressive achievement.",
+          "answer": "glory"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The speed and rhythm at which a story, speech, or event moves forward.",
+          "answer": "pacing"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To take control of something, especially a position of power, without the right to do so.",
+          "answer": "usurp"
         }
       ]
     },
@@ -98,33 +143,81 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "question.",
-            "enquiry",
-            "clear",
+            "built.",
+            "is",
+            "it",
+            "how",
+            "not",
+            "means,",
+            "sentence",
             "a",
-            "with",
-            "begins",
-            "project",
-            "capstone",
-            "Every"
+            "what",
+            "asks",
+            "Semantics"
           ],
-          "answer": "Every capstone project begins with a clear enquiry question."
+          "answer": "Semantics asks what a sentence means, not how it is built."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "field.",
+            "other.",
             "the",
-            "of",
-            "stretch",
-            "final",
+            "after",
+            "one",
+            "not",
+            "together,",
+            "solved",
+            "are",
+            "equations",
+            "Simultaneous"
+          ],
+          "answer": "Simultaneous equations are solved together, not one after the other."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "is.",
+            "actually",
+            "argument",
+            "an",
+            "weak",
+            "how",
+            "disguise",
+            "can",
+            "font",
+            "bold",
+            "A"
+          ],
+          "answer": "A bold font can disguise how weak an argument actually is."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "highlands.",
             "the",
-            "across",
-            "raced",
-            "runners",
+            "into",
+            "up",
+            "trail",
+            "twisting",
+            "a",
+            "followed",
+            "expedition",
             "The"
           ],
-          "answer": "The runners raced across the final stretch of the field."
+          "answer": "The expedition followed a twisting trail up into the highlands."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "round.",
+            "final",
+            "the",
+            "reached",
+            "teams",
+            "four",
+            "Only"
+          ],
+          "answer": "Only four teams reached the final round."
         }
       ]
     },
@@ -137,318 +230,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence is a correct second conditional?",
+          "prompt": "Which review word from Unit 1 means 'using few words to say something clearly'?",
           "choices": [
-            "If the bay was cleaner, more fish will return.",
-            "If the bay were cleaner, more fish would return.",
-            "If the bay is cleaner, more fish would return.",
-            "If the bay would be cleaner, more fish returned."
+            "temperate",
+            "concise",
+            "gullible",
+            "plausible"
           ],
-          "answer": "If the bay were cleaner, more fish would return.",
-          "explanation": "The second conditional imagines the present: if plus past ('were'), then would plus the base verb, as in Units 3 and 4."
+          "answer": "concise",
+          "explanation": "Concise writing keeps only the words that earn their place, like the questioning club's one-line rule in Unit 1."
         },
         {
-          "prompt": "In 'The officials tried to play down the pollution report', what does 'play down' mean?",
+          "prompt": "Which sentence compares two climbers correctly?",
           "choices": [
-            "to refuse to talk about something ever again",
-            "to make something seem less important",
-            "to practise before a serious match",
-            "to celebrate a result loudly"
+            "Zara climbed more carefully than the lone climber.",
+            "Zara climbed most carefully than the lone climber.",
+            "Zara climbed more carefully of the lone climber.",
+            "Zara climbed the most carefully than the lone climber."
           ],
-          "answer": "to make something seem less important",
-          "explanation": "Play down means to minimise: the officials wanted the report to seem smaller than it was, a phrasal verb from the Unit 7 pattern set."
+          "answer": "Zara climbed more carefully than the lone climber.",
+          "explanation": "Two actions compared take a comparative adverb with 'than': more carefully than. Superlatives need three or more."
         },
         {
-          "prompt": "Choose the missing word from 'Review text 3': The park wardens hoped the new signs would ______ visitors from leaving the marked trails.",
+          "prompt": "Which sentence is in the present continuous passive?",
           "choices": [
-            "commemorate",
-            "exult",
-            "deter",
-            "falter"
+            "New bins are affixed along the beach paths every season.",
+            "Volunteers are affixing new bins along the beach paths.",
+            "New bins are being affixed along the beach paths.",
+            "New bins will be affixed along the beach paths soon."
           ],
-          "answer": "deter",
-          "explanation": "Review text 3 says the wardens hoped the new signs would deter visitors from leaving the marked trails; deter means to make someone decide not to act."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to Review text 1, what did the Fact-Checker's Toolkit train readers to do before sharing a story?",
-          "choices": [
-            "To ask five questions first: who wrote this, when was it written, what evidence supports it, is it plausible, and who benefits if I believe it.",
-            "The movement started small, stayed visible and handed every neighbour a job worth doing, so results like new bins and clean-ups kept it growing.",
-            "Two days later another essay appeared by someone else, then more followed, printed by hand and passed under desks until a patient, systematic network had formed."
-          ],
-          "answer": "To ask five questions first: who wrote this, when was it written, what evidence supports it, is it plausible, and who benefits if I believe it.",
-          "explanation": "Review text 1 says the Fact-Checker's Toolkit handed you five steady questions to slow the race to share: who wrote this, when was it written, what evidence supports it, is it plausible, and who benefits if I believe it."
+          "answer": "New bins are being affixed along the beach paths.",
+          "explanation": "The present continuous passive is are or is plus being plus a past participle, as in Unit 3's clean-up scenes."
         },
-        {
-          "prompt": "What single lesson does Review text 3 draw from both Marka's shoreline and the Simien Highlands expedition?",
-          "choices": [
-            "The movement started small, stayed visible and handed every neighbour a job worth doing, so results like new bins and clean-ups kept it growing.",
-            "Language is power, and power demands evidence, fairness and craft.",
-            "Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush past the evidence."
-          ],
-          "answer": "Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush past the evidence.",
-          "explanation": "The text says: Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush past the evidence."
-        },
-        {
-          "prompt": "What does Review text 5 name as the one steady lesson running through all nine units of the year?",
-          "choices": [
-            "He admitted he could not prove it, so he refused to accuse anyone; he called the behaviour repugnant and led his cast to rewrite and perform without the mask.",
-            "Language is power, and power demands evidence, fairness and craft.",
-            "Nadir's pitch was slick and polished but thin on evidence, while the winners rehearsed, spoke with calm authority and brought working results, so proof beat polish."
-          ],
-          "answer": "Language is power, and power demands evidence, fairness and craft.",
-          "explanation": "In the paragraph that looks back over the whole road, Review text 5 sums up nine units in one sentence: language is power, and power demands evidence, fairness and craft."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Portfolio evidence conference",
-          "target": "Present four pieces of work from Units 1 to 9 and justify each choice with precise evidence of growth."
-        },
-        {
-          "prompt": "Research vocabulary in context",
-          "target": "Speak for two minutes about your enquiry topic using at least eight of the thirty review words accurately."
-        },
-        {
-          "prompt": "Question-and-answer defence",
-          "target": "Defend your conclusions while a partner asks five challenge questions, at least one about source reliability and one about a counterargument."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "wane.",
-            "to",
-            "began",
-            "party",
-            "the",
-            "at",
-            "excitement",
-            "the",
-            "on,",
-            "went",
-            "evening",
-            "the",
-            "As"
-          ],
-          "answer": "As the evening went on, the excitement at the party began to wane."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "end.",
-            "season's",
-            "the",
-            "mark",
-            "to",
-            "bonfire",
-            "a",
-            "lights",
-            "club",
-            "beach",
-            "the",
-            "summer",
-            "Every"
-          ],
-          "answer": "Every summer the beach club lights a bonfire to mark the season's end."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "climb.",
-            "each",
-            "compare",
-            "to",
-            "most",
-            "and",
-            "more",
-            "like",
-            "words",
-            "measuring",
-            "used",
-            "essay",
-            "The"
-          ],
-          "answer": "The essay used measuring words like more and most to compare each climb."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'playbooks' mean in this unit?",
-          "choices": [
-            "Sets of strategies or plans used to guide actions in a particular situation.",
-            "Checking that something is true or has been done correctly.",
-            "An algebraic expression with exactly two terms."
-          ],
-          "answer": "Sets of strategies or plans used to guide actions in a particular situation.",
-          "explanation": "playbooks: Sets of strategies or plans used to guide actions in a particular situation."
-        },
-        {
-          "prompt": "What does 'sorrow' mean in this unit?",
-          "choices": [
-            "Checking that something is true or has been done correctly.",
-            "An algebraic expression with exactly two terms.",
-            "A deep feeling of sadness, often caused by loss or difficulty."
-          ],
-          "answer": "A deep feeling of sadness, often caused by loss or difficulty.",
-          "explanation": "sorrow: A deep feeling of sadness, often caused by loss or difficulty."
-        },
-        {
-          "prompt": "What does 'binomial' mean in this unit?",
-          "choices": [
-            "A punctuation mark introducing a list, explanation or quotation.",
-            "An algebraic expression with exactly two terms.",
-            "Checking that something is true or has been done correctly."
-          ],
-          "answer": "An algebraic expression with exactly two terms.",
-          "explanation": "binomial: An algebraic expression with exactly two terms."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'unshakeable'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Unshakeable is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'deceptive'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Deceptive is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'tip'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Tip is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "triangulate",
-              "To check a finding by approaching it from several independent directions."
-            ],
-            [
-              "nonlinear",
-              "Not changing at a constant rate, so it does not plot as a straight line."
-            ],
-            [
-              "fades",
-              "Gradually loses colour, strength or importance over time."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "aim",
-              "To direct an effort, action or message towards a particular target."
-            ],
-            [
-              "overflowed",
-              "Became too full and spilled over, or was filled beyond its capacity."
-            ],
-            [
-              "raced",
-              "Moved very quickly, often trying to beat something or someone."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "creeping",
-              "Moving slowly, quietly, or gradually, often without being noticed at first."
-            ],
-            [
-              "concise",
-              "Using few words to say something clearly."
-            ],
-            [
-              "falter",
-              "to hesitate or lose strength when doing something"
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "The mayor said, 'The first units will be installed by December.' Which reported version is correct?",
           "choices": [
@@ -485,13 +298,535 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "According to Review text 1, what did the Fact-Checker's Toolkit train readers to do before sharing a story?",
+          "choices": [
+            "To ask five questions first: who wrote this, when was it written, what evidence supports it, is it plausible, and who benefits if I believe it.",
+            "The movement started small, stayed visible and handed every neighbour a job worth doing, so results like new bins and clean-ups kept it growing.",
+            "Two days later another essay appeared by someone else, then more followed, printed by hand and passed under desks until a patient, systematic network had formed."
+          ],
+          "answer": "To ask five questions first: who wrote this, when was it written, what evidence supports it, is it plausible, and who benefits if I believe it.",
+          "explanation": "Review text 1 says the Fact-Checker's Toolkit handed you five steady questions to slow the race to share: who wrote this, when was it written, what evidence supports it, is it plausible, and who benefits if I believe it."
+        },
+        {
+          "prompt": "What does Review text 2 say made Coastal Rise succeed where louder appeals might have failed?",
+          "choices": [
+            "Nadir's pitch was slick and polished but thin on evidence, while the winners rehearsed, spoke with calm authority and brought working results, so proof beat polish.",
+            "Language is power, and power demands evidence, fairness and craft.",
+            "The movement started small, stayed visible and handed every neighbour a job worth doing, so results like new bins and clean-ups kept it growing."
+          ],
+          "answer": "The movement started small, stayed visible and handed every neighbour a job worth doing, so results like new bins and clean-ups kept it growing.",
+          "explanation": "The paragraph about Rising Tide says such movements succeed because they start small, stay visible and hand every neighbour a job worth doing, and it names the visible results: new bins, weekend clean-ups and elders' bonfire stories."
+        },
+        {
+          "prompt": "What single lesson does Review text 3 draw from both Marka's shoreline and the Simien Highlands expedition?",
+          "choices": [
+            "He admitted he could not prove it, so he refused to accuse anyone; he called the behaviour repugnant and led his cast to rewrite and perform without the mask.",
+            "Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush past the evidence.",
+            "Nadir's pitch was slick and polished but thin on evidence, while the winners rehearsed, spoke with calm authority and brought working results, so proof beat polish."
+          ],
+          "answer": "Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush past the evidence.",
+          "explanation": "The text says: Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush past the evidence."
+        },
+        {
+          "prompt": "According to Review text 4, what standard does 'Legacy: The People History Remembers' use to decide who history keeps?",
+          "choices": [
+            "History keeps the names of people who changed what others could say, think or become, like Jamal and his hidden essay network.",
+            "Places recover when people take patient responsibility: bring counts rather than impressions, compare fairly and refuse to rush past the evidence.",
+            "If you cannot cite a source, you cannot repeat the claim; the rule dismantled the barricade of fear the hoax flyer had built between neighbours."
+          ],
+          "answer": "History keeps the names of people who changed what others could say, think or become, like Jamal and his hidden essay network.",
+          "explanation": "The Unit 7 paragraph says the information text supplied the unit's measuring stick: history keeps the names of people who changed what others could say, think or become. Jamal's essays did exactly that for the students at Kambazi."
+        },
+        {
+          "prompt": "What does Review text 5 name as the one steady lesson running through all nine units of the year?",
+          "choices": [
+            "They brought weeks of charts, samples and counts, and the mayor promised that the first units would be installed by December.",
+            "They hoped the signs would deter visitors from leaving the marked trails, protecting slopes already counted as damaged.",
+            "Language is power, and power demands evidence, fairness and craft."
+          ],
+          "answer": "Language is power, and power demands evidence, fairness and craft.",
+          "explanation": "In the paragraph that looks back over the whole road, Review text 5 sums up nine units in one sentence: language is power, and power demands evidence, fairness and craft."
+        },
+        {
+          "prompt": "What rule did Amal and Nora's questioning club adopt, and what problem was it designed to solve?",
+          "choices": [
+            "To ask five questions first: who wrote this, when was it written, what evidence supports it, is it plausible, and who benefits if I believe it.",
+            "If you cannot cite a source, you cannot repeat the claim; the rule dismantled the barricade of fear the hoax flyer had built between neighbours.",
+            "History keeps the names of people who changed what others could say, think or become, like Jamal and his hidden essay network."
+          ],
+          "answer": "If you cannot cite a source, you cannot repeat the claim; the rule dismantled the barricade of fear the hoax flyer had built between neighbours.",
+          "explanation": "The text says: If you cannot cite a source, you cannot repeat the claim; the rule dismantled the barricade of fear the hoax flyer had built between neighbours."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Portfolio evidence conference",
+          "target": "Verification meant repeating the count with a different observer."
+        },
+        {
+          "prompt": "Comparative reading and interpretation",
+          "target": "Compare two of the five review texts aloud: their purpose, their strongest evidence and their effect on you as a reader."
+        },
+        {
+          "prompt": "Research vocabulary in context",
+          "target": "Simultaneous equations are solved together, not one after the other."
+        },
+        {
+          "prompt": "Six-minute enquiry presentation",
+          "target": "A bold font can disguise how weak an argument actually is."
+        },
+        {
+          "prompt": "Question-and-answer defence",
+          "target": "Defend your conclusions while a partner asks five challenge questions, at least one about source reliability and one about a counterargument."
+        },
+        {
+          "prompt": "Final capstone presentation",
+          "target": "Only four teams reached the final round."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "deadline.",
+            "the",
+            "before",
+            "student",
+            "each",
+            "with",
+            "conference",
+            "will",
+            "teacher",
+            "The"
+          ],
+          "answer": "The teacher will conference with each student before the deadline."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "park.",
+            "national",
+            "the",
+            "is",
+            "trip",
+            "field",
+            "the",
+            "for",
+            "destination",
+            "Our"
+          ],
+          "answer": "Our destination for the field trip is the national park."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "June.",
+            "by",
+            "Maya",
+            "to",
+            "nature",
+            "second",
+            "became",
+            "source",
+            "every",
+            "checking",
+            "of",
+            "discipline",
+            "The"
+          ],
+          "answer": "The discipline of checking every source became second nature to Maya by June."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Monday.",
+            "on",
+            "sunrise",
+            "after",
+            "just",
+            "harbour",
+            "the",
+            "from",
+            "sailed",
+            "expedition",
+            "The"
+          ],
+          "answer": "The expedition sailed from the harbour just after sunrise on Monday."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "class.",
+            "from",
+            "him",
+            "knew",
+            "only",
+            "who",
+            "everyone",
+            "surprised",
+            "confidence",
+            "unshakeable",
+            "Jamal's"
+          ],
+          "answer": "Jamal's unshakeable confidence surprised everyone who only knew him from class."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "began.",
+            "performance",
+            "second",
+            "the",
+            "as",
+            "just",
+            "reappeared",
+            "mysteriously",
+            "mask",
+            "The"
+          ],
+          "answer": "The mask mysteriously reappeared just as the second performance began."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'speculate' mean in this unit?",
+          "choices": [
+            "To form an idea without firm evidence for it.",
+            "Checking that something is true or has been done correctly.",
+            "Working from the number below the line in a fraction."
+          ],
+          "answer": "To form an idea without firm evidence for it.",
+          "explanation": "speculate: To form an idea without firm evidence for it."
+        },
+        {
+          "prompt": "What does 'epigram' mean in this unit?",
+          "choices": [
+            "Checking that something is true or has been done correctly.",
+            "To form an idea without firm evidence for it.",
+            "A short, sharp saying that makes its point wittily."
+          ],
+          "answer": "A short, sharp saying that makes its point wittily.",
+          "explanation": "epigram: A short, sharp saying that makes its point wittily."
+        },
+        {
+          "prompt": "What does 'discipline' mean in this unit?",
+          "choices": [
+            "To form an idea without firm evidence for it.",
+            "Controlled behaviour that carefully follows a set of rules or a careful method.",
+            "Checking that something is true or has been done correctly."
+          ],
+          "answer": "Controlled behaviour that carefully follows a set of rules or a careful method.",
+          "explanation": "discipline: Controlled behaviour that carefully follows a set of rules or a careful method."
+        },
+        {
+          "prompt": "What does 'twisting' mean in this unit?",
+          "choices": [
+            "Curving and turning repeatedly rather than running in a straight line.",
+            "Checking that something is true or has been done correctly.",
+            "To form an idea without firm evidence for it."
+          ],
+          "answer": "Curving and turning repeatedly rather than running in a straight line.",
+          "explanation": "twisting: Curving and turning repeatedly rather than running in a straight line."
+        },
+        {
+          "prompt": "What does 'load' mean in this unit?",
+          "choices": [
+            "Checking that something is true or has been done correctly.",
+            "To form an idea without firm evidence for it.",
+            "Something heavy that is carried, or a weight that a structure must support."
+          ],
+          "answer": "Something heavy that is carried, or a weight that a structure must support.",
+          "explanation": "load: Something heavy that is carried, or a weight that a structure must support."
+        },
+        {
+          "prompt": "What does 'wane' mean in this unit?",
+          "choices": [
+            "To form an idea without firm evidence for it.",
+            "To become smaller, less strong, or less important over time.",
+            "Checking that something is true or has been done correctly."
+          ],
+          "answer": "To become smaller, less strong, or less important over time.",
+          "explanation": "wane: To become smaller, less strong, or less important over time."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'denominator-based'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Denominator-based is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'deconstruct'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Deconstruct is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'disguise'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Disguise is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'steeper'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Steeper is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'suspicion'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Suspicion is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'falter'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Falter is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "triangulate",
+              "To check a finding by approaching it from several independent directions."
+            ],
+            [
+              "binomial",
+              "An algebraic expression with exactly two terms."
+            ],
+            [
+              "interdisciplinary",
+              "Drawing on more than one field of study at once."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "paradox",
+              "A statement that seems to contradict itself yet holds a truth."
+            ],
+            [
+              "substantiate",
+              "To support a claim with evidence."
+            ],
+            [
+              "frightened",
+              "Feeling afraid or scared because of something dangerous or unsettling."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "motto",
+              "A short phrase that states a person's or group's beliefs or purpose."
+            ],
+            [
+              "quotation",
+              "The exact words someone said or wrote, repeated by another person."
+            ],
+            [
+              "glittering",
+              "Shining brightly, or seeming impressively attractive on the surface."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "sailed",
+              "Travelled across water in a boat or ship."
+            ],
+            [
+              "celebrated",
+              "Praised or honoured something as important, admirable, or worth remembering."
+            ],
+            [
+              "defends",
+              "Argues in support of an idea, choice, or person, usually with evidence."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "prose",
+              "Ordinary written or spoken language, without the rhythm or rhyme of poetry."
+            ],
+            [
+              "standard",
+              "A level of quality or achievement that is expected or aimed for."
+            ],
+            [
+              "soldered",
+              "Firmly joined together, so solid and strong that it is hard to break apart or argue against."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "exult",
+              "To feel very happy and excited, especially because of a success or victory."
+            ],
+            [
+              "adversary",
+              "A person or group that opposes or fights against another."
+            ],
+            [
+              "desist",
+              "To stop doing something"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Imani ______ her closing story since the opening round of the StoryForge. Which form completes the sentence?",
+          "choices": [
+            "has been shaping",
+            "has shaped being",
+            "is been shaping",
+            "have been shaping"
+          ],
+          "answer": "has been shaping",
+          "explanation": "'Since the opening round' measures unfinished duration, so the present perfect continuous fits: has been shaping, from Unit 8."
+        },
+        {
+          "prompt": "Which sentence is a correct second conditional?",
+          "choices": [
+            "If the bay was cleaner, more fish will return.",
+            "If the bay were cleaner, more fish would return.",
+            "If the bay is cleaner, more fish would return.",
+            "If the bay would be cleaner, more fish returned."
+          ],
+          "answer": "If the bay were cleaner, more fish would return.",
+          "explanation": "The second conditional imagines the present: if plus past ('were'), then would plus the base verb, as in Units 3 and 4."
+        },
+        {
+          "prompt": "In 'The officials tried to play down the pollution report', what does 'play down' mean?",
+          "choices": [
+            "to refuse to talk about something ever again",
+            "to make something seem less important",
+            "to practise before a serious match",
+            "to celebrate a result loudly"
+          ],
+          "answer": "to make something seem less important",
+          "explanation": "Play down means to minimise: the officials wanted the report to seem smaller than it was, a phrasal verb from the Unit 7 pattern set."
+        },
+        {
+          "prompt": "Choose the missing word from 'Review text 3': The park wardens hoped the new signs would ______ visitors from leaving the marked trails.",
+          "choices": [
+            "commemorate",
+            "exult",
+            "deter",
+            "falter"
+          ],
+          "answer": "deter",
+          "explanation": "Review text 3 says the wardens hoped the new signs would deter visitors from leaving the marked trails; deter means to make someone decide not to act."
+        },
+        {
+          "prompt": "Choose the missing word from 'Review text 4': His essays could ______ what other students only felt.",
+          "choices": [
+            "articulate",
+            "barricade",
+            "commemorate",
+            "exult"
+          ],
+          "answer": "articulate",
+          "explanation": "Review text 4 says Jamal's essays could articulate what other students only felt: they expressed hidden thoughts clearly."
+        },
         {
           "prompt": "Which review word from Unit 1 means 'using few words to say something clearly'?",
           "choices": [
@@ -502,28 +837,78 @@
           ],
           "answer": "concise",
           "explanation": "Concise writing keeps only the words that earn their place, like the questioning club's one-line rule in Unit 1."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Review text 3': The park wardens hoped the new signs would ______ visitors from leaving the marked trails.",
+          "choices": [
+            "commemorate",
+            "exult",
+            "deter",
+            "falter"
+          ],
+          "answer": "deter",
+          "explanation": "Review text 3 says the wardens hoped the new signs would deter visitors from leaving the marked trails; deter means to make someone decide not to act."
         },
         {
-          "prompt": "Which sentence compares two climbers correctly?",
+          "prompt": "Choose the missing word from 'Review text 4': His essays could ______ what other students only felt.",
           "choices": [
-            "Zara climbed more carefully than the lone climber.",
-            "Zara climbed most carefully than the lone climber.",
-            "Zara climbed more carefully of the lone climber.",
-            "Zara climbed the most carefully than the lone climber."
+            "articulate",
+            "barricade",
+            "commemorate",
+            "exult"
           ],
-          "answer": "Zara climbed more carefully than the lone climber.",
-          "explanation": "Two actions compared take a comparative adverb with 'than': more carefully than. Superlatives need three or more."
+          "answer": "articulate",
+          "explanation": "Review text 4 says Jamal's essays could articulate what other students only felt: they expressed hidden thoughts clearly."
         },
         {
-          "prompt": "Which sentence is in the present continuous passive?",
+          "prompt": "Which word means: Drawing on more than one field of study at once.",
           "choices": [
-            "New bins are affixed along the beach paths every season.",
-            "Volunteers are affixing new bins along the beach paths.",
-            "New bins are being affixed along the beach paths.",
-            "New bins will be affixed along the beach paths soon."
+            "interdisciplinary",
+            "verification",
+            "speculate"
           ],
-          "answer": "New bins are being affixed along the beach paths.",
-          "explanation": "The present continuous passive is are or is plus being plus a past participle, as in Unit 3's clean-up scenes."
+          "answer": "interdisciplinary",
+          "explanation": "interdisciplinary: Drawing on more than one field of study at once."
+        },
+        {
+          "prompt": "Which word means: Controlled behaviour that carefully follows a set of rules or a careful method.",
+          "choices": [
+            "verification",
+            "speculate",
+            "discipline"
+          ],
+          "answer": "discipline",
+          "explanation": "discipline: Controlled behaviour that carefully follows a set of rules or a careful method."
+        },
+        {
+          "prompt": "What type of word is 'defends'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Defends is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'wane'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Wane is used as a verb in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t02-u06",
   "title": "A Different Type of Story Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A place where people are buried after they die.",
           "choices": [
             "cemetery",
-            "informal",
-            "literal"
+            "accurate",
+            "necessary"
           ],
           "answer": "cemetery",
           "explanation": "cemetery: A place where people are buried after they die."
         },
         {
-          "prompt": "Which word means: Very bad, unpleasant or frightening.",
+          "prompt": "Which word means: A person who holds a position of authority in government.",
           "choices": [
             "cemetery",
-            "informal",
-            "terrible"
+            "accurate",
+            "official"
           ],
-          "answer": "terrible",
-          "explanation": "terrible: Very bad, unpleasant or frightening."
+          "answer": "official",
+          "explanation": "official: A person who holds a position of authority in government."
         },
         {
-          "prompt": "Which word means: A person who is learning at a school or college.",
+          "prompt": "Which word means: Comes into view or starts to be seen.",
           "choices": [
-            "informal",
-            "student",
+            "accurate",
+            "appears",
             "cemetery"
           ],
-          "answer": "student",
-          "explanation": "student: A person who is learning at a school or college."
+          "answer": "appears",
+          "explanation": "appears: Comes into view or starts to be seen."
+        },
+        {
+          "prompt": "Which word means: Relating to a city, town or the duties and rights of its citizens.",
+          "choices": [
+            "civic",
+            "cemetery",
+            "accurate"
+          ],
+          "answer": "civic",
+          "explanation": "civic: Relating to a city, town or the duties and rights of its citizens."
+        },
+        {
+          "prompt": "Which word means: Questioned or opposed something because it seemed wrong or unfair.",
+          "choices": [
+            "cemetery",
+            "accurate",
+            "challenged"
+          ],
+          "answer": "challenged",
+          "explanation": "challenged: Questioned or opposed something because it seemed wrong or unfair."
+        },
+        {
+          "prompt": "Which word means: A spoken or written set of remarks that explains or describes an event or work.",
+          "choices": [
+            "accurate",
+            "commentary",
+            "cemetery"
+          ],
+          "answer": "commentary",
+          "explanation": "commentary: A spoken or written set of remarks that explains or describes an event or work."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A person who works on a ship or sails as their job.",
-          "answer": "sailor"
+          "clue": "A person who is in charge of a business or a team.",
+          "answer": "manager"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Not real, but acted out or imagined as if it were real.",
-          "answer": "pretend"
+          "clue": "To use time or money doing something.",
+          "answer": "spend"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Having the colour of blood or a ripe tomato.",
+          "answer": "red"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The person in charge of running a school.",
+          "answer": "headteacher"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The opening part of a story that sets up who and where.",
+          "answer": "exposition"
         }
       ]
     },
@@ -96,30 +141,78 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "attention.",
-            "our",
-            "get",
-            "to",
-            "arms",
-            "his",
-            "waved",
-            "He"
+            "leave.",
+            "of",
+            "day",
+            "a",
+            "her",
+            "gave",
+            "employer",
+            "Her"
           ],
-          "answer": "He waved his arms to get our attention."
+          "answer": "Her employer gave her a day of leave."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "window.",
-            "classroom",
+            "library.",
+            "school",
             "the",
-            "off",
-            "dust",
+            "of",
+            "tour",
+            "a",
+            "class",
             "the",
-            "wiped",
-            "Sami"
+            "gave",
+            "teacher",
+            "The"
           ],
-          "answer": "Sami wiped the dust off the classroom window."
+          "answer": "The teacher gave the class a tour of the school library."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "grassland.",
+            "dry",
+            "the",
+            "across",
+            "fox",
+            "the",
+            "chased",
+            "hyena",
+            "The"
+          ],
+          "answer": "The hyena chased the fox across the dry grassland."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "meaningful.",
+            "feel",
+            "to",
+            "trial",
+            "pretend",
+            "the",
+            "wanted",
+            "teacher",
+            "The"
+          ],
+          "answer": "The teacher wanted the pretend trial to feel meaningful."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "sooner.",
+            "fixed",
+            "been",
+            "had",
+            "rule",
+            "the",
+            "wished",
+            "headteacher",
+            "The"
+          ],
+          "answer": "The headteacher wished the rule had been fixed sooner."
         }
       ]
     },
@@ -132,311 +225,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from part 1 of the story: \"Ask any student who felt unwelcome, ______, or ignored.\"",
+          "prompt": "What does the word \"illegible\" mean?",
           "choices": [
-            "unexpected",
-            "unsuccessful",
-            "unfamiliar",
-            "uneasy"
+            "Very boring because it is always the same.",
+            "Able to be travelled on, especially by boats.",
+            "Not awake and not aware of what is happening.",
+            "Hard to read or not clear enough to understand."
           ],
-          "answer": "uneasy",
-          "explanation": "Amal lists three uncomfortable feelings, and uneasy is the one that means worried or uncomfortable."
+          "answer": "Hard to read or not clear enough to understand.",
+          "explanation": "Legible means readable, so the prefix il- flips it: the faded files in the story were illegible."
         },
         {
-          "prompt": "Choose the missing word from part 2 of the story: \"Because some were too ______ to speak,\" added Nora.",
+          "prompt": "Which prefix turns \"complete\" into a word meaning the opposite?",
           "choices": [
-            "unaware",
-            "unconscious",
-            "uncertain",
-            "unfamiliar"
+            "in-",
+            "-ous",
+            "re-",
+            "-able"
           ],
-          "answer": "uncertain",
-          "explanation": "Nora explains that people were not sure enough to speak, and uncertain means not sure about something."
+          "answer": "in-",
+          "explanation": "In- means not, so complete becomes incomplete; -ous and -able are endings, and re- means again."
         },
         {
-          "prompt": "Choose the FANBOYS word that fits: \"The task was long, ______ they finished on time.\"",
+          "prompt": "Teacher Yasmin says one genre is built on suspense, real clues and false clues. Which genre is it?",
           "choices": [
-            "yet",
-            "nor",
-            "for",
-            "or"
+            "Fable",
+            "Legend",
+            "Mystery",
+            "Realistic fiction"
           ],
-          "answer": "yet",
-          "explanation": "The second half is a surprise after the first, and yet marks a surprising contrast."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "How many bookshelves does Teacher Yasmin stand in front of, and what does each one hold?",
-          "choices": [
-            "She stands in front of five colourful bookshelves, and each shelf holds one story genre.",
-            "It takes place in the small red-brick courthouse in Bukoba, as part of their civic education week.",
-            "False clues keep the reader guessing, so the suspense holds until the ending finally makes sense."
-          ],
-          "answer": "She stands in front of five colourful bookshelves, and each shelf holds one story genre.",
-          "explanation": "The opening paragraph names five shelves and says each one holds a different type of story."
+          "answer": "Mystery",
+          "explanation": "The dark blue shelf holds mysteries, where the writer plants false clues to keep the reader guessing."
         },
-        {
-          "prompt": "What two reasons do Sami and Nora give for the unfair law lasting so long?",
-          "choices": [
-            "It takes place in the small red-brick courthouse in Bukoba, as part of their civic education week.",
-            "It suggests the reader sees clearly into someone else's ordinary life and understands their feelings.",
-            "Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak."
-          ],
-          "answer": "Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak.",
-          "explanation": "Both reasons come from the group discussion the teacher leads after the trial."
-        },
-        {
-          "prompt": "Teacher Yasmin says a mystery writer also plants false clues. Why would a writer choose to do that?",
-          "choices": [
-            "They found letters from students, including one saying they felt punished for a condition they could not change.",
-            "False clues keep the reader guessing, so the suspense holds until the ending finally makes sense.",
-            "Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak."
-          ],
-          "answer": "False clues keep the reader guessing, so the suspense holds until the ending finally makes sense.",
-          "explanation": "The mystery shelf links clues, false clues and suspense in one explanation, which gives the reason."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Genre Detective Game",
-          "target": "My story is about a girl who finds a locked box under her bed."
-        },
-        {
-          "prompt": "Speaking 3: Dramatic Reading",
-          "target": "He waved his arms to get our attention."
-        },
-        {
-          "prompt": "Speaking 5: Prefix Expert Explains",
-          "target": "The word is ______, and the base word inside it is ______."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "dark.",
-            "the",
-            "in",
-            "noise",
-            "strange",
-            "a",
-            "heard",
-            "I",
-            "when",
-            "uneasy",
-            "felt",
-            "I"
-          ],
-          "answer": "I felt uneasy when I heard a strange noise in the dark."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "page.",
-            "first",
-            "very",
-            "the",
-            "from",
-            "suspense",
-            "on",
-            "built",
-            "are",
-            "stories",
-            "Mystery"
-          ],
-          "answer": "Mystery stories are built on suspense from the very first page."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "pages.",
-            "missing",
-            "the",
-            "find",
-            "to",
-            "folder",
-            "the",
-            "opened",
-            "Nora"
-          ],
-          "answer": "Nora opened the folder to find the missing pages."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'suspense' mean in this unit?",
-          "choices": [
-            "A feeling of excitement or nervousness while waiting to find out what happens.",
-            "A place where people are buried after they die.",
-            "Not formal or official; relaxed and casual."
-          ],
-          "answer": "A feeling of excitement or nervousness while waiting to find out what happens.",
-          "explanation": "suspense: A feeling of excitement or nervousness while waiting to find out what happens."
-        },
-        {
-          "prompt": "What does 'witnessing' mean in this unit?",
-          "choices": [
-            "A place where people are buried after they die.",
-            "Not formal or official; relaxed and casual.",
-            "Seeing or experiencing something happen, often something important."
-          ],
-          "answer": "Seeing or experiencing something happen, often something important.",
-          "explanation": "witnessing: Seeing or experiencing something happen, often something important."
-        },
-        {
-          "prompt": "What does 'informal' mean in this unit?",
-          "choices": [
-            "Meaning exactly what the words say, with nothing figurative.",
-            "Not formal or official; relaxed and casual.",
-            "A place where people are buried after they die."
-          ],
-          "answer": "Not formal or official; relaxed and casual.",
-          "explanation": "informal: Not formal or official; relaxed and casual."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'red'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Red is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'disregard'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Disregard is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'vast'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Vast is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "category",
-              "A group of things that share the same features."
-            ],
-            [
-              "coherence",
-              "The quality of a text whose ideas fit together sensibly."
-            ],
-            [
-              "unlikely",
-              "Not expected to happen or be true; improbable."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "waterfall",
-              "A place where a river or stream falls suddenly from a high point."
-            ],
-            [
-              "outwits",
-              "Beats someone by being cleverer than them, rather than by fighting."
-            ],
-            [
-              "shelves",
-              "Flat boards fixed to a wall or inside a cupboard, used for storing or displaying things."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "reviewed",
-              "Looked at something again carefully to check or judge it."
-            ],
-            [
-              "fortunately",
-              "Luckily, or in a way that is good for someone."
-            ],
-            [
-              "disadvantage",
-              "A situation that makes something harder or less good."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which genre uses talking animals as its main characters and always teaches a moral?",
           "choices": [
@@ -473,13 +293,538 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "How many bookshelves does Teacher Yasmin stand in front of, and what does each one hold?",
+          "choices": [
+            "She stands in front of five colourful bookshelves, and each shelf holds one story genre.",
+            "It takes place in the small red-brick courthouse in Bukoba, as part of their civic education week.",
+            "False clues keep the reader guessing, so the suspense holds until the ending finally makes sense."
+          ],
+          "answer": "She stands in front of five colourful bookshelves, and each shelf holds one story genre.",
+          "explanation": "The opening paragraph names five shelves and says each one holds a different type of story."
+        },
+        {
+          "prompt": "Which everyday objects are shown on the banner of the realistic fiction shelf?",
+          "choices": [
+            "Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak.",
+            "It suggests the reader sees clearly into someone else's ordinary life and understands their feelings.",
+            "The calm sky blue banner shows schoolbags, bicycles and houses."
+          ],
+          "answer": "The calm sky blue banner shows schoolbags, bicycles and houses.",
+          "explanation": "The fifth shelf is described with ordinary objects, which matches the ordinary lives in that genre."
+        },
+        {
+          "prompt": "What two reasons do Sami and Nora give for the unfair law lasting so long?",
+          "choices": [
+            "They found letters from students, including one saying they felt punished for a condition they could not change.",
+            "Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak.",
+            "Readers keep turning the pages because they always want to know what happens next."
+          ],
+          "answer": "Sami says many people were unaware of its effects, and Nora says some were too uncertain to speak.",
+          "explanation": "Both reasons come from the group discussion the teacher leads after the trial."
+        },
+        {
+          "prompt": "What does Amal mean when she says the old rule shows clear disregard for fairness?",
+          "choices": [
+            "She means the rule ignored fairness completely, because it shut students with a disability out of the top schools.",
+            "Readers keep turning the pages because they always want to know what happens next.",
+            "She admits that the delay was regrettable, then celebrates that the students are speaking about it now."
+          ],
+          "answer": "She means the rule ignored fairness completely, because it shut students with a disability out of the top schools.",
+          "explanation": "Amal speaks straight after the teacher reads the rule aloud, so her words judge that rule."
+        },
+        {
+          "prompt": "Teacher Yasmin says a mystery writer also plants false clues. Why would a writer choose to do that?",
+          "choices": [
+            "She means the rule ignored fairness completely, because it shut students with a disability out of the top schools.",
+            "She stands in front of five colourful bookshelves, and each shelf holds one story genre.",
+            "False clues keep the reader guessing, so the suspense holds until the ending finally makes sense."
+          ],
+          "answer": "False clues keep the reader guessing, so the suspense holds until the ending finally makes sense.",
+          "explanation": "The mystery shelf links clues, false clues and suspense in one explanation, which gives the reason."
+        },
+        {
+          "prompt": "What did the students find inside the folder marked Unheard Voices, and why did it affect them?",
+          "choices": [
+            "The calm sky blue banner shows schoolbags, bicycles and houses.",
+            "They found letters from students, including one saying they felt punished for a condition they could not change.",
+            "Students who were refused a place stopped believing their future could change, so the rule took more than a school place."
+          ],
+          "answer": "They found letters from students, including one saying they felt punished for a condition they could not change.",
+          "explanation": "Nora calls the line heartbreaking, which shows the letters made the unfairness feel real."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Genre Detective Game",
+          "target": "My story is about a girl who finds a locked box under her bed."
+        },
+        {
+          "prompt": "Speaking 2: Book Recommendation Talk",
+          "target": "Her employer gave her a day of leave."
+        },
+        {
+          "prompt": "Speaking 3: Dramatic Reading",
+          "target": "The teacher gave the class a tour of the school library."
+        },
+        {
+          "prompt": "Speaking 4: Group Story Starter",
+          "target": "The boat rocked dangerously as the storm rolled in from the east."
+        },
+        {
+          "prompt": "Speaking 5: Prefix Expert Explains",
+          "target": "The word is ______, and the base word inside it is ______."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Unit Talk",
+          "target": "The headteacher wished the rule had been fixed sooner."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "herself.",
+            "by",
+            "box",
+            "heavy",
+            "the",
+            "lifting",
+            "of",
+            "incapable",
+            "is",
+            "She"
+          ],
+          "answer": "She is incapable of lifting the heavy box by herself."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "fair.",
+            "was",
+            "methods",
+            "two",
+            "the",
+            "of",
+            "evaluation",
+            "Her"
+          ],
+          "answer": "Her evaluation of the two methods was fair."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "places.",
+            "new",
+            "discover",
+            "and",
+            "problems",
+            "solve",
+            "danger,",
+            "face",
+            "characters",
+            "The"
+          ],
+          "answer": "The characters face danger, solve problems and discover new places."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "moral.",
+            "clear",
+            "a",
+            "with",
+            "end",
+            "always",
+            "not",
+            "do",
+            "they",
+            "because",
+            "fables",
+            "from",
+            "differ",
+            "Legends"
+          ],
+          "answer": "Legends differ from fables because they do not always end with a clear moral."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rule.",
+            "old",
+            "the",
+            "by",
+            "ignored",
+            "or",
+            "uneasy",
+            "unwelcome,",
+            "felt",
+            "who",
+            "student",
+            "any",
+            "Ask"
+          ],
+          "answer": "Ask any student who felt unwelcome, uneasy or ignored by the old rule."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "listen.",
+            "to",
+            "agreed",
+            "finally",
+            "council",
+            "the",
+            "and",
+            "decision,",
+            "the",
+            "followed",
+            "unrest",
+            "of",
+            "Weeks"
+          ],
+          "answer": "Weeks of unrest followed the decision, and the council finally agreed to listen."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'accurate' mean in this unit?",
+          "choices": [
+            "Accurate means correct and exact, without mistakes.",
+            "A place where people are buried after they die.",
+            "Needed, or very important to have."
+          ],
+          "answer": "Accurate means correct and exact, without mistakes.",
+          "explanation": "accurate: Accurate means correct and exact, without mistakes."
+        },
+        {
+          "prompt": "What does 'witness' mean in this unit?",
+          "choices": [
+            "A place where people are buried after they die.",
+            "Accurate means correct and exact, without mistakes.",
+            "A person who saw an event and can describe it."
+          ],
+          "answer": "A person who saw an event and can describe it.",
+          "explanation": "witness: A person who saw an event and can describe it."
+        },
+        {
+          "prompt": "What does 'mightiest' mean in this unit?",
+          "choices": [
+            "Accurate means correct and exact, without mistakes.",
+            "The strongest or most powerful of all.",
+            "A place where people are buried after they die."
+          ],
+          "answer": "The strongest or most powerful of all.",
+          "explanation": "mightiest: The strongest or most powerful of all."
+        },
+        {
+          "prompt": "What does 'denied' mean in this unit?",
+          "choices": [
+            "Refused to allow someone to have or do something.",
+            "A place where people are buried after they die.",
+            "Accurate means correct and exact, without mistakes."
+          ],
+          "answer": "Refused to allow someone to have or do something.",
+          "explanation": "denied: Refused to allow someone to have or do something."
+        },
+        {
+          "prompt": "What does 'uncertain' mean in this unit?",
+          "choices": [
+            "A place where people are buried after they die.",
+            "Accurate means correct and exact, without mistakes.",
+            "Not sure about something and not yet able to decide."
+          ],
+          "answer": "Not sure about something and not yet able to decide.",
+          "explanation": "uncertain: Not sure about something and not yet able to decide."
+        },
+        {
+          "prompt": "What does 'rhetorical' mean in this unit?",
+          "choices": [
+            "Accurate means correct and exact, without mistakes.",
+            "Describing a question asked to make a point, not to get an answer.",
+            "A place where people are buried after they die."
+          ],
+          "answer": "Describing a question asked to make a point, not to get an answer.",
+          "explanation": "rhetorical: Describing a question asked to make a point, not to get an answer."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'necessary'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Necessary is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'travelling'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Travelling is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'differ'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Differ is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'folder'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Folder is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'disregard'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Disregard is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'paraphrase'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Paraphrase is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "category",
+              "A group of things that share the same features."
+            ],
+            [
+              "formal",
+              "Serious and polite, following proper rules, especially in writing or speech."
+            ],
+            [
+              "criminal",
+              "A person who has broken the law."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "professional",
+              "To do with a job that needs special training and skill."
+            ],
+            [
+              "arms",
+              "The parts of your body between your shoulders and your hands."
+            ],
+            [
+              "highlands",
+              "An area of hilly or mountainous land."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "suspense",
+              "A feeling of excitement or nervousness while waiting to find out what happens."
+            ],
+            [
+              "fourth",
+              "Coming after the third one in a list or order."
+            ],
+            [
+              "house",
+              "A building where people live, usually with rooms for sleeping, eating and relaxing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "straightened",
+              "Made something neat, tidy or no longer bent."
+            ],
+            [
+              "civil",
+              "Relating to ordinary citizens and their lives, rather than the military or government leaders."
+            ],
+            [
+              "blocked",
+              "Stopped something from happening or from moving forward."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "unrest",
+              "A situation where people are unhappy and may protest or cause trouble."
+            ],
+            [
+              "dissatisfied",
+              "Not happy or pleased with something."
+            ],
+            [
+              "invincible",
+              "Unable to be defeated or overcome; very strong."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "recount",
+              "A retelling of events in the order they happened."
+            ],
+            [
+              "chronological",
+              "Arranged in the order that things happened."
+            ],
+            [
+              "validate",
+              "To check that something is true or acceptable."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from part 1 of the story: \"And this part says the rule was reviewed during a time of civil ______.\"",
+          "choices": [
+            "unique",
+            "unrest",
+            "unfortunately",
+            "uneasy"
+          ],
+          "answer": "unrest",
+          "explanation": "Civil unrest names a time when people are unhappy enough to protest, which is what Sami finds in the file."
+        },
+        {
+          "prompt": "Choose the missing word from part 1 of the story: \"Ask any student who felt unwelcome, ______, or ignored.\"",
+          "choices": [
+            "unexpected",
+            "unsuccessful",
+            "unfamiliar",
+            "uneasy"
+          ],
+          "answer": "uneasy",
+          "explanation": "Amal lists three uncomfortable feelings, and uneasy is the one that means worried or uncomfortable."
+        },
+        {
+          "prompt": "Choose the missing word from part 2 of the story: \"Because some were too ______ to speak,\" added Nora.",
+          "choices": [
+            "unaware",
+            "unconscious",
+            "uncertain",
+            "unfamiliar"
+          ],
+          "answer": "uncertain",
+          "explanation": "Nora explains that people were not sure enough to speak, and uncertain means not sure about something."
+        },
+        {
+          "prompt": "Choose the FANBOYS word that fits: \"The task was long, ______ they finished on time.\"",
+          "choices": [
+            "yet",
+            "nor",
+            "for",
+            "or"
+          ],
+          "answer": "yet",
+          "explanation": "The second half is a surprise after the first, and yet marks a surprising contrast."
+        },
+        {
+          "prompt": "In \"The rule seemed fair. However, it caused discrimination.\", what job is \"however\" doing?",
+          "choices": [
+            "Joining two words inside one phrase",
+            "Naming the time an event happened",
+            "Linking two separate sentences to show contrast",
+            "Turning a statement into a question"
+          ],
+          "answer": "Linking two separate sentences to show contrast",
+          "explanation": "However is a connective adverb: it reaches across the full stop and marks the contrast that follows."
+        },
         {
           "prompt": "What does the word \"illegible\" mean?",
           "choices": [
@@ -490,28 +835,78 @@
           ],
           "answer": "Hard to read or not clear enough to understand.",
           "explanation": "Legible means readable, so the prefix il- flips it: the faded files in the story were illegible."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the FANBOYS word that fits: \"The task was long, ______ they finished on time.\"",
+          "choices": [
+            "yet",
+            "nor",
+            "for",
+            "or"
+          ],
+          "answer": "yet",
+          "explanation": "The second half is a surprise after the first, and yet marks a surprising contrast."
         },
         {
-          "prompt": "Which prefix turns \"complete\" into a word meaning the opposite?",
+          "prompt": "In \"The rule seemed fair. However, it caused discrimination.\", what job is \"however\" doing?",
           "choices": [
-            "in-",
-            "-ous",
-            "re-",
-            "-able"
+            "Joining two words inside one phrase",
+            "Naming the time an event happened",
+            "Linking two separate sentences to show contrast",
+            "Turning a statement into a question"
           ],
-          "answer": "in-",
-          "explanation": "In- means not, so complete becomes incomplete; -ous and -able are endings, and re- means again."
+          "answer": "Linking two separate sentences to show contrast",
+          "explanation": "However is a connective adverb: it reaches across the full stop and marks the contrast that follows."
         },
         {
-          "prompt": "Teacher Yasmin says one genre is built on suspense, real clues and false clues. Which genre is it?",
+          "prompt": "Which word means: A person who has broken the law.",
           "choices": [
-            "Fable",
-            "Legend",
-            "Mystery",
-            "Realistic fiction"
+            "criminal",
+            "cemetery",
+            "accurate"
           ],
-          "answer": "Mystery",
-          "explanation": "The dark blue shelf holds mysteries, where the writer plants false clues to keep the reader guessing."
+          "answer": "criminal",
+          "explanation": "criminal: A person who has broken the law."
+        },
+        {
+          "prompt": "Which word means: The strongest or most powerful of all.",
+          "choices": [
+            "cemetery",
+            "accurate",
+            "mightiest"
+          ],
+          "answer": "mightiest",
+          "explanation": "mightiest: The strongest or most powerful of all."
+        },
+        {
+          "prompt": "What type of word is 'blocked'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Blocked is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'rhetorical'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Rhetorical is used as an adjective in this dictionary sense."
         }
       ]
     }

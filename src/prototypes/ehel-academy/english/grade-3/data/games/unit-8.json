@@ -5,7 +5,7 @@
   "unitId": "eng-g03-t03-u08",
   "title": "Numbers, Shapes, and Measurement Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A young sheep, or the meat from it.",
           "choices": [
             "lamb",
-            "latitude",
-            "land"
+            "gnat",
+            "several"
           ],
           "answer": "lamb",
           "explanation": "lamb: A young sheep, or the meat from it."
         },
         {
-          "prompt": "Which word means: To check that something is true or correct.",
+          "prompt": "Which word means: A mirror is something you look into to see yourself.",
           "choices": [
             "lamb",
-            "latitude",
-            "verify"
+            "gnat",
+            "mirror"
           ],
-          "answer": "verify",
-          "explanation": "verify: To check that something is true or correct."
+          "answer": "mirror",
+          "explanation": "mirror: A mirror is something you look into to see yourself."
         },
         {
-          "prompt": "Which word means: A person who helps you learn something new.",
+          "prompt": "Which word means: The school subject about numbers, shapes and measuring.",
           "choices": [
-            "latitude",
-            "tutor",
+            "gnat",
+            "maths",
             "lamb"
           ],
-          "answer": "tutor",
-          "explanation": "tutor: A person who helps you learn something new."
+          "answer": "maths",
+          "explanation": "maths: The school subject about numbers, shapes and measuring."
+        },
+        {
+          "prompt": "Which word means: A short way of saying do not.",
+          "choices": [
+            "don't",
+            "lamb",
+            "gnat"
+          ],
+          "answer": "don't",
+          "explanation": "don't: A short way of saying do not."
+        },
+        {
+          "prompt": "Which word means: Adding the same number many times to find a total quickly.",
+          "choices": [
+            "lamb",
+            "gnat",
+            "multiplication"
+          ],
+          "answer": "multiplication",
+          "explanation": "multiplication: Adding the same number many times to find a total quickly."
+        },
+        {
+          "prompt": "Which word means: How long something is from one end to the other end.",
+          "choices": [
+            "gnat",
+            "length",
+            "lamb"
+          ],
+          "answer": "length",
+          "explanation": "length: How long something is from one end to the other end."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "How much something is worth, or the amount a number stands for.",
-          "answer": "value"
+          "clue": "A mirror is something you look into to see yourself.",
+          "answer": "mirror"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A straight tool used to measure or draw lines.",
-          "answer": "ruler"
+          "clue": "The day, month and year written down together.",
+          "answer": "date"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The hard shells left behind by small sea creatures.",
+          "answer": "seashells"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "How big or how small something is when you look at it.",
+          "answer": "size"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "How wide something is, from one side to the other.",
+          "answer": "width"
         }
       ]
     },
@@ -98,27 +143,76 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "morning.",
-            "every",
-            "temperature",
-            "the",
-            "Record"
+            "window.",
+            "tiny",
+            "a",
+            "and",
+            "roof,",
+            "small",
+            "a",
+            "walls,",
+            "had",
+            "It"
           ],
-          "answer": "Record the temperature every morning."
+          "answer": "It had walls, a small roof, and a tiny window."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "dates.",
-            "of",
-            "amount",
-            "same",
+            "mountain.",
             "the",
-            "received",
-            "cousin",
-            "Each"
+            "on",
+            "jacket",
+            "warm",
+            "his",
+            "wear",
+            "will",
+            "Leo"
           ],
-          "answer": "Each cousin received the same amount of dates."
+          "answer": "Leo will wear his warm jacket on the mountain."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "ruler.",
+            "her",
+            "with",
+            "floor",
+            "the",
+            "on",
+            "kneeling",
+            "was",
+            "Nora"
+          ],
+          "answer": "Nora was kneeling on the floor with her ruler."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "desk.",
+            "the",
+            "under",
+            "hidden",
+            "clue",
+            "a",
+            "There's"
+          ],
+          "answer": "There's a clue hidden under the desk."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "blue.",
+            "red,",
+            "blue,",
+            "red,",
+            "pattern:",
+            "colour",
+            "a",
+            "saw",
+            "We"
+          ],
+          "answer": "We saw a colour pattern: red, blue, red, blue."
         }
       ]
     },
@@ -131,301 +225,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence explains a reason with 'because'?",
+          "prompt": "What does the word 'million' mean in this unit?",
           "choices": [
-            "I used multiplication today.",
-            "I used multiplication because it is faster than adding.",
-            "Multiplication and addition are both useful maths operations.",
-            "Use multiplication now."
+            "A very big number written 1,000,000, or one thousand thousands.",
+            "A unit of length equal to one hundred centimetres.",
+            "Going the same way without bending or curving, like a ruler edge.",
+            "Splitting a number into equal parts so everyone gets the same."
           ],
-          "answer": "I used multiplication because it is faster than adding.",
-          "explanation": "Because joins the effect to its cause, so it tells us why."
+          "answer": "A very big number written 1,000,000, or one thousand thousands.",
+          "explanation": "One million counts things, so it is a number, not a length."
         },
         {
-          "prompt": "Choose the missing word from A Pattern Poem: “Five, six, shapes and sticks, _____ and round, patterns found!”",
+          "prompt": "What does the word 'measure' mean in this unit?",
           "choices": [
-            "Subtraction",
-            "Multiplication",
-            "Division",
-            "Straight"
+            "A design or sequence of things that repeats in the same order.",
+            "How far it is from one place to another place.",
+            "To find out the size, length or amount of something.",
+            "Taking one number away from another to see what is left."
           ],
-          "answer": "Straight",
-          "explanation": "The poem sets straight lines against round ones, so Straight completes the rhyme."
+          "answer": "To find out the size, length or amount of something.",
+          "explanation": "Measure is the action; the others name a pattern, a distance and subtraction."
         },
         {
-          "prompt": "Choose the missing word from Maths Is Everywhere: “When Amal helps her mother at the market, she uses _____ to add the prices.”",
+          "prompt": "What does the word 'pattern' mean in this unit?",
           "choices": [
-            "addition",
-            "subtraction",
-            "million",
-            "height"
+            "How heavy something is when you put it on the scales.",
+            "A design or sequence of things that repeats in the same order.",
+            "Something that is true and can be checked or proven.",
+            "Adding the same number over and over again to find a total quickly."
           ],
-          "answer": "addition",
-          "explanation": "Adding prices together is addition, which is why the text names that operation."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Which maths word does Amal use to add the prices at the market?",
-          "choices": [
-            "She uses addition to add the prices at the market.",
-            "One, two, three, four, five, six.",
-            "One hundred thousand comes just before one million."
-          ],
-          "answer": "She uses addition to add the prices at the market.",
-          "explanation": "The text names addition as the operation Amal uses for prices."
+          "answer": "A design or sequence of things that repeats in the same order.",
+          "explanation": "A pattern repeats in order, like red, blue, red, blue on the classroom tiles."
         },
-        {
-          "prompt": "What repeats in every line of the pattern poem to make the pattern?",
-          "choices": [
-            "One, two, three, four, five, six.",
-            "She asked whether they could find the right pattern to solve the number puzzle.",
-            "Two counting numbers begin the line and a rhyming word ends it."
-          ],
-          "answer": "Two counting numbers begin the line and a rhyming word ends it.",
-          "explanation": "Shoe rhymes with two, more with four and sticks with six, so the rhyme repeats."
-        },
-        {
-          "prompt": "Which number comes just before one million in Numbers Big and Small?",
-          "choices": [
-            "He multiplied 25 shells by 10 bowls to reach 250 shells.",
-            "One hundred thousand comes just before one million.",
-            "Two counting numbers begin the line and a rhyming word ends it."
-          ],
-          "answer": "One hundred thousand comes just before one million.",
-          "explanation": "The order is ten thousand, one hundred thousand, then one million."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Measure and Tell",
-          "target": "This is a / an ______. Its height is about ______."
-        },
-        {
-          "prompt": "Speaking 3 — Guess My Pattern",
-          "target": "Two, four, six, ______?"
-        },
-        {
-          "prompt": "Speaking 5 — Explain It with Because",
-          "target": "We multiplied because it is faster than adding."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "page.",
-            "Sami's",
-            "on",
-            "straight",
-            "isn't",
-            "line",
-            "The"
-          ],
-          "answer": "The line isn't straight on Sami's page."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "week?",
-            "this",
-            "test",
-            "maths",
-            "the",
-            "is",
-            "date",
-            "What"
-          ],
-          "answer": "What date is the maths test this week?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "scales.",
-            "the",
-            "using",
-            "bag",
-            "the",
-            "measured",
-            "Sami"
-          ],
-          "answer": "Sami measured the bag using the scales."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'despite' mean in this unit?",
-          "choices": [
-            "Even though something might have stopped it.",
-            "A young sheep, or the meat from it.",
-            "How far north or south a place is from the middle of Earth."
-          ],
-          "answer": "Even though something might have stopped it.",
-          "explanation": "despite: Even though something might have stopped it."
-        },
-        {
-          "prompt": "What does 'grams' mean in this unit?",
-          "choices": [
-            "A young sheep, or the meat from it.",
-            "How far north or south a place is from the middle of Earth.",
-            "A unit used to measure how heavy something is."
-          ],
-          "answer": "A unit used to measure how heavy something is.",
-          "explanation": "grams: A unit used to measure how heavy something is."
-        },
-        {
-          "prompt": "What does 'latitude' mean in this unit?",
-          "choices": [
-            "Land is the ground or the country where people live.",
-            "How far north or south a place is from the middle of Earth.",
-            "A young sheep, or the meat from it."
-          ],
-          "answer": "How far north or south a place is from the middle of Earth.",
-          "explanation": "latitude: How far north or south a place is from the middle of Earth."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'buckle'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Buckle is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'pattern'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Pattern is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'subtract'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Subtract is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "comb",
-              "A flat tool with teeth for tidying your hair."
-            ],
-            [
-              "coast",
-              "The land next to the sea."
-            ],
-            [
-              "degree",
-              "A unit for measuring temperature or an angle."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "weight",
-              "How heavy something is when you put it on the scales."
-            ],
-            [
-              "plenty",
-              "More than enough."
-            ],
-            [
-              "tool",
-              "A thing you use to help you do a job."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "repeated",
-              "Said or did something again after the first time."
-            ],
-            [
-              "fewer",
-              "A smaller number of things than before."
-            ],
-            [
-              "fact",
-              "Something that is true and can be checked or proven."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "In The Mystery of the Million Shells, how many shells did the teams count in total?",
           "choices": [
@@ -462,13 +293,518 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Which maths word does Amal use to add the prices at the market?",
+          "choices": [
+            "She uses addition to add the prices at the market.",
+            "One, two, three, four, five, six.",
+            "One hundred thousand comes just before one million."
+          ],
+          "answer": "She uses addition to add the prices at the market.",
+          "explanation": "The text names addition as the operation Amal uses for prices."
+        },
+        {
+          "prompt": "What do Amal and her mother use to share the dates with four cousins?",
+          "choices": [
+            "Two counting numbers begin the line and a rhyming word ends it.",
+            "She asked whether they could find the right pattern to solve the number puzzle.",
+            "They use division to share the dates between the four cousins."
+          ],
+          "answer": "They use division to share the dates between the four cousins.",
+          "explanation": "The text says that sharing the dates with four cousins is division."
+        },
+        {
+          "prompt": "What repeats in every line of the pattern poem to make the pattern?",
+          "choices": [
+            "He multiplied 25 shells by 10 bowls to reach 250 shells.",
+            "Two counting numbers begin the line and a rhyming word ends it.",
+            "The class must measure three things."
+          ],
+          "answer": "Two counting numbers begin the line and a rhyming word ends it.",
+          "explanation": "Shoe rhymes with two, more with four and sticks with six, so the rhyme repeats."
+        },
+        {
+          "prompt": "What is the first thing the class must measure in The Measuring Challenge?",
+          "choices": [
+            "They must measure the height of their desk first.",
+            "The class must measure three things.",
+            "It was too tiny to measure, so she used the other ruler."
+          ],
+          "answer": "They must measure the height of their desk first.",
+          "explanation": "The word First marks the opening instruction: measure the height of your desk."
+        },
+        {
+          "prompt": "Which number comes just before one million in Numbers Big and Small?",
+          "choices": [
+            "They must measure the height of their desk first.",
+            "She uses addition to add the prices at the market.",
+            "One hundred thousand comes just before one million."
+          ],
+          "answer": "One hundred thousand comes just before one million.",
+          "explanation": "The order is ten thousand, one hundred thousand, then one million."
+        },
+        {
+          "prompt": "How did Sami work out that the ten bowls held 250 shells?",
+          "choices": [
+            "They use division to share the dates between the four cousins.",
+            "He multiplied 25 shells by 10 bowls to reach 250 shells.",
+            "One million is the biggest number in that list."
+          ],
+          "answer": "He multiplied 25 shells by 10 bowls to reach 250 shells.",
+          "explanation": "Amal asks “25 times 10 is …?” and Sami answers “Multiplication!” then “That's 250.”"
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Measure and Tell",
+          "target": "This is a / an ______. Its height is about ______."
+        },
+        {
+          "prompt": "Speaking 2 — Maths in the Market",
+          "target": "Imagine you are shopping."
+        },
+        {
+          "prompt": "Speaking 3 — Guess My Pattern",
+          "target": "Two, four, six, ______?"
+        },
+        {
+          "prompt": "Speaking 4 — Big Number Read-Aloud",
+          "target": "Nora was kneeling on the floor with her ruler."
+        },
+        {
+          "prompt": "Speaking 5 — Explain It with Because",
+          "target": "We multiplied because it is faster than adding."
+        },
+        {
+          "prompt": "Speaking 6 — One-Minute Measuring Talk",
+          "target": "We saw a colour pattern: red, blue, red, blue."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "coast.",
+            "the",
+            "on",
+            "rocks",
+            "the",
+            "against",
+            "crash",
+            "waves",
+            "Strong"
+          ],
+          "answer": "Strong waves crash against the rocks on the coast."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "morning.",
+            "every",
+            "temperature",
+            "the",
+            "Record"
+          ],
+          "answer": "Record the temperature every morning."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "dates.",
+            "and",
+            "mangoes",
+            "the",
+            "of",
+            "prices",
+            "the",
+            "down",
+            "wrote",
+            "Amal"
+          ],
+          "answer": "Amal wrote down the prices of the mangoes and dates."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "ruler.",
+            "the",
+            "of",
+            "length",
+            "exact",
+            "the",
+            "measured",
+            "Sami"
+          ],
+          "answer": "Sami measured the exact length of the ruler."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "number.",
+            "exact",
+            "the",
+            "remember",
+            "can't",
+            "Sami"
+          ],
+          "answer": "Sami can't remember the exact number."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "answer.",
+            "quick",
+            "one",
+            "into",
+            "shells",
+            "of",
+            "bowls",
+            "ten",
+            "turned",
+            "Multiplication"
+          ],
+          "answer": "Multiplication turned ten bowls of shells into one quick answer."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'gnat' mean in this unit?",
+          "choices": [
+            "A very small flying insect that bites.",
+            "A young sheep, or the meat from it.",
+            "More than two, but not very many."
+          ],
+          "answer": "A very small flying insect that bites.",
+          "explanation": "gnat: A very small flying insect that bites."
+        },
+        {
+          "prompt": "What does 'coin' mean in this unit?",
+          "choices": [
+            "A young sheep, or the meat from it.",
+            "A very small flying insect that bites.",
+            "A coin is a round piece of metal money."
+          ],
+          "answer": "A coin is a round piece of metal money.",
+          "explanation": "coin: A coin is a round piece of metal money."
+        },
+        {
+          "prompt": "What does 'challenge' mean in this unit?",
+          "choices": [
+            "A very small flying insect that bites.",
+            "A task that tests your skill and takes real effort.",
+            "A young sheep, or the meat from it."
+          ],
+          "answer": "A task that tests your skill and takes real effort.",
+          "explanation": "challenge: A task that tests your skill and takes real effort."
+        },
+        {
+          "prompt": "What does 'can't' mean in this unit?",
+          "choices": [
+            "A short way of saying cannot.",
+            "A young sheep, or the meat from it.",
+            "A very small flying insect that bites."
+          ],
+          "answer": "A short way of saying cannot.",
+          "explanation": "can't: A short way of saying cannot."
+        },
+        {
+          "prompt": "What does 'Africa' mean in this unit?",
+          "choices": [
+            "A young sheep, or the meat from it.",
+            "A very small flying insect that bites.",
+            "The large continent where Kenya and Egypt are."
+          ],
+          "answer": "The large continent where Kenya and Egypt are.",
+          "explanation": "Africa: The large continent where Kenya and Egypt are."
+        },
+        {
+          "prompt": "What does 'subtract' mean in this unit?",
+          "choices": [
+            "A very small flying insect that bites.",
+            "To take one number away from another.",
+            "A young sheep, or the meat from it."
+          ],
+          "answer": "To take one number away from another.",
+          "explanation": "subtract: To take one number away from another."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'several'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Several is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'wear'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Wear is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'exact'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Exact is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'eighty'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Eighty is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'border'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Border is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'select'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Select is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "comb",
+              "A flat tool with teeth for tidying your hair."
+            ],
+            [
+              "including",
+              "Having something as one part of a whole group."
+            ],
+            [
+              "roof",
+              "A roof is the cover on the top of a building."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "bottle",
+              "A bottle is a container for holding a drink."
+            ],
+            [
+              "alone",
+              "Alone means with nobody else there."
+            ],
+            [
+              "pours",
+              "To tip a liquid or loose things out of a container."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "buckle",
+              "A clip that fastens a belt or a shoe."
+            ],
+            [
+              "third",
+              "Coming after the first and second in order."
+            ],
+            [
+              "thousand",
+              "The number written as 1,000."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "clue",
+              "A piece of information that helps you solve something."
+            ],
+            [
+              "itself",
+              "The very same thing that was already mentioned."
+            ],
+            [
+              "fact",
+              "Something that is true and can be checked or proven."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "measure",
+              "To find out the size, length or amount of something."
+            ],
+            [
+              "latitude",
+              "How far north or south a place is from the middle of Earth."
+            ],
+            [
+              "island",
+              "A piece of land with water all around it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "width",
+              "How wide something is, from one side to the other."
+            ],
+            [
+              "reduce",
+              "To make something smaller or less."
+            ],
+            [
+              "volume",
+              "The amount of space something fills."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence uses 'have got' correctly for one person?",
+          "choices": [
+            "They has got a metre stick.",
+            "We has got ten bowls.",
+            "She has got a new ruler.",
+            "He have got a bicycle."
+          ],
+          "answer": "She has got a new ruler.",
+          "explanation": "He, she and it take has got, but we and they take have got."
+        },
+        {
+          "prompt": "Which sentence explains a reason with 'because'?",
+          "choices": [
+            "I used multiplication today.",
+            "I used multiplication because it is faster than adding.",
+            "Multiplication and addition are both useful maths operations.",
+            "Use multiplication now."
+          ],
+          "answer": "I used multiplication because it is faster than adding.",
+          "explanation": "Because joins the effect to its cause, so it tells us why."
+        },
+        {
+          "prompt": "Choose the missing word from A Pattern Poem: “Five, six, shapes and sticks, _____ and round, patterns found!”",
+          "choices": [
+            "Subtraction",
+            "Multiplication",
+            "Division",
+            "Straight"
+          ],
+          "answer": "Straight",
+          "explanation": "The poem sets straight lines against round ones, so Straight completes the rhyme."
+        },
+        {
+          "prompt": "Choose the missing word from Maths Is Everywhere: “When Amal helps her mother at the market, she uses _____ to add the prices.”",
+          "choices": [
+            "addition",
+            "subtraction",
+            "million",
+            "height"
+          ],
+          "answer": "addition",
+          "explanation": "Adding prices together is addition, which is why the text names that operation."
+        },
+        {
+          "prompt": "In The Measuring Challenge, which tool may the class use?",
+          "choices": [
+            "A pair of scissors",
+            "A colour pencil",
+            "A metre stick",
+            "A shopping basket"
+          ],
+          "answer": "A metre stick",
+          "explanation": "The speaker names a metre stick before telling the class to begin."
+        },
         {
           "prompt": "What does the word 'million' mean in this unit?",
           "choices": [
@@ -479,28 +815,78 @@
           ],
           "answer": "A very big number written 1,000,000, or one thousand thousands.",
           "explanation": "One million counts things, so it is a number, not a length."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from Maths Is Everywhere: “When Amal helps her mother at the market, she uses _____ to add the prices.”",
+          "choices": [
+            "addition",
+            "subtraction",
+            "million",
+            "height"
+          ],
+          "answer": "addition",
+          "explanation": "Adding prices together is addition, which is why the text names that operation."
         },
         {
-          "prompt": "What does the word 'measure' mean in this unit?",
+          "prompt": "In The Measuring Challenge, which tool may the class use?",
           "choices": [
-            "A design or sequence of things that repeats in the same order.",
-            "How far it is from one place to another place.",
-            "To find out the size, length or amount of something.",
-            "Taking one number away from another to see what is left."
+            "A pair of scissors",
+            "A colour pencil",
+            "A metre stick",
+            "A shopping basket"
           ],
-          "answer": "To find out the size, length or amount of something.",
-          "explanation": "Measure is the action; the others name a pattern, a distance and subtraction."
+          "answer": "A metre stick",
+          "explanation": "The speaker names a metre stick before telling the class to begin."
         },
         {
-          "prompt": "What does the word 'pattern' mean in this unit?",
+          "prompt": "Which word means: A roof is the cover on the top of a building.",
           "choices": [
-            "How heavy something is when you put it on the scales.",
-            "A design or sequence of things that repeats in the same order.",
-            "Something that is true and can be checked or proven.",
-            "Adding the same number over and over again to find a total quickly."
+            "roof",
+            "lamb",
+            "gnat"
           ],
-          "answer": "A design or sequence of things that repeats in the same order.",
-          "explanation": "A pattern repeats in order, like red, blue, red, blue on the classroom tiles."
+          "answer": "roof",
+          "explanation": "roof: A roof is the cover on the top of a building."
+        },
+        {
+          "prompt": "Which word means: A task that tests your skill and takes real effort.",
+          "choices": [
+            "lamb",
+            "gnat",
+            "challenge"
+          ],
+          "answer": "challenge",
+          "explanation": "challenge: A task that tests your skill and takes real effort."
+        },
+        {
+          "prompt": "What type of word is 'fact'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Fact is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'subtract'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Subtract is used as a verb in this dictionary sense."
         }
       ]
     }

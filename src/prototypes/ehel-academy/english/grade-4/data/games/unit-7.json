@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t03-u07",
   "title": "Emotions, Behaviour, and Identity Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A choice you make after thinking about it.",
           "choices": [
             "decision",
-            "attitude",
-            "patience"
+            "rarely",
+            "protect"
           ],
           "answer": "decision",
           "explanation": "decision: A choice you make after thinking about it."
         },
         {
-          "prompt": "Which word means: Not often; hardly ever.",
+          "prompt": "Which word means: The power that runs lights and machines.",
           "choices": [
             "decision",
-            "attitude",
-            "rarely"
+            "rarely",
+            "electricity"
           ],
-          "answer": "rarely",
-          "explanation": "rarely: Not often; hardly ever."
+          "answer": "electricity",
+          "explanation": "electricity: The power that runs lights and machines."
         },
         {
-          "prompt": "Which word means: Dresses are pieces of clothing that women and girls wear, covering the body in one piece.",
+          "prompt": "Which word means: Cooks food, such as bread or cakes, using dry heat in an oven.",
           "choices": [
-            "attitude",
-            "dresses",
+            "rarely",
+            "bakes",
             "decision"
           ],
-          "answer": "dresses",
-          "explanation": "dresses: Dresses are pieces of clothing that women and girls wear, covering the body in one piece."
+          "answer": "bakes",
+          "explanation": "bakes: Cooks food, such as bread or cakes, using dry heat in an oven."
+        },
+        {
+          "prompt": "Which word means: Backgrounds are the different families, cultures or places that people come from.",
+          "choices": [
+            "backgrounds",
+            "decision",
+            "rarely"
+          ],
+          "answer": "backgrounds",
+          "explanation": "backgrounds: Backgrounds are the different families, cultures or places that people come from."
+        },
+        {
+          "prompt": "Which word means: Feeling happy about something you did or about who you are.",
+          "choices": [
+            "decision",
+            "rarely",
+            "proud"
+          ],
+          "answer": "proud",
+          "explanation": "proud: Feeling happy about something you did or about who you are."
+        },
+        {
+          "prompt": "Which word means: The feeling of being thankful for something.",
+          "choices": [
+            "rarely",
+            "gratitude",
+            "decision"
+          ],
+          "answer": "gratitude",
+          "explanation": "gratitude: The feeling of being thankful for something."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Next to or together with something or someone.",
-          "answer": "alongside"
+          "clue": "The power that runs lights and machines.",
+          "answer": "electricity"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Backgrounds are the different families, cultures or places that people come from.",
-          "answer": "backgrounds"
+          "clue": "The time in a person's life when they are a child.",
+          "answer": "childhood"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Dresses are pieces of clothing that women and girls wear, covering the body in one piece.",
+          "answer": "dresses"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Feeling happy about something you did or about who you are.",
+          "answer": "proud"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The feeling of being thankful for something.",
+          "answer": "gratitude"
         }
       ]
     },
@@ -96,29 +141,73 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "identity.",
-            "her",
-            "of",
-            "part",
-            "is",
-            "language",
-            "Her"
+            "lessons.",
+            "before",
+            "brain",
+            "your",
+            "up",
+            "wakes",
+            "breakfast",
+            "healthy",
+            "A"
           ],
-          "answer": "Her language is part of her identity."
+          "answer": "A healthy breakfast wakes up your brain before lessons."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "curtain.",
-            "the",
-            "behind",
-            "neatly",
-            "stacked",
-            "were",
-            "props",
-            "The"
+            "Sami.",
+            "today,",
+            "happy",
+            "seem",
+            "You"
           ],
-          "answer": "The props were stacked neatly behind the curtain."
+          "answer": "You seem happy today, Sami."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "on.",
+            "go",
+            "to",
+            "turn",
+            "her",
+            "before",
+            "backstage",
+            "waited",
+            "Amal"
+          ],
+          "answer": "Amal waited backstage before her turn to go on."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "crown.",
+            "fallen",
+            "the",
+            "up",
+            "pick",
+            "to",
+            "down",
+            "bent",
+            "Amal"
+          ],
+          "answer": "Amal bent down to pick up the fallen crown."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "spider.",
+            "huge",
+            "the",
+            "saw",
+            "I",
+            "when",
+            "terrified",
+            "was",
+            "I"
+          ],
+          "answer": "I was terrified when I saw the huge spider."
         }
       ]
     },
@@ -131,302 +220,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Complete this past simple sentence: “She ______ tired after the long party.”",
+          "prompt": "Which word means feeling worried or a little afraid about something that might happen?",
           "choices": [
-            "feel",
-            "feels",
-            "felt",
-            "feeling"
+            "attract",
+            "nervous",
+            "dishwasher",
+            "frequent"
           ],
-          "answer": "felt",
-          "explanation": "Feel is irregular, so its past simple form is felt rather than feeled."
+          "answer": "nervous",
+          "explanation": "Nervous names that worried feeling. Attract is an action, a dishwasher is a machine, and frequent describes how often something happens."
         },
         {
-          "prompt": "Which sentence gives advice using a modal verb?",
+          "prompt": "Amal shook and could not sit still before her spelling test. Which word describes her best?",
           "choices": [
-            "Don’t run in the hall.",
-            "You should be gentle with the puppy.",
-            "Are you feeling shy today?",
-            "The wind was fierce last night."
+            "generous",
+            "humorous",
+            "anxious",
+            "polite"
           ],
-          "answer": "You should be gentle with the puppy.",
-          "explanation": "Should is the modal verb. The first option is an imperative, the third is a question, and the fourth is past simple."
+          "answer": "anxious",
+          "explanation": "Anxious describes a very worried feeling. Generous, humorous and polite all describe how a person behaves towards others."
         },
         {
-          "prompt": "Which question about a life experience is written correctly?",
+          "prompt": "What does the word generous mean?",
           "choices": [
-            "You have ever felt proud?",
-            "Have you ever proud felt?",
-            "Did you ever have felt proud?",
-            "Have you ever felt proud?"
+            "Happy to share or give to others",
+            "Very bad or cruel",
+            "Happening often, or many times",
+            "Quiet and afraid to talk to people"
           ],
-          "answer": "Have you ever felt proud?",
-          "explanation": "A present perfect question puts have before the subject, then ever, then the past participle felt."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Why did Amal feel nervous while she sat at the kitchen table?",
-          "choices": [
-            "She felt nervous because her big spelling test was the very next day.",
-            "They have practised hard, they must be gentle and polite backstage, and they should smile and keep going after a mistake.",
-            "It is a negative imperative, and it asks everybody to share the costumes fairly backstage."
-          ],
-          "answer": "She felt nervous because her big spelling test was the very next day.",
-          "explanation": "The text names the spelling test and links it directly to the word nervous."
+          "answer": "Happy to share or give to others",
+          "explanation": "The other three options are the meanings of evil, frequent and shy."
         },
-        {
-          "prompt": "Which part did Amal play in the school play, and why did it matter to her?",
-          "choices": [
-            "They have practised hard, they must be gentle and polite backstage, and they should smile and keep going after a mistake.",
-            "Maya felt proud because she showed her family's food to everybody at the fair.",
-            "She played the kind queen who helps people in need, and it was her first ever school play."
-          ],
-          "answer": "She played the kind queen who helps people in need, and it was her first ever school play.",
-          "explanation": "The narrator gives both the role and the fact that Amal had never acted before, which raises the pressure."
-        },
-        {
-          "prompt": "What made Maya feel proud when she went to the fair last year?",
-          "choices": [
-            "The new student looked terrified and stood alone, so walking away would put Amal's comfort first.",
-            "Maya felt proud because she showed her family's food to everybody at the fair.",
-            "Nora is curious because she is visiting a cultural fair tomorrow and has never tried food from so many places."
-          ],
-          "answer": "Maya felt proud because she showed her family's food to everybody at the fair.",
-          "explanation": "Maya answers her own experience question, which is the detail that explains her pride."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: How Do You Feel?",
-          "target": "Today I feel ______ because ______."
-        },
-        {
-          "prompt": "Speaking 3: Feelings Charades",
-          "target": "Are you feeling ______?"
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one big idea from this unit in about six sentences, such as why kindness helps somebody who feels shy."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "morning.",
-            "tomorrow",
-            "costume",
-            "your",
-            "forget",
-            "mustn't",
-            "You"
-          ],
-          "answer": "You mustn't forget your costume tomorrow morning."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "childhood.",
-            "their",
-            "from",
-            "stories",
-            "shared",
-            "grandparents",
-            "Sami's"
-          ],
-          "answer": "Sami's grandparents shared stories from their childhood."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "over.",
-            "fell",
-            "nearly",
-            "he",
-            "hard",
-            "so",
-            "laughing",
-            "was",
-            "Sami"
-          ],
-          "answer": "Sami was laughing so hard he nearly fell over."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'tricky' mean in this unit?",
-          "choices": [
-            "Difficult to do or understand, needing extra care or thought.",
-            "A choice you make after thinking about it.",
-            "The way you think and feel, shown in how you act."
-          ],
-          "answer": "Difficult to do or understand, needing extra care or thought.",
-          "explanation": "tricky: Difficult to do or understand, needing extra care or thought."
-        },
-        {
-          "prompt": "What does 'student' mean in this unit?",
-          "choices": [
-            "A choice you make after thinking about it.",
-            "The way you think and feel, shown in how you act.",
-            "A student is a person who is learning at a school or college."
-          ],
-          "answer": "A student is a person who is learning at a school or college.",
-          "explanation": "student: A student is a person who is learning at a school or college."
-        },
-        {
-          "prompt": "What does 'attitude' mean in this unit?",
-          "choices": [
-            "Being able to wait calmly without getting cross.",
-            "The way you think and feel, shown in how you act.",
-            "A choice you make after thinking about it."
-          ],
-          "answer": "The way you think and feel, shown in how you act.",
-          "explanation": "attitude: The way you think and feel, shown in how you act."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'audience'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Audience is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'selfish'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Selfish is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'emotion'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Emotion is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "division",
-              "Splitting a number into equal parts so everyone gets the same."
-            ],
-            [
-              "gratitude",
-              "The feeling of being thankful for something."
-            ],
-            [
-              "conflict",
-              "A serious disagreement between people or groups."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "alongside",
-              "Next to or together with something or someone."
-            ],
-            [
-              "head",
-              "The top part of your body, where your brain, eyes and ears are."
-            ],
-            [
-              "third",
-              "Coming after the second thing in a list or in order."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "crown",
-              "A crown is a special decorated headpiece worn by a king or queen."
-            ],
-            [
-              "putting",
-              "Putting means placing something somewhere, or getting something ready to happen."
-            ],
-            [
-              "generous",
-              "Happy to share what you have, or to give things to others."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sentence shows selfish behaviour?",
           "choices": [
@@ -463,13 +288,519 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Why did Amal feel nervous while she sat at the kitchen table?",
+          "choices": [
+            "She felt nervous because her big spelling test was the very next day.",
+            "They have practised hard, they must be gentle and polite backstage, and they should smile and keep going after a mistake.",
+            "It is a negative imperative, and it asks everybody to share the costumes fairly backstage."
+          ],
+          "answer": "She felt nervous because her big spelling test was the very next day.",
+          "explanation": "The text names the spelling test and links it directly to the word nervous."
+        },
+        {
+          "prompt": "What three things does Teacher Yasmin ask the class to remember before the play?",
+          "choices": [
+            "Nora is curious because she is visiting a cultural fair tomorrow and has never tried food from so many places.",
+            "Maya felt proud because she showed her family's food to everybody at the fair.",
+            "They have practised hard, they must be gentle and polite backstage, and they should smile and keep going after a mistake."
+          ],
+          "answer": "They have practised hard, they must be gentle and polite backstage, and they should smile and keep going after a mistake.",
+          "explanation": "The talk is organised with First, Second and Third, so each point can be listed in order."
+        },
+        {
+          "prompt": "Which part did Amal play in the school play, and why did it matter to her?",
+          "choices": [
+            "The new student looked terrified and stood alone, so walking away would put Amal's comfort first.",
+            "She played the kind queen who helps people in need, and it was her first ever school play.",
+            "Nora is curious because she is visiting a cultural fair tomorrow and has never tried food from so many places."
+          ],
+          "answer": "She played the kind queen who helps people in need, and it was her first ever school play.",
+          "explanation": "The narrator gives both the role and the fact that Amal had never acted before, which raises the pressure."
+        },
+        {
+          "prompt": "What does Nora mean when she says her friends come from many ethnic groups?",
+          "choices": [
+            "She means their families come from different cultures and home places, from the city to farming villages and other countries.",
+            "She played the kind queen who helps people in need, and it was her first ever school play.",
+            "She is asking Amal to notice the worry calmly and then let it settle, instead of fighting it."
+          ],
+          "answer": "She means their families come from different cultures and home places, from the city to farming villages and other countries.",
+          "explanation": "The sentence straight after the word ethnic lists the different backgrounds, which shows the meaning in context."
+        },
+        {
+          "prompt": "What made Maya feel proud when she went to the fair last year?",
+          "choices": [
+            "Adam said he had felt nervous before a test too, and that it was fine.",
+            "Her grandmother bakes sweet honey cakes for the guests, which is a generous welcome.",
+            "Maya felt proud because she showed her family's food to everybody at the fair."
+          ],
+          "answer": "Maya felt proud because she showed her family's food to everybody at the fair.",
+          "explanation": "Maya answers her own experience question, which is the detail that explains her pride."
+        },
+        {
+          "prompt": "Mum tells Amal to be polite to her worry. What is Mum really asking her to do?",
+          "choices": [
+            "She felt nervous because her big spelling test was the very next day.",
+            "She is asking Amal to notice the worry calmly and then let it settle, instead of fighting it.",
+            "She means their families come from different cultures and home places, from the city to farming villages and other countries."
+          ],
+          "answer": "She is asking Amal to notice the worry calmly and then let it settle, instead of fighting it.",
+          "explanation": "The joke works because you cannot argue a worry away, but you can treat it gently and put it to sleep."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: How Do You Feel?",
+          "target": "Today I feel ______ because ______."
+        },
+        {
+          "prompt": "Speaking 2: Give Kind Advice",
+          "target": "Imagine your friend feels nervous or shy before the class play."
+        },
+        {
+          "prompt": "Speaking 3: Feelings Charades",
+          "target": "Are you feeling ______?"
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "What does generous mean?"
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Amal bent down to pick up the fallen crown."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Unit Talk",
+          "target": "I was terrified when I saw the huge spider."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "cup.",
+            "broken",
+            "the",
+            "for",
+            "apologise",
+            "to",
+            "went",
+            "Leo"
+          ],
+          "answer": "Leo went to apologise for the broken cup."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bird.",
+            "injured",
+            "the",
+            "for",
+            "sympathy",
+            "felt",
+            "She"
+          ],
+          "answer": "She felt sympathy for the injured bird."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "disappear.",
+            "coin",
+            "the",
+            "made",
+            "trick",
+            "magician's",
+            "The"
+          ],
+          "answer": "The magician's trick made the coin disappear."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "costumes.",
+            "their",
+            "fix",
+            "to",
+            "mirror",
+            "the",
+            "shared",
+            "Amal",
+            "and",
+            "Sami"
+          ],
+          "answer": "Sami and Amal shared the mirror to fix their costumes."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "story.",
+            "the",
+            "in",
+            "leader",
+            "wise",
+            "a",
+            "was",
+            "queen",
+            "The"
+          ],
+          "answer": "The queen was a wise leader in the story."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "contest.",
+            "spelling",
+            "the",
+            "winning",
+            "about",
+            "doubtful",
+            "looked",
+            "Leo"
+          ],
+          "answer": "Leo looked doubtful about winning the spelling contest."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'rarely' mean in this unit?",
+          "choices": [
+            "Not often; hardly ever.",
+            "A choice you make after thinking about it.",
+            "Protect means to keep something or someone safe from harm."
+          ],
+          "answer": "Not often; hardly ever.",
+          "explanation": "rarely: Not often; hardly ever."
+        },
+        {
+          "prompt": "What does 'muscle' mean in this unit?",
+          "choices": [
+            "A choice you make after thinking about it.",
+            "Not often; hardly ever.",
+            "A part of the body that tightens to make you move."
+          ],
+          "answer": "A part of the body that tightens to make you move.",
+          "explanation": "muscle: A part of the body that tightens to make you move."
+        },
+        {
+          "prompt": "What does 'practised' mean in this unit?",
+          "choices": [
+            "Not often; hardly ever.",
+            "Did something again and again to get better at it.",
+            "A choice you make after thinking about it."
+          ],
+          "answer": "Did something again and again to get better at it.",
+          "explanation": "practised: Did something again and again to get better at it."
+        },
+        {
+          "prompt": "What does 'sink' mean in this unit?",
+          "choices": [
+            "A sink is a bowl fixed to a wall with taps, used for washing things.",
+            "A choice you make after thinking about it.",
+            "Not often; hardly ever."
+          ],
+          "answer": "A sink is a bowl fixed to a wall with taps, used for washing things.",
+          "explanation": "sink: A sink is a bowl fixed to a wall with taps, used for washing things."
+        },
+        {
+          "prompt": "What does 'humorous' mean in this unit?",
+          "choices": [
+            "A choice you make after thinking about it.",
+            "Not often; hardly ever.",
+            "Funny in a clever way, so that people around you laugh."
+          ],
+          "answer": "Funny in a clever way, so that people around you laugh.",
+          "explanation": "humorous: Funny in a clever way, so that people around you laugh."
+        },
+        {
+          "prompt": "What does 'pride' mean in this unit?",
+          "choices": [
+            "Not often; hardly ever.",
+            "Pleasure and satisfaction in what you have achieved.",
+            "A choice you make after thinking about it."
+          ],
+          "answer": "Pleasure and satisfaction in what you have achieved.",
+          "explanation": "pride: Pleasure and satisfaction in what you have achieved."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'protect'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Protect is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'don'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Don is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'third'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Third is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'awake'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Awake is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'risky'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Risky is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'confidence'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Confidence is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "division",
+              "Splitting a number into equal parts so everyone gets the same."
+            ],
+            [
+              "environment",
+              "The environment is the world around us: the air, land and water."
+            ],
+            [
+              "brain",
+              "The part of your body inside your head that helps you think and learn."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "human",
+              "A person, rather than an animal or a machine."
+            ],
+            [
+              "temperature",
+              "Temperature is a measurement of how hot or cold something is."
+            ],
+            [
+              "milk",
+              "A white drink that comes from cows or other animals, often served warm or cold."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "grandparents",
+              "The parents of your mother or your father."
+            ],
+            [
+              "mirror",
+              "A flat piece of glass that shows your reflection."
+            ],
+            [
+              "queen",
+              "A queen is a woman who rules a country or is married to a king."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "bent",
+              "Bent means you leaned or curved your body downward or to one side."
+            ],
+            [
+              "scared",
+              "Scared means feeling afraid because something frightens you."
+            ],
+            [
+              "mustn't",
+              "Mustn't means 'must not', telling someone they are not allowed to do something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "polite",
+              "Showing good manners and treating other people kindly with your words."
+            ],
+            [
+              "ethnic",
+              "Belonging to a group who share the same culture, language or history."
+            ],
+            [
+              "attitude",
+              "The way you think and feel, shown in how you act."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "independence",
+              "Being able to look after yourself and make your own choices."
+            ],
+            [
+              "talent",
+              "A natural ability to do something well."
+            ],
+            [
+              "leadership",
+              "Guiding and directing a group of people."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence describes a plan that is already arranged for tomorrow?",
+          "choices": [
+            "We visited the fair yesterday.",
+            "We are visiting the fair tomorrow.",
+            "We visit the fair every single year.",
+            "We have visited the fair twice."
+          ],
+          "answer": "We are visiting the fair tomorrow.",
+          "explanation": "The present continuous plus a future time word signals an arranged plan, not a habit or a finished action."
+        },
+        {
+          "prompt": "Complete this past simple sentence: “She ______ tired after the long party.”",
+          "choices": [
+            "feel",
+            "feels",
+            "felt",
+            "feeling"
+          ],
+          "answer": "felt",
+          "explanation": "Feel is irregular, so its past simple form is felt rather than feeled."
+        },
+        {
+          "prompt": "Which sentence gives advice using a modal verb?",
+          "choices": [
+            "Don’t run in the hall.",
+            "You should be gentle with the puppy.",
+            "Are you feeling shy today?",
+            "The wind was fierce last night."
+          ],
+          "answer": "You should be gentle with the puppy.",
+          "explanation": "Should is the modal verb. The first option is an imperative, the third is a question, and the fourth is past simple."
+        },
+        {
+          "prompt": "Which question about a life experience is written correctly?",
+          "choices": [
+            "You have ever felt proud?",
+            "Have you ever proud felt?",
+            "Did you ever have felt proud?",
+            "Have you ever felt proud?"
+          ],
+          "answer": "Have you ever felt proud?",
+          "explanation": "A present perfect question puts have before the subject, then ever, then the past participle felt."
+        },
+        {
+          "prompt": "The class argued strongly about the best game. Which phrase describes that talk naturally?",
+          "choices": [
+            "a fierce debate",
+            "a gentle debate",
+            "a shy debate",
+            "a curious debate"
+          ],
+          "answer": "a fierce debate",
+          "explanation": "Fierce and debate are a natural collocation. Gentle, shy and curious do not partner debate in everyday English."
+        },
         {
           "prompt": "Which word means feeling worried or a little afraid about something that might happen?",
           "choices": [
@@ -480,28 +811,78 @@
           ],
           "answer": "nervous",
           "explanation": "Nervous names that worried feeling. Attract is an action, a dishwasher is a machine, and frequent describes how often something happens."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which question about a life experience is written correctly?",
+          "choices": [
+            "You have ever felt proud?",
+            "Have you ever proud felt?",
+            "Did you ever have felt proud?",
+            "Have you ever felt proud?"
+          ],
+          "answer": "Have you ever felt proud?",
+          "explanation": "A present perfect question puts have before the subject, then ever, then the past participle felt."
         },
         {
-          "prompt": "Amal shook and could not sit still before her spelling test. Which word describes her best?",
+          "prompt": "The class argued strongly about the best game. Which phrase describes that talk naturally?",
           "choices": [
-            "generous",
-            "humorous",
-            "anxious",
-            "polite"
+            "a fierce debate",
+            "a gentle debate",
+            "a shy debate",
+            "a curious debate"
           ],
-          "answer": "anxious",
-          "explanation": "Anxious describes a very worried feeling. Generous, humorous and polite all describe how a person behaves towards others."
+          "answer": "a fierce debate",
+          "explanation": "Fierce and debate are a natural collocation. Gentle, shy and curious do not partner debate in everyday English."
         },
         {
-          "prompt": "What does the word generous mean?",
+          "prompt": "Which word means: The part of your body inside your head that helps you think and learn.",
           "choices": [
-            "Happy to share or give to others",
-            "Very bad or cruel",
-            "Happening often, or many times",
-            "Quiet and afraid to talk to people"
+            "brain",
+            "decision",
+            "rarely"
           ],
-          "answer": "Happy to share or give to others",
-          "explanation": "The other three options are the meanings of evil, frequent and shy."
+          "answer": "brain",
+          "explanation": "brain: The part of your body inside your head that helps you think and learn."
+        },
+        {
+          "prompt": "Which word means: Did something again and again to get better at it.",
+          "choices": [
+            "decision",
+            "rarely",
+            "practised"
+          ],
+          "answer": "practised",
+          "explanation": "practised: Did something again and again to get better at it."
+        },
+        {
+          "prompt": "What type of word is 'mustn't'?",
+          "choices": [
+            "Phrase",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Phrase",
+          "explanation": "Mustn't is used as a phrase in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'pride'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Pride is used as a noun in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t02-u06",
   "title": "People in Society Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Learning about things at school or at home.",
           "choices": [
             "education",
-            "colleague",
-            "manager"
+            "whilst",
+            "central"
           ],
           "answer": "education",
           "explanation": "education: Learning about things at school or at home."
         },
         {
-          "prompt": "Which word means: A person who carries messages from one person to another.",
+          "prompt": "Which word means: Made by nature, and not by people.",
           "choices": [
             "education",
-            "colleague",
-            "messenger"
+            "whilst",
+            "natural"
           ],
-          "answer": "messenger",
-          "explanation": "messenger: A person who carries messages from one person to another."
+          "answer": "natural",
+          "explanation": "natural: Made by nature, and not by people."
         },
         {
-          "prompt": "Which word means: Wow is a word people say when something surprises or amazes them.",
+          "prompt": "Which word means: To give off a soft, steady light.",
           "choices": [
-            "colleague",
-            "wow",
+            "whilst",
+            "glow",
             "education"
           ],
-          "answer": "wow",
-          "explanation": "wow: Wow is a word people say when something surprises or amazes them."
+          "answer": "glow",
+          "explanation": "glow: To give off a soft, steady light."
+        },
+        {
+          "prompt": "Which word means: Played means someone took part in a game, sport or piece of music before now.",
+          "choices": [
+            "played",
+            "education",
+            "whilst"
+          ],
+          "answer": "played",
+          "explanation": "played: Played means someone took part in a game, sport or piece of music before now."
+        },
+        {
+          "prompt": "Which word means: A point is the main idea or reason behind something that is said or done.",
+          "choices": [
+            "education",
+            "whilst",
+            "point"
+          ],
+          "answer": "point",
+          "explanation": "point: A point is the main idea or reason behind something that is said or done."
+        },
+        {
+          "prompt": "Which word means: A group of people chosen to make decisions for a place.",
+          "choices": [
+            "whilst",
+            "council",
+            "education"
+          ],
+          "answer": "council",
+          "explanation": "council: A group of people chosen to make decisions for a place."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Someone who is brave or helps others.",
-          "answer": "hero"
+          "clue": "Made by nature, and not by people.",
+          "answer": "natural"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Magic is something amazing that seems impossible to explain.",
-          "answer": "magic"
+          "clue": "To give off a soft, steady light.",
+          "answer": "glow"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Dancers are people who move to music, often as a performance.",
+          "answer": "dancers"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Laid means put something down carefully in a flat position.",
+          "answer": "laid"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A group of people chosen to make decisions for a place.",
+          "answer": "council"
         }
       ]
     },
@@ -99,30 +144,81 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "justice.",
-            "deliver",
-            "to",
-            "exists",
-            "court",
+            "week.",
+            "dry",
+            "a",
+            "after",
+            "rain",
+            "extra",
+            "the",
+            "welcomed",
+            "farmers",
             "The"
           ],
-          "answer": "The court exists to deliver justice."
+          "answer": "The farmers welcomed the extra rain after a dry week."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "site.",
-            "building",
+            "other.",
+            "each",
+            "help",
+            "to",
+            "roles",
+            "different",
+            "plays",
+            "town",
             "the",
-            "on",
-            "day",
-            "every",
-            "boots",
-            "strong",
-            "wears",
-            "Elena"
+            "in",
+            "Everyone"
           ],
-          "answer": "Elena wears strong boots every day on the building site."
+          "answer": "Everyone in the town plays different roles to help each other."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "refugee.",
+            "a",
+            "and",
+            "immigrant",
+            "an",
+            "between",
+            "difference",
+            "the",
+            "explained",
+            "mother",
+            "Theo's"
+          ],
+          "answer": "Theo's mother explained the difference between an immigrant and a refugee."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "children.",
+            "young",
+            "the",
+            "to",
+            "magic",
+            "like",
+            "looked",
+            "trick",
+            "The"
+          ],
+          "answer": "The trick looked like magic to the young children."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "town.",
+            "the",
+            "through",
+            "proudly",
+            "marched",
+            "school",
+            "whole",
+            "The"
+          ],
+          "answer": "The whole school marched proudly through the town."
         }
       ]
     },
@@ -135,302 +231,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence uses the Present Simple correctly?",
+          "prompt": "What does the word 'caretaker' mean?",
           "choices": [
-            "The engineer design bridges.",
-            "The engineer designing bridges every single day.",
-            "The engineer designs bridges.",
-            "The engineer design bridge."
+            "A person who cleans and takes care of a building.",
+            "A machine that lifts heavy stones onto a lorry at a building site.",
+            "A short piece of writing printed in a newspaper.",
+            "A room where the pupils hang their coats."
           ],
-          "answer": "The engineer designs bridges.",
-          "explanation": "The subject is he or she, so the verb takes the -s ending and stands alone without an -ing form."
+          "answer": "A person who cleans and takes care of a building.",
+          "explanation": "In the parade, the caretaker walks proudly in his clean uniform after keeping the school tidy all week."
         },
         {
-          "prompt": "Complete the rule with the right modal verb: You _____ ignore someone who needs help.",
+          "prompt": "Which meaning matches the word 'senator'?",
           "choices": [
-            "should",
-            "may",
-            "can",
-            "mustn't"
+            "A person who takes pictures with a camera.",
+            "A cart full of fruit that is pushed slowly through the busy market.",
+            "A person chosen to help make the laws for a country.",
+            "The group of people trained to protect a country."
           ],
-          "answer": "mustn't",
-          "explanation": "This is a rule about what is not allowed, so mustn't is stronger and more suitable than the advice word should."
+          "answer": "A person chosen to help make the laws for a country.",
+          "explanation": "A senator works on the laws of a whole country, which is why the newspaper reports the school visit."
         },
         {
-          "prompt": "Which word shows direction in this sentence: The class walked _____ the centre of town?",
+          "prompt": "In this unit, what is an article?",
           "choices": [
-            "towards",
-            "in",
-            "on",
-            "near"
+            "A person who repairs the wooden stalls at the busy market.",
+            "A short piece of writing in a newspaper or magazine.",
+            "A rule that everyone in the town must obey.",
+            "A small bell fixed to the front of a bicycle."
           ],
-          "answer": "towards",
-          "explanation": "Towards points the walk at a destination, while in, on and near would hold the class in one place."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Which two workers does the text place in the market, and what does each one do?",
-          "choices": [
-            "The merchant sells fresh fruit and the carpenter mends a wooden stall.",
-            "They left because their home was not safe.",
-            "She says you mustn't build in a hurry and you should plan carefully and check twice."
-          ],
-          "answer": "The merchant sells fresh fruit and the carpenter mends a wooden stall.",
-          "explanation": "Both workers appear in the market sentence, so the answer names them in the order the text gives."
+          "answer": "A short piece of writing in a newspaper or magazine.",
+          "explanation": "The messenger's newspaper carries the article about the senator, so an article is writing, not a person."
         },
-        {
-          "prompt": "What did Omar come to our town to do?",
-          "choices": [
-            "They left because their home was not safe.",
-            "The school was chosen to make posters about the important jobs in their community.",
-            "He came to open a market stall and build a better life."
-          ],
-          "answer": "He came to open a market stall and build a better life.",
-          "explanation": "Omar is named as the immigrant, and his two reasons sit side by side in one sentence."
-        },
-        {
-          "prompt": "What advice does Elena give using should and mustn't?",
-          "choices": [
-            "He made one for the military because they protect us, and one for the refugees who moved here.",
-            "She says you mustn't build in a hurry and you should plan carefully and check twice.",
-            "He came to open a market stall and build a better life."
-          ],
-          "answer": "She says you mustn't build in a hurry and you should plan carefully and check twice.",
-          "explanation": "The rule and the advice sit in one of her replies, one telling us what is banned and one what is wise."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Describe a Job",
-          "target": "A ______ is a person who ______."
-        },
-        {
-          "prompt": "Speaking 3: Giving Advice",
-          "target": "You should thank the people who help you."
-        },
-        {
-          "prompt": "Speaking 5: Welcome a New Neighbour",
-          "target": "Elena wears strong boots every day on the building site."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "became.",
-            "drums",
-            "the",
-            "loud",
-            "how",
-            "minded",
-            "parade",
-            "the",
-            "at",
-            "Nobody"
-          ],
-          "answer": "Nobody at the parade minded how loud the drums became."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "family.",
-            "her",
-            "in",
-            "youngest",
-            "the",
-            "is",
-            "Amal"
-          ],
-          "answer": "Amal is the youngest in her family."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "loudly.",
-            "rang",
-            "bell",
-            "bicycle",
-            "messenger's",
-            "The"
-          ],
-          "answer": "The messenger's bicycle bell rang loudly."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'deciding' mean in this unit?",
-          "choices": [
-            "Thinking carefully and then choosing what to do.",
-            "Learning about things at school or at home.",
-            "A person who works with you at your job."
-          ],
-          "answer": "Thinking carefully and then choosing what to do.",
-          "explanation": "deciding: Thinking carefully and then choosing what to do."
-        },
-        {
-          "prompt": "What does 'ignore' mean in this unit?",
-          "choices": [
-            "Learning about things at school or at home.",
-            "A person who works with you at your job.",
-            "Ignore means to pay no attention to someone or something on purpose."
-          ],
-          "answer": "Ignore means to pay no attention to someone or something on purpose.",
-          "explanation": "ignore: Ignore means to pay no attention to someone or something on purpose."
-        },
-        {
-          "prompt": "What does 'colleague' mean in this unit?",
-          "choices": [
-            "A person who is in charge of a business or a team.",
-            "A person who works with you at your job.",
-            "Learning about things at school or at home."
-          ],
-          "answer": "A person who works with you at your job.",
-          "explanation": "colleague: A person who works with you at your job."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'can't'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Can't is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'labourer'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Labourer is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'charity'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Charity is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "competition",
-              "An event where people try their best to win."
-            ],
-            [
-              "expert",
-              "A person with great knowledge or skill in a subject."
-            ],
-            [
-              "victim",
-              "A person who has been hurt or harmed by something."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "hero",
-              "Someone who is brave or helps others."
-            ],
-            [
-              "travelled",
-              "Went from one place to another, often across a long distance."
-            ],
-            [
-              "exception",
-              "Something that is different and does not follow the usual rule."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "posed",
-              "Posed means stood still in a certain way so a photograph could be taken."
-            ],
-            [
-              "capes",
-              "Capes are long pieces of cloth worn over the shoulders, often by heroes in stories."
-            ],
-            [
-              "caretaker",
-              "A person who cleans and takes care of a building."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Who would you ask for help with understanding the law?",
           "choices": [
@@ -467,13 +299,518 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Which two workers does the text place in the market, and what does each one do?",
+          "choices": [
+            "The merchant sells fresh fruit and the carpenter mends a wooden stall.",
+            "They left because their home was not safe.",
+            "She says you mustn't build in a hurry and you should plan carefully and check twice."
+          ],
+          "answer": "The merchant sells fresh fruit and the carpenter mends a wooden stall.",
+          "explanation": "Both workers appear in the market sentence, so the answer names them in the order the text gives."
+        },
+        {
+          "prompt": "In “The People of Our Town”, which preposition tells you where the engineer checks the new bridge?",
+          "choices": [
+            "He came to open a market stall and build a better life.",
+            "The school was chosen to make posters about the important jobs in their community.",
+            "The word near, because the text says the engineer works near the river."
+          ],
+          "answer": "The word near, because the text says the engineer works near the river.",
+          "explanation": "Near is a place preposition, so it fixes the engineer beside the river rather than moving him along it."
+        },
+        {
+          "prompt": "What did Omar come to our town to do?",
+          "choices": [
+            "He made one for the military because they protect us, and one for the refugees who moved here.",
+            "He came to open a market stall and build a better life.",
+            "She says a refugee runs from danger while an immigrant walks towards a dream."
+          ],
+          "answer": "He came to open a market stall and build a better life.",
+          "explanation": "Omar is named as the immigrant, and his two reasons sit side by side in one sentence."
+        },
+        {
+          "prompt": "What does Elena say an engineer designs and builds?",
+          "choices": [
+            "She says an engineer designs and builds roads, bridges, and machines.",
+            "She says a refugee runs from danger while an immigrant walks towards a dream.",
+            "She means ordinary helpers, such as the caretaker with his brooms, are heroes too."
+          ],
+          "answer": "She says an engineer designs and builds roads, bridges, and machines.",
+          "explanation": "Elena answers the reporter's first question with a list of three things, and the answer keeps all three."
+        },
+        {
+          "prompt": "What advice does Elena give using should and mustn't?",
+          "choices": [
+            "She says an engineer designs and builds roads, bridges, and machines.",
+            "The merchant sells fresh fruit and the carpenter mends a wooden stall.",
+            "She says you mustn't build in a hurry and you should plan carefully and check twice."
+          ],
+          "answer": "She says you mustn't build in a hurry and you should plan carefully and check twice.",
+          "explanation": "The rule and the advice sit in one of her replies, one telling us what is banned and one what is wise."
+        },
+        {
+          "prompt": "What two signs did Adam make, and what reason did he give for each?",
+          "choices": [
+            "The word near, because the text says the engineer works near the river.",
+            "He made one for the military because they protect us, and one for the refugees who moved here.",
+            "She is standing by the water and checking the plans for the bridge."
+          ],
+          "answer": "He made one for the military because they protect us, and one for the refugees who moved here.",
+          "explanation": "Adam explains both signs in the same speech, giving protection as one reason and welcome as the other."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Describe a Job",
+          "target": "A ______ is a person who ______."
+        },
+        {
+          "prompt": "Speaking 2: The Interview Game",
+          "target": "What do you do?"
+        },
+        {
+          "prompt": "Speaking 3: Giving Advice",
+          "target": "You should thank the people who help you."
+        },
+        {
+          "prompt": "Speaking 4: Word Expert Minute",
+          "target": "Theo's mother explained the difference between an immigrant and a refugee."
+        },
+        {
+          "prompt": "Speaking 5: Welcome a New Neighbour",
+          "target": "The trick looked like magic to the young children."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Talk About a Local Hero",
+          "target": "The whole school marched proudly through the town."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "diary.",
+            "her",
+            "in",
+            "story",
+            "personal",
+            "her",
+            "about",
+            "wrote",
+            "She"
+          ],
+          "answer": "She wrote about her personal story in her diary."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "crossing.",
+            "the",
+            "use",
+            "must",
+            "pedestrian",
+            "A"
+          ],
+          "answer": "A pedestrian must use the crossing."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shone.",
+            "it",
+            "until",
+            "corridor",
+            "the",
+            "swept",
+            "caretaker",
+            "The"
+          ],
+          "answer": "The caretaker swept the corridor until it shone."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "dream.",
+            "new",
+            "a",
+            "towards",
+            "walks",
+            "often",
+            "immigrant",
+            "An"
+          ],
+          "answer": "An immigrant often walks towards a new dream."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "gate.",
+            "school",
+            "the",
+            "by",
+            "posed",
+            "Nora",
+            "and",
+            "Amal"
+          ],
+          "answer": "Amal and Nora posed by the school gate."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "did.",
+            "sister",
+            "his",
+            "than",
+            "less",
+            "noise",
+            "the",
+            "minded",
+            "Sami"
+          ],
+          "answer": "Sami minded the noise less than his sister did."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'whilst' mean in this unit?",
+          "choices": [
+            "While; at the same time as something else.",
+            "Learning about things at school or at home.",
+            "In the middle, or the most important part."
+          ],
+          "answer": "While; at the same time as something else.",
+          "explanation": "whilst: While; at the same time as something else."
+        },
+        {
+          "prompt": "What does 'real' mean in this unit?",
+          "choices": [
+            "Learning about things at school or at home.",
+            "While; at the same time as something else.",
+            "True, and not made up or pretend."
+          ],
+          "answer": "True, and not made up or pretend.",
+          "explanation": "real: True, and not made up or pretend."
+        },
+        {
+          "prompt": "What does 'fully' mean in this unit?",
+          "choices": [
+            "While; at the same time as something else.",
+            "Completely, with nothing left out or missing.",
+            "Learning about things at school or at home."
+          ],
+          "answer": "Completely, with nothing left out or missing.",
+          "explanation": "fully: Completely, with nothing left out or missing."
+        },
+        {
+          "prompt": "What does 'uniform' mean in this unit?",
+          "choices": [
+            "A uniform is a special set of clothes that shows what job or group someone belongs to.",
+            "Learning about things at school or at home.",
+            "While; at the same time as something else."
+          ],
+          "answer": "A uniform is a special set of clothes that shows what job or group someone belongs to.",
+          "explanation": "uniform: A uniform is a special set of clothes that shows what job or group someone belongs to."
+        },
+        {
+          "prompt": "What does 'caretaker' mean in this unit?",
+          "choices": [
+            "Learning about things at school or at home.",
+            "While; at the same time as something else.",
+            "A person who cleans and takes care of a building."
+          ],
+          "answer": "A person who cleans and takes care of a building.",
+          "explanation": "caretaker: A person who cleans and takes care of a building."
+        },
+        {
+          "prompt": "What does 'immigrant' mean in this unit?",
+          "choices": [
+            "While; at the same time as something else.",
+            "A person who moves to live in another country.",
+            "Learning about things at school or at home."
+          ],
+          "answer": "A person who moves to live in another country.",
+          "explanation": "immigrant: A person who moves to live in another country."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'central'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Central is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'hero'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Hero is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'helmet'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Helmet is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'journal'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Journal is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'lawyer'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Lawyer is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'politician'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Politician is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "competition",
+              "An event where people try their best to win."
+            ],
+            [
+              "attractive",
+              "Pleasant to look at."
+            ],
+            [
+              "expensive",
+              "Costing a lot of money."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "possible",
+              "Able to happen or be done."
+            ],
+            [
+              "photographer",
+              "A person who takes pictures with a camera."
+            ],
+            [
+              "stacks",
+              "Piles things neatly one on top of another."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "peaceful",
+              "Calm, quiet and free from fighting or trouble."
+            ],
+            [
+              "towards",
+              "In the direction of someone or something."
+            ],
+            [
+              "wide",
+              "Measuring a large distance from one side to the other."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "wow",
+              "Wow is a word people say when something surprises or amazes them."
+            ],
+            [
+              "praises",
+              "Praises means says kind things about someone because they did something well."
+            ],
+            [
+              "hour",
+              "An hour is a unit of time equal to sixty minutes."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "cones",
+              "Cones are shapes with a round base and a pointed top, often used to mark roads."
+            ],
+            [
+              "merchant",
+              "A person who buys and sells things, often in a market."
+            ],
+            [
+              "ancestor",
+              "A member of your family who lived long before you were born."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "employer",
+              "A person or company that pays others to work."
+            ],
+            [
+              "minority",
+              "A smaller group within a much larger one."
+            ],
+            [
+              "witness",
+              "A person who saw an event and can describe it."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Two Neighbours': A refugee runs from danger; an _____ walks towards a dream.",
+          "choices": [
+            "artist",
+            "immigrant",
+            "engineer",
+            "article"
+          ],
+          "answer": "immigrant",
+          "explanation": "Theo's mother contrasts running from danger with walking towards a dream, and the dream belongs to the immigrant."
+        },
+        {
+          "prompt": "Which sentence uses the Present Simple correctly?",
+          "choices": [
+            "The engineer design bridges.",
+            "The engineer designing bridges every single day.",
+            "The engineer designs bridges.",
+            "The engineer design bridge."
+          ],
+          "answer": "The engineer designs bridges.",
+          "explanation": "The subject is he or she, so the verb takes the -s ending and stands alone without an -ing form."
+        },
+        {
+          "prompt": "Complete the rule with the right modal verb: You _____ ignore someone who needs help.",
+          "choices": [
+            "should",
+            "may",
+            "can",
+            "mustn't"
+          ],
+          "answer": "mustn't",
+          "explanation": "This is a rule about what is not allowed, so mustn't is stronger and more suitable than the advice word should."
+        },
+        {
+          "prompt": "Which word shows direction in this sentence: The class walked _____ the centre of town?",
+          "choices": [
+            "towards",
+            "in",
+            "on",
+            "near"
+          ],
+          "answer": "towards",
+          "explanation": "Towards points the walk at a destination, while in, on and near would hold the class in one place."
+        },
+        {
+          "prompt": "In 'The Community Parade', why does Amal write that heroes sometimes carry brooms?",
+          "choices": [
+            "Because every parade in the town ends with a big cleaning day.",
+            "Because she means the caretaker who cleans her school is a hero.",
+            "Because the messenger was selling brooms beside his stack of newspapers.",
+            "Because her teacher asked the class to draw brooms on their posters."
+          ],
+          "answer": "Because she means the caretaker who cleans her school is a hero.",
+          "explanation": "Amal swaps the storybook cape for a broom so that quiet, daily work counts as bravery too."
+        },
         {
           "prompt": "What does the word 'caretaker' mean?",
           "choices": [
@@ -484,28 +821,78 @@
           ],
           "answer": "A person who cleans and takes care of a building.",
           "explanation": "In the parade, the caretaker walks proudly in his clean uniform after keeping the school tidy all week."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which word shows direction in this sentence: The class walked _____ the centre of town?",
+          "choices": [
+            "towards",
+            "in",
+            "on",
+            "near"
+          ],
+          "answer": "towards",
+          "explanation": "Towards points the walk at a destination, while in, on and near would hold the class in one place."
         },
         {
-          "prompt": "Which meaning matches the word 'senator'?",
+          "prompt": "In 'The Community Parade', why does Amal write that heroes sometimes carry brooms?",
           "choices": [
-            "A person who takes pictures with a camera.",
-            "A cart full of fruit that is pushed slowly through the busy market.",
-            "A person chosen to help make the laws for a country.",
-            "The group of people trained to protect a country."
+            "Because every parade in the town ends with a big cleaning day.",
+            "Because she means the caretaker who cleans her school is a hero.",
+            "Because the messenger was selling brooms beside his stack of newspapers.",
+            "Because her teacher asked the class to draw brooms on their posters."
           ],
-          "answer": "A person chosen to help make the laws for a country.",
-          "explanation": "A senator works on the laws of a whole country, which is why the newspaper reports the school visit."
+          "answer": "Because she means the caretaker who cleans her school is a hero.",
+          "explanation": "Amal swaps the storybook cape for a broom so that quiet, daily work counts as bravery too."
         },
         {
-          "prompt": "In this unit, what is an article?",
+          "prompt": "Which word means: Costing a lot of money.",
           "choices": [
-            "A person who repairs the wooden stalls at the busy market.",
-            "A short piece of writing in a newspaper or magazine.",
-            "A rule that everyone in the town must obey.",
-            "A small bell fixed to the front of a bicycle."
+            "expensive",
+            "education",
+            "whilst"
           ],
-          "answer": "A short piece of writing in a newspaper or magazine.",
-          "explanation": "The messenger's newspaper carries the article about the senator, so an article is writing, not a person."
+          "answer": "expensive",
+          "explanation": "expensive: Costing a lot of money."
+        },
+        {
+          "prompt": "Which word means: Completely, with nothing left out or missing.",
+          "choices": [
+            "education",
+            "whilst",
+            "fully"
+          ],
+          "answer": "fully",
+          "explanation": "fully: Completely, with nothing left out or missing."
+        },
+        {
+          "prompt": "What type of word is 'hour'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Hour is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'immigrant'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Immigrant is used as a noun in this dictionary sense."
         }
       ]
     }

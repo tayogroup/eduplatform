@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t03-u10",
   "title": "My English Voice: Grade 4 Capstone Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Not able to be done or to happen.",
           "choices": [
             "impossible",
-            "clause",
-            "idiom"
+            "adventure",
+            "author"
           ],
           "answer": "impossible",
           "explanation": "impossible: Not able to be done or to happen."
         },
         {
-          "prompt": "Which word means: When several words close together begin with the same sound.",
+          "prompt": "Which word means: To predict means to say what you think will happen next.",
           "choices": [
             "impossible",
-            "clause",
-            "alliteration"
+            "adventure",
+            "predict"
           ],
-          "answer": "alliteration",
-          "explanation": "alliteration: When several words close together begin with the same sound."
+          "answer": "predict",
+          "explanation": "predict: To predict means to say what you think will happen next."
         },
         {
-          "prompt": "Which word means: Coming after fourth and before sixth in a list or order.",
+          "prompt": "Which word means: A girl or woman who has the same parents as you.",
           "choices": [
-            "clause",
-            "fifth",
+            "adventure",
+            "sister",
             "impossible"
           ],
-          "answer": "fifth",
-          "explanation": "fifth: Coming after fourth and before sixth in a list or order."
+          "answer": "sister",
+          "explanation": "sister: A girl or woman who has the same parents as you."
+        },
+        {
+          "prompt": "Which word means: Coming after fifth and before seventh in a list or order.",
+          "choices": [
+            "sixth",
+            "impossible",
+            "adventure"
+          ],
+          "answer": "sixth",
+          "explanation": "sixth: Coming after fifth and before seventh in a list or order."
+        },
+        {
+          "prompt": "Which word means: A shape that curls round and round, moving out from the centre.",
+          "choices": [
+            "impossible",
+            "adventure",
+            "spiral"
+          ],
+          "answer": "spiral",
+          "explanation": "spiral: A shape that curls round and round, moving out from the centre."
+        },
+        {
+          "prompt": "Which word means: A word that sounds like another but is spelled differently.",
+          "choices": [
+            "adventure",
+            "homophone",
+            "impossible"
+          ],
+          "answer": "homophone",
+          "explanation": "homophone: A word that sounds like another but is spelled differently."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A type of writing, music or film.",
-          "answer": "genre"
+          "clue": "To whisper means to speak very quietly.",
+          "answer": "whisper"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Coming after seventh and before ninth in a list or order.",
-          "answer": "eighth"
+          "clue": "To finish doing all the parts of something.",
+          "answer": "complete"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Coming after sixth and before eighth in a list or order.",
+          "answer": "seventh"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A shape that curls round and round, moving out from the centre.",
+          "answer": "spiral"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A word that sounds like another but is spelled differently.",
+          "answer": "homophone"
         }
       ]
     },
@@ -99,29 +144,75 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "thoughtful.",
-            "was",
-            "question",
+            "it.",
+            "read",
+            "can",
+            "everybody",
+            "so",
+            "neatly",
+            "information",
             "the",
-            "to",
-            "response",
-            "Her"
+            "write",
+            "Please"
           ],
-          "answer": "Her response to the question was thoughtful."
+          "answer": "Please write the information neatly so everybody can read it."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "talk.",
-            "her",
-            "prepare",
-            "to",
-            "week",
-            "one",
-            "had",
-            "Amal"
+            "book.",
+            "of",
+            "plural",
+            "the",
+            "is",
+            "Books"
           ],
-          "answer": "Amal had one week to prepare her talk."
+          "answer": "Books is the plural of book."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "speaking.",
+            "and",
+            "writing",
+            "reading,",
+            "tested",
+            "Exhibition",
+            "The"
+          ],
+          "answer": "The Exhibition tested reading, writing and speaking."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "goat.",
+            "a",
+            "of",
+            "story",
+            "the",
+            "told",
+            "unit",
+            "fifth",
+            "The"
+          ],
+          "answer": "The fifth unit told the story of a goat."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "market.",
+            "the",
+            "of",
+            "smell",
+            "kitchen",
+            "whole",
+            "the",
+            "made",
+            "spice",
+            "warm",
+            "One"
+          ],
+          "answer": "One warm spice made the whole kitchen smell of the market."
         }
       ]
     },
@@ -134,309 +225,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Teacher Yasmin says the attic rule is not a choice. Which sentence states an obligation?",
+          "prompt": "Nora touched the damp grass and said the ground was still wet. Which review word names that water?",
           "choices": [
-            "You might wear gloves in the attic.",
-            "You could wear gloves in the attic.",
-            "You have to wear gloves in the attic.",
-            "You would like to wear gloves in the attic."
+            "moisture",
+            "mail",
+            "spiral",
+            "service"
           ],
-          "answer": "You have to wear gloves in the attic.",
-          "explanation": "Have to states an obligation, while might and could only state a possibility."
+          "answer": "moisture",
+          "explanation": "Moisture is the small amount of water sitting in the air or on a surface, as Unit 2 taught."
         },
         {
-          "prompt": "Which sentence compares three or more storms correctly?",
+          "prompt": "The horse ran fast on four legs across the field. Which verb describes exactly what it did?",
           "choices": [
-            "A tornado spins faster than a storm.",
-            "A tornado is the fastest storm of all.",
-            "A tornado spins more fast than a storm.",
-            "A tornado is more faster than a storm."
+            "agreed",
+            "delivered",
+            "proceeded",
+            "galloped"
           ],
-          "answer": "A tornado is the fastest storm of all.",
-          "explanation": "The superlative the fastest compares one thing with every other, while faster compares only two."
+          "answer": "galloped",
+          "explanation": "Gallop is the Unit 5 verb for running fast on four legs; proceed only means to keep going."
         },
         {
-          "prompt": "In the Year 4 Exhibition brief, how long must each learner's talk last?",
+          "prompt": "Amal was not sure that her attic list was good enough to keep. Which word describes her?",
           "choices": [
-            "Two minutes.",
-            "Two hours.",
-            "Five minutes.",
-            "Ten seconds."
+            "terrified",
+            "generous",
+            "doubtful",
+            "fresh"
           ],
-          "answer": "Two minutes.",
-          "explanation": "Part 3 of the brief fixes the talk at two minutes, which is why speakers slow down rather than add pages."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What did Teacher Yasmin place on every desk, and what did she tell the class to choose?",
-          "choices": [
-            "She placed one thick blue folder on every desk, and she told the class to choose the six pages that carry their own English voice.",
-            "The pages must come from at least five different units, and the set must show reading, writing, speaking and new words.",
-            "She offers to let that learner present to her alone on Thursday, with nobody else in the room."
-          ],
-          "answer": "She placed one thick blue folder on every desk, and she told the class to choose the six pages that carry their own English voice.",
-          "explanation": "The opening two sentences name the thick blue folder and quote the instruction about the six pages."
+          "answer": "doubtful",
+          "explanation": "Doubtful means not sure that something is true or good, which is milder than terrified."
         },
-        {
-          "prompt": "According to Part 3 of the brief, what three things does a speaker do during the two-minute talk, and in what order?",
-          "choices": [
-            "The pages must come from at least five different units, and the set must show reading, writing, speaking and new words.",
-            "She is most proud of page four, because she wrote it twice and the second time was far better.",
-            "The speaker opens with their name, then presents three pages, then answers two questions from the audience."
-          ],
-          "answer": "The speaker opens with their name, then presents three pages, then answers two questions from the audience.",
-          "explanation": "Part 3 lists the three steps in that exact order and fixes the talk at two minutes."
-        },
-        {
-          "prompt": "What does Teacher Yasmin offer a learner who feels too nervous to present on Friday?",
-          "choices": [
-            "It taught her to ask one question and then stop talking.",
-            "She offers to let that learner present to her alone on Thursday, with nobody else in the room.",
-            "The speaker opens with their name, then presents three pages, then answers two questions from the audience."
-          ],
-          "answer": "She offers to let that learner present to her alone on Thursday, with nobody else in the room.",
-          "explanation": "Her reply to Leo sets out the private Thursday rehearsal as the alternative to the public evening."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Choosing My Six Pages",
-          "target": "I chose my ______ page from Unit ______ because it shows ______."
-        },
-        {
-          "prompt": "Speaking 3 — Thirty Review Words in One Minute",
-          "target": "From Unit 2 I remember moisture, because our poster curled in the rain."
-        },
-        {
-          "prompt": "Speaking 5 — Answering Questions From Visitors",
-          "target": "Which page was hardest to finish, and why?"
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "bread.",
-            "bakery",
-            "the",
-            "beside",
-            "lamb",
-            "fresh",
-            "sold",
-            "stall",
-            "market",
-            "The"
-          ],
-          "answer": "The market stall sold fresh lamb beside the bakery bread."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "night.",
-            "last",
-            "talk",
-            "my",
-            "practise",
-            "me",
-            "helped",
-            "sister",
-            "My"
-          ],
-          "answer": "My sister helped me practise my talk last night."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Exhibition.",
-            "the",
-            "for",
-            "title",
-            "one",
-            "on",
-            "agree",
-            "to",
-            "had",
-            "class",
-            "The"
-          ],
-          "answer": "The class had to agree on one title for the Exhibition."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'lay' mean in this unit?",
-          "choices": [
-            "Was resting flat somewhere, the past tense of the word lie.",
-            "Not able to be done or to happen.",
-            "A group of words containing a verb, part of a sentence."
-          ],
-          "answer": "Was resting flat somewhere, the past tense of the word lie.",
-          "explanation": "lay: Was resting flat somewhere, the past tense of the word lie."
-        },
-        {
-          "prompt": "What does 'breath' mean in this unit?",
-          "choices": [
-            "Not able to be done or to happen.",
-            "A group of words containing a verb, part of a sentence.",
-            "The air you take in and let out of your lungs."
-          ],
-          "answer": "The air you take in and let out of your lungs.",
-          "explanation": "breath: The air you take in and let out of your lungs."
-        },
-        {
-          "prompt": "What does 'clause' mean in this unit?",
-          "choices": [
-            "A phrase whose meaning is not what the words say.",
-            "A group of words containing a verb, part of a sentence.",
-            "Not able to be done or to happen."
-          ],
-          "answer": "A group of words containing a verb, part of a sentence.",
-          "explanation": "clause: A group of words containing a verb, part of a sentence."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'partner'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Partner is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'carpenter'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Carpenter is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'reference'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Reference is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "actress",
-              "A woman or girl who performs a role in a play or film."
-            ],
-            [
-              "drama",
-              "A play written for the stage, radio or screen."
-            ],
-            [
-              "quotation",
-              "Words someone said or wrote, repeated by another person."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "apostrophe",
-              "A mark showing a missing letter or who owns something."
-            ],
-            [
-              "clauses",
-              "Parts of a sentence that each have their own subject and verb."
-            ],
-            [
-              "rehearsed",
-              "Practised something carefully before doing it for real."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "seventh",
-              "Coming after sixth and before eighth in a list or order."
-            ],
-            [
-              "sandwich",
-              "Food made of two pieces of bread with meat, cheese, or vegetables inside."
-            ],
-            [
-              "caretaker",
-              "A person who cleans and takes care of a building."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Omar sorts letters and parcels at the post counter every morning. What is he sorting?",
           "choices": [
@@ -473,13 +293,526 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What did Teacher Yasmin place on every desk, and what did she tell the class to choose?",
+          "choices": [
+            "She placed one thick blue folder on every desk, and she told the class to choose the six pages that carry their own English voice.",
+            "The pages must come from at least five different units, and the set must show reading, writing, speaking and new words.",
+            "She offers to let that learner present to her alone on Thursday, with nobody else in the room."
+          ],
+          "answer": "She placed one thick blue folder on every desk, and she told the class to choose the six pages that carry their own English voice.",
+          "explanation": "The opening two sentences name the thick blue folder and quote the instruction about the six pages."
+        },
+        {
+          "prompt": "Amal nearly threw away the attic list. Why did she keep it in the end?",
+          "choices": [
+            "The speaker opens with their name, then presents three pages, then answers two questions from the audience.",
+            "She is most proud of page four, because she wrote it twice and the second time was far better.",
+            "She read her last line again and saw that it was the first sentence she had ever written with two clauses joined properly."
+          ],
+          "answer": "She read her last line again and saw that it was the first sentence she had ever written with two clauses joined properly.",
+          "explanation": "The story shows her re-reading the gloves and masks sentence, then keeping the page for what that sentence proves about her writing."
+        },
+        {
+          "prompt": "According to Part 3 of the brief, what three things does a speaker do during the two-minute talk, and in what order?",
+          "choices": [
+            "It taught her to ask one question and then stop talking.",
+            "The speaker opens with their name, then presents three pages, then answers two questions from the audience.",
+            "Room Five begins to gallop and to race, and it ends in a spiral that curls underground."
+          ],
+          "answer": "The speaker opens with their name, then presents three pages, then answers two questions from the audience.",
+          "explanation": "Part 3 lists the three steps in that exact order and fixes the talk at two minutes."
+        },
+        {
+          "prompt": "The poem ends by saying the writer holds the key to all nine rooms. What does that image mean?",
+          "choices": [
+            "It means the writer can now open and use everything she found in the nine rooms, whenever she needs it.",
+            "Room Five begins to gallop and to race, and it ends in a spiral that curls underground.",
+            "She says that in Unit 1 Amal read to her one word at a time, but tonight she reads like somebody who owns the words."
+          ],
+          "answer": "It means the writer can now open and use everything she found in the nine rooms, whenever she needs it.",
+          "explanation": "Each room in the poem holds one part of the year, so holding the key means all of that learning belongs to her now."
+        },
+        {
+          "prompt": "What does Teacher Yasmin offer a learner who feels too nervous to present on Friday?",
+          "choices": [
+            "It means the writer can now open and use everything she found in the nine rooms, whenever she needs it.",
+            "She placed one thick blue folder on every desk, and she told the class to choose the six pages that carry their own English voice.",
+            "She offers to let that learner present to her alone on Thursday, with nobody else in the room."
+          ],
+          "answer": "She offers to let that learner present to her alone on Thursday, with nobody else in the room.",
+          "explanation": "Her reply to Leo sets out the private Thursday rehearsal as the alternative to the public evening."
+        },
+        {
+          "prompt": "What does Amal say the Unit 1 interview with Omar taught her about talking to people?",
+          "choices": [
+            "She read her last line again and saw that it was the first sentence she had ever written with two clauses joined properly.",
+            "It taught her to ask one question and then stop talking.",
+            "The wall is nine metres and sixty centimetres long, and Maya says thirty boards will not fit along it in one row."
+          ],
+          "answer": "It taught her to ask one question and then stop talking.",
+          "explanation": "Omar asks whether the report helped, and Amal names listening after the question as the lesson she kept."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Choosing My Six Pages",
+          "target": "I chose my ______ page from Unit ______ because it shows ______."
+        },
+        {
+          "prompt": "Speaking 2 — Explaining One Grammar Choice",
+          "target": "My first sentence said ______, and that was not right yet."
+        },
+        {
+          "prompt": "Speaking 3 — Thirty Review Words in One Minute",
+          "target": "From Unit 2 I remember moisture, because our poster curled in the rain."
+        },
+        {
+          "prompt": "Speaking 4 — The Two-Minute Exhibition Talk",
+          "target": "Good evening. My name is ______, and my display is called ______."
+        },
+        {
+          "prompt": "Speaking 5 — Answering Questions From Visitors",
+          "target": "Which page was hardest to finish, and why?"
+        },
+        {
+          "prompt": "Speaking 6 — My Year in Three Honest Sentences",
+          "target": "The hardest thing this year was ______."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "attic.",
+            "the",
+            "into",
+            "climbed",
+            "they",
+            "before",
+            "equipment",
+            "safety",
+            "wore",
+            "crew",
+            "The"
+          ],
+          "answer": "The crew wore safety equipment before they climbed into the attic."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "freezes.",
+            "never",
+            "that",
+            "lake",
+            "a",
+            "of",
+            "tells",
+            "legend",
+            "The"
+          ],
+          "answer": "The legend tells of a lake that never freezes."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "'don't'.",
+            "in",
+            "letter",
+            "missing",
+            "the",
+            "shows",
+            "apostrophe",
+            "An"
+          ],
+          "answer": "An apostrophe shows the missing letter in 'don't'."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "board.",
+            "their",
+            "from",
+            "pages",
+            "three",
+            "present",
+            "will",
+            "pupil",
+            "Each"
+          ],
+          "answer": "Each pupil will present three pages from their board."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "door.",
+            "classroom",
+            "the",
+            "near",
+            "board",
+            "eighth",
+            "the",
+            "is",
+            "This"
+          ],
+          "answer": "This is the eighth board near the classroom door."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "list.",
+            "attic",
+            "the",
+            "about",
+            "thought",
+            "first",
+            "her",
+            "down",
+            "wrote",
+            "Amal"
+          ],
+          "answer": "Amal wrote down her first thought about the attic list."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'adventure' mean in this unit?",
+          "choices": [
+            "An exciting experience or journey.",
+            "Not able to be done or to happen.",
+            "A person who writes books or stories."
+          ],
+          "answer": "An exciting experience or journey.",
+          "explanation": "adventure: An exciting experience or journey."
+        },
+        {
+          "prompt": "What does 'comma' mean in this unit?",
+          "choices": [
+            "Not able to be done or to happen.",
+            "An exciting experience or journey.",
+            "A small mark ( , ) used to show a pause or to separate items in a list."
+          ],
+          "answer": "A small mark ( , ) used to show a pause or to separate items in a list.",
+          "explanation": "comma: A small mark ( , ) used to show a pause or to separate items in a list."
+        },
+        {
+          "prompt": "What does 'paragraphs' mean in this unit?",
+          "choices": [
+            "An exciting experience or journey.",
+            "Groups of sentences that talk about one main idea.",
+            "Not able to be done or to happen."
+          ],
+          "answer": "Groups of sentences that talk about one main idea.",
+          "explanation": "paragraphs: Groups of sentences that talk about one main idea."
+        },
+        {
+          "prompt": "What does 'language' mean in this unit?",
+          "choices": [
+            "A way people talk and write to share ideas and feelings.",
+            "Not able to be done or to happen.",
+            "An exciting experience or journey."
+          ],
+          "answer": "A way people talk and write to share ideas and feelings.",
+          "explanation": "language: A way people talk and write to share ideas and feelings."
+        },
+        {
+          "prompt": "What does 'nervous' mean in this unit?",
+          "choices": [
+            "Not able to be done or to happen.",
+            "An exciting experience or journey.",
+            "Feeling worried or a little afraid about something that might happen."
+          ],
+          "answer": "Feeling worried or a little afraid about something that might happen.",
+          "explanation": "nervous: Feeling worried or a little afraid about something that might happen."
+        },
+        {
+          "prompt": "What does 'metaphor' mean in this unit?",
+          "choices": [
+            "An exciting experience or journey.",
+            "Saying one thing is another to compare them.",
+            "Not able to be done or to happen."
+          ],
+          "answer": "Saying one thing is another to compare them.",
+          "explanation": "metaphor: Saying one thing is another to compare them."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'author'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Author is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'reader'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Reader is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'rehearsed'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Rehearsed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'surface'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Surface is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'folder'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Folder is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'response'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Response is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "actress",
+              "A woman or girl who performs a role in a play or film."
+            ],
+            [
+              "alternatively",
+              "As another choice instead."
+            ],
+            [
+              "opinion",
+              "Your opinion is what you think about something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "conversation",
+              "A conversation is when two or more people talk together."
+            ],
+            [
+              "noun",
+              "A word that names a person, place or thing."
+            ],
+            [
+              "lay",
+              "Was resting flat somewhere, the past tense of the word lie."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "complete",
+              "To finish doing all the parts of something."
+            ],
+            [
+              "improved",
+              "Got better than it was before."
+            ],
+            [
+              "sixty",
+              "The number 60, six groups of ten."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "eighth",
+              "Coming after seventh and before ninth in a list or order."
+            ],
+            [
+              "sweat",
+              "The clear water that comes from your skin when you are hot."
+            ],
+            [
+              "service",
+              "Help or work done for others."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "carpenter",
+              "A person who builds things from wood."
+            ],
+            [
+              "equipment",
+              "Things that are used for a special job or task, like tools or machines."
+            ],
+            [
+              "contraction",
+              "A short form of two words, written with an apostrophe."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "illustration",
+              "A picture or drawing that helps explain something."
+            ],
+            [
+              "quotation",
+              "Words someone said or wrote, repeated by another person."
+            ],
+            [
+              "statement",
+              "Something said or written to express a fact or opinion."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Complete the question tag: We are presenting on Friday, ______",
+          "choices": [
+            "isn't it?",
+            "don't we?",
+            "are we?",
+            "aren't we?"
+          ],
+          "answer": "aren't we?",
+          "explanation": "The sentence is positive and uses are with we, so the tag flips to the negative aren't we."
+        },
+        {
+          "prompt": "Teacher Yasmin says the attic rule is not a choice. Which sentence states an obligation?",
+          "choices": [
+            "You might wear gloves in the attic.",
+            "You could wear gloves in the attic.",
+            "You have to wear gloves in the attic.",
+            "You would like to wear gloves in the attic."
+          ],
+          "answer": "You have to wear gloves in the attic.",
+          "explanation": "Have to states an obligation, while might and could only state a possibility."
+        },
+        {
+          "prompt": "Which sentence compares three or more storms correctly?",
+          "choices": [
+            "A tornado spins faster than a storm.",
+            "A tornado is the fastest storm of all.",
+            "A tornado spins more fast than a storm.",
+            "A tornado is more faster than a storm."
+          ],
+          "answer": "A tornado is the fastest storm of all.",
+          "explanation": "The superlative the fastest compares one thing with every other, while faster compares only two."
+        },
+        {
+          "prompt": "In the Year 4 Exhibition brief, how long must each learner's talk last?",
+          "choices": [
+            "Two minutes.",
+            "Two hours.",
+            "Five minutes.",
+            "Ten seconds."
+          ],
+          "answer": "Two minutes.",
+          "explanation": "Part 3 of the brief fixes the talk at two minutes, which is why speakers slow down rather than add pages."
+        },
+        {
+          "prompt": "In \"Amal's English Voice\", who tells Amal that she now reads like somebody who owns the words?",
+          "choices": [
+            "Teacher Yasmin.",
+            "Grandma Hana.",
+            "Her brother Adam.",
+            "Her friend Nora."
+          ],
+          "answer": "Grandma Hana.",
+          "explanation": "Grandma Hana puts down her tea at the kitchen table and compares tonight with Unit 1."
+        },
         {
           "prompt": "Nora touched the damp grass and said the ground was still wet. Which review word names that water?",
           "choices": [
@@ -490,28 +823,78 @@
           ],
           "answer": "moisture",
           "explanation": "Moisture is the small amount of water sitting in the air or on a surface, as Unit 2 taught."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "In the Year 4 Exhibition brief, how long must each learner's talk last?",
+          "choices": [
+            "Two minutes.",
+            "Two hours.",
+            "Five minutes.",
+            "Ten seconds."
+          ],
+          "answer": "Two minutes.",
+          "explanation": "Part 3 of the brief fixes the talk at two minutes, which is why speakers slow down rather than add pages."
         },
         {
-          "prompt": "The horse ran fast on four legs across the field. Which verb describes exactly what it did?",
+          "prompt": "In \"Amal's English Voice\", who tells Amal that she now reads like somebody who owns the words?",
           "choices": [
-            "agreed",
-            "delivered",
-            "proceeded",
-            "galloped"
+            "Teacher Yasmin.",
+            "Grandma Hana.",
+            "Her brother Adam.",
+            "Her friend Nora."
           ],
-          "answer": "galloped",
-          "explanation": "Gallop is the Unit 5 verb for running fast on four legs; proceed only means to keep going."
+          "answer": "Grandma Hana.",
+          "explanation": "Grandma Hana puts down her tea at the kitchen table and compares tonight with Unit 1."
         },
         {
-          "prompt": "Amal was not sure that her attic list was good enough to keep. Which word describes her?",
+          "prompt": "Which word means: Your opinion is what you think about something.",
           "choices": [
-            "terrified",
-            "generous",
-            "doubtful",
-            "fresh"
+            "opinion",
+            "impossible",
+            "adventure"
           ],
-          "answer": "doubtful",
-          "explanation": "Doubtful means not sure that something is true or good, which is milder than terrified."
+          "answer": "opinion",
+          "explanation": "opinion: Your opinion is what you think about something."
+        },
+        {
+          "prompt": "Which word means: Groups of sentences that talk about one main idea.",
+          "choices": [
+            "impossible",
+            "adventure",
+            "paragraphs"
+          ],
+          "answer": "paragraphs",
+          "explanation": "paragraphs: Groups of sentences that talk about one main idea."
+        },
+        {
+          "prompt": "What type of word is 'service'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Service is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'metaphor'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Metaphor is used as a noun in this dictionary sense."
         }
       ]
     }

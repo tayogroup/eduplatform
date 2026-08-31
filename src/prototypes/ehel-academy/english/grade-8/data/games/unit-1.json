@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t01-u01",
   "title": "Languages and Communication Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: An idea considered apart from the particular cases it came from.",
           "choices": [
             "abstraction",
-            "misinformation",
-            "exist"
+            "nuanced",
+            "reconstruct"
           ],
           "answer": "abstraction",
           "explanation": "abstraction: An idea considered apart from the particular cases it came from."
         },
         {
-          "prompt": "Which word means: The word or words by which a particular person, place, or thing is known.",
+          "prompt": "Which word means: A tap is a light, quick touch, such as pressing a button on a screen.",
           "choices": [
             "abstraction",
-            "misinformation",
-            "name"
+            "nuanced",
+            "tap"
           ],
-          "answer": "name",
-          "explanation": "name: The word or words by which a particular person, place, or thing is known."
+          "answer": "tap",
+          "explanation": "tap: A tap is a light, quick touch, such as pressing a button on a screen."
         },
         {
-          "prompt": "Which word means: One or the other of two people or things, used to say something was true of both.",
+          "prompt": "Which word means: The most essential, central, or important part of something.",
           "choices": [
-            "misinformation",
-            "either",
+            "nuanced",
+            "heart",
             "abstraction"
           ],
-          "answer": "either",
-          "explanation": "either: One or the other of two people or things, used to say something was true of both."
+          "answer": "heart",
+          "explanation": "heart: The most essential, central, or important part of something."
+        },
+        {
+          "prompt": "Which word means: Large vehicles that carry many passengers along a fixed route.",
+          "choices": [
+            "buses",
+            "abstraction",
+            "nuanced"
+          ],
+          "answer": "buses",
+          "explanation": "buses: Large vehicles that carry many passengers along a fixed route."
+        },
+        {
+          "prompt": "Which word means: A visible mass of tiny water droplets floating in the sky, or something that darkens a mood.",
+          "choices": [
+            "abstraction",
+            "nuanced",
+            "cloud"
+          ],
+          "answer": "cloud",
+          "explanation": "cloud: A visible mass of tiny water droplets floating in the sky, or something that darkens a mood."
+        },
+        {
+          "prompt": "Which word means: Feeling worried, anxious, or uneasy about something.",
+          "choices": [
+            "nuanced",
+            "nervous",
+            "abstraction"
+          ],
+          "answer": "nervous",
+          "explanation": "nervous: Feeling worried, anxious, or uneasy about something."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A profile used to post and share content online, or a description of what happened.",
-          "answer": "account"
+          "clue": "To exist means to be real or to be present in the world.",
+          "answer": "exist"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A place, often outdoors, where people buy and sell goods.",
-          "answer": "market"
+          "clue": "At or towards the back of something, or supporting and standing up for someone.",
+          "answer": "behind"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A single unit of language that has meaning and is used to speak or write.",
+          "answer": "word"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Welcomed someone, or was the first thing a person saw or experienced.",
+          "answer": "greeted"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Moved by lifting a foot and placing it down in a new position.",
+          "answer": "stepped"
         }
       ]
     },
@@ -98,38 +143,87 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "questioned.",
-            "be",
-            "could",
-            "nobody",
-            "so",
-            "claim,",
-            "the",
-            "behind",
-            "name",
+            "season.",
+            "dry",
             "a",
-            "put",
-            "Nobody"
+            "in",
+            "grass",
+            "through",
+            "spreading",
+            "fire",
+            "a",
+            "like",
+            "behaves",
+            "rumour",
+            "A"
           ],
-          "answer": "Nobody put a name behind the claim, so nobody could be questioned."
+          "answer": "A rumour behaves like a fire spreading through grass in a dry season."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "help.",
-            "for",
-            "waiting",
+            "photographs.",
+            "older",
             "of",
-            "instead",
-            "ourselves",
-            "problem",
-            "the",
-            "solve",
-            "to",
-            "decided",
-            "We"
+            "thousands",
+            "against",
+            "image",
+            "an",
+            "compare",
+            "can",
+            "software",
+            "Special"
           ],
-          "answer": "We decided to solve the problem ourselves instead of waiting for help."
+          "answer": "Special software can compare an image against thousands of older photographs."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "fear.",
+            "with",
+            "corridor",
+            "a",
+            "fill",
+            "longer",
+            "no",
+            "can",
+            "rumour",
+            "single",
+            "A"
+          ],
+          "answer": "A single rumour can no longer fill a corridor with fear."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "shouting.",
+            "was",
+            "her",
+            "around",
+            "else",
+            "everyone",
+            "while",
+            "calm",
+            "stayed",
+            "Nora"
+          ],
+          "answer": "Nora stayed calm while everyone else around her was shouting."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "phone.",
+            "her",
+            "on",
+            "message",
+            "the",
+            "at",
+            "staring",
+            "frozen,",
+            "sat",
+            "Nora"
+          ],
+          "answer": "Nora sat frozen, staring at the message on her phone."
         }
       ]
     },
@@ -142,310 +236,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Fact-Checker's Toolkit': The simplest _____ of misinformation is false information passed on by people who have not checked it.",
+          "prompt": "What does 'concise' mean?",
           "choices": [
-            "accustom",
-            "quibble",
-            "definition",
-            "allot"
+            "A statement that explains the meaning of a word.",
+            "A strong feeling of enthusiasm and eagerness.",
+            "The length of time that a person or thing lives or lasts.",
+            "Using few words to say something clearly."
           ],
-          "answer": "definition",
-          "explanation": "The text says: The simplest definition of misinformation is false information passed on by people who have not checked it."
+          "answer": "Using few words to say something clearly.",
+          "explanation": "The teacher asked us to write a concise summary of the story."
         },
         {
-          "prompt": "Choose the missing word from 'Whispers Beyond the Gate, part 1': Think critically about who had facts and who just followed. I will _____ ten minutes for group discussion.",
+          "prompt": "What does 'barricade' mean?",
           "choices": [
-            "allot",
-            "accustom",
-            "quibble",
-            "assimilate"
+            "A statement that explains the meaning of a word.",
+            "A structure used to block people or vehicles from passing.",
+            "The length of time that a person or thing lives or lasts.",
+            "To give or set aside a certain amount for a specific purpose."
           ],
-          "answer": "allot",
-          "explanation": "The text says: I will allot ten minutes for group discussion."
+          "answer": "A structure used to block people or vehicles from passing.",
+          "explanation": "The protesters built a barricade across the road using old crates."
         },
         {
-          "prompt": "Choose the missing word from 'Whispers Beyond the Gate, part 3': Students learned to _____ information carefully rather than react to it emotionally.",
+          "prompt": "What does 'zeal' mean?",
           "choices": [
-            "accustom",
-            "quibble",
-            "assimilate",
-            "allot"
+            "A statement that explains the meaning of a word.",
+            "A strong feeling of enthusiasm and eagerness.",
+            "To give or set aside a certain amount for a specific purpose.",
+            "To make someone familiar with something through repeated experience."
           ],
-          "answer": "assimilate",
-          "explanation": "The text says: Students learned to assimilate information carefully rather than react to it emotionally."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to The Speed of a Whisper, what is a rumour, and what are the three reasons the passage gives for why rumours move so fast?",
-          "choices": [
-            "A rumour is a story that runs ahead of its facts, and it moves fast because of excitement, belonging and the sheer speed of modern messages.",
-            "She notices that he is filming himself rather than the protest and laughing, and another student tags a post calling it a fake riot for the feed.",
-            "She means a story can sound reasonable and still be false, so it must be checked; Amal wants facts before acting, while Nora feels the pull of action."
-          ],
-          "answer": "A rumour is a story that runs ahead of its facts, and it moves fast because of excitement, belonging and the sheer speed of modern messages.",
-          "explanation": "The text opens by calling a rumour \"a story that runs ahead of its facts\", and then answers \"Why do rumours move so fast?\" with three reasons: excitement, belonging, and speed itself."
+          "answer": "A strong feeling of enthusiasm and eagerness.",
+          "explanation": "She studied with great zeal because she wanted the top grade."
         },
-        {
-          "prompt": "At the protest in part 2, what does Amal notice about the boy with the portable speaker, and how does another student label the scene online?",
-          "choices": [
-            "It suggests that one tiny spark can set whole neighbourhoods of conversation alight, and that the fire is far easier to start than to put out.",
-            "It advises the reader to pause before sharing -- wait, reread and check -- because strong feelings are exactly the lever a hoax uses to switch off careful thinking.",
-            "She notices that he is filming himself rather than the protest and laughing, and another student tags a post calling it a fake riot for the feed."
-          ],
-          "answer": "She notices that he is filming himself rather than the protest and laughing, and another student tags a post calling it a fake riot for the feed.",
-          "explanation": "When Amal scans the crowd, she points out that the boy with the speaker \"is filming himself, not the protest\" and laughing; then another student tags a post online: \"Fake riot for the feed.\""
-        },
-        {
-          "prompt": "Why does the toolkit call an anonymous message the weakest kind of source?",
-          "choices": [
-            "A rumour is a story that runs ahead of its facts, and it moves fast because of excitement, belonging and the sheer speed of modern messages.",
-            "Because nobody puts their name behind the claim, no one can be questioned or held responsible if it proves false, while an honest organiser signs what they share.",
-            "It suggests that one tiny spark can set whole neighbourhoods of conversation alight, and that the fire is far easier to start than to put out."
-          ],
-          "answer": "Because nobody puts their name behind the claim, no one can be questioned or held responsible if it proves false, while an honest organiser signs what they share.",
-          "explanation": "Look at question one of the toolkit: with an anonymous message nobody puts their name behind the claim, so no one can be questioned or held responsible if it proves false, whereas an honest organiser signs what they share."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Contrast Debate",
-          "target": "Justice is an abstraction until somebody is treated unfairly."
-        },
-        {
-          "prompt": "Speaking 3: Discussion Circle",
-          "target": "Nobody put a name behind the claim, so nobody could be questioned."
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "uniform.",
-            "school",
-            "new",
-            "the",
-            "about",
-            "students",
-            "the",
-            "among",
-            "dissent",
-            "was",
-            "There"
-          ],
-          "answer": "There was dissent among the students about the new school uniform."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "sign.",
-            "warning",
-            "a",
-            "itself",
-            "was",
-            "which",
-            "author,",
-            "no",
-            "had",
-            "flyer",
-            "The"
-          ],
-          "answer": "The flyer had no author, which was itself a warning sign."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Sami?",
-            "crowd,",
-            "a",
-            "follow",
-            "to",
-            "wise",
-            "always",
-            "it",
-            "Is"
-          ],
-          "answer": "Is it always wise to follow a crowd, Sami?"
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'would' mean in this unit?",
-          "choices": [
-            "A word used to talk about something that was likely, expected, or imagined.",
-            "An idea considered apart from the particular cases it came from.",
-            "Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong."
-          ],
-          "answer": "A word used to talk about something that was likely, expected, or imagined.",
-          "explanation": "would: A word used to talk about something that was likely, expected, or imagined."
-        },
-        {
-          "prompt": "What does 'outlet' mean in this unit?",
-          "choices": [
-            "An idea considered apart from the particular cases it came from.",
-            "Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong.",
-            "A business or organisation, especially one that publishes news or sells goods."
-          ],
-          "answer": "A business or organisation, especially one that publishes news or sells goods.",
-          "explanation": "outlet: A business or organisation, especially one that publishes news or sells goods."
-        },
-        {
-          "prompt": "What does 'misinformation' mean in this unit?",
-          "choices": [
-            "To exist means to be real or to be present in the world.",
-            "Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong.",
-            "An idea considered apart from the particular cases it came from."
-          ],
-          "answer": "Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong.",
-          "explanation": "misinformation: Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'imports'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Imports is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'dispelled'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Dispelled is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'faith'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Faith is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "assimilation",
-              "The process by which one group takes on the culture of another."
-            ],
-            [
-              "third",
-              "Third means coming immediately after the second, in position or order."
-            ],
-            [
-              "might",
-              "A word used to say that something is possible but not certain."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "questioned",
-              "Asked about closely, especially in order to check facts or test whether something is true."
-            ],
-            [
-              "popular",
-              "Liked, enjoyed, or supported by a large number of people."
-            ],
-            [
-              "bit",
-              "Used the teeth to cut into or grip something."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "warily",
-              "In a cautious way, as if expecting danger or trouble."
-            ],
-            [
-              "fist",
-              "A hand with the fingers curled tightly into the palm."
-            ],
-            [
-              "right",
-              "Correct, true, or morally acceptable."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'longevity' mean?",
           "choices": [
@@ -482,13 +304,527 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "According to The Speed of a Whisper, what is a rumour, and what are the three reasons the passage gives for why rumours move so fast?",
+          "choices": [
+            "A rumour is a story that runs ahead of its facts, and it moves fast because of excitement, belonging and the sheer speed of modern messages.",
+            "She notices that he is filming himself rather than the protest and laughing, and another student tags a post calling it a fake riot for the feed.",
+            "She means a story can sound reasonable and still be false, so it must be checked; Amal wants facts before acting, while Nora feels the pull of action."
+          ],
+          "answer": "A rumour is a story that runs ahead of its facts, and it moves fast because of excitement, belonging and the sheer speed of modern messages.",
+          "explanation": "The text opens by calling a rumour \"a story that runs ahead of its facts\", and then answers \"Why do rumours move so fast?\" with three reasons: excitement, belonging, and speed itself."
+        },
+        {
+          "prompt": "In part 1 of the story, what does the hoax flyer tell students to do on Harbour Road, and which three details are missing from it?",
+          "choices": [
+            "It suggests that one tiny spark can set whole neighbourhoods of conversation alight, and that the fire is far easier to start than to put out.",
+            "It advises the reader to pause before sharing -- wait, reread and check -- because strong feelings are exactly the lever a hoax uses to switch off careful thinking.",
+            "It tells them to bring signs, block the lorries and show their defiance at half past three, but it has no organiser's name, no logo and no source."
+          ],
+          "answer": "It tells them to bring signs, block the lorries and show their defiance at half past three, but it has no organiser's name, no logo and no source.",
+          "explanation": "Amal reads the flyer aloud at the gate: \"Half past three. Harbour Road. Bring signs. Block the lorries. Show your defiance.\" Straight after, the text notes there was no organiser's name, no logo and no source."
+        },
+        {
+          "prompt": "At the protest in part 2, what does Amal notice about the boy with the portable speaker, and how does another student label the scene online?",
+          "choices": [
+            "A rumour is a story that runs ahead of its facts, and it moves fast because of excitement, belonging and the sheer speed of modern messages.",
+            "She notices that he is filming himself rather than the protest and laughing, and another student tags a post calling it a fake riot for the feed.",
+            "Because nobody puts their name behind the claim, no one can be questioned or held responsible if it proves false, while an honest organiser signs what they share."
+          ],
+          "answer": "She notices that he is filming himself rather than the protest and laughing, and another student tags a post calling it a fake riot for the feed.",
+          "explanation": "When Amal scans the crowd, she points out that the boy with the speaker \"is filming himself, not the protest\" and laughing; then another student tags a post online: \"Fake riot for the feed.\""
+        },
+        {
+          "prompt": "The Speed of a Whisper says a rumour behaves like a grass fire in a dry season. What two ideas about rumours does this comparison suggest?",
+          "choices": [
+            "It suggests that one tiny spark can set whole neighbourhoods of conversation alight, and that the fire is far easier to start than to put out.",
+            "She means a story can sound reasonable and still be false, so it must be checked; Amal wants facts before acting, while Nora feels the pull of action.",
+            "It tells them to bring signs, block the lorries and show their defiance at half past three, but it has no organiser's name, no logo and no source."
+          ],
+          "answer": "It suggests that one tiny spark can set whole neighbourhoods of conversation alight, and that the fire is far easier to start than to put out.",
+          "explanation": "You must interpret figurative language inside an information text and explain the effect of the simile."
+        },
+        {
+          "prompt": "Why does the toolkit call an anonymous message the weakest kind of source?",
+          "choices": [
+            "It advises the reader to pause before sharing -- wait, reread and check -- because strong feelings are exactly the lever a hoax uses to switch off careful thinking.",
+            "She notices that he is filming himself rather than the protest and laughing, and another student tags a post calling it a fake riot for the feed.",
+            "Because nobody puts their name behind the claim, no one can be questioned or held responsible if it proves false, while an honest organiser signs what they share."
+          ],
+          "answer": "Because nobody puts their name behind the claim, no one can be questioned or held responsible if it proves false, while an honest organiser signs what they share.",
+          "explanation": "Look at question one of the toolkit: with an anonymous message nobody puts their name behind the claim, so no one can be questioned or held responsible if it proves false, whereas an honest organiser signs what they share."
+        },
+        {
+          "prompt": "Amal tells Nora that the story seems plausible, but plausible is not the same as true. What does she mean, and how do the two friends differ in part 1?",
+          "choices": [
+            "It suggests that one tiny spark can set whole neighbourhoods of conversation alight, and that the fire is far easier to start than to put out.",
+            "She means a story can sound reasonable and still be false, so it must be checked; Amal wants facts before acting, while Nora feels the pull of action.",
+            "A rumour is a story that runs ahead of its facts, and it moves fast because of excitement, belonging and the sheer speed of modern messages."
+          ],
+          "answer": "She means a story can sound reasonable and still be false, so it must be checked; Amal wants facts before acting, while Nora feels the pull of action.",
+          "explanation": "Under the stairwell Amal points out the video could be from anywhere and undated, so a story that sounds reasonable can still be false. The text then contrasts them: Amal is cautious and thoughtful, while Nora feels the pull of action."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Contrast Debate",
+          "target": "Justice is an abstraction until somebody is treated unfairly."
+        },
+        {
+          "prompt": "Speaking 2: Retelling in Reported Speech",
+          "target": "A rumour behaves like a fire spreading through grass in a dry season."
+        },
+        {
+          "prompt": "Speaking 3: Discussion Circle",
+          "target": "Special software can compare an image against thousands of older photographs."
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "A single rumour can no longer fill a corridor with fear."
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Nora stayed calm while everyone else around her was shouting."
+        },
+        {
+          "prompt": "Speaking 6: Six-Minute Unit Argument",
+          "target": "Nora sat frozen, staring at the message on her phone."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "longevity.",
+            "your",
+            "improve",
+            "can",
+            "food",
+            "healthy",
+            "Eating"
+          ],
+          "answer": "Eating healthy food can improve your longevity."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "spark.",
+            "careless",
+            "single",
+            "a",
+            "by",
+            "alight",
+            "set",
+            "was",
+            "field",
+            "dry",
+            "The"
+          ],
+          "answer": "The dry field was set alight by a single careless spark."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "school.",
+            "the",
+            "across",
+            "spread",
+            "rumour",
+            "the",
+            "made",
+            "photo",
+            "unchecked",
+            "an",
+            "Sharing"
+          ],
+          "answer": "Sharing an unchecked photo made the rumour spread across the school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "school.",
+            "to",
+            "way",
+            "the",
+            "on",
+            "Amal",
+            "beside",
+            "walked",
+            "Nora"
+          ],
+          "answer": "Nora walked beside Amal on the way to school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "board?",
+            "the",
+            "on",
+            "write",
+            "Yasmin",
+            "Teacher",
+            "did",
+            "word",
+            "vocabulary",
+            "Which"
+          ],
+          "answer": "Which vocabulary word did Teacher Yasmin write on the board?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "carelessness.",
+            "Kian's",
+            "from",
+            "dissent",
+            "with",
+            "edged",
+            "was",
+            "voice",
+            "Nora's"
+          ],
+          "answer": "Nora's voice was edged with dissent from Kian's carelessness."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'nuanced' mean in this unit?",
+          "choices": [
+            "Showing small but important differences of meaning.",
+            "An idea considered apart from the particular cases it came from.",
+            "To build something again from the evidence that remains."
+          ],
+          "answer": "Showing small but important differences of meaning.",
+          "explanation": "nuanced: Showing small but important differences of meaning."
+        },
+        {
+          "prompt": "What does 'slow' mean in this unit?",
+          "choices": [
+            "An idea considered apart from the particular cases it came from.",
+            "Showing small but important differences of meaning.",
+            "Taking a long time to happen, move, or finish."
+          ],
+          "answer": "Taking a long time to happen, move, or finish.",
+          "explanation": "slow: Taking a long time to happen, move, or finish."
+        },
+        {
+          "prompt": "What does 'attendance' mean in this unit?",
+          "choices": [
+            "Showing small but important differences of meaning.",
+            "The act of being present at an event, or the number of people who turn up.",
+            "An idea considered apart from the particular cases it came from."
+          ],
+          "answer": "The act of being present at an event, or the number of people who turn up.",
+          "explanation": "attendance: The act of being present at an event, or the number of people who turn up."
+        },
+        {
+          "prompt": "What does 'shut' mean in this unit?",
+          "choices": [
+            "Closed, or being closed, so that nothing can pass through.",
+            "An idea considered apart from the particular cases it came from.",
+            "Showing small but important differences of meaning."
+          ],
+          "answer": "Closed, or being closed, so that nothing can pass through.",
+          "explanation": "shut: Closed, or being closed, so that nothing can pass through."
+        },
+        {
+          "prompt": "What does 'around' mean in this unit?",
+          "choices": [
+            "An idea considered apart from the particular cases it came from.",
+            "Showing small but important differences of meaning.",
+            "In various directions or in a circle, without a fixed destination."
+          ],
+          "answer": "In various directions or in a circle, without a fixed destination.",
+          "explanation": "around: In various directions or in a circle, without a fixed destination."
+        },
+        {
+          "prompt": "What does 'replied' mean in this unit?",
+          "choices": [
+            "Showing small but important differences of meaning.",
+            "Said something as an answer to a question or statement.",
+            "An idea considered apart from the particular cases it came from."
+          ],
+          "answer": "Said something as an answer to a question or statement.",
+          "explanation": "replied: Said something as an answer to a question or statement."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'reconstruct'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Reconstruct is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'certainty'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Certainty is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fresh'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Fresh is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'happening'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Happening is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'next'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Next is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'force'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Force is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "assimilation",
+              "The process by which one group takes on the culture of another."
+            ],
+            [
+              "prologue",
+              "An opening section that comes before the main story."
+            ],
+            [
+              "knowledge",
+              "Knowledge is the information, facts and understanding a person has gained through learning or experience."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "behaves",
+              "Behaves means acts or reacts in a particular way."
+            ],
+            [
+              "already",
+              "Before now, or earlier than expected."
+            ],
+            [
+              "societies",
+              "Large groups of people who live together under shared rules and customs."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "plain",
+              "Simple and easy to understand, without unnecessary decoration, complication, or fuss."
+            ],
+            [
+              "inspect",
+              "To look at something closely and carefully in order to check it thoroughly."
+            ],
+            [
+              "less",
+              "A smaller amount of something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "smell",
+              "The quality of something that can be noticed through the nose."
+            ],
+            [
+              "red",
+              "Having the colour of blood or a ripe tomato."
+            ],
+            [
+              "acting",
+              "Behaving in a particular way, or performing a role, such as in a play."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "observe",
+              "To watch something carefully without taking part in it."
+            ],
+            [
+              "jaw",
+              "The bony part of the face that forms the mouth and holds the teeth."
+            ],
+            [
+              "follower",
+              "A person who follows or supports someone, especially on social media."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "stepped",
+              "Moved by lifting a foot and placing it down in a new position."
+            ],
+            [
+              "twinge",
+              "A sudden, brief feeling, often of pain, guilt, or emotion."
+            ],
+            [
+              "accustom",
+              "To make someone familiar with something through repeated experience."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Speed of a Whisper: How Rumours Travel': Some people forward every alarming message with _____, proud to be first with the drama.",
+          "choices": [
+            "zeal",
+            "accustom",
+            "quibble",
+            "assimilate"
+          ],
+          "answer": "zeal",
+          "explanation": "The text says: Some people forward every alarming message with zeal, proud to be first with the drama."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Fact-Checker's Toolkit': The simplest _____ of misinformation is false information passed on by people who have not checked it.",
+          "choices": [
+            "accustom",
+            "quibble",
+            "definition",
+            "allot"
+          ],
+          "answer": "definition",
+          "explanation": "The text says: The simplest definition of misinformation is false information passed on by people who have not checked it."
+        },
+        {
+          "prompt": "Choose the missing word from 'Whispers Beyond the Gate, part 1': Think critically about who had facts and who just followed. I will _____ ten minutes for group discussion.",
+          "choices": [
+            "allot",
+            "accustom",
+            "quibble",
+            "assimilate"
+          ],
+          "answer": "allot",
+          "explanation": "The text says: I will allot ten minutes for group discussion."
+        },
+        {
+          "prompt": "Choose the missing word from 'Whispers Beyond the Gate, part 3': Students learned to _____ information carefully rather than react to it emotionally.",
+          "choices": [
+            "accustom",
+            "quibble",
+            "assimilate",
+            "allot"
+          ],
+          "answer": "assimilate",
+          "explanation": "The text says: Students learned to assimilate information carefully rather than react to it emotionally."
+        },
+        {
+          "prompt": "Choose the missing word from 'Whispers Beyond the Gate, part 1': It was a _____ morning, mild and pleasant, but something in the air felt strange.",
+          "choices": [
+            "longevity",
+            "temperate",
+            "barricade",
+            "zeal"
+          ],
+          "answer": "temperate",
+          "explanation": "The text says: It was a temperate morning, mild and pleasant, but something in the air felt strange."
+        },
         {
           "prompt": "What does 'concise' mean?",
           "choices": [
@@ -499,28 +835,78 @@
           ],
           "answer": "Using few words to say something clearly.",
           "explanation": "The teacher asked us to write a concise summary of the story."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Whispers Beyond the Gate, part 3': Students learned to _____ information carefully rather than react to it emotionally.",
+          "choices": [
+            "accustom",
+            "quibble",
+            "assimilate",
+            "allot"
+          ],
+          "answer": "assimilate",
+          "explanation": "The text says: Students learned to assimilate information carefully rather than react to it emotionally."
         },
         {
-          "prompt": "What does 'barricade' mean?",
+          "prompt": "Choose the missing word from 'Whispers Beyond the Gate, part 1': It was a _____ morning, mild and pleasant, but something in the air felt strange.",
           "choices": [
-            "A statement that explains the meaning of a word.",
-            "A structure used to block people or vehicles from passing.",
-            "The length of time that a person or thing lives or lasts.",
-            "To give or set aside a certain amount for a specific purpose."
+            "longevity",
+            "temperate",
+            "barricade",
+            "zeal"
           ],
-          "answer": "A structure used to block people or vehicles from passing.",
-          "explanation": "The protesters built a barricade across the road using old crates."
+          "answer": "temperate",
+          "explanation": "The text says: It was a temperate morning, mild and pleasant, but something in the air felt strange."
         },
         {
-          "prompt": "What does 'zeal' mean?",
+          "prompt": "Which word means: Small means little in size, amount or importance.",
           "choices": [
-            "A statement that explains the meaning of a word.",
-            "A strong feeling of enthusiasm and eagerness.",
-            "To give or set aside a certain amount for a specific purpose.",
-            "To make someone familiar with something through repeated experience."
+            "small",
+            "abstraction",
+            "nuanced"
           ],
-          "answer": "A strong feeling of enthusiasm and eagerness.",
-          "explanation": "She studied with great zeal because she wanted the top grade."
+          "answer": "small",
+          "explanation": "small: Small means little in size, amount or importance."
+        },
+        {
+          "prompt": "Which word means: The act of being present at an event, or the number of people who turn up.",
+          "choices": [
+            "abstraction",
+            "nuanced",
+            "attendance"
+          ],
+          "answer": "attendance",
+          "explanation": "attendance: The act of being present at an event, or the number of people who turn up."
+        },
+        {
+          "prompt": "What type of word is 'pull'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Pull is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'replied'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Replied is used as a verb in this dictionary sense."
         }
       ]
     }

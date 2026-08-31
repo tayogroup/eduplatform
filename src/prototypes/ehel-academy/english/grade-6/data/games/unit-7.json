@@ -5,7 +5,7 @@
   "unitId": "eng-g06-t03-u07",
   "title": "Nature’s Power Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The person who makes or invents something.",
           "choices": [
             "creator",
-            "density",
-            "translation"
+            "empathy",
+            "pictogram"
           ],
           "answer": "creator",
           "explanation": "creator: The person who makes or invents something."
         },
         {
-          "prompt": "Which word means: Recovery is the process of returning to a normal, healthy state after a difficult event.",
+          "prompt": "Which word means: An angle smaller than a right angle.",
           "choices": [
             "creator",
-            "density",
-            "recovery"
+            "empathy",
+            "acute"
           ],
-          "answer": "recovery",
-          "explanation": "recovery: Recovery is the process of returning to a normal, healthy state after a difficult event."
+          "answer": "acute",
+          "explanation": "acute: An angle smaller than a right angle."
         },
         {
-          "prompt": "Which word means: A device that makes a person's voice louder so more people can hear it.",
+          "prompt": "Which word means: Underneath means in or to a position below something else.",
           "choices": [
-            "density",
-            "microphone",
+            "empathy",
+            "underneath",
             "creator"
           ],
-          "answer": "microphone",
-          "explanation": "microphone: A device that makes a person's voice louder so more people can hear it."
+          "answer": "underneath",
+          "explanation": "underneath: Underneath means in or to a position below something else."
+        },
+        {
+          "prompt": "Which word means: Dark glasses worn to protect the eyes from bright sunlight.",
+          "choices": [
+            "sunglasses",
+            "creator",
+            "empathy"
+          ],
+          "answer": "sunglasses",
+          "explanation": "sunglasses: Dark glasses worn to protect the eyes from bright sunlight."
+        },
+        {
+          "prompt": "Which word means: To stop something from growing or going beyond a certain amount.",
+          "choices": [
+            "creator",
+            "empathy",
+            "limit"
+          ],
+          "answer": "limit",
+          "explanation": "limit: To stop something from growing or going beyond a certain amount."
+        },
+        {
+          "prompt": "Which word means: The process of bringing something back to its original condition or making it better.",
+          "choices": [
+            "empathy",
+            "restoration",
+            "creator"
+          ],
+          "answer": "restoration",
+          "explanation": "restoration: The process of bringing something back to its original condition or making it better."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A stage is a particular point or step in a process that develops over time.",
-          "answer": "stage"
+          "clue": "An angle smaller than a right angle.",
+          "answer": "acute"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Happening by itself, without a person having to make it happen each time.",
-          "answer": "automatic"
+          "clue": "Carrying means holding and moving something from one place to another.",
+          "answer": "carrying"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The number 40, one more than thirty-nine.",
+          "answer": "forty"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Connected with things that happened in the past.",
+          "answer": "historical"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A way to find out a number or answer by using maths.",
+          "answer": "calculation"
         }
       ]
     },
@@ -97,38 +142,86 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "animal.",
-            "wild",
-            "a",
-            "like",
-            "howled",
-            "wind",
+            "school?",
+            "to",
+            "walks",
+            "class",
             "the",
-            "while",
-            "rooftops",
-            "the",
-            "hammered",
-            "Rain"
+            "of",
+            "percentage",
+            "What"
           ],
-          "answer": "Rain hammered the rooftops while the wind howled like a wild animal."
+          "answer": "What percentage of the class walks to school?"
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "region.",
+            "village.",
             "the",
-            "across",
-            "machines",
-            "farming",
-            "modern",
+            "through",
+            "tore",
+            "winds",
+            "strongest",
+            "the",
+            "as",
+            "snapped",
+            "and",
+            "bent",
+            "Trees"
+          ],
+          "answer": "Trees bent and snapped as the strongest winds tore through the village."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "pocket.",
+            "her",
+            "into",
+            "it",
+            "slipping",
+            "before",
+            "paper",
+            "the",
+            "folded",
+            "carefully",
+            "Amal"
+          ],
+          "answer": "Amal carefully folded the paper before slipping it into her pocket."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "cost.",
+            "the",
             "of",
-            "expansion",
-            "the",
-            "described",
-            "plan",
+            "because",
+            "studies",
+            "her",
+            "leave",
+            "to",
+            "had",
+            "she",
+            "explained",
+            "woman",
             "The"
           ],
-          "answer": "The plan described the expansion of modern farming machines across the region."
+          "answer": "The woman explained she had to leave her studies because of the cost."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "audience.",
+            "the",
+            "reminded",
+            "speaker",
+            "the",
+            "dreams,",
+            "limit",
+            "not",
+            "do",
+            "Systems"
+          ],
+          "answer": "Systems do not limit dreams, the speaker reminded the audience."
         }
       ]
     },
@@ -141,313 +234,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence correctly uses the Past Continuous and the Past Simple together?",
+          "prompt": "What does the word 'conduction' mean?",
           "choices": [
-            "I was eat lunch when she called.",
-            "They playing football when it rained.",
-            "She were cooking when the storm hit.",
-            "We were studying when the earthquake struck."
+            "The way heat or electricity moves through a material.",
+            "A promise to keep working even when it is hard.",
+            "A formal announcement made by a leader.",
+            "The fair sharing of supplies among families."
           ],
-          "answer": "We were studying when the earthquake struck.",
-          "explanation": "Only this option pairs a correct Past Continuous (were studying) with a Past Simple (struck) after when."
+          "answer": "The way heat or electricity moves through a material.",
+          "explanation": "Conduction is the movement of heat or electricity through a material, as the warm ocean fed the cyclone."
         },
         {
-          "prompt": "Choose the correct connecting word: We stayed in the shelter _____ the storm passed.",
+          "prompt": "What does the word 'inflation' mean?",
           "choices": [
-            "until",
-            "while",
-            "when",
-            "because"
+            "The process of digging through rubble to find survivors.",
+            "A rise in prices, so that money buys less than before.",
+            "A group of people who manage a school or town.",
+            "A picture or drawing that helps explain an idea."
           ],
-          "answer": "until",
-          "explanation": "Until shows an action that continues up to a stopping point, here the moment the storm passed."
+          "answer": "A rise in prices, so that money buys less than before.",
+          "explanation": "Inflation means rising prices; after the drought it pushed the price of maize higher."
         },
         {
-          "prompt": "What does the word 'capitalism' mean?",
+          "prompt": "In 'When Nature Speaks', engineers used careful _____ to check which roads and bridges were safe.",
           "choices": [
-            "A system where the government owns all property and shares it.",
-            "A formal statement announcing important news.",
-            "An economic system where people own businesses and compete to sell goods.",
-            "The process of using machines instead of people."
-          ],
-          "answer": "An economic system where people own businesses and compete to sell goods.",
-          "explanation": "Capitalism is a system of private ownership and competition, the model the story's country was leaving."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What natural disaster was heading towards the coastal town of Mabari, and how did the administration warn the people?",
-          "choices": [
-            "A powerful cyclone was heading towards Mabari, and the local administration issued a declaration to warn the town.",
-            "Heat conduction from the warm ocean fed energy into the storm, and warm air rising into the stratosphere created the spinning winds.",
-            "She used “while” to show that different actions happened at the same time, and that ordinary needs, such as eating and school, continued while the systems changed."
-          ],
-          "answer": "A powerful cyclone was heading towards Mabari, and the local administration issued a declaration to warn the town.",
-          "explanation": "The opening paragraph names the cyclone and the administration's declaration."
-        },
-        {
-          "prompt": "The elder said, “We cannot stop a cyclone, but we can prepare, and we can rebuild.” What attitude does this show about the community?",
-          "choices": [
-            "Heat conduction from the warm ocean fed energy into the storm, and warm air rising into the stratosphere created the spinning winds.",
-            "The official adjusted his tie, said he was revising the plans, and offered to meet the students the next week.",
-            "It shows a calm, hopeful attitude and the community's commitment to preparation and to restoration after the storm."
-          ],
-          "answer": "It shows a calm, hopeful attitude and the community's commitment to preparation and to restoration after the storm.",
-          "explanation": "The elder accepts that a cyclone cannot be stopped yet still values preparation and rebuilding."
-        },
-        {
-          "prompt": "Amal repeated the word “while” in her speech at the forum. What point was she making about the events in the village?",
-          "choices": [
-            "Maya was studying for her exams, her mother was preparing dinner, and her little brother was playing outside.",
-            "She used “while” to show that different actions happened at the same time, and that ordinary needs, such as eating and school, continued while the systems changed.",
-            "It shows a calm, hopeful attitude and the community's commitment to preparation and to restoration after the storm."
-          ],
-          "answer": "She used “while” to show that different actions happened at the same time, and that ordinary needs, such as eating and school, continued while the systems changed.",
-          "explanation": "Her speech pairs the changing systems with the planting, eating and schooling that carried on at the same time."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: News Presenter Role-Play",
-          "target": "The creator of the design never patented it."
-        },
-        {
-          "prompt": "Speaking 3: Discussion, How Should We Prepare?",
-          "target": "Rain hammered the rooftops while the wind howled like a wild animal."
-        },
-        {
-          "prompt": "Speaking 5: Safety Broadcast Read-Aloud",
-          "target": "The plan described the expansion of modern farming machines across the region."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "days.",
-            "hardest",
-            "the",
-            "through",
-            "community",
-            "a",
-            "carry",
-            "can",
-            "allies",
-            "Loyal"
-          ],
-          "answer": "Loyal allies can carry a community through the hardest days."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "recovery.",
-            "town's",
-            "the",
-            "of",
-            "stage",
-            "every",
-            "showing",
-            "wall",
-            "picture",
-            "a",
-            "made",
-            "class",
-            "The"
-          ],
-          "answer": "The class made a picture wall showing every stage of the town's recovery."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "meeting.",
-            "the",
-            "before",
+            "conduction",
+            "mechanisation",
             "calculation",
-            "the",
-            "fixing",
-            "into",
-            "effort",
-            "real",
-            "put",
-            "Sami"
+            "pollination"
           ],
-          "answer": "Sami put real effort into fixing the calculation before the meeting."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'low' mean in this unit?",
-          "choices": [
-            "Close to the ground or not very high compared with other things nearby.",
-            "The person who makes or invents something.",
-            "How much mass is packed into a given space."
-          ],
-          "answer": "Close to the ground or not very high compared with other things nearby.",
-          "explanation": "low: Close to the ground or not very high compared with other things nearby."
+          "answer": "calculation",
+          "explanation": "The restoration paragraph says engineers used careful calculation to check the roads and bridges."
         },
-        {
-          "prompt": "What does 'limit' mean in this unit?",
-          "choices": [
-            "The person who makes or invents something.",
-            "How much mass is packed into a given space.",
-            "To stop something from growing or going beyond a certain amount."
-          ],
-          "answer": "To stop something from growing or going beyond a certain amount.",
-          "explanation": "limit: To stop something from growing or going beyond a certain amount."
-        },
-        {
-          "prompt": "What does 'density' mean in this unit?",
-          "choices": [
-            "Sliding a shape to a new position without turning or resizing it.",
-            "How much mass is packed into a given space.",
-            "The person who makes or invents something."
-          ],
-          "answer": "How much mass is packed into a given space.",
-          "explanation": "density: How much mass is packed into a given space."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'converting'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Converting is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'administration'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Administration is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'hear'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Hear is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "descriptive",
-              "Giving a clear picture of what something is like."
-            ],
-            [
-              "quadrilateral",
-              "A flat shape with four straight sides."
-            ],
-            [
-              "pulled",
-              "Pulled means used force to move something towards you or along a surface."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "picture",
-              "A picture is a drawing, painting, or photograph that shows how something looks."
-            ],
-            [
-              "placed",
-              "Put something carefully in a particular position or spot."
-            ],
-            [
-              "expansion",
-              "The process of something growing larger or covering more area than before."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "claps",
-              "The sounds people make by striking their hands together, usually to show approval."
-            ],
-            [
-              "confirmed",
-              "Showed or stated that something is true or correct."
-            ],
-            [
-              "socialist",
-              "A person who believes that everyone should share things equally and that the government should help make this happen."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "The scientists said that heat _____ from the warm ocean surface fed energy into the storm.",
           "choices": [
@@ -484,13 +302,540 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What natural disaster was heading towards the coastal town of Mabari, and how did the administration warn the people?",
+          "choices": [
+            "A powerful cyclone was heading towards Mabari, and the local administration issued a declaration to warn the town.",
+            "Heat conduction from the warm ocean fed energy into the storm, and warm air rising into the stratosphere created the spinning winds.",
+            "She used “while” to show that different actions happened at the same time, and that ordinary needs, such as eating and school, continued while the systems changed."
+          ],
+          "answer": "A powerful cyclone was heading towards Mabari, and the local administration issued a declaration to warn the town.",
+          "explanation": "The opening paragraph names the cyclone and the administration's declaration."
+        },
+        {
+          "prompt": "What was Daniel doing when the radio announcement came, and what were each of his parents doing?",
+          "choices": [
+            "It shows a calm, hopeful attitude and the community's commitment to preparation and to restoration after the storm.",
+            "The official adjusted his tie, said he was revising the plans, and offered to meet the students the next week.",
+            "Daniel was watching the sky, his mother was cooking dinner, and his father was mending the fence."
+          ],
+          "answer": "Daniel was watching the sky, his mother was cooking dinner, and his father was mending the fence.",
+          "explanation": "Daniel's own words in the third paragraph list the three actions that were in progress."
+        },
+        {
+          "prompt": "The elder said, “We cannot stop a cyclone, but we can prepare, and we can rebuild.” What attitude does this show about the community?",
+          "choices": [
+            "Maya was studying for her exams, her mother was preparing dinner, and her little brother was playing outside.",
+            "It shows a calm, hopeful attitude and the community's commitment to preparation and to restoration after the storm.",
+            "Her school chose Amal to represent the youth and speak on their behalf, which the teacher called representation."
+          ],
+          "answer": "It shows a calm, hopeful attitude and the community's commitment to preparation and to restoration after the storm.",
+          "explanation": "The elder accepts that a cyclone cannot be stopped yet still values preparation and rebuilding."
+        },
+        {
+          "prompt": "What change did the local leader announce, and which economic system was the country adopting?",
+          "choices": [
+            "The leader announced that the economy would change, leaving a capitalist model and adopting socialism.",
+            "Her school chose Amal to represent the youth and speak on their behalf, which the teacher called representation.",
+            "The administration issued a declaration telling everyone to move to open spaces, so that they would be safe from falling walls."
+          ],
+          "answer": "The leader announced that the economy would change, leaving a capitalist model and adopting socialism.",
+          "explanation": "The leader's declaration says the country was moving from capitalism to socialism."
+        },
+        {
+          "prompt": "Amal repeated the word “while” in her speech at the forum. What point was she making about the events in the village?",
+          "choices": [
+            "The leader announced that the economy would change, leaving a capitalist model and adopting socialism.",
+            "A powerful cyclone was heading towards Mabari, and the local administration issued a declaration to warn the town.",
+            "She used “while” to show that different actions happened at the same time, and that ordinary needs, such as eating and school, continued while the systems changed."
+          ],
+          "answer": "She used “while” to show that different actions happened at the same time, and that ordinary needs, such as eating and school, continued while the systems changed.",
+          "explanation": "Her speech pairs the changing systems with the planting, eating and schooling that carried on at the same time."
+        },
+        {
+          "prompt": "In the survivor's account, what were Maya, her mother, and her brother each doing when the cyclone struck?",
+          "choices": [
+            "Daniel was watching the sky, his mother was cooking dinner, and his father was mending the fence.",
+            "Maya was studying for her exams, her mother was preparing dinner, and her little brother was playing outside.",
+            "She used “while” to show that different actions happened at the same time, and that ordinary needs, such as eating and school, continued while the systems changed."
+          ],
+          "answer": "Maya was studying for her exams, her mother was preparing dinner, and her little brother was playing outside.",
+          "explanation": "Maya lists the three actions that were happening when the wind began to scream."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: News Presenter Role-Play",
+          "target": "The creator of the design never patented it."
+        },
+        {
+          "prompt": "Speaking 2: Cyclone Survivor Interview",
+          "target": "With your AI tutor or a partner, role-play an interview with a cyclone survivor."
+        },
+        {
+          "prompt": "Speaking 3: Discussion, How Should We Prepare?",
+          "target": "Trees bent and snapped as the strongest winds tore through the village."
+        },
+        {
+          "prompt": "Speaking 4: Disaster Timeline Game",
+          "target": "Play the timeline game: one speaker describes a scene using the Past Continuous, and the other interrupts it with when and a Past Simple event."
+        },
+        {
+          "prompt": "Speaking 5: Safety Broadcast Read-Aloud",
+          "target": "The woman explained she had to leave her studies because of the cost."
+        },
+        {
+          "prompt": "Speaking 6: Opinion Talk, Does Nature Speak?",
+          "target": "Systems do not limit dreams, the speaker reminded the audience."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "starts.",
+            "play",
+            "school",
+            "the",
+            "before",
+            "preparation",
+            "some",
+            "do",
+            "to",
+            "need",
+            "We"
+          ],
+          "answer": "We need to do some preparation before the school play starts."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "quadrilateral.",
+            "of",
+            "kind",
+            "one",
+            "is",
+            "square",
+            "A"
+          ],
+          "answer": "A square is one kind of quadrilateral."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "dark.",
+            "street",
+            "the",
+            "leaving",
+            "harbour,",
+            "the",
+            "near",
+            "somewhere",
+            "snapped",
+            "line",
+            "power",
+            "A"
+          ],
+          "answer": "A power line snapped somewhere near the harbour, leaving the street dark."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Mbuma.",
+            "in",
+            "person",
+            "young",
+            "every",
+            "of",
+            "behalf",
+            "on",
+            "speak",
+            "to",
+            "agreed",
+            "Amal"
+          ],
+          "answer": "Amal agreed to speak on behalf of every young person in Mbuma."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hear.",
+            "to",
+            "in",
+            "leaned",
+            "everyone",
+            "that",
+            "voice",
+            "soft",
+            "a",
+            "in",
+            "spoke",
+            "man",
+            "old",
+            "The"
+          ],
+          "answer": "The old man spoke in a soft voice that everyone leaned in to hear."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "speaker.",
+            "young",
+            "the",
+            "at",
+            "nodding",
+            "insight,",
+            "limit",
+            "not",
+            "does",
+            "age",
+            "that",
+            "said",
+            "moderator",
+            "The"
+          ],
+          "answer": "The moderator said that age does not limit insight, nodding at the young speaker."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'empathy' mean in this unit?",
+          "choices": [
+            "Understanding how another person feels.",
+            "The person who makes or invents something.",
+            "A chart that uses pictures to stand for numbers."
+          ],
+          "answer": "Understanding how another person feels.",
+          "explanation": "empathy: Understanding how another person feels."
+        },
+        {
+          "prompt": "What does 'heading' mean in this unit?",
+          "choices": [
+            "The person who makes or invents something.",
+            "Understanding how another person feels.",
+            "Heading means moving or travelling towards a particular place or direction."
+          ],
+          "answer": "Heading means moving or travelling towards a particular place or direction.",
+          "explanation": "heading: Heading means moving or travelling towards a particular place or direction."
+        },
+        {
+          "prompt": "What does 'hung' mean in this unit?",
+          "choices": [
+            "Understanding how another person feels.",
+            "Hung means was suspended or stayed in the air without falling.",
+            "The person who makes or invents something."
+          ],
+          "answer": "Hung means was suspended or stayed in the air without falling.",
+          "explanation": "hung: Hung means was suspended or stayed in the air without falling."
+        },
+        {
+          "prompt": "What does 'soft' mean in this unit?",
+          "choices": [
+            "Gentle, quiet, or not hard or rough to touch.",
+            "The person who makes or invents something.",
+            "Understanding how another person feels."
+          ],
+          "answer": "Gentle, quiet, or not hard or rough to touch.",
+          "explanation": "soft: Gentle, quiet, or not hard or rough to touch."
+        },
+        {
+          "prompt": "What does 'scale' mean in this unit?",
+          "choices": [
+            "The person who makes or invents something.",
+            "Understanding how another person feels.",
+            "A range of numbers used to measure and compare the size or strength of something."
+          ],
+          "answer": "A range of numbers used to measure and compare the size or strength of something.",
+          "explanation": "scale: A range of numbers used to measure and compare the size or strength of something."
+        },
+        {
+          "prompt": "What does 'allies' mean in this unit?",
+          "choices": [
+            "Understanding how another person feels.",
+            "Friends or partners who help each other.",
+            "The person who makes or invents something."
+          ],
+          "answer": "Friends or partners who help each other.",
+          "explanation": "allies: Friends or partners who help each other."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'pictogram'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Pictogram is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'loading'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Loading is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'placed'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Placed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'planting'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Planting is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'conduction'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Conduction is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'gradient'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Gradient is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "descriptive",
+              "Giving a clear picture of what something is like."
+            ],
+            [
+              "sympathy",
+              "Caring about someone else's sadness or difficulty."
+            ],
+            [
+              "median",
+              "The middle value when the numbers are put in order."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "conversion",
+              "The process of changing something from one form to another."
+            ],
+            [
+              "beach",
+              "A beach is an area of sand or pebbles beside the sea."
+            ],
+            [
+              "fallen",
+              "Fallen describes something that has dropped down to the ground from a higher place."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "feet",
+              "Feet are the parts of the body at the end of the legs that a person stands on."
+            ],
+            [
+              "holding",
+              "Keeping something in your hands or arms so it does not fall or move away."
+            ],
+            [
+              "private",
+              "Belonging to one person or group rather than being shared by everyone."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "expansion",
+              "The process of something growing larger or covering more area than before."
+            ],
+            [
+              "effort",
+              "The physical or mental energy a person puts into trying to do something."
+            ],
+            [
+              "tie",
+              "A long, narrow piece of cloth worn around the neck, usually with formal clothing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "thirteen",
+              "The number after twelve; equal to thirteen in amount or age."
+            ],
+            [
+              "reopen",
+              "To open something again after it has been closed for a while."
+            ],
+            [
+              "socialism",
+              "A system where the government controls important things like schools and hospitals to help everyone equally."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "commitment",
+              "A promise to do something or to be loyal to someone or something."
+            ],
+            [
+              "wavelength",
+              "The distance between one wave's peak and the next."
+            ],
+            [
+              "parallelogram",
+              "A quadrilateral whose opposite sides are parallel."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does the word 'allies' mean?",
+          "choices": [
+            "Prices that keep rising after a disaster.",
+            "Command words that give clear instructions.",
+            "Friends or partners who help each other.",
+            "A picture that explains an idea."
+          ],
+          "answer": "Friends or partners who help each other.",
+          "explanation": "Allies are partners who help each other; neighbouring towns became allies after the storm."
+        },
+        {
+          "prompt": "Which sentence correctly uses the Past Continuous and the Past Simple together?",
+          "choices": [
+            "I was eat lunch when she called.",
+            "They playing football when it rained.",
+            "She were cooking when the storm hit.",
+            "We were studying when the earthquake struck."
+          ],
+          "answer": "We were studying when the earthquake struck.",
+          "explanation": "Only this option pairs a correct Past Continuous (were studying) with a Past Simple (struck) after when."
+        },
+        {
+          "prompt": "Choose the correct connecting word: We stayed in the shelter _____ the storm passed.",
+          "choices": [
+            "until",
+            "while",
+            "when",
+            "because"
+          ],
+          "answer": "until",
+          "explanation": "Until shows an action that continues up to a stopping point, here the moment the storm passed."
+        },
+        {
+          "prompt": "What does the word 'capitalism' mean?",
+          "choices": [
+            "A system where the government owns all property and shares it.",
+            "A formal statement announcing important news.",
+            "An economic system where people own businesses and compete to sell goods.",
+            "The process of using machines instead of people."
+          ],
+          "answer": "An economic system where people own businesses and compete to sell goods.",
+          "explanation": "Capitalism is a system of private ownership and competition, the model the story's country was leaving."
+        },
+        {
+          "prompt": "In 'The Speech Under the Baobab', the country was leaving a capitalist model and adopting _____.",
+          "choices": [
+            "communism",
+            "socialism",
+            "mechanisation",
+            "inflation"
+          ],
+          "answer": "socialism",
+          "explanation": "The leader's declaration says the country was adopting socialism to share wealth more fairly."
+        },
         {
           "prompt": "What does the word 'conduction' mean?",
           "choices": [
@@ -501,28 +846,78 @@
           ],
           "answer": "The way heat or electricity moves through a material.",
           "explanation": "Conduction is the movement of heat or electricity through a material, as the warm ocean fed the cyclone."
-        },
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
         {
-          "prompt": "What does the word 'inflation' mean?",
+          "prompt": "What does the word 'capitalism' mean?",
           "choices": [
-            "The process of digging through rubble to find survivors.",
-            "A rise in prices, so that money buys less than before.",
-            "A group of people who manage a school or town.",
-            "A picture or drawing that helps explain an idea."
+            "A system where the government owns all property and shares it.",
+            "A formal statement announcing important news.",
+            "An economic system where people own businesses and compete to sell goods.",
+            "The process of using machines instead of people."
           ],
-          "answer": "A rise in prices, so that money buys less than before.",
-          "explanation": "Inflation means rising prices; after the drought it pushed the price of maize higher."
+          "answer": "An economic system where people own businesses and compete to sell goods.",
+          "explanation": "Capitalism is a system of private ownership and competition, the model the story's country was leaving."
         },
         {
-          "prompt": "In 'When Nature Speaks', engineers used careful _____ to check which roads and bridges were safe.",
+          "prompt": "In 'The Speech Under the Baobab', the country was leaving a capitalist model and adopting _____.",
           "choices": [
-            "conduction",
+            "communism",
+            "socialism",
             "mechanisation",
-            "calculation",
-            "pollination"
+            "inflation"
           ],
-          "answer": "calculation",
-          "explanation": "The restoration paragraph says engineers used careful calculation to check the roads and bridges."
+          "answer": "socialism",
+          "explanation": "The leader's declaration says the country was adopting socialism to share wealth more fairly."
+        },
+        {
+          "prompt": "Which word means: A number you get by multiplying another number.",
+          "choices": [
+            "multiple",
+            "creator",
+            "empathy"
+          ],
+          "answer": "multiple",
+          "explanation": "multiple: A number you get by multiplying another number."
+        },
+        {
+          "prompt": "Which word means: Hung means was suspended or stayed in the air without falling.",
+          "choices": [
+            "creator",
+            "empathy",
+            "hung"
+          ],
+          "answer": "hung",
+          "explanation": "hung: Hung means was suspended or stayed in the air without falling."
+        },
+        {
+          "prompt": "What type of word is 'revising'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Revising is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'allies'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Allies is used as a noun in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g06-t03-u10",
   "title": "My English Voice: Grade 6 Capstone Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A guess about what will happen in the future.",
           "choices": [
             "prediction",
-            "acquire",
-            "prioritise"
+            "readiness",
+            "context"
           ],
           "answer": "prediction",
           "explanation": "prediction: A guess about what will happen in the future."
         },
         {
-          "prompt": "Which word means: The number placed in front of a letter in algebra.",
+          "prompt": "Which word means: The act of getting somebody to agree with you.",
           "choices": [
             "prediction",
-            "acquire",
-            "coefficient"
+            "readiness",
+            "persuasion"
           ],
-          "answer": "coefficient",
-          "explanation": "coefficient: The number placed in front of a letter in algebra."
+          "answer": "persuasion",
+          "explanation": "persuasion: The act of getting somebody to agree with you."
         },
         {
-          "prompt": "Which word means: Dangerous and unsafe, often because a place is not what it first seems.",
+          "prompt": "Which word means: Money people pay to the government to fund public services.",
           "choices": [
-            "acquire",
-            "treacherous",
+            "readiness",
+            "tax",
             "prediction"
           ],
-          "answer": "treacherous",
-          "explanation": "treacherous: Dangerous and unsafe, often because a place is not what it first seems."
+          "answer": "tax",
+          "explanation": "tax: Money people pay to the government to fund public services."
+        },
+        {
+          "prompt": "Which word means: A person who legally belongs to a country and shares its rights and duties.",
+          "choices": [
+            "citizen",
+            "prediction",
+            "readiness"
+          ],
+          "answer": "citizen",
+          "explanation": "citizen: A person who legally belongs to a country and shares its rights and duties."
+        },
+        {
+          "prompt": "Which word means: In a strong, steady and decided way that is not easily moved or changed.",
+          "choices": [
+            "prediction",
+            "readiness",
+            "firmly"
+          ],
+          "answer": "firmly",
+          "explanation": "firmly: In a strong, steady and decided way that is not easily moved or changed."
+        },
+        {
+          "prompt": "Which word means: To make something stronger, or to support a point with more evidence.",
+          "choices": [
+            "readiness",
+            "reinforce",
+            "prediction"
+          ],
+          "answer": "reinforce",
+          "explanation": "reinforce: To make something stronger, or to support a point with more evidence."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Describing a fraction whose top number is the larger one.",
-          "answer": "improper"
+          "clue": "Words someone said or wrote, repeated by another person.",
+          "answer": "quotation"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A ruler who holds complete power and makes every rule without asking anyone.",
-          "answer": "dictator"
+          "clue": "Having paid work, or the work itself.",
+          "answer": "employment"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The act of going into a place, or the way that leads inside it.",
+          "answer": "entry"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "In a strong, steady and decided way that is not easily moved or changed.",
+          "answer": "firmly"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To stand for something, or to act on behalf of a person or group.",
+          "answer": "represent"
         }
       ]
     },
@@ -103,30 +148,76 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "abandoned.",
-            "was",
-            "settlement",
+            "language.",
+            "figurative",
+            "is",
+            "angry",
+            "sea",
             "the",
-            "why",
-            "about",
-            "theorise",
-            "Historians"
+            "Calling"
           ],
-          "answer": "Historians theorise about why the settlement was abandoned."
+          "answer": "Calling the sea angry is figurative language."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "test.",
-            "every",
-            "in",
-            "superior",
-            "proved",
-            "design",
-            "second",
+            "stanzas.",
+            "four",
+            "has",
+            "poem",
             "The"
           ],
-          "answer": "The second design proved superior in every test."
+          "answer": "The poem has four stanzas."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "day.",
+            "market",
+            "on",
+            "profit",
+            "small",
+            "a",
+            "made",
+            "stall",
+            "The"
+          ],
+          "answer": "The stall made a small profit on market day."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "patients.",
+            "between",
+            "passes",
+            "infection",
+            "no",
+            "so",
+            "hands",
+            "their",
+            "wash",
+            "Nurses"
+          ],
+          "answer": "Nurses wash their hands so no infection passes between patients."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "trapped.",
+            "became",
+            "antelope",
+            "the",
+            "where",
+            "marsh",
+            "treacherous",
+            "the",
+            "described",
+            "review",
+            "3",
+            "Unit",
+            "The"
+          ],
+          "answer": "The Unit 3 review described the treacherous marsh where the antelope became trapped."
         }
       ]
     },
@@ -139,317 +230,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What does 'straits' mean?",
+          "prompt": "What does 'illegal' mean?",
           "choices": [
-            "A person who travels to new places to discover things",
-            "A narrow strip of sea joining two larger areas of water",
-            "A group of people and animals travelling together across a desert",
-            "The act of going into a place, or the way inside"
+            "Not allowed by the law or by the rules",
+            "The act of going into a place, or the way inside",
+            "A tool or device used to make music or do a job",
+            "The power to form fresh pictures and ideas in your mind"
           ],
-          "answer": "A narrow strip of sea joining two larger areas of water",
-          "explanation": "Straits are a narrow strip of sea between two areas of water."
+          "answer": "Not allowed by the law or by the rules",
+          "explanation": "Something illegal breaks the law or the agreed rules."
         },
         {
-          "prompt": "What does 'explorer' mean?",
+          "prompt": "What does 'citizen' mean?",
           "choices": [
-            "A short journey made for pleasure, discovery or learning",
-            "A group of people and animals travelling together across a desert",
-            "A narrow strip of sea joining two larger areas of water",
-            "A person who travels to new places to discover things"
+            "The power to make your own choices and take action",
+            "Connected to the physical features of the Earth and how places lie",
+            "A person who legally belongs to a country and shares its rights",
+            "At the beginning, or in the first place"
           ],
-          "answer": "A person who travels to new places to discover things",
-          "explanation": "An explorer travels to new places to discover things."
+          "answer": "A person who legally belongs to a country and shares its rights",
+          "explanation": "A citizen belongs to a country and shares its rights and duties."
         },
         {
-          "prompt": "What does 'humble' mean?",
+          "prompt": "What does 'geographic' mean?",
           "choices": [
-            "Modest, and not thinking you are better than other people",
-            "To treat people cruelly and unfairly, keeping them powerless",
+            "Something that could cause harm or danger",
+            "Connected to the physical features of the Earth and how places lie",
             "A ruler who holds complete power and makes every rule alone",
-            "The power to make your own choices and take action"
+            "A group of people and animals travelling together across a desert"
           ],
-          "answer": "Modest, and not thinking you are better than other people",
-          "explanation": "A humble person is modest and not boastful."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What lesson does the story of Dina the weaver begin to teach?",
-          "choices": [
-            "That guarding your skill or knowledge only for yourself, like a well kept from everyone, can leave you helpless when trouble finally comes.",
-            "Because training makes the heart stronger and more efficient, so it pumps more blood with each beat and works less hard at rest.",
-            "That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with others."
-          ],
-          "answer": "That guarding your skill or knowledge only for yourself, like a well kept from everyone, can leave you helpless when trouble finally comes.",
-          "explanation": "Zane warns that a river which shares nothing becomes a swamp, and the storm then destroys everything Dina had guarded alone."
+          "answer": "Connected to the physical features of the Earth and how places lie",
+          "explanation": "Geographic features are the physical features of the Earth."
         },
-        {
-          "prompt": "What does the sport passage say happens if you do not eat enough healthy food?",
-          "choices": [
-            "Because training makes the heart stronger and more efficient, so it pumps more blood with each beat and works less hard at rest.",
-            "One part for saving, one part for spending on needs or things you enjoy, and one part for giving to charity or helping your family.",
-            "Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well."
-          ],
-          "answer": "Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well.",
-          "explanation": "The writer links a balanced diet of fruit, vegetables and whole grains to having the energy to train and compete."
-        },
-        {
-          "prompt": "What is the central message of the Money Matters text?",
-          "choices": [
-            "Both suggest that hoarding selfishly, whether it is weaving skill or money, is unwise, and that sharing with others makes a person stronger.",
-            "That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with others.",
-            "Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well."
-          ],
-          "answer": "That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with others.",
-          "explanation": "The passage repeats that money is not good or bad on its own; how we use it is what matters."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Portfolio evidence conference",
-          "target": "Explain three portfolio choices and support each choice with precise evidence."
-        },
-        {
-          "prompt": "Research vocabulary in context",
-          "target": "Historians theorise about why the settlement was abandoned."
-        },
-        {
-          "prompt": "Question-and-answer defence",
-          "target": "Answer six audience questions with relevant evidence and thoughtful clarification."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "soup.",
-            "hot",
-            "in",
-            "warming",
-            "spoon",
-            "metal",
-            "a",
-            "using",
-            "conduction",
-            "explained",
-            "review",
-            "7",
-            "Unit",
-            "The"
-          ],
-          "answer": "The Unit 7 review explained conduction using a metal spoon warming in hot soup."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "snowfall.",
-            "heavy",
-            "the",
-            "after",
-            "dangerous",
-            "more",
-            "even",
-            "grew",
-            "pass",
-            "mountain",
-            "treacherous",
-            "The"
-          ],
-          "answer": "The treacherous mountain pass grew even more dangerous after the heavy snowfall."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "bar.",
-            "metal",
-            "a",
-            "along",
-            "quickly",
-            "heat",
-            "carries",
-            "conduction",
-            "how",
-            "showed",
-            "Sarah",
-            "Doctor"
-          ],
-          "answer": "Doctor Sarah showed how conduction carries heat quickly along a metal bar."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'dilation' mean in this unit?",
-          "choices": [
-            "Making a shape larger or smaller while keeping its proportions.",
-            "A guess about what will happen in the future.",
-            "To get or gain something, usually by effort or learning."
-          ],
-          "answer": "Making a shape larger or smaller while keeping its proportions.",
-          "explanation": "dilation: Making a shape larger or smaller while keeping its proportions."
-        },
-        {
-          "prompt": "What does 'excursion' mean in this unit?",
-          "choices": [
-            "A guess about what will happen in the future.",
-            "To get or gain something, usually by effort or learning.",
-            "A short journey made for pleasure, discovery or learning, then a return home."
-          ],
-          "answer": "A short journey made for pleasure, discovery or learning, then a return home.",
-          "explanation": "excursion: A short journey made for pleasure, discovery or learning, then a return home."
-        },
-        {
-          "prompt": "What does 'acquire' mean in this unit?",
-          "choices": [
-            "To decide which things matter most and do them first.",
-            "To get or gain something, usually by effort or learning.",
-            "A guess about what will happen in the future."
-          ],
-          "answer": "To get or gain something, usually by effort or learning.",
-          "explanation": "acquire: To get or gain something, usually by effort or learning."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'geographic'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Geographic is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'conduction'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Conduction is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'annotate'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Annotate is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "certainty",
-              "Being sure that something is true."
-            ],
-            [
-              "hypothesise",
-              "To suggest an explanation that can then be tested."
-            ],
-            [
-              "annotate",
-              "To add notes to a text explaining or commenting on it."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "improper",
-              "Describing a fraction whose top number is the larger one."
-            ],
-            [
-              "superior",
-              "Better than something else, or higher in rank."
-            ],
-            [
-              "geographic",
-              "Connected to the physical features of the Earth and how places are arranged."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "oppress",
-              "To treat people cruelly and unfairly so that they feel weak and powerless."
-            ],
-            [
-              "meagre",
-              "Very small in amount or quality, and clearly not enough for what is needed."
-            ],
-            [
-              "pollination",
-              "The moving of pollen between flowers so that plants can make seeds and fruit."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'originally' mean?",
           "choices": [
@@ -486,13 +298,534 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What lesson does the story of Dina the weaver begin to teach?",
+          "choices": [
+            "That guarding your skill or knowledge only for yourself, like a well kept from everyone, can leave you helpless when trouble finally comes.",
+            "Because training makes the heart stronger and more efficient, so it pumps more blood with each beat and works less hard at rest.",
+            "That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with others."
+          ],
+          "answer": "That guarding your skill or knowledge only for yourself, like a well kept from everyone, can leave you helpless when trouble finally comes.",
+          "explanation": "Zane warns that a river which shares nothing becomes a swamp, and the storm then destroys everything Dina had guarded alone."
+        },
+        {
+          "prompt": "Which detail shows how proud Dina was of her weaving skill?",
+          "choices": [
+            "Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well.",
+            "One part for saving, one part for spending on needs or things you enjoy, and one part for giving to charity or helping your family.",
+            "She always refused to teach the younger women, saying her secret knowledge was the very thing that made her cloth valuable."
+          ],
+          "answer": "She always refused to teach the younger women, saying her secret knowledge was the very thing that made her cloth valuable.",
+          "explanation": "The passage says she guarded her methods closely and would not share her techniques with anyone."
+        },
+        {
+          "prompt": "What does the sport passage say happens if you do not eat enough healthy food?",
+          "choices": [
+            "Both suggest that hoarding selfishly, whether it is weaving skill or money, is unwise, and that sharing with others makes a person stronger.",
+            "Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well.",
+            "As a community of living things that depend on each other and on the land, water and air around them."
+          ],
+          "answer": "Your performance will deteriorate over time, because your body lacks the fuel it needs to perform well.",
+          "explanation": "The writer links a balanced diet of fruit, vegetables and whole grains to having the energy to train and compete."
+        },
+        {
+          "prompt": "What overall point does the inventions text make about who can invent?",
+          "choices": [
+            "That anyone with curiosity, creativity and commitment can invent, because the real procedure is to observe, question, experiment and improve.",
+            "As a community of living things that depend on each other and on the land, water and air around them.",
+            "It reminds me to share my ideas and sources openly instead of guarding them, so my work grows rather than turning stale like a swamp."
+          ],
+          "answer": "That anyone with curiosity, creativity and commitment can invent, because the real procedure is to observe, question, experiment and improve.",
+          "explanation": "The passage ends by saying young inventors in Kenya and Somalia solved real problems without big laboratories or money."
+        },
+        {
+          "prompt": "What is the central message of the Money Matters text?",
+          "choices": [
+            "That anyone with curiosity, creativity and commitment can invent, because the real procedure is to observe, question, experiment and improve.",
+            "That guarding your skill or knowledge only for yourself, like a well kept from everyone, can leave you helpless when trouble finally comes.",
+            "That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with others."
+          ],
+          "answer": "That money is only a tool, and what really counts is making wise, balanced choices such as saving, budgeting and sharing with others.",
+          "explanation": "The passage repeats that money is not good or bad on its own; how we use it is what matters."
+        },
+        {
+          "prompt": "The weaver story and the money text both value wisdom; what shared idea about sharing do they express?",
+          "choices": [
+            "She always refused to teach the younger women, saying her secret knowledge was the very thing that made her cloth valuable.",
+            "Both suggest that hoarding selfishly, whether it is weaving skill or money, is unwise, and that sharing with others makes a person stronger.",
+            "It made books far cheaper and quicker to produce, so within decades millions who had never owned a book could finally read and learn."
+          ],
+          "answer": "Both suggest that hoarding selfishly, whether it is weaving skill or money, is unwise, and that sharing with others makes a person stronger.",
+          "explanation": "Dina's guarded well fails her, while the money passage praises budgeting and giving to charity."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Portfolio evidence conference",
+          "target": "My prediction is that second-hand stalls will outnumber new-clothes stalls at next year's fair."
+        },
+        {
+          "prompt": "Fluent reading and interpretation",
+          "target": "Calling the sea angry is figurative language."
+        },
+        {
+          "prompt": "Research vocabulary in context",
+          "target": "The poem has four stanzas."
+        },
+        {
+          "prompt": "Four-minute presentation",
+          "target": "The stall made a small profit on market day."
+        },
+        {
+          "prompt": "Question-and-answer defence",
+          "target": "Nurses wash their hands so no infection passes between patients."
+        },
+        {
+          "prompt": "Final capstone presentation",
+          "target": "The Unit 3 review described the treacherous marsh where the antelope became trapped."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "sunlight.",
+            "harmful",
+            "from",
+            "us",
+            "shields",
+            "stratosphere",
+            "the",
+            "how",
+            "described",
+            "review",
+            "7",
+            "Unit",
+            "The"
+          ],
+          "answer": "The Unit 7 review described how the stratosphere shields us from harmful sunlight."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "beam.",
+            "concrete",
+            "the",
+            "reinforce",
+            "rods",
+            "Steel"
+          ],
+          "answer": "Steel rods reinforce the concrete beam."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "number.",
+            "mixed",
+            "a",
+            "is",
+            "half",
+            "a",
+            "and",
+            "Two"
+          ],
+          "answer": "Two and a half is a mixed number."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "valley.",
+            "the",
+            "from",
+            "desert",
+            "the",
+            "divide",
+            "that",
+            "borders",
+            "geographic",
+            "the",
+            "showed",
+            "chart",
+            "The"
+          ],
+          "answer": "The chart showed the geographic borders that divide the desert from the valley."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "team.",
+            "whole",
+            "her",
+            "thanked",
+            "and",
+            "humble",
+            "remained",
+            "Amal",
+            "prize,",
+            "the",
+            "winning",
+            "after",
+            "Even"
+          ],
+          "answer": "Even after winning the prize, Amal remained humble and thanked her whole team."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "centuries.",
+            "for",
+            "buried",
+            "lain",
+            "had",
+            "that",
+            "pots",
+            "uncovered",
+            "slowly",
+            "excavation",
+            "The"
+          ],
+          "answer": "The excavation slowly uncovered pots that had lain buried for centuries."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'readiness' mean in this unit?",
+          "choices": [
+            "The state of being prepared and willing.",
+            "A guess about what will happen in the future.",
+            "The situation or background that helps you understand something."
+          ],
+          "answer": "The state of being prepared and willing.",
+          "explanation": "readiness: The state of being prepared and willing."
+        },
+        {
+          "prompt": "What does 'stanza' mean in this unit?",
+          "choices": [
+            "A guess about what will happen in the future.",
+            "The state of being prepared and willing.",
+            "A group of lines forming one section of a poem."
+          ],
+          "answer": "A group of lines forming one section of a poem.",
+          "explanation": "stanza: A group of lines forming one section of a poem."
+        },
+        {
+          "prompt": "What does 'artery' mean in this unit?",
+          "choices": [
+            "The state of being prepared and willing.",
+            "A tube that carries blood away from the heart.",
+            "A guess about what will happen in the future."
+          ],
+          "answer": "A tube that carries blood away from the heart.",
+          "explanation": "artery: A tube that carries blood away from the heart."
+        },
+        {
+          "prompt": "What does 'originally' mean in this unit?",
+          "choices": [
+            "At the very beginning, or in the first place before anything changed.",
+            "A guess about what will happen in the future.",
+            "The state of being prepared and willing."
+          ],
+          "answer": "At the very beginning, or in the first place before anything changed.",
+          "explanation": "originally: At the very beginning, or in the first place before anything changed."
+        },
+        {
+          "prompt": "What does 'commentary' mean in this unit?",
+          "choices": [
+            "A guess about what will happen in the future.",
+            "The state of being prepared and willing.",
+            "A spoken or written set of remarks that explains or describes an event or work."
+          ],
+          "answer": "A spoken or written set of remarks that explains or describes an event or work.",
+          "explanation": "commentary: A spoken or written set of remarks that explains or describes an event or work."
+        },
+        {
+          "prompt": "What does 'conceptualise' mean in this unit?",
+          "choices": [
+            "The state of being prepared and willing.",
+            "To form a clear idea of something in your mind.",
+            "A guess about what will happen in the future."
+          ],
+          "answer": "To form a clear idea of something in your mind.",
+          "explanation": "conceptualise: To form a clear idea of something in your mind."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'context'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Context is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'genre'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Genre is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'infection'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Infection is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'dictator'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Dictator is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'rehearsal'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Rehearsal is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'formula'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Formula is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "certainty",
+              "Being sure that something is true."
+            ],
+            [
+              "clause",
+              "A group of words containing a verb, part of a sentence."
+            ],
+            [
+              "inference",
+              "A conclusion you reach from clues rather than being told."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "reference",
+              "A mention of where information came from."
+            ],
+            [
+              "apostrophe",
+              "A mark showing a missing letter or who owns something."
+            ],
+            [
+              "income",
+              "The money a person earns from working or selling things."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "employment",
+              "Having paid work, or the work itself."
+            ],
+            [
+              "hygiene",
+              "Keeping yourself and your surroundings clean in order to stay healthy."
+            ],
+            [
+              "flood",
+              "A great overflow of water onto normally dry land."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "instrument",
+              "A tool or device used to make music or to carry out a particular job."
+            ],
+            [
+              "treacherous",
+              "Dangerous and unsafe, often because a place is not what it first seems."
+            ],
+            [
+              "caravan",
+              "A group of people and animals travelling together, often across a wide desert."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "script",
+              "The written words of a play, film or speech that performers learn and say."
+            ],
+            [
+              "excavation",
+              "The careful digging of the ground to uncover buildings, bones or buried objects."
+            ],
+            [
+              "hypothesise",
+              "To suggest an explanation that can then be tested."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "theorise",
+              "To form an idea that explains a set of facts."
+            ],
+            [
+              "coefficient",
+              "The number placed in front of a letter in algebra."
+            ],
+            [
+              "outcome",
+              "The result of something, or one possible result in probability."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does 'treacherous' mean?",
+          "choices": [
+            "Something that could cause harm or danger",
+            "Modest, and not thinking you are better than other people",
+            "Dangerous and unsafe, often because it is not what it seems",
+            "A short journey made for pleasure, discovery or learning"
+          ],
+          "answer": "Dangerous and unsafe, often because it is not what it seems",
+          "explanation": "Treacherous ground is dangerous and not what it seems."
+        },
+        {
+          "prompt": "What does 'straits' mean?",
+          "choices": [
+            "A person who travels to new places to discover things",
+            "A narrow strip of sea joining two larger areas of water",
+            "A group of people and animals travelling together across a desert",
+            "The act of going into a place, or the way inside"
+          ],
+          "answer": "A narrow strip of sea joining two larger areas of water",
+          "explanation": "Straits are a narrow strip of sea between two areas of water."
+        },
+        {
+          "prompt": "What does 'explorer' mean?",
+          "choices": [
+            "A short journey made for pleasure, discovery or learning",
+            "A group of people and animals travelling together across a desert",
+            "A narrow strip of sea joining two larger areas of water",
+            "A person who travels to new places to discover things"
+          ],
+          "answer": "A person who travels to new places to discover things",
+          "explanation": "An explorer travels to new places to discover things."
+        },
+        {
+          "prompt": "What does 'humble' mean?",
+          "choices": [
+            "Modest, and not thinking you are better than other people",
+            "To treat people cruelly and unfairly, keeping them powerless",
+            "A ruler who holds complete power and makes every rule alone",
+            "The power to make your own choices and take action"
+          ],
+          "answer": "Modest, and not thinking you are better than other people",
+          "explanation": "A humble person is modest and not boastful."
+        },
+        {
+          "prompt": "Choose the missing word: The ships sailed carefully through the narrow _____ between the two islands.",
+          "choices": [
+            "Threat",
+            "Straits",
+            "Caravan",
+            "Excursion"
+          ],
+          "answer": "Straits",
+          "explanation": "A strait is a narrow strip of sea between two areas of land, so 'straits' fits the sentence."
+        },
         {
           "prompt": "What does 'illegal' mean?",
           "choices": [
@@ -503,28 +836,78 @@
           ],
           "answer": "Not allowed by the law or by the rules",
           "explanation": "Something illegal breaks the law or the agreed rules."
-        },
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
         {
-          "prompt": "What does 'citizen' mean?",
+          "prompt": "What does 'humble' mean?",
           "choices": [
-            "The power to make your own choices and take action",
-            "Connected to the physical features of the Earth and how places lie",
-            "A person who legally belongs to a country and shares its rights",
-            "At the beginning, or in the first place"
-          ],
-          "answer": "A person who legally belongs to a country and shares its rights",
-          "explanation": "A citizen belongs to a country and shares its rights and duties."
-        },
-        {
-          "prompt": "What does 'geographic' mean?",
-          "choices": [
-            "Something that could cause harm or danger",
-            "Connected to the physical features of the Earth and how places lie",
+            "Modest, and not thinking you are better than other people",
+            "To treat people cruelly and unfairly, keeping them powerless",
             "A ruler who holds complete power and makes every rule alone",
-            "A group of people and animals travelling together across a desert"
+            "The power to make your own choices and take action"
           ],
-          "answer": "Connected to the physical features of the Earth and how places lie",
-          "explanation": "Geographic features are the physical features of the Earth."
+          "answer": "Modest, and not thinking you are better than other people",
+          "explanation": "A humble person is modest and not boastful."
+        },
+        {
+          "prompt": "Choose the missing word: The ships sailed carefully through the narrow _____ between the two islands.",
+          "choices": [
+            "Threat",
+            "Straits",
+            "Caravan",
+            "Excursion"
+          ],
+          "answer": "Straits",
+          "explanation": "A strait is a narrow strip of sea between two areas of land, so 'straits' fits the sentence."
+        },
+        {
+          "prompt": "Which word means: A phrase whose meaning is not what the words say.",
+          "choices": [
+            "idiom",
+            "prediction",
+            "readiness"
+          ],
+          "answer": "idiom",
+          "explanation": "idiom: A phrase whose meaning is not what the words say."
+        },
+        {
+          "prompt": "Which word means: A tube that carries blood away from the heart.",
+          "choices": [
+            "prediction",
+            "readiness",
+            "artery"
+          ],
+          "answer": "artery",
+          "explanation": "artery: A tube that carries blood away from the heart."
+        },
+        {
+          "prompt": "What type of word is 'excursion'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Excursion is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'conceptualise'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Conceptualise is used as a verb in this dictionary sense."
         }
       ]
     }

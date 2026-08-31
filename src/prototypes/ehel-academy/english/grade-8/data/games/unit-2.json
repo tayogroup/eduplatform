@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t01-u02",
   "title": "Design, Packaging, and Sustainability Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The quality of being genuinely what something claims to be.",
           "choices": [
             "authenticity",
-            "complement",
-            "moulded"
+            "capacitance",
+            "refrain"
           ],
           "answer": "authenticity",
           "explanation": "authenticity: The quality of being genuinely what something claims to be."
         },
         {
-          "prompt": "Which word means: To collect or bring together information, people, or things.",
+          "prompt": "Which word means: The quality of being kind, honest, or good for someone's health.",
           "choices": [
             "authenticity",
-            "complement",
-            "gather"
+            "capacitance",
+            "goodness"
           ],
-          "answer": "gather",
-          "explanation": "gather: To collect or bring together information, people, or things."
+          "answer": "goodness",
+          "explanation": "goodness: The quality of being kind, honest, or good for someone's health."
         },
         {
-          "prompt": "Which word means: Dark means having little or no light.",
+          "prompt": "Which word means: To trick someone into believing something that is not true.",
           "choices": [
-            "complement",
-            "dark",
+            "capacitance",
+            "fool",
             "authenticity"
           ],
-          "answer": "dark",
-          "explanation": "dark: Dark means having little or no light."
+          "answer": "fool",
+          "explanation": "fool: To trick someone into believing something that is not true."
+        },
+        {
+          "prompt": "Which word means: The short, thick fingers on the sides of your hands, often used to show approval by pointing upward.",
+          "choices": [
+            "thumbs",
+            "authenticity",
+            "capacitance"
+          ],
+          "answer": "thumbs",
+          "explanation": "thumbs: The short, thick fingers on the sides of your hands, often used to show approval by pointing upward."
+        },
+        {
+          "prompt": "Which word means: To write means to put words or symbols down on paper or a screen to record information.",
+          "choices": [
+            "authenticity",
+            "capacitance",
+            "write"
+          ],
+          "answer": "write",
+          "explanation": "write: To write means to put words or symbols down on paper or a screen to record information."
+        },
+        {
+          "prompt": "Which word means: Not easy to understand, or not stated in a plain and direct way.",
+          "choices": [
+            "capacitance",
+            "unclear",
+            "authenticity"
+          ],
+          "answer": "unclear",
+          "explanation": "unclear: Not easy to understand, or not stated in a plain and direct way."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The basic character or quality of something, or the natural world.",
-          "answer": "nature"
+          "clue": "The risks, gains, or losses that depend on how something turns out.",
+          "answer": "stakes"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Accessed means gained entry to or used something, such as a computer system.",
-          "answer": "accessed"
+          "clue": "Refers to something briefly, in speech or writing.",
+          "answer": "mentions"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A person's name written by their own hand, used to identify or approve something.",
+          "answer": "signature"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Night is the time of day when it is dark, between evening and morning.",
+          "answer": "night"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Removing something completely, especially writing, data, or a record.",
+          "answer": "deleting"
         }
       ]
     },
@@ -98,39 +143,94 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "ignored.",
-            "often",
-            "are",
-            "it",
-            "about",
-            "writes",
-            "anyone",
-            "before",
-            "problem",
+            "urgent.",
+            "more",
+            "seem",
+            "headline",
             "a",
-            "feel",
-            "who",
-            "people",
-            "The"
+            "make",
+            "to",
+            "fonts",
+            "bold",
+            "choose",
+            "often",
+            "Designers"
           ],
-          "answer": "The people who feel a problem before anyone writes about it are often ignored."
+          "answer": "Designers often choose bold fonts to make a headline seem more urgent."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "recording.",
-            "the",
-            "of",
-            "middle",
-            "the",
-            "in",
-            "dark",
-            "went",
-            "suddenly",
-            "screen",
+            "tree.",
+            "by",
+            "tree",
+            "disappears",
+            "that",
+            "forest",
+            "a",
+            "to",
+            "trust",
+            "vanishing",
+            "compared",
+            "report",
             "The"
           ],
-          "answer": "The screen suddenly went dark in the middle of the recording."
+          "answer": "The report compared vanishing trust to a forest that disappears tree by tree."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "future.",
+            "city's",
+            "the",
+            "for",
+            "news",
+            "reporting",
+            "as",
+            "itself",
+            "described",
+            "Radio",
+            "Youth",
+            "Horizon"
+          ],
+          "answer": "Horizon Youth Radio described itself as reporting news for the city's future."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "interview.",
+            "the",
+            "before",
+            "right",
+            "vanished",
+            "files",
+            "the",
+            "that",
+            "convenient",
+            "very",
+            "seemed",
+            "It"
+          ],
+          "answer": "It seemed very convenient that the files vanished right before the interview."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "school.",
+            "the",
+            "to",
+            "message",
+            "her",
+            "reading",
+            "before",
+            "breath",
+            "long",
+            "a",
+            "out",
+            "let",
+            "Imani"
+          ],
+          "answer": "Imani let out a long breath before reading her message to the school."
         }
       ]
     },
@@ -143,313 +243,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Signal in the Static, part 1': \"We must _____, investigate, and demand clarity.\"",
+          "prompt": "In this unit, what does the verb 'usurp' mean?",
           "choices": [
-            "intervene",
-            "obstruct",
-            "avert",
-            "inundate"
+            "To flood or overwhelm a place or a person with an extremely large amount of something.",
+            "To take control of something, especially power, without the right to do so.",
+            "To speak angrily to someone because they have done something wrong.",
+            "To prevent something bad or dangerous from happening to someone."
           ],
-          "answer": "intervene",
-          "explanation": "In the debate, Imani argues that young people must step in rather than stay silent, so intervene completes her call to action."
+          "answer": "To take control of something, especially power, without the right to do so.",
+          "explanation": "Usurp means to seize a role or power that does not belong to you, which is why Imani warns that staying silent lets officials usurp the truth."
         },
         {
-          "prompt": "Choose the missing word from 'Packaging the Truth': Shoppers who want the facts must _____ the small print on the back of the carton.",
+          "prompt": "Which definition matches the adjective 'oblique'?",
           "choices": [
-            "flourish",
-            "exult",
-            "loathe",
-            "decipher"
+            "Boring because it stays exactly the same and never changes.",
+            "Giving off light; bright or shining in the dark.",
+            "Very skilled or naturally talented at doing something.",
+            "Not straight or direct; slanted or angled."
           ],
-          "answer": "decipher",
-          "explanation": "Decipher means to work out something difficult to read, and the passage says the sugar content hides in tiny letters that shoppers must puzzle out."
+          "answer": "Not straight or direct; slanted or angled.",
+          "explanation": "Oblique describes a line or a message that approaches at a slant, like the anonymous note that hints at wrongdoing without stating it."
         },
         {
-          "prompt": "Choose the missing word from 'Signal in the Static, part 2': \"But truth is not always the most _____. Sometimes it hides in whispers.\"",
+          "prompt": "What does the noun 'restitution' mean?",
           "choices": [
-            "monotonous",
-            "luminous",
-            "erratic",
-            "sociable"
+            "The act of giving back something that was lost or taken away.",
+            "A short summary of a story that gives only the main points.",
+            "A very large and sometimes uncountable number of people or things.",
+            "The slow and careful process of studying something closely to understand it better."
           ],
-          "answer": "luminous",
-          "explanation": "Luminous means shining; Imani warns that the brightest, most polished version of events is not automatically the true one."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to 'Packaging the Truth', which choices has someone already made before you weigh a single fact in a message?",
-          "choices": [
-            "Someone has already chosen the colours, the fonts, the size of the headline, the photographs and the tone of voice.",
-            "It claimed the official story about the gardens was fake and warned that there was more beneath the soil than plants.",
-            "She says a precise, formal question leaves an evasive speaker nowhere to hide, because it names exactly the information required."
-          ],
-          "answer": "Someone has already chosen the colours, the fonts, the size of the headline, the photographs and the tone of voice.",
-          "explanation": "The text opens by saying every message arrives in packaging: \"someone has already chosen the colours, the fonts, the size of the headline, the photographs and the tone of voice\" before you weigh a single fact."
+          "answer": "The act of giving back something that was lost or taken away.",
+          "explanation": "Restitution is repayment for what was taken; in the story, some families finally receive early restitution after the investigation begins."
         },
-        {
-          "prompt": "What did the anonymous note slipped under the radio-room door claim about the city gardens?",
-          "choices": [
-            "A scanned analysis of land permits, signed by the mayor's office and a private firm, appeared anonymously in Kofi's locker.",
-            "He keeps himself deliberately unreadable and dismisses the question about who started the rumours, suggesting he wants to control what counts as relevant and reveal nothing.",
-            "It claimed the official story about the gardens was fake and warned that there was more beneath the soil than plants."
-          ],
-          "answer": "It claimed the official story about the gardens was fake and warned that there was more beneath the soil than plants.",
-          "explanation": "The note slipped under the door reads: \"They are lying. What you are hearing about the city gardens is fake. There is more beneath the soil than plants.\" It carried no name and no signature."
-        },
-        {
-          "prompt": "According to Amara, what does a precise, formal question achieve when a speaker is being evasive?",
-          "choices": [
-            "By phrasing the rule like a law of nature that is always true, she shows verification is not a preference but an unchanging condition for anything reaching the air.",
-            "She says a precise, formal question leaves an evasive speaker nowhere to hide, because it names exactly the information required.",
-            "A scanned analysis of land permits, signed by the mayor's office and a private firm, appeared anonymously in Kofi's locker."
-          ],
-          "answer": "She says a precise, formal question leaves an evasive speaker nowhere to hide, because it names exactly the information required.",
-          "explanation": "Amara warns about officials who give oblique answers. She says \"An evasive speaker loves a vague question\", but a precise, formal question \"leaves an evasive speaker nowhere to hide, because it names exactly the information required.\""
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "The label's authenticity was checked before the batch shipped."
-        },
-        {
-          "prompt": "Speaking 3: Six-Minute Unit Argument",
-          "target": "Young people should help investigate and report on public issues."
-        },
-        {
-          "prompt": "Speaking 5: Compare the Two Versions",
-          "target": "The screen suddenly went dark in the middle of the recording."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "everything.",
-            "changed",
-            "clause",
-            "buried",
-            "one",
-            "yet",
-            "monotonous,",
-            "felt",
-            "aloud",
-            "contract",
-            "the",
-            "Reading"
-          ],
-          "answer": "Reading the contract aloud felt monotonous, yet one buried clause changed everything."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "document.",
-            "missing",
-            "the",
-            "request",
-            "to",
-            "office",
-            "council",
-            "the",
-            "visited",
-            "reporter",
-            "The"
-          ],
-          "answer": "The reporter visited the council office to request the missing document."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "quiet.",
-            "went",
-            "line",
-            "the",
-            "as",
-            "microphone",
-            "the",
-            "on",
-            "tightened",
-            "grip",
-            "Kofi's"
-          ],
-          "answer": "Kofi's grip tightened on the microphone as the line went quiet."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'preparation' mean in this unit?",
-          "choices": [
-            "The work and planning you do to get ready for something before it happens.",
-            "The quality of being genuinely what something claims to be.",
-            "A word or phrase that completes the meaning of a verb."
-          ],
-          "answer": "The work and planning you do to get ready for something before it happens.",
-          "explanation": "preparation: The work and planning you do to get ready for something before it happens."
-        },
-        {
-          "prompt": "What does 'bias' mean in this unit?",
-          "choices": [
-            "The quality of being genuinely what something claims to be.",
-            "A word or phrase that completes the meaning of a verb.",
-            "An unfair leaning toward one side of an argument, which stops a report from being balanced."
-          ],
-          "answer": "An unfair leaning toward one side of an argument, which stops a report from being balanced.",
-          "explanation": "bias: An unfair leaning toward one side of an argument, which stops a report from being balanced."
-        },
-        {
-          "prompt": "What does 'complement' mean in this unit?",
-          "choices": [
-            "Shaped by being poured or pressed into a mould while soft, then left to set.",
-            "A word or phrase that completes the meaning of a verb.",
-            "The quality of being genuinely what something claims to be."
-          ],
-          "answer": "A word or phrase that completes the meaning of a verb.",
-          "explanation": "complement: A word or phrase that completes the meaning of a verb."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'beside'?",
-          "choices": [
-            "Preposition",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Preposition",
-          "explanation": "Beside is used as a preposition in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'avert'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Avert is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'surge'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Surge is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "clarification",
-              "An explanation that makes something clearer."
-            ],
-            [
-              "goodness",
-              "The quality of being kind, honest, or good for someone's health."
-            ],
-            [
-              "selects",
-              "Chooses something carefully from a number of possibilities."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "writes",
-              "Puts words on paper or a screen to record or communicate something."
-            ],
-            [
-              "send",
-              "To cause a message, object or person to go from one place to another."
-            ],
-            [
-              "vendor",
-              "A person who sells goods, often from a stall or in the street."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "timeline",
-              "A timeline is a record or display of events arranged in the order they happened."
-            ],
-            [
-              "breath",
-              "The air that you take into your lungs and let out again."
-            ],
-            [
-              "exult",
-              "To feel very happy and excited, especially because of a success or victory."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Mr. Nadir wore an 'impassive' expression during the interview. What does 'impassive' mean?",
           "choices": [
@@ -486,13 +311,534 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "According to 'Packaging the Truth', which choices has someone already made before you weigh a single fact in a message?",
+          "choices": [
+            "Someone has already chosen the colours, the fonts, the size of the headline, the photographs and the tone of voice.",
+            "It claimed the official story about the gardens was fake and warned that there was more beneath the soil than plants.",
+            "She says a precise, formal question leaves an evasive speaker nowhere to hide, because it names exactly the information required."
+          ],
+          "answer": "Someone has already chosen the colours, the fonts, the size of the headline, the photographs and the tone of voice.",
+          "explanation": "The text opens by saying every message arrives in packaging: \"someone has already chosen the colours, the fonts, the size of the headline, the photographs and the tone of voice\" before you weigh a single fact."
+        },
+        {
+          "prompt": "In the interview, what is Amara's unbreakable rule about claims, and how many independent sources does she require?",
+          "choices": [
+            "A scanned analysis of land permits, signed by the mayor's office and a private firm, appeared anonymously in Kofi's locker.",
+            "By phrasing the rule like a law of nature that is always true, she shows verification is not a preference but an unchanging condition for anything reaching the air.",
+            "Her rule is that if the station cannot verify a claim, it does not broadcast it, and every difficult claim needs two independent sources."
+          ],
+          "answer": "Her rule is that if the station cannot verify a claim, it does not broadcast it, and every difficult claim needs two independent sources.",
+          "explanation": "When asked with whom she checks a difficult claim, Amara says \"Two independent sources, always\", and adds the rule she treats like a law of nature: \"if we cannot verify a claim, we do not broadcast it.\""
+        },
+        {
+          "prompt": "What did the anonymous note slipped under the radio-room door claim about the city gardens?",
+          "choices": [
+            "Someone has already chosen the colours, the fonts, the size of the headline, the photographs and the tone of voice.",
+            "It claimed the official story about the gardens was fake and warned that there was more beneath the soil than plants.",
+            "Its painted sunrise, smiling farmer and the words about natural goodness suggest health without stating any checkable fact, so there is nothing a customer can disprove."
+          ],
+          "answer": "It claimed the official story about the gardens was fake and warned that there was more beneath the soil than plants.",
+          "explanation": "The note slipped under the door reads: \"They are lying. What you are hearing about the city gardens is fake. There is more beneath the soil than plants.\" It carried no name and no signature."
+        },
+        {
+          "prompt": "What evidence finally proved that the garden land had been leased, and where did it appear?",
+          "choices": [
+            "A scanned analysis of land permits, signed by the mayor's office and a private firm, appeared anonymously in Kofi's locker.",
+            "She says a precise, formal question leaves an evasive speaker nowhere to hide, because it names exactly the information required.",
+            "Her rule is that if the station cannot verify a claim, it does not broadcast it, and every difficult claim needs two independent sources."
+          ],
+          "answer": "A scanned analysis of land permits, signed by the mayor's office and a private firm, appeared anonymously in Kofi's locker.",
+          "explanation": "In the turning-point scene a heavier anonymous envelope appears in Kofi's locker holding a scanned analysis of land permits with signatures from the mayor's office and a private firm, showing the land had been leased quietly."
+        },
+        {
+          "prompt": "How does the sunrise juice carton make an implicit health claim, and why is that claim so difficult to challenge?",
+          "choices": [
+            "By phrasing the rule like a law of nature that is always true, she shows verification is not a preference but an unchanging condition for anything reaching the air.",
+            "It claimed the official story about the gardens was fake and warned that there was more beneath the soil than plants.",
+            "Its painted sunrise, smiling farmer and the words about natural goodness suggest health without stating any checkable fact, so there is nothing a customer can disprove."
+          ],
+          "answer": "Its painted sunrise, smiling farmer and the words about natural goodness suggest health without stating any checkable fact, so there is nothing a customer can disprove.",
+          "explanation": "The text says: Its painted sunrise, smiling farmer and the words about natural goodness suggest health without stating any checkable fact, so there is nothing a customer can disprove."
+        },
+        {
+          "prompt": "According to Amara, what does a precise, formal question achieve when a speaker is being evasive?",
+          "choices": [
+            "A scanned analysis of land permits, signed by the mayor's office and a private firm, appeared anonymously in Kofi's locker.",
+            "She says a precise, formal question leaves an evasive speaker nowhere to hide, because it names exactly the information required.",
+            "Someone has already chosen the colours, the fonts, the size of the headline, the photographs and the tone of voice."
+          ],
+          "answer": "She says a precise, formal question leaves an evasive speaker nowhere to hide, because it names exactly the information required.",
+          "explanation": "Amara warns about officials who give oblique answers. She says \"An evasive speaker loves a vague question\", but a precise, formal question \"leaves an evasive speaker nowhere to hide, because it names exactly the information required.\""
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Vocabulary Expert Interview",
+          "target": "The label's authenticity was checked before the batch shipped."
+        },
+        {
+          "prompt": "Speaking 2: Broadcast a Balanced Bulletin",
+          "target": "Designers often choose bold fonts to make a headline seem more urgent."
+        },
+        {
+          "prompt": "Speaking 3: Six-Minute Unit Argument",
+          "target": "Young people should help investigate and report on public issues."
+        },
+        {
+          "prompt": "Speaking 4: Formal Interview Role-Play",
+          "target": "Horizon Youth Radio described itself as reporting news for the city's future."
+        },
+        {
+          "prompt": "Speaking 5: Compare the Two Versions",
+          "target": "It seemed very convenient that the files vanished right before the interview."
+        },
+        {
+          "prompt": "Speaking 6: Conditional Decision Debate",
+          "target": "If we broadcast, ..."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "taken.",
+            "had",
+            "scheme",
+            "the",
+            "what",
+            "recovered",
+            "family",
+            "every",
+            "so",
+            "restitution,",
+            "full",
+            "ordered",
+            "court",
+            "The"
+          ],
+          "answer": "The court ordered full restitution, so every family recovered what the scheme had taken."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "carton.",
+            "the",
+            "on",
+            "claim",
+            "health",
+            "the",
+            "supported",
+            "proof",
+            "of",
+            "drop",
+            "a",
+            "Not"
+          ],
+          "answer": "Not a drop of proof supported the health claim on the carton."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "them.",
+            "correct",
+            "that",
+            "facts",
+            "the",
+            "than",
+            "faster",
+            "spread",
+            "often",
+            "Rumours"
+          ],
+          "answer": "Rumours often spread faster than the facts that correct them."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Imani.",
+            "worried",
+            "which",
+            "emotional,",
+            "than",
+            "rather",
+            "calculated",
+            "was",
+            "language",
+            "The"
+          ],
+          "answer": "The language was calculated rather than emotional, which worried Imani."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "unfamiliar.",
+            "completely",
+            "and",
+            "calm",
+            "sounded",
+            "voice",
+            "masked",
+            "caller's",
+            "The"
+          ],
+          "answer": "The caller's masked voice sounded calm and completely unfamiliar."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "expected.",
+            "anyone",
+            "than",
+            "evidence",
+            "more",
+            "carrying",
+            "was",
+            "folder",
+            "The"
+          ],
+          "answer": "The folder was carrying more evidence than anyone expected."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'capacitance' mean in this unit?",
+          "choices": [
+            "How much electric charge something can store for a given voltage.",
+            "The quality of being genuinely what something claims to be.",
+            "A line or group of lines repeated through a poem or song."
+          ],
+          "answer": "How much electric charge something can store for a given voltage.",
+          "explanation": "capacitance: How much electric charge something can store for a given voltage."
+        },
+        {
+          "prompt": "What does 'plastic' mean in this unit?",
+          "choices": [
+            "The quality of being genuinely what something claims to be.",
+            "How much electric charge something can store for a given voltage.",
+            "A light, strong material made from chemicals, often used to make packaging and everyday objects."
+          ],
+          "answer": "A light, strong material made from chemicals, often used to make packaging and everyday objects.",
+          "explanation": "plastic: A light, strong material made from chemicals, often used to make packaging and everyday objects."
+        },
+        {
+          "prompt": "What does 'nurses' mean in this unit?",
+          "choices": [
+            "How much electric charge something can store for a given voltage.",
+            "People trained to care for sick or injured patients.",
+            "The quality of being genuinely what something claims to be."
+          ],
+          "answer": "People trained to care for sick or injured patients.",
+          "explanation": "nurses: People trained to care for sick or injured patients."
+        },
+        {
+          "prompt": "What does 'calculated' mean in this unit?",
+          "choices": [
+            "Carefully planned and thought out in advance, rather than said without thinking.",
+            "The quality of being genuinely what something claims to be.",
+            "How much electric charge something can store for a given voltage."
+          ],
+          "answer": "Carefully planned and thought out in advance, rather than said without thinking.",
+          "explanation": "calculated: Carefully planned and thought out in advance, rather than said without thinking."
+        },
+        {
+          "prompt": "What does 'modulated' mean in this unit?",
+          "choices": [
+            "The quality of being genuinely what something claims to be.",
+            "How much electric charge something can store for a given voltage.",
+            "Modulated means changed or adjusted, especially to disguise how something normally sounds."
+          ],
+          "answer": "Modulated means changed or adjusted, especially to disguise how something normally sounds.",
+          "explanation": "modulated: Modulated means changed or adjusted, especially to disguise how something normally sounds."
+        },
+        {
+          "prompt": "What does 'investigation' mean in this unit?",
+          "choices": [
+            "How much electric charge something can store for a given voltage.",
+            "A careful and thorough search to discover the true facts about something.",
+            "The quality of being genuinely what something claims to be."
+          ],
+          "answer": "A careful and thorough search to discover the true facts about something.",
+          "explanation": "investigation: A careful and thorough search to discover the true facts about something."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'refrain'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Refrain is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sensational'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Sensational is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'preposition'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Preposition is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'planner'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Planner is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'choice'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Choice is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'intervene'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Intervene is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "clarification",
+              "An explanation that makes something clearer."
+            ],
+            [
+              "entrepreneurship",
+              "The activity of starting and running your own business, often by taking risks to build something new."
+            ],
+            [
+              "solidarity",
+              "Standing together with others who share a cause or a hardship."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "health",
+              "The general condition of a person's body and mind, especially whether it is well or ill."
+            ],
+            [
+              "truthfully",
+              "In a way that is honest and does not hide or exaggerate anything."
+            ],
+            [
+              "deserve",
+              "To be entitled to something because of one's actions or qualities."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "station",
+              "A place with the equipment needed to broadcast radio or television programmes."
+            ],
+            [
+              "nature",
+              "The basic character or quality of something, or the natural world."
+            ],
+            [
+              "preparation",
+              "The work and planning you do to get ready for something before it happens."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "covered",
+              "Reported on or dealt with a subject or event in the news."
+            ],
+            [
+              "private",
+              "Belonging to a particular person or company, rather than the government or the public."
+            ],
+            [
+              "woman",
+              "A woman is an adult female person."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "confusion",
+              "Confusion is a state of being uncertain or unable to understand what is happening."
+            ],
+            [
+              "trouble",
+              "Trouble means difficulty, danger, or a problem that causes worry."
+            ],
+            [
+              "caller",
+              "A person who is speaking to someone else on the telephone."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "deciding",
+              "Choosing between two or more possibilities after thinking carefully about them."
+            ],
+            [
+              "better",
+              "Of higher quality, more suitable, or more desirable than something else."
+            ],
+            [
+              "analysis",
+              "The process of studying something carefully to understand it better."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence uses a relative pronoun correctly?",
+          "choices": [
+            "The teacher which helped us with revision is very kind.",
+            "The document who contained the permits was anonymous.",
+            "The student who won the debate is in my class.",
+            "My brother who enjoys maths, is studying tonight."
+          ],
+          "answer": "The student who won the debate is in my class.",
+          "explanation": "People take who and things take that or which; the first two options swap them, and the fourth strands a single comma where a pair or none belongs."
+        },
+        {
+          "prompt": "Choose the missing word from 'Signal in the Static, part 1': \"We must _____, investigate, and demand clarity.\"",
+          "choices": [
+            "intervene",
+            "obstruct",
+            "avert",
+            "inundate"
+          ],
+          "answer": "intervene",
+          "explanation": "In the debate, Imani argues that young people must step in rather than stay silent, so intervene completes her call to action."
+        },
+        {
+          "prompt": "Choose the missing word from 'Packaging the Truth': Shoppers who want the facts must _____ the small print on the back of the carton.",
+          "choices": [
+            "flourish",
+            "exult",
+            "loathe",
+            "decipher"
+          ],
+          "answer": "decipher",
+          "explanation": "Decipher means to work out something difficult to read, and the passage says the sugar content hides in tiny letters that shoppers must puzzle out."
+        },
+        {
+          "prompt": "Choose the missing word from 'Signal in the Static, part 2': \"But truth is not always the most _____. Sometimes it hides in whispers.\"",
+          "choices": [
+            "monotonous",
+            "luminous",
+            "erratic",
+            "sociable"
+          ],
+          "answer": "luminous",
+          "explanation": "Luminous means shining; Imani warns that the brightest, most polished version of events is not automatically the true one."
+        },
+        {
+          "prompt": "Choose the missing word from 'Signal in the Static, part 2': \"Imani _____, but silently. No cheering, no fists in the air.\"",
+          "choices": [
+            "loathed",
+            "feigned",
+            "rebuked",
+            "exulted"
+          ],
+          "answer": "exulted",
+          "explanation": "Exult means to feel triumphant joy after a success, and Imani celebrates the flood of supportive calls with one quiet breath of pride."
+        },
         {
           "prompt": "In this unit, what does the verb 'usurp' mean?",
           "choices": [
@@ -503,28 +849,78 @@
           ],
           "answer": "To take control of something, especially power, without the right to do so.",
           "explanation": "Usurp means to seize a role or power that does not belong to you, which is why Imani warns that staying silent lets officials usurp the truth."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Signal in the Static, part 2': \"But truth is not always the most _____. Sometimes it hides in whispers.\"",
+          "choices": [
+            "monotonous",
+            "luminous",
+            "erratic",
+            "sociable"
+          ],
+          "answer": "luminous",
+          "explanation": "Luminous means shining; Imani warns that the brightest, most polished version of events is not automatically the true one."
         },
         {
-          "prompt": "Which definition matches the adjective 'oblique'?",
+          "prompt": "Choose the missing word from 'Signal in the Static, part 2': \"Imani _____, but silently. No cheering, no fists in the air.\"",
           "choices": [
-            "Boring because it stays exactly the same and never changes.",
-            "Giving off light; bright or shining in the dark.",
-            "Very skilled or naturally talented at doing something.",
-            "Not straight or direct; slanted or angled."
+            "loathed",
+            "feigned",
+            "rebuked",
+            "exulted"
           ],
-          "answer": "Not straight or direct; slanted or angled.",
-          "explanation": "Oblique describes a line or a message that approaches at a slant, like the anonymous note that hints at wrongdoing without stating it."
+          "answer": "exulted",
+          "explanation": "Exult means to feel triumphant joy after a success, and Imani celebrates the flood of supportive calls with one quiet breath of pride."
         },
         {
-          "prompt": "What does the noun 'restitution' mean?",
+          "prompt": "Which word means: The belief that countries should work together for shared ends.",
           "choices": [
-            "The act of giving back something that was lost or taken away.",
-            "A short summary of a story that gives only the main points.",
-            "A very large and sometimes uncountable number of people or things.",
-            "The slow and careful process of studying something closely to understand it better."
+            "internationalism",
+            "authenticity",
+            "capacitance"
           ],
-          "answer": "The act of giving back something that was lost or taken away.",
-          "explanation": "Restitution is repayment for what was taken; in the story, some families finally receive early restitution after the investigation begins."
+          "answer": "internationalism",
+          "explanation": "internationalism: The belief that countries should work together for shared ends."
+        },
+        {
+          "prompt": "Which word means: People trained to care for sick or injured patients.",
+          "choices": [
+            "authenticity",
+            "capacitance",
+            "nurses"
+          ],
+          "answer": "nurses",
+          "explanation": "nurses: People trained to care for sick or injured patients."
+        },
+        {
+          "prompt": "What type of word is 'scarf'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Scarf is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'investigation'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Investigation is used as a noun in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g01-t02-u06",
   "title": "My Five Senses Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A ship is a very big boat that carries people across the sea.",
           "choices": [
             "ship",
-            "chat",
-            "listen"
+            "shell",
+            "chat"
           ],
           "answer": "ship",
           "explanation": "ship: A ship is a very big boat that carries people across the sea."
         },
         {
-          "prompt": "Which word means: More than one foot. We stand and walk on our feet.",
+          "prompt": "Which word means: Your eye is the part of your body you use to see.",
           "choices": [
             "ship",
-            "chat",
-            "feet"
+            "shell",
+            "eye"
           ],
-          "answer": "feet",
-          "explanation": "feet: More than one foot. We stand and walk on our feet."
+          "answer": "eye",
+          "explanation": "eye: Your eye is the part of your body you use to see."
         },
         {
-          "prompt": "Which word means: A drum is a musical instrument you hit to make a beat.",
+          "prompt": "Which word means: Crying means making tears and sounds because you feel sad or hurt.",
           "choices": [
-            "chat",
-            "drum",
+            "shell",
+            "crying",
             "ship"
           ],
-          "answer": "drum",
-          "explanation": "drum: A drum is a musical instrument you hit to make a beat."
+          "answer": "crying",
+          "explanation": "crying: Crying means making tears and sounds because you feel sad or hurt."
+        },
+        {
+          "prompt": "Which word means: Pia is a fun, silly sound children sing before the word piano in a song.",
+          "choices": [
+            "pia",
+            "ship",
+            "shell"
+          ],
+          "answer": "pia",
+          "explanation": "pia: Pia is a fun, silly sound children sing before the word piano in a song."
+        },
+        {
+          "prompt": "Which word means: Something hard does not bend when you press it.",
+          "choices": [
+            "ship",
+            "shell",
+            "hard"
+          ],
+          "answer": "hard",
+          "explanation": "hard: Something hard does not bend when you press it."
+        },
+        {
+          "prompt": "Which word means: Feeling more cold than another thing you touch.",
+          "choices": [
+            "shell",
+            "colder",
+            "ship"
+          ],
+          "answer": "colder",
+          "explanation": "colder: Feeling more cold than another thing you touch."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "More than one foot. We stand and walk on our feet.",
-          "answer": "feet"
+          "clue": "Your eye is the part of your body you use to see.",
+          "answer": "eye"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A violin is a musical instrument you play with a bow.",
-          "answer": "violin"
+          "clue": "Crying means making tears and sounds because you feel sad or hurt.",
+          "answer": "crying"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "An instrument is something you play to make music.",
+          "answer": "instrument"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A loud sound feels very big in your ears.",
+          "answer": "loud"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Having more juice inside than another fruit or vegetable.",
+          "answer": "juicier"
         }
       ]
     },
@@ -95,28 +140,62 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "pancakes.",
-            "the",
-            "smell",
-            "can",
-            "nose",
-            "My"
+            "leg.",
+            "broken",
+            "a",
+            "has",
+            "table",
+            "old",
+            "The"
           ],
-          "answer": "My nose can smell the pancakes."
+          "answer": "The old table has a broken leg."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "things.",
-            "touch",
-            "to",
-            "hands",
-            "her",
-            "used",
-            "Amal",
-            "Last,"
+            "happy.",
+            "was",
+            "she",
+            "because",
+            "smiled",
+            "Amal"
           ],
-          "answer": "Last, Amal used her hands to touch things."
+          "answer": "Amal smiled because she was happy."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "cloth.",
+            "warm",
+            "soft,",
+            "a",
+            "touched",
+            "Amal"
+          ],
+          "answer": "Amal touched a soft, warm cloth."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "violin.",
+            "the",
+            "playing",
+            "practised",
+            "Samira"
+          ],
+          "answer": "Samira practised playing the violin."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "hard.",
+            "and",
+            "cold",
+            "is",
+            "stone",
+            "The"
+          ],
+          "answer": "The stone is cold and hard."
         }
       ]
     },
@@ -129,298 +208,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which word tells how honey tastes?",
+          "prompt": "Which body part do you use to see?",
           "choices": [
-            "noisy",
-            "rough",
-            "sweet",
-            "shiny"
+            "eyes",
+            "nose",
+            "ears",
+            "hands"
           ],
-          "answer": "sweet",
-          "explanation": "Honey tastes sweet; noisy is for sounds, shiny is for looks and rough is for touch."
+          "answer": "eyes",
+          "explanation": "We see with our eyes; ears are for hearing, the nose is for smelling and hands are for touching."
         },
         {
-          "prompt": "Which of these can you hear?",
+          "prompt": "Which body part do you use to hear?",
           "choices": [
-            "a soft blanket",
-            "a red flower",
-            "a sweet date",
-            "a bell ringing"
-          ],
-          "answer": "a bell ringing",
-          "explanation": "A ringing bell makes a sound; the flower is for looking, the blanket for touching and the date for tasting."
-        },
-        {
-          "prompt": "Which sentence about our senses is true?",
-          "choices": [
-            "I can see with my eyes.",
-            "I can hear with my nose.",
-            "I can see with my ears.",
-            "I can smell with my hands."
-          ],
-          "answer": "I can see with my eyes.",
-          "explanation": "Eyes are for seeing; ears hear, the nose smells and hands touch, so the other sentences are mixed up."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Who took Amal to the busy market?",
-          "choices": [
-            "Her grandma",
-            "'Fresh fish! Fresh fish!'",
-            "Our wonderful senses"
-          ],
-          "answer": "Her grandma",
-          "explanation": "The story begins with Amal going to the market with her grandma."
-        },
-        {
-          "prompt": "What was the man calling out in the market?",
-          "choices": [
-            "Soft",
-            "I can hear with my ears.",
-            "'Fresh fish! Fresh fish!'"
-          ],
-          "answer": "'Fresh fish! Fresh fish!'",
-          "explanation": "Amal used her ears and heard a man calling, 'Fresh fish! Fresh fish!'"
-        },
-        {
-          "prompt": "What did Grandma say we must be thankful for?",
-          "choices": [
-            "I can see with my eyes.",
-            "Our wonderful senses",
-            "Soft"
-          ],
-          "answer": "Our wonderful senses",
-          "explanation": "Grandma says they must be thankful for their wonderful senses."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 - Listen and point",
-          "target": "Point to the body part an adult names if one is nearby, or that the audio names, then say the sentence back."
-        },
-        {
-          "prompt": "Speaking 3 - Ask and answer",
-          "target": "Feel something hidden in a bag and describe it."
-        },
-        {
-          "prompt": "Speaking 5 - Role-play",
-          "target": "Play a body-part game and point as you speak."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "soft.",
-            "very",
-            "feels",
-            "fur",
-            "kitten's",
-            "The"
-          ],
-          "answer": "The kitten's fur feels very soft."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "pot.",
-            "big",
-            "a",
-            "from",
-            "spices",
-            "smelled",
-            "Amal"
-          ],
-          "answer": "Amal smelled spices from a big pot."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "soft.",
-            "and",
-            "pink",
-            "is",
+            "eyes",
+            "ears",
             "tongue",
-            "My"
+            "feet"
           ],
-          "answer": "My tongue is pink and soft."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'because' mean in this unit?",
-          "choices": [
-            "This word tells you the reason for something.",
-            "A ship is a very big boat that carries people across the sea.",
-            "Chat means to talk with someone in a friendly way."
-          ],
-          "answer": "This word tells you the reason for something.",
-          "explanation": "because: This word tells you the reason for something."
+          "answer": "ears",
+          "explanation": "We hear with our ears; eyes are for seeing, the tongue is for tasting and feet are for walking."
         },
         {
-          "prompt": "What does 'eyes' mean in this unit?",
+          "prompt": "Which body part do you use to smell a flower?",
           "choices": [
-            "A ship is a very big boat that carries people across the sea.",
-            "Chat means to talk with someone in a friendly way.",
-            "The two parts of your face that help you see."
+            "eyes",
+            "ears",
+            "nose",
+            "hands"
           ],
-          "answer": "The two parts of your face that help you see.",
-          "explanation": "eyes: The two parts of your face that help you see."
+          "answer": "nose",
+          "explanation": "We smell with our nose; hands touch, ears hear and eyes see."
         },
-        {
-          "prompt": "What does 'chat' mean in this unit?",
-          "choices": [
-            "To keep quiet and hear carefully with your ears.",
-            "Chat means to talk with someone in a friendly way.",
-            "A ship is a very big boat that carries people across the sea."
-          ],
-          "answer": "Chat means to talk with someone in a friendly way.",
-          "explanation": "chat: Chat means to talk with someone in a friendly way."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'thankful'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Thankful is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'long'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Long is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'ear'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Ear is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "dish",
-              "A dish is a shallow bowl you put food in."
-            ],
-            [
-              "leg",
-              "The long part of your body that you walk and run with."
-            ],
-            [
-              "ear",
-              "The part of your head that you hear with."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "taste",
-              "To use your tongue to know if food is sweet or salty."
-            ],
-            [
-              "calling",
-              "Calling means shouting or saying something loudly so people can hear you."
-            ],
-            [
-              "thankful",
-              "Thankful means you feel glad and want to say thank you."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "different",
-              "Different means not the same as something else."
-            ],
-            [
-              "soft",
-              "Something soft feels gentle and nice to touch."
-            ],
-            [
-              "long",
-              "Something long goes a big way from end to end."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sense do you use with your tongue?",
           "choices": [
@@ -457,13 +276,509 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Who took Amal to the busy market?",
+          "choices": [
+            "Her grandma",
+            "'Fresh fish! Fresh fish!'",
+            "Our wonderful senses"
+          ],
+          "answer": "Her grandma",
+          "explanation": "The story begins with Amal going to the market with her grandma."
+        },
+        {
+          "prompt": "Which sense did Amal use for the piece of ripe mango?",
+          "choices": [
+            "Soft",
+            "I can hear with my ears.",
+            "Taste, with her tongue"
+          ],
+          "answer": "Taste, with her tongue",
+          "explanation": "Amal used her tongue to taste the mango and said it was sweet and juicy."
+        },
+        {
+          "prompt": "What was the man calling out in the market?",
+          "choices": [
+            "I can see with my eyes.",
+            "'Fresh fish! Fresh fish!'",
+            "Seeing, with her eyes"
+          ],
+          "answer": "'Fresh fish! Fresh fish!'",
+          "explanation": "Amal used her ears and heard a man calling, 'Fresh fish! Fresh fish!'"
+        },
+        {
+          "prompt": "Which sense did Amal use first at the market?",
+          "choices": [
+            "Seeing, with her eyes",
+            "Our wonderful senses",
+            "Her grandma"
+          ],
+          "answer": "Seeing, with her eyes",
+          "explanation": "'First, Amal used her eyes to see' the red tomatoes and yellow bananas."
+        },
+        {
+          "prompt": "What did Grandma say we must be thankful for?",
+          "choices": [
+            "I can hear with my ears.",
+            "Taste, with her tongue",
+            "Our wonderful senses"
+          ],
+          "answer": "Our wonderful senses",
+          "explanation": "Grandma says they must be thankful for their wonderful senses."
+        },
+        {
+          "prompt": "Which talk line names the part you hear with?",
+          "choices": [
+            "'Fresh fish! Fresh fish!'",
+            "I can hear with my ears.",
+            "I can see with my eyes."
+          ],
+          "answer": "I can hear with my ears.",
+          "explanation": "The second talk line is 'I can hear with my ears.'"
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "Point to the body part an adult names if one is nearby, or that the audio names, then say the sentence back."
+        },
+        {
+          "prompt": "Speaking 2 - Repeat the model",
+          "target": "Close your eyes, listen, then tell your partner one sound you heard."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "Feel something hidden in a bag and describe it."
+        },
+        {
+          "prompt": "Speaking 4 - Picture talk",
+          "target": "Hold two things and compare them for your partner."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "Play a body-part game and point as you speak."
+        },
+        {
+          "prompt": "Speaking 6 - My confident turn",
+          "target": "Ask the class your own sense riddle."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "car.",
+            "the",
+            "than",
+            "louder",
+            "is",
+            "tractor",
+            "The"
+          ],
+          "answer": "The tractor is louder than the car."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "morning.",
+            "every",
+            "teeth",
+            "her",
+            "cleans",
+            "Amal"
+          ],
+          "answer": "Amal cleans her teeth every morning."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "pot.",
+            "big",
+            "a",
+            "from",
+            "spices",
+            "smelled",
+            "Amal"
+          ],
+          "answer": "Amal smelled spices from a big pot."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "piano.",
+            "a",
+            "of",
+            "sound",
+            "the",
+            "love",
+            "I"
+          ],
+          "answer": "I love the sound of a piano."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "soft.",
+            "and",
+            "pink",
+            "is",
+            "tongue",
+            "My"
+          ],
+          "answer": "My tongue is pink and soft."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "curly.",
+            "and",
+            "short",
+            "is",
+            "hair",
+            "My"
+          ],
+          "answer": "My hair is short and curly."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'shell' mean in this unit?",
+          "choices": [
+            "A shell is the hard outside part of a nut, an egg or a sea animal.",
+            "A ship is a very big boat that carries people across the sea.",
+            "Chat means to talk with someone in a friendly way."
+          ],
+          "answer": "A shell is the hard outside part of a nut, an egg or a sea animal.",
+          "explanation": "shell: A shell is the hard outside part of a nut, an egg or a sea animal."
+        },
+        {
+          "prompt": "What does 'mouth' mean in this unit?",
+          "choices": [
+            "A ship is a very big boat that carries people across the sea.",
+            "A shell is the hard outside part of a nut, an egg or a sea animal.",
+            "The part of your face you use to eat and talk."
+          ],
+          "answer": "The part of your face you use to eat and talk.",
+          "explanation": "mouth: The part of your face you use to eat and talk."
+        },
+        {
+          "prompt": "What does 'mmm' mean in this unit?",
+          "choices": [
+            "A shell is the hard outside part of a nut, an egg or a sea animal.",
+            "Mmm is a sound you make when something smells or tastes very good.",
+            "A ship is a very big boat that carries people across the sea."
+          ],
+          "answer": "Mmm is a sound you make when something smells or tastes very good.",
+          "explanation": "mmm: Mmm is a sound you make when something smells or tastes very good."
+        },
+        {
+          "prompt": "What does 'violin' mean in this unit?",
+          "choices": [
+            "A violin is a musical instrument you play with a bow.",
+            "A ship is a very big boat that carries people across the sea.",
+            "A shell is the hard outside part of a nut, an egg or a sea animal."
+          ],
+          "answer": "A violin is a musical instrument you play with a bow.",
+          "explanation": "violin: A violin is a musical instrument you play with a bow."
+        },
+        {
+          "prompt": "What does 'sweet' mean in this unit?",
+          "choices": [
+            "A ship is a very big boat that carries people across the sea.",
+            "A shell is the hard outside part of a nut, an egg or a sea animal.",
+            "Something sweet tastes lovely, like honey, dates or sugar."
+          ],
+          "answer": "Something sweet tastes lovely, like honey, dates or sugar.",
+          "explanation": "sweet: Something sweet tastes lovely, like honey, dates or sugar."
+        },
+        {
+          "prompt": "What does 'bath' mean in this unit?",
+          "choices": [
+            "A shell is the hard outside part of a nut, an egg or a sea animal.",
+            "A bath is a big tub you fill with water to wash in.",
+            "A ship is a very big boat that carries people across the sea."
+          ],
+          "answer": "A bath is a big tub you fill with water to wash in.",
+          "explanation": "bath: A bath is a big tub you fill with water to wash in."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'chat'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Chat is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'play'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Play is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'tasted'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Tasted is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'hooves'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Hooves is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'flat'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Flat is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'body'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Body is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "dish",
+              "A dish is a shallow bowl you put food in."
+            ],
+            [
+              "chat",
+              "Chat means to talk with someone in a friendly way."
+            ],
+            [
+              "head",
+              "The top part of your body, with your face and hair."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "nose",
+              "The part of your face you smell and breathe with."
+            ],
+            [
+              "play",
+              "To have fun with toys, games or friends."
+            ],
+            [
+              "used",
+              "Used means you did something with a tool or a part of your body."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "spices",
+              "Spices are parts of plants that make food taste and smell strong."
+            ],
+            [
+              "tasted",
+              "Tasted means you used your tongue to find out how food tastes."
+            ],
+            [
+              "what's",
+              "What's is a short way to say what is."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "drum",
+              "A drum is a musical instrument you hit to make a beat."
+            ],
+            [
+              "hooves",
+              "Hooves are the hard feet of animals like horses and goats."
+            ],
+            [
+              "hands",
+              "The two parts at the end of your arms."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "quiet",
+              "A quiet sound is very small and soft."
+            ],
+            [
+              "flat",
+              "Something flat is smooth with no bumps or hills."
+            ],
+            [
+              "louder",
+              "Making a bigger sound than another person or thing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "neck",
+              "Your neck joins your head to your body."
+            ],
+            [
+              "body",
+              "Your body is all the parts of you, like your arms, legs and head."
+            ],
+            [
+              "smell",
+              "To use your nose to find out what something is like."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Maya holds a piece of ice. How does it feel?",
+          "choices": [
+            "sweet",
+            "cold",
+            "bright",
+            "loud"
+          ],
+          "answer": "cold",
+          "explanation": "Ice feels cold when you touch it; loud is a sound, bright is a sight and sweet is a taste."
+        },
+        {
+          "prompt": "Which word tells how honey tastes?",
+          "choices": [
+            "noisy",
+            "rough",
+            "sweet",
+            "shiny"
+          ],
+          "answer": "sweet",
+          "explanation": "Honey tastes sweet; noisy is for sounds, shiny is for looks and rough is for touch."
+        },
+        {
+          "prompt": "Which of these can you hear?",
+          "choices": [
+            "a soft blanket",
+            "a red flower",
+            "a sweet date",
+            "a bell ringing"
+          ],
+          "answer": "a bell ringing",
+          "explanation": "A ringing bell makes a sound; the flower is for looking, the blanket for touching and the date for tasting."
+        },
+        {
+          "prompt": "Which sentence about our senses is true?",
+          "choices": [
+            "I can see with my eyes.",
+            "I can hear with my nose.",
+            "I can see with my ears.",
+            "I can smell with my hands."
+          ],
+          "answer": "I can see with my eyes.",
+          "explanation": "Eyes are for seeing; ears hear, the nose smells and hands touch, so the other sentences are mixed up."
+        },
+        {
+          "prompt": "Which sentence compares two things?",
+          "choices": [
+            "This box is heavy.",
+            "This box is heavier than that box.",
+            "The box is brown.",
+            "I can see the box."
+          ],
+          "answer": "This box is heavier than that box.",
+          "explanation": "The word than compares two things; the other sentences only describe one box."
+        },
         {
           "prompt": "Which body part do you use to see?",
           "choices": [
@@ -474,28 +789,78 @@
           ],
           "answer": "eyes",
           "explanation": "We see with our eyes; ears are for hearing, the nose is for smelling and hands are for touching."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence about our senses is true?",
+          "choices": [
+            "I can see with my eyes.",
+            "I can hear with my nose.",
+            "I can see with my ears.",
+            "I can smell with my hands."
+          ],
+          "answer": "I can see with my eyes.",
+          "explanation": "Eyes are for seeing; ears hear, the nose smells and hands touch, so the other sentences are mixed up."
         },
         {
-          "prompt": "Which body part do you use to hear?",
+          "prompt": "Which sentence compares two things?",
           "choices": [
-            "eyes",
-            "ears",
-            "tongue",
-            "feet"
+            "This box is heavy.",
+            "This box is heavier than that box.",
+            "The box is brown.",
+            "I can see the box."
           ],
-          "answer": "ears",
-          "explanation": "We hear with our ears; eyes are for seeing, the tongue is for tasting and feet are for walking."
+          "answer": "This box is heavier than that box.",
+          "explanation": "The word than compares two things; the other sentences only describe one box."
         },
         {
-          "prompt": "Which body part do you use to smell a flower?",
+          "prompt": "Which word means: The long part of your body that you walk and run with.",
           "choices": [
-            "eyes",
-            "ears",
-            "nose",
-            "hands"
+            "leg",
+            "ship",
+            "shell"
           ],
-          "answer": "nose",
-          "explanation": "We smell with our nose; hands touch, ears hear and eyes see."
+          "answer": "leg",
+          "explanation": "leg: The long part of your body that you walk and run with."
+        },
+        {
+          "prompt": "Which word means: Mmm is a sound you make when something smells or tastes very good.",
+          "choices": [
+            "ship",
+            "shell",
+            "mmm"
+          ],
+          "answer": "mmm",
+          "explanation": "mmm: Mmm is a sound you make when something smells or tastes very good."
+        },
+        {
+          "prompt": "What type of word is 'tongue'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Tongue is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'bath'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Bath is used as a noun in this dictionary sense."
         }
       ]
     }

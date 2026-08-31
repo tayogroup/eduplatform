@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t03-u10",
   "title": "My English Voice: Grade 7 Capstone Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A complete and often surprising change in the form, appearance or nature of something.",
           "choices": [
             "transformation",
-            "semantic",
-            "refute"
+            "lexical",
+            "immune"
           ],
           "answer": "transformation",
           "explanation": "transformation: A complete and often surprising change in the form, appearance or nature of something."
         },
         {
-          "prompt": "Which word means: Able to be trusted to do what is expected, again and again.",
+          "prompt": "Which word means: To make something stronger, or to support a point with more evidence.",
           "choices": [
             "transformation",
-            "semantic",
-            "dependable"
+            "lexical",
+            "reinforce"
+          ],
+          "answer": "reinforce",
+          "explanation": "reinforce: To make something stronger, or to support a point with more evidence."
+        },
+        {
+          "prompt": "Which word means: Able to be trusted to do what is expected, again and again.",
+          "choices": [
+            "lexical",
+            "dependable",
+            "transformation"
           ],
           "answer": "dependable",
           "explanation": "dependable: Able to be trusted to do what is expected, again and again."
         },
         {
-          "prompt": "Which word means: Angry and ready to fight or argue.",
+          "prompt": "Which word means: The final part of something, where a decision or main point is reached.",
           "choices": [
-            "semantic",
-            "belligerent",
+            "conclusion",
+            "transformation",
+            "lexical"
+          ],
+          "answer": "conclusion",
+          "explanation": "conclusion: The final part of something, where a decision or main point is reached."
+        },
+        {
+          "prompt": "Which word means: A strong, regular, repeated pattern of sound or movement.",
+          "choices": [
+            "transformation",
+            "lexical",
+            "rhythm"
+          ],
+          "answer": "rhythm",
+          "explanation": "rhythm: A strong, regular, repeated pattern of sound or movement."
+        },
+        {
+          "prompt": "Which word means: An indirect reference to another work, person or event.",
+          "choices": [
+            "lexical",
+            "allusion",
             "transformation"
           ],
-          "answer": "belligerent",
-          "explanation": "belligerent: Angry and ready to fight or argue."
+          "answer": "allusion",
+          "explanation": "allusion: An indirect reference to another work, person or event."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A plant, or part of a plant, that people grow and eat as food.",
-          "answer": "vegetable"
+          "clue": "To form an idea that explains a set of facts.",
+          "answer": "theorise"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The wish to do evil or harm to others.",
-          "answer": "malevolence"
+          "clue": "Able to be trusted to do what is expected, again and again.",
+          "answer": "dependable"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The thinking or explanation behind a decision or conclusion.",
+          "answer": "reasoning"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Working hard and being careful to do things well.",
+          "answer": "diligent"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To show or tell what you think or feel.",
+          "answer": "express"
         }
       ]
     },
@@ -100,35 +145,84 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "other.",
-            "the",
-            "after",
-            "one",
+            "roads.",
+            "enough",
             "not",
-            "together,",
-            "solved",
-            "are",
-            "equations",
-            "Simultaneous"
+            "and",
+            "people",
+            "many",
+            "too",
+            "challenge:",
+            "same",
+            "the",
+            "faces",
+            "city",
+            "growing",
+            "Every"
           ],
-          "answer": "Simultaneous equations are solved together, not one after the other."
+          "answer": "Every growing city faces the same challenge: too many people and not enough roads."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "week.",
-            "next",
-            "conference",
-            "portfolio",
-            "the",
-            "to",
-            "annotated,",
-            "piece,",
-            "best",
-            "your",
-            "Bring"
+            "fraction.",
+            "improper",
+            "an",
+            "is",
+            "quarters",
+            "Seven"
           ],
-          "answer": "Bring your best piece, annotated, to the portfolio conference next week."
+          "answer": "Seven quarters is an improper fraction."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "twice.",
+            "failed",
+            "plan",
+            "the",
+            "when",
+            "even",
+            "friend",
+            "loyal",
+            "a",
+            "remained",
+            "Zane"
+          ],
+          "answer": "Zane remained a loyal friend even when the plan failed twice."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "on.",
+            "depends",
+            "capstone",
+            "your",
+            "habits",
+            "source-checking",
+            "the",
+            "sharpen",
+            "will",
+            "retelling",
+            "This"
+          ],
+          "answer": "This retelling will sharpen the source-checking habits your capstone depends on."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "valley.",
+            "the",
+            "above",
+            "high",
+            "from",
+            "field",
+            "every",
+            "photographed",
+            "drone",
+            "The"
+          ],
+          "answer": "The drone photographed every field from high above the valley."
         }
       ]
     },
@@ -141,310 +235,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence uses the Unit 7 verb pattern correctly?",
+          "prompt": "Which review word from Unit 1 means 'to make someone very angry'?",
           "choices": [
-            "She decided applying for the scholarship.",
-            "She enjoys to practise interviews.",
-            "She decided to apply for the scholarship.",
-            "She finished to write her report."
+            "acknowledge",
+            "infuriate",
+            "endeavour",
+            "demonstrate"
           ],
-          "answer": "She decided to apply for the scholarship.",
-          "explanation": "Decide takes to plus the infinitive, so she decided to apply is the only correct pattern."
+          "answer": "infuriate",
+          "explanation": "To infuriate someone is to make them very angry; acknowledge, endeavour and demonstrate carry no sense of anger."
         },
         {
-          "prompt": "Nora said, 'I have just posted the article.' Which reported version is correct?",
+          "prompt": "Which sentence uses a participle adjective correctly?",
           "choices": [
-            "Nora said that I had just posted the article.",
-            "Nora said me that she had just posted the article.",
-            "Nora says that she has just posting the article.",
-            "Nora said that she had just posted the article."
+            "The film was bored, so we left early.",
+            "We felt boring during the film.",
+            "The film was boring, so we left early.",
+            "The bored film sent us to sleep."
           ],
-          "answer": "Nora said that she had just posted the article.",
-          "explanation": "Reported speech backshifts have posted to had posted and changes the pronoun I to she."
+          "answer": "The film was boring, so we left early.",
+          "explanation": "A film causes the feeling, so it is boring; the people watching it are the ones who feel bored."
         },
         {
-          "prompt": "Which sentence means the same as 'If you do not water the seedlings, they will die.'?",
+          "prompt": "Which technique from Unit 3 gives human actions to something that is not human?",
           "choices": [
-            "Unless the seedlings die, you will water them.",
-            "Unless you water the seedlings, they will not die.",
-            "Unless you water the seedlings, they will die.",
-            "If you water the seedlings, they will die."
+            "personification",
+            "alliteration",
+            "rhyme",
+            "simile"
           ],
-          "answer": "Unless you water the seedlings, they will die.",
-          "explanation": "Unless means if not, so unless you water them keeps the original warning unchanged."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What does the word abtirsiinyo describe in the review of Unit 1?",
-          "choices": [
-            "It is the Somali tradition of reciting the family line, which can stretch back twenty generations or more.",
-            "The story itself survives, because heritage lives in memory and language as much as in objects.",
-            "Classmates who had hidden their own work began submitting poems, comics and essays, and the writing club grew past twenty members."
-          ],
-          "answer": "It is the Somali tradition of reciting the family line, which can stretch back twenty generations or more.",
-          "explanation": "The passage explains that abtirsiinyo tells a person their ancestry, their clan, and their place in the community."
+          "answer": "personification",
+          "explanation": "Personification gives human actions to non-human things, such as saying the wind danced."
         },
-        {
-          "prompt": "Why did Imani defend Kian when the teacher's motorcycle was stolen?",
-          "choices": [
-            "The story itself survives, because heritage lives in memory and language as much as in objects.",
-            "They included participation logs proving that Form 3 had not been negligent during the last clean-up day.",
-            "She believed he was innocent until proven guilty and refused to let suspicion punish a quiet new student."
-          ],
-          "answer": "She believed he was innocent until proven guilty and refused to let suspicion punish a quiet new student.",
-          "explanation": "The motorcycle was found abandoned near the river the next day, which proved Kian had done nothing wrong."
-        },
-        {
-          "prompt": "What evidence did the students include with their letter about the Saturday cleaning rule?",
-          "choices": [
-            "A hearing reviewed the testimonies, discovered that a loose screw had caused the damage, and exonerated him completely.",
-            "They included participation logs proving that Form 3 had not been negligent during the last clean-up day.",
-            "Max used printed posters, sweets and lunchtime music, while Imani used hand-drawn posters, honest speeches and promises of work."
-          ],
-          "answer": "They included participation logs proving that Form 3 had not been negligent during the last clean-up day.",
-          "explanation": "The logs mattered because the principal later confirmed Form 3 had cleaned more consecutively than any other form."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Portfolio evidence conference",
-          "target": "I chose my Unit 4 report because it proves my passive-voice control improved."
-        },
-        {
-          "prompt": "Research vocabulary in context",
-          "target": "My evidence demonstrates that the original claim rested on bias, not facts."
-        },
-        {
-          "prompt": "Question-and-answer defence",
-          "target": "That figure comes from my second source, which I checked against the first."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "shelter.",
-            "homeless",
-            "the",
-            "to",
-            "food",
-            "donated",
-            "woman",
-            "benevolent",
-            "The"
-          ],
-          "answer": "The benevolent woman donated food to the homeless shelter."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "magazine.",
-            "school",
-            "the",
-            "in",
-            "ideas",
-            "my",
-            "express",
-            "to",
-            "want",
-            "I"
-          ],
-          "answer": "I want to express my ideas in the school magazine."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "it.",
-            "about",
-            "word",
-            "a",
-            "said",
-            "anyone",
-            "before",
-            "building",
-            "resentment",
-            "the",
-            "noticed",
-            "Zara"
-          ],
-          "answer": "Zara noticed the resentment building before anyone said a word about it."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'urging' mean in this unit?",
-          "choices": [
-            "Trying strongly to persuade someone to do something.",
-            "A complete and often surprising change in the form, appearance or nature of something.",
-            "To do with the meaning of words."
-          ],
-          "answer": "Trying strongly to persuade someone to do something.",
-          "explanation": "urging: Trying strongly to persuade someone to do something."
-        },
-        {
-          "prompt": "What does 'diligent' mean in this unit?",
-          "choices": [
-            "A complete and often surprising change in the form, appearance or nature of something.",
-            "To do with the meaning of words.",
-            "Working hard and being careful to do things well."
-          ],
-          "answer": "Working hard and being careful to do things well.",
-          "explanation": "diligent: Working hard and being careful to do things well."
-        },
-        {
-          "prompt": "What does 'semantic' mean in this unit?",
-          "choices": [
-            "To prove that a statement is wrong.",
-            "To do with the meaning of words.",
-            "A complete and often surprising change in the form, appearance or nature of something."
-          ],
-          "answer": "To do with the meaning of words.",
-          "explanation": "semantic: To do with the meaning of words."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'conditional'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Conditional is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'bias'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Bias is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'theorem'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Theorem is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "variability",
-              "How much something varies from one measurement to the next."
-            ],
-            [
-              "tragedy",
-              "A play in which the main character is brought down, often by their own flaw."
-            ],
-            [
-              "simultaneous",
-              "Happening or being solved at the same time."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "loyal",
-              "Firm and faithful in supporting a person, group, or cause."
-            ],
-            [
-              "hers",
-              "Belonging to a female person who has already been mentioned."
-            ],
-            [
-              "conditional",
-              "Depending on something else being true or happening first, often shown with 'if'."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "vindictive",
-              "Wanting to hurt someone because they hurt you."
-            ],
-            [
-              "melancholy",
-              "A feeling of sadness or being unhappy for a long time."
-            ],
-            [
-              "bias",
-              "An unfair preference or opinion that affects how you think or act."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which Unit 4 word describes someone who is very happy because good news has just arrived?",
           "choices": [
@@ -481,13 +303,540 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What does the word abtirsiinyo describe in the review of Unit 1?",
+          "choices": [
+            "It is the Somali tradition of reciting the family line, which can stretch back twenty generations or more.",
+            "The story itself survives, because heritage lives in memory and language as much as in objects.",
+            "Classmates who had hidden their own work began submitting poems, comics and essays, and the writing club grew past twenty members."
+          ],
+          "answer": "It is the Somali tradition of reciting the family line, which can stretch back twenty generations or more.",
+          "explanation": "The passage explains that abtirsiinyo tells a person their ancestry, their clan, and their place in the community."
+        },
+        {
+          "prompt": "According to the passage, what usually survives a family's migration when houses and possessions are lost?",
+          "choices": [
+            "Max used printed posters, sweets and lunchtime music, while Imani used hand-drawn posters, honest speeches and promises of work.",
+            "They included participation logs proving that Form 3 had not been negligent during the last clean-up day.",
+            "The story itself survives, because heritage lives in memory and language as much as in objects."
+          ],
+          "answer": "The story itself survives, because heritage lives in memory and language as much as in objects.",
+          "explanation": "The text adds that a family that knows its heritage carries its identity anywhere."
+        },
+        {
+          "prompt": "Why did Imani defend Kian when the teacher's motorcycle was stolen?",
+          "choices": [
+            "A hearing reviewed the testimonies, discovered that a loose screw had caused the damage, and exonerated him completely.",
+            "She believed he was innocent until proven guilty and refused to let suspicion punish a quiet new student.",
+            "Max used printed posters, sweets and lunchtime music, while Imani used hand-drawn posters, honest speeches and promises of work."
+          ],
+          "answer": "She believed he was innocent until proven guilty and refused to let suspicion punish a quiet new student.",
+          "explanation": "The motorcycle was found abandoned near the river the next day, which proved Kian had done nothing wrong."
+        },
+        {
+          "prompt": "What happened after Sana dropped her story into the submission box?",
+          "choices": [
+            "Weeks passed in silence, and then a poster announced that Echoes of the Highlands had been printed with her story inside.",
+            "She believed he was innocent until proven guilty and refused to let suspicion punish a quiet new student.",
+            "Sensors in the soil sent readings to the app, which then alerted farmers when crops needed water."
+          ],
+          "answer": "Weeks passed in silence, and then a poster announced that Echoes of the Highlands had been printed with her story inside.",
+          "explanation": "Her name appeared under the story titled Star Listener, and students crowded round to read it."
+        },
+        {
+          "prompt": "What evidence did the students include with their letter about the Saturday cleaning rule?",
+          "choices": [
+            "She answered with kindness, honesty, and hard work.",
+            "They refused to be discouraged and determined that if they worked together, they could prove the doubters wrong.",
+            "They included participation logs proving that Form 3 had not been negligent during the last clean-up day."
+          ],
+          "answer": "They included participation logs proving that Form 3 had not been negligent during the last clean-up day.",
+          "explanation": "The logs mattered because the principal later confirmed Form 3 had cleaned more consecutively than any other form."
+        },
+        {
+          "prompt": "What did the weather-monitoring app do for local farmers?",
+          "choices": [
+            "It is the Somali tradition of reciting the family line, which can stretch back twenty generations or more.",
+            "Sensors in the soil sent readings to the app, which then alerted farmers when crops needed water.",
+            "Weeks passed in silence, and then a poster announced that Echoes of the Highlands had been printed with her story inside."
+          ],
+          "answer": "Sensors in the soil sent readings to the app, which then alerted farmers when crops needed water.",
+          "explanation": "One farmer reported that an early alert had just saved her entire field of maize."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Portfolio evidence conference",
+          "target": "I chose my Unit 4 report because it proves my passive-voice control improved."
+        },
+        {
+          "prompt": "Comparative reading and interpretation",
+          "target": "The Kitale narrator admires Imani, while the Unit 9 report stays neutral."
+        },
+        {
+          "prompt": "Research vocabulary in context",
+          "target": "My evidence demonstrates that the original claim rested on bias, not facts."
+        },
+        {
+          "prompt": "Five-minute enquiry presentation",
+          "target": "Zane remained a loyal friend even when the plan failed twice."
+        },
+        {
+          "prompt": "Question-and-answer defence",
+          "target": "That figure comes from my second source, which I checked against the first."
+        },
+        {
+          "prompt": "Final capstone presentation",
+          "target": "The drone photographed every field from high above the valley."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "better.",
+            "words",
+            "the",
+            "remember",
+            "to",
+            "repetition",
+            "through",
+            "vocabulary",
+            "our",
+            "practise",
+            "we",
+            "class,",
+            "In"
+          ],
+          "answer": "In class, we practise our vocabulary through repetition to remember the words better."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "exams.",
+            "his",
+            "all",
+            "pass",
+            "him",
+            "helped",
+            "evening",
+            "every",
+            "studying",
+            "to",
+            "dedication",
+            "His"
+          ],
+          "answer": "His dedication to studying every evening helped him pass all his exams."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "you.",
+            "for",
+            "it",
+            "does",
+            "else",
+            "somebody",
+            "before",
+            "claim",
+            "the",
+            "Qualify"
+          ],
+          "answer": "Qualify the claim before somebody else does it for you."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "asked.",
+            "is",
+            "she",
+            "time",
+            "every",
+            "account",
+            "same",
+            "the",
+            "gives",
+            "witness",
+            "dependable",
+            "A"
+          ],
+          "answer": "A dependable witness gives the same account every time she is asked."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hers.",
+            "was",
+            "that",
+            "one",
+            "the",
+            "except",
+            "labelled",
+            "was",
+            "shelf",
+            "the",
+            "on",
+            "notebook",
+            "Every"
+          ],
+          "answer": "Every notebook on the shelf was labelled except the one that was hers."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "planning.",
+            "careful",
+            "more",
+            "towards",
+            "farmers",
+            "pushing",
+            "kept",
+            "project",
+            "drone",
+            "The"
+          ],
+          "answer": "The drone project kept pushing farmers towards more careful planning."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'lexical' mean in this unit?",
+          "choices": [
+            "To do with the words of a language rather than its grammar.",
+            "A complete and often surprising change in the form, appearance or nature of something.",
+            "Protected against a particular disease."
+          ],
+          "answer": "To do with the words of a language rather than its grammar.",
+          "explanation": "lexical: To do with the words of a language rather than its grammar."
+        },
+        {
+          "prompt": "What does 'descending' mean in this unit?",
+          "choices": [
+            "A complete and often surprising change in the form, appearance or nature of something.",
+            "To do with the words of a language rather than its grammar.",
+            "Going down, or arranged from largest to smallest."
+          ],
+          "answer": "Going down, or arranged from largest to smallest.",
+          "explanation": "descending: Going down, or arranged from largest to smallest."
+        },
+        {
+          "prompt": "What does 'soon' mean in this unit?",
+          "choices": [
+            "To do with the words of a language rather than its grammar.",
+            "Happening in a short time from now, or not long after something else.",
+            "A complete and often surprising change in the form, appearance or nature of something."
+          ],
+          "answer": "Happening in a short time from now, or not long after something else.",
+          "explanation": "soon: Happening in a short time from now, or not long after something else."
+        },
+        {
+          "prompt": "What does 'pushing' mean in this unit?",
+          "choices": [
+            "Forcing something to move, increase, or change, often with steady pressure.",
+            "A complete and often surprising change in the form, appearance or nature of something.",
+            "To do with the words of a language rather than its grammar."
+          ],
+          "answer": "Forcing something to move, increase, or change, often with steady pressure.",
+          "explanation": "pushing: Forcing something to move, increase, or change, often with steady pressure."
+        },
+        {
+          "prompt": "What does 'vulnerable' mean in this unit?",
+          "choices": [
+            "A complete and often surprising change in the form, appearance or nature of something.",
+            "To do with the words of a language rather than its grammar.",
+            "Able to be easily hurt or harmed, either physically or emotionally."
+          ],
+          "answer": "Able to be easily hurt or harmed, either physically or emotionally.",
+          "explanation": "vulnerable: Able to be easily hurt or harmed, either physically or emotionally."
+        },
+        {
+          "prompt": "What does 'syntax' mean in this unit?",
+          "choices": [
+            "To do with the words of a language rather than its grammar.",
+            "The arrangement of words to make a well-formed sentence.",
+            "A complete and often surprising change in the form, appearance or nature of something."
+          ],
+          "answer": "The arrangement of words to make a well-formed sentence.",
+          "explanation": "syntax: The arrangement of words to make a well-formed sentence."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'immune'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Immune is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'mixed'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Mixed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'round'?",
+          "choices": [
+            "Verb",
+            "Preposition",
+            "Noun"
+          ],
+          "answer": "Preposition",
+          "explanation": "Round is used as a preposition in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'belligerent'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Belligerent is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'analogy'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Analogy is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'refute'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Refute is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "variability",
+              "How much something varies from one measurement to the next."
+            ],
+            [
+              "germination",
+              "The moment a seed begins to grow into a plant."
+            ],
+            [
+              "hypothesise",
+              "To suggest an explanation that can then be tested."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "theorise",
+              "To form an idea that explains a set of facts."
+            ],
+            [
+              "inverse",
+              "The opposite operation, which undoes the first one."
+            ],
+            [
+              "autonomy",
+              "The freedom to make your own decisions."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "loyal",
+              "Firm and faithful in supporting a person, group, or cause."
+            ],
+            [
+              "trembling",
+              "Shaking slightly, often because of fear, cold, or strong emotion."
+            ],
+            [
+              "defence",
+              "An explanation or argument given to support or protect an idea, especially against criticism."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "conditional",
+              "Depending on something else being true or happening first, often shown with 'if'."
+            ],
+            [
+              "enquiry",
+              "A question or investigation aimed at finding out information."
+            ],
+            [
+              "charismatic",
+              "Having a special charm that attracts and inspires people."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "melancholy",
+              "A feeling of sadness or being unhappy for a long time."
+            ],
+            [
+              "demonstrate",
+              "To show how something works or to prove something clearly."
+            ],
+            [
+              "dedication",
+              "Being fully committed to a task or purpose; giving time and energy to something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "paradox",
+              "A statement that seems to contradict itself yet holds a truth."
+            ],
+            [
+              "correlate",
+              "To show that two things change together."
+            ],
+            [
+              "proportionality",
+              "A fixed relationship in which one quantity scales with another."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which Unit 6 review word names facts or information that help prove a claim is true?",
+          "choices": [
+            "evidence",
+            "analogy",
+            "perseverance",
+            "rhythm"
+          ],
+          "answer": "evidence",
+          "explanation": "Evidence names the facts that prove a claim; analogy, perseverance and rhythm mean quite different things."
+        },
+        {
+          "prompt": "Which sentence uses the Unit 7 verb pattern correctly?",
+          "choices": [
+            "She decided applying for the scholarship.",
+            "She enjoys to practise interviews.",
+            "She decided to apply for the scholarship.",
+            "She finished to write her report."
+          ],
+          "answer": "She decided to apply for the scholarship.",
+          "explanation": "Decide takes to plus the infinitive, so she decided to apply is the only correct pattern."
+        },
+        {
+          "prompt": "Nora said, 'I have just posted the article.' Which reported version is correct?",
+          "choices": [
+            "Nora said that I had just posted the article.",
+            "Nora said me that she had just posted the article.",
+            "Nora says that she has just posting the article.",
+            "Nora said that she had just posted the article."
+          ],
+          "answer": "Nora said that she had just posted the article.",
+          "explanation": "Reported speech backshifts have posted to had posted and changes the pronoun I to she."
+        },
+        {
+          "prompt": "Which sentence means the same as 'If you do not water the seedlings, they will die.'?",
+          "choices": [
+            "Unless the seedlings die, you will water them.",
+            "Unless you water the seedlings, they will not die.",
+            "Unless you water the seedlings, they will die.",
+            "If you water the seedlings, they will die."
+          ],
+          "answer": "Unless you water the seedlings, they will die.",
+          "explanation": "Unless means if not, so unless you water them keeps the original warning unchanged."
+        },
+        {
+          "prompt": "In 'Review text 2: The Hero of Kitale', why did Imani win the school election?",
+          "choices": [
+            "Her honest plans convinced students she would truly act.",
+            "Her family printed hundreds of colourful posters.",
+            "She promised music and sweets at lunchtime.",
+            "The teachers changed the votes to help her."
+          ],
+          "answer": "Her honest plans convinced students she would truly act.",
+          "explanation": "In the retelling, students trusted Imani's honest plans and promises of real work, not gifts or music."
+        },
         {
           "prompt": "Which review word from Unit 1 means 'to make someone very angry'?",
           "choices": [
@@ -498,28 +847,78 @@
           ],
           "answer": "infuriate",
           "explanation": "To infuriate someone is to make them very angry; acknowledge, endeavour and demonstrate carry no sense of anger."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence means the same as 'If you do not water the seedlings, they will die.'?",
+          "choices": [
+            "Unless the seedlings die, you will water them.",
+            "Unless you water the seedlings, they will not die.",
+            "Unless you water the seedlings, they will die.",
+            "If you water the seedlings, they will die."
+          ],
+          "answer": "Unless you water the seedlings, they will die.",
+          "explanation": "Unless means if not, so unless you water them keeps the original warning unchanged."
         },
         {
-          "prompt": "Which sentence uses a participle adjective correctly?",
+          "prompt": "In 'Review text 2: The Hero of Kitale', why did Imani win the school election?",
           "choices": [
-            "The film was bored, so we left early.",
-            "We felt boring during the film.",
-            "The film was boring, so we left early.",
-            "The bored film sent us to sleep."
+            "Her honest plans convinced students she would truly act.",
+            "Her family printed hundreds of colourful posters.",
+            "She promised music and sweets at lunchtime.",
+            "The teachers changed the votes to help her."
           ],
-          "answer": "The film was boring, so we left early.",
-          "explanation": "A film causes the feeling, so it is boring; the people watching it are the ones who feel bored."
+          "answer": "Her honest plans convinced students she would truly act.",
+          "explanation": "In the retelling, students trusted Imani's honest plans and promises of real work, not gifts or music."
         },
         {
-          "prompt": "Which technique from Unit 3 gives human actions to something that is not human?",
+          "prompt": "Which word means: To ask about something to get information.",
           "choices": [
-            "personification",
-            "alliteration",
-            "rhyme",
-            "simile"
+            "enquire",
+            "transformation",
+            "lexical"
           ],
-          "answer": "personification",
-          "explanation": "Personification gives human actions to non-human things, such as saying the wind danced."
+          "answer": "enquire",
+          "explanation": "enquire: To ask about something to get information."
+        },
+        {
+          "prompt": "Which word means: Happening in a short time from now, or not long after something else.",
+          "choices": [
+            "transformation",
+            "lexical",
+            "soon"
+          ],
+          "answer": "soon",
+          "explanation": "soon: Happening in a short time from now, or not long after something else."
+        },
+        {
+          "prompt": "What type of word is 'charismatic'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Charismatic is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'syntax'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Syntax is used as a noun in this dictionary sense."
         }
       ]
     }

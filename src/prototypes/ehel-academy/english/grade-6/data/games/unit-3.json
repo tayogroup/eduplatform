@@ -5,7 +5,7 @@
   "unitId": "eng-g06-t01-u03",
   "title": "Life in the Wild Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A strong wish to learn or find out about something.",
           "choices": [
             "curiosity",
-            "diffusion",
-            "web"
+            "reproduce",
+            "automatic"
           ],
           "answer": "curiosity",
           "explanation": "curiosity: A strong wish to learn or find out about something."
         },
         {
-          "prompt": "Which word means: A slender, long-necked antelope found in East Africa that stands to feed on leaves.",
+          "prompt": "Which word means: A closely connected network in which every part relies on the others.",
           "choices": [
             "curiosity",
-            "diffusion",
-            "gerenuk"
+            "reproduce",
+            "web"
           ],
-          "answer": "gerenuk",
-          "explanation": "gerenuk: A slender, long-necked antelope found in East Africa that stands to feed on leaves."
+          "answer": "web",
+          "explanation": "web: A closely connected network in which every part relies on the others."
         },
         {
-          "prompt": "Which word means: A feeling of great sadness.",
+          "prompt": "Which word means: To feed on leaves, twigs, or shoots from bushes and trees.",
           "choices": [
-            "diffusion",
-            "sorrow",
+            "reproduce",
+            "browse",
             "curiosity"
           ],
-          "answer": "sorrow",
-          "explanation": "sorrow: A feeling of great sadness."
+          "answer": "browse",
+          "explanation": "browse: To feed on leaves, twigs, or shoots from bushes and trees."
+        },
+        {
+          "prompt": "Which word means: A light, man-made material that does not break down easily and can pollute nature.",
+          "choices": [
+            "plastic",
+            "curiosity",
+            "reproduce"
+          ],
+          "answer": "plastic",
+          "explanation": "plastic: A light, man-made material that does not break down easily and can pollute nature."
+        },
+        {
+          "prompt": "Which word means: Showing or making known something that was hidden or secret.",
+          "choices": [
+            "curiosity",
+            "reproduce",
+            "revealing"
+          ],
+          "answer": "revealing",
+          "explanation": "revealing: Showing or making known something that was hidden or secret."
+        },
+        {
+          "prompt": "Which word means: Information, often false or misleading, used to influence how people think.",
+          "choices": [
+            "reproduce",
+            "propaganda",
+            "curiosity"
+          ],
+          "answer": "propaganda",
+          "explanation": "propaganda: Information, often false or misleading, used to influence how people think."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To feed on leaves, twigs, or shoots from bushes and trees.",
-          "answer": "browse"
+          "clue": "Extremely dry, with very little rain or moisture.",
+          "answer": "arid"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The state of being joined together as one, working for the same goal.",
-          "answer": "unity"
+          "clue": "Continuing to live, especially through a difficult or dangerous time.",
+          "answer": "surviving"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Fine, dry powder made of tiny particles of earth or dirt.",
+          "answer": "dust"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Moved by a current of air, or made air pass out from the mouth.",
+          "answer": "blew"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A feeling of being upset or annoyed because you cannot do something you want.",
+          "answer": "frustration"
         }
       ]
     },
@@ -99,6 +144,18 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
+            "exceptional.",
+            "is",
+            "dates",
+            "for",
+            "memory",
+            "Her"
+          ],
+          "answer": "Her memory for dates is exceptional."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
             "looks.",
             "it",
             "than",
@@ -114,18 +171,49 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
+            "rains.",
+            "the",
+            "by",
+            "behind",
+            "left",
+            "pools",
+            "the",
+            "in",
+            "gather",
+            "toads",
+            "and",
+            "Frogs"
+          ],
+          "answer": "Frogs and toads gather in the pools left behind by the rains."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
             "square.",
             "village",
+            "quiet",
             "the",
-            "through",
-            "rows",
-            "tight",
-            "in",
-            "marched",
-            "soldiers",
-            "The"
+            "of",
+            "corner",
+            "every",
+            "watched",
+            "Soldiers"
           ],
-          "answer": "The soldiers marched in tight rows through the village square."
+          "answer": "Soldiers watched every corner of the quiet village square."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "her.",
+            "questioned",
+            "soldier",
+            "the",
+            "when",
+            "calmly",
+            "responded",
+            "Amal"
+          ],
+          "answer": "Amal responded calmly when the soldier questioned her."
         }
       ]
     },
@@ -138,37 +226,70 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Red Cloth, part 1': People called him a _____, someone who gave orders no one could question.",
+          "prompt": "What does 'threat' mean?",
           "choices": [
-            "dictator",
-            "funeral",
+            "Something that can cause harm or danger.",
+            "A difficult situation that causes suffering or trouble.",
+            "A leader who has complete power and makes all the rules without asking others.",
+            "To treat someone in a cruel or unfair way, making them feel weak or powerless."
+          ],
+          "answer": "Something that can cause harm or danger.",
+          "explanation": "The dark clouds are a threat of a coming storm."
+        },
+        {
+          "prompt": "What does 'treacherous' mean?",
+          "choices": [
+            "A difficult situation that causes suffering or trouble.",
+            "Dangerous and not safe, often because it is not what it seems.",
+            "To treat someone badly or unfairly because of their beliefs or identity.",
+            "To treat someone in a cruel or unfair way, making them feel weak or powerless."
+          ],
+          "answer": "Dangerous and not safe, often because it is not what it seems.",
+          "explanation": "The path through the mountains was treacherous after the rains."
+        },
+        {
+          "prompt": "What does 'dictator' mean?",
+          "choices": [
+            "A difficult situation that causes suffering or trouble.",
+            "To say that something is not allowed.",
+            "A leader who has complete power and makes all the rules without asking others.",
+            "To treat someone badly or unfairly because of their beliefs or identity."
+          ],
+          "answer": "A leader who has complete power and makes all the rules without asking others.",
+          "explanation": "The dictator did not allow people to speak freely or choose their leaders."
+        },
+        {
+          "prompt": "What does 'oppress' mean?",
+          "choices": [
+            "To keep going through something difficult without giving up.",
+            "To say that something is not allowed.",
+            "To treat someone in a cruel or unfair way, making them feel weak or powerless.",
+            "To treat someone badly or unfairly because of their beliefs or identity."
+          ],
+          "answer": "To treat someone in a cruel or unfair way, making them feel weak or powerless.",
+          "explanation": "The soldiers tried to oppress the villagers by taking away their rights."
+        },
+        {
+          "prompt": "Choose the missing word from 'Who Eats Whom: Food Chains of the Savannah': When plastic waste reaches the ocean, it becomes a _____ to sea turtles who mistake it for jellyfish.",
+          "choices": [
             "threat",
-            "proclaimed"
+            "oppress",
+            "dictator",
+            "treacherous"
           ],
-          "answer": "dictator",
-          "explanation": "The text says: People called him a dictator, someone who gave orders no one could question."
+          "answer": "threat",
+          "explanation": "The text says: When plastic waste reaches the ocean, it becomes a threat to sea turtles who mistake it for jellyfish."
         },
         {
-          "prompt": "Choose the missing word from 'The Red Cloth, part 2': Write how they faced _____, and how they responded.” Amal wrote about her grandmother, who had once hidden refugees fleeing the war.",
+          "prompt": "Choose the missing word from 'Who Eats Whom: Food Chains of the Savannah': The balance of nature is _____ — it can look strong, but it is easily broken.",
           "choices": [
-            "persecute",
             "hardship",
-            "prohibit",
-            "endure"
-          ],
-          "answer": "hardship",
-          "explanation": "The text says: Write how they faced hardship, and how they responded.” Amal wrote about her grandmother, who had once hidden refugees fleeing the war."
-        },
-        {
-          "prompt": "Choose the missing word from 'Who Eats Whom: Food Chains of the Savannah': They _____ months of dry heat and burst into life when the rains finally come.",
-          "choices": [
             "treacherous",
             "dictator",
-            "endure",
-            "threat"
+            "oppress"
           ],
-          "answer": "endure",
-          "explanation": "The text says: They endure months of dry heat and burst into life when the rains finally come."
+          "answer": "treacherous",
+          "explanation": "The text says: The balance of nature is treacherous — it can look strong, but it is easily broken."
         }
       ]
     },
@@ -209,6 +330,38 @@
           ],
           "answer": "They clean the environment by eating dead animals, which helps stop disease from spreading and keeps the food web healthy.",
           "explanation": "The text states that these birds of prey play an important role because they clean the environment by eating dead animals."
+        },
+        {
+          "prompt": "The health worker says, “Illness is not always observable.” How does Amal later connect this idea to injustice?",
+          "choices": [
+            "Amal says injustice is like typhoid — you do not always see it, but it poisons everything — comparing the hidden illness in the water to the hidden harm of unfair rule.",
+            "They claimed the books contained propaganda and said the villagers must only learn what the soldiers allowed.",
+            "They clean the environment by eating dead animals, which helps stop disease from spreading and keeps the food web healthy."
+          ],
+          "answer": "Amal says injustice is like typhoid — you do not always see it, but it poisons everything — comparing the hidden illness in the water to the hidden harm of unfair rule.",
+          "explanation": "The answer should link the observable/hidden illness to Amal’s simile that injustice quietly poisons everything."
+        },
+        {
+          "prompt": "What does 'dictator' mean?",
+          "choices": [
+            "A difficult situation that causes suffering or trouble.",
+            "To say that something is not allowed.",
+            "A leader who has complete power and makes all the rules without asking others.",
+            "To treat someone badly or unfairly because of their beliefs or identity."
+          ],
+          "answer": "A leader who has complete power and makes all the rules without asking others.",
+          "explanation": "The dictator did not allow people to speak freely or choose their leaders."
+        },
+        {
+          "prompt": "What does 'oppress' mean?",
+          "choices": [
+            "To keep going through something difficult without giving up.",
+            "To say that something is not allowed.",
+            "To treat someone in a cruel or unfair way, making them feel weak or powerless.",
+            "To treat someone badly or unfairly because of their beliefs or identity."
+          ],
+          "answer": "To treat someone in a cruel or unfair way, making them feel weak or powerless.",
+          "explanation": "The soldiers tried to oppress the villagers by taking away their rights."
         }
       ]
     },
@@ -225,12 +378,24 @@
           "target": "Curiosity is what keeps a field biologist watching for hours."
         },
         {
+          "prompt": "Speaking 2: Explain a Food Chain",
+          "target": "Her memory for dates is exceptional."
+        },
+        {
           "prompt": "Speaking 3: Present Your Animal Report",
           "target": "That balance is easier to break than it looks."
         },
         {
+          "prompt": "Speaking 4: Food Chain Challenge",
+          "target": "Play the Food Chain Challenge."
+        },
+        {
           "prompt": "Speaking 5: Habitat Guessing Game",
           "target": "Play the Habitat Guessing Game."
+        },
+        {
+          "prompt": "Speaking 6: Wildlife Ranger Response",
+          "target": "Amal responded calmly when the soldier questioned her."
         }
       ]
     },
@@ -245,54 +410,102 @@
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "leaders.",
-            "their",
-            "choose",
-            "or",
-            "freely",
-            "speak",
+            "village.",
+            "the",
+            "control",
             "to",
-            "people",
-            "allow",
-            "not",
-            "did",
-            "dictator",
-            "The"
-          ],
-          "answer": "The dictator did not allow people to speak freely or choose their leaders."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "away.",
-            "stay",
-            "rains",
-            "the",
-            "week",
-            "every",
+            "stamps",
+            "and",
+            "papers",
             "with",
-            "drier",
-            "grows",
-            "land",
+            "bureaucracy",
+            "a",
+            "up",
+            "set",
+            "soldiers",
             "The"
           ],
-          "answer": "The land grows drier with every week the rains stay away."
+          "answer": "The soldiers set up a bureaucracy with papers and stamps to control the village."
         },
         {
           "prompt": "Put this unit sentence in order.",
           "tokens": [
-            "house.",
-            "Amal's",
-            "behind",
-            "tree",
+            "cell.",
+            "living",
+            "every",
+            "almost",
+            "in",
+            "solvent",
             "the",
-            "from",
-            "mangoes",
-            "picked",
-            "children",
+            "is",
+            "Water"
+          ],
+          "answer": "Water is the solvent in almost every living cell."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "speed.",
+            "cheetah's",
+            "the",
+            "describe",
+            "to",
+            "clause",
+            "relative",
+            "a",
+            "used",
+            "writer",
             "The"
           ],
-          "answer": "The children picked mangoes from the tree behind Amal's house."
+          "answer": "The writer used a relative clause to describe the cheetah's speed."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "height.",
+            "incredible",
+            "an",
+            "from",
+            "animal",
+            "dead",
+            "a",
+            "spot",
+            "can",
+            "Vultures"
+          ],
+          "answer": "Vultures can spot a dead animal from an incredible height."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rest.",
+            "to",
+            "stopping",
+            "without",
+            "hours",
+            "for",
+            "marched",
+            "soldiers",
+            "tired",
+            "The"
+          ],
+          "answer": "The tired soldiers marched for hours without stopping to rest."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "crowd.",
+            "the",
+            "at",
+            "shouted",
+            "soldiers",
+            "the",
+            "this?\"",
+            "behind",
+            "is",
+            "\"Who"
+          ],
+          "answer": "\"Who is behind this?\" the soldiers shouted at the crowd."
         }
       ]
     },
@@ -305,34 +518,64 @@
       "description": "Choose the approved meaning before moving to the next clue.",
       "rounds": [
         {
-          "prompt": "What does 'vultures' mean in this unit?",
+          "prompt": "What does 'reproduce' mean in this unit?",
           "choices": [
-            "Large birds that mostly eat the bodies of dead animals instead of hunting live prey.",
+            "To produce young, so that a kind of living thing continues.",
             "A strong wish to learn or find out about something.",
-            "The spreading of a substance from where there is more to where there is less."
+            "Happening by itself, without a person having to make it happen each time."
           ],
-          "answer": "Large birds that mostly eat the bodies of dead animals instead of hunting live prey.",
-          "explanation": "vultures: Large birds that mostly eat the bodies of dead animals instead of hunting live prey."
+          "answer": "To produce young, so that a kind of living thing continues.",
+          "explanation": "reproduce: To produce young, so that a kind of living thing continues."
         },
         {
-          "prompt": "What does 'sunset' mean in this unit?",
+          "prompt": "What does 'feeding' mean in this unit?",
           "choices": [
             "A strong wish to learn or find out about something.",
-            "The spreading of a substance from where there is more to where there is less.",
-            "The time of day when the sun goes down and disappears from the sky."
+            "To produce young, so that a kind of living thing continues.",
+            "Giving food to a living thing, or the act of eating food."
           ],
-          "answer": "The time of day when the sun goes down and disappears from the sky.",
-          "explanation": "sunset: The time of day when the sun goes down and disappears from the sky."
+          "answer": "Giving food to a living thing, or the act of eating food.",
+          "explanation": "feeding: Giving food to a living thing, or the act of eating food."
         },
         {
-          "prompt": "What does 'diffusion' mean in this unit?",
+          "prompt": "What does 'catch' mean in this unit?",
           "choices": [
-            "A closely connected network in which every part relies on the others.",
-            "The spreading of a substance from where there is more to where there is less.",
+            "To produce young, so that a kind of living thing continues.",
+            "To get hold of something, especially after chasing it.",
             "A strong wish to learn or find out about something."
           ],
-          "answer": "The spreading of a substance from where there is more to where there is less.",
-          "explanation": "diffusion: The spreading of a substance from where there is more to where there is less."
+          "answer": "To get hold of something, especially after chasing it.",
+          "explanation": "catch: To get hold of something, especially after chasing it."
+        },
+        {
+          "prompt": "What does 'mangoes' mean in this unit?",
+          "choices": [
+            "Sweet, juicy fruits that grow on trees in warm climates.",
+            "A strong wish to learn or find out about something.",
+            "To produce young, so that a kind of living thing continues."
+          ],
+          "answer": "Sweet, juicy fruits that grow on trees in warm climates.",
+          "explanation": "mangoes: Sweet, juicy fruits that grow on trees in warm climates."
+        },
+        {
+          "prompt": "What does 'whose' mean in this unit?",
+          "choices": [
+            "A strong wish to learn or find out about something.",
+            "To produce young, so that a kind of living thing continues.",
+            "Belonging to which person, used to show ownership."
+          ],
+          "answer": "Belonging to which person, used to show ownership.",
+          "explanation": "whose: Belonging to which person, used to show ownership."
+        },
+        {
+          "prompt": "What does 'ensure' mean in this unit?",
+          "choices": [
+            "To produce young, so that a kind of living thing continues.",
+            "To make sure that something happens or is done.",
+            "A strong wish to learn or find out about something."
+          ],
+          "answer": "To make sure that something happens or is done.",
+          "explanation": "ensure: To make sure that something happens or is done."
         }
       ]
     },
@@ -345,34 +588,64 @@
       "description": "Identify how each vocabulary word works in English.",
       "rounds": [
         {
-          "prompt": "What type of word is 'ruler'?",
+          "prompt": "What type of word is 'automatic'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Automatic is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'relative'?",
           "choices": [
             "Noun",
             "Verb",
             "Adjective"
           ],
-          "answer": "Noun",
-          "explanation": "Ruler is used as a noun in this dictionary sense."
+          "answer": "Adjective",
+          "explanation": "Relative is used as an adjective in this dictionary sense."
         },
         {
-          "prompt": "What type of word is 'bureaucracy'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Bureaucracy is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'passages'?",
+          "prompt": "What type of word is 'toads'?",
           "choices": [
             "Adjective",
             "Noun",
             "Verb"
           ],
           "answer": "Noun",
-          "explanation": "Passages is used as a noun in this dictionary sense."
+          "explanation": "Toads is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'dispersed'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Dispersed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'patrolled'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Patrolled is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'microorganism'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Microorganism is used as a noun in this dictionary sense."
         }
       ]
     },
@@ -392,12 +665,12 @@
               "Supplied with what is needed for a task."
             ],
             [
-              "adjacent",
-              "Next to or beside something else."
+              "satisfaction",
+              "The pleasure of having done or got what you wanted."
             ],
             [
-              "predators",
-              "Animals that hunt and eat other animals for food."
+              "dramatic",
+              "Sudden and striking, or to do with plays."
             ]
           ]
         },
@@ -405,16 +678,16 @@
           "prompt": "Match vocabulary set 2.",
           "pairs": [
             [
-              "stands",
-              "To be in an upright position, supported by the feet or legs."
+              "producers",
+              "Living things, usually plants, that make their own food and start a food chain."
             ],
             [
-              "toads",
-              "Small, jumping animals with rough skin that live near water and on land."
+              "prey",
+              "An animal that is hunted and eaten by another animal."
             ],
             [
-              "grey",
-              "Having the colour that is a mixture of black and white."
+              "zebra",
+              "An African animal like a horse with black and white stripes."
             ]
           ]
         },
@@ -422,16 +695,67 @@
           "prompt": "Match vocabulary set 3.",
           "pairs": [
             [
-              "fully",
-              "Completely and in every possible way, leaving nothing out."
+              "surviving",
+              "Continuing to live, especially through a difficult or dangerous time."
             ],
             [
-              "whose",
-              "Belonging to which person, used to show ownership."
+              "role",
+              "The particular job or purpose that someone or something has."
             ],
             [
-              "proclaimed",
-              "To say something loudly or officially."
+              "sharks",
+              "Large sea fish, some of which are powerful hunters, with rows of sharp teeth."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "surrounded",
+              "Was or were positioned all around something on every side."
+            ],
+            [
+              "bury",
+              "To place a dead body into the ground."
+            ],
+            [
+              "fire",
+              "A burning flame, or a strong feeling of passion and determination."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "sunset",
+              "The time of day when the sun goes down and disappears from the sky."
+            ],
+            [
+              "handed",
+              "Gave something to someone by passing it to them."
+            ],
+            [
+              "hardship",
+              "A difficult situation that causes suffering or trouble."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "carbon",
+              "A basic element found in all living things and in materials like coal and diamonds."
+            ],
+            [
+              "chromosome",
+              "A thread inside a cell that carries the genes."
+            ],
+            [
+              "solvent",
+              "A liquid that dissolves another substance."
             ]
           ]
         }
@@ -446,28 +770,6 @@
       "description": "Read each unit question carefully and choose the best answer.",
       "rounds": [
         {
-          "prompt": "What does 'oppress' mean?",
-          "choices": [
-            "To keep going through something difficult without giving up.",
-            "To say that something is not allowed.",
-            "To treat someone in a cruel or unfair way, making them feel weak or powerless.",
-            "To treat someone badly or unfairly because of their beliefs or identity."
-          ],
-          "answer": "To treat someone in a cruel or unfair way, making them feel weak or powerless.",
-          "explanation": "The soldiers tried to oppress the villagers by taking away their rights."
-        },
-        {
-          "prompt": "Choose the missing word from 'Who Eats Whom: Food Chains of the Savannah': When plastic waste reaches the ocean, it becomes a _____ to sea turtles who mistake it for jellyfish.",
-          "choices": [
-            "threat",
-            "oppress",
-            "dictator",
-            "treacherous"
-          ],
-          "answer": "threat",
-          "explanation": "The text says: When plastic waste reaches the ocean, it becomes a threat to sea turtles who mistake it for jellyfish."
-        },
-        {
           "prompt": "Choose the missing word from 'Who Eats Whom: Food Chains of the Savannah': The balance of nature is _____ — it can look strong, but it is easily broken.",
           "choices": [
             "hardship",
@@ -477,6 +779,61 @@
           ],
           "answer": "treacherous",
           "explanation": "The text says: The balance of nature is treacherous — it can look strong, but it is easily broken."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Red Cloth, part 1': People called him a _____, someone who gave orders no one could question.",
+          "choices": [
+            "dictator",
+            "funeral",
+            "threat",
+            "proclaimed"
+          ],
+          "answer": "dictator",
+          "explanation": "The text says: People called him a dictator, someone who gave orders no one could question."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Red Cloth, part 2': Write how they faced _____, and how they responded.” Amal wrote about her grandmother, who had once hidden refugees fleeing the war.",
+          "choices": [
+            "persecute",
+            "hardship",
+            "prohibit",
+            "endure"
+          ],
+          "answer": "hardship",
+          "explanation": "The text says: Write how they faced hardship, and how they responded.” Amal wrote about her grandmother, who had once hidden refugees fleeing the war."
+        },
+        {
+          "prompt": "Choose the missing word from 'Who Eats Whom: Food Chains of the Savannah': They _____ months of dry heat and burst into life when the rains finally come.",
+          "choices": [
+            "treacherous",
+            "dictator",
+            "endure",
+            "threat"
+          ],
+          "answer": "endure",
+          "explanation": "The text says: They endure months of dry heat and burst into life when the rains finally come."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Red Cloth, part 1': Without warning, they had _____ that Kalembo now belonged to a land “across the sea.” No one had seen this ruler.",
+          "choices": [
+            "oppress",
+            "hardship",
+            "proclaimed",
+            "persecute"
+          ],
+          "answer": "proclaimed",
+          "explanation": "The text says: Without warning, they had proclaimed that Kalembo now belonged to a land “across the sea.” No one had seen this ruler."
+        },
+        {
+          "prompt": "What does 'threat' mean?",
+          "choices": [
+            "Something that can cause harm or danger.",
+            "A difficult situation that causes suffering or trouble.",
+            "A leader who has complete power and makes all the rules without asking others.",
+            "To treat someone in a cruel or unfair way, making them feel weak or powerless."
+          ],
+          "answer": "Something that can cause harm or danger.",
+          "explanation": "The dark clouds are a threat of a coming storm."
         }
       ]
     },
@@ -489,37 +846,66 @@
       "description": "Finish with a mixed challenge across the whole unit.",
       "rounds": [
         {
-          "prompt": "What does 'threat' mean?",
+          "prompt": "Choose the missing word from 'Who Eats Whom: Food Chains of the Savannah': They _____ months of dry heat and burst into life when the rains finally come.",
           "choices": [
-            "Something that can cause harm or danger.",
-            "A difficult situation that causes suffering or trouble.",
-            "A leader who has complete power and makes all the rules without asking others.",
-            "To treat someone in a cruel or unfair way, making them feel weak or powerless."
+            "treacherous",
+            "dictator",
+            "endure",
+            "threat"
           ],
-          "answer": "Something that can cause harm or danger.",
-          "explanation": "The dark clouds are a threat of a coming storm."
+          "answer": "endure",
+          "explanation": "The text says: They endure months of dry heat and burst into life when the rains finally come."
         },
         {
-          "prompt": "What does 'treacherous' mean?",
+          "prompt": "Choose the missing word from 'The Red Cloth, part 1': Without warning, they had _____ that Kalembo now belonged to a land “across the sea.” No one had seen this ruler.",
           "choices": [
-            "A difficult situation that causes suffering or trouble.",
-            "Dangerous and not safe, often because it is not what it seems.",
-            "To treat someone badly or unfairly because of their beliefs or identity.",
-            "To treat someone in a cruel or unfair way, making them feel weak or powerless."
+            "oppress",
+            "hardship",
+            "proclaimed",
+            "persecute"
           ],
-          "answer": "Dangerous and not safe, often because it is not what it seems.",
-          "explanation": "The path through the mountains was treacherous after the rains."
+          "answer": "proclaimed",
+          "explanation": "The text says: Without warning, they had proclaimed that Kalembo now belonged to a land “across the sea.” No one had seen this ruler."
         },
         {
-          "prompt": "What does 'dictator' mean?",
+          "prompt": "Which word means: Helping people to learn something.",
           "choices": [
-            "A difficult situation that causes suffering or trouble.",
-            "To say that something is not allowed.",
-            "A leader who has complete power and makes all the rules without asking others.",
-            "To treat someone badly or unfairly because of their beliefs or identity."
+            "educational",
+            "curiosity",
+            "reproduce"
           ],
-          "answer": "A leader who has complete power and makes all the rules without asking others.",
-          "explanation": "The dictator did not allow people to speak freely or choose their leaders."
+          "answer": "educational",
+          "explanation": "educational: Helping people to learn something."
+        },
+        {
+          "prompt": "Which word means: To get hold of something, especially after chasing it.",
+          "choices": [
+            "curiosity",
+            "reproduce",
+            "catch"
+          ],
+          "answer": "catch",
+          "explanation": "catch: To get hold of something, especially after chasing it."
+        },
+        {
+          "prompt": "What type of word is 'weapons'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Weapons is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'ensure'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Ensure is used as a verb in this dictionary sense."
         }
       ]
     }

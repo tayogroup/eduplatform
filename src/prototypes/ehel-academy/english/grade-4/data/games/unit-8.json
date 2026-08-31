@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t03-u08",
   "title": "Tools, Machines, and Everyday Items Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Something new that somebody has made for the first time.",
           "choices": [
             "invention",
-            "radius",
-            "creative"
+            "regarding",
+            "coast"
           ],
           "answer": "invention",
           "explanation": "invention: Something new that somebody has made for the first time."
         },
         {
-          "prompt": "Which word means: Fragile means easy to break, so it must be handled with care.",
+          "prompt": "Which word means: Flat and even to touch, with no rough parts.",
           "choices": [
             "invention",
-            "radius",
-            "fragile"
+            "regarding",
+            "smooth"
           ],
-          "answer": "fragile",
-          "explanation": "fragile: Fragile means easy to break, so it must be handled with care."
+          "answer": "smooth",
+          "explanation": "smooth: Flat and even to touch, with no rough parts."
         },
         {
-          "prompt": "Which word means: Lying over something so that it cannot be seen.",
+          "prompt": "Which word means: Lenses are curved pieces of glass that help people see things more clearly.",
           "choices": [
-            "radius",
-            "covering",
+            "regarding",
+            "lenses",
             "invention"
           ],
-          "answer": "covering",
-          "explanation": "covering: Lying over something so that it cannot be seen."
+          "answer": "lenses",
+          "explanation": "lenses: Lenses are curved pieces of glass that help people see things more clearly."
+        },
+        {
+          "prompt": "Which word means: Frightening, or making you feel afraid.",
+          "choices": [
+            "scary",
+            "invention",
+            "regarding"
+          ],
+          "answer": "scary",
+          "explanation": "scary: Frightening, or making you feel afraid."
+        },
+        {
+          "prompt": "Which word means: Things that are used for a special job or task, like tools or machines.",
+          "choices": [
+            "invention",
+            "regarding",
+            "equipment"
+          ],
+          "answer": "equipment",
+          "explanation": "equipment: Things that are used for a special job or task, like tools or machines."
+        },
+        {
+          "prompt": "Which word means: The distance from the centre of a circle to its edge.",
+          "choices": [
+            "regarding",
+            "radius",
+            "invention"
+          ],
+          "answer": "radius",
+          "explanation": "radius: The distance from the centre of a circle to its edge."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Rakes are garden tools with a row of teeth used to gather leaves or soil.",
-          "answer": "rakes"
+          "clue": "Hard and firm, and not a liquid or a gas.",
+          "answer": "solid"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Small pieces of paper or plastic with a sticky back and a picture on them.",
-          "answer": "stickers"
+          "clue": "Nearer means closer in distance than something else.",
+          "answer": "nearer"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Lying over something so that it cannot be seen.",
+          "answer": "covering"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A cover or container used to hold papers and keep them tidy.",
+          "answer": "folder"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The amount left over after dividing.",
+          "answer": "remainder"
         }
       ]
     },
@@ -95,31 +140,75 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "tool.",
-            "new",
-            "the",
-            "regarding",
-            "question",
-            "a",
-            "have",
-            "I"
+            "seven.",
+            "get",
+            "to",
+            "ten",
+            "from",
+            "three",
+            "Subtract"
           ],
-          "answer": "I have a question regarding the new tool."
+          "answer": "Subtract three from ten to get seven."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "neighbour.",
-            "his",
-            "to",
-            "hello",
-            "out",
-            "called",
-            "and",
-            "waved",
-            "Sami"
+            "trip.",
+            "long",
+            "the",
+            "before",
+            "engine",
+            "the",
+            "checked",
+            "mechanic",
+            "The"
           ],
-          "answer": "Sami waved and called out hello to his neighbour."
+          "answer": "The mechanic checked the engine before the long trip."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "Amal.",
+            "to",
+            "blurry",
+            "looked",
+            "words",
+            "the",
+            "glasses,",
+            "her",
+            "Without"
+          ],
+          "answer": "Without her glasses, the words looked blurry to Amal."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "today.",
+            "later",
+            "rain",
+            "will",
+            "it",
+            "Perhaps"
+          ],
+          "answer": "Perhaps it will rain later today."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "goalposts.",
+            "and",
+            "ball",
+            "a",
+            "like",
+            "football,",
+            "play",
+            "to",
+            "equipment",
+            "special",
+            "need",
+            "We"
+          ],
+          "answer": "We need special equipment to play football, like a ball and goalposts."
         }
       ]
     },
@@ -132,297 +221,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence is written as an imperative instruction?",
+          "prompt": "Which machine would you use to heat a bowl of soup quickly?",
           "choices": [
-            "You should washing your hands.",
-            "The hands are washed by me.",
-            "I washed my hands before dinner.",
-            "Wash your hands before you eat."
+            "The microwave",
+            "The curtain",
+            "The briefcase",
+            "The toothpaste"
           ],
-          "answer": "Wash your hands before you eat.",
-          "explanation": "An imperative starts with the base verb and needs no subject, so only the last sentence gives an instruction."
+          "answer": "The microwave",
+          "explanation": "A microwave is a machine that cooks or heats food quickly, so the soup is warm in minutes."
         },
         {
-          "prompt": "Read this line from “The Attic Clue”: “It had buttons and even a tiny _____ made of plastic.” Which word fits the gap?",
+          "prompt": "Which word names big machines that work together to do a heavy job?",
           "choices": [
-            "shield",
-            "ingredient",
-            "toothbrush",
-            "resources"
+            "cocoa",
+            "machinery",
+            "attic",
+            "crew"
           ],
-          "answer": "shield",
-          "explanation": "The toy helicopter's shield was the flat guard that protected its wires from harm."
+          "answer": "machinery",
+          "explanation": "Machinery names the big machines; cocoa is a powder, an attic is a room and a crew is a group of people."
         },
         {
-          "prompt": "Which word completes the safety rule from the microwave talk: “Stir the food with a clean _____ before you eat.”?",
+          "prompt": "Read this line from “The Attic Clue”: “They took torches, brooms, and a _____ to hold any papers they found.” Which word fits the gap?",
           "choices": [
-            "briefcase",
-            "stapler",
-            "utensil",
+            "helicopter",
+            "ambulance",
+            "folder",
             "telescope"
           ],
-          "answer": "utensil",
-          "explanation": "The talk asks you to stir with a clean utensil, and a spoon or fork is exactly that."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Which tool does Amal use to join her homework pages together?",
-          "choices": [
-            "Amal uses a stapler to join her homework pages together.",
-            "It means the telescope makes faraway things look near; the sky does not actually move.",
-            "They found drawings of machines and a note about building the future."
-          ],
-          "answer": "Amal uses a stapler to join her homework pages together.",
-          "explanation": "The second sentence of the text names the stapler as the tool for joining pages."
+          "answer": "folder",
+          "explanation": "Only a folder holds papers; the other three are vehicles or a viewing tool."
         },
-        {
-          "prompt": "Why does the speaker warn you never to put metal inside the microwave?",
-          "choices": [
-            "It means the telescope makes faraway things look near; the sky does not actually move.",
-            "They built a toy helicopter, and the plastic shield protected its wires.",
-            "Metal must stay out because it can cause sparks."
-          ],
-          "answer": "Metal must stay out because it can cause sparks.",
-          "explanation": "The warning and its reason are joined by because in the third sentence of the talk."
-        },
-        {
-          "prompt": "What did Amal and Leo find inside the briefcase in the attic?",
-          "choices": [
-            "She learned that tools help us, but teamwork builds the best things of all.",
-            "They found drawings of machines and a note about building the future.",
-            "Metal must stay out because it can cause sparks."
-          ],
-          "answer": "They found drawings of machines and a note about building the future.",
-          "explanation": "The briefcase is opened one line after Amal points at it, and two things come out of it."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Describe an Everyday Item",
-          "target": "It is a machine that heats food quickly."
-        },
-        {
-          "prompt": "Speaking 3: What Am I?",
-          "target": "Is it a machine that ______?"
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "We wear gloves because the attic is dusty."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "arrives.",
-            "she",
-            "when",
-            "Grandma",
-            "to",
-            "Wave"
-          ],
-          "answer": "Wave to Grandma when she arrives."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "ago.",
-            "years",
-            "two",
-            "town",
-            "this",
-            "to",
-            "moved",
-            "Sami"
-          ],
-          "answer": "Sami moved to this town two years ago."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "outside.",
-            "it",
-            "tested",
-            "They"
-          ],
-          "answer": "They tested it outside."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'twinkling' mean in this unit?",
-          "choices": [
-            "Twinkling means shining with a light that flickers on and off.",
-            "Something new that somebody has made for the first time.",
-            "The distance from the centre of a circle to its edge."
-          ],
-          "answer": "Twinkling means shining with a light that flickers on and off.",
-          "explanation": "twinkling: Twinkling means shining with a light that flickers on and off."
-        },
-        {
-          "prompt": "What does 'drove' mean in this unit?",
-          "choices": [
-            "Something new that somebody has made for the first time.",
-            "The distance from the centre of a circle to its edge.",
-            "Controlled and moved a vehicle, such as a car or bus."
-          ],
-          "answer": "Controlled and moved a vehicle, such as a car or bus.",
-          "explanation": "drove: Controlled and moved a vehicle, such as a car or bus."
-        },
-        {
-          "prompt": "What does 'radius' mean in this unit?",
-          "choices": [
-            "Using new and clever ideas to make or design something.",
-            "The distance from the centre of a circle to its edge.",
-            "Something new that somebody has made for the first time."
-          ],
-          "answer": "The distance from the centre of a circle to its edge.",
-          "explanation": "radius: The distance from the centre of a circle to its edge."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'foil'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Foil is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'curtain'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Curtain is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'remarkable'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Remarkable is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "protection",
-              "Something that keeps a person or thing safe from harm."
-            ],
-            [
-              "compose",
-              "To write or put together a piece of music or writing."
-            ],
-            [
-              "logical",
-              "Sensible, and following clear steps of reasoning."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "shovels",
-              "Shovels are tools with a flat blade used for digging or moving earth."
-            ],
-            [
-              "curved",
-              "Curved means bent smoothly, not straight or flat."
-            ],
-            [
-              "hello",
-              "Hello is a friendly word people say when they meet or greet someone."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "future",
-              "The time that has not happened yet."
-            ],
-            [
-              "addressed",
-              "Wrote a name and place on something, like a letter, to show who should get it."
-            ],
-            [
-              "machinery",
-              "Big machines that work together to do a heavy job."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "In “A Look at the Stars”, what can a telescope show you on the moon?",
           "choices": [
@@ -459,13 +289,523 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Which tool does Amal use to join her homework pages together?",
+          "choices": [
+            "Amal uses a stapler to join her homework pages together.",
+            "It means the telescope makes faraway things look near; the sky does not actually move.",
+            "They found drawings of machines and a note about building the future."
+          ],
+          "answer": "Amal uses a stapler to join her homework pages together.",
+          "explanation": "The second sentence of the text names the stapler as the tool for joining pages."
+        },
+        {
+          "prompt": "According to the text, what two jobs does heavy machinery do inside a factory?",
+          "choices": [
+            "Metal must stay out because it can cause sparks.",
+            "They built a toy helicopter, and the plastic shield protected its wires.",
+            "Heavy machinery helps people build cars and lift boxes."
+          ],
+          "answer": "Heavy machinery helps people build cars and lift boxes.",
+          "explanation": "Both jobs sit in the same factory sentence, so give both building and lifting."
+        },
+        {
+          "prompt": "Why does the speaker warn you never to put metal inside the microwave?",
+          "choices": [
+            "She learned that tools help us, but teamwork builds the best things of all.",
+            "Metal must stay out because it can cause sparks.",
+            "You have to stay close so that the food does not get too hot."
+          ],
+          "answer": "Metal must stay out because it can cause sparks.",
+          "explanation": "The warning and its reason are joined by because in the third sentence of the talk."
+        },
+        {
+          "prompt": "Who does the song thank at the end, and what do those people do?",
+          "choices": [
+            "It thanks the people who work night and day to keep us safe.",
+            "You have to stay close so that the food does not get too hot.",
+            "She hoped a future student would use her drawings and invent something new."
+          ],
+          "answer": "It thanks the people who work night and day to keep us safe.",
+          "explanation": "The last line names the workers, not the machines, so the answer must be about people."
+        },
+        {
+          "prompt": "What did Amal and Leo find inside the briefcase in the attic?",
+          "choices": [
+            "It thanks the people who work night and day to keep us safe.",
+            "Amal uses a stapler to join her homework pages together.",
+            "They found drawings of machines and a note about building the future."
+          ],
+          "answer": "They found drawings of machines and a note about building the future.",
+          "explanation": "The briefcase is opened one line after Amal points at it, and two things come out of it."
+        },
+        {
+          "prompt": "What does Amal say she has learned by the last line of the story?",
+          "choices": [
+            "Heavy machinery helps people build cars and lift boxes.",
+            "She learned that tools help us, but teamwork builds the best things of all.",
+            "They had to wear gloves and masks because the attic might be dusty."
+          ],
+          "answer": "She learned that tools help us, but teamwork builds the best things of all.",
+          "explanation": "The closing line is Amal's own words, so the answer should quote or closely follow them."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Describe an Everyday Item",
+          "target": "It is a machine that heats food quickly."
+        },
+        {
+          "prompt": "Speaking 2: Safety Rules",
+          "target": "We have to wear gloves when we clean the attic."
+        },
+        {
+          "prompt": "Speaking 3: What Am I?",
+          "target": "Is it a machine that ______?"
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "What does a crew do?"
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "We wear gloves because the attic is dusty."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Unit Talk",
+          "target": "We need special equipment to play football, like a ball and goalposts."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "wheel.",
+            "the",
+            "of",
+            "diameter",
+            "the",
+            "Measure"
+          ],
+          "answer": "Measure the diameter of the wheel."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hand.",
+            "his",
+            "in",
+            "familiar",
+            "felt",
+            "tool",
+            "The"
+          ],
+          "answer": "The tool felt familiar in his hand."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "museum.",
+            "the",
+            "in",
+            "telescope",
+            "huge",
+            "the",
+            "at",
+            "gasped",
+            "Sami"
+          ],
+          "answer": "Sami gasped at the huge telescope in the museum."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "yard.",
+            "the",
+            "across",
+            "stone",
+            "round",
+            "the",
+            "rolled",
+            "Sami"
+          ],
+          "answer": "Sami rolled the round stone across the yard."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "future.",
+            "the",
+            "build",
+            "will",
+            "who",
+            "student",
+            "the",
+            "for",
+            "said:",
+            "note",
+            "The"
+          ],
+          "answer": "The note said: for the student who will build the future."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hall.",
+            "school",
+            "the",
+            "beside",
+            "cupboard",
+            "big",
+            "the",
+            "in",
+            "lives",
+            "equipment",
+            "sports",
+            "Our"
+          ],
+          "answer": "Our sports equipment lives in the big cupboard beside the school hall."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'regarding' mean in this unit?",
+          "choices": [
+            "About a particular subject, in writing or speech.",
+            "Something new that somebody has made for the first time.",
+            "The coast is the land that lies right next to the sea."
+          ],
+          "answer": "About a particular subject, in writing or speech.",
+          "explanation": "regarding: About a particular subject, in writing or speech."
+        },
+        {
+          "prompt": "What does 'stove' mean in this unit?",
+          "choices": [
+            "Something new that somebody has made for the first time.",
+            "About a particular subject, in writing or speech.",
+            "A stove is a machine used for cooking or heating food."
+          ],
+          "answer": "A stove is a machine used for cooking or heating food.",
+          "explanation": "stove: A stove is a machine used for cooking or heating food."
+        },
+        {
+          "prompt": "What does 'observatory' mean in this unit?",
+          "choices": [
+            "About a particular subject, in writing or speech.",
+            "An observatory is a special building where scientists study the stars and sky.",
+            "Something new that somebody has made for the first time."
+          ],
+          "answer": "An observatory is a special building where scientists study the stars and sky.",
+          "explanation": "observatory: An observatory is a special building where scientists study the stars and sky."
+        },
+        {
+          "prompt": "What does 'handed' mean in this unit?",
+          "choices": [
+            "Gave something to someone by passing it with your hand.",
+            "Something new that somebody has made for the first time.",
+            "About a particular subject, in writing or speech."
+          ],
+          "answer": "Gave something to someone by passing it with your hand.",
+          "explanation": "handed: Gave something to someone by passing it with your hand."
+        },
+        {
+          "prompt": "What does 'machinery' mean in this unit?",
+          "choices": [
+            "Something new that somebody has made for the first time.",
+            "About a particular subject, in writing or speech.",
+            "Big machines that work together to do a heavy job."
+          ],
+          "answer": "Big machines that work together to do a heavy job.",
+          "explanation": "machinery: Big machines that work together to do a heavy job."
+        },
+        {
+          "prompt": "What does 'draft' mean in this unit?",
+          "choices": [
+            "About a particular subject, in writing or speech.",
+            "A first version of a piece of writing.",
+            "Something new that somebody has made for the first time."
+          ],
+          "answer": "A first version of a piece of writing.",
+          "explanation": "draft: A first version of a piece of writing."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'coast'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Coast is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'huge'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Huge is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'astronomers'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Astronomers is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'teamwork'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Teamwork is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'toothpaste'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Toothpaste is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'critical'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Critical is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "protection",
+              "Something that keeps a person or thing safe from harm."
+            ],
+            [
+              "Asia",
+              "Asia is the largest continent, stretching from the Middle East to Japan."
+            ],
+            [
+              "height",
+              "How tall something is from the bottom to the top."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "straight",
+              "Going the same way without bending or curving, like a ruler edge."
+            ],
+            [
+              "fixing",
+              "Fixing means repairing something that is broken so it works again."
+            ],
+            [
+              "twinkling",
+              "Twinkling means shining with a light that flickers on and off."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "bowls",
+              "Bowls are round, deep dishes used for holding food or liquid."
+            ],
+            [
+              "blurry",
+              "Blurry means not clear, so shapes look fuzzy or hard to see."
+            ],
+            [
+              "bare",
+              "Not covered by anything, especially clothes or shoes."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "stickers",
+              "Small pieces of paper or plastic with a sticky back and a picture on them."
+            ],
+            [
+              "inventor",
+              "A person who designs and creates new things that did not exist before."
+            ],
+            [
+              "whose",
+              "Belonging to which person, as in asking who owns something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "briefcase",
+              "A strong bag used to carry papers and important work things."
+            ],
+            [
+              "utensil",
+              "A tool used for eating or cooking, like a fork or a spoon."
+            ],
+            [
+              "ambulance",
+              "A special vehicle that takes sick or hurt people to the hospital."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "assess",
+              "To judge how good, big or serious something is."
+            ],
+            [
+              "awful",
+              "Very bad, unpleasant or shocking."
+            ],
+            [
+              "intelligent",
+              "Able to learn, understand and think things through well."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which word correctly completes this sentence: “A crew is a group of people _____ work together.”?",
+          "choices": [
+            "which",
+            "what",
+            "who",
+            "whose"
+          ],
+          "answer": "who",
+          "explanation": "We use who for people; which is for things, whose shows belonging and what is not a relative pronoun here."
+        },
+        {
+          "prompt": "Which sentence is written as an imperative instruction?",
+          "choices": [
+            "You should washing your hands.",
+            "The hands are washed by me.",
+            "I washed my hands before dinner.",
+            "Wash your hands before you eat."
+          ],
+          "answer": "Wash your hands before you eat.",
+          "explanation": "An imperative starts with the base verb and needs no subject, so only the last sentence gives an instruction."
+        },
+        {
+          "prompt": "Read this line from “The Attic Clue”: “It had buttons and even a tiny _____ made of plastic.” Which word fits the gap?",
+          "choices": [
+            "shield",
+            "ingredient",
+            "toothbrush",
+            "resources"
+          ],
+          "answer": "shield",
+          "explanation": "The toy helicopter's shield was the flat guard that protected its wires from harm."
+        },
+        {
+          "prompt": "Which word completes the safety rule from the microwave talk: “Stir the food with a clean _____ before you eat.”?",
+          "choices": [
+            "briefcase",
+            "stapler",
+            "utensil",
+            "telescope"
+          ],
+          "answer": "utensil",
+          "explanation": "The talk asks you to stir with a clean utensil, and a spoon or fork is exactly that."
+        },
+        {
+          "prompt": "Which sentence uses the past simple correctly?",
+          "choices": [
+            "She goed to the market last week.",
+            "She went to the market last week.",
+            "She go to the market last week.",
+            "She will went to the market last week."
+          ],
+          "answer": "She went to the market last week.",
+          "explanation": "Go is irregular, so its past simple form is went, and will never stands beside a past verb."
+        },
         {
           "prompt": "Which machine would you use to heat a bowl of soup quickly?",
           "choices": [
@@ -476,28 +816,78 @@
           ],
           "answer": "The microwave",
           "explanation": "A microwave is a machine that cooks or heats food quickly, so the soup is warm in minutes."
-        },
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
         {
-          "prompt": "Which word names big machines that work together to do a heavy job?",
+          "prompt": "Which word completes the safety rule from the microwave talk: “Stir the food with a clean _____ before you eat.”?",
           "choices": [
-            "cocoa",
-            "machinery",
-            "attic",
-            "crew"
-          ],
-          "answer": "machinery",
-          "explanation": "Machinery names the big machines; cocoa is a powder, an attic is a room and a crew is a group of people."
-        },
-        {
-          "prompt": "Read this line from “The Attic Clue”: “They took torches, brooms, and a _____ to hold any papers they found.” Which word fits the gap?",
-          "choices": [
-            "helicopter",
-            "ambulance",
-            "folder",
+            "briefcase",
+            "stapler",
+            "utensil",
             "telescope"
           ],
-          "answer": "folder",
-          "explanation": "Only a folder holds papers; the other three are vehicles or a viewing tool."
+          "answer": "utensil",
+          "explanation": "The talk asks you to stir with a clean utensil, and a spoon or fork is exactly that."
+        },
+        {
+          "prompt": "Which sentence uses the past simple correctly?",
+          "choices": [
+            "She goed to the market last week.",
+            "She went to the market last week.",
+            "She go to the market last week.",
+            "She will went to the market last week."
+          ],
+          "answer": "She went to the market last week.",
+          "explanation": "Go is irregular, so its past simple form is went, and will never stands beside a past verb."
+        },
+        {
+          "prompt": "Which word means: How tall something is from the bottom to the top.",
+          "choices": [
+            "height",
+            "invention",
+            "regarding"
+          ],
+          "answer": "height",
+          "explanation": "height: How tall something is from the bottom to the top."
+        },
+        {
+          "prompt": "Which word means: An observatory is a special building where scientists study the stars and sky.",
+          "choices": [
+            "invention",
+            "regarding",
+            "observatory"
+          ],
+          "answer": "observatory",
+          "explanation": "observatory: An observatory is a special building where scientists study the stars and sky."
+        },
+        {
+          "prompt": "What type of word is 'whose'?",
+          "choices": [
+            "Pronoun",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Pronoun",
+          "explanation": "Whose is used as a pronoun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'draft'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Draft is used as a noun in this dictionary sense."
         }
       ]
     }

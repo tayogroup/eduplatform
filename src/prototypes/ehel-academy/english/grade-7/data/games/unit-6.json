@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t02-u06",
   "title": "Sports, Olympics, and Achievement Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A suggestion that is not stated directly but can be understood.",
           "choices": [
             "implication",
-            "scatter",
-            "stadion"
+            "indicative",
+            "citation"
           ],
           "answer": "implication",
           "explanation": "implication: A suggestion that is not stated directly but can be understood."
         },
         {
-          "prompt": "Which word means: Very unusual, remarkable, or far beyond what is normal.",
+          "prompt": "Which word means: Laws, considered together, or the making of them.",
           "choices": [
             "implication",
-            "scatter",
-            "extraordinary"
+            "indicative",
+            "legislation"
           ],
-          "answer": "extraordinary",
-          "explanation": "extraordinary: Very unusual, remarkable, or far beyond what is normal."
+          "answer": "legislation",
+          "explanation": "legislation: Laws, considered together, or the making of them."
         },
         {
-          "prompt": "Which word means: To look into or examine something carefully in order to learn more about it.",
+          "prompt": "Which word means: Restrictions or boundaries on what a person or thing is able to do.",
           "choices": [
-            "scatter",
-            "explore",
+            "indicative",
+            "limitations",
             "implication"
           ],
-          "answer": "explore",
-          "explanation": "explore: To look into or examine something carefully in order to learn more about it."
+          "answer": "limitations",
+          "explanation": "limitations: Restrictions or boundaries on what a person or thing is able to do."
+        },
+        {
+          "prompt": "Which word means: Happening or published once every month.",
+          "choices": [
+            "monthly",
+            "implication",
+            "indicative"
+          ],
+          "answer": "monthly",
+          "explanation": "monthly: Happening or published once every month."
+        },
+        {
+          "prompt": "Which word means: To present something for someone to accept, use, or consider.",
+          "choices": [
+            "implication",
+            "indicative",
+            "offer"
+          ],
+          "answer": "offer",
+          "explanation": "offer: To present something for someone to accept, use, or consider."
+        },
+        {
+          "prompt": "Which word means: A short part taken from a longer piece of writing.",
+          "choices": [
+            "indicative",
+            "excerpt",
+            "implication"
+          ],
+          "answer": "excerpt",
+          "explanation": "excerpt: A short part taken from a longer piece of writing."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Successfully completed or reached something through hard work and effort.",
-          "answer": "achieved"
+          "clue": "To make changes to something in order to improve it.",
+          "answer": "reform"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The air that moves into and out of your lungs when you breathe.",
-          "answer": "breath"
+          "clue": "Important, needing careful thought, or not funny or trivial.",
+          "answer": "serious"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Directly, without turning or stopping, towards a place.",
+          "answer": "straight"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "More than one, or involving several different things.",
+          "answer": "multiple"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A group of words that someone has said or written, repeated by another.",
+          "answer": "quotation"
         }
       ]
     },
@@ -102,37 +147,88 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "advantage.",
-            "unfair",
-            "an",
-            "gain",
-            "to",
-            "substances",
-            "banned",
-            "of",
-            "use",
+            "shot.",
+            "a",
+            "without",
+            "dispute",
             "the",
-            "is",
-            "Doping"
+            "settled",
+            "Diplomacy"
           ],
-          "answer": "Doping is the use of banned substances to gain an unfair advantage."
+          "answer": "Diplomacy settled the dispute without a shot."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "school.",
-            "whole",
+            "final.",
             "the",
-            "within",
-            "matter",
-            "serious",
-            "a",
-            "become",
-            "had",
-            "complaint",
+            "in",
+            "second",
+            "finishing",
+            "after",
+            "medal",
+            "silver",
+            "her",
+            "up",
+            "held",
+            "proudly",
+            "athlete",
             "The"
           ],
-          "answer": "The complaint had become a serious matter within the whole school."
+          "answer": "The athlete proudly held up her silver medal after finishing second in the final."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "day.",
+            "entire",
+            "her",
+            "shapes",
+            "it",
+            "hobby;",
+            "a",
+            "than",
+            "more",
+            "far",
+            "is",
+            "running",
+            "Sana,",
+            "For"
+          ],
+          "answer": "For Sana, running is far more than a hobby; it shapes her entire day."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "corridor.",
+            "the",
+            "in",
+            "article",
+            "the",
+            "about",
+            "yelling",
+            "were",
+            "students",
+            "several",
+            "afternoon,",
+            "By"
+          ],
+          "answer": "By afternoon, several students were yelling about the article in the corridor."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "approval.",
+            "teacher's",
+            "the",
+            "without",
+            "story",
+            "the",
+            "published",
+            "had",
+            "Zara"
+          ],
+          "answer": "Zara had published the story without the teacher's approval."
         }
       ]
     },
@@ -145,310 +241,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Spirit of the Olympics': _____ can influence decisions made by judges and officials.",
+          "prompt": "What does 'analogy' mean?",
           "choices": [
-            "Diversity",
-            "Censorship",
-            "Context",
-            "Bias"
+            "A difficult or tricky situation.",
+            "A way of explaining something by comparing it to something else that is similar.",
+            "When authorities control what people can see, read, or say.",
+            "The place or point where something begins or comes from."
           ],
-          "answer": "Bias",
-          "explanation": "The text says: Bias can influence decisions made by judges and officials."
+          "answer": "A way of explaining something by comparing it to something else that is similar.",
+          "explanation": "An analogy explains by comparing: the teacher used an analogy to explain how a computer works by comparing it to a brain."
         },
         {
-          "prompt": "Choose the missing word from 'The Truth in the Margins, part 1': It quoted unnamed sources and offered no balance in _____.",
+          "prompt": "What does 'predicament' mean?",
           "choices": [
-            "quotation",
-            "viewpoint",
-            "affiliation",
-            "origin"
+            "A firm decision or promise to do something.",
+            "A short part taken from a longer piece of writing.",
+            "A difficult or tricky situation.",
+            "A connection or relationship with a group or organisation."
           ],
-          "answer": "viewpoint",
-          "explanation": "The text says: It quoted unnamed sources and offered no balance in viewpoint."
+          "answer": "A difficult or tricky situation.",
+          "explanation": "A predicament is a tricky situation: when the goalkeeper was injured, the team was in a real predicament."
         },
         {
-          "prompt": "Choose the missing word from 'The Truth in the Margins, part 2': In a world where _____, bias, and disconnection can spread quickly, storytelling had become their tool for clarity.",
+          "prompt": "What does 'judicial' mean?",
           "choices": [
-            "censorship",
-            "evidence",
-            "introduction",
-            "theme"
+            "Related to courts of law and judges.",
+            "Expected or likely to happen in the future.",
+            "Certain to happen and impossible to avoid.",
+            "Aware of and able to think about what is happening."
           ],
-          "answer": "censorship",
-          "explanation": "The text says: In a world where censorship, bias, and disconnection can spread quickly, storytelling had become their tool for clarity."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "When and where did the ancient Olympic Games begin, and what was the only event at the very first Games?",
-          "choices": [
-            "The ancient Games began around 776 BCE at Olympia in ancient Greece, and the only event at first was a short sprint called the stadion.",
-            "Sana wakes at five o'clock, runs eight kilometres before breakfast, rests during the hottest part of the day, and does strength exercises in the afternoon.",
-            "Amara saw that the article mixed opinion and fact with no clear introduction or logical organisation, quoted unnamed sources and offered no balance in viewpoint."
-          ],
-          "answer": "The ancient Games began around 776 BCE at Olympia in ancient Greece, and the only event at first was a short sprint called the stadion.",
-          "explanation": "The text says ancient Greece hosted the first competitions in a place called Olympia, that the ancient Games began around 776 BCE, and that at first there was only one race, a short sprint called the stadion."
+          "answer": "Related to courts of law and judges.",
+          "explanation": "Judicial describes anything connected with courts and judges, as in the judicial system that ensures rules are followed fairly."
         },
-        {
-          "prompt": "What was Amara's role at the school, and what did the unauthorised article claim?",
-          "choices": [
-            "Sana wakes at five o'clock, runs eight kilometres before breakfast, rests during the hottest part of the day, and does strength exercises in the afternoon.",
-            "The team wrote that stress is like a rope: the more you pull it, the more likely it snaps, showing how growing pressure pushes students towards breaking point.",
-            "Amara was the editor of The Beacon, the school's monthly publication, and the unauthorised article blamed the Form 3 students for exam cheating."
-          ],
-          "answer": "Amara was the editor of The Beacon, the school's monthly publication, and the unauthorised article blamed the Form 3 students for exam cheating.",
-          "explanation": "The story tells you Amara was the editor of The Beacon, the school's monthly publication. The stapled article, 'The Downfall of Discipline', was about exam cheating and blamed the Form 3 students."
-        },
-        {
-          "prompt": "What problems did Amara identify with the structure of the original article?",
-          "choices": [
-            "For Sana, achievement is not about medals alone but about proving that discipline and determination can overcome any obstacle; you then give your own supported view.",
-            "Amara saw that the article mixed opinion and fact with no clear introduction or logical organisation, quoted unnamed sources and offered no balance in viewpoint.",
-            "Amara was the editor of The Beacon, the school's monthly publication, and the unauthorised article blamed the Form 3 students for exam cheating."
-          ],
-          "answer": "Amara saw that the article mixed opinion and fact with no clear introduction or logical organisation, quoted unnamed sources and offered no balance in viewpoint.",
-          "explanation": "Analysis of structure: the passage lists the mixing of opinion and fact, the missing introduction, the unnamed sources and the absence of balance."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Sports Debate",
-          "target": "The Olympic Games should be held in the same city every time."
-        },
-        {
-          "prompt": "Speaking 3: Sports Interview Role-Play",
-          "target": "How did you first become interested in your sport?"
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important idea from this unit — for example, why the Paralympic Games have changed how people think about ability."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "achievement.",
-            "human",
-            "of",
-            "celebration",
-            "the",
-            "is",
-            "Olympics",
-            "the",
-            "of",
-            "theme",
-            "The"
-          ],
-          "answer": "The theme of the Olympics is the celebration of human achievement."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "school.",
-            "before",
-            "father",
-            "his",
-            "help",
-            "to",
-            "morning",
-            "every",
-            "six",
-            "at",
-            "wakes",
-            "Sami"
-          ],
-          "answer": "Sami wakes at six every morning to help his father before school."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "next.",
-            "up",
-            "spoke",
-            "whoever",
-            "support",
-            "to",
-            "promised",
-            "Rohan"
-          ],
-          "answer": "Rohan promised to support whoever spoke up next."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'train' mean in this unit?",
-          "choices": [
-            "To prepare for a sport or activity by practising regularly.",
-            "A suggestion that is not stated directly but can be understood.",
-            "A graph that plots two measurements against each other."
-          ],
-          "answer": "To prepare for a sport or activity by practising regularly.",
-          "explanation": "train: To prepare for a sport or activity by practising regularly."
-        },
-        {
-          "prompt": "What does 'estimated' mean in this unit?",
-          "choices": [
-            "A suggestion that is not stated directly but can be understood.",
-            "A graph that plots two measurements against each other.",
-            "Made an approximate calculation or judgement about an amount or value."
-          ],
-          "answer": "Made an approximate calculation or judgement about an amount or value.",
-          "explanation": "estimated: Made an approximate calculation or judgement about an amount or value."
-        },
-        {
-          "prompt": "What does 'scatter' mean in this unit?",
-          "choices": [
-            "An ancient Greek word for a short foot race, and the track where it was run.",
-            "A graph that plots two measurements against each other.",
-            "A suggestion that is not stated directly but can be understood."
-          ],
-          "answer": "A graph that plots two measurements against each other.",
-          "explanation": "scatter: A graph that plots two measurements against each other."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'dishonest'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Dishonest is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'theme'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Theme is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'physical'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Physical is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "innovation",
-              "A new method or idea put into practice."
-            ],
-            [
-              "compelling",
-              "So convincing or interesting that it holds your attention."
-            ],
-            [
-              "educator",
-              "A person whose job is to teach or train others, especially in a school setting."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "achieved",
-              "Successfully completed or reached something through hard work and effort."
-            ],
-            [
-              "ahead",
-              "In front, or further forward in time, distance, or progress."
-            ],
-            [
-              "assistant",
-              "A person who helps another person, especially in their job."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "offer",
-              "To present something for someone to accept, use, or consider."
-            ],
-            [
-              "corrected",
-              "Fixed a mistake or made something accurate that was previously wrong."
-            ],
-            [
-              "quotation",
-              "A group of words that someone has said or written, repeated by another."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'implication' mean?",
           "choices": [
@@ -485,13 +309,529 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "When and where did the ancient Olympic Games begin, and what was the only event at the very first Games?",
+          "choices": [
+            "The ancient Games began around 776 BCE at Olympia in ancient Greece, and the only event at first was a short sprint called the stadion.",
+            "Sana wakes at five o'clock, runs eight kilometres before breakfast, rests during the hottest part of the day, and does strength exercises in the afternoon.",
+            "Amara saw that the article mixed opinion and fact with no clear introduction or logical organisation, quoted unnamed sources and offered no balance in viewpoint."
+          ],
+          "answer": "The ancient Games began around 776 BCE at Olympia in ancient Greece, and the only event at first was a short sprint called the stadion.",
+          "explanation": "The text says ancient Greece hosted the first competitions in a place called Olympia, that the ancient Games began around 776 BCE, and that at first there was only one race, a short sprint called the stadion."
+        },
+        {
+          "prompt": "How did the first modern Olympics of 1896 compare in size with the Games of today?",
+          "choices": [
+            "Amara was the editor of The Beacon, the school's monthly publication, and the unauthorised article blamed the Form 3 students for exam cheating.",
+            "The team wrote that stress is like a rope: the more you pull it, the more likely it snaps, showing how growing pressure pushes students towards breaking point.",
+            "The first modern Games in Athens featured just 241 athletes from 14 countries, while today more than 10,000 competitors from over 200 nations take part."
+          ],
+          "answer": "The first modern Games in Athens featured just 241 athletes from 14 countries, while today more than 10,000 competitors from over 200 nations take part.",
+          "explanation": "Comparison of detail: you set the 1896 Athens figures against the modern totals of over ten thousand competitors from more than two hundred nations."
+        },
+        {
+          "prompt": "What was Amara's role at the school, and what did the unauthorised article claim?",
+          "choices": [
+            "For Sana, achievement is not about medals alone but about proving that discipline and determination can overcome any obstacle; you then give your own supported view.",
+            "Amara was the editor of The Beacon, the school's monthly publication, and the unauthorised article blamed the Form 3 students for exam cheating.",
+            "Coaches say ability is like an iceberg: the performance you see on the surface is only a small part of the training, effort and character underneath."
+          ],
+          "answer": "Amara was the editor of The Beacon, the school's monthly publication, and the unauthorised article blamed the Form 3 students for exam cheating.",
+          "explanation": "The story tells you Amara was the editor of The Beacon, the school's monthly publication. The stapled article, 'The Downfall of Discipline', was about exam cheating and blamed the Form 3 students."
+        },
+        {
+          "prompt": "What analogy do coaches use to describe ability, and what does it mean in your own words?",
+          "choices": [
+            "Coaches say ability is like an iceberg: the performance you see on the surface is only a small part of the training, effort and character underneath.",
+            "The log lets Sana and her coach estimate how fast she is improving each month; he describes the numbers as evidence of hard work that does not lie.",
+            "The ancient Games began around 776 BCE at Olympia in ancient Greece, and the only event at first was a short sprint called the stadion."
+          ],
+          "answer": "Coaches say ability is like an iceberg: the performance you see on the surface is only a small part of the training, effort and character underneath.",
+          "explanation": "Vocabulary in context: you must unpack the iceberg analogy, showing that visible performance hides most of the whole."
+        },
+        {
+          "prompt": "What problems did Amara identify with the structure of the original article?",
+          "choices": [
+            "The log lets Sana and her coach estimate how fast she is improving each month; he describes the numbers as evidence of hard work that does not lie.",
+            "The first modern Games in Athens featured just 241 athletes from 14 countries, while today more than 10,000 competitors from over 200 nations take part.",
+            "Amara saw that the article mixed opinion and fact with no clear introduction or logical organisation, quoted unnamed sources and offered no balance in viewpoint."
+          ],
+          "answer": "Amara saw that the article mixed opinion and fact with no clear introduction or logical organisation, quoted unnamed sources and offered no balance in viewpoint.",
+          "explanation": "Analysis of structure: the passage lists the mixing of opinion and fact, the missing introduction, the unnamed sources and the absence of balance."
+        },
+        {
+          "prompt": "What analogy did the team use to describe student stress, and what does it suggest?",
+          "choices": [
+            "Sana wakes at five o'clock, runs eight kilometres before breakfast, rests during the hottest part of the day, and does strength exercises in the afternoon.",
+            "The team wrote that stress is like a rope: the more you pull it, the more likely it snaps, showing how growing pressure pushes students towards breaking point.",
+            "Amara saw that the article mixed opinion and fact with no clear introduction or logical organisation, quoted unnamed sources and offered no balance in viewpoint."
+          ],
+          "answer": "The team wrote that stress is like a rope: the more you pull it, the more likely it snaps, showing how growing pressure pushes students towards breaking point.",
+          "explanation": "Interpretation of figurative language: the rope analogy pictures rising pressure moving students steadily closer to snapping."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Sports Debate",
+          "target": "The Olympic Games should be held in the same city every time."
+        },
+        {
+          "prompt": "Speaking 2: Olympic Research Presentation",
+          "target": "Diplomacy settled the dispute without a shot."
+        },
+        {
+          "prompt": "Speaking 3: Sports Interview Role-Play",
+          "target": "How did you first become interested in your sport?"
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "For Sana, running is far more than a hobby; it shapes her entire day."
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "By afternoon, several students were yelling about the article in the corridor."
+        },
+        {
+          "prompt": "Speaking 6: Five-Minute Unit Talk",
+          "target": "Zara had published the story without the teacher's approval."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "class.",
+            "the",
+            "to",
+            "book",
+            "the",
+            "from",
+            "excerpt",
+            "an",
+            "read",
+            "teacher",
+            "The"
+          ],
+          "answer": "The teacher read an excerpt from the book to the class."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "picture.",
+            "fair",
+            "a",
+            "gave",
+            "runner",
+            "tenth",
+            "every",
+            "Sampling"
+          ],
+          "answer": "Sampling every tenth runner gave a fair picture."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "table.",
+            "the",
+            "of",
+            "surface",
+            "smooth",
+            "the",
+            "on",
+            "gathered",
+            "droplets",
+            "Water"
+          ],
+          "answer": "Water droplets gathered on the smooth surface of the table."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "teacher.",
+            "head",
+            "the",
+            "surprised",
+            "office",
+            "the",
+            "outside",
+            "crowd",
+            "the",
+            "of",
+            "size",
+            "The"
+          ],
+          "answer": "The size of the crowd outside the office surprised the head teacher."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "quickly.",
+            "so",
+            "happen",
+            "to",
+            "disagreement",
+            "the",
+            "expected",
+            "Nobody"
+          ],
+          "answer": "Nobody expected the disagreement to happen so quickly."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "months.",
+            "few",
+            "a",
+            "after",
+            "dwindled",
+            "newsletter",
+            "old",
+            "the",
+            "in",
+            "Interest"
+          ],
+          "answer": "Interest in the old newsletter dwindled after a few months."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'indicative' mean in this unit?",
+          "choices": [
+            "Describing the verb form used to state a fact.",
+            "A suggestion that is not stated directly but can be understood.",
+            "A note showing where a fact or quotation came from."
+          ],
+          "answer": "Describing the verb form used to state a fact.",
+          "explanation": "indicative: Describing the verb form used to state a fact."
+        },
+        {
+          "prompt": "What does 'accountability' mean in this unit?",
+          "choices": [
+            "A suggestion that is not stated directly but can be understood.",
+            "Describing the verb form used to state a fact.",
+            "Being responsible for your actions and ready to explain or answer for them."
+          ],
+          "answer": "Being responsible for your actions and ready to explain or answer for them.",
+          "explanation": "accountability: Being responsible for your actions and ready to explain or answer for them."
+        },
+        {
+          "prompt": "What does 'benefit' mean in this unit?",
+          "choices": [
+            "Describing the verb form used to state a fact.",
+            "To gain something helpful or useful from a situation or action.",
+            "A suggestion that is not stated directly but can be understood."
+          ],
+          "answer": "To gain something helpful or useful from a situation or action.",
+          "explanation": "benefit: To gain something helpful or useful from a situation or action."
+        },
+        {
+          "prompt": "What does 'neutral' mean in this unit?",
+          "choices": [
+            "Not supporting or favouring either side in an argument or contest.",
+            "A suggestion that is not stated directly but can be understood.",
+            "Describing the verb form used to state a fact."
+          ],
+          "answer": "Not supporting or favouring either side in an argument or contest.",
+          "explanation": "neutral: Not supporting or favouring either side in an argument or contest."
+        },
+        {
+          "prompt": "What does 'welled' mean in this unit?",
+          "choices": [
+            "A suggestion that is not stated directly but can be understood.",
+            "Describing the verb form used to state a fact.",
+            "Filled up and rose to the surface, especially when tears form in someone's eyes."
+          ],
+          "answer": "Filled up and rose to the surface, especially when tears form in someone's eyes.",
+          "explanation": "welled: Filled up and rose to the surface, especially when tears form in someone's eyes."
+        },
+        {
+          "prompt": "What does 'judicial' mean in this unit?",
+          "choices": [
+            "Describing the verb form used to state a fact.",
+            "Related to courts of law and judges.",
+            "A suggestion that is not stated directly but can be understood."
+          ],
+          "answer": "Related to courts of law and judges.",
+          "explanation": "judicial: Related to courts of law and judges."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'citation'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Citation is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'stretches'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Stretches is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'stretching'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Stretching is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'illustrated'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Illustrated is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'expectations'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Expectations is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'prospective'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Prospective is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "innovation",
+              "A new method or idea put into practice."
+            ],
+            [
+              "exposition",
+              "A clear explanation or description, often used to introduce a story's characters and setting."
+            ],
+            [
+              "validate",
+              "To check that something is true or acceptable."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "reform",
+              "To make changes to something in order to improve it."
+            ],
+            [
+              "consent",
+              "Permission that someone gives to allow something to happen."
+            ],
+            [
+              "bronze",
+              "A brownish-orange metal made from copper and tin, often used for third-place medals or statues."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "blade",
+              "A curved, springy artificial leg used by some athletes to run, or the sharp part of a cutting tool."
+            ],
+            [
+              "achieved",
+              "Successfully completed or reached something through hard work and effort."
+            ],
+            [
+              "train",
+              "To prepare for a sport or activity by practising regularly."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "straight",
+              "Directly, without turning or stopping, towards a place."
+            ],
+            [
+              "targeting",
+              "Deliberately aiming criticism, action, or attention at a particular person or group."
+            ],
+            [
+              "issue",
+              "A problem, topic, or question that needs to be discussed or resolved."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "unofficial",
+              "Not approved or authorised by an official organisation or authority."
+            ],
+            [
+              "worried",
+              "Felt anxious or troubled about something that might happen."
+            ],
+            [
+              "clarity",
+              "The quality of being clear and easy to understand."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "quotation",
+              "A group of words that someone has said or written, repeated by another."
+            ],
+            [
+              "illustrate",
+              "To show or explain something using examples or pictures."
+            ],
+            [
+              "statistical",
+              "Based on the collecting and study of numerical data."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'A Day in the Life of a Young Athlete': Her coach, a former national athlete, watches her progress carefully and keeps a training log so they can _____ how fast she is improving each month.",
+          "choices": [
+            "estimate",
+            "illustrate",
+            "structure",
+            "contrast"
+          ],
+          "answer": "estimate",
+          "explanation": "The text says: Her coach, a former national athlete, watches her progress carefully and keeps a training log so they can estimate how fast she is improving each month."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Spirit of the Olympics': _____ can influence decisions made by judges and officials.",
+          "choices": [
+            "Diversity",
+            "Censorship",
+            "Context",
+            "Bias"
+          ],
+          "answer": "Bias",
+          "explanation": "The text says: Bias can influence decisions made by judges and officials."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Truth in the Margins, part 1': It quoted unnamed sources and offered no balance in _____.",
+          "choices": [
+            "quotation",
+            "viewpoint",
+            "affiliation",
+            "origin"
+          ],
+          "answer": "viewpoint",
+          "explanation": "The text says: It quoted unnamed sources and offered no balance in viewpoint."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Truth in the Margins, part 2': In a world where _____, bias, and disconnection can spread quickly, storytelling had become their tool for clarity.",
+          "choices": [
+            "censorship",
+            "evidence",
+            "introduction",
+            "theme"
+          ],
+          "answer": "censorship",
+          "explanation": "The text says: In a world where censorship, bias, and disconnection can spread quickly, storytelling had become their tool for clarity."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Truth in the Margins, part 2': Amara reflected: organisation, truth, and _____ don’t just make good stories — they build strong communities.",
+          "choices": [
+            "resolution",
+            "structure",
+            "diversity",
+            "bias"
+          ],
+          "answer": "diversity",
+          "explanation": "The text says: organisation, truth, and diversity don’t just make good stories — they build strong communities."
+        },
         {
           "prompt": "What does 'analogy' mean?",
           "choices": [
@@ -502,28 +842,78 @@
           ],
           "answer": "A way of explaining something by comparing it to something else that is similar.",
           "explanation": "An analogy explains by comparing: the teacher used an analogy to explain how a computer works by comparing it to a brain."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Truth in the Margins, part 2': In a world where _____, bias, and disconnection can spread quickly, storytelling had become their tool for clarity.",
+          "choices": [
+            "censorship",
+            "evidence",
+            "introduction",
+            "theme"
+          ],
+          "answer": "censorship",
+          "explanation": "The text says: In a world where censorship, bias, and disconnection can spread quickly, storytelling had become their tool for clarity."
         },
         {
-          "prompt": "What does 'predicament' mean?",
+          "prompt": "Choose the missing word from 'The Truth in the Margins, part 2': Amara reflected: organisation, truth, and _____ don’t just make good stories — they build strong communities.",
           "choices": [
-            "A firm decision or promise to do something.",
-            "A short part taken from a longer piece of writing.",
-            "A difficult or tricky situation.",
-            "A connection or relationship with a group or organisation."
+            "resolution",
+            "structure",
+            "diversity",
+            "bias"
           ],
-          "answer": "A difficult or tricky situation.",
-          "explanation": "A predicament is a tricky situation: when the goalkeeper was injured, the team was in a real predicament."
+          "answer": "diversity",
+          "explanation": "The text says: organisation, truth, and diversity don’t just make good stories — they build strong communities."
         },
         {
-          "prompt": "What does 'judicial' mean?",
+          "prompt": "Which word means: Based on ideas rather than on practical experience.",
           "choices": [
-            "Related to courts of law and judges.",
-            "Expected or likely to happen in the future.",
-            "Certain to happen and impossible to avoid.",
-            "Aware of and able to think about what is happening."
+            "theoretical",
+            "implication",
+            "indicative"
           ],
-          "answer": "Related to courts of law and judges.",
-          "explanation": "Judicial describes anything connected with courts and judges, as in the judicial system that ensures rules are followed fairly."
+          "answer": "theoretical",
+          "explanation": "theoretical: Based on ideas rather than on practical experience."
+        },
+        {
+          "prompt": "Which word means: To gain something helpful or useful from a situation or action.",
+          "choices": [
+            "implication",
+            "indicative",
+            "benefit"
+          ],
+          "answer": "benefit",
+          "explanation": "benefit: To gain something helpful or useful from a situation or action."
+        },
+        {
+          "prompt": "What type of word is 'handled'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Handled is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'judicial'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Judicial is used as an adjective in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t01-u01",
   "title": "Daily Life & Communication Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A machine that lets you speak to somebody far away.",
           "choices": [
             "telephone",
-            "media",
-            "convenient"
+            "robot",
+            "cheerful"
           ],
           "answer": "telephone",
           "explanation": "telephone: A machine that lets you speak to somebody far away."
         },
         {
-          "prompt": "Which word means: Young people who are not yet adults.",
+          "prompt": "Which word means: A person you have never met before.",
           "choices": [
             "telephone",
-            "media",
-            "children"
+            "robot",
+            "stranger"
           ],
-          "answer": "children",
-          "explanation": "children: Young people who are not yet adults."
+          "answer": "stranger",
+          "explanation": "stranger: A person you have never met before."
         },
         {
-          "prompt": "Which word means: A word that shows something has to happen or is very necessary.",
+          "prompt": "Which word means: Making very little noise, or calm and peaceful.",
           "choices": [
-            "media",
-            "must",
+            "robot",
+            "quiet",
             "telephone"
           ],
-          "answer": "must",
-          "explanation": "must: A word that shows something has to happen or is very necessary."
+          "answer": "quiet",
+          "explanation": "quiet: Making very little noise, or calm and peaceful."
+        },
+        {
+          "prompt": "Which word means: Putting something on a scale to find out how heavy it is.",
+          "choices": [
+            "weighing",
+            "telephone",
+            "robot"
+          ],
+          "answer": "weighing",
+          "explanation": "weighing: Putting something on a scale to find out how heavy it is."
+        },
+        {
+          "prompt": "Which word means: Speaking in a very loud voice, often because of excitement or worry.",
+          "choices": [
+            "telephone",
+            "robot",
+            "shouting"
+          ],
+          "answer": "shouting",
+          "explanation": "shouting: Speaking in a very loud voice, often because of excitement or worry."
+        },
+        {
+          "prompt": "Which word means: To keep doing something without stopping.",
+          "choices": [
+            "robot",
+            "continue",
+            "telephone"
+          ],
+          "answer": "continue",
+          "explanation": "continue: To keep doing something without stopping."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A place where children go to learn new things.",
-          "answer": "school"
+          "clue": "A building or room where people go to buy things.",
+          "answer": "shop"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A word that shows something has to happen or is very necessary.",
-          "answer": "must"
+          "clue": "If something matters, it is important to someone.",
+          "answer": "matters"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To tell someone you are grateful for what they did.",
+          "answer": "thank"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Stopped an event from happening after it was already planned.",
+          "answer": "cancelled"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The hard work you put into doing something.",
+          "answer": "effort"
         }
       ]
     },
@@ -99,27 +144,75 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "running.",
-            "at",
-            "fast",
+            "day.",
+            "first",
             "very",
-            "is",
-            "Sami"
+            "the",
+            "on",
+            "began",
+            "friendship",
+            "Their"
           ],
-          "answer": "Sami is very fast at running."
+          "answer": "Their friendship began on the very first day."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "worked.",
-            "Omar",
-            "hard",
-            "how",
-            "showed",
-            "report",
-            "Amal's"
+            "minute.",
+            "every",
+            "longer",
+            "grew",
+            "counter",
+            "the",
+            "at",
+            "queue",
+            "The"
           ],
-          "answer": "Amal's report showed how hard Omar worked."
+          "answer": "The queue at the counter grew longer every minute."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "sometimes.",
+            "story",
+            "good",
+            "a",
+            "in",
+            "myself",
+            "lose",
+            "I"
+          ],
+          "answer": "I lose myself in a good story sometimes."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "news.",
+            "good",
+            "the",
+            "heard",
+            "she",
+            "when",
+            "smiled",
+            "Amal"
+          ],
+          "answer": "Amal smiled when she heard the good news."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "table.",
+            "the",
+            "at",
+            "else",
+            "anyone",
+            "before",
+            "first,",
+            "eating",
+            "finished",
+            "Sami"
+          ],
+          "answer": "Sami finished eating first, before anyone else at the table."
         }
       ]
     },
@@ -132,303 +225,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Fair Effort, Daily Gains': I had to ______ two languages to serve everyone here.",
+          "prompt": "What does the word 'peace' mean?",
           "choices": [
-            "cancel",
-            "leave",
-            "master",
-            "continue"
+            "Letters and packages that are sent or delivered.",
+            "The hard work you put into doing something.",
+            "A time when there is calm and quiet, with no fighting or trouble.",
+            "A way people talk and write to share ideas and feelings."
           ],
-          "answer": "master",
-          "explanation": "Omar had to learn both languages very well, which is what master means."
+          "answer": "A time when there is calm and quiet, with no fighting or trouble.",
+          "explanation": "Peace names a calm, quiet time; the other options define mail, effort and language."
         },
         {
-          "prompt": "Which question is written correctly for an interview?",
+          "prompt": "Which sentence uses the verb pattern after 'agree' correctly?",
           "choices": [
-            "When you leave for work?",
-            "What she does every day?",
-            "Why you speak two languages at work?",
-            "When do you leave for work?"
+            "She agrees to send the mail.",
+            "She agrees send the mail.",
+            "She agrees sending the mail tomorrow.",
+            "She agree to send the mail."
           ],
-          "answer": "When do you leave for work?",
-          "explanation": "An interview question needs its helping verb: when plus do plus you plus leave."
+          "answer": "She agrees to send the mail.",
+          "explanation": "Agree takes to and a verb, and the subject she needs agrees, not agree."
         },
         {
-          "prompt": "Which sentence uses a conjunction to show a difference?",
+          "prompt": "Choose the missing word from 'A Day at the Post Counter': Every morning he sorts the ______, weighs the parcels, and helps people send letters.",
           "choices": [
-            "I wanted to play outside, but it started to rain.",
-            "She runs fast because she has plenty of speed and energy.",
-            "I write the mail and maintain the records.",
-            "Would you like football or basketball?"
-          ],
-          "answer": "I wanted to play outside, but it started to rain.",
-          "explanation": "But joins two opposite ideas; because gives a reason, and adds, or offers a choice."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Which word in the text means calm and quiet, with no trouble?",
-          "choices": [
-            "The word is peace, which Omar says a letter can bring.",
-            "She writes that she usually arrives early, so lateness is not her pattern.",
-            "He can serve almost every customer in town, whichever language they use."
-          ],
-          "answer": "The word is peace, which Omar says a letter can bring.",
-          "explanation": "Omar links letters to peace, so the surrounding words give the meaning away."
-        },
-        {
-          "prompt": "What reason does Omar give for saying that mail is still important?",
-          "choices": [
-            "She writes that she usually arrives early, so lateness is not her pattern.",
-            "She enjoys the daily reading time, because she says she really likes it.",
-            "Not everyone owns a phone, so a letter helps someone feel remembered."
-          ],
-          "answer": "Not everyone owns a phone, so a letter helps someone feel remembered.",
-          "explanation": "Omar answers with because, and the reason follows straight after it."
-        },
-        {
-          "prompt": "Why is it useful that Omar speaks two languages at the shop?",
-          "choices": [
-            "He means he does the same job every day, in a steady pattern.",
-            "He can serve almost every customer in town, whichever language they use.",
-            "Not everyone owns a phone, so a letter helps someone feel remembered."
-          ],
-          "answer": "He can serve almost every customer in town, whichever language they use.",
-          "explanation": "The text puts his two languages and serving every customer in the same sentence."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Describe Your Daily Routine",
-          "target": "Every morning I ______."
-        },
-        {
-          "prompt": "Speaking 3: Give the Instructions",
-          "target": "First, boil the water. Next, add the tea. Then, wait two minutes."
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain why mail still matters in a town where some people own no phone."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "today.",
             "mail",
-            "the",
-            "in",
-            "letter",
-            "a",
-            "received",
-            "I"
+            "balance",
+            "citizen",
+            "speed"
           ],
-          "answer": "I received a letter in the mail today."
+          "answer": "mail",
+          "explanation": "The text says he sorts the mail, which is what arrives to be delivered."
         },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Theo?",
-            "help,",
-            "to",
-            "wants",
-            "who",
-            "else",
-            "anyone",
-            "there",
-            "Is"
-          ],
-          "answer": "Is there anyone else who wants to help, Theo?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "question.",
-            "customer's",
-            "every",
-            "to",
-            "kindly",
-            "replied",
-            "Omar"
-          ],
-          "answer": "Omar replied kindly to every customer's question."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'water' mean in this unit?",
-          "choices": [
-            "Water is the clear liquid we drink and use for washing.",
-            "A machine that lets you speak to somebody far away.",
-            "The ways news and stories reach people, such as television and the internet."
-          ],
-          "answer": "Water is the clear liquid we drink and use for washing.",
-          "explanation": "water: Water is the clear liquid we drink and use for washing."
-        },
-        {
-          "prompt": "What does 'library' mean in this unit?",
-          "choices": [
-            "A machine that lets you speak to somebody far away.",
-            "The ways news and stories reach people, such as television and the internet.",
-            "A room or building full of books that people can read or borrow."
-          ],
-          "answer": "A room or building full of books that people can read or borrow.",
-          "explanation": "library: A room or building full of books that people can read or borrow."
-        },
-        {
-          "prompt": "What does 'media' mean in this unit?",
-          "choices": [
-            "Easy to use or do, because it saves you time or trouble.",
-            "The ways news and stories reach people, such as television and the internet.",
-            "A machine that lets you speak to somebody far away."
-          ],
-          "answer": "The ways news and stories reach people, such as television and the internet.",
-          "explanation": "media: The ways news and stories reach people, such as television and the internet."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'often'?",
-          "choices": [
-            "Adverb",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adverb",
-          "explanation": "Often is used as an adverb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'mail'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Mail is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'sitting'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Sitting is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "supermarket",
-              "A large shop that sells food and many other everyday things."
-            ],
-            [
-              "robot",
-              "A machine that can be programmed to do a job by itself."
-            ],
-            [
-              "size",
-              "How big or small something is."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "stop",
-              "To no longer move, or to no longer do something."
-            ],
-            [
-              "talk",
-              "When you talk, you use words to share your thoughts with someone."
-            ],
-            [
-              "sort",
-              "To put things into groups or in a certain order."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "manage",
-              "To successfully deal with or organise something, even if it is difficult."
-            ],
-            [
-              "meaning",
-              "The idea or message that a word, story, or action is trying to show."
-            ],
-            [
-              "week",
-              "A period of seven days, from one Monday to the next."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sentence puts the adverb of frequency in the right place?",
           "choices": [
@@ -465,13 +293,521 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Which word in the text means calm and quiet, with no trouble?",
+          "choices": [
+            "The word is peace, which Omar says a letter can bring.",
+            "She writes that she usually arrives early, so lateness is not her pattern.",
+            "He can serve almost every customer in town, whichever language they use."
+          ],
+          "answer": "The word is peace, which Omar says a letter can bring.",
+          "explanation": "Omar links letters to peace, so the surrounding words give the meaning away."
+        },
+        {
+          "prompt": "What two jobs does the writer do at home before walking to school?",
+          "choices": [
+            "Not everyone owns a phone, so a letter helps someone feel remembered.",
+            "She enjoys the daily reading time, because she says she really likes it.",
+            "She helps her mother sweep the floor and boil the water."
+          ],
+          "answer": "She helps her mother sweep the floor and boil the water.",
+          "explanation": "The opening sentence names both morning jobs before school is mentioned."
+        },
+        {
+          "prompt": "What reason does Omar give for saying that mail is still important?",
+          "choices": [
+            "He means he does the same job every day, in a steady pattern.",
+            "Not everyone owns a phone, so a letter helps someone feel remembered.",
+            "She asks whether she may interview him for her school report."
+          ],
+          "answer": "Not everyone owns a phone, so a letter helps someone feel remembered.",
+          "explanation": "Omar answers with because, and the reason follows straight after it."
+        },
+        {
+          "prompt": "What prize does Teacher Yasmin offer to the winner of the writing contest?",
+          "choices": [
+            "The winner gains a brand-new dictionary.",
+            "She asks whether she may interview him for her school report.",
+            "Teacher Yasmin says the report was honest, clear and full of meaning."
+          ],
+          "answer": "The winner gains a brand-new dictionary.",
+          "explanation": "The notice promises a dictionary, and Amal is holding one at the end."
+        },
+        {
+          "prompt": "Why is it useful that Omar speaks two languages at the shop?",
+          "choices": [
+            "The winner gains a brand-new dictionary.",
+            "The word is peace, which Omar says a letter can bring.",
+            "He can serve almost every customer in town, whichever language they use."
+          ],
+          "answer": "He can serve almost every customer in town, whichever language they use.",
+          "explanation": "The text puts his two languages and serving every customer in the same sentence."
+        },
+        {
+          "prompt": "What does Omar mean when he calls his job his usual work?",
+          "choices": [
+            "She helps her mother sweep the floor and boil the water.",
+            "He means he does the same job every day, in a steady pattern.",
+            "Sami shouts that it is cancelled, but Teacher Yasmin moves it into the library."
+          ],
+          "answer": "He means he does the same job every day, in a steady pattern.",
+          "explanation": "Usual describes what normally happens, and he adds that every day matters."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Describe Your Daily Routine",
+          "target": "Every morning I ______."
+        },
+        {
+          "prompt": "Speaking 2: Interview a Family Member",
+          "target": "What do you do in your daily work?"
+        },
+        {
+          "prompt": "Speaking 3: Give the Instructions",
+          "target": "First, boil the water. Next, add the tea. Then, wait two minutes."
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "I lose myself in a good story sometimes."
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Amal smiled when she heard the good news."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Unit Talk",
+          "target": "Sami finished eating first, before anyone else at the table."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rain.",
+            "the",
+            "of",
+            "because",
+            "picnic",
+            "the",
+            "cancel",
+            "to",
+            "had",
+            "We"
+          ],
+          "answer": "We had to cancel the picnic because of the rain."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shelves.",
+            "tall",
+            "of",
+            "row",
+            "a",
+            "beside",
+            "stands",
+            "counter",
+            "post",
+            "The"
+          ],
+          "answer": "The post counter stands beside a row of tall shelves."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "school.",
+            "before",
+            "day",
+            "every",
+            "mother",
+            "her",
+            "helped",
+            "Amal"
+          ],
+          "answer": "Amal helped her mother every day before school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "began.",
+            "contest",
+            "the",
+            "before",
+            "nervous",
+            "feeling",
+            "was",
+            "Sami"
+          ],
+          "answer": "Sami was feeling nervous before the contest began."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "pot?",
+            "hot",
+            "the",
+            "from",
+            "back",
+            "step",
+            "Omar",
+            "Did"
+          ],
+          "answer": "Did Omar step back from the hot pot?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "midday.",
+            "by",
+            "longer",
+            "grown",
+            "had",
+            "queue",
+            "The"
+          ],
+          "answer": "The queue had grown longer by midday."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'robot' mean in this unit?",
+          "choices": [
+            "A machine that can be programmed to do a job by itself.",
+            "A machine that lets you speak to somebody far away.",
+            "Happy and bright in the way you look, speak and act."
+          ],
+          "answer": "A machine that can be programmed to do a job by itself.",
+          "explanation": "robot: A machine that can be programmed to do a job by itself."
+        },
+        {
+          "prompt": "What does 'size' mean in this unit?",
+          "choices": [
+            "A machine that lets you speak to somebody far away.",
+            "A machine that can be programmed to do a job by itself.",
+            "How big or small something is."
+          ],
+          "answer": "How big or small something is.",
+          "explanation": "size: How big or small something is."
+        },
+        {
+          "prompt": "What does 'water' mean in this unit?",
+          "choices": [
+            "A machine that can be programmed to do a job by itself.",
+            "Water is the clear liquid we drink and use for washing.",
+            "A machine that lets you speak to somebody far away."
+          ],
+          "answer": "Water is the clear liquid we drink and use for washing.",
+          "explanation": "water: Water is the clear liquid we drink and use for washing."
+        },
+        {
+          "prompt": "What does 'bit' mean in this unit?",
+          "choices": [
+            "A small amount or small part of something.",
+            "A machine that lets you speak to somebody far away.",
+            "A machine that can be programmed to do a job by itself."
+          ],
+          "answer": "A small amount or small part of something.",
+          "explanation": "bit: A small amount or small part of something."
+        },
+        {
+          "prompt": "What does 'clapped' mean in this unit?",
+          "choices": [
+            "A machine that lets you speak to somebody far away.",
+            "A machine that can be programmed to do a job by itself.",
+            "Hit your hands together to show that you liked something."
+          ],
+          "answer": "Hit your hands together to show that you liked something.",
+          "explanation": "clapped: Hit your hands together to show that you liked something."
+        },
+        {
+          "prompt": "What does 'leave' mean in this unit?",
+          "choices": [
+            "A machine that can be programmed to do a job by itself.",
+            "To go away from a place.",
+            "A machine that lets you speak to somebody far away."
+          ],
+          "answer": "To go away from a place.",
+          "explanation": "leave: To go away from a place."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'cheerful'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Cheerful is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'remembered'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Remembered is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'usually'?",
+          "choices": [
+            "Verb",
+            "Adverb",
+            "Noun"
+          ],
+          "answer": "Adverb",
+          "explanation": "Usually is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'smiled'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Smiled is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'anybody'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Pronoun"
+          ],
+          "answer": "Pronoun",
+          "explanation": "Anybody is used as a pronoun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'digital'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Digital is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "supermarket",
+              "A large shop that sells food and many other everyday things."
+            ],
+            [
+              "honest",
+              "Telling the truth and not hiding anything."
+            ],
+            [
+              "shy",
+              "Quiet and a little afraid to talk to people you do not know."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "shop",
+              "A building or room where people go to buy things."
+            ],
+            [
+              "patiently",
+              "In a calm way, without getting upset while you wait."
+            ],
+            [
+              "simply",
+              "In an easy and plain way, without any extra fuss."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "matters",
+              "If something matters, it is important to someone."
+            ],
+            [
+              "book",
+              "A book is pages of writing or pictures joined together for reading."
+            ],
+            [
+              "soon",
+              "If something happens soon, it will happen in a short time from now."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "sort",
+              "To put things into groups or in a certain order."
+            ],
+            [
+              "pinned",
+              "Fixed something to a wall or board using a pin."
+            ],
+            [
+              "many",
+              "A large number of people or things."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "library",
+              "A room or building full of books that people can read or borrow."
+            ],
+            [
+              "listening",
+              "Paying close attention to sounds or to what someone is saying."
+            ],
+            [
+              "near",
+              "Close to something in distance or position."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "effort",
+              "The hard work you put into doing something."
+            ],
+            [
+              "application",
+              "A program you open on a phone or computer to do a job."
+            ],
+            [
+              "profile",
+              "A page that shows who you are on a website."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What does the word 'balance' mean?",
+          "choices": [
+            "To say that something will not happen any more.",
+            "Having an equal, steady amount on each side.",
+            "To go away from a place.",
+            "In a way that is easy to see, hear or understand."
+          ],
+          "answer": "Having an equal, steady amount on each side.",
+          "explanation": "Balance is the steady, equal share Amal keeps between work and free time."
+        },
+        {
+          "prompt": "Choose the missing word from 'Fair Effort, Daily Gains': I had to ______ two languages to serve everyone here.",
+          "choices": [
+            "cancel",
+            "leave",
+            "master",
+            "continue"
+          ],
+          "answer": "master",
+          "explanation": "Omar had to learn both languages very well, which is what master means."
+        },
+        {
+          "prompt": "Which question is written correctly for an interview?",
+          "choices": [
+            "When you leave for work?",
+            "What she does every day?",
+            "Why you speak two languages at work?",
+            "When do you leave for work?"
+          ],
+          "answer": "When do you leave for work?",
+          "explanation": "An interview question needs its helping verb: when plus do plus you plus leave."
+        },
+        {
+          "prompt": "Which sentence uses a conjunction to show a difference?",
+          "choices": [
+            "I wanted to play outside, but it started to rain.",
+            "She runs fast because she has plenty of speed and energy.",
+            "I write the mail and maintain the records.",
+            "Would you like football or basketball?"
+          ],
+          "answer": "I wanted to play outside, but it started to rain.",
+          "explanation": "But joins two opposite ideas; because gives a reason, and adds, or offers a choice."
+        },
+        {
+          "prompt": "What does the adverb 'clearly' tell us about the way someone speaks?",
+          "choices": [
+            "That they speak every single day without ever missing one.",
+            "That they speak in a way that is easy to understand.",
+            "That they stop speaking before they finish.",
+            "That they speak at a very high speed."
+          ],
+          "answer": "That they speak in a way that is easy to understand.",
+          "explanation": "Clearly is an adverb of manner, so it answers how, not how often or how fast."
+        },
         {
           "prompt": "What does the word 'peace' mean?",
           "choices": [
@@ -482,28 +818,78 @@
           ],
           "answer": "A time when there is calm and quiet, with no fighting or trouble.",
           "explanation": "Peace names a calm, quiet time; the other options define mail, effort and language."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence uses a conjunction to show a difference?",
+          "choices": [
+            "I wanted to play outside, but it started to rain.",
+            "She runs fast because she has plenty of speed and energy.",
+            "I write the mail and maintain the records.",
+            "Would you like football or basketball?"
+          ],
+          "answer": "I wanted to play outside, but it started to rain.",
+          "explanation": "But joins two opposite ideas; because gives a reason, and adds, or offers a choice."
         },
         {
-          "prompt": "Which sentence uses the verb pattern after 'agree' correctly?",
+          "prompt": "What does the adverb 'clearly' tell us about the way someone speaks?",
           "choices": [
-            "She agrees to send the mail.",
-            "She agrees send the mail.",
-            "She agrees sending the mail tomorrow.",
-            "She agree to send the mail."
+            "That they speak every single day without ever missing one.",
+            "That they speak in a way that is easy to understand.",
+            "That they stop speaking before they finish.",
+            "That they speak at a very high speed."
           ],
-          "answer": "She agrees to send the mail.",
-          "explanation": "Agree takes to and a verb, and the subject she needs agrees, not agree."
+          "answer": "That they speak in a way that is easy to understand.",
+          "explanation": "Clearly is an adverb of manner, so it answers how, not how often or how fast."
         },
         {
-          "prompt": "Choose the missing word from 'A Day at the Post Counter': Every morning he sorts the ______, weighs the parcels, and helps people send letters.",
+          "prompt": "Which word means: Only caring about yourself and not about how other people feel.",
           "choices": [
-            "mail",
-            "balance",
-            "citizen",
-            "speed"
+            "selfish",
+            "telephone",
+            "robot"
           ],
-          "answer": "mail",
-          "explanation": "The text says he sorts the mail, which is what arrives to be delivered."
+          "answer": "selfish",
+          "explanation": "selfish: Only caring about yourself and not about how other people feel."
+        },
+        {
+          "prompt": "Which word means: Water is the clear liquid we drink and use for washing.",
+          "choices": [
+            "telephone",
+            "robot",
+            "water"
+          ],
+          "answer": "water",
+          "explanation": "water: Water is the clear liquid we drink and use for washing."
+        },
+        {
+          "prompt": "What type of word is 'next'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Next is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'leave'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Leave is used as a verb in this dictionary sense."
         }
       ]
     }

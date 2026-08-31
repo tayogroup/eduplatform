@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t03-u07",
   "title": "Success, Careers, and Personal Growth Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A careful search made to find out the true facts about something.",
           "choices": [
             "investigation",
-            "socialism",
-            "legitimate"
+            "frame",
+            "integer"
           ],
           "answer": "investigation",
           "explanation": "investigation: A careful search made to find out the true facts about something."
         },
         {
-          "prompt": "Which word means: To find or learn something that was not known before.",
+          "prompt": "Which word means: How steeply a line or a slope rises or falls.",
           "choices": [
             "investigation",
-            "socialism",
-            "discover"
+            "frame",
+            "gradient"
           ],
-          "answer": "discover",
-          "explanation": "discover: To find or learn something that was not known before."
+          "answer": "gradient",
+          "explanation": "gradient: How steeply a line or a slope rises or falls."
         },
         {
-          "prompt": "Which word means: Not as good as expected, causing a feeling of sadness or letdown.",
+          "prompt": "Which word means: Gives people paid work in a business or organisation.",
           "choices": [
-            "socialism",
-            "disappointing",
+            "frame",
+            "employs",
             "investigation"
           ],
-          "answer": "disappointing",
-          "explanation": "disappointing: Not as good as expected, causing a feeling of sadness or letdown."
+          "answer": "employs",
+          "explanation": "employs: Gives people paid work in a business or organisation."
+        },
+        {
+          "prompt": "Which word means: How heavy something is, or a feeling of pressure and responsibility.",
+          "choices": [
+            "weight",
+            "investigation",
+            "frame"
+          ],
+          "answer": "weight",
+          "explanation": "weight: How heavy something is, or a feeling of pressure and responsibility."
+        },
+        {
+          "prompt": "Which word means: Made a sudden loud, sharp sound, like something breaking apart.",
+          "choices": [
+            "investigation",
+            "frame",
+            "cracked"
+          ],
+          "answer": "cracked",
+          "explanation": "cracked: Made a sudden loud, sharp sound, like something breaking apart."
+        },
+        {
+          "prompt": "Which word means: The ability to recover from difficulties and keep going.",
+          "choices": [
+            "frame",
+            "resilience",
+            "investigation"
+          ],
+          "answer": "resilience",
+          "explanation": "resilience: The ability to recover from difficulties and keep going."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To grow, improve, or become more advanced over time.",
-          "answer": "develop"
+          "clue": "A straight line that touches a curve at exactly one point.",
+          "answer": "tangent"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Great strength or power, especially of something like weather or a physical push.",
-          "answer": "force"
+          "clue": "A person qualified to treat people who are ill or injured.",
+          "answer": "doctor"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A chance to do something that could help a person succeed.",
+          "answer": "opportunity"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Unusual or special enough to be noticed and admired.",
+          "answer": "remarkable"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The ability to recover from difficulties and keep going.",
+          "answer": "resilience"
         }
       ]
     },
@@ -101,35 +146,81 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "impossible.",
-            "felt",
-            "it",
-            "when",
-            "even",
-            "training",
-            "her",
-            "to",
-            "committed",
-            "stayed",
-            "Nora"
+            "detail.",
+            "in",
+            "trials",
+            "qualifying",
+            "the",
+            "covers",
+            "Beacon",
+            "The",
+            "of",
+            "issue",
+            "current",
+            "The"
           ],
-          "answer": "Nora stayed committed to her training even when it felt impossible."
+          "answer": "The current issue of The Beacon covers the qualifying trials in detail."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "harbour.",
-            "the",
-            "near",
-            "stalls",
-            "the",
-            "lined",
-            "fruit",
-            "fresh",
-            "of",
-            "Baskets"
+            "tessellation.",
+            "perfect",
+            "a",
+            "form",
+            "tiles",
+            "floor",
+            "The"
           ],
-          "answer": "Baskets of fresh fruit lined the stalls near the harbour."
+          "answer": "The floor tiles form a perfect tessellation."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "ideas.",
+            "business",
+            "own",
+            "their",
+            "develop",
+            "teenagers",
+            "helped",
+            "workshop",
+            "The"
+          ],
+          "answer": "The workshop helped teenagers develop their own business ideas."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "announced.",
+            "was",
+            "competition",
+            "the",
+            "since",
+            "secretive",
+            "and",
+            "quiet",
+            "grown",
+            "had",
+            "Nora"
+          ],
+          "answer": "Nora had grown quiet and secretive since the competition was announced."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "heavier.",
+            "grew",
+            "rain",
+            "the",
+            "as",
+            "sky",
+            "the",
+            "across",
+            "rolled",
+            "Thunder"
+          ],
+          "answer": "Thunder rolled across the sky as the rain grew heavier."
         }
       ]
     },
@@ -142,311 +233,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Building a Future': She studied by lamplight every evening, and her _____ impressed everyone who knew her.",
+          "prompt": "What does 'ambition' mean?",
           "choices": [
-            "perseverance",
-            "apprentice",
-            "ambition",
-            "dedication"
+            "A strong desire to achieve something important in life.",
+            "An important event or stage in the development of something.",
+            "Continuing to work hard even when things are difficult or take a long time.",
+            "Something that has been accomplished through effort and skill."
           ],
-          "answer": "perseverance",
-          "explanation": "The text says: She studied by lamplight every evening, and her perseverance impressed everyone who knew her."
+          "answer": "A strong desire to achieve something important in life.",
+          "explanation": "Her ambition is to become a doctor who helps children in rural areas."
         },
         {
-          "prompt": "Choose the missing word from 'The Storm of Truth, part 3': \"But a true friend reminded me that integrity is the foundation of every real _____.",
+          "prompt": "What does 'dedication' mean?",
           "choices": [
-            "perseverance",
-            "milestone",
-            "achievement",
-            "dedication"
+            "An important event or stage in the development of something.",
+            "Being fully committed to a task or purpose; giving time and energy to something.",
+            "Excellence that makes someone stand out; a high mark or honour.",
+            "Something that has been accomplished through effort and skill."
           ],
-          "answer": "achievement",
-          "explanation": "The text says: \"But a true friend reminded me that integrity is the foundation of every real achievement."
+          "answer": "Being fully committed to a task or purpose; giving time and energy to something.",
+          "explanation": "His dedication to studying every evening helped him pass all his exams."
         },
         {
-          "prompt": "Choose the missing word from 'The Storm of Truth, part 1': The winner would receive a scholarship to attend a special leadership academy in Nairobi — a _____ that could change her life forever.",
+          "prompt": "What does 'perseverance' mean?",
           "choices": [
-            "distinction",
-            "resilience",
-            "profession",
-            "milestone"
+            "An important event or stage in the development of something.",
+            "Continuing to work hard even when things are difficult or take a long time.",
+            "Excellence that makes someone stand out; a high mark or honour.",
+            "The ability to recover from difficulties and keep going."
           ],
-          "answer": "milestone",
-          "explanation": "The text says: The winner would receive a scholarship to attend a special leadership academy in Nairobi — a milestone that could change her life forever."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to the opening of “Building a Future”, what matters most about the work a person does?",
-          "choices": [
-            "What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you.",
-            "The winner would receive a scholarship to attend a special leadership academy in Nairobi.",
-            "Amal warned that everything Nora had worked for would be lost and that her reputation would be damaged, which is why she asked whether the prize was worth that risk."
-          ],
-          "answer": "What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you.",
-          "explanation": "The opening paragraph says it directly: 'What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you.'"
+          "answer": "Continuing to work hard even when things are difficult or take a long time.",
+          "explanation": "Through perseverance, she learned to speak English fluently."
         },
-        {
-          "prompt": "What prize would the winner of the Regional Young Leaders Competition receive?",
-          "choices": [
-            "She tells them to find something they are passionate about, not to be afraid of hard work, and always to be grateful for the people who help them along the way.",
-            "He said Nora was brave because she told the truth, and Amal was brave because she helped her friend instead of protecting her advantage.",
-            "The winner would receive a scholarship to attend a special leadership academy in Nairobi."
-          ],
-          "answer": "The winner would receive a scholarship to attend a special leadership academy in Nairobi.",
-          "explanation": "When the story introduces the Regional Young Leaders Competition, it says the winner would receive a scholarship to attend a special leadership academy in Nairobi, a milestone that could change Amal's life."
-        },
-        {
-          "prompt": "Which details in part one show that Nora had changed before the competition?",
-          "choices": [
-            "What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you.",
-            "Nora had become distant and secretive, she carried a folder everywhere and would not show anyone what was inside, and she said quietly that she was committed to winning.",
-            "She tells them to find something they are passionate about, not to be afraid of hard work, and always to be grateful for the people who help them along the way."
-          ],
-          "answer": "Nora had become distant and secretive, she carried a folder everywhere and would not show anyone what was inside, and she said quietly that she was committed to winning.",
-          "explanation": "When Amal glances at Nora, the text says Nora had become distant and secretive, carried a folder everywhere and would not show anyone what was inside, and said quietly that she was committed to winning."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Present Your Career Choice",
-          "target": "The investigation took four months and changed one paragraph of the report."
-        },
-        {
-          "prompt": "Speaking 3: Career Guess Game",
-          "target": "Think of a career and give three spoken clues without naming it, using adjective + preposition phrases and the passive voice."
-        },
-        {
-          "prompt": "Speaking 5: Retell the Storm of Truth",
-          "target": "Baskets of fresh fruit lined the stalls near the harbour."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "year.",
-            "this",
-            "achievement",
-            "greatest",
-            "her",
-            "was",
-            "prize",
-            "science",
-            "the",
-            "Winning"
-          ],
-          "answer": "Winning the science prize was her greatest achievement this year."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Nora?",
-            "impossible,",
-            "felt",
-            "once",
-            "that",
-            "skill",
-            "a",
-            "develop",
-            "you",
-            "can",
-            "How"
-          ],
-          "answer": "How can you develop a skill that once felt impossible, Nora?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "out?",
-            "came",
-            "truth",
-            "the",
-            "moment",
-            "the",
-            "it,",
-            "didn't",
-            "hammered,",
-            "heart",
-            "Her"
-          ],
-          "answer": "Her heart hammered, didn't it, the moment the truth came out?"
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'salt' mean in this unit?",
-          "choices": [
-            "A white substance found in seawater that gives food a savoury taste.",
-            "A careful search made to find out the true facts about something.",
-            "A system in which key industries and services are owned by the public."
-          ],
-          "answer": "A white substance found in seawater that gives food a savoury taste.",
-          "explanation": "salt: A white substance found in seawater that gives food a savoury taste."
-        },
-        {
-          "prompt": "What does 'practised' mean in this unit?",
-          "choices": [
-            "A careful search made to find out the true facts about something.",
-            "A system in which key industries and services are owned by the public.",
-            "Did something again and again in order to improve at it."
-          ],
-          "answer": "Did something again and again in order to improve at it.",
-          "explanation": "practised: Did something again and again in order to improve at it."
-        },
-        {
-          "prompt": "What does 'socialism' mean in this unit?",
-          "choices": [
-            "Allowed by rules or law, or reasonable and justified.",
-            "A system in which key industries and services are owned by the public.",
-            "A careful search made to find out the true facts about something."
-          ],
-          "answer": "A system in which key industries and services are owned by the public.",
-          "explanation": "socialism: A system in which key industries and services are owned by the public."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'fruit'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Fruit is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'apprentice'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Apprentice is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'professor'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Professor is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "originality",
-              "The quality of being new and not copied from anything."
-            ],
-            [
-              "frame",
-              "To present an idea in a way that shapes how it is understood."
-            ],
-            [
-              "proud",
-              "Feeling great pleasure and satisfaction because of something you or someone close to you has achieved."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "opportunities",
-              "Chances to do something that can help a person succeed or improve their life."
-            ],
-            [
-              "fishermen",
-              "People whose job is to catch fish, usually from the sea or a river."
-            ],
-            [
-              "poverty",
-              "The state of being very poor and lacking money for basic needs."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "thunder",
-              "A loud rumbling or crashing sound that comes from the sky during a storm."
-            ],
-            [
-              "afford",
-              "To have enough money or time to be able to do something."
-            ],
-            [
-              "profession",
-              "A job that requires special training or education."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'achievement' mean?",
           "choices": [
@@ -483,13 +301,528 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "According to the opening of “Building a Future”, what matters most about the work a person does?",
+          "choices": [
+            "What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you.",
+            "The winner would receive a scholarship to attend a special leadership academy in Nairobi.",
+            "Amal warned that everything Nora had worked for would be lost and that her reputation would be damaged, which is why she asked whether the prize was worth that risk."
+          ],
+          "answer": "What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you.",
+          "explanation": "The opening paragraph says it directly: 'What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you.'"
+        },
+        {
+          "prompt": "Where was Sana trained, and what work does she do now?",
+          "choices": [
+            "She tells them to find something they are passionate about, not to be afraid of hard work, and always to be grateful for the people who help them along the way.",
+            "He said Nora was brave because she told the truth, and Amal was brave because she helped her friend instead of protecting her advantage.",
+            "Sana was trained in Mogadishu and now works as a nurse at the district hospital, where she has been for six years."
+          ],
+          "answer": "Sana was trained in Mogadishu and now works as a nurse at the district hospital, where she has been for six years.",
+          "explanation": "In her first answer, Sana says, 'I am a nurse at the district hospital. I have been working here for six years. I was trained in Mogadishu,' so both facts come straight from her own words."
+        },
+        {
+          "prompt": "What prize would the winner of the Regional Young Leaders Competition receive?",
+          "choices": [
+            "What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you.",
+            "The winner would receive a scholarship to attend a special leadership academy in Nairobi.",
+            "Nora had become distant and secretive, she carried a folder everywhere and would not show anyone what was inside, and she said quietly that she was committed to winning."
+          ],
+          "answer": "The winner would receive a scholarship to attend a special leadership academy in Nairobi.",
+          "explanation": "When the story introduces the Regional Young Leaders Competition, it says the winner would receive a scholarship to attend a special leadership academy in Nairobi, a milestone that could change Amal's life."
+        },
+        {
+          "prompt": "What three pieces of advice does Sana give to young people at the end of the interview?",
+          "choices": [
+            "She tells them to find something they are passionate about, not to be afraid of hard work, and always to be grateful for the people who help them along the way.",
+            "Amal warned that everything Nora had worked for would be lost and that her reputation would be damaged, which is why she asked whether the prize was worth that risk.",
+            "Sana was trained in Mogadishu and now works as a nurse at the district hospital, where she has been for six years."
+          ],
+          "answer": "She tells them to find something they are passionate about, not to be afraid of hard work, and always to be grateful for the people who help them along the way.",
+          "explanation": "Sana's last answer holds three separate instructions: 'Find something you are passionate about. Do not be afraid of hard work. And always be grateful for the people who help you along the way.'"
+        },
+        {
+          "prompt": "Which details in part one show that Nora had changed before the competition?",
+          "choices": [
+            "He said Nora was brave because she told the truth, and Amal was brave because she helped her friend instead of protecting her advantage.",
+            "The winner would receive a scholarship to attend a special leadership academy in Nairobi.",
+            "Nora had become distant and secretive, she carried a folder everywhere and would not show anyone what was inside, and she said quietly that she was committed to winning."
+          ],
+          "answer": "Nora had become distant and secretive, she carried a folder everywhere and would not show anyone what was inside, and she said quietly that she was committed to winning.",
+          "explanation": "When Amal glances at Nora, the text says Nora had become distant and secretive, carried a folder everywhere and would not show anyone what was inside, and said quietly that she was committed to winning."
+        },
+        {
+          "prompt": "According to Amal, what could Nora lose if she gave the copied speech and the truth was discovered later?",
+          "choices": [
+            "She tells them to find something they are passionate about, not to be afraid of hard work, and always to be grateful for the people who help them along the way.",
+            "Amal warned that everything Nora had worked for would be lost and that her reputation would be damaged, which is why she asked whether the prize was worth that risk.",
+            "What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you."
+          ],
+          "answer": "Amal warned that everything Nora had worked for would be lost and that her reputation would be damaged, which is why she asked whether the prize was worth that risk.",
+          "explanation": "Amal tells Nora that if someone discovers the truth later, 'everything you have worked for will be lost. Your reputation will be damaged,' and then asks, 'Is that worth it?'"
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Present Your Career Choice",
+          "target": "The investigation took four months and changed one paragraph of the report."
+        },
+        {
+          "prompt": "Speaking 2: What Does Success Really Mean?",
+          "target": "What does success really mean?"
+        },
+        {
+          "prompt": "Speaking 3: Career Guess Game",
+          "target": "Think of a career and give three spoken clues without naming it, using adjective + preposition phrases and the passive voice."
+        },
+        {
+          "prompt": "Speaking 4: Interview a Role Model",
+          "target": "What made you choose this work?"
+        },
+        {
+          "prompt": "Speaking 5: Retell the Storm of Truth",
+          "target": "Nora had grown quiet and secretive since the competition was announced."
+        },
+        {
+          "prompt": "Speaking 6: Five-Minute Success Speech",
+          "target": "Thunder rolled across the sky as the rain grew heavier."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "areas.",
+            "rural",
+            "in",
+            "children",
+            "helps",
+            "who",
+            "doctor",
+            "a",
+            "become",
+            "to",
+            "is",
+            "ambition",
+            "Her"
+          ],
+          "answer": "Her ambition is to become a doctor who helps children in rural areas."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "years.",
+            "two",
+            "complete",
+            "to",
+            "obligation",
+            "an",
+            "carries",
+            "apprenticeship",
+            "The"
+          ],
+          "answer": "The apprenticeship carries an obligation to complete two years."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Amal?",
+            "about,",
+            "passionate",
+            "you",
+            "are",
+            "What"
+          ],
+          "answer": "What are you passionate about, Amal?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "again?",
+            "lesson",
+            "the",
+            "during",
+            "secrets",
+            "whispering",
+            "girls",
+            "two",
+            "the",
+            "Were"
+          ],
+          "answer": "Were the two girls whispering secrets during the lesson again?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "louder?",
+            "grew",
+            "warnings",
+            "weather",
+            "the",
+            "when",
+            "cancelled",
+            "were",
+            "activities",
+            "Which"
+          ],
+          "answer": "Which activities were cancelled when the weather warnings grew louder?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "stalls?",
+            "market",
+            "damaged",
+            "the",
+            "repair",
+            "shopkeepers",
+            "the",
+            "did",
+            "quickly",
+            "How"
+          ],
+          "answer": "How quickly did the shopkeepers repair the damaged market stalls?"
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'frame' mean in this unit?",
+          "choices": [
+            "To present an idea in a way that shapes how it is understood.",
+            "A careful search made to find out the true facts about something.",
+            "A whole number, with no fraction or decimal part."
+          ],
+          "answer": "To present an idea in a way that shapes how it is understood.",
+          "explanation": "frame: To present an idea in a way that shapes how it is understood."
+        },
+        {
+          "prompt": "What does 'quadrilateral' mean in this unit?",
+          "choices": [
+            "A careful search made to find out the true facts about something.",
+            "To present an idea in a way that shapes how it is understood.",
+            "A flat shape with four straight sides."
+          ],
+          "answer": "A flat shape with four straight sides.",
+          "explanation": "quadrilateral: A flat shape with four straight sides."
+        },
+        {
+          "prompt": "What does 'interested' mean in this unit?",
+          "choices": [
+            "To present an idea in a way that shapes how it is understood.",
+            "Wanting to learn more about or give attention to something.",
+            "A careful search made to find out the true facts about something."
+          ],
+          "answer": "Wanting to learn more about or give attention to something.",
+          "explanation": "interested: Wanting to learn more about or give attention to something."
+        },
+        {
+          "prompt": "What does 'folder' mean in this unit?",
+          "choices": [
+            "A flat cover used to hold and organise loose papers or documents.",
+            "A careful search made to find out the true facts about something.",
+            "To present an idea in a way that shapes how it is understood."
+          ],
+          "answer": "A flat cover used to hold and organise loose papers or documents.",
+          "explanation": "folder: A flat cover used to hold and organise loose papers or documents."
+        },
+        {
+          "prompt": "What does 'fish' mean in this unit?",
+          "choices": [
+            "A careful search made to find out the true facts about something.",
+            "To present an idea in a way that shapes how it is understood.",
+            "An animal that lives in water and breathes through gills."
+          ],
+          "answer": "An animal that lives in water and breathes through gills.",
+          "explanation": "fish: An animal that lives in water and breathes through gills."
+        },
+        {
+          "prompt": "What does 'integrity' mean in this unit?",
+          "choices": [
+            "To present an idea in a way that shapes how it is understood.",
+            "Being honest and having strong moral principles, even when no one is watching.",
+            "A careful search made to find out the true facts about something."
+          ],
+          "answer": "Being honest and having strong moral principles, even when no one is watching.",
+          "explanation": "integrity: Being honest and having strong moral principles, even when no one is watching."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'integer'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Integer is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'translation'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Translation is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'ill'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Ill is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fruit'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Fruit is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'dying'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Dying is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'aspiration'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Aspiration is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "originality",
+              "The quality of being new and not copied from anything."
+            ],
+            [
+              "coordinating",
+              "Describing a word that joins two parts of equal weight."
+            ],
+            [
+              "conductor",
+              "A material that lets heat or electricity pass through it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "arc",
+              "A curved part of the edge of a circle."
+            ],
+            [
+              "prism",
+              "A solid shape with the same cross-section all the way along."
+            ],
+            [
+              "seventeen",
+              "The number that comes after sixteen and before eighteen; often describing someone's age."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "unimportant",
+              "Not significant or worth paying attention to."
+            ],
+            [
+              "develop",
+              "To grow, improve, or become more advanced over time."
+            ],
+            [
+              "palm",
+              "A tall tropical tree with long leaves at the top, often found near beaches."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "opportunity",
+              "A chance to do something that could help a person succeed."
+            ],
+            [
+              "poverty",
+              "The state of being very poor and lacking money for basic needs."
+            ],
+            [
+              "froze",
+              "Suddenly stopped moving or speaking, usually because of shock or fear."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "remarkable",
+              "Unusual or special enough to be noticed and admired."
+            ],
+            [
+              "shopkeepers",
+              "People who own or manage small shops, often selling everyday goods."
+            ],
+            [
+              "advantage",
+              "Something that puts you in a better or more favourable position than others."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "vocation",
+              "A strong feeling of being suited to a particular career or calling."
+            ],
+            [
+              "confidence",
+              "The feeling of believing in yourself and your abilities."
+            ],
+            [
+              "socialism",
+              "A system in which key industries and services are owned by the public."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Building a Future': What matters most is not the title you hold but the _____ you bring to your work and the contribution you make to the people around you.",
+          "choices": [
+            "resilience",
+            "dedication",
+            "milestone",
+            "distinction"
+          ],
+          "answer": "dedication",
+          "explanation": "The text says: What matters most is not the title you hold but the dedication you bring to your work and the contribution you make to the people around you."
+        },
+        {
+          "prompt": "Choose the missing word from 'Building a Future': She studied by lamplight every evening, and her _____ impressed everyone who knew her.",
+          "choices": [
+            "perseverance",
+            "apprentice",
+            "ambition",
+            "dedication"
+          ],
+          "answer": "perseverance",
+          "explanation": "The text says: She studied by lamplight every evening, and her perseverance impressed everyone who knew her."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Storm of Truth, part 3': \"But a true friend reminded me that integrity is the foundation of every real _____.",
+          "choices": [
+            "perseverance",
+            "milestone",
+            "achievement",
+            "dedication"
+          ],
+          "answer": "achievement",
+          "explanation": "The text says: \"But a true friend reminded me that integrity is the foundation of every real achievement."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Storm of Truth, part 1': The winner would receive a scholarship to attend a special leadership academy in Nairobi — a _____ that could change her life forever.",
+          "choices": [
+            "distinction",
+            "resilience",
+            "profession",
+            "milestone"
+          ],
+          "answer": "milestone",
+          "explanation": "The text says: The winner would receive a scholarship to attend a special leadership academy in Nairobi — a milestone that could change her life forever."
+        },
+        {
+          "prompt": "Choose the missing word from 'Building a Future': When she passed her exams with _____, the entire neighbourhood celebrated.",
+          "choices": [
+            "achievement",
+            "distinction",
+            "dedication",
+            "perseverance"
+          ],
+          "answer": "distinction",
+          "explanation": "The text says: When she passed her exams with distinction, the entire neighbourhood celebrated."
+        },
         {
           "prompt": "What does 'ambition' mean?",
           "choices": [
@@ -500,28 +833,78 @@
           ],
           "answer": "A strong desire to achieve something important in life.",
           "explanation": "Her ambition is to become a doctor who helps children in rural areas."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Storm of Truth, part 1': The winner would receive a scholarship to attend a special leadership academy in Nairobi — a _____ that could change her life forever.",
+          "choices": [
+            "distinction",
+            "resilience",
+            "profession",
+            "milestone"
+          ],
+          "answer": "milestone",
+          "explanation": "The text says: The winner would receive a scholarship to attend a special leadership academy in Nairobi — a milestone that could change her life forever."
         },
         {
-          "prompt": "What does 'dedication' mean?",
+          "prompt": "Choose the missing word from 'Building a Future': When she passed her exams with _____, the entire neighbourhood celebrated.",
           "choices": [
-            "An important event or stage in the development of something.",
-            "Being fully committed to a task or purpose; giving time and energy to something.",
-            "Excellence that makes someone stand out; a high mark or honour.",
-            "Something that has been accomplished through effort and skill."
+            "achievement",
+            "distinction",
+            "dedication",
+            "perseverance"
           ],
-          "answer": "Being fully committed to a task or purpose; giving time and energy to something.",
-          "explanation": "His dedication to studying every evening helped him pass all his exams."
+          "answer": "distinction",
+          "explanation": "The text says: When she passed her exams with distinction, the entire neighbourhood celebrated."
         },
         {
-          "prompt": "What does 'perseverance' mean?",
+          "prompt": "Which word means: A material that lets heat or electricity pass through it.",
           "choices": [
-            "An important event or stage in the development of something.",
-            "Continuing to work hard even when things are difficult or take a long time.",
-            "Excellence that makes someone stand out; a high mark or honour.",
-            "The ability to recover from difficulties and keep going."
+            "conductor",
+            "investigation",
+            "frame"
           ],
-          "answer": "Continuing to work hard even when things are difficult or take a long time.",
-          "explanation": "Through perseverance, she learned to speak English fluently."
+          "answer": "conductor",
+          "explanation": "conductor: A material that lets heat or electricity pass through it."
+        },
+        {
+          "prompt": "Which word means: Wanting to learn more about or give attention to something.",
+          "choices": [
+            "investigation",
+            "frame",
+            "interested"
+          ],
+          "answer": "interested",
+          "explanation": "interested: Wanting to learn more about or give attention to something."
+        },
+        {
+          "prompt": "What type of word is 'froze'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Froze is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'integrity'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Integrity is used as a noun in this dictionary sense."
         }
       ]
     }

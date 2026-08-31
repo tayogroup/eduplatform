@@ -5,7 +5,7 @@
   "unitId": "eng-g03-t02-u06",
   "title": "Describing People and Things Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Easy to see through, or easy to understand.",
           "choices": [
             "clear",
-            "certain",
-            "formal"
+            "probably",
+            "west"
           ],
           "answer": "clear",
           "explanation": "clear: Easy to see through, or easy to understand."
         },
         {
-          "prompt": "Which word means: Without any doubt at all.",
+          "prompt": "Which word means: Very pleasant, beautiful, or nice to see or experience.",
           "choices": [
             "clear",
-            "certain",
-            "certainly"
+            "probably",
+            "lovely"
           ],
-          "answer": "certainly",
-          "explanation": "certainly: Without any doubt at all."
+          "answer": "lovely",
+          "explanation": "lovely: Very pleasant, beautiful, or nice to see or experience."
         },
         {
-          "prompt": "Which word means: The time in the middle of the day when people stop to eat lunch.",
+          "prompt": "Which word means: Without means not having or not doing something.",
           "choices": [
-            "certain",
-            "lunchtime",
+            "probably",
+            "without",
             "clear"
           ],
-          "answer": "lunchtime",
-          "explanation": "lunchtime: The time in the middle of the day when people stop to eat lunch."
+          "answer": "without",
+          "explanation": "without: Without means not having or not doing something."
+        },
+        {
+          "prompt": "Which word means: Behaving the worst and causing the most trouble, more than anyone else.",
+          "choices": [
+            "naughtiest",
+            "clear",
+            "probably"
+          ],
+          "answer": "naughtiest",
+          "explanation": "naughtiest: Behaving the worst and causing the most trouble, more than anyone else."
+        },
+        {
+          "prompt": "Which word means: More brave; more willing to do something difficult or scary.",
+          "choices": [
+            "clear",
+            "probably",
+            "braver"
+          ],
+          "answer": "braver",
+          "explanation": "braver: More brave; more willing to do something difficult or scary."
+        },
+        {
+          "prompt": "Which word means: Very, very large.",
+          "choices": [
+            "probably",
+            "enormous",
+            "clear"
+          ],
+          "answer": "enormous",
+          "explanation": "enormous: Very, very large."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Very likely, but not for sure.",
-          "answer": "probably"
+          "clue": "A lake is a big area of water with land all around it.",
+          "answer": "lake"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Not nice or gentle, and likely to hurt someone's feelings.",
-          "answer": "unkind"
+          "clue": "A bump is a small lump or rough part on a surface.",
+          "answer": "bump"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "More gentle and helpful than someone or something else.",
+          "answer": "kinder"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Closes something, like a door or gate.",
+          "answer": "shuts"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Completely correct, with no mistake at all.",
+          "answer": "exact"
         }
       ]
     },
@@ -98,29 +143,72 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "market.",
-            "public",
-            "busy",
-            "the",
-            "at",
-            "fruit",
-            "sells",
-            "Omar"
+            "Amal.",
+            "work,",
+            "careful",
+            "is",
+            "That",
+            "Yasmin:",
+            "Teacher"
           ],
-          "answer": "Omar sells fruit at the busy public market."
+          "answer": "Teacher Yasmin: That is careful work, Amal."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "rain.",
+            "gate.",
             "the",
-            "after",
-            "wet",
-            "were",
-            "stones",
+            "at",
+            "barked",
+            "dog",
+            "neighbour's",
             "The"
           ],
-          "answer": "The stones were wet after the rain."
+          "answer": "The neighbour's dog barked at the gate."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "him.",
+            "for",
+            "problem",
+            "a",
+            "not",
+            "was",
+            "road",
+            "wet",
+            "The"
+          ],
+          "answer": "The wet road was not a problem for him."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "know.",
+            "I",
+            "people",
+            "most",
+            "than",
+            "kinder",
+            "is",
+            "brother",
+            "My"
+          ],
+          "answer": "My brother is kinder than most people I know."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "Nora.",
+            "to",
+            "speak",
+            "to",
+            "courage",
+            "the",
+            "found",
+            "Amal"
+          ],
+          "answer": "Amal found the courage to speak to Nora."
         }
       ]
     },
@@ -133,306 +221,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "What is the correct comparative form of the adjective happy?",
+          "prompt": "What does the word kindness mean?",
           "choices": [
-            "happyer",
-            "happier",
-            "more happy",
-            "happiest"
+            "The act of being kind and helpful to somebody.",
+            "A rough road with many bumps, stones and puddles.",
+            "A person who is liked by many other people.",
+            "Something you are able to do without any help."
           ],
-          "answer": "happier",
-          "explanation": "Words ending in -y change the y to i before -er, so happy becomes happier."
+          "answer": "The act of being kind and helpful to somebody.",
+          "explanation": "Kindness names the action, while kind is the adjective that describes the person doing it."
         },
         {
-          "prompt": "Which sentence uses could correctly?",
+          "prompt": "Which meaning matches the adjective tough?",
           "choices": [
-            "She could plays the drum.",
-            "She could to play the drum.",
-            "She could played the drum.",
-            "She could play the drum."
+            "Almost the same as something else, but not exactly.",
+            "Strong and hard to break, tear or hurt.",
+            "Living and growing, and not dead.",
+            "Nice and helpful to other people."
           ],
-          "answer": "She could play the drum.",
-          "explanation": "Could is always followed by the plain verb, so play takes no -s, no -ed and no to."
+          "answer": "Strong and hard to break, tear or hurt.",
+          "explanation": "Tough describes strength, so boots and gloves are tough, while rough describes a bumpy surface."
         },
         {
-          "prompt": "Teacher Yasmin wants to know the reason for something. Which question word should she use?",
+          "prompt": "Choose the missing word from ‘My Cousin Noah’: He is always _____, but he still has time to help me.",
           "choices": [
-            "Why",
-            "Where",
-            "When",
-            "Who"
+            "rough",
+            "alive",
+            "busy",
+            "similar"
           ],
-          "answer": "Why",
-          "explanation": "Why asks for a reason, where asks about a place, when asks about a time and who asks about a person."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Who is the writer's favourite person in ‘My Cousin Noah’?",
-          "choices": [
-            "The writer's favourite person is her cousin Noah.",
-            "Any three of these words: kind, honest, busy, calm and friendly.",
-            "The speaker was sad, and Nora stayed calm and helped her."
-          ],
-          "answer": "The writer's favourite person is her cousin Noah.",
-          "explanation": "The opening sentence names Noah, so this is a straight recall of the first line."
+          "answer": "busy",
+          "explanation": "The text says Noah is always busy, and the word but shows the surprise that he still finds time."
         },
-        {
-          "prompt": "What is the first road like, and what is the second road like?",
-          "choices": [
-            "Any three of these words: kind, honest, busy, calm and friendly.",
-            "He could carry ten bags of rice.",
-            "The first road is smooth and easy to walk on, and the second road is rough with bumps and stones."
-          ],
-          "answer": "The first road is smooth and easy to walk on, and the second road is rough with bumps and stones.",
-          "explanation": "The two middle sentences contrast the smooth road with the rough one, so both halves are needed."
-        },
-        {
-          "prompt": "How did Nora help the speaker yesterday?",
-          "choices": [
-            "She was new, because her family had moved to the town, so nobody knew her name yet.",
-            "The speaker was sad, and Nora stayed calm and helped her.",
-            "The first road is smooth and easy to walk on, and the second road is rough with bumps and stones."
-          ],
-          "answer": "The speaker was sad, and Nora stayed calm and helped her.",
-          "explanation": "Two past-tense verbs, was and helped, carry the answer and show the event is finished."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Describe Your Favourite Person",
-          "target": "My favourite person is ______."
-        },
-        {
-          "prompt": "Speaking 3 — Guess Who",
-          "target": "This person is kind, busy and honest."
-        },
-        {
-          "prompt": "Speaking 5 — Explain and Respond",
-          "target": "Explain why Nora is kinder than she believes she is."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "grass.",
-            "the",
-            "on",
-            "loudly",
-            "laughing",
-            "were",
-            "pupils",
-            "The"
-          ],
-          "answer": "The pupils were laughing loudly on the grass."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "road.",
-            "paved",
-            "a",
-            "over",
-            "smoothly",
-            "glide",
-            "wheels",
-            "Bicycle"
-          ],
-          "answer": "Bicycle wheels glide smoothly over a paved road."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "heavy.",
-            "too",
-            "was",
-            "it",
-            "but",
-            "box,",
-            "the",
-            "lift",
-            "to",
-            "tried",
-            "Sami"
-          ],
-          "answer": "Sami tried to lift the box, but it was too heavy."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'theirs' mean in this unit?",
-          "choices": [
-            "Theirs means something that belongs to them.",
-            "Easy to see through, or easy to understand.",
-            "Completely sure about something."
-          ],
-          "answer": "Theirs means something that belongs to them.",
-          "explanation": "theirs: Theirs means something that belongs to them."
-        },
-        {
-          "prompt": "What does 'strength' mean in this unit?",
-          "choices": [
-            "Easy to see through, or easy to understand.",
-            "Completely sure about something.",
-            "How strong and powerful a person or thing is."
-          ],
-          "answer": "How strong and powerful a person or thing is.",
-          "explanation": "strength: How strong and powerful a person or thing is."
-        },
-        {
-          "prompt": "What does 'certain' mean in this unit?",
-          "choices": [
-            "Serious and polite, following the proper rules.",
-            "Completely sure about something.",
-            "Easy to see through, or easy to understand."
-          ],
-          "answer": "Completely sure about something.",
-          "explanation": "certain: Completely sure about something."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'scooter'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Scooter is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'kind'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Kind is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'possible'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Possible is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "deer",
-              "A wild animal with long thin legs that runs very fast."
-            ],
-            [
-              "exact",
-              "Completely correct, with no mistake at all."
-            ],
-            [
-              "personal",
-              "Something that belongs to you or is about you."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "definitely",
-              "For certain, with no doubt at all."
-            ],
-            [
-              "wheels",
-              "Wheels are the round parts that turn to let something like a bike or car move."
-            ],
-            [
-              "prefers",
-              "Prefers means likes one thing more than another."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "naughtiest",
-              "Behaving the worst and causing the most trouble, more than anyone else."
-            ],
-            [
-              "owner",
-              "A person who something belongs to."
-            ],
-            [
-              "noisiest",
-              "Making the most loud and unpleasant sound, more than anyone else."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Choose the missing word from ‘Two Roads’: My father says his old boots are _____, so the rough road is not a problem.",
           "choices": [
@@ -469,13 +289,519 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Who is the writer's favourite person in ‘My Cousin Noah’?",
+          "choices": [
+            "The writer's favourite person is her cousin Noah.",
+            "Any three of these words: kind, honest, busy, calm and friendly.",
+            "The speaker was sad, and Nora stayed calm and helped her."
+          ],
+          "answer": "The writer's favourite person is her cousin Noah.",
+          "explanation": "The opening sentence names Noah, so this is a straight recall of the first line."
+        },
+        {
+          "prompt": "Why is Noah popular at school?",
+          "choices": [
+            "The first road is smooth and easy to walk on, and the second road is rough with bumps and stones.",
+            "He could carry ten bags of rice.",
+            "Noah is popular at school because he cares about everyone."
+          ],
+          "answer": "Noah is popular at school because he cares about everyone.",
+          "explanation": "The text gives the reason, and the word because points straight to it."
+        },
+        {
+          "prompt": "What is the first road like, and what is the second road like?",
+          "choices": [
+            "She was new, because her family had moved to the town, so nobody knew her name yet.",
+            "The first road is smooth and easy to walk on, and the second road is rough with bumps and stones.",
+            "His old boots are tough, so the bumps and the stones do not trouble his feet."
+          ],
+          "answer": "The first road is smooth and easy to walk on, and the second road is rough with bumps and stones.",
+          "explanation": "The two middle sentences contrast the smooth road with the rough one, so both halves are needed."
+        },
+        {
+          "prompt": "Are the two roads similar, and which words in the text tell you?",
+          "choices": [
+            "They are not similar, and the last line says they are not similar at all.",
+            "His old boots are tough, so the bumps and the stones do not trouble his feet.",
+            "She felt alone in the playground, and under the tree she felt more alive."
+          ],
+          "answer": "They are not similar, and the last line says they are not similar at all.",
+          "explanation": "The closing exclamation states the difference outright, so you quote it as evidence."
+        },
+        {
+          "prompt": "How did Nora help the speaker yesterday?",
+          "choices": [
+            "They are not similar, and the last line says they are not similar at all.",
+            "The writer's favourite person is her cousin Noah.",
+            "The speaker was sad, and Nora stayed calm and helped her."
+          ],
+          "answer": "The speaker was sad, and Nora stayed calm and helped her.",
+          "explanation": "Two past-tense verbs, was and helped, carry the answer and show the event is finished."
+        },
+        {
+          "prompt": "Why was Amal sitting alone when the story begins?",
+          "choices": [
+            "Noah is popular at school because he cares about everyone.",
+            "She was new, because her family had moved to the town, so nobody knew her name yet.",
+            "The speaker's best friend is Nora."
+          ],
+          "answer": "She was new, because her family had moved to the town, so nobody knew her name yet.",
+          "explanation": "The fourth and fifth lines explain her loneliness, and both are needed for a full answer."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Describe Your Favourite Person",
+          "target": "My favourite person is ______."
+        },
+        {
+          "prompt": "Speaking 2 — Describe a Thing",
+          "target": "This is my ______."
+        },
+        {
+          "prompt": "Speaking 3 — Guess Who",
+          "target": "This person is kind, busy and honest."
+        },
+        {
+          "prompt": "Speaking 4 — Vocabulary Expert Interview",
+          "target": "What does careless mean, and when were you careless?"
+        },
+        {
+          "prompt": "Speaking 5 — Explain and Respond",
+          "target": "My brother is kinder than most people I know."
+        },
+        {
+          "prompt": "Speaking 6 — One-Minute Unit Talk",
+          "target": "Amal found the courage to speak to Nora."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "night.",
+            "until",
+            "morning",
+            "from",
+            "active",
+            "is",
+            "Leo"
+          ],
+          "answer": "Leo is active from morning until night."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "run.",
+            "not",
+            "walk,",
+            "to",
+            "is",
+            "rule",
+            "general",
+            "The"
+          ],
+          "answer": "The general rule is to walk, not run."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "day.",
+            "every",
+            "dog",
+            "neighbour's",
+            "the",
+            "walks",
+            "Noah"
+          ],
+          "answer": "Noah walks the neighbour's dog every day."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "problem.",
+            "the",
+            "solve",
+            "to",
+            "together",
+            "worked",
+            "We"
+          ],
+          "answer": "We worked together to solve the problem."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "else.",
+            "everyone",
+            "than",
+            "kinder",
+            "is",
+            "brother",
+            "his",
+            "said",
+            "Leo"
+          ],
+          "answer": "Leo said his brother is kinder than everyone else."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "class.",
+            "the",
+            "of",
+            "front",
+            "in",
+            "spoke",
+            "he",
+            "when",
+            "courage",
+            "showed",
+            "Sami"
+          ],
+          "answer": "Sami showed courage when he spoke in front of the class."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'probably' mean in this unit?",
+          "choices": [
+            "Very likely, but not for sure.",
+            "Easy to see through, or easy to understand.",
+            "West is the direction where the sun goes down."
+          ],
+          "answer": "Very likely, but not for sure.",
+          "explanation": "probably: Very likely, but not for sure."
+        },
+        {
+          "prompt": "What does 'Earth' mean in this unit?",
+          "choices": [
+            "Easy to see through, or easy to understand.",
+            "Very likely, but not for sure.",
+            "Our planet. It turns round, which gives us day and night."
+          ],
+          "answer": "Our planet. It turns round, which gives us day and night.",
+          "explanation": "Earth: Our planet. It turns round, which gives us day and night."
+        },
+        {
+          "prompt": "What does 'boots' mean in this unit?",
+          "choices": [
+            "Very likely, but not for sure.",
+            "Boots are strong shoes that cover your feet and ankles.",
+            "Easy to see through, or easy to understand."
+          ],
+          "answer": "Boots are strong shoes that cover your feet and ankles.",
+          "explanation": "boots: Boots are strong shoes that cover your feet and ankles."
+        },
+        {
+          "prompt": "What does 'age' mean in this unit?",
+          "choices": [
+            "The number of years that someone has lived.",
+            "Easy to see through, or easy to understand.",
+            "Very likely, but not for sure."
+          ],
+          "answer": "The number of years that someone has lived.",
+          "explanation": "age: The number of years that someone has lived."
+        },
+        {
+          "prompt": "What does 'calm' mean in this unit?",
+          "choices": [
+            "Easy to see through, or easy to understand.",
+            "Very likely, but not for sure.",
+            "Quiet and gentle, and not angry or excited."
+          ],
+          "answer": "Quiet and gentle, and not angry or excited.",
+          "explanation": "calm: Quiet and gentle, and not angry or excited."
+        },
+        {
+          "prompt": "What does 'formal' mean in this unit?",
+          "choices": [
+            "Very likely, but not for sure.",
+            "Serious and polite, following the proper rules.",
+            "Easy to see through, or easy to understand."
+          ],
+          "answer": "Serious and polite, following the proper rules.",
+          "explanation": "formal: Serious and polite, following the proper rules."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'west'?",
+          "choices": [
+            "Position",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Position",
+          "explanation": "West is used as a position in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'kitchen'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Kitchen is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'scooter'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Scooter is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'lunchbox'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Lunchbox is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'favourite'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Favourite is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'main'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Main is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "deer",
+              "A wild animal with long thin legs that runs very fast."
+            ],
+            [
+              "south",
+              "South is the direction opposite to north."
+            ],
+            [
+              "careful",
+              "Careful means paying close attention so nothing goes wrong."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "hill",
+              "A hill is a piece of land that is higher than the ground around it."
+            ],
+            [
+              "remember",
+              "Remember means to keep something in your mind and think of it again."
+            ],
+            [
+              "patiently",
+              "Patiently means calmly, without getting annoyed while you wait or help someone."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "second",
+              "Second means coming right after the first one in order."
+            ],
+            [
+              "prefers",
+              "Prefers means likes one thing more than another."
+            ],
+            [
+              "admire",
+              "Admire means to think highly of someone or something because it is impressive or good."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "elderly",
+              "Having lived for a long time; quite old."
+            ],
+            [
+              "agree",
+              "To have the same opinion as someone else."
+            ],
+            [
+              "laughing",
+              "Making sounds and smiling because something is funny or happy."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "noisiest",
+              "Making the most loud and unpleasant sound, more than anyone else."
+            ],
+            [
+              "tough",
+              "Strong and hard to break, tear or hurt."
+            ],
+            [
+              "blank",
+              "Something blank has nothing written, drawn, or filled in on it yet."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "excellent",
+              "Very good indeed."
+            ],
+            [
+              "independent",
+              "Able to do things without help from others."
+            ],
+            [
+              "powerful",
+              "Having great strength or force."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence uses the past simple correctly?",
+          "choices": [
+            "He goed to the shop yesterday.",
+            "He gone to the shop yesterday afternoon.",
+            "He went to the shop yesterday.",
+            "He go to the shop yesterday."
+          ],
+          "answer": "He went to the shop yesterday.",
+          "explanation": "Go is an irregular verb, so its past simple is went rather than goed or gone."
+        },
+        {
+          "prompt": "What is the correct comparative form of the adjective happy?",
+          "choices": [
+            "happyer",
+            "happier",
+            "more happy",
+            "happiest"
+          ],
+          "answer": "happier",
+          "explanation": "Words ending in -y change the y to i before -er, so happy becomes happier."
+        },
+        {
+          "prompt": "Which sentence uses could correctly?",
+          "choices": [
+            "She could plays the drum.",
+            "She could to play the drum.",
+            "She could played the drum.",
+            "She could play the drum."
+          ],
+          "answer": "She could play the drum.",
+          "explanation": "Could is always followed by the plain verb, so play takes no -s, no -ed and no to."
+        },
+        {
+          "prompt": "Teacher Yasmin wants to know the reason for something. Which question word should she use?",
+          "choices": [
+            "Why",
+            "Where",
+            "When",
+            "Who"
+          ],
+          "answer": "Why",
+          "explanation": "Why asks for a reason, where asks about a place, when asks about a time and who asks about a person."
+        },
+        {
+          "prompt": "Nora said, “I am busy.” Which sentence reports her words correctly?",
+          "choices": [
+            "Nora said she is busy.",
+            "Nora said her busy.",
+            "Nora said she was busy.",
+            "Nora said, she busy today."
+          ],
+          "answer": "Nora said she was busy.",
+          "explanation": "Reported speech moves the verb one step back, so am becomes was and the speech marks disappear."
+        },
         {
           "prompt": "What does the word kindness mean?",
           "choices": [
@@ -486,28 +812,78 @@
           ],
           "answer": "The act of being kind and helpful to somebody.",
           "explanation": "Kindness names the action, while kind is the adjective that describes the person doing it."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Teacher Yasmin wants to know the reason for something. Which question word should she use?",
+          "choices": [
+            "Why",
+            "Where",
+            "When",
+            "Who"
+          ],
+          "answer": "Why",
+          "explanation": "Why asks for a reason, where asks about a place, when asks about a time and who asks about a person."
         },
         {
-          "prompt": "Which meaning matches the adjective tough?",
+          "prompt": "Nora said, “I am busy.” Which sentence reports her words correctly?",
           "choices": [
-            "Almost the same as something else, but not exactly.",
-            "Strong and hard to break, tear or hurt.",
-            "Living and growing, and not dead.",
-            "Nice and helpful to other people."
+            "Nora said she is busy.",
+            "Nora said her busy.",
+            "Nora said she was busy.",
+            "Nora said, she busy today."
           ],
-          "answer": "Strong and hard to break, tear or hurt.",
-          "explanation": "Tough describes strength, so boots and gloves are tough, while rough describes a bumpy surface."
+          "answer": "Nora said she was busy.",
+          "explanation": "Reported speech moves the verb one step back, so am becomes was and the speech marks disappear."
         },
         {
-          "prompt": "Choose the missing word from ‘My Cousin Noah’: He is always _____, but he still has time to help me.",
+          "prompt": "Which word means: Careful means paying close attention so nothing goes wrong.",
           "choices": [
-            "rough",
-            "alive",
-            "busy",
-            "similar"
+            "careful",
+            "clear",
+            "probably"
           ],
-          "answer": "busy",
-          "explanation": "The text says Noah is always busy, and the word but shows the surprise that he still finds time."
+          "answer": "careful",
+          "explanation": "careful: Careful means paying close attention so nothing goes wrong."
+        },
+        {
+          "prompt": "Which word means: Boots are strong shoes that cover your feet and ankles.",
+          "choices": [
+            "clear",
+            "probably",
+            "boots"
+          ],
+          "answer": "boots",
+          "explanation": "boots: Boots are strong shoes that cover your feet and ankles."
+        },
+        {
+          "prompt": "What type of word is 'laughing'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Laughing is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'formal'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Formal is used as an adjective in this dictionary sense."
         }
       ]
     }

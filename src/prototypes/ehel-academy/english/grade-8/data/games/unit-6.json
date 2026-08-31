@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t02-u06",
   "title": "Natural Wonders and Conservation Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Making something official by setting it out in fixed rules.",
           "choices": [
             "formalisation",
-            "personal-agency",
-            "spin"
+            "locus",
+            "aphorism"
           ],
           "answer": "formalisation",
           "explanation": "formalisation: Making something official by setting it out in fixed rules."
         },
         {
-          "prompt": "Which word means: For that reason, as a result of what was just said.",
+          "prompt": "Which word means: Certain to happen and impossible to avoid.",
           "choices": [
             "formalisation",
-            "personal-agency",
-            "therefore"
+            "locus",
+            "inevitable"
           ],
-          "answer": "therefore",
-          "explanation": "therefore: For that reason, as a result of what was just said."
+          "answer": "inevitable",
+          "explanation": "inevitable: Certain to happen and impossible to avoid."
         },
         {
-          "prompt": "Which word means: The amount of space between two places or points.",
+          "prompt": "Which word means: To walk or travel regularly around an area to check that everything is safe or in order.",
           "choices": [
-            "personal-agency",
-            "distance",
+            "locus",
+            "patrol",
             "formalisation"
           ],
-          "answer": "distance",
-          "explanation": "distance: The amount of space between two places or points."
+          "answer": "patrol",
+          "explanation": "patrol: To walk or travel regularly around an area to check that everything is safe or in order."
+        },
+        {
+          "prompt": "Which word means: Not shown with a sign, label, or mark, so it is hard to identify.",
+          "choices": [
+            "unmarked",
+            "formalisation",
+            "locus"
+          ],
+          "answer": "unmarked",
+          "explanation": "unmarked: Not shown with a sign, label, or mark, so it is hard to identify."
+        },
+        {
+          "prompt": "Which word means: Does not succeed at doing something, or does not work as expected.",
+          "choices": [
+            "formalisation",
+            "locus",
+            "fails"
+          ],
+          "answer": "fails",
+          "explanation": "fails: Does not succeed at doing something, or does not work as expected."
+        },
+        {
+          "prompt": "Which word means: A natural feeling or reaction that guides behaviour without conscious thought.",
+          "choices": [
+            "locus",
+            "instinct",
+            "formalisation"
+          ],
+          "answer": "instinct",
+          "explanation": "instinct: A natural feeling or reaction that guides behaviour without conscious thought."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Very unusual or impressive, and worth noticing or talking about.",
-          "answer": "remarkable"
+          "clue": "Steep slopes or cliffs formed where land drops sharply from a higher level to a lower one.",
+          "answer": "escarpments"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To move or increase suddenly and powerfully.",
-          "answer": "surged"
+          "clue": "A piece of ground that rises or falls at an angle, such as the side of a hill.",
+          "answer": "slope"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "An official document that gives someone permission to do something.",
+          "answer": "permit"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Covered in shadow or darkness because light is blocked.",
+          "answer": "shadowed"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To wrongly understand or identify something as something else.",
+          "answer": "mistook"
         }
       ]
     },
@@ -100,35 +145,83 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "spring.",
-            "each",
-            "ridge",
+            "quarters.",
+            "slowest",
+            "and",
+            "fastest",
             "the",
-            "below",
-            "terraces",
-            "the",
-            "on",
-            "barley",
-            "plant",
-            "Farmers"
+            "ignores",
+            "range",
+            "interquartile",
+            "The"
           ],
-          "answer": "Farmers plant barley on the terraces below the ridge each spring."
+          "answer": "The interquartile range ignores the fastest and slowest quarters."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "team.",
+            "grass.",
+            "pale",
             "the",
-            "reminded",
-            "Milo",
-            "fail,",
-            "all",
-            "we",
-            "fails,",
-            "one",
-            "If"
+            "against",
+            "rust",
+            "of",
+            "colour",
+            "the",
+            "was",
+            "fur",
+            "wolf's",
+            "The"
           ],
-          "answer": "If one fails, we all fail, Milo reminded the team."
+          "answer": "The wolf's fur was the colour of rust against the pale grass."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "view.",
+            "of",
+            "point",
+            "their",
+            "for",
+            "case",
+            "reasonable",
+            "a",
+            "made",
+            "sides",
+            "Both"
+          ],
+          "answer": "Both sides made a reasonable case for their point of view."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "too.",
+            "judgement",
+            "but",
+            "endurance",
+            "physical",
+            "just",
+            "not",
+            "tested",
+            "ascent",
+            "The"
+          ],
+          "answer": "The ascent tested not just physical endurance but judgement too."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "bridge.",
+            "rock",
+            "narrow",
+            "the",
+            "across",
+            "cautiously",
+            "moved",
+            "group",
+            "The"
+          ],
+          "answer": "The group moved cautiously across the narrow rock bridge."
         }
       ]
     },
@@ -141,314 +234,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Citadel of Wind and Stone, part 2': She studied the terrain, noting ______ signs of erosion near the narrow bridge.",
+          "prompt": "What does 'furtive' mean?",
           "choices": [
-            "gruelling",
-            "conspicuous",
-            "audacious",
-            "gnarled"
+            "Showing strong feelings or enthusiasm for something",
+            "Done secretly because you do not want to be noticed",
+            "Twisted and rough, usually describing old trees or branches",
+            "Extremely tiring and difficult"
           ],
-          "answer": "conspicuous",
-          "explanation": "The text says: She studied the terrain, noting conspicuous signs of erosion near the narrow bridge."
+          "answer": "Done secretly because you do not want to be noticed",
+          "explanation": "Furtive describes actions done secretly, like the furtive glance at the map in the word's example sentence."
         },
         {
-          "prompt": "Choose the missing word from 'The Citadel of Wind and Stone, part 2': Wind pushed against the students, ______ even the strongest from rushing.",
+          "prompt": "What does 'headway' mean?",
           "choices": [
-            "kindling",
-            "antagonising",
-            "quavering",
-            "deterring"
+            "A very cruel or terrible act",
+            "A short break or rest from something difficult",
+            "A strong fortress that protects a city or area",
+            "Progress or forward movement towards a goal"
           ],
-          "answer": "deterring",
-          "explanation": "The text says: Wind pushed against the students, deterring even the strongest from rushing."
+          "answer": "Progress or forward movement towards a goal",
+          "explanation": "Headway means progress towards a goal, as when a trail crew makes slow headway through thick bamboo."
         },
         {
-          "prompt": "Choose the missing word from 'The Roof of Africa: Wonders Worth Keeping': fewer than five hundred survive, which makes every single animal ______ to the future of its species.",
+          "prompt": "What does 'anarchy' mean?",
           "choices": [
-            "outlandish",
-            "crucial",
-            "brusque",
-            "furtive"
+            "A situation with no government or authority, leading to confusion",
+            "A place where someone is going or something is being sent",
+            "Easy to see or notice; very obvious",
+            "To reach the highest point or final stage of something"
           ],
-          "answer": "crucial",
-          "explanation": "The text says: fewer than five hundred survive, which makes every single animal crucial to the future of its species."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to 'The Roof of Africa', why do gelada monkeys move to the cliff ledges at dusk?",
-          "choices": [
-            "They retreat to narrow cliff ledges to sleep because predators cannot follow them there.",
-            "They eat dried dates and roasted chickpeas in the shade of the outcrop.",
-            "She notices conspicuous signs of erosion near the narrow rock bridge: the stones are loose and a crack splits the path near the end."
-          ],
-          "answer": "They retreat to narrow cliff ledges to sleep because predators cannot follow them there.",
-          "explanation": "The wildlife paragraph says geladas retreat at dusk to sleep on narrow cliff ledges 'where predators cannot follow', so the ledges keep them safe through the night."
+          "answer": "A situation with no government or authority, leading to confusion",
+          "explanation": "Anarchy names the confusion that follows when nobody holds authority."
         },
-        {
-          "prompt": "What do the students eat during their midday rest beneath the rock outcrop?",
-          "choices": [
-            "A radio call reports that Tariq has been found with a minor injury, and by sunrise he limps into the courtyard with his clothes torn and covered in dust.",
-            "She promises the group will go after Tariq if he falls, she keeps the team together on the safer long route, and she urges them to catch up carefully instead of splitting.",
-            "They eat dried dates and roasted chickpeas in the shade of the outcrop."
-          ],
-          "answer": "They eat dried dates and roasted chickpeas in the shade of the outcrop.",
-          "explanation": "In the midday rest under the rock outcrop, the group huddled in the shade 'eating dried dates and roasted chickpeas' while the heat shimmered on the stones below."
-        },
-        {
-          "prompt": "When the path forks below the citadel, what evidence persuades Zara to choose the longer route?",
-          "choices": [
-            "They retreat to narrow cliff ledges to sleep because predators cannot follow them there.",
-            "She notices conspicuous signs of erosion near the narrow rock bridge: the stones are loose and a crack splits the path near the end.",
-            "A radio call reports that Tariq has been found with a minor injury, and by sunrise he limps into the courtyard with his clothes torn and covered in dust."
-          ],
-          "answer": "She notices conspicuous signs of erosion near the narrow rock bridge: the stones are loose and a crack splits the path near the end.",
-          "explanation": "At the fork, Zara studies the terrain and notices conspicuous signs of erosion near the narrow bridge: the stones are loose and a crack splits the path near the end, so she chooses the longer, protected route."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Comparing Natural Wonders",
-          "target": "The formalisation of the grazing agreement ended a century of argument."
-        },
-        {
-          "prompt": "Speaking 3: Reporting What Others Said",
-          "target": "Practise reported speech by telling a partner or your AI Tutor what the characters in the story said."
-        },
-        {
-          "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "If one fails, we all fail, Milo reminded the team."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "citadel.",
-            "the",
-            "at",
-            "ceremony",
-            "a",
-            "with",
-            "culminate",
-            "will",
-            "programme",
-            "leadership",
-            "The"
-          ],
-          "answer": "The leadership programme will culminate with a ceremony at the citadel."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "most?",
-            "them",
-            "need",
-            "that",
-            "villages",
-            "the",
-            "to",
-            "close",
-            "built",
-            "usually",
-            "nurseries",
-            "tree",
-            "are",
-            "Why"
-          ],
-          "answer": "Why are tree nurseries usually built close to the villages that need them most?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "others.",
-            "the",
-            "for",
-            "waiting",
-            "without",
-            "outcrop",
-            "the",
-            "past",
-            "strode",
-            "Tariq"
-          ],
-          "answer": "Tariq strode past the outcrop without waiting for the others."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'saturated' mean in this unit?",
-          "choices": [
-            "So full of water that it cannot absorb any more.",
-            "Making something official by setting it out in fixed rules.",
-            "An individual's own capacity to choose and to act."
-          ],
-          "answer": "So full of water that it cannot absorb any more.",
-          "explanation": "saturated: So full of water that it cannot absorb any more."
-        },
-        {
-          "prompt": "What does 'tore' mean in this unit?",
-          "choices": [
-            "Making something official by setting it out in fixed rules.",
-            "An individual's own capacity to choose and to act.",
-            "To pull something apart with force, or to move violently and quickly."
-          ],
-          "answer": "To pull something apart with force, or to move violently and quickly.",
-          "explanation": "tore: To pull something apart with force, or to move violently and quickly."
-        },
-        {
-          "prompt": "What does 'personal-agency' mean in this unit?",
-          "choices": [
-            "To turn quickly around a central point.",
-            "An individual's own capacity to choose and to act.",
-            "Making something official by setting it out in fixed rules."
-          ],
-          "answer": "An individual's own capacity to choose and to act.",
-          "explanation": "personal-agency: An individual's own capacity to choose and to act."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'scoffed'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Scoffed is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'transgression'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Transgression is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'hunter'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Hunter is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "biosphere",
-              "The whole zone of the Earth where living things exist."
-            ],
-            [
-              "surrounding",
-              "Describing the area or things that are near or all around something."
-            ],
-            [
-              "wolf",
-              "A wild animal related to the dog that often hunts alone or in a group."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "tree",
-              "A tall plant with a wooden trunk, branches, and leaves that can live for many years."
-            ],
-            [
-              "muleteers",
-              "People whose job is to lead and look after mules, especially ones carrying loads."
-            ],
-            [
-              "panting",
-              "Breathing quickly and heavily, especially after hard exercise."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "avoid",
-              "To stay away from something or to prevent something from happening."
-            ],
-            [
-              "relief",
-              "A feeling of comfort when worry or fear ends."
-            ],
-            [
-              "antagonise",
-              "To make someone angry or upset by your actions or words"
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'quaver' mean?",
           "choices": [
@@ -485,34 +302,62 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'furtive' mean?",
+          "prompt": "According to 'The Roof of Africa', why do gelada monkeys move to the cliff ledges at dusk?",
           "choices": [
-            "Showing strong feelings or enthusiasm for something",
-            "Done secretly because you do not want to be noticed",
-            "Twisted and rough, usually describing old trees or branches",
-            "Extremely tiring and difficult"
+            "They retreat to narrow cliff ledges to sleep because predators cannot follow them there.",
+            "They eat dried dates and roasted chickpeas in the shade of the outcrop.",
+            "She notices conspicuous signs of erosion near the narrow rock bridge: the stones are loose and a crack splits the path near the end."
           ],
-          "answer": "Done secretly because you do not want to be noticed",
-          "explanation": "Furtive describes actions done secretly, like the furtive glance at the map in the word's example sentence."
+          "answer": "They retreat to narrow cliff ledges to sleep because predators cannot follow them there.",
+          "explanation": "The wildlife paragraph says geladas retreat at dusk to sleep on narrow cliff ledges 'where predators cannot follow', so the ledges keep them safe through the night."
         },
         {
-          "prompt": "What does 'headway' mean?",
+          "prompt": "What happened two years ago when a visitor ignored the warning boards near the waterfall?",
           "choices": [
-            "A very cruel or terrible act",
-            "A short break or rest from something difficult",
-            "A strong fortress that protects a city or area",
-            "Progress or forward movement towards a goal"
+            "A radio call reports that Tariq has been found with a minor injury, and by sunrise he limps into the courtyard with his clothes torn and covered in dust.",
+            "They retreat to narrow cliff ledges to sleep because predators cannot follow them there.",
+            "The visitor slipped near the waterfall and had to be carried down the mountain by four rangers."
           ],
-          "answer": "Progress or forward movement towards a goal",
-          "explanation": "Headway means progress towards a goal, as when a trail crew makes slow headway through thick bamboo."
+          "answer": "The visitor slipped near the waterfall and had to be carried down the mountain by four rangers.",
+          "explanation": "Warden Amara recalls that the visitor slipped near the waterfall and had to be carried down by four rangers, which is why she says a closed sign is cheaper than a rescue."
+        },
+        {
+          "prompt": "What do the students eat during their midday rest beneath the rock outcrop?",
+          "choices": [
+            "The visitor slipped near the waterfall and had to be carried down the mountain by four rangers.",
+            "They eat dried dates and roasted chickpeas in the shade of the outcrop.",
+            "She notices conspicuous signs of erosion near the narrow rock bridge: the stones are loose and a crack splits the path near the end."
+          ],
+          "answer": "They eat dried dates and roasted chickpeas in the shade of the outcrop.",
+          "explanation": "In the midday rest under the rock outcrop, the group huddled in the shade 'eating dried dates and roasted chickpeas' while the heat shimmered on the stones below."
+        },
+        {
+          "prompt": "What news arrives just before dawn, and how does Tariq finally return to the citadel?",
+          "choices": [
+            "A radio call reports that Tariq has been found with a minor injury, and by sunrise he limps into the courtyard with his clothes torn and covered in dust.",
+            "They retreat to narrow cliff ledges to sleep because predators cannot follow them there.",
+            "They eat dried dates and roasted chickpeas in the shade of the outcrop."
+          ],
+          "answer": "A radio call reports that Tariq has been found with a minor injury, and by sunrise he limps into the courtyard with his clothes torn and covered in dust.",
+          "explanation": "Just before dawn a radio call says 'Found him. Minor injury. He is being escorted back', and by sunrise Tariq limps into the courtyard with his clothes torn and covered in dust."
+        },
+        {
+          "prompt": "When the path forks below the citadel, what evidence persuades Zara to choose the longer route?",
+          "choices": [
+            "The visitor slipped near the waterfall and had to be carried down the mountain by four rangers.",
+            "A radio call reports that Tariq has been found with a minor injury, and by sunrise he limps into the courtyard with his clothes torn and covered in dust.",
+            "She notices conspicuous signs of erosion near the narrow rock bridge: the stones are loose and a crack splits the path near the end."
+          ],
+          "answer": "She notices conspicuous signs of erosion near the narrow rock bridge: the stones are loose and a crack splits the path near the end.",
+          "explanation": "At the fork, Zara studies the terrain and notices conspicuous signs of erosion near the narrow bridge: the stones are loose and a crack splits the path near the end, so she chooses the longer, protected route."
         },
         {
           "prompt": "What does 'anarchy' mean?",
@@ -524,6 +369,553 @@
           ],
           "answer": "A situation with no government or authority, leading to confusion",
           "explanation": "Anarchy names the confusion that follows when nobody holds authority."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Comparing Natural Wonders",
+          "target": "The formalisation of the grazing agreement ended a century of argument."
+        },
+        {
+          "prompt": "Speaking 2: Role Play: The Leadership Debate",
+          "target": "Imagine you are one of the characters in the story."
+        },
+        {
+          "prompt": "Speaking 3: Reporting What Others Said",
+          "target": "The wolf's fur was the colour of rust against the pale grass."
+        },
+        {
+          "prompt": "Speaking 4: Conservation Discussion",
+          "target": "Both sides made a reasonable case for their point of view."
+        },
+        {
+          "prompt": "Speaking 5: Vocabulary Expert Interview",
+          "target": "The ascent tested not just physical endurance but judgement too."
+        },
+        {
+          "prompt": "Speaking 6: Explain and Respond",
+          "target": "The group moved cautiously across the narrow rock bridge."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "conservation.",
+            "in",
+            "interest",
+            "her",
+            "kindled",
+            "Mountains",
+            "Simien",
+            "the",
+            "about",
+            "Reading"
+          ],
+          "answer": "Reading about the Simien Mountains kindled her interest in conservation."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "gorge.",
+            "the",
+            "through",
+            "drifted",
+            "it",
+            "as",
+            "gently",
+            "spin",
+            "to",
+            "seemed",
+            "mist",
+            "The"
+          ],
+          "answer": "The mist seemed to spin gently as it drifted through the gorge."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "land?",
+            "the",
+            "nearest",
+            "live",
+            "who",
+            "people",
+            "the",
+            "with",
+            "disagree",
+            "sometimes",
+            "conservationists",
+            "do",
+            "Why"
+          ],
+          "answer": "Why do conservationists sometimes disagree with the people who live nearest the land?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "gate.",
+            "the",
+            "at",
+            "wait",
+            "to",
+            "had",
+            "and",
+            "permit",
+            "his",
+            "forgot",
+            "Rohan"
+          ],
+          "answer": "Rohan forgot his permit and had to wait at the gate."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rules.",
+            "the",
+            "ignores",
+            "person",
+            "one",
+            "even",
+            "if",
+            "fails",
+            "plan",
+            "whole",
+            "The"
+          ],
+          "answer": "The whole plan fails if even one person ignores the rules."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "path.",
+            "darkened",
+            "the",
+            "on",
+            "stone",
+            "loose",
+            "a",
+            "over",
+            "tripped",
+            "Sami"
+          ],
+          "answer": "Sami tripped over a loose stone on the darkened path."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'locus' mean in this unit?",
+          "choices": [
+            "The set of all points that satisfy a given condition.",
+            "Making something official by setting it out in fixed rules.",
+            "A short sharp saying that states a truth."
+          ],
+          "answer": "The set of all points that satisfy a given condition.",
+          "explanation": "locus: The set of all points that satisfy a given condition."
+        },
+        {
+          "prompt": "What does 'carved' mean in this unit?",
+          "choices": [
+            "Making something official by setting it out in fixed rules.",
+            "The set of all points that satisfy a given condition.",
+            "Shaped or cut something, often stone or wood, gradually over time or with a tool."
+          ],
+          "answer": "Shaped or cut something, often stone or wood, gradually over time or with a tool.",
+          "explanation": "carved: Shaped or cut something, often stone or wood, gradually over time or with a tool."
+        },
+        {
+          "prompt": "What does 'mountain' mean in this unit?",
+          "choices": [
+            "The set of all points that satisfy a given condition.",
+            "A very high piece of land, usually much higher and steeper than a hill.",
+            "Making something official by setting it out in fixed rules."
+          ],
+          "answer": "A very high piece of land, usually much higher and steeper than a hill.",
+          "explanation": "mountain: A very high piece of land, usually much higher and steeper than a hill."
+        },
+        {
+          "prompt": "What does 'western' mean in this unit?",
+          "choices": [
+            "Situated in or belonging to the west, the direction where the sun sets.",
+            "Making something official by setting it out in fixed rules.",
+            "The set of all points that satisfy a given condition."
+          ],
+          "answer": "Situated in or belonging to the west, the direction where the sun sets.",
+          "explanation": "western: Situated in or belonging to the west, the direction where the sun sets."
+        },
+        {
+          "prompt": "What does 'surged' mean in this unit?",
+          "choices": [
+            "Making something official by setting it out in fixed rules.",
+            "The set of all points that satisfy a given condition.",
+            "To move or increase suddenly and powerfully."
+          ],
+          "answer": "To move or increase suddenly and powerfully.",
+          "explanation": "surged: To move or increase suddenly and powerfully."
+        },
+        {
+          "prompt": "What does 'atrocity' mean in this unit?",
+          "choices": [
+            "The set of all points that satisfy a given condition.",
+            "A very cruel or terrible act",
+            "Making something official by setting it out in fixed rules."
+          ],
+          "answer": "A very cruel or terrible act",
+          "explanation": "atrocity: A very cruel or terrible act"
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'aphorism'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Aphorism is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'ledges'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Ledges is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'snows'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Snows is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'rougher'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Rougher is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'options'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Options is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'quaver'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Quaver is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "biosphere",
+              "The whole zone of the Earth where living things exist."
+            ],
+            [
+              "rigorous",
+              "Careful, thorough, and following the method exactly."
+            ],
+            [
+              "cellular",
+              "To do with the cells that living things are made of."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "high",
+              "Reaching a great distance above the ground, the sea, or a starting point."
+            ],
+            [
+              "stronghold",
+              "A place that is strongly defended or protected, often by nature rather than people."
+            ],
+            [
+              "wolf",
+              "A wild animal related to the dog that often hunts alone or in a group."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "threats",
+              "Things that are likely to cause harm or danger."
+            ],
+            [
+              "tended",
+              "Looked after or cared for, especially a plant, animal, or sick person."
+            ],
+            [
+              "widens",
+              "Becomes wider, or makes something wider than it was before."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "alternative",
+              "A different choice or option instead of the one already suggested."
+            ],
+            [
+              "swirls",
+              "Patterns or movements that twist and curve around, like small spinning currents."
+            ],
+            [
+              "arrogant",
+              "Having an unfairly high opinion of your own importance or abilities."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "abruptly",
+              "Suddenly and without warning, in a way that feels sharp or unexpected."
+            ],
+            [
+              "pushed",
+              "To press against something with force in order to move it."
+            ],
+            [
+              "outposts",
+              "Small camps or stations set up away from the main base, often to watch or support an area."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "mistook",
+              "To wrongly understand or identify something as something else."
+            ],
+            [
+              "anarchy",
+              "A situation with no government or authority, leading to confusion"
+            ],
+            [
+              "conspicuous",
+              "Easy to see or notice; very obvious"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Citadel of Wind and Stone, part 1': You will break the rules. That is a ______ we agreed to avoid.",
+          "choices": [
+            "respite",
+            "destination",
+            "transgression",
+            "citadel"
+          ],
+          "answer": "transgression",
+          "explanation": "The text says: That is a transgression we agreed to avoid."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Citadel of Wind and Stone, part 2': She studied the terrain, noting ______ signs of erosion near the narrow bridge.",
+          "choices": [
+            "gruelling",
+            "conspicuous",
+            "audacious",
+            "gnarled"
+          ],
+          "answer": "conspicuous",
+          "explanation": "The text says: She studied the terrain, noting conspicuous signs of erosion near the narrow bridge."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Citadel of Wind and Stone, part 2': Wind pushed against the students, ______ even the strongest from rushing.",
+          "choices": [
+            "kindling",
+            "antagonising",
+            "quavering",
+            "deterring"
+          ],
+          "answer": "deterring",
+          "explanation": "The text says: Wind pushed against the students, deterring even the strongest from rushing."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Roof of Africa: Wonders Worth Keeping': fewer than five hundred survive, which makes every single animal ______ to the future of its species.",
+          "choices": [
+            "outlandish",
+            "crucial",
+            "brusque",
+            "furtive"
+          ],
+          "answer": "crucial",
+          "explanation": "The text says: fewer than five hundred survive, which makes every single animal crucial to the future of its species."
+        },
+        {
+          "prompt": "Choose the missing word from 'Should the High Trails Close? Two Voices from the Reserve': It is a ______. The mountain needs one, exactly as a runner needs rest after a gruelling race.",
+          "choices": [
+            "respite",
+            "transgression",
+            "headway",
+            "eddy"
+          ],
+          "answer": "respite",
+          "explanation": "The text says: It is a respite. The mountain needs one, exactly as a runner needs rest after a gruelling race."
+        },
+        {
+          "prompt": "What does 'furtive' mean?",
+          "choices": [
+            "Showing strong feelings or enthusiasm for something",
+            "Done secretly because you do not want to be noticed",
+            "Twisted and rough, usually describing old trees or branches",
+            "Extremely tiring and difficult"
+          ],
+          "answer": "Done secretly because you do not want to be noticed",
+          "explanation": "Furtive describes actions done secretly, like the furtive glance at the map in the word's example sentence."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Roof of Africa: Wonders Worth Keeping': fewer than five hundred survive, which makes every single animal ______ to the future of its species.",
+          "choices": [
+            "outlandish",
+            "crucial",
+            "brusque",
+            "furtive"
+          ],
+          "answer": "crucial",
+          "explanation": "The text says: fewer than five hundred survive, which makes every single animal crucial to the future of its species."
+        },
+        {
+          "prompt": "Choose the missing word from 'Should the High Trails Close? Two Voices from the Reserve': It is a ______. The mountain needs one, exactly as a runner needs rest after a gruelling race.",
+          "choices": [
+            "respite",
+            "transgression",
+            "headway",
+            "eddy"
+          ],
+          "answer": "respite",
+          "explanation": "The text says: It is a respite. The mountain needs one, exactly as a runner needs rest after a gruelling race."
+        },
+        {
+          "prompt": "Which word means: The study of how features are passed from parents to offspring.",
+          "choices": [
+            "genetics",
+            "formalisation",
+            "locus"
+          ],
+          "answer": "genetics",
+          "explanation": "genetics: The study of how features are passed from parents to offspring."
+        },
+        {
+          "prompt": "Which word means: A very high piece of land, usually much higher and steeper than a hill.",
+          "choices": [
+            "formalisation",
+            "locus",
+            "mountain"
+          ],
+          "answer": "mountain",
+          "explanation": "mountain: A very high piece of land, usually much higher and steeper than a hill."
+        },
+        {
+          "prompt": "What type of word is 'clashed'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Clashed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'atrocity'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Atrocity is used as a noun in this dictionary sense."
         }
       ]
     }

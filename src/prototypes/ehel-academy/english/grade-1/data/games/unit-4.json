@@ -5,7 +5,7 @@
   "unitId": "eng-g01-t02-u04",
   "title": "Making Things Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A pet animal that barks, wags its tail and likes long walks.",
           "choices": [
             "dog",
-            "hop",
-            "colour"
+            "fox",
+            "hop"
           ],
           "answer": "dog",
           "explanation": "dog: A pet animal that barks, wags its tail and likes long walks."
         },
         {
-          "prompt": "Which word means: The colour of soil, tree trunks and warm bread.",
+          "prompt": "Which word means: The colour of the sky on a sunny day.",
           "choices": [
             "dog",
-            "hop",
-            "brown"
+            "fox",
+            "blue"
           ],
-          "answer": "brown",
-          "explanation": "brown: The colour of soil, tree trunks and warm bread."
+          "answer": "blue",
+          "explanation": "blue: The colour of the sky on a sunny day."
         },
         {
-          "prompt": "Which word means: Gentlemen is a polite word for men.",
+          "prompt": "Which word means: Either is used to say something is also true, usually after the word not.",
           "choices": [
-            "hop",
-            "gentlemen",
+            "fox",
+            "either",
             "dog"
           ],
-          "answer": "gentlemen",
-          "explanation": "gentlemen: Gentlemen is a polite word for men."
+          "answer": "either",
+          "explanation": "either: Either is used to say something is also true, usually after the word not."
+        },
+        {
+          "prompt": "Which word means: A donkey is an animal like a small horse with long ears.",
+          "choices": [
+            "donkey",
+            "dog",
+            "fox"
+          ],
+          "answer": "donkey",
+          "explanation": "donkey: A donkey is an animal like a small horse with long ears."
+        },
+        {
+          "prompt": "Which word means: Things you wear on your feet when you go outside.",
+          "choices": [
+            "dog",
+            "fox",
+            "shoes"
+          ],
+          "answer": "shoes",
+          "explanation": "shoes: Things you wear on your feet when you go outside."
+        },
+        {
+          "prompt": "Which word means: Carry means to hold something and move it with you.",
+          "choices": [
+            "fox",
+            "carry",
+            "dog"
+          ],
+          "answer": "carry",
+          "explanation": "carry: Carry means to hold something and move it with you."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The colour of milk, fresh snow and clean paper.",
-          "answer": "white"
+          "clue": "The colour of grass and of leaves on a tree.",
+          "answer": "green"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Sometimes means something happens now and then, but not always.",
-          "answer": "sometimes"
+          "clue": "Laughed means made a happy sound because something was funny.",
+          "answer": "laughed"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Lived means had a home in a certain place.",
+          "answer": "lived"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Strong shoes that cover your feet and your ankles.",
+          "answer": "boots"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A colour is what we see, like red, blue or green.",
+          "answer": "colour"
         }
       ]
     },
@@ -95,27 +140,61 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "blue.",
-            "deep",
-            "looks",
-            "sea",
-            "The"
+            "flowers.",
+            "draw",
+            "to",
+            "likes",
+            "Amal"
           ],
-          "answer": "The sea looks deep blue."
+          "answer": "Amal likes to draw flowers."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "neat.",
-            "mat",
+            "grass.",
             "the",
-            "make",
+            "weave",
             "to",
-            "again",
-            "tried",
+            "started",
             "Amal"
           ],
-          "answer": "Amal tried again to make the mat neat."
+          "answer": "Amal started to weave the grass."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "patient.",
+            "very",
+            "was",
+            "Amal",
+            "said",
+            "Grandma"
+          ],
+          "answer": "Grandma said Amal was very patient."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "scarecrow.",
+            "the",
+            "for",
+            "straw",
+            "brought",
+            "Koko"
+          ],
+          "answer": "Koko brought straw for the scarecrow."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "farm.",
+            "the",
+            "on",
+            "boots",
+            "wears",
+            "Sami"
+          ],
+          "answer": "Sami wears boots on the farm."
         }
       ]
     },
@@ -128,300 +207,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Sami has made a red square. Which sentence describes it?",
+          "prompt": "Which word names a shape?",
           "choices": [
-            "It is a green triangle.",
-            "It is a blue square.",
-            "It is a red square.",
-            "It is a red circle."
-          ],
-          "answer": "It is a red square.",
-          "explanation": "The colour and the shape must both match, so only this sentence is true."
-        },
-        {
-          "prompt": "Which thing do you use to cut paper?",
-          "choices": [
-            "ruler",
-            "crayon",
+            "circle",
             "glue",
-            "scissors"
+            "yellow",
+            "soft"
           ],
-          "answer": "scissors",
-          "explanation": "Scissors cut; glue sticks, a crayon colours and a ruler helps draw straight lines."
+          "answer": "circle",
+          "explanation": "A circle is a shape; yellow is a colour, glue is a thing we use and soft tells how something feels."
         },
         {
-          "prompt": "Which thing do you use to stick two pieces of paper together?",
+          "prompt": "Which shape has three sides?",
           "choices": [
-            "glue",
-            "rubber",
-            "scissors",
-            "pencil"
+            "circle",
+            "triangle",
+            "square",
+            "rectangle"
           ],
-          "answer": "glue",
-          "explanation": "Glue sticks things; scissors cut them apart, a pencil writes and a rubber takes writing away."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
+          "answer": "triangle",
+          "explanation": "A triangle has three sides; a circle has none and a square and rectangle have four."
+        },
         {
-          "prompt": "What are Amal and Grandma making under the big tree?",
+          "prompt": "Which shape has four sides that are all the same length?",
           "choices": [
-            "A mat, from soft grass",
-            "She wove the mat slowly and carefully, without rushing",
-            "To show her that trying again makes work better"
+            "circle",
+            "line",
+            "square",
+            "triangle"
           ],
-          "answer": "A mat, from soft grass",
-          "explanation": "Grandma is making a mat from soft grass and Amal says she wants one too."
+          "answer": "square",
+          "explanation": "All four sides of a square are equal; a triangle has three sides, a circle is round and a line is straight."
         },
-        {
-          "prompt": "Grandma said Amal was patient. What did Amal do slowly?",
-          "choices": [
-            "She took a deep breath and tried again",
-            "I am cutting ___.",
-            "She wove the mat slowly and carefully, without rushing"
-          ],
-          "answer": "She wove the mat slowly and carefully, without rushing",
-          "explanation": "The second time Amal weaves slow and careful, and does not rush."
-        },
-        {
-          "prompt": "Why did Adam tell Amal about his own first picture?",
-          "choices": [
-            "I am wearing ___.",
-            "To show her that trying again makes work better",
-            "She took a deep breath and tried again"
-          ],
-          "answer": "To show her that trying again makes work better",
-          "explanation": "Adam says his first picture was not good either, and he tried again and again."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 - Listen and point",
-          "target": "An adult can hold up a shape card and name it, or you can listen to the audio name it, then you name the next one."
-        },
-        {
-          "prompt": "Speaking 3 - Ask and answer",
-          "target": "Tell your partner what you are cutting as you work."
-        },
-        {
-          "prompt": "Speaking 5 - Role-play",
-          "target": "Play a dressing-up game and say what you have on."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "shirt.",
-            "clean",
-            "a",
-            "on",
-            "puts",
-            "Theo"
-          ],
-          "answer": "Theo puts on a clean shirt."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "mat.",
-            "a",
-            "weave",
-            "to",
-            "how",
-            "Amal",
-            "showed",
-            "Grandma"
-          ],
-          "answer": "Grandma showed Amal how to weave a mat."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "mat.",
-            "the",
-            "on",
-            "morning",
-            "all",
-            "worked",
-            "Grandma"
-          ],
-          "answer": "Grandma worked all morning on the mat."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'shape' mean in this unit?",
-          "choices": [
-            "A shape is the outline of something, like a circle or a square.",
-            "A pet animal that barks, wags its tail and likes long walks.",
-            "Hop means to jump quickly on one or both feet."
-          ],
-          "answer": "A shape is the outline of something, like a circle or a square.",
-          "explanation": "shape: A shape is the outline of something, like a circle or a square."
-        },
-        {
-          "prompt": "What does 'worked' mean in this unit?",
-          "choices": [
-            "A pet animal that barks, wags its tail and likes long walks.",
-            "Hop means to jump quickly on one or both feet.",
-            "Worked means did a job or task, often for a long time."
-          ],
-          "answer": "Worked means did a job or task, often for a long time.",
-          "explanation": "worked: Worked means did a job or task, often for a long time."
-        },
-        {
-          "prompt": "What does 'hop' mean in this unit?",
-          "choices": [
-            "A colour is what we see, like red, blue or green.",
-            "Hop means to jump quickly on one or both feet.",
-            "A pet animal that barks, wags its tail and likes long walks."
-          ],
-          "answer": "Hop means to jump quickly on one or both feet.",
-          "explanation": "hop: Hop means to jump quickly on one or both feet."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'smile'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Smile is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'superhero'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Superhero is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'young'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Young is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "top",
-              "The top is the highest part of something."
-            ],
-            [
-              "star",
-              "A tiny point of light in the night sky. The sun is a star."
-            ],
-            [
-              "old",
-              "Old means having lived or been here for a long time."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "grey",
-              "Grey is the colour between black and white, like rain clouds."
-            ],
-            [
-              "started",
-              "Started means began doing something."
-            ],
-            [
-              "rush",
-              "To rush means to hurry and move very quickly."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "flap",
-              "To flap means to move quickly up and down, like a bird's wings."
-            ],
-            [
-              "gold",
-              "A shiny yellow colour, like a special ring."
-            ],
-            [
-              "king",
-              "A man in stories who rules a whole country."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which shape is round with no corners?",
           "choices": [
@@ -458,13 +275,513 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What are Amal and Grandma making under the big tree?",
+          "choices": [
+            "A mat, from soft grass",
+            "She wove the mat slowly and carefully, without rushing",
+            "To show her that trying again makes work better"
+          ],
+          "answer": "A mat, from soft grass",
+          "explanation": "Grandma is making a mat from soft grass and Amal says she wants one too."
+        },
+        {
+          "prompt": "Which shape did Adam cut out in red?",
+          "choices": [
+            "She took a deep breath and tried again",
+            "I am cutting ___.",
+            "A circle"
+          ],
+          "answer": "A circle",
+          "explanation": "Adam says, 'I cut a red circle and a blue square.'"
+        },
+        {
+          "prompt": "Grandma said Amal was patient. What did Amal do slowly?",
+          "choices": [
+            "I am wearing ___.",
+            "She wove the mat slowly and carefully, without rushing",
+            "Pleased and proud, because she smiled a big smile"
+          ],
+          "answer": "She wove the mat slowly and carefully, without rushing",
+          "explanation": "The second time Amal weaves slow and careful, and does not rush."
+        },
+        {
+          "prompt": "How did Grandma feel about the finished mat? How do you know?",
+          "choices": [
+            "Pleased and proud, because she smiled a big smile",
+            "To show her that trying again makes work better",
+            "A mat, from soft grass"
+          ],
+          "answer": "Pleased and proud, because she smiled a big smile",
+          "explanation": "Grandma smiles a big smile and says, 'You did it, Amal! You were patient.'"
+        },
+        {
+          "prompt": "Why did Adam tell Amal about his own first picture?",
+          "choices": [
+            "I am cutting ___.",
+            "A circle",
+            "To show her that trying again makes work better"
+          ],
+          "answer": "To show her that trying again makes work better",
+          "explanation": "Adam says his first picture was not good either, and he tried again and again."
+        },
+        {
+          "prompt": "Which talk line do you say while you cut paper?",
+          "choices": [
+            "She wove the mat slowly and carefully, without rushing",
+            "I am cutting ___.",
+            "I am wearing ___."
+          ],
+          "answer": "I am cutting ___.",
+          "explanation": "'I am cutting ___' is the talk line for cutting."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "An adult can hold up a shape card and name it, or you can listen to the audio name it, then you name the next one."
+        },
+        {
+          "prompt": "Speaking 2 - Repeat the model",
+          "target": "Copy an adult if one is nearby, or copy the audio model, then describe your own shape with a colour word."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "Amal started to weave the grass."
+        },
+        {
+          "prompt": "Speaking 4 - Picture talk",
+          "target": "Grandma said Amal was very patient."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "Play a dressing-up game and say what you have on."
+        },
+        {
+          "prompt": "Speaking 6 - My confident turn",
+          "target": "Sami wears boots on the farm."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "up.",
+            "gave",
+            "then",
+            "and",
+            "stars",
+            "fifty",
+            "counted",
+            "Amal"
+          ],
+          "answer": "Amal counted fifty stars and then gave up."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shape.",
+            "square",
+            "a",
+            "has",
+            "mat",
+            "door",
+            "My"
+          ],
+          "answer": "My door mat has a square shape."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hand.",
+            "her",
+            "under",
+            "bumpy",
+            "felt",
+            "mat",
+            "first",
+            "Amal's"
+          ],
+          "answer": "Amal's first mat felt bumpy under her hand."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "shoes.",
+            "blue",
+            "new",
+            "his",
+            "wearing",
+            "is",
+            "Adam"
+          ],
+          "answer": "Adam is wearing his new blue shoes."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "carefully.",
+            "away",
+            "mat",
+            "the",
+            "put",
+            "Grandma"
+          ],
+          "answer": "Grandma put the mat away carefully."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "chair.",
+            "big",
+            "a",
+            "on",
+            "sits",
+            "king",
+            "The"
+          ],
+          "answer": "The king sits on a big chair."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'fox' mean in this unit?",
+          "choices": [
+            "A fox is a wild animal with a pointed face and a bushy tail.",
+            "A pet animal that barks, wags its tail and likes long walks.",
+            "Hop means to jump quickly on one or both feet."
+          ],
+          "answer": "A fox is a wild animal with a pointed face and a bushy tail.",
+          "explanation": "fox: A fox is a wild animal with a pointed face and a bushy tail."
+        },
+        {
+          "prompt": "What does 'pink' mean in this unit?",
+          "choices": [
+            "A pet animal that barks, wags its tail and likes long walks.",
+            "A fox is a wild animal with a pointed face and a bushy tail.",
+            "A light colour made from red and white, like a flower."
+          ],
+          "answer": "A light colour made from red and white, like a flower.",
+          "explanation": "pink: A light colour made from red and white, like a flower."
+        },
+        {
+          "prompt": "What does 'try' mean in this unit?",
+          "choices": [
+            "A fox is a wild animal with a pointed face and a bushy tail.",
+            "To try means to make an effort to do something.",
+            "A pet animal that barks, wags its tail and likes long walks."
+          ],
+          "answer": "To try means to make an effort to do something.",
+          "explanation": "try: To try means to make an effort to do something."
+        },
+        {
+          "prompt": "What does 'brought' mean in this unit?",
+          "choices": [
+            "Brought means carried something to a place.",
+            "A pet animal that barks, wags its tail and likes long walks.",
+            "A fox is a wild animal with a pointed face and a bushy tail."
+          ],
+          "answer": "Brought means carried something to a place.",
+          "explanation": "brought: Brought means carried something to a place."
+        },
+        {
+          "prompt": "What does 'princess' mean in this unit?",
+          "choices": [
+            "A pet animal that barks, wags its tail and likes long walks.",
+            "A fox is a wild animal with a pointed face and a bushy tail.",
+            "A girl in stories whose father is a king."
+          ],
+          "answer": "A girl in stories whose father is a king.",
+          "explanation": "princess: A girl in stories whose father is a king."
+        },
+        {
+          "prompt": "What does 'open' mean in this unit?",
+          "choices": [
+            "A fox is a wild animal with a pointed face and a bushy tail.",
+            "Open means to move something so you can go in or see inside.",
+            "A pet animal that barks, wags its tail and likes long walks."
+          ],
+          "answer": "Open means to move something so you can go in or see inside.",
+          "explanation": "open: Open means to move something so you can go in or see inside."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'hop'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Hop is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'making'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Making is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'earth'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Earth is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'garden'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Garden is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'make'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Make is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'young'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Young is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "top",
+              "The top is the highest part of something."
+            ],
+            [
+              "pot",
+              "A pot is a deep round dish you cook food in."
+            ],
+            [
+              "draw",
+              "To make a picture with a pencil or crayons."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "yellow",
+              "The colour of the sun and of ripe bananas."
+            ],
+            [
+              "village",
+              "A village is a small place in the countryside where people live."
+            ],
+            [
+              "bumpy",
+              "Bumpy means not flat or smooth, with lots of small lumps."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "tried",
+              "Tried means made an effort to do something."
+            ],
+            [
+              "patient",
+              "Patient means able to wait calmly without getting upset."
+            ],
+            [
+              "sillier",
+              "Sillier means more silly or more funny than before."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "planted",
+              "Planted means put seeds or plants into the ground to grow."
+            ],
+            [
+              "away",
+              "Away means moving to a different place, far from here."
+            ],
+            [
+              "dress",
+              "Clothing that joins the top and skirt in one piece."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "glasses",
+              "Something you wear on your face to help you see."
+            ],
+            [
+              "cook",
+              "A person who makes food for other people to eat."
+            ],
+            [
+              "thank",
+              "To tell someone you are happy for their kindness."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "count",
+              "Count means to say numbers in order to find how many."
+            ],
+            [
+              "tall",
+              "Tall means reaching up high, more than most people or things."
+            ],
+            [
+              "triangle",
+              "A shape with three straight sides and three pointy corners."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Maya mixes red paint with yellow paint. Which colour does she make?",
+          "choices": [
+            "green",
+            "orange",
+            "blue",
+            "black"
+          ],
+          "answer": "orange",
+          "explanation": "Red and yellow together make orange; blue and yellow would make green."
+        },
+        {
+          "prompt": "Sami has made a red square. Which sentence describes it?",
+          "choices": [
+            "It is a green triangle.",
+            "It is a blue square.",
+            "It is a red square.",
+            "It is a red circle."
+          ],
+          "answer": "It is a red square.",
+          "explanation": "The colour and the shape must both match, so only this sentence is true."
+        },
+        {
+          "prompt": "Which thing do you use to cut paper?",
+          "choices": [
+            "ruler",
+            "crayon",
+            "glue",
+            "scissors"
+          ],
+          "answer": "scissors",
+          "explanation": "Scissors cut; glue sticks, a crayon colours and a ruler helps draw straight lines."
+        },
+        {
+          "prompt": "Which thing do you use to stick two pieces of paper together?",
+          "choices": [
+            "glue",
+            "rubber",
+            "scissors",
+            "pencil"
+          ],
+          "answer": "glue",
+          "explanation": "Glue sticks things; scissors cut them apart, a pencil writes and a rubber takes writing away."
+        },
+        {
+          "prompt": "Samira has a blue hat on her head. Which sentence tells us that?",
+          "choices": [
+            "I am making a blue hat.",
+            "I am wearing a blue hat.",
+            "I am cutting a blue hat.",
+            "I am painting a blue hat."
+          ],
+          "answer": "I am wearing a blue hat.",
+          "explanation": "Wearing means it is on you; making, cutting and painting are things you do before it is finished."
+        },
         {
           "prompt": "Which word names a shape?",
           "choices": [
@@ -475,28 +792,78 @@
           ],
           "answer": "circle",
           "explanation": "A circle is a shape; yellow is a colour, glue is a thing we use and soft tells how something feels."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which thing do you use to stick two pieces of paper together?",
+          "choices": [
+            "glue",
+            "rubber",
+            "scissors",
+            "pencil"
+          ],
+          "answer": "glue",
+          "explanation": "Glue sticks things; scissors cut them apart, a pencil writes and a rubber takes writing away."
         },
         {
-          "prompt": "Which shape has three sides?",
+          "prompt": "Samira has a blue hat on her head. Which sentence tells us that?",
           "choices": [
-            "circle",
-            "triangle",
-            "square",
-            "rectangle"
+            "I am making a blue hat.",
+            "I am wearing a blue hat.",
+            "I am cutting a blue hat.",
+            "I am painting a blue hat."
           ],
-          "answer": "triangle",
-          "explanation": "A triangle has three sides; a circle has none and a square and rectangle have four."
+          "answer": "I am wearing a blue hat.",
+          "explanation": "Wearing means it is on you; making, cutting and painting are things you do before it is finished."
         },
         {
-          "prompt": "Which shape has four sides that are all the same length?",
+          "prompt": "Which word means: The colour of a tomato, a strawberry or a fire engine.",
           "choices": [
-            "circle",
-            "line",
-            "square",
-            "triangle"
+            "red",
+            "dog",
+            "fox"
           ],
-          "answer": "square",
-          "explanation": "All four sides of a square are equal; a triangle has three sides, a circle is round and a line is straight."
+          "answer": "red",
+          "explanation": "red: The colour of a tomato, a strawberry or a fire engine."
+        },
+        {
+          "prompt": "Which word means: To try means to make an effort to do something.",
+          "choices": [
+            "dog",
+            "fox",
+            "try"
+          ],
+          "answer": "try",
+          "explanation": "try: To try means to make an effort to do something."
+        },
+        {
+          "prompt": "What type of word is 'shirt'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Shirt is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'open'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Open is used as a verb in this dictionary sense."
         }
       ]
     }

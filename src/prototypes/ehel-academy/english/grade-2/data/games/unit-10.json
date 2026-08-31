@@ -5,7 +5,7 @@
   "unitId": "eng-g02-t03-u10",
   "title": "My English World: Grade 2 Capstone Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A cube is a solid shape with six flat, square sides.",
           "choices": [
             "cube",
-            "beginning",
-            "meaning"
+            "perhaps",
+            "first"
           ],
           "answer": "cube",
           "explanation": "cube: A cube is a solid shape with six flat, square sides."
         },
         {
-          "prompt": "Which word means: Yet means up to now, or so far.",
+          "prompt": "Which word means: Zero is the number 0. It means none at all.",
           "choices": [
             "cube",
-            "beginning",
-            "yet"
+            "perhaps",
+            "zero"
           ],
-          "answer": "yet",
-          "explanation": "yet: Yet means up to now, or so far."
+          "answer": "zero",
+          "explanation": "zero: Zero is the number 0. It means none at all."
         },
         {
-          "prompt": "Which word means: Ticked means marked something with a small check mark to show it is done.",
+          "prompt": "Which word means: Newest means the most recently made, out of a group of things.",
           "choices": [
-            "beginning",
-            "ticked",
+            "perhaps",
+            "newest",
             "cube"
           ],
-          "answer": "ticked",
-          "explanation": "ticked: Ticked means marked something with a small check mark to show it is done."
+          "answer": "newest",
+          "explanation": "newest: Newest means the most recently made, out of a group of things."
+        },
+        {
+          "prompt": "Which word means: An easel is a wooden stand that holds your picture while you paint or draw.",
+          "choices": [
+            "easel",
+            "cube",
+            "perhaps"
+          ],
+          "answer": "easel",
+          "explanation": "easel: An easel is a wooden stand that holds your picture while you paint or draw."
+        },
+        {
+          "prompt": "Which word means: To enjoy something or to think that it is good.",
+          "choices": [
+            "cube",
+            "perhaps",
+            "like"
+          ],
+          "answer": "like",
+          "explanation": "like: To enjoy something or to think that it is good."
+        },
+        {
+          "prompt": "Which word means: An idea is a thought or plan that you think of in your mind.",
+          "choices": [
+            "perhaps",
+            "idea",
+            "cube"
+          ],
+          "answer": "idea",
+          "explanation": "idea: An idea is a thought or plan that you think of in your mind."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Perhaps means maybe, when you are not sure.",
-          "answer": "perhaps"
+          "clue": "Zero is the number 0. It means none at all.",
+          "answer": "zero"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A mistake is something you get wrong by accident.",
-          "answer": "mistake"
+          "clue": "Newest means the most recently made, out of a group of things.",
+          "answer": "newest"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Closing means shutting something, like a book, a box or a door.",
+          "answer": "closing"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To enjoy something or to think that it is good.",
+          "answer": "like"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Facts or details about something.",
+          "answer": "information"
         }
       ]
     },
@@ -96,31 +141,73 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "Theo.",
-            "neighbour",
-            "her",
-            "about",
-            "poem",
-            "a",
-            "lay",
-            "it",
-            "Behind"
+            "tomorrow.",
+            "farm",
+            "the",
+            "to",
+            "go",
+            "will",
+            "We"
           ],
-          "answer": "Behind it lay a poem about her neighbour Theo."
+          "answer": "We will go to the farm tomorrow."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "sentence.",
-            "this",
-            "in",
-            "stop",
+            "page.",
+            "your",
+            "for",
+            "pictures",
+            "three",
+            "least",
+            "at",
+            "Choose"
+          ],
+          "answer": "Choose at least three pictures for your page."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "stop.",
             "full",
             "missing",
-            "the",
-            "Find"
+            "a",
+            "hear",
+            "can",
+            "ears",
+            "Your"
           ],
-          "answer": "Find the missing full stop in this sentence."
+          "answer": "Your ears can hear a missing full stop."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "yard.",
+            "school",
+            "the",
+            "above",
+            "high",
+            "flew",
+            "swallow",
+            "A"
+          ],
+          "answer": "A swallow flew high above the school yard."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "night.",
+            "at",
+            "garden",
+            "the",
+            "in",
+            "chirping",
+            "cricket",
+            "a",
+            "heard",
+            "We"
+          ],
+          "answer": "We heard a cricket chirping in the garden at night."
         }
       ]
     },
@@ -133,303 +220,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence tells you about the past?",
+          "prompt": "This is Amal. ______ is presenting her booklet to the class.",
           "choices": [
-            "We planted a tree last term.",
-            "We are planting a tree today.",
-            "We will plant a tree in Year 3.",
-            "We plant trees every year."
+            "He",
+            "She",
+            "They",
+            "We"
           ],
-          "answer": "We planted a tree last term.",
-          "explanation": "Planted ends in -ed and last term is finished, so this is the past from Unit 7."
+          "answer": "She",
+          "explanation": "Amal is one girl, so we use she. Unit 1 taught this pronoun."
         },
         {
-          "prompt": "There ______ three pictures beside the booklet.",
+          "prompt": "The firefighters ______ helping on Warta Street.",
           "choices": [
             "is",
             "am",
-            "are",
-            "was"
+            "was",
+            "are"
           ],
           "answer": "are",
-          "explanation": "Three pictures are more than one, so we use There are, as Unit 8 taught."
+          "explanation": "Firefighters is more than one person, so the verb is are. This is the Unit 2 pattern."
         },
         {
-          "prompt": "Which word means a large building with many different shops inside it?",
+          "prompt": "Which sentence is a command?",
           "choices": [
-            "library",
-            "shopping centre",
-            "flat",
-            "hut"
+            "Point at page four.",
+            "Amal points at page four.",
+            "She is pointing at page four.",
+            "Amal will point at page four."
           ],
-          "answer": "shopping centre",
-          "explanation": "A library holds books, a flat is rooms to live in and a hut is a small home. Only the shopping centre holds many shops."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What did Amal find at the very front of her English folder?",
-          "choices": [
-            "Her welcome card from Unit 1, with her name written in careful blue letters.",
-            "Her hands felt cold, and she had to breathe slowly before she spoke.",
-            "It wants you to read every page aloud before you hand the booklet in."
-          ],
-          "answer": "Her welcome card from Unit 1, with her name written in careful blue letters.",
-          "explanation": "The first paragraph says the welcome card was at the front and the name was in careful blue letters."
+          "answer": "Point at page four.",
+          "explanation": "A command starts with the plain verb and tells somebody what to do, as in Unit 3."
         },
-        {
-          "prompt": "Amal wrote that she wants to read a long chapter book next year. What does that tell you about her reading now?",
-          "choices": [
-            "Her hands felt cold, and she had to breathe slowly before she spoke.",
-            "Page four, because it shows the sun and her long shadow.",
-            "She can already read shorter books by herself, so she is ready for something longer."
-          ],
-          "answer": "She can already read shorter books by herself, so she is ready for something longer.",
-          "explanation": "This is an inference: the goal only makes sense if her reading has already grown this year."
-        },
-        {
-          "prompt": "The brief says your ears will find the missing full stops. What does it want you to do?",
-          "choices": [
-            "Adam said it was too short, so she added two facts about planting.",
-            "It wants you to read every page aloud before you hand the booklet in.",
-            "She can already read shorter books by herself, so she is ready for something longer."
-          ],
-          "answer": "It wants you to read every page aloud before you hand the booklet in.",
-          "explanation": "The last paragraph explains that reading aloud is how you hear a missing full stop."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Introduce My English World",
-          "target": "My name is ______."
-        },
-        {
-          "prompt": "Speaking 3 — Read Aloud with Expression",
-          "target": "Behind it lay a poem about her neighbour Theo."
-        },
-        {
-          "prompt": "Speaking 5 — Answer a Visitor's Question",
-          "target": "Which unit did this page come from?"
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "bag.",
-            "school",
-            "my",
-            "carry",
-            "to",
-            "arms",
-            "my",
-            "use",
-            "I"
-          ],
-          "answer": "I use my arms to carry my school bag."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "carefully?",
-            "brief",
-            "the",
-            "read",
-            "you",
-            "Did"
-          ],
-          "answer": "Did you read the brief carefully?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "page.",
-            "sky",
-            "the",
-            "on",
-            "shadow",
-            "own",
-            "her",
-            "drew",
-            "Amal"
-          ],
-          "answer": "Amal drew her own shadow on the sky page."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'added' mean in this unit?",
-          "choices": [
-            "Added means put something extra into a piece of writing or a drawing.",
-            "A cube is a solid shape with six flat, square sides.",
-            "The beginning is the first part, before the middle and the end."
-          ],
-          "answer": "Added means put something extra into a piece of writing or a drawing.",
-          "explanation": "added: Added means put something extra into a piece of writing or a drawing."
-        },
-        {
-          "prompt": "What does 'shadow' mean in this unit?",
-          "choices": [
-            "A cube is a solid shape with six flat, square sides.",
-            "The beginning is the first part, before the middle and the end.",
-            "A dark shape made when something blocks the light."
-          ],
-          "answer": "A dark shape made when something blocks the light.",
-          "explanation": "shadow: A dark shape made when something blocks the light."
-        },
-        {
-          "prompt": "What does 'beginning' mean in this unit?",
-          "choices": [
-            "The meaning is what a word or a story is telling you.",
-            "The beginning is the first part, before the middle and the end.",
-            "A cube is a solid shape with six flat, square sides."
-          ],
-          "answer": "The beginning is the first part, before the middle and the end.",
-          "explanation": "beginning: The beginning is the first part, before the middle and the end."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'fixing'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Fixing is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'sun'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Sun is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'conversation'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Conversation is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "use",
-              "To use something means to do a job with it."
-            ],
-            [
-              "information",
-              "Facts or details about something."
-            ],
-            [
-              "discuss",
-              "To talk about something with other people."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "together",
-              "Together means with each other, in the same place."
-            ],
-            [
-              "clearly",
-              "Clearly means in a way that is easy to hear, see or understand."
-            ],
-            [
-              "fix",
-              "Fix means to make something right after you find a mistake in it."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "easel",
-              "An easel is a wooden stand that holds your picture while you paint or draw."
-            ],
-            [
-              "library",
-              "A building where you can read books and borrow them to take home."
-            ],
-            [
-              "hand",
-              "The part at the end of your arm, with a thumb and fingers."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sentence compares two things correctly?",
           "choices": [
@@ -466,13 +288,514 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What did Amal find at the very front of her English folder?",
+          "choices": [
+            "Her welcome card from Unit 1, with her name written in careful blue letters.",
+            "Her hands felt cold, and she had to breathe slowly before she spoke.",
+            "It wants you to read every page aloud before you hand the booklet in."
+          ],
+          "answer": "Her welcome card from Unit 1, with her name written in careful blue letters.",
+          "explanation": "The first paragraph says the welcome card was at the front and the name was in careful blue letters."
+        },
+        {
+          "prompt": "Which sentence did Amal correct on her helpers page, and what did she change it to?",
+          "choices": [
+            "She can already read shorter books by herself, so she is ready for something longer.",
+            "Page four, because it shows the sun and her long shadow.",
+            "She had written “The firefighters is working.” She changed it to “The firefighters are working.”"
+          ],
+          "answer": "She had written “The firefighters is working.” She changed it to “The firefighters are working.”",
+          "explanation": "Paragraph four quotes both versions, so you must copy the corrected verb are."
+        },
+        {
+          "prompt": "Amal wrote that she wants to read a long chapter book next year. What does that tell you about her reading now?",
+          "choices": [
+            "Adam said it was too short, so she added two facts about planting.",
+            "She can already read shorter books by herself, so she is ready for something longer.",
+            "It has four parts. In Part 3 you present your work for about two minutes."
+          ],
+          "answer": "She can already read shorter books by herself, so she is ready for something longer.",
+          "explanation": "This is an inference: the goal only makes sense if her reading has already grown this year."
+        },
+        {
+          "prompt": "From how many different units must the six booklet pages come?",
+          "choices": [
+            "From at least four different units.",
+            "It has four parts. In Part 3 you present your work for about two minutes.",
+            "Nora likes the bug page and the butterfly wings, and Amal says she labelled the wings and the antennae."
+          ],
+          "answer": "From at least four different units.",
+          "explanation": "Part 1 of the brief says six pages from at least four different units."
+        },
+        {
+          "prompt": "The brief says your ears will find the missing full stops. What does it want you to do?",
+          "choices": [
+            "From at least four different units.",
+            "Her welcome card from Unit 1, with her name written in careful blue letters.",
+            "It wants you to read every page aloud before you hand the booklet in."
+          ],
+          "answer": "It wants you to read every page aloud before you hand the booklet in.",
+          "explanation": "The last paragraph explains that reading aloud is how you hear a missing full stop."
+        },
+        {
+          "prompt": "How did Amal make her plant page better after she read it to Adam?",
+          "choices": [
+            "She had written “The firefighters is working.” She changed it to “The firefighters are working.”",
+            "Adam said it was too short, so she added two facts about planting.",
+            "One picture and one label."
+          ],
+          "answer": "Adam said it was too short, so she added two facts about planting.",
+          "explanation": "Amal tells Leo exactly what feedback she was given and what she added because of it."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Introduce My English World",
+          "target": "My name is ______."
+        },
+        {
+          "prompt": "Speaking 2 — Vocabulary Spotlight",
+          "target": "We will go to the farm tomorrow."
+        },
+        {
+          "prompt": "Speaking 3 — Read Aloud with Expression",
+          "target": "Your ears can hear a missing full stop."
+        },
+        {
+          "prompt": "Speaking 4 — Explain My Best Page",
+          "target": "This page comes from Unit ______."
+        },
+        {
+          "prompt": "Speaking 5 — Answer a Visitor's Question",
+          "target": "Which unit did this page come from?"
+        },
+        {
+          "prompt": "Speaking 6 — The Final Capstone Presentation",
+          "target": "We heard a cricket chirping in the garden at night."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "story?",
+            "favourite",
+            "your",
+            "of",
+            "title",
+            "the",
+            "is",
+            "What"
+          ],
+          "answer": "What is the title of your favourite story?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "fox.",
+            "clever",
+            "a",
+            "about",
+            "tale",
+            "a",
+            "us",
+            "told",
+            "Grandma"
+          ],
+          "answer": "Grandma told us a tale about a clever fox."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "stop?",
+            "full",
+            "missing",
+            "the",
+            "fixed",
+            "Who"
+          ],
+          "answer": "Who fixed the missing full stop?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "unfinished?",
+            "sentence",
+            "this",
+            "Is"
+          ],
+          "answer": "Is this sentence unfinished?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "that?",
+            "than",
+            "louder",
+            "clap",
+            "you",
+            "Can"
+          ],
+          "answer": "Can you clap louder than that?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "block.",
+            "the",
+            "of",
+            "floor",
+            "fifth",
+            "the",
+            "on",
+            "flat",
+            "his",
+            "drew",
+            "Leo"
+          ],
+          "answer": "Leo drew his flat on the fifth floor of the block."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'perhaps' mean in this unit?",
+          "choices": [
+            "Perhaps means maybe, when you are not sure.",
+            "A cube is a solid shape with six flat, square sides.",
+            "The order word for number 1, right at the very front."
+          ],
+          "answer": "Perhaps means maybe, when you are not sure.",
+          "explanation": "perhaps: Perhaps means maybe, when you are not sure."
+        },
+        {
+          "prompt": "What does 'thank you' mean in this unit?",
+          "choices": [
+            "A cube is a solid shape with six flat, square sides.",
+            "Perhaps means maybe, when you are not sure.",
+            "We say thank you when someone gives us something or helps us."
+          ],
+          "answer": "We say thank you when someone gives us something or helps us.",
+          "explanation": "thank you: We say thank you when someone gives us something or helps us."
+        },
+        {
+          "prompt": "What does 'practise' mean in this unit?",
+          "choices": [
+            "Perhaps means maybe, when you are not sure.",
+            "Practise means to do something again and again so you get better at it.",
+            "A cube is a solid shape with six flat, square sides."
+          ],
+          "answer": "Practise means to do something again and again so you get better at it.",
+          "explanation": "practise: Practise means to do something again and again so you get better at it."
+        },
+        {
+          "prompt": "What does 'neighbour' mean in this unit?",
+          "choices": [
+            "A person who lives near you, on your street or in your building.",
+            "A cube is a solid shape with six flat, square sides.",
+            "Perhaps means maybe, when you are not sure."
+          ],
+          "answer": "A person who lives near you, on your street or in your building.",
+          "explanation": "neighbour: A person who lives near you, on your street or in your building."
+        },
+        {
+          "prompt": "What does 'ant' mean in this unit?",
+          "choices": [
+            "A cube is a solid shape with six flat, square sides.",
+            "Perhaps means maybe, when you are not sure.",
+            "A small insect that lives in large groups and works with others."
+          ],
+          "answer": "A small insect that lives in large groups and works with others.",
+          "explanation": "ant: A small insect that lives in large groups and works with others."
+        },
+        {
+          "prompt": "What does 'meaning' mean in this unit?",
+          "choices": [
+            "Perhaps means maybe, when you are not sure.",
+            "The meaning is what a word or a story is telling you.",
+            "A cube is a solid shape with six flat, square sides."
+          ],
+          "answer": "The meaning is what a word or a story is telling you.",
+          "explanation": "meaning: The meaning is what a word or a story is telling you."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'first'?",
+          "choices": [
+            "Number",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Number",
+          "explanation": "First is used as a number in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'unit'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Unit is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fixing'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Fixing is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'house'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "House is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'reporter'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Reporter is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'retell'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Retell is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "use",
+              "To use something means to do a job with it."
+            ],
+            [
+              "kind",
+              "Kind means gentle and helpful towards other people."
+            ],
+            [
+              "tomorrow",
+              "Tomorrow means the day after today."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "angry",
+              "Angry means you feel cross about something."
+            ],
+            [
+              "help",
+              "Help means to make something easier for someone by doing part of it."
+            ],
+            [
+              "adjectives",
+              "Adjectives are words that describe a person, a place or a thing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "main",
+              "Main means the most important part of something."
+            ],
+            [
+              "fix",
+              "Fix means to make something right after you find a mistake in it."
+            ],
+            [
+              "plan",
+              "A plan is a set of steps you make before you start something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "swallow",
+              "A swallow is a small bird with pointed wings that flies very fast."
+            ],
+            [
+              "butterfly",
+              "An insect with large, colourful wings that flies from flower to flower."
+            ],
+            [
+              "light",
+              "The brightness that lets us see things."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "hand",
+              "The part at the end of your arm, with a thumb and fingers."
+            ],
+            [
+              "spell",
+              "To say or write the letters of a word in order."
+            ],
+            [
+              "event",
+              "Something special that happens, like a party or a game."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "fact",
+              "A fact is something true that you can learn and tell other people."
+            ],
+            [
+              "tale",
+              "A tale is a story, often an old one that people retell."
+            ],
+            [
+              "whisper",
+              "To whisper means to speak very quietly."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which word is a describing word?",
+          "choices": [
+            "jump",
+            "library",
+            "quickly",
+            "bright"
+          ],
+          "answer": "bright",
+          "explanation": "Bright describes the sky, as in Unit 4. Jump is an action, library names a place and quickly tells how."
+        },
+        {
+          "prompt": "Which sentence tells you about the past?",
+          "choices": [
+            "We planted a tree last term.",
+            "We are planting a tree today.",
+            "We will plant a tree in Year 3.",
+            "We plant trees every year."
+          ],
+          "answer": "We planted a tree last term.",
+          "explanation": "Planted ends in -ed and last term is finished, so this is the past from Unit 7."
+        },
+        {
+          "prompt": "There ______ three pictures beside the booklet.",
+          "choices": [
+            "is",
+            "am",
+            "are",
+            "was"
+          ],
+          "answer": "are",
+          "explanation": "Three pictures are more than one, so we use There are, as Unit 8 taught."
+        },
+        {
+          "prompt": "Which word means a large building with many different shops inside it?",
+          "choices": [
+            "library",
+            "shopping centre",
+            "flat",
+            "hut"
+          ],
+          "answer": "shopping centre",
+          "explanation": "A library holds books, a flat is rooms to live in and a hut is a small home. Only the shopping centre holds many shops."
+        },
+        {
+          "prompt": "Your partner's page has good ideas but no full stops. What is the kindest and most useful thing to say?",
+          "choices": [
+            "This page is wrong.",
+            "I do not like it.",
+            "Change everything again.",
+            "Your ideas are clear, so add full stops at the end."
+          ],
+          "answer": "Your ideas are clear, so add full stops at the end.",
+          "explanation": "Good feedback names something that works and gives one clear next step."
+        },
         {
           "prompt": "This is Amal. ______ is presenting her booklet to the class.",
           "choices": [
@@ -483,28 +806,78 @@
           ],
           "answer": "She",
           "explanation": "Amal is one girl, so we use she. Unit 1 taught this pronoun."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which word means a large building with many different shops inside it?",
+          "choices": [
+            "library",
+            "shopping centre",
+            "flat",
+            "hut"
+          ],
+          "answer": "shopping centre",
+          "explanation": "A library holds books, a flat is rooms to live in and a hut is a small home. Only the shopping centre holds many shops."
         },
         {
-          "prompt": "The firefighters ______ helping on Warta Street.",
+          "prompt": "Your partner's page has good ideas but no full stops. What is the kindest and most useful thing to say?",
           "choices": [
-            "is",
-            "am",
-            "was",
-            "are"
+            "This page is wrong.",
+            "I do not like it.",
+            "Change everything again.",
+            "Your ideas are clear, so add full stops at the end."
           ],
-          "answer": "are",
-          "explanation": "Firefighters is more than one person, so the verb is are. This is the Unit 2 pattern."
+          "answer": "Your ideas are clear, so add full stops at the end.",
+          "explanation": "Good feedback names something that works and gives one clear next step."
         },
         {
-          "prompt": "Which sentence is a command?",
+          "prompt": "Which word means: Tomorrow means the day after today.",
           "choices": [
-            "Point at page four.",
-            "Amal points at page four.",
-            "She is pointing at page four.",
-            "Amal will point at page four."
+            "tomorrow",
+            "cube",
+            "perhaps"
           ],
-          "answer": "Point at page four.",
-          "explanation": "A command starts with the plain verb and tells somebody what to do, as in Unit 3."
+          "answer": "tomorrow",
+          "explanation": "tomorrow: Tomorrow means the day after today."
+        },
+        {
+          "prompt": "Which word means: Practise means to do something again and again so you get better at it.",
+          "choices": [
+            "cube",
+            "perhaps",
+            "practise"
+          ],
+          "answer": "practise",
+          "explanation": "practise: Practise means to do something again and again so you get better at it."
+        },
+        {
+          "prompt": "What type of word is 'light'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Light is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'meaning'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Meaning is used as a noun in this dictionary sense."
         }
       ]
     }

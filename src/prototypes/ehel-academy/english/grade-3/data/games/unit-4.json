@@ -5,7 +5,7 @@
   "unitId": "eng-g03-t02-u04",
   "title": "Places and Community Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A sound, especially one that is loud or sudden.",
           "choices": [
             "noise",
-            "dentist",
-            "soldier"
+            "beneath",
+            "rectangle"
           ],
           "answer": "noise",
           "explanation": "noise: A sound, especially one that is loud or sudden."
         },
         {
-          "prompt": "Which word means: A large building where machines make things.",
+          "prompt": "Which word means: Heat is how warm something is.",
           "choices": [
             "noise",
-            "dentist",
-            "factory"
+            "beneath",
+            "heat"
           ],
-          "answer": "factory",
-          "explanation": "factory: A large building where machines make things."
+          "answer": "heat",
+          "explanation": "heat: Heat is how warm something is."
         },
         {
-          "prompt": "Which word means: On or into a bus, ship, plane or train.",
+          "prompt": "Which word means: Builders are people whose job is to build houses and other buildings.",
           "choices": [
-            "dentist",
-            "aboard",
+            "beneath",
+            "builders",
             "noise"
           ],
-          "answer": "aboard",
-          "explanation": "aboard: On or into a bus, ship, plane or train."
+          "answer": "builders",
+          "explanation": "builders: Builders are people whose job is to build houses and other buildings."
+        },
+        {
+          "prompt": "Which word means: A person who is trained to look after sick or hurt people.",
+          "choices": [
+            "nurse",
+            "noise",
+            "beneath"
+          ],
+          "answer": "nurse",
+          "explanation": "nurse: A person who is trained to look after sick or hurt people."
+        },
+        {
+          "prompt": "Which word means: A person who helps sick people feel better.",
+          "choices": [
+            "noise",
+            "beneath",
+            "doctor"
+          ],
+          "answer": "doctor",
+          "explanation": "doctor: A person who helps sick people feel better."
+        },
+        {
+          "prompt": "Which word means: The person who flies an aeroplane through the sky.",
+          "choices": [
+            "beneath",
+            "pilot",
+            "noise"
+          ],
+          "answer": "pilot",
+          "explanation": "pilot: The person who flies an aeroplane through the sky."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A place where people study after they leave school.",
-          "answer": "university"
+          "clue": "Heat is how warm something is.",
+          "answer": "heat"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A place where a bus, car or journey pauses for a short while.",
-          "answer": "stop"
+          "clue": "Builders are people whose job is to build houses and other buildings.",
+          "answer": "builders"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Moving from one side of something to the other.",
+          "answer": "through"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A person who helps keep people safe and makes sure rules are followed.",
+          "answer": "officer"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The leader of a country.",
+          "answer": "president"
         }
       ]
     },
@@ -95,28 +140,71 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "songs.",
-            "wonderful",
-            "many",
-            "has",
-            "culture",
-            "Our"
+            "sea.",
+            "the",
+            "above",
+            "rainbow",
+            "a",
+            "saw",
+            "Leo"
           ],
-          "answer": "Our culture has many wonderful songs."
+          "answer": "Leo saw a rainbow above the sea."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "friend.",
-            "his",
-            "with",
+            "garden.",
             "school",
-            "to",
-            "walks",
-            "usually",
-            "Sami"
+            "the",
+            "behind",
+            "happen",
+            "did",
+            "strange",
+            "Something"
           ],
-          "answer": "Sami usually walks to school with his friend."
+          "answer": "Something strange did happen behind the school garden."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "village.",
+            "the",
+            "near",
+            "land",
+            "the",
+            "covered",
+            "fields",
+            "Green"
+          ],
+          "answer": "Green fields covered the land near the village."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "market.",
+            "the",
+            "near",
+            "stop",
+            "first",
+            "its",
+            "made",
+            "bus",
+            "The"
+          ],
+          "answer": "The bus made its first stop near the market."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "map.",
+            "a",
+            "class",
+            "the",
+            "showed",
+            "Yasmin",
+            "Teacher"
+          ],
+          "answer": "Teacher Yasmin showed the class a map."
         }
       ]
     },
@@ -129,299 +217,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which question is written correctly?",
+          "prompt": "Which word names the person who helps sick people feel better?",
           "choices": [
-            "Does you like the market?",
-            "Do she know the address?",
-            "Where he is going today?",
-            "Do you like the market?"
-          ],
-          "answer": "Do you like the market?",
-          "explanation": "You takes do, she takes does, and a question word must be followed by the verb: Where is he going today?"
-        },
-        {
-          "prompt": "Which sentence uses the simple present correctly?",
-          "choices": [
-            "The market open at seven o'clock.",
-            "My brother go to college.",
-            "The doctor works at the hospital.",
-            "She visit her grandmother on Sunday."
-          ],
-          "answer": "The doctor works at the hospital.",
-          "explanation": "He, she and it add -s to the verb, so the other three sentences are all missing that ending."
-        },
-        {
-          "prompt": "Which sentence gives a reason with because?",
-          "choices": [
-            "I like the market because it has fresh fruit.",
-            "The quiet village sits between green farms and tall trees.",
-            "Exit the court quietly, please.",
-            "Because it rained."
-          ],
-          "answer": "I like the market because it has fresh fruit.",
-          "explanation": "Only this sentence joins a complete idea to its reason; the last option is not a full sentence at all."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Why does the community need older students to learn new jobs at the college?",
-          "choices": [
-            "Because those students grow into the nurses, officers and builders the community needs.",
-            "Because only goats wander past the garden, while crowds fill the market.",
-            "Amal lives in a small village near Mount Meru, and her village is quiet."
-          ],
-          "answer": "Because those students grow into the nurses, officers and builders the community needs.",
-          "explanation": "You have to join the college sentence to the helpers named earlier in the same passage."
-        },
-        {
-          "prompt": "In “At the Market”, what two foods does the speaker buy?",
-          "choices": [
-            "Because only goats wander past the garden, while crowds fill the market.",
-            "They visited the hospital first, and a kind nurse met them at the door.",
-            "The speaker buys bananas and rice at the busy market."
-          ],
-          "answer": "The speaker buys bananas and rice at the busy market.",
-          "explanation": "Both foods sit in one short sentence, so you scan the passage for the pair."
-        },
-        {
-          "prompt": "Where does Amal live, and is her village quiet or busy?",
-          "choices": [
-            "Because people were resting inside the hospital, and noise would disturb them.",
-            "Amal lives in a small village near Mount Meru, and her village is quiet.",
-            "The speaker buys bananas and rice at the busy market."
-          ],
-          "answer": "Amal lives in a small village near Mount Meru, and her village is quiet.",
-          "explanation": "The opening sentence of the story supplies both the place and the describing word."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — My Community",
-          "target": "In my community there is a ______."
-        },
-        {
-          "prompt": "Speaking 3 — Guess the Place",
-          "target": "A doctor works here."
-        },
-        {
-          "prompt": "Speaking 5 — Explain and Respond",
-          "target": "Name your favourite place in the county centre and explain your choice with because."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "market.",
-            "the",
-            "to",
-            "catch",
-            "his",
-            "carried",
             "sailor",
-            "The"
+            "doctor",
+            "market",
+            "border"
           ],
-          "answer": "The sailor carried his catch to the market."
+          "answer": "doctor",
+          "explanation": "Only the doctor cares for sick people; a sailor works at sea, a market sells food and a border is a line on a map."
         },
         {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "job.",
-            "everyone's",
-            "is",
-            "tidy",
-            "classroom",
-            "the",
-            "Keeping"
-          ],
-          "answer": "Keeping the classroom tidy is everyone's job."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "mangoes.",
-            "ripe",
-            "sweet",
-            "loves",
-            "Amal"
-          ],
-          "answer": "Amal loves sweet ripe mangoes."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'sick' mean in this unit?",
+          "prompt": "What does the word 'exit' mean?",
           "choices": [
-            "Sick means feeling unwell or having an illness.",
-            "A sound, especially one that is loud or sudden.",
-            "A doctor who looks after your teeth."
+            "A line where two countries meet.",
+            "A school for older students and adults.",
+            "A person who works on a ship at sea.",
+            "A way to go out of a place."
           ],
-          "answer": "Sick means feeling unwell or having an illness.",
-          "explanation": "sick: Sick means feeling unwell or having an illness."
+          "answer": "A way to go out of a place.",
+          "explanation": "The other three options are the meanings of border, college and sailor."
         },
         {
-          "prompt": "What does 'counties' mean in this unit?",
+          "prompt": "Choose the missing word from 'Our Community': At the _____, people buy and sell food.",
           "choices": [
-            "A sound, especially one that is loud or sudden.",
-            "A doctor who looks after your teeth.",
-            "Large areas of land with their own name and border, like parts of a country."
+            "market",
+            "doctor",
+            "address",
+            "quiet"
           ],
-          "answer": "Large areas of land with their own name and border, like parts of a country.",
-          "explanation": "counties: Large areas of land with their own name and border, like parts of a country."
+          "answer": "market",
+          "explanation": "The text pairs buying and selling with the market, not with a person, a home detail or a describing word."
         },
-        {
-          "prompt": "What does 'dentist' mean in this unit?",
-          "choices": [
-            "A person who serves in the army.",
-            "A doctor who looks after your teeth.",
-            "A sound, especially one that is loud or sudden."
-          ],
-          "answer": "A doctor who looks after your teeth.",
-          "explanation": "dentist: A doctor who looks after your teeth."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'everywhere'?",
-          "choices": [
-            "Adverb",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adverb",
-          "explanation": "Everywhere is used as an adverb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'sailor'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Sailor is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'nation'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Nation is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "enjoy",
-              "To like doing something so much that you want more of it."
-            ],
-            [
-              "mechanic",
-              "A person whose job is mending machines and cars."
-            ],
-            [
-              "crowd",
-              "A crowd is a large group of people gathered together in one place."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "beneath",
-              "Under or below something."
-            ],
-            [
-              "sell",
-              "To sell means to give something to someone else in exchange for money."
-            ],
-            [
-              "green",
-              "Green is the colour of grass and fresh leaves."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "stop",
-              "A place where a bus, car or journey pauses for a short while."
-            ],
-            [
-              "roots",
-              "The parts of a plant under the ground, or the place where a person's family began."
-            ],
-            [
-              "officer",
-              "A person who helps keep people safe and makes sure rules are followed."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "In the poem 'Places I Know', which place is called grand?",
           "choices": [
@@ -458,13 +285,510 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Why does the community need older students to learn new jobs at the college?",
+          "choices": [
+            "Because those students grow into the nurses, officers and builders the community needs.",
+            "Because only goats wander past the garden, while crowds fill the market.",
+            "Amal lives in a small village near Mount Meru, and her village is quiet."
+          ],
+          "answer": "Because those students grow into the nurses, officers and builders the community needs.",
+          "explanation": "You have to join the college sentence to the helpers named earlier in the same passage."
+        },
+        {
+          "prompt": "The poem calls the court grand. Which word does the poem give the market?",
+          "choices": [
+            "The speaker buys bananas and rice at the busy market.",
+            "They visited the hospital first, and a kind nurse met them at the door.",
+            "The poem gives the market the word busy, right beside grand for the court."
+          ],
+          "answer": "The poem gives the market the word busy, right beside grand for the court.",
+          "explanation": "Both describing words sit in the same line, so you read the contrast off the poem."
+        },
+        {
+          "prompt": "In “At the Market”, what two foods does the speaker buy?",
+          "choices": [
+            "Because people were resting inside the hospital, and noise would disturb them.",
+            "The speaker buys bananas and rice at the busy market.",
+            "The doctor helps you when you are sick. The officer keeps you safe. The sailor sails across the sea."
+          ],
+          "answer": "The speaker buys bananas and rice at the busy market.",
+          "explanation": "Both foods sit in one short sentence, so you scan the passage for the pair."
+        },
+        {
+          "prompt": "The song says the sailor sails across the sea. What does sails tell you?",
+          "choices": [
+            "It tells you the sailor travels on water in a boat or ship.",
+            "The doctor helps you when you are sick. The officer keeps you safe. The sailor sails across the sea.",
+            "A border is where one county ends and another begins. Arusha and Kilimanjaro counties meet there."
+          ],
+          "answer": "It tells you the sailor travels on water in a boat or ship.",
+          "explanation": "The phrase across the sea gives you enough context to work out the verb."
+        },
+        {
+          "prompt": "Where does Amal live, and is her village quiet or busy?",
+          "choices": [
+            "It tells you the sailor travels on water in a boat or ship.",
+            "Because those students grow into the nurses, officers and builders the community needs.",
+            "Amal lives in a small village near Mount Meru, and her village is quiet."
+          ],
+          "answer": "Amal lives in a small village near Mount Meru, and her village is quiet.",
+          "explanation": "The opening sentence of the story supplies both the place and the describing word."
+        },
+        {
+          "prompt": "Why did Teacher Yasmin say, “Exit the hospital quietly”?",
+          "choices": [
+            "The poem gives the market the word busy, right beside grand for the court.",
+            "Because people were resting inside the hospital, and noise would disturb them.",
+            "Amal lives in a small village near Mount Meru, and her village is quiet."
+          ],
+          "answer": "Because people were resting inside the hospital, and noise would disturb them.",
+          "explanation": "Teacher Yasmin gives her reason in the very next sentence, so the answer must quote it."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — My Community",
+          "target": "In my community there is a ______."
+        },
+        {
+          "prompt": "Speaking 2 — Giving Directions",
+          "target": "Go straight to the market."
+        },
+        {
+          "prompt": "Speaking 3 — Guess the Place",
+          "target": "A doctor works here."
+        },
+        {
+          "prompt": "Speaking 4 — Vocabulary Expert Interview",
+          "target": "Does a sailor work at sea?"
+        },
+        {
+          "prompt": "Speaking 5 — Explain and Respond",
+          "target": "Name your favourite place in the county centre and explain your choice with because."
+        },
+        {
+          "prompt": "Speaking 6 — One-Minute Unit Talk",
+          "target": "Teacher Yasmin showed the class a map."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "letter.",
+            "the",
+            "on",
+            "address",
+            "home",
+            "my",
+            "wrote",
+            "I"
+          ],
+          "answer": "I wrote my home address on the letter."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Friday.",
+            "every",
+            "us",
+            "with",
+            "reads",
+            "volunteer",
+            "A"
+          ],
+          "answer": "A volunteer reads with us every Friday."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "university.",
+            "at",
+            "medicine",
+            "studies",
+            "cousin",
+            "My"
+          ],
+          "answer": "My cousin studies medicine at university."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "vegetables.",
+            "green",
+            "the",
+            "beside",
+            "sat",
+            "tomatoes",
+            "Fresh"
+          ],
+          "answer": "Fresh tomatoes sat beside the green vegetables."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "window.",
+            "open",
+            "the",
+            "through",
+            "came",
+            "Sunlight"
+          ],
+          "answer": "Sunlight came through the open window."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "children.",
+            "youngest",
+            "the",
+            "including",
+            "helped,",
+            "Everyone"
+          ],
+          "answer": "Everyone helped, including the youngest children."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'beneath' mean in this unit?",
+          "choices": [
+            "Under or below something.",
+            "A sound, especially one that is loud or sudden.",
+            "A shape with four sides, two long and two short."
+          ],
+          "answer": "Under or below something.",
+          "explanation": "beneath: Under or below something."
+        },
+        {
+          "prompt": "What does 'believe' mean in this unit?",
+          "choices": [
+            "A sound, especially one that is loud or sudden.",
+            "Under or below something.",
+            "To feel sure inside that something is true or right."
+          ],
+          "answer": "To feel sure inside that something is true or right.",
+          "explanation": "believe: To feel sure inside that something is true or right."
+        },
+        {
+          "prompt": "What does 'land' mean in this unit?",
+          "choices": [
+            "Under or below something.",
+            "Land is the ground or the country where people live.",
+            "A sound, especially one that is loud or sudden."
+          ],
+          "answer": "Land is the ground or the country where people live.",
+          "explanation": "land: Land is the ground or the country where people live."
+        },
+        {
+          "prompt": "What does 'benches' mean in this unit?",
+          "choices": [
+            "Long, hard seats where more than one person can sit.",
+            "A sound, especially one that is loud or sudden.",
+            "Under or below something."
+          ],
+          "answer": "Long, hard seats where more than one person can sit.",
+          "explanation": "benches: Long, hard seats where more than one person can sit."
+        },
+        {
+          "prompt": "What does 'college' mean in this unit?",
+          "choices": [
+            "A sound, especially one that is loud or sudden.",
+            "Under or below something.",
+            "A school for older students and adults."
+          ],
+          "answer": "A school for older students and adults.",
+          "explanation": "college: A school for older students and adults."
+        },
+        {
+          "prompt": "What does 'volunteer' mean in this unit?",
+          "choices": [
+            "Under or below something.",
+            "A person who helps without being paid.",
+            "A sound, especially one that is loud or sudden."
+          ],
+          "answer": "A person who helps without being paid.",
+          "explanation": "volunteer: A person who helps without being paid."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'rectangle'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Rectangle is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'happen'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Happen is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'everywhere'?",
+          "choices": [
+            "Verb",
+            "Adverb",
+            "Noun"
+          ],
+          "answer": "Adverb",
+          "explanation": "Everywhere is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'might'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Might is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'address'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Address is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'crowd'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Crowd is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "enjoy",
+              "To like doing something so much that you want more of it."
+            ],
+            [
+              "via",
+              "By way of a particular place or route."
+            ],
+            [
+              "rainbow",
+              "A rainbow is a curved band of colours that appears in the sky after rain."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "cloudy",
+              "Describes a sky covered with grey or white clouds."
+            ],
+            [
+              "famous",
+              "Famous means that a lot of people know about you."
+            ],
+            [
+              "spread",
+              "To spread means to lay something out so it covers a wider space."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "watering",
+              "Watering means giving water to plants so they can grow."
+            ],
+            [
+              "red",
+              "Red is a bright colour, like the colour of a ripe tomato."
+            ],
+            [
+              "northern",
+              "Northern means in or from the north part of a country or place."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "clean",
+              "Not dirty; free from dust, mess or germs."
+            ],
+            [
+              "far",
+              "A long distance away from where you are."
+            ],
+            [
+              "knowing",
+              "Understanding or being sure about something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "sailor",
+              "A person who works on a boat or ship at sea."
+            ],
+            [
+              "village",
+              "A small group of homes in the countryside, smaller than a town."
+            ],
+            [
+              "dentist",
+              "A doctor who looks after your teeth."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "scientist",
+              "A person who studies things carefully to learn how the world works."
+            ],
+            [
+              "owner",
+              "A person who something belongs to."
+            ],
+            [
+              "rule",
+              "Something you must do or must not do."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence gives an instruction?",
+          "choices": [
+            "Exit the hall quietly.",
+            "The doctor works here.",
+            "Is the market busy?",
+            "We bought some mangoes."
+          ],
+          "answer": "Exit the hall quietly.",
+          "explanation": "It opens with a base verb and leaves out the word you; the others are a statement, a question and a statement."
+        },
+        {
+          "prompt": "Which question is written correctly?",
+          "choices": [
+            "Does you like the market?",
+            "Do she know the address?",
+            "Where he is going today?",
+            "Do you like the market?"
+          ],
+          "answer": "Do you like the market?",
+          "explanation": "You takes do, she takes does, and a question word must be followed by the verb: Where is he going today?"
+        },
+        {
+          "prompt": "Which sentence uses the simple present correctly?",
+          "choices": [
+            "The market open at seven o'clock.",
+            "My brother go to college.",
+            "The doctor works at the hospital.",
+            "She visit her grandmother on Sunday."
+          ],
+          "answer": "The doctor works at the hospital.",
+          "explanation": "He, she and it add -s to the verb, so the other three sentences are all missing that ending."
+        },
+        {
+          "prompt": "Which sentence gives a reason with because?",
+          "choices": [
+            "I like the market because it has fresh fruit.",
+            "The quiet village sits between green farms and tall trees.",
+            "Exit the court quietly, please.",
+            "Because it rained."
+          ],
+          "answer": "I like the market because it has fresh fruit.",
+          "explanation": "Only this sentence joins a complete idea to its reason; the last option is not a full sentence at all."
+        },
+        {
+          "prompt": "Which words show that a large number of people visit the market?",
+          "choices": [
+            "some",
+            "a lot of",
+            "quiet",
+            "just a few"
+          ],
+          "answer": "a lot of",
+          "explanation": "A lot of means a large amount; some and just a few mean smaller amounts, and quiet describes a place."
+        },
         {
           "prompt": "Which word names the person who helps sick people feel better?",
           "choices": [
@@ -475,28 +799,78 @@
           ],
           "answer": "doctor",
           "explanation": "Only the doctor cares for sick people; a sailor works at sea, a market sells food and a border is a line on a map."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence gives a reason with because?",
+          "choices": [
+            "I like the market because it has fresh fruit.",
+            "The quiet village sits between green farms and tall trees.",
+            "Exit the court quietly, please.",
+            "Because it rained."
+          ],
+          "answer": "I like the market because it has fresh fruit.",
+          "explanation": "Only this sentence joins a complete idea to its reason; the last option is not a full sentence at all."
         },
         {
-          "prompt": "What does the word 'exit' mean?",
+          "prompt": "Which words show that a large number of people visit the market?",
           "choices": [
-            "A line where two countries meet.",
-            "A school for older students and adults.",
-            "A person who works on a ship at sea.",
-            "A way to go out of a place."
+            "some",
+            "a lot of",
+            "quiet",
+            "just a few"
           ],
-          "answer": "A way to go out of a place.",
-          "explanation": "The other three options are the meanings of border, college and sailor."
+          "answer": "a lot of",
+          "explanation": "A lot of means a large amount; some and just a few mean smaller amounts, and quiet describes a place."
         },
         {
-          "prompt": "Choose the missing word from 'Our Community': At the _____, people buy and sell food.",
+          "prompt": "Which word means: A rainbow is a curved band of colours that appears in the sky after rain.",
           "choices": [
-            "market",
-            "doctor",
-            "address",
-            "quiet"
+            "rainbow",
+            "noise",
+            "beneath"
           ],
-          "answer": "market",
-          "explanation": "The text pairs buying and selling with the market, not with a person, a home detail or a describing word."
+          "answer": "rainbow",
+          "explanation": "rainbow: A rainbow is a curved band of colours that appears in the sky after rain."
+        },
+        {
+          "prompt": "Which word means: Land is the ground or the country where people live.",
+          "choices": [
+            "noise",
+            "beneath",
+            "land"
+          ],
+          "answer": "land",
+          "explanation": "land: Land is the ground or the country where people live."
+        },
+        {
+          "prompt": "What type of word is 'knowing'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Knowing is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'volunteer'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Volunteer is used as a noun in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t01-u03",
   "title": "Food and Health Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: In a glad and cheerful way.",
           "choices": [
             "happily",
-            "symptom",
-            "essential"
+            "mainly",
+            "quarter"
           ],
           "answer": "happily",
           "explanation": "happily: In a glad and cheerful way."
         },
         {
-          "prompt": "Which word means: A farm is land where people grow crops or keep animals for food.",
+          "prompt": "Which word means: To go from one place to another, often over a long distance.",
           "choices": [
             "happily",
-            "symptom",
-            "farm"
+            "mainly",
+            "travel"
           ],
-          "answer": "farm",
-          "explanation": "farm: A farm is land where people grow crops or keep animals for food."
+          "answer": "travel",
+          "explanation": "travel: To go from one place to another, often over a long distance."
         },
         {
-          "prompt": "Which word means: To give food to a person or animal.",
+          "prompt": "Which word means: Red is the colour of ripe tomatoes or ripe strawberries.",
           "choices": [
-            "symptom",
-            "feed",
+            "mainly",
+            "red",
             "happily"
           ],
-          "answer": "feed",
-          "explanation": "feed: To give food to a person or animal."
+          "answer": "red",
+          "explanation": "red: Red is the colour of ripe tomatoes or ripe strawberries."
+        },
+        {
+          "prompt": "Which word means: To cause something to happen, often something bad.",
+          "choices": [
+            "lead",
+            "happily",
+            "mainly"
+          ],
+          "answer": "lead",
+          "explanation": "lead: To cause something to happen, often something bad."
+        },
+        {
+          "prompt": "Which word means: A statement that tells you what to do.",
+          "choices": [
+            "happily",
+            "mainly",
+            "instruction"
+          ],
+          "answer": "instruction",
+          "explanation": "instruction: A statement that tells you what to do."
+        },
+        {
+          "prompt": "Which word means: The smallest living part that all plants and animals are made of.",
+          "choices": [
+            "mainly",
+            "cell",
+            "happily"
+          ],
+          "answer": "cell",
+          "explanation": "cell: The smallest living part that all plants and animals are made of."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Protect means to keep something or someone safe from harm.",
-          "answer": "protect"
+          "clue": "To start being something new or different than before.",
+          "answer": "become"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Very valuable and important; not to be wasted.",
-          "answer": "precious"
+          "clue": "A pen is a tool people use to write with ink.",
+          "answer": "pen"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "An illness that affects a person's body and stops it working properly.",
+          "answer": "disease"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The amount that fills one hand.",
+          "answer": "handful"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A tiny living thing that can make you ill.",
+          "answer": "germ"
         }
       ]
     },
@@ -96,32 +141,73 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "tree.",
-            "tallest",
-            "the",
-            "than",
-            "higher",
-            "flew",
-            "kite",
-            "The"
+            "Thursday.",
+            "before",
+            "boards",
+            "their",
+            "prepare",
+            "must",
+            "Pupils"
           ],
-          "answer": "The kite flew higher than the tallest tree."
+          "answer": "Pupils must prepare their boards before Thursday."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "loud.",
-            "so",
-            "was",
-            "storm",
-            "the",
-            "because",
-            "sleep",
-            "not",
-            "could",
-            "Noah"
+            "goodness.",
+            "of",
+            "full",
+            "are",
+            "vegetables",
+            "Fresh"
           ],
-          "answer": "Noah could not sleep because the storm was so loud."
+          "answer": "Fresh vegetables are full of goodness."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "choice.",
+            "wise",
+            "a",
+            "not",
+            "was",
+            "meat",
+            "old",
+            "the",
+            "Eating"
+          ],
+          "answer": "Eating the old meat was not a wise choice."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "inside.",
+            "fresh",
+            "not",
+            "was",
+            "it",
+            "but",
+            "fine,",
+            "looked",
+            "fruit",
+            "The"
+          ],
+          "answer": "The fruit looked fine, but it was not fresh inside."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "trip.",
+            "the",
+            "before",
+            "instruction",
+            "clear",
+            "one",
+            "gave",
+            "Hana",
+            "Grandma"
+          ],
+          "answer": "Grandma Hana gave one clear instruction before the trip."
         }
       ]
     },
@@ -134,304 +220,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence gives the reason using to and a base verb?",
+          "prompt": "Which word means a time when many people do not have enough food?",
           "choices": [
-            "We wash the fruit for clean.",
-            "We wash the fruit before removing pesticide.",
-            "We wash the fruit to remove pesticide.",
-            "We wash the fruit so clean it."
+            "bakery",
+            "famine",
+            "spice",
+            "comma"
           ],
-          "answer": "We wash the fruit to remove pesticide.",
-          "explanation": "Only this sentence uses to plus the base verb remove, which is how the infinitive of purpose gives a reason."
+          "answer": "famine",
+          "explanation": "A famine is a shortage of food, while a bakery is a shop, a spice is a flavouring and a comma is a punctuation mark."
         },
         {
-          "prompt": "Which sentence is a correct imperative for a food-safety poster?",
+          "prompt": "Which word names the chemical a farmer sprays to kill insects on crops?",
           "choices": [
-            "You wash the fruit before eating.",
-            "The fruit is washed by you.",
-            "Washing the fruit is important for everyone.",
-            "Wash the fruit before you eat it."
+            "pesticide",
+            "stomach",
+            "comma",
+            "labour"
           ],
-          "answer": "Wash the fruit before you eat it.",
-          "explanation": "An imperative starts with the base verb and leaves out the subject you."
+          "answer": "pesticide",
+          "explanation": "Pesticide is sprayed on plants; a stomach is a body part, a comma is a punctuation mark and labour is hard work."
         },
         {
-          "prompt": "Which sentence compares two kinds of bread correctly?",
+          "prompt": "Amal had to chew the dried meat for a long time. Which unit word describes it?",
           "choices": [
-            "Fresh bread is better than old bread.",
-            "Fresh bread is more good than old bread.",
-            "Fresh bread is gooder than old bread.",
-            "Fresh bread is the most good bread."
+            "fresh",
+            "deadly",
+            "chewy",
+            "famine"
           ],
-          "answer": "Fresh bread is better than old bread.",
-          "explanation": "Good has the special comparison form better, and a comparison needs than to join the two things."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Which two places does the food pass through before it finally reaches your home?",
-          "choices": [
-            "It travels to the market and then the bakery before it reaches your home.",
-            "The rule is “You must be more careful” and the possibility is “Old food might make you very sick”.",
-            "The meat was not fresh, and Doctor Sarah blamed chemicals used to clean old meat that were not washed off."
-          ],
-          "answer": "It travels to the market and then the bakery before it reaches your home.",
-          "explanation": "The text lists the journey in order: the market first, the bakery next, and home last."
+          "answer": "chewy",
+          "explanation": "Chewy means hard to bite, so it fits meat that needs long chewing; fresh, deadly and famine describe other things."
         },
-        {
-          "prompt": "Which three foods does The Market Song ask you to gather with care?",
-          "choices": [
-            "The rule is “You must be more careful” and the possibility is “Old food might make you very sick”.",
-            "She writes that farmers must use less pesticide and that people must wash their food with care.",
-            "The song names rice, lamb and fresh green peas."
-          ],
-          "answer": "The song names rice, lamb and fresh green peas.",
-          "explanation": "The three foods appear in the opening line, joined by and before the word gather."
-        },
-        {
-          "prompt": "Why did the sandwich make Amal ill, and what did Doctor Sarah say caused it?",
-          "choices": [
-            "She chooses only what looks clean and safe, because her illness taught her to check food first.",
-            "The meat was not fresh, and Doctor Sarah blamed chemicals used to clean old meat that were not washed off.",
-            "The song names rice, lamb and fresh green peas."
-          ],
-          "answer": "The meat was not fresh, and Doctor Sarah blamed chemicals used to clean old meat that were not washed off.",
-          "explanation": "Omar warns about the meat early on, and the doctor names the unwashed cleaning chemicals later."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: My Favourite Meal",
-          "target": "My favourite meal is ______."
-        },
-        {
-          "prompt": "Speaking 3: Healthy or Not?",
-          "target": "Fresh mangoes are better than sweets because ______."
-        },
-        {
-          "prompt": "Speaking 5: Explain the Journey to Your Plate",
-          "target": "Noah could not sleep because the storm was so loud."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "guests.",
-            "the",
-            "for",
-            "rice",
-            "and",
-            "lamb",
-            "cooked",
-            "We"
-          ],
-          "answer": "We cooked lamb and rice for the guests."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "notebook.",
-            "his",
-            "into",
-            "line",
-            "favourite",
-            "his",
-            "copied",
-            "Noah"
-          ],
-          "answer": "Noah copied his favourite line into his notebook."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "dates.",
-            "sweet",
-            "the",
-            "into",
-            "bit",
-            "he",
-            "as",
-            "grinned",
-            "Theo"
-          ],
-          "answer": "Theo grinned as he bit into the sweet dates."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'healthy' mean in this unit?",
-          "choices": [
-            "Healthy means good for your body, or being well and strong.",
-            "In a glad and cheerful way.",
-            "A sign in your body that shows you may be ill."
-          ],
-          "answer": "Healthy means good for your body, or being well and strong.",
-          "explanation": "healthy: Healthy means good for your body, or being well and strong."
-        },
-        {
-          "prompt": "What does 'kitchen' mean in this unit?",
-          "choices": [
-            "In a glad and cheerful way.",
-            "A sign in your body that shows you may be ill.",
-            "The room where food is cooked and prepared."
-          ],
-          "answer": "The room where food is cooked and prepared.",
-          "explanation": "kitchen: The room where food is cooked and prepared."
-        },
-        {
-          "prompt": "What does 'symptom' mean in this unit?",
-          "choices": [
-            "So necessary that it cannot be left out.",
-            "A sign in your body that shows you may be ill.",
-            "In a glad and cheerful way."
-          ],
-          "answer": "A sign in your body that shows you may be ill.",
-          "explanation": "symptom: A sign in your body that shows you may be ill."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'poisoning'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Poisoning is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'deadly'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Deadly is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'delightful'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Delightful is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "safely",
-              "In a way that avoids harm or danger."
-            ],
-            [
-              "source",
-              "The place where something comes from."
-            ],
-            [
-              "aware",
-              "Knowing that something exists or is happening."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "wash",
-              "Wash means to clean something using water and sometimes soap."
-            ],
-            [
-              "dizzy",
-              "Dizzy means feeling like everything around you is spinning."
-            ],
-            [
-              "belly",
-              "Your belly is the front part of your body below your chest, your stomach."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "illness",
-              "A period of being unwell or having a disease."
-            ],
-            [
-              "stall",
-              "A small table or stand where things are sold, often at a market."
-            ],
-            [
-              "fresh",
-              "New and clean; not old or spoiled."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Choose the missing word from The Market Song: “Rice and ______ and fresh green peas, gather them with care, if you please!”",
           "choices": [
@@ -468,13 +288,520 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Which two places does the food pass through before it finally reaches your home?",
+          "choices": [
+            "It travels to the market and then the bakery before it reaches your home.",
+            "The rule is “You must be more careful” and the possibility is “Old food might make you very sick”.",
+            "The meat was not fresh, and Doctor Sarah blamed chemicals used to clean old meat that were not washed off."
+          ],
+          "answer": "It travels to the market and then the bakery before it reaches your home.",
+          "explanation": "The text lists the journey in order: the market first, the bakery next, and home last."
+        },
+        {
+          "prompt": "At the clinic, what does Amal say she ate the night before?",
+          "choices": [
+            "The song names rice, lamb and fresh green peas.",
+            "She writes that farmers must use less pesticide and that people must wash their food with care.",
+            "She says she ate an old sandwich the night before."
+          ],
+          "answer": "She says she ate an old sandwich the night before.",
+          "explanation": "Amal answers by naming the old sandwich as the cause of her sore stomach."
+        },
+        {
+          "prompt": "Which three foods does The Market Song ask you to gather with care?",
+          "choices": [
+            "She chooses only what looks clean and safe, because her illness taught her to check food first.",
+            "The song names rice, lamb and fresh green peas.",
+            "It helps children grow."
+          ],
+          "answer": "The song names rice, lamb and fresh green peas.",
+          "explanation": "The three foods appear in the opening line, joined by and before the word gather."
+        },
+        {
+          "prompt": "According to the last line of the song, what does healthy food help children do?",
+          "choices": [
+            "It helps children grow.",
+            "She feeds the cows and carries water from the well.",
+            "It travels to the market and then the bakery before it reaches your home."
+          ],
+          "answer": "It helps children grow.",
+          "explanation": "The closing line gives the reason for washing and cooking the food carefully."
+        },
+        {
+          "prompt": "Why did the sandwich make Amal ill, and what did Doctor Sarah say caused it?",
+          "choices": [
+            "She feeds the cows and carries water from the well.",
+            "She says she ate an old sandwich the night before.",
+            "The meat was not fresh, and Doctor Sarah blamed chemicals used to clean old meat that were not washed off."
+          ],
+          "answer": "The meat was not fresh, and Doctor Sarah blamed chemicals used to clean old meat that were not washed off.",
+          "explanation": "Omar warns about the meat early on, and the doctor names the unwashed cleaning chemicals later."
+        },
+        {
+          "prompt": "What health message does Amal finally write into her own story?",
+          "choices": [
+            "The rule is “You must be more careful” and the possibility is “Old food might make you very sick”.",
+            "She writes that farmers must use less pesticide and that people must wash their food with care.",
+            "The meat was not fresh, and Doctor Sarah blamed chemicals used to clean old meat that were not washed off."
+          ],
+          "answer": "She writes that farmers must use less pesticide and that people must wash their food with care.",
+          "explanation": "Amal adds this advice after Noah tells her to gather facts and then give good advice."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: My Favourite Meal",
+          "target": "My favourite meal is ______."
+        },
+        {
+          "prompt": "Speaking 2: Giving Healthy Advice",
+          "target": "______ your hands first."
+        },
+        {
+          "prompt": "Speaking 3: Healthy or Not?",
+          "target": "Fresh mangoes are better than sweets because ______."
+        },
+        {
+          "prompt": "Speaking 4: Food and Health Interview",
+          "target": "Do you wash fruit before you eat it?"
+        },
+        {
+          "prompt": "Speaking 5: Explain the Journey to Your Plate",
+          "target": "The fruit looked fine, but it was not fresh inside."
+        },
+        {
+          "prompt": "Speaking 6: My Two-Minute Food Safety Talk",
+          "target": "Grandma Hana gave one clear instruction before the trip."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "had.",
+            "they",
+            "little",
+            "what",
+            "shared",
+            "families",
+            "famine,",
+            "the",
+            "During"
+          ],
+          "answer": "During the famine, families shared what little they had."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "child.",
+            "young",
+            "a",
+            "for",
+            "suitable",
+            "is",
+            "soup",
+            "This"
+          ],
+          "answer": "This soup is suitable for a young child."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "vegetables.",
+            "and",
+            "lamb",
+            "with",
+            "rice",
+            "eat",
+            "to",
+            "likes",
+            "Amal"
+          ],
+          "answer": "Amal likes to eat rice with lamb and vegetables."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "family.",
+            "her",
+            "with",
+            "river",
+            "the",
+            "beside",
+            "lived",
+            "Amal"
+          ],
+          "answer": "Amal lived beside the river with her family."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "joke.",
+            "silly",
+            "the",
+            "heard",
+            "he",
+            "when",
+            "giggled",
+            "Theo"
+          ],
+          "answer": "Theo giggled when he heard the silly joke."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "it.",
+            "cooking",
+            "before",
+            "rice",
+            "the",
+            "washed",
+            "Hana",
+            "Grandma"
+          ],
+          "answer": "Grandma Hana washed the rice before cooking it."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'mainly' mean in this unit?",
+          "choices": [
+            "For the most part; more than anything else.",
+            "In a glad and cheerful way.",
+            "One of four equal parts of something."
+          ],
+          "answer": "For the most part; more than anything else.",
+          "explanation": "mainly: For the most part; more than anything else."
+        },
+        {
+          "prompt": "What does 'normal' mean in this unit?",
+          "choices": [
+            "In a glad and cheerful way.",
+            "For the most part; more than anything else.",
+            "Usual and not different from what happens most of the time."
+          ],
+          "answer": "Usual and not different from what happens most of the time.",
+          "explanation": "normal: Usual and not different from what happens most of the time."
+        },
+        {
+          "prompt": "What does 'doctor' mean in this unit?",
+          "choices": [
+            "For the most part; more than anything else.",
+            "A doctor is a person trained to help sick people get well.",
+            "In a glad and cheerful way."
+          ],
+          "answer": "A doctor is a person trained to help sick people get well.",
+          "explanation": "doctor: A doctor is a person trained to help sick people get well."
+        },
+        {
+          "prompt": "What does 'less' mean in this unit?",
+          "choices": [
+            "A smaller amount of something than before.",
+            "In a glad and cheerful way.",
+            "For the most part; more than anything else."
+          ],
+          "answer": "A smaller amount of something than before.",
+          "explanation": "less: A smaller amount of something than before."
+        },
+        {
+          "prompt": "What does 'sang' mean in this unit?",
+          "choices": [
+            "In a glad and cheerful way.",
+            "For the most part; more than anything else.",
+            "The past tense of sing, when someone made music with their voice."
+          ],
+          "answer": "The past tense of sing, when someone made music with their voice.",
+          "explanation": "sang: The past tense of sing, when someone made music with their voice."
+        },
+        {
+          "prompt": "What does 'reproduce' mean in this unit?",
+          "choices": [
+            "For the most part; more than anything else.",
+            "To produce young, so that a kind of living thing continues.",
+            "In a glad and cheerful way."
+          ],
+          "answer": "To produce young, so that a kind of living thing continues.",
+          "explanation": "reproduce: To produce young, so that a kind of living thing continues."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'quarter'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Quarter is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'seeds'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Seeds is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'might'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Might is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'freshest'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Freshest is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'chewy'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Chewy is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'physical'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Physical is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "safely",
+              "In a way that avoids harm or danger."
+            ],
+            [
+              "confident",
+              "Confident means you feel sure that you can do something."
+            ],
+            [
+              "continue",
+              "To keep doing something without stopping."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "daily",
+              "Happening every day, as part of a normal routine."
+            ],
+            [
+              "grassy",
+              "Grassy means covered with grass, like a green field or hill."
+            ],
+            [
+              "wash",
+              "Wash means to clean something using water and sometimes soap."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "healthy",
+              "Healthy means good for your body, or being well and strong."
+            ],
+            [
+              "choice",
+              "A choice is a decision you make between two or more things."
+            ],
+            [
+              "tastes",
+              "Tastes means has a certain flavour when you eat or drink it."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "eaten",
+              "Having had food chewed and swallowed."
+            ],
+            [
+              "either",
+              "Also, used after a negative statement to add another similar fact."
+            ],
+            [
+              "nurse",
+              "A person trained to care for sick or injured people."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "fingers",
+              "The five moving parts at the end of each hand."
+            ],
+            [
+              "spice",
+              "A part of a plant, like pepper, that adds flavour to food."
+            ],
+            [
+              "cattle",
+              "Large farm animals such as cows and bulls, kept for milk and meat."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "nutrition",
+              "The good things in food and drink that help a body grow and stay well."
+            ],
+            [
+              "system",
+              "A set of parts that work together to do a job."
+            ],
+            [
+              "practical",
+              "Useful and sensible in real life, not just in theory."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which helping verb correctly begins this question: ______ your brother like rice?",
+          "choices": [
+            "Do",
+            "Does",
+            "Are",
+            "Is"
+          ],
+          "answer": "Does",
+          "explanation": "Your brother is one person, so the question needs does with the base verb like."
+        },
+        {
+          "prompt": "Which sentence gives the reason using to and a base verb?",
+          "choices": [
+            "We wash the fruit for clean.",
+            "We wash the fruit before removing pesticide.",
+            "We wash the fruit to remove pesticide.",
+            "We wash the fruit so clean it."
+          ],
+          "answer": "We wash the fruit to remove pesticide.",
+          "explanation": "Only this sentence uses to plus the base verb remove, which is how the infinitive of purpose gives a reason."
+        },
+        {
+          "prompt": "Which sentence is a correct imperative for a food-safety poster?",
+          "choices": [
+            "You wash the fruit before eating.",
+            "The fruit is washed by you.",
+            "Washing the fruit is important for everyone.",
+            "Wash the fruit before you eat it."
+          ],
+          "answer": "Wash the fruit before you eat it.",
+          "explanation": "An imperative starts with the base verb and leaves out the subject you."
+        },
+        {
+          "prompt": "Which sentence compares two kinds of bread correctly?",
+          "choices": [
+            "Fresh bread is better than old bread.",
+            "Fresh bread is more good than old bread.",
+            "Fresh bread is gooder than old bread.",
+            "Fresh bread is the most good bread."
+          ],
+          "answer": "Fresh bread is better than old bread.",
+          "explanation": "Good has the special comparison form better, and a comparison needs than to join the two things."
+        },
+        {
+          "prompt": "Which food list uses commas correctly?",
+          "choices": [
+            "We bought rice lamb and dates.",
+            "We bought, rice lamb and dates.",
+            "We bought rice, lamb, and dates.",
+            "We, bought rice, lamb and dates."
+          ],
+          "answer": "We bought rice, lamb, and dates.",
+          "explanation": "A comma separates each item in a list of three or more, and no comma belongs after the verb bought."
+        },
         {
           "prompt": "Which word means a time when many people do not have enough food?",
           "choices": [
@@ -485,28 +812,78 @@
           ],
           "answer": "famine",
           "explanation": "A famine is a shortage of food, while a bakery is a shop, a spice is a flavouring and a comma is a punctuation mark."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence compares two kinds of bread correctly?",
+          "choices": [
+            "Fresh bread is better than old bread.",
+            "Fresh bread is more good than old bread.",
+            "Fresh bread is gooder than old bread.",
+            "Fresh bread is the most good bread."
+          ],
+          "answer": "Fresh bread is better than old bread.",
+          "explanation": "Good has the special comparison form better, and a comparison needs than to join the two things."
         },
         {
-          "prompt": "Which word names the chemical a farmer sprays to kill insects on crops?",
+          "prompt": "Which food list uses commas correctly?",
           "choices": [
-            "pesticide",
-            "stomach",
-            "comma",
-            "labour"
+            "We bought rice lamb and dates.",
+            "We bought, rice lamb and dates.",
+            "We bought rice, lamb, and dates.",
+            "We, bought rice, lamb and dates."
           ],
-          "answer": "pesticide",
-          "explanation": "Pesticide is sprayed on plants; a stomach is a body part, a comma is a punctuation mark and labour is hard work."
+          "answer": "We bought rice, lamb, and dates.",
+          "explanation": "A comma separates each item in a list of three or more, and no comma belongs after the verb bought."
         },
         {
-          "prompt": "Amal had to chew the dried meat for a long time. Which unit word describes it?",
+          "prompt": "Which word means: To keep doing something without stopping.",
           "choices": [
-            "fresh",
-            "deadly",
-            "chewy",
-            "famine"
+            "continue",
+            "happily",
+            "mainly"
           ],
-          "answer": "chewy",
-          "explanation": "Chewy means hard to bite, so it fits meat that needs long chewing; fresh, deadly and famine describe other things."
+          "answer": "continue",
+          "explanation": "continue: To keep doing something without stopping."
+        },
+        {
+          "prompt": "Which word means: A doctor is a person trained to help sick people get well.",
+          "choices": [
+            "happily",
+            "mainly",
+            "doctor"
+          ],
+          "answer": "doctor",
+          "explanation": "doctor: A doctor is a person trained to help sick people get well."
+        },
+        {
+          "prompt": "What type of word is 'nurse'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Nurse is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'reproduce'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Reproduce is used as a verb in this dictionary sense."
         }
       ]
     }

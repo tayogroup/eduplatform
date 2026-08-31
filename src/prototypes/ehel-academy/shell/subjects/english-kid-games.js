@@ -85,6 +85,19 @@ const WORLD_BY_TYPE = {
 };
 const worldOf = (game) => WORLDS[game.id] || WORLD_BY_TYPE[game.type] || WORLD_BY_TYPE.choice;
 
+// How many chances a game gives, in words, read from the PACK. It said "three"
+// as a literal until the packs went to six on 2026-09-01 and the sentence
+// quietly became false — the one number on this page that could not correct
+// itself, while the stars, the star jar and the section guide all could. If the
+// games ever differ from one another it says "a few", which is true of any pack.
+const NUMBER_WORDS = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+function roundsWord(games) {
+  const counts = new Set(games.map((game) => game.rounds.length));
+  if (counts.size !== 1) return "a few chances";
+  const [count] = [...counts];
+  return `${NUMBER_WORDS[count] || count} chance${count === 1 ? "" : "s"}`;
+}
+
 // The park behind the host: a sun and two rows of hills, drawn once and tinted
 // by whichever world is on screen. Deliberately ONE piece of scenery rather
 // than a set of floating shapes — three loose circles clipped by the panel's
@@ -258,7 +271,7 @@ export function createGameZone(api) {
         <div class="kg-welcome-say">
           <span class="kg-eyebrow">Unit ${unit.no} · ${escapeHtml(unit.title)}</span>
           <h1>Game Park</h1>
-          <p>${games.length} games to play. Every game gives you three chances to earn a star.</p>
+          <p>${games.length} games to play. Every game gives you ${roundsWord(games)} to earn a star.</p>
           <div class="kg-jar">
             <div class="kg-jar-track"><span style="width:${starGoal ? Math.round((stars / starGoal) * 100) : 0}%"></span></div>
             <strong>★ ${stars} <span>of ${starGoal} stars</span></strong>

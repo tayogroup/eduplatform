@@ -5,7 +5,7 @@
   "unitId": "eng-g01-t02-u05",
   "title": "On the Farm Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The big hot star that gives us light in the day.",
           "choices": [
             "sun",
-            "rug",
-            "rabbit"
+            "fun",
+            "rug"
           ],
           "answer": "sun",
           "explanation": "sun: The big hot star that gives us light in the day."
         },
         {
-          "prompt": "Which word means: You use this word when you talk about yourself.",
+          "prompt": "Which word means: A big wild cat with a loud roar and golden fur.",
           "choices": [
             "sun",
-            "rug",
-            "me"
+            "fun",
+            "lion"
           ],
-          "answer": "me",
-          "explanation": "me: You use this word when you talk about yourself."
+          "answer": "lion",
+          "explanation": "lion: A big wild cat with a loud roar and golden fur."
         },
         {
-          "prompt": "Which word means: A baby bird that has just come out of its shell.",
+          "prompt": "Which word means: This word asks in what way something happens.",
           "choices": [
-            "rug",
-            "chick",
+            "fun",
+            "how",
             "sun"
           ],
-          "answer": "chick",
-          "explanation": "chick: A baby bird that has just come out of its shell."
+          "answer": "how",
+          "explanation": "how: This word asks in what way something happens."
+        },
+        {
+          "prompt": "Which word means: Liked means you enjoyed something or thought it was nice.",
+          "choices": [
+            "liked",
+            "sun",
+            "fun"
+          ],
+          "answer": "liked",
+          "explanation": "liked: Liked means you enjoyed something or thought it was nice."
+        },
+        {
+          "prompt": "Which word means: The short, snuffly sound that a pig makes in the mud.",
+          "choices": [
+            "sun",
+            "fun",
+            "oink"
+          ],
+          "answer": "oink",
+          "explanation": "oink: The short, snuffly sound that a pig makes in the mud."
+        },
+        {
+          "prompt": "Which word means: Getting bigger, like a plant or a child.",
+          "choices": [
+            "fun",
+            "growing",
+            "sun"
+          ],
+          "answer": "growing",
+          "explanation": "growing: Getting bigger, like a plant or a child."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Were means the same as are, but it already happened.",
-          "answer": "were"
+          "clue": "A big wild cat with a loud roar and golden fur.",
+          "answer": "lion"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A pink farm animal with a curly tail and flat nose.",
-          "answer": "pig"
+          "clue": "Must means you have to do something.",
+          "answer": "must"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Peep is the small sound a baby chick makes.",
+          "answer": "peep"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A big farm building where animals and hay stay.",
+          "answer": "barn"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Round vegetables with layers that make your eyes water.",
+          "answer": "onions"
         }
       ]
     },
@@ -95,27 +140,65 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "grass.",
+            "wall.",
             "the",
-            "through",
-            "moved",
-            "snake",
-            "The"
+            "on",
+            "sat",
+            "bird",
+            "little",
+            "A"
           ],
-          "answer": "The snake moved through the grass."
+          "answer": "A little bird sat on the wall."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "cow.",
-            "the",
-            "from",
-            "milk",
-            "fresh",
-            "drank",
-            "Amal"
+            "book.",
+            "new",
+            "a",
+            "have",
+            "I"
           ],
-          "answer": "Amal drank fresh milk from the cow."
+          "answer": "I have a new book."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "spring.",
+            "in",
+            "grows",
+            "farm",
+            "the",
+            "on",
+            "Everything"
+          ],
+          "answer": "Everything on the farm grows in spring."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "peep.",
+            "soft",
+            "a",
+            "made",
+            "chick",
+            "little",
+            "The"
+          ],
+          "answer": "The little chick made a soft peep."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "mud.",
+            "the",
+            "in",
+            "oink",
+            "says",
+            "pig",
+            "The"
+          ],
+          "answer": "The pig says oink in the mud."
         }
       ]
     },
@@ -128,296 +211,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which farm animal can swim on the pond?",
+          "prompt": "Which word names a farm animal?",
           "choices": [
-            "duck",
-            "sheep",
-            "hen",
-            "goat"
+            "tractor",
+            "barn",
+            "goat",
+            "grass"
           ],
-          "answer": "duck",
-          "explanation": "A duck swims on water; hens, sheep and goats stay on the land."
+          "answer": "goat",
+          "explanation": "A goat is an animal; a tractor, a barn and grass are all found on a farm but they are not alive animals."
         },
         {
-          "prompt": "Which sentence tells what the horse is doing right now?",
+          "prompt": "Which farm animal gives us milk?",
           "choices": [
-            "This is a horse.",
-            "The horse is running.",
-            "The horse is brown.",
-            "The horse has a long tail."
-          ],
-          "answer": "The horse is running.",
-          "explanation": "The -ing word running shows an action happening now; the others tell us a colour, a body part or a name."
-        },
-        {
-          "prompt": "Which sentence tells us what a sheep has?",
-          "choices": [
-            "It has feathers.",
-            "It has wings.",
-            "It has soft wool.",
-            "It has fins."
-          ],
-          "answer": "It has soft wool.",
-          "explanation": "Sheep are covered in wool; feathers and wings belong to birds and fins belong to fish."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Which animal did Amal and Grandma go to see first?",
-          "choices": [
-            "The cow",
-            "A little white egg",
-            "The ___ says ___. (for example: The cow says moo.)"
-          ],
-          "answer": "The cow",
-          "explanation": "The story says, 'First they went to see the cow.'"
-        },
-        {
-          "prompt": "What did Amal find in the straw after she fed the hen?",
-          "choices": [
-            "Tired, but happy",
-            "The ___ is ___ing.",
-            "A little white egg"
-          ],
-          "answer": "A little white egg",
-          "explanation": "Amal saw something warm in the straw: it was a little white egg."
-        },
-        {
-          "prompt": "Why did the hen give Amal an egg?",
-          "choices": [
-            "The cow",
-            "Because Amal was kind and fed her",
-            "Tired, but happy"
-          ],
-          "answer": "Because Amal was kind and fed her",
-          "explanation": "Grandma says, 'When you are kind to the animals, they are kind to you.'"
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 - Listen and point",
-          "target": "Point to farm animals as an adult names them if one is nearby, or as the audio names them, then name them on your own."
-        },
-        {
-          "prompt": "Speaking 3 - Ask and answer",
-          "target": "Ask and answer about what the farm animals are doing."
-        },
-        {
-          "prompt": "Speaking 5 - Role-play",
-          "target": "Act out the farmer's morning with a partner."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "barn.",
-            "the",
-            "inside",
-            "sleeps",
-            "cow",
-            "The"
-          ],
-          "answer": "The cow sleeps inside the barn."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Adam.",
-            "to",
-            "ball",
-            "the",
-            "threw",
-            "Sami"
-          ],
-          "answer": "Sami threw the ball to Adam."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "neigh.",
-            "goes",
             "horse",
-            "happy",
-            "The"
+            "hen",
+            "duck",
+            "cow"
           ],
-          "answer": "The happy horse goes neigh."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'of' mean in this unit?",
-          "choices": [
-            "This word shows what something belongs to or is made from.",
-            "The big hot star that gives us light in the day.",
-            "A rug is a soft mat that covers part of a floor."
-          ],
-          "answer": "This word shows what something belongs to or is made from.",
-          "explanation": "of: This word shows what something belongs to or is made from."
+          "answer": "cow",
+          "explanation": "A cow gives milk; a hen and a duck give eggs and we do not milk a horse."
         },
         {
-          "prompt": "What does 'neigh' mean in this unit?",
+          "prompt": "Which farm animal lays the eggs we eat for breakfast?",
           "choices": [
-            "The big hot star that gives us light in the day.",
-            "A rug is a soft mat that covers part of a floor.",
-            "The loud, high sound that a horse makes in its stall."
+            "hen",
+            "sheep",
+            "cow",
+            "horse"
           ],
-          "answer": "The loud, high sound that a horse makes in its stall.",
-          "explanation": "neigh: The loud, high sound that a horse makes in its stall."
+          "answer": "hen",
+          "explanation": "A hen lays eggs; a sheep, a cow and a horse do not lay eggs at all."
         },
-        {
-          "prompt": "What does 'rug' mean in this unit?",
-          "choices": [
-            "A soft animal with long ears that hops and eats carrots.",
-            "A rug is a soft mat that covers part of a floor.",
-            "The big hot star that gives us light in the day."
-          ],
-          "answer": "A rug is a soft mat that covers part of a floor.",
-          "explanation": "rug: A rug is a soft mat that covers part of a floor."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'happily'?",
-          "choices": [
-            "Adverb",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adverb",
-          "explanation": "Happily is used as an adverb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'driving'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Driving is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'monkey'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Monkey is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "bus",
-              "A long vehicle that carries many people at once."
-            ],
-            [
-              "frog",
-              "A small green animal that hops and lives near water."
-            ],
-            [
-              "elephant",
-              "A very big grey animal with a long trunk and huge ears."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "were",
-              "Were means the same as are, but it already happened."
-            ],
-            [
-              "before",
-              "Before means earlier than something else happens."
-            ],
-            [
-              "verse",
-              "Verse means one part of a song or poem."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "goose",
-              "A big farm bird with a very long neck."
-            ],
-            [
-              "barn",
-              "A big farm building where animals and hay stay."
-            ],
-            [
-              "driving",
-              "Making a car, bus or tractor move along."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What sound does a cow make?",
           "choices": [
@@ -454,13 +279,504 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Which animal did Amal and Grandma go to see first?",
+          "choices": [
+            "The cow",
+            "A little white egg",
+            "The ___ says ___. (for example: The cow says moo.)"
+          ],
+          "answer": "The cow",
+          "explanation": "The story says, 'First they went to see the cow.'"
+        },
+        {
+          "prompt": "Which animal wanted to eat Amal's hat?",
+          "choices": [
+            "Tired, but happy",
+            "The ___ is ___ing.",
+            "The goat"
+          ],
+          "answer": "The goat",
+          "explanation": "The story says the goat wanted to eat Amal's hat, and Amal laughed."
+        },
+        {
+          "prompt": "What did Amal find in the straw after she fed the hen?",
+          "choices": [
+            "The cow",
+            "A little white egg",
+            "Because Amal was kind and fed her"
+          ],
+          "answer": "A little white egg",
+          "explanation": "Amal saw something warm in the straw: it was a little white egg."
+        },
+        {
+          "prompt": "How did Amal feel at the end of her farm day?",
+          "choices": [
+            "Tired, but happy",
+            "The ___ says ___. (for example: The cow says moo.)",
+            "The goat"
+          ],
+          "answer": "Tired, but happy",
+          "explanation": "After waving to Adam the story says she was tired, but she was happy."
+        },
+        {
+          "prompt": "Why did the hen give Amal an egg?",
+          "choices": [
+            "The ___ is ___ing.",
+            "A little white egg",
+            "Because Amal was kind and fed her"
+          ],
+          "answer": "Because Amal was kind and fed her",
+          "explanation": "Grandma says, 'When you are kind to the animals, they are kind to you.'"
+        },
+        {
+          "prompt": "Which talk line makes an animal sound?",
+          "choices": [
+            "Tired, but happy",
+            "The ___ says ___. (for example: The cow says moo.)",
+            "The cow"
+          ],
+          "answer": "The ___ says ___. (for example: The cow says moo.)",
+          "explanation": "'The ___ says ___' is the line for animal sounds."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "Point to farm animals as an adult names them if one is nearby, or as the audio names them, then name them on your own."
+        },
+        {
+          "prompt": "Speaking 2 - Repeat the model",
+          "target": "Copy the adult's animal sound if one is nearby, or copy the audio's animal sound, then try one by yourself."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "Ask and answer about what the farm animals are doing."
+        },
+        {
+          "prompt": "Speaking 4 - Picture talk",
+          "target": "Everything on the farm grows in spring."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "The little chick made a soft peep."
+        },
+        {
+          "prompt": "Speaking 6 - My confident turn",
+          "target": "The pig says oink in the mud."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "tomatoes.",
+            "ripe",
+            "picking",
+            "is",
+            "Maya"
+          ],
+          "answer": "Maya is picking ripe tomatoes."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hill.",
+            "the",
+            "on",
+            "grass",
+            "eats",
+            "goat",
+            "The"
+          ],
+          "answer": "The goat eats grass on the hill."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Adam.",
+            "to",
+            "ball",
+            "the",
+            "threw",
+            "Sami"
+          ],
+          "answer": "Sami threw the ball to Adam."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "chick?",
+            "a",
+            "like",
+            "hop",
+            "you",
+            "Can"
+          ],
+          "answer": "Can you hop like a chick?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "neigh.",
+            "goes",
+            "horse",
+            "happy",
+            "The"
+          ],
+          "answer": "The happy horse goes neigh."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hands.",
+            "gentle",
+            "takes",
+            "seeds",
+            "Planting"
+          ],
+          "answer": "Planting seeds takes gentle hands."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'fun' mean in this unit?",
+          "choices": [
+            "Fun means enjoying yourself.",
+            "The big hot star that gives us light in the day.",
+            "A rug is a soft mat that covers part of a floor."
+          ],
+          "answer": "Fun means enjoying yourself.",
+          "explanation": "fun: Fun means enjoying yourself."
+        },
+        {
+          "prompt": "What does 'he' mean in this unit?",
+          "choices": [
+            "The big hot star that gives us light in the day.",
+            "Fun means enjoying yourself.",
+            "This word means a boy or a man."
+          ],
+          "answer": "This word means a boy or a man.",
+          "explanation": "he: This word means a boy or a man."
+        },
+        {
+          "prompt": "What does 'must' mean in this unit?",
+          "choices": [
+            "Fun means enjoying yourself.",
+            "Must means you have to do something.",
+            "The big hot star that gives us light in the day."
+          ],
+          "answer": "Must means you have to do something.",
+          "explanation": "must: Must means you have to do something."
+        },
+        {
+          "prompt": "What does 'peep' mean in this unit?",
+          "choices": [
+            "Peep is the small sound a baby chick makes.",
+            "The big hot star that gives us light in the day.",
+            "Fun means enjoying yourself."
+          ],
+          "answer": "Peep is the small sound a baby chick makes.",
+          "explanation": "peep: Peep is the small sound a baby chick makes."
+        },
+        {
+          "prompt": "What does 'field' mean in this unit?",
+          "choices": [
+            "The big hot star that gives us light in the day.",
+            "Fun means enjoying yourself.",
+            "Wide open land where grass or food plants grow."
+          ],
+          "answer": "Wide open land where grass or food plants grow.",
+          "explanation": "field: Wide open land where grass or food plants grow."
+        },
+        {
+          "prompt": "What does 'carrots' mean in this unit?",
+          "choices": [
+            "Fun means enjoying yourself.",
+            "Long orange vegetables that grow under the soil.",
+            "The big hot star that gives us light in the day."
+          ],
+          "answer": "Long orange vegetables that grow under the soil.",
+          "explanation": "carrots: Long orange vegetables that grow under the soil."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'rug'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Rug is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'were'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Were is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'drove'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Drove is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'goose'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Goose is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'seed'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Seed is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'animal'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Animal is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "bus",
+              "A long vehicle that carries many people at once."
+            ],
+            [
+              "mud",
+              "Mud is soft wet earth."
+            ],
+            [
+              "bird",
+              "A bird is an animal with feathers and wings."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "her",
+              "This word means belonging to a girl or a woman."
+            ],
+            [
+              "are",
+              "We use are with you, we and they to say what something is."
+            ],
+            [
+              "want",
+              "Want means you would like to have something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "loved",
+              "Loved means you liked someone or something very much."
+            ],
+            [
+              "drove",
+              "Drove means you made a vehicle move and go somewhere."
+            ],
+            [
+              "verse",
+              "Verse means one part of a song or poem."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "heard",
+              "Heard means you noticed a sound with your ears."
+            ],
+            [
+              "duck",
+              "A farm bird that swims and has flat feet."
+            ],
+            [
+              "quack",
+              "The loud, short sound that a duck makes near the water."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "farm",
+              "A place where people grow food and keep animals."
+            ],
+            [
+              "wheat",
+              "A tall farm plant we use to make bread."
+            ],
+            [
+              "picking",
+              "Taking fruit or vegetables off a plant with your hands."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "onions",
+              "Round vegetables with layers that make your eyes water."
+            ],
+            [
+              "animal",
+              "An animal is a living thing that moves about, like a cat or a bird."
+            ],
+            [
+              "elephant",
+              "A very big grey animal with a long trunk and huge ears."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "What do we call a baby hen?",
+          "choices": [
+            "calf",
+            "foal",
+            "lamb",
+            "chick"
+          ],
+          "answer": "chick",
+          "explanation": "A baby hen is a chick; a calf is a baby cow, a lamb is a baby sheep and a foal is a baby horse."
+        },
+        {
+          "prompt": "Which farm animal can swim on the pond?",
+          "choices": [
+            "duck",
+            "sheep",
+            "hen",
+            "goat"
+          ],
+          "answer": "duck",
+          "explanation": "A duck swims on water; hens, sheep and goats stay on the land."
+        },
+        {
+          "prompt": "Which sentence tells what the horse is doing right now?",
+          "choices": [
+            "This is a horse.",
+            "The horse is running.",
+            "The horse is brown.",
+            "The horse has a long tail."
+          ],
+          "answer": "The horse is running.",
+          "explanation": "The -ing word running shows an action happening now; the others tell us a colour, a body part or a name."
+        },
+        {
+          "prompt": "Which sentence tells us what a sheep has?",
+          "choices": [
+            "It has feathers.",
+            "It has wings.",
+            "It has soft wool.",
+            "It has fins."
+          ],
+          "answer": "It has soft wool.",
+          "explanation": "Sheep are covered in wool; feathers and wings belong to birds and fins belong to fish."
+        },
+        {
+          "prompt": "Which word do we use to tell what happens at the beginning of a story?",
+          "choices": [
+            "Last",
+            "Next",
+            "Then",
+            "First"
+          ],
+          "answer": "First",
+          "explanation": "First shows the beginning; then and next come in the middle and last comes at the end."
+        },
         {
           "prompt": "Which word names a farm animal?",
           "choices": [
@@ -471,28 +787,78 @@
           ],
           "answer": "goat",
           "explanation": "A goat is an animal; a tractor, a barn and grass are all found on a farm but they are not alive animals."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which sentence tells us what a sheep has?",
+          "choices": [
+            "It has feathers.",
+            "It has wings.",
+            "It has soft wool.",
+            "It has fins."
+          ],
+          "answer": "It has soft wool.",
+          "explanation": "Sheep are covered in wool; feathers and wings belong to birds and fins belong to fish."
         },
         {
-          "prompt": "Which farm animal gives us milk?",
+          "prompt": "Which word do we use to tell what happens at the beginning of a story?",
           "choices": [
-            "horse",
-            "hen",
-            "duck",
-            "cow"
+            "Last",
+            "Next",
+            "Then",
+            "First"
           ],
-          "answer": "cow",
-          "explanation": "A cow gives milk; a hen and a duck give eggs and we do not milk a horse."
+          "answer": "First",
+          "explanation": "First shows the beginning; then and next come in the middle and last comes at the end."
         },
         {
-          "prompt": "Which farm animal lays the eggs we eat for breakfast?",
+          "prompt": "Which word means: A bird is an animal with feathers and wings.",
           "choices": [
-            "hen",
-            "sheep",
-            "cow",
-            "horse"
+            "bird",
+            "sun",
+            "fun"
           ],
-          "answer": "hen",
-          "explanation": "A hen lays eggs; a sheep, a cow and a horse do not lay eggs at all."
+          "answer": "bird",
+          "explanation": "bird: A bird is an animal with feathers and wings."
+        },
+        {
+          "prompt": "Which word means: Must means you have to do something.",
+          "choices": [
+            "sun",
+            "fun",
+            "must"
+          ],
+          "answer": "must",
+          "explanation": "must: Must means you have to do something."
+        },
+        {
+          "prompt": "What type of word is 'quack'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Quack is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'carrots'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Carrots is used as a noun in this dictionary sense."
         }
       ]
     }

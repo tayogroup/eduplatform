@@ -5,7 +5,7 @@
   "unitId": "eng-g05-t01-u02",
   "title": "Exploring Space Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: To happen, especially without being planned.",
           "choices": [
             "occur",
-            "reflection",
-            "prey"
+            "atmosphere",
+            "waste"
           ],
           "answer": "occur",
           "explanation": "occur: To happen, especially without being planned."
         },
         {
-          "prompt": "Which word means: The moon is the large, round object that travels around the Earth and shines at night.",
+          "prompt": "Which word means: Wondered means thought about something with curiosity, wanting to know more about it.",
           "choices": [
             "occur",
-            "reflection",
-            "moon"
+            "atmosphere",
+            "wondered"
           ],
-          "answer": "moon",
-          "explanation": "moon: The moon is the large, round object that travels around the Earth and shines at night."
+          "answer": "wondered",
+          "explanation": "wondered: Wondered means thought about something with curiosity, wanting to know more about it."
         },
         {
-          "prompt": "Which word means: Hurting means causing pain or discomfort to someone or something.",
+          "prompt": "Which word means: Rush means to move or do something very quickly, often because there is little time.",
           "choices": [
-            "reflection",
-            "hurting",
+            "atmosphere",
+            "rush",
             "occur"
           ],
-          "answer": "hurting",
-          "explanation": "hurting: Hurting means causing pain or discomfort to someone or something."
+          "answer": "rush",
+          "explanation": "rush: Rush means to move or do something very quickly, often because there is little time."
+        },
+        {
+          "prompt": "Which word means: Small, flat computers that people use by touching the screen.",
+          "choices": [
+            "tablets",
+            "occur",
+            "atmosphere"
+          ],
+          "answer": "tablets",
+          "explanation": "tablets: Small, flat computers that people use by touching the screen."
+        },
+        {
+          "prompt": "Which word means: Reduce means to make something smaller or less in amount.",
+          "choices": [
+            "occur",
+            "atmosphere",
+            "reduce"
+          ],
+          "answer": "reduce",
+          "explanation": "reduce: Reduce means to make something smaller or less in amount."
+        },
+        {
+          "prompt": "Which word means: The state of having something that belongs to you",
+          "choices": [
+            "atmosphere",
+            "ownership",
+            "occur"
+          ],
+          "answer": "ownership",
+          "explanation": "ownership: The state of having something that belongs to you"
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The moon is the large, round object that travels around the Earth and shines at night.",
-          "answer": "moon"
+          "clue": "Wondered means thought about something with curiosity, wanting to know more about it.",
+          "answer": "wondered"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Hurting means causing pain or discomfort to someone or something.",
-          "answer": "hurting"
+          "clue": "Rush means to move or do something very quickly, often because there is little time.",
+          "answer": "rush"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Worked together with others in a helpful, friendly way.",
+          "answer": "cooperated"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Reduce means to make something smaller or less in amount.",
+          "answer": "reduce"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Very loud or growing quickly",
+          "answer": "booming"
         }
       ]
     },
@@ -98,36 +143,83 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "language.",
-            "English",
-            "the",
-            "into",
-            "crossed",
-            "later",
-            "book",
-            "his",
+            "dry.",
+            "and",
+            "hot",
+            "is",
+            "June",
             "in",
-            "names",
-            "star",
-            "Many"
+            "day",
+            "typical",
+            "A"
           ],
-          "answer": "Many star names in his book later crossed into the English language."
+          "answer": "A typical day in June is hot and dry."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "meteorite.",
-            "small",
-            "a",
-            "be",
-            "to",
-            "out",
-            "turned",
-            "object",
-            "glowing",
+            "station.",
+            "the",
+            "aboard",
+            "leaves",
+            "salad",
+            "grow",
+            "and",
+            "experiments",
+            "conduct",
+            "astronauts",
             "The"
           ],
-          "answer": "The glowing object turned out to be a small meteorite."
+          "answer": "The astronauts conduct experiments and grow salad leaves aboard the station."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "winners.",
+            "fair",
+            "science",
+            "the",
+            "about",
+            "announcement",
+            "an",
+            "made",
+            "Yasmin",
+            "Teacher"
+          ],
+          "answer": "Teacher Yasmin made an announcement about the science fair winners."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "worked.",
+            "sensor",
+            "the",
+            "how",
+            "understand",
+            "pupils",
+            "the",
+            "helped",
+            "observation",
+            "Careful"
+          ],
+          "answer": "Careful observation helped the pupils understand how the sensor worked."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "meeting.",
+            "the",
+            "for",
+            "hall",
+            "small",
+            "the",
+            "into",
+            "fitted",
+            "class",
+            "whole",
+            "The"
+          ],
+          "answer": "The whole class fitted into the small hall for the meeting."
         }
       ]
     },
@@ -140,306 +232,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which of these statements about space is an opinion rather than a fact?",
+          "prompt": "Which sentence uses the correct verb after an indefinite pronoun?",
           "choices": [
-            "The Moon orbits the Earth.",
-            "Sputnik 1 was launched in 1957.",
-            "The space station has been in orbit since 1998.",
-            "Stars are the most beautiful things in the sky."
+            "Everyone is ready for the presentation.",
+            "Everyone are ready for the presentation.",
+            "Nobody know the answer yet.",
+            "Everything have been packed."
           ],
-          "answer": "Stars are the most beautiful things in the sky.",
-          "explanation": "Most beautiful signals a personal view that cannot be checked. The other three statements can be verified in a reference book."
+          "answer": "Everyone is ready for the presentation.",
+          "explanation": "Everyone is singular, so it takes the singular verb is. The other three sentences pair a singular pronoun with a plural verb."
         },
         {
-          "prompt": "In The Burrow Discovery, what did Sami build for the team's model?",
+          "prompt": "What does the word burrow mean?",
           "choices": [
-            "A painted banner",
-            "A soil sensor",
-            "A card windmill",
-            "A glass telescope"
+            "A large area of land ruled by one government",
+            "A very bright light that is hard to see in",
+            "A hole or tunnel that an animal makes in the ground to live in",
+            "A written agreement between two or more groups"
           ],
-          "answer": "A soil sensor",
-          "explanation": "Sami built the soil sensor that measures moisture. The windmill belonged to Leo's group and the banner to the boycott pupils."
+          "answer": "A hole or tunnel that an animal makes in the ground to live in",
+          "explanation": "A burrow is an animal home dug into the ground. The other options define empire, glare and contract."
         },
         {
-          "prompt": "The prefix mis in the word misunderstood tells you the action was done in which way?",
+          "prompt": "Which sentence uses anyone correctly?",
           "choices": [
-            "again",
-            "before",
-            "wrongly",
-            "quickly"
+            "Anyone left a bag in the hall.",
+            "Did anyone see my notebook?",
+            "Anyone has been using the tablets today.",
+            "Anyone is more important than teamwork."
           ],
-          "answer": "wrongly",
-          "explanation": "The prefix mis means wrongly, so misunderstood means understood wrongly. The prefix re means again."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What did the early observers build on high ground, and what did they use it for?",
-          "choices": [
-            "They built observatories on high ground so that they could map the patterns of the stars.",
-            "They built a towering windmill from card and wire, and Leo claimed the glare from the bulbs proved it worked.",
-            "They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly."
-          ],
-          "answer": "They built observatories on high ground so that they could map the patterns of the stars.",
-          "explanation": "The first paragraph lists observatories, star maps and brass measuring instruments as the observers' tools."
+          "answer": "Did anyone see my notebook?",
+          "explanation": "Anyone belongs in questions and negatives. The other three are statements, which need someone, somebody or nothing."
         },
-        {
-          "prompt": "Why does Sami want to research the plastic-cup boycott before he joins it?",
-          "choices": [
-            "They built a towering windmill from card and wire, and Leo claimed the glare from the bulbs proved it worked.",
-            "It says that nothing in science happens quickly, so you have to be patient to get brilliant results.",
-            "He believes that nobody should sign anything they have not read, so he wants the figures first."
-          ],
-          "answer": "He believes that nobody should sign anything they have not read, so he wants the figures first.",
-          "explanation": "Sami states this reason himself, and the team then asks the group leader to show them his figures."
-        },
-        {
-          "prompt": "Elena tells the team they seem very loyal to their work. Which detail from the story supports her?",
-          "choices": [
-            "Scientists began to cooperate across borders, sharing ideas and instruments as they worked towards the Moon.",
-            "They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly.",
-            "He believes that nobody should sign anything they have not read, so he wants the figures first."
-          ],
-          "answer": "They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly.",
-          "explanation": "Loyal means staying with something you care about, and this team stayed with equipment that had already failed."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Astronaut interview role-play",
-          "target": "Eclipses occur only when the moon lines up exactly."
-        },
-        {
-          "prompt": "Speaking 3: Group presentation of a science mission",
-          "target": "In a small group, plan a pretend science mission and give it a name."
-        },
-        {
-          "prompt": "Speaking 5: Should our school hold a boycott?",
-          "target": "I agree with Nora because..."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "sweets.",
-            "many",
-            "too",
-            "eating",
-            "avoid",
-            "to",
-            "try",
-            "I"
-          ],
-          "answer": "I try to avoid eating too many sweets."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "deadline.",
-            "the",
-            "before",
-            "project",
-            "their",
-            "finish",
-            "team",
-            "the",
-            "helped",
-            "cooperation",
-            "Good"
-          ],
-          "answer": "Good cooperation helped the team finish their project before the deadline."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "form.",
-            "entry",
-            "the",
-            "on",
-            "perfectly",
-            "fitted",
-            "handwriting",
-            "Amal's"
-          ],
-          "answer": "Amal's handwriting fitted perfectly on the entry form."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'exploration' mean in this unit?",
-          "choices": [
-            "Exploration is the act of travelling to and studying new or unknown places.",
-            "To happen, especially without being planned.",
-            "Light or sound bouncing back off a surface."
-          ],
-          "answer": "Exploration is the act of travelling to and studying new or unknown places.",
-          "explanation": "exploration: Exploration is the act of travelling to and studying new or unknown places."
-        },
-        {
-          "prompt": "What does 'energy' mean in this unit?",
-          "choices": [
-            "To happen, especially without being planned.",
-            "Light or sound bouncing back off a surface.",
-            "Energy is the power that makes things move, work or produce light and heat."
-          ],
-          "answer": "Energy is the power that makes things move, work or produce light and heat.",
-          "explanation": "energy: Energy is the power that makes things move, work or produce light and heat."
-        },
-        {
-          "prompt": "What does 'reflection' mean in this unit?",
-          "choices": [
-            "An animal that is hunted and eaten by another.",
-            "Light or sound bouncing back off a surface.",
-            "To happen, especially without being planned."
-          ],
-          "answer": "Light or sound bouncing back off a surface.",
-          "explanation": "reflection: Light or sound bouncing back off a surface."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'tablets'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Tablets is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'boycott'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Boycott is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'angles'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Angles is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "convenience",
-              "The quality of being easy or useful to do or use."
-            ],
-            [
-              "frequency",
-              "How often something happens in a given time."
-            ],
-            [
-              "mapped",
-              "Mapped means recorded or drew the exact position of something, often to make a chart or plan."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "planet",
-              "A planet is a large, round object in space that travels around a star, such as the Sun."
-            ],
-            [
-              "engineer",
-              "A person whose job is to design, build or fix machines, buildings or systems."
-            ],
-            [
-              "typing",
-              "Writing something by pressing the keys on a keyboard or tablet."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "giggled",
-              "Giggled means laughed in a light, quiet way, often at something silly."
-            ],
-            [
-              "less",
-              "Less means a smaller amount of something."
-            ],
-            [
-              "expose",
-              "To show something that is usually hidden or to make something known"
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sentence avoids a double negative?",
           "choices": [
@@ -476,13 +300,533 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What did the early observers build on high ground, and what did they use it for?",
+          "choices": [
+            "They built observatories on high ground so that they could map the patterns of the stars.",
+            "They built a towering windmill from card and wire, and Leo claimed the glare from the bulbs proved it worked.",
+            "They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly."
+          ],
+          "answer": "They built observatories on high ground so that they could map the patterns of the stars.",
+          "explanation": "The first paragraph lists observatories, star maps and brass measuring instruments as the observers' tools."
+        },
+        {
+          "prompt": "What did Amal's team build for the science fair, and what did the model show?",
+          "choices": [
+            "He believes that nobody should sign anything they have not read, so he wants the figures first.",
+            "It says that nothing in science happens quickly, so you have to be patient to get brilliant results.",
+            "They built a model burrow that showed how a rabbit lives inside an animal home."
+          ],
+          "answer": "They built a model burrow that showed how a rabbit lives inside an animal home.",
+          "explanation": "Amal explains the project to the visitors crowding round her table in the opening lines."
+        },
+        {
+          "prompt": "Why does Sami want to research the plastic-cup boycott before he joins it?",
+          "choices": [
+            "Scientists began to cooperate across borders, sharing ideas and instruments as they worked towards the Moon.",
+            "He believes that nobody should sign anything they have not read, so he wants the figures first.",
+            "Its measurements of position and brightness were so accurate that nobody had produced anything as complete."
+          ],
+          "answer": "He believes that nobody should sign anything they have not read, so he wants the figures first.",
+          "explanation": "Sami states this reason himself, and the team then asks the group leader to show them his figures."
+        },
+        {
+          "prompt": "The passage calls the rockets towering. What does that word tell you about them?",
+          "choices": [
+            "It tells you the rockets are extremely tall, which is why the writer calls them marvels of engineering.",
+            "Its measurements of position and brightness were so accurate that nobody had produced anything as complete.",
+            "There is no shop in space and nobody can rush up with a spare part, so the crew repair things themselves."
+          ],
+          "answer": "It tells you the rockets are extremely tall, which is why the writer calls them marvels of engineering.",
+          "explanation": "Towering means very tall or high, and the praise for the engineering sits in the same sentence."
+        },
+        {
+          "prompt": "Elena tells the team they seem very loyal to their work. Which detail from the story supports her?",
+          "choices": [
+            "It tells you the rockets are extremely tall, which is why the writer calls them marvels of engineering.",
+            "They built observatories on high ground so that they could map the patterns of the stars.",
+            "They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly."
+          ],
+          "answer": "They kept improving the sensor after it failed, and on fair day both the burrow and the sensor worked perfectly.",
+          "explanation": "Loyal means staying with something you care about, and this team stayed with equipment that had already failed."
+        },
+        {
+          "prompt": "The passage says the launch of Sputnik 1 changed everything. What changed in the way scientists worked?",
+          "choices": [
+            "They built a model burrow that showed how a rabbit lives inside an animal home.",
+            "Scientists began to cooperate across borders, sharing ideas and instruments as they worked towards the Moon.",
+            "The sensor had refused to work the day before, so Nora jokes that it tells them nothing at all."
+          ],
+          "answer": "Scientists began to cooperate across borders, sharing ideas and instruments as they worked towards the Moon.",
+          "explanation": "Cooperation across borders is the change the writer names in the sentence straight after the 1957 launch."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Astronaut interview role-play",
+          "target": "Eclipses occur only when the moon lines up exactly."
+        },
+        {
+          "prompt": "Speaking 2: Fact or opinion? Listen and decide",
+          "target": "Your teacher or an adult reads you a list of statements about space."
+        },
+        {
+          "prompt": "Speaking 3: Group presentation of a science mission",
+          "target": "In a small group, plan a pretend science mission and give it a name."
+        },
+        {
+          "prompt": "Speaking 4: Reading the winning blog aloud",
+          "target": "Teacher Yasmin made an announcement about the science fair winners."
+        },
+        {
+          "prompt": "Speaking 5: Should our school hold a boycott?",
+          "target": "I agree with Nora because..."
+        },
+        {
+          "prompt": "Speaking 6: Vocabulary expert interview",
+          "target": "What is the difference between an object and a source?"
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "month.",
+            "a",
+            "about",
+            "in",
+            "orbit",
+            "its",
+            "completes",
+            "moon",
+            "The"
+          ],
+          "answer": "The moon completes its orbit in about a month."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "them.",
+            "above",
+            "sky",
+            "the",
+            "crossed",
+            "it",
+            "as",
+            "satellite",
+            "the",
+            "tracked",
+            "Scientists"
+          ],
+          "answer": "Scientists tracked the satellite as it crossed the sky above them."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "began.",
+            "mission",
+            "long",
+            "their",
+            "before",
+            "advance",
+            "in",
+            "tool",
+            "every",
+            "packed",
+            "crew",
+            "The"
+          ],
+          "answer": "The crew packed every tool in advance before their long mission began."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "long.",
+            "too",
+            "look",
+            "you",
+            "if",
+            "eyes",
+            "your",
+            "hurt",
+            "sometimes",
+            "can",
+            "lights",
+            "Bright"
+          ],
+          "answer": "Bright lights can sometimes hurt your eyes if you look too long."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "work.",
+            "hard",
+            "pupils'",
+            "the",
+            "celebrate",
+            "to",
+            "hall",
+            "the",
+            "at",
+            "gathered",
+            "Families"
+          ],
+          "answer": "Families gathered at the hall to celebrate the pupils' hard work."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "book?",
+            "favourite",
+            "your",
+            "of",
+            "name",
+            "the",
+            "is",
+            "What"
+          ],
+          "answer": "What is the name of your favourite book?"
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'atmosphere' mean in this unit?",
+          "choices": [
+            "The layer of gases that surrounds the Earth.",
+            "To happen, especially without being planned.",
+            "Things that are thrown away because nobody wants them."
+          ],
+          "answer": "The layer of gases that surrounds the Earth.",
+          "explanation": "atmosphere: The layer of gases that surrounds the Earth."
+        },
+        {
+          "prompt": "What does 'angles' mean in this unit?",
+          "choices": [
+            "To happen, especially without being planned.",
+            "The layer of gases that surrounds the Earth.",
+            "Angles are the spaces between two lines or surfaces that meet, usually measured in degrees."
+          ],
+          "answer": "Angles are the spaces between two lines or surfaces that meet, usually measured in degrees.",
+          "explanation": "angles: Angles are the spaces between two lines or surfaces that meet, usually measured in degrees."
+        },
+        {
+          "prompt": "What does 'goal' mean in this unit?",
+          "choices": [
+            "The layer of gases that surrounds the Earth.",
+            "Something a person or group is working hard to achieve.",
+            "To happen, especially without being planned."
+          ],
+          "answer": "Something a person or group is working hard to achieve.",
+          "explanation": "goal: Something a person or group is working hard to achieve."
+        },
+        {
+          "prompt": "What does 'plastic' mean in this unit?",
+          "choices": [
+            "A light, man-made material that can be shaped into many different objects.",
+            "To happen, especially without being planned.",
+            "The layer of gases that surrounds the Earth."
+          ],
+          "answer": "A light, man-made material that can be shaped into many different objects.",
+          "explanation": "plastic: A light, man-made material that can be shaped into many different objects."
+        },
+        {
+          "prompt": "What does 'protect' mean in this unit?",
+          "choices": [
+            "To happen, especially without being planned.",
+            "The layer of gases that surrounds the Earth.",
+            "Protect means to keep someone or something safe from harm."
+          ],
+          "answer": "Protect means to keep someone or something safe from harm.",
+          "explanation": "protect: Protect means to keep someone or something safe from harm."
+        },
+        {
+          "prompt": "What does 'galaxy' mean in this unit?",
+          "choices": [
+            "The layer of gases that surrounds the Earth.",
+            "A huge group of stars, dust and gas held together in space.",
+            "To happen, especially without being planned."
+          ],
+          "answer": "A huge group of stars, dust and gas held together in space.",
+          "explanation": "galaxy: A huge group of stars, dust and gas held together in space."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'waste'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Waste is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'complete'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Complete is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'soil'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Soil is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'giggled'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Giggled is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'loyalty'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Loyalty is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'carbon'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Carbon is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "convenience",
+              "The quality of being easy or useful to do or use."
+            ],
+            [
+              "surface",
+              "The top or outside part of something."
+            ],
+            [
+              "invisible",
+              "Not able to be seen at all."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "observers",
+              "Observers are people who watch something closely and carefully, often to learn from it."
+            ],
+            [
+              "star",
+              "A star is a huge, hot ball of glowing gas that shines in the night sky."
+            ],
+            [
+              "station",
+              "A station is a place or base built for a particular purpose, such as research, travel or transport."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "serious",
+              "Serious means important and needing careful attention, not something to treat lightly."
+            ],
+            [
+              "table",
+              "A flat piece of furniture with legs, used for working, eating or displaying things."
+            ],
+            [
+              "eyes",
+              "The two parts of the body used for seeing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "cheap",
+              "Not costing very much money, but sometimes also low in quality."
+            ],
+            [
+              "bulbs",
+              "Small glass parts that give off light when electricity flows through them."
+            ],
+            [
+              "beeped",
+              "Beeped means made a short, sharp electronic sound."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "less",
+              "Less means a smaller amount of something."
+            ],
+            [
+              "fitted",
+              "Fitted means was the right size or shape for a space or purpose."
+            ],
+            [
+              "cooperate",
+              "To work together with others to achieve something"
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "approval",
+              "When someone thinks something is good or okay"
+            ],
+            [
+              "universe",
+              "Everything that exists: all space, matter and time."
+            ],
+            [
+              "electrical",
+              "To do with electricity, or worked by it."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which unit word describes somebody who feels sleepy and wants to rest?",
+          "choices": [
+            "loyal",
+            "towering",
+            "drowsy",
+            "booming"
+          ],
+          "answer": "drowsy",
+          "explanation": "Drowsy means sleepy. Loyal describes faithfulness, towering describes height and booming describes loudness."
+        },
+        {
+          "prompt": "Which of these statements about space is an opinion rather than a fact?",
+          "choices": [
+            "The Moon orbits the Earth.",
+            "Sputnik 1 was launched in 1957.",
+            "The space station has been in orbit since 1998.",
+            "Stars are the most beautiful things in the sky."
+          ],
+          "answer": "Stars are the most beautiful things in the sky.",
+          "explanation": "Most beautiful signals a personal view that cannot be checked. The other three statements can be verified in a reference book."
+        },
+        {
+          "prompt": "In The Burrow Discovery, what did Sami build for the team's model?",
+          "choices": [
+            "A painted banner",
+            "A soil sensor",
+            "A card windmill",
+            "A glass telescope"
+          ],
+          "answer": "A soil sensor",
+          "explanation": "Sami built the soil sensor that measures moisture. The windmill belonged to Leo's group and the banner to the boycott pupils."
+        },
+        {
+          "prompt": "The prefix mis in the word misunderstood tells you the action was done in which way?",
+          "choices": [
+            "again",
+            "before",
+            "wrongly",
+            "quickly"
+          ],
+          "answer": "wrongly",
+          "explanation": "The prefix mis means wrongly, so misunderstood means understood wrongly. The prefix re means again."
+        },
+        {
+          "prompt": "What are people doing when they take part in a boycott?",
+          "choices": [
+            "Refusing to buy or use something to show they disagree",
+            "Lifting a heavy load to the top of a pole",
+            "Signing a written agreement about shared rules",
+            "Telling everybody a piece of important news"
+          ],
+          "answer": "Refusing to buy or use something to show they disagree",
+          "explanation": "A boycott is a peaceful refusal to buy or use something. The other options describe hoisting, signing a contract and announcing."
+        },
         {
           "prompt": "Which sentence uses the correct verb after an indefinite pronoun?",
           "choices": [
@@ -493,28 +837,78 @@
           ],
           "answer": "Everyone is ready for the presentation.",
           "explanation": "Everyone is singular, so it takes the singular verb is. The other three sentences pair a singular pronoun with a plural verb."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "The prefix mis in the word misunderstood tells you the action was done in which way?",
+          "choices": [
+            "again",
+            "before",
+            "wrongly",
+            "quickly"
+          ],
+          "answer": "wrongly",
+          "explanation": "The prefix mis means wrongly, so misunderstood means understood wrongly. The prefix re means again."
         },
         {
-          "prompt": "What does the word burrow mean?",
+          "prompt": "What are people doing when they take part in a boycott?",
           "choices": [
-            "A large area of land ruled by one government",
-            "A very bright light that is hard to see in",
-            "A hole or tunnel that an animal makes in the ground to live in",
-            "A written agreement between two or more groups"
+            "Refusing to buy or use something to show they disagree",
+            "Lifting a heavy load to the top of a pole",
+            "Signing a written agreement about shared rules",
+            "Telling everybody a piece of important news"
           ],
-          "answer": "A hole or tunnel that an animal makes in the ground to live in",
-          "explanation": "A burrow is an animal home dug into the ground. The other options define empire, glare and contract."
+          "answer": "Refusing to buy or use something to show they disagree",
+          "explanation": "A boycott is a peaceful refusal to buy or use something. The other options describe hoisting, signing a contract and announcing."
         },
         {
-          "prompt": "Which sentence uses anyone correctly?",
+          "prompt": "Which word means: Happening often, again and again over a short time.",
           "choices": [
-            "Anyone left a bag in the hall.",
-            "Did anyone see my notebook?",
-            "Anyone has been using the tablets today.",
-            "Anyone is more important than teamwork."
+            "frequent",
+            "occur",
+            "atmosphere"
           ],
-          "answer": "Did anyone see my notebook?",
-          "explanation": "Anyone belongs in questions and negatives. The other three are statements, which need someone, somebody or nothing."
+          "answer": "frequent",
+          "explanation": "frequent: Happening often, again and again over a short time."
+        },
+        {
+          "prompt": "Which word means: Something a person or group is working hard to achieve.",
+          "choices": [
+            "occur",
+            "atmosphere",
+            "goal"
+          ],
+          "answer": "goal",
+          "explanation": "goal: Something a person or group is working hard to achieve."
+        },
+        {
+          "prompt": "What type of word is 'curious'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Curious is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'galaxy'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Galaxy is used as a noun in this dictionary sense."
         }
       ]
     }

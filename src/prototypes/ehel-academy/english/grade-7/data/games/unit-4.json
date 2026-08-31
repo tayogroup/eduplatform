@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t02-u04",
   "title": "Transport, Cities, and Urban Solutions Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The building of something, or the way it is put together.",
           "choices": [
             "construction",
-            "globalisation",
-            "challenge"
+            "subjunctive",
+            "debugging"
           ],
           "answer": "construction",
           "explanation": "construction: The building of something, or the way it is put together."
         },
         {
-          "prompt": "Which word means: A drawing that shows where places are and how to get to them.",
+          "prompt": "Which word means: To change something slightly so it fits.",
           "choices": [
             "construction",
-            "globalisation",
-            "map"
+            "subjunctive",
+            "adjust"
           ],
-          "answer": "map",
-          "explanation": "map: A drawing that shows where places are and how to get to them."
+          "answer": "adjust",
+          "explanation": "adjust: To change something slightly so it fits."
         },
         {
-          "prompt": "Which word means: A thin rubber bag that is filled with air or gas until it becomes round and light.",
+          "prompt": "Which word means: Happening often, following a normal pattern, or doing something habitually.",
           "choices": [
-            "globalisation",
-            "balloon",
+            "subjunctive",
+            "regular",
             "construction"
           ],
-          "answer": "balloon",
-          "explanation": "balloon: A thin rubber bag that is filled with air or gas until it becomes round and light."
+          "answer": "regular",
+          "explanation": "regular: Happening often, following a normal pattern, or doing something habitually."
+        },
+        {
+          "prompt": "Which word means: A wide route built for vehicles to travel between places.",
+          "choices": [
+            "road",
+            "construction",
+            "subjunctive"
+          ],
+          "answer": "road",
+          "explanation": "road: A wide route built for vehicles to travel between places."
+        },
+        {
+          "prompt": "Which word means: Steady, firmly settled, and not likely to change suddenly.",
+          "choices": [
+            "construction",
+            "subjunctive",
+            "stable"
+          ],
+          "answer": "stable",
+          "explanation": "stable: Steady, firmly settled, and not likely to change suddenly."
+        },
+        {
+          "prompt": "Which word means: Not aware of something that is happening around you.",
+          "choices": [
+            "subjunctive",
+            "oblivious",
+            "construction"
+          ],
+          "answer": "oblivious",
+          "explanation": "oblivious: Not aware of something that is happening around you."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To find your way around a place, often using a map or directions.",
-          "answer": "navigate"
+          "clue": "To do with the practical details of how something works.",
+          "answer": "technical"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Moving slowly and without control, often carried by wind, water, or feelings.",
-          "answer": "drifting"
+          "clue": "Not long ago, or happening a short time before now.",
+          "answer": "recently"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A wide route built for vehicles to travel between places.",
+          "answer": "road"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Feeling worried or nervous about something that might happen.",
+          "answer": "anxious"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Very unpleasant or rude; something that annoys people.",
+          "answer": "obnoxious"
         }
       ]
     },
@@ -97,36 +142,82 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "market.",
-            "crowded",
-            "the",
-            "through",
-            "vegetables",
-            "fresh",
-            "with",
-            "loaded",
-            "carts",
-            "push",
-            "Traders"
+            "installed.",
+            "is",
+            "nothing",
+            "so",
+            "browser-based,",
+            "is",
+            "tool",
+            "whole",
+            "The"
           ],
-          "answer": "Traders push carts loaded with fresh vegetables through the crowded market."
+          "answer": "The whole tool is browser-based, so nothing is installed."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "lesson.",
-            "the",
-            "of",
-            "end",
-            "the",
-            "at",
-            "loudly",
-            "rang",
-            "bell",
-            "school",
+            "minibus.",
+            "a",
+            "or",
+            "car",
+            "a",
+            "than",
+            "faster",
+            "traffic",
+            "through",
+            "weave",
+            "can",
+            "bajaaj",
+            "A"
+          ],
+          "answer": "A bajaaj can weave through traffic faster than a car or a minibus."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "morning.",
+            "Saturday",
+            "every",
+            "busier",
+            "gets",
+            "market",
             "The"
           ],
-          "answer": "The school bell rang loudly at the end of the lesson."
+          "answer": "The market gets busier every Saturday morning."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "again.",
+            "it",
+            "reading",
+            "before",
+            "note",
+            "crumpled",
+            "the",
+            "out",
+            "smoothed",
+            "She"
+          ],
+          "answer": "She smoothed out the crumpled note before reading it again."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "all.",
+            "at",
+            "shame",
+            "not",
+            "was",
+            "felt",
+            "she",
+            "what",
+            "time,",
+            "this",
+            "But"
+          ],
+          "answer": "But this time, what she felt was not shame at all."
         }
       ]
     },
@@ -139,315 +230,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'A Heart in the Noise, part 2': The shelves were dusty, the chairs _____, but it felt like a second home.",
+          "prompt": "What does 'melancholy' mean?",
           "choices": [
-            "famished",
-            "askew",
-            "lax",
-            "ostentatious"
+            "A feeling of sadness or being unhappy for a long time.",
+            "Able to be easily hurt or harmed, either physically or emotionally.",
+            "Careful about possible dangers or problems.",
+            "Very happy and excited about something good that has happened."
           ],
-          "answer": "askew",
-          "explanation": "The text says: The shelves were dusty, the chairs askew, but it felt like a second home."
+          "answer": "A feeling of sadness or being unhappy for a long time.",
+          "explanation": "After her friend moved away, she felt a deep sense of melancholy."
         },
         {
-          "prompt": "Which sentence uses its preposition correctly?",
+          "prompt": "What does 'exuberant' mean?",
           "choices": [
-            "I was born in 2012.",
-            "I was born at 2012.",
-            "We have a test in Thursday.",
-            "The picture hangs in the wall."
+            "Able to be easily hurt or harmed, either physically or emotionally.",
+            "Careful about possible dangers or problems.",
+            "Full of energy, excitement, and happiness.",
+            "Very hungry or starving."
           ],
-          "answer": "I was born in 2012.",
-          "explanation": "Years take in (in 2012), days take on (on Thursday), and surfaces take on (on the wall)."
+          "answer": "Full of energy, excitement, and happiness.",
+          "explanation": "The children were exuberant as they played in the park on a sunny day."
         },
         {
-          "prompt": "Choose the correct passive form: The new road ______ before the rainy season.",
+          "prompt": "What does 'elated' mean?",
           "choices": [
-            "should built",
-            "should be building",
-            "should being built",
-            "should be built"
+            "Careful about possible dangers or problems.",
+            "Feeling satisfied with yourself and not wanting to improve or change.",
+            "Very happy and excited about something good that has happened.",
+            "Very hungry or starving."
           ],
-          "answer": "should be built",
-          "explanation": "A modal passive is always modal + be + past participle, so should be built is the only correct form."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to 'Moving Through Mogadishu: A City in Motion', what happens on the streets every morning at 6:30?",
-          "choices": [
-            "The streets begin to hum with life: minibuses crowd the main roads, motorcycles weave between cars, and pedestrians walk quickly along the dusty pavements.",
-            "She scored 37% on her maths test, and her teacher's comment that she must improve her discipline rang in her ears.",
-            "He means planners should put the needs of pedestrians and passengers first, designing streets that are safe and easy for everyone to use rather than only making room for traffic."
-          ],
-          "answer": "The streets begin to hum with life: minibuses crowd the main roads, motorcycles weave between cars, and pedestrians walk quickly along the dusty pavements.",
-          "explanation": "Look at the opening picture of the morning rush: the text says the streets \"begin to hum with life\" as minibuses crowd the main roads, motorcycles weave between cars, and pedestrians walk quickly along dusty pavements."
+          "answer": "Very happy and excited about something good that has happened.",
+          "explanation": "She was elated when she found out she had won the competition."
         },
-        {
-          "prompt": "What happened at school to make Imani feel so embarrassed at the start of the story?",
-          "choices": [
-            "She wrote down every flaw and every strength of the speakers, and her notes became a short article that was published in the school newsletter the following Monday.",
-            "She means people often ignore their own hidden feelings; Imani learns this by telling her mother everything and then writing honestly in her article and her reflection essay.",
-            "She scored 37% on her maths test, and her teacher's comment that she must improve her discipline rang in her ears."
-          ],
-          "answer": "She scored 37% on her maths test, and her teacher's comment that she must improve her discipline rang in her ears.",
-          "explanation": "In the scene at her mother's kiosk, Imani stares at her crumpled maths test with a red \"37%\" circled at the top, and her teacher's comment, \"You must improve your discipline\", rings in her ears."
-        },
-        {
-          "prompt": "Nadir says, 'A city should not just be built for cars. It should be designed for people.' What does he mean?",
-          "choices": [
-            "The streets begin to hum with life: minibuses crowd the main roads, motorcycles weave between cars, and pedestrians walk quickly along the dusty pavements.",
-            "He means planners should put the needs of pedestrians and passengers first, designing streets that are safe and easy for everyone to use rather than only making room for traffic.",
-            "She wrote down every flaw and every strength of the speakers, and her notes became a short article that was published in the school newsletter the following Monday."
-          ],
-          "answer": "He means planners should put the needs of pedestrians and passengers first, designing streets that are safe and easy for everyone to use rather than only making room for traffic.",
-          "explanation": "The text says: He means planners should put the needs of pedestrians and passengers first, designing streets that are safe and easy for everyone to use rather than only making room for traffic."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "Construction of the ring road took four years."
-        },
-        {
-          "prompt": "Speaking 3: Five-Minute Talk — Present Your Travel Guide",
-          "target": "Turn your city travel guide into a five-minute talk."
-        },
-        {
-          "prompt": "Speaking 5: City Comparison Game",
-          "target": "The school bell rang loudly at the end of the lesson."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "studying.",
-            "stopped",
-            "and",
-            "complacent",
-            "became",
-            "he",
-            "test,",
-            "the",
-            "on",
-            "grade",
-            "good",
-            "a",
-            "getting",
-            "After"
-          ],
-          "answer": "After getting a good grade on the test, he became complacent and stopped studying."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "junction.",
-            "busiest",
-            "the",
-            "at",
-            "lights",
-            "traffic",
-            "new",
-            "installed",
-            "recently",
-            "council",
-            "The"
-          ],
-          "answer": "The council recently installed new traffic lights at the busiest junction."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "assembly.",
-            "for",
-            "rang",
-            "bell",
-            "the",
-            "when",
-            "desk",
-            "her",
-            "cleaning",
-            "was",
-            "Imani"
-          ],
-          "answer": "Imani was cleaning her desk when the bell rang for assembly."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'college' mean in this unit?",
-          "choices": [
-            "A place where students study after leaving secondary school.",
-            "The building of something, or the way it is put together.",
-            "The growing connection of the world's economies and cultures."
-          ],
-          "answer": "A place where students study after leaving secondary school.",
-          "explanation": "college: A place where students study after leaving secondary school."
-        },
-        {
-          "prompt": "What does 'hosted' mean in this unit?",
-          "choices": [
-            "The building of something, or the way it is put together.",
-            "The growing connection of the world's economies and cultures.",
-            "Organised an event and welcomed the people who came to it."
-          ],
-          "answer": "Organised an event and welcomed the people who came to it.",
-          "explanation": "hosted: Organised an event and welcomed the people who came to it."
-        },
-        {
-          "prompt": "What does 'globalisation' mean in this unit?",
-          "choices": [
-            "A difficult task that tests your ability or effort to overcome it.",
-            "The growing connection of the world's economies and cultures.",
-            "The building of something, or the way it is put together."
-          ],
-          "answer": "The growing connection of the world's economies and cultures.",
-          "explanation": "globalisation: The growing connection of the world's economies and cultures."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'buzzed'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Buzzed is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'ludicrous'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Ludicrous is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'bajaaj'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Bajaaj is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "credibility",
-              "The quality of deserving to be believed."
-            ],
-            [
-              "optimise",
-              "To make something work as well as it possibly can."
-            ],
-            [
-              "common",
-              "Found or happening often, so that it is not unusual."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "idea",
-              "A thought or plan that comes into your mind, often a solution to a problem."
-            ],
-            [
-              "potholes",
-              "Holes worn into the surface of a road over time."
-            ],
-            [
-              "circled",
-              "Drew a ring around something, or moved in a loop around it."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "dreamed",
-              "Experienced images, feelings, or events in the mind while asleep."
-            ],
-            [
-              "forgot",
-              "Failed to remember something you needed to know or do."
-            ],
-            [
-              "oblivious",
-              "Not aware of something that is happening around you."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'vulnerable' mean?",
           "choices": [
@@ -484,34 +298,52 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'melancholy' mean?",
+          "prompt": "According to 'Moving Through Mogadishu: A City in Motion', what happens on the streets every morning at 6:30?",
           "choices": [
-            "A feeling of sadness or being unhappy for a long time.",
-            "Able to be easily hurt or harmed, either physically or emotionally.",
-            "Careful about possible dangers or problems.",
-            "Very happy and excited about something good that has happened."
+            "The streets begin to hum with life: minibuses crowd the main roads, motorcycles weave between cars, and pedestrians walk quickly along the dusty pavements.",
+            "She scored 37% on her maths test, and her teacher's comment that she must improve her discipline rang in her ears.",
+            "She wrote down every flaw and every strength of the speakers, and her notes became a short article that was published in the school newsletter the following Monday."
           ],
-          "answer": "A feeling of sadness or being unhappy for a long time.",
-          "explanation": "After her friend moved away, she felt a deep sense of melancholy."
+          "answer": "The streets begin to hum with life: minibuses crowd the main roads, motorcycles weave between cars, and pedestrians walk quickly along the dusty pavements.",
+          "explanation": "Look at the opening picture of the morning rush: the text says the streets \"begin to hum with life\" as minibuses crowd the main roads, motorcycles weave between cars, and pedestrians walk quickly along dusty pavements."
         },
         {
-          "prompt": "What does 'exuberant' mean?",
+          "prompt": "In the interview, which two forms of transport does Amara say people mainly use, and when are the buses busiest?",
           "choices": [
-            "Able to be easily hurt or harmed, either physically or emotionally.",
-            "Careful about possible dangers or problems.",
-            "Full of energy, excitement, and happiness.",
-            "Very hungry or starving."
+            "She wrote down every flaw and every strength of the speakers, and her notes became a short article that was published in the school newsletter the following Monday.",
+            "The streets begin to hum with life: minibuses crowd the main roads, motorcycles weave between cars, and pedestrians walk quickly along the dusty pavements.",
+            "People mainly travel by minibus or bajaaj, and the buses are busiest in the morning and at about 5 p.m., when people are going home from work."
           ],
-          "answer": "Full of energy, excitement, and happiness.",
-          "explanation": "The children were exuberant as they played in the park on a sunny day."
+          "answer": "People mainly travel by minibus or bajaaj, and the buses are busiest in the morning and at about 5 p.m., when people are going home from work.",
+          "explanation": "In her first answer Amara says the main way to get around is by minibus or bajaaj, and that the buses are always full \"especially in the morning and at about 5 p.m., when people are going home from work\"."
+        },
+        {
+          "prompt": "What happened at school to make Imani feel so embarrassed at the start of the story?",
+          "choices": [
+            "People mainly travel by minibus or bajaaj, and the buses are busiest in the morning and at about 5 p.m., when people are going home from work.",
+            "She scored 37% on her maths test, and her teacher's comment that she must improve her discipline rang in her ears.",
+            "The streets begin to hum with life: minibuses crowd the main roads, motorcycles weave between cars, and pedestrians walk quickly along the dusty pavements."
+          ],
+          "answer": "She scored 37% on her maths test, and her teacher's comment that she must improve her discipline rang in her ears.",
+          "explanation": "In the scene at her mother's kiosk, Imani stares at her crumpled maths test with a red \"37%\" circled at the top, and her teacher's comment, \"You must improve your discipline\", rings in her ears."
+        },
+        {
+          "prompt": "What did Imani write down at the debate event, and what happened to her notes afterwards?",
+          "choices": [
+            "She wrote down every flaw and every strength of the speakers, and her notes became a short article that was published in the school newsletter the following Monday.",
+            "People mainly travel by minibus or bajaaj, and the buses are busiest in the morning and at about 5 p.m., when people are going home from work.",
+            "She scored 37% on her maths test, and her teacher's comment that she must improve her discipline rang in her ears."
+          ],
+          "answer": "She wrote down every flaw and every strength of the speakers, and her notes became a short article that was published in the school newsletter the following Monday.",
+          "explanation": "At the debate, the text says Imani \"wrote down everything — every flaw, every strength\", and that her notes became a short article published in the school newsletter the following Monday."
         },
         {
           "prompt": "What does 'elated' mean?",
@@ -523,6 +355,566 @@
           ],
           "answer": "Very happy and excited about something good that has happened.",
           "explanation": "She was elated when she found out she had won the competition."
+        },
+        {
+          "prompt": "What does 'vulnerable' mean?",
+          "choices": [
+            "Able to be easily hurt or harmed, either physically or emotionally.",
+            "Feeling satisfied with yourself and not wanting to improve or change.",
+            "Very hungry or starving.",
+            "Very unpleasant or rude; something that annoys people."
+          ],
+          "answer": "Able to be easily hurt or harmed, either physically or emotionally.",
+          "explanation": "The little bird was vulnerable because it had just fallen from its nest."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Vocabulary Expert Interview",
+          "target": "Construction of the ring road took four years."
+        },
+        {
+          "prompt": "Speaking 2: Transport Interview Role-Play",
+          "target": "Role-play the interview about city transport."
+        },
+        {
+          "prompt": "Speaking 3: Five-Minute Talk — Present Your Travel Guide",
+          "target": "Turn your city travel guide into a five-minute talk."
+        },
+        {
+          "prompt": "Speaking 4: Debate — Cars or Public Transport?",
+          "target": "Debate whether cities should build more roads for cars or invest in better public transport."
+        },
+        {
+          "prompt": "Speaking 5: City Comparison Game",
+          "target": "She smoothed out the crumpled note before reading it again."
+        },
+        {
+          "prompt": "Speaking 6: Story Voices — The Assembly Scene",
+          "target": "But this time, what she felt was not shame at all."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "it.",
+            "do",
+            "not",
+            "did",
+            "students",
+            "many",
+            "so",
+            "homework,",
+            "about",
+            "lax",
+            "too",
+            "was",
+            "teacher",
+            "The"
+          ],
+          "answer": "The teacher was too lax about homework, so many students did not do it."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "amount.",
+            "same",
+            "the",
+            "not",
+            "needs,",
+            "it",
+            "what",
+            "district",
+            "each",
+            "gives",
+            "Equity"
+          ],
+          "answer": "Equity gives each district what it needs, not the same amount."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "better.",
+            "much",
+            "journeys",
+            "their",
+            "plan",
+            "passengers",
+            "help",
+            "would",
+            "schedule",
+            "fixed",
+            "A"
+          ],
+          "answer": "A fixed schedule would help passengers plan their journeys much better."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "term.",
+            "of",
+            "start",
+            "the",
+            "since",
+            "steadily",
+            "improving",
+            "been",
+            "has",
+            "handwriting",
+            "Her"
+          ],
+          "answer": "Her handwriting has been improving steadily since the start of term."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "morning.",
+            "Saturday",
+            "on",
+            "colour",
+            "and",
+            "noise",
+            "with",
+            "buzzed",
+            "market",
+            "The"
+          ],
+          "answer": "The market buzzed with noise and colour on Saturday morning."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "term.",
+            "all",
+            "time",
+            "first",
+            "the",
+            "for",
+            "answer",
+            "her",
+            "about",
+            "certain",
+            "felt",
+            "Imani"
+          ],
+          "answer": "Imani felt certain about her answer for the first time all term."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'subjunctive' mean in this unit?",
+          "choices": [
+            "A verb form used for wishes, suggestions and unreal situations.",
+            "The building of something, or the way it is put together.",
+            "Finding and fixing the mistakes in a program."
+          ],
+          "answer": "A verb form used for wishes, suggestions and unreal situations.",
+          "explanation": "subjunctive: A verb form used for wishes, suggestions and unreal situations."
+        },
+        {
+          "prompt": "What does 'challenge' mean in this unit?",
+          "choices": [
+            "The building of something, or the way it is put together.",
+            "A verb form used for wishes, suggestions and unreal situations.",
+            "A difficult task that tests your ability or effort to overcome it."
+          ],
+          "answer": "A difficult task that tests your ability or effort to overcome it.",
+          "explanation": "challenge: A difficult task that tests your ability or effort to overcome it."
+        },
+        {
+          "prompt": "What does 'information' mean in this unit?",
+          "choices": [
+            "A verb form used for wishes, suggestions and unreal situations.",
+            "Facts or details that tell you something useful about a subject.",
+            "The building of something, or the way it is put together."
+          ],
+          "answer": "Facts or details that tell you something useful about a subject.",
+          "explanation": "information: Facts or details that tell you something useful about a subject."
+        },
+        {
+          "prompt": "What does 'crumpled' mean in this unit?",
+          "choices": [
+            "Crushed into creases and folds, so no longer smooth or flat.",
+            "The building of something, or the way it is put together.",
+            "A verb form used for wishes, suggestions and unreal situations."
+          ],
+          "answer": "Crushed into creases and folds, so no longer smooth or flat.",
+          "explanation": "crumpled: Crushed into creases and folds, so no longer smooth or flat."
+        },
+        {
+          "prompt": "What does 'observe' mean in this unit?",
+          "choices": [
+            "The building of something, or the way it is put together.",
+            "A verb form used for wishes, suggestions and unreal situations.",
+            "To watch something or someone carefully in order to learn about it."
+          ],
+          "answer": "To watch something or someone carefully in order to learn about it.",
+          "explanation": "observe: To watch something or someone carefully in order to learn about it."
+        },
+        {
+          "prompt": "What does 'askew' mean in this unit?",
+          "choices": [
+            "A verb form used for wishes, suggestions and unreal situations.",
+            "Not straight or level; tilted to one side.",
+            "The building of something, or the way it is put together."
+          ],
+          "answer": "Not straight or level; tilted to one side.",
+          "explanation": "askew: Not straight or level; tilted to one side."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'debugging'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Debugging is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'laid'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Laid is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'interviewed'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Interviewed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'cleaning'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Cleaning is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'board'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Board is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'urbanisation'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Urbanisation is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "credibility",
+              "The quality of deserving to be believed."
+            ],
+            [
+              "hyperbole",
+              "Deliberate exaggeration used for effect."
+            ],
+            [
+              "cache",
+              "A store of recently used data, kept close by so it can be fetched fast."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "innovative",
+              "New in a way that improves on what came before."
+            ],
+            [
+              "rural",
+              "Relating to the countryside rather than a town or city."
+            ],
+            [
+              "painted",
+              "Covered a surface with paint, often to add colour or a pattern."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "recently",
+              "Not long ago, or happening a short time before now."
+            ],
+            [
+              "dangerous",
+              "Likely to cause harm, injury, or serious trouble."
+            ],
+            [
+              "potholes",
+              "Holes worn into the surface of a road over time."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "chapati",
+              "A flat, round bread cooked on a hot pan, eaten across East Africa."
+            ],
+            [
+              "playing",
+              "Taking part in a game or activity for fun."
+            ],
+            [
+              "word",
+              "A single unit of language, spoken or written, that carries its own meaning."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "emotional",
+              "Showing or connected to strong feelings such as joy, sadness, or fear."
+            ],
+            [
+              "shelves",
+              "Flat boards fixed to a wall or frame, used for storing or displaying things."
+            ],
+            [
+              "elated",
+              "Very happy and excited about something good that has happened."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "ephemeral",
+              "Lasting for a very short time."
+            ],
+            [
+              "gingerly",
+              "In a careful or cautious way."
+            ],
+            [
+              "vector",
+              "A quantity that has both a size and a direction."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Moving Through Mogadishu: A City in Motion': Mogadishu is louder, busier, and more _____ than it has been in years.",
+          "choices": [
+            "famished",
+            "exuberant",
+            "complacent",
+            "obnoxious"
+          ],
+          "answer": "exuberant",
+          "explanation": "The text says: Mogadishu is louder, busier, and more exuberant than it has been in years."
+        },
+        {
+          "prompt": "Choose the missing word from 'A Heart in the Noise, part 2': The shelves were dusty, the chairs _____, but it felt like a second home.",
+          "choices": [
+            "famished",
+            "askew",
+            "lax",
+            "ostentatious"
+          ],
+          "answer": "askew",
+          "explanation": "The text says: The shelves were dusty, the chairs askew, but it felt like a second home."
+        },
+        {
+          "prompt": "Which sentence uses its preposition correctly?",
+          "choices": [
+            "I was born in 2012.",
+            "I was born at 2012.",
+            "We have a test in Thursday.",
+            "The picture hangs in the wall."
+          ],
+          "answer": "I was born in 2012.",
+          "explanation": "Years take in (in 2012), days take on (on Thursday), and surfaces take on (on the wall)."
+        },
+        {
+          "prompt": "Choose the correct passive form: The new road ______ before the rainy season.",
+          "choices": [
+            "should built",
+            "should be building",
+            "should being built",
+            "should be built"
+          ],
+          "answer": "should be built",
+          "explanation": "A modal passive is always modal + be + past participle, so should be built is the only correct form."
+        },
+        {
+          "prompt": "The accident blocked the road, but no one was hurt. Which sentence adverb shows relief: '_____, no one was hurt in the accident.'?",
+          "choices": [
+            "Because",
+            "Fortunately",
+            "Certainly",
+            "Unfortunately"
+          ],
+          "answer": "Fortunately",
+          "explanation": "The news is good, so the adverb of relief fits: unfortunately signals bad news and certainly signals confidence, while because is not a sentence adverb at all."
+        },
+        {
+          "prompt": "What does 'melancholy' mean?",
+          "choices": [
+            "A feeling of sadness or being unhappy for a long time.",
+            "Able to be easily hurt or harmed, either physically or emotionally.",
+            "Careful about possible dangers or problems.",
+            "Very happy and excited about something good that has happened."
+          ],
+          "answer": "A feeling of sadness or being unhappy for a long time.",
+          "explanation": "After her friend moved away, she felt a deep sense of melancholy."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the correct passive form: The new road ______ before the rainy season.",
+          "choices": [
+            "should built",
+            "should be building",
+            "should being built",
+            "should be built"
+          ],
+          "answer": "should be built",
+          "explanation": "A modal passive is always modal + be + past participle, so should be built is the only correct form."
+        },
+        {
+          "prompt": "The accident blocked the road, but no one was hurt. Which sentence adverb shows relief: '_____, no one was hurt in the accident.'?",
+          "choices": [
+            "Because",
+            "Fortunately",
+            "Certainly",
+            "Unfortunately"
+          ],
+          "answer": "Fortunately",
+          "explanation": "The news is good, so the adverb of relief fits: unfortunately signals bad news and certainly signals confidence, while because is not a sentence adverb at all."
+        },
+        {
+          "prompt": "Which word means: The mark on a screen showing where the next action will happen.",
+          "choices": [
+            "cursor",
+            "construction",
+            "subjunctive"
+          ],
+          "answer": "cursor",
+          "explanation": "cursor: The mark on a screen showing where the next action will happen."
+        },
+        {
+          "prompt": "Which word means: Facts or details that tell you something useful about a subject.",
+          "choices": [
+            "construction",
+            "subjunctive",
+            "information"
+          ],
+          "answer": "information",
+          "explanation": "information: Facts or details that tell you something useful about a subject."
+        },
+        {
+          "prompt": "What type of word is 'sting'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Sting is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'askew'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Askew is used as an adjective in this dictionary sense."
         }
       ]
     }

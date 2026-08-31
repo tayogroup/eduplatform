@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t01-u03",
   "title": "Clothing, Fashion, and Sustainability Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Something taken to be true without being checked.",
           "choices": [
             "assumption",
-            "dominant",
-            "shirt"
+            "participle",
+            "inheritance"
           ],
           "answer": "assumption",
           "explanation": "assumption: Something taken to be true without being checked."
         },
         {
-          "prompt": "Which word means: Creative describes using original ideas and imagination to make or invent something new.",
+          "prompt": "Which word means: To examine something very closely and carefully.",
           "choices": [
             "assumption",
-            "dominant",
-            "creative"
+            "participle",
+            "scrutinise"
           ],
-          "answer": "creative",
-          "explanation": "creative: Creative describes using original ideas and imagination to make or invent something new."
+          "answer": "scrutinise",
+          "explanation": "scrutinise: To examine something very closely and carefully."
         },
         {
-          "prompt": "Which word means: A small flying insect whose bite can leave an itchy mark and sometimes spread disease.",
+          "prompt": "Which word means: Unwanted describes something that a person no longer wants or needs.",
           "choices": [
-            "dominant",
-            "mosquito",
+            "participle",
+            "unwanted",
             "assumption"
           ],
-          "answer": "mosquito",
-          "explanation": "mosquito: A small flying insect whose bite can leave an itchy mark and sometimes spread disease."
+          "answer": "unwanted",
+          "explanation": "unwanted: Unwanted describes something that a person no longer wants or needs."
+        },
+        {
+          "prompt": "Which word means: Containers, usually made of glass, used to store things.",
+          "choices": [
+            "jars",
+            "assumption",
+            "participle"
+          ],
+          "answer": "jars",
+          "explanation": "jars: Containers, usually made of glass, used to store things."
+        },
+        {
+          "prompt": "Which word means: A person who pays close attention to what someone else is saying.",
+          "choices": [
+            "assumption",
+            "participle",
+            "listener"
+          ],
+          "answer": "listener",
+          "explanation": "listener: A person who pays close attention to what someone else is saying."
+        },
+        {
+          "prompt": "Which word means: Thought carefully about something, especially something that happened in the past.",
+          "choices": [
+            "participle",
+            "reflected",
+            "assumption"
+          ],
+          "answer": "reflected",
+          "explanation": "reflected: Thought carefully about something, especially something that happened in the past."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To turn old or unwanted items into something new and more useful, instead of throwing them away.",
-          "answer": "upcycle"
+          "clue": "The sound that you make when you speak or sing; also, a writer's unique style.",
+          "answer": "voice"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Material made of crossed threads with small holes, used to catch or protect against things.",
-          "answer": "net"
+          "clue": "Creative describes using original ideas and imagination to make or invent something new.",
+          "answer": "creative"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "In a way that costs very little money, often meaning poor quality.",
+          "answer": "cheaply"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Became larger or wider, often because of surprise or strong emotion.",
+          "answer": "widened"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To make a person or a hurt feeling better, or to mend.",
+          "answer": "heal"
         }
       ]
     },
@@ -99,36 +144,83 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "workshop.",
-            "Amara's",
-            "at",
-            "arrive",
-            "clothes",
-            "unwanted",
-            "of",
-            "bags",
-            "week,",
-            "Every"
+            "phenomenon.",
+            "global",
+            "a",
+            "are",
+            "routes",
+            "Migration"
           ],
-          "answer": "Every week, bags of unwanted clothes arrive at Amara's workshop."
+          "answer": "Migration routes are a global phenomenon."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "writing.",
+            "workshop.",
+            "the",
+            "at",
+            "afternoon",
+            "the",
+            "of",
+            "most",
+            "took",
+            "blue",
+            "cotton",
+            "the",
+            "Dyeing"
+          ],
+          "answer": "Dyeing the cotton blue took most of the afternoon at the workshop."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "interview.",
+            "radio",
+            "Amara's",
+            "of",
+            "transcript",
+            "full",
+            "a",
+            "read",
+            "class",
+            "The"
+          ],
+          "answer": "The class read a full transcript of Amara's radio interview."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "bed.",
             "her",
-            "share",
-            "she",
-            "suggested",
-            "Zane",
-            "whenever",
-            "head",
+            "under",
+            "hidden",
+            "notebook",
+            "red",
             "her",
-            "shake",
-            "would",
+            "kept",
             "Sana"
           ],
-          "answer": "Sana would shake her head whenever Zane suggested she share her writing."
+          "answer": "Sana kept her red notebook hidden under her bed."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "angry.",
+            "was",
+            "sea",
+            "the",
+            "says",
+            "poet",
+            "a",
+            "when",
+            "mean",
+            "could",
+            "it",
+            "what",
+            "asked",
+            "Sana"
+          ],
+          "answer": "Sana asked what it could mean when a poet says the sea was angry."
         }
       ]
     },
@@ -141,313 +233,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'A Voice in the Valley, part 1': Zane made an ______ that stuck in her mind: \"A voice kept silent is like a drum never played.\"",
+          "prompt": "What does 'alliteration' mean?",
           "choices": [
-            "inference",
-            "imagery",
-            "exposition",
-            "assertion"
+            "Using words in a way that is not literal, often to create a special meaning or effect.",
+            "The repetition of the same sound at the beginning of several words in a sentence or phrase.",
+            "A conclusion or opinion formed based on evidence, rather than from what is explicitly stated.",
+            "The marks used in writing to separate sentences and clarify meaning, like full stops, commas, and question marks."
           ],
-          "answer": "assertion",
-          "explanation": "Zane's memorable drum sentence is described as an assertion, a strong statement that something is true."
+          "answer": "The repetition of the same sound at the beginning of several words in a sentence or phrase.",
+          "explanation": "Alliteration repeats the same opening sound across neighbouring words, as in a slogan like second-hand style saves so much."
         },
         {
-          "prompt": "Choose the missing word from 'A Voice in the Valley, part 2': She also showed students how to ______ meaning from a sentence and how to structure their stories in chronological order.",
+          "prompt": "What does 'rhyme' mean?",
           "choices": [
-            "narrate",
-            "rhyme",
-            "infer",
-            "impose"
+            "A clear explanation or description, often used to introduce a story's characters and setting.",
+            "The feelings or ideas that a word makes you think of, beyond its basic meaning.",
+            "A way of describing something non-human by giving it human qualities.",
+            "A word that has the same ending sound as another word."
           ],
-          "answer": "infer",
-          "explanation": "Sana taught her classmates to infer, meaning to work out meaning from clues rather than direct statements."
+          "answer": "A word that has the same ending sound as another word.",
+          "explanation": "A rhyme matches ending sounds, which is why cat and hat pair so neatly in a poem."
         },
         {
-          "prompt": "Choose the missing word from 'A Voice in the Valley, part 2': Her new story included strong ______, expressive dialogue, and a clear thesis: that art can heal what fear breaks.",
+          "prompt": "What does 'rhythm' mean?",
           "choices": [
-            "exposition",
-            "connotation",
-            "prediction",
-            "rhythm"
+            "A strong, regular, repeated pattern of sound or movement.",
+            "Arranged in the order that things happened, from earliest to latest.",
+            "A short description or title that explains a picture or video.",
+            "A statement or main idea that someone wants to prove in their writing."
           ],
-          "answer": "exposition",
-          "explanation": "Voices in the Dust opens with strong exposition, the part of a story that introduces characters and setting."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In the Planet Wardrobe interview, what did Amara make from the pile of old curtains, and how old was she when she started?",
-          "choices": [
-            "She turned the old curtains into a skirt and a bag, and she started making clothes from recycled materials when she was about twelve.",
-            "The judge declares that the poem must be shared with schools across the region, and the next month it is printed in three school newsletters.",
-            "She means that small technical choices, like where a sentence pauses or stops, change the feeling readers take from a story, so editing is part of the storytelling craft."
-          ],
-          "answer": "She turned the old curtains into a skirt and a bag, and she started making clothes from recycled materials when she was about twelve.",
-          "explanation": "In her first answer Amara says she started when she was about twelve, found a pile of old curtains that were going to be thrown away, and made a skirt and a bag from them."
+          "answer": "A strong, regular, repeated pattern of sound or movement.",
+          "explanation": "Rhythm is the steady, repeated beat you can clap along to in music, chants and poems."
         },
-        {
-          "prompt": "What does Sana keep in the red notebook under her bed, and why does she refuse at first to share it?",
-          "choices": [
-            "It is figurative: there are no real mountains, but the image makes the reader picture an enormous, growing mass of wasted clothing that is impossible to ignore.",
-            "She turned the old curtains into a skirt and a bag, and she started making clothes from recycled materials when she was about twelve.",
-            "The notebook holds her stories, poems and paraphrased tales from her grandmother, and she refuses to share it because she fears people will laugh and call her writing childish."
-          ],
-          "answer": "The notebook holds her stories, poems and paraphrased tales from her grandmother, and she refuses to share it because she fears people will laugh and call her writing childish.",
-          "explanation": "The text says Sana's red notebook is where she narrates stories, writes poems and paraphrases her grandmother's tales. When Zane tells her to share it she replies, 'They'll laugh. They'll say it's childish.'"
-        },
-        {
-          "prompt": "The passage says mountains of textiles pile up in landfill. Is the word mountains literal or figurative, and what effect does this choice create?",
-          "choices": [
-            "The notebook holds her stories, poems and paraphrased tales from her grandmother, and she refuses to share it because she fears people will laugh and call her writing childish.",
-            "It is figurative: there are no real mountains, but the image makes the reader picture an enormous, growing mass of wasted clothing that is impossible to ignore.",
-            "She means that small technical choices, like where a sentence pauses or stops, change the feeling readers take from a story, so editing is part of the storytelling craft."
-          ],
-          "answer": "It is figurative: there are no real mountains, but the image makes the reader picture an enormous, growing mass of wasted clothing that is impossible to ignore.",
-          "explanation": "You must recognise figurative language inside an information text and comment on its persuasive effect, linking to the unit's work on metaphor."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Describe Your Outfit with Multi-Word Verbs",
-          "target": "Describe today's outfit to a partner or your AI tutor, with an adult nearby, using at least two multi-word verbs and two precise adjectives."
-        },
-        {
-          "prompt": "Speaking 3: Five-Minute Unit Talk",
-          "target": "Every week, bags of unwanted clothes arrive at Amara's workshop."
-        },
-        {
-          "prompt": "Speaking 5: Story Read-Aloud with Expression",
-          "target": "Sana would shake her head whenever Zane suggested she share her writing."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "rhyme.",
-            "that",
-            "words",
-            "of",
-            "examples",
-            "are",
-            "\"hat\"",
-            "and",
-            "\"cat\"",
-            "poem,",
-            "the",
-            "In"
-          ],
-          "answer": "In the poem, \"cat\" and \"hat\" are examples of words that rhyme."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "class.",
-            "before",
-            "bag",
-            "small",
-            "a",
-            "into",
-            "kit",
-            "sewing",
-            "her",
-            "packed",
-            "Samira"
-          ],
-          "answer": "Samira packed her sewing kit into a small bag before class."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "journal.",
-            "school",
-            "first",
-            "very",
-            "their",
-            "launching",
-            "about",
-            "excited",
-            "felt",
-            "class",
-            "The"
-          ],
-          "answer": "The class felt excited about launching their very first school journal."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'sewn' mean in this unit?",
-          "choices": [
-            "Joined or fixed together using a needle and thread.",
-            "Something taken to be true without being checked.",
-            "Most powerful or most common in a situation."
-          ],
-          "answer": "Joined or fixed together using a needle and thread.",
-          "explanation": "sewn: Joined or fixed together using a needle and thread."
-        },
-        {
-          "prompt": "What does 'danced' mean in this unit?",
-          "choices": [
-            "Something taken to be true without being checked.",
-            "Most powerful or most common in a situation.",
-            "Moved in a lively or graceful way, often used to describe something that seems almost alive."
-          ],
-          "answer": "Moved in a lively or graceful way, often used to describe something that seems almost alive.",
-          "explanation": "danced: Moved in a lively or graceful way, often used to describe something that seems almost alive."
-        },
-        {
-          "prompt": "What does 'dominant' mean in this unit?",
-          "choices": [
-            "A shirt is a piece of clothing worn on the top half of the body, often with a collar.",
-            "Most powerful or most common in a situation.",
-            "Something taken to be true without being checked."
-          ],
-          "answer": "Most powerful or most common in a situation.",
-          "explanation": "dominant: Most powerful or most common in a situation."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'spiced'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Adjective",
-          "explanation": "Spiced is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'repetition'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Repetition is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'discarding'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Discarding is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "composition",
-              "What something is made of, or the way its parts are arranged."
-            ],
-            [
-              "participle",
-              "A verb form, often ending in -ed or -ing, used to build other tenses or describe a noun."
-            ],
-            [
-              "fifteen",
-              "Fifteen is the number that comes after fourteen and before sixteen, written as 15."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "throwing",
-              "Throwing something away means getting rid of it, usually by putting it in the rubbish."
-            ],
-            [
-              "turn",
-              "To change something into a different form or use."
-            ],
-            [
-              "roosters",
-              "Adult male chickens, known for crowing loudly early in the morning."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "trembled",
-              "Shook slightly, usually because of fear, excitement, or nervousness."
-            ],
-            [
-              "can't",
-              "A short way of saying that something is not possible, replacing the word cannot."
-            ],
-            [
-              "loving",
-              "Showing warm affection and care for someone."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'repetition' mean?",
           "choices": [
@@ -484,34 +301,52 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'alliteration' mean?",
+          "prompt": "In the Planet Wardrobe interview, what did Amara make from the pile of old curtains, and how old was she when she started?",
           "choices": [
-            "Using words in a way that is not literal, often to create a special meaning or effect.",
-            "The repetition of the same sound at the beginning of several words in a sentence or phrase.",
-            "A conclusion or opinion formed based on evidence, rather than from what is explicitly stated.",
-            "The marks used in writing to separate sentences and clarify meaning, like full stops, commas, and question marks."
+            "She turned the old curtains into a skirt and a bag, and she started making clothes from recycled materials when she was about twelve.",
+            "It is figurative: there are no real mountains, but the image makes the reader picture an enormous, growing mass of wasted clothing that is impossible to ignore.",
+            "She means that small technical choices, like where a sentence pauses or stops, change the feeling readers take from a story, so editing is part of the storytelling craft."
           ],
-          "answer": "The repetition of the same sound at the beginning of several words in a sentence or phrase.",
-          "explanation": "Alliteration repeats the same opening sound across neighbouring words, as in a slogan like second-hand style saves so much."
+          "answer": "She turned the old curtains into a skirt and a bag, and she started making clothes from recycled materials when she was about twelve.",
+          "explanation": "In her first answer Amara says she started when she was about twelve, found a pile of old curtains that were going to be thrown away, and made a skirt and a bag from them."
         },
         {
-          "prompt": "What does 'rhyme' mean?",
+          "prompt": "What happens to Sana's new poem after the judge speaks at the youth arts event?",
           "choices": [
-            "A clear explanation or description, often used to introduce a story's characters and setting.",
-            "The feelings or ideas that a word makes you think of, beyond its basic meaning.",
-            "A way of describing something non-human by giving it human qualities.",
-            "A word that has the same ending sound as another word."
+            "She means that small technical choices, like where a sentence pauses or stops, change the feeling readers take from a story, so editing is part of the storytelling craft.",
+            "She turned the old curtains into a skirt and a bag, and she started making clothes from recycled materials when she was about twelve.",
+            "The judge declares that the poem must be shared with schools across the region, and the next month it is printed in three school newsletters."
           ],
-          "answer": "A word that has the same ending sound as another word.",
-          "explanation": "A rhyme matches ending sounds, which is why cat and hat pair so neatly in a poem."
+          "answer": "The judge declares that the poem must be shared with schools across the region, and the next month it is printed in three school newsletters.",
+          "explanation": "After Sana reads her poem, one judge declares it 'must be shared with schools across the region', and the text says the next month it was printed in three school newsletters."
+        },
+        {
+          "prompt": "The passage says mountains of textiles pile up in landfill. Is the word mountains literal or figurative, and what effect does this choice create?",
+          "choices": [
+            "The judge declares that the poem must be shared with schools across the region, and the next month it is printed in three school newsletters.",
+            "It is figurative: there are no real mountains, but the image makes the reader picture an enormous, growing mass of wasted clothing that is impossible to ignore.",
+            "She turned the old curtains into a skirt and a bag, and she started making clothes from recycled materials when she was about twelve."
+          ],
+          "answer": "It is figurative: there are no real mountains, but the image makes the reader picture an enormous, growing mass of wasted clothing that is impossible to ignore.",
+          "explanation": "You must recognise figurative language inside an information text and comment on its persuasive effect, linking to the unit's work on metaphor."
+        },
+        {
+          "prompt": "Sana tells a younger student that even punctuation can shape how a story is perceived. What does she mean by this?",
+          "choices": [
+            "She means that small technical choices, like where a sentence pauses or stops, change the feeling readers take from a story, so editing is part of the storytelling craft.",
+            "The judge declares that the poem must be shared with schools across the region, and the next month it is printed in three school newsletters.",
+            "It is figurative: there are no real mountains, but the image makes the reader picture an enormous, growing mass of wasted clothing that is impossible to ignore."
+          ],
+          "answer": "She means that small technical choices, like where a sentence pauses or stops, change the feeling readers take from a story, so editing is part of the storytelling craft.",
+          "explanation": "You interpret a character's statement about the writer's craft and explain it in your own words."
         },
         {
           "prompt": "What does 'rhythm' mean?",
@@ -523,6 +358,568 @@
           ],
           "answer": "A strong, regular, repeated pattern of sound or movement.",
           "explanation": "Rhythm is the steady, repeated beat you can clap along to in music, chants and poems."
+        },
+        {
+          "prompt": "What does 'repetition' mean?",
+          "choices": [
+            "Words that create pictures in your mind by describing things in vivid detail.",
+            "A way of comparing two things using the words \"like\" or \"as\".",
+            "Doing or saying something again and again.",
+            "A strong statement that something is true."
+          ],
+          "answer": "Doing or saying something again and again.",
+          "explanation": "Repetition means returning to the same word or action again and again, on purpose or for practice."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Describe Your Outfit with Multi-Word Verbs",
+          "target": "Describe today's outfit to a partner or your AI tutor, with an adult nearby, using at least two multi-word verbs and two precise adjectives."
+        },
+        {
+          "prompt": "Speaking 2: Planet Wardrobe Interview Role-Play",
+          "target": "Migration routes are a global phenomenon."
+        },
+        {
+          "prompt": "Speaking 3: Five-Minute Unit Talk",
+          "target": "Dyeing the cotton blue took most of the afternoon at the workshop."
+        },
+        {
+          "prompt": "Speaking 4: Persuasive Mini-Speech Against Fast Fashion",
+          "target": "The class read a full transcript of Amara's radio interview."
+        },
+        {
+          "prompt": "Speaking 5: Story Read-Aloud with Expression",
+          "target": "Sana kept her red notebook hidden under her bed."
+        },
+        {
+          "prompt": "Speaking 6: Pledge and Panel Discussion",
+          "target": "Sana asked what it could mean when a poet says the sea was angry."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "dance.",
+            "to",
+            "want",
+            "everyone",
+            "made",
+            "that",
+            "rhythm",
+            "steady",
+            "a",
+            "kept",
+            "drummer",
+            "The"
+          ],
+          "answer": "The drummer kept a steady rhythm that made everyone want to dance."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "exactly.",
+            "copy",
+            "can",
+            "storyteller",
+            "other",
+            "no",
+            "that",
+            "fingerprint",
+            "the",
+            "is",
+            "voice",
+            "writer's",
+            "A"
+          ],
+          "answer": "A writer's voice is the fingerprint that no other storyteller can copy exactly."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "years.",
+            "for",
+            "landfill",
+            "in",
+            "buried",
+            "up",
+            "end",
+            "often",
+            "garments",
+            "Unwanted"
+          ],
+          "answer": "Unwanted garments often end up buried in landfill for years."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "Monday.",
+            "on",
+            "shirts",
+            "old",
+            "of",
+            "sack",
+            "huge",
+            "a",
+            "delivered",
+            "neighbours",
+            "The"
+          ],
+          "answer": "The neighbours delivered a huge sack of old shirts on Monday."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "week.",
+            "the",
+            "of",
+            "rest",
+            "the",
+            "for",
+            "Sana",
+            "with",
+            "stuck",
+            "poem",
+            "the",
+            "from",
+            "line",
+            "One"
+          ],
+          "answer": "One line from the poem stuck with Sana for the rest of the week."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rang.",
+            "bell",
+            "the",
+            "before",
+            "strip",
+            "comic",
+            "his",
+            "finished",
+            "almost",
+            "had",
+            "Milo"
+          ],
+          "answer": "Milo had almost finished his comic strip before the bell rang."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'participle' mean in this unit?",
+          "choices": [
+            "A verb form, often ending in -ed or -ing, used to build other tenses or describe a noun.",
+            "Something taken to be true without being checked.",
+            "The passing of features from parents to their young."
+          ],
+          "answer": "A verb form, often ending in -ed or -ing, used to build other tenses or describe a noun.",
+          "explanation": "participle: A verb form, often ending in -ed or -ing, used to build other tenses or describe a noun."
+        },
+        {
+          "prompt": "What does 'shirt' mean in this unit?",
+          "choices": [
+            "Something taken to be true without being checked.",
+            "A verb form, often ending in -ed or -ing, used to build other tenses or describe a noun.",
+            "A shirt is a piece of clothing worn on the top half of the body, often with a collar."
+          ],
+          "answer": "A shirt is a piece of clothing worn on the top half of the body, often with a collar.",
+          "explanation": "shirt: A shirt is a piece of clothing worn on the top half of the body, often with a collar."
+        },
+        {
+          "prompt": "What does 'bag' mean in this unit?",
+          "choices": [
+            "A verb form, often ending in -ed or -ing, used to build other tenses or describe a noun.",
+            "A container made of cloth, paper, or plastic used to carry or hold things.",
+            "Something taken to be true without being checked."
+          ],
+          "answer": "A container made of cloth, paper, or plastic used to carry or hold things.",
+          "explanation": "bag: A container made of cloth, paper, or plastic used to carry or hold things."
+        },
+        {
+          "prompt": "What does 'rooftops' mean in this unit?",
+          "choices": [
+            "The outside top coverings of houses or buildings, seen from above or in the distance.",
+            "Something taken to be true without being checked.",
+            "A verb form, often ending in -ed or -ing, used to build other tenses or describe a noun."
+          ],
+          "answer": "The outside top coverings of houses or buildings, seen from above or in the distance.",
+          "explanation": "rooftops: The outside top coverings of houses or buildings, seen from above or in the distance."
+        },
+        {
+          "prompt": "What does 'mirror' mean in this unit?",
+          "choices": [
+            "Something taken to be true without being checked.",
+            "A verb form, often ending in -ed or -ing, used to build other tenses or describe a noun.",
+            "A flat piece of glass that reflects an image back to the person looking at it."
+          ],
+          "answer": "A flat piece of glass that reflects an image back to the person looking at it.",
+          "explanation": "mirror: A flat piece of glass that reflects an image back to the person looking at it."
+        },
+        {
+          "prompt": "What does 'simile' mean in this unit?",
+          "choices": [
+            "A verb form, often ending in -ed or -ing, used to build other tenses or describe a noun.",
+            "A way of comparing two things using the words \"like\" or \"as\".",
+            "Something taken to be true without being checked."
+          ],
+          "answer": "A way of comparing two things using the words \"like\" or \"as\".",
+          "explanation": "simile: A way of comparing two things using the words \"like\" or \"as\"."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'inheritance'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Inheritance is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fact'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Fact is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'consumers'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Consumers is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'whisper'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Whisper is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'can't'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Phrase"
+          ],
+          "answer": "Phrase",
+          "explanation": "Can't is used as a phrase in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'persuasive'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Persuasive is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "composition",
+              "What something is made of, or the way its parts are arranged."
+            ],
+            [
+              "fundamental",
+              "Basic, and forming the foundation of something."
+            ],
+            [
+              "sediment",
+              "Material that settles at the bottom of a liquid."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "paraphrase",
+              "To say something in a different way, using different words."
+            ],
+            [
+              "synthetic",
+              "Synthetic materials are made artificially through chemical processes rather than grown naturally."
+            ],
+            [
+              "huge",
+              "Huge means extremely large in size, amount, or degree."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "decompose",
+              "Decompose means to break down and rot naturally over a period of time."
+            ],
+            [
+              "mindful",
+              "Careful and thoughtful about the choices you make and their effect on others."
+            ],
+            [
+              "sew",
+              "To join or repair cloth using a needle and thread."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "tablecloths",
+              "Large pieces of cloth used to cover a table."
+            ],
+            [
+              "creak",
+              "A slow, squeaky sound made by something old or stiff, like a wooden door."
+            ],
+            [
+              "flute",
+              "A thin musical instrument played by blowing air across a hole near one end."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "pointed",
+              "Showed the direction or location of something by holding out a finger toward it."
+            ],
+            [
+              "placed",
+              "Positioned or put somewhere with care or purpose."
+            ],
+            [
+              "encouraged",
+              "Gave someone support, confidence or hope to do something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "born",
+              "Brought into existence, or created for the first time."
+            ],
+            [
+              "signify",
+              "To show or represent something."
+            ],
+            [
+              "distillation",
+              "Separating liquids by boiling them and cooling the vapour."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'A Voice in the Valley, part 1': Her writing was full of ______, similes, and metaphors, which made even the cows seem like scholars and the mountains like sleeping giants.",
+          "choices": [
+            "personification",
+            "punctuation",
+            "exposition",
+            "repetition"
+          ],
+          "answer": "personification",
+          "explanation": "The sentence lists three figurative devices in her writing, and personification is the one that begins the list."
+        },
+        {
+          "prompt": "Choose the missing word from 'A Voice in the Valley, part 1': Zane made an ______ that stuck in her mind: \"A voice kept silent is like a drum never played.\"",
+          "choices": [
+            "inference",
+            "imagery",
+            "exposition",
+            "assertion"
+          ],
+          "answer": "assertion",
+          "explanation": "Zane's memorable drum sentence is described as an assertion, a strong statement that something is true."
+        },
+        {
+          "prompt": "Choose the missing word from 'A Voice in the Valley, part 2': She also showed students how to ______ meaning from a sentence and how to structure their stories in chronological order.",
+          "choices": [
+            "narrate",
+            "rhyme",
+            "infer",
+            "impose"
+          ],
+          "answer": "infer",
+          "explanation": "Sana taught her classmates to infer, meaning to work out meaning from clues rather than direct statements."
+        },
+        {
+          "prompt": "Choose the missing word from 'A Voice in the Valley, part 2': Her new story included strong ______, expressive dialogue, and a clear thesis: that art can heal what fear breaks.",
+          "choices": [
+            "exposition",
+            "connotation",
+            "prediction",
+            "rhythm"
+          ],
+          "answer": "exposition",
+          "explanation": "Voices in the Dust opens with strong exposition, the part of a story that introduces characters and setting."
+        },
+        {
+          "prompt": "Choose the missing word from 'A Voice in the Valley, part 1': She had used ______, rhyme, and a strong voice.",
+          "choices": [
+            "metaphor",
+            "alliteration",
+            "dialogue",
+            "inference"
+          ],
+          "answer": "alliteration",
+          "explanation": "Star Listener showcased alliteration alongside rhyme and a strong voice, which is why it stood out."
+        },
+        {
+          "prompt": "What does 'alliteration' mean?",
+          "choices": [
+            "Using words in a way that is not literal, often to create a special meaning or effect.",
+            "The repetition of the same sound at the beginning of several words in a sentence or phrase.",
+            "A conclusion or opinion formed based on evidence, rather than from what is explicitly stated.",
+            "The marks used in writing to separate sentences and clarify meaning, like full stops, commas, and question marks."
+          ],
+          "answer": "The repetition of the same sound at the beginning of several words in a sentence or phrase.",
+          "explanation": "Alliteration repeats the same opening sound across neighbouring words, as in a slogan like second-hand style saves so much."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'A Voice in the Valley, part 2': Her new story included strong ______, expressive dialogue, and a clear thesis: that art can heal what fear breaks.",
+          "choices": [
+            "exposition",
+            "connotation",
+            "prediction",
+            "rhythm"
+          ],
+          "answer": "exposition",
+          "explanation": "Voices in the Dust opens with strong exposition, the part of a story that introduces characters and setting."
+        },
+        {
+          "prompt": "Choose the missing word from 'A Voice in the Valley, part 1': She had used ______, rhyme, and a strong voice.",
+          "choices": [
+            "metaphor",
+            "alliteration",
+            "dialogue",
+            "inference"
+          ],
+          "answer": "alliteration",
+          "explanation": "Star Listener showcased alliteration alongside rhyme and a strong voice, which is why it stood out."
+        },
+        {
+          "prompt": "Which word means: Something that speeds up a change without being used up itself.",
+          "choices": [
+            "catalyst",
+            "assumption",
+            "participle"
+          ],
+          "answer": "catalyst",
+          "explanation": "catalyst: Something that speeds up a change without being used up itself."
+        },
+        {
+          "prompt": "Which word means: A container made of cloth, paper, or plastic used to carry or hold things.",
+          "choices": [
+            "assumption",
+            "participle",
+            "bag"
+          ],
+          "answer": "bag",
+          "explanation": "bag: A container made of cloth, paper, or plastic used to carry or hold things."
+        },
+        {
+          "prompt": "What type of word is 'surprise'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Surprise is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'simile'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Simile is used as a noun in this dictionary sense."
         }
       ]
     }

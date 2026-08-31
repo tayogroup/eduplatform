@@ -5,7 +5,7 @@
   "unitId": "eng-g06-t01-u01",
   "title": "There's a Lesson in That Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: To make room for someone, or to change a plan to suit them.",
           "choices": [
             "accommodate",
-            "trace",
-            "would"
+            "encouragement",
+            "wellbeing"
           ],
           "answer": "accommodate",
           "explanation": "accommodate: To make room for someone, or to change a plan to suit them."
         },
         {
-          "prompt": "Which word means: Coming before all the others in time, order, or importance.",
+          "prompt": "Which word means: The top part of the body that contains the brain, eyes, and mouth.",
           "choices": [
             "accommodate",
-            "trace",
-            "first"
+            "encouragement",
+            "head"
           ],
-          "answer": "first",
-          "explanation": "first: Coming before all the others in time, order, or importance."
+          "answer": "head",
+          "explanation": "head: The top part of the body that contains the brain, eyes, and mouth."
         },
         {
-          "prompt": "Which word means: A place where children go to learn and study together.",
+          "prompt": "Which word means: A child in the earliest months or years of life.",
           "choices": [
-            "trace",
-            "school",
+            "encouragement",
+            "baby",
             "accommodate"
           ],
-          "answer": "school",
-          "explanation": "school: A place where children go to learn and study together."
+          "answer": "baby",
+          "explanation": "baby: A child in the earliest months or years of life."
+        },
+        {
+          "prompt": "Which word means: A small vehicle built for travelling across water.",
+          "choices": [
+            "boat",
+            "accommodate",
+            "encouragement"
+          ],
+          "answer": "boat",
+          "explanation": "boat: A small vehicle built for travelling across water."
+        },
+        {
+          "prompt": "Which word means: A person's chance to do something, especially when people take actions one after another.",
+          "choices": [
+            "accommodate",
+            "encouragement",
+            "turn"
+          ],
+          "answer": "turn",
+          "explanation": "turn: A person's chance to do something, especially when people take actions one after another."
+        },
+        {
+          "prompt": "Which word means: Moving something, such as a hand or cloth, from side to side.",
+          "choices": [
+            "encouragement",
+            "waving",
+            "accommodate"
+          ],
+          "answer": "waving",
+          "explanation": "waving: Moving something, such as a hand or cloth, from side to side."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A feeling caused by something happening that was unexpected.",
-          "answer": "surprise"
+          "clue": "A person who lives next to or near another.",
+          "answer": "neighbour"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A talk given out loud to an audience, usually to explain or persuade.",
-          "answer": "speech"
+          "clue": "The part of the body where the leg joins the side of the trunk.",
+          "answer": "hip"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A male parent, especially in relation to his own children.",
+          "answer": "father"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "In the space or time separating two people or things.",
+          "answer": "between"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Repeated or sounded again as the sound bounced back off something.",
+          "answer": "echoed"
         }
       ]
     },
@@ -100,34 +145,81 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "weather.",
-            "dry",
-            "of",
-            "months",
-            "after",
-            "rain",
+            "ball.",
             "the",
+            "kicking",
             "for",
-            "grateful",
-            "were",
-            "farmers",
+            "techniques",
+            "new",
+            "explained",
+            "coach",
             "The"
           ],
-          "answer": "The farmers were grateful for the rain after months of dry weather."
+          "answer": "The coach explained new techniques for kicking the ball."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "beach.",
+            "sandy",
+            "the",
+            "on",
+            "abandoned",
+            "lay",
+            "boat",
+            "old",
+            "The"
+          ],
+          "answer": "The old boat lay abandoned on the sandy beach."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "style.",
+            "unique",
+            "own",
+            "her",
+            "developed",
+            "village",
+            "the",
+            "in",
+            "weaver",
+            "Each"
+          ],
+          "answer": "Each weaver in the village developed her own unique style."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "group.",
+            "fishermen's",
+            "the",
+            "for",
+            "speak",
+            "to",
+            "chosen",
+            "was",
+            "Kian"
+          ],
+          "answer": "Kian was chosen to speak for the fishermen's group."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
             "heard.",
-            "be",
+            "being",
+            "from",
+            "people",
+            "ordinary",
+            "block",
             "to",
-            "chance",
-            "a",
-            "deserved",
-            "citizen",
-            "Every"
+            "designed",
+            "seemed",
+            "rules",
+            "old",
+            "The"
           ],
-          "answer": "Every citizen deserved a chance to be heard."
+          "answer": "The old rules seemed designed to block ordinary people from being heard."
         }
       ]
     },
@@ -140,309 +232,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "In 'Voices in the Chamber, part 2', complete Kian's line: This is an _____ my father uses to measure wood.",
+          "prompt": "What does the word 'illegal' mean?",
           "choices": [
-            "entry",
-            "blockade",
-            "confederation",
-            "instrument"
+            "A tool or device used to do a particular job",
+            "The official approval of a brand-new law",
+            "Not allowed by law or rules",
+            "A connection or bond between two people"
           ],
-          "answer": "instrument",
-          "explanation": "Kian holds up an instrument and uses it as a symbol in his speech about fair laws."
+          "answer": "Not allowed by law or rules",
+          "explanation": "'Illegal' describes an action that breaks the law, like the unfair taxes the villagers feared."
         },
         {
-          "prompt": "In 'Voices in the Chamber, part 1', complete Father's line: We've been _____ with little, and asked to give much.",
+          "prompt": "What does the word 'parliament' mean?",
           "choices": [
-            "censored",
-            "supplied",
-            "reflected",
-            "ratified"
+            "A group of people who make the laws for a country",
+            "A short story that teaches a clear moral lesson",
+            "The activity of fighting during a war",
+            "A room that is kept for a special purpose"
           ],
-          "answer": "supplied",
-          "explanation": "Father complains, 'We've been supplied with little, and asked to give much.'"
+          "answer": "A group of people who make the laws for a country",
+          "explanation": "In the story, the parliament finally ratifies a fairer trade law after the hearings."
         },
         {
-          "prompt": "In 'Voices in the Chamber, part 2', complete Kian's line: It's not _____ if we are not heard.",
+          "prompt": "What does the word 'harmony' mean?",
           "choices": [
-            "warfare",
-            "disgrace",
-            "harmony",
-            "perspective"
+            "The official approval of a law or treaty",
+            "A person chosen to help decide a court case",
+            "An action that stops goods entering or leaving",
+            "A pleasing sense of peace and agreement"
           ],
-          "answer": "harmony",
-          "explanation": "Kian insists that real harmony cannot exist while the people are ignored."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What was Dina known for across the region, and why did merchants travel to her village?",
-          "choices": [
-            "She was famous for her beautiful woven cloths, so merchants travelled from distant towns just to buy them.",
-            "He meant that talent or knowledge kept only for yourself grows stale and useless, like still, trapped water.",
-            "It is a classroom debate in which each group must argue for or against ratifying a new trade law."
-          ],
-          "answer": "She was famous for her beautiful woven cloths, so merchants travelled from distant towns just to buy them.",
-          "explanation": "This is stated at the start of the passage, where her shimmering blue and gold patterns are described."
+          "answer": "A pleasing sense of peace and agreement",
+          "explanation": "Kian argues that forced harmony is not real harmony if the people are not heard."
         },
-        {
-          "prompt": "What did the monsoon storm do to Dina's workshop and loom?",
-          "choices": [
-            "He meant that talent or knowledge kept only for yourself grows stale and useless, like still, trapped water.",
-            "He uses it to argue that, just as you cannot build with a tool you do not understand, the officials make laws without understanding the people.",
-            "The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins."
-          ],
-          "answer": "The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins.",
-          "explanation": "The storm destroys her livelihood, which sets up the problem the community later helps her solve."
-        },
-        {
-          "prompt": "What is the mock parliament event, and what does the teacher ask each group of students to do?",
-          "choices": [
-            "He means Kian has begun to take an active, responsible part in his community instead of staying a silent onlooker.",
-            "It is a classroom debate in which each group must argue for or against ratifying a new trade law.",
-            "The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins."
-          ],
-          "answer": "It is a classroom debate in which each group must argue for or against ratifying a new trade law.",
-          "explanation": "The event lets the students rehearse arguing a case, which prepares Kian for the real forum later."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Retell a Fable from Memory",
-          "target": "The hall can accommodate the whole of Year 6 at once."
-        },
-        {
-          "prompt": "Speaking 3: Discuss a Moral Dilemma",
-          "target": "The farmers were grateful for the rain after months of dry weather."
-        },
-        {
-          "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "Every citizen deserved a chance to be heard."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "music.",
-            "beautiful",
-            "making",
-            "harmony,",
-            "in",
-            "sang",
-            "choir",
-            "The"
-          ],
-          "answer": "The choir sang in harmony, making beautiful music."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "exam?",
-            "the",
-            "during",
-            "helpless",
-            "so",
-            "look",
-            "Sami",
-            "did",
-            "Why"
-          ],
-          "answer": "Why did Sami look so helpless during the exam?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "room.",
-            "government",
-            "real",
-            "a",
-            "like",
-            "look",
-            "to",
-            "rearranged",
-            "been",
-            "had",
-            "hall",
-            "school",
-            "The"
-          ],
-          "answer": "The school hall had been rearranged to look like a real government room."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'week' mean in this unit?",
-          "choices": [
-            "A period of seven days.",
-            "To make room for someone, or to change a plan to suit them.",
-            "To follow something back to where it started."
-          ],
-          "answer": "A period of seven days.",
-          "explanation": "week: A period of seven days."
-        },
-        {
-          "prompt": "What does 'clapped' mean in this unit?",
-          "choices": [
-            "To make room for someone, or to change a plan to suit them.",
-            "To follow something back to where it started.",
-            "Hit your hands together, usually to show approval or praise."
-          ],
-          "answer": "Hit your hands together, usually to show approval or praise.",
-          "explanation": "clapped: Hit your hands together, usually to show approval or praise."
-        },
-        {
-          "prompt": "What does 'trace' mean in this unit?",
-          "choices": [
-            "Used to talk about something that happened often in the past, or something imagined.",
-            "To follow something back to where it started.",
-            "To make room for someone, or to change a plan to suit them."
-          ],
-          "answer": "To follow something back to where it started.",
-          "explanation": "trace: To follow something back to where it started."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'much'?",
-          "choices": [
-            "Pronoun",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Pronoun",
-          "explanation": "Much is used as a pronoun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'illegal'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Illegal is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'must'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Must is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "amateur",
-              "Doing something for love of it rather than for pay."
-            ],
-            [
-              "weaving",
-              "The craft of making cloth by crossing threads over and under each other."
-            ],
-            [
-              "like",
-              "Similar to, or in the same way as, something else."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "surprise",
-              "A feeling caused by something happening that was unexpected."
-            ],
-            [
-              "honest",
-              "Truthful and sincere, not lying or pretending."
-            ],
-            [
-              "northern",
-              "Situated in or coming from the north."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "desks",
-              "Tables, often with a flat top, that people sit at to write or work."
-            ],
-            [
-              "back",
-              "The rear part of something, or the position furthest from the front."
-            ],
-            [
-              "air",
-              "The invisible mixture of gases around the earth that people and animals breathe."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does the word 'blockade' mean?",
           "choices": [
@@ -479,13 +300,531 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What was Dina known for across the region, and why did merchants travel to her village?",
+          "choices": [
+            "She was famous for her beautiful woven cloths, so merchants travelled from distant towns just to buy them.",
+            "He meant that talent or knowledge kept only for yourself grows stale and useless, like still, trapped water.",
+            "It is a classroom debate in which each group must argue for or against ratifying a new trade law."
+          ],
+          "answer": "She was famous for her beautiful woven cloths, so merchants travelled from distant towns just to buy them.",
+          "explanation": "This is stated at the start of the passage, where her shimmering blue and gold patterns are described."
+        },
+        {
+          "prompt": "How did Dina answer when younger women asked her to teach them her weaving techniques?",
+          "choices": [
+            "The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins.",
+            "He uses it to argue that, just as you cannot build with a tool you do not understand, the officials make laws without understanding the people.",
+            "She refused, saying the skills had taken her years to master and that her secret knowledge made her cloth valuable."
+          ],
+          "answer": "She refused, saying the skills had taken her years to master and that her secret knowledge made her cloth valuable.",
+          "explanation": "Dina guards her methods because she believes sharing them would make her own work less valuable."
+        },
+        {
+          "prompt": "What did the monsoon storm do to Dina's workshop and loom?",
+          "choices": [
+            "He means Kian has begun to take an active, responsible part in his community instead of staying a silent onlooker.",
+            "The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins.",
+            "The coarser shared thread makes thicker, warmer, more durable cloth, suggesting that working together creates something stronger than working alone."
+          ],
+          "answer": "The powerful wind snapped her wooden loom and scattered her silk threads, and the rain left her workshop in ruins.",
+          "explanation": "The storm destroys her livelihood, which sets up the problem the community later helps her solve."
+        },
+        {
+          "prompt": "At the start of Voices in the Chamber, who rules Kalimani, and how do the local people feel about the new trade laws?",
+          "choices": [
+            "Foreign powers rule the port town, and the local people feel angry and unheard because the laws are written without asking them.",
+            "The coarser shared thread makes thicker, warmer, more durable cloth, suggesting that working together creates something stronger than working alone.",
+            "Many villagers giving honest testimony together create enough pressure to change the law, teaching that united voices and truth outweigh anger alone."
+          ],
+          "answer": "Foreign powers rule the port town, and the local people feel angry and unheard because the laws are written without asking them.",
+          "explanation": "The passage shows the family's pride and frustration under laws made for them but never with them."
+        },
+        {
+          "prompt": "What is the mock parliament event, and what does the teacher ask each group of students to do?",
+          "choices": [
+            "Foreign powers rule the port town, and the local people feel angry and unheard because the laws are written without asking them.",
+            "She was famous for her beautiful woven cloths, so merchants travelled from distant towns just to buy them.",
+            "It is a classroom debate in which each group must argue for or against ratifying a new trade law."
+          ],
+          "answer": "It is a classroom debate in which each group must argue for or against ratifying a new trade law.",
+          "explanation": "The event lets the students rehearse arguing a case, which prepares Kian for the real forum later."
+        },
+        {
+          "prompt": "What does Kian's father mean when he tells him he has become a citizen today, not merely a student?",
+          "choices": [
+            "She refused, saying the skills had taken her years to master and that her secret knowledge made her cloth valuable.",
+            "He means Kian has begun to take an active, responsible part in his community instead of staying a silent onlooker.",
+            "It is a classroom debate in which each group must argue for or against ratifying a new trade law."
+          ],
+          "answer": "He means Kian has begun to take an active, responsible part in his community instead of staying a silent onlooker.",
+          "explanation": "Becoming a citizen here means speaking up and sharing responsibility for decisions that affect everyone."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Retell a Fable from Memory",
+          "target": "The hall can accommodate the whole of Year 6 at once."
+        },
+        {
+          "prompt": "Speaking 2: Read Aloud with Expression",
+          "target": "The coach explained new techniques for kicking the ball."
+        },
+        {
+          "prompt": "Speaking 3: Discuss a Moral Dilemma",
+          "target": "The old boat lay abandoned on the sandy beach."
+        },
+        {
+          "prompt": "Speaking 4: Perform a Fable as a Dialogue",
+          "target": "Each weaver in the village developed her own unique style."
+        },
+        {
+          "prompt": "Speaking 5: Vocabulary Expert Interview",
+          "target": "Kian was chosen to speak for the fishermen's group."
+        },
+        {
+          "prompt": "Speaking 6: Four-Minute Unit Talk",
+          "target": "The old rules seemed designed to block ordinary people from being heard."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "chamber.",
+            "large",
+            "his",
+            "in",
+            "meeting",
+            "a",
+            "held",
+            "king",
+            "The"
+          ],
+          "answer": "The king held a meeting in his large chamber."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "years.",
+            "many",
+            "over",
+            "built",
+            "had",
+            "she",
+            "talent",
+            "the",
+            "of",
+            "proud",
+            "was",
+            "Dina"
+          ],
+          "answer": "Dina was proud of the talent she had built over many years."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "begins?",
+            "match",
+            "the",
+            "before",
+            "stop",
+            "rain",
+            "the",
+            "Will"
+          ],
+          "answer": "Will the rain stop before the match begins?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "parliament.",
+            "the",
+            "to",
+            "speech",
+            "his",
+            "finishing",
+            "after",
+            "broadly",
+            "grinned",
+            "Kian"
+          ],
+          "answer": "Kian grinned broadly after finishing his speech to the parliament."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "ministers.",
+            "colonial",
+            "the",
+            "played",
+            "third",
+            "a",
+            "while",
+            "Confederation,",
+            "Coastline",
+            "the",
+            "became",
+            "group",
+            "Another"
+          ],
+          "answer": "Another group became the Coastline Confederation, while a third played the colonial ministers."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "hands.",
+            "his",
+            "in",
+            "shaking",
+            "pot",
+            "battered",
+            "the",
+            "noticed",
+            "Zara"
+          ],
+          "answer": "Zara noticed the battered pot shaking in his hands."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'encouragement' mean in this unit?",
+          "choices": [
+            "Words or actions that give someone hope and confidence.",
+            "To make room for someone, or to change a plan to suit them.",
+            "The state of being healthy, comfortable and happy."
+          ],
+          "answer": "Words or actions that give someone hope and confidence.",
+          "explanation": "encouragement: Words or actions that give someone hope and confidence."
+        },
+        {
+          "prompt": "What does 'useless' mean in this unit?",
+          "choices": [
+            "To make room for someone, or to change a plan to suit them.",
+            "Words or actions that give someone hope and confidence.",
+            "Not able to work well or serve any purpose."
+          ],
+          "answer": "Not able to work well or serve any purpose.",
+          "explanation": "useless: Not able to work well or serve any purpose."
+        },
+        {
+          "prompt": "What does 'planks' mean in this unit?",
+          "choices": [
+            "Words or actions that give someone hope and confidence.",
+            "Long, flat pieces of wood used for building things.",
+            "To make room for someone, or to change a plan to suit them."
+          ],
+          "answer": "Long, flat pieces of wood used for building things.",
+          "explanation": "planks: Long, flat pieces of wood used for building things."
+        },
+        {
+          "prompt": "What does 'whispers' mean in this unit?",
+          "choices": [
+            "Very quiet, soft sounds made when people speak using very little breath.",
+            "To make room for someone, or to change a plan to suit them.",
+            "Words or actions that give someone hope and confidence."
+          ],
+          "answer": "Very quiet, soft sounds made when people speak using very little breath.",
+          "explanation": "whispers: Very quiet, soft sounds made when people speak using very little breath."
+        },
+        {
+          "prompt": "What does 'later' mean in this unit?",
+          "choices": [
+            "To make room for someone, or to change a plan to suit them.",
+            "Words or actions that give someone hope and confidence.",
+            "At a time after the present, or after something else has happened."
+          ],
+          "answer": "At a time after the present, or after something else has happened.",
+          "explanation": "later: At a time after the present, or after something else has happened."
+        },
+        {
+          "prompt": "What does 'perspective' mean in this unit?",
+          "choices": [
+            "Words or actions that give someone hope and confidence.",
+            "A way of looking at or thinking about something",
+            "To make room for someone, or to change a plan to suit them."
+          ],
+          "answer": "A way of looking at or thinking about something",
+          "explanation": "perspective: A way of looking at or thinking about something"
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'wellbeing'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Wellbeing is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'along'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Preposition"
+          ],
+          "answer": "Preposition",
+          "explanation": "Along is used as a preposition in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'thicker'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Thicker is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'represent'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Represent is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'talks'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Talks is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'relationship'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Relationship is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "amateur",
+              "Doing something for love of it rather than for pay."
+            ],
+            [
+              "maturity",
+              "Behaving in a sensible, grown-up way."
+            ],
+            [
+              "weaving",
+              "The craft of making cloth by crossing threads over and under each other."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "knowledge",
+              "Information and understanding gained through learning or experience."
+            ],
+            [
+              "hard",
+              "With a lot of effort, force, or energy."
+            ],
+            [
+              "scattering",
+              "Throwing or spreading things in many different directions."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "certainly",
+              "Without any doubt at all; used to show something is definitely true."
+            ],
+            [
+              "week",
+              "A period of seven days."
+            ],
+            [
+              "twelve",
+              "The number twelve; one more than eleven."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "stall",
+              "A small stand or table where goods are sold, often in a market."
+            ],
+            [
+              "recently",
+              "Not long ago, in the near past."
+            ],
+            [
+              "friend",
+              "A person you like and trust, and who you spend time with."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "wrapped",
+              "Covered something completely by folding material around it."
+            ],
+            [
+              "directions",
+              "The ways or paths in which something moves, or instructions on how to reach a place."
+            ],
+            [
+              "delivered",
+              "Brought and given to the place or person it was meant for."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "beside",
+              "Next to or at the side of someone or something."
+            ],
+            [
+              "blockade",
+              "An action to stop people or goods getting in or out of a place"
+            ],
+            [
+              "monologue",
+              "A long speech by one person, spoken alone or to others."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "In 'Voices in the Chamber, part 2', complete Father's line: You have become a _____ today, Kian, not merely a student.",
+          "choices": [
+            "inventor",
+            "juror",
+            "citizen",
+            "settler"
+          ],
+          "answer": "citizen",
+          "explanation": "Kian's father tells him he has become a citizen, meaning he now takes an active part in the community."
+        },
+        {
+          "prompt": "In 'Voices in the Chamber, part 2', complete Kian's line: This is an _____ my father uses to measure wood.",
+          "choices": [
+            "entry",
+            "blockade",
+            "confederation",
+            "instrument"
+          ],
+          "answer": "instrument",
+          "explanation": "Kian holds up an instrument and uses it as a symbol in his speech about fair laws."
+        },
+        {
+          "prompt": "In 'Voices in the Chamber, part 1', complete Father's line: We've been _____ with little, and asked to give much.",
+          "choices": [
+            "censored",
+            "supplied",
+            "reflected",
+            "ratified"
+          ],
+          "answer": "supplied",
+          "explanation": "Father complains, 'We've been supplied with little, and asked to give much.'"
+        },
+        {
+          "prompt": "In 'Voices in the Chamber, part 2', complete Kian's line: It's not _____ if we are not heard.",
+          "choices": [
+            "warfare",
+            "disgrace",
+            "harmony",
+            "perspective"
+          ],
+          "answer": "harmony",
+          "explanation": "Kian insists that real harmony cannot exist while the people are ignored."
+        },
+        {
+          "prompt": "In 'Voices in the Chamber, part 2', complete the line: That speech changed my _____.",
+          "choices": [
+            "perspective",
+            "parliament",
+            "blockade",
+            "emancipation"
+          ],
+          "answer": "perspective",
+          "explanation": "A visiting student admits, 'That speech changed my perspective.'"
+        },
         {
           "prompt": "What does the word 'illegal' mean?",
           "choices": [
@@ -496,28 +835,78 @@
           ],
           "answer": "Not allowed by law or rules",
           "explanation": "'Illegal' describes an action that breaks the law, like the unfair taxes the villagers feared."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "In 'Voices in the Chamber, part 2', complete Kian's line: It's not _____ if we are not heard.",
+          "choices": [
+            "warfare",
+            "disgrace",
+            "harmony",
+            "perspective"
+          ],
+          "answer": "harmony",
+          "explanation": "Kian insists that real harmony cannot exist while the people are ignored."
         },
         {
-          "prompt": "What does the word 'parliament' mean?",
+          "prompt": "In 'Voices in the Chamber, part 2', complete the line: That speech changed my _____.",
           "choices": [
-            "A group of people who make the laws for a country",
-            "A short story that teaches a clear moral lesson",
-            "The activity of fighting during a war",
-            "A room that is kept for a special purpose"
+            "perspective",
+            "parliament",
+            "blockade",
+            "emancipation"
           ],
-          "answer": "A group of people who make the laws for a country",
-          "explanation": "In the story, the parliament finally ratifies a fairer trade law after the hearings."
+          "answer": "perspective",
+          "explanation": "A visiting student admits, 'That speech changed my perspective.'"
         },
         {
-          "prompt": "What does the word 'harmony' mean?",
+          "prompt": "Which word means: Different from, or not similar to, something else.",
           "choices": [
-            "The official approval of a law or treaty",
-            "A person chosen to help decide a court case",
-            "An action that stops goods entering or leaving",
-            "A pleasing sense of peace and agreement"
+            "unlike",
+            "accommodate",
+            "encouragement"
           ],
-          "answer": "A pleasing sense of peace and agreement",
-          "explanation": "Kian argues that forced harmony is not real harmony if the people are not heard."
+          "answer": "unlike",
+          "explanation": "unlike: Different from, or not similar to, something else."
+        },
+        {
+          "prompt": "Which word means: Long, flat pieces of wood used for building things.",
+          "choices": [
+            "accommodate",
+            "encouragement",
+            "planks"
+          ],
+          "answer": "planks",
+          "explanation": "planks: Long, flat pieces of wood used for building things."
+        },
+        {
+          "prompt": "What type of word is 'school'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "School is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'perspective'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Perspective is used as a noun in this dictionary sense."
         }
       ]
     }

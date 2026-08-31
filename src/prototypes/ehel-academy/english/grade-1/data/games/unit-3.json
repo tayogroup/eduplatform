@@ -5,7 +5,7 @@
   "unitId": "eng-g01-t01-u03",
   "title": "Fun and Games Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Large in size, taking up lots of space.",
           "choices": [
             "big",
-            "tin",
-            "run"
+            "hit",
+            "tin"
           ],
           "answer": "big",
           "explanation": "big: Large in size, taking up lots of space."
         },
         {
-          "prompt": "Which word means: Very makes another word stronger, like very big or very happy.",
+          "prompt": "Which word means: This word means those people or those things.",
           "choices": [
             "big",
-            "tin",
-            "very"
+            "hit",
+            "them"
           ],
-          "answer": "very",
-          "explanation": "very: Very makes another word stronger, like very big or very happy."
+          "answer": "them",
+          "explanation": "them: This word means those people or those things."
         },
         {
-          "prompt": "Which word means: Learn means to find out how to do something new.",
+          "prompt": "Which word means: Could means you were able to do something.",
           "choices": [
-            "tin",
-            "learn",
+            "hit",
+            "could",
             "big"
           ],
-          "answer": "learn",
-          "explanation": "learn: Learn means to find out how to do something new."
+          "answer": "could",
+          "explanation": "could: Could means you were able to do something."
+        },
+        {
+          "prompt": "Which word means: Every means each one, with none left out.",
+          "choices": [
+            "every",
+            "big",
+            "hit"
+          ],
+          "answer": "every",
+          "explanation": "every: Every means each one, with none left out."
+        },
+        {
+          "prompt": "Which word means: To hold out your finger to show where something is.",
+          "choices": [
+            "big",
+            "hit",
+            "point"
+          ],
+          "answer": "point",
+          "explanation": "point: To hold out your finger to show where something is."
+        },
+        {
+          "prompt": "Which word means: One side of your body. Your left hand is on that side.",
+          "choices": [
+            "hit",
+            "left",
+            "big"
+          ],
+          "answer": "left",
+          "explanation": "left: One side of your body. Your left hand is on that side."
         }
       ]
     },
@@ -67,8 +97,23 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
+          "clue": "Wanted means you really hoped to have or do something.",
+          "answer": "wanted"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
           "clue": "Learn means to find out how to do something new.",
           "answer": "learn"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To hold out your finger to show where something is.",
+          "answer": "point"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To take hold of something moving in the air.",
+          "answer": "catch"
         }
       ]
     },
@@ -95,29 +140,61 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "A.",
-            "is",
-            "name",
-            "my",
-            "of",
-            "letter",
-            "first",
+            "field.",
+            "the",
+            "across",
+            "run",
+            "children",
             "The"
           ],
-          "answer": "The first letter of my name is A."
+          "answer": "The children run across the field."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "mud.",
+            "pond.",
             "the",
-            "in",
-            "stuck",
-            "is",
-            "shoe",
-            "My"
+            "on",
+            "swims",
+            "duck",
+            "The"
           ],
-          "answer": "My shoe is stuck in the mud."
+          "answer": "The duck swims on the pond."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "friend.",
+            "tall",
+            "a",
+            "has",
+            "Sami"
+          ],
+          "answer": "Sami has a tall friend."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "bee.",
+            "a",
+            "like",
+            "buzz",
+            "can",
+            "I"
+          ],
+          "answer": "I can buzz like a bee."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "class.",
+            "in",
+            "hand",
+            "my",
+            "raise",
+            "I"
+          ],
+          "answer": "I raise my hand in class."
         }
       ]
     },
@@ -130,296 +207,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "The ball is under the table. Which word tells you where the ball is?",
+          "prompt": "Which word is an action word, something you do?",
           "choices": [
-            "under",
-            "red",
-            "ball",
-            "table"
-          ],
-          "answer": "under",
-          "explanation": "Under is the position word; ball and table are naming words and red is a colour."
-        },
-        {
-          "prompt": "Which word completes the instruction: Touch your ___.",
-          "choices": [
-            "blue",
-            "nose",
+            "rain",
+            "table",
             "jump",
-            "fast"
+            "shoe"
           ],
-          "answer": "nose",
-          "explanation": "You can touch a body part like your nose; jump is an action, fast tells speed and blue is a colour."
+          "answer": "jump",
+          "explanation": "Jump is something your body does; a table, rain and a shoe are naming words, not actions."
         },
         {
-          "prompt": "What is a kind thing to say when you play a game with your friends?",
+          "prompt": "Which action do you do by putting your two hands together?",
           "choices": [
-            "Go away.",
-            "You cannot play.",
-            "It is your turn.",
-            "I always win."
+            "jump",
+            "blink",
+            "run",
+            "clap"
           ],
-          "answer": "It is your turn.",
-          "explanation": "Sharing turns is kind and fair; the other sentences would leave a friend out."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
+          "answer": "clap",
+          "explanation": "Clapping uses two hands; you run and jump with your legs and blink with your eyes."
+        },
         {
-          "prompt": "What colour was Amal's big ball?",
+          "prompt": "A ball hits the ground and comes back up. Which word tells what it does?",
           "choices": [
-            "Red",
-            "It went up into a big tree",
-            "Because he was tall and could shake the branch"
+            "bounce",
+            "sleep",
+            "eat",
+            "write"
           ],
-          "answer": "Red",
-          "explanation": "The story says Amal had a big red ball."
+          "answer": "bounce",
+          "explanation": "Going down and up again is called bouncing; sleeping, eating and writing are not ball movements."
         },
-        {
-          "prompt": "What happened to the ball after Leo threw it?",
-          "choices": [
-            "On a branch of the big tree",
-            "The ball is on the ___.",
-            "It went up into a big tree"
-          ],
-          "answer": "It went up into a big tree",
-          "explanation": "Leo threw the ball, it went up, up, up, and landed on a branch."
-        },
-        {
-          "prompt": "Why could Adam get the ball down when the children could not?",
-          "choices": [
-            "Can you ___?",
-            "Because he was tall and could shake the branch",
-            "On a branch of the big tree"
-          ],
-          "answer": "Because he was tall and could shake the branch",
-          "explanation": "The story says Adam was tall, and he shook the branch until the ball fell."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 - Listen and point",
-          "target": "Copy an adult's action if one is nearby, or copy the action from the audio, then say what you did."
-        },
-        {
-          "prompt": "Speaking 3 - Ask and answer",
-          "target": "Show your partner a body part or a toy and tell them about it."
-        },
-        {
-          "prompt": "Speaking 5 - Role-play",
-          "target": "Play a giving-orders game with a friend."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "picture.",
-            "animal",
-            "the",
-            "to",
-            "point",
-            "I"
-          ],
-          "answer": "I point to the animal picture."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "field.",
-            "the",
-            "across",
-            "ran",
-            "Sami"
-          ],
-          "answer": "Sami ran across the field."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "giraffe?",
-            "a",
-            "seen",
-            "ever",
-            "you",
-            "Have"
-          ],
-          "answer": "Have you ever seen a giraffe?"
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'duck' mean in this unit?",
-          "choices": [
-            "A bird that swims on water and says quack.",
-            "Large in size, taking up lots of space.",
-            "A tin is a metal box that keeps food fresh."
-          ],
-          "answer": "A bird that swims on water and says quack.",
-          "explanation": "duck: A bird that swims on water and says quack."
-        },
-        {
-          "prompt": "What does 'giraffe' mean in this unit?",
-          "choices": [
-            "Large in size, taking up lots of space.",
-            "A tin is a metal box that keeps food fresh.",
-            "A giraffe is a tall animal with a very long neck."
-          ],
-          "answer": "A giraffe is a tall animal with a very long neck.",
-          "explanation": "giraffe: A giraffe is a tall animal with a very long neck."
-        },
-        {
-          "prompt": "What does 'tin' mean in this unit?",
-          "choices": [
-            "To move your legs very fast, faster than walking.",
-            "A tin is a metal box that keeps food fresh.",
-            "Large in size, taking up lots of space."
-          ],
-          "answer": "A tin is a metal box that keeps food fresh.",
-          "explanation": "tin: A tin is a metal box that keeps food fresh."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'bobbin'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Bobbin is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'finger'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Finger is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'word'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Word is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "six",
-              "The number 6. It comes after five and before seven."
-            ],
-            [
-              "clap",
-              "To hit your hands together to make a sound."
-            ],
-            [
-              "page",
-              "A page is one side of a sheet of paper in a book."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "go",
-              "To start moving or leave for another place."
-            ],
-            [
-              "bug",
-              "A tiny creature with legs that crawls or flies."
-            ],
-            [
-              "rhythm",
-              "Rhythm is a pattern of sound, like a beat you can clap."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "rhyme",
-              "A rhyme is a short poem or song with matching end sounds."
-            ],
-            [
-              "shake",
-              "To move something quickly from side to side."
-            ],
-            [
-              "finger",
-              "One of the five thin parts on your hand."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Sami throws a ball to Maya. What should Maya do with her hands?",
           "choices": [
@@ -456,13 +275,504 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What colour was Amal's big ball?",
+          "choices": [
+            "Red",
+            "It went up into a big tree",
+            "Because he was tall and could shake the branch"
+          ],
+          "answer": "Red",
+          "explanation": "The story says Amal had a big red ball."
+        },
+        {
+          "prompt": "In which town was Amal playing?",
+          "choices": [
+            "On a branch of the big tree",
+            "The ball is on the ___.",
+            "Hargeisa"
+          ],
+          "answer": "Hargeisa",
+          "explanation": "The first line says it was a sunny day in the town of Hargeisa."
+        },
+        {
+          "prompt": "What happened to the ball after Leo threw it?",
+          "choices": [
+            "Can you ___?",
+            "It went up into a big tree",
+            "Sad, because the story says Leo looked sad"
+          ],
+          "answer": "It went up into a big tree",
+          "explanation": "Leo threw the ball, it went up, up, up, and landed on a branch."
+        },
+        {
+          "prompt": "How did Leo feel when he asked to play? How do you know?",
+          "choices": [
+            "Sad, because the story says Leo looked sad",
+            "Because he was tall and could shake the branch",
+            "Red"
+          ],
+          "answer": "Sad, because the story says Leo looked sad",
+          "explanation": "Leo asks 'Can I play too?' and the story says he looked sad."
+        },
+        {
+          "prompt": "Why could Adam get the ball down when the children could not?",
+          "choices": [
+            "The ball is on the ___.",
+            "Hargeisa",
+            "Because he was tall and could shake the branch"
+          ],
+          "answer": "Because he was tall and could shake the branch",
+          "explanation": "The story says Adam was tall, and he shook the branch until the ball fell."
+        },
+        {
+          "prompt": "Which talk line tells where the ball is?",
+          "choices": [
+            "It went up into a big tree",
+            "The ball is on the ___.",
+            "Can you ___?"
+          ],
+          "answer": "The ball is on the ___.",
+          "explanation": "'The ball is on the ___' is the position line in the talk lines."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "Copy an adult's action if one is nearby, or copy the action from the audio, then say what you did."
+        },
+        {
+          "prompt": "Speaking 2 - Repeat the model",
+          "target": "Ask a friend to try an action, then answer them."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "Show your partner a body part or a toy and tell them about it."
+        },
+        {
+          "prompt": "Speaking 4 - Picture talk",
+          "target": "Move a ball around the room and say where it is."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "Play a giving-orders game with a friend."
+        },
+        {
+          "prompt": "Speaking 6 - My confident turn",
+          "target": "I raise my hand in class."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "me.",
+            "to",
+            "next",
+            "sits",
+            "Sami"
+          ],
+          "answer": "Sami sits next to me."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "page.",
+            "next",
+            "the",
+            "to",
+            "turned",
+            "Amal"
+          ],
+          "answer": "Amal turned to the next page."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "field.",
+            "the",
+            "across",
+            "ran",
+            "Sami"
+          ],
+          "answer": "Sami ran across the field."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "ceiling.",
+            "the",
+            "from",
+            "hangs",
+            "light",
+            "The"
+          ],
+          "answer": "The light hangs from the ceiling."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "giraffe?",
+            "a",
+            "seen",
+            "ever",
+            "you",
+            "Have"
+          ],
+          "answer": "Have you ever seen a giraffe?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "pancakes.",
+            "the",
+            "smell",
+            "can",
+            "nose",
+            "My"
+          ],
+          "answer": "My nose can smell the pancakes."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'hit' mean in this unit?",
+          "choices": [
+            "To knock something with your hand or with a bat.",
+            "Large in size, taking up lots of space.",
+            "A tin is a metal box that keeps food fresh."
+          ],
+          "answer": "To knock something with your hand or with a bat.",
+          "explanation": "hit: To knock something with your hand or with a bat."
+        },
+        {
+          "prompt": "What does 'like' mean in this unit?",
+          "choices": [
+            "Large in size, taking up lots of space.",
+            "To knock something with your hand or with a bat.",
+            "To think something is nice and enjoy it."
+          ],
+          "answer": "To think something is nice and enjoy it.",
+          "explanation": "like: To think something is nice and enjoy it."
+        },
+        {
+          "prompt": "What does 'stuck' mean in this unit?",
+          "choices": [
+            "To knock something with your hand or with a bat.",
+            "Stuck means something cannot move because it is caught or held tight.",
+            "Large in size, taking up lots of space."
+          ],
+          "answer": "Stuck means something cannot move because it is caught or held tight.",
+          "explanation": "stuck: Stuck means something cannot move because it is caught or held tight."
+        },
+        {
+          "prompt": "What does 'buzz' mean in this unit?",
+          "choices": [
+            "Buzz means to make a humming sound like a bee.",
+            "Large in size, taking up lots of space.",
+            "To knock something with your hand or with a bat."
+          ],
+          "answer": "Buzz means to make a humming sound like a bee.",
+          "explanation": "buzz: Buzz means to make a humming sound like a bee."
+        },
+        {
+          "prompt": "What does 'feet' mean in this unit?",
+          "choices": [
+            "Large in size, taking up lots of space.",
+            "To knock something with your hand or with a bat.",
+            "More than one foot. We stand and walk on our feet."
+          ],
+          "answer": "More than one foot. We stand and walk on our feet.",
+          "explanation": "feet: More than one foot. We stand and walk on our feet."
+        },
+        {
+          "prompt": "What does 'kick' mean in this unit?",
+          "choices": [
+            "To knock something with your hand or with a bat.",
+            "Kick means to hit something with your foot.",
+            "Large in size, taking up lots of space."
+          ],
+          "answer": "Kick means to hit something with your foot.",
+          "explanation": "kick: Kick means to hit something with your foot."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'tin'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Tin is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'rabbit'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Rabbit is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'rhythm'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Rhythm is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'flew'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Flew is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'toes'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Toes is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'smile'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Smile is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "six",
+              "The number 6. It comes after five and before seven."
+            ],
+            [
+              "fin",
+              "A fin is the flat part on a fish that helps it swim."
+            ],
+            [
+              "run",
+              "To move your legs very fast, faster than walking."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "do",
+              "We use do to ask questions and to talk about actions."
+            ],
+            [
+              "why",
+              "This word asks for the reason something happens."
+            ],
+            [
+              "puppy",
+              "A baby dog. It is soft and likes to play."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "sad",
+              "Sad means you feel unhappy, like when something upsets you."
+            ],
+            [
+              "much",
+              "Much means a large amount of something."
+            ],
+            [
+              "window",
+              "A window is an opening in a wall that lets in light."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "body",
+              "Your body is all the parts of you, like your arms, legs and head."
+            ],
+            [
+              "whee",
+              "Whee is a word you say when you feel a fun, fast rush of excitement."
+            ],
+            [
+              "roll",
+              "To move along by turning over and over."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "hand",
+              "The part at the end of your arm with five fingers."
+            ],
+            [
+              "toes",
+              "The ten little parts at the end of your feet."
+            ],
+            [
+              "on",
+              "A small word that shows something is above and touching, like 'on the table'."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "catch",
+              "To take hold of something moving in the air."
+            ],
+            [
+              "smile",
+              "A smile is the happy shape your mouth makes when you are pleased."
+            ],
+            [
+              "letter",
+              "A letter is one of the signs we use to write words, like a or b."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which one is a question?",
+          "choices": [
+            "The ball is red.",
+            "We catch the ball.",
+            "I can catch the ball.",
+            "Can you catch the ball?"
+          ],
+          "answer": "Can you catch the ball?",
+          "explanation": "Only this one asks something and ends with a question mark; the others are telling sentences."
+        },
+        {
+          "prompt": "The ball is under the table. Which word tells you where the ball is?",
+          "choices": [
+            "under",
+            "red",
+            "ball",
+            "table"
+          ],
+          "answer": "under",
+          "explanation": "Under is the position word; ball and table are naming words and red is a colour."
+        },
+        {
+          "prompt": "Which word completes the instruction: Touch your ___.",
+          "choices": [
+            "blue",
+            "nose",
+            "jump",
+            "fast"
+          ],
+          "answer": "nose",
+          "explanation": "You can touch a body part like your nose; jump is an action, fast tells speed and blue is a colour."
+        },
+        {
+          "prompt": "What is a kind thing to say when you play a game with your friends?",
+          "choices": [
+            "Go away.",
+            "You cannot play.",
+            "It is your turn.",
+            "I always win."
+          ],
+          "answer": "It is your turn.",
+          "explanation": "Sharing turns is kind and fair; the other sentences would leave a friend out."
+        },
+        {
+          "prompt": "Which word rhymes with hop?",
+          "choices": [
+            "hat",
+            "sun",
+            "hen",
+            "top"
+          ],
+          "answer": "top",
+          "explanation": "Hop and top both end with the /op/ sound; hat, hen and sun end in different sounds."
+        },
         {
           "prompt": "Which word is an action word, something you do?",
           "choices": [
@@ -473,28 +783,78 @@
           ],
           "answer": "jump",
           "explanation": "Jump is something your body does; a table, rain and a shoe are naming words, not actions."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What is a kind thing to say when you play a game with your friends?",
+          "choices": [
+            "Go away.",
+            "You cannot play.",
+            "It is your turn.",
+            "I always win."
+          ],
+          "answer": "It is your turn.",
+          "explanation": "Sharing turns is kind and fair; the other sentences would leave a friend out."
         },
         {
-          "prompt": "Which action do you do by putting your two hands together?",
+          "prompt": "Which word rhymes with hop?",
           "choices": [
-            "jump",
-            "blink",
+            "hat",
+            "sun",
+            "hen",
+            "top"
+          ],
+          "answer": "top",
+          "explanation": "Hop and top both end with the /op/ sound; hat, hen and sun end in different sounds."
+        },
+        {
+          "prompt": "Which word means: To move your legs very fast, faster than walking.",
+          "choices": [
             "run",
-            "clap"
+            "big",
+            "hit"
           ],
-          "answer": "clap",
-          "explanation": "Clapping uses two hands; you run and jump with your legs and blink with your eyes."
+          "answer": "run",
+          "explanation": "run: To move your legs very fast, faster than walking."
         },
         {
-          "prompt": "A ball hits the ground and comes back up. Which word tells what it does?",
+          "prompt": "Which word means: Stuck means something cannot move because it is caught or held tight.",
           "choices": [
-            "bounce",
-            "sleep",
-            "eat",
-            "write"
+            "big",
+            "hit",
+            "stuck"
           ],
-          "answer": "bounce",
-          "explanation": "Going down and up again is called bouncing; sleeping, eating and writing are not ball movements."
+          "answer": "stuck",
+          "explanation": "stuck: Stuck means something cannot move because it is caught or held tight."
+        },
+        {
+          "prompt": "What type of word is 'bounce'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Bounce is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'kick'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Kick is used as a verb in this dictionary sense."
         }
       ]
     }

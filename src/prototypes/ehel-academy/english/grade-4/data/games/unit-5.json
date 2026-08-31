@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t02-u05",
   "title": "Action and Movement Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Something that a person or a thing does.",
           "choices": [
             "action",
-            "maintain",
-            "complain"
+            "gradually",
+            "include"
           ],
           "answer": "action",
           "explanation": "action: Something that a person or a thing does."
         },
         {
-          "prompt": "Which word means: Crossed means moved from one side of something to the other.",
+          "prompt": "Which word means: To collect things or bring people together.",
           "choices": [
             "action",
-            "maintain",
-            "crossed"
+            "gradually",
+            "gather"
           ],
-          "answer": "crossed",
-          "explanation": "crossed: Crossed means moved from one side of something to the other."
+          "answer": "gather",
+          "explanation": "gather: To collect things or bring people together."
         },
         {
-          "prompt": "Which word means: Doing or saying the same thing that someone else did or said.",
+          "prompt": "Which word means: Bending means curving or folding something so it is not straight.",
           "choices": [
-            "maintain",
-            "copying",
+            "gradually",
+            "bending",
             "action"
           ],
-          "answer": "copying",
-          "explanation": "copying: Doing or saying the same thing that someone else did or said."
+          "answer": "bending",
+          "explanation": "bending: Bending means curving or folding something so it is not straight."
+        },
+        {
+          "prompt": "Which word means: An empty space or opening in something, like the ground or a wall.",
+          "choices": [
+            "hole",
+            "action",
+            "gradually"
+          ],
+          "answer": "hole",
+          "explanation": "hole: An empty space or opening in something, like the ground or a wall."
+        },
+        {
+          "prompt": "Which word means: A collection of information kept together, often written down or on paper.",
+          "choices": [
+            "action",
+            "gradually",
+            "file"
+          ],
+          "answer": "file",
+          "explanation": "file: A collection of information kept together, often written down or on paper."
+        },
+        {
+          "prompt": "Which word means: To change something into a different form.",
+          "choices": [
+            "gradually",
+            "convert",
+            "action"
+          ],
+          "answer": "convert",
+          "explanation": "convert: To change something into a different form."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Arms are the two long parts of your body between your shoulders and hands.",
-          "answer": "arms"
+          "clue": "To bring in something new, or to make people known to each other.",
+          "answer": "introduce"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A large wild cat with a golden coat, known for its loud roar.",
-          "answer": "lion"
+          "clue": "Flexible means able to bend or move easily without breaking.",
+          "answer": "flexible"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Having picked something up or moved it, or having already happened.",
+          "answer": "taken"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Used words to explain what someone or something looks like.",
+          "answer": "described"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To grow larger, or to make something larger.",
+          "answer": "expand"
         }
       ]
     },
@@ -96,31 +141,70 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "line.",
-            "finish",
+            "you.",
+            "of",
+            "four",
             "the",
-            "saw",
-            "and",
-            "ahead",
-            "looked",
-            "Samira"
+            "between",
+            "oranges",
+            "the",
+            "Divide"
           ],
-          "answer": "Samira looked ahead and saw the finish line."
+          "answer": "Divide the oranges between the four of you."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "rested.",
-            "she",
-            "after",
-            "eased",
-            "leg",
-            "her",
-            "in",
-            "pain",
+            "enclosure.",
+            "its",
+            "around",
+            "slowly",
+            "paced",
+            "lion",
             "The"
           ],
-          "answer": "The pain in her leg eased after she rested."
+          "answer": "The lion paced slowly around its enclosure."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "race.",
+            "the",
+            "win",
+            "to",
+            "hoping",
+            "was",
+            "Amal"
+          ],
+          "answer": "Amal was hoping to win the race."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "lion.",
+            "a",
+            "showed",
+            "wall",
+            "the",
+            "on",
+            "drawing",
+            "old",
+            "The"
+          ],
+          "answer": "The old drawing on the wall showed a lion."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "water.",
+            "find",
+            "to",
+            "far",
+            "travel",
+            "animals",
+            "Some"
+          ],
+          "answer": "Some animals travel far to find water."
         }
       ]
     },
@@ -133,308 +217,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from ‘How Animals Move’: A snail moves slowly in a _____ shape.",
+          "prompt": "What does the verb ‘gallop’ mean?",
           "choices": [
-            "signal",
-            "rate",
-            "whistle",
-            "spiral"
+            "To stop something from happening.",
+            "A sign or message that tells you something.",
+            "To run fast on four legs, like a horse.",
+            "The feeling of being pushed or stressed by something."
           ],
-          "answer": "spiral",
-          "explanation": "The animal text pairs the snail with a spiral, the shape that curls round and round."
+          "answer": "To run fast on four legs, like a horse.",
+          "explanation": "Only an animal with four legs can gallop, which is why the horse in the story gallops but the car does not."
         },
         {
-          "prompt": "Choose the missing word from ‘The Lost Goat’: First he took a _____ into the alley.",
+          "prompt": "What does the adjective ‘greedy’ mean?",
           "choices": [
-            "gallop",
-            "peek",
-            "pressure",
-            "whistle"
+            "Wanting more food, money or things than you need.",
+            "Looking at one thing for a very long time without blinking.",
+            "Pressing something tightly between both of your hands.",
+            "Going forward slowly and carefully in the dark."
           ],
-          "answer": "peek",
-          "explanation": "Adam looks quickly and secretly before he proceeds, and the word for that quick look is peek."
+          "answer": "Wanting more food, money or things than you need.",
+          "explanation": "Talia uses greedy about people who want an animal but will not care for it properly."
         },
         {
-          "prompt": "In ‘The Spiral Cave’, what stepped out of the shadows towards the children?",
+          "prompt": "Which sentence puts the verb into the correct past simple form?",
           "choices": [
-            "A thin, shivering dog",
-            "A tall, silver horse",
-            "A frightened brown goat",
-            "A nest of noisy birds"
+            "Yesterday she rescue the bird.",
+            "Yesterday she rescued the bird.",
+            "Yesterday she rescuing the bird.",
+            "Yesterday she will rescue the bird."
           ],
-          "answer": "A thin, shivering dog",
-          "explanation": "Two eyes appear first, and then a small dog that is thin and shivering walks forward and wags its tail."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What sound told the runners at the village field to begin?",
-          "choices": [
-            "Teacher Yasmin blew her whistle, and that sound told the runners to begin.",
-            "Amal stayed calm under pressure while everyone watched, and she still crossed the line first.",
-            "They found a dark hole in the ground beside the river."
-          ],
-          "answer": "Teacher Yasmin blew her whistle, and that sound told the runners to begin.",
-          "explanation": "The text names the whistle as the starting sound, so the whistle is the evidence."
+          "answer": "Yesterday she rescued the bird.",
+          "explanation": "Yesterday shows the action is finished, so the regular verb rescue takes the -ed ending."
         },
-        {
-          "prompt": "According to the text, what happens to some animals when there is no water?",
-          "choices": [
-            "Amal stayed calm under pressure while everyone watched, and she still crossed the line first.",
-            "It went down in a spiral, which Leo compared to a staircase.",
-            "They suffer, so they must travel a long way to find a river."
-          ],
-          "answer": "They suffer, so they must travel a long way to find a river.",
-          "explanation": "The sentence pairs suffer with the need to move far to find a river, which gives both halves of the answer."
-        },
-        {
-          "prompt": "What shape did the tunnel floor make as it went down?",
-          "choices": [
-            "The tunnel is very old and there is pressure from the soil, so it could fall in at any time.",
-            "It went down in a spiral, which Leo compared to a staircase.",
-            "A bird signals to warn the others of danger so the whole group can fly away."
-          ],
-          "answer": "It went down in a spiral, which Leo compared to a staircase.",
-          "explanation": "Amal describes the spiral floor and Leo answers with the staircase comparison, so both details belong together."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Describe an Action",
-          "target": "The horse galloped quickly across the field."
-        },
-        {
-          "prompt": "Speaking 3: Act and Guess",
-          "target": "Samira looked ahead and saw the finish line."
-        },
-        {
-          "prompt": "Speaking 5: Talk About a Good Choice",
-          "target": "The best choice was checking the tunnel, because the soil could have fallen in."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "up.",
-            "stood",
-            "never",
-            "that",
-            "ear",
-            "one",
-            "had",
-            "dog",
-            "little",
-            "The"
-          ],
-          "answer": "The little dog had one ear that never stood up."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "fence.",
-            "the",
-            "in",
-            "gap",
-            "narrow",
-            "a",
-            "through",
-            "squeezed",
-            "cat",
-            "A"
-          ],
-          "answer": "A cat squeezed through a narrow gap in the fence."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "hole.",
-            "the",
-            "near",
-            "rocks",
-            "the",
-            "over",
-            "carefully",
-            "stepped",
-            "Amal"
-          ],
-          "answer": "Amal stepped carefully over the rocks near the hole."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'cat' mean in this unit?",
-          "choices": [
-            "A cat is a small furry animal that many people keep as a pet.",
-            "Something that a person or a thing does.",
-            "To keep something in good condition, or to make it stay the same."
-          ],
-          "answer": "A cat is a small furry animal that many people keep as a pet.",
-          "explanation": "cat: A cat is a small furry animal that many people keep as a pet."
-        },
-        {
-          "prompt": "What does 'paw' mean in this unit?",
-          "choices": [
-            "Something that a person or a thing does.",
-            "To keep something in good condition, or to make it stay the same.",
-            "The foot of an animal such as a dog or cat."
-          ],
-          "answer": "The foot of an animal such as a dog or cat.",
-          "explanation": "paw: The foot of an animal such as a dog or cat."
-        },
-        {
-          "prompt": "What does 'maintain' mean in this unit?",
-          "choices": [
-            "To say that you are unhappy about something.",
-            "To keep something in good condition, or to make it stay the same.",
-            "Something that a person or a thing does."
-          ],
-          "answer": "To keep something in good condition, or to make it stay the same.",
-          "explanation": "maintain: To keep something in good condition, or to make it stay the same."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'straw'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Straw is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'rate'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Rate is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'scan'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Scan is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "operation",
-              "The way a machine or a plan works when it is running."
-            ],
-            [
-              "accomplish",
-              "To succeed in doing something you set out to do."
-            ],
-            [
-              "influence",
-              "The power to change how someone thinks or acts."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "homemade",
-              "Homemade means made at home rather than bought from a shop."
-            ],
-            [
-              "fly",
-              "To fly means to move through the air, usually using wings."
-            ],
-            [
-              "eased",
-              "Eased means became less worried, painful or difficult."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "wider",
-              "Bigger from one side to the other; more spread out."
-            ],
-            [
-              "halfway",
-              "At the middle point between the beginning and the end."
-            ],
-            [
-              "proceed",
-              "To go forward or to keep going."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sentence uses an adverb of manner to say how the snail moved?",
           "choices": [
@@ -471,13 +285,519 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What sound told the runners at the village field to begin?",
+          "choices": [
+            "Teacher Yasmin blew her whistle, and that sound told the runners to begin.",
+            "Amal stayed calm under pressure while everyone watched, and she still crossed the line first.",
+            "They found a dark hole in the ground beside the river."
+          ],
+          "answer": "Teacher Yasmin blew her whistle, and that sound told the runners to begin.",
+          "explanation": "The text names the whistle as the starting sound, so the whistle is the evidence."
+        },
+        {
+          "prompt": "Why was Teacher Yasmin pleased with the way Amal raced?",
+          "choices": [
+            "A bird signals to warn the others of danger so the whole group can fly away.",
+            "It went down in a spiral, which Leo compared to a staircase.",
+            "Amal stayed calm under pressure while everyone watched, and she still crossed the line first."
+          ],
+          "answer": "Amal stayed calm under pressure while everyone watched, and she still crossed the line first.",
+          "explanation": "The final line of praise repeats the words calm and pressure, which is the evidence for the answer."
+        },
+        {
+          "prompt": "According to the text, what happens to some animals when there is no water?",
+          "choices": [
+            "The tunnel is very old and there is pressure from the soil, so it could fall in at any time.",
+            "They suffer, so they must travel a long way to find a river.",
+            "A bird signals to warn the others of danger so the whole group can fly away."
+          ],
+          "answer": "They suffer, so they must travel a long way to find a river.",
+          "explanation": "The sentence pairs suffer with the need to move far to find a river, which gives both halves of the answer."
+        },
+        {
+          "prompt": "In the script, what did Adam do first, and what did he do next?",
+          "choices": [
+            "First he took a peek into the alley, and then he proceeded slowly.",
+            "They suffer, so they must travel a long way to find a river.",
+            "Nora suggested making posters that describe the dog, in case someone was looking for him."
+          ],
+          "answer": "First he took a peek into the alley, and then he proceeded slowly.",
+          "explanation": "The words First and Then signal the order, so listeners can retell the two steps correctly."
+        },
+        {
+          "prompt": "What shape did the tunnel floor make as it went down?",
+          "choices": [
+            "Adam lost his little goat somewhere near the market.",
+            "They chose Simba, because Nora said he is strong, like a lion.",
+            "It went down in a spiral, which Leo compared to a staircase."
+          ],
+          "answer": "It went down in a spiral, which Leo compared to a staircase.",
+          "explanation": "Amal describes the spiral floor and Leo answers with the staircase comparison, so both details belong together."
+        },
+        {
+          "prompt": "What kind plan did Nora suggest for finding the dog’s owner?",
+          "choices": [
+            "Teacher Yasmin blew her whistle, and that sound told the runners to begin.",
+            "Nora suggested making posters that describe the dog, in case someone was looking for him.",
+            "First he took a peek into the alley, and then he proceeded slowly."
+          ],
+          "answer": "Nora suggested making posters that describe the dog, in case someone was looking for him.",
+          "explanation": "Her plan uses the unit word describe, and Talia calls it a kind plan straight afterwards."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Describe an Action",
+          "target": "The horse galloped quickly across the field."
+        },
+        {
+          "prompt": "Speaking 2: Tell About a Time You Felt Pressure",
+          "target": "One day, I had to ______."
+        },
+        {
+          "prompt": "Speaking 3: Act and Guess",
+          "target": "The lion paced slowly around its enclosure."
+        },
+        {
+          "prompt": "Speaking 4: Word Detective Interview",
+          "target": "What is the difference between peek and gaze?"
+        },
+        {
+          "prompt": "Speaking 5: Talk About a Good Choice",
+          "target": "The best choice was checking the tunnel, because the soil could have fallen in."
+        },
+        {
+          "prompt": "Speaking 6: Read the Story Aloud",
+          "target": "Some animals travel far to find water."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "homework.",
+            "my",
+            "forgot",
+            "I",
+            "that",
+            "admit",
+            "to",
+            "had",
+            "I"
+          ],
+          "answer": "I had to admit that I forgot my homework."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "attend.",
+            "will",
+            "you",
+            "that",
+            "confirm",
+            "Please"
+          ],
+          "answer": "Please confirm that you will attend."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "race.",
+            "long",
+            "the",
+            "during",
+            "well",
+            "herself",
+            "paced",
+            "Amal"
+          ],
+          "answer": "Amal paced herself well during the long race."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "goat.",
+            "his",
+            "find",
+            "to",
+            "hoping",
+            "market,",
+            "the",
+            "searched",
+            "Adam"
+          ],
+          "answer": "Adam searched the market, hoping to find his goat."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "walls.",
+            "stone",
+            "the",
+            "off",
+            "echoed",
+            "voice",
+            "Amal's"
+          ],
+          "answer": "Amal's voice echoed off the stone walls."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "day.",
+            "next",
+            "the",
+            "teacher",
+            "her",
+            "to",
+            "cave",
+            "the",
+            "described",
+            "Amal"
+          ],
+          "answer": "Amal described the cave to her teacher the next day."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'gradually' mean in this unit?",
+          "choices": [
+            "Slowly, over a period of time.",
+            "Something that a person or a thing does.",
+            "To include means to make something one part of a group."
+          ],
+          "answer": "Slowly, over a period of time.",
+          "explanation": "gradually: Slowly, over a period of time."
+        },
+        {
+          "prompt": "What does 'ahead' mean in this unit?",
+          "choices": [
+            "Something that a person or a thing does.",
+            "Slowly, over a period of time.",
+            "Ahead means in front of you or further along in a race or journey."
+          ],
+          "answer": "Ahead means in front of you or further along in a race or journey.",
+          "explanation": "ahead: Ahead means in front of you or further along in a race or journey."
+        },
+        {
+          "prompt": "What does 'tied' mean in this unit?",
+          "choices": [
+            "Slowly, over a period of time.",
+            "Tied means fastened or attached with a rope or string.",
+            "Something that a person or a thing does."
+          ],
+          "answer": "Tied means fastened or attached with a rope or string.",
+          "explanation": "tied: Tied means fastened or attached with a rope or string."
+        },
+        {
+          "prompt": "What does 'echoed' mean in this unit?",
+          "choices": [
+            "When a sound repeated and bounced back off walls or rocks.",
+            "Something that a person or a thing does.",
+            "Slowly, over a period of time."
+          ],
+          "answer": "When a sound repeated and bounced back off walls or rocks.",
+          "explanation": "echoed: When a sound repeated and bounced back off walls or rocks."
+        },
+        {
+          "prompt": "What does 'length' mean in this unit?",
+          "choices": [
+            "Something that a person or a thing does.",
+            "Slowly, over a period of time.",
+            "How long something is, measured from one end to the other."
+          ],
+          "answer": "How long something is, measured from one end to the other.",
+          "explanation": "length: How long something is, measured from one end to the other."
+        },
+        {
+          "prompt": "What does 'cooperate' mean in this unit?",
+          "choices": [
+            "Slowly, over a period of time.",
+            "To work together with others towards the same goal.",
+            "Something that a person or a thing does."
+          ],
+          "answer": "To work together with others towards the same goal.",
+          "explanation": "cooperate: To work together with others towards the same goal."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'include'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Include is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'crossed'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Crossed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'alley'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Alley is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'friendly'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Friendly is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'gaze'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Gaze is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'argue'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Argue is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "operation",
+              "The way a machine or a plan works when it is running."
+            ],
+            [
+              "measure",
+              "To find out how long, how tall or how heavy something is."
+            ],
+            [
+              "connect",
+              "To join two things together."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "mark",
+              "To mark something means to write or draw on it so you can notice or remember it."
+            ],
+            [
+              "distract",
+              "To distract someone means to take their attention away from what they are doing."
+            ],
+            [
+              "escape",
+              "To escape means to get away from danger or from a place."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "rely",
+              "To rely on something means to trust it and depend on it for help."
+            ],
+            [
+              "hoping",
+              "Hoping means wishing for something to happen or wanting something to be true."
+            ],
+            [
+              "chewing",
+              "Chewing means biting and crushing food with your teeth before swallowing."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "step",
+              "One movement of your foot when you walk."
+            ],
+            [
+              "stepped",
+              "Moved forward by putting one foot in front of the other."
+            ],
+            [
+              "barked",
+              "Made a short, loud sound, the way a dog does."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "brown",
+              "A colour like coffee or soil, often seen on animals or trees."
+            ],
+            [
+              "spiral",
+              "A shape that curls round and round, moving out from the centre."
+            ],
+            [
+              "rescue",
+              "To save someone or something from danger."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "exchange",
+              "To give one thing and receive another in return."
+            ],
+            [
+              "allow",
+              "If you allow something, you let it happen."
+            ],
+            [
+              "estimate",
+              "A careful guess about an amount, or to make such a guess."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which phrase puts the adjective and the noun in the right order?",
+          "choices": [
+            "a staircase spiral",
+            "a fox greedy",
+            "a spiral staircase",
+            "a dog hungry"
+          ],
+          "answer": "a spiral staircase",
+          "explanation": "In English the describing word stands in front of the naming word, so spiral comes before staircase."
+        },
+        {
+          "prompt": "Choose the missing word from ‘How Animals Move’: A snail moves slowly in a _____ shape.",
+          "choices": [
+            "signal",
+            "rate",
+            "whistle",
+            "spiral"
+          ],
+          "answer": "spiral",
+          "explanation": "The animal text pairs the snail with a spiral, the shape that curls round and round."
+        },
+        {
+          "prompt": "Choose the missing word from ‘The Lost Goat’: First he took a _____ into the alley.",
+          "choices": [
+            "gallop",
+            "peek",
+            "pressure",
+            "whistle"
+          ],
+          "answer": "peek",
+          "explanation": "Adam looks quickly and secretly before he proceeds, and the word for that quick look is peek."
+        },
+        {
+          "prompt": "In ‘The Spiral Cave’, what stepped out of the shadows towards the children?",
+          "choices": [
+            "A thin, shivering dog",
+            "A tall, silver horse",
+            "A frightened brown goat",
+            "A nest of noisy birds"
+          ],
+          "answer": "A thin, shivering dog",
+          "explanation": "Two eyes appear first, and then a small dog that is thin and shivering walks forward and wags its tail."
+        },
+        {
+          "prompt": "Amal felt it before the race, and Talia said the soil above the tunnel had it too. What is it?",
+          "choices": [
+            "staircase",
+            "notebook",
+            "pressure",
+            "torch"
+          ],
+          "answer": "pressure",
+          "explanation": "Amal feels it before the race, and Talia warns that soil above the tunnel presses down in the same way."
+        },
         {
           "prompt": "What does the verb ‘gallop’ mean?",
           "choices": [
@@ -488,28 +808,78 @@
           ],
           "answer": "To run fast on four legs, like a horse.",
           "explanation": "Only an animal with four legs can gallop, which is why the horse in the story gallops but the car does not."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "In ‘The Spiral Cave’, what stepped out of the shadows towards the children?",
+          "choices": [
+            "A thin, shivering dog",
+            "A tall, silver horse",
+            "A frightened brown goat",
+            "A nest of noisy birds"
+          ],
+          "answer": "A thin, shivering dog",
+          "explanation": "Two eyes appear first, and then a small dog that is thin and shivering walks forward and wags its tail."
         },
         {
-          "prompt": "What does the adjective ‘greedy’ mean?",
+          "prompt": "Amal felt it before the race, and Talia said the soil above the tunnel had it too. What is it?",
           "choices": [
-            "Wanting more food, money or things than you need.",
-            "Looking at one thing for a very long time without blinking.",
-            "Pressing something tightly between both of your hands.",
-            "Going forward slowly and carefully in the dark."
+            "staircase",
+            "notebook",
+            "pressure",
+            "torch"
           ],
-          "answer": "Wanting more food, money or things than you need.",
-          "explanation": "Talia uses greedy about people who want an animal but will not care for it properly."
+          "answer": "pressure",
+          "explanation": "Amal feels it before the race, and Talia warns that soil above the tunnel presses down in the same way."
         },
         {
-          "prompt": "Which sentence puts the verb into the correct past simple form?",
+          "prompt": "Which word means: To join two things together.",
           "choices": [
-            "Yesterday she rescue the bird.",
-            "Yesterday she rescued the bird.",
-            "Yesterday she rescuing the bird.",
-            "Yesterday she will rescue the bird."
+            "connect",
+            "action",
+            "gradually"
           ],
-          "answer": "Yesterday she rescued the bird.",
-          "explanation": "Yesterday shows the action is finished, so the regular verb rescue takes the -ed ending."
+          "answer": "connect",
+          "explanation": "connect: To join two things together."
+        },
+        {
+          "prompt": "Which word means: Tied means fastened or attached with a rope or string.",
+          "choices": [
+            "action",
+            "gradually",
+            "tied"
+          ],
+          "answer": "tied",
+          "explanation": "tied: Tied means fastened or attached with a rope or string."
+        },
+        {
+          "prompt": "What type of word is 'barked'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Barked is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'cooperate'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Cooperate is used as a verb in this dictionary sense."
         }
       ]
     }

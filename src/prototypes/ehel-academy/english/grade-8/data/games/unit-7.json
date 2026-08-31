@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t03-u07",
   "title": "Historical Figures and Legacy Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The range of things something is able to do.",
           "choices": [
             "functionality",
-            "definitive",
-            "trains"
+            "multilateralism",
+            "unprecedented"
           ],
           "answer": "functionality",
           "explanation": "functionality: The range of things something is able to do."
         },
         {
-          "prompt": "Which word means: Something added only to make a thing look nicer, without any real purpose.",
+          "prompt": "Which word means: Examining something by breaking it into its parts.",
           "choices": [
             "functionality",
-            "definitive",
-            "decoration"
+            "multilateralism",
+            "analytical"
           ],
-          "answer": "decoration",
-          "explanation": "decoration: Something added only to make a thing look nicer, without any real purpose."
+          "answer": "analytical",
+          "explanation": "analytical: Examining something by breaking it into its parts."
         },
         {
-          "prompt": "Which word means: A polite and respectful word used to speak to a man, especially someone in authority.",
+          "prompt": "Which word means: People who govern or hold power over a country or region.",
           "choices": [
-            "definitive",
-            "sir",
+            "multilateralism",
+            "rulers",
             "functionality"
           ],
-          "answer": "sir",
-          "explanation": "sir: A polite and respectful word used to speak to a man, especially someone in authority."
+          "answer": "rulers",
+          "explanation": "rulers: People who govern or hold power over a country or region."
+        },
+        {
+          "prompt": "Which word means: Spoken or written communication, especially a connected piece of argument or conversation.",
+          "choices": [
+            "discourse",
+            "functionality",
+            "multilateralism"
+          ],
+          "answer": "discourse",
+          "explanation": "discourse: Spoken or written communication, especially a connected piece of argument or conversation."
+        },
+        {
+          "prompt": "Which word means: Directly, without stopping or turning aside first.",
+          "choices": [
+            "functionality",
+            "multilateralism",
+            "straight"
+          ],
+          "answer": "straight",
+          "explanation": "straight: Directly, without stopping or turning aside first."
+        },
+        {
+          "prompt": "Which word means: The process of teaching and learning, especially in schools.",
+          "choices": [
+            "multilateralism",
+            "education",
+            "functionality"
+          ],
+          "answer": "education",
+          "explanation": "education: The process of teaching and learning, especially in schools."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To tell a story or report something again, often in your own words.",
-          "answer": "retell"
+          "clue": "Doing a task or job, or operating correctly the way it should.",
+          "answer": "working"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A group of people or things that are connected and work together.",
-          "answer": "network"
+          "clue": "Words that describe an action, a state, or something happening.",
+          "answer": "verbs"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Damage or a worn appearance caused by ordinary use over time.",
+          "answer": "wear"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Spoke suddenly and sharply, often out of anger or impatience.",
+          "answer": "snapped"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Fast, informal talk, often about unimportant things.",
+          "answer": "chatter"
         }
       ]
     },
@@ -98,34 +143,86 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "version.",
-            "official",
-            "newspaper's",
-            "a",
-            "from",
-            "sharply",
-            "differs",
-            "often",
-            "account",
-            "participant's",
-            "A"
+            "approach.",
+            "whole",
+            "the",
+            "reassess",
+            "them",
+            "made",
+            "result",
+            "The"
           ],
-          "answer": "A participant's account often differs sharply from a newspaper's official version."
+          "answer": "The result made them reassess the whole approach."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "inspection.",
-            "Saturday",
+            "permission.",
+            "without",
+            "grounds",
             "the",
-            "during",
-            "dorm",
-            "Jamal's",
-            "searched",
-            "prefect",
+            "leaving",
+            "from",
+            "pupils",
+            "forbids",
+            "rulebook",
+            "school",
+            "The"
+          ],
+          "answer": "The school rulebook forbids pupils from leaving the grounds without permission."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "person.",
+            "same",
+            "the",
+            "are",
+            "object",
+            "the",
+            "and",
+            "subject",
+            "the",
+            "that",
+            "shows",
+            "pronoun",
+            "reflexive",
             "A"
           ],
-          "answer": "A prefect searched Jamal's dorm during the Saturday inspection."
+          "answer": "A reflexive pronoun shows that the subject and the object are the same person."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "blankets.",
+            "the",
+            "under",
+            "essays",
+            "crafting",
+            "nights",
+            "his",
+            "spent",
+            "Jamal"
+          ],
+          "answer": "Jamal spent his nights crafting essays under the blankets."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "slippery.",
+            "and",
+            "cold",
+            "feel",
+            "walls",
+            "the",
+            "made",
+            "cave",
+            "the",
+            "of",
+            "dampness",
+            "The"
+          ],
+          "answer": "The dampness of the cave made the walls feel cold and slippery."
         }
       ]
     },
@@ -138,311 +235,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 1': His tone was cautious but _____, each sentence carefully justified.",
+          "prompt": "What does 'benign' mean?",
           "choices": [
-            "emphatic",
-            "unsightly",
-            "petulant",
-            "strenuous"
+            "A person's usual mood or way of thinking.",
+            "A problem or fault in something that makes it not work properly.",
+            "Done according to a plan or system; organised and methodical.",
+            "Kind and gentle; not harmful or dangerous."
           ],
-          "answer": "emphatic",
-          "explanation": "The text says: His tone was cautious but emphatic, each sentence carefully justified."
+          "answer": "Kind and gentle; not harmful or dangerous.",
+          "explanation": "Benign describes someone or something kind, gentle and harmless, like the smile classmates saw in the quiet boy at the back of the room."
         },
         {
-          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 2': But silence is not always peace. It is sometimes the _____ in freedom.",
+          "prompt": "What does 'reprieve' mean?",
           "choices": [
-            "reprieve",
-            "habitation",
-            "defect",
-            "circumference"
+            "A hidden store of things, often used to keep items safe.",
+            "The distance around the edge of a circle.",
+            "A temporary break from something difficult or unpleasant.",
+            "An argument that opposes or disagrees with another argument."
           ],
-          "answer": "defect",
-          "explanation": "The text says: But silence is not always peace. It is sometimes the defect in freedom."
+          "answer": "A temporary break from something difficult or unpleasant.",
+          "explanation": "A reprieve is a temporary break from something difficult, such as a quiet weekend in the middle of an exam season."
         },
         {
-          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 2': But it also brought a new _____: student-run discussion clubs, approved by the board under strict guidelines.",
+          "prompt": "What does 'connoisseur' mean?",
           "choices": [
-            "barter",
-            "initiative",
-            "connoisseur",
-            "conclusion"
+            "A person who knows a lot about something and can judge its quality.",
+            "The ability to start something on your own without being told.",
+            "A place where people or animals live.",
+            "The quality or character of a sound, or the way someone speaks."
           ],
-          "answer": "initiative",
-          "explanation": "The text says: But it also brought a new initiative: student-run discussion clubs, approved by the board under strict guidelines."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to the information text, how did news and speeches travel across East Africa by 1948, and from which cities?",
-          "choices": [
-            "Radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any newspaper cart could travel.",
-            "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit tin.",
-            "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question."
-          ],
-          "answer": "Radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any newspaper cart could travel.",
-          "explanation": "Look at the paragraph about East Africa in the late 1940s. It says radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any newspaper cart could travel."
+          "answer": "A person who knows a lot about something and can judge its quality.",
+          "explanation": "A connoisseur has studied a subject so closely that they can judge quality with confidence, like an expert taster of fine teas."
         },
-        {
-          "prompt": "What did Jamal discover behind the old assembly hall one evening, and who was gathered there?",
-          "choices": [
-            "His title was On the Edge of Thought, and he told the hall that silence is not always peace but sometimes the defect in freedom.",
-            "He wavers and asks what will happen if they are caught, but something bold in Tariq's voice kindles a flame inside him, so he says he will write.",
-            "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit tin."
-          ],
-          "answer": "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit tin.",
-          "explanation": "The text says that one evening, while others played football, Jamal slipped behind the old assembly hall and found Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit tin."
-        },
-        {
-          "prompt": "According to the toolkit, what three changes do you make when you turn direct speech into reported speech?",
-          "choices": [
-            "Because Amara is the strict, conservative head prefect, her presence gives the movement weight and credibility even though she disagrees with its liberal chatter.",
-            "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question.",
-            "His title was On the Edge of Thought, and he told the hall that silence is not always peace but sometimes the defect in freedom."
-          ],
-          "answer": "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question.",
-          "explanation": "The toolkit says that when you retell someone's words without quoting them, you shift the tense one step back, adjust the pronouns, and drop the question mark, so Tariq's 'We need to keep this going' becomes 'they needed to keep it going'."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: The Rebellion of Silence Retold",
-          "target": "The archive's functionality grew with every year of cataloguing."
-        },
-        {
-          "prompt": "Speaking 3: Reported Speech Role-Play",
-          "target": "I believe in learning and questions."
-        },
-        {
-          "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "A prefect searched Jamal's dorm during the Saturday inspection."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "3.14.",
-            "by",
-            "diameter",
-            "the",
-            "multiply",
-            "can",
-            "you",
-            "circle,",
-            "a",
-            "of",
-            "circumference",
-            "the",
-            "find",
-            "To"
-          ],
-          "answer": "To find the circumference of a circle, you can multiply the diameter by 3.14."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "introduces.",
-            "unit",
-            "the",
-            "tool",
-            "grammar",
-            "fourth",
-            "the",
-            "is",
-            "speech",
-            "Reported"
-          ],
-          "answer": "Reported speech is the fourth grammar tool the unit introduces."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "prayers.",
-            "evening",
-            "before",
-            "students",
-            "the",
-            "addressed",
-            "headmaster",
-            "The"
-          ],
-          "answer": "The headmaster addressed the students before evening prayers."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'individual' mean in this unit?",
-          "choices": [
-            "Considered separately, as a single one rather than as part of a group.",
-            "The range of things something is able to do.",
-            "Final and authoritative, settling the question."
-          ],
-          "answer": "Considered separately, as a single one rather than as part of a group.",
-          "explanation": "individual: Considered separately, as a single one rather than as part of a group."
-        },
-        {
-          "prompt": "What does 'punished' mean in this unit?",
-          "choices": [
-            "The range of things something is able to do.",
-            "Final and authoritative, settling the question.",
-            "Made someone suffer a penalty for doing something wrong."
-          ],
-          "answer": "Made someone suffer a penalty for doing something wrong.",
-          "explanation": "punished: Made someone suffer a penalty for doing something wrong."
-        },
-        {
-          "prompt": "What does 'definitive' mean in this unit?",
-          "choices": [
-            "Teaches or prepares someone to do something through regular practice.",
-            "Final and authoritative, settling the question.",
-            "The range of things something is able to do."
-          ],
-          "answer": "Final and authoritative, settling the question.",
-          "explanation": "definitive: Final and authoritative, settling the question."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'tin'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Tin is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'banish'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Banish is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'institutions'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Institutions is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "imperialism",
-              "A policy of extending a country's power over other territories."
-            ],
-            [
-              "restrictive",
-              "Describing a clause that identifies which one is meant."
-            ],
-            [
-              "taxation",
-              "The system of collecting money from people or businesses to fund a government."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "completed",
-              "Finished, with nothing left still happening or unresolved."
-            ],
-            [
-              "text",
-              "A piece of writing, considered as a whole rather than as separate sentences."
-            ],
-            [
-              "forbidden",
-              "Not allowed; banned by a rule or an order."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "ached",
-              "Felt a dull, continuous pain in a part of the body."
-            ],
-            [
-              "submission",
-              "The act of accepting someone else's authority or giving in to their control."
-            ],
-            [
-              "replenish",
-              "To fill something up again or make it full after it has been used."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'petulant' mean?",
           "choices": [
@@ -479,13 +303,530 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "According to the information text, how did news and speeches travel across East Africa by 1948, and from which cities?",
+          "choices": [
+            "Radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any newspaper cart could travel.",
+            "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit tin.",
+            "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question."
+          ],
+          "answer": "Radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any newspaper cart could travel.",
+          "explanation": "Look at the paragraph about East Africa in the late 1940s. It says radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any newspaper cart could travel."
+        },
+        {
+          "prompt": "In the toolkit text, which two tenses combine in the example about Jamal writing an essay when the prefect found his notebook?",
+          "choices": [
+            "His title was On the Edge of Thought, and he told the hall that silence is not always peace but sometimes the defect in freedom.",
+            "He wavers and asks what will happen if they are caught, but something bold in Tariq's voice kindles a flame inside him, so he says he will write.",
+            "The Past Continuous (was writing) stretches the background action while the Past Simple (found) reports the action that interrupts it."
+          ],
+          "answer": "The Past Continuous (was writing) stretches the background action while the Past Simple (found) reports the action that interrupts it.",
+          "explanation": "The text says: The Past Continuous (was writing) stretches the background action while the Past Simple (found) reports the action that interrupts it."
+        },
+        {
+          "prompt": "What did Jamal discover behind the old assembly hall one evening, and who was gathered there?",
+          "choices": [
+            "Because Amara is the strict, conservative head prefect, her presence gives the movement weight and credibility even though she disagrees with its liberal chatter.",
+            "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit tin.",
+            "The text names a teacher who trains a generation of writers, a nurse who reorganises a clinic, and a student who starts a discussion club."
+          ],
+          "answer": "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit tin.",
+          "explanation": "The text says that one evening, while others played football, Jamal slipped behind the old assembly hall and found Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit tin."
+        },
+        {
+          "prompt": "The writer claims a historical figure does not have to be famous. Which three examples in the opening paragraph support this claim?",
+          "choices": [
+            "The text names a teacher who trains a generation of writers, a nurse who reorganises a clinic, and a student who starts a discussion club.",
+            "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question.",
+            "Radios crackled with news and speeches from Nairobi, Accra and Dar es Salaam, carrying arguments across borders faster than any newspaper cart could travel."
+          ],
+          "answer": "The text names a teacher who trains a generation of writers, a nurse who reorganises a clinic, and a student who starts a discussion club.",
+          "explanation": "You must connect the writer's claim about legacy to the supporting examples that immediately follow it."
+        },
+        {
+          "prompt": "According to the toolkit, what three changes do you make when you turn direct speech into reported speech?",
+          "choices": [
+            "He wavers and asks what will happen if they are caught, but something bold in Tariq's voice kindles a flame inside him, so he says he will write.",
+            "The Past Continuous (was writing) stretches the background action while the Past Simple (found) reports the action that interrupts it.",
+            "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question."
+          ],
+          "answer": "You shift the tense one step back, adjust the pronouns, and drop the question mark when reporting a question.",
+          "explanation": "The toolkit says that when you retell someone's words without quoting them, you shift the tense one step back, adjust the pronouns, and drop the question mark, so Tariq's 'We need to keep this going' becomes 'they needed to keep it going'."
+        },
+        {
+          "prompt": "How does Jamal first respond to Tariq's plan, and what finally persuades him to promise to write?",
+          "choices": [
+            "He found his classmate Tariq and three others around a candle, sharing a cache of newspapers and pamphlets hidden in a biscuit tin.",
+            "He wavers and asks what will happen if they are caught, but something bold in Tariq's voice kindles a flame inside him, so he says he will write.",
+            "Because Amara is the strict, conservative head prefect, her presence gives the movement weight and credibility even though she disagrees with its liberal chatter."
+          ],
+          "answer": "He wavers and asks what will happen if they are caught, but something bold in Tariq's voice kindles a flame inside him, so he says he will write.",
+          "explanation": "The text says Jamal wavered and asked, 'But what if they catch us?' Then something in Tariq's voice kindled a flame inside him, something bold and profound, so he answered, 'I will write.'"
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: The Rebellion of Silence Retold",
+          "target": "The archive's functionality grew with every year of cataloguing."
+        },
+        {
+          "prompt": "Speaking 2: Legacy Discussion Circle",
+          "target": "The result made them reassess the whole approach."
+        },
+        {
+          "prompt": "Speaking 3: Reported Speech Role-Play",
+          "target": "I believe in learning and questions."
+        },
+        {
+          "prompt": "Speaking 4: Mini-Debate with Discourse Markers",
+          "target": "A reflexive pronoun shows that the subject and the object are the same person."
+        },
+        {
+          "prompt": "Speaking 5: Vocabulary Expert Interview",
+          "target": "Jamal spent his nights crafting essays under the blankets."
+        },
+        {
+          "prompt": "Speaking 6: The Legacy Address",
+          "target": "The dampness of the cave made the walls feel cold and slippery."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "kingdom.",
+            "the",
+            "from",
+            "thief",
+            "the",
+            "banish",
+            "to",
+            "decided",
+            "king",
+            "The"
+          ],
+          "answer": "The king decided to banish the thief from the kingdom."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "reading?",
+            "the",
+            "in",
+            "described",
+            "systems",
+            "education",
+            "colonial",
+            "the",
+            "were",
+            "fair",
+            "How"
+          ],
+          "answer": "How fair were the colonial education systems described in the reading?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "dormitory.",
+            "the",
+            "into",
+            "walked",
+            "prefect",
+            "the",
+            "when",
+            "whispering",
+            "were",
+            "students",
+            "The"
+          ],
+          "answer": "The students were whispering when the prefect walked into the dormitory."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "courtyard?",
+            "the",
+            "above",
+            "nest",
+            "that",
+            "birds",
+            "the",
+            "observing",
+            "still",
+            "Samira",
+            "Is"
+          ],
+          "answer": "Is Samira still observing the birds that nest above the courtyard?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "contest.",
+            "the",
+            "cancel",
+            "to",
+            "decision",
+            "the",
+            "about",
+            "furious",
+            "was",
+            "Tariq"
+          ],
+          "answer": "Tariq was furious about the decision to cancel the contest."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "meeting.",
+            "the",
+            "in",
+            "everything",
+            "changed",
+            "presence",
+            "Her"
+          ],
+          "answer": "Her presence changed everything in the meeting."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'multilateralism' mean in this unit?",
+          "choices": [
+            "Working through agreements between many countries at once.",
+            "The range of things something is able to do.",
+            "Never having happened before."
+          ],
+          "answer": "Working through agreements between many countries at once.",
+          "explanation": "multilateralism: Working through agreements between many countries at once."
+        },
+        {
+          "prompt": "What does 'continues' mean in this unit?",
+          "choices": [
+            "The range of things something is able to do.",
+            "Working through agreements between many countries at once.",
+            "Keeps happening or going on without stopping."
+          ],
+          "answer": "Keeps happening or going on without stopping.",
+          "explanation": "continues: Keeps happening or going on without stopping."
+        },
+        {
+          "prompt": "What does 'decoration' mean in this unit?",
+          "choices": [
+            "Working through agreements between many countries at once.",
+            "Something added only to make a thing look nicer, without any real purpose.",
+            "The range of things something is able to do."
+          ],
+          "answer": "Something added only to make a thing look nicer, without any real purpose.",
+          "explanation": "decoration: Something added only to make a thing look nicer, without any real purpose."
+        },
+        {
+          "prompt": "What does 'wear' mean in this unit?",
+          "choices": [
+            "Damage or a worn appearance caused by ordinary use over time.",
+            "The range of things something is able to do.",
+            "Working through agreements between many countries at once."
+          ],
+          "answer": "Damage or a worn appearance caused by ordinary use over time.",
+          "explanation": "wear: Damage or a worn appearance caused by ordinary use over time."
+        },
+        {
+          "prompt": "What does 'network' mean in this unit?",
+          "choices": [
+            "The range of things something is able to do.",
+            "Working through agreements between many countries at once.",
+            "A group of people or things that are connected and work together."
+          ],
+          "answer": "A group of people or things that are connected and work together.",
+          "explanation": "network: A group of people or things that are connected and work together."
+        },
+        {
+          "prompt": "What does 'defect' mean in this unit?",
+          "choices": [
+            "Working through agreements between many countries at once.",
+            "A problem or fault in something that makes it not work properly.",
+            "The range of things something is able to do."
+          ],
+          "answer": "A problem or fault in something that makes it not work properly.",
+          "explanation": "defect: A problem or fault in something that makes it not work properly."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'unprecedented'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Unprecedented is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'governed'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Governed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'participle'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Participle is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'boomed'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Boomed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'obeyed'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Obeyed is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'petulant'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Petulant is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "imperialism",
+              "A policy of extending a country's power over other territories."
+            ],
+            [
+              "arbitrate",
+              "To settle a dispute by making a binding decision."
+            ],
+            [
+              "self-efficacy",
+              "Your belief that you can do what a task requires."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "legitimate",
+              "Allowed by rules or law, or reasonable and justified."
+            ],
+            [
+              "reorganises",
+              "Arranges or organises something again in a better or more useful way."
+            ],
+            [
+              "representation",
+              "Having someone speak or act on your behalf, especially in government or decisions."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "viewpoint",
+              "A particular way of thinking about or looking at a situation."
+            ],
+            [
+              "ing",
+              "The ending added to a verb to show that an action is still happening or continuing."
+            ],
+            [
+              "individual",
+              "Considered separately, as a single one rather than as part of a group."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "signposts",
+              "Words or phrases that show a reader or listener where an argument is going next."
+            ],
+            [
+              "leather",
+              "A tough material made from the treated skin of an animal, used for bags, shoes and books."
+            ],
+            [
+              "flame",
+              "A burning tongue of fire, or a strong feeling that has just begun."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "unrest",
+              "A state of trouble, dissatisfaction or disturbance, often before real conflict begins."
+            ],
+            [
+              "cancelling",
+              "Stopping a planned event from happening."
+            ],
+            [
+              "sceptical",
+              "Not easily convinced; having doubts about whether something is true or good."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "chatter",
+              "Fast, informal talk, often about unimportant things."
+            ],
+            [
+              "waver",
+              "To be unsure about something or to change your mind."
+            ],
+            [
+              "justify",
+              "To give reasons or explanations so that something makes sense."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 1': They were sharing a _____ of newspapers and pamphlets hidden in a biscuit tin.",
+          "choices": [
+            "defect",
+            "habitation",
+            "conclusion",
+            "cache"
+          ],
+          "answer": "cache",
+          "explanation": "The text says: They were sharing a cache of newspapers and pamphlets hidden in a biscuit tin."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 1': His tone was cautious but _____, each sentence carefully justified.",
+          "choices": [
+            "emphatic",
+            "unsightly",
+            "petulant",
+            "strenuous"
+          ],
+          "answer": "emphatic",
+          "explanation": "The text says: His tone was cautious but emphatic, each sentence carefully justified."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 2': But silence is not always peace. It is sometimes the _____ in freedom.",
+          "choices": [
+            "reprieve",
+            "habitation",
+            "defect",
+            "circumference"
+          ],
+          "answer": "defect",
+          "explanation": "The text says: But silence is not always peace. It is sometimes the defect in freedom."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 2': But it also brought a new _____: student-run discussion clubs, approved by the board under strict guidelines.",
+          "choices": [
+            "barter",
+            "initiative",
+            "connoisseur",
+            "conclusion"
+          ],
+          "answer": "initiative",
+          "explanation": "The text says: But it also brought a new initiative: student-run discussion clubs, approved by the board under strict guidelines."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 2': You are lucky the board is more _____ than I am.",
+          "choices": [
+            "strenuous",
+            "ecstatic",
+            "unsightly",
+            "liberal"
+          ],
+          "answer": "liberal",
+          "explanation": "The text says: You are lucky the board is more liberal than I am. The board tolerated debate that the headmaster wanted to forbid."
+        },
         {
           "prompt": "What does 'benign' mean?",
           "choices": [
@@ -496,28 +837,78 @@
           ],
           "answer": "Kind and gentle; not harmful or dangerous.",
           "explanation": "Benign describes someone or something kind, gentle and harmless, like the smile classmates saw in the quiet boy at the back of the room."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 2': But it also brought a new _____: student-run discussion clubs, approved by the board under strict guidelines.",
+          "choices": [
+            "barter",
+            "initiative",
+            "connoisseur",
+            "conclusion"
+          ],
+          "answer": "initiative",
+          "explanation": "The text says: But it also brought a new initiative: student-run discussion clubs, approved by the board under strict guidelines."
         },
         {
-          "prompt": "What does 'reprieve' mean?",
+          "prompt": "Choose the missing word from 'The Rebellion of Silence, part 2': You are lucky the board is more _____ than I am.",
           "choices": [
-            "A hidden store of things, often used to keep items safe.",
-            "The distance around the edge of a circle.",
-            "A temporary break from something difficult or unpleasant.",
-            "An argument that opposes or disagrees with another argument."
+            "strenuous",
+            "ecstatic",
+            "unsightly",
+            "liberal"
           ],
-          "answer": "A temporary break from something difficult or unpleasant.",
-          "explanation": "A reprieve is a temporary break from something difficult, such as a quiet weekend in the middle of an exam season."
+          "answer": "liberal",
+          "explanation": "The text says: You are lucky the board is more liberal than I am. The board tolerated debate that the headmaster wanted to forbid."
         },
         {
-          "prompt": "What does 'connoisseur' mean?",
+          "prompt": "Which word means: Acting from firm beliefs about right and wrong.",
           "choices": [
-            "A person who knows a lot about something and can judge its quality.",
-            "The ability to start something on your own without being told.",
-            "A place where people or animals live.",
-            "The quality or character of a sound, or the way someone speaks."
+            "principled",
+            "functionality",
+            "multilateralism"
           ],
-          "answer": "A person who knows a lot about something and can judge its quality.",
-          "explanation": "A connoisseur has studied a subject so closely that they can judge quality with confidence, like an expert taster of fine teas."
+          "answer": "principled",
+          "explanation": "principled: Acting from firm beliefs about right and wrong."
+        },
+        {
+          "prompt": "Which word means: Something added only to make a thing look nicer, without any real purpose.",
+          "choices": [
+            "functionality",
+            "multilateralism",
+            "decoration"
+          ],
+          "answer": "decoration",
+          "explanation": "decoration: Something added only to make a thing look nicer, without any real purpose."
+        },
+        {
+          "prompt": "What type of word is 'crafting'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Crafting is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'defect'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Defect is used as a noun in this dictionary sense."
         }
       ]
     }

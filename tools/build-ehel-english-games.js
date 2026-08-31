@@ -23,7 +23,36 @@ function article(word) {
 // generator used to clip 167 of them across 28 units. 180 characters admits
 // every unit's minimum of three (measured 2026-08-17); anything longer is left
 // out rather than cut.
-const READING_CHOICE_MAX = 180;
+// 170, not 180. The number is the audit's own bar (audit-ehel-english-games.js
+// flags any prompt, answer or choice over 170), and the two had disagreed by ten
+// characters since the cap was written — so the builder legally emitted choices
+// its own audit then reported. At three rounds that was 33 instances and was
+// tolerated; six rounds draws twice as deep into the same pool and would have
+// made it 62. Closing the gap costs three units their sixth comprehension item
+// (10 of 81 units fall short of six at 180, 13 at 170) and the partial fill in
+// readingRounds covers those with one quiz round each — a far better trade than
+// sixty-two options too long for a child to read.
+const READING_CHOICE_MAX = 170;
+
+// Six rounds per game, every grade. Owner, 2026-09-01: "there are only 3
+// questions per game, make it 6", scoped to Grades 1-4, then widened the same
+// day — "proceed with all 8 grades".
+//
+// Both halves were measured before the number moved, not after. Per unit, the
+// minimums are 36 vocabulary words at 1-4 and 100 at 5-8, 29 / 92 spellable
+// ones, 10 quiz questions, 6 speaking tasks and 72 / 137 usable sentences — so
+// six is authored content everywhere rather than padding. Comprehension is the
+// single exception at BOTH ends (Grade 1 Unit 0, and nine units across Grades
+// 6-8 hold three to five usable items) and is handled by the partial fill in
+// readingRounds rather than by a threshold.
+//
+// Kept as a function of grade even though it now answers the same everywhere:
+// this file's default is all eight grades, so the day the count differs by
+// stage again it must differ HERE, not in whoever remembers to pass a filter.
+const roundsFor = (grade) => { void grade; return 6; };
+// Two of three, four of six: the same bar either way, so mastery means the same
+// thing at every grade.
+const masteryFor = (grade) => Math.ceil(roundsFor(grade) * 2 / 3);
 function fitsWhole(value, limit) {
   return String(value || "").replace(/\s+/g, " ").trim().length <= limit;
 }
@@ -61,11 +90,11 @@ function quizRound(question) {
   };
 }
 
-function quizRounds(unit, start) {
-  return Array.from({ length: 3 }, (_, index) => quizRound(unit.quizzes[(start + index) % unit.quizzes.length]));
+function quizRounds(unit, start, rounds) {
+  return Array.from({ length: rounds }, (_, index) => quizRound(unit.quizzes[(start + index) % unit.quizzes.length]));
 }
 
-function sentenceCandidates(unit, vocabulary) {
+function sentenceCandidates(unit, vocabulary, rounds) {
   // Upper-grade units carry longer sentences, so a hard 11-word cap starves the
   // word-order game and forces the padding path. Widen the window and fall back
   // to the first practice sentence when the example sentence is too long.
@@ -83,7 +112,7 @@ function sentenceCandidates(unit, vocabulary) {
   // per unused vocabulary word, then an indexed generic as a last resort.
   const words = vocabulary.map((item) => item.entry.displayWord);
   let w = 0, n = 1;
-  while (unique.length < 6) {
+  while (unique.length < rounds * 2) {
     const next = w < words.length
       ? `The word ${words[w++]} is on our Unit ${unit.unit.unitNo} list.`
       : `Review sentence ${n++} for ${clean(unit.unit.unitTitle, 50)}.`;
@@ -97,6 +126,19 @@ function sentenceRound(sentence, prompt) {
   const tokens = answer.split(/\s+/);
   return { prompt, tokens: [...tokens].reverse(), answer };
 }
+
+// A target is what the learner SAYS. Anything that opens with a verb aimed AT
+// the learner is an instruction about the task, not the words to speak.
+//
+// This list is deliberately a SUPERSET of the one audit-ehel-english-games.js
+// tests for, because the two had drifted and the drift was invisible: the audit
+// rejects "practise", the builder's own list did not, so it emitted "Practise
+// the opening of your show-and-tell." at Grade 1 Unit 10 and then flagged
+// itself. `deliver` is new to both — going to six rounds reached a task whose
+// instruction starts with it ("Deliver your whole presentation at the
+// showcase."), which neither list could see. A generator that cannot fail its
+// own audit is the point.
+const INSTRUCTION_START = /^(act|answer|ask your|choose|create|deliver|discuss|explain|find|in small|if you|introduce|look|perform|plan|practice|practise|prepare|present|read|record|retell|say|select|speak|take|tell|use|work|write)(?![a-z])/i;
 
 function speakingTarget(task, fallback) {
   const source = clean(task.instructionsAndModelLines, 260).replace(/[“”]/g, "\"");
@@ -114,13 +156,19 @@ function speakingTarget(task, fallback) {
   // sentence does not fit in 145 characters, use the fallback rather than a
   // fragment ending "…" (the second pass found "…three comparatives and one...").
   const candidate = firstSentence ? clean(firstSentence[1], 145) : "";
-  if (!candidate || /^(choose|create|discuss|find|in small|if you|look|plan|prepare|read|record|retell|select|take|use|work|write)/i.test(candidate)) {
-    return clean(fallback, 145);
+  // The fallback is tested by the SAME rule. It used to be trusted blindly, and
+  // at six rounds that handed Grade 2 Unit 10 "Choose at least three pictures
+  // for your page." as a thing to say aloud — one instruction swapped for
+  // another. `fallback` is now a list, and this takes the first sayable entry.
+  if (!candidate || INSTRUCTION_START.test(candidate)) {
+    const pool = [].concat(fallback).filter(Boolean).map((item) => clean(item, 145));
+    return pool.find((item) => !INSTRUCTION_START.test(item)) || pool[0] || candidate;
   }
   return candidate;
 }
 
 function buildPack(grade, unit, dictionary) {
+  const ROUNDS = roundsFor(grade);
   const entries = new Map(dictionary.entries.map((entry) => [entry.dictionaryEntryId, entry]));
   const allLinks = unit.dictionaryLinks.map((link) => ({ link, entry: entries.get(link.dictionaryEntryId) })).filter((item) => item.entry);
   // One card per word. A word taught as a Core word can ALSO survive as a
@@ -138,12 +186,34 @@ function buildPack(grade, unit, dictionary) {
     if (!held || (coreGroups.has(item.link.groupId) && !coreGroups.has(held.link.groupId))) byWord.set(key, item);
   }
   const vocabulary = [...byWord.values()];
-  const selected = sample(vocabulary, 12);
+  // 24, not 12. Three games draw six words each from this list, and at 12 the
+  // three offsets collapsed: sample(selected, 6, 5) and sample(selected, 6, 7)
+  // both return the six ODD indices, so Definition Dash and Word Type Power
+  // would have asked about the same six words. At 24 the stride is 4 and the
+  // offsets 0 / 1 / 2 give three disjoint sets.
+  const selected = sample(vocabulary, 24);
   const shortWords = vocabulary.filter((item) => /^[A-Za-z]{3,11}$/.test(item.entry.displayWord));
-  const spellingWords = sample(shortWords.length >= 3 ? shortWords : vocabulary, 3, 1);
-  const sentences = sentenceCandidates(unit, vocabulary);
-  const sentenceSet = sample(sentences, 6);
+  const spellingWords = sample(shortWords.length >= ROUNDS ? shortWords : vocabulary, ROUNDS, 1);
+  const sentences = sentenceCandidates(unit, vocabulary, ROUNDS);
+  // Two games take half each, so the set is twice the round count.
+  const sentenceSet = sample(sentences, ROUNDS * 2);
   const parts = ["Noun", "Verb", "Adjective", "Adverb", "Expression"];
+  const meaningOf = (item) => clean(item.link.childMeaning || item.entry.canonicalMeaning, 120);
+  // The two vocabulary round shapes, lifted out of their games so Unit Mission
+  // can ask them too without a second copy of the wording drifting from the
+  // first. Both close over `selected`, which is where their distractors come
+  // from — a distractor drawn from outside the unit's own word list would be
+  // recognisable as wrong without knowing the answer.
+  const meaningRound = (item, index) => ({
+    prompt: `Which word means: ${meaningOf(item)}`,
+    choices: choices(item.entry.displayWord, selected.filter((other) => other !== item).map((other) => other.entry.displayWord), index),
+    answer: item.entry.displayWord,
+    explanation: `${item.entry.displayWord}: ${clean(item.link.childMeaning || item.entry.canonicalMeaning, 150)}`,
+  });
+  const wordTypeRound = (item, index) => {
+    const answer = item.entry.partOfSpeech.charAt(0).toUpperCase() + item.entry.partOfSpeech.slice(1);
+    return { prompt: `What type of word is '${item.entry.displayWord}'?`, choices: choices(answer, parts, index), answer, explanation: `${item.entry.displayWord.charAt(0).toUpperCase()}${item.entry.displayWord.slice(1)} is used as ${article(item.entry.partOfSpeech)} ${item.entry.partOfSpeech} in this dictionary sense.` };
+  };
   const comprehension = unit.comprehension.filter((item) => (
     item.question
     && item.question.length <= 165
@@ -159,17 +229,26 @@ function buildPack(grade, unit, dictionary) {
     ...unit.quizzes.map((item) => item.correctAnswer).filter((text) => fitsWhole(text, READING_CHOICE_MAX)).map((text) => clean(text, READING_CHOICE_MAX)),
     ...vocabulary.map((item) => item.link.childMeaning || item.entry.canonicalMeaning).filter((text) => fitsWhole(text, READING_CHOICE_MAX)).map((text) => clean(text, READING_CHOICE_MAX)),
   ];
-  const readingRounds = comprehension.length >= 3
-    ? sample(comprehension, 3).map((item, index) => {
+  // Fill with real comprehension FIRST and top up from the quiz bank only for
+  // the shortfall. All-or-nothing was fine at three rounds, where every unit
+  // cleared the bar; at six, nine units across Grades 6-8 hold only three to
+  // five usable comprehension items, and the old rule would have thrown all of
+  // them away and made Reading Detective six quiz questions — a comprehension
+  // game that is not about the reading. Five real rounds plus one borrowed
+  // beats none plus six.
+  const readingTaken = Math.min(ROUNDS, comprehension.length);
+  const readingRounds = [
+    ...sample(comprehension, readingTaken).map((item, index) => {
       const distractors = sample(comprehension.filter((other) => other.questionId !== item.questionId), 2, index + 1).map((other) => clean(other.correctAnswer, READING_CHOICE_MAX));
       const answer = clean(item.correctAnswer, READING_CHOICE_MAX);
       // The comprehension item's own explanation is now written to the learner
       // (second pass, 2026-08-17); use it, and fall back to quoting the answer.
       const explanation = fitsWhole(item.explanation, 240) && !/^(The learner|Award|Accept)/.test(String(item.explanation)) ? clean(item.explanation, 240) : `The text says: ${answer}`;
       return { prompt: clean(item.question, 400), choices: choices(answer, distractors, index, answerPool), answer, explanation };
-    })
-    : quizRounds(unit, 2);
-  const pairsVocabulary = sample(vocabulary, 9, 2);
+    }),
+    ...quizRounds(unit, 2, ROUNDS - readingTaken),
+  ];
+  const pairsVocabulary = sample(vocabulary, ROUNDS * 3, 2);
 
   return {
     schemaVersion: "Ehel English Games v1.0",
@@ -178,17 +257,15 @@ function buildPack(grade, unit, dictionary) {
     unitId: unit.unit.unitId,
     title: `${unit.unit.unitTitle} Game Zone`,
     source: "Generated from approved unit runtime and linked master dictionary",
-    masteryScore: 2,
+    // A learner who had mastered a game at 3/3 reads as unmastered until they
+    // play the longer version; their section tick is untouched, because
+    // progress.completed is a separate record.
+    masteryScore: masteryFor(grade),
     games: [
       {
         id: "meaning-match", type: "choice", icon: "images", title: "Meaning Match", skill: "Vocabulary",
         description: "Match each unit word to its approved child-friendly meaning.",
-        rounds: sample(selected, 3).map((item, index) => ({
-          prompt: `Which word means: ${clean(item.link.childMeaning || item.entry.canonicalMeaning, 120)}`,
-          choices: choices(item.entry.displayWord, selected.filter((other) => other !== item).map((other) => other.entry.displayWord), index),
-          answer: item.entry.displayWord,
-          explanation: `${item.entry.displayWord}: ${clean(item.link.childMeaning || item.entry.canonicalMeaning, 150)}`,
-        })),
+        rounds: sample(selected, ROUNDS, 0).map(meaningRound),
       },
       {
         id: "spelling-builder", type: "spelling", icon: "blocks", title: "Spelling Builder", skill: "Spelling",
@@ -198,11 +275,11 @@ function buildPack(grade, unit, dictionary) {
       {
         id: "sentence-puzzle", type: "sentence", icon: "puzzle", title: "Sentence Puzzle", skill: "Sentence building",
         description: "Put unit words into the correct sentence order.",
-        rounds: sentenceSet.slice(0, 3).map((sentence) => sentenceRound(sentence, "Build the complete model sentence.")),
+        rounds: sentenceSet.slice(0, ROUNDS).map((sentence) => sentenceRound(sentence, "Build the complete model sentence.")),
       },
       {
         id: "language-choice", type: "choice", icon: "list-filter", title: "Language Choice", skill: "Grammar and usage",
-        description: "Choose the form that makes the unit language accurate.", rounds: quizRounds(unit, 6),
+        description: "Choose the form that makes the unit language accurate.", rounds: quizRounds(unit, 0, ROUNDS),
       },
       {
         id: "reading-detective", type: "choice", icon: "scan-search", title: "Reading Detective", skill: "Comprehension",
@@ -211,17 +288,17 @@ function buildPack(grade, unit, dictionary) {
       {
         id: "speaking-quest", type: "speaking", icon: "mic-2", title: "Speaking Quest", skill: "Pronunciation",
         description: "Listen, record, review and submit useful unit language.",
-        rounds: sample(unit.speaking, 3).map((task, index) => ({ prompt: clean(task.title, 120), target: speakingTarget(task, sentenceSet[index]) })),
+        rounds: sample(unit.speaking, ROUNDS).map((task, index) => ({ prompt: clean(task.title, 120), target: speakingTarget(task, sentenceSet.slice(index)) })),
       },
       {
         id: "word-order-race", type: "sequence", icon: "calendar-days", title: "Word Order Race", skill: "Fluency and order",
         description: "Arrange unit language in a clear, accurate order.",
-        rounds: sentenceSet.slice(3, 6).map((sentence) => sentenceRound(sentence, "Put this unit sentence in order.")),
+        rounds: sentenceSet.slice(ROUNDS, ROUNDS * 2).map((sentence) => sentenceRound(sentence, "Put this unit sentence in order.")),
       },
       {
         id: "definition-dash", type: "choice", icon: "palette", title: "Definition Dash", skill: "Meaning in context",
         description: "Choose the approved meaning before moving to the next clue.",
-        rounds: sample(selected, 3, 5).map((item, index) => {
+        rounds: sample(selected, ROUNDS, 1).map((item, index) => {
           const answer = clean(item.link.childMeaning || item.entry.canonicalMeaning, 130);
           return {
             prompt: `What does '${item.entry.displayWord}' mean in this unit?`,
@@ -234,23 +311,34 @@ function buildPack(grade, unit, dictionary) {
       {
         id: "word-type-power", type: "choice", icon: "users-round", title: "Word Type Power", skill: "Parts of speech",
         description: "Identify how each vocabulary word works in English.",
-        rounds: sample(selected, 3, 7).map((item, index) => {
-          const answer = item.entry.partOfSpeech.charAt(0).toUpperCase() + item.entry.partOfSpeech.slice(1);
-          return { prompt: `What type of word is '${item.entry.displayWord}'?`, choices: choices(answer, parts, index), answer, explanation: `${item.entry.displayWord.charAt(0).toUpperCase()}${item.entry.displayWord.slice(1)} is used as ${article(item.entry.partOfSpeech)} ${item.entry.partOfSpeech} in this dictionary sense.` };
-        }),
+        rounds: sample(selected, ROUNDS, 2).map(wordTypeRound),
       },
       {
         id: "memory-pairs", type: "pairs", icon: "copy-check", title: "Memory Pairs", skill: "Vocabulary recall",
         description: "Reveal tiles and connect each word with its meaning.",
-        rounds: [0, 1, 2].map((round) => ({ prompt: `Match vocabulary set ${round + 1}.`, pairs: pairsVocabulary.slice(round * 3, round * 3 + 3).map((item) => [item.entry.displayWord, clean(item.link.childMeaning || item.entry.canonicalMeaning, 200)]) })),
+        rounds: Array.from({ length: ROUNDS }, (_, round) => ({ prompt: `Match vocabulary set ${round + 1}.`, pairs: pairsVocabulary.slice(round * 3, round * 3 + 3).map((item) => [item.entry.displayWord, clean(item.link.childMeaning || item.entry.canonicalMeaning, 200)]) })),
       },
       {
         id: "question-quest", type: "choice", icon: "circle-help", title: "Question Quest", skill: "Question answering",
-        description: "Read each unit question carefully and choose the best answer.", rounds: quizRounds(unit, 3),
+        description: "Read each unit question carefully and choose the best answer.", rounds: quizRounds(unit, 5, ROUNDS),
       },
       {
+        // Genuinely mixed now, and the arithmetic forced it rather than taste. A
+        // unit has TEN quiz questions. Three games drawing six each is eighteen
+        // slots over ten, and by pigeonhole that leaves any two of them sharing
+        // about three of their six — which a child notices as the same question
+        // twice in one sitting. Two games drawing six each is twelve over ten and
+        // shares exactly two. So Unit Mission stops being a third copy of the
+        // quiz and does what its description has always promised: two quiz
+        // questions, two meanings and two word types, on the one vocabulary
+        // offset (3) the other three games leave unused.
         id: "unit-mission", type: "choice", icon: "hand-heart", title: "Unit Mission", skill: "Mixed review",
-        description: "Finish with a mixed challenge across the whole unit.", rounds: quizRounds(unit, 0),
+        description: "Finish with a mixed challenge across the whole unit.",
+        rounds: [
+          ...quizRounds(unit, 8, ROUNDS).slice(0, 2),
+          ...sample(selected, 4, 3).slice(0, 2).map(meaningRound),
+          ...sample(selected, 4, 3).slice(2, 4).map(wordTypeRound),
+        ],
       },
     ],
   };

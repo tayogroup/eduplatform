@@ -5,7 +5,7 @@
   "unitId": "eng-g07-t01-u01",
   "title": "Family, Identity, and History Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: A gradual gathering of something into a larger amount.",
           "choices": [
             "accumulation",
-            "culture",
-            "hold"
+            "motif",
+            "imply"
           ],
           "answer": "accumulation",
           "explanation": "accumulation: A gradual gathering of something into a larger amount."
         },
         {
-          "prompt": "Which word means: A biography is the true story of a real person's life, usually written by someone else.",
+          "prompt": "Which word means: The parent of your mother or father.",
           "choices": [
             "accumulation",
-            "culture",
-            "biography"
+            "motif",
+            "grandparent"
           ],
-          "answer": "biography",
-          "explanation": "biography: A biography is the true story of a real person's life, usually written by someone else."
+          "answer": "grandparent",
+          "explanation": "grandparent: The parent of your mother or father."
         },
         {
-          "prompt": "Which word means: Started to burn, or took hold of and stopped something moving.",
+          "prompt": "Which word means: To study something means spending time learning about it carefully and in detail.",
           "choices": [
-            "culture",
-            "caught",
+            "motif",
+            "study",
             "accumulation"
           ],
-          "answer": "caught",
-          "explanation": "caught: Started to burn, or took hold of and stopped something moving."
+          "answer": "study",
+          "explanation": "study: To study something means spending time learning about it carefully and in detail."
+        },
+        {
+          "prompt": "Which word means: A person who buys and sells goods, especially as their main job.",
+          "choices": [
+            "trader",
+            "accumulation",
+            "motif"
+          ],
+          "answer": "trader",
+          "explanation": "trader: A person who buys and sells goods, especially as their main job."
+        },
+        {
+          "prompt": "Which word means: Fastened something with rope, string, or a similar material.",
+          "choices": [
+            "accumulation",
+            "motif",
+            "tied"
+          ],
+          "answer": "tied",
+          "explanation": "tied: Fastened something with rope, string, or a similar material."
+        },
+        {
+          "prompt": "Which word means: People who become angry or act without thinking very quickly.",
+          "choices": [
+            "motif",
+            "hotheads",
+            "accumulation"
+          ],
+          "answer": "hotheads",
+          "explanation": "hotheads: People who become angry or act without thinking very quickly."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To write means to put words on paper or a screen to record or share ideas.",
-          "answer": "write"
+          "clue": "Cut or shaped from wood or stone, usually by hand.",
+          "answer": "carved"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The grey powder left behind after something has completely burned.",
-          "answer": "ash"
+          "clue": "To study something means spending time learning about it carefully and in detail.",
+          "answer": "study"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Following in time or place; coming later than something else.",
+          "answer": "after"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "In a position higher than something else.",
+          "answer": "above"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Telling the truth and not lying or hiding anything.",
+          "answer": "honest"
         }
       ]
     },
@@ -99,38 +144,87 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "entrance.",
-            "market",
+            "generations.",
+            "for",
+            "alive",
+            "history",
+            "family's",
             "the",
-            "near",
-            "table",
-            "small",
-            "a",
-            "from",
-            "spices",
-            "sold",
-            "grandmother",
-            "My"
+            "kept",
+            "stories",
+            "and",
+            "Songs"
           ],
-          "answer": "My grandmother sold spices from a small table near the market entrance."
+          "answer": "Songs and stories kept the family's history alive for generations."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "began.",
-            "goalpost",
+            "shelter.",
+            "finding",
+            "before",
+            "road",
+            "trade",
+            "old",
             "the",
-            "about",
-            "argument",
-            "the",
-            "moment",
-            "the",
-            "loud",
-            "grew",
-            "team",
-            "Kofi's"
+            "along",
+            "days",
+            "for",
+            "walked",
+            "They"
           ],
-          "answer": "Kofi's team grew loud the moment the argument about the goalpost began."
+          "answer": "They walked for days along the old trade road before finding shelter."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "shop.",
+            "small",
+            "a",
+            "open",
+            "to",
+            "years",
+            "five",
+            "in",
+            "money",
+            "enough",
+            "saved",
+            "Nadir"
+          ],
+          "answer": "Nadir saved enough money in five years to open a small shop."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "noise.",
+            "the",
+            "through",
+            "cutting",
+            "voice",
+            "his",
+            "sharply,",
+            "said",
+            "Jamal",
+            "liar,\"",
+            "the",
+            "\"You're"
+          ],
+          "answer": "\"You're the liar,\" Jamal said sharply, his voice cutting through the noise."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "knife.",
+            "sharp",
+            "a",
+            "with",
+            "football",
+            "Jamal's",
+            "slashed",
+            "had",
+            "Someone"
+          ],
+          "answer": "Someone had slashed Jamal's football with a sharp knife."
         }
       ]
     },
@@ -143,314 +237,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': The air between them became thick with _____.",
+          "prompt": "What does 'belligerent' mean?",
           "choices": [
-            "conflict",
-            "problem",
-            "belligerent",
-            "animosity"
+            "A strong feeling of dislike or hatred towards someone.",
+            "Angry and ready to fight or argue.",
+            "To make someone very angry.",
+            "Wanting to hurt someone because they hurt you."
           ],
-          "answer": "animosity",
-          "explanation": "The text says: The air between them became thick with animosity."
+          "answer": "Angry and ready to fight or argue.",
+          "explanation": "The belligerent dog barked loudly at anyone who came near."
         },
         {
-          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 2': Kofi, once _____ and loud, now listened before speaking.",
+          "prompt": "What does 'malevolence' mean?",
           "choices": [
-            "belligerent",
-            "narcissistic",
-            "malevolence",
-            "vindictive"
+            "A strong feeling of dislike or hatred towards someone.",
+            "Someone who is very interested in themselves and thinks they are better than others.",
+            "The wish to do evil or harm to others.",
+            "To make someone very angry."
           ],
-          "answer": "narcissistic",
-          "explanation": "The text says: Kofi, once narcissistic and loud, now listened before speaking."
+          "answer": "The wish to do evil or harm to others.",
+          "explanation": "The villain in the story showed malevolence by trying to hurt the hero."
         },
         {
-          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': \"They _____ too much,\" whispered Ben beside him.",
+          "prompt": "What does 'vindictive' mean?",
           "choices": [
-            "vindictive",
-            "argue",
-            "infuriate",
-            "animosity"
+            "A strong feeling of dislike or hatred towards someone.",
+            "Someone who is very interested in themselves and thinks they are better than others.",
+            "To talk about something in a way that shows you have different opinions and want to convince someone.",
+            "Wanting to hurt someone because they hurt you."
           ],
-          "answer": "argue",
-          "explanation": "The text says: \"They argue too much,\" whispered Ben beside him."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Who really slashed Jamal's football, and how did the boys discover the truth?",
-          "choices": [
-            "Milo Otieno slashed the ball, and the boys discovered the truth when Ben found a knife with the initials M.O. carved into the handle.",
-            "Jamal saw Kofi risk his own safety to free a goat tied to a fence in the smoky yard, and he began to think there was more behind Kofi's abrasive mask than shouting and swagger.",
-            "Milo damaged the ball because he felt left out and angry after the others stopped talking to him, and once he confessed he asked whether he could still play with the team."
-          ],
-          "answer": "Milo Otieno slashed the ball, and the boys discovered the truth when Ben found a knife with the initials M.O. carved into the handle.",
-          "explanation": "Ben comes running with a knife carved with the initials M.O., which Jamal recognises as Milo Otieno's. When the boys confront Milo he first denies it, then admits, 'Fine. I did it.'"
+          "answer": "Wanting to hurt someone because they hurt you.",
+          "explanation": "After being teased, she felt vindictive and wanted to get back at her classmates."
         },
-        {
-          "prompt": "In the interview, why did Amara's grandfather leave the family farm, and how did he first earn money in the city?",
-          "choices": [
-            "Milo damaged the ball because he felt left out and angry after the others stopped talking to him, and once he confessed he asked whether he could still play with the team.",
-            "Milo Otieno slashed the ball, and the boys discovered the truth when Ben found a knife with the initials M.O. carved into the handle.",
-            "A drought in the 1960s made the crops fail, so the family left the farm, and when they first reached the city her grandfather earned money working as a porter at the market."
-          ],
-          "answer": "A drought in the 1960s made the crops fail, so the family left the farm, and when they first reached the city her grandfather earned money working as a porter at the market.",
-          "explanation": "You combine two details from Amara's interview: the drought that ended the farm and the porter work that fed the family in the city."
-        },
-        {
-          "prompt": "How did the fire at the neighbour's house change the way Jamal saw Kofi?",
-          "choices": [
-            "A drought in the 1960s made the crops fail, so the family left the farm, and when they first reached the city her grandfather earned money working as a porter at the market.",
-            "Jamal saw Kofi risk his own safety to free a goat tied to a fence in the smoky yard, and he began to think there was more behind Kofi's abrasive mask than shouting and swagger.",
-            "Milo Otieno slashed the ball, and the boys discovered the truth when Ben found a knife with the initials M.O. carved into the handle."
-          ],
-          "answer": "Jamal saw Kofi risk his own safety to free a goat tied to a fence in the smoky yard, and he began to think there was more behind Kofi's abrasive mask than shouting and swagger.",
-          "explanation": "At the fire Jamal sees Kofi risk his life to free the goat tied to the fence. Afterwards the text says Jamal 'began to see him differently' and wondered if there was more behind Kofi's abrasive mask."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Present Your Family Biography",
-          "target": "An accumulation of small savings paid for the whole journey."
-        },
-        {
-          "prompt": "Speaking 3: Five-Minute Talk — Where We Come From",
-          "target": "My grandmother sold spices from a small table near the market entrance."
-        },
-        {
-          "prompt": "Speaking 5: Interview an Elder",
-          "target": "Where were you born, and where did you grow up?"
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "boys.",
-            "two",
-            "the",
-            "between",
-            "respect",
-            "genuine",
-            "by",
-            "replaced",
-            "faded,",
-            "rivalry",
-            "old",
-            "The"
-          ],
-          "answer": "The old rivalry faded, replaced by genuine respect between the two boys."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "years?",
-            "driest",
-            "the",
-            "during",
-            "children",
-            "twelve",
-            "feed",
-            "still",
-            "farm",
-            "small",
-            "the",
-            "Could"
-          ],
-          "answer": "Could the small farm still feed twelve children during the driest years?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "smoke.",
-            "of",
-            "smell",
-            "the",
-            "to",
-            "morning",
-            "next",
-            "the",
-            "early",
-            "woke",
-            "Jamal"
-          ],
-          "answer": "Jamal woke early the next morning to the smell of smoke."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'crafted' mean in this unit?",
-          "choices": [
-            "Crafted means made something skilfully, usually with care and often by hand.",
-            "A gradual gathering of something into a larger amount.",
-            "The customs, beliefs, and way of life shared by a group of people."
-          ],
-          "answer": "Crafted means made something skilfully, usually with care and often by hand.",
-          "explanation": "crafted: Crafted means made something skilfully, usually with care and often by hand."
-        },
-        {
-          "prompt": "What does 'week' mean in this unit?",
-          "choices": [
-            "A gradual gathering of something into a larger amount.",
-            "The customs, beliefs, and way of life shared by a group of people.",
-            "A period of seven days."
-          ],
-          "answer": "A period of seven days.",
-          "explanation": "week: A period of seven days."
-        },
-        {
-          "prompt": "What does 'culture' mean in this unit?",
-          "choices": [
-            "To contain something, or to keep it safely within something else.",
-            "The customs, beliefs, and way of life shared by a group of people.",
-            "A gradual gathering of something into a larger amount."
-          ],
-          "answer": "The customs, beliefs, and way of life shared by a group of people.",
-          "explanation": "culture: The customs, beliefs, and way of life shared by a group of people."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'goalpost'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Goalpost is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'fix'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Fix is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'originally'?",
-          "choices": [
-            "Verb",
-            "Adverb",
-            "Noun"
-          ],
-          "answer": "Adverb",
-          "explanation": "Originally is used as an adverb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "administration",
-              "The people who manage and organise a school, business, or other organisation."
-            ],
-            [
-              "clan",
-              "A large group of families who are connected by a shared ancestor or history."
-            ],
-            [
-              "lives",
-              "A group of people's daily experiences and activities, especially over a long period of time."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "describe",
-              "To describe something means using words to explain what it is like."
-            ],
-            [
-              "enough",
-              "As much or as many as is needed for something."
-            ],
-            [
-              "sweat",
-              "The salty moisture that appears on your skin when you are hot or working hard."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "billowed",
-              "Rose or moved in large, swelling clouds or waves, like smoke or a sail in the wind."
-            ],
-            [
-              "funny",
-              "Amusing or causing laughter, though sometimes used sarcastically to mean the opposite."
-            ],
-            [
-              "clean",
-              "Free from dirt, mess, or rubbish."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'infuriate' mean?",
           "choices": [
@@ -487,34 +305,22 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'belligerent' mean?",
+          "prompt": "Who really slashed Jamal's football, and how did the boys discover the truth?",
           "choices": [
-            "A strong feeling of dislike or hatred towards someone.",
+            "Milo Otieno slashed the ball, and the boys discovered the truth when Ben found a knife with the initials M.O. carved into the handle.",
             "Angry and ready to fight or argue.",
-            "To make someone very angry.",
-            "Wanting to hurt someone because they hurt you."
+            "The wish to do evil or harm to others."
           ],
-          "answer": "Angry and ready to fight or argue.",
-          "explanation": "The belligerent dog barked loudly at anyone who came near."
-        },
-        {
-          "prompt": "What does 'malevolence' mean?",
-          "choices": [
-            "A strong feeling of dislike or hatred towards someone.",
-            "Someone who is very interested in themselves and thinks they are better than others.",
-            "The wish to do evil or harm to others.",
-            "To make someone very angry."
-          ],
-          "answer": "The wish to do evil or harm to others.",
-          "explanation": "The villain in the story showed malevolence by trying to hurt the hero."
+          "answer": "Milo Otieno slashed the ball, and the boys discovered the truth when Ben found a knife with the initials M.O. carved into the handle.",
+          "explanation": "Ben comes running with a knife carved with the initials M.O., which Jamal recognises as Milo Otieno's. When the boys confront Milo he first denies it, then admits, 'Fine. I did it.'"
         },
         {
           "prompt": "What does 'vindictive' mean?",
@@ -526,6 +332,600 @@
           ],
           "answer": "Wanting to hurt someone because they hurt you.",
           "explanation": "After being teased, she felt vindictive and wanted to get back at her classmates."
+        },
+        {
+          "prompt": "What does 'infuriate' mean?",
+          "choices": [
+            "A discussion where people express different opinions about something.",
+            "Someone who is very interested in themselves and thinks they are better than others.",
+            "To make someone very angry.",
+            "To talk about something in a way that shows you have different opinions and want to convince someone."
+          ],
+          "answer": "To make someone very angry.",
+          "explanation": "It can infuriate me when people talk during a film."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': Their leader, Kofi, was known for being _____.",
+          "choices": [
+            "belligerent",
+            "animosity",
+            "narcissistic",
+            "argue"
+          ],
+          "answer": "belligerent",
+          "explanation": "The text says: Their leader, Kofi, was known for being belligerent."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': \"Only someone as _____ as you would do this.\"",
+          "choices": [
+            "vindictive",
+            "conflict",
+            "problem",
+            "belligerent"
+          ],
+          "answer": "vindictive",
+          "explanation": "The text says: \"Only someone as vindictive as you would do this.\""
+        },
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': The air between them became thick with _____.",
+          "choices": [
+            "conflict",
+            "problem",
+            "belligerent",
+            "animosity"
+          ],
+          "answer": "animosity",
+          "explanation": "The text says: The air between them became thick with animosity."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Present Your Family Biography",
+          "target": "An accumulation of small savings paid for the whole journey."
+        },
+        {
+          "prompt": "Speaking 2: Family Tree Discussion",
+          "target": "My great-grandfather's name was..."
+        },
+        {
+          "prompt": "Speaking 3: Five-Minute Talk — Where We Come From",
+          "target": "They walked for days along the old trade road before finding shelter."
+        },
+        {
+          "prompt": "Speaking 4: Where Do You Come From? Game",
+          "target": "This person grew up near the coast. They worked with timber. They sold boats to merchants."
+        },
+        {
+          "prompt": "Speaking 5: Interview an Elder",
+          "target": "Where were you born, and where did you grow up?"
+        },
+        {
+          "prompt": "Speaking 6: Conflict Advice Role-Play",
+          "target": "One partner plays Jamal in the middle of his quarrel with Kofi; the other plays a friend giving advice."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "ball.",
+            "the",
+            "about",
+            "not",
+            "trust,",
+            "losing",
+            "about",
+            "really",
+            "it's",
+            "realised",
+            "Kofi"
+          ],
+          "answer": "Kofi realised it's really about losing trust, not about the ball."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "fade.",
+            "memories",
+            "the",
+            "before",
+            "chronicle",
+            "a",
+            "record",
+            "to",
+            "important",
+            "is",
+            "It"
+          ],
+          "answer": "It is important to record a chronicle before the memories fade."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "decade?",
+            "difficult",
+            "that",
+            "during",
+            "regions",
+            "southern",
+            "the",
+            "from",
+            "migrate",
+            "families",
+            "many",
+            "so",
+            "did",
+            "Why"
+          ],
+          "answer": "Why did so many families migrate from the southern regions during that difficult decade?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "generations.",
+            "three",
+            "for",
+            "box",
+            "wooden",
+            "that",
+            "inside",
+            "rested",
+            "had",
+            "rope",
+            "old",
+            "The"
+          ],
+          "answer": "The old rope had rested inside that wooden box for three generations."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "day.",
+            "the",
+            "about",
+            "thinking",
+            "lay",
+            "Jamal",
+            "as",
+            "window",
+            "the",
+            "through",
+            "fell",
+            "Moonlight"
+          ],
+          "answer": "Moonlight fell through the window as Jamal lay thinking about the day."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "quietly.",
+            "said",
+            "Kofi",
+            "others,",
+            "blame",
+            "to",
+            "quick",
+            "so",
+            "always",
+            "You're"
+          ],
+          "answer": "You're always so quick to blame others, Kofi said quietly."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'motif' mean in this unit?",
+          "choices": [
+            "An image or idea that returns again and again in a story.",
+            "A gradual gathering of something into a larger amount.",
+            "To suggest something without saying it directly."
+          ],
+          "answer": "An image or idea that returns again and again in a story.",
+          "explanation": "motif: An image or idea that returns again and again in a story."
+        },
+        {
+          "prompt": "What does 'inherits' mean in this unit?",
+          "choices": [
+            "A gradual gathering of something into a larger amount.",
+            "An image or idea that returns again and again in a story.",
+            "Receives money, property, or qualities from someone, especially a family member."
+          ],
+          "answer": "Receives money, property, or qualities from someone, especially a family member.",
+          "explanation": "inherits: Receives money, property, or qualities from someone, especially a family member."
+        },
+        {
+          "prompt": "What does 'listen' mean in this unit?",
+          "choices": [
+            "An image or idea that returns again and again in a story.",
+            "To listen means to pay attention to a sound so that you can understand it.",
+            "A gradual gathering of something into a larger amount."
+          ],
+          "answer": "To listen means to pay attention to a sound so that you can understand it.",
+          "explanation": "listen: To listen means to pay attention to a sound so that you can understand it."
+        },
+        {
+          "prompt": "What does 'mixed' mean in this unit?",
+          "choices": [
+            "Combined two or more different things together.",
+            "A gradual gathering of something into a larger amount.",
+            "An image or idea that returns again and again in a story."
+          ],
+          "answer": "Combined two or more different things together.",
+          "explanation": "mixed: Combined two or more different things together."
+        },
+        {
+          "prompt": "What does 'bravery' mean in this unit?",
+          "choices": [
+            "A gradual gathering of something into a larger amount.",
+            "An image or idea that returns again and again in a story.",
+            "The quality of facing danger or pain without giving in to fear."
+          ],
+          "answer": "The quality of facing danger or pain without giving in to fear.",
+          "explanation": "bravery: The quality of facing danger or pain without giving in to fear."
+        },
+        {
+          "prompt": "What does 'it's' mean in this unit?",
+          "choices": [
+            "An image or idea that returns again and again in a story.",
+            "A short way of saying the words it is.",
+            "A gradual gathering of something into a larger amount."
+          ],
+          "answer": "A short way of saying the words it is.",
+          "explanation": "it's: A short way of saying the words it is."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'imply'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Imply is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'student'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Student is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'crafted'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Crafted is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'lied'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Lied is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'ball'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Ball is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'mendacious'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Mendacious is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "administration",
+              "The people who manage and organise a school, business, or other organisation."
+            ],
+            [
+              "coherent",
+              "Clear and logical, so the parts follow one another."
+            ],
+            [
+              "important",
+              "Having great value, meaning, or effect, and deserving serious attention."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "artefact",
+              "An object made by people in the past that gives clues about history and culture."
+            ],
+            [
+              "houses",
+              "Buildings where people live, usually with rooms for sleeping, eating, and resting."
+            ],
+            [
+              "big",
+              "Large in size, number, or importance."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "write",
+              "To write means to put words on paper or a screen to record or share ideas."
+            ],
+            [
+              "near",
+              "Near means not far away in distance or time from something else."
+            ],
+            [
+              "laughing",
+              "Making sounds and showing an expression that shows you find something funny or joyful."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "scholar",
+              "A person who has studied a subject deeply and knows a great deal about it."
+            ],
+            [
+              "fight",
+              "To use physical force or angry words against someone in a struggle."
+            ],
+            [
+              "shouldn't",
+              "A short way of saying 'should not', meaning it is wrong or unwise to do something."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "kicked",
+              "Hit something or someone with the foot."
+            ],
+            [
+              "returned",
+              "Came back to a place after being away."
+            ],
+            [
+              "what's",
+              "A short way of saying the words what is, often used to ask about something happening."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "we've",
+              "A short way of saying the words we have."
+            ],
+            [
+              "narcissistic",
+              "Someone who is very interested in themselves and thinks they are better than others."
+            ],
+            [
+              "casualty",
+              "A person who is hurt or killed in an accident or war."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': \"Only someone as _____ as you would do this.\"",
+          "choices": [
+            "vindictive",
+            "conflict",
+            "problem",
+            "belligerent"
+          ],
+          "answer": "vindictive",
+          "explanation": "The text says: \"Only someone as vindictive as you would do this.\""
+        },
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': The air between them became thick with _____.",
+          "choices": [
+            "conflict",
+            "problem",
+            "belligerent",
+            "animosity"
+          ],
+          "answer": "animosity",
+          "explanation": "The text says: The air between them became thick with animosity."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 2': Kofi, once _____ and loud, now listened before speaking.",
+          "choices": [
+            "belligerent",
+            "narcissistic",
+            "malevolence",
+            "vindictive"
+          ],
+          "answer": "narcissistic",
+          "explanation": "The text says: Kofi, once narcissistic and loud, now listened before speaking."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': \"They _____ too much,\" whispered Ben beside him.",
+          "choices": [
+            "vindictive",
+            "argue",
+            "infuriate",
+            "animosity"
+          ],
+          "answer": "argue",
+          "explanation": "The text says: \"They argue too much,\" whispered Ben beside him."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': It all started with an _____ about football.",
+          "choices": [
+            "animosity",
+            "alienate",
+            "argument",
+            "abrasive"
+          ],
+          "answer": "argument",
+          "explanation": "The text says: It all started with an argument about football."
+        },
+        {
+          "prompt": "What does 'belligerent' mean?",
+          "choices": [
+            "A strong feeling of dislike or hatred towards someone.",
+            "Angry and ready to fight or argue.",
+            "To make someone very angry.",
+            "Wanting to hurt someone because they hurt you."
+          ],
+          "answer": "Angry and ready to fight or argue.",
+          "explanation": "The belligerent dog barked loudly at anyone who came near."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': \"They _____ too much,\" whispered Ben beside him.",
+          "choices": [
+            "vindictive",
+            "argue",
+            "infuriate",
+            "animosity"
+          ],
+          "answer": "argue",
+          "explanation": "The text says: \"They argue too much,\" whispered Ben beside him."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Fire Behind the Fence, part 1': It all started with an _____ about football.",
+          "choices": [
+            "animosity",
+            "alienate",
+            "argument",
+            "abrasive"
+          ],
+          "answer": "argument",
+          "explanation": "The text says: It all started with an argument about football."
+        },
+        {
+          "prompt": "Which word means: Moving from one side or point of something to the other, or across a period of time.",
+          "choices": [
+            "through",
+            "accumulation",
+            "motif"
+          ],
+          "answer": "through",
+          "explanation": "through: Moving from one side or point of something to the other, or across a period of time."
+        },
+        {
+          "prompt": "Which word means: To listen means to pay attention to a sound so that you can understand it.",
+          "choices": [
+            "accumulation",
+            "motif",
+            "listen"
+          ],
+          "answer": "listen",
+          "explanation": "listen: To listen means to pay attention to a sound so that you can understand it."
+        },
+        {
+          "prompt": "What type of word is 'lay'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Lay is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'it's'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Phrase"
+          ],
+          "answer": "Phrase",
+          "explanation": "It's is used as a phrase in this dictionary sense."
         }
       ]
     }

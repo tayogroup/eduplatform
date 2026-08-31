@@ -5,7 +5,7 @@
   "unitId": "eng-g01-t03-u07",
   "title": "Let's Go! Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Something long goes a big way from end to end.",
           "choices": [
             "long",
-            "above",
-            "outside"
+            "king",
+            "these"
           ],
           "answer": "long",
           "explanation": "long: Something long goes a big way from end to end."
         },
         {
-          "prompt": "Which word means: Was means the same as is, but it already happened.",
+          "prompt": "Which word means: This word means those people or those things.",
           "choices": [
             "long",
-            "above",
-            "was"
+            "king",
+            "they"
           ],
-          "answer": "was",
-          "explanation": "was: Was means the same as is, but it already happened."
+          "answer": "they",
+          "explanation": "they: This word means those people or those things."
         },
         {
-          "prompt": "Which word means: A vehicle with two wheels that you ride by pedalling.",
+          "prompt": "Which word means: Shall is used to ask or say what will happen next.",
           "choices": [
-            "above",
-            "bicycle",
+            "king",
+            "shall",
             "long"
           ],
-          "answer": "bicycle",
-          "explanation": "bicycle: A vehicle with two wheels that you ride by pedalling."
+          "answer": "shall",
+          "explanation": "shall: Shall is used to ask or say what will happen next."
+        },
+        {
+          "prompt": "Which word means: A long vehicle that carries many people at once.",
+          "choices": [
+            "bus",
+            "long",
+            "king"
+          ],
+          "answer": "bus",
+          "explanation": "bus: A long vehicle that carries many people at once."
+        },
+        {
+          "prompt": "Which word means: To stay on top of water without sinking.",
+          "choices": [
+            "long",
+            "king",
+            "float"
+          ],
+          "answer": "float",
+          "explanation": "float: To stay on top of water without sinking."
+        },
+        {
+          "prompt": "Which word means: The colour of the sky and the deep sea.",
+          "choices": [
+            "king",
+            "blue",
+            "long"
+          ],
+          "answer": "blue",
+          "explanation": "blue: The colour of the sky and the deep sea."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Was means the same as is, but it already happened.",
-          "answer": "was"
+          "clue": "Him means that boy or man, used instead of saying his name.",
+          "answer": "him"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A vehicle with two wheels that you ride by pedalling.",
-          "answer": "bicycle"
+          "clue": "A swish is a soft, quick sound something makes as it moves.",
+          "answer": "swish"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A vehicle with four wheels that a family rides in.",
+          "answer": "car"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To stay on top of water without sinking.",
+          "answer": "float"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "In a higher place than something else, without touching it.",
+          "answer": "above"
         }
       ]
     },
@@ -95,12 +140,24 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "Adam.",
-            "was",
-            "name",
-            "His"
+            "morning.",
+            "every",
+            "sings",
+            "class",
+            "Our"
           ],
-          "answer": "His name was Adam."
+          "answer": "Our class sings every morning."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "please?",
+            "me,",
+            "help",
+            "you",
+            "Could"
+          ],
+          "answer": "Could you help me, please?"
         },
         {
           "prompt": "Build the complete model sentence.",
@@ -112,6 +169,30 @@
             "Lulu"
           ],
           "answer": "Lulu was a little swallow."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "clouds.",
+            "the",
+            "above",
+            "flies",
+            "plane",
+            "The"
+          ],
+          "answer": "The plane flies above the clouds."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "seat.",
+            "your",
+            "on",
+            "down",
+            "sit",
+            "Please"
+          ],
+          "answer": "Please sit down on your seat."
         }
       ]
     },
@@ -124,299 +205,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence tells where a car goes?",
+          "prompt": "Which word names a way to travel?",
           "choices": [
-            "It goes on the road.",
-            "It goes in the sky.",
-            "It goes on the sea.",
-            "It goes on the rails."
+            "window",
+            "apple",
+            "bus",
+            "cloud"
           ],
-          "answer": "It goes on the road.",
-          "explanation": "Cars drive on roads; the sea is for boats, the sky is for planes and the rails are for trains."
+          "answer": "bus",
+          "explanation": "You can travel in a bus; a window, an apple and a cloud do not take you anywhere."
         },
         {
-          "prompt": "Which word tells you that something moves very quickly?",
+          "prompt": "Which one travels on water?",
           "choices": [
-            "heavy",
-            "fast",
-            "slow",
-            "quiet"
+            "bicycle",
+            "train",
+            "bus",
+            "boat"
           ],
-          "answer": "fast",
-          "explanation": "Fast means quick; slow is the opposite, heavy tells weight and quiet tells sound."
+          "answer": "boat",
+          "explanation": "A boat goes on the water; a bus and a bicycle go on the road and a train goes on rails."
         },
         {
-          "prompt": "What should you do before you cross the road?",
+          "prompt": "Which one flies in the sky?",
           "choices": [
-            "Close your eyes.",
-            "Run across quickly.",
-            "Stop, look and listen.",
-            "Play on the road."
+            "plane",
+            "boat",
+            "train",
+            "car"
           ],
-          "answer": "Stop, look and listen.",
-          "explanation": "Stopping, looking and listening keeps you safe; the other choices are all dangerous."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What two colours was the big bus?",
-          "choices": [
-            "Yellow and red",
-            "She walked",
-            "She called out to her, and Amal ran and hugged her"
-          ],
-          "answer": "Yellow and red",
-          "explanation": "The story says a big bus came and it was yellow and red."
+          "answer": "plane",
+          "explanation": "A plane flies; a car and a train stay on the ground and a boat stays on the water."
         },
-        {
-          "prompt": "How did Amal travel first, before she went by bus?",
-          "choices": [
-            "Slow and bumpy",
-            "I go by ___. (for example: I go by bus.)",
-            "She walked"
-          ],
-          "answer": "She walked",
-          "explanation": "Mum says, 'First we walk. Then we go by bus.'"
-        },
-        {
-          "prompt": "How do we know Grandma was glad to see Amal?",
-          "choices": [
-            "It goes on the ___. (for example: on the road.)",
-            "She called out to her, and Amal ran and hugged her",
-            "Slow and bumpy"
-          ],
-          "answer": "She called out to her, and Amal ran and hugged her",
-          "explanation": "Grandma calls, 'Amal! You came to see me!' and Amal gives her a big hug."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 - Listen and point",
-          "target": "Point to transport pictures as an adult names them if one is nearby, or as the audio names them, then say your own."
-        },
-        {
-          "prompt": "Speaking 3 - Ask and answer",
-          "target": "Ask and answer about a busy street picture."
-        },
-        {
-          "prompt": "Speaking 5 - Role-play",
-          "target": "Role-play a bus ride with your friends."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "bus.",
-            "by",
-            "town",
-            "to",
-            "travel",
-            "We"
-          ],
-          "answer": "We travel to town by bus."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "bus.",
-            "the",
-            "on",
-            "ding",
-            "a",
-            "heard",
-            "I"
-          ],
-          "answer": "I heard a ding on the bus."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "side.",
-            "to",
-            "side",
-            "from",
-            "move",
-            "wipers",
-            "The"
-          ],
-          "answer": "The wipers move from side to side."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'what' mean in this unit?",
-          "choices": [
-            "This word asks about a thing.",
-            "Something long goes a big way from end to end.",
-            "In a higher place than something else, without touching it."
-          ],
-          "answer": "This word asks about a thing.",
-          "explanation": "what: This word asks about a thing."
-        },
-        {
-          "prompt": "What does 'bell' mean in this unit?",
-          "choices": [
-            "Something long goes a big way from end to end.",
-            "In a higher place than something else, without touching it.",
-            "A part that rings to tell people you are coming."
-          ],
-          "answer": "A part that rings to tell people you are coming.",
-          "explanation": "bell: A part that rings to tell people you are coming."
-        },
-        {
-          "prompt": "What does 'above' mean in this unit?",
-          "choices": [
-            "Outside means not inside a building.",
-            "In a higher place than something else, without touching it.",
-            "Something long goes a big way from end to end."
-          ],
-          "answer": "In a higher place than something else, without touching it.",
-          "explanation": "above: In a higher place than something else, without touching it."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'goodbye'?",
-          "choices": [
-            "Interjection",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Interjection",
-          "explanation": "Goodbye is used as an interjection in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'stop'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Stop is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'my'?",
-          "choices": [
-            "Verb",
-            "Pronoun",
-            "Noun"
-          ],
-          "answer": "Pronoun",
-          "explanation": "My is used as a pronoun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "ring",
-              "Ring means to make a clear, loud sound like a bell."
-            ],
-            [
-              "beside",
-              "Beside means next to something or someone."
-            ],
-            [
-              "my",
-              "A small word that shows something belongs to you."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "has",
-              "We use has with he, she and it to show that someone owns something."
-            ],
-            [
-              "back",
-              "Back means to move or turn towards where you started."
-            ],
-            [
-              "lake",
-              "A lake is a big area of water with land all around it."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "train",
-              "A long vehicle that travels on metal tracks."
-            ],
-            [
-              "fly",
-              "To move through the air, like a bird or a plane."
-            ],
-            [
-              "slow",
-              "Moving gently without hurrying, so you take a long time."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which one has only two wheels?",
           "choices": [
@@ -453,13 +273,508 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What two colours was the big bus?",
+          "choices": [
+            "Yellow and red",
+            "She walked",
+            "She called out to her, and Amal ran and hugged her"
+          ],
+          "answer": "Yellow and red",
+          "explanation": "The story says a big bus came and it was yellow and red."
+        },
+        {
+          "prompt": "Where did Amal sit on the bus?",
+          "choices": [
+            "Slow and bumpy",
+            "I go by ___. (for example: I go by bus.)",
+            "By the window"
+          ],
+          "answer": "By the window",
+          "explanation": "Mum says 'Find a seat,' and Amal found a seat by the window."
+        },
+        {
+          "prompt": "How did Amal travel first, before she went by bus?",
+          "choices": [
+            "It goes on the ___. (for example: on the road.)",
+            "She walked",
+            "Adam"
+          ],
+          "answer": "She walked",
+          "explanation": "Mum says, 'First we walk. Then we go by bus.'"
+        },
+        {
+          "prompt": "Who was riding a bicycle and waved at Amal?",
+          "choices": [
+            "Adam",
+            "She called out to her, and Amal ran and hugged her",
+            "Yellow and red"
+          ],
+          "answer": "Adam",
+          "explanation": "Amal sees a boy on a bicycle who waves, and his name was Adam."
+        },
+        {
+          "prompt": "How do we know Grandma was glad to see Amal?",
+          "choices": [
+            "I go by ___. (for example: I go by bus.)",
+            "By the window",
+            "She called out to her, and Amal ran and hugged her"
+          ],
+          "answer": "She called out to her, and Amal ran and hugged her",
+          "explanation": "Grandma calls, 'Amal! You came to see me!' and Amal gives her a big hug."
+        },
+        {
+          "prompt": "Which talk line tells how you travel?",
+          "choices": [
+            "She walked",
+            "I go by ___. (for example: I go by bus.)",
+            "It goes on the ___. (for example: on the road.)"
+          ],
+          "answer": "I go by ___. (for example: I go by bus.)",
+          "explanation": "'I go by ___' is the talk line for how you travel."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 - Listen and point",
+          "target": "Point to transport pictures as an adult names them if one is nearby, or as the audio names them, then say your own."
+        },
+        {
+          "prompt": "Speaking 2 - Repeat the model",
+          "target": "Copy the adult if one is nearby, or copy the audio model, then try a new vehicle by yourself."
+        },
+        {
+          "prompt": "Speaking 3 - Ask and answer",
+          "target": "Ask and answer about a busy street picture."
+        },
+        {
+          "prompt": "Speaking 4 - Picture talk",
+          "target": "Compare two vehicles in the picture with your partner."
+        },
+        {
+          "prompt": "Speaking 5 - Role-play",
+          "target": "Role-play a bus ride with your friends."
+        },
+        {
+          "prompt": "Speaking 6 - My confident turn",
+          "target": "Please sit down on your seat."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "us.",
+            "for",
+            "stops",
+            "bus",
+            "red",
+            "The"
+          ],
+          "answer": "The red bus stops for us."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "play.",
+            "to",
+            "outside",
+            "ran",
+            "Amal"
+          ],
+          "answer": "Amal ran outside to play."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bus.",
+            "the",
+            "on",
+            "ding",
+            "a",
+            "heard",
+            "I"
+          ],
+          "answer": "I heard a ding on the bus."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "short.",
+            "is",
+            "market",
+            "the",
+            "to",
+            "walk",
+            "My"
+          ],
+          "answer": "My walk to the market is short."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "side.",
+            "to",
+            "side",
+            "from",
+            "move",
+            "wipers",
+            "The"
+          ],
+          "answer": "The wipers move from side to side."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "us.",
+            "above",
+            "fast",
+            "flies",
+            "helicopter",
+            "The"
+          ],
+          "answer": "The helicopter flies fast above us."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'king' mean in this unit?",
+          "choices": [
+            "A man in stories who rules a whole country.",
+            "Something long goes a big way from end to end.",
+            "This word points to more than one thing close to you."
+          ],
+          "answer": "A man in stories who rules a whole country.",
+          "explanation": "king: A man in stories who rules a whole country."
+        },
+        {
+          "prompt": "What does 'be' mean in this unit?",
+          "choices": [
+            "Something long goes a big way from end to end.",
+            "A man in stories who rules a whole country.",
+            "Be means to exist or to happen."
+          ],
+          "answer": "Be means to exist or to happen.",
+          "explanation": "be: Be means to exist or to happen."
+        },
+        {
+          "prompt": "What does 'course' mean in this unit?",
+          "choices": [
+            "A man in stories who rules a whole country.",
+            "Of course means yes, in a sure and certain way.",
+            "Something long goes a big way from end to end."
+          ],
+          "answer": "Of course means yes, in a sure and certain way.",
+          "explanation": "course: Of course means yes, in a sure and certain way."
+        },
+        {
+          "prompt": "What does 'train' mean in this unit?",
+          "choices": [
+            "A long vehicle that travels on metal tracks.",
+            "Something long goes a big way from end to end.",
+            "A man in stories who rules a whole country."
+          ],
+          "answer": "A long vehicle that travels on metal tracks.",
+          "explanation": "train: A long vehicle that travels on metal tracks."
+        },
+        {
+          "prompt": "What does 'school' mean in this unit?",
+          "choices": [
+            "Something long goes a big way from end to end.",
+            "A man in stories who rules a whole country.",
+            "The place where children go to learn and play."
+          ],
+          "answer": "The place where children go to learn and play.",
+          "explanation": "school: The place where children go to learn and play."
+        },
+        {
+          "prompt": "What does 'below' mean in this unit?",
+          "choices": [
+            "A man in stories who rules a whole country.",
+            "Below means in a lower place than something else.",
+            "Something long goes a big way from end to end."
+          ],
+          "answer": "Below means in a lower place than something else.",
+          "explanation": "below: Below means in a lower place than something else."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'these'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "These is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'make'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Make is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'swallow'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Swallow is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'seat'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Seat is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'fast'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Fast is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'beside'?",
+          "choices": [
+            "Verb",
+            "Position",
+            "Noun"
+          ],
+          "answer": "Position",
+          "explanation": "Beside is used as a position in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "ring",
+              "Ring means to make a clear, loud sound like a bell."
+            ],
+            [
+              "these",
+              "This word points to more than one thing close to you."
+            ],
+            [
+              "our",
+              "This word means belonging to us."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "was",
+              "Was means the same as is, but it already happened."
+            ],
+            [
+              "make",
+              "To build or create something new with your hands."
+            ],
+            [
+              "beep",
+              "A beep is a short, sharp sound that a horn makes."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "ding",
+              "A ding is a short, ringing sound that a bell makes."
+            ],
+            [
+              "swallow",
+              "A swallow is a small bird with pointed wings that flies fast."
+            ],
+            [
+              "wings",
+              "Wings are the parts of a bird's body that it uses to fly."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "bicycle",
+              "A vehicle with two wheels that you ride by pedalling."
+            ],
+            [
+              "wheels",
+              "Round parts that turn so a vehicle can move."
+            ],
+            [
+              "drive",
+              "To make a car or bus go where you want."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "sit down",
+              "To put your body onto a chair or the floor."
+            ],
+            [
+              "up",
+              "Towards a higher place, like the sky above your head."
+            ],
+            [
+              "big",
+              "Large in size, taking up lots of space."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "yellow",
+              "The colour of the sun and school buses."
+            ],
+            [
+              "behind",
+              "Behind means at the back of something."
+            ],
+            [
+              "near",
+              "Close to something, only a short walk away."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Sami comes to school in a bus. Which sentence is correct?",
+          "choices": [
+            "I go by buses.",
+            "I go bus.",
+            "I by go bus.",
+            "I go by bus."
+          ],
+          "answer": "I go by bus.",
+          "explanation": "We say I go by bus for one bus; the other sentences have the words in the wrong order or the wrong form."
+        },
+        {
+          "prompt": "Which sentence tells where a car goes?",
+          "choices": [
+            "It goes on the road.",
+            "It goes in the sky.",
+            "It goes on the sea.",
+            "It goes on the rails."
+          ],
+          "answer": "It goes on the road.",
+          "explanation": "Cars drive on roads; the sea is for boats, the sky is for planes and the rails are for trains."
+        },
+        {
+          "prompt": "Which word tells you that something moves very quickly?",
+          "choices": [
+            "heavy",
+            "fast",
+            "slow",
+            "quiet"
+          ],
+          "answer": "fast",
+          "explanation": "Fast means quick; slow is the opposite, heavy tells weight and quiet tells sound."
+        },
+        {
+          "prompt": "What should you do before you cross the road?",
+          "choices": [
+            "Close your eyes.",
+            "Run across quickly.",
+            "Stop, look and listen.",
+            "Play on the road."
+          ],
+          "answer": "Stop, look and listen.",
+          "explanation": "Stopping, looking and listening keeps you safe; the other choices are all dangerous."
+        },
+        {
+          "prompt": "Which word completes the sentence: We are ___ to the market.",
+          "choices": [
+            "walker",
+            "walked",
+            "walk",
+            "walking"
+          ],
+          "answer": "walking",
+          "explanation": "After we are we use the -ing word walking to show it is happening now."
+        },
         {
           "prompt": "Which word names a way to travel?",
           "choices": [
@@ -470,28 +785,78 @@
           ],
           "answer": "bus",
           "explanation": "You can travel in a bus; a window, an apple and a cloud do not take you anywhere."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "What should you do before you cross the road?",
+          "choices": [
+            "Close your eyes.",
+            "Run across quickly.",
+            "Stop, look and listen.",
+            "Play on the road."
+          ],
+          "answer": "Stop, look and listen.",
+          "explanation": "Stopping, looking and listening keeps you safe; the other choices are all dangerous."
         },
         {
-          "prompt": "Which one travels on water?",
+          "prompt": "Which word completes the sentence: We are ___ to the market.",
           "choices": [
-            "bicycle",
-            "train",
-            "bus",
-            "boat"
+            "walker",
+            "walked",
+            "walk",
+            "walking"
           ],
-          "answer": "boat",
-          "explanation": "A boat goes on the water; a bus and a bicycle go on the road and a train goes on rails."
+          "answer": "walking",
+          "explanation": "After we are we use the -ing word walking to show it is happening now."
         },
         {
-          "prompt": "Which one flies in the sky?",
+          "prompt": "Which word means: This word means belonging to a boy or a man.",
           "choices": [
-            "plane",
-            "boat",
-            "train",
-            "car"
+            "his",
+            "long",
+            "king"
           ],
-          "answer": "plane",
-          "explanation": "A plane flies; a car and a train stay on the ground and a boat stays on the water."
+          "answer": "his",
+          "explanation": "his: This word means belonging to a boy or a man."
+        },
+        {
+          "prompt": "Which word means: Of course means yes, in a sure and certain way.",
+          "choices": [
+            "long",
+            "king",
+            "course"
+          ],
+          "answer": "course",
+          "explanation": "course: Of course means yes, in a sure and certain way."
+        },
+        {
+          "prompt": "What type of word is 'wipers'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Wipers is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'below'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Position"
+          ],
+          "answer": "Position",
+          "explanation": "Below is used as a position in this dictionary sense."
         }
       ]
     }

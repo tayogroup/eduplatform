@@ -5,7 +5,7 @@
   "unitId": "eng-g06-t03-u09",
   "title": "Amazing Arts Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The power to form new ideas or pictures in your mind that are not in front of you.",
           "choices": [
             "imagination",
-            "discursive",
-            "tremendous"
+            "boundary",
+            "rural"
           ],
           "answer": "imagination",
           "explanation": "imagination: The power to form new ideas or pictures in your mind that are not in front of you."
         },
         {
-          "prompt": "Which word means: To reach a place after travelling, or for something to finally happen.",
+          "prompt": "Which word means: The first page you reach on a website.",
           "choices": [
             "imagination",
-            "discursive",
-            "arrive"
+            "boundary",
+            "homepage"
           ],
-          "answer": "arrive",
-          "explanation": "arrive: To reach a place after travelling, or for something to finally happen."
+          "answer": "homepage",
+          "explanation": "homepage: The first page you reach on a website."
         },
         {
-          "prompt": "Which word means: To suffer badly or die because of not having enough food.",
+          "prompt": "Which word means: Large paintings made directly on walls, often showing scenes or pictures.",
           "choices": [
-            "discursive",
-            "starve",
+            "boundary",
+            "murals",
             "imagination"
           ],
-          "answer": "starve",
-          "explanation": "starve: To suffer badly or die because of not having enough food."
+          "answer": "murals",
+          "explanation": "murals: Large paintings made directly on walls, often showing scenes or pictures."
+        },
+        {
+          "prompt": "Which word means: A dirty, untidy or disorganised state of something.",
+          "choices": [
+            "mess",
+            "imagination",
+            "boundary"
+          ],
+          "answer": "mess",
+          "explanation": "mess: A dirty, untidy or disorganised state of something."
+        },
+        {
+          "prompt": "Which word means: Gave up something valuable in order to achieve or help something more important.",
+          "choices": [
+            "imagination",
+            "boundary",
+            "sacrificed"
+          ],
+          "answer": "sacrificed",
+          "explanation": "sacrificed: Gave up something valuable in order to achieve or help something more important."
+        },
+        {
+          "prompt": "Which word means: To change something into a different form or appearance.",
+          "choices": [
+            "boundary",
+            "transform",
+            "imagination"
+          ],
+          "answer": "transform",
+          "explanation": "transform: To change something into a different form or appearance."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "The parts of a town or city that are furthest from its centre.",
-          "answer": "outskirts"
+          "clue": "A word or image you click to jump to another page.",
+          "answer": "hyperlink"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A sum of money given by an organisation to help pay for a particular project.",
-          "answer": "grant"
+          "clue": "Large paintings made directly on walls, often showing scenes or pictures.",
+          "answer": "murals"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "One of two children born to the same mother at the same time.",
+          "answer": "twin"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Decayed plant material that is added to soil to help plants grow better.",
+          "answer": "compost"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "To move to a different place.",
+          "answer": "relocate"
         }
       ]
     },
@@ -99,38 +144,76 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "garden.",
-            "a",
-            "into",
-            "valley",
-            "dusty",
-            "a",
-            "turned",
-            "trying",
-            "keep",
-            "to",
-            "willingness",
-            "Their"
+            "symmetry.",
+            "perfect",
+            "show",
+            "wings",
+            "butterfly's",
+            "A"
           ],
-          "answer": "Their willingness to keep trying turned a dusty valley into a garden."
+          "answer": "A butterfly's wings show perfect symmetry."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "down.",
-            "knocked",
-            "had",
-            "storm",
+            "private.",
+            "login",
+            "your",
+            "Keep"
+          ],
+          "answer": "Keep your login private."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "painted.",
+            "being",
+            "mural",
             "the",
-            "tree",
-            "every",
-            "replant",
+            "watch",
             "to",
-            "promised",
-            "students",
+            "out",
+            "came",
+            "neighbourhood",
+            "whole",
             "The"
           ],
-          "answer": "The students promised to replant every tree the storm had knocked down."
+          "answer": "The whole neighbourhood came out to watch the mural being painted."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "drought.",
+            "long",
+            "the",
+            "during",
+            "badly",
+            "suffered",
+            "orchard",
+            "old",
+            "The"
+          ],
+          "answer": "The old orchard suffered badly during the long drought."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "years.",
+            "for",
+            "village",
+            "the",
+            "of",
+            "edge",
+            "the",
+            "at",
+            "empty",
+            "stood",
+            "had",
+            "storehouse",
+            "old",
+            "The"
+          ],
+          "answer": "The old storehouse had stood empty at the edge of the village for years."
         }
       ]
     },
@@ -143,307 +226,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'The Children of Wind Valley, part 1': Now it is close to the _____.\" Tariq nodded.",
+          "prompt": "What does 'deforestation' mean?",
           "choices": [
-            "sacrifice",
-            "deforestation",
-            "landscape",
-            "subtropics"
+            "A type of plant with a strong, fresh smell and taste, often used in teas and sweets.",
+            "The area of land just below the tropics, where the weather is warm and sometimes dry.",
+            "The height of something above sea level or ground level.",
+            "The process of cutting down or removing trees from a forest or area of land."
           ],
-          "answer": "subtropics",
-          "explanation": "The text says: Now it is close to the subtropics.\" Tariq nodded."
+          "answer": "The process of cutting down or removing trees from a forest or area of land.",
+          "explanation": "Deforestation can harm animals that live in the trees and cause floods."
         },
         {
-          "prompt": "Choose the missing word from 'The Children of Wind Valley, part 1': And the _____ plants are gone.\" They sat on a rock overlooking the valley.",
+          "prompt": "What does 'landscape' mean?",
           "choices": [
-            "preserve",
-            "peppermint",
-            "reform",
-            "activism"
+            "A machine that uses the movement of air or water to create energy or power.",
+            "A type of plant with a strong, fresh smell and taste, often used in teas and sweets.",
+            "The area of land just below the tropics, where the weather is warm and sometimes dry.",
+            "The visible features of an area of land, including mountains, trees, and water."
           ],
-          "answer": "peppermint",
-          "explanation": "The text says: And the peppermint plants are gone.\" They sat on a rock overlooking the valley."
+          "answer": "The visible features of an area of land, including mountains, trees, and water.",
+          "explanation": "The landscape was beautiful, with tall mountains and green fields."
         },
         {
-          "prompt": "Choose the missing word from 'The Children of Wind Valley, part 1': Nature is not just space; it is memory.\" They visited a local farm with a wind _____.",
+          "prompt": "What does 'altitude' mean?",
           "choices": [
-            "altitude",
-            "turbine",
-            "deforestation",
-            "landscape"
+            "A machine that uses the movement of air or water to create energy or power.",
+            "A type of plant with a strong, fresh smell and taste, often used in teas and sweets.",
+            "The height of something above sea level or ground level.",
+            "To make changes to something in order to improve it."
           ],
-          "answer": "turbine",
-          "explanation": "The text says: They visited a local farm with a wind turbine."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to the passage, what three kinds of change did young people make in the three places it describes?",
-          "choices": [
-            "They turned broken objects into beautiful instruments, empty walls into colourful murals, and a dusty valley into a thriving green space.",
-            "Lusinga was once famous for its cool climate, its wildflowers, and the strong winds that whispered through the hills.",
-            "The shopkeeper said the project was just school talk and not real, and one man shouted at them to stop blaming people for cutting trees, asking whether they wanted him to starve."
-          ],
-          "answer": "They turned broken objects into beautiful instruments, empty walls into colourful murals, and a dusty valley into a thriving green space.",
-          "explanation": "The second paragraph gives the three examples: instruments from broken objects, murals on empty walls, and a green space in a dusty valley."
+          "answer": "The height of something above sea level or ground level.",
+          "explanation": "The aeroplane flew at a high altitude, far above the clouds."
         },
-        {
-          "prompt": "What was the village of Lusinga once famous for?",
-          "choices": [
-            "They named it the Ridge Replanting Project and planned to build a small wind farm, a tree nursery, and a learning centre.",
-            "The letter showed that their work had inspired others, because a school in Rwanda had heard about the project and wanted to start something similar.",
-            "Lusinga was once famous for its cool climate, its wildflowers, and the strong winds that whispered through the hills."
-          ],
-          "answer": "Lusinga was once famous for its cool climate, its wildflowers, and the strong winds that whispered through the hills.",
-          "explanation": "The first paragraph describes the valley's cool climate, wildflowers and whispering winds before the land began to suffer."
-        },
-        {
-          "prompt": "Not everyone supported the children. What did the shopkeeper and one man say?",
-          "choices": [
-            "They turned broken objects into beautiful instruments, empty walls into colourful murals, and a dusty valley into a thriving green space.",
-            "The shopkeeper said the project was just school talk and not real, and one man shouted at them to stop blaming people for cutting trees, asking whether they wanted him to starve.",
-            "They named it the Ridge Replanting Project and planned to build a small wind farm, a tree nursery, and a learning centre."
-          ],
-          "answer": "The shopkeeper said the project was just school talk and not real, and one man shouted at them to stop blaming people for cutting trees, asking whether they wanted him to starve.",
-          "explanation": "Part two records the shopkeeper dismissing the project and an angry man defending the cutting of trees."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Vocabulary Expert Interview",
-          "target": "A painter needs imagination and a great deal of patience."
-        },
-        {
-          "prompt": "Speaking 3: Four-Minute Unit Talk",
-          "target": "Their willingness to keep trying turned a dusty valley into a garden."
-        },
-        {
-          "prompt": "Speaking 5: Retell the Story",
-          "target": "The students promised to replant every tree the storm had knocked down."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "together.",
-            "learn",
-            "countries",
-            "different",
-            "many",
-            "from",
-            "students",
-            "because",
-            "pluralistic",
-            "is",
-            "school",
-            "Our"
-          ],
-          "answer": "Our school is pluralistic because students from many different countries learn together."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "useful.",
-            "still",
-            "but",
-            "worn",
-            "were",
-            "brushes",
-            "donated",
-            "The"
-          ],
-          "answer": "The donated brushes were worn but still useful."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "compost.",
-            "carry",
-            "helped",
-            "elders",
-            "and",
-            "holes",
-            "dug",
-            "Students"
-          ],
-          "answer": "Students dug holes and elders helped carry compost."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'soon' mean in this unit?",
-          "choices": [
-            "In a short time from now, or happening quickly after something else.",
-            "The power to form new ideas or pictures in your mind that are not in front of you.",
-            "Discussing a subject from several sides rather than arguing one."
-          ],
-          "answer": "In a short time from now, or happening quickly after something else.",
-          "explanation": "soon: In a short time from now, or happening quickly after something else."
-        },
-        {
-          "prompt": "What does 'fluttered' mean in this unit?",
-          "choices": [
-            "The power to form new ideas or pictures in your mind that are not in front of you.",
-            "Discussing a subject from several sides rather than arguing one.",
-            "Moved lightly and quickly, especially by flapping wings or fluttering in a breeze."
-          ],
-          "answer": "Moved lightly and quickly, especially by flapping wings or fluttering in a breeze.",
-          "explanation": "fluttered: Moved lightly and quickly, especially by flapping wings or fluttering in a breeze."
-        },
-        {
-          "prompt": "What does 'discursive' mean in this unit?",
-          "choices": [
-            "Very great in size, amount, or force.",
-            "Discussing a subject from several sides rather than arguing one.",
-            "The power to form new ideas or pictures in your mind that are not in front of you."
-          ],
-          "answer": "Discussing a subject from several sides rather than arguing one.",
-          "explanation": "discursive: Discussing a subject from several sides rather than arguing one."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'sing'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Sing is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'occasional'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Occasional is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'packet'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Packet is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "organisation",
-              "A group of people who work together for a common purpose."
-            ],
-            [
-              "decisive",
-              "Settling something firmly, or able to decide quickly."
-            ],
-            [
-              "paintbrush",
-              "A tool with bristles on a handle, used for putting paint onto a surface."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "decorate",
-              "To make something look more attractive by adding colour or design to it."
-            ],
-            [
-              "adjective",
-              "A word that describes a noun, telling us more about it."
-            ],
-            [
-              "graph",
-              "A diagram that uses lines, bars or points to show how numbers change or compare."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "grant",
-              "A sum of money given by an organisation to help pay for a particular project."
-            ],
-            [
-              "caring",
-              "Looking after someone or something and feeling concerned about their wellbeing."
-            ],
-            [
-              "analyse",
-              "To look closely at something to understand it better."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'subtropics' mean?",
           "choices": [
@@ -480,34 +294,62 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'deforestation' mean?",
+          "prompt": "According to the passage, what three kinds of change did young people make in the three places it describes?",
           "choices": [
-            "A type of plant with a strong, fresh smell and taste, often used in teas and sweets.",
-            "The area of land just below the tropics, where the weather is warm and sometimes dry.",
-            "The height of something above sea level or ground level.",
-            "The process of cutting down or removing trees from a forest or area of land."
+            "They turned broken objects into beautiful instruments, empty walls into colourful murals, and a dusty valley into a thriving green space.",
+            "Lusinga was once famous for its cool climate, its wildflowers, and the strong winds that whispered through the hills.",
+            "The letter showed that their work had inspired others, because a school in Rwanda had heard about the project and wanted to start something similar."
           ],
-          "answer": "The process of cutting down or removing trees from a forest or area of land.",
-          "explanation": "Deforestation can harm animals that live in the trees and cause floods."
+          "answer": "They turned broken objects into beautiful instruments, empty walls into colourful murals, and a dusty valley into a thriving green space.",
+          "explanation": "The second paragraph gives the three examples: instruments from broken objects, murals on empty walls, and a green space in a dusty valley."
         },
         {
-          "prompt": "What does 'landscape' mean?",
+          "prompt": "What problem did the Mural Makers notice about the walls along the main road?",
           "choices": [
-            "A machine that uses the movement of air or water to create energy or power.",
-            "A type of plant with a strong, fresh smell and taste, often used in teas and sweets.",
-            "The area of land just below the tropics, where the weather is warm and sometimes dry.",
-            "The visible features of an area of land, including mountains, trees, and water."
+            "They named it the Ridge Replanting Project and planned to build a small wind farm, a tree nursery, and a learning centre.",
+            "They turned broken objects into beautiful instruments, empty walls into colourful murals, and a dusty valley into a thriving green space.",
+            "The walls were cracked, grey, and covered in dust, and nothing about the street felt welcoming."
           ],
-          "answer": "The visible features of an area of land, including mountains, trees, and water.",
-          "explanation": "The landscape was beautiful, with tall mountains and green fields."
+          "answer": "The walls were cracked, grey, and covered in dust, and nothing about the street felt welcoming.",
+          "explanation": "In the second paragraph the teenagers see cracked, dusty walls where families walk past quickly."
+        },
+        {
+          "prompt": "What was the village of Lusinga once famous for?",
+          "choices": [
+            "The walls were cracked, grey, and covered in dust, and nothing about the street felt welcoming.",
+            "Lusinga was once famous for its cool climate, its wildflowers, and the strong winds that whispered through the hills.",
+            "The letter showed that their work had inspired others, because a school in Rwanda had heard about the project and wanted to start something similar."
+          ],
+          "answer": "Lusinga was once famous for its cool climate, its wildflowers, and the strong winds that whispered through the hills.",
+          "explanation": "The first paragraph describes the valley's cool climate, wildflowers and whispering winds before the land began to suffer."
+        },
+        {
+          "prompt": "What did the group name their project, and what did they plan to build?",
+          "choices": [
+            "They named it the Ridge Replanting Project and planned to build a small wind farm, a tree nursery, and a learning centre.",
+            "They turned broken objects into beautiful instruments, empty walls into colourful murals, and a dusty valley into a thriving green space.",
+            "Lusinga was once famous for its cool climate, its wildflowers, and the strong winds that whispered through the hills."
+          ],
+          "answer": "They named it the Ridge Replanting Project and planned to build a small wind farm, a tree nursery, and a learning centre.",
+          "explanation": "In part two the group launches the Ridge Replanting Project with plans for a wind farm, a nursery and a learning centre."
+        },
+        {
+          "prompt": "Why was the letter from the school in Rwanda important to the children?",
+          "choices": [
+            "The walls were cracked, grey, and covered in dust, and nothing about the street felt welcoming.",
+            "They named it the Ridge Replanting Project and planned to build a small wind farm, a tree nursery, and a learning centre.",
+            "The letter showed that their work had inspired others, because a school in Rwanda had heard about the project and wanted to start something similar."
+          ],
+          "answer": "The letter showed that their work had inspired others, because a school in Rwanda had heard about the project and wanted to start something similar.",
+          "explanation": "The Rwanda letter proves the project's influence had spread beyond Wind Valley to another school."
         },
         {
           "prompt": "What does 'altitude' mean?",
@@ -519,6 +361,550 @@
           ],
           "answer": "The height of something above sea level or ground level.",
           "explanation": "The aeroplane flew at a high altitude, far above the clouds."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Vocabulary Expert Interview",
+          "target": "A painter needs imagination and a great deal of patience."
+        },
+        {
+          "prompt": "Speaking 2: Explain and Respond",
+          "target": "A butterfly's wings show perfect symmetry."
+        },
+        {
+          "prompt": "Speaking 3: Four-Minute Unit Talk",
+          "target": "Keep your login private."
+        },
+        {
+          "prompt": "Speaking 4: Community Debate",
+          "target": "paint does not feed families."
+        },
+        {
+          "prompt": "Speaking 5: Retell the Story",
+          "target": "The old orchard suffered badly during the long drought."
+        },
+        {
+          "prompt": "Speaking 6: Motto Presentation",
+          "target": "The old storehouse had stood empty at the edge of the village for years."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rain.",
+            "the",
+            "after",
+            "sunshine",
+            "warm",
+            "the",
+            "in",
+            "flourished",
+            "flowers",
+            "The"
+          ],
+          "answer": "The flowers flourished in the warm sunshine after the rain."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "turbine.",
+            "new",
+            "the",
+            "for",
+            "platform",
+            "concrete",
+            "circular",
+            "wide",
+            "a",
+            "planned",
+            "They"
+          ],
+          "answer": "They planned a wide circular concrete platform for the new turbine."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "routine.",
+            "daily",
+            "the",
+            "of",
+            "part",
+            "became",
+            "trees",
+            "young",
+            "the",
+            "Watering"
+          ],
+          "answer": "Watering the young trees became part of the daily routine."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "trees.",
+            "evergreen",
+            "tall",
+            "by",
+            "surrounded",
+            "once",
+            "was",
+            "valley",
+            "The"
+          ],
+          "answer": "The valley was once surrounded by tall evergreen trees."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "proposal.",
+            "their",
+            "in",
+            "platform",
+            "concrete",
+            "circular",
+            "wide",
+            "a",
+            "described",
+            "They"
+          ],
+          "answer": "They described a wide circular concrete platform in their proposal."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "light.",
+            "evening",
+            "golden",
+            "in",
+            "bathed",
+            "hills",
+            "rolling",
+            "of",
+            "landscape",
+            "stunning",
+            "a",
+            "painted",
+            "artist",
+            "The"
+          ],
+          "answer": "The artist painted a stunning landscape of rolling hills bathed in golden evening light."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'boundary' mean in this unit?",
+          "choices": [
+            "A line that shows where one area ends and another begins.",
+            "The power to form new ideas or pictures in your mind that are not in front of you.",
+            "Relating to the countryside, rather than a city or town."
+          ],
+          "answer": "A line that shows where one area ends and another begins.",
+          "explanation": "boundary: A line that shows where one area ends and another begins."
+        },
+        {
+          "prompt": "What does 'security' mean in this unit?",
+          "choices": [
+            "The power to form new ideas or pictures in your mind that are not in front of you.",
+            "A line that shows where one area ends and another begins.",
+            "Protection against harm, theft or unwanted access."
+          ],
+          "answer": "Protection against harm, theft or unwanted access.",
+          "explanation": "security: Protection against harm, theft or unwanted access."
+        },
+        {
+          "prompt": "What does 'decorate' mean in this unit?",
+          "choices": [
+            "A line that shows where one area ends and another begins.",
+            "To make something look more attractive by adding colour or design to it.",
+            "The power to form new ideas or pictures in your mind that are not in front of you."
+          ],
+          "answer": "To make something look more attractive by adding colour or design to it.",
+          "explanation": "decorate: To make something look more attractive by adding colour or design to it."
+        },
+        {
+          "prompt": "What does 'cent' mean in this unit?",
+          "choices": [
+            "A hundredth part of something, most often used in the phrase per cent.",
+            "The power to form new ideas or pictures in your mind that are not in front of you.",
+            "A line that shows where one area ends and another begins."
+          ],
+          "answer": "A hundredth part of something, most often used in the phrase per cent.",
+          "explanation": "cent: A hundredth part of something, most often used in the phrase per cent."
+        },
+        {
+          "prompt": "What does 'principal' mean in this unit?",
+          "choices": [
+            "The power to form new ideas or pictures in your mind that are not in front of you.",
+            "A line that shows where one area ends and another begins.",
+            "The person in charge of a school, sometimes called a head teacher."
+          ],
+          "answer": "The person in charge of a school, sometimes called a head teacher.",
+          "explanation": "principal: The person in charge of a school, sometimes called a head teacher."
+        },
+        {
+          "prompt": "What does 'pun' mean in this unit?",
+          "choices": [
+            "A line that shows where one area ends and another begins.",
+            "A joke that plays on two meanings of one word.",
+            "The power to form new ideas or pictures in your mind that are not in front of you."
+          ],
+          "answer": "A joke that plays on two meanings of one word.",
+          "explanation": "pun: A joke that plays on two meanings of one word."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'rural'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Rural is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'connection'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Connection is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'leftover'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Leftover is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'nursery'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Nursery is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'subtropics'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Subtropics is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'transcript'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Transcript is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "organisation",
+              "A group of people who work together for a common purpose."
+            ],
+            [
+              "settlement",
+              "A place where people have built homes and live together."
+            ],
+            [
+              "interval",
+              "The time between two events."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "icon",
+              "A small picture that stands for a program or a file."
+            ],
+            [
+              "wireless",
+              "Working without wires, by sending signals through the air."
+            ],
+            [
+              "inspire",
+              "To give someone an idea, feeling or confidence to do something creative or brave."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "willingness",
+              "A readiness or eagerness to do something, even when it is difficult."
+            ],
+            [
+              "outskirts",
+              "The parts of a town or city that are furthest from its centre."
+            ],
+            [
+              "mix",
+              "To combine two or more things together to make something new."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "stumps",
+              "The short parts of tree trunks left standing after a tree is cut down."
+            ],
+            [
+              "left",
+              "Remained after everything or everyone else had gone or been taken away."
+            ],
+            [
+              "starve",
+              "To suffer badly or die because of not having enough food."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "transformation",
+              "A complete and often surprising change in the form, appearance or nature of something."
+            ],
+            [
+              "deforestation",
+              "The process of cutting down or removing trees from a forest or area of land."
+            ],
+            [
+              "flourished",
+              "To grow or develop in a healthy way; to be successful."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "absolute",
+              "Something that is complete and not limited in any way."
+            ],
+            [
+              "discursive",
+              "Discussing a subject from several sides rather than arguing one."
+            ],
+            [
+              "intermediate",
+              "In the middle, between two stages or levels."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Mural Makers of Mogadishu': The mural showed a _____ of green hills, a bright sun, and children planting trees together.",
+          "choices": [
+            "turbine",
+            "reform",
+            "landscape",
+            "peppermint"
+          ],
+          "answer": "landscape",
+          "explanation": "The text says: The mural showed a landscape of green hills, a bright sun, and children planting trees together."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Children of Wind Valley, part 1': Now it is close to the _____.\" Tariq nodded.",
+          "choices": [
+            "sacrifice",
+            "deforestation",
+            "landscape",
+            "subtropics"
+          ],
+          "answer": "subtropics",
+          "explanation": "The text says: Now it is close to the subtropics.\" Tariq nodded."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Children of Wind Valley, part 1': And the _____ plants are gone.\" They sat on a rock overlooking the valley.",
+          "choices": [
+            "preserve",
+            "peppermint",
+            "reform",
+            "activism"
+          ],
+          "answer": "peppermint",
+          "explanation": "The text says: And the peppermint plants are gone.\" They sat on a rock overlooking the valley."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Children of Wind Valley, part 1': Nature is not just space; it is memory.\" They visited a local farm with a wind _____.",
+          "choices": [
+            "altitude",
+            "turbine",
+            "deforestation",
+            "landscape"
+          ],
+          "answer": "turbine",
+          "explanation": "The text says: They visited a local farm with a wind turbine."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Children of Wind Valley, part 2': Especially your section on _____.\" She showed them her notes.",
+          "choices": [
+            "landscape",
+            "altitude",
+            "subtropics",
+            "reform"
+          ],
+          "answer": "reform",
+          "explanation": "The text says: Especially your section on reform.\" She showed them her notes."
+        },
+        {
+          "prompt": "What does 'deforestation' mean?",
+          "choices": [
+            "A type of plant with a strong, fresh smell and taste, often used in teas and sweets.",
+            "The area of land just below the tropics, where the weather is warm and sometimes dry.",
+            "The height of something above sea level or ground level.",
+            "The process of cutting down or removing trees from a forest or area of land."
+          ],
+          "answer": "The process of cutting down or removing trees from a forest or area of land.",
+          "explanation": "Deforestation can harm animals that live in the trees and cause floods."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Children of Wind Valley, part 1': Nature is not just space; it is memory.\" They visited a local farm with a wind _____.",
+          "choices": [
+            "altitude",
+            "turbine",
+            "deforestation",
+            "landscape"
+          ],
+          "answer": "turbine",
+          "explanation": "The text says: They visited a local farm with a wind turbine."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Children of Wind Valley, part 2': Especially your section on _____.\" She showed them her notes.",
+          "choices": [
+            "landscape",
+            "altitude",
+            "subtropics",
+            "reform"
+          ],
+          "answer": "reform",
+          "explanation": "The text says: Especially your section on reform.\" She showed them her notes."
+        },
+        {
+          "prompt": "Which word means: One complete turn around a centre or axis.",
+          "choices": [
+            "rotation",
+            "imagination",
+            "boundary"
+          ],
+          "answer": "rotation",
+          "explanation": "rotation: One complete turn around a centre or axis."
+        },
+        {
+          "prompt": "Which word means: To make something look more attractive by adding colour or design to it.",
+          "choices": [
+            "imagination",
+            "boundary",
+            "decorate"
+          ],
+          "answer": "decorate",
+          "explanation": "decorate: To make something look more attractive by adding colour or design to it."
+        },
+        {
+          "prompt": "What type of word is 'starve'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Starve is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'pun'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Pun is used as a noun in this dictionary sense."
         }
       ]
     }

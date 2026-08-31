@@ -5,7 +5,7 @@
   "unitId": "eng-g02-t01-u03",
   "title": "Ready, Steady, Go! Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: To keep means to have something and not give it away.",
           "choices": [
             "keep",
-            "wake",
-            "heavy"
+            "move",
+            "finish"
           ],
           "answer": "keep",
           "explanation": "keep: To keep means to have something and not give it away."
         },
         {
-          "prompt": "Which word means: To play means to have fun with games or toys.",
+          "prompt": "Which word means: A smile is the happy shape your mouth makes when you are pleased.",
           "choices": [
             "keep",
-            "wake",
-            "play"
+            "move",
+            "smile"
           ],
-          "answer": "play",
-          "explanation": "play: To play means to have fun with games or toys."
+          "answer": "smile",
+          "explanation": "smile: A smile is the happy shape your mouth makes when you are pleased."
         },
         {
-          "prompt": "Which word means: Cheering means shouting happily to show support for someone.",
+          "prompt": "Which word means: Earlier means before the usual time.",
           "choices": [
-            "wake",
-            "cheering",
+            "move",
+            "earlier",
             "keep"
           ],
-          "answer": "cheering",
-          "explanation": "cheering: Cheering means shouting happily to show support for someone."
+          "answer": "earlier",
+          "explanation": "earlier: Earlier means before the usual time."
+        },
+        {
+          "prompt": "Which word means: A relay is a race where each person on a team runs one part before the next person runs.",
+          "choices": [
+            "relay",
+            "keep",
+            "move"
+          ],
+          "answer": "relay",
+          "explanation": "relay: A relay is a race where each person on a team runs one part before the next person runs."
+        },
+        {
+          "prompt": "Which word means: A noise is a sound that you can hear.",
+          "choices": [
+            "keep",
+            "move",
+            "noise"
+          ],
+          "answer": "noise",
+          "explanation": "noise: A noise is a sound that you can hear."
+        },
+        {
+          "prompt": "Which word means: To move your head up and down to show that you agree.",
+          "choices": [
+            "move",
+            "nod",
+            "keep"
+          ],
+          "answer": "nod",
+          "explanation": "nod: To move your head up and down to show that you agree."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A banana is a long yellow fruit that you peel before eating.",
-          "answer": "banana"
+          "clue": "A throw is when a player sends something like a ball through the air.",
+          "answer": "throw"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Won means you came first or did the best in a race, game or competition.",
-          "answer": "won"
+          "clue": "Special means not ordinary, and different in a good way.",
+          "answer": "special"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Faster means moving with more speed than someone or something else.",
+          "answer": "faster"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Fair means right and equal for everyone, following the rules.",
+          "answer": "fair"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The clear drink that your body needs every single day.",
+          "answer": "water"
         }
       ]
     },
@@ -97,31 +142,69 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "song.",
+            "far.",
+            "very",
+            "ball",
             "the",
-            "during",
-            "action",
-            "funny",
-            "a",
-            "did",
-            "Sami"
+            "kick",
+            "can",
+            "Adam"
           ],
-          "answer": "Sami did a funny action during the song."
+          "answer": "Adam can kick the ball very far."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "race.",
-            "hop",
+            "banana.",
             "the",
-            "in",
-            "way",
-            "whole",
-            "the",
-            "hopped",
-            "Zuri"
+            "about",
+            "heard",
+            "he",
+            "when",
+            "grinned",
+            "Theo"
           ],
-          "answer": "Zuri hopped the whole way in the hop race."
+          "answer": "Theo grinned when he heard about the banana."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "head.",
+            "her",
+            "above",
+            "high",
+            "flag",
+            "her",
+            "waving",
+            "is",
+            "Amal"
+          ],
+          "answer": "Amal is waving her flag high above her head."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "fall.",
+            "to",
+            "began",
+            "rain",
+            "the",
+            "Suddenly,"
+          ],
+          "answer": "Suddenly, the rain began to fall."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "field.",
+            "the",
+            "across",
+            "ball",
+            "the",
+            "threw",
+            "Sami"
+          ],
+          "answer": "Sami threw the ball across the field."
         }
       ]
     },
@@ -134,301 +217,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which of these helps your body stay healthy and strong?",
+          "prompt": "Which word means the part at the end of your arm, with fingers?",
           "choices": [
-            "Watching television all day",
-            "Sitting still for many hours",
-            "Staying awake all night",
-            "Drinking water every day"
+            "hand",
+            "water",
+            "sleep",
+            "energy"
           ],
-          "answer": "Drinking water every day",
-          "explanation": "Water helps your body work well. The other three choices keep your body still or tired."
+          "answer": "hand",
+          "explanation": "A hand sits at the end of each arm. Water, sleep and energy are health words, not body parts."
         },
         {
-          "prompt": "In the poem “Reach for the Sky!”, where do you put your finger?",
+          "prompt": "Sami holds his pencil with his ____s.",
           "choices": [
-            "On your knee",
-            "On your ear",
-            "On your nose",
-            "On your elbow"
+            "toe",
+            "finger",
+            "water",
+            "turn"
           ],
-          "answer": "On your nose",
-          "explanation": "Line three of the poem says, “Put your finger on your nose.” The other body parts are not in the poem."
+          "answer": "finger",
+          "explanation": "We hold a pencil between our fingers and thumb. Toes are on your feet, and water and turn are not body parts of the hand."
         },
         {
-          "prompt": "In “The Big Race”, why did Theo fall over?",
+          "prompt": "Which word means to jump up and down on one foot?",
           "choices": [
-            "He was waving to the crowd and did not watch his feet.",
-            "He tripped over a big bag that somebody had left on the grass.",
-            "He stopped in the middle of the race to drink his water.",
-            "He was helping Amal to stand up again after her fall."
+            "clap",
+            "water",
+            "hop",
+            "head"
           ],
-          "answer": "He was waving to the crowd and did not watch his feet.",
-          "explanation": "The story says Theo was so busy waving that he did not look at his feet, and then he tripped."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Which line of the poem is said at the beginning and then again at the end?",
-          "choices": [
-            "“Reach for the sky!”",
-            "It helps you stay strong.",
-            "She shouted, “Keep going, Leo!”"
-          ],
-          "answer": "“Reach for the sky!”",
-          "explanation": "Poems often repeat a line. Here the poem opens with “Reach for the sky!” and the last line finishes with the same words."
+          "answer": "hop",
+          "explanation": "Hopping uses one foot only. Clapping uses hands, water is a drink, and head is a body part."
         },
-        {
-          "prompt": "What is the special day at school called in this listening text?",
-          "choices": [
-            "It helps you stay strong.",
-            "He was waving to the crowd, so he did not look at his feet.",
-            "“Get Up and Move” day."
-          ],
-          "answer": "“Get Up and Move” day.",
-          "explanation": "The text names the day."
-        },
-        {
-          "prompt": "Why did Theo trip and fall in the relay race?",
-          "choices": [
-            "She walked back and helped Theo stand up. Any reason that uses the story, such as Theo looking sad or rubbing his hurt knee.",
-            "He was waving to the crowd, so he did not look at his feet.",
-            "Eating healthy food."
-          ],
-          "answer": "He was waving to the crowd, so he did not look at his feet.",
-          "explanation": "The story says Theo was so busy waving that he did not watch where he was running, and then he tripped."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Naming Body Parts",
-          "target": "This is my ______."
-        },
-        {
-          "prompt": "Speaking Game — Leader Says",
-          "target": "The leader says, touch your toes!"
-        },
-        {
-          "prompt": "Speaking 5 — Healthy Habit Interview",
-          "target": "What exercise do you enjoy?"
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "shelf.",
-            "top",
-            "the",
-            "for",
-            "reaching",
-            "was",
-            "Sami"
-          ],
-          "answer": "Sami was reaching for the top shelf."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "school?",
-            "at",
-            "day",
-            "normal",
-            "a",
-            "today",
-            "Was"
-          ],
-          "answer": "Was today a normal day at school?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "play.",
-            "and",
-            "move",
-            "to",
-            "day",
-            "another",
-            "is",
-            "Tomorrow"
-          ],
-          "answer": "Tomorrow is another day to move and play."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'special' mean in this unit?",
-          "choices": [
-            "Special means not ordinary, and different in a good way.",
-            "To keep means to have something and not give it away.",
-            "To wake means to stop sleeping and open your eyes."
-          ],
-          "answer": "Special means not ordinary, and different in a good way.",
-          "explanation": "special: Special means not ordinary, and different in a good way."
-        },
-        {
-          "prompt": "What does 'ostrich' mean in this unit?",
-          "choices": [
-            "To keep means to have something and not give it away.",
-            "To wake means to stop sleeping and open your eyes.",
-            "An ostrich is a very large bird with long legs that cannot fly."
-          ],
-          "answer": "An ostrich is a very large bird with long legs that cannot fly.",
-          "explanation": "ostrich: An ostrich is a very large bird with long legs that cannot fly."
-        },
-        {
-          "prompt": "What does 'wake' mean in this unit?",
-          "choices": [
-            "Hard to lift because it weighs a lot.",
-            "To wake means to stop sleeping and open your eyes.",
-            "To keep means to have something and not give it away."
-          ],
-          "answer": "To wake means to stop sleeping and open your eyes.",
-          "explanation": "wake: To wake means to stop sleeping and open your eyes."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'relay'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Relay is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'wave'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Wave is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'along'?",
-          "choices": [
-            "Verb",
-            "Preposition",
-            "Noun"
-          ],
-          "answer": "Preposition",
-          "explanation": "Along is used as a preposition in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "cool",
-              "Cool means a little bit cold, but not too cold."
-            ],
-            [
-              "strong",
-              "Having lots of power in your body or your muscles."
-            ],
-            [
-              "learn",
-              "Learn means to find out how to do something new."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "banana",
-              "A banana is a long yellow fruit that you peel before eating."
-            ],
-            [
-              "bounce",
-              "To bounce means to spring up again after hitting something."
-            ],
-            [
-              "hopped",
-              "Hopped means jumped on one foot."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "rubbing",
-              "Rubbing means moving your hand back and forth over something, often because it hurts."
-            ],
-            [
-              "ball",
-              "A ball is a round object that you can throw, kick or bounce."
-            ],
-            [
-              "tummy",
-              "The front part of your body below your chest, also called the stomach."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sentence uses the present continuous correctly?",
           "choices": [
@@ -465,13 +285,515 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Which line of the poem is said at the beginning and then again at the end?",
+          "choices": [
+            "“Reach for the sky!”",
+            "It helps you stay strong.",
+            "She shouted, “Keep going, Leo!”"
+          ],
+          "answer": "“Reach for the sky!”",
+          "explanation": "Poems often repeat a line. Here the poem opens with “Reach for the sky!” and the last line finishes with the same words."
+        },
+        {
+          "prompt": "According to the text, what does moving your body every day help you to do?",
+          "choices": [
+            "Eating healthy food.",
+            "He was waving to the crowd, so he did not look at his feet.",
+            "It helps you stay strong."
+          ],
+          "answer": "It helps you stay strong.",
+          "explanation": "The text says that moving your body every day helps you stay strong."
+        },
+        {
+          "prompt": "What is the special day at school called in this listening text?",
+          "choices": [
+            "She walked back and helped Theo stand up. Any reason that uses the story, such as Theo looking sad or rubbing his hurt knee.",
+            "“Get Up and Move” day.",
+            "Eating healthy food."
+          ],
+          "answer": "“Get Up and Move” day.",
+          "explanation": "The text names the day."
+        },
+        {
+          "prompt": "What special day is it at Amal's school?",
+          "choices": [
+            "It is sports day.",
+            "Drinking water helps your body work well, and getting enough sleep helps you grow.",
+            "Her tummy felt full of butterflies and she felt worried, but she kept running as fast as she could."
+          ],
+          "answer": "It is sports day.",
+          "explanation": "The story opens by telling you that it was sports day at Amal's school."
+        },
+        {
+          "prompt": "Why did Theo trip and fall in the relay race?",
+          "choices": [
+            "“Get Up and Move” day.",
+            "That kindness and effort matter more than crossing the line first.",
+            "He was waving to the crowd, so he did not look at his feet."
+          ],
+          "answer": "He was waving to the crowd, so he did not look at his feet.",
+          "explanation": "The story says Theo was so busy waving that he did not watch where he was running, and then he tripped."
+        },
+        {
+          "prompt": "How did Amal feel when her legs felt slow, and what did she do instead of giving up?",
+          "choices": [
+            "Any personal example that names the hard thing, says what you did to keep going, and says how it ended.",
+            "Her tummy felt full of butterflies and she felt worried, but she kept running as fast as she could.",
+            "Healthy and strong."
+          ],
+          "answer": "Her tummy felt full of butterflies and she felt worried, but she kept running as fast as she could.",
+          "explanation": "The butterflies in her tummy show her nerves, and her own words show that she carried on running."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Naming Body Parts",
+          "target": "This is my ______."
+        },
+        {
+          "prompt": "Speaking 2 — Describing Actions",
+          "target": "Do an action, and while you are still doing it say what is happening."
+        },
+        {
+          "prompt": "Speaking Game — Leader Says",
+          "target": "The leader says, touch your toes!"
+        },
+        {
+          "prompt": "Speaking 4 — Movement Coach",
+          "target": "Reach for the sky."
+        },
+        {
+          "prompt": "Speaking 5 — Healthy Habit Interview",
+          "target": "What exercise do you enjoy?"
+        },
+        {
+          "prompt": "Speaking 6 — Sports Reporter",
+          "target": "Theo is waving to the crowd."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "rains.",
+            "it",
+            "when",
+            "puddles",
+            "the",
+            "over",
+            "jump",
+            "We"
+          ],
+          "answer": "We jump over the puddles when it rains."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "illness.",
+            "an",
+            "with",
+            "school",
+            "of",
+            "week",
+            "a",
+            "missed",
+            "Leo"
+          ],
+          "answer": "Leo missed a week of school with an illness."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "lesson?",
+            "the",
+            "during",
+            "thoughtful",
+            "Sami",
+            "Was"
+          ],
+          "answer": "Was Sami thoughtful during the lesson?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "most?",
+            "the",
+            "race",
+            "the",
+            "enjoyed",
+            "Who"
+          ],
+          "answer": "Who enjoyed the race the most?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "bit.",
+            "little",
+            "a",
+            "by",
+            "race",
+            "running",
+            "the",
+            "won",
+            "Theo"
+          ],
+          "answer": "Theo won the running race by a little bit."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "once.",
+            "at",
+            "wiggling",
+            "all",
+            "were",
+            "fingers",
+            "Ten"
+          ],
+          "answer": "Ten fingers were all wiggling at once."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'move' mean in this unit?",
+          "choices": [
+            "To move means to go from one place to another.",
+            "To keep means to have something and not give it away.",
+            "To finish means to come to the end of something."
+          ],
+          "answer": "To move means to go from one place to another.",
+          "explanation": "move: To move means to go from one place to another."
+        },
+        {
+          "prompt": "What does 'ruler' mean in this unit?",
+          "choices": [
+            "To keep means to have something and not give it away.",
+            "To move means to go from one place to another.",
+            "A flat tool with marks on it for measuring and drawing straight lines."
+          ],
+          "answer": "A flat tool with marks on it for measuring and drawing straight lines.",
+          "explanation": "ruler: A flat tool with marks on it for measuring and drawing straight lines."
+        },
+        {
+          "prompt": "What does 'hoops' mean in this unit?",
+          "choices": [
+            "To move means to go from one place to another.",
+            "Hoops are round rings that you can jump over or through.",
+            "To keep means to have something and not give it away."
+          ],
+          "answer": "Hoops are round rings that you can jump over or through.",
+          "explanation": "hoops: Hoops are round rings that you can jump over or through."
+        },
+        {
+          "prompt": "What does 'crowd' mean in this unit?",
+          "choices": [
+            "A crowd is a large group of people gathered together in one place.",
+            "To keep means to have something and not give it away.",
+            "To move means to go from one place to another."
+          ],
+          "answer": "A crowd is a large group of people gathered together in one place.",
+          "explanation": "crowd: A crowd is a large group of people gathered together in one place."
+        },
+        {
+          "prompt": "What does 'hers' mean in this unit?",
+          "choices": [
+            "To keep means to have something and not give it away.",
+            "To move means to go from one place to another.",
+            "Hers means that something belongs to a girl or woman."
+          ],
+          "answer": "Hers means that something belongs to a girl or woman.",
+          "explanation": "hers: Hers means that something belongs to a girl or woman."
+        },
+        {
+          "prompt": "What does 'drop' mean in this unit?",
+          "choices": [
+            "To move means to go from one place to another.",
+            "Drop means to let something fall from your hand.",
+            "To keep means to have something and not give it away."
+          ],
+          "answer": "Drop means to let something fall from your hand.",
+          "explanation": "drop: Drop means to let something fall from your hand."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'finish'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Finish is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'park'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Park is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'brother'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Brother is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'cheering'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Cheering is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'reaching'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Reaching is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'alive'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Alive is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "cool",
+              "Cool means a little bit cold, but not too cold."
+            ],
+            [
+              "sick",
+              "Sick means feeling unwell or having an illness."
+            ],
+            [
+              "catch",
+              "Catch means to grab hold of something moving through the air."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "throw",
+              "A throw is when a player sends something like a ball through the air."
+            ],
+            [
+              "run",
+              "To run means to move very fast on your feet."
+            ],
+            [
+              "clue",
+              "A clue is a hint that helps you guess the answer."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "special",
+              "Special means not ordinary, and different in a good way."
+            ],
+            [
+              "hopping",
+              "Hopping means jumping on one foot again and again."
+            ],
+            [
+              "dance",
+              "A dance is a way of moving your body to music."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "slow",
+              "Slow means not moving very fast."
+            ],
+            [
+              "rolled",
+              "Rolled means something moved along by turning over and over, like a ball."
+            ],
+            [
+              "highest",
+              "Highest means reaching further up than anything else."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "fair",
+              "Fair means right and equal for everyone, following the rules."
+            ],
+            [
+              "wrong",
+              "Wrong means not right or not correct."
+            ],
+            [
+              "finger",
+              "One of the five long parts at the end of your hand."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "touch",
+              "To put your hand or your finger onto something."
+            ],
+            [
+              "healthy",
+              "Strong and well, and not feeling ill."
+            ],
+            [
+              "illness",
+              "An illness is when your body is unwell for a while."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which of these sentences is a command?",
+          "choices": [
+            "Touch your toes.",
+            "My toes are cold.",
+            "Are your toes cold?",
+            "I am touching my toes."
+          ],
+          "answer": "Touch your toes.",
+          "explanation": "A command starts with the action word and tells someone to do something. The others describe, ask or report."
+        },
+        {
+          "prompt": "Which of these helps your body stay healthy and strong?",
+          "choices": [
+            "Watching television all day",
+            "Sitting still for many hours",
+            "Staying awake all night",
+            "Drinking water every day"
+          ],
+          "answer": "Drinking water every day",
+          "explanation": "Water helps your body work well. The other three choices keep your body still or tired."
+        },
+        {
+          "prompt": "In the poem “Reach for the Sky!”, where do you put your finger?",
+          "choices": [
+            "On your knee",
+            "On your ear",
+            "On your nose",
+            "On your elbow"
+          ],
+          "answer": "On your nose",
+          "explanation": "Line three of the poem says, “Put your finger on your nose.” The other body parts are not in the poem."
+        },
+        {
+          "prompt": "In “The Big Race”, why did Theo fall over?",
+          "choices": [
+            "He was waving to the crowd and did not watch his feet.",
+            "He tripped over a big bag that somebody had left on the grass.",
+            "He stopped in the middle of the race to drink his water.",
+            "He was helping Amal to stand up again after her fall."
+          ],
+          "answer": "He was waving to the crowd and did not watch his feet.",
+          "explanation": "The story says Theo was so busy waving that he did not look at his feet, and then he tripped."
+        },
+        {
+          "prompt": "What does the word energy mean?",
+          "choices": [
+            "One of the small parts at the end of your foot.",
+            "To move your head up and down to say yes.",
+            "The power you get from food and rest to play and learn.",
+            "To stretch your arm out to something."
+          ],
+          "answer": "The power you get from food and rest to play and learn.",
+          "explanation": "Energy is what food and rest give you. The other three options describe a toe, nodding and reaching."
+        },
         {
           "prompt": "Which word means the part at the end of your arm, with fingers?",
           "choices": [
@@ -482,28 +804,78 @@
           ],
           "answer": "hand",
           "explanation": "A hand sits at the end of each arm. Water, sleep and energy are health words, not body parts."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "In “The Big Race”, why did Theo fall over?",
+          "choices": [
+            "He was waving to the crowd and did not watch his feet.",
+            "He tripped over a big bag that somebody had left on the grass.",
+            "He stopped in the middle of the race to drink his water.",
+            "He was helping Amal to stand up again after her fall."
+          ],
+          "answer": "He was waving to the crowd and did not watch his feet.",
+          "explanation": "The story says Theo was so busy waving that he did not look at his feet, and then he tripped."
         },
         {
-          "prompt": "Sami holds his pencil with his ____s.",
+          "prompt": "What does the word energy mean?",
           "choices": [
-            "toe",
-            "finger",
-            "water",
-            "turn"
+            "One of the small parts at the end of your foot.",
+            "To move your head up and down to say yes.",
+            "The power you get from food and rest to play and learn.",
+            "To stretch your arm out to something."
           ],
-          "answer": "finger",
-          "explanation": "We hold a pencil between our fingers and thumb. Toes are on your feet, and water and turn are not body parts of the hand."
+          "answer": "The power you get from food and rest to play and learn.",
+          "explanation": "Energy is what food and rest give you. The other three options describe a toe, nodding and reaching."
         },
         {
-          "prompt": "Which word means to jump up and down on one foot?",
+          "prompt": "Which word means: Catch means to grab hold of something moving through the air.",
           "choices": [
-            "clap",
-            "water",
-            "hop",
-            "head"
+            "catch",
+            "keep",
+            "move"
           ],
-          "answer": "hop",
-          "explanation": "Hopping uses one foot only. Clapping uses hands, water is a drink, and head is a body part."
+          "answer": "catch",
+          "explanation": "catch: Catch means to grab hold of something moving through the air."
+        },
+        {
+          "prompt": "Which word means: Hoops are round rings that you can jump over or through.",
+          "choices": [
+            "keep",
+            "move",
+            "hoops"
+          ],
+          "answer": "hoops",
+          "explanation": "hoops: Hoops are round rings that you can jump over or through."
+        },
+        {
+          "prompt": "What type of word is 'highest'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Highest is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'drop'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Drop is used as a verb in this dictionary sense."
         }
       ]
     }

@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t02-u04",
   "title": "Advertising and Persuasion Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Spreading control out from the centre to smaller units.",
           "choices": [
             "decentralisation",
-            "modality",
-            "dubbed"
+            "debunk",
+            "urbanisation"
           ],
           "answer": "decentralisation",
           "explanation": "decentralisation: Spreading control out from the centre to smaller units."
         },
         {
-          "prompt": "Which word means: Absolutely necessary; something that cannot be left out or done without.",
+          "prompt": "Which word means: Centuries are periods of one hundred years each, used to describe very long stretches of time.",
           "choices": [
             "decentralisation",
-            "modality",
-            "essential"
+            "debunk",
+            "centuries"
           ],
-          "answer": "essential",
-          "explanation": "essential: Absolutely necessary; something that cannot be left out or done without."
+          "answer": "centuries",
+          "explanation": "centuries: Centuries are periods of one hundred years each, used to describe very long stretches of time."
         },
         {
-          "prompt": "Which word means: The chance that something particular will or will not happen.",
+          "prompt": "Which word means: The way a person acts or responds in a particular situation.",
           "choices": [
-            "modality",
-            "odds",
+            "debunk",
+            "behaviour",
             "decentralisation"
           ],
-          "answer": "odds",
-          "explanation": "odds: The chance that something particular will or will not happen."
+          "answer": "behaviour",
+          "explanation": "behaviour: The way a person acts or responds in a particular situation."
+        },
+        {
+          "prompt": "Which word means: Assumes means accepts something as true without checking or asking for proof.",
+          "choices": [
+            "assumes",
+            "decentralisation",
+            "debunk"
+          ],
+          "answer": "assumes",
+          "explanation": "assumes: Assumes means accepts something as true without checking or asking for proof."
+        },
+        {
+          "prompt": "Which word means: Saying or thinking that someone is responsible for something bad that happened.",
+          "choices": [
+            "decentralisation",
+            "debunk",
+            "blaming"
+          ],
+          "answer": "blaming",
+          "explanation": "blaming: Saying or thinking that someone is responsible for something bad that happened."
+        },
+        {
+          "prompt": "Which word means: A gentle, light wind that feels pleasant rather than strong or cold.",
+          "choices": [
+            "debunk",
+            "breeze",
+            "decentralisation"
+          ],
+          "answer": "breeze",
+          "explanation": "breeze: A gentle, light wind that feels pleasant rather than strong or cold."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Relating to the government or to the process of governing a country.",
-          "answer": "political"
+          "clue": "A booster is something that increases or improves the strength, energy, or effect of something else.",
+          "answer": "booster"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To feel very confident that something is true, often said informally.",
-          "answer": "bet"
+          "clue": "The number one thousand million, written as 1,000,000,000.",
+          "answer": "billion"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A theme is the main subject or idea that runs through a piece of work or an event.",
+          "answer": "theme"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Became smaller in size, amount, or strength than it was before.",
+          "answer": "shrank"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The act or system of sorting and storing documents in order.",
+          "answer": "filing"
         }
       ]
     },
@@ -98,38 +143,86 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "Friday.",
-            "on",
-            "time",
-            "free",
-            "extra",
-            "students",
+            "ended.",
+            "even",
+            "sale",
             "the",
-            "earned",
-            "class",
-            "in",
-            "behaviour",
-            "Good"
+            "before",
+            "stock",
+            "of",
+            "out",
+            "ran",
+            "shop",
+            "The"
           ],
-          "answer": "Good behaviour in class earned the students extra free time on Friday."
+          "answer": "The shop ran out of stock before the sale even ended."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "down.",
-            "team",
-            "his",
-            "letting",
-            "after",
-            "shame",
-            "of",
-            "sense",
-            "deep",
-            "a",
-            "felt",
-            "Rohan"
+            "worked.",
+            "actually",
+            "drink",
+            "the",
+            "that",
+            "proof",
+            "real",
+            "no",
+            "offered",
+            "advert",
+            "The"
           ],
-          "answer": "Rohan felt a deep sense of shame after letting his team down."
+          "answer": "The advert offered no real proof that the drink actually worked."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "again.",
+            "and",
+            "again",
+            "advert",
+            "the",
+            "seeing",
+            "after",
+            "phone",
+            "new",
+            "a",
+            "wanting",
+            "kept",
+            "She"
+          ],
+          "answer": "She kept wanting a new phone after seeing the advert again and again."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "glitchy.",
+            "little",
+            "a",
+            "still",
+            "but",
+            "clever",
+            "was",
+            "drone",
+            "waste-sorting",
+            "Their"
+          ],
+          "answer": "Their waste-sorting drone was clever but still a little glitchy."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "danger.",
+            "from",
+            "body",
+            "soft",
+            "its",
+            "protects",
+            "shell",
+            "turtle's",
+            "A"
+          ],
+          "answer": "A turtle's shell protects its soft body from danger."
         }
       ]
     },
@@ -142,311 +235,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from Code Name: Bonanza, part 1: Imani felt the _____ diminish. Their odds shrank like morning mist.",
+          "prompt": "What does 'aptitude' mean?",
           "choices": [
-            "momentum",
-            "demeanor",
-            "bonanza",
-            "concession"
+            "The way a person behaves or shows their feelings.",
+            "A natural ability to do something well.",
+            "Enjoyment or enthusiasm in doing something.",
+            "Something that is given up or allowed in order to reach an agreement."
           ],
-          "answer": "momentum",
-          "explanation": "The text says: Imani felt the momentum diminish. Momentum is the force of something moving forward, which is exactly what the failed demo drained away."
+          "answer": "A natural ability to do something well.",
+          "explanation": "Aptitude is a natural talent, as in the story where Imani is known for her sharp aptitude in algorithms; the other options define demeanor, gusto and concession."
         },
         {
-          "prompt": "Choose the missing word from Code Name: Bonanza, part 2: \"We did our best,\" she said, refusing to be drawn into his _____ games.",
+          "prompt": "What does 'concession' mean?",
           "choices": [
-            "attentive",
-            "intricate",
-            "indifferent",
-            "insolent"
+            "Something that is given up or allowed in order to reach an agreement.",
+            "The force or speed of something moving, especially when it is getting faster.",
+            "A person or group that opposes or fights against another.",
+            "An agreement or harmony between people or groups."
           ],
-          "answer": "insolent",
-          "explanation": "The text says: refusing to be drawn into his insolent games. Insolent means rude and disrespectful, which matches Nadir's taunt about panicking."
+          "answer": "Something that is given up or allowed in order to reach an agreement.",
+          "explanation": "A concession is something surrendered to reach a deal, like Nadir's offer to collaborate next year; the other options define momentum, adversary and accord."
         },
         {
-          "prompt": "Choose the missing word from Code Name: Bonanza, part 2: The room felt _____, suddenly full of promise. Empty space had become opportunity.",
+          "prompt": "What does 'obsolete' mean?",
           "choices": [
-            "desolate",
-            "apprehensive",
-            "capacious",
-            "pungent"
+            "Difficult to find, catch, or achieve.",
+            "Having a lot of space; able to hold a lot of things.",
+            "No longer used or needed because something newer exists.",
+            "Paying close attention to something or someone."
           ],
-          "answer": "capacious",
-          "explanation": "The text says: The room felt capacious, suddenly full of promise. Capacious means roomy and able to hold a great deal; desolate would contradict the hopeful mood."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "According to The Power of Persuasion, what three tools do modern advertisers use to target specific audiences?",
-          "choices": [
-            "Modern advertisers use psychology, data analysis and visual design to aim their messages at specific audiences.",
-            "Their project was a waste-sorting drone, and it was glitchy because it sometimes confused recyclable plastic with food waste.",
-            "She refused because the team had no proof, and she said that without proof the rumours were just noise."
-          ],
-          "answer": "Modern advertisers use psychology, data analysis and visual design to aim their messages at specific audiences.",
-          "explanation": "The paragraph explaining that modern advertising is more intricate than a market trader's shouting says advertisers use psychology, data analysis and visual design to target audiences."
+          "answer": "No longer used or needed because something newer exists.",
+          "explanation": "Obsolete describes things replaced by newer inventions, such as the fax machines discussed in the Before and After activity; the other options define elusive, capacious and attentive."
         },
-        {
-          "prompt": "In the interview, what did the advert claim about the trainers Zara bought, and what did she discover after buying them?",
-          "choices": [
-            "The judges said Team Spark impressed them not only with innovation but with transparency and teamwork, demonstrating growth, strategy and an eye for ethical application.",
-            "Modern advertisers use psychology, data analysis and visual design to aim their messages at specific audiences.",
-            "The advert called them the most comfortable shoes ever made, but when Zara bought them they were not as comfortable as the advert claimed."
-          ],
-          "answer": "The advert called them the most comfortable shoes ever made, but when Zara bought them they were not as comfortable as the advert claimed.",
-          "explanation": "Zara says the advert called the trainers 'the most comfortable shoes ever made', but after buying them she found they were not as comfortable as it claimed."
-        },
-        {
-          "prompt": "How did the judges explain their decision to award first place to Team Spark?",
-          "choices": [
-            "The advert called them the most comfortable shoes ever made, but when Zara bought them they were not as comfortable as the advert claimed.",
-            "The judges said Team Spark impressed them not only with innovation but with transparency and teamwork, demonstrating growth, strategy and an eye for ethical application.",
-            "She refused because the team had no proof, and she said that without proof the rumours were just noise."
-          ],
-          "answer": "The judges said Team Spark impressed them not only with innovation but with transparency and teamwork, demonstrating growth, strategy and an eye for ethical application.",
-          "explanation": "The judges say Team Spark impressed them with transparency and teamwork as well as innovation, showing growth, strategy and ethical thinking, which is why they placed first."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: My Advertising Story",
-          "target": "Decentralisation moved the decisions closer to the people affected."
-        },
-        {
-          "prompt": "Speaking 3: Six-Minute Ethics Argument",
-          "target": "Good behaviour in class earned the students extra free time on Friday."
-        },
-        {
-          "prompt": "Speaking 5: Calm Authority Read-Aloud",
-          "target": "Perform Imani's pitch script from the story — The drone is launched by solar timing."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "metal.",
-            "strong",
-            "light,",
-            "a",
-            "from",
-            "made",
-            "was",
-            "frame",
-            "drone's",
-            "The"
-          ],
-          "answer": "The drone's frame was made from a light, strong metal."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "school.",
-            "at",
-            "handwashing",
-            "encourage",
-            "to",
-            "posters",
-            "persuasive",
-            "used",
-            "campaign",
-            "health",
-            "The"
-          ],
-          "answer": "The health campaign used persuasive posters to encourage handwashing at school."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "bins.",
-            "labelled",
-            "into",
-            "items",
-            "sorting",
-            "dream,",
-            "a",
-            "like",
-            "hovered",
-            "drone",
-            "Their"
-          ],
-          "answer": "Their drone hovered like a dream, sorting items into labelled bins."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'influencers' mean in this unit?",
-          "choices": [
-            "Influencers are people, often on social media, who can affect what their followers think, buy or believe.",
-            "Spreading control out from the centre to smaller units.",
-            "How certain or obligatory a statement is made to sound."
-          ],
-          "answer": "Influencers are people, often on social media, who can affect what their followers think, buy or believe.",
-          "explanation": "influencers: Influencers are people, often on social media, who can affect what their followers think, buy or believe."
-        },
-        {
-          "prompt": "What does 'approval' mean in this unit?",
-          "choices": [
-            "Spreading control out from the centre to smaller units.",
-            "How certain or obligatory a statement is made to sound.",
-            "A feeling or expression of agreement that something is good."
-          ],
-          "answer": "A feeling or expression of agreement that something is good.",
-          "explanation": "approval: A feeling or expression of agreement that something is good."
-        },
-        {
-          "prompt": "What does 'modality' mean in this unit?",
-          "choices": [
-            "To be dubbed something means to be given a particular name or nickname.",
-            "How certain or obligatory a statement is made to sound.",
-            "Spreading control out from the centre to smaller units."
-          ],
-          "answer": "How certain or obligatory a statement is made to sound.",
-          "explanation": "modality: How certain or obligatory a statement is made to sound."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'shame'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Shame is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'accord'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Accord is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'principle'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Principle is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "disinformation",
-              "False information spread deliberately to deceive people."
-            ],
-            [
-              "trader",
-              "A trader is a person who buys and sells goods, often in a market or shop."
-            ],
-            [
-              "toothpaste",
-              "Toothpaste is a paste used with a toothbrush to clean teeth."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "billion",
-              "The number one thousand million, written as 1,000,000,000."
-            ],
-            [
-              "regulation",
-              "A regulation is an official rule made by an authority to control how something is done."
-            ],
-            [
-              "battlefield",
-              "A battlefield is a place of intense conflict, or a scene of fierce competition or argument."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "slammed",
-              "Put something down or shut something suddenly, forcefully, and loudly."
-            ],
-            [
-              "tense",
-              "Anxious, nervous, or unable to relax because of stress or worry."
-            ],
-            [
-              "aptitude",
-              "A natural ability to do something well."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'gusto' mean?",
           "choices": [
@@ -483,34 +303,62 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'aptitude' mean?",
+          "prompt": "According to The Power of Persuasion, what three tools do modern advertisers use to target specific audiences?",
           "choices": [
-            "The way a person behaves or shows their feelings.",
-            "A natural ability to do something well.",
-            "Enjoyment or enthusiasm in doing something.",
-            "Something that is given up or allowed in order to reach an agreement."
+            "Modern advertisers use psychology, data analysis and visual design to aim their messages at specific audiences.",
+            "Their project was a waste-sorting drone, and it was glitchy because it sometimes confused recyclable plastic with food waste.",
+            "She refused because the team had no proof, and she said that without proof the rumours were just noise."
           ],
-          "answer": "A natural ability to do something well.",
-          "explanation": "Aptitude is a natural talent, as in the story where Imani is known for her sharp aptitude in algorithms; the other options define demeanor, gusto and concession."
+          "answer": "Modern advertisers use psychology, data analysis and visual design to aim their messages at specific audiences.",
+          "explanation": "The paragraph explaining that modern advertising is more intricate than a market trader's shouting says advertisers use psychology, data analysis and visual design to target audiences."
         },
         {
-          "prompt": "What does 'concession' mean?",
+          "prompt": "In the interview, what did the advert claim about the trainers Zara bought, and what did she discover after buying them?",
           "choices": [
-            "Something that is given up or allowed in order to reach an agreement.",
-            "The force or speed of something moving, especially when it is getting faster.",
-            "A person or group that opposes or fights against another.",
-            "An agreement or harmony between people or groups."
+            "The judges said Team Spark impressed them not only with innovation but with transparency and teamwork, demonstrating growth, strategy and an eye for ethical application.",
+            "Modern advertisers use psychology, data analysis and visual design to aim their messages at specific audiences.",
+            "The advert called them the most comfortable shoes ever made, but when Zara bought them they were not as comfortable as the advert claimed."
           ],
-          "answer": "Something that is given up or allowed in order to reach an agreement.",
-          "explanation": "A concession is something surrendered to reach a deal, like Nadir's offer to collaborate next year; the other options define momentum, adversary and accord."
+          "answer": "The advert called them the most comfortable shoes ever made, but when Zara bought them they were not as comfortable as the advert claimed.",
+          "explanation": "Zara says the advert called the trainers 'the most comfortable shoes ever made', but after buying them she found they were not as comfortable as it claimed."
+        },
+        {
+          "prompt": "What was Team Spark's project, and what problem did it have before the Wednesday demo?",
+          "choices": [
+            "The advert called them the most comfortable shoes ever made, but when Zara bought them they were not as comfortable as the advert claimed.",
+            "Their project was a waste-sorting drone, and it was glitchy because it sometimes confused recyclable plastic with food waste.",
+            "She refused because the team had no proof, and she said that without proof the rumours were just noise."
+          ],
+          "answer": "Their project was a waste-sorting drone, and it was glitchy because it sometimes confused recyclable plastic with food waste.",
+          "explanation": "Early in the story you learn Team Spark built a waste-sorting drone that kept confusing recyclable plastic for food waste, which made it glitchy before the demo."
+        },
+        {
+          "prompt": "How did the judges explain their decision to award first place to Team Spark?",
+          "choices": [
+            "The judges said Team Spark impressed them not only with innovation but with transparency and teamwork, demonstrating growth, strategy and an eye for ethical application.",
+            "Modern advertisers use psychology, data analysis and visual design to aim their messages at specific audiences.",
+            "Their project was a waste-sorting drone, and it was glitchy because it sometimes confused recyclable plastic with food waste."
+          ],
+          "answer": "The judges said Team Spark impressed them not only with innovation but with transparency and teamwork, demonstrating growth, strategy and an eye for ethical application.",
+          "explanation": "The judges say Team Spark impressed them with transparency and teamwork as well as innovation, showing growth, strategy and ethical thinking, which is why they placed first."
+        },
+        {
+          "prompt": "Why did Imani refuse to report Team Horizon when rumours spread that they had copied elements from online builds?",
+          "choices": [
+            "The advert called them the most comfortable shoes ever made, but when Zara bought them they were not as comfortable as the advert claimed.",
+            "The judges said Team Spark impressed them not only with innovation but with transparency and teamwork, demonstrating growth, strategy and an eye for ethical application.",
+            "She refused because the team had no proof, and she said that without proof the rumours were just noise."
+          ],
+          "answer": "She refused because the team had no proof, and she said that without proof the rumours were just noise.",
+          "explanation": "Imani tells Rohan they should only report Team Horizon if they have proof, because without proof the rumours are just noise, showing she wants solid evidence, not gossip."
         },
         {
           "prompt": "What does 'obsolete' mean?",
@@ -522,6 +370,553 @@
           ],
           "answer": "No longer used or needed because something newer exists.",
           "explanation": "Obsolete describes things replaced by newer inventions, such as the fax machines discussed in the Before and After activity; the other options define elusive, capacious and attentive."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: My Advertising Story",
+          "target": "Decentralisation moved the decisions closer to the people affected."
+        },
+        {
+          "prompt": "Speaking 2: Regulation Debate",
+          "target": "Debate this question with a partner or your AI tutor: should governments create stricter rules for advertising on social media?"
+        },
+        {
+          "prompt": "Speaking 3: Six-Minute Ethics Argument",
+          "target": "The advert offered no real proof that the drink actually worked."
+        },
+        {
+          "prompt": "Speaking 4: The Advertising Pitch Challenge",
+          "target": "She kept wanting a new phone after seeing the advert again and again."
+        },
+        {
+          "prompt": "Speaking 5: Calm Authority Read-Aloud",
+          "target": "Their waste-sorting drone was clever but still a little glitchy."
+        },
+        {
+          "prompt": "Speaking 6: Vocabulary Expert Interview",
+          "target": "A turtle's shell protects its soft body from danger."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "spoke.",
+            "judge",
+            "the",
+            "as",
+            "margin",
+            "the",
+            "in",
+            "notes",
+            "scribbling",
+            "was",
+            "Rohan"
+          ],
+          "answer": "Rohan was scribbling notes in the margin as the judge spoke."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "supplies.",
+            "and",
+            "books",
+            "my",
+            "of",
+            "all",
+            "fit",
+            "could",
+            "backpack",
+            "capacious",
+            "The"
+          ],
+          "answer": "The capacious backpack could fit all of my books and supplies."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "centre.",
+            "sports",
+            "new",
+            "the",
+            "open",
+            "to",
+            "town",
+            "our",
+            "visited",
+            "once",
+            "footballer",
+            "famous",
+            "A"
+          ],
+          "answer": "A famous footballer once visited our town to open the new sports centre."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "all.",
+            "and",
+            "faults",
+            "honestly,",
+            "gadgets",
+            "reviewed",
+            "who",
+            "influencer",
+            "an",
+            "followed",
+            "Rohan"
+          ],
+          "answer": "Rohan followed an influencer who reviewed gadgets honestly, faults and all."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "table.",
+            "the",
+            "off",
+            "lifted",
+            "it",
+            "moment",
+            "the",
+            "wobbled",
+            "prototype",
+            "Their"
+          ],
+          "answer": "Their prototype wobbled the moment it lifted off the table."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "canteen.",
+            "the",
+            "from",
+            "skins",
+            "banana",
+            "composted",
+            "place",
+            "third",
+            "in",
+            "drone",
+            "The"
+          ],
+          "answer": "The drone in third place composted banana skins from the canteen."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'debunk' mean in this unit?",
+          "choices": [
+            "To show that a claim or belief is false.",
+            "Spreading control out from the centre to smaller units.",
+            "The growth of towns and cities as people move into them."
+          ],
+          "answer": "To show that a claim or belief is false.",
+          "explanation": "debunk: To show that a claim or belief is false."
+        },
+        {
+          "prompt": "What does 'glistening' mean in this unit?",
+          "choices": [
+            "Spreading control out from the centre to smaller units.",
+            "To show that a claim or belief is false.",
+            "Glistening describes something shining brightly, often because it is wet or covered in light."
+          ],
+          "answer": "Glistening describes something shining brightly, often because it is wet or covered in light.",
+          "explanation": "glistening: Glistening describes something shining brightly, often because it is wet or covered in light."
+        },
+        {
+          "prompt": "What does 'spends' mean in this unit?",
+          "choices": [
+            "To show that a claim or belief is false.",
+            "Uses money, time, or effort on something.",
+            "Spreading control out from the centre to smaller units."
+          ],
+          "answer": "Uses money, time, or effort on something.",
+          "explanation": "spends: Uses money, time, or effort on something."
+        },
+        {
+          "prompt": "What does 'urban' mean in this unit?",
+          "choices": [
+            "Urban means relating to a city or a densely built-up town area, rather than the countryside.",
+            "Spreading control out from the centre to smaller units.",
+            "To show that a claim or belief is false."
+          ],
+          "answer": "Urban means relating to a city or a densely built-up town area, rather than the countryside.",
+          "explanation": "urban: Urban means relating to a city or a densely built-up town area, rather than the countryside."
+        },
+        {
+          "prompt": "What does 'simplifying' mean in this unit?",
+          "choices": [
+            "Spreading control out from the centre to smaller units.",
+            "To show that a claim or belief is false.",
+            "Making something easier to understand or use by removing unnecessary parts."
+          ],
+          "answer": "Making something easier to understand or use by removing unnecessary parts.",
+          "explanation": "simplifying: Making something easier to understand or use by removing unnecessary parts."
+        },
+        {
+          "prompt": "What does 'sky' mean in this unit?",
+          "choices": [
+            "To show that a claim or belief is false.",
+            "The space above the earth where clouds, the sun and stars appear.",
+            "Spreading control out from the centre to smaller units."
+          ],
+          "answer": "The space above the earth where clouds, the sun and stars appear.",
+          "explanation": "sky: The space above the earth where clouds, the sun and stars appear."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'urbanisation'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Urbanisation is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'desire'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Desire is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'escape'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Escape is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'tech'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Tech is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'steadier'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Steadier is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'concession'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Concession is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "disinformation",
+              "False information spread deliberately to deceive people."
+            ],
+            [
+              "ideological",
+              "Based on a system of political or social beliefs."
+            ],
+            [
+              "marginalisation",
+              "Pushing a group to the edge of a society's attention."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "psychology",
+              "Psychology is the scientific study of how people think, feel, and behave."
+            ],
+            [
+              "logic",
+              "Logic is a way of thinking that uses reason and clear facts to reach a sensible conclusion."
+            ],
+            [
+              "critical",
+              "Critical means carefully judging whether something is good, true, or reliable rather than accepting it blindly."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "evolving",
+              "Changing and developing gradually, often becoming more complex over time."
+            ],
+            [
+              "propaganda",
+              "Information, often one-sided or misleading, spread to promote a particular cause."
+            ],
+            [
+              "influencers",
+              "Influencers are people, often on social media, who can affect what their followers think, buy or believe."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "examine",
+              "Examine means to look at something closely and carefully in order to understand or judge it."
+            ],
+            [
+              "annoying",
+              "Annoying means causing mild irritation or slight anger."
+            ],
+            [
+              "ours",
+              "Belonging to us, showing that something is owned by the speaker and others."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "labelled",
+              "Marked with a label that shows a name, type, or contents."
+            ],
+            [
+              "slick",
+              "Smoothly impressive and skilful, sometimes suggesting a lack of real honesty."
+            ],
+            [
+              "added",
+              "Said something extra, or joined one thing together with another."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "sketches",
+              "Quick, rough drawings that show an idea before it is finished."
+            ],
+            [
+              "belligerence",
+              "An aggressive or hostile attitude, often shown through angry words or actions."
+            ],
+            [
+              "emerge",
+              "To come out or appear from somewhere."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from Code Name: Bonanza, part 1: Created by a _____ team, The Beacon seemed flawless. Too flawless.",
+          "choices": [
+            "belligerent",
+            "capacious",
+            "cunning",
+            "bountiful"
+          ],
+          "answer": "cunning",
+          "explanation": "The text says: Created by a cunning team, The Beacon seemed flawless. Cunning means clever in a deceptive way, which matches the copying rumours around Team Horizon."
+        },
+        {
+          "prompt": "Choose the missing word from Code Name: Bonanza, part 1: Imani felt the _____ diminish. Their odds shrank like morning mist.",
+          "choices": [
+            "momentum",
+            "demeanor",
+            "bonanza",
+            "concession"
+          ],
+          "answer": "momentum",
+          "explanation": "The text says: Imani felt the momentum diminish. Momentum is the force of something moving forward, which is exactly what the failed demo drained away."
+        },
+        {
+          "prompt": "Choose the missing word from Code Name: Bonanza, part 2: \"We did our best,\" she said, refusing to be drawn into his _____ games.",
+          "choices": [
+            "attentive",
+            "intricate",
+            "indifferent",
+            "insolent"
+          ],
+          "answer": "insolent",
+          "explanation": "The text says: refusing to be drawn into his insolent games. Insolent means rude and disrespectful, which matches Nadir's taunt about panicking."
+        },
+        {
+          "prompt": "Choose the missing word from Code Name: Bonanza, part 2: The room felt _____, suddenly full of promise. Empty space had become opportunity.",
+          "choices": [
+            "desolate",
+            "apprehensive",
+            "capacious",
+            "pungent"
+          ],
+          "answer": "capacious",
+          "explanation": "The text says: The room felt capacious, suddenly full of promise. Capacious means roomy and able to hold a great deal; desolate would contradict the hopeful mood."
+        },
+        {
+          "prompt": "Choose the missing word from The Power of Persuasion: This creates a cycle that can turn an ordinary product into a _____ of sales.",
+          "choices": [
+            "momentum",
+            "bonanza",
+            "concession",
+            "aptitude"
+          ],
+          "answer": "bonanza",
+          "explanation": "The text says: a cycle that can turn an ordinary product into a bonanza of sales. A bonanza is a sudden flood of something good — here, sales driven by social proof."
+        },
+        {
+          "prompt": "What does 'aptitude' mean?",
+          "choices": [
+            "The way a person behaves or shows their feelings.",
+            "A natural ability to do something well.",
+            "Enjoyment or enthusiasm in doing something.",
+            "Something that is given up or allowed in order to reach an agreement."
+          ],
+          "answer": "A natural ability to do something well.",
+          "explanation": "Aptitude is a natural talent, as in the story where Imani is known for her sharp aptitude in algorithms; the other options define demeanor, gusto and concession."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from Code Name: Bonanza, part 2: The room felt _____, suddenly full of promise. Empty space had become opportunity.",
+          "choices": [
+            "desolate",
+            "apprehensive",
+            "capacious",
+            "pungent"
+          ],
+          "answer": "capacious",
+          "explanation": "The text says: The room felt capacious, suddenly full of promise. Capacious means roomy and able to hold a great deal; desolate would contradict the hopeful mood."
+        },
+        {
+          "prompt": "Choose the missing word from The Power of Persuasion: This creates a cycle that can turn an ordinary product into a _____ of sales.",
+          "choices": [
+            "momentum",
+            "bonanza",
+            "concession",
+            "aptitude"
+          ],
+          "answer": "bonanza",
+          "explanation": "The text says: a cycle that can turn an ordinary product into a bonanza of sales. A bonanza is a sudden flood of something good — here, sales driven by social proof."
+        },
+        {
+          "prompt": "Which word means: A mark of shame unfairly attached to a person or group.",
+          "choices": [
+            "stigma",
+            "decentralisation",
+            "debunk"
+          ],
+          "answer": "stigma",
+          "explanation": "stigma: A mark of shame unfairly attached to a person or group."
+        },
+        {
+          "prompt": "Which word means: Uses money, time, or effort on something.",
+          "choices": [
+            "decentralisation",
+            "debunk",
+            "spends"
+          ],
+          "answer": "spends",
+          "explanation": "spends: Uses money, time, or effort on something."
+        },
+        {
+          "prompt": "What type of word is 'campus'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Campus is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sky'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Sky is used as a noun in this dictionary sense."
         }
       ]
     }

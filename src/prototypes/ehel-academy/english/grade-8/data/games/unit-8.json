@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t03-u08",
   "title": "Global Storytelling and Creativity Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: The reasons given to show that something is right or necessary.",
           "choices": [
             "justification",
-            "symbolism-based",
-            "sailors"
+            "stream-of-consciousness",
+            "writer-purpose"
           ],
           "answer": "justification",
           "explanation": "justification: The reasons given to show that something is right or necessary."
         },
         {
-          "prompt": "Which word means: To learn or become completely skilled at something.",
+          "prompt": "Which word means: A picture or description that exaggerates features for effect.",
           "choices": [
             "justification",
-            "symbolism-based",
-            "master"
+            "stream-of-consciousness",
+            "caricature"
           ],
-          "answer": "master",
-          "explanation": "master: To learn or become completely skilled at something."
+          "answer": "caricature",
+          "explanation": "caricature: A picture or description that exaggerates features for effect."
         },
         {
-          "prompt": "Which word means: More difficult or demanding than something else.",
+          "prompt": "Which word means: Stories about people and events that are imagined rather than real.",
           "choices": [
-            "symbolism-based",
-            "tougher",
+            "stream-of-consciousness",
+            "fiction",
             "justification"
           ],
-          "answer": "tougher",
-          "explanation": "tougher: More difficult or demanding than something else."
+          "answer": "fiction",
+          "explanation": "fiction: Stories about people and events that are imagined rather than real."
+        },
+        {
+          "prompt": "Which word means: Was completely full of a large, busy number of people or things.",
+          "choices": [
+            "teemed",
+            "justification",
+            "stream-of-consciousness"
+          ],
+          "answer": "teemed",
+          "explanation": "teemed: Was completely full of a large, busy number of people or things."
+        },
+        {
+          "prompt": "Which word means: Said that something was not true, or refused to admit or allow something.",
+          "choices": [
+            "justification",
+            "stream-of-consciousness",
+            "denied"
+          ],
+          "answer": "denied",
+          "explanation": "denied: Said that something was not true, or refused to admit or allow something."
+        },
+        {
+          "prompt": "Which word means: To make something clear or easier to understand.",
+          "choices": [
+            "stream-of-consciousness",
+            "clarify",
+            "justification"
+          ],
+          "answer": "clarify",
+          "explanation": "clarify: To make something clear or easier to understand."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Words that name a person, place, thing or idea.",
-          "answer": "nouns"
+          "clue": "A substance such as pepper or cinnamon used to flavour food.",
+          "answer": "spice"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A senior government official in charge of a particular department.",
-          "answer": "minister"
+          "clue": "Added to something else, or as well as it.",
+          "answer": "plus"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A small sealed container used to protect or store something, sometimes for a very long time.",
+          "answer": "capsule"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Improved something by making small, careful changes.",
+          "answer": "refined"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Strange or mysterious, often in a way that is unsettling.",
+          "answer": "uncanny"
         }
       ]
     },
@@ -99,37 +144,85 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "rule.",
-            "grammar",
-            "new",
-            "the",
-            "of",
-            "explanation",
-            "clear",
-            "a",
-            "gave",
-            "teacher",
+            "evidence.",
+            "on",
+            "thin",
+            "and",
+            "rhetoric",
+            "fine",
+            "was",
+            "speech",
             "The"
           ],
-          "answer": "The teacher gave a clear explanation of the new grammar rule."
+          "answer": "The speech was fine rhetoric and thin on evidence."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "speak.",
+            "sea.",
             "to",
-            "began",
-            "Imani",
-            "as",
-            "amphitheatre",
+            "out",
+            "and",
+            "village",
             "the",
-            "over",
-            "fell",
-            "silence",
-            "hushed",
-            "A"
+            "past",
+            "slowly",
+            "wound",
+            "river",
+            "old",
+            "The"
           ],
-          "answer": "A hushed silence fell over the amphitheatre as Imani began to speak."
+          "answer": "The old river wound slowly past the village and out to sea."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "boy.",
+            "small",
+            "a",
+            "was",
+            "he",
+            "since",
+            "village",
+            "this",
+            "in",
+            "lived",
+            "has",
+            "He"
+          ],
+          "answer": "He has lived in this village since he was a small boy."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "final.",
+            "the",
+            "watch",
+            "to",
+            "amphitheatre",
+            "ancient",
+            "the",
+            "in",
+            "gathered",
+            "Thousands"
+          ],
+          "answer": "Thousands gathered in the ancient amphitheatre to watch the final."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "nausea.",
+            "of",
+            "waves",
+            "fighting",
+            "passengers",
+            "several",
+            "left",
+            "boat",
+            "rocking",
+            "The"
+          ],
+          "answer": "The rocking boat left several passengers fighting waves of nausea."
         }
       ]
     },
@@ -142,312 +235,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Why Stories Shape the World': Every festival season, the streets of the old harbour quarter _____ with poets, drummers and film crews.",
+          "prompt": "What does 'campaign' mean?",
           "choices": [
-            "teem",
-            "jut",
-            "waft",
-            "recuperate"
+            "The ability to keep going and not get tired easily.",
+            "A planned series of actions carried out over time to achieve an important goal.",
+            "Special words or expressions used by a particular group.",
+            "Suggesting that something bad is going to happen."
           ],
-          "answer": "teem",
-          "explanation": "The passage reads: Every festival season, the streets of the old harbour quarter teem with poets, drummers and film crews."
+          "answer": "A planned series of actions carried out over time to achieve an important goal.",
+          "explanation": "A campaign is a planned, organised effort for a cause, like the students' campaign to raise money for their school library."
         },
         {
-          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 1': Imani, a seventeen-year-old with an avid curiosity and endless _____, had been writing since she was ten.",
+          "prompt": "What does 'clarify' mean?",
           "choices": [
-            "jargon",
-            "commotion",
-            "antics",
-            "stamina"
+            "To stick out or extend beyond something else.",
+            "To help someone do something wrong or illegal.",
+            "To move gently through the air, often describing smells or sounds.",
+            "To make something clear or easier to understand."
           ],
-          "answer": "stamina",
-          "explanation": "The passage reads: Imani, a seventeen-year-old with an avid curiosity and endless stamina, had been writing since she was ten."
+          "answer": "To make something clear or easier to understand.",
+          "explanation": "To clarify is to make an idea clearer for your listener, as in: can you clarify what you mean by that?"
         },
         {
-          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 2': Because it was _____ to support the planet, and it was foolish not to.",
+          "prompt": "What does 'assail' mean?",
           "choices": [
-            "ominous",
-            "feasible",
-            "infinite",
-            "malleable"
+            "To attack someone or something violently or with strong words.",
+            "To completely focus on something and not notice anything else.",
+            "To make someone want to do something or work harder.",
+            "To be full of or to have a lot of something."
           ],
-          "answer": "feasible",
-          "explanation": "The passage reads: Because it was feasible to support the planet, and it was foolish not to."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Before printing presses reached the coast, what kinds of knowledge did Somali oral poetry preserve, according to Why Stories Shape the World?",
-          "choices": [
-            "It preserved family histories, trade routes and hard-won warnings about drought.",
-            "It is called The Flood That Forgot No One, a tale about a girl who learns to speak the ocean's language after her island sinks.",
-            "He decides to stay behind, saying he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\""
-          ],
-          "answer": "It preserved family histories, trade routes and hard-won warnings about drought.",
-          "explanation": "The opening paragraph about the East African coast says Somali oral poetry preserved family histories, trade routes and hard-won warnings about drought, long before printing presses arrived."
+          "answer": "To attack someone or something violently or with strong words.",
+          "explanation": "Pressure, doubts or critics can assail a person; the word means to attack with force or with strong words."
         },
-        {
-          "prompt": "What is the title of Imani's competition piece, and what is it about?",
-          "choices": [
-            "It is called Feasible Futures, and it aims to show not just loss but resilience, solutions and ways forward.",
-            "It steps further back than the past simple to show which event happened first, as in Imani had already left the stage when the audience clapped.",
-            "It is called The Flood That Forgot No One, a tale about a girl who learns to speak the ocean's language after her island sinks."
-          ],
-          "answer": "It is called The Flood That Forgot No One, a tale about a girl who learns to speak the ocean's language after her island sinks.",
-          "explanation": "Look at the preparation-tent scene: while sipping ginger tea, Imani has written a piece called The Flood That Forgot No One, about a girl who learns to speak the ocean's language after her island sinks."
-        },
-        {
-          "prompt": "What foolhardy decision does Imani's uncle make in her retelling, and how does the sea answer him?",
-          "choices": [
-            "The officials denied that the flood ever happened, so Imani means that refusing to admit a disaster helps cause the next one, because nothing is learned and nothing changes.",
-            "He decides to stay behind, saying he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\"",
-            "It is called Feasible Futures, and it aims to show not just loss but resilience, solutions and ways forward."
-          ],
-          "answer": "He decides to stay behind, saying he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\"",
-          "explanation": "In the final broadcast, Imani describes her uncle's foolhardy decision to stay behind. He says he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\""
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Story Retelling",
-          "target": "After reading The Edge of the Infinite, practise retelling the story in your own words."
-        },
-        {
-          "prompt": "Speaking 3: My Storytelling Campaign",
-          "target": "The teacher gave a clear explanation of the new grammar rule."
-        },
-        {
-          "prompt": "Speaking 5: Explain and Respond",
-          "target": "Explain one important unit idea, give a reason with because, and respond to two follow-up questions."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "storm.",
-            "the",
-            "about",
-            "worry",
-            "us",
-            "making",
-            "ominous,",
-            "looked",
-            "clouds",
-            "dark",
-            "The"
-          ],
-          "answer": "The dark clouds looked ominous, making us worry about the storm."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "have.",
-            "or",
-            "has",
-            "verb",
-            "the",
-            "plus",
-            "subject",
-            "simple:",
-            "is",
-            "structure",
-            "sentence",
-            "The"
-          ],
-          "answer": "The sentence structure is simple: subject plus the verb has or have."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "drowning.",
-            "about",
-            "nightmares",
-            "had",
-            "she",
-            "flood,",
-            "the",
-            "after",
-            "weeks",
-            "For"
-          ],
-          "answer": "For weeks after the flood, she had nightmares about drowning."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'compete' mean in this unit?",
-          "choices": [
-            "To take part in a contest, trying to do better than the other people involved.",
-            "The reasons given to show that something is right or necessary.",
-            "Working through objects that stand for larger ideas."
-          ],
-          "answer": "To take part in a contest, trying to do better than the other people involved.",
-          "explanation": "compete: To take part in a contest, trying to do better than the other people involved."
-        },
-        {
-          "prompt": "What does 'saltwater' mean in this unit?",
-          "choices": [
-            "The reasons given to show that something is right or necessary.",
-            "Working through objects that stand for larger ideas.",
-            "Water that contains salt, such as water from the sea."
-          ],
-          "answer": "Water that contains salt, such as water from the sea.",
-          "explanation": "saltwater: Water that contains salt, such as water from the sea."
-        },
-        {
-          "prompt": "What does 'symbolism-based' mean in this unit?",
-          "choices": [
-            "People who work on a ship as part of its crew.",
-            "Working through objects that stand for larger ideas.",
-            "The reasons given to show that something is right or necessary."
-          ],
-          "answer": "Working through objects that stand for larger ideas.",
-          "explanation": "symbolism-based: Working through objects that stand for larger ideas."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'sinks'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Sinks is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'recuperate'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Recuperate is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'creators'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Creators is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "objectivity",
-              "Judging by facts rather than by personal feeling."
-            ],
-            [
-              "differentiated",
-              "Made or treated differently to suit different cases."
-            ],
-            [
-              "destroys",
-              "To damage something so badly that it no longer exists."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "sleeping",
-              "Resting with your eyes closed, not awake or aware of your surroundings."
-            ],
-            [
-              "merged",
-              "Combined two or more things so they became one."
-            ],
-            [
-              "metaphor's",
-              "A short way of saying metaphor is, used when someone points out that a comparison is too complicated or unclear."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "nausea",
-              "A feeling of sickness in the stomach that often makes a person want to vomit."
-            ],
-            [
-              "soul",
-              "The spiritual or emotional part of a person, often linked to their deepest feelings."
-            ],
-            [
-              "decree",
-              "An official order or decision made by a person in authority."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'infinite' mean?",
           "choices": [
@@ -484,13 +303,530 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Before printing presses reached the coast, what kinds of knowledge did Somali oral poetry preserve, according to Why Stories Shape the World?",
+          "choices": [
+            "It preserved family histories, trade routes and hard-won warnings about drought.",
+            "It is called The Flood That Forgot No One, a tale about a girl who learns to speak the ocean's language after her island sinks.",
+            "He decides to stay behind, saying he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\""
+          ],
+          "answer": "It preserved family histories, trade routes and hard-won warnings about drought.",
+          "explanation": "The opening paragraph about the East African coast says Somali oral poetry preserved family histories, trade routes and hard-won warnings about drought, long before printing presses arrived."
+        },
+        {
+          "prompt": "Which tense does The Grammar of a Good Story call the natural tense of dedication, and what is its structure?",
+          "choices": [
+            "It is called Feasible Futures, and it aims to show not just loss but resilience, solutions and ways forward.",
+            "It steps further back than the past simple to show which event happened first, as in Imani had already left the stage when the audience clapped.",
+            "The present perfect continuous, formed with the subject plus has or have, plus been, plus the verb in its -ing form."
+          ],
+          "answer": "The present perfect continuous, formed with the subject plus has or have, plus been, plus the verb in its -ing form.",
+          "explanation": "In the paragraph about the unit's main focus, the text calls the present perfect continuous the natural tense of dedication and gives its structure: subject plus has or have, plus been, plus the verb in its -ing form."
+        },
+        {
+          "prompt": "What is the title of Imani's competition piece, and what is it about?",
+          "choices": [
+            "It preserved family histories, trade routes and hard-won warnings about drought.",
+            "It is called The Flood That Forgot No One, a tale about a girl who learns to speak the ocean's language after her island sinks.",
+            "He decides to stay behind, saying he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\""
+          ],
+          "answer": "It is called The Flood That Forgot No One, a tale about a girl who learns to speak the ocean's language after her island sinks.",
+          "explanation": "Look at the preparation-tent scene: while sipping ginger tea, Imani has written a piece called The Flood That Forgot No One, about a girl who learns to speak the ocean's language after her island sinks."
+        },
+        {
+          "prompt": "What is Imani's new project called at the end of the story, and what does it aim to show?",
+          "choices": [
+            "It is called Feasible Futures, and it aims to show not just loss but resilience, solutions and ways forward.",
+            "It steps further back than the past simple to show which event happened first, as in Imani had already left the stage when the audience clapped.",
+            "The present perfect continuous, formed with the subject plus has or have, plus been, plus the verb in its -ing form."
+          ],
+          "answer": "It is called Feasible Futures, and it aims to show not just loss but resilience, solutions and ways forward.",
+          "explanation": "Near the end of part 2, the text says her project was called Feasible Futures and that it aimed to show not just loss but resilience: solutions, and ways forward."
+        },
+        {
+          "prompt": "What foolhardy decision does Imani's uncle make in her retelling, and how does the sea answer him?",
+          "choices": [
+            "It preserved family histories, trade routes and hard-won warnings about drought.",
+            "It is called The Flood That Forgot No One, a tale about a girl who learns to speak the ocean's language after her island sinks.",
+            "He decides to stay behind, saying he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\""
+          ],
+          "answer": "He decides to stay behind, saying he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\"",
+          "explanation": "In the final broadcast, Imani describes her uncle's foolhardy decision to stay behind. He says he has lived by the sea and will die by the sea, and the sea replies, \"Then let me take you.\""
+        },
+        {
+          "prompt": "How does the past perfect keep a timeline honest, according to The Grammar of a Good Story?",
+          "choices": [
+            "It is called Feasible Futures, and it aims to show not just loss but resilience, solutions and ways forward.",
+            "It steps further back than the past simple to show which event happened first, as in Imani had already left the stage when the audience clapped.",
+            "The present perfect continuous, formed with the subject plus has or have, plus been, plus the verb in its -ing form."
+          ],
+          "answer": "It steps further back than the past simple to show which event happened first, as in Imani had already left the stage when the audience clapped.",
+          "explanation": "The passage explains that the past simple reports events in order while the past perfect steps further back to show what happened first, as in Imani had already left the stage when the audience clapped."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Story Retelling",
+          "target": "After reading The Edge of the Infinite, practise retelling the story in your own words."
+        },
+        {
+          "prompt": "Speaking 2: Reported Speech Conversations",
+          "target": "The speech was fine rhetoric and thin on evidence."
+        },
+        {
+          "prompt": "Speaking 3: My Storytelling Campaign",
+          "target": "The old river wound slowly past the village and out to sea."
+        },
+        {
+          "prompt": "Speaking 4: Vocabulary Expert Interview",
+          "target": "He has lived in this village since he was a small boy."
+        },
+        {
+          "prompt": "Speaking 5: Explain and Respond",
+          "target": "Thousands gathered in the ancient amphitheatre to watch the final."
+        },
+        {
+          "prompt": "Speaking 6: Six-Minute Unit Argument",
+          "target": "The rocking boat left several passengers fighting waves of nausea."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "marathon.",
+            "the",
+            "for",
+            "stamina",
+            "her",
+            "build",
+            "her",
+            "helped",
+            "day",
+            "every",
+            "Running"
+          ],
+          "answer": "Running every day helped her build her stamina for the marathon."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "science.",
+            "about",
+            "talking",
+            "when",
+            "jargon",
+            "of",
+            "lot",
+            "a",
+            "used",
+            "teacher",
+            "The"
+          ],
+          "answer": "The teacher used a lot of jargon when talking about science."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "grammar.",
+            "tricky",
+            "such",
+            "master",
+            "you",
+            "help",
+            "will",
+            "practice",
+            "sustained",
+            "Only"
+          ],
+          "answer": "Only sustained practice will help you master such tricky grammar."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "enough?",
+            "achievements",
+            "students'",
+            "the",
+            "spotlight",
+            "article",
+            "this",
+            "Does"
+          ],
+          "answer": "Does this article spotlight the students' achievements enough?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "coffins.",
+            "makeshift",
+            "into",
+            "boats",
+            "fishing",
+            "three",
+            "turned",
+            "flood",
+            "The"
+          ],
+          "answer": "The flood turned three fishing boats into makeshift coffins."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "narrative.",
+            "and",
+            "documentary",
+            "combining",
+            "series",
+            "full",
+            "a",
+            "on",
+            "working",
+            "was",
+            "She"
+          ],
+          "answer": "She was working on a full series combining documentary and narrative."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'stream-of-consciousness' mean in this unit?",
+          "choices": [
+            "Writing that follows a character's thoughts as they come.",
+            "The reasons given to show that something is right or necessary.",
+            "What a writer is trying to achieve with a piece of writing."
+          ],
+          "answer": "Writing that follows a character's thoughts as they come.",
+          "explanation": "stream-of-consciousness: Writing that follows a character's thoughts as they come."
+        },
+        {
+          "prompt": "What does 'sanction' mean in this unit?",
+          "choices": [
+            "The reasons given to show that something is right or necessary.",
+            "Writing that follows a character's thoughts as they come.",
+            "A penalty imposed to make a country or person obey."
+          ],
+          "answer": "A penalty imposed to make a country or person obey.",
+          "explanation": "sanction: A penalty imposed to make a country or person obey."
+        },
+        {
+          "prompt": "What does 'sustained' mean in this unit?",
+          "choices": [
+            "Writing that follows a character's thoughts as they come.",
+            "Continuing steadily over a long period without stopping.",
+            "The reasons given to show that something is right or necessary."
+          ],
+          "answer": "Continuing steadily over a long period without stopping.",
+          "explanation": "sustained: Continuing steadily over a long period without stopping."
+        },
+        {
+          "prompt": "What does 'style' mean in this unit?",
+          "choices": [
+            "A particular way of doing, writing or making something that makes it recognisable.",
+            "The reasons given to show that something is right or necessary.",
+            "Writing that follows a character's thoughts as they come."
+          ],
+          "answer": "A particular way of doing, writing or making something that makes it recognisable.",
+          "explanation": "style: A particular way of doing, writing or making something that makes it recognisable."
+        },
+        {
+          "prompt": "What does 'fainted' mean in this unit?",
+          "choices": [
+            "The reasons given to show that something is right or necessary.",
+            "Writing that follows a character's thoughts as they come.",
+            "Suddenly lost consciousness for a short time."
+          ],
+          "answer": "Suddenly lost consciousness for a short time.",
+          "explanation": "fainted: Suddenly lost consciousness for a short time."
+        },
+        {
+          "prompt": "What does 'relevant' mean in this unit?",
+          "choices": [
+            "Writing that follows a character's thoughts as they come.",
+            "Connected to the topic or situation being discussed.",
+            "The reasons given to show that something is right or necessary."
+          ],
+          "answer": "Connected to the topic or situation being discussed.",
+          "explanation": "relevant: Connected to the topic or situation being discussed."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'writer-purpose'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Writer-purpose is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sailors'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Sailors is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'connects'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Connects is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'maize'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Maize is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'necessary'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Necessary is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'waft'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Waft is used as a verb in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "objectivity",
+              "Judging by facts rather than by personal feeling."
+            ],
+            [
+              "conceit",
+              "An extended and surprising comparison running through a work."
+            ],
+            [
+              "multidimensional",
+              "Having several distinct aspects that all matter."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "misinformation",
+              "Misinformation is false or inaccurate information that is spread, often without the person realising it is wrong."
+            ],
+            [
+              "interrogate",
+              "To question something closely and searchingly."
+            ],
+            [
+              "river",
+              "A large natural stream of water flowing into the sea or a lake."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "entertain",
+              "To hold someone's attention and give them enjoyment."
+            ],
+            [
+              "master",
+              "To learn or become completely skilled at something."
+            ],
+            [
+              "prepositional",
+              "Relating to a preposition, a small word like in or on that shows place, time or direction."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "merged",
+              "Combined two or more things so they became one."
+            ],
+            [
+              "seventeen",
+              "The number 17, one more than sixteen."
+            ],
+            [
+              "sinks",
+              "Goes down below the surface of water or another substance."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "swelling",
+              "Gradually growing larger, louder, or more intense."
+            ],
+            [
+              "gown",
+              "A long, formal dress worn on special occasions."
+            ],
+            [
+              "metaphors",
+              "Words or phrases used to describe one thing by comparing it to something else."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "infinite",
+              "Something that has no limits or end; it goes on forever."
+            ],
+            [
+              "ominous",
+              "Suggesting that something bad is going to happen."
+            ],
+            [
+              "affluent",
+              "Having a lot of money and wealth."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 1': \"Your metaphor's too _____ — what does the fire actually represent?\"",
+          "choices": [
+            "uncanny",
+            "balmy",
+            "malleable",
+            "ominous"
+          ],
+          "answer": "malleable",
+          "explanation": "The passage reads: \"Your metaphor's too malleable — what does the fire actually represent?\""
+        },
+        {
+          "prompt": "Choose the missing word from 'Why Stories Shape the World': Every festival season, the streets of the old harbour quarter _____ with poets, drummers and film crews.",
+          "choices": [
+            "teem",
+            "jut",
+            "waft",
+            "recuperate"
+          ],
+          "answer": "teem",
+          "explanation": "The passage reads: Every festival season, the streets of the old harbour quarter teem with poets, drummers and film crews."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 1': Imani, a seventeen-year-old with an avid curiosity and endless _____, had been writing since she was ten.",
+          "choices": [
+            "jargon",
+            "commotion",
+            "antics",
+            "stamina"
+          ],
+          "answer": "stamina",
+          "explanation": "The passage reads: Imani, a seventeen-year-old with an avid curiosity and endless stamina, had been writing since she was ten."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 2': Because it was _____ to support the planet, and it was foolish not to.",
+          "choices": [
+            "ominous",
+            "feasible",
+            "infinite",
+            "malleable"
+          ],
+          "answer": "feasible",
+          "explanation": "The passage reads: Because it was feasible to support the planet, and it was foolish not to."
+        },
+        {
+          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 2': She described her uncle's _____ decision to stay behind.",
+          "choices": [
+            "balmy",
+            "avid",
+            "foolhardy",
+            "relevant"
+          ],
+          "answer": "foolhardy",
+          "explanation": "The passage reads: She described her uncle's foolhardy decision to stay behind."
+        },
         {
           "prompt": "What does 'campaign' mean?",
           "choices": [
@@ -501,28 +837,78 @@
           ],
           "answer": "A planned series of actions carried out over time to achieve an important goal.",
           "explanation": "A campaign is a planned, organised effort for a cause, like the students' campaign to raise money for their school library."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 2': Because it was _____ to support the planet, and it was foolish not to.",
+          "choices": [
+            "ominous",
+            "feasible",
+            "infinite",
+            "malleable"
+          ],
+          "answer": "feasible",
+          "explanation": "The passage reads: Because it was feasible to support the planet, and it was foolish not to."
         },
         {
-          "prompt": "What does 'clarify' mean?",
+          "prompt": "Choose the missing word from 'The Edge of the Infinite, part 2': She described her uncle's _____ decision to stay behind.",
           "choices": [
-            "To stick out or extend beyond something else.",
-            "To help someone do something wrong or illegal.",
-            "To move gently through the air, often describing smells or sounds.",
-            "To make something clear or easier to understand."
+            "balmy",
+            "avid",
+            "foolhardy",
+            "relevant"
           ],
-          "answer": "To make something clear or easier to understand.",
-          "explanation": "To clarify is to make an idea clearer for your listener, as in: can you clarify what you mean by that?"
+          "answer": "foolhardy",
+          "explanation": "The passage reads: She described her uncle's foolhardy decision to stay behind."
         },
         {
-          "prompt": "What does 'assail' mean?",
+          "prompt": "Which word means: To treat something accepted as a question worth examining.",
           "choices": [
-            "To attack someone or something violently or with strong words.",
-            "To completely focus on something and not notice anything else.",
-            "To make someone want to do something or work harder.",
-            "To be full of or to have a lot of something."
+            "problematise",
+            "justification",
+            "stream-of-consciousness"
           ],
-          "answer": "To attack someone or something violently or with strong words.",
-          "explanation": "Pressure, doubts or critics can assail a person; the word means to attack with force or with strong words."
+          "answer": "problematise",
+          "explanation": "problematise: To treat something accepted as a question worth examining."
+        },
+        {
+          "prompt": "Which word means: Continuing steadily over a long period without stopping.",
+          "choices": [
+            "justification",
+            "stream-of-consciousness",
+            "sustained"
+          ],
+          "answer": "sustained",
+          "explanation": "sustained: Continuing steadily over a long period without stopping."
+        },
+        {
+          "prompt": "What type of word is 'sinks'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Sinks is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'relevant'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Relevant is used as an adjective in this dictionary sense."
         }
       ]
     }

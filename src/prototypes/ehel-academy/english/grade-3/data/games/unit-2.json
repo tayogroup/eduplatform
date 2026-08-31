@@ -5,7 +5,7 @@
   "unitId": "eng-g03-t01-u02",
   "title": "School and Learning Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: To stay on top of water without sinking.",
           "choices": [
             "float",
-            "heading",
-            "email"
+            "camera",
+            "themselves"
           ],
           "answer": "float",
           "explanation": "float: To stay on top of water without sinking."
         },
         {
-          "prompt": "Which word means: Not one single person.",
+          "prompt": "Which word means: A small group of homes in the countryside, smaller than a town.",
           "choices": [
             "float",
-            "heading",
-            "nobody"
+            "camera",
+            "village"
           ],
-          "answer": "nobody",
-          "explanation": "nobody: Not one single person."
+          "answer": "village",
+          "explanation": "village: A small group of homes in the countryside, smaller than a town."
         },
         {
-          "prompt": "Which word means: Already means something happened before now, or sooner than expected.",
+          "prompt": "Which word means: Coming after everything else, or the most recent one.",
           "choices": [
-            "heading",
-            "already",
+            "camera",
+            "last",
             "float"
           ],
-          "answer": "already",
-          "explanation": "already: Already means something happened before now, or sooner than expected."
+          "answer": "last",
+          "explanation": "last: Coming after everything else, or the most recent one."
+        },
+        {
+          "prompt": "Which word means: Met means came together with someone in the same place.",
+          "choices": [
+            "met",
+            "float",
+            "camera"
+          ],
+          "answer": "met",
+          "explanation": "met: Met means came together with someone in the same place."
+        },
+        {
+          "prompt": "Which word means: Sort means to put things in order or group them by type.",
+          "choices": [
+            "float",
+            "camera",
+            "sort"
+          ],
+          "answer": "sort",
+          "explanation": "sort: Sort means to put things in order or group them by type."
+        },
+        {
+          "prompt": "Which word means: One part of a long book, with its own number or title.",
+          "choices": [
+            "camera",
+            "chapter",
+            "float"
+          ],
+          "answer": "chapter",
+          "explanation": "chapter: One part of a long book, with its own number or title."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Usual and not different from what happens most of the time.",
-          "answer": "normal"
+          "clue": "To meet means to come together with someone in the same place.",
+          "answer": "meet"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Graduated means finished a school or a level of learning successfully.",
-          "answer": "graduated"
+          "clue": "A period of time that lasts seven days.",
+          "answer": "week"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Opened means moved something so it was no longer shut.",
+          "answer": "opened"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Joy is a strong feeling of happiness.",
+          "answer": "joy"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The list at the front of a book that shows what is inside.",
+          "answer": "contents"
         }
       ]
     },
@@ -94,32 +139,72 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "draw.",
-            "a",
-            "was",
-            "match",
-            "the",
-            "of",
-            "result",
+            "bread.",
+            "and",
+            "fruit",
+            "sold",
+            "shopkeeper",
             "The"
           ],
-          "answer": "The result of the match was a draw."
+          "answer": "The shopkeeper sold fruit and bread."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "bag.",
+            "school",
+            "his",
+            "pack",
+            "brother",
+            "her",
+            "helped",
+            "Maya"
+          ],
+          "answer": "Maya helped her brother pack his school bag."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "effort.",
+            "group's",
+            "her",
+            "of",
+            "proud",
+            "felt",
+            "Amal"
+          ],
+          "answer": "Amal felt proud of her group's effort."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "prize.",
+            "the",
+            "saw",
+            "she",
+            "when",
+            "up",
+            "lit",
+            "face",
+            "Her"
+          ],
+          "answer": "Her face lit up when she saw the prize."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
             "contest.",
-            "next",
             "the",
-            "for",
-            "better",
-            "prepare",
-            "to",
-            "agreed",
+            "during",
+            "spirit",
+            "kind",
+            "a",
+            "showed",
             "class",
-            "Our"
+            "whole",
+            "The"
           ],
-          "answer": "Our class agreed to prepare better for the next contest."
+          "answer": "The whole class showed a kind spirit during the contest."
         }
       ]
     },
@@ -132,302 +217,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which word joins these two ideas: “I like the library ______ it is quiet.”?",
+          "prompt": "Which word means a place where you can find and borrow books?",
           "choices": [
-            "but",
-            "so that",
-            "because",
-            "even though"
+            "eraser",
+            "library",
+            "contest",
+            "mathematics"
           ],
-          "answer": "because",
-          "explanation": "Because introduces a reason; but shows contrast, so that shows purpose, and even though shows surprise."
+          "answer": "library",
+          "explanation": "A library is a place, while an eraser is a tool, a contest is an event, and mathematics is a subject."
         },
         {
-          "prompt": "In ‘The Grammar Champions’, where did Amal’s group go to study and write their report?",
+          "prompt": "What does the word ‘author’ mean?",
           "choices": [
-            "To the market",
-            "To the sports hall",
-            "To Teacher Yasmin’s office",
-            "To the school library"
+            "A tool used to clean pencil marks from paper.",
+            "A short paper or talk that tells about something.",
+            "Things we use at school or home, like pencils and paper.",
+            "A person who writes books or stories."
           ],
-          "answer": "To the school library",
-          "explanation": "The story says the group met in the library the next day to study together and write their report."
+          "answer": "A person who writes books or stories.",
+          "explanation": "The other three options are the meanings of eraser, report and supply."
         },
         {
-          "prompt": "Which word means small pieces of information about something?",
+          "prompt": "In ‘A Day at School’, why does Adam say grammar is his favourite subject?",
           "choices": [
-            "details",
-            "supply",
-            "topic",
-            "education"
+            "Because it helps him write well.",
+            "Because his sister teaches it.",
+            "Because it happens after lunch every single day.",
+            "Because he likes counting numbers."
           ],
-          "answer": "details",
-          "explanation": "Supply names objects, topic names the idea you write about, and education names learning itself."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "Which subject does Adam like best, and what reason does he give?",
-          "choices": [
-            "Adam likes grammar best because it helps him write well.",
-            "The singer learns in the library, which the song calls quiet and bright.",
-            "Maya brought her book and her eraser."
-          ],
-          "answer": "Adam likes grammar best because it helps him write well.",
-          "explanation": "Adam names grammar as his favourite subject and gives his reason straight after the word because."
+          "answer": "Because it helps him write well.",
+          "explanation": "Adam gives that exact reason right after the word because in the passage."
         },
-        {
-          "prompt": "What is the name of Amal’s group, and which topic did they choose?",
-          "choices": [
-            "The singer learns in the library, which the song calls quiet and bright.",
-            "The word studied tells us that it happened in the past.",
-            "Her group is called The Grammar Champions, and they chose prepositions."
-          ],
-          "answer": "Her group is called The Grammar Champions, and they chose prepositions.",
-          "explanation": "The group name appears when Amal joins Daniel and Nora, and Amal suggests prepositions a few lines later."
-        },
-        {
-          "prompt": "Which two things did Maya bring to school that morning?",
-          "choices": [
-            "It shows that he values school and enjoys learning enough to want to teach others.",
-            "Maya brought her book and her eraser.",
-            "Her group is called The Grammar Champions, and they chose prepositions."
-          ],
-          "answer": "Maya brought her book and her eraser.",
-          "explanation": "Maya lists both items when she answers Teacher Yasmin’s first question."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Talk About Your School Day",
-          "target": "Today I studied ______."
-        },
-        {
-          "prompt": "Speaking 3 — Guess My Subject",
-          "target": "In this subject, we work with numbers."
-        },
-        {
-          "prompt": "Speaking 5 — Explain and Respond",
-          "target": "I study in the library because it is quiet."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "shelf.",
-            "the",
-            "on",
-            "books",
-            "the",
-            "sort",
-            "helped",
-            "Maya"
-          ],
-          "answer": "Maya helped sort the books on the shelf."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "Maya?",
-            "week,",
-            "this",
-            "read",
-            "you",
-            "did",
-            "books",
-            "many",
-            "How"
-          ],
-          "answer": "How many books did you read this week, Maya?"
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "class.",
-            "the",
-            "at",
-            "smiled",
-            "judge",
-            "Another"
-          ],
-          "answer": "Another judge smiled at the class."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'important' mean in this unit?",
-          "choices": [
-            "Mattering a great deal and needing your care or attention.",
-            "To stay on top of water without sinking.",
-            "The title written at the top of a page or a piece of writing."
-          ],
-          "answer": "Mattering a great deal and needing your care or attention.",
-          "explanation": "important: Mattering a great deal and needing your care or attention."
-        },
-        {
-          "prompt": "What does 'turn' mean in this unit?",
-          "choices": [
-            "To stay on top of water without sinking.",
-            "The title written at the top of a page or a piece of writing.",
-            "A turn is the moment when it is your time to do something."
-          ],
-          "answer": "A turn is the moment when it is your time to do something.",
-          "explanation": "turn: A turn is the moment when it is your time to do something."
-        },
-        {
-          "prompt": "What does 'heading' mean in this unit?",
-          "choices": [
-            "A message you send to somebody through a computer.",
-            "The title written at the top of a page or a piece of writing.",
-            "To stay on top of water without sinking."
-          ],
-          "answer": "The title written at the top of a page or a piece of writing.",
-          "explanation": "heading: The title written at the top of a page or a piece of writing."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'include'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Include is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'author'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Author is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'task'?",
-          "choices": [
-            "Adjective",
-            "Noun",
-            "Verb"
-          ],
-          "answer": "Noun",
-          "explanation": "Task is used as a noun in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "coach",
-              "A person who trains a team and helps them play better."
-            ],
-            [
-              "photograph",
-              "A photograph is a picture taken with a camera."
-            ],
-            [
-              "project",
-              "A piece of work you plan and finish over some time."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "pack",
-              "To put things together neatly into a bag, box, or case."
-            ],
-            [
-              "check",
-              "To look at something carefully to make sure it is right."
-            ],
-            [
-              "clever",
-              "Quick to learn, understand, and think of good ideas."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "worked",
-              "Worked means did a job or task, often for a period of time."
-            ],
-            [
-              "winners",
-              "Winners are the people who succeed or come first in a contest."
-            ],
-            [
-              "loudest",
-              "Loudest means making the most noise of all."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which sentence uses the simple past tense correctly?",
           "choices": [
@@ -464,13 +285,513 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "Which subject does Adam like best, and what reason does he give?",
+          "choices": [
+            "Adam likes grammar best because it helps him write well.",
+            "The singer learns in the library, which the song calls quiet and bright.",
+            "Maya brought her book and her eraser."
+          ],
+          "answer": "Adam likes grammar best because it helps him write well.",
+          "explanation": "Adam names grammar as his favourite subject and gives his reason straight after the word because."
+        },
+        {
+          "prompt": "What is today’s lesson about in Teacher Yasmin’s classroom?",
+          "choices": [
+            "Her group is called The Grammar Champions, and they chose prepositions.",
+            "The word studied tells us that it happened in the past.",
+            "Today’s lesson is about authors."
+          ],
+          "answer": "Today’s lesson is about authors.",
+          "explanation": "Teacher Yasmin says it in her opening line, before she asks about the books."
+        },
+        {
+          "prompt": "What is the name of Amal’s group, and which topic did they choose?",
+          "choices": [
+            "It shows that he values school and enjoys learning enough to want to teach others.",
+            "Her group is called The Grammar Champions, and they chose prepositions.",
+            "He goes to the library at break time so that he can read."
+          ],
+          "answer": "Her group is called The Grammar Champions, and they chose prepositions.",
+          "explanation": "The group name appears when Amal joins Daniel and Nora, and Amal suggests prepositions a few lines later."
+        },
+        {
+          "prompt": "Where does Adam go at break time, and what does he do there?",
+          "choices": [
+            "He goes to the library at break time so that he can read.",
+            "They felt proud because their hard work and teamwork helped them do their best.",
+            "Adam likes grammar best because it helps him write well."
+          ],
+          "answer": "He goes to the library at break time so that he can read.",
+          "explanation": "The sentence beginning At break time gives both the place and the reason."
+        },
+        {
+          "prompt": "Which two things did Maya bring to school that morning?",
+          "choices": [
+            "They felt proud because their hard work and teamwork helped them do their best.",
+            "Today’s lesson is about authors.",
+            "Maya brought her book and her eraser."
+          ],
+          "answer": "Maya brought her book and her eraser.",
+          "explanation": "Maya lists both items when she answers Teacher Yasmin’s first question."
+        },
+        {
+          "prompt": "Which word in the song tells you that the singing happened in the past?",
+          "choices": [
+            "The singer learns in the library, which the song calls quiet and bright.",
+            "The word studied tells us that it happened in the past.",
+            "Maya brought her book and her eraser."
+          ],
+          "answer": "The word studied tells us that it happened in the past.",
+          "explanation": "Studied ends in –ed, the regular past-tense ending taught in Grammar 1."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Talk About Your School Day",
+          "target": "Today I studied ______."
+        },
+        {
+          "prompt": "Speaking 2 — Ask and Answer About the Past",
+          "target": "What did you study yesterday?"
+        },
+        {
+          "prompt": "Speaking 3 — Guess My Subject",
+          "target": "In this subject, we work with numbers."
+        },
+        {
+          "prompt": "Speaking 4 — Vocabulary Expert Interview",
+          "target": "What does the word report mean?"
+        },
+        {
+          "prompt": "Speaking 5 — Explain and Respond",
+          "target": "I study in the library because it is quiet."
+        },
+        {
+          "prompt": "Speaking 6 — One-Minute Unit Talk",
+          "target": "How I prepare for a contest."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "night.",
+            "every",
+            "words",
+            "spelling",
+            "my",
+            "study",
+            "I"
+          ],
+          "answer": "I study my spelling words every night."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "office.",
+            "the",
+            "at",
+            "document",
+            "the",
+            "signed",
+            "Dad"
+          ],
+          "answer": "Dad signed the document at the office."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "questions.",
+            "many",
+            "her",
+            "asked",
+            "classmates",
+            "Amal's"
+          ],
+          "answer": "Amal's classmates asked her many questions."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "contest?",
+            "spelling",
+            "the",
+            "for",
+            "prize",
+            "the",
+            "was",
+            "What"
+          ],
+          "answer": "What was the prize for the spelling contest?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "day.",
+            "contest",
+            "was",
+            "it",
+            "Finally,"
+          ],
+          "answer": "Finally, it was contest day."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "one.",
+            "every",
+            "knew",
+            "I",
+            "until",
+            "evening,",
+            "each",
+            "words",
+            "five",
+            "Just"
+          ],
+          "answer": "Just five words each evening, until I knew every one."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'camera' mean in this unit?",
+          "choices": [
+            "A machine that takes photographs or films moving pictures.",
+            "To stay on top of water without sinking.",
+            "Used to say that people did something on their own."
+          ],
+          "answer": "A machine that takes photographs or films moving pictures.",
+          "explanation": "camera: A machine that takes photographs or films moving pictures."
+        },
+        {
+          "prompt": "What does 'send' mean in this unit?",
+          "choices": [
+            "To stay on top of water without sinking.",
+            "A machine that takes photographs or films moving pictures.",
+            "Send means to make something travel or go to a place."
+          ],
+          "answer": "Send means to make something travel or go to a place.",
+          "explanation": "send: Send means to make something travel or go to a place."
+        },
+        {
+          "prompt": "What does 'nervous' mean in this unit?",
+          "choices": [
+            "A machine that takes photographs or films moving pictures.",
+            "Feeling a little worried or afraid before something happens.",
+            "To stay on top of water without sinking."
+          ],
+          "answer": "Feeling a little worried or afraid before something happens.",
+          "explanation": "nervous: Feeling a little worried or afraid before something happens."
+        },
+        {
+          "prompt": "What does 'worked' mean in this unit?",
+          "choices": [
+            "Worked means did a job or task, often for a period of time.",
+            "To stay on top of water without sinking.",
+            "A machine that takes photographs or films moving pictures."
+          ],
+          "answer": "Worked means did a job or task, often for a period of time.",
+          "explanation": "worked: Worked means did a job or task, often for a period of time."
+        },
+        {
+          "prompt": "What does 'knew' mean in this unit?",
+          "choices": [
+            "To stay on top of water without sinking.",
+            "A machine that takes photographs or films moving pictures.",
+            "Knew means understood or remembered something already."
+          ],
+          "answer": "Knew means understood or remembered something already.",
+          "explanation": "knew: Knew means understood or remembered something already."
+        },
+        {
+          "prompt": "What does 'graph' mean in this unit?",
+          "choices": [
+            "A machine that takes photographs or films moving pictures.",
+            "A drawing that uses bars or lines to compare numbers.",
+            "To stay on top of water without sinking."
+          ],
+          "answer": "A drawing that uses bars or lines to compare numbers.",
+          "explanation": "graph: A drawing that uses bars or lines to compare numbers."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'themselves'?",
+          "choices": [
+            "Pronoun",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Pronoun",
+          "explanation": "Themselves is used as a pronoun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'normal'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Normal is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'mattered'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Mattered is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'judges'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Judges is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'library'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Library is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'printer'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Printer is used as a noun in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "coach",
+              "A person who trains a team and helps them play better."
+            ],
+            [
+              "email",
+              "A message you send to somebody through a computer."
+            ],
+            [
+              "firefighter",
+              "A person who puts out fires and rescues people from danger."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "visit",
+              "To visit means to go and see a person or a place."
+            ],
+            [
+              "helpful",
+              "Helpful means ready to help other people."
+            ],
+            [
+              "classmates",
+              "Children who are in the same class as you at school."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "check",
+              "To look at something carefully to make sure it is right."
+            ],
+            [
+              "work",
+              "A task or job that takes time and energy to finish."
+            ],
+            [
+              "include",
+              "To add something as one part of a whole."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "cartoons",
+              "Cartoons are simple, funny drawings that tell a story or explain an idea."
+            ],
+            [
+              "finally",
+              "Finally means at last, after a long time of waiting."
+            ],
+            [
+              "pen",
+              "A pen is a tool used for writing or drawing with ink."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "thirty",
+              "Thirty is the number after twenty-nine and before thirty-one."
+            ],
+            [
+              "loudest",
+              "Loudest means making the most noise of all."
+            ],
+            [
+              "contest",
+              "A game or test to see who is best."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "index",
+              "The list at the back of a book that shows where to find things."
+            ],
+            [
+              "folder",
+              "A folder is a cover that holds your papers together."
+            ],
+            [
+              "activity",
+              "Something you do, for fun or for learning."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Which sentence shows the possessive ’s used correctly?",
+          "choices": [
+            "The teacher’s desk is tidy.",
+            "The teachers desk is tidy.",
+            "The teacher desk’s is tidy.",
+            "The teachers’s desk is tidy."
+          ],
+          "answer": "The teacher’s desk is tidy.",
+          "explanation": "One owner takes an apostrophe and then s, attached to the owner rather than to the thing owned."
+        },
+        {
+          "prompt": "Which word joins these two ideas: “I like the library ______ it is quiet.”?",
+          "choices": [
+            "but",
+            "so that",
+            "because",
+            "even though"
+          ],
+          "answer": "because",
+          "explanation": "Because introduces a reason; but shows contrast, so that shows purpose, and even though shows surprise."
+        },
+        {
+          "prompt": "In ‘The Grammar Champions’, where did Amal’s group go to study and write their report?",
+          "choices": [
+            "To the market",
+            "To the sports hall",
+            "To Teacher Yasmin’s office",
+            "To the school library"
+          ],
+          "answer": "To the school library",
+          "explanation": "The story says the group met in the library the next day to study together and write their report."
+        },
+        {
+          "prompt": "Which word means small pieces of information about something?",
+          "choices": [
+            "details",
+            "supply",
+            "topic",
+            "education"
+          ],
+          "answer": "details",
+          "explanation": "Supply names objects, topic names the idea you write about, and education names learning itself."
+        },
+        {
+          "prompt": "Choose the missing word: We ______ for the contest by reading and practising every day.",
+          "choices": [
+            "graduated",
+            "prepared",
+            "erased",
+            "reported"
+          ],
+          "answer": "prepared",
+          "explanation": "Prepare means to get ready, and the –d ending puts it in the past like the rest of the sentence."
+        },
         {
           "prompt": "Which word means a place where you can find and borrow books?",
           "choices": [
@@ -481,28 +802,78 @@
           ],
           "answer": "library",
           "explanation": "A library is a place, while an eraser is a tool, a contest is an event, and mathematics is a subject."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Which word means small pieces of information about something?",
+          "choices": [
+            "details",
+            "supply",
+            "topic",
+            "education"
+          ],
+          "answer": "details",
+          "explanation": "Supply names objects, topic names the idea you write about, and education names learning itself."
         },
         {
-          "prompt": "What does the word ‘author’ mean?",
+          "prompt": "Choose the missing word: We ______ for the contest by reading and practising every day.",
           "choices": [
-            "A tool used to clean pencil marks from paper.",
-            "A short paper or talk that tells about something.",
-            "Things we use at school or home, like pencils and paper.",
-            "A person who writes books or stories."
+            "graduated",
+            "prepared",
+            "erased",
+            "reported"
           ],
-          "answer": "A person who writes books or stories.",
-          "explanation": "The other three options are the meanings of eraser, report and supply."
+          "answer": "prepared",
+          "explanation": "Prepare means to get ready, and the –d ending puts it in the past like the rest of the sentence."
         },
         {
-          "prompt": "In ‘A Day at School’, why does Adam say grammar is his favourite subject?",
+          "prompt": "Which word means: A person who owns or looks after a small shop.",
           "choices": [
-            "Because it helps him write well.",
-            "Because his sister teaches it.",
-            "Because it happens after lunch every single day.",
-            "Because he likes counting numbers."
+            "shopkeeper",
+            "float",
+            "camera"
           ],
-          "answer": "Because it helps him write well.",
-          "explanation": "Adam gives that exact reason right after the word because in the passage."
+          "answer": "shopkeeper",
+          "explanation": "shopkeeper: A person who owns or looks after a small shop."
+        },
+        {
+          "prompt": "Which word means: Feeling a little worried or afraid before something happens.",
+          "choices": [
+            "float",
+            "camera",
+            "nervous"
+          ],
+          "answer": "nervous",
+          "explanation": "nervous: Feeling a little worried or afraid before something happens."
+        },
+        {
+          "prompt": "What type of word is 'cartoon'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Cartoon is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'graph'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Graph is used as a noun in this dictionary sense."
         }
       ]
     }

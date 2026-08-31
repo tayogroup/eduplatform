@@ -5,7 +5,7 @@
   "unitId": "eng-g08-t02-u05",
   "title": "Natural Resources and Sustainability Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: Giving people the authority and confidence to act for themselves.",
           "choices": [
             "empowerment",
-            "reciprocal",
-            "arrive"
+            "trade-based",
+            "risk-awareness"
           ],
           "answer": "empowerment",
           "explanation": "empowerment: Giving people the authority and confidence to act for themselves."
         },
         {
-          "prompt": "Which word means: Extremely dirty, in a way that is unpleasant or unhealthy.",
+          "prompt": "Which word means: To prepare food by heating it.",
           "choices": [
             "empowerment",
-            "reciprocal",
-            "filthy"
+            "trade-based",
+            "cook"
           ],
-          "answer": "filthy",
-          "explanation": "filthy: Extremely dirty, in a way that is unpleasant or unhealthy."
+          "answer": "cook",
+          "explanation": "cook: To prepare food by heating it."
         },
         {
-          "prompt": "Which word means: Carrying or taking something or someone along to a place.",
+          "prompt": "Which word means: Having a colour between black and white, often associated with dullness.",
           "choices": [
-            "reciprocal",
-            "bringing",
+            "trade-based",
+            "grey",
             "empowerment"
           ],
-          "answer": "bringing",
-          "explanation": "bringing: Carrying or taking something or someone along to a place."
+          "answer": "grey",
+          "explanation": "grey: Having a colour between black and white, often associated with dullness."
+        },
+        {
+          "prompt": "Which word means: Careful and considerate treatment of someone or something, showing that it is valued.",
+          "choices": [
+            "respect",
+            "empowerment",
+            "trade-based"
+          ],
+          "answer": "respect",
+          "explanation": "respect: Careful and considerate treatment of someone or something, showing that it is valued."
+        },
+        {
+          "prompt": "Which word means: Giving a speech or message, or bringing something to a place.",
+          "choices": [
+            "empowerment",
+            "trade-based",
+            "delivering"
+          ],
+          "answer": "delivering",
+          "explanation": "delivering: Giving a speech or message, or bringing something to a place."
+        },
+        {
+          "prompt": "Which word means: Stated means said something clearly and formally, often as part of an official announcement.",
+          "choices": [
+            "trade-based",
+            "stated",
+            "empowerment"
+          ],
+          "answer": "stated",
+          "explanation": "stated: Stated means said something clearly and formally, often as part of an official announcement."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "An amount or figure used to count or measure something.",
-          "answer": "number"
+          "clue": "Very serious, extreme, or intense.",
+          "answer": "severe"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Algae are simple plant-like living things that grow in water and can form a green or brown layer.",
-          "answer": "algae"
+          "clue": "To give someone a false idea or lead them to a wrong conclusion.",
+          "answer": "mislead"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Growing, developing, or doing very well, full of energy and success.",
+          "answer": "thriving"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Making a strong, repeated movement or sound, like a heart pumping quickly.",
+          "answer": "beating"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Fold means to bend or curl something over on itself, or to curl back like a wave.",
+          "answer": "fold"
         }
       ]
     },
@@ -100,37 +145,89 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "it.",
-            "beside",
-            "evidence",
-            "proper",
-            "without",
-            "nobody",
-            "convinced",
-            "reef",
+            "birds.",
             "the",
-            "for",
-            "concern",
-            "sincere",
-            "His"
+            "as",
+            "well",
+            "as",
+            "soil",
+            "the",
+            "records",
+            "survey",
+            "holistic",
+            "A"
           ],
-          "answer": "His sincere concern for the reef convinced nobody without proper evidence beside it."
+          "answer": "A holistic survey records the soil as well as the birds."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "report.",
-            "their",
-            "writing",
-            "before",
-            "data",
-            "of",
-            "months",
-            "reviewed",
-            "club",
+            "season.",
+            "breeding",
+            "the",
+            "during",
+            "year",
+            "every",
+            "beach",
+            "same",
+            "the",
+            "to",
+            "return",
+            "Turtles"
+          ],
+          "answer": "Turtles return to the same beach every year during the breeding season."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "otherwise.",
+            "show",
+            "tests",
+            "the",
+            "while",
+            "healthy",
+            "is",
+            "coastline",
+            "the",
+            "insists",
+            "elder",
+            "an",
+            "Suppose"
+          ],
+          "answer": "Suppose an elder insists the coastline is healthy while the tests show otherwise."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "seawater.",
+            "cloudy",
+            "with",
+            "filled",
+            "tube",
+            "glass",
+            "a",
+            "held",
+            "student",
             "The"
           ],
-          "answer": "The club reviewed months of data before writing their report."
+          "answer": "The student held a glass tube filled with cloudy seawater."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "traditions.",
+            "own",
+            "their",
+            "mocked",
+            "activists",
+            "young",
+            "the",
+            "claimed",
+            "wrongly",
+            "article",
+            "The"
+          ],
+          "answer": "The article wrongly claimed the young activists mocked their own traditions."
         }
       ]
     },
@@ -143,315 +240,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from 'Shifting Currents, part 1': \"They think it is clean,\" he muttered, pausing to pick up a straw. \"But it is a _____ beauty.\"",
+          "prompt": "What does 'falter' mean?",
           "choices": [
-            "deceptive",
-            "pristine",
-            "sombre",
-            "terse"
+            "a word that means the opposite of another word",
+            "making someone believe something that is not true; misleading",
+            "to hesitate or lose strength when doing something",
+            "lacking experience or sophistication; easily fooled or deceived"
           ],
-          "answer": "deceptive",
-          "explanation": "The surface looks clean but is not, so the beauty deceives the viewer."
+          "answer": "to hesitate or lose strength when doing something",
+          "explanation": "In the story, Tariq faltered when he spoke to older residents: his courage briefly lost strength."
         },
         {
-          "prompt": "Choose the missing word from 'Shifting Currents, part 2': \"This is the _____ result of ignorance, not evil. And we have the power to change it.\"",
+          "prompt": "What does 'pristine' mean?",
           "choices": [
-            "naive",
-            "credible",
-            "threadbare",
-            "egregious"
+            "clean, fresh, and in its original condition; not spoiled or damaged",
+            "a plan or method used to achieve a goal",
+            "a feeling of strong dislike or lack of respect for someone or something",
+            "dark or serious in mood; not cheerful"
           ],
-          "answer": "egregious",
-          "explanation": "Egregious fits because Tariq is naming a shockingly bad outcome caused by habit, not by malice."
+          "answer": "clean, fresh, and in its original condition; not spoiled or damaged",
+          "explanation": "The sea only looked pristine at first glance; the word describes an unspoiled, original condition."
         },
         {
-          "prompt": "Choose the missing word from 'Natural Resources Under Pressure': When the amount taken from the sea begins to _____ what the sea can replace, populations of fish shrink year after year.",
+          "prompt": "What does 'deceptive' mean?",
           "choices": [
-            "subside",
-            "falter",
-            "surpass",
-            "modify"
+            "very large in amount or quantity",
+            "using few words, often in a way that seems rude or unfriendly",
+            "a change from one state or condition to another",
+            "making someone believe something that is not true; misleading"
           ],
-          "answer": "surpass",
-          "explanation": "Surpass means to go beyond a limit: the catch exceeds what the sea can replace."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In 'How Scientists Read a Coastline', why do scientists collect water samples at several points along the shore instead of just one?",
-          "choices": [
-            "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several points give a truthful picture.",
-            "She announces that 'The first units will be installed by December', using the future passive voice.",
-            "The grandfather now accepts that questioning old habits protects the community he loves rather than insulting it, and Tariq admits, 'We should have listened to each other sooner.'"
-          ],
-          "answer": "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several points give a truthful picture.",
-          "explanation": "The text says a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so testing several points along the shore gives an honest picture of the whole coastline."
+          "answer": "making someone believe something that is not true; misleading",
+          "explanation": "Tariq calls the calm blue surface a deceptive beauty because it misleads people about the decay below."
         },
-        {
-          "prompt": "In part 1 of 'Shifting Currents', what does Tariq find on the beach that shows the sea is not really pristine?",
-          "choices": [
-            "The grandfather now accepts that questioning old habits protects the community he loves rather than insulting it, and Tariq admits, 'We should have listened to each other sooner.'",
-            "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several points give a truthful picture.",
-            "He finds plastic bottles snagged in old fishing nets and sweet wrappers drifting near the ancient coral rocks."
-          ],
-          "answer": "He finds plastic bottles snagged in old fishing nets and sweet wrappers drifting near the ancient coral rocks.",
-          "explanation": "Anchors you to the opening image that launches the whole story."
-        },
-        {
-          "prompt": "At the end of part 2, what does the mayor announce about the purification units, and which grammar pattern does she use?",
-          "choices": [
-            "He finds plastic bottles snagged in old fishing nets and sweet wrappers drifting near the ancient coral rocks.",
-            "She announces that 'The first units will be installed by December', using the future passive voice.",
-            "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several points give a truthful picture."
-          ],
-          "answer": "She announces that 'The first units will be installed by December', using the future passive voice.",
-          "explanation": "Connects a plot detail to the unit's grammar focus on the future passive."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Story Discussion",
-          "target": "The scheme's empowerment of local growers changed who set the price."
-        },
-        {
-          "prompt": "Speaking 3: Role Play",
-          "target": "His sincere concern for the reef convinced nobody without proper evidence beside it."
-        },
-        {
-          "prompt": "Speaking 5: Vocabulary Expert Interview",
-          "target": "The club reviewed months of data before writing their report."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "amiss.",
-            "was",
-            "something",
-            "knew",
-            "I",
-            "window,",
-            "broken",
-            "the",
-            "saw",
-            "I",
-            "When"
-          ],
-          "answer": "When I saw the broken window, I knew something was amiss."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "began.",
-            "rules",
-            "new",
-            "the",
-            "since",
-            "improving",
-            "been",
-            "has",
-            "headland",
-            "the",
-            "near",
-            "quality",
-            "water",
-            "The"
-          ],
-          "answer": "The water quality near the headland has been improving since the new rules began."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "began.",
-            "meeting",
-            "the",
-            "before",
-            "rows",
-            "neat",
-            "in",
-            "chairs",
-            "the",
-            "arranged",
-            "Volunteers"
-          ],
-          "answer": "Volunteers arranged the chairs in neat rows before the meeting began."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'weather' mean in this unit?",
-          "choices": [
-            "The conditions outside at a particular time, such as rain, wind, sun, or storms.",
-            "Giving people the authority and confidence to act for themselves.",
-            "Given and received in return by both sides."
-          ],
-          "answer": "The conditions outside at a particular time, such as rain, wind, sun, or storms.",
-          "explanation": "weather: The conditions outside at a particular time, such as rain, wind, sun, or storms."
-        },
-        {
-          "prompt": "What does 'picking' mean in this unit?",
-          "choices": [
-            "Giving people the authority and confidence to act for themselves.",
-            "Given and received in return by both sides.",
-            "Picking means collecting or gathering something, often one item at a time."
-          ],
-          "answer": "Picking means collecting or gathering something, often one item at a time.",
-          "explanation": "picking: Picking means collecting or gathering something, often one item at a time."
-        },
-        {
-          "prompt": "What does 'reciprocal' mean in this unit?",
-          "choices": [
-            "To reach a place or a point in time.",
-            "Given and received in return by both sides.",
-            "Giving people the authority and confidence to act for themselves."
-          ],
-          "answer": "Given and received in return by both sides.",
-          "explanation": "reciprocal: Given and received in return by both sides."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'tube'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Tube is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'modify'?",
-          "choices": [
-            "Noun",
-            "Adjective",
-            "Verb"
-          ],
-          "answer": "Verb",
-          "explanation": "Modify is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'recover'?",
-          "choices": [
-            "Adjective",
-            "Verb",
-            "Noun"
-          ],
-          "answer": "Verb",
-          "explanation": "Recover is used as a verb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "frequency-table",
-              "A table showing how often each value occurs in a set of data."
-            ],
-            [
-              "supply",
-              "To provide something that is needed or wanted."
-            ],
-            [
-              "unwelcome",
-              "Not wanted, and often unpleasant or awkward when it happens."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "measure",
-              "To find the exact size, amount, or level of something using an instrument."
-            ],
-            [
-              "doubter",
-              "A person who is not sure whether something is true and asks questions about it."
-            ],
-            [
-              "dedicated",
-              "Working very hard and giving a lot of time and energy to something."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "killed",
-              "Caused a living thing to die."
-            ],
-            [
-              "podium",
-              "A podium is a small raised platform that a speaker stands on to address an audience."
-            ],
-            [
-              "tactic",
-              "a plan or method used to achieve a goal"
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "What does 'naive' mean?",
           "choices": [
@@ -488,34 +308,42 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
         {
-          "prompt": "What does 'falter' mean?",
+          "prompt": "In 'How Scientists Read a Coastline', why do scientists collect water samples at several points along the shore instead of just one?",
           "choices": [
-            "a word that means the opposite of another word",
-            "making someone believe something that is not true; misleading",
-            "to hesitate or lose strength when doing something",
-            "lacking experience or sophistication; easily fooled or deceived"
+            "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several points give a truthful picture.",
+            "She announces that 'The first units will be installed by December', using the future passive voice.",
+            "He finds plastic bottles snagged in old fishing nets and sweet wrappers drifting near the ancient coral rocks."
           ],
-          "answer": "to hesitate or lose strength when doing something",
-          "explanation": "In the story, Tariq faltered when he spoke to older residents: his courage briefly lost strength."
+          "answer": "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several points give a truthful picture.",
+          "explanation": "The text says a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so testing several points along the shore gives an honest picture of the whole coastline."
         },
         {
-          "prompt": "What does 'pristine' mean?",
+          "prompt": "In part 1 of 'Shifting Currents', what does Tariq find on the beach that shows the sea is not really pristine?",
           "choices": [
-            "clean, fresh, and in its original condition; not spoiled or damaged",
-            "a plan or method used to achieve a goal",
-            "a feeling of strong dislike or lack of respect for someone or something",
-            "dark or serious in mood; not cheerful"
+            "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several points give a truthful picture.",
+            "She announces that 'The first units will be installed by December', using the future passive voice.",
+            "He finds plastic bottles snagged in old fishing nets and sweet wrappers drifting near the ancient coral rocks."
           ],
-          "answer": "clean, fresh, and in its original condition; not spoiled or damaged",
-          "explanation": "The sea only looked pristine at first glance; the word describes an unspoiled, original condition."
+          "answer": "He finds plastic bottles snagged in old fishing nets and sweet wrappers drifting near the ancient coral rocks.",
+          "explanation": "Anchors you to the opening image that launches the whole story."
+        },
+        {
+          "prompt": "At the end of part 2, what does the mayor announce about the purification units, and which grammar pattern does she use?",
+          "choices": [
+            "Because a single sample can mislead: water near the harbour may be filthy while water near the headland is clean, so several points give a truthful picture.",
+            "She announces that 'The first units will be installed by December', using the future passive voice.",
+            "He finds plastic bottles snagged in old fishing nets and sweet wrappers drifting near the ancient coral rocks."
+          ],
+          "answer": "She announces that 'The first units will be installed by December', using the future passive voice.",
+          "explanation": "Connects a plot detail to the unit's grammar focus on the future passive."
         },
         {
           "prompt": "What does 'deceptive' mean?",
@@ -527,6 +355,579 @@
           ],
           "answer": "making someone believe something that is not true; misleading",
           "explanation": "Tariq calls the calm blue surface a deceptive beauty because it misleads people about the decay below."
+        },
+        {
+          "prompt": "What does 'naive' mean?",
+          "choices": [
+            "sad and gloomy; not cheerful or happy",
+            "lacking experience or sophistication; easily fooled or deceived",
+            "a set of beliefs or ideas that are taught by a group or organisation",
+            "thinking you are better than others; proud and unfriendly"
+          ],
+          "answer": "lacking experience or sophistication; easily fooled or deceived",
+          "explanation": "Tariq says some resisters are simply naive about the science: inexperienced, not wicked."
+        },
+        {
+          "prompt": "Choose the missing word from 'Shifting Currents, part 2': Tariq rehearsed his speech with _____ effort.",
+          "choices": [
+            "sombre",
+            "persistent",
+            "threadbare",
+            "copious"
+          ],
+          "answer": "persistent",
+          "explanation": "Rehearsing again and again, adjusting his tone each time, shows effort that continues despite difficulty."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Story Discussion",
+          "target": "The scheme's empowerment of local growers changed who set the price."
+        },
+        {
+          "prompt": "Speaking 2: Persuasive Mini-Speech",
+          "target": "A holistic survey records the soil as well as the birds."
+        },
+        {
+          "prompt": "Speaking 3: Role Play",
+          "target": "Turtles return to the same beach every year during the breeding season."
+        },
+        {
+          "prompt": "Speaking 4: Debate Performance",
+          "target": "Hold the debate you prepared in Activities 3."
+        },
+        {
+          "prompt": "Speaking 5: Vocabulary Expert Interview",
+          "target": "The student held a glass tube filled with cloudy seawater."
+        },
+        {
+          "prompt": "Speaking 6: Explain and Respond",
+          "target": "The article wrongly claimed the young activists mocked their own traditions."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "challenging.",
+            "and",
+            "exciting",
+            "be",
+            "can",
+            "school",
+            "high",
+            "to",
+            "school",
+            "middle",
+            "from",
+            "transition",
+            "The"
+          ],
+          "answer": "The transition from middle school to high school can be exciting and challenging."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "replace.",
+            "can",
+            "it",
+            "than",
+            "sea",
+            "the",
+            "from",
+            "taken",
+            "is",
+            "more",
+            "whenever",
+            "shrink",
+            "populations",
+            "Fish"
+          ],
+          "answer": "Fish populations shrink whenever more is taken from the sea than it can replace."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "properly.",
+            "breathe",
+            "to",
+            "fish",
+            "for",
+            "hard",
+            "it",
+            "make",
+            "can",
+            "oxygen",
+            "dissolved",
+            "Low"
+          ],
+          "answer": "Low dissolved oxygen can make it hard for fish to breathe properly."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "creatures.",
+            "sea",
+            "different",
+            "of",
+            "thousands",
+            "supports",
+            "reef",
+            "coral",
+            "thriving",
+            "A"
+          ],
+          "answer": "A thriving coral reef supports thousands of different sea creatures."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "project.",
+            "school",
+            "her",
+            "about",
+            "asked",
+            "Grandfather",
+            "when",
+            "nervously",
+            "laughed",
+            "Zara"
+          ],
+          "answer": "Zara laughed nervously when Grandfather asked about her school project."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "week.",
+            "single",
+            "a",
+            "within",
+            "council",
+            "regional",
+            "the",
+            "with",
+            "meeting",
+            "a",
+            "secured",
+            "Amara"
+          ],
+          "answer": "Amara secured a meeting with the regional council within a single week."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'trade-based' mean in this unit?",
+          "choices": [
+            "Working through the buying and selling of goods between countries.",
+            "Giving people the authority and confidence to act for themselves.",
+            "Recognising what could go wrong before it does."
+          ],
+          "answer": "Working through the buying and selling of goods between countries.",
+          "explanation": "trade-based: Working through the buying and selling of goods between countries."
+        },
+        {
+          "prompt": "What does 'ecosystem' mean in this unit?",
+          "choices": [
+            "Giving people the authority and confidence to act for themselves.",
+            "Working through the buying and selling of goods between countries.",
+            "All the living things in an area together with the environment they depend on."
+          ],
+          "answer": "All the living things in an area together with the environment they depend on.",
+          "explanation": "ecosystem: All the living things in an area together with the environment they depend on."
+        },
+        {
+          "prompt": "What does 'headland' mean in this unit?",
+          "choices": [
+            "Working through the buying and selling of goods between countries.",
+            "A narrow piece of land that sticks out from the coast into the sea.",
+            "Giving people the authority and confidence to act for themselves."
+          ],
+          "answer": "A narrow piece of land that sticks out from the coast into the sea.",
+          "explanation": "headland: A narrow piece of land that sticks out from the coast into the sea."
+        },
+        {
+          "prompt": "What does 'former' mean in this unit?",
+          "choices": [
+            "Belonging to an earlier time, or describing something as it used to be.",
+            "Giving people the authority and confidence to act for themselves.",
+            "Working through the buying and selling of goods between countries."
+          ],
+          "answer": "Belonging to an earlier time, or describing something as it used to be.",
+          "explanation": "former: Belonging to an earlier time, or describing something as it used to be."
+        },
+        {
+          "prompt": "What does 'algae' mean in this unit?",
+          "choices": [
+            "Giving people the authority and confidence to act for themselves.",
+            "Working through the buying and selling of goods between countries.",
+            "Algae are simple plant-like living things that grow in water and can form a green or brown layer."
+          ],
+          "answer": "Algae are simple plant-like living things that grow in water and can form a green or brown layer.",
+          "explanation": "algae: Algae are simple plant-like living things that grow in water and can form a green or brown layer."
+        },
+        {
+          "prompt": "What does 'tongue' mean in this unit?",
+          "choices": [
+            "Working through the buying and selling of goods between countries.",
+            "A tongue can mean a language spoken by a group of people, or the body part used for speaking and tasting.",
+            "Giving people the authority and confidence to act for themselves."
+          ],
+          "answer": "A tongue can mean a language spoken by a group of people, or the body part used for speaking and tasting.",
+          "explanation": "tongue: A tongue can mean a language spoken by a group of people, or the body part used for speaking and tasting."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'risk-awareness'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Risk-awareness is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'arithmetic'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Arithmetic is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'dive'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Dive is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'heal'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Heal is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'misunderstood'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Misunderstood is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'sombre'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Sombre is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "frequency-table",
+              "A table showing how often each value occurs in a set of data."
+            ],
+            [
+              "biome",
+              "A large region defined by its climate and the life it supports."
+            ],
+            [
+              "equilibrium",
+              "A state of balance where opposing forces cancel out."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "shelter",
+              "To protect someone or something from harm or bad weather."
+            ],
+            [
+              "overuse",
+              "The act of using something too much, so that it becomes damaged or runs out."
+            ],
+            [
+              "destroying",
+              "Damaging something so badly that it no longer exists or works."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "willingness",
+              "A readiness or eagerness to do something, especially when it is difficult or unpopular."
+            ],
+            [
+              "oxygen",
+              "A gas in the air and water that living things need in order to breathe."
+            ],
+            [
+              "weather",
+              "The conditions outside at a particular time, such as rain, wind, sun, or storms."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "fearing",
+              "Feeling worried or afraid that something bad might happen."
+            ],
+            [
+              "topic",
+              "A subject that people talk, write, or think about."
+            ],
+            [
+              "aggressive",
+              "Acting in a forceful or hostile way, often ready to argue or attack."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "winded",
+              "Out of breath, usually after running or a sudden shock."
+            ],
+            [
+              "blame",
+              "To blame someone means to say or believe that they are responsible for something bad."
+            ],
+            [
+              "capital",
+              "A capital is the city where a country's or region's government is based."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "internship",
+              "An internship is a temporary position where someone gains real work experience, often unpaid."
+            ],
+            [
+              "naive",
+              "lacking experience or sophistication; easily fooled or deceived"
+            ],
+            [
+              "discern",
+              "to notice or understand something clearly"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Shifting Currents, part 1': The _____ of respect is not science—it is carelessness.",
+          "choices": [
+            "doctrine",
+            "dialect",
+            "antonym",
+            "tactic"
+          ],
+          "answer": "antonym",
+          "explanation": "Grandfather corrects the debate: the true opposite of respect is carelessness, so the missing word names an opposite."
+        },
+        {
+          "prompt": "Choose the missing word from 'Shifting Currents, part 1': \"They think it is clean,\" he muttered, pausing to pick up a straw. \"But it is a _____ beauty.\"",
+          "choices": [
+            "deceptive",
+            "pristine",
+            "sombre",
+            "terse"
+          ],
+          "answer": "deceptive",
+          "explanation": "The surface looks clean but is not, so the beauty deceives the viewer."
+        },
+        {
+          "prompt": "Choose the missing word from 'Shifting Currents, part 2': \"This is the _____ result of ignorance, not evil. And we have the power to change it.\"",
+          "choices": [
+            "naive",
+            "credible",
+            "threadbare",
+            "egregious"
+          ],
+          "answer": "egregious",
+          "explanation": "Egregious fits because Tariq is naming a shockingly bad outcome caused by habit, not by malice."
+        },
+        {
+          "prompt": "Choose the missing word from 'Natural Resources Under Pressure': When the amount taken from the sea begins to _____ what the sea can replace, populations of fish shrink year after year.",
+          "choices": [
+            "subside",
+            "falter",
+            "surpass",
+            "modify"
+          ],
+          "answer": "surpass",
+          "explanation": "Surpass means to go beyond a limit: the catch exceeds what the sea can replace."
+        },
+        {
+          "prompt": "Choose the missing word from 'Shifting Currents, part 2': Some data had been hidden. Some opinions were loud but not _____.",
+          "choices": [
+            "threadbare",
+            "credible",
+            "sombre",
+            "copious"
+          ],
+          "answer": "credible",
+          "explanation": "Credible completes the contrast: the opinions were loud, but they could not be trusted."
+        },
+        {
+          "prompt": "What does 'falter' mean?",
+          "choices": [
+            "a word that means the opposite of another word",
+            "making someone believe something that is not true; misleading",
+            "to hesitate or lose strength when doing something",
+            "lacking experience or sophistication; easily fooled or deceived"
+          ],
+          "answer": "to hesitate or lose strength when doing something",
+          "explanation": "In the story, Tariq faltered when he spoke to older residents: his courage briefly lost strength."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the missing word from 'Natural Resources Under Pressure': When the amount taken from the sea begins to _____ what the sea can replace, populations of fish shrink year after year.",
+          "choices": [
+            "subside",
+            "falter",
+            "surpass",
+            "modify"
+          ],
+          "answer": "surpass",
+          "explanation": "Surpass means to go beyond a limit: the catch exceeds what the sea can replace."
+        },
+        {
+          "prompt": "Choose the missing word from 'Shifting Currents, part 2': Some data had been hidden. Some opinions were loud but not _____.",
+          "choices": [
+            "threadbare",
+            "credible",
+            "sombre",
+            "copious"
+          ],
+          "answer": "credible",
+          "explanation": "Credible completes the contrast: the opinions were loud, but they could not be trusted."
+        },
+        {
+          "prompt": "Which word means: To investigate something closely, or an instrument for doing so.",
+          "choices": [
+            "probe",
+            "empowerment",
+            "trade-based"
+          ],
+          "answer": "probe",
+          "explanation": "probe: To investigate something closely, or an instrument for doing so."
+        },
+        {
+          "prompt": "Which word means: A narrow piece of land that sticks out from the coast into the sea.",
+          "choices": [
+            "empowerment",
+            "trade-based",
+            "headland"
+          ],
+          "answer": "headland",
+          "explanation": "headland: A narrow piece of land that sticks out from the coast into the sea."
+        },
+        {
+          "prompt": "What type of word is 'shopkeeper'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Shopkeeper is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'tongue'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Tongue is used as a noun in this dictionary sense."
         }
       ]
     }

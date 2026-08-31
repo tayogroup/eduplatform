@@ -5,7 +5,7 @@
   "unitId": "eng-g03-t01-u01",
   "title": "All About Me and My Family Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: To shout happily to show you are pleased or to support someone.",
           "choices": [
             "cheer",
-            "shy",
-            "myself"
+            "itself",
+            "cousin"
           ],
           "answer": "cheer",
           "explanation": "cheer: To shout happily to show you are pleased or to support someone."
         },
         {
-          "prompt": "Which word means: A person who is not named or known.",
+          "prompt": "Which word means: A girl or woman who has the same parents as you.",
           "choices": [
             "cheer",
-            "shy",
-            "someone"
+            "itself",
+            "sister"
           ],
-          "answer": "someone",
-          "explanation": "someone: A person who is not named or known."
+          "answer": "sister",
+          "explanation": "sister: A girl or woman who has the same parents as you."
         },
         {
-          "prompt": "Which word means: Spoke very quietly and softly.",
+          "prompt": "Which word means: In the space that separates two things or two people.",
           "choices": [
-            "shy",
-            "whispered",
+            "itself",
+            "between",
             "cheer"
           ],
-          "answer": "whispered",
-          "explanation": "whispered: Spoke very quietly and softly."
+          "answer": "between",
+          "explanation": "between: In the space that separates two things or two people."
+        },
+        {
+          "prompt": "Which word means: Precisely, in a completely correct way.",
+          "choices": [
+            "exactly",
+            "cheer",
+            "itself"
+          ],
+          "answer": "exactly",
+          "explanation": "exactly: Precisely, in a completely correct way."
+        },
+        {
+          "prompt": "Which word means: Smiled in a big, happy way, in the past.",
+          "choices": [
+            "cheer",
+            "itself",
+            "grinned"
+          ],
+          "answer": "grinned",
+          "explanation": "grinned: Smiled in a big, happy way, in the past."
+        },
+        {
+          "prompt": "Which word means: A person you like and spend time with.",
+          "choices": [
+            "itself",
+            "friend",
+            "cheer"
+          ],
+          "answer": "friend",
+          "explanation": "friend: A person you like and spend time with."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "To put something in place, ready for use.",
-          "answer": "set"
+          "clue": "A girl or woman who has the same parents as you.",
+          "answer": "sister"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "A word used to agree with something, or to say it is true.",
-          "answer": "yes"
+          "clue": "In the space that separates two things or two people.",
+          "answer": "between"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Precisely, in a completely correct way.",
+          "answer": "exactly"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Smiled in a big, happy way, in the past.",
+          "answer": "grinned"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "A person you like and spend time with.",
+          "answer": "friend"
         }
       ]
     },
@@ -97,30 +142,70 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "ones.",
-            "blue",
-            "the",
-            "than",
-            "better",
-            "shoes",
-            "red",
-            "the",
-            "like",
-            "I"
+            "morning.",
+            "every",
+            "lunch",
+            "my",
+            "packs",
+            "mum",
+            "My"
           ],
-          "answer": "I like the red shoes better than the blue ones."
+          "answer": "My mum packs my lunch every morning."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "class.",
-            "in",
-            "well",
-            "listens",
-            "always",
+            "table.",
+            "the",
+            "around",
+            "sat",
+            "children",
+            "The"
+          ],
+          "answer": "The children sat around the table."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "time.",
+            "break",
+            "at",
+            "gate",
+            "the",
+            "to",
+            "run",
+            "children",
+            "The"
+          ],
+          "answer": "The children run to the gate at break time."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "up.",
+            "chin",
+            "her",
+            "with",
+            "forward",
+            "stepped",
             "Amal"
           ],
-          "answer": "Amal always listens well in class."
+          "answer": "Amal stepped forward with her chin up."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "shelf.",
+            "the",
+            "on",
+            "books",
+            "of",
+            "lot",
+            "a",
+            "are",
+            "There"
+          ],
+          "answer": "There are a lot of books on the shelf."
         }
       ]
     },
@@ -133,302 +218,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Choose the missing word from “Good Behaviour at School”: At school, we show ______ to our teacher and to our friends.",
+          "prompt": "Amal lives with her parents, her brothers and her grandmother. What do we call this group of people?",
           "choices": [
-            "traffic",
-            "weather",
-            "luggage",
-            "respect"
+            "her market",
+            "her family",
+            "her notebook",
+            "her homework"
           ],
-          "answer": "respect",
-          "explanation": "The text opens by naming what we show to our teacher and friends, and that word is respect."
+          "answer": "her family",
+          "explanation": "A family is the people who live with you and love you, so the group in the house is her family."
         },
         {
-          "prompt": "Choose the missing word from “Amal's Big Day”: She whispered to her best friend, Nora, “What is your ______ in the play?”",
+          "prompt": "In the class play, Nora acts as the older student who has learned more. What is she called?",
           "choices": [
-            "vest",
-            "newspaper",
-            "duty",
-            "poster"
+            "junior",
+            "visitor",
+            "neighbour",
+            "senior"
           ],
-          "answer": "duty",
-          "explanation": "Amal asks what job Nora must take care of in the play, and a job you must do is a duty."
+          "answer": "senior",
+          "explanation": "A senior is an older person or someone who has learned more, which is exactly the part Nora plays."
         },
         {
-          "prompt": "Where does “Public and Private” say you can play games and be loud?",
+          "prompt": "Which sentence uses the present continuous correctly?",
           "choices": [
-            "At home, in private.",
-            "In public, at the busy market in town.",
-            "In the lunch area at school.",
-            "At the school gate in the morning."
+            "The students are practising their lines.",
+            "The students practising their lines.",
+            "The students is practising their lines.",
+            "The students practise their lines last week."
           ],
-          "answer": "At home, in private.",
-          "explanation": "The listening text pairs in private with at home, and every other option names a public place."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "What does Amal say her duty at home is?",
-          "choices": [
-            "Her duty is to keep her room tidy and to be kind.",
-            "Her parents are her role models, and they teach her to help other people.",
-            "Because she is the youngest member of the drama club."
-          ],
-          "answer": "Her duty is to keep her room tidy and to be kind.",
-          "explanation": "The text gives two parts to the duty, so a full answer names both the tidy room and the kindness."
+          "answer": "The students are practising their lines.",
+          "explanation": "Present continuous needs a be word plus the -ing verb, and a plural subject takes are practising."
         },
-        {
-          "prompt": "Amal talks about her grandmother. Should she say he or she about her? Why?",
-          "choices": [
-            "Her parents are her role models, and they teach her to help other people.",
-            "She runs over at once and offers to help the younger girl.",
-            "She should say she, because grandmother names one female person."
-          ],
-          "answer": "She should say she, because grandmother names one female person.",
-          "explanation": "Choosing the right pronoun depends on who the noun names, which is Grammar Lesson 4 in this unit."
-        },
-        {
-          "prompt": "Why do the drama club students call Amal Junior?",
-          "choices": [
-            "She is acting the senior student, so Amal can show the polite way.",
-            "Because she is the youngest member of the drama club.",
-            "She should say she, because grandmother names one female person."
-          ],
-          "answer": "Because she is the youngest member of the drama club.",
-          "explanation": "The opening line of the story gives the reason for the nickname straight away."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1 — Introduce Your Family",
-          "target": "In my family, there is ______, ______, and me."
-        },
-        {
-          "prompt": "Speaking 3 — Ask Me a Question",
-          "target": "Who is in your family?"
-        },
-        {
-          "prompt": "Speaking 5 — Public or Private Role Play",
-          "target": "Act out two short scenes with a partner or your helper."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "early.",
-            "homework",
-            "her",
-            "finished",
-            "actually",
-            "Amal"
-          ],
-          "answer": "Amal actually finished her homework early."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "makes.",
-            "Hana",
-            "Grandma",
-            "one",
-            "the",
-            "like",
-            "tastes",
-            "soup",
-            "This"
-          ],
-          "answer": "This soup tastes like the one Grandma Hana makes."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "play.",
-            "the",
-            "in",
-            "rude",
-            "be",
-            "to",
-            "pretended",
-            "Nora"
-          ],
-          "answer": "Nora pretended to be rude in the play."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'running' mean in this unit?",
-          "choices": [
-            "Moving quickly on your legs, faster than walking.",
-            "To shout happily to show you are pleased or to support someone.",
-            "Feeling a little nervous around people you do not know."
-          ],
-          "answer": "Moving quickly on your legs, faster than walking.",
-          "explanation": "running: Moving quickly on your legs, faster than walking."
-        },
-        {
-          "prompt": "What does 'ground' mean in this unit?",
-          "choices": [
-            "To shout happily to show you are pleased or to support someone.",
-            "Feeling a little nervous around people you do not know.",
-            "The surface of the earth that you walk on."
-          ],
-          "answer": "The surface of the earth that you walk on.",
-          "explanation": "ground: The surface of the earth that you walk on."
-        },
-        {
-          "prompt": "What does 'shy' mean in this unit?",
-          "choices": [
-            "A word you use to talk about doing something to or for you.",
-            "Feeling a little nervous around people you do not know.",
-            "To shout happily to show you are pleased or to support someone."
-          ],
-          "answer": "Feeling a little nervous around people you do not know.",
-          "explanation": "shy: Feeling a little nervous around people you do not know."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'bit'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Noun",
-          "explanation": "Bit is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'next'?",
-          "choices": [
-            "Noun",
-            "Verb",
-            "Adjective"
-          ],
-          "answer": "Adjective",
-          "explanation": "Next is used as an adjective in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'always'?",
-          "choices": [
-            "Verb",
-            "Adverb",
-            "Noun"
-          ],
-          "answer": "Adverb",
-          "explanation": "Always is used as an adverb in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "steep",
-              "Rising or falling very sharply, so it is hard to climb."
-            ],
-            [
-              "unkind",
-              "Not nice or gentle, and likely to hurt someone's feelings."
-            ],
-            [
-              "brother",
-              "A boy or man who has the same parents as you."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "set",
-              "To put something in place, ready for use."
-            ],
-            [
-              "corridor",
-              "A long, narrow hallway inside a building that joins rooms together."
-            ],
-            [
-              "working",
-              "Doing a job or a task that needs effort."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "hands",
-              "The parts of your body at the end of your arms, used for holding things."
-            ],
-            [
-              "write",
-              "To put words or letters onto paper using a pen or pencil."
-            ],
-            [
-              "completely",
-              "Fully, with nothing left out."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Which Wh- word asks about a time?",
           "choices": [
@@ -465,13 +286,519 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "What does Amal say her duty at home is?",
+          "choices": [
+            "Her duty is to keep her room tidy and to be kind.",
+            "Her parents are her role models, and they teach her to help other people.",
+            "Because she is the youngest member of the drama club."
+          ],
+          "answer": "Her duty is to keep her room tidy and to be kind.",
+          "explanation": "The text gives two parts to the duty, so a full answer names both the tidy room and the kindness."
+        },
+        {
+          "prompt": "The text calls the lunch area a public place. What does public mean here?",
+          "choices": [
+            "She should say she, because grandmother names one female person.",
+            "She runs over at once and offers to help the younger girl.",
+            "Public means everyone at school shares the area, so we behave calmly there."
+          ],
+          "answer": "Public means everyone at school shares the area, so we behave calmly there.",
+          "explanation": "The words around it, sit down calmly and speak softly, show that public means shared with other people."
+        },
+        {
+          "prompt": "Amal talks about her grandmother. Should she say he or she about her? Why?",
+          "choices": [
+            "She is acting the senior student, so Amal can show the polite way.",
+            "She should say she, because grandmother names one female person.",
+            "In private, at home with your family."
+          ],
+          "answer": "She should say she, because grandmother names one female person.",
+          "explanation": "Choosing the right pronoun depends on who the noun names, which is Grammar Lesson 4 in this unit."
+        },
+        {
+          "prompt": "Where does the speaker say you can play games and be loud?",
+          "choices": [
+            "In private, at home with your family.",
+            "Many other people share the market, so a calm voice keeps everyone safe.",
+            "Her duty is to keep her room tidy and to be kind."
+          ],
+          "answer": "In private, at home with your family.",
+          "explanation": "The first sentence pairs in private with at home, so the answer must include both parts."
+        },
+        {
+          "prompt": "Why do the drama club students call Amal Junior?",
+          "choices": [
+            "Many other people share the market, so a calm voice keeps everyone safe.",
+            "Public means everyone at school shares the area, so we behave calmly there.",
+            "Because she is the youngest member of the drama club."
+          ],
+          "answer": "Because she is the youngest member of the drama club.",
+          "explanation": "The opening line of the story gives the reason for the nickname straight away."
+        },
+        {
+          "prompt": "What does Amal do straight after she sees the junior student drop her bag?",
+          "choices": [
+            "Her parents are her role models, and they teach her to help other people.",
+            "She runs over at once and offers to help the younger girl.",
+            "Because she is the youngest member of the drama club."
+          ],
+          "answer": "She runs over at once and offers to help the younger girl.",
+          "explanation": "The sentence beginning Amal ran over at once shows the order of events at the gate."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1 — Introduce Your Family",
+          "target": "In my family, there is ______, ______, and me."
+        },
+        {
+          "prompt": "Speaking 2 — What Do You Like?",
+          "target": "I like ______, and I like ______."
+        },
+        {
+          "prompt": "Speaking 3 — Ask Me a Question",
+          "target": "Who is in your family?"
+        },
+        {
+          "prompt": "Speaking 4 — Values Word Interview",
+          "target": "How do you show respect at work?"
+        },
+        {
+          "prompt": "Speaking 5 — Public or Private Role Play",
+          "target": "Amal stepped forward with her chin up."
+        },
+        {
+          "prompt": "Speaking 6 — One-Minute Talk About Me",
+          "target": "There are a lot of books on the shelf."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "anxious.",
+            "very",
+            "feel",
+            "me",
+            "made",
+            "results",
+            "exam",
+            "the",
+            "for",
+            "Waiting"
+          ],
+          "answer": "Waiting for the exam results made me feel very anxious."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "year.",
+            "last",
+            "town",
+            "new",
+            "a",
+            "to",
+            "moved",
+            "family",
+            "Amal's"
+          ],
+          "answer": "Amal's family moved to a new town last year."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "family.",
+            "happy",
+            "big,",
+            "her",
+            "with",
+            "lives",
+            "Amal"
+          ],
+          "answer": "Amal lives with her big, happy family."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "football?",
+            "plays",
+            "he",
+            "when",
+            "shout",
+            "always",
+            "Leo",
+            "does",
+            "Why"
+          ],
+          "answer": "Why does Leo always shout when he plays football?"
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "storm.",
+            "the",
+            "before",
+            "dark",
+            "became",
+            "sky",
+            "The"
+          ],
+          "answer": "The sky became dark before the storm."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "skills.",
+            "football",
+            "brother's",
+            "big",
+            "his",
+            "admired",
+            "Sami"
+          ],
+          "answer": "Sami admired his big brother's football skills."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'itself' mean in this unit?",
+          "choices": [
+            "The very same thing that was already mentioned.",
+            "To shout happily to show you are pleased or to support someone.",
+            "The child of your aunt or uncle."
+          ],
+          "answer": "The very same thing that was already mentioned.",
+          "explanation": "itself: The very same thing that was already mentioned."
+        },
+        {
+          "prompt": "What does 'sleep' mean in this unit?",
+          "choices": [
+            "To shout happily to show you are pleased or to support someone.",
+            "The very same thing that was already mentioned.",
+            "To rest with your eyes closed at night."
+          ],
+          "answer": "To rest with your eyes closed at night.",
+          "explanation": "sleep: To rest with your eyes closed at night."
+        },
+        {
+          "prompt": "What does 'walk' mean in this unit?",
+          "choices": [
+            "The very same thing that was already mentioned.",
+            "To move on your feet, one step after another, at a normal speed.",
+            "To shout happily to show you are pleased or to support someone."
+          ],
+          "answer": "To move on your feet, one step after another, at a normal speed.",
+          "explanation": "walk: To move on your feet, one step after another, at a normal speed."
+        },
+        {
+          "prompt": "What does 'painting' mean in this unit?",
+          "choices": [
+            "Using paint and a brush to put colour on something.",
+            "To shout happily to show you are pleased or to support someone.",
+            "The very same thing that was already mentioned."
+          ],
+          "answer": "Using paint and a brush to put colour on something.",
+          "explanation": "painting: Using paint and a brush to put colour on something."
+        },
+        {
+          "prompt": "What does 'nickname' mean in this unit?",
+          "choices": [
+            "To shout happily to show you are pleased or to support someone.",
+            "The very same thing that was already mentioned.",
+            "A friendly, shorter name that people call you instead of your real name."
+          ],
+          "answer": "A friendly, shorter name that people call you instead of your real name.",
+          "explanation": "nickname: A friendly, shorter name that people call you instead of your real name."
+        },
+        {
+          "prompt": "What does 'anxious' mean in this unit?",
+          "choices": [
+            "The very same thing that was already mentioned.",
+            "Feeling very worried, with lots of worried thoughts that will not go away.",
+            "To shout happily to show you are pleased or to support someone."
+          ],
+          "answer": "Feeling very worried, with lots of worried thoughts that will not go away.",
+          "explanation": "anxious: Feeling very worried, with lots of worried thoughts that will not go away."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'cousin'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Cousin is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'especially'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adverb"
+          ],
+          "answer": "Adverb",
+          "explanation": "Especially is used as an adverb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'role'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Noun",
+          "explanation": "Role is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'stepped'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Stepped is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'calls'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Calls is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'peaceful'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Peaceful is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "steep",
+              "Rising or falling very sharply, so it is hard to climb."
+            ],
+            [
+              "soon",
+              "In a short time from now, with not long to wait."
+            ],
+            [
+              "name",
+              "The word that people call you or something else."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "always",
+              "At every time, without any exceptions."
+            ],
+            [
+              "every",
+              "Each one, with none left out."
+            ],
+            [
+              "big",
+              "Large in size, not small at all."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "softly",
+              "In a quiet, gentle way, without making much noise."
+            ],
+            [
+              "hello",
+              "A friendly word people say when they meet or greet someone."
+            ],
+            [
+              "laugh",
+              "To make sounds that show you think something is funny."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "comfortable",
+              "Feeling relaxed and at ease, with nothing hurting or worrying you."
+            ],
+            [
+              "newspaper",
+              "Printed sheets of paper with news stories and pictures."
+            ],
+            [
+              "hand",
+              "The part of your body at the end of your arm, used for holding things."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "write",
+              "To put words or letters onto paper using a pen or pencil."
+            ],
+            [
+              "lot",
+              "A large amount or number of something."
+            ],
+            [
+              "actually",
+              "In fact, or really, used to show what is truly true."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "junior",
+              "A younger person, or someone in a lower class."
+            ],
+            [
+              "frightened",
+              "Feeling scared or afraid of something."
+            ],
+            [
+              "sensible",
+              "Showing good sense and thinking carefully before you act."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Complete this sentence: Nora ______ reading books at night.",
+          "choices": [
+            "likes",
+            "like",
+            "liking",
+            "liked"
+          ],
+          "answer": "likes",
+          "explanation": "Nora is one person, so she takes likes with an s, just as he and it do."
+        },
+        {
+          "prompt": "Choose the missing word from “Good Behaviour at School”: At school, we show ______ to our teacher and to our friends.",
+          "choices": [
+            "traffic",
+            "weather",
+            "luggage",
+            "respect"
+          ],
+          "answer": "respect",
+          "explanation": "The text opens by naming what we show to our teacher and friends, and that word is respect."
+        },
+        {
+          "prompt": "Choose the missing word from “Amal's Big Day”: She whispered to her best friend, Nora, “What is your ______ in the play?”",
+          "choices": [
+            "vest",
+            "newspaper",
+            "duty",
+            "poster"
+          ],
+          "answer": "duty",
+          "explanation": "Amal asks what job Nora must take care of in the play, and a job you must do is a duty."
+        },
+        {
+          "prompt": "Where does “Public and Private” say you can play games and be loud?",
+          "choices": [
+            "At home, in private.",
+            "In public, at the busy market in town.",
+            "In the lunch area at school.",
+            "At the school gate in the morning."
+          ],
+          "answer": "At home, in private.",
+          "explanation": "The listening text pairs in private with at home, and every other option names a public place."
+        },
+        {
+          "prompt": "Which word means to show someone great respect for what they do?",
+          "choices": [
+            "safety",
+            "honour",
+            "ladder",
+            "weather"
+          ],
+          "answer": "honour",
+          "explanation": "Honour is stronger than being polite, and the other three name being free from danger, a tool and the sky."
+        },
         {
           "prompt": "Amal lives with her parents, her brothers and her grandmother. What do we call this group of people?",
           "choices": [
@@ -482,28 +809,78 @@
           ],
           "answer": "her family",
           "explanation": "A family is the people who live with you and love you, so the group in the house is her family."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Where does “Public and Private” say you can play games and be loud?",
+          "choices": [
+            "At home, in private.",
+            "In public, at the busy market in town.",
+            "In the lunch area at school.",
+            "At the school gate in the morning."
+          ],
+          "answer": "At home, in private.",
+          "explanation": "The listening text pairs in private with at home, and every other option names a public place."
         },
         {
-          "prompt": "In the class play, Nora acts as the older student who has learned more. What is she called?",
+          "prompt": "Which word means to show someone great respect for what they do?",
           "choices": [
-            "junior",
-            "visitor",
-            "neighbour",
-            "senior"
+            "safety",
+            "honour",
+            "ladder",
+            "weather"
           ],
-          "answer": "senior",
-          "explanation": "A senior is an older person or someone who has learned more, which is exactly the part Nora plays."
+          "answer": "honour",
+          "explanation": "Honour is stronger than being polite, and the other three name being free from danger, a tool and the sky."
         },
         {
-          "prompt": "Which sentence uses the present continuous correctly?",
+          "prompt": "Which word means: Not very big or large in size.",
           "choices": [
-            "The students are practising their lines.",
-            "The students practising their lines.",
-            "The students is practising their lines.",
-            "The students practise their lines last week."
+            "small",
+            "cheer",
+            "itself"
           ],
-          "answer": "The students are practising their lines.",
-          "explanation": "Present continuous needs a be word plus the -ing verb, and a plural subject takes are practising."
+          "answer": "small",
+          "explanation": "small: Not very big or large in size."
+        },
+        {
+          "prompt": "Which word means: To move on your feet, one step after another, at a normal speed.",
+          "choices": [
+            "cheer",
+            "itself",
+            "walk"
+          ],
+          "answer": "walk",
+          "explanation": "walk: To move on your feet, one step after another, at a normal speed."
+        },
+        {
+          "prompt": "What type of word is 'drop'?",
+          "choices": [
+            "Verb",
+            "Noun",
+            "Adjective"
+          ],
+          "answer": "Verb",
+          "explanation": "Drop is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'anxious'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Adjective",
+          "explanation": "Anxious is used as an adjective in this dictionary sense."
         }
       ]
     }

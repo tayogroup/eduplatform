@@ -5,7 +5,7 @@
   "unitId": "eng-g04-t01-u02",
   "title": "Nature & Weather Game Zone",
   "source": "Generated from approved unit runtime and linked master dictionary",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "meaning-match",
@@ -19,31 +19,61 @@
           "prompt": "Which word means: In a fast way, taking little time.",
           "choices": [
             "quickly",
-            "resource",
-            "lesser"
+            "textbook",
+            "file"
           ],
           "answer": "quickly",
           "explanation": "quickly: In a fast way, taking little time."
         },
         {
-          "prompt": "Which word means: Seen means looked at and noticed with your eyes, usually after have or had.",
+          "prompt": "Which word means: Along means moving forward beside or following the length of something.",
           "choices": [
             "quickly",
-            "resource",
-            "seen"
+            "textbook",
+            "along"
           ],
-          "answer": "seen",
-          "explanation": "seen: Seen means looked at and noticed with your eyes, usually after have or had."
+          "answer": "along",
+          "explanation": "along: Along means moving forward beside or following the length of something."
         },
         {
-          "prompt": "Which word means: A piece of clothing worn on the top part of the body.",
+          "prompt": "Which word means: To pick means to choose something, or for wind to pick up and blow harder.",
           "choices": [
-            "resource",
-            "shirt",
+            "textbook",
+            "pick",
             "quickly"
           ],
-          "answer": "shirt",
-          "explanation": "shirt: A piece of clothing worn on the top part of the body."
+          "answer": "pick",
+          "explanation": "pick: To pick means to choose something, or for wind to pick up and blow harder."
+        },
+        {
+          "prompt": "Which word means: Moving from one side of something to the other side.",
+          "choices": [
+            "through",
+            "quickly",
+            "textbook"
+          ],
+          "answer": "through",
+          "explanation": "through: Moving from one side of something to the other side."
+        },
+        {
+          "prompt": "Which word means: Kilometres are units used to measure long distances.",
+          "choices": [
+            "quickly",
+            "textbook",
+            "kilometres"
+          ],
+          "answer": "kilometres",
+          "explanation": "kilometres: Kilometres are units used to measure long distances."
+        },
+        {
+          "prompt": "Which word means: When the air is full of tiny water drops and you cannot see far.",
+          "choices": [
+            "textbook",
+            "foggy",
+            "quickly"
+          ],
+          "answer": "foggy",
+          "explanation": "foggy: When the air is full of tiny water drops and you cannot see far."
         }
       ]
     },
@@ -62,13 +92,28 @@
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Study means to spend time learning about something carefully.",
-          "answer": "study"
+          "clue": "Until means up to the time when something happens.",
+          "answer": "until"
         },
         {
           "prompt": "Build the word that matches the clue.",
-          "clue": "Covered in water or another liquid; not dry.",
-          "answer": "wet"
+          "clue": "Washing is the clothes and other items that are being cleaned, often hung out to dry.",
+          "answer": "washing"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "The parts of your body at the end of your arms, used for holding things.",
+          "answer": "hands"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Kilometres are units used to measure long distances.",
+          "answer": "kilometres"
+        },
+        {
+          "prompt": "Build the word that matches the clue.",
+          "clue": "Covered with, or full of, snow.",
+          "answer": "snowy"
         }
       ]
     },
@@ -97,29 +142,69 @@
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "wind.",
-            "the",
-            "in",
-            "bend",
-            "to",
-            "began",
-            "branch",
-            "The"
+            "underneath.",
+            "neatly",
+            "correction",
+            "your",
+            "Write"
           ],
-          "answer": "The branch began to bend in the wind."
+          "answer": "Write your correction neatly underneath."
         },
         {
           "prompt": "Build the complete model sentence.",
           "tokens": [
-            "correctly.",
-            "and",
-            "quickly",
-            "question",
+            "storm.",
             "the",
-            "answered",
-            "Leo"
+            "after",
+            "everywhere",
+            "appeared",
+            "Puddles"
           ],
-          "answer": "Leo answered the question quickly and correctly."
+          "answer": "Puddles appeared everywhere after the storm."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "fair.",
+            "science",
+            "the",
+            "to",
+            "forward",
+            "looked",
+            "class",
+            "whole",
+            "The"
+          ],
+          "answer": "The whole class looked forward to the science fair."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "class.",
+            "whole",
+            "the",
+            "for",
+            "exciting",
+            "was",
+            "fair",
+            "science",
+            "The"
+          ],
+          "answer": "The science fair was exciting for the whole class."
+        },
+        {
+          "prompt": "Build the complete model sentence.",
+          "tokens": [
+            "fog.",
+            "the",
+            "in",
+            "somewhere",
+            "singing",
+            "was",
+            "bird",
+            "A"
+          ],
+          "answer": "A bird was singing somewhere in the fog."
         }
       ]
     },
@@ -132,306 +217,38 @@
       "description": "Choose the form that makes the unit language accurate.",
       "rounds": [
         {
-          "prompt": "Which sentence states the fact correctly?",
+          "prompt": "What does the word “breath” mean?",
           "choices": [
-            "Fur keep animals warm.",
-            "Fur keeping animals warm.",
-            "Fur keeps animals warm.",
-            "Fur are keeping animals warm."
+            "A small amount of water in the air or on a surface.",
+            "The air you take in and let out of your lungs.",
+            "Small balls of ice that fall from the sky during a storm.",
+            "A large field of grass and flowers where animals graze."
           ],
-          "answer": "Fur keeps animals warm.",
-          "explanation": "Fur behaves like it, so the present simple verb takes -s: fur keeps."
+          "answer": "The air you take in and let out of your lungs.",
+          "explanation": "Breath is the air your lungs take in and let out, as in “I took a deep breath”."
         },
         {
-          "prompt": "Which question matches the answer “Solar power comes from the sun.”?",
+          "prompt": "What does the word “canyon” mean?",
           "choices": [
-            "Where does solar power come from?",
-            "Who uses solar power at the school?",
-            "When does solar power stop?",
-            "Why is solar power free?"
+            "A part of the sea or a lake that is partly surrounded by land.",
+            "The soft hair that covers some animals' bodies.",
+            "Covered with, or full of, snow.",
+            "A deep valley with steep sides, often with a river at the bottom."
           ],
-          "answer": "Where does solar power come from?",
-          "explanation": "The answer names a place the power comes from, so the question needs where."
+          "answer": "A deep valley with steep sides, often with a river at the bottom.",
+          "explanation": "A canyon is a deep valley with steep sides, which is why it is deeper than a meadow."
         },
         {
-          "prompt": "Choose the correct preposition: The toy is _____ the table, resting on top.",
+          "prompt": "Choose the missing word from “The Storm and the Science Tent”: Nora sat down, catching her _____.",
           "choices": [
-            "under",
-            "between",
-            "inside",
-            "on"
+            "breath",
+            "moisture",
+            "meadow",
+            "rust"
           ],
-          "answer": "on",
-          "explanation": "Something resting on top of a surface sits on it, not under or inside it."
-        }
-      ]
-    },
-    {
-      "id": "reading-detective",
-      "type": "choice",
-      "icon": "scan-search",
-      "title": "Reading Detective",
-      "skill": "Comprehension",
-      "description": "Use unit evidence to solve each reading clue.",
-      "rounds": [
-        {
-          "prompt": "In “Weather Around the World”, why do plants need moisture?",
-          "choices": [
-            "Plants need moisture to grow, and the rain gives them that water.",
-            "A gentle storm brings rain, but a hurricane brings very strong wind.",
-            "Amal says a tornado spins faster than any other storm."
-          ],
-          "answer": "Plants need moisture to grow, and the rain gives them that water.",
-          "explanation": "The text joins the two ideas with because: rain helps plants grow, because plants need moisture."
+          "answer": "breath",
+          "explanation": "Nora had just run to the hall, so she sat down catching her breath."
         },
-        {
-          "prompt": "Why does the poet say the hills have almost gone away?",
-          "choices": [
-            "A gentle storm brings rain, but a hurricane brings very strong wind.",
-            "Stronger compares two things, and most powerful compares many things.",
-            "The fog is so thick that the hills cannot be seen from below."
-          ],
-          "answer": "The fog is so thick that the hills cannot be seen from below.",
-          "explanation": "The hills have not moved; the last line explains that the whole world hides in fog."
-        },
-        {
-          "prompt": "Nora says “stronger” and “most powerful”. Which one compares only two things?",
-          "choices": [
-            "They planned to teach how storms work and how people can stay safe.",
-            "Stronger compares two things, and most powerful compares many things.",
-            "The poem uses still, quiet and slow to show the calm."
-          ],
-          "answer": "Stronger compares two things, and most powerful compares many things.",
-          "explanation": "Stronger is a comparative, so it needs two items; most powerful is a superlative for a whole group."
-        }
-      ]
-    },
-    {
-      "id": "speaking-quest",
-      "type": "speaking",
-      "icon": "mic-2",
-      "title": "Speaking Quest",
-      "skill": "Pronunciation",
-      "description": "Listen, record, review and submit useful unit language.",
-      "rounds": [
-        {
-          "prompt": "Speaking 1: Describe Today's Weather",
-          "target": "Today the weather is ______."
-        },
-        {
-          "prompt": "Speaking 3: Guess the Weather",
-          "target": "Can you see far?"
-        },
-        {
-          "prompt": "Speaking 5: Explain How a Storm Forms",
-          "target": "Explain to a listener how a storm forms and why hail can damage crops."
-        }
-      ]
-    },
-    {
-      "id": "word-order-race",
-      "type": "sequence",
-      "icon": "calendar-days",
-      "title": "Word Order Race",
-      "skill": "Fluency and order",
-      "description": "Arrange unit language in a clear, accurate order.",
-      "rounds": [
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "face.",
-            "my",
-            "from",
-            "sweat",
-            "the",
-            "wiped",
-            "I",
-            "sun,",
-            "the",
-            "in",
-            "running",
-            "After"
-          ],
-          "answer": "After running in the sun, I wiped the sweat from my face."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "tonight.",
-            "tight",
-            "shut",
-            "are",
-            "windows",
-            "your",
-            "sure",
-            "Make"
-          ],
-          "answer": "Make sure your windows are shut tight tonight."
-        },
-        {
-          "prompt": "Put this unit sentence in order.",
-          "tokens": [
-            "sunshine.",
-            "the",
-            "in",
-            "brightly",
-            "sparkled",
-            "puddles",
-            "The"
-          ],
-          "answer": "The puddles sparkled brightly in the sunshine."
-        }
-      ]
-    },
-    {
-      "id": "definition-dash",
-      "type": "choice",
-      "icon": "palette",
-      "title": "Definition Dash",
-      "skill": "Meaning in context",
-      "description": "Choose the approved meaning before moving to the next clue.",
-      "rounds": [
-        {
-          "prompt": "What does 'hear' mean in this unit?",
-          "choices": [
-            "To hear means to notice a sound with your ears.",
-            "In a fast way, taking little time.",
-            "Something useful from nature that people can use."
-          ],
-          "answer": "To hear means to notice a sound with your ears.",
-          "explanation": "hear: To hear means to notice a sound with your ears."
-        },
-        {
-          "prompt": "What does 'iron' mean in this unit?",
-          "choices": [
-            "In a fast way, taking little time.",
-            "Something useful from nature that people can use.",
-            "Iron is a strong grey metal used to make tools and machines."
-          ],
-          "answer": "Iron is a strong grey metal used to make tools and machines.",
-          "explanation": "iron: Iron is a strong grey metal used to make tools and machines."
-        },
-        {
-          "prompt": "What does 'resource' mean in this unit?",
-          "choices": [
-            "Smaller or less important than something else.",
-            "Something useful from nature that people can use.",
-            "In a fast way, taking little time."
-          ],
-          "answer": "Something useful from nature that people can use.",
-          "explanation": "resource: Something useful from nature that people can use."
-        }
-      ]
-    },
-    {
-      "id": "word-type-power",
-      "type": "choice",
-      "icon": "users-round",
-      "title": "Word Type Power",
-      "skill": "Parts of speech",
-      "description": "Identify how each vocabulary word works in English.",
-      "rounds": [
-        {
-          "prompt": "What type of word is 'run'?",
-          "choices": [
-            "Verb",
-            "Noun",
-            "Adjective"
-          ],
-          "answer": "Verb",
-          "explanation": "Run is used as a verb in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'sweat'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Noun",
-          "explanation": "Sweat is used as a noun in this dictionary sense."
-        },
-        {
-          "prompt": "What type of word is 'green'?",
-          "choices": [
-            "Verb",
-            "Adjective",
-            "Noun"
-          ],
-          "answer": "Adjective",
-          "explanation": "Green is used as an adjective in this dictionary sense."
-        }
-      ]
-    },
-    {
-      "id": "memory-pairs",
-      "type": "pairs",
-      "icon": "copy-check",
-      "title": "Memory Pairs",
-      "skill": "Vocabulary recall",
-      "description": "Reveal tiles and connect each word with its meaning.",
-      "rounds": [
-        {
-          "prompt": "Match vocabulary set 1.",
-          "pairs": [
-            [
-              "quietly",
-              "Without making much noise."
-            ],
-            [
-              "visible",
-              "Able to be seen."
-            ],
-            [
-              "dry",
-              "Dry means having no water in it or on it, so it is not wet."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 2.",
-          "pairs": [
-            [
-              "temperature",
-              "Temperature is a measurement of how hot or cold something is."
-            ],
-            [
-              "extra",
-              "Extra means more than what is usual or needed."
-            ],
-            [
-              "beautiful",
-              "Very pleasing to look at or hear."
-            ]
-          ]
-        },
-        {
-          "prompt": "Match vocabulary set 3.",
-          "pairs": [
-            [
-              "frightening",
-              "Making you feel scared or afraid."
-            ],
-            [
-              "dripping",
-              "Dripping means letting small drops of water fall steadily."
-            ],
-            [
-              "neither",
-              "Neither means not one and not the other of two things."
-            ]
-          ]
-        }
-      ]
-    },
-    {
-      "id": "question-quest",
-      "type": "choice",
-      "icon": "circle-help",
-      "title": "Question Quest",
-      "skill": "Question answering",
-      "description": "Read each unit question carefully and choose the best answer.",
-      "rounds": [
         {
           "prompt": "Choose the missing word from “Weather Around the World”: Rain helps plants grow, because plants need _____.",
           "choices": [
@@ -468,13 +285,521 @@
       ]
     },
     {
-      "id": "unit-mission",
+      "id": "reading-detective",
       "type": "choice",
-      "icon": "hand-heart",
-      "title": "Unit Mission",
-      "skill": "Mixed review",
-      "description": "Finish with a mixed challenge across the whole unit.",
+      "icon": "scan-search",
+      "title": "Reading Detective",
+      "skill": "Comprehension",
+      "description": "Use unit evidence to solve each reading clue.",
       "rounds": [
+        {
+          "prompt": "In “Weather Around the World”, why do plants need moisture?",
+          "choices": [
+            "Plants need moisture to grow, and the rain gives them that water.",
+            "A gentle storm brings rain, but a hurricane brings very strong wind.",
+            "Amal says a tornado spins faster than any other storm."
+          ],
+          "answer": "Plants need moisture to grow, and the rain gives them that water.",
+          "explanation": "The text joins the two ideas with because: rain helps plants grow, because plants need moisture."
+        },
+        {
+          "prompt": "What difference does the text give between a gentle storm and a hurricane?",
+          "choices": [
+            "The poem uses still, quiet and slow to show the calm.",
+            "Stronger compares two things, and most powerful compares many things.",
+            "A gentle storm brings rain, but a hurricane brings very strong wind."
+          ],
+          "answer": "A gentle storm brings rain, but a hurricane brings very strong wind.",
+          "explanation": "The writer contrasts the two with but, so the hurricane is clearly the more powerful weather."
+        },
+        {
+          "prompt": "Why does the poet say the hills have almost gone away?",
+          "choices": [
+            "They planned to teach how storms work and how people can stay safe.",
+            "The fog is so thick that the hills cannot be seen from below.",
+            "The poem uses still, quiet and slow to show the calm."
+          ],
+          "answer": "The fog is so thick that the hills cannot be seen from below.",
+          "explanation": "The hills have not moved; the last line explains that the whole world hides in fog."
+        },
+        {
+          "prompt": "What does the reporter tell listeners to do when they hear thunder, and why?",
+          "choices": [
+            "Go inside and stay calm, because thunder warns that the storm is close.",
+            "The fog is so thick that the hills cannot be seen from below.",
+            "The wind picked up and the surface of the lake began to ripple."
+          ],
+          "answer": "Go inside and stay calm, because thunder warns that the storm is close.",
+          "explanation": "The safety line comes straight after the storm forecast, so the advice belongs to that storm."
+        },
+        {
+          "prompt": "Nora says “stronger” and “most powerful”. Which one compares only two things?",
+          "choices": [
+            "The report says the storm may bring rain and hail tonight.",
+            "She sat catching her breath, her heart was beating fast and her shirt was wet with sweat.",
+            "Stronger compares two things, and most powerful compares many things."
+          ],
+          "answer": "Stronger compares two things, and most powerful compares many things.",
+          "explanation": "Stronger is a comparative, so it needs two items; most powerful is a superlative for a whole group."
+        },
+        {
+          "prompt": "What happened to the lake just before the storm returned?",
+          "choices": [
+            "Plants need moisture to grow, and the rain gives them that water.",
+            "The wind picked up and the surface of the lake began to ripple.",
+            "Go inside and stay calm, because thunder warns that the storm is close."
+          ],
+          "answer": "The wind picked up and the surface of the lake began to ripple.",
+          "explanation": "The ripple is the warning sign; the shout about the storm comes in the next paragraph."
+        }
+      ]
+    },
+    {
+      "id": "speaking-quest",
+      "type": "speaking",
+      "icon": "mic-2",
+      "title": "Speaking Quest",
+      "skill": "Pronunciation",
+      "description": "Listen, record, review and submit useful unit language.",
+      "rounds": [
+        {
+          "prompt": "Speaking 1: Describe Today's Weather",
+          "target": "Today the weather is ______."
+        },
+        {
+          "prompt": "Speaking 2: Compare Two Things in Nature",
+          "target": "A canyon is deeper than a meadow."
+        },
+        {
+          "prompt": "Speaking 3: Guess the Weather",
+          "target": "Can you see far?"
+        },
+        {
+          "prompt": "Speaking 4: Weather Word Expert",
+          "target": "What is hail? Hail is small balls of ice that fall during a storm."
+        },
+        {
+          "prompt": "Speaking 5: Explain How a Storm Forms",
+          "target": "The science fair was exciting for the whole class."
+        },
+        {
+          "prompt": "Speaking 6: Three-Minute Storm Safety Talk",
+          "target": "A bird was singing somewhere in the fog."
+        }
+      ]
+    },
+    {
+      "id": "word-order-race",
+      "type": "sequence",
+      "icon": "calendar-days",
+      "title": "Word Order Race",
+      "skill": "Fluency and order",
+      "description": "Arrange unit language in a clear, accurate order.",
+      "rounds": [
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "vapour.",
+            "water",
+            "into",
+            "puddle",
+            "the",
+            "turns",
+            "Evaporation"
+          ],
+          "answer": "Evaporation turns the puddle into water vapour."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "school.",
+            "to",
+            "scarf",
+            "grey",
+            "a",
+            "wore",
+            "Amal"
+          ],
+          "answer": "Amal wore a grey scarf to school."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "fog.",
+            "the",
+            "through",
+            "gate",
+            "school",
+            "the",
+            "see",
+            "barely",
+            "could",
+            "Amal"
+          ],
+          "answer": "Amal could barely see the school gate through the fog."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "fair.",
+            "the",
+            "of",
+            "morning",
+            "the",
+            "on",
+            "strange",
+            "looked",
+            "already",
+            "sky",
+            "The"
+          ],
+          "answer": "The sky already looked strange on the morning of the fair."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "king.",
+            "fair",
+            "and",
+            "wise",
+            "a",
+            "of",
+            "told",
+            "story",
+            "The"
+          ],
+          "answer": "The story told of a wise and fair king."
+        },
+        {
+          "prompt": "Put this unit sentence in order.",
+          "tokens": [
+            "storm.",
+            "the",
+            "followed",
+            "sky",
+            "blue",
+            "bright",
+            "A"
+          ],
+          "answer": "A bright blue sky followed the storm."
+        }
+      ]
+    },
+    {
+      "id": "definition-dash",
+      "type": "choice",
+      "icon": "palette",
+      "title": "Definition Dash",
+      "skill": "Meaning in context",
+      "description": "Choose the approved meaning before moving to the next clue.",
+      "rounds": [
+        {
+          "prompt": "What does 'textbook' mean in this unit?",
+          "choices": [
+            "A book you use in class to learn about a subject.",
+            "In a fast way, taking little time.",
+            "A collection of information kept together, often written down or on paper."
+          ],
+          "answer": "A book you use in class to learn about a subject.",
+          "explanation": "textbook: A book you use in class to learn about a subject."
+        },
+        {
+          "prompt": "What does 'gentler' mean in this unit?",
+          "choices": [
+            "In a fast way, taking little time.",
+            "A book you use in class to learn about a subject.",
+            "Gentler means softer or calmer than something else."
+          ],
+          "answer": "Gentler means softer or calmer than something else.",
+          "explanation": "gentler: Gentler means softer or calmer than something else."
+        },
+        {
+          "prompt": "What does 'clearer' mean in this unit?",
+          "choices": [
+            "A book you use in class to learn about a subject.",
+            "Clearer means easier to see through, or more free from cloud than before.",
+            "In a fast way, taking little time."
+          ],
+          "answer": "Clearer means easier to see through, or more free from cloud than before.",
+          "explanation": "clearer: Clearer means easier to see through, or more free from cloud than before."
+        },
+        {
+          "prompt": "What does 'cheek' mean in this unit?",
+          "choices": [
+            "The soft part of your face below your eye and beside your mouth.",
+            "In a fast way, taking little time.",
+            "A book you use in class to learn about a subject."
+          ],
+          "answer": "The soft part of your face below your eye and beside your mouth.",
+          "explanation": "cheek: The soft part of your face below your eye and beside your mouth."
+        },
+        {
+          "prompt": "What does 'demonstration' mean in this unit?",
+          "choices": [
+            "In a fast way, taking little time.",
+            "A book you use in class to learn about a subject.",
+            "A demonstration is a way of showing how something works."
+          ],
+          "answer": "A demonstration is a way of showing how something works.",
+          "explanation": "demonstration: A demonstration is a way of showing how something works."
+        },
+        {
+          "prompt": "What does 'gravity' mean in this unit?",
+          "choices": [
+            "A book you use in class to learn about a subject.",
+            "The force that pulls everything towards the Earth.",
+            "In a fast way, taking little time."
+          ],
+          "answer": "The force that pulls everything towards the Earth.",
+          "explanation": "gravity: The force that pulls everything towards the Earth."
+        }
+      ]
+    },
+    {
+      "id": "word-type-power",
+      "type": "choice",
+      "icon": "users-round",
+      "title": "Word Type Power",
+      "skill": "Parts of speech",
+      "description": "Identify how each vocabulary word works in English.",
+      "rounds": [
+        {
+          "prompt": "What type of word is 'file'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "File is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'bend'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Bend is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'collecting'?",
+          "choices": [
+            "Adjective",
+            "Verb",
+            "Noun"
+          ],
+          "answer": "Verb",
+          "explanation": "Collecting is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'exciting'?",
+          "choices": [
+            "Adjective",
+            "Noun",
+            "Verb"
+          ],
+          "answer": "Adjective",
+          "explanation": "Exciting is used as an adjective in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'invited'?",
+          "choices": [
+            "Noun",
+            "Adjective",
+            "Verb"
+          ],
+          "answer": "Verb",
+          "explanation": "Invited is used as a verb in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'extinct'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Adjective",
+          "explanation": "Extinct is used as an adjective in this dictionary sense."
+        }
+      ]
+    },
+    {
+      "id": "memory-pairs",
+      "type": "pairs",
+      "icon": "copy-check",
+      "title": "Memory Pairs",
+      "skill": "Vocabulary recall",
+      "description": "Reveal tiles and connect each word with its meaning.",
+      "rounds": [
+        {
+          "prompt": "Match vocabulary set 1.",
+          "pairs": [
+            [
+              "quietly",
+              "Without making much noise."
+            ],
+            [
+              "diagram",
+              "A simple drawing that explains how something works."
+            ],
+            [
+              "activity",
+              "Something you do, for fun or for learning."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 2.",
+          "pairs": [
+            [
+              "mist",
+              "Mist is a thin cloud of tiny water drops that hangs close to the ground."
+            ],
+            [
+              "rain",
+              "Rain is water that falls from clouds in small drops."
+            ],
+            [
+              "temperature",
+              "Temperature is a measurement of how hot or cold something is."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 3.",
+          "pairs": [
+            [
+              "sure",
+              "Sure means certain or confident that something is true."
+            ],
+            [
+              "drifts",
+              "When something drifts, it moves along slowly, carried by wind or water."
+            ],
+            [
+              "nodded",
+              "Nodded means moved your head up and down, often to say yes."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 4.",
+          "pairs": [
+            [
+              "causes",
+              "Makes something happen or take place."
+            ],
+            [
+              "beating",
+              "Making a regular thumping movement, like a heart pumping."
+            ],
+            [
+              "brightly",
+              "In a way that shines with a lot of light."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 5.",
+          "pairs": [
+            [
+              "dripping",
+              "Dripping means letting small drops of water fall steadily."
+            ],
+            [
+              "above",
+              "Above means in a higher position than something else."
+            ],
+            [
+              "breath",
+              "The air you take in and let out of your lungs."
+            ]
+          ]
+        },
+        {
+          "prompt": "Match vocabulary set 6.",
+          "pairs": [
+            [
+              "volcano",
+              "A mountain that can erupt with hot lava, ash, and gas."
+            ],
+            [
+              "vibration",
+              "A fast shaking movement, often making a sound."
+            ],
+            [
+              "visible",
+              "Able to be seen."
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "question-quest",
+      "type": "choice",
+      "icon": "circle-help",
+      "title": "Question Quest",
+      "skill": "Question answering",
+      "description": "Read each unit question carefully and choose the best answer.",
+      "rounds": [
+        {
+          "prompt": "Complete the sentence: This is _____ morning of the year.",
+          "choices": [
+            "more foggy",
+            "foggier",
+            "the most foggiest",
+            "the foggiest"
+          ],
+          "answer": "the foggiest",
+          "explanation": "Foggy ends in -y, so it becomes foggiest, and a superlative needs the in front of it."
+        },
+        {
+          "prompt": "Which sentence states the fact correctly?",
+          "choices": [
+            "Fur keep animals warm.",
+            "Fur keeping animals warm.",
+            "Fur keeps animals warm.",
+            "Fur are keeping animals warm."
+          ],
+          "answer": "Fur keeps animals warm.",
+          "explanation": "Fur behaves like it, so the present simple verb takes -s: fur keeps."
+        },
+        {
+          "prompt": "Which question matches the answer “Solar power comes from the sun.”?",
+          "choices": [
+            "Where does solar power come from?",
+            "Who uses solar power at the school?",
+            "When does solar power stop?",
+            "Why is solar power free?"
+          ],
+          "answer": "Where does solar power come from?",
+          "explanation": "The answer names a place the power comes from, so the question needs where."
+        },
+        {
+          "prompt": "Choose the correct preposition: The toy is _____ the table, resting on top.",
+          "choices": [
+            "under",
+            "between",
+            "inside",
+            "on"
+          ],
+          "answer": "on",
+          "explanation": "Something resting on top of a surface sits on it, not under or inside it."
+        },
+        {
+          "prompt": "Which sentence is a correct imperative?",
+          "choices": [
+            "You listen to me carefully.",
+            "Listen to me carefully.",
+            "Listening to me carefully.",
+            "To listen to me carefully."
+          ],
+          "answer": "Listen to me carefully.",
+          "explanation": "An imperative drops the subject and starts with the base verb, so Listen is right."
+        },
         {
           "prompt": "What does the word “breath” mean?",
           "choices": [
@@ -485,28 +810,78 @@
           ],
           "answer": "The air you take in and let out of your lungs.",
           "explanation": "Breath is the air your lungs take in and let out, as in “I took a deep breath”."
+        }
+      ]
+    },
+    {
+      "id": "unit-mission",
+      "type": "choice",
+      "icon": "hand-heart",
+      "title": "Unit Mission",
+      "skill": "Mixed review",
+      "description": "Finish with a mixed challenge across the whole unit.",
+      "rounds": [
+        {
+          "prompt": "Choose the correct preposition: The toy is _____ the table, resting on top.",
+          "choices": [
+            "under",
+            "between",
+            "inside",
+            "on"
+          ],
+          "answer": "on",
+          "explanation": "Something resting on top of a surface sits on it, not under or inside it."
         },
         {
-          "prompt": "What does the word “canyon” mean?",
+          "prompt": "Which sentence is a correct imperative?",
           "choices": [
-            "A part of the sea or a lake that is partly surrounded by land.",
-            "The soft hair that covers some animals' bodies.",
-            "Covered with, or full of, snow.",
-            "A deep valley with steep sides, often with a river at the bottom."
+            "You listen to me carefully.",
+            "Listen to me carefully.",
+            "Listening to me carefully.",
+            "To listen to me carefully."
           ],
-          "answer": "A deep valley with steep sides, often with a river at the bottom.",
-          "explanation": "A canyon is a deep valley with steep sides, which is why it is deeper than a meadow."
+          "answer": "Listen to me carefully.",
+          "explanation": "An imperative drops the subject and starts with the base verb, so Listen is right."
         },
         {
-          "prompt": "Choose the missing word from “The Storm and the Science Tent”: Nora sat down, catching her _____.",
+          "prompt": "Which word means: A job you are asked to finish.",
           "choices": [
-            "breath",
-            "moisture",
-            "meadow",
-            "rust"
+            "task",
+            "quickly",
+            "textbook"
           ],
-          "answer": "breath",
-          "explanation": "Nora had just run to the hall, so she sat down catching her breath."
+          "answer": "task",
+          "explanation": "task: A job you are asked to finish."
+        },
+        {
+          "prompt": "Which word means: Clearer means easier to see through, or more free from cloud than before.",
+          "choices": [
+            "quickly",
+            "textbook",
+            "clearer"
+          ],
+          "answer": "clearer",
+          "explanation": "clearer: Clearer means easier to see through, or more free from cloud than before."
+        },
+        {
+          "prompt": "What type of word is 'puddles'?",
+          "choices": [
+            "Noun",
+            "Verb",
+            "Adjective"
+          ],
+          "answer": "Noun",
+          "explanation": "Puddles is used as a noun in this dictionary sense."
+        },
+        {
+          "prompt": "What type of word is 'gravity'?",
+          "choices": [
+            "Verb",
+            "Adjective",
+            "Noun"
+          ],
+          "answer": "Noun",
+          "explanation": "Gravity is used as a noun in this dictionary sense."
         }
       ]
     }

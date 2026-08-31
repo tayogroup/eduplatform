@@ -3,7 +3,7 @@
   "grade": 2,
   "unit": 1,
   "title": "Welcome and Calendar Game Zone",
-  "masteryScore": 2,
+  "masteryScore": 4,
   "games": [
     {
       "id": "picture-match",
@@ -42,6 +42,36 @@
           ],
           "answer": "birthday",
           "explanation": "Your birthday comes once each year."
+        },
+        {
+          "prompt": "Which word means a group of seven days?",
+          "choices": [
+            "week",
+            "month",
+            "year"
+          ],
+          "answer": "week",
+          "explanation": "A week is a group of seven days that follow one after another."
+        },
+        {
+          "prompt": "Which word means one of the twelve parts of a year?",
+          "choices": [
+            "afternoon",
+            "month",
+            "week"
+          ],
+          "answer": "month",
+          "explanation": "A month is one of the twelve parts of a year."
+        },
+        {
+          "prompt": "Which word means the part of the day between midday and evening?",
+          "choices": [
+            "moment",
+            "weather",
+            "afternoon"
+          ],
+          "answer": "afternoon",
+          "explanation": "The afternoon is the part of the day between midday and evening."
         }
       ]
     },
@@ -67,6 +97,21 @@
           "prompt": "Build the calendar word.",
           "clue": "It shows days, weeks and months.",
           "answer": "calendar"
+        },
+        {
+          "prompt": "Build the time word.",
+          "clue": "A group of seven days that follow one after another.",
+          "answer": "week"
+        },
+        {
+          "prompt": "Build the family word.",
+          "clue": "The sister of your mother or father.",
+          "answer": "aunt"
+        },
+        {
+          "prompt": "Build the outdoor word.",
+          "clue": "What it is like outside, such as sunny, rainy or windy.",
+          "answer": "weather"
         }
       ]
     },
@@ -107,6 +152,40 @@
             "colour"
           ],
           "answer": "What colour is your bag?"
+        },
+        {
+          "prompt": "Say when your birthday is.",
+          "tokens": [
+            "June.",
+            "in",
+            "is",
+            "birthday",
+            "My"
+          ],
+          "answer": "My birthday is in June."
+        },
+        {
+          "prompt": "Tell the class about Nora.",
+          "tokens": [
+            "partner.",
+            "new",
+            "my",
+            "is",
+            "Nora"
+          ],
+          "answer": "Nora is my new partner."
+        },
+        {
+          "prompt": "Say what your class does each week.",
+          "tokens": [
+            "week.",
+            "every",
+            "book",
+            "a",
+            "read",
+            "We"
+          ],
+          "answer": "We read a book every week."
         }
       ]
     },
@@ -147,6 +226,36 @@
           ],
           "answer": "What colour is your bag?",
           "explanation": "The complete pattern is: What colour is ...?"
+        },
+        {
+          "prompt": "Nora and Leo ___ in the same class.",
+          "choices": [
+            "are",
+            "is",
+            "am"
+          ],
+          "answer": "are",
+          "explanation": "Use are when you are talking about more than one person."
+        },
+        {
+          "prompt": "This is my aunt. ___ visits us every month.",
+          "choices": [
+            "He",
+            "She",
+            "It"
+          ],
+          "answer": "She",
+          "explanation": "Use she when talking about one girl or woman."
+        },
+        {
+          "prompt": "Amal ___ her book on the desk.",
+          "choices": [
+            "put",
+            "putting",
+            "puts"
+          ],
+          "answer": "puts",
+          "explanation": "Use puts with he, she or one named person."
         }
       ]
     },
@@ -188,6 +297,36 @@
           ],
           "answer": "She welcomed her.",
           "explanation": "Amal smiled, introduced herself and offered to be Nora's partner."
+        },
+        {
+          "prompt": "How does Amal spell her name for Teacher Yasmin?",
+          "choices": [
+            "A-M-A-L",
+            "A-M-E-L",
+            "A-M-A-R"
+          ],
+          "answer": "A-M-A-L",
+          "explanation": "Amal says the letters A-M-A-L."
+        },
+        {
+          "prompt": "Who is Maya's partner, and what does that partner like?",
+          "choices": [
+            "Nora, and she likes trees.",
+            "Leo, and he likes football.",
+            "Teacher Yasmin, and she likes books."
+          ],
+          "answer": "Nora, and she likes trees.",
+          "explanation": "Maya's partner is Nora, and Nora likes trees."
+        },
+        {
+          "prompt": "Which day is the first day of the school week in this story?",
+          "choices": [
+            "Monday",
+            "Saturday",
+            "Sunday"
+          ],
+          "answer": "Saturday",
+          "explanation": "The story says Saturday is the first day of the school week."
         }
       ]
     },
@@ -210,6 +349,18 @@
         {
           "prompt": "Welcome a new friend.",
           "target": "Hello. You can be my partner."
+        },
+        {
+          "prompt": "Say hello to your teacher.",
+          "target": "Good morning, Teacher Yasmin."
+        },
+        {
+          "prompt": "Introduce a friend to the class.",
+          "target": "This is my friend Nora."
+        },
+        {
+          "prompt": "Say two things you like.",
+          "target": "I like drawing and reading."
         }
       ]
     },
@@ -247,6 +398,33 @@
             "February"
           ],
           "answer": "January February March"
+        },
+        {
+          "prompt": "Put these end-of-week days in order.",
+          "tokens": [
+            "Sunday",
+            "Friday",
+            "Saturday"
+          ],
+          "answer": "Friday Saturday Sunday"
+        },
+        {
+          "prompt": "Put these middle-year months in order.",
+          "tokens": [
+            "June",
+            "April",
+            "May"
+          ],
+          "answer": "April May June"
+        },
+        {
+          "prompt": "Put these end-of-year months in order.",
+          "tokens": [
+            "December",
+            "October",
+            "November"
+          ],
+          "answer": "October November December"
         }
       ]
     },
@@ -287,6 +465,36 @@
           ],
           "answer": "blue",
           "explanation": "Blue is the colour word."
+        },
+        {
+          "prompt": "Which word names the colour of a ripe banana?",
+          "choices": [
+            "yellow",
+            "black",
+            "white"
+          ],
+          "answer": "yellow",
+          "explanation": "A ripe banana is yellow."
+        },
+        {
+          "prompt": "Which number comes after nine?",
+          "choices": [
+            "twelve",
+            "eight",
+            "ten"
+          ],
+          "answer": "ten",
+          "explanation": "The counting order goes nine, ten, eleven, twelve."
+        },
+        {
+          "prompt": "Which word names the colour of fresh milk?",
+          "choices": [
+            "brown",
+            "white",
+            "green"
+          ],
+          "answer": "white",
+          "explanation": "Fresh milk is white."
         }
       ]
     },
@@ -327,6 +535,36 @@
           ],
           "answer": "She",
           "explanation": "The story uses she for Teacher Yasmin."
+        },
+        {
+          "prompt": "This is my desk. ___ is next to the window.",
+          "choices": [
+            "She",
+            "It",
+            "He"
+          ],
+          "answer": "It",
+          "explanation": "Use it for a thing, not for a person."
+        },
+        {
+          "prompt": "These are my friends. ___ like football.",
+          "choices": [
+            "They",
+            "She",
+            "He"
+          ],
+          "answer": "They",
+          "explanation": "Use they when you are talking about more than one person."
+        },
+        {
+          "prompt": "This is my father. ___ helps me read.",
+          "choices": [
+            "It",
+            "She",
+            "He"
+          ],
+          "answer": "He",
+          "explanation": "Use he when talking about one boy or man."
         }
       ]
     },
@@ -388,6 +626,57 @@
               "letters with meaning"
             ]
           ]
+        },
+        {
+          "prompt": "Match the time words.",
+          "pairs": [
+            [
+              "week",
+              "seven days one after another"
+            ],
+            [
+              "month",
+              "one of the twelve parts of a year"
+            ],
+            [
+              "year",
+              "twelve months, from January to December"
+            ]
+          ]
+        },
+        {
+          "prompt": "Match the room words.",
+          "pairs": [
+            [
+              "window",
+              "an opening that lets light in"
+            ],
+            [
+              "desk",
+              "a table you sit at to read and write"
+            ],
+            [
+              "room",
+              "a space inside a house"
+            ]
+          ]
+        },
+        {
+          "prompt": "Match the family words.",
+          "pairs": [
+            [
+              "mother",
+              "a woman who has a child"
+            ],
+            [
+              "father",
+              "a man who has a child"
+            ],
+            [
+              "aunt",
+              "the sister of your mother or father"
+            ]
+          ]
         }
       ]
     },
@@ -429,6 +718,37 @@
             "What"
           ],
           "answer": "What do you like?"
+        },
+        {
+          "prompt": "Ask someone's age.",
+          "tokens": [
+            "you?",
+            "are",
+            "old",
+            "How"
+          ],
+          "answer": "How old are you?"
+        },
+        {
+          "prompt": "Ask about a birthday.",
+          "tokens": [
+            "birthday?",
+            "your",
+            "is",
+            "When"
+          ],
+          "answer": "When is your birthday?"
+        },
+        {
+          "prompt": "Ask about today.",
+          "tokens": [
+            "today?",
+            "it",
+            "is",
+            "day",
+            "What"
+          ],
+          "answer": "What day is it today?"
         }
       ]
     },
@@ -469,6 +789,36 @@
           ],
           "answer": "I like drawing too!",
           "explanation": "A relevant, friendly response keeps the dialogue going."
+        },
+        {
+          "prompt": "Your new partner cannot find a pencil. What should you say?",
+          "choices": [
+            "You can use mine.",
+            "Find your own.",
+            "Stop talking."
+          ],
+          "answer": "You can use mine.",
+          "explanation": "Sharing a pencil helps a new partner feel welcome."
+        },
+        {
+          "prompt": "A friend says, 'My birthday is in May.' What is a kind reply?",
+          "choices": [
+            "I do not care.",
+            "Happy birthday for May!",
+            "May is wrong."
+          ],
+          "answer": "Happy birthday for May!",
+          "explanation": "A warm reply keeps the conversation friendly."
+        },
+        {
+          "prompt": "It is the end of the school day. What do you say to your partner?",
+          "choices": [
+            "Give me that.",
+            "Nothing at all.",
+            "Goodbye. See you tomorrow."
+          ],
+          "answer": "Goodbye. See you tomorrow.",
+          "explanation": "Goodbye is what we say when we leave."
         }
       ]
     }

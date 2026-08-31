@@ -672,12 +672,76 @@ section is where picking it LANDS — a quiz question must not drop the learner 
 the project page.
 
 **English gets none, deliberately, and it is the case that looks like an
-omission.** It has a Capstone row and it is a DOOR rather than a project:
-`renderCapstone` shows Unit 10's own launch page, and Unit 10 is already indexed
-as a unit, so a topic there would be a second card leading to content the index
-already describes. Global Perspectives and Intensive English author no capstone
-at all. If a `grade-capstone.json` is ever written for English, `capstoneTopics`
-picks it up with no change.
+omission.** It authors no `grade-capstone.json`: Unit 10 IS its capstone and is
+already indexed as a unit, so a capstone topic there would be a second card
+leading to content the index already describes. Global Perspectives and
+Intensive English author no capstone at all. If a `grade-capstone.json` is ever
+written for English, `capstoneTopics` picks it up with no change. (This
+paragraph used to describe the row as "a DOOR rather than a project, showing
+Unit 10's own launch page". The row has changed -- see the section below -- and
+this conclusion has not.)
+
+### English's `capstone` row is now the UNIT's recap, "What I learned" (2026-08-31)
+
+Owner decision, and it REPLACES the row's previous job rather than adding to it.
+The row was added on 2026-08-27 as a door to the grade's Unit 10 project, drawn
+in every unit -- and `renderCapstone` read only the manifest and the unit gate,
+so a learner standing in Unit 3 opened "Capstone project" and met four bullets
+about Unit 10 under "This opens when you reach Unit 10". Nothing on it was about
+Unit 3. The owner's intention for the row had always been a summary of what the
+unit taught.
+
+`renderUnitRecap` (`shell/subjects/english.js`) draws that: the unit's outcomes,
+the taught vocabulary groups and how many of their words are known, the grammar
+titles, the reading titles, and which countable sections carry a tick. All of it
+is READ from the unit JSON, so a content fix reaches the page with no edit in the
+shell.
+
+Four things to know before touching it:
+
+- **An unanswered outcome is left unmarked, and the page says so.** The only
+  per-outcome signal a learner has actually given is the self-assessment from My
+  progress (`progress.self`, keyed by selfAssessmentId, tied to an outcome by
+  `outcomeId`), so that is what is shown -- four marks for four claims, one per
+  point of the authored scale plus a dashed circle for "not asked yet". The
+  tempting alternative is to infer a tick from the sections finished, and
+  `evidenceOfLearning` is prose ("Word Wall ticked for all twelve months, and
+  the Activity 1 month order completed correctly"); parsing it would put a
+  confident claim on a child's page about something nobody measured. Same rule
+  the group board's activity ring keeps.
+- **Two "at a glance" panels, two different word counts, and that is correct.**
+  The Overview's panel prints `course.dictionaryLinks.length` -- the unit's whole
+  word list including the story glossary, 158 in Grade 3 Unit 3 -- and the recap
+  counts `taughtWords()`, the 31 that Core words asks the learner to know and
+  gates on. So the recap's panel is called "How far you have got", its three
+  figures are all about the LEARNER, and its words figure names its own section
+  rather than saying a bare "words". Do not "reconcile" them by making one read
+  the other; they answer different questions.
+- **The grade project keeps its route.** `capstoneDoorPanel()` is the old page's
+  content as a panel at the foot of the right column, in three states -- in it,
+  open, locked -- and the locked one carries no button, because a control that
+  cannot go anywhere reads as the lock being broken. It is the only thing on the
+  page that consults the unit gate.
+- **The `capstone` clause in `sectionUnlocked` is GONE, not moved.** The row used
+  to lock until the learner reached Unit 10 (owner, 2026-08-27, so a child could
+  see the year coming without jumping to it); the page now describes the unit the
+  learner is standing in, so it is open exactly when that unit is. No clause was
+  needed for that: `capstone` is absent from `SECTION_CHAIN`, `indexOf` answers
+  -1, and the existing `index <= 0` line reads that as "not a step" and opens it.
+  The `if (id === "capstone") return renderCapstone()` guard in
+  `renderLockedSection` became unreachable with it and is deleted rather than
+  left to look load-bearing.
+
+The route id stays `capstone` -- the nav, the progress store, get-help's section
+search and course-app's `TUTORING_HIDDEN` all speak it, so renaming it would be a
+migration rather than a label change. It is still `nonCountable` and still absent
+from `SECTION_CHAIN`: a row in all ten units that summarises rather than teaches
+cannot decide whether any of them is finished.
+
+**Tutoring learners still do not see it**, because `capstone` is in
+`TUTORING_HIDDEN` (`shell/course-app.js`), which is shared by all six subjects
+and where the other five still mean a whole-stage project. That is unchanged and
+untouched here -- a decision waiting to be asked, not an oversight.
 
 **A floor set at what you had before the last thing you added is a formality.**
 The three `TOPIC_FLOORS` were exactly the pre-capstone totals, so extraction

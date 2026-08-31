@@ -379,23 +379,26 @@ const sections = [
   // learner arrives from a search with a word they are stuck on and no unit to
   // meet it in, so they get the whole grade's glossary as a place to look one up.
   ["glossary", "book-a", "Glossary"],
-  // The grade's final project, in EVERY unit rather than only in the one that
-  // launches it. Until now English's capstone was reachable only as Unit 10's
-  // `lecture` row wearing a different label (see visibleSections' relabel) —
-  // which put it third in the nav, in the video slot, and invisible from every
-  // other unit. A learner could not see what the year was building towards, and
-  // could not get back to it afterwards.
+  // THE UNIT'S RECAP — "What I learned" — and the grade project's door at the
+  // foot of it. Owner, 2026-08-31.
   //
-  // It is a DOOR, not a step. Unit 10 IS the capstone; this row is how you see
-  // it coming and how you return. So it is never counted and never gates — see
-  // nonCountable — because a row that appears in all ten units while belonging
-  // to one of them cannot decide whether any of them is finished. Same standing
-  // as Live sessions and Story Library.
+  // It shipped as the door ALONE, labelled "Capstone project": one page about
+  // Unit 10's final project, drawn identically in all ten units and locked in
+  // nine of them, so a learner standing in Unit 3 opened it and was told nothing
+  // whatever about Unit 3. The owner's intention for the row was always a summary
+  // of what the unit taught, which is what renderUnitRecap draws now; the project
+  // keeps a panel of its own on the same page (capstoneDoorPanel), so Unit 10 did
+  // not lose the route this row was added to give it.
   //
-  // Position mirrors Science, Mathematics and Computing, which put their Stage
-  // Capstone exactly here: after the reference rows, above the live class and
-  // the progress page.
-  ["capstone", "flag", "Capstone project"],
+  // Still never counted and never gating — see nonCountable, and its absence from
+  // SECTION_CHAIN. A row that appears in all ten units and SUMMARISES rather than
+  // teaches cannot decide whether any of them is finished. Same standing as the
+  // Teacher & Parent Guide, Live sessions and the Story Library.
+  //
+  // Position is unchanged and still mirrors Science, Mathematics and Computing,
+  // which put their Stage Capstone exactly here: after the reference rows, above
+  // the live class and the progress page.
+  ["capstone", "graduation-cap", "What I learned"],
   ["live", "video", "Live sessions"],
   ["reflect", "sparkles", "My progress"],
 ];
@@ -467,7 +470,7 @@ const SECTION_HINTS = {
   ebooks: "Read or watch one book to the end.",
   "book-comprehension": "Answer the questions about your books. Tap the right picture or word.",
   reflect: "Choose an answer for every sentence about how you did.",
-  capstone: "Your big project for the whole grade. Look at it any time — it opens when you reach Unit 10.",
+  capstone: "Look back at everything this unit taught you. Nothing here is marked — read it whenever it helps.",
 };
 // Unit 10 has no video: its first step is a page that launches the capstone.
 const CAPSTONE_LAUNCH_HINT = "Read about your capstone project, then press the button to start.";
@@ -1174,13 +1177,15 @@ const sectionChain = () => SECTION_CHAIN.filter((id) => visibleSections().some((
 function sectionUnlocked(id, { fromOverview = false } = {}) {
   if (!UNIT_GATE_ENABLED || isPrereqUnit || TEACHER_PREVIEW) return true;
   if (REVIEW_TOPIC && id === REVIEW_TOPIC) return true;
-  // The capstone is not a step in THIS unit's chain — it is the whole grade's
-  // final project — so what stands in its way is a UNIT, not the section above
-  // it. Asking the chain would answer index -1, which reads as "not a step" and
-  // opens it from Unit 1. Owner decision, 2026-08-27: it locks like every other
-  // row until the learner reaches Unit 10, so a child sees where the year is
-  // going without being able to jump there.
-  if (id === "capstone") return unitIsUnlocked(CAPSTONE_UNIT);
+  // `capstone` needs no clause of its own. It held one until 2026-08-31, when
+  // it was the grade PROJECT's door and the owner's rule was that it locked
+  // until the learner reached Unit 10 — what stood in its way was a UNIT, not
+  // the section above it. It is that unit's own recap now, so the thing it
+  // describes is open exactly when the unit is, and the chain answers correctly
+  // without help: `capstone` is not in SECTION_CHAIN, indexOf gives -1, and the
+  // `index <= 0` line below reads that as "not a step" and opens it. The Unit
+  // 10 door inside the page still checks the lock itself (capstoneDoorPanel),
+  // so nothing jumps the year.
   const chain = sectionChain();
   const index = chain.indexOf(id);
   if (index <= 0) return true; // not a step, or the first one
@@ -10204,65 +10209,222 @@ function bindOverviewAudio(holder) {
   }));
 }
 
-// The capstone door. One page, two states, deliberately in one function: the
-// locked and open versions say the same thing about the same project and differ
-// only in whether the way in is a button or a sentence about Unit 10. Splitting
-// them is how the two copies drift.
+// "What I learned" — the unit's own recap, with the grade project's door at the
+// foot of it. Owner, 2026-08-31.
 //
-// It renders the project overview English already has rather than any new
-// curriculum. English carries no grade-capstone.json — Science, Mathematics and
-// Computing each read one, with a driving question, staged prompts, an evidence
-// checklist and a rubric — so what this door shows is what Unit 10's launch page
-// shows, and the work itself still lives in Unit 10. If that file is ever
-// authored for English, this is the renderer that should read it.
-function renderCapstone() {
-  const open = unitIsUnlocked(CAPSTONE_UNIT) || TEACHER_PREVIEW;
-  const here = unitNumber === CAPSTONE_UNIT;
-  const entry = manifest?.units?.find((unit) => Number(unit.number) === CAPSTONE_UNIT);
-  const title = entry?.title || `Unit ${CAPSTONE_UNIT}`;
-  const nextUp = currentOpenUnit();
-  const nextTitle = manifest?.units?.find((unit) => Number(unit.number) === nextUp)?.title || `Unit ${nextUp}`;
+// What this replaced: one page describing Unit 10's capstone project, drawn
+// identically in all ten units and locked in nine of them. A learner standing
+// in Unit 3 opened it and read "This opens when you reach Unit 10" over four
+// bullets about a project — nothing about Unit 3, its words, its grammar or its
+// texts. The row's whole content came from the manifest and the unit gate; it
+// never once read the unit it was rendered in.
+//
+// Everything here is READ from the unit, never restated in this file: the
+// outcomes, the taught vocabulary groups, the grammar titles, the reading
+// titles. A content fix reaches this page with no edit here, which is the same
+// reason the Overview's "What you will learn" reads course.outcomes rather than
+// carrying its own list.
+//
+// AN UNANSWERED OUTCOME IS LEFT UNMARKED, and the page says why. The only
+// honest per-outcome signal a learner has given is their own self-assessment —
+// `progress.self`, keyed by selfAssessmentId, tied to an outcome by `outcomeId`
+// — so that is what is shown. The alternative is to infer a tick from the
+// sections finished, and `evidenceOfLearning` is prose ("Word Wall ticked for
+// all twelve months, and the Activity 1 month order completed correctly");
+// parsing it would put a confident claim on the page about something nobody
+// measured. Four states are four different claims — the rule the group board's
+// activity ring already keeps.
+//
+// It MARKS NOTHING. Still nonCountable, still absent from SECTION_CHAIN.
+function renderUnitRecap() {
+  // A typed #capstone reaches this renderer whatever the nav offers — the shell
+  // dispatches on the hash (`config.renderers[route]`), not on visibleSections
+  // — and the Prerequisite unit has no unit.json behind it, so there is no
+  // recap to draw. The door is still true there and is the whole page.
+  if (isPrereqUnit || !Array.isArray(course?.outcomes)) {
+    $("#app").innerHTML = `${pageHeader(
+      `${escapeHtml(gradeLabel)} · English`,
+      "Your capstone project",
+      "There is no unit to look back at here. This is what the year is building towards.",
+    )}<div class="overview-grid"><div class="section-stack">${capstoneDoorPanel()}</div></div>`;
+    bindRecapButtons();
+    return;
+  }
+
+  const verdicts = new Map((course.selfAssessment || [])
+    .filter((item) => item.outcomeId)
+    .map((item) => [item.outcomeId, progress.self?.[item.selfAssessmentId] || ""]));
+  // The TAUGHT words, which is the set Core words asks the learner to know and
+  // gates on -- NOT course.dictionaryLinks, which also carries the story
+  // glossary and is five times longer (158 against 31 in Grade 3 Unit 3). The
+  // Overview's "at a glance" panel prints that longer figure, which is why the
+  // panel below names its SECTION rather than saying a bare "words": two pages
+  // showing two different counts under the same word is a page a learner cannot
+  // reconcile, and only one of the two is the number they are asked to reach.
+  const words = taughtWords();
+  const knownIds = new Set(progress.knownWords || []);
+  const known = words.filter((item) => knownIds.has(item.vocabularyId));
+  const grammar = course.grammar || [];
+  const readings = course.readings || [];
+  const countable = unitSectionIds();
+  const done = countable.filter((id) => progress.completed.includes(id));
+  const unitDone = countable.length > 0 && done.length === countable.length;
+  const said = course.outcomes.filter((outcome) => verdicts.get(outcome.outcomeId)).length;
+
+  // Four marks for four claims, one per point of the authored scale ("Not yet |
+  // With help | By myself") plus the dashed circle for an outcome the learner
+  // has not answered. Collapsing "Not yet" and "With help" into one mark was
+  // the first version of this, and it says the same thing about a learner who
+  // told us they cannot do it yet and one who told us they can with help --
+  // which is the distinction the self-assessment exists to record. The fallback
+  // is the middle mark rather than the dashed one: an unrecognised scale value
+  // is still an ANSWER, and drawing it as unanswered would lose it.
+  const VERDICT_MARKS = { "By myself": "circle-check-big", "With help": "circle-dot", "Not yet": "circle" };
+  const verdictIcon = (verdict) => (verdict ? VERDICT_MARKS[verdict] || "circle-dot" : "circle-dashed");
+
+  // The taught words grouped as the unit groups them, off the LINKS rather than
+  // off `vocabularyGroups`: taughtWords() has already dropped the story-glossary
+  // group, and reading the group list back would put a row on the page for a
+  // group whose words are not in the count beside it.
+  const groups = [];
+  for (const item of words) {
+    const title = item.groupTitle || "Words for this unit";
+    let group = groups.find((entry) => entry.title === title);
+    if (!group) groups.push((group = { title, total: 0, known: 0 }));
+    group.total += 1;
+    if (knownIds.has(item.vocabularyId)) group.known += 1;
+  }
+
+  const list = (rows) => `<ul class="path-list">${rows.join("")}</ul>`;
+  const row = (iconName, html) => `<li>${icon(iconName)}<span>${html}</span></li>`;
+  const unitNo = escapeHtml(String(course.unit.unitNo));
+
+  // A TUTORING learner reads the same page with every progress claim taken off
+  // it, because they have not walked this unit and were never going to. They
+  // arrive from a search on one problem, land in whichever unit teaches it, and
+  // what is useful to them is the half of this page that describes the CONTENT
+  // -- what the unit covers, its words, its patterns, its texts. The other half
+  // would be eight dashed circles, "0 of 31 known" and "0/12 sections done":
+  // every one of those true, none of them about them, and together they read as
+  // a page reporting that the learner has failed.
+  //
+  // The grade project goes with it, and that part is the ORIGINAL tutoring
+  // decision still standing: a whole-year capstone is not an answer to somebody
+  // who came with one question. What changed on 2026-08-31 is only that the row
+  // now carries something else as well.
+  const positioned = !IS_TUTORING;
+
+  // Named, because the two columns hold them in different places: a course
+  // learner's right column is their progress and the project door, so these sit
+  // under the words on the left; a tutoring learner has neither, so these move
+  // across and fill the column that would otherwise be empty. Writing the
+  // markup twice is the version of this that drifts.
+  const grammarPanel = grammar.length ? `<section class="panel">
+          <h3>${icon("pencil-line")} ${positioned ? "The patterns you practised" : "The patterns it teaches"}</h3>
+          ${list(grammar.map((item) => row("circle-dot", escapeHtml(item.title))))}
+        </section>` : "";
+  const readingsPanel = readings.length ? `<section class="panel">
+          <h3>${icon("book-open-text")} ${positioned ? "What you read and heard" : "What there is to read and hear"}</h3>
+          ${list(readings.map((item) => row("circle-dot", `<strong>${escapeHtml(item.title)}</strong>${item.genre ? ` — ${escapeHtml(item.genre)}` : ""}`)))}
+        </section>` : "";
+
   $("#app").innerHTML = `${pageHeader(
-    `${escapeHtml(gradeLabel)} · your final project`,
-    "Capstone project",
-    open
-      ? "Bring your best English work together, make something you are proud of, and present it."
-      : `This opens when you reach Unit ${CAPSTONE_UNIT}. Have a look at what you are working towards.`,
-    open ? "Approved content" : "Locked",
+    `${escapeHtml(gradeLabel)} · Unit ${unitNo}`,
+    positioned
+      ? `What you learned in ${escapeHtml(course.unit.unitTitle)}`
+      : `What ${escapeHtml(course.unit.unitTitle)} teaches`,
+    !positioned
+      ? "Everything this unit covers, on one page — so you can see whether what you are stuck on is in it."
+      : unitDone
+        ? "Everything this unit taught you, on one page. Nothing here is marked — it is yours to look back at."
+        : "What this unit teaches, and how far you have got. Nothing here is marked — it is yours to look back at.",
   )}
     <div class="overview-grid">
       <div class="section-stack">
         <section class="panel">
-          <h2>${icon(open ? "flag" : "lock")} Choose. Create. Present. Reflect.</h2>
-          <p>Your capstone is <strong>Unit ${CAPSTONE_UNIT}: ${escapeHtml(title)}</strong> — the last unit of ${escapeHtml(gradeLabel)} English. You choose your strongest work, make a final product from it, and present it. Your teacher guides each stage across six live sessions.</p>
-          ${here && open
-            ? `<p>You are in it now. Start from this unit's <strong>Capstone launch</strong>.</p><button class="button gold" data-go="lecture" type="button">${icon("flag")} Go to Capstone launch ${icon("arrow-right")}</button>`
-            : open
-              ? `<a class="button gold" href="${escapeHtml(courseLocation(CAPSTONE_UNIT, "lecture"))}">${icon("flag")} Open my capstone ${icon("arrow-right")}</a>`
-              : `<p>You are up to <strong>Unit ${nextUp}: ${escapeHtml(nextTitle)}</strong>. Finish each unit and Unit ${CAPSTONE_UNIT} opens by itself.</p>${
-                  // No button when the learner is already standing in their open
-                  // unit — "Go to Unit 1" from inside Unit 1 is a button that
-                  // does nothing, and a dead control on a locked page reads as
-                  // the lock being broken. The Overview is one click away in the
-                  // nav; this page's job there is to say what is coming.
-                  nextUp === unitNumber
-                    ? `<button class="button gold" data-go="overview" type="button">Back to this unit ${icon("arrow-right")}</button>`
-                    : `<a class="button gold" href="${escapeHtml(courseLocation(nextUp))}">Go to Unit ${nextUp} ${icon("arrow-right")}</a>`
-                }`}
+          <span class="eyebrow">Unit ${unitNo} · ${positioned ? "what it taught" : "what it covers"}</span>
+          <h2>${icon("graduation-cap")} ${positioned ? "What you can do now" : "What this unit covers"}</h2>
+          ${list(course.outcomes.map((outcome) => {
+            const verdict = positioned ? verdicts.get(outcome.outcomeId) || "" : "";
+            return row(positioned ? verdictIcon(verdict) : "circle-dot", `${escapeHtml(outcome.learningOutcome)}${verdict ? ` — <strong>${escapeHtml(verdict)}</strong>` : ""}`);
+          }))}
+          ${positioned && said < course.outcomes.length
+            ? `<p>${said === 0 ? "You have not said how you got on yet." : `You have said how you got on with ${said} of ${course.outcomes.length}.`} The dashed circles are waiting for you.</p>
+               <button class="button secondary" data-go="reflect" type="button">Say how I got on ${icon("arrow-right")}</button>`
+            : ""}
         </section>
+        <section class="panel">
+          <h3>${icon("book-a")} ${positioned ? "The words you met" : "The words it teaches"}</h3>
+          <p>This unit's ${escapeHtml(sectionLabel("dictionary"))} section teaches ${words.length} ${words.length === 1 ? "word" : "words"} in ${groups.length} ${groups.length === 1 ? "group" : "groups"}.${positioned ? ` You have marked ${known.length} of them as known.` : ""}</p>
+          ${groups.length > 1 ? list(groups.map((group) => row(
+            !positioned ? "circle-dot" : group.known === group.total ? "circle-check-big" : group.known ? "circle-dot" : "circle-dashed",
+            `<strong>${escapeHtml(group.title)}</strong>${positioned ? ` — ${group.known} of ${group.total} known` : ` — ${group.total} ${group.total === 1 ? "word" : "words"}`}`,
+          ))) : ""}
+          <button class="button secondary" data-go="dictionary" type="button">${positioned ? "Go back to the words" : "Open the words"} ${icon("arrow-right")}</button>
+        </section>
+        ${positioned ? `${grammarPanel}
+        ${readingsPanel}` : ""}
       </div>
       <div class="section-stack">
+        ${!positioned ? `${grammarPanel}
+        ${readingsPanel}` : `
         <section class="panel">
-          <h3>What the capstone asks of you</h3>
-          <ol class="path-list">
-            <li>${icon("circle-dot")}<span><strong>Choose</strong> — pick the work from this year you are proudest of.</span></li>
-            <li>${icon("circle-dot")}<span><strong>Create</strong> — turn it into one finished product.</span></li>
-            <li>${icon("circle-dot")}<span><strong>Present</strong> — say it out loud, to your class.</span></li>
-            <li>${icon("circle-dot")}<span><strong>Reflect</strong> — say what got better this year.</span></li>
-          </ol>
+          <h3>How far you have got</h3>
+          <div class="stat-row">
+            <div class="stat"><strong>${known.length}/${words.length}</strong><small>${escapeHtml(sectionLabel("dictionary").toLowerCase())} known</small></div>
+            <div class="stat"><strong>${done.length}/${countable.length}</strong><small>sections done</small></div>
+            <div class="stat"><strong>${said}/${course.outcomes.length}</strong><small>outcomes rated</small></div>
+          </div>
         </section>
+        <section class="panel">
+          <h3>${icon("list-checks")} What you finished</h3>
+          ${countable.length
+            ? list(countable.map((id) => row(progress.completed.includes(id) ? "circle-check-big" : "circle-dashed", escapeHtml(sectionLabel(id)))))
+            : "<p>This unit has no sections to tick.</p>"}
+          ${unitDone ? `<p><strong>Every section of Unit ${unitNo} has a tick. Brilliant work.</strong></p>` : ""}
+        </section>
+        ${capstoneDoorPanel()}`}
       </div>
     </div>`;
+  bindRecapButtons();
+}
+
+// The grade's final project, as a panel rather than a page. It says what the old
+// capstone page said, because Unit 10 is still the capstone and a learner still
+// needs to see it coming and to get back to it afterwards — that is what this
+// row was added for, and it is the half of it that was right.
+//
+// Three states, and the locked one carries NO button on purpose: a control that
+// cannot go anywhere reads as the lock being broken. The page around it is open
+// at every unit now, so this panel is the only thing here that consults the
+// unit gate.
+function capstoneDoorPanel() {
+  const open = unitIsUnlocked(CAPSTONE_UNIT) || TEACHER_PREVIEW;
+  const here = unitNumber === CAPSTONE_UNIT;
+  const entry = manifest?.units?.find((unit) => Number(unit.number) === CAPSTONE_UNIT);
+  const title = entry?.title || `Unit ${CAPSTONE_UNIT}`;
+  const body = here && open
+    ? `You are in it now — Unit ${CAPSTONE_UNIT} IS your final project. Choose your strongest work from the year, make one finished thing out of it, and present it.`
+    : open
+      ? `Unit ${CAPSTONE_UNIT}: ${title} is open. Choose your strongest work from the year, make one finished thing out of it, and present it.`
+      : `Your final project is Unit ${CAPSTONE_UNIT}: ${title}, the last unit of ${gradeLabel} English. Finish each unit and it opens by itself.`;
+  const way = here && open
+    ? `<button class="button gold" data-go="lecture" type="button">${icon("flag")} Go to Capstone launch ${icon("arrow-right")}</button>`
+    : open
+      ? `<a class="button gold" href="${escapeHtml(courseLocation(CAPSTONE_UNIT, "lecture"))}">${icon("flag")} Open my capstone ${icon("arrow-right")}</a>`
+      : "";
+  return `<section class="panel">
+      <span class="eyebrow">${escapeHtml(gradeLabel)} · your final project</span>
+      <h3>${icon(open ? "flag" : "lock")} Choose. Create. Present. Reflect.</h3>
+      <p>${escapeHtml(body)}</p>
+      ${way}
+    </section>`;
+}
+
+// Both pages above draw `data-go` buttons, and the no-unit page draws only the
+// door's — one binder rather than two, so a button added to either can never be
+// the one nobody wired up.
+function bindRecapButtons() {
   $$("[data-go]").forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
 }
 
@@ -10281,11 +10443,6 @@ function gated(renderers) {
 // The locked-section page. Same job as the locked-unit page one level down:
 // name the one thing standing in the way, and offer the way to it.
 function renderLockedSection(id) {
-  // The capstone belongs to the grade, not to this unit's chain, so the generic
-  // page cannot describe it: chain.indexOf() answers -1, `previous` comes back
-  // undefined, and the learner is told to finish a section called "undefined".
-  // It names the unit standing in the way instead.
-  if (id === "capstone") return renderCapstone();
   const open = nextOpenSection();
   const chain = sectionChain();
   const previous = chain[chain.indexOf(id) - 1];
@@ -17217,6 +17374,11 @@ const aiState = loadAIState();
 
 const config = {
   subjectKey: "english",
+  // Subtracted from the shell's TUTORING_HIDDEN, which is otherwise shared by
+  // all six subjects (course-app.js, where the reasoning is). English's
+  // `capstone` row is this unit's own recap rather than a stage project, so
+  // the reason the category cannot see the other five does not describe it.
+  tutoringShows: ["capstone"],
   param: "grade",
   mediaSubject: "english",
   ttsPurpose: "ehel_english",
@@ -17313,10 +17475,10 @@ const config = {
     ebooks: () => renderEbooks(),
     glossary: () => renderGlossary(),
     "story-library": () => renderStoryLibrary(),
-    // Registered inside gated() like everything else, but it draws its own
-    // locked state: gated() calls renderLockedSection, which hands the capstone
-    // straight back here (see the guard there).
-    capstone: () => renderCapstone(),
+    // Route id `capstone`, page "What I learned". The id is what the nav, the
+    // progress store, get-help's section search and course-app's TUTORING_HIDDEN
+    // all speak, so renaming it would be a migration rather than a label change.
+    capstone: () => renderUnitRecap(),
     live: () => renderLive(),
     reflect: () => renderReflect(),
     "final-quiz": () => renderFinalQuiz(),

@@ -165,7 +165,26 @@ export function createCourseApp(config) {
   // AND dropped from the countable list in one place, because several subjects
   // count "live" toward a unit's 100% — hiding it while still counting it would
   // make every unit permanently incompletable for this category.
-  const TUTORING_HIDDEN = ["unit-plan", "year-plan", "live", "capstone", "capstonequiz"];
+  //
+  // A subject may EXEMPT a row from this list (`config.tutoringShows`) and may
+  // not add to it. Subtraction only, and that is the whole design: the list
+  // stays written once, a subject states only the row it differs on, and the
+  // two readers below still share one value -- so no exemption can put the nav
+  // and the search out of step with each other, which is what the note further
+  // down is protecting.
+  //
+  // The one exemption today is English's `capstone`, which stopped being a row
+  // about a whole-stage project on 2026-08-31 and became that UNIT's own recap
+  // (see renderUnitRecap in shell/subjects/english.js). The reason this category
+  // could not see it -- "a learner who arrives with one problem and no course
+  // position is not helped by a whole-stage project" -- is a true statement
+  // about the page that used to be there. What is there now is a summary of
+  // what the unit teaches, which is orientation, and orientation is precisely
+  // what arriving from a search without a position leaves you short of. The
+  // other five subjects still mean a stage project by `capstone` and are
+  // untouched.
+  const TUTORING_HIDDEN_ROWS = ["unit-plan", "year-plan", "live", "capstone", "capstonequiz"];
+  const TUTORING_HIDDEN = TUTORING_HIDDEN_ROWS.filter((id) => !(config.tutoringShows || []).includes(id));
   const tutoringVisible = (id) => !IS_TUTORING || !TUTORING_HIDDEN.includes(id);
 
   // Welcome gate: mounted immediately, before any data load, so the learner sees

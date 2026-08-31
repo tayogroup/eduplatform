@@ -461,7 +461,7 @@ const SECTION_HINTS = {
   grammar: "Look at the pattern and try the practice, then press the button to finish.",
   speaking: "Say the sentences out loud. Record yourself if you can, then press the button to finish.",
   writing: "Write your own sentences — at least eight words — and press Submit.",
-  activities: "Do the activities, then press the button to finish.",
+  activities: "Do each activity, tick off its steps, then press the button to finish.",
   games: "Play every game once.",
   quiz: "Answer all the questions. Get more than half right to pass. You can try again.",
   ebooks: "Read or watch one book to the end.",
@@ -10972,7 +10972,7 @@ let activeDeck = null;
 const mountDeck = (options) => {
   const { finish = null, closingHint = "", onSlide = null, slides = [], ...rest } = options;
   const label = options.label || "Slide";
-  const closing = () => deckClosingSlide({ finish, hint: closingHint });
+  const closing = () => deckClosingSlide({ finish, hint: typeof closingHint === "function" ? closingHint() : closingHint });
   const withClosing = (list) => (list.length ? [...list, closing()] : list);
   const relabel = (deck) => {
     const n = deck.count - 1;
@@ -11043,7 +11043,7 @@ const DECK_INTROS = {
   grammar: { title: "Say the patterns", steps: [["braces", "One pattern at a time. Say it out loud and try the practice."], DECK_STEP_LISTEN, ["check", "Go through every pattern to the last slide to finish."]] },
   speaking: { title: "Use your voice", steps: [["messages-square", "One practice at a time. Press “Hear model”, then say it yourself."], ["mic", "Press Record to record yourself, then Submit."], DECK_STEP_NEXT] },
   writing: { title: "Plan, write and improve", steps: [["pencil-line", "One task at a time. Write your own sentences in the box — at least eight words."], ["send", "Press “Submit this draft” to save your writing."], DECK_STEP_NEXT] },
-  activities: { title: "Learn by doing", steps: [["shapes", "One activity at a time. Do it, then press “Mark complete”."], DECK_STEP_LISTEN, ["check", "On the last slide, press “Finish activities”."]] },
+  activities: { title: "Learn by doing", steps: [["shapes", "One activity at a time. Do each step, then tap its circle to tick it off."], ["pencil", "Write your answer on the line, or press “Draw it” to draw one."], ["check", "When every step is ticked, press “Mark complete”."]] },
 };
 const deckIntro = (id) => DECK_INTROS[id] || null;
 
@@ -12912,50 +12912,413 @@ function renderActivitiesClassic() {
   }));
   $("#activities-done").addEventListener("click", () => complete("activities", "Unit activities complete."));
 }
+// Activities as a deck: one challenge per slide. Since 2026-08-31 the slide is
+// something a Grade 1-4 learner DOES rather than a paragraph they read, and the
+// three reasons are all measurable in the content rather than matters of taste.
+//
+// An activity's instruction is usually not ONE thing. Measured across all 246
+// Grade 1-4 activities: 133 are a lead-in line followed by two or more item
+// lines — "Choose the best word: height, weight, distance, pattern." and then
+// four sentences with a blank in each. The old slide printed all of that as one
+// paragraph over one textarea, so a child was handed four tasks as a wall of
+// text and a single box for the lot.
+//
+// Nothing PERSISTED. The note typed into that textarea and every "Mark
+// complete" lived in the DOM alone — no writer, no key, nothing in
+// `progress` — so six activities worked through on Monday were six blank
+// unticked slides on Tuesday. Vocabulary, writing drafts and the self
+// assessment have all been stored per learner for as long as they have
+// existed (`progress.knownWords`, `.writing`, `.self`); activities were the
+// one section whose work the app threw away.
+//
+// And every activity carries `answerSummary` — all 246 of them — which nothing
+// in the shell had ever drawn. A child could do the work and had no way to find
+// out whether it was right.
+//
+// So: the items become tappable steps with their own answer lines and their own
+// voice, the whole slide is stored under `progress.activities`, and "How did I
+// do?" reveals the marking notes. This is the deck path only, which is Grades
+// 1-4 and never a tutoring learner — `renderActivitiesClassic` above is
+// untouched and is still what Grades 5-8 and the tutoring category get.
 
-// Activities as a deck: one challenge per slide — instructions, the voice that
-// reads them, and the box to answer in. The per-activity "Mark complete" is kept
-// (it is how a learner tracks six separate challenges) and marks its own slide
-// without repainting it, so the note they just typed stays where they left it.
-function renderActivitiesCarousel() {
+// The parser is a newline split and nothing else. The lead-in is the first line
+// and the items are the rest, which is the shape the content already has — so
+// there is no pattern here that can silently match nothing and quietly take a
+// unit out of the feature, the way a wording-keyed one would.
+//
+// Three lines is the floor (a lead plus two items): "lead + one line" is a
+// two-sentence instruction rather than a checklist, and one tick-box is worse
+// than none. Measured: 133 of 246 clear that floor, the other 113 fall to the
+// single-block branch and keep one answer box.
+//
+// The marker is stripped into a badge where the content prints one — 64 of the
+// 133 number their items, 5 number some of them and 74 number none — and where
+// there is no marker the step still gets its position, so every step is
+// numbered on screen whatever the source did. Stripping is never allowed to
+// empty a line: `text` falls back to the whole line, so an item that is only a
+// marker still shows something.
+const ACTIVITY_ITEM_MARK = /^\s*(?:\d+\s*[.):]|[a-z]\s*[.)])\s+/i;
+const ACTIVITY_INLINE_MARK = /(?<![\d.])(\d+)\.\s+/g;
+
+// Grade 1 numbers its items INLINE, which is why this second pass exists rather
+// than being cleverness for its own sake: on the newline rule alone Grade 1
+// scored 0 of 66 — the one grade that most needs one thing at a time got none
+// of it, while Grade 4 got 52 of 60. Its activities run the items along a
+// single line: "Make your mini-book. 1. Fold three sheets. 2. Staple the
+// middle. 3. Add your six pages."
+//
+// The guard against reading prose as a list is that the numbers must be a RUN
+// starting at 1 and climbing by one. A sentence that merely contains a numeral
+// has no such run, and the lookbehind stops a decimal, or a numeral inside a
+// larger number, from opening one. Measured with that guard in place: Grade 1
+// gains 17 of its 66, and the other 49 are genuinely one instruction two
+// sentences long ("Hide a ball for a friend to find…") that a checklist would
+// only chop up.
+//
+// Know before mutating it that the run guard is UNEXERCISED by the content as
+// it stands: all 17 of those activities number ascending from 1, so removing
+// the guard changes not one slide today and reads as dead code under a
+// mutation test. It is here for content not yet written — the cost is one
+// clause and the failure it prevents is prose served to a five-year-old as a
+// checklist that has to be ticked before the activity will mark complete.
+//
+// A trailing comma or semicolon is dropped because the inline form punctuates
+// for a sentence the item is no longer in — "the red book," is a list item on
+// screen, not a clause. Anything else an item carries is left alone: where the
+// closing sentence is glued to the last one ("the yellow door. Name each colour
+// as you finish it.") it stays there, because separating a tail from an item is
+// a judgement about prose and getting it wrong drops a line of the instruction.
+function activitySteps(activity) {
+  const whole = String(activity.instructionsAndItems || "").trim();
+  const lines = whole.split("\n").map((line) => line.trim()).filter(Boolean);
+  if (lines.length >= 3) {
+    return {
+      lead: lines[0],
+      items: lines.slice(1).map((line, index) => {
+        const found = line.match(ACTIVITY_ITEM_MARK);
+        const raw = found ? found[0] : "";
+        return {
+          mark: raw.trim().replace(/[.):]+$/, "") || String(index + 1),
+          text: line.slice(raw.length).trim() || line,
+        };
+      }),
+    };
+  }
+  // Two lines is a lead and one item, which is a two-sentence instruction
+  // rather than a checklist — and it is left whole rather than falling to the
+  // inline pass, which would read across the break and mean something else.
+  if (lines.length > 1) return { lead: whole, items: [] };
+  const marks = [...whole.matchAll(ACTIVITY_INLINE_MARK)];
+  if (marks.length < 2 || !marks.every((match, index) => Number(match[1]) === index + 1)) return { lead: whole, items: [] };
+  return {
+    lead: whole.slice(0, marks[0].index).trim(),
+    items: marks.map((match, index) => ({
+      mark: match[1],
+      text: whole
+        .slice(match.index + match[0].length, index + 1 < marks.length ? marks[index + 1].index : whole.length)
+        .trim()
+        .replace(/[,;]$/, ""),
+    })),
+  };
+}
+
+// One record per activity: which steps are ticked, what was typed against each
+// of them, the drawing, and whether the learner marked the whole thing done.
+// Read defensively because this is localStorage — a record written by an older
+// build, or hand-edited, must not throw on the way to a lesson.
+function activityState(id) {
+  progress.activities ||= {};
+  const saved = progress.activities[id] || {};
+  return {
+    steps: Array.isArray(saved.steps) ? saved.steps : [],
+    notes: saved.notes && typeof saved.notes === "object" ? saved.notes : {},
+    drawing: typeof saved.drawing === "string" ? saved.drawing : "",
+    done: saved.done === true,
+  };
+}
+
+function saveActivityState(id, patch) {
+  progress.activities ||= {};
+  progress.activities[id] = { ...activityState(id), ...patch };
+  saveProgress();
+}
+
+const activityStepsDone = (state, items) => items.filter((_, index) => state.steps[index]).length;
+
+function activityStepHtml(activity, item, index, state) {
   const esc = escapeHtml;
-  const activities = course.activities;
-  const slides = activities.map((activity, index) => `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
-      <span class="gc-eyebrow">Activity ${activity.sequence} of ${activities.length} · ${esc(activity.activityType)}</span>
-      <h3 class="gc-title">${esc(activity.title)}</h3>
-      <p class="gc-note gc-try">${esc(activity.instructionsAndItems)}</p>
-      ${activity.audio?.available ? `<div class="gc-actions"><button class="gc-btn play" type="button" data-activity-audio="${esc(activity.activityId)}">${icon("volume-2")} Hear the instructions</button></div>` : ""}
-      <div class="wc-sentence">
-        <small>Your answer or notes</small>
-        <textarea data-activity-response="${esc(activity.activityId)}" rows="5" placeholder="Record your answer or notes…" aria-label="Response for ${esc(activity.title)}"></textarea>
+  const ticked = Boolean(state.steps[index]);
+  const id = esc(activity.activityId);
+  return `<li class="wc-act-step${ticked ? " is-done" : ""}">
+      <button class="wc-act-tick" type="button" data-activity-tick="${id}" data-step="${index}" aria-pressed="${ticked}" aria-label="I have done step ${index + 1}">
+        <span class="wc-act-num" aria-hidden="true">${esc(item.mark)}</span>
+        <span class="wc-act-mark" aria-hidden="true">${icon("check")}</span>
+      </button>
+      <div class="wc-act-body">
+        <p class="wc-act-text">${esc(item.text)}</p>
+        <input class="wc-act-line" type="text" data-activity-note="${id}" data-activity-slot="${index}" value="${esc(state.notes[index] || "")}" placeholder="Answer…" aria-label="Your answer for step ${index + 1}">
       </div>
-      <button class="gc-btn ghost" type="button" data-activity-done="${esc(activity.activityId)}">${icon("check")} Mark complete</button>
-    </div></section>`);
+      <button class="wc-act-say" type="button" data-activity-say="${index}" data-activity-owner="${id}" aria-label="Hear step ${index + 1}">${icon("volume-2")}</button>
+    </li>`;
+}
 
-  mountDeck({
+function activitySlideHtml(activity, index, total) {
+  const esc = escapeHtml;
+  const { lead, items } = activitySteps(activity);
+  const state = activityState(activity.activityId);
+  const id = esc(activity.activityId);
+  const done = activityStepsDone(state, items);
+  return `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner wc-act">
+      <span class="gc-eyebrow">Activity ${esc(String(activity.sequence))} of ${total} · ${esc(activity.activityType)}</span>
+      <h3 class="gc-title">${esc(activity.title)}</h3>
+      <p class="gc-note gc-try">${esc(lead)}</p>
+      <div class="gc-actions">
+        ${activity.audio?.available ? `<button class="gc-btn play" type="button" data-activity-audio="${id}">${icon("volume-2")} Hear the instructions</button>` : ""}
+        <button class="gc-btn ghost" type="button" data-activity-draw="${id}">${icon("pencil")} ${state.drawing ? "My drawing" : "Draw it"}</button>
+      </div>
+      ${items.length
+        ? `<p class="wc-act-count" data-activity-count="${id}">${done} of ${items.length} done</p>
+           <ol class="wc-act-steps">${items.map((item, position) => activityStepHtml(activity, item, position, state)).join("")}</ol>`
+        : `<div class="wc-sentence">
+             <small>Your answer or notes</small>
+             <textarea data-activity-note="${id}" data-activity-slot="all" rows="4" placeholder="Write what you did, or what you found out…" aria-label="Your answer for ${esc(activity.title)}">${esc(state.notes.all || "")}</textarea>
+           </div>`}
+      <div class="wc-act-pad" data-activity-pad="${id}" hidden></div>
+      <div class="gc-actions">
+        ${activity.answerSummary ? `<button class="gc-btn ghost" type="button" data-activity-check="${id}">${icon("circle-help")} How did I do?</button>` : ""}
+        <button class="gc-btn ${state.done ? "done" : "ghost"}" type="button" data-activity-done="${id}"${state.done ? " disabled" : ""}>${icon(state.done ? "check-circle" : "check")} ${state.done ? "Complete" : "Mark complete"}</button>
+      </div>
+      ${activity.answerSummary
+        ? `<div class="wc-act-answer" data-activity-answer="${id}" hidden>
+             <span class="wc-act-grownup">${icon("users")} For your grown-up</span>
+             <p>${esc(activity.answerSummary)}</p>
+           </div>`
+        : ""}
+    </div></section>`;
+}
+
+// The drawing pad. Grade 1 asks a child to draw or colour or make something in
+// 39 of its 66 activities and Grade 2 in 14 of 60 — "Colour the classroom
+// picture", "Draw yourself at school in your uniform" — and the only instrument
+// the slide offered was a textarea, for a learner who is five and cannot yet
+// type. It is opt-in (the pad is built on the first press and not before) so a
+// Grade 4 slide about paragraph structure does not carry a canvas nobody wants,
+// and it is offered at every grade rather than gated on the activity's wording,
+// because "which activities are drawing activities" is a judgement about prose
+// and the child pressing the button already knows the answer.
+//
+// It stores a bitmap, and the size guard is not decoration. Progress is ONE
+// JSON blob per unit and `storageSet` swallows a quota error in silence, so an
+// oversized drawing would not fail by itself — it would stop the whole unit's
+// progress saving, invisibly, which is the exact failure mode the progress
+// client spent eleven releases on. Hence a small canvas, a low quality, and a
+// refusal to store anything over the budget: the drawing is the cheapest thing
+// on the slide to lose and the tick is the most expensive.
+const ACTIVITY_PAD_INKS = ["#17324d", "#e2504c", "#2a6cb0", "#3f9c5c", "#e8a33d"];
+const ACTIVITY_DRAWING_BUDGET = 40000; // characters of data URL, ~30KB of image
+
+function activityPadDataUrl(canvas) {
+  for (const quality of [0.5, 0.35, 0.2]) {
+    const url = canvas.toDataURL("image/jpeg", quality);
+    if (url.length <= ACTIVITY_DRAWING_BUDGET) return url;
+  }
+  return "";
+}
+
+function mountActivityPad(host, activityId) {
+  const state = activityState(activityId);
+  host.innerHTML = `<canvas class="wc-act-canvas" width="480" height="300" aria-label="Drawing area"></canvas>
+    <div class="wc-act-padbar">
+      ${ACTIVITY_PAD_INKS.map((ink, index) => `<button type="button" class="wc-act-ink${index ? "" : " is-on"}" data-ink="${ink}" style="--ink:${ink}" aria-label="Draw in this colour"></button>`).join("")}
+      <button type="button" class="gc-btn ghost wc-act-clear" data-pad-clear="${escapeHtml(activityId)}">${icon("eraser")} Start again</button>
+    </div>`;
+  icons();
+  const canvas = host.querySelector("canvas");
+  const ctx = canvas.getContext("2d");
+  const blank = () => { ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height); };
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.lineWidth = 7;
+  ctx.strokeStyle = ACTIVITY_PAD_INKS[0];
+  blank();
+  if (state.drawing) {
+    const saved = new Image();
+    saved.onload = () => ctx.drawImage(saved, 0, 0, canvas.width, canvas.height);
+    saved.src = state.drawing;
+  }
+
+  // The deck arms its swipe on a touchstart anywhere in the viewport, so a
+  // finger drawing a line would also turn the page. Stopping the event at the
+  // canvas keeps it from reaching that listener; `touch-action: none` in the
+  // stylesheet is what stops the page scrolling under the same finger.
+  canvas.addEventListener("touchstart", (event) => event.stopPropagation());
+
+  let drawing = false;
+  let saveTimer = null;
+  const at = (event) => {
+    const box = canvas.getBoundingClientRect();
+    return [(event.clientX - box.left) * (canvas.width / box.width), (event.clientY - box.top) * (canvas.height / box.height)];
+  };
+  const store = () => {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      const url = activityPadDataUrl(canvas);
+      if (!url) return toast("That drawing is too big to keep. It is still on screen — try “Start again” for a simpler one.");
+      saveActivityState(activityId, { drawing: url });
+      return undefined;
+    }, 400);
+  };
+  canvas.addEventListener("pointerdown", (event) => {
+    drawing = true;
+    // Capture keeps a stroke following a finger that slides off the canvas,
+    // and it is a nicety rather than a requirement: it throws where the
+    // pointer is not one the element may capture, and an uncaught throw here
+    // would take the whole stroke with it before a single line was drawn.
+    try { canvas.setPointerCapture(event.pointerId); } catch { /* draw without it */ }
+    const [x, y] = at(event);
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 0.01, y); // a tap alone should leave a dot
+    ctx.stroke();
+  });
+  canvas.addEventListener("pointermove", (event) => {
+    if (!drawing) return;
+    const [x, y] = at(event);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  });
+  const lift = () => { if (!drawing) return; drawing = false; store(); };
+  canvas.addEventListener("pointerup", lift);
+  canvas.addEventListener("pointercancel", lift);
+  canvas.addEventListener("pointerleave", lift);
+
+  host.addEventListener("click", (event) => {
+    const ink = event.target.closest("[data-ink]");
+    if (ink) {
+      ctx.strokeStyle = ink.dataset.ink;
+      host.querySelectorAll("[data-ink]").forEach((node) => node.classList.toggle("is-on", node === ink));
+      return;
+    }
+    if (!event.target.closest("[data-pad-clear]")) return;
+    blank();
+    saveActivityState(activityId, { drawing: "" });
+  });
+}
+
+function renderActivitiesCarousel() {
+  const activities = course.activities;
+  const total = activities.length;
+  const marked = () => activities.filter((item) => activityState(item.activityId).done).length;
+  const closingHint = () => (marked() >= total
+    ? "You have marked every activity. Press the button to finish this section."
+    : `You have marked ${marked()} of your ${total} activities. Press the button when you are done.`);
+
+  const deck = mountDeck({
     heading: "Learn by doing",
     label: "Activity",
     intro: deckIntro("activities"),
     finish: ["activities", "Finish activities"],
-    slides,
+    closingHint,
+    slides: activities.map((activity, index) => activitySlideHtml(activity, index, total)),
     onClick: (event) => {
-      const target = event.target.closest("[data-activity-audio], [data-activity-done], [data-deck-finish]");
+      const target = event.target.closest("[data-activity-audio], [data-activity-tick], [data-activity-say], [data-activity-draw], [data-activity-check], [data-activity-done], [data-deck-finish]");
       if (!target) return undefined;
       if (target.dataset.deckFinish) return complete("activities", "Unit activities complete.");
+
+      const slide = target.closest(".gc-slide");
+
+      // A tick repaints its own row and the counter and NOTHING else. The
+      // repaint a whole slide would need is what takes an answer the learner is
+      // half way through typing, and their caret with it.
+      if (target.dataset.activityTick) {
+        const id = target.dataset.activityTick;
+        const position = Number(target.dataset.step);
+        const state = activityState(id);
+        const steps = [...state.steps];
+        steps[position] = !steps[position];
+        saveActivityState(id, { steps });
+        target.setAttribute("aria-pressed", String(Boolean(steps[position])));
+        target.closest(".wc-act-step")?.classList.toggle("is-done", Boolean(steps[position]));
+        const counter = slide?.querySelector(`[data-activity-count="${CSS.escape(id)}"]`);
+        if (counter) {
+          const items = activitySteps(activities.find((item) => item.activityId === id)).items;
+          counter.textContent = `${steps.filter(Boolean).length} of ${items.length} done`;
+        }
+        return undefined;
+      }
+
+      if (target.dataset.activityOwner) {
+        const activity = activities.find((item) => item.activityId === target.dataset.activityOwner);
+        const step = activity && activitySteps(activity).items[Number(target.dataset.activitySay)];
+        if (!step) return undefined;
+        return playGameInstruction(step.text, target);
+      }
+
+      if (target.dataset.activityDraw) {
+        const id = target.dataset.activityDraw;
+        const host = slide?.querySelector(`[data-activity-pad="${CSS.escape(id)}"]`);
+        if (!host) return undefined;
+        if (host.hidden) {
+          if (!host.dataset.ready) { mountActivityPad(host, id); host.dataset.ready = "1"; }
+          host.hidden = false;
+          target.innerHTML = `${icon("pencil")} Hide the drawing`;
+        } else {
+          host.hidden = true;
+          target.innerHTML = `${icon("pencil")} My drawing`;
+        }
+        icons();
+        return undefined;
+      }
+
+      // Freely available, the way the comprehension deck's "Check guidance" is
+      // — a child who taps it first has not cheated their way past a gate,
+      // they have read the marking notes, which are addressed to the adult
+      // beside them and say so on their face.
+      if (target.dataset.activityCheck) {
+        const panel = slide?.querySelector(`[data-activity-answer="${CSS.escape(target.dataset.activityCheck)}"]`);
+        if (!panel) return undefined;
+        panel.hidden = !panel.hidden;
+        target.innerHTML = `${icon("circle-help")} ${panel.hidden ? "How did I do?" : "Hide the notes"}`;
+        icons();
+        return undefined;
+      }
+
       if (target.dataset.activityDone) {
+        const id = target.dataset.activityDone;
+        const items = activitySteps(activities.find((item) => item.activityId === id)).items;
+        const state = activityState(id);
+        const left = items.length - activityStepsDone(state, items);
+        if (left > 0) return toast(left === 1 ? "One more step to tick off first." : `Tick off ${left} more steps first.`);
+        saveActivityState(id, { done: true });
         target.disabled = true;
         target.classList.remove("ghost");
         target.classList.add("done");
         target.innerHTML = `${icon("check-circle")} Complete`;
         icons();
+        deck.refreshClosing();
         return undefined;
       }
+
       const activity = activities.find((item) => item.activityId === target.dataset.activityAudio);
       return playAudio(activity.audio.source, { rate: AI_NARRATION_RATE, button: target });
     },
   });
-}
 
+  // Delegated, so it survives the redraws the deck makes on its own. Debounced
+  // for the same reason the writing draft is: this writes the whole unit's
+  // progress blob and emits a summary, and a Grade 4 typing a sentence should
+  // not do that thirty times.
+  let noteTimer = null;
+  deck.root.addEventListener("input", (event) => {
+    const field = event.target.closest("[data-activity-note]");
+    if (!field) return;
+    const id = field.dataset.activityNote;
+    const slot = field.dataset.activitySlot;
+    const value = field.value;
+    clearTimeout(noteTimer);
+    noteTimer = setTimeout(() => saveActivityState(id, { notes: { ...activityState(id).notes, [slot]: value } }), 400);
+  });
+}
 async function playGameInstruction(text, button) {
   if (!audioEnabled) return toast("Sound is muted. Use the sound button in the header to turn it on.");
   const original = button.innerHTML;
@@ -16759,7 +17122,7 @@ const config = {
   // in a gated chain and its units unlock one another, which the shell's
   // generic card does not know about.
   completionCard: false,
-  progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {} },
+  progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {}, activities: {} },
   gradeDefaults: { completed: [] },
   keys: (g, u) => ({ progress: `ehel-english-g${g}-u${u}-progress-v1` }),
   courseKey: (g) => `ehel-eng-g${String(g).padStart(2, "0")}`,

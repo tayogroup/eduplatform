@@ -329,6 +329,71 @@ body.deck-theatre .gc-wrap:not(.is-theatre) { display: none; }
 .wc-sentence small { color: #5a6f88; letter-spacing: .04em; text-transform: uppercase; font-size: 12px; }
 .wc-sentence p { margin: 0; font-size: 18px; line-height: 1.5; color: #17324d; }
 .wc-sentence-controls { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+/* The Grade 1-4 activity slide: a lead-in, then the activity's own items as
+   steps a learner ticks off. Deck-only classes, so no rule here can match an
+   upper-stage page, which draws renderActivitiesClassic and no .wc-act node. */
+.wc-act { gap: 10px; }
+.wc-act-count { margin: 0; font-size: 14px; font-weight: var(--weight-bold, 700); letter-spacing: .04em; text-transform: uppercase; color: #5a6f88; }
+.wc-act-steps { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 620px; display: grid; gap: 8px; }
+.wc-act-step { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; background: #eef4fa; border-radius: 14px; padding: 10px 14px; transition: background .18s; }
+.wc-act-step.is-done { background: #e5f7e9; }
+/* The tick is the big target: a five-year-old aims with a finger, and the
+   number lives inside it so the row has one thing to hit rather than two. */
+.wc-act-tick { position: relative; width: 46px; height: 46px; flex: none; border: 3px solid #c3d4e6; border-radius: 50%; background: #fff; cursor: pointer; display: grid; place-items: center; padding: 0; transition: background .18s, border-color .18s, transform .12s; }
+.wc-act-tick:hover { transform: scale(1.06); }
+.wc-act-tick:active { transform: scale(.94); }
+.wc-act-num { font: var(--weight-bold, 700) 19px var(--font-serif, serif); color: #2a6cb0; transition: opacity .14s; }
+.wc-act-mark { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; transition: opacity .14s; }
+.wc-act-mark svg, .wc-act-mark i { width: 26px; height: 26px; color: #fff; }
+.wc-act-step.is-done .wc-act-tick { background: #3f9c5c; border-color: #3f9c5c; }
+.wc-act-step.is-done .wc-act-num { opacity: 0; }
+.wc-act-step.is-done .wc-act-mark { opacity: 1; }
+/* The answer line sits BESIDE its step, not under it. Stacked, four steps
+   made the slide 1332px inside a 552px carousel and the old single-textarea
+   slide had fitted without scrolling — and a five-year-old does not go
+   looking for content by scrolling INSIDE a card that already swipes. Side
+   by side a step is ~66px rather than ~100px, which puts a four-step slide
+   back to roughly the height it replaced. Under 720px there is no room for
+   two columns, so it stacks again and the slide scrolls, which is what a
+   phone does everywhere else in the deck. */
+.wc-act-body { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.wc-act-body .wc-act-text { flex: 1 1 auto; }
+.wc-act-body .wc-act-line { flex: 0 1 160px; }
+.wc-act-text { margin: 0; font-size: 18px; line-height: 1.45; color: #17324d; text-align: left; }
+.wc-act-step.is-done .wc-act-text { color: #2c5c41; }
+.wc-act-line { font: inherit; font-size: 17px; width: 100%; padding: 9px 12px; border: 2px solid #c3d4e6; border-radius: 10px; background: #fff; color: #17324d; }
+.wc-act-line:focus { outline: none; border-color: #2a6cb0; box-shadow: 0 0 0 3px #2a6cb033; }
+.wc-act-say { flex: none; width: 42px; height: 42px; border: none; border-radius: 50%; background: #fff; color: #2a6cb0; cursor: pointer; display: grid; place-items: center; box-shadow: 0 2px 8px #17324d1f; transition: transform .12s; }
+.wc-act-say:hover { transform: scale(1.08); }
+.wc-act-say svg, .wc-act-say i { width: 20px; height: 20px; }
+/* The marking notes are written to the adult beside the learner, so the panel
+   says so on its face rather than passing adult prose off as a child's answer. */
+/* `display` beats the [hidden] attribute, so both panels need saying
+   explicitly: without this the marking notes -- which are addressed to the
+   adult and carry the answers -- sit open on a child's slide from the moment
+   it paints, and the "How did I do?" button toggles an attribute that changes
+   nothing. It measured as hidden:true and 151px tall at the same time. */
+.wc-act-answer[hidden], .wc-act-pad[hidden] { display: none; }
+.wc-act-answer { width: 100%; max-width: 620px; background: #fff6e6; border: 2px solid #e8a33d; border-radius: 14px; padding: 12px 16px; display: grid; gap: 6px; text-align: left; }
+.wc-act-answer p { margin: 0; font-size: 17px; line-height: 1.5; color: #17324d; }
+.wc-act-grownup { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: var(--weight-bold, 700); letter-spacing: .06em; text-transform: uppercase; color: #8a5b12; }
+.wc-act-grownup svg, .wc-act-grownup i { width: 15px; height: 15px; }
+/* touch-action keeps the page from scrolling under a finger that is drawing;
+   the deck's own swipe is stopped at the canvas in JS. */
+.wc-act-pad { display: grid; gap: 10px; justify-items: center; }
+.wc-act-canvas { touch-action: none; width: 100%; max-width: 480px; aspect-ratio: 8 / 5; background: #fff; border: 3px solid #c3d4e6; border-radius: 14px; cursor: crosshair; }
+.wc-act-padbar { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.wc-act-ink { width: 34px; height: 34px; border-radius: 50%; border: 3px solid #fff; background: var(--ink); cursor: pointer; box-shadow: 0 2px 8px #17324d33; padding: 0; transition: transform .12s; }
+.wc-act-ink:hover { transform: scale(1.1); }
+.wc-act-ink.is-on { border-color: #17324d; transform: scale(1.12); }
+@media (max-width: 640px) {
+  .wc-act-step { gap: 9px; padding: 10px; }
+  .wc-act-tick { width: 40px; height: 40px; }
+  .wc-act-text { font-size: 16px; }
+  .wc-act-say { width: 36px; height: 36px; }
+  .wc-act-body { display: grid; align-items: start; }
+  .wc-act-body .wc-act-line { flex: none; }
+}
 .gc-btn.small { font-size: 15px; padding: 10px 18px; }
 .gc-btn.small svg { width: 17px; height: 17px; }
 /* Sits below the dots, not in .gc-top: the full-bleed rules hide .gc-top, and

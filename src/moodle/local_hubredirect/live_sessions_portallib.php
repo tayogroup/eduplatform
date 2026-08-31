@@ -520,11 +520,9 @@ function pqlsesl_agenda_slides_controls($session, string $returnurl): string {
 }
 
 function pqlsesl_bbb_password($session, string $role): string {
-    $secret = trim((string)get_config('local_prequran', 'bbb_shared_secret'));
-    if ($secret === '') {
-        return '';
-    }
-    return substr(sha1('prequran-live|' . (int)$session->id . '|' . (string)$session->bbb_meeting_id . '|' . $role . '|' . $secret), 0, 24);
+    // One derivation, in accesslib.php. This wrapper stays because both this
+    // file and its portal twin call it by their own prefix all over.
+    return pqh_live_session_bbb_password($session, $role);
 }
 
 function pqlsesl_bbb_is_configured(): bool {

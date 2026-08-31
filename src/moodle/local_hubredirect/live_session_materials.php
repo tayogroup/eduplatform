@@ -248,6 +248,55 @@ function pqlmat_insert_agenda_url($session, string $filename): void {
     ]);
 }
 
+// Clear the room: end the BBB meeting, which is the ONLY thing BBB's API can do
+// that removes anybody. There is no eject call in the API -- moderators eject
+// one learner at a time from the client's own user list -- so "send the class
+// out and stay" is necessarily end-and-walk-back-in. Everyone is dropped, the
+// teacher included; the redirect that follows is what makes that a round trip
+// rather than a dead end, and the agenda deck re-inserts itself on the way back
+// because the rebuilt room is a new room.
+function pqlmat_clear_room($session): int {
+    global $CFG;
+    if (empty($session->bbb_created) || (string)($session->status ?? '') !== 'live') {
+        pqlmat_stop('The live room is not running, so there is nobody in it to send out.', 'Live room not started');
+    }
+    $locallib = $CFG->dirroot . '/local/prequran/locallib.php';
+    if (!file_exists($locallib)) {
+        pqlmat_stop('The live classroom service is not ready. Please ask support to review the live-room configuration.', 'Live classroom unavailable');
+    }
+    require_once($locallib);
+    $meetingid = trim((string)($session->bbb_meeting_id ?? ''));
+    $password = pqh_live_session_bbb_password($session, 'moderator');
+    if ($meetingid === '' || $password === '') {
+        pqlmat_stop('The live room is not configured, so it cannot be cleared.', 'Live classroom unavailable');
+    }
+
+    local_prequran_bbb_call('end', ['meetingID' => $meetingid, 'password' => $password]);
+
+    // BBB keeps reporting the meeting as running for a moment after end returns,
+    // and create is idempotent -- so a rejoin that lands inside that window is
+    // answered with the DYING meeting and puts the teacher straight back in the
+    // room they just cleared, learners and all. Wait for a definite not-running.
+    // null is the call itself failing, which is no evidence either way, so stop
+    // rather than spin: the same rule retire_ended_rooms() follows.
+    $waitedms = 0;
+    for ($attempt = 0; $attempt < 8; $attempt++) {
+        usleep(750000);
+        $waitedms += 750;
+        $running = local_prequran_bbb_is_meeting_running($meetingid);
+        if ($running !== true) {
+            break;
+        }
+    }
+
+    pqlmat_audit((int)$session->id, 'bbb_room_cleared', 'session', (int)$session->id, [
+        'meeting_id' => $meetingid,
+        'waited_ms' => $waitedms,
+        'still_running' => local_prequran_bbb_is_meeting_running($meetingid) === true,
+    ]);
+    return $waitedms;
+}
+
 function pqlmat_material_public_url($material): string {
     $url = pqh_workspace_material_public_url($material);
     if ($url === '') {
@@ -358,6 +407,50 @@ if ($action === 'whiteboard') {
         pqh_access_denied('The whiteboard could not be sent to the live room. Please ask support to review the live-room material setup.', $returnurl, 'Whiteboard unavailable');
     }
 }
+if ($action === 'clearroom') {
+    if (!confirm_sesskey()) {
+        pqh_access_denied('Please reopen Teacher Materials and try again.', $returnurl, 'Teacher Materials action expired');
+    }
+    // Ending a room mid-class cannot be undone and cannot be partial, so it asks
+    // first and says plainly what the learners see -- BBB shows them the meeting
+    // has ended, and nothing stops them coming back while the session is still
+    // inside its join window.
+    if (!optional_param('confirmclear', 0, PARAM_BOOL)) {
+        echo $OUTPUT->header();
+        echo $OUTPUT->confirm(
+            'Send everyone out of the live room? Every learner is dropped immediately and sees "this meeting has ended". '
+                . 'You are dropped too and will be taken straight back into a fresh room -- the whiteboard and the current '
+                . 'slide position do not survive, and the agenda deck is loaded again. A learner whose session is still inside '
+                . 'its join window can rejoin from their own page.',
+            pqlmat_url('/local/hubredirect/live_session_materials.php', $urlparams, [
+                'sessionid' => $sessionid,
+                'action' => 'clearroom',
+                'confirmclear' => 1,
+                'compact' => $compact ? 1 : 0,
+                'sesskey' => sesskey(),
+            ]),
+            $returnurl
+        );
+        echo $OUTPUT->footer();
+        exit;
+    }
+    try {
+        pqlmat_clear_room($session);
+    } catch (Throwable $e) {
+        pqlmat_audit($sessionid, 'bbb_room_clear_failed', 'session', $sessionid, ['error' => $e->getMessage()]);
+        pqh_access_denied('The live room could not be cleared. Please ask support to review the live-room configuration.', $returnurl, 'Clear the room unavailable');
+    }
+    redirect(
+        pqlmat_url('/local/hubredirect/live_sessions.php', $urlparams, [
+            'action' => 'join',
+            'sessionid' => $sessionid,
+            'sesskey' => sesskey(),
+        ]),
+        'The room is cleared. Taking you back in - the old BBB tab can be closed.',
+        2,
+        \core\output\notification::NOTIFY_SUCCESS
+    );
+}
 if ($action === 'insert') {
     if (!confirm_sesskey()) {
         pqh_access_denied('Please reopen Teacher Materials and try again.', $returnurl, 'Teacher Materials action expired');
@@ -396,6 +489,10 @@ if ($action === 'insert') {
 
 $materials = pqlmat_materials($workspaceid);
 $agendaurl = pqh_live_session_agenda_public_url($session);
+// The clear control only mounts while there IS a room to clear: outside a live
+// room the action can do nothing but refuse, and a button that can only fail is
+// worse than no button -- the same rule the learner's raise-hand control keeps.
+$roomlive = !empty($session->bbb_created) && (string)($session->status ?? '') === 'live';
 
 echo $OUTPUT->header();
 ?>
@@ -410,6 +507,8 @@ echo $OUTPUT->header();
 .pqlmat-btn:hover{background:#e7f4e7;text-decoration:none}
 .pqlmat-btn--primary{background:#2f6f4e;color:#fff;border-color:#2f6f4e}
 .pqlmat-btn--primary:hover{background:#285f43;color:#fff}
+.pqlmat-btn--danger{background:#fff;color:#8a2f22;border-color:rgba(138,47,34,.35)}
+.pqlmat-btn--danger:hover{background:#fdeeea;color:#8a2f22}
 .pqlmat-panel{margin-top:12px;border:1px solid rgba(23,48,68,.12);border-radius:8px;background:#fff;overflow:hidden}
 .pqlmat-panel--compact{margin-top:0}
 .pqlmat-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;background:#fbfdff;border-bottom:1px solid rgba(23,48,68,.1)}
@@ -472,6 +571,15 @@ body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-reg
           <button class="pqlmat-btn pqlmat-btn--primary" type="submit">Return to Agenda</button>
         </form>
         <?php endif; ?>
+        <?php if ($roomlive): ?>
+        <form class="pqlmat-inline" method="post">
+          <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+          <input type="hidden" name="action" value="clearroom">
+          <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+          <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
+          <button class="pqlmat-btn pqlmat-btn--danger" type="submit" title="Ends the room for everyone, then takes you straight back in">Clear the room</button>
+        </form>
+        <?php endif; ?>
       </div>
     </div>
     <?php if ($agendaurl === ''): ?>
@@ -513,6 +621,16 @@ body.pqlmat-page #page-footer,body.pqlmat-page footer,body.pqlmat-page [data-reg
         <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
         <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
         <button class="pqlmat-btn pqlmat-btn--primary" type="submit">Return to Agenda</button>
+      </form>
+      <?php endif; ?>
+      <?php if ($roomlive): ?>
+      <form class="pqlmat-inline" method="post">
+        <input type="hidden" name="sesskey" value="<?php echo sesskey(); ?>">
+        <input type="hidden" name="action" value="clearroom">
+        <input type="hidden" name="compact" value="1">
+        <?php if (!empty($urlparams['consumer'])): ?><input type="hidden" name="consumer" value="<?php echo s((string)$urlparams['consumer']); ?>"><?php endif; ?>
+        <?php if (!empty($urlparams['workspaceid'])): ?><input type="hidden" name="workspaceid" value="<?php echo (int)$urlparams['workspaceid']; ?>"><?php endif; ?>
+        <button class="pqlmat-btn pqlmat-btn--danger" type="submit" title="Ends the room for everyone, then takes you straight back in">Clear the room</button>
       </form>
       <?php endif; ?>
     </div>

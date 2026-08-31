@@ -2697,6 +2697,20 @@ function pqh_live_session_agenda_public_url($session): string {
     return $path !== '' ? pqh_bunny_cdn_url($path) : '';
 }
 
+// The BBB moderator/attendee password for a session, derived rather than stored.
+// The same sha1 expression is written out in four places; this is the copy new
+// code should call, and live_sessions.php and live_sessions_portallib.php now
+// delegate to it so those two cannot drift from each other. A wrong password is
+// not a visible failure -- BBB simply refuses the call -- so the derivation is
+// exactly the kind of thing that must not exist twice.
+function pqh_live_session_bbb_password($session, string $role): string {
+    $secret = trim((string)get_config('local_prequran', 'bbb_shared_secret'));
+    if ($secret === '') {
+        return '';
+    }
+    return substr(sha1('prequran-live|' . (int)$session->id . '|' . (string)$session->bbb_meeting_id . '|' . $role . '|' . $secret), 0, 24);
+}
+
 // Has the deck attached to this session changed since the one BigBlueButton is
 // known to hold? Kept free of Moodle so the comparison can be exercised
 // directly: it takes the path attached now, the CDN URL that path resolves to,

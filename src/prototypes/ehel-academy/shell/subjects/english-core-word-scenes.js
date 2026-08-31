@@ -335,9 +335,10 @@ SCENES.said = () => SCENES.say();
 // annoy, believe, dare, decide, enjoy, happen, imagine, promise, remember,
 // understand (G3); accept, become, belong, cause, continue, forgive, improve,
 // manage, notice, predict, respect, trust, wonder (G4) — a scene for "believe"
-// would be a scene of something else. "beginning" and "pound" are skipped too:
-// their dictionary tags say verb while their taught senses look nominal, the
-// same defect class as king/mouth (flagged, not fixed here).
+// would be a scene of something else. The census also held "beginning" and
+// "pound" back as suspect verb tags; the tag audit later settled them —
+// beginning is a noun (tag fixed, correctly no scene), pound is a real verb
+// and its scene sits with the state-verb tranche below.
 
 // ------------------------------------------------- shared props and builders
 const tableProp = (x, y, w = 84) => `<g transform="translate(${x} ${y})"><rect x="${-w / 2}" y="0" width="${w}" height="7" rx="3" fill="${P.wood}"/><rect x="${-w / 2 + 6}" y="7" width="5" height="22" fill="${P.wood}"/><rect x="${w / 2 - 11}" y="7" width="5" height="22" fill="${P.wood}"/></g>`;
@@ -1284,7 +1285,10 @@ SCENES.whisper = () => scene(`
 // that are NOT mental (become, cause, happen, continue…) would be lied about
 // by a bubble, so they get event scenes instead: a caterpillar becomes a
 // butterfly, a finger causes the dominoes to fall, a balloon popping happens.
-// Only "beginning" and "pound" stay absent — suspect verb tags, not verbs.
+// The tag audit (2026-08-31) settled the two words the census had held as
+// suspects: "beginning" is taught as a noun and its tag is now fixed, so it
+// is correctly absent; "pound" is taught as "hit hard, again and again" — a
+// real verb wrongly suspected — and has its scene below.
 
 const thoughtBubble = (x, y, w, h, inner, anim = "") =>
   `<g transform="translate(${x} ${y})"><g>${anim === "" ? fade(2.6, "0;1;1;0", 'keyTimes="0;0.15;0.85;1"') : anim}
@@ -1483,6 +1487,17 @@ SCENES.trust = () => scene(`
   <path d="M136 102 Q148 94 160 102" fill="none" stroke="${P.skin}" stroke-width="6.5" stroke-linecap="round"/>
   ${kid({ x: 174, y: 136, s: 1.05, shirt: P.teal, flip: true, armLBase: 12, armRBase: -78, bodyAnim: shift(0.6, "0 0;0 -2;0 0") })}
   ${kid({ x: 122, y: 136, s: 1.05, shirt: P.red, mouth: "o", armLBase: 12, armRBase: -78, bodyAnim: shift(0.6, "0 0;0 -2;0 0") })}`);
+
+// pound — hit it hard, again and again. The census skipped this word as a
+// suspect verb tag; its taught meaning ("To hit something hard, again and
+// again") proved the TAG right and the suspicion wrong, so it gets its scene
+// after all — the one word the tag audit returned to the map.
+SCENES.pound = () => scene(`${sun(38, 30)}
+  <g transform="translate(168 148)"><path d="M-24 -34 A 24 10 0 0 1 24 -34 L24 0 Q0 8 -24 0 Z" fill="${P.red}"/><ellipse cy="-34" rx="24" ry="10" fill="#f6d0cf" stroke="#c23e3a" stroke-width="2"/><path d="M-24 -34 L-16 -8 M24 -34 L16 -8 M0 -24 V2" stroke="#c23e3a" stroke-width="2" opacity="0.6"/></g>
+  ${[0, 1].map((i) => `<path d="M${150 + i * 36} ${100 - i * 4} l${i ? 4 : -4} -7" stroke="${P.gold}" stroke-width="2.4" stroke-linecap="round">${fade(0.6, "0;1;0", `begin="${-i * 0.3}s"`)}</path>`).join("")}
+  ${kid({ x: 116, y: 148, s: 1.15, shirt: P.teal, mouth: "o",
+    armLBase: -60, armLAnim: rot(0.6, "-22 0 0;20 0 0;-22 0 0"),
+    armRBase: -75, armRAnim: rot(0.6, "20 0 0;-22 0 0;20 0 0") })}`);
 
 // wonder — the night sky is full of question marks.
 SCENES.wonder = () => scene(`

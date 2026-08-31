@@ -1052,6 +1052,10 @@ function pql_insert_agenda_slides_into_bbb($session, string $source): void {
             'document_source' => 'agenda_public_url',
             'filename' => $filename,
             'url' => $documenturl,
+            // The storage path is what pqh_live_session_agenda_awaiting_bbb()
+            // compares on: the URL alone carries a version stamp that moves
+            // without the deck changing.
+            'bunny_path' => trim((string)($session->agenda_slides_path ?? '')),
         ]);
     } catch (Throwable $e) {
         pql_audit((int)$session->id, 'agenda_slides_bbb_insert_failed', 'session', (int)$session->id, [
@@ -1649,12 +1653,17 @@ if ($error === '' && optional_param('action', '', PARAM_ALPHANUMEXT) === 'join')
         ]);
     }
 
-    // Insert the agenda deck only when the room was just built. Re-inserting
-    // on every join forced BBB to re-convert the PPTX, flashing "Something
-    // went wrong. Attempting to recover..." in the presentation area, and it
-    // also stomped whatever deck or whiteboard the teacher had made current.
-    if ($roomjustcreated && in_array($role, ['teacher', 'admin_observer'], true)) {
-        pql_insert_agenda_slides_into_bbb($session, 'teacher_start_or_join');
+    // Insert the agenda deck when the room was just built, and again when the
+    // teacher has attached a DIFFERENT deck since BBB was last given one.
+    // Re-inserting on every join forced BBB to re-convert the PPTX, flashing
+    // "Something went wrong. Attempting to recover..." in the presentation
+    // area, and it also stomped whatever deck or whiteboard the teacher had
+    // made current -- but gating on the room alone meant an agenda replaced
+    // after the room existed never reached the class at all. Comparing against
+    // what BBB was last given keeps both: an unchanged deck is never re-sent.
+    if (in_array($role, ['teacher', 'admin_observer'], true)
+            && ($roomjustcreated || pqh_live_session_agenda_awaiting_bbb($session))) {
+        pql_insert_agenda_slides_into_bbb($session, $roomjustcreated ? 'teacher_start_or_join' : 'agenda_replaced');
     }
 
     try {

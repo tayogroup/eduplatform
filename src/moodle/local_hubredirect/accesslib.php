@@ -2697,6 +2697,76 @@ function pqh_live_session_agenda_public_url($session): string {
     return $path !== '' ? pqh_bunny_cdn_url($path) : '';
 }
 
+// Has the deck attached to this session changed since the one BigBlueButton is
+// known to hold? Kept free of Moodle so the comparison can be exercised
+// directly: it takes the path attached now, the CDN URL that path resolves to,
+// and the details JSON of the last insert BBB received.
+function pqh_live_session_agenda_bbb_document_changed(string $currentpath, string $currenturl, string $detailsjson): bool {
+    $currentpath = trim($currentpath);
+    if ($currentpath === '') {
+        return false;
+    }
+    $details = json_decode($detailsjson, true);
+    if (!is_array($details)) {
+        return false;
+    }
+    $lastpath = trim((string)($details['bunny_path'] ?? ''));
+    if ($lastpath !== '') {
+        return $lastpath !== $currentpath;
+    }
+    // Rows written before the storage path was recorded carry only the document
+    // URL. Compare it WITHOUT the cache-busting query: that version stamp falls
+    // back to timemodified, which moves on an ordinary session update, and a URL
+    // comparison would then read as a new deck on every single join -- the
+    // re-conversion flashing the room-just-built gate was added to stop.
+    $lasturl = trim((string)($details['url'] ?? ''));
+    $currenturl = trim($currenturl);
+    if ($lasturl === '' || $currenturl === '') {
+        return false;
+    }
+    return rawurldecode(explode('?', $lasturl)[0]) !== rawurldecode(explode('?', $currenturl)[0]);
+}
+
+// True when the deck attached to this session is NOT the one BigBlueButton was
+// last given, so a teacher who replaces the agenda after the room is built can
+// have the new one pushed on their next start/join. The audit trail is the
+// record of what BBB holds: rows are already written on every insert and on
+// every Teacher Materials "Return to Agenda", so this needs no new column and
+// no upgrade step. A restore counts, so a teacher who has already pushed the
+// new deck by hand is not stomped a second time.
+function pqh_live_session_agenda_awaiting_bbb($session): bool {
+    global $DB;
+    $path = trim((string)($session->agenda_slides_path ?? ''));
+    $sessionid = (int)($session->id ?? 0);
+    if ($path === '' || $sessionid <= 0 || !pqh_table_exists_safe('local_prequran_live_audit')) {
+        return false;
+    }
+    $rows = $DB->get_records_select(
+        'local_prequran_live_audit',
+        'sessionid = :sessionid AND action IN (:inserted, :restored)',
+        [
+            'sessionid' => $sessionid,
+            'inserted' => 'agenda_slides_bbb_inserted',
+            'restored' => 'bbb_agenda_restored',
+        ],
+        'timecreated DESC, id DESC',
+        'id, details',
+        0,
+        1
+    );
+    if (!$rows) {
+        // Nothing has ever reached the room; the caller's own room-just-built
+        // gate decides that case.
+        return false;
+    }
+    $row = reset($rows);
+    return pqh_live_session_agenda_bbb_document_changed(
+        $path,
+        pqh_live_session_agenda_public_url($session),
+        (string)($row->details ?? '')
+    );
+}
+
 function pqh_workspace_material_bunny_metadata($material): array {
     $metadata = json_decode((string)($material->metadatajson ?? ''), true);
     return is_array($metadata) ? $metadata : [];

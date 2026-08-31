@@ -24,6 +24,7 @@ $templatevariant = strtolower(trim(optional_param('templatevariant', '', PARAM_A
 if (!in_array($templatevariant, ['ar', 'en'], true)) {
     $templatevariant = '';
 }
+$confirmtemplate = optional_param('confirmtemplate', 0, PARAM_BOOL);
 $editorlangraw = strtolower(trim(optional_param('editorlang', '', PARAM_ALPHANUMEXT)));
 $editorlangmap = [
     'ar' => 'ar',
@@ -56,6 +57,47 @@ if ($workspaceid > 0) {
     pqh_enforce_role_domain($consumercontext, $workspaceid, (int)$USER->id);
 }
 
+$docserver = rtrim(trim((string)get_config('local_prequran', 'onlyoffice_document_server_url')), '/');
+$context = context_system::instance();
+$PAGE->set_context($context);
+$PAGE->set_url(new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + ['sessionid' => $sessionid]));
+$PAGE->set_pagelayout('embedded');
+$PAGE->set_title('Edit Live Session Agenda');
+$PAGE->set_heading('Edit Live Session Agenda');
+$PAGE->add_body_class('pqh-agenda-editor-page');
+
+// Starting again from a stock template REPLACES whatever is attached, and the
+// replaced deck cannot be recovered from this page. The language buttons used to
+// carry templatevariant, so a teacher who uploaded a finished agenda and then
+// clicked English or Arabic silently lost it and got the blank template back.
+// The buttons now only switch the editor's language; replacing is its own
+// action, and it asks first whenever there is something to lose.
+if ($templatevariant !== '' && trim((string)($session->agenda_slides_path ?? '')) !== '' && !($confirmtemplate && confirm_sesskey())) {
+    $attached = trim((string)($session->agenda_slides_filename ?? ''));
+    if ($attached === '') {
+        $attached = 'the deck attached to this session';
+    }
+    $templatename = $templatevariant === 'ar' ? 'Arabic' : 'English';
+    echo $OUTPUT->header();
+    echo $OUTPUT->confirm(
+        'Replace ' . s($attached) . ' with the blank ' . $templatename . ' agenda template? '
+            . 'The deck attached now cannot be recovered from this page.',
+        new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + [
+            'sessionid' => $sessionid,
+            'editorlang' => $editorlang,
+            'templatevariant' => $templatevariant,
+            'confirmtemplate' => 1,
+            'sesskey' => sesskey(),
+        ]),
+        new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + [
+            'sessionid' => $sessionid,
+            'editorlang' => $editorlang,
+        ])
+    );
+    echo $OUTPUT->footer();
+    exit;
+}
+
 if ($templatevariant !== '') {
     try {
         $session = pqh_attach_default_agenda_to_live_session($sessionid, (int)$USER->id, $templatevariant, true) ?: $session;
@@ -69,15 +111,6 @@ if ($templatevariant !== '') {
         pqh_access_denied('The agenda template could not be prepared for online editing. Please ask support to review the agenda template storage setup.', $returnurl, 'Agenda editor unavailable');
     }
 }
-
-$docserver = rtrim(trim((string)get_config('local_prequran', 'onlyoffice_document_server_url')), '/');
-$context = context_system::instance();
-$PAGE->set_context($context);
-$PAGE->set_url(new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + ['sessionid' => $sessionid]));
-$PAGE->set_pagelayout('embedded');
-$PAGE->set_title('Edit Live Session Agenda');
-$PAGE->set_heading('Edit Live Session Agenda');
-$PAGE->add_body_class('pqh-agenda-editor-page');
 
 echo $OUTPUT->header();
 ?>
@@ -116,8 +149,9 @@ body.pqh-agenda-editor-page .main-inner{margin:0!important;padding:0!important;m
       <p class="pqh-editor-meta"><?php echo s((string)$session->title); ?> - <?php echo s((string)($session->agenda_slides_filename ?? 'Live Session Agenda template.pptx')); ?></p>
     </div>
     <div class="pqh-editor-actions">
-      <a class="pqh-editor-btn pqh-editor-lang<?php echo $editorlang === 'en' ? ' pqh-editor-lang--active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + ['sessionid' => $sessionid, 'editorlang' => 'en', 'templatevariant' => 'en']))->out(false); ?>">English</a>
-      <a class="pqh-editor-btn pqh-editor-lang<?php echo $editorlang === 'ar' ? ' pqh-editor-lang--active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + ['sessionid' => $sessionid, 'editorlang' => 'ar', 'templatevariant' => 'ar']))->out(false); ?>">Arabic</a>
+      <a class="pqh-editor-btn pqh-editor-lang<?php echo $editorlang === 'en' ? ' pqh-editor-lang--active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + ['sessionid' => $sessionid, 'editorlang' => 'en']))->out(false); ?>">English</a>
+      <a class="pqh-editor-btn pqh-editor-lang<?php echo $editorlang === 'ar' ? ' pqh-editor-lang--active' : ''; ?>" href="<?php echo (new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + ['sessionid' => $sessionid, 'editorlang' => 'ar']))->out(false); ?>">Arabic</a>
+      <a class="pqh-editor-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_session_agenda_editor.php', $urlparams + ['sessionid' => $sessionid, 'editorlang' => $editorlang, 'templatevariant' => $editorlang]))->out(false); ?>">Start from <?php echo $editorlang === 'ar' ? 'Arabic' : 'English'; ?> template</a>
       <a class="pqh-editor-btn" href="<?php echo (new moodle_url('/local/hubredirect/live_session_agenda_file.php', $urlparams + ['sessionid' => $sessionid]))->out(false); ?>">Download</a>
       <a class="pqh-editor-btn" href="<?php echo $returnurl->out(false); ?>">Back</a>
     </div>

@@ -1022,6 +1022,10 @@ function pqlsesl_insert_agenda_slides_into_bbb($session, string $source): void {
             'document_source' => 'agenda_public_url',
             'filename' => $filename,
             'url' => $documenturl,
+            // The storage path is what pqh_live_session_agenda_awaiting_bbb()
+            // compares on: the URL alone carries a version stamp that moves
+            // without the deck changing.
+            'bunny_path' => trim((string)($session->agenda_slides_path ?? '')),
         ]);
     } catch (Throwable $e) {
         pqlsesl_audit((int)$session->id, 'agenda_slides_bbb_insert_failed', 'session', (int)$session->id, [

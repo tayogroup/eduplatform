@@ -284,12 +284,17 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             ]);
         }
 
-        // Insert the agenda deck only when the room was just built. Re-inserting
-        // on every join forced BBB to re-convert the PPTX, flashing "Something
-        // went wrong. Attempting to recover..." in the presentation area, and it
-        // also stomped whatever deck or whiteboard the teacher had made current.
-        if ($roomjustcreated && in_array($role, ['teacher', 'admin_observer'], true)) {
-            pqlsesl_insert_agenda_slides_into_bbb($session, 'teacher_start_or_join');
+        // Insert the agenda deck when the room was just built, and again when
+        // the teacher has attached a DIFFERENT deck since BBB was last given
+        // one. Re-inserting on every join forced BBB to re-convert the PPTX,
+        // flashing "Something went wrong. Attempting to recover..." in the
+        // presentation area, and it also stomped whatever deck or whiteboard
+        // the teacher had made current -- but gating on the room alone meant an
+        // agenda replaced after the room existed never reached the class at
+        // all. Keep this in step with the live_sessions.php twin.
+        if (in_array($role, ['teacher', 'admin_observer'], true)
+                && ($roomjustcreated || pqh_live_session_agenda_awaiting_bbb($session))) {
+            pqlsesl_insert_agenda_slides_into_bbb($session, $roomjustcreated ? 'teacher_start_or_join' : 'agenda_replaced');
         }
 
         try {

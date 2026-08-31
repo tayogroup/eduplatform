@@ -131,11 +131,35 @@ function actGaps(unit, grade, words, used) {
   const picked = words.filter((w) => !used.has(w.word)).slice(0, voice.count);
   if (picked.length < 3) return null;
   picked.forEach((p) => used.add(p.word));
+  // The word bank is not decoration, and "use each once" is what makes the note
+  // below TRUE. Without them, 7 of the 184 gap-fills have more than one answer
+  // that genuinely fits — "Adam is ______ today." takes happy, sad or nine;
+  // "Can ______ answer this question?" takes anybody, somebody or everybody;
+  // "We can finish the chart ______." takes later or earlier — and a child who
+  // wrote the other right answer was shown a different one under "The answer:".
+  // The first draft asserted "only one fits", which was simply false for those.
+  //
+  // Naming the set makes every item decidable by elimination and gives up
+  // nothing a recall test was really buying, because the words are one tap away
+  // in Vocabulary anyway. It is also the house form rather than a new idea: this
+  // unit's own existing activities already do it ("Choose the best word: height,
+  // weight, distance, pattern."). Alphabetical, so the order gives nothing away.
+  const bank = picked.map((p) => p.word).sort((x, y) => x.localeCompare(y, "en"));
   return {
     title: "Finish the sentence",
     activityType: grade <= 2 ? "Write the word" : "Sentence practice",
-    instructionsAndItems: `${voice.gaps}\n${numbered(picked.map(blank))}`,
-    answerSummary: `Each sentence takes one word from this unit and only one fits. ${key(picked.map((p) => p.word))}`,
+    instructionsAndItems: `${voice.gaps} Choose from: ${bank.join(", ")}. Use each word once.\n${numbered(picked.map(blank))}`,
+    // The last clause is the honest one and it is here because the word bank
+    // does NOT fix everything. It resolved 5 of the 7 ambiguous items by
+    // elimination; 2 survive it, and both are pairs that swap cleanly between
+    // two frames — happy/sad across "Adam is ______ today." and "Why do you
+    // look so ______?", later/earlier across "We can finish the chart ______."
+    // and "The bus came ______ than usual today." Nothing detectable
+    // distinguishes those; it needs meaning, not structure. So rather than
+    // claim a uniqueness that is false twice in 184, the notes say these are
+    // the intended answers rather than the only possible ones, which is true
+    // everywhere and is what the adult marking it needs to know.
+    answerSummary: `Each word is used once, so if one sentence is hard, do the others first and see what is left. These are the intended answers, not the only ones that could work — if a child's word also makes sense in the sentence, it is not wrong. ${key(picked.map((p) => p.word))}`,
   };
 }
 

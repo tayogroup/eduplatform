@@ -6836,7 +6836,30 @@ function renderLectureClassic() {
 }
 
 function linkedWords() {
-  return course.dictionaryLinks.map((link) => ({ ...link, master: dictionary.entries.find((entry) => entry.dictionaryEntryId === link.dictionaryEntryId) }));
+  // A link whose dictionary entry is MISSING gets a stub, never undefined.
+  // This is the one place `.master` is attached, and both word designs read
+  // its fields bare (`item.master.partOfSpeech`, `.displayWord`) at a dozen
+  // sites — so one unresolved id used to kill the WHOLE section with "We
+  // could not prepare the lesson", which is how every Grade 2-4 Core words
+  // page died locally on 2026-08-31 while the rebalanced units were ahead of
+  // their dictionaries. That data gap is closed (e88c8e5a0), but units and
+  // dictionaries ship as separate files, so the next lag would crash learners
+  // instead of a dev tree. The stub degrades honestly: the link's own
+  // masterWord/displayWord give the slide its word, the empty partOfSpeech
+  // drops the label, `available: false` draws no audio button — a plain slide
+  // instead of a dead section. It also keeps `master` always truthy, which is
+  // what the sites testing `item.master?.` already assume of a healthy row.
+  return course.dictionaryLinks.map((link) => ({
+    ...link,
+    master: dictionary.entries.find((entry) => entry.dictionaryEntryId === link.dictionaryEntryId) || {
+      dictionaryEntryId: link.dictionaryEntryId,
+      lemma: (link.masterWord || link.displayWord || "").toLowerCase(),
+      displayWord: link.displayWord || link.masterWord || "",
+      partOfSpeech: "",
+      partOfSpeechDefinition: "",
+      audio: { available: false },
+    },
+  }));
 }
 
 // ── Grades 1-4: the slide deck, and what still sits above it ─────────────────
@@ -7308,7 +7331,7 @@ function renderWordCarousel() {
     const actionScene = item.master ? coreWordScene(item.master.lemma) : "";
     const picture = actionScene ? "" : dictionaryPicture(item.master);
     return `<section class="gc-slide gc-v${index % 5}" data-slide="${esc(item.vocabularyId)}"><div class="gc-inner">
-      <span class="gc-eyebrow">Word ${index + 1} of ${words.length} · ${esc(item.master.partOfSpeech)}${item.groupTitle ? ` · ${esc(item.groupTitle)}` : ""}</span>
+      <span class="gc-eyebrow">Word ${index + 1} of ${words.length}${item.master.partOfSpeech ? ` · ${esc(item.master.partOfSpeech)}` : ""}${item.groupTitle ? ` · ${esc(item.groupTitle)}` : ""}</span>
       ${actionScene ? `<div class="wc-scene" aria-hidden="true">${actionScene}</div>` : picture ? `<div class="wc-picture" aria-hidden="true">${picture}</div>` : ""}
       <div class="gc-pattern" lang="en">${esc(item.master.displayWord)}</div>
       <p class="gc-lead">${esc(item.childMeaning)}</p>

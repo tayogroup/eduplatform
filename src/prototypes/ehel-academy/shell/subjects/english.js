@@ -13,6 +13,7 @@ import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
 import { coreWordScene } from "./english-core-word-scenes.js?v=scenes-1";
 import { createGameZone } from "./english-kid-games.js?v=kid-games-1";
+import { createPatternLab } from "./english-kid-grammar.js?v=kid-grammar-1";
 import { createSpeakingStudio } from "./english-kid-speaking.js?v=kid-speaking-1";
 import { cursiveWord, cursiveCanWrite } from "./cursive-strokes.js?v=cursive-1";
 import { SCHOOL_CALENDAR, calendarTerm, termDatesLabel, termWeekTotal, halfTermRow, formatDay } from "../study-plan.js?v=study-plan-2";
@@ -11231,8 +11232,13 @@ const DECK_INTROS = {
   dictionary: { title: "Say the words", steps: [["book-a", "One word at a time. Say each word out loud, then press “I know this word”."], DECK_STEP_LISTEN, DECK_STEP_NEXT] },
   reading: { title: "Read the story", steps: [["book-open", "One page at a time. Read it, or listen to it."], DECK_STEP_LISTEN, ["check", "On the last page, press “I have read this text”."]] },
   comprehension: { title: "Think about the story", steps: [["list-checks", "One question at a time. Say your answer, then press “Check guidance” to see a good answer."], DECK_STEP_NEXT, ["check", "On the last slide, press “Finish comprehension”."]] },
-  grammar: { title: "Say the patterns", steps: [["braces", "One pattern at a time. Say it out loud and try the practice."], DECK_STEP_LISTEN, ["check", "Go through every pattern to the last slide to finish."]] },
   writing: { title: "Plan, write and improve", steps: [["pencil-line", "One task at a time. Write your own sentences in the box — at least eight words."], ["send", "Press “Submit this draft” to save your writing."], DECK_STEP_NEXT] },
+  // "Try the practice" was true of a `<details>` a learner opened and read. The
+  // practice is now questions they answer on the slide, so the middle line says
+  // what to do with them — and it says the questions do not decide the tick,
+  // because a child who thinks a wrong answer costs them the section will stop
+  // answering rather than risk it.
+  grammar: { title: "Say the patterns", steps: [["braces", "One pattern at a time. Say it out loud, then answer the questions under it."], ["pencil", "Tap a word or write your answer. Getting one wrong costs you nothing — try again."], ["check", "Go through every pattern to the last slide to finish."]] },
   activities: { title: "Learn by doing", steps: [["shapes", "One activity at a time. Do each step, then tap its circle to tick it off."], ["pencil", "Write your answer on the line, or press “Draw it” to draw one."], ["check", "When every step is ticked, press “Mark complete”."]] },
 };
 const deckIntro = (id) => DECK_INTROS[id] || null;
@@ -12716,9 +12722,84 @@ function renderGrammarClassic() {
 // style): one language pattern per vibrant slide, big "Hear it" button, side
 // arrows, dots, swipe. Reaching the last slide completes the section.
 const GC_EMOJI = ["🔤", "👂", "🧩", "🗣️", "👀", "⭐", "🌈", "🎈"];
+
+// --- the Grades 1-4 Pattern Lab ----------------------------------------------
+// Owner, 2026-09-01: the grammar practice was a paragraph behind a `<details>`
+// with the answers printed on the end of it, so the one part of the section
+// where a child does something was folded shut and self-marked. english-kid-
+// grammar.js turns that same authored string into the exercises it describes.
+//
+// Only the PRACTICE block of a slide changes. The pattern, the picture, the
+// rule, the Hear it buttons, the deck, and — the part that matters — the way
+// this section is completed are all exactly as they were: reaching the last
+// slide finishes it, and nothing the lab does can gate `grammar`, which gates
+// the rest of the unit through SECTION_CHAIN.
+//
+// It is built lazily and keyed on the course, so a learner moving between units
+// gets that unit's practice rather than a lab still holding the last one's.
+// Grades 5-8 never construct it: renderGrammarClassic is their renderer, and a
+// tutoring learner at 1-4 is on the classic page too (DECK_PAGE), which is the
+// documented "the original page, at every stage" exemption and is untouched here.
+let patternLabInstance = null;
+let patternLabCourse = null;
+function patternLab() {
+  if (patternLabInstance && patternLabCourse === course) return patternLabInstance;
+  patternLabCourse = course;
+  patternLabInstance = createPatternLab({
+    grade: gradeNumber,
+    escapeHtml, icon, icons, toast,
+    wordPicture: (word) => wordPicture(word, gradeNumber),
+    soundOn: () => audioEnabled,
+    // The runtime voice, for the Grade 1 sentence a child has just built out of
+    // tiles. Same helper the Game Park speaks through, so there is one paid
+    // voice path at these grades rather than two.
+    speak: (text, button) => playGameInstruction(text, button),
+    // english.js owns the answer-key pattern (check-english-content.mjs reads
+    // the declaration out of this file by name) and the worksheet already reads
+    // practice strings through these three; the lab is handed them rather than
+    // holding a fourth copy of the same rules.
+    practice: {
+      split: splitGrammarPractice,
+      strip: stripGrammarAnswerKey,
+      take: takeGrammarAnswerKey,
+      marker: grammarAnswerKeyMarker,
+    },
+    // "Next pattern" on the practice's own finish card. The deck is mounted
+    // after the lab is built and re-mounted on every render of the section, so
+    // this reads `activeDeck` at press time rather than closing over a deck
+    // that may since have been replaced.
+    goNext: () => activeDeck?.goTo(activeDeck.index + 1),
+    stateFor: (id) => (progress.grammarPractice || {})[id] || {},
+    saveState: (id, state) => {
+      progress.grammarPractice ||= {};
+      progress.grammarPractice[id] = state;
+      saveProgress();
+    },
+  });
+  return patternLabInstance;
+}
+
+// The practice, as something to do. The lab returns "" for a lesson whose
+// practice string it could not turn into questions at all — an oral Grade 1
+// task it could not read, a practice field that is empty — and that is the one
+// case where the old `<details>` is still the right answer: the text exists, it
+// is addressed to the learner, and showing nothing would lose it. So the
+// fallback is the original block, unchanged, rather than a blank slide.
+function practiceHtml(lesson, lab) {
+  if (!lesson.practice) return "";
+  const audio = lesson.practiceAudio?.available
+    ? `<button class="gc-btn ghost small" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>`
+    : "";
+  const panel = lab.panelHtml(lesson);
+  if (panel) return `${panel}${audio ? `<div class="gc-actions">${audio}</div>` : ""}`;
+  return `<details class="gc-practice"><summary>Show practice</summary><p class="gc-note gc-try">${escapeHtml(lesson.practice)}</p>${audio}</details>`;
+}
+
 function renderGrammarCarousel() {
   const lessons = course.grammar;
   const esc = escapeHtml;
+  const lab = patternLab();
+  const lessonById = (id) => lessons.find((item) => item.grammarId === id);
   // Every field the grid workshop shows is preserved — only the layout changes:
   // title, the S/V/O diagram, explanation, the rule (ruleAndExamples), the
   // common-mistake teacher note, the memory tip, the practice, audio + source.
@@ -12744,21 +12825,27 @@ function renderGrammarCarousel() {
       ${lesson.audio?.available ? `<small class="gc-source">ElevenLabs · approved Ehel voice · ${AI_NARRATION_RATE_LABEL}</small>` : ""}
       ${lesson.commonMistake ? `<p class="gc-note gc-mistake">${esc(lesson.commonMistake)}</p>` : ""}
       ${lesson.memoryTip ? `<p class="gc-note"><span class="field-label">Memory tip:</span> ${esc(lesson.memoryTip)}</p>` : ""}
-      ${lesson.practice ? `<details class="gc-practice"><summary>Show practice</summary><p class="gc-note gc-try">${esc(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="gc-btn" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>` : ""}
+      ${practiceHtml(lesson, lab)}
     </div></section>`;
   });
 
   const finish = () => { if (!progress.completed.includes("grammar")) complete("grammar", "Grammar patterns complete. Well done!"); };
-  mountDeck({
+  const deck = mountDeck({
     heading: "Say the patterns",
     label: "Pattern",
     intro: deckIntro("grammar"),
     finish: ["grammar", `I practised all ${lessons.length} lessons`],
     slides,
     // Reaching the last slide is the completion: a learner who swiped through
-    // every pattern has done the section, button or no button.
+    // every pattern has done the section, button or no button. UNCHANGED by the
+    // Pattern Lab, deliberately — the practice is practice, and `grammar` gates
+    // the rest of the unit, so a child who gets a question wrong must not lose
+    // Speaking, Writing and the Quiz behind it.
     onSlide: (index) => { if (index === slides.length - 1) finish(); },
     onClick: (event) => {
+      // The lab's own controls first: it repaints its panel in place, so its
+      // buttons are replaced on every tap and can only be reached by delegation.
+      if (lab.handle(event, lessonById)) return undefined;
       const target = event.target.closest("[data-grammar-audio], [data-practice-audio], [data-deck-finish]");
       if (!target) return undefined;
       if (target.dataset.deckFinish) return finish();
@@ -12772,6 +12859,10 @@ function renderGrammarCarousel() {
       return playAudio(lesson.practiceAudio.source, { rate: AI_NARRATION_RATE, button: target });
     },
   });
+  // Enter checks an answer, and what is typed is saved as it is typed. Bound to
+  // the deck's root once, for the same reason the clicks are delegated: the
+  // panel a learner is typing in is replaced the moment they press Check.
+  lab.bindKeys(deck.root, lessonById);
 }
 
 // --- the Grades 1-4 Speaking Studio -------------------------------------------
@@ -16033,6 +16124,18 @@ const takeGrammarAnswerKey = (piece) => {
   const found = piece.match(GRAMMAR_ANSWER_KEY);
   return found ? piece.slice(found.index).trim() : "";
 };
+// The MARKER ITSELF — "Check yourself:", "Self-check:", "Answers, Part A:" — as
+// the pattern matched it. The Pattern Lab (english-kid-grammar.js) needs to take
+// the marker off the front of a key before reading the answers out of it, and
+// the only thing that knows how long a marker is, is the pattern that found it.
+// Cutting at "the first colon or dash" instead was tried and is wrong on the
+// commonest wording in the content: "Self-check" contains a dash, so it leaves
+// "check:" behind, and in a comma-separated key "check: a spiral staircase"
+// becomes the answer to question one. The lab is handed this rather than
+// carrying a second copy of GRAMMAR_ANSWER_KEY, which would be a second thing to
+// keep in step — and check-english-content.mjs reads this declaration out of
+// THIS file by name, so the pattern must stay here.
+const grammarAnswerKeyMarker = (piece) => (String(piece).match(GRAMMAR_ANSWER_KEY) || [""])[0];
 
 // A gap-fill wants one line to answer on; an open task wants room to write. The
 // prompt's own shape decides, which is a proxy but a legible one — 647 of the 981

@@ -339,7 +339,11 @@ const sections = [
   // tells a learner working alone that the explainer belongs to someone else.
   // Computing and Global Perspectives made the same rename for the same reason.
   ["lecture", "play-square", "Video lesson"],
-  ["dictionary", "book-a", "Vocabulary"],
+  // "Core words" rather than "Vocabulary" (owner, 2026-08-28). Renamed HERE and
+  // nowhere else for the nav: sectionLabel() and navLabelOf() both read this row,
+  // so the nav entry, the completion card, the locked message, the section guide
+  // and the screen-reader announcement move together and cannot disagree.
+  ["dictionary", "book-a", "Core words"],
   ["reading", "book-open", "Reading & story"],
   ["comprehension", "list-checks", "Comprehension"],
   ["grammar", "braces", "Grammar"],
@@ -537,7 +541,7 @@ const SECTION_GUIDES = {
         "Read the four steps under “How to learn” — that is how you will work in this unit.",
         "Press “I have previewed this unit”, then “Open vocabulary” to go on.",
       ],
-      finish: "This section is marked complete once the video lesson is ready. For now, read the preview and go on to Vocabulary.",
+      finish: "This section is marked complete once the video lesson is ready. For now, read the preview and go on to Core words.",
     }),
   dictionary: () => {
     const total = course.dictionaryLinks.length;
@@ -551,7 +555,7 @@ const SECTION_GUIDES = {
         "When you know the word, press “I know this word”. It gets a LEARNED tag in the list.",
         "Do this for every word. Click the next word in the word list on the left until you have learned all the words.",
       ],
-      finish: "Vocabulary is finished when you have learned all the words and marked each one as known.",
+      finish: "You finish Core words when you have learned all the words and marked each one as known.",
     };
   },
   reading: () => {
@@ -6988,7 +6992,7 @@ function renderDictionaryClassic() {
   // The lab LISTS every word and COMPLETES on the taught ones (see taughtWords).
   const taught = taughtWords();
   activeWordId = activeWordId || words[0].vocabularyId;
-  $("#app").innerHTML = `${pageHeader("Linked master dictionary", "Vocabulary lab", `Search the ${gradeLabel} sub-dictionary. Every word links to one reusable master entry and approved pronunciation.`, `${dictionary.entryCount} master entries`)}
+  $("#app").innerHTML = `${pageHeader("Linked master dictionary", "Core words", `Search the ${gradeLabel} sub-dictionary. Every word links to one reusable master entry and approved pronunciation.`, `${dictionary.entryCount} master entries`)}
     <div class="toolbar"><label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search dictionary"></label><select id="group-filter" aria-label="Filter vocabulary group"><option value="all">All vocabulary groups</option>${course.vocabularyGroups.map((group) => `<option value="${group.id}">${escapeHtml(group.title)}</option>`).join("")}</select><span id="dictionary-count" class="status-chip">${words.length} words</span></div>
     <div class="dictionary-layout"><section class="panel word-list" id="word-list"></section><section class="panel word-card" id="word-card"></section></div>`;
   const drawList = () => {
@@ -7275,17 +7279,22 @@ function renderWordCarousel() {
   // the two would tie a vocabulary decision to a handwriting one.
   const DECK_TEACHES_TAUGHT_ONLY = gradeNumber <= 4;
   let words = DECK_TEACHES_TAUGHT_ONLY ? taught : allWords;
-  // The section is named for what it teaches. Where every taught word sits in
-  // one group that group's own title IS the section — "Core words" at Grade 1 —
-  // and a generic heading above it would be the third place the learner is told
-  // nothing. Where the taught words span several groups there is no one name to
-  // use, so the generic heading stands.
+  // The deck is headed by the SECTION'S OWN NAME, read from the nav table, so
+  // the heading and the entry the learner clicked can never be two names for one
+  // thing — the rule navLabelOf() already keeps for the resource cards.
+  //
+  // It used to derive the heading from the taught group's title where there was
+  // exactly one, and fall back to a generic "Say the words". That was right while
+  // the section was called Vocabulary and only Grade 1 had a group called Core
+  // words; the moment the nav was renamed (owner, 2026-08-28) it left Grade 2
+  // reading "Core words" in the nav and "Say the words" on the page it opened.
   const taughtGroups = [...new Set(taught.map((item) => item.groupTitle).filter(Boolean))];
   // Naming the section after its one taught group only makes sense where the
   // deck IS that group. Off the gate the deck still walks the glossary too, so
   // the group's title would be a name for a third of what is on screen.
+  // Still gates the group filter: a dropdown offering one option is furniture.
   const namedDeck = DECK_TEACHES_TAUGHT_ONLY && taughtGroups.length === 1;
-  const deckHeading = namedDeck ? taughtGroups[0] : "Say the words";
+  const deckHeading = sectionLabel("dictionary");
 
   const wordSlide = (item, index) => {
     const sentences = shownSentences(item);
@@ -7389,7 +7398,7 @@ function renderWordCarousel() {
       // used to complete the section outright, which let a learner swipe to the
       // end and take the tick with no word marked. Now it names what is left.
       if (target.dataset.deckFinish) {
-        if (allWordsKnown(taught)) return complete("dictionary", "Vocabulary complete. Well done!");
+        if (allWordsKnown(taught)) return complete("dictionary", "Core words complete. Well done!");
         const left = taught.length - learnedTaught();
         return toast(`Mark every new word with “I know this word” first — ${left} to go.`);
       }
@@ -12464,7 +12473,7 @@ function studentResourceCards() {
     // the words it cannot describe — which is most of them by Grade 8, where the
     // vocabulary is abstract. One wording for all eight grades, because it is
     // true at all eight.
-    { route: "dictionary", iconName: "book-a", title: navLabelOf("dictionary", "Vocabulary"), blurb: "Every new word in this unit, with a picture where there is one, its meaning and a voice to listen to." },
+    { route: "dictionary", iconName: "book-a", title: navLabelOf("dictionary", "Core words"), blurb: "Every new word in this unit, with a picture where there is one, its meaning and a voice to listen to." },
     // The grade's whole word list, and always open — unlike the card above,
     // which is this unit's words and locks with the section. Looking a word up
     // is the case the unit page cannot serve: a learner who half-remembers a

@@ -101,8 +101,13 @@ function shows(sentence, word) {
   // The hyphen is written as optional so "self-control" and "self control" both
   // count; the word is not spelled without it, but a sentence should not fail on
   // a space.
-  if (/-/.test(word)) {
-    const parts = word.split("-").map((p) => p.replace(/[^a-z]/gi, ""));
+  // A displayWord can carry a SPACE for the same reason ("thank you" for the
+  // headword stored `thankyou`), and the catch-all strip below would collapse
+  // it back to the solid form this branch exists to escape — so a spaced word
+  // takes the hyphen path too, and "thank you", "thank-you" and "thankyou"
+  // all count.
+  if (/[-\s]/.test(word)) {
+    const parts = word.split(/[-\s]+/).map((p) => p.replace(/[^a-z]/gi, ""));
     const joined = parts.join("[- ]?");
     if (new RegExp(`\\b${joined}(?:s|ed|ing)?\\b`, "i").test(sentence)) return true;
     // A hyphenated verb ending in a silent e drops it before -ed and -ing, exactly as
@@ -208,7 +213,15 @@ for (const unit of draft.units) {
     const within = new Set();
     sentences.forEach((s, i) => {
       const n = i + 1;
-      if (!shows(s, w.word)) bad.push(`sentence ${n} never uses "${w.word}": ${s}`);
+      // A headword stored solid can be WRITTEN as two words: `thankyou` is
+      // displayed and spoken as "thank you", so no natural sentence can ever
+      // contain the stored form. The authored displayWord is the form the child
+      // actually reads — accept it as an occurrence. Same shape as the -ies and
+      // -ae rules in shows(): a form the rule was not told about reads as an
+      // absence of the word. Grade 1 set the precedent (authored `thankyou`
+      // carries displayWord "thank you"); this only honours it.
+      if (!shows(s, w.word) && !(a?.displayWord && shows(s, a.displayWord)))
+        bad.push(`sentence ${n} never uses "${w.word}": ${s}`);
       if (s.length > MAX_SENTENCE) bad.push(`sentence ${n} is ${s.length} chars (max ${MAX_SENTENCE}): ${s}`);
       if (s.trim().split(/\s+/).length > MAX_WORDS) bad.push(`sentence ${n} is over ${MAX_WORDS} words: ${s}`);
       if (!/^["'“]?[A-Z]/.test(s)) bad.push(`sentence ${n} does not start with a capital: ${s}`);

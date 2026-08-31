@@ -303,8 +303,23 @@ for (const cu of core.units) {
   // that rule is about the word, not about which id happened to be recycled.
   const coreWordsHere = new Set(links.map((l) => String(l.masterWord).toLowerCase()));
   const alsoTaught = (l) => coreWordsHere.has(String(l.masterWord).toLowerCase());
+  // A link sitting in a CORE group whose word is no longer in this grade's plan
+  // is a word the plan moved to another grade. The core-group exclusion below
+  // exists so a rerun does not displace its own output — but that exclusion
+  // silently DELETED these: the link is in a core group, so it is neither
+  // rebuilt (its word is not in the plan) nor kept as glossary. The readings
+  // that taught the word still use it, so it belongs in the story glossary,
+  // exactly where a pre-restructure taught word goes. Grade 1 only escaped
+  // because its one-group repair had renamed the group ids, which made its old
+  // links `oldTaught`; Grade 2 kept the plan ids and lost all 248 departed
+  // words — found by the games gate quizzing `lonely` against a meaning no
+  // link in the unit carried any more.
+  const planWordsGrade = new Set(
+    core.units.flatMap((u) => u.groups.flatMap((g) => g.words.map((w) => String(w).toLowerCase()))));
+  const departed = (l) =>
+    coreIds.has(l.groupId) && !planWordsGrade.has(String(l.masterWord).toLowerCase());
   const displaced = doc.dictionaryLinks.filter(
-    (l) => oldIds.has(l.groupId) && !claimedIds.has(l.vocabularyId) && !alsoTaught(l));
+    (l) => (oldIds.has(l.groupId) || departed(l)) && !claimedIds.has(l.vocabularyId) && !alsoTaught(l));
   // A rerun must not carry its own core links into the glossary either: they are
   // rebuilt from core-words.json above, so drop anything already in a core group.
   const keptGlossary = doc.dictionaryLinks.filter(

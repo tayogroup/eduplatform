@@ -84,8 +84,8 @@ function face(mouth) {
   }`;
 }
 
-function head({ mouth = "smile", anim = "" } = {}) {
-  return `<g transform="translate(0 -47)"><g>${anim}<circle r="13.5" fill="${P.skin}"/><path d="M-13.5 -1.5 a13.5 13.5 0 0 1 27 0 z" fill="${P.hair}"/>${face(mouth)}</g></g>`;
+function head({ mouth = "smile", anim = "", hair = P.hair } = {}) {
+  return `<g transform="translate(0 -47)"><g>${anim}<circle r="13.5" fill="${P.skin}"/><path d="M-13.5 -1.5 a13.5 13.5 0 0 1 27 0 z" fill="${hair}"/>${face(mouth)}</g></g>`;
 }
 
 function arm(side, base, { anim = "", hold = "" } = {}) {
@@ -111,7 +111,7 @@ function kid({
   x = 0, y = 0, s = 1, shirt = P.blue, mouth = "smile",
   armLBase = 8, armRBase = -8, armLAnim = "", armRAnim = "",
   armLHold = "", armRHold = "", headAnim = "", bodyAnim = "",
-  legs = "stand", flip = false,
+  legs = "stand", flip = false, hair = P.hair,
 } = {}) {
   const legsHtml = legs === "hop" ? legsHop() : legs === "seated" ? legsSeated() : legsStanding();
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})"><g>${bodyAnim}
@@ -119,7 +119,7 @@ function kid({
     <rect x="-14" y="-37" width="28" height="31" rx="10" fill="${shirt}"/>
     ${arm("l", armLBase, { anim: armLAnim, hold: armLHold })}
     ${arm("r", armRBase, { anim: armRAnim, hold: armRHold })}
-    ${head({ mouth, anim: headAnim })}
+    ${head({ mouth, anim: headAnim, hair })}
   </g></g>`;
 }
 
@@ -1275,6 +1275,221 @@ SCENES.whisper = () => scene(`
   <g transform="translate(148 58)"><g>${fade(2.4, "0;1;1;0", 'keyTimes="0;0.2;0.8;1"')}<path d="M-18 -8 Q0 -16 18 -8" fill="none" stroke="${P.grey}" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/><circle cx="-8" cy="0" r="1.6" fill="${P.grey}"/><circle cx="0" cy="2" r="1.6" fill="${P.grey}"/><circle cx="8" cy="0" r="1.6" fill="${P.grey}"/></g></g>
   ${kid({ x: 108, y: 148, s: 1.1, shirt: P.purple, mouth: "o", armLBase: 12, armRBase: -125 })}
   ${kid({ x: 172, y: 148, s: 1.05, shirt: P.gold, flip: true, armLBase: 12, armRBase: -12, headAnim: rot(2.4, "8 0 -47;8 0 -47") })}`);
+
+// ============================================================ state verbs
+// The third tranche (owner, 2026-08-31): the 30 verbs the first two tranches
+// deliberately skipped. The genuinely MENTAL ones get the thought-bubble
+// convention — a cloud over the child's head showing what is in the mind, the
+// picture-book grammar every five-year-old already reads. The abstract ones
+// that are NOT mental (become, cause, happen, continue…) would be lied about
+// by a bubble, so they get event scenes instead: a caterpillar becomes a
+// butterfly, a finger causes the dominoes to fall, a balloon popping happens.
+// Only "beginning" and "pound" stay absent — suspect verb tags, not verbs.
+
+const thoughtBubble = (x, y, w, h, inner, anim = "") =>
+  `<g transform="translate(${x} ${y})"><g>${anim === "" ? fade(2.6, "0;1;1;0", 'keyTimes="0;0.15;0.85;1"') : anim}
+    <ellipse rx="${w / 2}" ry="${h / 2}" fill="${P.bubble}" stroke="${P.grey}" stroke-width="1.5"/>
+    <circle cx="${-w / 2 + 4}" cy="${h / 2 + 7}" r="4.2" fill="${P.bubble}" stroke="${P.grey}" stroke-width="1.4"/>
+    <circle cx="${-w / 2 - 4}" cy="${h / 2 + 16}" r="2.6" fill="${P.bubble}" stroke="${P.grey}" stroke-width="1.3"/>
+    ${inner}
+  </g></g>`;
+const heartShape = (x, y, s, color = P.red) => `<path d="M0 3 C-1 0 -6 -3 -6 -7 a3.6 3.6 0 0 1 6 -2.6 A3.6 3.6 0 0 1 6 -7 C6 -3 1 0 0 3 Z" fill="${color}" transform="translate(${x} ${y}) scale(${s})"/>`;
+const starShape = (x, y, s, color = P.gold) => `<path d="M0 -8 L2.2 -2.4 L8 -2 L3.6 1.8 L5 7.6 L0 4.4 L-5 7.6 L-3.6 1.8 L-8 -2 L-2.2 -2.4 Z" fill="${color}" transform="translate(${x} ${y}) scale(${s})"/>`;
+
+// like — a heart for the football in the mind.
+SCENES.like = () => scene(`${sun(38, 30)}
+  ${thoughtBubble(178, 58, 62, 38, `<g transform="translate(-10 2) scale(0.9)">${football(9)}</g>${heartShape(16, -2, 1.1)}`)}
+  ${kid({ x: 122, y: 148, s: 1.15, shirt: P.red, armLBase: 12, armRBase: -12 })}`);
+
+// want — the teddy on the shelf, and the same teddy in the bubble.
+SCENES.want = () => {
+  const teddy = `<g><circle cy="-6" r="6" fill="#c8965c"/><circle cx="-4.4" cy="-10.5" r="2.2" fill="#c8965c"/><circle cx="4.4" cy="-10.5" r="2.2" fill="#c8965c"/><ellipse cy="2.6" rx="7" ry="6" fill="#c8965c"/><circle cx="-1.8" cy="-7" r="0.9" fill="${P.line}"/><circle cx="1.8" cy="-7" r="0.9" fill="${P.line}"/></g>`;
+  return scene(`
+  <path d="M168 84 H236" stroke="${P.wood}" stroke-width="5" stroke-linecap="round"/>
+  <g transform="translate(206 82)">${teddy}</g>
+  ${thoughtBubble(96, 56, 54, 38, `<g transform="translate(0 2)">${teddy}</g>${sparkle(19, -10, 0.6, P.gold)}`)}
+  ${kid({ x: 138, y: 148, s: 1.15, shirt: P.purple, mouth: "o", armLBase: 12, armRBase: -65 })}`);
+};
+
+// hope — rain at the window, sunshine in the bubble.
+SCENES.hope = () => scene(`
+  ${[0, 1, 2].map((i) => `<path d="M${66 + i * 22} 48 l-4 12" stroke="${P.water}" stroke-width="2.4" stroke-linecap="round">${fade(0.9, "0;1;0", `begin="${-i * 0.3}s"`)}${shift(0.9, "0 0;0 20", `begin="${-i * 0.3}s"`)}</path>`).join("")}
+  ${thoughtBubble(182, 60, 58, 40, `<circle cy="0" r="9" fill="#ffd166"/>${[0, 45, 90, 135, 180, 225, 270, 315].map((a) => `<path d="M0 -13 V-16" stroke="#ffd166" stroke-width="2.4" stroke-linecap="round" transform="rotate(${a})"/>`).join("")}`)}
+  ${kid({ x: 122, y: 148, s: 1.15, shirt: P.teal, armLBase: 12, armRBase: -12, headAnim: rot(2.6, "-6 0 -47;4 0 -47;-6 0 -47") })}`);
+
+// know — the answer is already there, hand up and sure.
+SCENES.know = () => scene(`
+  <g transform="translate(84 84)"><rect x="-34" y="-30" width="68" height="48" rx="4" fill="#2f4f43"/><rect x="-38" y="-34" width="76" height="6" rx="3" fill="${P.wood}"/>${boardText("2 + 2 = ?", 13, "#fffdf5", -2)}</g>
+  ${thoughtBubble(196, 56, 44, 34, boardText("4", 20, P.green))}
+  ${kid({ x: 156, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: 12, armRBase: -160 })}`);
+
+// need — a hot day, and the one thing that matters is water.
+SCENES.need = () => scene(`${sun(38, 28)}
+  <path d="M148 74 q-3 5 0 8 q4 -3 0 -8 Z" fill="${P.water}">${fade(1.8, "0;1;0")}${shift(1.8, "0 0;0 8")}</path>
+  ${thoughtBubble(192, 58, 50, 38, `<path d="M-8 -10 L8 -10 L6 8 Q0 12 -6 8 Z" fill="${P.water}" stroke="#6fb3e0" stroke-width="1.4"/><path d="M-4 -13 L2 -22" stroke="${P.red}" stroke-width="2" stroke-linecap="round"/>`)}
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.red, mouth: "o", armLBase: 30, armRBase: -30 })}`);
+
+// think — a question mark becomes an idea.
+SCENES.think = () => scene(`
+  ${thoughtBubble(180, 56, 52, 40, `<g>${fade(3, "1;1;0;0;1", 'keyTimes="0;0.4;0.48;0.9;1"')}${bubbleText("?", 20)}</g><g opacity="0">${fade(3, "0;0;1;1;0", 'keyTimes="0;0.4;0.48;0.9;1"')}<circle cy="-2" r="7" fill="${P.gold}"/><path d="M-2.6 7 H2.6 M-1.8 10.4 H1.8" stroke="#d88f22" stroke-width="1.8" stroke-linecap="round"/></g>`, `${fade(3, "1;1")}`)}
+  ${kid({ x: 124, y: 148, s: 1.15, shirt: P.blue, armLBase: 12, armRBase: -108, headAnim: rot(3, "6 0 -47;6 0 -47") })}`);
+
+// agree — two minds with the very same picture in them.
+SCENES.agree = () => scene(`
+  ${thoughtBubble(78, 52, 42, 30, `<g transform="scale(0.75)">${football(9)}</g>`, fade(2.6, "1;1"))}
+  ${thoughtBubble(182, 52, 42, 30, `<g transform="scale(0.75)">${football(9)}</g>`, fade(2.6, "1;1"))}
+  <path d="M121 60 l5 6 l11 -13" fill="none" stroke="${P.green}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">${fade(2.6, "0;0;1;1", 'keyTimes="0;0.4;0.55;1"')}</path>
+  ${kid({ x: 94, y: 148, s: 1.1, shirt: P.teal, armLBase: 12, armRBase: -12, headAnim: rot(1.4, "-5 0 -47;5 0 -47;-5 0 -47") })}
+  ${kid({ x: 168, y: 148, s: 1.1, shirt: P.gold, flip: true, armLBase: 12, armRBase: -12, headAnim: rot(1.4, "-5 0 -47;5 0 -47;-5 0 -47") })}`);
+
+// annoy — the fly will not go away.
+SCENES.annoy = () => scene(`${sun(38, 30)}
+  <g><animateMotion path="M150 78 q20 -14 34 0 q-12 12 -34 8 q-20 -6 0 -8" dur="2.2s" repeatCount="indefinite"/><ellipse rx="3.4" ry="2.4" fill="${P.line}"/><ellipse cx="-1" cy="-2.4" rx="2.2" ry="1.4" fill="#9fb4c4" transform="rotate(-30)"/><ellipse cx="1" cy="-2.4" rx="2.2" ry="1.4" fill="#9fb4c4" transform="rotate(30)"/></g>
+  <path d="M118 96 l4 -3 M132 96 l-4 -3" stroke="${P.line}" stroke-width="1.8" stroke-linecap="round"/>
+  ${kid({ x: 125, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: 12, armRBase: -120, armRAnim: rot(0.5, "-16 0 0;16 0 0;-16 0 0") })}`);
+
+// believe — held to the heart, and true.
+SCENES.believe = () => scene(`${sun(38, 30)}
+  ${thoughtBubble(184, 56, 52, 38, `${starShape(-6, 0, 1)}<path d="M6 2 l4 5 l9 -11" fill="none" stroke="${P.green}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`)}
+  ${kid({ x: 126, y: 148, s: 1.15, shirt: P.purple, armLBase: 12, armRBase: -68 })}`);
+
+// dare — the big step, and the self in the bubble already up there.
+SCENES.dare = () => scene(`
+  ${boxProp(188, 148, 56, 44, P.grey, `<path d="M-28 -44 H28" stroke="#7c8a97" stroke-width="2"/>`)}
+  ${thoughtBubble(92, 52, 56, 40, `<g transform="translate(0 12) scale(0.5)">${kid({ x: 0, y: 0, s: 1, shirt: P.red, mouth: "o", armLBase: 145, armRBase: -145 })}</g>${sparkle(20, -10, 0.55, P.gold)}`)}
+  ${kid({ x: 128, y: 148, s: 1.15, shirt: P.red, mouth: "o", armLBase: 25, armRBase: -25, bodyAnim: shift(1.4, "0 0;0 -3;0 0") })}`);
+
+// decide — two choices in one bubble, and the tick lands on one.
+SCENES.decide = () => scene(`
+  ${thoughtBubble(178, 58, 74, 44, `<path d="M0 -16 V16" stroke="${P.grey}" stroke-width="1.4" stroke-dasharray="3 3"/><g transform="translate(-17 2)"><circle r="8" fill="${P.red}"/><path d="M0 -8 Q1 -11 3 -12" fill="none" stroke="${P.green}" stroke-width="1.8" stroke-linecap="round"/></g><g transform="translate(17 0)"><circle cy="2" r="7" fill="${P.gold}"/><circle cx="-2" cy="0" r="1" fill="#8a5a33"/><circle cx="3" cy="4" r="1" fill="#8a5a33"/></g><path d="M-24 12 l4 5 l9 -11" fill="none" stroke="${P.green}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${fade(2.8, "0;0;1;1", 'keyTimes="0;0.5;0.65;1"')}</path>`, fade(2.8, "1;1"))}
+  ${kid({ x: 116, y: 148, s: 1.15, shirt: P.teal, armLBase: 12, armRBase: -108 })}`);
+
+// enjoy — on the swing, and loving every bit of it.
+SCENES.enjoy = () => scene(`
+  <path d="M96 44 L86 148 M164 44 L174 148" stroke="${P.wood}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M76 46 H184" stroke="${P.wood}" stroke-width="6" stroke-linecap="round"/>
+  <g transform="translate(130 48)"><g>${rot(2.2, "-14 0 0;14 0 0;-14 0 0")}<path d="M-14 0 V72 M14 0 V72" stroke="#8a6a48" stroke-width="2.6"/><rect x="-20" y="70" width="40" height="7" rx="3" fill="${P.wood}"/><g transform="translate(0 62)">${kid({ x: 0, y: 0, s: 0.95, shirt: P.gold, mouth: "o", legs: "seated", armLBase: -55, armRBase: 55 })}</g></g></g>
+  ${[0, 1].map((i) => `<g transform="translate(${186 + i * 16} ${76 - i * 14})">${heartShape(0, 0, 0.8 - i * 0.2)}<animate attributeName="opacity" values="0;1;0" dur="1.8s" begin="${-i * 0.9}s" repeatCount="indefinite"/></g>`).join("")}`);
+
+// happen — pop! Something just took place.
+SCENES.happen = () => scene(`${sun(38, 30)}
+  <g>${fade(2.4, "1;1;0;0;1", 'keyTimes="0;0.42;0.47;0.94;1"')}<g transform="translate(168 84)"><g>${shift(2.4, "0 0;0 -5;0 0")}<ellipse rx="16" ry="19" fill="${P.red}"/><path d="M0 19 L-3 25 H3 Z" fill="${P.red}"/><path d="M0 25 Q4 40 0 56" fill="none" stroke="${P.grey}" stroke-width="1.6"/></g></g></g>
+  <g opacity="0">${fade(2.4, "0;0;1;1;0", 'keyTimes="0;0.42;0.47;0.94;1"')}<g transform="translate(168 84)">${[0, 45, 90, 135, 180, 225, 270, 315].map((a) => `<path d="M0 -10 L0 -20" stroke="${P.red}" stroke-width="3" stroke-linecap="round" transform="rotate(${a})"/>`).join("")}${bubbleText("POP!", 13)}</g></g>
+  ${kid({ x: 104, y: 148, s: 1.15, shirt: P.blue, mouth: "o", armLBase: 12, armRBase: -55 })}`);
+
+// imagine — a castle and a dragon, conjured out of nothing.
+SCENES.imagine = () => scene(`
+  ${thoughtBubble(168, 60, 96, 52, `
+    <g transform="translate(-24 6)"><rect x="-12" y="-12" width="24" height="16" fill="#c9b8e8"/><rect x="-16" y="-20" width="8" height="24" fill="#b39fdc"/><rect x="8" y="-20" width="8" height="24" fill="#b39fdc"/><path d="M-16 -20 L-12 -27 L-8 -20 Z M8 -20 L12 -27 L16 -20 Z" fill="${P.purple}"/><rect x="-3" y="-4" width="6" height="8" fill="#6f54a3"/></g>
+    <g transform="translate(24 -6)"><g>${shift(1.6, "0 0;0 -4;0 0")}<path d="M-10 2 Q0 -6 10 2 Q4 6 -2 5 Q-7 6 -10 2 Z" fill="${P.green}"/><circle cx="9" cy="-1" r="4" fill="${P.green}"/><path d="M12 -2 q4 0 5 3 q-3 1 -5 -1 Z" fill="${P.red}"/><circle cx="10" cy="-2" r="1" fill="${P.line}"/><path d="M-2 -3 Q-6 -12 2 -10 Z" fill="#8fce9d"/></g></g>`, fade(3, "1;1"))}
+  ${kid({ x: 108, y: 148, s: 1.15, shirt: P.purple, armLBase: 12, armRBase: -12, headAnim: rot(3, "-4 0 -47;6 0 -47;-4 0 -47") })}`);
+
+// promise — pinkies linked; it will surely be done.
+SCENES.promise = () => scene(`${sun(38, 30)}
+  ${heartShape(130, 66, 1.2)}
+  <path d="M118 96 Q130 88 142 96" fill="none" stroke="${P.skin}" stroke-width="6.5" stroke-linecap="round"/>
+  ${kid({ x: 102, y: 148, s: 1.1, shirt: P.red, armLBase: 12, armRBase: -78 })}
+  ${kid({ x: 158, y: 148, s: 1.1, shirt: P.teal, flip: true, armLBase: 12, armRBase: -78 })}`);
+
+// remember — yesterday's birthday cake, still there in the mind.
+SCENES.remember = () => scene(`
+  ${thoughtBubble(180, 58, 66, 44, `
+    <g opacity="0.75"><rect x="-16" y="-2" width="32" height="14" rx="3" fill="#d8c4a8"/><rect x="-13" y="-9" width="26" height="8" rx="2" fill="#c9ab88"/>${[-8, 0, 8].map((cx) => `<path d="M${cx} -9 V-14" stroke="#a98f6f" stroke-width="1.8"/><circle cx="${cx}" cy="-15.4" r="1.6" fill="${P.gold}"/>`).join("")}</g>
+    <g transform="translate(23 -13)"><circle r="6" fill="none" stroke="${P.grey}" stroke-width="1.6"/><path d="M0 0 V-3.6 M0 0 H2.6" stroke="${P.grey}" stroke-width="1.4" stroke-linecap="round"/></g>`, fade(3, "1;1"))}
+  ${kid({ x: 116, y: 148, s: 1.15, shirt: P.gold, armLBase: 12, armRBase: -108, headAnim: rot(3, "5 0 -47;5 0 -47") })}`);
+
+// understand — the light goes on, and it is right.
+SCENES.understand = () => scene(`
+  <g transform="translate(80 84)"><rect x="-32" y="-28" width="64" height="46" rx="4" fill="#2f4f43"/><rect x="-36" y="-32" width="72" height="6" rx="3" fill="${P.wood}"/>${boardText("2 + 2 = 4", 11, "#fffdf5", -2)}</g>
+  ${thoughtBubble(196, 56, 50, 38, `<g>${fade(2.8, "0;0;1;1", 'keyTimes="0;0.35;0.5;1"')}<circle cy="-3" r="7.5" fill="${P.gold}"/><path d="M-2.8 6.5 H2.8 M-2 10 H2" stroke="#d88f22" stroke-width="1.8" stroke-linecap="round"/><path d="M10 4 l3.4 4 l7 -9" fill="none" stroke="${P.green}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>`, fade(2.8, "1;1"))}
+  ${kid({ x: 152, y: 148, s: 1.15, shirt: P.green, armLBase: 12, armRBase: -12 })}`);
+
+// accept — a yes, a nod, and the gift is taken.
+SCENES.accept = () => scene(`${sun(38, 30)}
+  <g transform="translate(130 92)">${boxProp(0, 10, 24, 18, P.teal, `<path d="M-12 -9 H12 M0 -18 V0" stroke="${P.gold}" stroke-width="2.4"/>`)}</g>
+  <path d="M170 62 l5 6 l10 -12" fill="none" stroke="${P.green}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">${fade(2.4, "0;0;1;1", 'keyTimes="0;0.4;0.55;1"')}</path>
+  ${kid({ x: 96, y: 148, s: 1.1, shirt: P.purple, armLBase: 12, armRBase: -82 })}
+  ${kid({ x: 172, y: 148, s: 1.1, shirt: P.gold, flip: true, armLBase: 12, armRBase: -82, headAnim: rot(1.2, "-6 0 -47;6 0 -47;-6 0 -47") })}`);
+
+// become — the caterpillar becomes a butterfly.
+SCENES.become = () => scene(`${sun(38, 30)}
+  <path d="M96 152 Q108 118 100 96 M100 118 Q112 114 118 106" fill="none" stroke="${P.green}" stroke-width="4" stroke-linecap="round"/>
+  <g>${fade(3.4, "1;1;0;0;1", 'keyTimes="0;0.38;0.45;0.93;1"')}<g transform="translate(150 142)">${[0, 1, 2, 3].map((i) => `<circle cx="${i * 9}" cy="${-Math.sin(i * 1.1) * 3}" r="5.5" fill="${P.green}"/>`).join("")}<circle cx="-7" cy="-2" r="6" fill="#8fce9d"/><circle cx="-9" cy="-4" r="1" fill="${P.line}"/><path d="M-9 -9 l-2 -4 M-5 -9 l1 -4" stroke="${P.line}" stroke-width="1.2" stroke-linecap="round"/></g></g>
+  <g opacity="0">${fade(3.4, "0;0;1;1;0", 'keyTimes="0;0.38;0.45;0.93;1"')}<g transform="translate(160 100)"><g>${shift(1.4, "0 0;0 -6;0 0")}<ellipse cx="-8" cy="0" rx="9" ry="12" fill="${P.purple}" transform="rotate(20)"><animateTransform attributeName="transform" type="rotate" values="0;26;0" dur="0.4s" repeatCount="indefinite" additive="sum"/></ellipse><ellipse cx="8" cy="0" rx="9" ry="12" fill="${P.gold}" transform="rotate(-20)"><animateTransform attributeName="transform" type="rotate" values="0;-26;0" dur="0.4s" repeatCount="indefinite" additive="sum"/></ellipse><rect x="-1.6" y="-9" width="3.2" height="18" rx="1.6" fill="${P.line}"/><path d="M-1 -9 q-2 -5 -5 -6 M1 -9 q2 -5 5 -6" fill="none" stroke="${P.line}" stroke-width="1.2" stroke-linecap="round"/></g></g></g>`);
+
+// belong — the teddy's own basket, marked with its own picture.
+SCENES.belong = () => scene(`
+  <g transform="translate(178 148)"><path d="M-22 0 H22 L16 -22 H-16 Z" fill="${P.wood}" transform="scale(1 -1)"/><rect x="-11" y="-19" width="22" height="14" rx="2" fill="#fffdf5"/><g transform="translate(0 -12) scale(0.55)"><circle cy="-6" r="6" fill="#c8965c"/><circle cx="-4.4" cy="-10.5" r="2.2" fill="#c8965c"/><circle cx="4.4" cy="-10.5" r="2.2" fill="#c8965c"/><ellipse cy="2.6" rx="7" ry="6" fill="#c8965c"/></g></g>
+  <g transform="translate(112 92)"><g>${shift(2.8, "0 0;62 30;66 44", 'keyTimes="0;0.5;0.62"')}${fade(2.8, "1;1;0", 'keyTimes="0;0.56;0.66"')}<circle cy="-6" r="6" fill="#c8965c"/><circle cx="-4.4" cy="-10.5" r="2.2" fill="#c8965c"/><circle cx="4.4" cy="-10.5" r="2.2" fill="#c8965c"/><ellipse cy="2.6" rx="7" ry="6" fill="#c8965c"/><circle cx="-1.8" cy="-7" r="0.9" fill="${P.line}"/><circle cx="1.8" cy="-7" r="0.9" fill="${P.line}"/></g></g>
+  ${heartShape(206, 106, 1, P.red)}
+  ${kid({ x: 84, y: 148, s: 1.05, shirt: P.teal, armLBase: 12, armRBase: -80 })}`);
+
+// cause — one small push makes all of them fall.
+SCENES.cause = () => scene(`
+  ${[0, 1, 2, 3].map((i) => `<g transform="translate(${138 + i * 26} 148)"><g>${rot(3, `0 0 0;0 0 0;72 8 0;72 8 0`, `keyTimes="0;${(0.25 + i * 0.09).toFixed(2)};${(0.36 + i * 0.09).toFixed(2)};1"`)}<rect x="-6" y="-38" width="14" height="38" rx="3" fill="${[P.red, P.gold, P.teal, P.purple][i]}"/></g></g>`).join("")}
+  ${kid({ x: 96, y: 148, s: 1.1, shirt: P.blue, mouth: "o", armLBase: 12, armRBase: -78, armRAnim: rot(3, "-14 0 0;8 0 0;8 0 0;-14 0 0", 'keyTimes="0;0.25;0.6;1"') })}`);
+
+// continue — up the stairs, and keep on going.
+SCENES.continue = () => scene(`
+  ${[0, 1, 2, 3].map((i) => `<rect x="${118 + i * 30}" y="${148 - (i + 1) * 22}" width="30" height="${(i + 1) * 22 + 4}" fill="${i % 2 ? "#c8d8c2" : "#bccfb6"}"/>`).join("")}
+  <path d="M226 48 H244 M238 42 l7 6 l-7 6" fill="none" stroke="${P.green}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <g>${shift(3, "-28 22;-28 22;2 0;2 0;30 -22", 'keyTimes="0;0.15;0.45;0.6;1"')}${fade(3, "1;1;1;1;0", 'keyTimes="0;0.8;0.9;0.96;1"')}
+    ${kid({ x: 132, y: 122, s: 0.95, shirt: P.gold, armLBase: 25, armRBase: -25, bodyAnim: shift(0.5, "0 0;0 -2;0 0") })}
+  </g>`);
+
+// forgive — the toy broke, and the hug still happens.
+SCENES.forgive = () => scene(`
+  <g transform="translate(130 144)"><path d="M-8 0 L-2 -6 M2 -4 L8 0" stroke="${P.wood}" stroke-width="4" stroke-linecap="round"/></g>
+  ${heartShape(130, 58, 1.3, P.red)}
+  <g>${shift(3, "-12 0;0 0;0 0", 'keyTimes="0;0.4;1"')}${kid({ x: 112, y: 148, s: 1.1, shirt: P.red, armLBase: 12, armRBase: -85 })}</g>
+  <g>${shift(3, "12 0;0 0;0 0", 'keyTimes="0;0.4;1"')}${kid({ x: 150, y: 148, s: 1.1, shirt: P.teal, flip: true, armLBase: 12, armRBase: -85 })}</g>`);
+
+// improve — the wobbly letter grows up into a neat one.
+SCENES.improve = () => boardScene(`<text x="-22" y="4" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="20" fill="${P.grey}" transform="rotate(-8 -22 0)">a</text><path d="M-6 -2 H6 M2 -6 L8 -2 L2 2" fill="none" stroke="${P.line}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 -1)"/><g>${fade(2.8, "0;0;1;1", 'keyTimes="0;0.4;0.55;1"')}${boardText("a", 24, P.green, 4).replace('x="0"', 'x="22"')}${starShape(22, -18, 0.55)}</g>`, { shirt: P.gold });
+
+// manage — a wobbly armful of books, safely held after all.
+SCENES.manage = () => scene(`${sun(38, 30)}
+  <g>${rot(2.6, "-3 130 148;3 130 148;-3 130 148")}
+    ${kid({ x: 130, y: 148, s: 1.15, shirt: P.green, mouth: "o", armLBase: -58, armRBase: 58 })}
+    <g transform="translate(130 116)">${[[0, P.red], [-12, P.gold], [-24, P.teal], [-36, P.purple]].map(([dy, c]) => `<rect x="-16" y="${dy - 10}" width="32" height="10" rx="2" fill="${c}"/>`).join("")}</g>
+  </g>
+  <path d="M186 70 l5 6 l10 -12" fill="none" stroke="${P.green}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">${fade(2.6, "0;0;1;1", 'keyTimes="0;0.5;0.65;1"')}</path>`);
+
+// notice — the tiny ladybird, seen.
+SCENES.notice = () => scene(`${sun(38, 30)}
+  <path d="M168 152 Q186 128 214 136 Q206 152 186 152 Z" fill="${P.green}"/>
+  <g transform="translate(192 138)"><ellipse rx="5" ry="4" fill="${P.red}"/><circle cx="4" cy="-1" r="2" fill="${P.line}"/><circle cx="-2" cy="-1.4" r="0.9" fill="${P.line}"/><circle cx="0.5" cy="1.6" r="0.9" fill="${P.line}"/></g>
+  <text x="206" y="106" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="17" font-weight="bold" fill="${P.gold}">!${fade(2.2, "0;0;1;1;0", 'keyTimes="0;0.35;0.5;0.85;1"')}</text>
+  ${kid({ x: 128, y: 148, s: 1.15, shirt: P.blue, mouth: "o", armLBase: 12, armRBase: -60, headAnim: rot(2.2, "0 0 -47;9 0 -47;9 0 -47;0 0 -47", 'keyTimes="0;0.35;0.85;1"') })}`);
+
+// predict — the cloud says rain is coming; the bubble is already ready.
+SCENES.predict = () => scene(`
+  <g transform="translate(70 40)"><ellipse rx="19" ry="9" fill="#9fb4c4"/><ellipse cx="12" cy="-4" rx="12" ry="7" fill="#9fb4c4"/></g>
+  ${thoughtBubble(186, 60, 58, 42, `${[0, 1].map((i) => `<path d="M${-10 + i * 10} -12 l-3 8" stroke="${P.water}" stroke-width="2" stroke-linecap="round">${fade(1, "0;1;0", `begin="${-i * 0.4}s"`)}</path>`).join("")}<g transform="translate(4 6)"><path d="M0 4 V-4" stroke="${P.wood}" stroke-width="2"/><path d="M-12 -4 Q0 -14 12 -4 Q8 -6 4 -4 Q0 -7 -4 -4 Q-8 -6 -12 -4 Z" fill="${P.teal}"/><path d="M0 4 q2 3 4 1" fill="none" stroke="${P.wood}" stroke-width="1.8" stroke-linecap="round"/></g>`, fade(3, "1;1"))}
+  ${kid({ x: 126, y: 148, s: 1.15, shirt: P.teal, armLBase: 12, armRBase: -12, headAnim: rot(3, "-8 0 -47;-8 0 -47;5 0 -47;5 0 -47", 'keyTimes="0;0.3;0.5;1"') })}`);
+
+// respect — a chair offered, and a bow of the head for Grandma.
+SCENES.respect = () => scene(`
+  <g transform="translate(174 148)"><rect x="-4" y="-52" width="44" height="8" rx="3" fill="${P.wood}"/><rect x="-4" y="-30" width="44" height="7" rx="3" fill="${P.wood}"/><rect x="-2" y="-26" width="5" height="26" fill="${P.wood}"/><rect x="33" y="-52" width="5" height="52" fill="${P.wood}"/></g>
+  ${heartShape(130, 54, 1.1)}
+  ${kid({ x: 128, y: 148, s: 1.05, shirt: P.grey, flip: true, hair: "#e8e4de", armLBase: 12, armRBase: -35 })}
+  ${kid({ x: 84, y: 148, s: 1.1, shirt: P.gold, armLBase: 12, armRBase: -80, headAnim: rot(2.4, "0 0 -47;10 0 -47;10 0 -47;0 0 -47", 'keyTimes="0;0.3;0.7;1"') })}`);
+
+// trust — across the stepping stones, holding the hand that leads.
+SCENES.trust = () => scene(`
+  <rect x="0" y="128" width="260" height="18" fill="${P.water}"/>
+  ${[104, 134, 164, 194].map((sx) => `<ellipse cx="${sx}" cy="140" rx="13" ry="5.5" fill="${P.grey}"/>`).join("")}
+  ${heartShape(148, 60, 1)}
+  <path d="M136 102 Q148 94 160 102" fill="none" stroke="${P.skin}" stroke-width="6.5" stroke-linecap="round"/>
+  ${kid({ x: 174, y: 136, s: 1.05, shirt: P.teal, flip: true, armLBase: 12, armRBase: -78, bodyAnim: shift(0.6, "0 0;0 -2;0 0") })}
+  ${kid({ x: 122, y: 136, s: 1.05, shirt: P.red, mouth: "o", armLBase: 12, armRBase: -78, bodyAnim: shift(0.6, "0 0;0 -2;0 0") })}`);
+
+// wonder — the night sky is full of question marks.
+SCENES.wonder = () => scene(`
+  ${[[60, 40], [96, 28], [216, 34], [238, 62]].map(([sx, sy]) => starShape(sx, sy, 0.5, "#f6d96b")).join("")}
+  <circle cx="196" cy="40" r="13" fill="#f6ecc9"/><circle cx="190" cy="36" r="11.6" fill="#3a4a6b"/>
+  ${thoughtBubble(112, 58, 52, 38, `${bubbleText("?", 18)}${starShape(16, -8, 0.55)}`, fade(3, "1;1"))}
+  ${kid({ x: 152, y: 148, s: 1.15, shirt: P.purple, armLBase: 12, armRBase: -12, headAnim: rot(3, "-9 0 -47;-9 0 -47") })}`, { sky: "#3a4a6b", ground: "#41595e" });
 
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the

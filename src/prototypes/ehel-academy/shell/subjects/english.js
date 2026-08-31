@@ -12904,7 +12904,7 @@ function renderActivities() {
 
 function renderActivitiesClassic() {
   const { $, $$ } = classicScope();
-  $("#app").innerHTML = `${pageHeader("Learn by doing", "Activities", `Complete six practical ${escapeHtml(course.unit.unitTitle)} challenges.`)}<div class="task-grid">${course.activities.map((activity) => `<article class="panel task-card"><span class="eyebrow">Activity ${activity.sequence} · ${escapeHtml(activity.activityType)}</span><h3>${escapeHtml(activity.title)}</h3><p class="rule-box">${escapeHtml(activity.instructionsAndItems)}</p>${activity.audio?.available ? `<button class="button secondary" data-activity-audio="${activity.activityId}" type="button">${icon("volume-2")} Hear the instructions</button>` : ""}<textarea class="activity-response" rows="4" placeholder="Record your answer or notes…" aria-label="Response for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${activity.activityId}" type="button">${icon("check")} Mark complete</button></article>`).join("")}</div><p><button class="button primary" id="activities-done" type="button">Finish activities ${icon("check")}</button></p>`;
+  $("#app").innerHTML = `${pageHeader("Learn by doing", "Activities", `Complete ${course.activities.length} practical ${escapeHtml(course.unit.unitTitle)} challenges.`)}<div class="task-grid">${course.activities.map((activity) => `<article class="panel task-card"><span class="eyebrow">Activity ${activity.sequence} · ${escapeHtml(activity.activityType)}</span><h3>${escapeHtml(activity.title)}</h3><p class="rule-box">${escapeHtml(activity.instructionsAndItems)}</p>${activity.audio?.available ? `<button class="button secondary" data-activity-audio="${activity.activityId}" type="button">${icon("volume-2")} Hear the instructions</button>` : ""}<textarea class="activity-response" rows="4" placeholder="Record your answer or notes…" aria-label="Response for ${escapeHtml(activity.title)}"></textarea><button class="button secondary" data-activity-done="${activity.activityId}" type="button">${icon("check")} Mark complete</button></article>`).join("")}</div><p><button class="button primary" id="activities-done" type="button">Finish activities ${icon("check")}</button></p>`;
   $$('[data-activity-done]').forEach((button) => button.addEventListener("click", () => { button.disabled = true; button.innerHTML = `${icon("check-circle")} Complete`; icons(); }));
   $$('[data-activity-audio]').forEach((button) => button.addEventListener("click", () => {
     const item = course.activities.find((a) => a.activityId === button.dataset.activityAudio);
@@ -13410,15 +13410,29 @@ function renderActivitiesCarousel() {
   // for the same reason the writing draft is: this writes the whole unit's
   // progress blob and emits a summary, and a Grade 4 typing a sentence should
   // not do that thirty times.
+  // One timer, but it saves the WHOLE slide rather than the field that fired.
+  // Debouncing per field with a shared timer loses answers: the last keystroke
+  // in one box starts the clock, and moving to the next box inside 400ms
+  // cancels it, so the first answer is never written. That is not a corner case
+  // on a checklist of four one-word answers — it is what typing "cat", "bat",
+  // "hat" quickly looks like, and it cost three of four answers when this was
+  // first tested. Reading every box on the slide at save time cannot lose one,
+  // and costs a handful of DOM reads on a keystroke the learner already paused
+  // after.
   let noteTimer = null;
   deck.root.addEventListener("input", (event) => {
     const field = event.target.closest("[data-activity-note]");
     if (!field) return;
     const id = field.dataset.activityNote;
-    const slot = field.dataset.activitySlot;
-    const value = field.value;
+    const slide = field.closest(".gc-slide");
     clearTimeout(noteTimer);
-    noteTimer = setTimeout(() => saveActivityState(id, { notes: { ...activityState(id).notes, [slot]: value } }), 400);
+    noteTimer = setTimeout(() => {
+      const notes = { ...activityState(id).notes };
+      for (const box of slide?.querySelectorAll(`[data-activity-note="${CSS.escape(id)}"]`) || []) {
+        notes[box.dataset.activitySlot] = box.value;
+      }
+      saveActivityState(id, { notes });
+    }, 400);
   });
 }
 async function playGameInstruction(text, button) {

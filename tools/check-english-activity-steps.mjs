@@ -55,12 +55,17 @@ const GRADES = [1, 2, 3, 4];
 // Floors are the measurement taken when the split shipped (2026-08-31), not a
 // round number below it: a floor set under the true count is a formality that
 // passes while a whole grade quietly drops out.
-const FLOORS = { 1: 17, 2: 38, 3: 43, 4: 52 };
-const STEP_FLOOR = 585;
+// Raised 2026-08-31 when activities 7-12 were authored into every Grade 1-4
+// unit (246 new, taking each unit from 6 to 12). The new six are written in
+// the shape this splitter reads, so coverage went 150/246 -> 396/492 and
+// per-step answers 46 -> 158. Locking that in is the point of a floor: the
+// old values would now pass while two thirds of the checklists vanished.
+const FLOORS = { 1: 83, 2: 98, 3: 103, 4: 112 };
+const STEP_FLOOR = 1670;
 // Stepped activities whose marking notes carry a per-step answer run. Floored
 // for the same reason as the steps: a key run that stops parsing shows the
 // child nothing and looks exactly like an activity that never had answers.
-const KEY_FLOOR = 46;
+const KEY_FLOOR = 158;
 // Deliberately the gate's OWN copy of the two key patterns rather than the
 // extracted ones. Everything else here runs the shipped code, because a copy
 // would pass while the real thing was broken — but the numbering check below

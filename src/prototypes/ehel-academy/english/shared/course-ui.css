@@ -393,6 +393,60 @@ body.deck-theatre .gc-wrap:not(.is-theatre) { display: none; }
 .wc-act-grownup svg, .wc-act-grownup i { width: 15px; height: 15px; }
 /* touch-action keeps the page from scrolling under a finger that is drawing;
    the deck's own swipe is stopped at the canvas in JS. */
+/* The writing studio's slide, Grades 1-4 (the deck path only). Scoped to
+   .wc-w-* so no rule here can reach an upper-stage page, which draws
+   renderWritingClassic and no .wc-write node. */
+.wc-write { gap: 10px; }
+.wc-w-head { display: flex; align-items: baseline; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+/* The chip IS the bar: --w-fill paints the progress, so the number and the fill
+   are one value and cannot disagree - the same trick the Wehel time chip uses
+   for the same reason. */
+.wc-w-goal { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 6px; padding: 5px 13px; border-radius: 999px; background: #eef4fa; font-size: 13px; font-weight: var(--weight-bold, 700); letter-spacing: .04em; text-transform: uppercase; color: #2a6cb0; }
+.wc-w-goal::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--w-fill, 0%); background: #cfe3f6; transition: width .25s ease; }
+.wc-w-goal > * { position: relative; }
+.wc-w-goal svg, .wc-w-goal i { position: relative; width: 16px; height: 16px; }
+.wc-w-goal.is-hit { background: #e5f7e9; color: #2c6b45; }
+.wc-w-goal.is-hit::before { background: #bfe9cb; }
+@keyframes wc-w-pop { 0% { transform: scale(1); } 45% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.wc-w-goal.just-hit { animation: wc-w-pop .42s ease; }
+
+/* The sentence frame and its word bank. Grade 1 only in practice - it draws
+   where modelText carries a blank, which is 56 of that grade's 66 tasks and
+   none above it. */
+.wc-w-frame { width: 100%; max-width: 620px; display: grid; gap: 8px; justify-items: center; background: #fff6e6; border: 2px solid #f0c986; border-radius: 16px; padding: 12px 16px; }
+.wc-w-frame > small { font-size: 12px; font-weight: var(--weight-bold, 700); letter-spacing: .06em; text-transform: uppercase; color: #8a5b12; }
+.wc-w-model { margin: 0; font: var(--weight-bold, 700) 26px/1.35 var(--font-serif, serif); color: #17324d; text-align: center; }
+.wc-w-bank { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.wc-w-chip { font: var(--weight-bold, 700) 19px var(--font-serif, serif); color: #17324d; background: #fff; border: 3px solid #e8a33d; border-radius: 999px; padding: 7px 18px; cursor: pointer; transition: transform .12s, background .15s; }
+.wc-w-chip:hover { transform: translateY(-2px) scale(1.04); background: #fff1d9; }
+.wc-w-chip:active { transform: scale(.95); }
+
+/* The checklist. Open on the slide rather than folded into <details>: it is
+   what the child checks their own writing against, and a criterion nobody
+   opened is a criterion nobody used. */
+.wc-w-check { width: 100%; max-width: 620px; display: grid; gap: 8px; }
+.wc-w-checkhead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.wc-w-checktitle { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: var(--weight-bold, 700); letter-spacing: .05em; text-transform: uppercase; color: #17324d; }
+.wc-w-checktitle svg, .wc-w-checktitle i { width: 16px; height: 16px; }
+.wc-w-count { font-size: 13px; font-weight: var(--weight-bold, 700); letter-spacing: .04em; text-transform: uppercase; color: #5a6f88; }
+.wc-w-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.wc-w-item { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; background: #eef4fa; border-radius: 14px; padding: 7px 12px; transition: background .18s; }
+.wc-w-item.is-done { background: #e5f7e9; }
+.wc-w-item.is-done .wc-act-tick { background: #3f9c5c; border-color: #3f9c5c; }
+.wc-w-item.is-done .wc-act-num { opacity: 0; }
+.wc-w-item.is-done .wc-act-mark { opacity: 1; }
+.wc-w-item.is-done .wc-act-text { color: #2c5c41; }
+
+.wc-w-pad[hidden] { display: none; }
+.wc-w-pad { display: grid; gap: 10px; justify-items: center; width: 100%; }
+
+@media (max-width: 640px) {
+  .wc-w-model { font-size: 22px; }
+  .wc-w-chip { font-size: 17px; padding: 6px 15px; }
+  .wc-w-item { gap: 9px; padding: 10px; }
+}
+
 .wc-act-pad { display: grid; gap: 10px; justify-items: center; }
 .wc-act-canvas { touch-action: none; width: 100%; max-width: 480px; aspect-ratio: 8 / 5; background: #fff; border: 3px solid #c3d4e6; border-radius: 14px; cursor: crosshair; }
 .wc-act-padbar { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }

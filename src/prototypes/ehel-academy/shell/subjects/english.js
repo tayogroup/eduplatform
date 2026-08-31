@@ -11232,13 +11232,13 @@ const DECK_INTROS = {
   dictionary: { title: "Say the words", steps: [["book-a", "One word at a time. Say each word out loud, then press “I know this word”."], DECK_STEP_LISTEN, DECK_STEP_NEXT] },
   reading: { title: "Read the story", steps: [["book-open", "One page at a time. Read it, or listen to it."], DECK_STEP_LISTEN, ["check", "On the last page, press “I have read this text”."]] },
   comprehension: { title: "Think about the story", steps: [["list-checks", "One question at a time. Say your answer, then press “Check guidance” to see a good answer."], DECK_STEP_NEXT, ["check", "On the last slide, press “Finish comprehension”."]] },
-  writing: { title: "Plan, write and improve", steps: [["pencil-line", "One task at a time. Write your own sentences in the box — at least eight words."], ["send", "Press “Submit this draft” to save your writing."], DECK_STEP_NEXT] },
   // "Try the practice" was true of a `<details>` a learner opened and read. The
   // practice is now questions they answer on the slide, so the middle line says
   // what to do with them — and it says the questions do not decide the tick,
   // because a child who thinks a wrong answer costs them the section will stop
   // answering rather than risk it.
   grammar: { title: "Say the patterns", steps: [["braces", "One pattern at a time. Say it out loud, then answer the questions under it."], ["pencil", "Tap a word or write your answer. Getting one wrong costs you nothing — try again."], ["check", "Go through every pattern to the last slide to finish."]] },
+  writing: { title: "Plan, write and improve", steps: [["pencil-line", "One task at a time. Write in the box, tap a word to build a sentence, or press “Draw it”."], ["list-checks", "Watch the counter fill up, and tick the checklist as you go."], ["send", "Press “Submit this draft” to save your writing."]] },
   activities: { title: "Learn by doing", steps: [["shapes", "One activity at a time. Do each step, then tap its circle to tick it off."], ["pencil", "Write your answer on the line, or press “Draw it” to draw one."], ["check", "When every step is ticked, press “Mark complete”."]] },
 };
 const deckIntro = (id) => DECK_INTROS[id] || null;
@@ -13125,6 +13125,198 @@ function renderWritingClassic() {
   draw();
 }
 
+// ---------------------------------------------------------------------------
+// The writing studio's instruments, Grades 1-4 (the deck path only).
+//
+// Rewritten 2026-09-01. What was here drew the task as a paragraph over an
+// empty textarea and asked for eight words, and three things were measurably
+// wrong with that for the grades it serves.
+//
+// THE SUBMIT GATE WAS UNREACHABLE IN GRADE 1. It refused any draft under eight
+// words, and the intro slide said so to a five-year-old ("Write your own
+// sentences in the box - at least eight words"). Grade 1's tasks ask for
+// "Drawing, tracing or 1-3 words" (27 of 66) or "One label, phrase or short
+// sentence" (27 more): in TEN of Grade 1's eleven units every single writing
+// task asks for less than the gate demanded. Verified in the browser rather
+// than read off the source - the model answer the content itself prints for
+// Unit 1, "This is a chair.", was typed in and refused, and `writing` stayed
+// unticked. It is in SECTION_CHAIN, so that padlocks Activities, Games and the
+// Quiz behind it for the rest of the unit. A child doing exactly as they were
+// told could not finish a unit.
+//
+// THE INSTRUMENT WAS WRONG. 106 of the 246 tasks ask for a drawing, a picture,
+// a label or tracing - 65 of Grade 1's 66 - and the only thing on the slide was
+// a box to type in, for learners who are five and mostly cannot type yet.
+//
+// THE CHECKLIST WAS DECORATION. Both designs render `successCriteria` as
+// checkboxes, and nothing anywhere listened to them or stored them: 24 live
+// checkboxes on a Grade 1 slide, every tick lost on reload. Exactly the defect
+// the activities deck was found to have the day before, in the section next
+// door.
+//
+// So the slide now carries the task's own target as something the learner
+// watches fill, the checklist ticks and is kept, a drawing pad is one press
+// away, and Grade 1's sentence frames can be built by tapping words. Grades 5-8
+// and the tutoring category keep `renderWritingClassic` untouched.
+
+// What the task asked for, read off its own `expectedLength`. 239 of the 246
+// Grade 1-4 tasks state a countable target there ("5 complete sentences",
+// "1-3 words", "A heading plus 3 complete sentences") and that string is the
+// only place it is written down.
+//
+// The units are grouped rather than kept apart because what a learner counts on
+// screen has to be what they can see themselves producing: lines, captions,
+// facts, steps and sentences are all "sentences" to a child looking at a box of
+// them, and only words are counted differently. A paragraph target counts
+// sentences too - nothing can count paragraphs in a draft being typed, and
+// "1-2 organised paragraphs" is four to twelve sentences whichever way it is
+// read, so it takes the sentence unit with the number left alone.
+const WRITING_NUMBER_WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12 };
+const WRITING_NUMBER = "\\d+|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve";
+// The gap between the number and its noun may not contain a DIGIT, which is
+// what binds each noun to the number that actually modifies it. Without that,
+// "One picture, 1-3 labels" reads as one label and "A title, 2 subheadings and
+// 6 fact sentences" as two sentences - the first number in the string wins over
+// the one standing next to the thing being counted. Eight of the 246 read
+// differently with the guard and all eight get closer to what the string says.
+const WRITING_TARGET_RE = new RegExp(
+  "\\b(" + WRITING_NUMBER + ")(?:\\s*(?:to|or|-)\\s*(" + WRITING_NUMBER + "))?[^.0-9]{0,24}?\\b(sentences?|lines?|captions?|steps?|facts?|instructions?|commands?|questions?|tips?|couplets?|pages?|paragraphs?|bullet|words?|labels?)",
+  "gi",
+);
+const WRITING_WORD_UNITS = /^(?:words?|labels?)$/i;
+
+function writingTarget(task) {
+  // A RANGE AIMS AT ITS TOP. "1-3 words", "5-6 complete sentences" and "4-6
+  // numbered steps" all invite the larger number, and a meter set to the
+  // smaller one congratulates a Grade 1 writer on their first word and then has
+  // nothing left to ask for. The gate is one unit either way, so aiming high
+  // costs a child nothing and gives them somewhere to go.
+  const read = (value) => {
+    if (!value) return null;
+    const raw = value.toLowerCase();
+    const parsed = WRITING_NUMBER_WORDS[raw] ?? Number(raw);
+    return Number.isFinite(parsed) ? parsed : null;
+  };
+  // A task often names several countable things and the LARGEST is the one the
+  // learner spends the page producing. Taking the first instead read "One
+  // organised paragraph of six to eight sentences" - Grade 4's commonest target
+  // - as a one-sentence task, so a child was congratulated on finishing after
+  // their first line. It also keeps the container where the container IS the
+  // count: "Six numbered pages with one planning sentence each" stays six,
+  // because six is larger than one, with no rule about paragraphs needed.
+  WRITING_TARGET_RE.lastIndex = 0;
+  let best = null;
+  for (const found of String(task.expectedLength || "").matchAll(WRITING_TARGET_RE)) {
+    const n = Math.max(read(found[1]) || 0, read(found[2]) || 0);
+    if (n >= 1 && (!best || n > best.n)) best = { n, unit: found[3] };
+  }
+  // The seven that state no countable target ("Letter shapes and matches",
+  // "Thirty words sorted under six headings") get no meter rather than an
+  // invented one. A bar counting toward a number nobody wrote down is a claim
+  // about what the task wants, and this file has paid for those before.
+  if (!best) return null;
+  const { n } = best;
+  const words = WRITING_WORD_UNITS.test(best.unit);
+  return { n, words, noun: n === 1 ? (words ? "word" : "sentence") : (words ? "words" : "sentences") };
+}
+
+const writingWords = (text) => String(text || "").trim().split(/\s+/).filter(Boolean).length;
+// A sentence is a run of two or more words closed by . ! ? - or, for a child
+// who has not closed the last one yet, the words trailing after it. Counting
+// only closed sentences would leave the meter a step behind the writer for as
+// long as they are writing, which is the moment it is meant to encourage them.
+const writingSentences = (text) => String(text || "")
+  .split(/[.!?]+/)
+  .map((part) => part.trim())
+  .filter((part) => part.split(/\s+/).filter(Boolean).length >= 2)
+  .length;
+
+const writingCount = (text, target) => (target && target.words ? writingWords(text) : writingSentences(text));
+
+// The ticks and the drawing. NOT the draft: that stays in `progress.writing[id]`
+// where it has always been, because the classic studio, the portfolio and the
+// `draft.saved` event all read it there.
+function writingState(id) {
+  progress.writingWork ||= {};
+  const saved = progress.writingWork[id] || {};
+  return {
+    checks: Array.isArray(saved.checks) ? saved.checks : [],
+    drawing: typeof saved.drawing === "string" ? saved.drawing : "",
+  };
+}
+
+function saveWritingState(id, patch) {
+  progress.writingWork ||= {};
+  progress.writingWork[id] = { ...writingState(id), ...patch };
+  saveProgress();
+}
+
+// One criterion per line, which is what a checklist is for.
+//
+// Splitting on the semicolon alone leaves 60 of the 246 tasks with a single
+// item that is really three - 54 of Grade 2's 60 read like "I used a capital
+// letter for my name and for my friend's name, chose he or she correctly, and
+// ended every sentence with a full stop." That is three things to check and one
+// box to tick them with.
+//
+// The comma pass is guarded on SHAPE, not on wording: it runs only where the
+// semicolon pass found nothing, and only if every fragment is three words or
+// more. That guard is not decoration and was not designed against a contrived
+// case - it is what refuses the four tasks whose commas are a list INSIDE one
+// criterion ("My card has a heading, two duties, two named pieces of clothing
+// or equipment, and a labelled drawing"), where "two duties" is the two-word
+// fragment that stops it. 56 of the 60 gain a real checklist; those four keep
+// the single line they should have.
+function writingCriteria(task) {
+  const whole = String(task.successCriteria || "").trim();
+  if (!whole) return [];
+  const semis = whole.split(";").map((part) => part.trim()).filter(Boolean);
+  if (semis.length > 1) return semis;
+  const commas = whole.split(/,\s+/).map((part) => part.trim().replace(/^and\s+/i, "")).filter(Boolean);
+  if (commas.length > 1 && commas.every((part) => part.split(/\s+/).length >= 3)) return commas;
+  return semis;
+}
+
+// Grade 1's sentence frame, and the words the content itself vouched for.
+//
+// 56 of Grade 1's 66 tasks carry a `modelText` with a blank in it - "This is a
+// ___.", "I can ___.", "There are ___ ___." - and it sat behind a "View model
+// text" fold, as prose to read. For a learner who cannot yet type, a frame they
+// can fill by tapping is the difference between doing the task and watching it.
+//
+// THE BANK IS DERIVED FROM THE TASK'S OWN ANSWERS, NEVER FROM THE UNIT'S
+// VOCABULARY. Each candidate answer is matched against the frame and only the
+// part standing in the blank is kept, so "This is a desk." against "This is a
+// ___." offers `desk`. Pouring the unit's word list in instead would fill "I
+// can ___" with `chair` and hand a five-year-old a sentence that is not English
+// - the same rule the picture map keeps, where a word with no honest picture
+// shows none. 28 of the 56 yield a bank this way; the other 28 show the frame
+// as a starter with no chips, which is what the content supports.
+function writingFrame(task) {
+  const frame = String(task.modelText || "");
+  const parts = frame.match(/^(.*?)_{2,}(.*)$/);
+  if (!parts) return null;
+  const before = parts[1].trim();
+  const after = parts[2].replace(/[.!?]\s*$/, "").trim();
+  const candidates = [
+    ...(task.completedExample?.otherAnswers || []),
+    ...(task.completedExample?.items || []).map((item) => String(item).replace(/^[A-Za-z ]{2,14}:\s*/, "")),
+  ];
+  const fills = [];
+  for (const candidate of candidates) {
+    const answer = String(candidate).trim().replace(/[.!?]+$/, "");
+    if (before && !answer.toLowerCase().startsWith(before.toLowerCase())) continue;
+    let middle = answer.slice(before.length).trim();
+    if (after && middle.toLowerCase().endsWith(after.toLowerCase())) middle = middle.slice(0, middle.length - after.length).trim();
+    middle = middle.replace(/[.!?,]+$/, "").trim();
+    // Three words is the ceiling because the blank stands for a word or a short
+    // phrase ("my book", "three sisters"); anything longer is a whole answer
+    // that happened to start the same way, not the thing that goes in the gap.
+    if (middle && middle.split(/\s+/).length <= 3 && !fills.includes(middle)) fills.push(middle);
+  }
+  return { frame, before, after, fills };
+}
+
 // Writing as a deck: one task per slide, the draft box the centre of it.
 //
 // The studio's side panel does not survive as a panel — a slide has no room for
@@ -13137,36 +13329,82 @@ function renderWritingClassic() {
 // and swiping between tasks neither loses a draft nor re-renders the deck. The
 // autosave, its 350 ms debounce, the ProgressClient event and the eight-word
 // submit gate are the studio's, unchanged.
-function renderWritingCarousel() {
+// The meter's words, which are the whole point of it: a child watching a bar
+// fill toward a number the task named. It says how far they have come and never
+// how far short they are, and at the target it stops counting and celebrates -
+// a learner who wrote seven sentences for a five-sentence task has not overshot
+// anything.
+function writingMeterHtml(task, text) {
+  const target = writingTarget(task);
+  if (!target) return `<span class="wc-w-goal">${escapeHtml(task.expectedLength)}</span>`;
+  const done = Math.min(writingCount(text, target), target.n);
+  const hit = done >= target.n;
+  return `<span class="wc-w-goal${hit ? " is-hit" : ""}" style="--w-fill:${Math.round((done / target.n) * 100)}%">${
+    hit ? `${icon("party-popper")} All ${target.n} ${escapeHtml(target.noun)} - well done` : `${done} of ${target.n} ${escapeHtml(target.noun)}`
+  }</span>`;
+}
+
+function writingSlideHtml(task, index, total) {
   const esc = escapeHtml;
-  const tasks = course.writing;
-  const slides = tasks.map((task, index) => {
-    const saved = progress.writing[task.writingId] || "";
-    return `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner">
-      <span class="gc-eyebrow">Writing ${task.sequence} of ${tasks.length}${task.practiceType ? ` · ${esc(task.practiceType)}` : ""}</span>
+  const id = esc(task.writingId);
+  const saved = progress.writing[task.writingId] || "";
+  const state = writingState(task.writingId);
+  const criteria = writingCriteria(task);
+  const frame = writingFrame(task);
+  const ticked = criteria.filter((_, position) => state.checks[position]).length;
+  return `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner wc-write">
+      <div class="wc-w-head">
+        <span class="gc-eyebrow">Writing ${esc(String(task.sequence))} of ${total}${task.practiceType ? ` · ${esc(task.practiceType)}` : ""}</span>
+        <span data-writing-meter="${id}">${writingMeterHtml(task, saved)}</span>
+      </div>
       <h3 class="gc-title">${esc(task.title)}</h3>
       <p class="gc-note gc-try">${esc(task.promptAndInstructions)}</p>
-      ${task.audio?.available ? `<div class="gc-actions"><button class="gc-btn play" type="button" data-writing-audio="${esc(task.writingId)}">${icon("volume-2")} Hear the task</button></div>` : ""}
-      <p class="gc-note"><span class="field-label">Expected:</span> ${esc(task.expectedLength)}</p>
+      <div class="gc-actions">
+        ${task.audio?.available ? `<button class="gc-btn play" type="button" data-writing-audio="${id}">${icon("volume-2")} Hear the task</button>` : ""}
+        <button class="gc-btn ghost" type="button" data-writing-draw="${id}">${icon("pencil")} ${state.drawing ? "My drawing" : "Draw it"}</button>
+      </div>
+      ${frame ? `<div class="wc-w-frame">
+        <small>Your sentence</small>
+        <p class="wc-w-model">${esc(frame.frame)}</p>
+        ${frame.fills.length ? `<div class="wc-w-bank">${frame.fills.map((fill) => `<button class="wc-w-chip" type="button" data-writing-fill="${id}" data-fill="${esc(fill)}">${esc(fill)}</button>`).join("")}</div>` : ""}
+      </div>` : ""}
       <div class="wc-sentence">
         <small>Your draft</small>
-        <textarea data-draft="${esc(task.writingId)}" rows="7" placeholder="${esc(task.sentenceStarter)}" aria-label="Writing draft for ${esc(task.title)}">${esc(saved)}</textarea>
-        <small data-save-status="${esc(task.writingId)}" role="status" aria-live="polite" aria-atomic="true">${saved ? "Draft restored" : "Start writing when you are ready"}</small>
+        <textarea data-draft="${id}" rows="7" placeholder="${esc(task.sentenceStarter)}" aria-label="Writing draft for ${esc(task.title)}">${esc(saved)}</textarea>
+        <small data-save-status="${id}" role="status" aria-live="polite" aria-atomic="true">${saved ? "Draft restored" : "Start writing when you are ready"}</small>
       </div>
-      <button class="gc-btn" type="button" data-writing-feedback="${esc(task.writingId)}">${icon("message-circle")} Get feedback</button>
-      <div data-writing-feedback-out="${esc(task.writingId)}" role="status" aria-live="polite" aria-atomic="true"></div>
-      <details class="gc-practice"><summary>Writer's checklist</summary>
-        <ul class="checklist">${task.successCriteria.split(";").map((criterion, position) => `<li><label><input type="checkbox" data-writing-check="${esc(task.writingId)}-${position}"><span>${esc(criterion.trim())}</span></label></li>`).join("")}</ul>
-      </details>
-      <details class="gc-practice"><summary>View model text</summary><p class="model">${esc(task.modelText)}</p></details>
+      <div class="wc-w-pad" data-writing-pad="${id}" hidden></div>
+      <div class="gc-actions">
+        <button class="gc-btn" type="button" data-writing-feedback="${id}">${icon("message-circle")} Get feedback</button>
+        <button class="gc-btn done" type="button" data-writing-submit="${id}">${icon("send")} Submit this draft</button>
+      </div>
+      <div data-writing-feedback-out="${id}" role="status" aria-live="polite" aria-atomic="true"></div>
+      ${criteria.length ? `<div class="wc-w-check">
+        <div class="wc-w-checkhead">
+          <span class="wc-w-checktitle">${icon("list-checks")} Writer's checklist</span>
+          <span class="wc-w-count" data-writing-count="${id}">${ticked} of ${criteria.length} ticked</span>
+        </div>
+        <ul class="wc-w-list">${criteria.map((criterion, position) => `<li class="wc-w-item${state.checks[position] ? " is-done" : ""}">
+          <button class="wc-act-tick" type="button" data-writing-check="${id}" data-check="${position}" aria-pressed="${state.checks[position] ? "true" : "false"}" aria-label="I have done this: ${esc(criterion)}">
+            <span class="wc-act-num" aria-hidden="true">${position + 1}</span>
+            <span class="wc-act-mark" aria-hidden="true">${icon("check")}</span>
+          </button>
+          <p class="wc-act-text">${esc(criterion)}</p>
+          <button class="wc-act-say" type="button" data-writing-say="${position}" data-writing-owner="${id}" aria-label="Hear this">${icon("volume-2")}</button>
+        </li>`).join("")}</ul>
+      </div>` : ""}
+      ${frame ? "" : `<details class="gc-practice"><summary>View model text</summary><p class="model">${esc(task.modelText)}</p></details>`}
       ${completedExampleHtml(task, esc, "gc-practice")}
       <details class="gc-practice"><summary>Support and challenge</summary>
         <p class="gc-note"><span class="field-label">Support:</span> ${esc(task.support)}</p>
         <p class="gc-note"><span class="field-label">Challenge:</span> ${esc(task.extension)}</p>
       </details>
-      <button class="gc-btn done" type="button" data-writing-submit="${esc(task.writingId)}">${icon("send")} Submit this draft</button>
     </div></section>`;
-  });
+}
+
+function renderWritingCarousel() {
+  const tasks = course.writing;
+  const slides = tasks.map((task, index) => writingSlideHtml(task, index, tasks.length));
 
   const deck = mountDeck({
     heading: "Plan, write and improve",
@@ -13175,23 +13413,116 @@ function renderWritingCarousel() {
     closingHint: "Submit one draft on the task slides and Writing gets its tick.",
     slides,
     onClick: (event) => {
-      const target = event.target.closest("[data-writing-audio], [data-writing-submit], [data-writing-feedback]");
+      const target = event.target.closest("[data-writing-audio], [data-writing-submit], [data-writing-feedback], [data-writing-check], [data-writing-say], [data-writing-fill], [data-writing-draw]");
       if (!target) return undefined;
-      if (target.dataset.writingFeedback) {
-        const id = target.dataset.writingFeedback;
-        const draft = (deck.root.querySelector(`[data-draft="${CSS.escape(id)}"]`)?.value || "").trim();
-        if (draft.split(/\s+/).filter(Boolean).length < 5) return toast("Write a little more before asking for feedback.");
-        const writingTask = tasks.find((item) => item.writingId === id);
-        checkWritingWithWehel(`Check my writing for "${writingTask.title}": "${draft}"`, target, deck.root.querySelector(`[data-writing-feedback-out="${CSS.escape(id)}"]`));
+      const slide = target.closest(".gc-slide");
+      const draftOf = (id) => (deck.root.querySelector(`[data-draft="${CSS.escape(id)}"]`)?.value || "").trim();
+      const taskOf = (id) => tasks.find((item) => item.writingId === id);
+
+      // A tick repaints its own row and the counter and nothing else, for the
+      // reason the activities deck gives: repainting the slide takes the draft
+      // the learner is half way through typing, and their caret with it.
+      if (target.dataset.writingCheck) {
+        const id = target.dataset.writingCheck;
+        const position = Number(target.dataset.check);
+        const checks = [...writingState(id).checks];
+        checks[position] = !checks[position];
+        saveWritingState(id, { checks });
+        target.setAttribute("aria-pressed", String(Boolean(checks[position])));
+        target.closest(".wc-w-item")?.classList.toggle("is-done", Boolean(checks[position]));
+        const counter = slide?.querySelector(`[data-writing-count="${CSS.escape(id)}"]`);
+        if (counter) {
+          const total = writingCriteria(taskOf(id)).length;
+          counter.textContent = `${checks.filter(Boolean).length} of ${total} ticked`;
+        }
         return undefined;
       }
+
+      if (target.dataset.writingOwner) {
+        const criterion = writingCriteria(taskOf(target.dataset.writingOwner))[Number(target.dataset.writingSay)];
+        return criterion ? playGameInstruction(criterion, target) : undefined;
+      }
+
+      // Tapping a word builds the whole sentence, not just the word: a Grade 1
+      // learner filling "This is a ___." wants "This is a desk." in the box.
+      // It APPENDS rather than replacing, so a child who has already written one
+      // sentence keeps it and gets their second - and the caret is left at the
+      // end so the next thing typed continues the sentence rather than landing
+      // in front of it.
+      if (target.dataset.writingFill) {
+        const id = target.dataset.writingFill;
+        const frame = writingFrame(taskOf(id));
+        const field = deck.root.querySelector(`[data-draft="${CSS.escape(id)}"]`);
+        if (!frame || !field) return undefined;
+        const sentence = `${frame.before} ${target.dataset.fill}${frame.after ? ` ${frame.after}` : ""}`.replace(/\s+/g, " ").trim();
+        const ending = /[.!?]$/.test(sentence) ? "" : ".";
+        const before = field.value.replace(/\s+$/, "");
+        field.value = `${before}${before ? " " : ""}${sentence}${ending}`;
+        field.focus();
+        field.setSelectionRange(field.value.length, field.value.length);
+        field.dispatchEvent(new Event("input", { bubbles: true }));
+        return undefined;
+      }
+
+      if (target.dataset.writingDraw) {
+        const id = target.dataset.writingDraw;
+        const host = slide?.querySelector(`[data-writing-pad="${CSS.escape(id)}"]`);
+        if (!host) return undefined;
+        if (host.hidden) {
+          if (!host.dataset.ready) {
+            mountDrawingPad(host, {
+              readDrawing: () => writingState(id).drawing,
+              writeDrawing: (drawing) => saveWritingState(id, { drawing }),
+            });
+            host.dataset.ready = "1";
+          }
+          host.hidden = false;
+          target.innerHTML = `${icon("pencil")} Hide the drawing`;
+        } else {
+          host.hidden = true;
+          target.innerHTML = `${icon("pencil")} My drawing`;
+        }
+        icons();
+        return undefined;
+      }
+
+      if (target.dataset.writingFeedback) {
+        const id = target.dataset.writingFeedback;
+        const draft = draftOf(id);
+        if (draft.split(/\s+/).filter(Boolean).length < 5) return toast("Write a little more before asking for feedback.");
+        checkWritingWithWehel(`Check my writing for "${taskOf(id).title}": "${draft}"`, target, deck.root.querySelector(`[data-writing-feedback-out="${CSS.escape(id)}"]`));
+        return undefined;
+      }
+
       if (target.dataset.writingAudio) {
-        const task = tasks.find((item) => item.writingId === target.dataset.writingAudio);
+        const task = taskOf(target.dataset.writingAudio);
         return playAudio(task.audio.source, { rate: AI_NARRATION_RATE, button: target });
       }
+
+      // THE GATE ASKS FOR ONE UNIT OF WHAT THE TASK ASKED FOR, and a drawing
+      // counts. It used to demand eight words of everybody, which no Grade 1
+      // task asks for in ten of that grade's eleven units - so the section
+      // could not be ticked by a child doing exactly as they were told, and
+      // Writing is in SECTION_CHAIN, which padlocked the rest of the unit.
+      //
+      // The task's own target drives the METER, never the gate. Gating on it
+      // would move the wall rather than remove it: Grade 4's longest task wants
+      // twelve sentences, and a child who wrote nine would be refused and told
+      // nothing they could act on. So the meter encourages toward the whole
+      // task and the tick recognises the attempt - the same split the
+      // activities deck keeps between the step counter and "Mark complete".
       const id = target.dataset.writingSubmit;
-      const draft = (deck.root.querySelector(`[data-draft="${CSS.escape(id)}"]`)?.value || "").trim();
-      if (draft.split(/\s+/).filter(Boolean).length < 8) return toast("Add a little more to your draft before submitting.");
+      const draft = draftOf(id);
+      const task = taskOf(id);
+      const goal = writingTarget(task);
+      const enough = goal
+        ? writingCount(draft, goal) >= 1
+        : writingWords(draft) >= 3;
+      if (!enough && !writingState(id).drawing) {
+        return toast(goal && goal.words
+          ? "Write at least one word, or press “Draw it”, before you submit."
+          : "Write at least one sentence, or press “Draw it”, before you submit.");
+      }
       progress.writing[id] = draft;
       return complete("writing", "Writing draft saved to your learning portfolio.");
     },
@@ -13205,6 +13536,19 @@ function renderWritingCarousel() {
     const status = deck.root.querySelector(`[data-save-status="${CSS.escape(id)}"]`);
     clearTimeout(saveTimers.get(id));
     if (status) status.textContent = "Saving…";
+    // The meter moves on the keystroke, not on the 350 ms save. It is the one
+    // thing on the slide answering "am I getting there", and a bar that waits
+    // for the debounce reads as a bar that is not listening.
+    const meter = deck.root.querySelector(`[data-writing-meter="${CSS.escape(id)}"]`);
+    if (meter) {
+      const task = tasks.find((item) => item.writingId === id);
+      const wasHit = Boolean(meter.querySelector(".is-hit"));
+      meter.innerHTML = writingMeterHtml(task, field.value);
+      icons();
+      // Celebrate the crossing, once. Re-firing on every later keystroke would
+      // turn the reward for finishing into noise for carrying on writing.
+      if (!wasHit && meter.querySelector(".is-hit")) meter.querySelector(".is-hit").classList.add("just-hit");
+    }
     saveTimers.set(id, setTimeout(() => {
       progress.writing[id] = field.value;
       saveProgress();
@@ -13535,12 +13879,18 @@ function activityPadDataUrl(canvas) {
   return "";
 }
 
-function mountActivityPad(host, activityId) {
-  const state = activityState(activityId);
+// `readDrawing`/`writeDrawing` rather than an activity id, so the Writing deck
+// mounts this same instrument against its own store. That is the whole reason
+// the signature changed: 106 of the 246 Grade 1-4 writing tasks ask for a
+// drawing, a label or a picture — 65 of Grade 1's 66 — and a second canvas
+// written beside this one would be a second set of the quota, capture and
+// swipe-suppression decisions recorded above, drifting from the day it landed.
+function mountDrawingPad(host, { readDrawing, writeDrawing }) {
+  const existing = readDrawing();
   host.innerHTML = `<canvas class="wc-act-canvas" width="480" height="300" aria-label="Drawing area"></canvas>
     <div class="wc-act-padbar">
       ${ACTIVITY_PAD_INKS.map((ink, index) => `<button type="button" class="wc-act-ink${index ? "" : " is-on"}" data-ink="${ink}" style="--ink:${ink}" aria-label="Draw in this colour"></button>`).join("")}
-      <button type="button" class="gc-btn ghost wc-act-clear" data-pad-clear="${escapeHtml(activityId)}">${icon("eraser")} Start again</button>
+      <button type="button" class="gc-btn ghost wc-act-clear" data-pad-clear="1">${icon("eraser")} Start again</button>
     </div>`;
   icons();
   const canvas = host.querySelector("canvas");
@@ -13551,10 +13901,10 @@ function mountActivityPad(host, activityId) {
   ctx.lineWidth = 7;
   ctx.strokeStyle = ACTIVITY_PAD_INKS[0];
   blank();
-  if (state.drawing) {
+  if (existing) {
     const saved = new Image();
     saved.onload = () => ctx.drawImage(saved, 0, 0, canvas.width, canvas.height);
-    saved.src = state.drawing;
+    saved.src = existing;
   }
 
   // The deck arms its swipe on a touchstart anywhere in the viewport, so a
@@ -13574,7 +13924,7 @@ function mountActivityPad(host, activityId) {
     saveTimer = setTimeout(() => {
       const url = activityPadDataUrl(canvas);
       if (!url) return toast("That drawing is too big to keep. It is still on screen — try “Start again” for a simpler one.");
-      saveActivityState(activityId, { drawing: url });
+      writeDrawing(url);
       return undefined;
     }, 400);
   };
@@ -13611,9 +13961,15 @@ function mountActivityPad(host, activityId) {
     }
     if (!event.target.closest("[data-pad-clear]")) return;
     blank();
-    saveActivityState(activityId, { drawing: "" });
+    writeDrawing("");
   });
 }
+
+// The activities deck's own call, unchanged in behaviour: same store, same key.
+const mountActivityPad = (host, activityId) => mountDrawingPad(host, {
+  readDrawing: () => activityState(activityId).drawing,
+  writeDrawing: (drawing) => saveActivityState(activityId, { drawing }),
+});
 
 function renderActivitiesCarousel() {
   const activities = course.activities;
@@ -17669,7 +18025,7 @@ const config = {
   // in a gated chain and its units unlock one another, which the shell's
   // generic card does not know about.
   completionCard: false,
-  progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {}, activities: {} },
+  progressDefaults: { completed: [], knownWords: [], self: {}, writing: {}, games: {}, activities: {}, writingWork: {} },
   gradeDefaults: { completed: [] },
   keys: (g, u) => ({ progress: `ehel-english-g${g}-u${u}-progress-v1` }),
   courseKey: (g) => `ehel-eng-g${String(g).padStart(2, "0")}`,

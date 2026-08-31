@@ -200,6 +200,7 @@ try {
     const byId = new Map(shelf.map((book) => [book.id, book]));
     const kinds = { choice: 0, picture: 0, order: 0 };
     const used = new Set();
+    const orderBooks = [];
     const checkRef = (where, id, page) => {
       const book = byId.get(id);
       if (!book) { fail(`book-comprehension ${key} ${where}: "${id}" is not on this unit's shelf.`); return; }
@@ -220,6 +221,7 @@ try {
         if (!Array.isArray(question.pick) || question.pick.length !== 3) fail(`book-comprehension ${key} ${where}: picture needs 3 picks.`);
         if (!(Number.isInteger(question.answer) && question.answer >= 0 && question.answer < (question.pick || []).length)) fail(`book-comprehension ${key} ${where}: answer index does not resolve.`);
       } else if (question.kind === "order") {
+        orderBooks.push(question.book);
         (question.order || []).forEach((page) => checkRef(where, question.book, page));
         if (!Array.isArray(question.order) || question.order.length !== 3) fail(`book-comprehension ${key} ${where}: order needs 3 pages.`);
         for (let k = 1; k < (question.order || []).length; k += 1) {
@@ -227,8 +229,11 @@ try {
         }
       } else fail(`book-comprehension ${key} ${where}: unknown kind "${question.kind}".`);
     });
-    if ((set.questions || []).length && (kinds.choice !== 3 || kinds.picture !== 2 || kinds.order !== 1)) fail(`book-comprehension ${key}: kind mix choice ${kinds.choice}/picture ${kinds.picture}/order ${kinds.order}, expected 3/2/1.`);
-    if (used.size && used.size < 3) fail(`book-comprehension ${key}: only ${used.size} distinct book(s) used — the set is about the shelf, not one book.`);
+    // 12 per unit since 2026-08-31 (owner: "expand to 12"), doubled from the
+    // original 6 at the same mix ratio.
+    if ((set.questions || []).length && (kinds.choice !== 6 || kinds.picture !== 4 || kinds.order !== 2)) fail(`book-comprehension ${key}: kind mix choice ${kinds.choice}/picture ${kinds.picture}/order ${kinds.order}, expected 6/4/2.`);
+    if (kinds.order === 2 && orderBooks[0] === orderBooks[1]) fail(`book-comprehension ${key}: both order questions walk ${orderBooks[0]} — the second one must take another book.`);
+    if (used.size && used.size < 4) fail(`book-comprehension ${key}: only ${used.size} distinct book(s) used — the set is about the shelf, not one book.`);
   }
   // The floor: every Grade 1-4 unit 1-10 carries a set (40 — unit 0 is
   // withdrawn and deliberately has none). A parser that matches nothing, or a

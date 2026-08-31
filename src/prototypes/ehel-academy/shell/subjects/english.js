@@ -13045,6 +13045,88 @@ function saveActivityState(id, patch) {
 
 const activityStepsDone = (state, items) => items.filter((_, index) => state.steps[index]).length;
 
+// The marking notes carry a per-step answer often enough to be worth reading:
+// 41 of the 150 stepped activities number their answers to match their steps
+// ("1 height, 2 weight, 3 distance, 4 pattern" against four blanks, or "on,
+// under, in, between" against four sentences with a gap). Where the run matches
+// the steps EXACTLY — same count, ascending from 1 — each step can be shown its
+// own answer instead of the child hunting for it in a paragraph.
+//
+// The match has to be exact rather than best-effort. A key run one item shorter
+// than the steps binds every answer to the wrong question, which is the failure
+// this repo has already shipped once, in the Computing quiz keys: a key that is
+// a real answer to a different question passes every check that is not looking
+// at both at once.
+// Two patterns, tried in order, because a key run is numbered two ways and the
+// obvious single pattern gets one of them wrong. STRICT wants the number at a
+// position a key can start from — the beginning, or after a full stop, comma or
+// semicolon. LOOSE takes any number not inside another one.
+//
+// Strict has to go first, and the True/False keys are why: "1. True. 2. False,
+// there are 7 days in a week. 3. True. 4. False, September has 30 days." reads
+// to LOOSE as six markers — 1, 2, 7, 3, 4, 30 — because "7 days" and "30 days"
+// are numbers followed by a space. Six markers against four steps is a
+// mismatch, so the whole activity was silently refused a key it plainly has.
+// Strict sees the four. Neither pattern subsumes the other: strict finds 36 of
+// the 150 stepped activities and loose adds 10 it cannot see, for 46.
+const ACTIVITY_KEY_STRICT = /(?:^|(?<=[.;,])|(?<=[.;,]\s))\s*(\d+)[.)]?\s+/g;
+const ACTIVITY_KEY_LOOSE = /(?<![\d.])(\d+)[.)]?\s+/g;
+
+function activityKeyRun(summary, pattern, wanted) {
+  const marks = [...summary.matchAll(pattern)];
+  // Exact, not best-effort. A run one item shorter than the steps binds every
+  // answer to the wrong question — which is a real answer to a different
+  // question, the shape that passes every check not looking at both at once.
+  if (marks.length !== wanted) return null;
+  if (!marks.every((match, index) => Number(match[1]) === index + 1)) return null;
+  return marks.map((match, index) => summary
+    .slice(match.index + match[0].length, index + 1 < marks.length ? marks[index + 1].index : summary.length)
+    .trim()
+    .replace(/[,;.]+$/, ""));
+}
+
+function activityStepKeys(activity, items) {
+  if (!items.length) return null;
+  const summary = String(activity.answerSummary || "").trim();
+  return activityKeyRun(summary, ACTIVITY_KEY_STRICT, items.length)
+    || activityKeyRun(summary, ACTIVITY_KEY_LOOSE, items.length);
+}
+
+// Compared on words, with the punctuation and the little grammar words dropped:
+// a seven-year-old writing "on." or "It is on" has answered "on", and a child
+// who is told that is wrong learns not to trust the button.
+const activityAnswerShape = (value) => String(value || "")
+  .toLowerCase()
+  .replace(/[^a-z0-9\s]+/g, " ")
+  .replace(/\s+/g, " ")
+  .trim();
+
+// A key is often an answer with its explanation attached — "False, because fruit
+// and vegetables give you energy" — so a learner who wrote "False" has matched
+// it. Prefix matching both ways covers that, and the two-character floor stops a
+// single stray letter matching everything.
+function activityAnswerMatches(typed, key) {
+  const mine = activityAnswerShape(typed);
+  const want = activityAnswerShape(key);
+  if (mine.length < 2 || !want) return false;
+  return mine === want || want.startsWith(`${mine} `) || mine.startsWith(`${want} `);
+}
+
+// NOTHING HERE EVER SAYS "WRONG", and that is a decision rather than a
+// politeness. A quarter of the parsed keys are not answers at all but notes to
+// the adult — "The child's real weather word.", "Accept single words for the
+// blanks" — so a confident red cross would be marking a correct child wrong on
+// the strength of a sentence that was never an answer key. A match is
+// celebrated; anything else puts the two side by side and lets the child and
+// the grown-up decide, which is the same self-marking the Global Perspectives
+// quizzes use and the same thing the notes panel below already does for the
+// activity as a whole.
+function activityStepKeyHtml(key, typed) {
+  return activityAnswerMatches(typed, key)
+    ? `<span class="wc-act-yes">${icon("check")} Yes — you wrote “${escapeHtml(typed.trim())}”</span>`
+    : `<span class="wc-act-shown"><em>The answer:</em> ${escapeHtml(key)}</span>`;
+}
+
 function activityStepHtml(activity, item, index, state) {
   const esc = escapeHtml;
   const ticked = Boolean(state.steps[index]);
@@ -13059,6 +13141,7 @@ function activityStepHtml(activity, item, index, state) {
         <input class="wc-act-line" type="text" data-activity-note="${id}" data-activity-slot="${index}" value="${esc(state.notes[index] || "")}" placeholder="Answer…" aria-label="Your answer for step ${index + 1}">
       </div>
       <button class="wc-act-say" type="button" data-activity-say="${index}" data-activity-owner="${id}" aria-label="Hear step ${index + 1}">${icon("volume-2")}</button>
+      <p class="wc-act-key" data-activity-key="${index}" hidden></p>
     </li>`;
 }
 
@@ -13069,7 +13152,10 @@ function activitySlideHtml(activity, index, total) {
   const id = esc(activity.activityId);
   const done = activityStepsDone(state, items);
   return `<section class="gc-slide gc-v${index % 5}"><div class="gc-inner wc-act">
-      <span class="gc-eyebrow">Activity ${esc(String(activity.sequence))} of ${total} · ${esc(activity.activityType)}</span>
+      <div class="wc-act-head">
+        <span class="gc-eyebrow">Activity ${esc(String(activity.sequence))} of ${total} · ${esc(activity.activityType)}</span>
+        ${items.length ? `<span class="wc-act-count" data-activity-count="${id}">${done} of ${items.length} done</span>` : ""}
+      </div>
       <h3 class="gc-title">${esc(activity.title)}</h3>
       <p class="gc-note gc-try">${esc(lead)}</p>
       <div class="gc-actions">
@@ -13077,8 +13163,7 @@ function activitySlideHtml(activity, index, total) {
         <button class="gc-btn ghost" type="button" data-activity-draw="${id}">${icon("pencil")} ${state.drawing ? "My drawing" : "Draw it"}</button>
       </div>
       ${items.length
-        ? `<p class="wc-act-count" data-activity-count="${id}">${done} of ${items.length} done</p>
-           <ol class="wc-act-steps">${items.map((item, position) => activityStepHtml(activity, item, position, state)).join("")}</ol>`
+        ? `<ol class="wc-act-steps">${items.map((item, position) => activityStepHtml(activity, item, position, state)).join("")}</ol>`
         : `<div class="wc-sentence">
              <small>Your answer or notes</small>
              <textarea data-activity-note="${id}" data-activity-slot="all" rows="4" placeholder="Write what you did, or what you found out…" aria-label="Your answer for ${esc(activity.title)}">${esc(state.notes.all || "")}</textarea>
@@ -13275,10 +13360,27 @@ function renderActivitiesCarousel() {
       // they have read the marking notes, which are addressed to the adult
       // beside them and say so on their face.
       if (target.dataset.activityCheck) {
-        const panel = slide?.querySelector(`[data-activity-answer="${CSS.escape(target.dataset.activityCheck)}"]`);
+        const id = target.dataset.activityCheck;
+        const panel = slide?.querySelector(`[data-activity-answer="${CSS.escape(id)}"]`);
         if (!panel) return undefined;
-        panel.hidden = !panel.hidden;
-        target.innerHTML = `${icon("circle-help")} ${panel.hidden ? "How did I do?" : "Hide the notes"}`;
+        const showing = panel.hidden; // about to open
+        panel.hidden = !showing;
+        // Where the notes number their answers to match the steps, each step is
+        // given its own rather than leaving the child to find it in a
+        // paragraph. Recomputed on every press, not cached, so an answer typed
+        // and then corrected is marked against what is actually in the box.
+        const activity = activities.find((item) => item.activityId === id);
+        const items = activitySteps(activity).items;
+        const keys = activityStepKeys(activity, items);
+        for (const [index] of items.entries()) {
+          const slot = slide?.querySelector(`[data-activity-key="${index}"]`);
+          if (!slot) continue;
+          if (!showing || !keys) { slot.hidden = true; continue; }
+          const typed = slide?.querySelector(`[data-activity-note="${CSS.escape(id)}"][data-activity-slot="${index}"]`)?.value || "";
+          slot.innerHTML = activityStepKeyHtml(keys[index], typed);
+          slot.hidden = false;
+        }
+        target.innerHTML = `${icon("circle-help")} ${showing ? "Hide the answers" : "How did I do?"}`;
         icons();
         return undefined;
       }

@@ -332,14 +332,18 @@ body.deck-theatre .gc-wrap:not(.is-theatre) { display: none; }
 /* The Grade 1-4 activity slide: a lead-in, then the activity's own items as
    steps a learner ticks off. Deck-only classes, so no rule here can match an
    upper-stage page, which draws renderActivitiesClassic and no .wc-act node. */
-.wc-act { gap: 10px; }
-.wc-act-count { margin: 0; font-size: 14px; font-weight: var(--weight-bold, 700); letter-spacing: .04em; text-transform: uppercase; color: #5a6f88; }
-.wc-act-steps { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 620px; display: grid; gap: 8px; }
-.wc-act-step { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; background: #eef4fa; border-radius: 14px; padding: 10px 14px; transition: background .18s; }
+.wc-act { gap: 8px; }
+/* The done-count rides the eyebrow's line rather than taking a row of its
+   own: on a four-step slide that row plus its gap was 25px of the ~53px the
+   slide overflowed its carousel by. */
+.wc-act-head { display: flex; align-items: baseline; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.wc-act-count { margin: 0; font-size: 13px; font-weight: var(--weight-bold, 700); letter-spacing: .04em; text-transform: uppercase; color: #5a6f88; }
+.wc-act-steps { list-style: none; margin: 0; padding: 0; width: 100%; max-width: 620px; display: grid; gap: 6px; }
+.wc-act-step { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; background: #eef4fa; border-radius: 14px; padding: 7px 12px; transition: background .18s; }
 .wc-act-step.is-done { background: #e5f7e9; }
 /* The tick is the big target: a five-year-old aims with a finger, and the
    number lives inside it so the row has one thing to hit rather than two. */
-.wc-act-tick { position: relative; width: 46px; height: 46px; flex: none; border: 3px solid #c3d4e6; border-radius: 50%; background: #fff; cursor: pointer; display: grid; place-items: center; padding: 0; transition: background .18s, border-color .18s, transform .12s; }
+.wc-act-tick { position: relative; width: 42px; height: 42px; flex: none; border: 3px solid #c3d4e6; border-radius: 50%; background: #fff; cursor: pointer; display: grid; place-items: center; padding: 0; transition: background .18s, border-color .18s, transform .12s; }
 .wc-act-tick:hover { transform: scale(1.06); }
 .wc-act-tick:active { transform: scale(.94); }
 .wc-act-num { font: var(--weight-bold, 700) 19px var(--font-serif, serif); color: #2a6cb0; transition: opacity .14s; }
@@ -361,11 +365,20 @@ body.deck-theatre .gc-wrap:not(.is-theatre) { display: none; }
 .wc-act-body .wc-act-line { flex: 0 1 160px; }
 .wc-act-text { margin: 0; font-size: 18px; line-height: 1.45; color: #17324d; text-align: left; }
 .wc-act-step.is-done .wc-act-text { color: #2c5c41; }
-.wc-act-line { font: inherit; font-size: 17px; width: 100%; padding: 9px 12px; border: 2px solid #c3d4e6; border-radius: 10px; background: #fff; color: #17324d; }
+.wc-act-line { font: inherit; font-size: 17px; width: 100%; padding: 6px 11px; border: 2px solid #c3d4e6; border-radius: 10px; background: #fff; color: #17324d; }
 .wc-act-line:focus { outline: none; border-color: #2a6cb0; box-shadow: 0 0 0 3px #2a6cb033; }
 .wc-act-say { flex: none; width: 42px; height: 42px; border: none; border-radius: 50%; background: #fff; color: #2a6cb0; cursor: pointer; display: grid; place-items: center; box-shadow: 0 2px 8px #17324d1f; transition: transform .12s; }
 .wc-act-say:hover { transform: scale(1.08); }
 .wc-act-say svg, .wc-act-say i { width: 20px; height: 20px; }
+/* Spans the whole row, under the step it answers. A match is celebrated and
+   a mismatch is never called wrong -- see activityStepKeyHtml for why: a
+   quarter of the parsed keys are notes to the adult rather than answers. */
+.wc-act-key[hidden] { display: none; }
+.wc-act-key { grid-column: 1 / -1; margin: 2px 0 0; font-size: 16px; line-height: 1.4; }
+.wc-act-yes { display: inline-flex; align-items: center; gap: 6px; color: #2c6b45; font-weight: var(--weight-bold, 700); }
+.wc-act-yes svg, .wc-act-yes i { width: 17px; height: 17px; }
+.wc-act-shown { color: #17324d; }
+.wc-act-shown em { font-style: normal; color: #5a6f88; letter-spacing: .03em; text-transform: uppercase; font-size: 12px; margin-right: 6px; }
 /* The marking notes are written to the adult beside the learner, so the panel
    says so on its face rather than passing adult prose off as a child's answer. */
 /* `display` beats the [hidden] attribute, so both panels need saying

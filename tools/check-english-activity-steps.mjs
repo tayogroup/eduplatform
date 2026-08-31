@@ -16,14 +16,31 @@
 // Nothing about that is visible from the outside — the slide looks complete —
 // so every activity is checked for it rather than sampled.
 //
-// Mutation-tested five ways: removing the inline pass (grade 1 falls to 0),
-// raising the newline floor, a marker strip that eats two extra characters,
-// dropping the empty-text fallback, and renaming the function so extraction
-// fails. Four are caught; the fifth is a NO-OP on the content as it stands and
-// is recorded here so nobody chases it — `text: … || line` only fires for an
-// item line that is nothing but its own marker ("3."), and there are 0 of
-// those in 524 item lines. The "step has no text" assertion below is what
-// would catch it the day such a line is written. Both are for future content.
+// Mutation-tested nine ways. Caught: removing the inline pass (grade 1 falls to
+// 0), raising the newline floor, a marker strip that eats two extra characters,
+// renaming either extracted function, dropping the strict key pattern (46 keyed
+// activities fall to 41), and removing the key run's ascending check.
+//
+// Two survive, and they are opposite cases worth telling apart before anyone
+// chases them again:
+//
+//   NO-OP. Dropping `text: … || line` and loosening the key count to
+//   `marks.length < wanted` both change nothing, because the content has 0
+//   item lines that are only a marker and 0 key runs longer than their step
+//   list. The assertions that would catch them are written; there is simply
+//   nothing to catch yet. Both are for future content.
+//
+//   A REAL HOLE, now closed. Removing the ascending check on the key run
+//   survived the first version of this gate, and interrogating it is what
+//   found the worst defect on the slide: three activities have a key run that
+//   COUNTS right and is numbered wrong. "250 shells, then 245 shells." reads
+//   as two markers against two steps; "Items 1 and 3 are true; item 2 is
+//   false…" reads as 1, 3, 2, 4 against four. Bound by position that puts item
+//   3's answer under step 2 — a real, confident answer attached to the wrong
+//   question, which is the one thing on this slide a child cannot detect and
+//   the exact shape this repo already shipped once in the Computing quiz keys.
+//   The numbering assertion below closes it, and it names all three when the
+//   guard is removed.
 //
 // It exercises the SHIPPED function. `activitySteps` is module-scoped in
 // english.js and there is nothing to import, so its source is extracted and
@@ -40,6 +57,18 @@ const GRADES = [1, 2, 3, 4];
 // passes while a whole grade quietly drops out.
 const FLOORS = { 1: 17, 2: 38, 3: 43, 4: 52 };
 const STEP_FLOOR = 585;
+// Stepped activities whose marking notes carry a per-step answer run. Floored
+// for the same reason as the steps: a key run that stops parsing shows the
+// child nothing and looks exactly like an activity that never had answers.
+const KEY_FLOOR = 46;
+// Deliberately the gate's OWN copy of the two key patterns rather than the
+// extracted ones. Everything else here runs the shipped code, because a copy
+// would pass while the real thing was broken — but the numbering check below
+// has to be able to disagree with the parser, and a check that reuses the thing
+// it is checking cannot. If these drift from english.js the assertion fires,
+// which is the loud failure and the right one.
+const KEY_STRICT_PROBE = /(?:^|(?<=[.;,])|(?<=[.;,]\s))\s*(\d+)[.)]?\s+/g;
+const KEY_LOOSE_PROBE = /(?<![\d.])(\d+)[.)]?\s+/g;
 
 const die = (code, message) => { console.error(`✗ ${message}`); process.exitCode = code; };
 
@@ -66,23 +95,29 @@ const findFunction = (marker) => {
 const pieces = [
   findLine("const ACTIVITY_ITEM_MARK ="),
   findLine("const ACTIVITY_INLINE_MARK ="),
+  findLine("const ACTIVITY_KEY_STRICT ="),
+  findLine("const ACTIVITY_KEY_LOOSE ="),
   findFunction("function activitySteps(activity)"),
+  findFunction("function activityKeyRun(summary, pattern, wanted)"),
+  findFunction("function activityStepKeys(activity, items)"),
 ];
 if (pieces.some((piece) => !piece)) {
-  console.error(`✗ could not extract activitySteps and its patterns from ${SHELL}.`);
+  console.error(`✗ could not extract activitySteps/activityStepKeys and their patterns from ${SHELL}.`);
   console.error("  The gate cannot read what it is meant to check, so it is not reporting a pass.");
   console.error("  If the function was renamed or moved, update the markers in this file.");
   process.exit(2);
 }
 
 let activitySteps;
-try { activitySteps = new Function(`${pieces.join("\n")}\nreturn activitySteps;`)(); }
+let activityStepKeys;
+try { [activitySteps, activityStepKeys] = new Function(`${pieces.join("\n")}\nreturn [activitySteps, activityStepKeys];`)(); }
 catch (error) { console.error(`✗ extracted source did not evaluate: ${error.message}`); process.exit(2); }
 
 const problems = [];
 const counts = {};
 let total = 0;
 let steps = 0;
+let keyed = 0;
 
 for (const grade of GRADES) {
   const dir = `src/prototypes/ehel-academy/english/grade-${grade}/data/units`;
@@ -115,12 +150,41 @@ for (const grade of GRADES) {
         .filter((word) => !shown.includes(word.replace(/[,;]$/, "")))
         .filter((word) => !/^(?:\d+[.):]?|[a-z][.)])$/i.test(word));
       if (lost.length) problems.push(`${where}: ${lost.length} word(s) reach no slide — ${lost.slice(0, 6).join(" ")}`);
+
+      // The per-step answers. Length is the whole safety property: a key run
+      // that does not line up one-for-one with the steps would put a real
+      // answer under the wrong question, which reads as correct and is the one
+      // failure here a child cannot detect.
+      const keys = activityStepKeys(activity, items);
+      if (keys) {
+        keyed += 1;
+        if (keys.length !== items.length) problems.push(`${where}: ${keys.length} answers against ${items.length} steps`);
+        for (const [index, key] of keys.entries()) {
+          if (!String(key || "").trim()) problems.push(`${where}: answer ${index + 1} is empty`);
+        }
+        // The numbering is checked here INDEPENDENTLY of the parser, because the
+        // count matching is not enough on its own and three activities prove it.
+        // "250 shells, then 245 shells." offers two numbers against two steps;
+        // "Items 1 and 3 are true; item 2 is false…" offers 1, 3, 2, 4 against
+        // four. Bound by position, the second one puts item 3's answer under
+        // step 2 — an answer that is real, confident and attached to the wrong
+        // question, which is the one failure on this slide a child cannot
+        // detect. The shipped code refuses all three; without this the gate
+        // could not tell if it stopped.
+        const summary = String(activity.answerSummary || "").trim();
+        const ascends = [KEY_STRICT_PROBE, KEY_LOOSE_PROBE].some((pattern) => {
+          const found = [...summary.matchAll(pattern)].map((match) => Number(match[1]));
+          return found.length === items.length && found.every((value, index) => value === index + 1);
+        });
+        if (!ascends) problems.push(`${where}: answers were bound to steps from a run that is not numbered 1..${items.length}`);
+      }
     }
   }
 }
 
 const covered = Object.values(counts).reduce((sum, n) => sum + n, 0);
 console.log(`english activities, grades 1-4: ${covered} of ${total} become checklists, ${steps} tickable steps`);
+console.log(`  ${keyed} of those carry a per-step answer in their marking notes (floor ${KEY_FLOOR})`);
 for (const grade of GRADES) console.log(`  grade ${grade}: ${counts[grade]} of ${FLOORS[grade]} floor`);
 
 for (const grade of GRADES) {
@@ -128,6 +192,10 @@ for (const grade of GRADES) {
     die(1, `grade ${grade} split ${counts[grade]} activities into steps, below the recorded floor of ${FLOORS[grade]}.`
       + " Coverage may rise and never fall — a split that stops matching leaves every activity as one block of text and says nothing.");
   }
+}
+if (keyed < KEY_FLOOR) {
+  die(1, `${keyed} activities got a per-step answer run, below the recorded floor of ${KEY_FLOOR}.`
+    + " A key run that stops parsing shows the child nothing and is indistinguishable from an activity that never had answers.");
 }
 if (steps < STEP_FLOOR) {
   die(1, `${steps} steps across grades 1-4, below the recorded floor of ${STEP_FLOOR}.`

@@ -324,7 +324,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                     'userdata-prequran-sessionid' => (int)$session->id,
                     'userdata-prequran-workspaceid' => $workspaceid > 0 ? $workspaceid : (int)($session->workspaceid ?? 0),
                     'userdata-prequran-studentid' => $studentid,
-                ]
+                ] + (in_array($role, ['teacher', 'admin_observer'], true) ? [] : [
+                    // Content-first for learners (owner, 2026-08-30): sidebar
+                    // starts collapsed so slides / a shared screen use the
+                    // full width. Mirrors the legacy join door and the
+                    // externallib live_join — this port predated the flag.
+                    'userdata-bbb_show_participants_on_login' => 'false',
+                ])
             );
         } catch (Throwable $e) {
             pqlsesl_audit((int)$session->id, 'bbb_join_failed', 'session', (int)$session->id, ['error' => $e->getMessage()]);

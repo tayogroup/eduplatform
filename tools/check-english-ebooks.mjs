@@ -229,11 +229,14 @@ try {
         }
       } else fail(`book-comprehension ${key} ${where}: unknown kind "${question.kind}".`);
     });
-    // 12 per unit since 2026-08-31 (owner: "expand to 12"), doubled from the
-    // original 6 at the same mix ratio.
-    if ((set.questions || []).length && (kinds.choice !== 6 || kinds.picture !== 4 || kinds.order !== 2)) fail(`book-comprehension ${key}: kind mix choice ${kinds.choice}/picture ${kinds.picture}/order ${kinds.order}, expected 6/4/2.`);
-    if (kinds.order === 2 && orderBooks[0] === orderBooks[1]) fail(`book-comprehension ${key}: both order questions walk ${orderBooks[0]} — the second one must take another book.`);
-    if (used.size && used.size < 4) fail(`book-comprehension ${key}: only ${used.size} distinct book(s) used — the set is about the shelf, not one book.`);
+    // Per-grade set sizes, each an owner decision on 2026-08-31: 12 at Grades
+    // 1-2 ("expand to 12"), 18 at Grades 3-4 — six more per unit when those
+    // shelves grew to seven books, all six about the new books. Same mix
+    // ratio throughout.
+    const expect = set.grade <= 2 ? { choice: 6, picture: 4, order: 2, books: 4 } : { choice: 9, picture: 6, order: 3, books: 6 };
+    if ((set.questions || []).length && (kinds.choice !== expect.choice || kinds.picture !== expect.picture || kinds.order !== expect.order)) fail(`book-comprehension ${key}: kind mix choice ${kinds.choice}/picture ${kinds.picture}/order ${kinds.order}, expected ${expect.choice}/${expect.picture}/${expect.order}.`);
+    if (orderBooks.length && new Set(orderBooks).size !== orderBooks.length) fail(`book-comprehension ${key}: order questions repeat a book — each one must walk a different story.`);
+    if (used.size && used.size < expect.books) fail(`book-comprehension ${key}: only ${used.size} distinct book(s) used — the set is about the shelf, not one book.`);
   }
   // The floor: every Grade 1-4 unit 1-10 carries a set (40 — unit 0 is
   // withdrawn and deliberately has none). A parser that matches nothing, or a

@@ -229,11 +229,10 @@ try {
         }
       } else fail(`book-comprehension ${key} ${where}: unknown kind "${question.kind}".`);
     });
-    // Per-grade set sizes, each an owner decision on 2026-08-31: 12 at Grades
-    // 1-2 ("expand to 12"), 18 at Grades 3-4 — six more per unit when those
-    // shelves grew to seven books, all six about the new books. Same mix
-    // ratio throughout.
-    const expect = set.grade <= 2 ? { choice: 6, picture: 4, order: 2, books: 4 } : { choice: 9, picture: 6, order: 3, books: 6 };
+    // 18 per unit at EVERY grade since the seven-book shelves reached Grades
+    // 1-2 too (owner, 2026-08-31, in three steps the same day: 12 everywhere,
+    // then 18 at 3-4 with their new shelves, then 18 at 1-2 with theirs).
+    const expect = { choice: 9, picture: 6, order: 3, books: 6 };
     if ((set.questions || []).length && (kinds.choice !== expect.choice || kinds.picture !== expect.picture || kinds.order !== expect.order)) fail(`book-comprehension ${key}: kind mix choice ${kinds.choice}/picture ${kinds.picture}/order ${kinds.order}, expected ${expect.choice}/${expect.picture}/${expect.order}.`);
     if (orderBooks.length && new Set(orderBooks).size !== orderBooks.length) fail(`book-comprehension ${key}: order questions repeat a book — each one must walk a different story.`);
     if (used.size && used.size < expect.books) fail(`book-comprehension ${key}: only ${used.size} distinct book(s) used — the set is about the shelf, not one book.`);

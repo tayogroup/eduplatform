@@ -228,7 +228,18 @@ const FINAL_QUIZ_STORAGE_KEY = `ehel-english-g${gradeNumber}-course-final-quiz-v
 const PLACEMENT_STORAGE_KEY = `ehel-english-g${gradeNumber}-placement-exam-v1`;
 const AI_STORAGE_KEY = `ehel-english-g${gradeNumber}-u${unitNumber}-ai-v1`;
 const AI_VOICE_ID = "XfNU2rGpBa01ckF309OY";
-const AI_NARRATION_RATE = 0.90;
+// Younger learners need it slower (owner, 2026-08-28: Grades 1-4 read too
+// fast). English renders every clip at the voice's natural speed — the
+// generator sends no `speed` (tools/lib/ehel-tts.js) — and paces it in the
+// player, so this changes no bytes: nothing to re-render, nothing to re-upload,
+// and NO AUDIO_RELEASE bump, because the files on the CDN are untouched and a
+// learner's cached copy is still the right recording.
+// Grades 5-8 keep the 0.90 they have always had.
+const AI_NARRATION_RATE = gradeNumber <= 2 ? 0.80 : gradeNumber <= 4 ? 0.85 : 0.90;
+// The rate is printed under several Listen buttons, so it has to follow the
+// constant — a hardcoded "0.90x" beside audio playing at 0.80x is a caption
+// that lies about what the learner is hearing.
+const AI_NARRATION_RATE_LABEL = `${AI_NARRATION_RATE.toFixed(2)}x`;
 // Absolute once a launch names the platform, root-relative otherwise — see
 // wehel.js :: platformOrigin. English is served from the CDN like every other
 // subject, so a bare "/local/hubredirect/…" here reached the CDN and 404ed,
@@ -389,6 +400,50 @@ const sections = [
   ["reflect", "sparkles", "My progress"],
 ];
 
+// Grades 1-4 rearrange the reading sections (owner, 2026-08-31). Four moves,
+// one guard, and they stand or fall together:
+//
+//   - The picture-book shelf (`ebooks`) takes the slot straight after Core
+//     words and is CALLED "Reading" there — the first reading a young learner
+//     meets in a unit is the illustrated books.
+//   - A NEW section, `book-comprehension`, follows it: interactive questions
+//     about those books (tap the picture, tap the word, put the story in
+//     order), one combined set per unit in BOOK_COMPREHENSION_SETS below. It
+//     is a real step — countable, and it gates Grammar — exactly as the old
+//     Comprehension did.
+//   - The unit's own texts (`reading`, still "Reading & story") move to the
+//     shelf's old slot after the Quiz.
+//   - The old text Comprehension is HIDDEN at these grades for now (owner,
+//     same day): its row is removed here, which takes it out of the nav, the
+//     unlock chain and the countable list in one move — visibleSections,
+//     sectionChain and countableSectionIds all derive from this array. Its
+//     renderer and data are untouched, so restoring it is reinserting the row.
+//
+// Grades 5-8 keep their order and their Comprehension — they draw no Books
+// entry at all (unitEbooks stops at 4) — and every move is written as a no-op
+// wherever a row is missing, so it cannot damage a list that lacks one.
+//
+// SECTION_CHAIN below gets the SAME moves under the SAME guard, and the two
+// must move together: sectionUnlocked() locks by chain prefix, so a nav entry
+// sitting above its own chain position draws a padlock in the middle of an
+// otherwise-open list — the exact shape the gate's own history calls "the
+// lock looking broken".
+function swapSectionRows(list, idA, idB) {
+  const at = (id) => list.findIndex((row) => (Array.isArray(row) ? row[0] : row) === id);
+  const a = at(idA);
+  const b = at(idB);
+  if (a > -1 && b > -1) [list[a], list[b]] = [list[b], list[a]];
+}
+if (gradeNumber <= 4) {
+  swapSectionRows(sections, "reading", "ebooks");
+  const shelfRow = sections.find((row) => row[0] === "ebooks");
+  if (shelfRow) shelfRow[2] = "Reading";
+  const shelfAt = sections.findIndex((row) => row[0] === "ebooks");
+  if (shelfAt > -1) sections.splice(shelfAt + 1, 0, ["book-comprehension", "list-checks", "Comprehension"]);
+  const oldComprehension = sections.findIndex((row) => row[0] === "comprehension");
+  if (oldComprehension > -1) sections.splice(oldComprehension, 1);
+}
+
 // One line under each row of the overview's unit guide: what a learner does in
 // the section, and what finishes it. Each line is written from the section's
 // own completion rule — every word known, the eight-word draft, the 60% pass
@@ -410,6 +465,7 @@ const SECTION_HINTS = {
   games: "Play every game once.",
   quiz: "Answer all the questions. Get more than half right to pass. You can try again.",
   ebooks: "Read or watch one book to the end.",
+  "book-comprehension": "Answer the questions about your books. Tap the right picture or word.",
   reflect: "Choose an answer for every sentence about how you did.",
   capstone: "Your big project for the whole grade. Look at it any time — it opens when you reach Unit 10.",
 };
@@ -579,7 +635,10 @@ const SECTION_GUIDES = {
         "Read the text on the screen. Read it slowly, and read it out loud if you can.",
         "To hear it read to you, press “Prepare audio” and then the play button. Listen and follow the words with your finger.",
         ...(listening.length ? [`${listNames(listening)} ${listening.length === 1 ? "is a listening text" : "are listening texts"}: listen to ${listening.length === 1 ? "it" : "them"} first, then read along.`] : []),
-        ...(story.length ? [`${listNames(story)} is the story of this unit. Read it carefully — the Comprehension questions are about it and the other texts.`] : []),
+        // The Comprehension pointer holds only where the TEXT Comprehension is
+        // drawn — Grades 5-8. At 1-4 that section is hidden and "Comprehension"
+        // names the book questions, which are not about these texts.
+        ...(story.length ? [`${listNames(story)} is the story of this unit. Read it carefully${gradeNumber <= 4 ? "" : " — the Comprehension questions are about it and the other texts"}.`] : []),
         "Use “Next text” and “Previous text” to move between the texts. Read every one.",
       ],
       finish: "Press “Finished reading” when you have read all the texts.",
@@ -663,6 +722,15 @@ const SECTION_GUIDES = {
       "Read or watch it right to the end.",
     ],
     finish: "Press “Finish book” on the last page. One book finishes this section — read more if you like.",
+  }),
+  "book-comprehension": () => ({
+    steps: [
+      "The questions are about the books on your shelf. One question at a time.",
+      "Press the speaker to hear the question read to you.",
+      "Tap the picture or the word you think is right. If it is not right, try again — nothing is lost.",
+      "For the story-order question, tap the pictures in the order they happen in the book.",
+    ],
+    finish: "When every question has a star, press “Finish comprehension”.",
   }),
   reflect: () => ({
     steps: [
@@ -992,7 +1060,7 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // the next unit shut.
 const countableSectionIds = () => sections
   .filter(([id]) => !["overview", "live", "teacherguide", "unit-plan", "story-library", "glossary"].includes(id))
-  .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length))
+  .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "book-comprehension" || bookComprehensionQuestions().length))
   .map(([id]) => id);
 // The server's view of every unit, handed over by the shell before load() and
 // null on a per-device launch. localStorage alone made this gate a per-device
@@ -1087,6 +1155,15 @@ function unitIsLocked() {
 // app lands on, so the lecture would unlock before the page had been read.
 // It stays nonCountable, so completing it adds nothing to the unit's 100%.
 const SECTION_CHAIN = ["overview", "lecture", "dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "games", "quiz", "ebooks", "reflect", "final-quiz"];
+// The Grades 1-4 rearrangement (beside the sections table above) lands here
+// too — same ids, same guard — because this chain IS the unlock order and the
+// nav must mirror it, or a moved entry padlocks in the middle of an open
+// list. `comprehension` needs no removing: sectionChain() filters this list
+// by visibleSections, and the row is gone from `sections` at these grades.
+if (gradeNumber <= 4) {
+  swapSectionRows(SECTION_CHAIN, "reading", "ebooks");
+  SECTION_CHAIN.splice(SECTION_CHAIN.indexOf("ebooks") + 1, 0, "book-comprehension");
+}
 // Built against what this unit actually shows: a unit with no game pack has no
 // Games entry, and a chain that still demanded it would stall the learner at
 // the Quiz forever. `final-quiz` only exists on Unit 10, and comes last there.
@@ -3402,6 +3479,1034 @@ const ebookCatalog = [
     ],
   },
 
+  // ---------------------------------------------------------------- Grade 2, books four to seven
+  // Forty books, four for each of units 1 to 10, taking Grade 2's shelf from
+  // three books per unit to seven.
+  //
+  // As at Grade 1, they are four different KINDS of book rather than four more
+  // stories, and each comes from a text the unit already carries:
+  //
+  //   book 4  the unit's own STORY, retold          (its Story reading)
+  //   book 5  the unit's POEM, said out loud        (its poem)
+  //   book 6  the unit's LISTENING text             (its listening)
+  //   book 7  a look-and-name book of its WORDS     (its vocabularyGroups)
+  //
+  // **Book four needed no invention at all.** Every Grade 2 unit's Story stars
+  // AMAL, and not one of the thirty Zuri books tells it — ten finished, narrated,
+  // reviewed stories sitting inside the course, unread. So the Amal series now
+  // runs unbroken from Grade 1 to Grade 4, and the child who met her on her first
+  // day at school follows her through Year 2.
+  //
+  // Books five and six are the poem and the listening; book six puts the
+  // conversation somewhere and carries it one step past where the recording
+  // stops, which is the Grade 3 rule for a dialogue. Book seven is the vocabulary
+  // revision and stays in the Zuri storyworld, so the shelf keeps its own lead.
+  //
+  // One face was missing from the whole chain and is added in the kit: LEILA, the
+  // firefighter of Unit 2, who has a name, a uniform and lines in two texts.
+  // Illustrations: tools/create-grade2-shelf-ebook-illustrations.js.
+  {
+    id: "amals-first-week",
+    title: "Amal's First Week",
+    grades: [2],
+    units: [1],
+    level: "Level 2",
+    description: "Amal starts a new school, learns the days of the week, and on Thursday does for Nora what Leo did for her.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Amal's First Week is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 1 shelf. It retells the Unit 1 story of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Amal's First Week. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal in her new classroom with Teacher Yasmin and Leo, beside a calendar and a row of bunting" },
+      { image: "page-02.svg", sound: "woman-happy", text: "It was Amal's first day at a new school. She held her mother's hand and looked at the big blue door.", alt: "Amal and her mother standing outside the school building" },
+      { image: "page-03.svg", sound: "woman-happy", text: "\"Good morning. Welcome!\" said a kind teacher. \"My name is Teacher Yasmin. What is your name?\"", alt: "Teacher Yasmin welcoming Amal at the school gate with her arm held out" },
+      { image: "page-04.svg", sound: "child-happy", text: "\"My name is Amal. A-M-A-L,\" she said. She felt a little braver now.", alt: "Amal standing tall in the classroom spelling her name for her teacher" },
+      { image: "page-05.svg", sound: "child-surprised", text: "Inside, there was a big calendar on the wall, and a chart of all the colours.", alt: "Amal pointing at a colour chart and a calendar on the classroom wall" },
+      { image: "page-06.svg", sound: "child-happy", text: "\"Hello! My name is Leo,\" said a boy. \"Today is Saturday. You can be my partner!\"", alt: "Leo smiling and pointing as he introduces himself to Amal" },
+      { image: "page-07.svg", sound: "child-happy", text: "The whole class sang. \"Saturday, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday!\"", alt: "The class singing the days of the week with their hands up beside the calendar" },
+      { image: "page-08.svg", sound: "child-happy", text: "\"I like drawing,\" said Amal. \"I like football,\" said Leo. \"And mangoes!\"", alt: "Amal and Leo standing together beside Amal's drawing" },
+      { image: "page-09.svg", sound: "child-happy", text: "On Monday she learned her colours. On Tuesday she counted to twelve.", alt: "Amal pointing at the colour chart beside a table with a red book on it" },
+      { image: "page-10.svg", sound: "child-sad", text: "On Thursday a new girl came. She stood by the door and looked shy.", alt: "A shy new girl standing by the classroom door while Amal watches" },
+      { image: "page-11.svg", sound: "child-happy", text: "\"Hello. My name is Amal. You can be my partner today.\" \"My name is Nora,\" she said.", alt: "Amal welcoming Nora while Teacher Yasmin watches and smiles" },
+      { image: "page-12.svg", sound: "child-happy", text: "\"I have two friends now,\" Amal told her mother. \"And I know all the days of the week!\"", alt: "Amal telling her mother about her week at home, with confetti falling" },
+    ],
+  },
+  {
+    id: "when-i-open-up-a-book",
+    title: "When I Open Up a Book",
+    grades: [2],
+    units: [1],
+    level: "Level 2",
+    description: "Every page whispers Look! Look! Look! - and out come sports and monkeys, trains and kings.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "When I Open Up a Book is an original Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 1 shelf. It is built on the Unit 1 poem of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "When I Open Up a Book. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal beside a shelf of books with one book lying open on the floor" },
+      { image: "page-02.svg", sound: "child-happy", text: "Amal knows a poem about books. She says it before she starts to read.", alt: "Amal standing in front of a tall shelf of colourful books" },
+      { image: "page-03.svg", sound: "child-surprised", text: "When I open up a book...", alt: "Amal looking at a big open book with music notes floating above it" },
+      { image: "page-04.svg", sound: "child-surprised", text: "each page whispers, \"Look! Look! Look!\"", alt: "Amal pointing at the pages of a large open book" },
+      { image: "page-05.svg", sound: "zebra-happy", text: "Sports!", alt: "A zebra running fast across the savanna with a red ball nearby and dust at its feet" },
+      { image: "page-06.svg", sound: "monkey-happy", text: "And monkeys!", alt: "Three monkeys with their arms up under an acacia tree" },
+      { image: "page-07.svg", sound: "child-surprised", text: "And trains!", alt: "Amal pointing at a long train standing on the road" },
+      { image: "page-08.svg", sound: "child-happy", text: "And kings!", alt: "Amal and Leo beside an open book with a gold crown above it" },
+      { image: "page-09.svg", sound: "child-happy", text: "Stories of amazing things.", alt: "Amal in front of a shelf of books with one open on the floor beside her" },
+      { image: "page-10.svg", sound: "child-happy", text: "Nora says it with her. They say it three times.", alt: "Nora and Amal saying the poem together beside an open book with music notes" },
+      { image: "page-11.svg", sound: "child-happy", text: "\"Which book will you open?\" asked Amal. Leo chose the one about the fox.", alt: "Amal pointing at the bookshelf while Leo chooses a book" },
+      { image: "page-12.svg", sound: "child-happy", text: "When I open up a book, each page whispers, \"Look! Look! Look!\"", alt: "Amal with her arms up in front of the bookshelf, an open book beside her and confetti falling" },
+    ],
+  },
+  {
+    id: "seven-days-make-one-week",
+    title: "Seven Days Make One Week",
+    grades: [2],
+    units: [1],
+    level: "Level 2",
+    description: "The class sings the days of the week, one child and one day at a time, all the way to seven.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Seven Days Make One Week is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 1 shelf. It is built on the Days of the Week song from the Unit 1 listening of the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Seven Days Make One Week. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Teacher Yasmin and Amal singing beside a big classroom calendar under bunting" },
+      { image: "page-02.svg", sound: "woman-happy", text: "\"Stand up, everybody,\" said Teacher Yasmin. \"We will sing the days of the week.\"", alt: "Teacher Yasmin pointing at the classroom calendar" },
+      { image: "page-03.svg", sound: "child-happy", text: "\"Saturday!\" sang Amal and Leo. Saturday is the first day of our week.", alt: "Amal and Leo singing with their arms up beside the calendar" },
+      { image: "page-04.svg", sound: "child-happy", text: "\"Sunday!\" sang Nora.", alt: "Nora and Amal singing beside the calendar with the second day ringed" },
+      { image: "page-05.svg", sound: "child-happy", text: "\"Monday!\" sang Leo and Sami.", alt: "Leo and Sami standing beside the calendar with the third day ringed" },
+      { image: "page-06.svg", sound: "child-happy", text: "\"Tuesday!\" sang Amal, a little louder.", alt: "Amal with her arms up beside the calendar and floating music notes" },
+      { image: "page-07.svg", sound: "child-happy", text: "\"Wednesday!\" sang Theo, and Nora clapped.", alt: "Theo with his arms up beside Nora and the calendar" },
+      { image: "page-08.svg", sound: "child-happy", text: "\"Thursday!\" sang Amal and Maya.", alt: "Amal and Maya standing together beside the calendar" },
+      { image: "page-09.svg", sound: "child-happy", text: "\"Friday!\" sang everybody. Friday is a day to rest.", alt: "Amal singing with her arms up beside the calendar and music notes" },
+      { image: "page-10.svg", sound: "woman-happy", text: "\"Now count them,\" said Teacher Yasmin. \"How many days did we sing?\"", alt: "Teacher Yasmin pointing at the calendar while Amal counts" },
+      { image: "page-11.svg", sound: "child-happy", text: "One, two, three, four, five, six, seven. Seven days make one week!", alt: "Amal pointing at four big number cards showing one, two, three and four" },
+      { image: "page-12.svg", sound: "child-happy", text: "Seven days in all. \"Again!\" said Leo. \"And this time, faster!\"", alt: "The class singing together under bunting with confetti and music notes around them" },
+    ],
+  },
+  {
+    id: "the-first-the-second-the-third",
+    title: "The First, the Second, the Third",
+    grades: [2],
+    units: [1],
+    level: "Level 2",
+    description: "Zuri learns the words that go on a calendar - not one, two, three, but first, second, third.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The First, the Second, the Third is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 1 shelf. It names the unit's own calendar words, numbers and order words. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "The First, the Second, the Third. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri the meerkat with her arms up beside a big calendar under an acacia tree" },
+      { image: "page-02.svg", sound: "zuri-happy", text: "This is a calendar. A calendar shows every day of the month.", alt: "Zuri standing beside a large calendar board on the savanna" },
+      { image: "page-03.svg", sound: "zuri-happy", text: "This is the first day.", alt: "Zuri beside the calendar with the first day ringed in red" },
+      { image: "page-04.svg", sound: "zuri-happy", text: "This is the second day. And this is the third.", alt: "Zuri with her arms up beside the calendar with the third day ringed" },
+      { image: "page-05.svg", sound: "kiki-happy", text: "Seven days make one week. Kiki counts them all.", alt: "Zuri and Kiki beside the calendar with the seventh day ringed" },
+      { image: "page-06.svg", sound: "zuri-happy", text: "One, two, three, four.", alt: "Zuri pointing at four big number cards showing one, two, three and four" },
+      { image: "page-07.svg", sound: "zuri-happy", text: "Five, six, seven, eight.", alt: "Zuri beside four number cards showing five, six, seven and eight" },
+      { image: "page-08.svg", sound: "zuri-happy", text: "Nine, ten, eleven, twelve.", alt: "Zuri with her arms up beside four number cards showing nine, ten, eleven and twelve" },
+      { image: "page-09.svg", sound: "zuri-surprised", text: "The twelfth day of the month. That is a long way from the first!", alt: "A surprised Zuri beside the calendar with the twelfth day ringed" },
+      { image: "page-10.svg", sound: "zuri-happy", text: "The twentieth day is Kiki's birthday. Zuri made her a card.", alt: "Zuri beside the calendar with the twentieth ringed and a greeting card nearby" },
+      { image: "page-11.svg", sound: "zuri-happy", text: "The thirtieth day is the last day. Then a new month begins.", alt: "Zuri with her arms up beside the calendar with the thirtieth day ringed" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "First, second, third. \"I can say them all,\" said Zuri.", alt: "Zuri and Kiki cheering beside the calendar with confetti falling" },
+    ],
+  },
+  {
+    id: "the-helpers-of-warta-street",
+    title: "The Helpers of Warta Street",
+    grades: [2],
+    units: [2],
+    level: "Level 2",
+    description: "A window cleaner, a bus driver, two firefighters and a police officer - and the one job Amal thinks is the kindest.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Helpers of Warta Street is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 2 shelf. It retells the Unit 2 story of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "The Helpers of Warta Street. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal waving on Warta Street beside the market stall, the shops and Karim the window cleaner" },
+      { image: "page-02.svg", sound: "child-happy", text: "\"Look, Mum,\" said Amal from the window. \"The window cleaner is here!\"", alt: "Amal pointing out of the window at home while her mother stands beside her" },
+      { image: "page-03.svg", sound: "man-happy", text: "Karim used a long pole to reach the high glass. \"Good morning, Amal!\" he called.", alt: "Karim the window cleaner with his arms up beside a ladder and a bucket in front of the shops" },
+      { image: "page-04.svg", sound: "woman-happy", text: "A big blue bus stopped at the corner. Nadia the bus driver waved.", alt: "Nadia the bus driver waving beside the town bus at the bus stop" },
+      { image: "page-05.svg", sound: "child-happy", text: "\"One, two, three... ten! There are ten people on your bus!\" laughed Amal.", alt: "Amal pointing at number cards while the town bus waits behind her" },
+      { image: "page-06.svg", sound: "man-surprised", text: "Then a loud bell rang. There was smoke behind the market. \"A fire!\" shouted Karim.", alt: "Karim with his arms up in alarm as grey smoke rises behind the market stall" },
+      { image: "page-07.svg", sound: "bell", text: "A red fire engine came fast down the street. Two firefighters jumped out.", alt: "A red fire engine on Warta Street with Leila the firefighter and a surprised Amal" },
+      { image: "page-08.svg", sound: "woman-surprised", text: "They wore helmets, heavy boots and thick gloves. Leila wore a mask so she could breathe.", alt: "Leila the firefighter beside a helmet, boots, gloves and a mask laid out in a row" },
+      { image: "page-09.svg", sound: "goat", text: "The firefighters put out the fire. And look - they rescued the baby goats!", alt: "Leila smiling beside two rescued goats in front of the fire engine" },
+      { image: "page-10.svg", sound: "man-happy", text: "Rami the police officer arrived on his bicycle. \"Please stand back, my friends.\"", alt: "Rami the police officer with his arm raised beside his bicycle while Amal watches" },
+      { image: "page-11.svg", sound: "man-sad", text: "Old Omar's shop was full of smoke. He looked sad. \"Mum, we must help him,\" said Amal.", alt: "A sad Omar outside his market stall while Amal and her mother come to help" },
+      { image: "page-12.svg", sound: "man-happy", text: "\"You all have important jobs,\" said Omar, \"but today you helped an old shopkeeper. That is the kindest job of all.\"", alt: "Omar, Amal, Karim and Nadia celebrating together outside the mended shop with confetti falling" },
+    ],
+  },
+  {
+    id: "my-neighbourhood",
+    title: "My Neighbourhood",
+    grades: [2],
+    units: [2],
+    level: "Level 2",
+    description: "Come and meet the people in my neighbourhood - the grandmas and grandpas, the mums and dads, and the children too.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "My Neighbourhood is an original Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 2 shelf. It is built on the Unit 2 poem of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "My Neighbourhood. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal with her arms up on her street under bunting, beside the shops and a lamp post" },
+      { image: "page-02.svg", sound: "child-happy", text: "Come and meet the people in my neighbourhood.", alt: "Amal pointing along her street in front of the row of shops" },
+      { image: "page-03.svg", sound: "man-happy", text: "There are neighbours helping neighbours in my neighbourhood.", alt: "Karim and Omar standing together in front of the shops" },
+      { image: "page-04.svg", sound: "woman-happy", text: "There are grandmas and grandpas,", alt: "Grandma Hana and Grandpa standing together on the street" },
+      { image: "page-05.svg", sound: "woman-happy", text: "mums and dads,", alt: "Amal's mother and father standing together beside a lamp post" },
+      { image: "page-06.svg", sound: "child-happy", text: "children too.", alt: "Amal, Leo and Nora with their arms up in front of the shops" },
+      { image: "page-07.svg", sound: "woman-happy", text: "There is Nadia, who drives the bus.", alt: "Nadia the bus driver beside the bus stop and the town bus" },
+      { image: "page-08.svg", sound: "woman-happy", text: "There is Doctor Sarah, at the clinic.", alt: "Doctor Sarah outside the clinic beside a doctor's bag" },
+      { image: "page-09.svg", sound: "man-happy", text: "There is Rami, who keeps us safe at the crossing.", alt: "Rami the police officer with his arm raised beside a striped crossing" },
+      { image: "page-10.svg", sound: "woman-happy", text: "And there is my grandma, who knows everybody's name.", alt: "Amal and Grandma Hana walking together past the shops" },
+      { image: "page-11.svg", sound: "market", text: "In my neighbourhood, the streets around my home.", alt: "Amal pointing at the market stall in front of the row of shops" },
+      { image: "page-12.svg", sound: "child-happy", text: "Come and meet the people in my neighbourhood!", alt: "Amal, Karim, Nadia and Omar all together under bunting with confetti falling" },
+    ],
+  },
+  {
+    id: "firefighter-leila-comes-to-class",
+    title: "Firefighter Leila Comes to Class",
+    grades: [2],
+    units: [2],
+    level: "Level 2",
+    description: "One visitor, one uniform and a class full of questions - including the one nobody expected her to answer honestly.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Firefighter Leila Comes to Class is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 2 shelf. It is built on the Unit 2 listening text An Interview with a Firefighter from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Firefighter Leila Comes to Class. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Leila the firefighter in her blue uniform in the classroom with Amal and Theo under bunting" },
+      { image: "page-02.svg", sound: "woman-happy", text: "\"Firefighter Leila is coming to visit us today,\" said Teacher Yasmin.", alt: "Teacher Yasmin with her arms up telling the class the news while Amal and Nora listen" },
+      { image: "page-03.svg", sound: "child-surprised", text: "A tall woman in a blue uniform walked in. \"Hello again! Do you remember me?\"", alt: "Leila coming through the classroom door while a surprised Amal cheers" },
+      { image: "page-04.svg", sound: "child-happy", text: "Amal put up her hand first. \"What is your job?\"", alt: "Amal with her hand up asking a question while Leila listens, a speech bubble above them" },
+      { image: "page-05.svg", sound: "woman-happy", text: "\"I am a firefighter. I work at the fire station near the market.\"", alt: "Leila pointing at a helmet, boots, gloves and a mask laid out on the classroom floor" },
+      { image: "page-06.svg", sound: "child-happy", text: "\"What happens when there is a fire?\" asked Theo.", alt: "Theo with his hand up asking Leila a question, a speech bubble beside them" },
+      { image: "page-07.svg", sound: "bell", text: "\"The alarm rings, and I ride on the fire engine as fast as we can go.\"", alt: "Leila standing beside the red fire engine on the street" },
+      { image: "page-08.svg", sound: "child-surprised", text: "Nora leaned forward. \"Are you ever scared?\" she asked.", alt: "A surprised Nora asking Leila a quiet question in the classroom" },
+      { image: "page-09.svg", sound: "woman-happy", text: "\"Sometimes,\" said Leila. \"But I remember my training, and I trust my team.\"", alt: "Leila answering thoughtfully with a speech bubble floating beside her" },
+      { image: "page-10.svg", sound: "child-happy", text: "\"What do you do when there is no fire?\" asked Amal. \"We check our equipment.\"", alt: "Amal with her arms up beside Leila and the row of firefighting equipment" },
+      { image: "page-11.svg", sound: "child-happy", text: "Amal wrote every answer in her notepad. She did not want to forget one.", alt: "Amal beside her notepad while Teacher Yasmin smiles" },
+      { image: "page-12.svg", sound: "child-happy", text: "\"Thank you, Leila!\" said the whole class. And Leila waved all the way to the door.", alt: "Leila waving goodbye while Amal, Theo and Nora cheer with confetti falling" },
+    ],
+  },
+  {
+    id: "who-is-helping",
+    title: "Who Is Helping?",
+    grades: [2],
+    units: [2],
+    level: "Level 2",
+    description: "Zuri walks round the whole savanna asking one question, and every answer is somebody doing their job.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Who Is Helping? is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 2 shelf. It names the unit's own jobs, equipment and -ing action words. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "Who Is Helping? Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri with her arms up beside a market stall on the savanna, with Kiki nearby" },
+      { image: "page-02.svg", sound: "giraffe", text: "Who is teaching? Miss Twiga is teaching.", alt: "Miss Twiga the giraffe beside the school board while Zuri watches" },
+      { image: "page-03.svg", sound: "zuri-happy", text: "Who is rescuing? The firefighter is rescuing. Look - a helmet, boots, gloves and a mask.", alt: "Zuri with her arms up beside a helmet, boots, gloves and a mask laid out in a row" },
+      { image: "page-04.svg", sound: "zuri-happy", text: "Who is helping? The doctor is helping.", alt: "Zuri standing beside a doctor's bag under the acacia tree" },
+      { image: "page-05.svg", sound: "market", text: "Who is selling? The shopkeeper is selling.", alt: "Zuri with her arms up beside a market stall with a mango on it" },
+      { image: "page-06.svg", sound: "duku-happy", text: "Who is growing? The farmer is growing. Duku helps with the seeds.", alt: "Duku the donkey beside a handful of seeds while Zuri watches" },
+      { image: "page-07.svg", sound: "zuri-happy", text: "Who is driving? The bus driver is driving.", alt: "Zuri with her arms up beside the town bus on the savanna" },
+      { image: "page-08.svg", sound: "zuri-happy", text: "Who is cleaning? The window cleaner is cleaning.", alt: "Zuri beside a bucket and a mop under the acacia tree" },
+      { image: "page-09.svg", sound: "zuri-happy", text: "Who keeps us safe? The police officer, on a bicycle.", alt: "Zuri standing beside a green bicycle on the savanna" },
+      { image: "page-10.svg", sound: "zuri-happy", text: "Who is asking all the questions? The reporter is - and that is Zuri.", alt: "Zuri with her arms up beside her open notepad" },
+      { image: "page-11.svg", sound: "zuri-happy", text: "Who is watering? Everybody is. A neighbour helps a neighbour.", alt: "Zuri beside a young tree and a watering can pouring onto the soil" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "\"Everybody helps,\" said Zuri. \"And that is the best job of all.\"", alt: "Zuri and Kiki cheering beside the market stall with confetti falling" },
+    ],
+  },
+  {
+    id: "the-big-race",
+    title: "The Big Race",
+    grades: [2],
+    units: [3],
+    level: "Level 2",
+    description: "Amal wins the relay, and then walks back down the field to the boy who lost it.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Big Race is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 3 shelf. It retells the Unit 3 story of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "The Big Race. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal, Theo and Nora on the school field under bunting on sports day" },
+      { image: "page-02.svg", sound: "woman-happy", text: "\"Drink your water and do your best,\" said Teacher Yasmin. \"A strong body is a healthy body.\"", alt: "Teacher Yasmin pointing while Amal listens, a cup of water on the grass" },
+      { image: "page-03.svg", sound: "child-happy", text: "\"My legs are the fastest legs in the school,\" said Theo. \"The red team will win!\"", alt: "Theo with his arms up boasting while Amal and Leo look on" },
+      { image: "page-04.svg", sound: "child-happy", text: "\"Do not worry,\" said Nora. \"We will run together and do our best.\"", alt: "Nora, Amal and Sami standing together as the green team" },
+      { image: "page-05.svg", sound: "child-happy", text: "\"Ready, steady, go!\" The children hopped on one foot across the field.", alt: "Teacher Yasmin starting the hopping race while Leo and Amal hop across the field" },
+      { image: "page-06.svg", sound: "child-surprised", text: "Leo wobbled and nearly fell. \"Keep going, Leo!\" shouted Amal, clapping.", alt: "A wobbling Leo mid-hop while Amal cheers him on with her arms up" },
+      { image: "page-07.svg", sound: "child-happy", text: "Then came the relay. Nora ran fast. Sami ran faster. Then Leo passed the stick to Amal.", alt: "Nora, Sami and Amal running the relay with dust rising behind them" },
+      { image: "page-08.svg", sound: "child-sad", text: "Amal's legs felt slow. \"I am running as fast as I can. But Theo is winning!\"", alt: "A sad Amal running while Theo waves to the crowd far ahead" },
+      { image: "page-09.svg", sound: "child-sad", text: "Theo was waving to the crowd. He did not look at his feet. Suddenly he tripped and fell.", alt: "Theo fallen on the grass with dust around him while a surprised Amal runs past" },
+      { image: "page-10.svg", sound: "child-happy", text: "Amal reached the line first. The green team had won!", alt: "Amal, Nora and Leo cheering under the bunting with confetti falling" },
+      { image: "page-11.svg", sound: "child-sad", text: "But Amal looked back. Theo was still sitting on the grass. \"Are you hurt?\" she asked.", alt: "Amal reaching out a hand to a sad Theo sitting on the field" },
+      { image: "page-12.svg", sound: "woman-happy", text: "\"You ran your best, and you were kind to Theo,\" said Teacher Yasmin. \"That is the true winner.\"", alt: "Teacher Yasmin, Amal, Theo and Nora together under the bunting with confetti falling" },
+    ],
+  },
+  {
+    id: "reach-for-the-sky",
+    title: "Reach for the Sky!",
+    grades: [2],
+    units: [3],
+    level: "Level 2",
+    description: "Nine actions, one poem, and a whole class doing every single one of them.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Reach for the Sky! is an original Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 3 shelf. It is built on the Unit 3 action poem of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Reach for the Sky! Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal, Nora and Leo with their arms up in the school garden under bunting" },
+      { image: "page-02.svg", sound: "woman-happy", text: "\"Everybody stand up,\" said Teacher Yasmin. \"Do each action as you say it.\"", alt: "Teacher Yasmin with her arms up while Amal gets ready" },
+      { image: "page-03.svg", sound: "child-happy", text: "Reach for the sky!", alt: "Amal and Leo stretching both arms up towards the sky" },
+      { image: "page-04.svg", sound: "child-happy", text: "Clap your hands,", alt: "Nora and Amal clapping their hands with music notes floating beside them" },
+      { image: "page-05.svg", sound: "child-happy", text: "touch your toes.", alt: "Amal and Sami bending down to touch their toes" },
+      { image: "page-06.svg", sound: "child-happy", text: "Turn around.", alt: "Theo and Amal turning around with motion arcs curving beside them" },
+      { image: "page-07.svg", sound: "child-happy", text: "Put your finger on your nose.", alt: "Amal and Nora pointing at their own noses" },
+      { image: "page-08.svg", sound: "child-happy", text: "Flap your arms,", alt: "Leo and Amal flapping their arms with motion arcs beside them" },
+      { image: "page-09.svg", sound: "child-happy", text: "jump up high!", alt: "Amal and Sami jumping with dust puffs under their feet" },
+      { image: "page-10.svg", sound: "child-happy", text: "Wiggle your fingers,", alt: "Nora, Amal and Leo holding their hands up and wiggling their fingers" },
+      { image: "page-11.svg", sound: "child-happy", text: "and reach for the sky!", alt: "Amal and Teacher Yasmin with their arms stretched up, music notes beside them" },
+      { image: "page-12.svg", sound: "child-happy", text: "\"Again!\" said Theo. \"And this time, all together.\"", alt: "Amal, Nora, Leo and Theo all reaching for the sky with confetti and music notes" },
+    ],
+  },
+  {
+    id: "get-up-and-move-day",
+    title: "Get Up and Move Day",
+    grades: [2],
+    units: [3],
+    level: "Level 2",
+    description: "One morning a year, the whole school stops its lessons and goes outside to move.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Get Up and Move Day is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 3 shelf. It is built on the Unit 3 listening text of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Get Up and Move Day. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Teacher Yasmin and Amal on the school field under bunting, with coloured hoops on the grass" },
+      { image: "page-02.svg", sound: "woman-happy", text: "\"Good morning, everyone!\" called Teacher Yasmin. \"Choose a corner and get moving!\"", alt: "Teacher Yasmin with her arms up on the field while Sami and Leo listen" },
+      { image: "page-03.svg", sound: "child-happy", text: "In the first corner, Sami jumped from hoop to hoop.", alt: "Sami jumping with his arms up beside three coloured hoops on the grass" },
+      { image: "page-04.svg", sound: "child-happy", text: "\"Jump higher, Leo!\" laughed Sami, as they bounced along the row.", alt: "Leo bouncing between three hoops with dust puffs at his feet" },
+      { image: "page-05.svg", sound: "child-happy", text: "In the next corner, Nora hopped along a chalk path, one foot at a time.", alt: "Nora hopping across the field with dust rising behind her" },
+      { image: "page-06.svg", sound: "child-happy", text: "Near the gate, the children waved flags in the parade.", alt: "Amal with her arms up beside a red flag and a green flag on sticks" },
+      { image: "page-07.svg", sound: "child-happy", text: "Amal waved her flag high, and her little brother waved back from the fence.", alt: "Amal and little Idris both waving beside a blue flag" },
+      { image: "page-08.svg", sound: "child-happy", text: "By the music corner, the children nodded and clapped in time with the drum.", alt: "Theo and Maya clapping beside a red drum with music notes above it" },
+      { image: "page-09.svg", sound: "child-surprised", text: "Theo nodded so fast that his cap nearly fell off, and everybody laughed.", alt: "A surprised Theo nodding hard beside the drum while Nora laughs" },
+      { image: "page-10.svg", sound: "child-happy", text: "Everyone was having fun while moving their bodies.", alt: "Amal and Sami with their arms up beside hoops and a yellow flag" },
+      { image: "page-11.svg", sound: "woman-happy", text: "\"Now drink your water,\" said Teacher Yasmin. \"Moving makes you thirsty.\"", alt: "Teacher Yasmin and Amal beside a tall cup of water on the field" },
+      { image: "page-12.svg", sound: "child-happy", text: "\"Can we have Get Up and Move Day tomorrow too?\" asked Amal.", alt: "Amal, Sami, Nora and Theo all cheering under bunting with confetti and music notes" },
+    ],
+  },
+  {
+    id: "head-arm-hand-finger",
+    title: "Head, Arm, Hand, Finger",
+    grades: [2],
+    units: [3],
+    level: "Level 2",
+    description: "Zuri names every part of herself she can point at, and then makes each one move.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Head, Arm, Hand, Finger is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 3 shelf. It names the unit's own body parts, movement words and command words. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "Head, Arm, Hand, Finger. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri and Kiki with their arms up on the savanna under a row of bunting" },
+      { image: "page-02.svg", sound: "zuri-happy", text: "This is my head. Touch your head!", alt: "Zuri standing large with both arms raised to her head" },
+      { image: "page-03.svg", sound: "kiki-happy", text: "This is my arm. Wave your arm!", alt: "Zuri and Kiki both waving one arm in the air" },
+      { image: "page-04.svg", sound: "zuri-happy", text: "This is my hand. Clap your hands!", alt: "Zuri standing with her hands together on the savanna" },
+      { image: "page-05.svg", sound: "zuri-happy", text: "This is my finger. Wiggle your fingers!", alt: "Zuri and Kiki holding their hands out with fingers spread" },
+      { image: "page-06.svg", sound: "zuri-happy", text: "This is my tummy. And these are my toes!", alt: "Zuri reaching down towards her toes with motion arcs beside her" },
+      { image: "page-07.svg", sound: "elephant-happy", text: "Stand up. Reach up high - as high as an elephant's trunk!", alt: "Zuri stretching up with her arms raised beside the little elephant" },
+      { image: "page-08.svg", sound: "zuri-happy", text: "Turn around. Now turn the other way!", alt: "Zuri turning around with motion arcs curving beside her" },
+      { image: "page-09.svg", sound: "ostrich", text: "Hop like an ostrich. Hop, hop, hop!", alt: "Zuri hopping with her arms up beside the ostrich" },
+      { image: "page-10.svg", sound: "giraffe", text: "Nod your head. Miss Twiga nods hers a very long way.", alt: "Zuri nodding beside Miss Twiga the giraffe" },
+      { image: "page-11.svg", sound: "zuri-happy", text: "Jump! Clap! Wave! Now do them all at once.", alt: "Zuri and Kiki jumping together with dust puffs beneath them" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "\"Head, arm, hand, finger,\" said Zuri. \"I can name them and I can move them.\"", alt: "Zuri, Kiki and the little elephant celebrating under bunting with confetti falling" },
+    ],
+  },
+  {
+    id: "the-night-amal-counted-the-stars",
+    title: "The Night Amal Counted the Stars",
+    grades: [2],
+    units: [4],
+    level: "Level 2",
+    description: "A shadow that is long, then short, then gone - and a sky with more stars in it than anyone can count.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Night Amal Counted the Stars is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 4 shelf. It retells the Unit 4 story of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "lullaby", text: "The Night Amal Counted the Stars. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and Grandma Hana under a starry night sky beside a big acacia tree" },
+      { image: "page-02.svg", sound: "child-happy", text: "Amal woke early. The morning sky was pale and pink, and the sun was low.", alt: "Amal with her arms up in the early village morning" },
+      { image: "page-03.svg", sound: "child-surprised", text: "She ran out to feed the goats. On the sandy ground she saw a long, thin shape.", alt: "A surprised Amal pointing at her long morning shadow, with a goat nearby" },
+      { image: "page-04.svg", sound: "child-happy", text: "\"Look, Adam! My shadow is so long this morning!\"", alt: "Amal pointing at her long shadow while her brother Adam smiles beside her" },
+      { image: "page-05.svg", sound: "child-surprised", text: "By midday the sun was high. Her shadow was short. It hid right under her feet!", alt: "A surprised Amal standing over a tiny shadow at midday" },
+      { image: "page-06.svg", sound: "man-happy", text: "\"The sun did not move by itself,\" said Adam. \"Our Earth is turning, round and round.\"", alt: "Adam pointing at a globe in the village" },
+      { image: "page-07.svg", sound: "child-surprised", text: "A cloud drifted over the sun. Her shadow disappeared. \"No light, no shadow!\"", alt: "Amal with her arms up under two clouds passing across the sun" },
+      { image: "page-08.svg", sound: "woman-happy", text: "In the evening the sky turned orange. \"Come and sit with me,\" said Grandma Hana.", alt: "Amal and Grandma Hana under an orange sunset sky beside the acacia tree" },
+      { image: "page-09.svg", sound: "child-surprised", text: "\"Grandma,\" she whispered, \"there are so many stars!\"", alt: "A surprised Amal pointing up at a sky full of stars beside Grandma Hana" },
+      { image: "page-10.svg", sound: "child-happy", text: "\"One, two, three, four...\" But every time she looked, she found more.", alt: "Amal counting the stars with her arm raised under the night sky" },
+      { image: "page-11.svg", sound: "woman-happy", text: "\"The moon has no light of its own,\" said Grandma Hana. \"The sun shines on it.\"", alt: "Grandma Hana pointing up at the moon while a surprised Amal listens" },
+      { image: "page-12.svg", sound: "lullaby", text: "\"The sky is full of wonderful things,\" said Amal. \"I never really looked up before.\"", alt: "Amal and Grandma Hana sitting quietly together under the stars" },
+    ],
+  },
+  {
+    id: "my-shadow",
+    title: "My Shadow",
+    grades: [2],
+    units: [4],
+    level: "Level 2",
+    description: "A little shadow that goes in and out with me - and jumps into bed before I do.",
+    author: "Robert Louis Stevenson",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "My Shadow is a Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 4 shelf. The four lines of verse are from the poem \"My Shadow\" by Robert Louis Stevenson (1850-1894), which is in the public domain and is printed in the Unit 4 reading of the Ehel Year 2 English course. The framing sentences and all vector illustrations are by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "My Shadow, by Robert Louis Stevenson. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal with her arms up beside a long shadow stretching across the village ground" },
+      { image: "page-02.svg", sound: "child-happy", text: "I have a little shadow that goes in and out with me,", alt: "Amal walking beside her long shadow in the village" },
+      { image: "page-03.svg", sound: "child-surprised", text: "and what can be the use of him is more than I can see.", alt: "A surprised Amal pointing down at her own long shadow" },
+      { image: "page-04.svg", sound: "child-happy", text: "He is very, very like me from the heels up to the head,", alt: "Amal standing on the road with her shadow stretching out ahead of her" },
+      { image: "page-05.svg", sound: "child-happy", text: "Nora has one too. Two girls, two shadows, side by side.", alt: "Amal and Nora walking together, each with a long shadow on the road" },
+      { image: "page-06.svg", sound: "sun", text: "At midday the sun is high, and the little shadow hides under her feet.", alt: "Amal standing over a very short midday shadow in the village" },
+      { image: "page-07.svg", sound: "child-surprised", text: "\"Where did he go?\" said Amal. \"He is here. He is just very small.\"", alt: "A surprised Amal looking down at a tiny shadow beneath her" },
+      { image: "page-08.svg", sound: "sun", text: "In the evening the sun sinks low, and the shadow grows long again.", alt: "Amal with a very long evening shadow under an orange sunset sky" },
+      { image: "page-09.svg", sound: "child-happy", text: "Longer than the tree. Longer than the wall. Longest of all at bedtime.", alt: "Amal with her arms up beside an enormously long sunset shadow" },
+      { image: "page-10.svg", sound: "child-happy", text: "And I see him jump before me, when I jump into my bed.", alt: "Amal with her arms up beside her bed indoors" },
+      { image: "page-11.svg", sound: "lullaby", text: "Then the light goes out, and the little shadow goes to sleep too.", alt: "Amal standing quietly beside her bed with sleepy Zs floating above it" },
+      { image: "page-12.svg", sound: "lullaby", text: "Good night, little shadow. See you in the morning.", alt: "An empty bedroom with the bed made and sleepy Zs drifting above it" },
+    ],
+  },
+  {
+    id: "why-we-have-day-and-night",
+    title: "Why We Have Day and Night",
+    grades: [2],
+    units: [4],
+    level: "Level 2",
+    description: "A torch, an orange ball and one small mark - and the answer to where the sun goes at night.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Why We Have Day and Night is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 4 shelf. It is built on the Unit 4 listening text of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Why We Have Day and Night. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and Adam sitting under an orange evening sky beside the acacia tree" },
+      { image: "page-02.svg", sound: "child-surprised", text: "\"Adam, why does the sun disappear every night? Does it go to sleep?\"", alt: "A surprised Amal asking her brother Adam a question at sunset" },
+      { image: "page-03.svg", sound: "man-happy", text: "\"The sun never sleeps,\" said Adam. \"Let me show you something.\"", alt: "Adam pointing indoors beside a torch and an orange ball" },
+      { image: "page-04.svg", sound: "man-happy", text: "He fetched a torch. \"This torch is the sun,\" he said, and switched it on.", alt: "Adam pointing at a large torch lying on the floor" },
+      { image: "page-05.svg", sound: "man-happy", text: "\"And this ball is our planet, Earth. Watch this little mark I have drawn on it.\"", alt: "Adam pointing at an orange ball with a black mark drawn on one side" },
+      { image: "page-06.svg", sound: "sun", text: "He held the torch still and turned the ball slowly in front of it.", alt: "A bright torch beam falling across an orange ball in a darkened room" },
+      { image: "page-07.svg", sound: "child-surprised", text: "\"When the mark faces the torch, that part of Earth has light. That is day.\"", alt: "A surprised Amal pointing at the lit side of the ball in the torch beam" },
+      { image: "page-08.svg", sound: "lullaby", text: "Adam turned the ball further. Slowly the mark turned away from the light.", alt: "The orange ball turned so the mark sits in shadow away from the torch beam" },
+      { image: "page-09.svg", sound: "child-happy", text: "\"Now the mark faces away. No light. That is night!\" said Amal.", alt: "Amal smiling beside the ball with its mark turned into the dark" },
+      { image: "page-10.svg", sound: "man-happy", text: "\"It takes one whole day and one whole night for Earth to turn all the way round.\"", alt: "Adam pointing at the orange ball while Amal listens beside him" },
+      { image: "page-11.svg", sound: "lullaby", text: "That night Amal looked up. Somewhere, it was already morning.", alt: "Amal with her arms up under the stars beside Adam" },
+      { image: "page-12.svg", sound: "sun", text: "And in the morning the sun rose again, exactly as Adam had said it would.", alt: "Amal and Adam in the bright village morning with confetti falling" },
+    ],
+  },
+  {
+    id: "sunny-cloudy-windy-rainy",
+    title: "Sunny, Cloudy, Windy, Rainy",
+    grades: [2],
+    units: [4],
+    level: "Level 2",
+    description: "Zuri keeps a weather chart for one week, and no two days are the same.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Sunny, Cloudy, Windy, Rainy is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 4 shelf. It names the unit's own weather words, sky words and describing words. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "Sunny, Cloudy, Windy, Rainy. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri with her arms up under a white cloud on the savanna, with Kiki nearby" },
+      { image: "page-02.svg", sound: "sun", text: "Today is sunny. The sky is blue and bright.", alt: "Zuri with her arms up under a clear blue sky beside the acacia tree" },
+      { image: "page-03.svg", sound: "zuri-happy", text: "Today is cloudy. The clouds are white and low.", alt: "Zuri standing under two white clouds drifting across the sky" },
+      { image: "page-04.svg", sound: "wind", text: "Today is windy. The tall grass bends right over.", alt: "Zuri with her arms up beside bending tall grass under a grey cloud" },
+      { image: "page-05.svg", sound: "rain", text: "Today is rainy. Look at the big puddle!", alt: "Zuri in the falling rain beside a wide puddle" },
+      { image: "page-06.svg", sound: "sun", text: "Today is dry. The flower is thirsty.", alt: "Zuri beside dry grass and a drooping flower in the sunshine" },
+      { image: "page-07.svg", sound: "kiki-happy", text: "The sun is high and the day is bright. Kiki comes out to play.", alt: "Zuri and Kiki together under a bright sky on the savanna" },
+      { image: "page-08.svg", sound: "zuri-happy", text: "Now the sky is grey. The cloud is dark and low.", alt: "Zuri under a low grey cloud beside the acacia tree" },
+      { image: "page-09.svg", sound: "rain", text: "Rain again! Zuri did not bring anything to hide under.", alt: "A surprised Zuri caught in the rain beside a wide puddle" },
+      { image: "page-10.svg", sound: "sun", text: "Then the rain stopped, and a rainbow came out.", alt: "Zuri with her arms up under a bright rainbow" },
+      { image: "page-11.svg", sound: "bird", text: "A bird flew across the blue sky. It is a good day for flying.", alt: "Zuri watching a bird fly high above her under a white cloud" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "\"Sunny, cloudy, windy, rainy,\" said Zuri. \"One week, and every kind of sky.\"", alt: "Zuri and Kiki cheering under a rainbow with confetti falling" },
+    ],
+  },
+  {
+    id: "a-fair-way-to-measure",
+    title: "A Fair Way to Measure",
+    grades: [2],
+    units: [5],
+    level: "Level 2",
+    description: "Amal says fourteen feet and Leo says eleven, and Nora works out why they are both right.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "A Fair Way to Measure is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 5 shelf. It retells the Unit 5 story of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "A Fair Way to Measure. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Teacher Yasmin, Amal and Leo in the classroom beside a long metre stick" },
+      { image: "page-02.svg", sound: "woman-happy", text: "\"We are going to make a reading corner,\" said Teacher Yasmin. \"Who can measure the space?\"", alt: "Teacher Yasmin pointing while Nora listens in the classroom" },
+      { image: "page-03.svg", sound: "child-happy", text: "\"I can measure with my feet!\" said Amal, and she walked heel to toe across the floor.", alt: "Amal with her arms up volunteering while Teacher Yasmin smiles" },
+      { image: "page-04.svg", sound: "child-happy", text: "\"One, two, three... fourteen feet long!\"", alt: "Amal beside number cards showing twelve, thirteen and fourteen" },
+      { image: "page-05.svg", sound: "child-happy", text: "\"Let me try,\" laughed Leo. \"One, two, three... I count only eleven. You are wrong!\"", alt: "Leo beside number cards showing nine, ten and eleven" },
+      { image: "page-06.svg", sound: "child-sad", text: "\"No, YOU are wrong!\" said Amal. The two friends began to argue.", alt: "Amal and Leo pointing at each other and arguing in the classroom" },
+      { image: "page-07.svg", sound: "child-surprised", text: "Nora looked down. \"Leo's feet are big. Amal's feet are small. Feet are not a fair measure.\"", alt: "Nora pointing at their feet while Amal and Leo look surprised" },
+      { image: "page-08.svg", sound: "woman-happy", text: "\"Well done, Nora,\" said Teacher Yasmin. \"A metre is always the same length.\"", alt: "Teacher Yasmin pointing at a long metre stick on the classroom floor" },
+      { image: "page-09.svg", sound: "child-happy", text: "There are one hundred centimetres in one metre. The floor was three metres long.", alt: "Amal and Leo measuring together with a metre stick and a ruler" },
+      { image: "page-10.svg", sound: "child-happy", text: "Sami carried the heavy basket. Maya helped, so the load was fair for both.", alt: "Sami and Maya beside a balance scale tipped to one side" },
+      { image: "page-11.svg", sound: "child-sad", text: "\"I am the tallest, so I sit first!\" said Theo. \"Being tall does not mean you go first,\" said Amal.", alt: "A sad Theo standing tall while Amal speaks to him gently" },
+      { image: "page-12.svg", sound: "woman-happy", text: "\"A fair measure is the same for everyone,\" said Teacher Yasmin. \"And so is a kind heart.\"", alt: "The whole class celebrating together in the classroom with confetti falling" },
+    ],
+  },
+  {
+    id: "one-hundred-little-fingers",
+    title: "One Hundred Little Fingers",
+    grades: [2],
+    units: [5],
+    level: "Level 2",
+    description: "Count in tens all the way to a hundred, and hold every single finger in the air.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "One Hundred Little Fingers is an original Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 5 shelf. It is built on the Unit 5 counting song from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "One Hundred Little Fingers. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal with her arms up beside a counting line in tens, under bunting" },
+      { image: "page-02.svg", sound: "child-happy", text: "Ten little, twenty little, thirty little fingers.", alt: "Amal with her arms up beside number cards showing ten, twenty and thirty" },
+      { image: "page-03.svg", sound: "child-happy", text: "Forty little, fifty little, sixty little fingers.", alt: "Leo with his arms up beside number cards showing forty, fifty and sixty" },
+      { image: "page-04.svg", sound: "child-happy", text: "Seventy little, eighty little, ninety little fingers.", alt: "Nora with her arms up beside number cards showing seventy, eighty and ninety" },
+      { image: "page-05.svg", sound: "child-happy", text: "One hundred little fingers in the air!", alt: "Amal and Leo cheering beside a single large card showing one hundred" },
+      { image: "page-06.svg", sound: "woman-happy", text: "\"Counting in tens is faster than counting one by one,\" said Teacher Yasmin.", alt: "Teacher Yasmin pointing at a counting line marked in tens" },
+      { image: "page-07.svg", sound: "child-happy", text: "Ten, twenty, thirty, forty.", alt: "Amal beside four number cards showing ten, twenty, thirty and forty" },
+      { image: "page-08.svg", sound: "child-happy", text: "Fifty, sixty, seventy, eighty.", alt: "Sami beside four number cards showing fifty, sixty, seventy and eighty" },
+      { image: "page-09.svg", sound: "child-surprised", text: "Ninety... one hundred! We are there already!", alt: "A surprised Amal with her arms up beside cards showing ninety and one hundred" },
+      { image: "page-10.svg", sound: "child-happy", text: "Amal and Nora counted the whole line together, all the way along.", alt: "Amal and Nora with their arms up beside a counting line in tens" },
+      { image: "page-11.svg", sound: "woman-happy", text: "\"One hundred,\" said Teacher Yasmin. \"That is ten tens.\"", alt: "Teacher Yasmin with her arms up beside a big card showing one hundred" },
+      { image: "page-12.svg", sound: "child-happy", text: "One hundred little fingers in the air. \"Again, and faster!\" said Leo.", alt: "Amal and Leo cheering under bunting beside a card showing one hundred, with confetti and music notes" },
+    ],
+  },
+  {
+    id: "how-people-measured-long-ago",
+    title: "How People Measured Long Ago",
+    grades: [2],
+    units: [5],
+    level: "Level 2",
+    description: "Before rulers, people measured with fingers, hands, arms and footsteps - and nobody's answer ever matched.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "How People Measured Long Ago is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 5 shelf. It is built on the Unit 5 listening text of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "woman-happy", text: "How People Measured Long Ago. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Teacher Yasmin pointing at a poster while Amal listens in the classroom" },
+      { image: "page-02.svg", sound: "woman-happy", text: "\"Long, long ago,\" said Teacher Yasmin, \"there were no rulers and no metre sticks.\"", alt: "Teacher Yasmin telling the class a story while Amal and Leo listen" },
+      { image: "page-03.svg", sound: "woman-happy", text: "\"So how did people measure anything?\" The class had no idea.", alt: "Teacher Yasmin with her arms up beside a ruler lying on the classroom floor" },
+      { image: "page-04.svg", sound: "child-happy", text: "\"In Egypt they used the width of a finger for very small things.\"", alt: "Amal with her arms up beside a large orange card" },
+      { image: "page-05.svg", sound: "child-happy", text: "\"The length of a hand for medium things. The length of an arm for a piece of cloth.\"", alt: "Amal and Leo holding out a hand and an arm to measure" },
+      { image: "page-06.svg", sound: "child-surprised", text: "\"But wouldn't that give different answers for different people?\" asked Amal.", alt: "A surprised Amal asking her question while Teacher Yasmin smiles" },
+      { image: "page-07.svg", sound: "woman-happy", text: "\"Exactly right,\" said Teacher Yasmin. \"A big person's arm is longer than a small person's.\"", alt: "Teacher Yasmin pointing at a poster while a surprised Leo listens" },
+      { image: "page-08.svg", sound: "child-surprised", text: "\"In Rome they counted footsteps. A market might be one thousand footsteps away.\"", alt: "Theo taking a long stride across the classroom with dust puffs at his feet" },
+      { image: "page-09.svg", sound: "woman-happy", text: "\"But a tall soldier's footstep is longer than a short one's. So they argued too.\"", alt: "Teacher Yasmin pointing at a long metre stick while Amal listens" },
+      { image: "page-10.svg", sound: "child-happy", text: "\"Then somebody invented a ruler,\" said Amal, \"and a metre stick.\"", alt: "Amal and Leo beside a ruler and a metre stick on the classroom floor" },
+      { image: "page-11.svg", sound: "child-happy", text: "\"One hundred centimetres in one metre. The same for everybody, everywhere.\"", alt: "Amal pointing at number cards showing ninety-eight, ninety-nine and one hundred" },
+      { image: "page-12.svg", sound: "woman-happy", text: "\"And that,\" said Teacher Yasmin, \"is why nobody has to argue about it any more.\"", alt: "Teacher Yasmin, Amal and Leo celebrating beside a metre stick with confetti falling" },
+    ],
+  },
+  {
+    id: "big-and-small-long-and-short",
+    title: "Big and Small, Long and Short",
+    grades: [2],
+    units: [5],
+    level: "Level 2",
+    description: "Zuri finds the biggest thing and the smallest thing on the savanna, and every pair in between.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Big and Small, Long and Short is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 5 shelf. It names the unit's own comparing words and measuring words. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "Big and Small, Long and Short. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri with her arms up between the little elephant and a tiny chick" },
+      { image: "page-02.svg", sound: "elephant-happy", text: "The elephant is big.", alt: "Zuri pointing at the little elephant standing large beside her" },
+      { image: "page-03.svg", sound: "chick", text: "The chick is small.", alt: "Zuri pointing at a small chick standing in the grass" },
+      { image: "page-04.svg", sound: "giraffe", text: "Miss Twiga is tall. Very, very tall.", alt: "Zuri with her arms up beside Miss Twiga the giraffe" },
+      { image: "page-05.svg", sound: "kiki-happy", text: "Zuri is short. Kiki is shorter still.", alt: "Zuri standing beside Kiki the monkey on the savanna" },
+      { image: "page-06.svg", sound: "zuri-happy", text: "This metre stick is long. It is one whole metre.", alt: "Zuri pointing at a long metre stick lying on the ground" },
+      { image: "page-07.svg", sound: "zuri-happy", text: "This ruler is short. It is only thirty centimetres.", alt: "Zuri standing beside a short ruler on the savanna" },
+      { image: "page-08.svg", sound: "zuri-happy", text: "This side is heavy. That side is light.", alt: "Zuri with her arms up beside a balance scale tipped to one side" },
+      { image: "page-09.svg", sound: "zuri-happy", text: "The stone is heavy. The leaf is light.", alt: "Zuri pointing at a big grey stone and a green leaf side by side" },
+      { image: "page-10.svg", sound: "river", text: "The river is wide here, and narrow further along.", alt: "Zuri standing beside a winding river on the savanna" },
+      { image: "page-11.svg", sound: "giraffe", text: "Miss Twiga's head is high. The chick's head is low.", alt: "Zuri between Miss Twiga the giraffe and a small chick on the ground" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "\"Big and small, long and short,\" said Zuri. \"Everything is one or the other.\"", alt: "Zuri, the little elephant and a chick together with confetti falling" },
+    ],
+  },
+
+  {
+    id: "amal-and-the-little-garden-friends",
+    title: "Amal and the Little Garden Friends",
+    grades: [2],
+    units: [6],
+    level: "Level 2",
+    description: "Amal is afraid of bugs, until Adam sits very still beside her and shows her what they are actually doing.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Amal and the Little Garden Friends is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 6 shelf. It retells the Unit 6 story of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Amal and the Little Garden Friends. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and Adam in the garden beside a butterfly and a bright red flower" },
+      { image: "page-02.svg", sound: "bird", text: "Early one warm morning, Amal went out to the garden. Birds sang from the tall tree.", alt: "Amal in the garden at sunrise with a bird flying above her" },
+      { image: "page-03.svg", sound: "child-sad", text: "But Amal did not love one thing: bugs. When a bee buzzed near her, she ran.", alt: "A worried Amal backing away with her arms up as a bee flies near" },
+      { image: "page-04.svg", sound: "child-surprised", text: "\"Sit with me,\" whispered Adam. \"If you look closely, the garden is full of little friends.\"", alt: "Adam sitting still on a low rock while a surprised Amal comes closer" },
+      { image: "page-05.svg", sound: "child-happy", text: "\"A butterfly is an insect. Six legs, and two antennae on its head.\"", alt: "A large butterfly above a red flower while Adam points and Amal watches" },
+      { image: "page-06.svg", sound: "child-surprised", text: "\"Is the bee going to sting me?\" Amal asked, pulling back.", alt: "A surprised Amal beside a bee hovering over a flower" },
+      { image: "page-07.svg", sound: "child-happy", text: "\"Stay calm, and the bee will leave you alone.\" Amal held still. The bee flew away.", alt: "Amal standing calmly beside Adam while a bee flies off" },
+      { image: "page-08.svg", sound: "child-surprised", text: "Near her foot, a long line of ants marched over the soil, carrying tiny seeds.", alt: "A surprised Amal watching three ants marching towards an anthill" },
+      { image: "page-09.svg", sound: "child-happy", text: "\"Ants live under the ground. One ant is small, but many ants are very strong.\"", alt: "Adam pointing at a line of ants and an anthill while Amal watches" },
+      { image: "page-10.svg", sound: "child-surprised", text: "\"Count its legs,\" said Adam. \"Eight legs! Insects have only six.\" A spider is not an insect.", alt: "A surprised Amal looking at a spider in the middle of its shining web" },
+      { image: "page-11.svg", sound: "child-surprised", text: "Mina lifted her foot to stamp on a worm. \"Wait!\" called Amal. \"Worms help our plants grow.\"", alt: "Amal with her arm up stopping a surprised Mina beside a worm on the path" },
+      { image: "page-12.svg", sound: "woman-happy", text: "\"When we understand something,\" said her mother, \"we stop being afraid of it.\"", alt: "Amal telling her mother about the garden at home, with confetti falling" },
+    ],
+  },
+  {
+    id: "theres-a-bug-on-me",
+    title: "There's a Bug on Me",
+    grades: [2],
+    units: [6],
+    level: "Level 2",
+    description: "One, two, three - there's a bug on me. Where did it go? Nobody knows.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "There's a Bug on Me is an original Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 6 shelf. It is built on the Unit 6 bug poem from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "There's a Bug on Me. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal with her arms up in the garden beside a butterfly and a bright flower" },
+      { image: "page-02.svg", sound: "child-happy", text: "One, two, three!", alt: "Amal with her arms up beside three big number cards showing one, two and three" },
+      { image: "page-03.svg", sound: "child-surprised", text: "There's a bug on me!", alt: "A surprised Amal with her arms up while a bee hovers close beside her" },
+      { image: "page-04.svg", sound: "child-surprised", text: "Where did it go?", alt: "A surprised Amal looking around while Nora smiles beside a butterfly" },
+      { image: "page-05.svg", sound: "child-happy", text: "I don't know!", alt: "Amal pointing at a butterfly above a big flower in the garden" },
+      { image: "page-06.svg", sound: "child-surprised", text: "Is it on the anthill? No - that is an ant, and it is busy.", alt: "A surprised Amal beside a marching ant and an anthill" },
+      { image: "page-07.svg", sound: "crickets", text: "Is it in the grass? No - that is a cricket, and it is chirping.", alt: "A surprised Nora beside a cricket sitting in the tall grass" },
+      { image: "page-08.svg", sound: "child-surprised", text: "Is it on the web? No - that is a spider, and a spider is not an insect at all.", alt: "Amal with her arms up beside a spider sitting in its web" },
+      { image: "page-09.svg", sound: "child-happy", text: "Is it under the leaf? No - that is a worm, and it has no legs.", alt: "Amal pointing at a worm wriggling on the garden path" },
+      { image: "page-10.svg", sound: "child-happy", text: "There it is! It was the butterfly all along.", alt: "Amal and Nora smiling as a bee and a butterfly fly through the garden" },
+      { image: "page-11.svg", sound: "child-happy", text: "One, two, three. Say it again, and faster this time.", alt: "Amal and Nora with their arms up in the garden with music notes beside them" },
+      { image: "page-12.svg", sound: "child-happy", text: "There's a bug on me! And Amal was not one bit afraid.", alt: "Amal and Nora cheering beside a butterfly and a flower with confetti falling" },
+    ],
+  },
+  {
+    id: "grandpas-cricket",
+    title: "Grandpa's Cricket",
+    grades: [2],
+    units: [6],
+    level: "Level 2",
+    description: "Nora wants to keep the cricket, and Grandpa says yes - if she learns how to look after it properly.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Grandpa's Cricket is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 6 shelf. It is built on the Unit 6 listening text of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Grandpa's Cricket. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Nora and Grandpa in the garden beside a tomato plant and a glass jar" },
+      { image: "page-02.svg", sound: "man-happy", text: "Nora was helping Grandpa water the tomato plants.", alt: "Nora and Grandpa beside a garden plant and a watering can pouring" },
+      { image: "page-03.svg", sound: "child-surprised", text: "\"Grandpa, what is that in your pocket?\" asked Nora.", alt: "A surprised Nora pointing at Grandpa's shirt pocket" },
+      { image: "page-04.svg", sound: "crickets", text: "He opened his hand. A small brown cricket sat on his palm.", alt: "Grandpa pointing at a cricket held in the air while a surprised Nora looks" },
+      { image: "page-05.svg", sound: "crickets", text: "The cricket rubbed its wings together and made a soft, clicking chirp.", alt: "Nora with her arms up beside a cricket and a garden bench" },
+      { image: "page-06.svg", sound: "child-happy", text: "\"Can I keep it as a pet? I love the chirping sound!\" said Nora.", alt: "Nora asking Grandpa a question with a speech bubble above them and a cricket nearby" },
+      { image: "page-07.svg", sound: "man-happy", text: "\"You may - but you must take good care of it. First: crickets need to stay warm.\"", alt: "Grandpa pointing at a glass jar with holes in its lid" },
+      { image: "page-08.svg", sound: "child-happy", text: "\"Second: they eat small pieces of fruit and vegetables.\"", alt: "Nora beside a glass jar with a piece of fruit inside it" },
+      { image: "page-09.svg", sound: "man-happy", text: "\"Third: a shallow dish of water. And air holes in the lid, always.\"", alt: "Grandpa pointing at the jar and its lid while Nora listens" },
+      { image: "page-10.svg", sound: "child-happy", text: "Nora put the jar somewhere warm, away from the open window.", alt: "Nora standing beside the glass jar near the garden bench" },
+      { image: "page-11.svg", sound: "crickets", text: "That evening the cricket chirped, and Nora knew it was happy.", alt: "Nora with her arms up beside Grandpa and a chirping cricket in the grass" },
+      { image: "page-12.svg", sound: "man-happy", text: "\"A pet is not a toy,\" said Grandpa. \"It is somebody who needs you every day.\"", alt: "Nora and Grandpa together in the garden beside the cricket, with confetti falling" },
+    ],
+  },
+  {
+    id: "fly-jump-crawl-spin",
+    title: "Fly, Jump, Crawl, Spin",
+    grades: [2],
+    units: [6],
+    level: "Level 2",
+    description: "Every little creature in the garden moves its own way, and Zuri names all of them.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Fly, Jump, Crawl, Spin is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 6 shelf. It names the unit's own bugs and the action words they do. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "Fly, Jump, Crawl, Spin. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri with her arms up beside a butterfly and a flower under an acacia tree" },
+      { image: "page-02.svg", sound: "zuri-happy", text: "A butterfly can fly. Watch its wings open and close.", alt: "Zuri pointing at a large butterfly above a bright flower" },
+      { image: "page-03.svg", sound: "zuri-happy", text: "A bee can fly too. It is collecting nectar.", alt: "Zuri standing beside a bee hovering in the air" },
+      { image: "page-04.svg", sound: "crickets", text: "A cricket can jump. And it can chirp!", alt: "Zuri with her arms up beside a cricket in the tall grass" },
+      { image: "page-05.svg", sound: "zuri-happy", text: "An ant can crawl. It collects seeds and carries them home.", alt: "Zuri beside two ants crawling towards an anthill" },
+      { image: "page-06.svg", sound: "zuri-happy", text: "A spider can spin. This web came out of its own body.", alt: "Zuri pointing at a spider sitting in the middle of its web" },
+      { image: "page-07.svg", sound: "zuri-happy", text: "A worm can crawl too, but it has no legs at all.", alt: "Zuri standing beside a worm on the ground" },
+      { image: "page-08.svg", sound: "zuri-happy", text: "Under the log, the ants are collecting. On the log, nothing at all.", alt: "Zuri with her arms up beside a fallen log and a crawling ant" },
+      { image: "page-09.svg", sound: "zuri-happy", text: "Above the flower, the bee. In front of the flower, Zuri.", alt: "Zuri beside a bee hovering above a large flower" },
+      { image: "page-10.svg", sound: "zuri-happy", text: "Between the anthill and the grass, a whole line of ants.", alt: "Zuri with her arms up beside three ants and an anthill" },
+      { image: "page-11.svg", sound: "zuri-happy", text: "Six legs makes an insect. Eight legs makes a spider.", alt: "Zuri between a spider's web and a flying butterfly" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "\"Fly, jump, crawl, spin,\" said Zuri. \"Everybody moves their own way.\"", alt: "Zuri with her arms up among a butterfly, a bee and an ant, with confetti falling" },
+    ],
+  },
+  {
+    id: "amal-and-the-little-tree",
+    title: "Amal and the Little Tree",
+    grades: [2],
+    units: [7],
+    level: "Level 2",
+    description: "The river is almost dry and the bank is brown, so Amal plants a handful of seeds and waits.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Amal and the Little Tree is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 7 shelf. It retells the Unit 7 story of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Amal and the Little Tree. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and Grandmother Hana beside the old tree and the river in the village" },
+      { image: "page-02.svg", sound: "bird", text: "Amal loved to sit under the old tree. Birds sang in its branches every morning.", alt: "Amal with her arms up beneath the old village tree with a bird flying above" },
+      { image: "page-03.svg", sound: "child-sad", text: "One hot day she saw litter all along the path. \"Our village is not clean,\" she said.", alt: "A sad Amal and Adam pointing at scattered litter on the village path" },
+      { image: "page-04.svg", sound: "child-happy", text: "Amal, Adam and Nora spent the morning picking it up.", alt: "Amal and Nora beside a recycling bin, gathering litter from the path" },
+      { image: "page-05.svg", sound: "child-happy", text: "\"When we recycle this paper,\" said Nora, \"fewer trees are cut down.\"", alt: "Nora pointing at a recycling bin while Amal listens" },
+      { image: "page-06.svg", sound: "child-sad", text: "But the river was almost dry, and along the bank the land was empty and brown.", alt: "A sad Amal and Grandmother Hana beside a shrunken river on dry ground" },
+      { image: "page-07.svg", sound: "woman-happy", text: "\"Here,\" said Grandmother Hana, giving her a handful of seeds. \"Little things make a big difference.\"", alt: "Grandmother Hana handing Amal a bowl of small seeds on the dry ground" },
+      { image: "page-08.svg", sound: "child-happy", text: "The next morning, Amal and Adam dug small holes in the soft soil.", alt: "Amal and Adam beside two freshly dug holes in the village soil" },
+      { image: "page-09.svg", sound: "child-happy", text: "\"Can I help?\" asked Theo. \"Yes! You can be my partner,\" laughed Amal.", alt: "Theo with his arms up beside Amal and a dug hole" },
+      { image: "page-10.svg", sound: "puddle", text: "Every morning, Amal watered the seeds. One day a tiny green stem pushed up.", alt: "Amal beside a small green sprout with a watering can pouring onto the soil" },
+      { image: "page-11.svg", sound: "child-happy", text: "After many months, one small tree grew its very first flower.", alt: "Amal with her arms up beside two young trees and a white flower" },
+      { image: "page-12.svg", sound: "lullaby", text: "\"I'm thankful for the trees, the water and the clean air,\" she whispered.", alt: "Amal and Grandmother Hana looking at the young trees under the night sky" },
+    ],
+  },
+  {
+    id: "painted-blue-and-green",
+    title: "Painted Blue and Green",
+    grades: [2],
+    units: [7],
+    level: "Level 2",
+    description: "The sky is painted blue and the Earth is painted green, with a lot of fresh air in between.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Painted Blue and Green is an original Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 7 shelf. It is built on the Unit 7 poem for the Earth from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Painted Blue and Green. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal with her arms up under a blue sky and a white cloud beside the village tree" },
+      { image: "page-02.svg", sound: "child-happy", text: "I'm glad the sky is painted blue,", alt: "Amal with her arms up under a wide blue sky with one white cloud" },
+      { image: "page-03.svg", sound: "child-happy", text: "and Earth is painted green,", alt: "Amal pointing at the green land under a cloudy blue sky" },
+      { image: "page-04.svg", sound: "child-happy", text: "Green like the leaves in the garden.", alt: "Amal pointing at a leafy garden plant and a bright flower" },
+      { image: "page-05.svg", sound: "child-happy", text: "Green like every growing thing.", alt: "Amal and Nora beside two green garden plants" },
+      { image: "page-06.svg", sound: "bird", text: "With such a lot of nice fresh air", alt: "Amal with her arms up while two birds fly across the sky" },
+      { image: "page-07.svg", sound: "child-happy", text: "all sandwiched in between.", alt: "Amal and Adam standing under a big cloud in the village" },
+      { image: "page-08.svg", sound: "child-happy", text: "Roots, stem, leaves and a flower. The tree makes the air we breathe.", alt: "Amal pointing at a young tree and a diagram of a plant's parts" },
+      { image: "page-09.svg", sound: "river", text: "Blue like the river. Green like the bank beside it.", alt: "Amal standing beside the winding village river" },
+      { image: "page-10.svg", sound: "child-happy", text: "Amal and Nora said the poem together, twice.", alt: "Amal and Nora with their arms up under a cloud, with music notes beside them" },
+      { image: "page-11.svg", sound: "child-happy", text: "A butterfly came to hear it too.", alt: "Amal in the garden beside a leafy plant with a butterfly above it" },
+      { image: "page-12.svg", sound: "child-happy", text: "I'm glad the sky is painted blue, and Earth is painted green.", alt: "Amal and Nora cheering under a rainbow with confetti and music notes" },
+    ],
+  },
+  {
+    id: "a-family-on-mother-earth-day",
+    title: "A Family on Mother Earth Day",
+    grades: [2],
+    units: [7],
+    level: "Level 2",
+    description: "One family, one day, and six different jobs - and Sami on the porch, watching all of them.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "A Family on Mother Earth Day is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 7 shelf. It is built on the Unit 7 listening text of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "A Family on Mother Earth Day. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Sami and his father in the garden beside a young tree and a recycling bin" },
+      { image: "page-02.svg", sound: "child-happy", text: "Today is Mother Earth Day. Sami sits on the porch, watching everybody work.", alt: "Sami sitting on a garden bench watching the family at work" },
+      { image: "page-03.svg", sound: "man-happy", text: "In the garden, Sami's father is planting trees with his uncle.", alt: "Sami's father and uncle beside a dug hole and a young tree" },
+      { image: "page-04.svg", sound: "man-happy", text: "\"How many trees today?\" \"Six - one for every year since we moved here.\"", alt: "Sami's uncle pointing at three young trees planted in a row" },
+      { image: "page-05.svg", sound: "bird", text: "Near the fence, Sami's mother is counting birds with his aunt.", alt: "Sami's mother in the garden with a notepad while two birds fly overhead" },
+      { image: "page-06.svg", sound: "woman-happy", text: "\"I can see three small brown birds in that bush.\" \"Write that down.\"", alt: "Sami's mother and aunt beside an open notepad in the garden" },
+      { image: "page-07.svg", sound: "child-happy", text: "Down by the gate, Sami's brother is picking up litter with his friends.", alt: "Adam and Leo gathering scattered litter beside a recycling bin on the street" },
+      { image: "page-08.svg", sound: "child-happy", text: "\"This bag is nearly full.\" \"Good. A clean street is a happy street.\"", alt: "Adam with his arms up beside a full recycling bin on the street" },
+      { image: "page-09.svg", sound: "woman-happy", text: "Inside, Sami is making paper flowers with his grandmother.", alt: "Sami and Grandma Hana indoors beside a child's paper drawing" },
+      { image: "page-10.svg", sound: "child-happy", text: "\"We fold the petals like this,\" she said. Sami made five.", alt: "Sami with his arms up beside a paper drawing and a paper flower" },
+      { image: "page-11.svg", sound: "child-happy", text: "By evening there were six new trees standing in a row.", alt: "Sami and his father beside three young trees planted in the garden" },
+      { image: "page-12.svg", sound: "child-happy", text: "\"Everybody did one thing,\" said Sami. \"And one thing each is a lot.\"", alt: "Sami with his mother and father beside the new trees, with confetti falling" },
+    ],
+  },
+  {
+    id: "roots-stem-leaves-flower",
+    title: "Roots, Stem, Leaves, Flower",
+    grades: [2],
+    units: [7],
+    level: "Level 2",
+    description: "Zuri follows one seed all the way up, and learns the name of every part on the way.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Roots, Stem, Leaves, Flower is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 7 shelf. It names the unit's own parts of a plant and nature words. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "Roots, Stem, Leaves, Flower. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri with her arms up beside a diagram of a plant's parts under an acacia tree" },
+      { image: "page-02.svg", sound: "zuri-happy", text: "Every plant has the same four parts. Zuri knows all of them.", alt: "Zuri pointing at a large diagram showing the parts of a plant" },
+      { image: "page-03.svg", sound: "zuri-happy", text: "First there is a seed. It looks like nothing at all.", alt: "Zuri standing beside a single seed on the savanna soil" },
+      { image: "page-04.svg", sound: "zuri-happy", text: "Then a tiny green stem pushes up out of the soil.", alt: "Zuri beside a small green sprout coming out of the ground" },
+      { image: "page-05.svg", sound: "zuri-happy", text: "The roots grow down where nobody can see them. They hold the water in.", alt: "Zuri pointing at a leafy garden plant on the savanna" },
+      { image: "page-06.svg", sound: "zuri-happy", text: "Then comes the flower. This one is the brightest on the whole savanna.", alt: "Zuri with her arms up beside a tall bright flower" },
+      { image: "page-07.svg", sound: "zuri-happy", text: "And the leaves. Big leaves, small leaves - all of them making clean air.", alt: "Zuri standing between a large leaf and a smaller one" },
+      { image: "page-08.svg", sound: "zuri-happy", text: "Inside the flower are new seeds, and each one can be a whole new plant.", alt: "Zuri beside a scattering of seeds on the ground" },
+      { image: "page-09.svg", sound: "puddle", text: "Soil, water, air and sun. A plant needs all four.", alt: "Zuri beside a watering can pouring onto a small green sprout" },
+      { image: "page-10.svg", sound: "tree", text: "Wait long enough, and the little stem becomes a tree.", alt: "Zuri with her arms up beside a young tree on the savanna" },
+      { image: "page-11.svg", sound: "zuri-happy", text: "And when there is a flower, the butterfly comes.", alt: "Zuri beside a leafy plant with a butterfly hovering above it" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "\"Roots, stem, leaves, flower,\" said Zuri. \"And it all began with one seed.\"", alt: "Zuri with her arms up between a leafy plant and a bright flower, with confetti falling" },
+    ],
+  },
+  {
+    id: "helping-hands-at-home",
+    title: "Helping Hands at Home",
+    grades: [2],
+    units: [8],
+    level: "Level 2",
+    description: "Grandma is coming tomorrow, and the house is not ready - so Amal and Idris make it ready.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Helping Hands at Home is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 8 shelf. It retells the Unit 8 story of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Helping Hands at Home. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and little Idris in their living room beside a blue sofa and a red rug" },
+      { image: "page-02.svg", sound: "woman-happy", text: "\"Grandma Hana will visit us tomorrow,\" said Mother. \"She will stay a whole week!\"", alt: "Amal looking surprised as her mother shares the news in the living room" },
+      { image: "page-03.svg", sound: "child-happy", text: "\"Grandma is coming!\" shouted Idris, jumping up and down.", alt: "Little Idris with his arms up jumping while Amal smiles" },
+      { image: "page-04.svg", sound: "child-sad", text: "But there were toys under the sofa, dishes in the sink and dust on the table.", alt: "A concerned Amal pointing at the untidy living room with its sofa and rug" },
+      { image: "page-05.svg", sound: "child-happy", text: "First, the bedroom. \"I will make my bed,\" said Amal.", alt: "Amal beside a cutaway view of a tidy bedroom" },
+      { image: "page-06.svg", sound: "child-happy", text: "She pulled the blanket flat. Idris picked up his toys from under the bed.", alt: "Amal and Idris beside a neatly made bed" },
+      { image: "page-07.svg", sound: "child-happy", text: "Next, the living room. Amal swept the floor and shook the red rug outside.", alt: "Amal beside a broom and a red rug in the living room" },
+      { image: "page-08.svg", sound: "child-happy", text: "Idris wiped the little table until the dust was gone.", alt: "Idris beside a cutaway view of a tidy living room" },
+      { image: "page-09.svg", sound: "child-happy", text: "In the kitchen, Amal washed the dishes and Idris dried them with a cloth.", alt: "Amal and Idris beside a sink with the tap running" },
+      { image: "page-10.svg", sound: "woman-happy", text: "Mother was cooking sweet rice and warm vegetable pies. The kitchen smelled wonderful.", alt: "Amal's mother beside a cutaway view of the kitchen" },
+      { image: "page-11.svg", sound: "child-surprised", text: "\"Look outside the window!\" said Father. Under the big tree there was a tree house.", alt: "Father pointing at a tree house while a surprised Amal cheers" },
+      { image: "page-12.svg", sound: "woman-happy", text: "\"A home is a place where a family helps each other,\" said Grandma. \"Thank you, my helping hands.\"", alt: "Grandma Hana with Amal and Idris in the clean living room, with confetti falling" },
+    ],
+  },
+  {
+    id: "a-nest-is-a-home-for-a-bird",
+    title: "A Nest Is a Home for a Bird",
+    grades: [2],
+    units: [8],
+    level: "Level 2",
+    description: "A nest, a hive, a hole and a house - four homes, and every one of them is exactly right for somebody.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "A Nest Is a Home for a Bird is an original Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 8 shelf. It is built on the Unit 8 poem Homes from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "bird", text: "A Nest Is a Home for a Bird. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal with her arms up beneath an acacia tree holding a nest, with a bird beside it" },
+      { image: "page-02.svg", sound: "bird", text: "A nest is a home for a bird.", alt: "Amal pointing up at a nest high in the acacia tree with a bird sitting in it" },
+      { image: "page-03.svg", sound: "child-happy", text: "A hive is a home for a bee.", alt: "Amal pointing at a beehive in the garden with a bee flying nearby" },
+      { image: "page-04.svg", sound: "child-happy", text: "A hole is a home for a rabbit.", alt: "Amal pointing at a rabbit sitting beside its burrow in the garden" },
+      { image: "page-05.svg", sound: "child-happy", text: "And a house is a home for me.", alt: "Amal with her arms up in front of a small house on the street" },
+      { image: "page-06.svg", sound: "bird", text: "The bird built her nest out of grass and twigs, all by herself.", alt: "Amal looking up at a nest in the tree while a bird flies past" },
+      { image: "page-07.svg", sound: "child-happy", text: "The bees made their hive out of wax. Listen - you can hear them humming.", alt: "Nora beside a beehive with two bees flying around it" },
+      { image: "page-08.svg", sound: "child-happy", text: "The rabbit dug her hole in the soft soil, deep and warm.", alt: "Nora and Amal beside a rabbit at the mouth of its burrow" },
+      { image: "page-09.svg", sound: "child-happy", text: "Some people live in a house. Some live high up in a block of flats.", alt: "Amal pointing at a house and a tall block of flats on the street" },
+      { image: "page-10.svg", sound: "woman-happy", text: "\"And which one is best?\" asked Amal. \"The one you come home to,\" said Mum.", alt: "Amal and her mother standing together outside their house" },
+      { image: "page-11.svg", sound: "bird", text: "That night the bird came back to her nest, exactly as Amal came back to hers.", alt: "Amal with her arms up beneath the tree while a bird returns to its nest" },
+      { image: "page-12.svg", sound: "child-happy", text: "A nest, a hive, a hole - and a house. Home, sweet home.", alt: "Amal cheering outside her house with confetti and music notes around her" },
+    ],
+  },
+  {
+    id: "theos-tree-house",
+    title: "Theo's Tree House",
+    grades: [2],
+    units: [8],
+    level: "Level 2",
+    description: "A floor, four walls, a little door and a green roof - and ten steps to climb before you get there.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Theo's Tree House is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 8 shelf. It is built on the Unit 8 listening text of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Theo's Tree House. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Theo with his arms up in the garden beneath his finished tree house" },
+      { image: "page-02.svg", sound: "man-happy", text: "\"Theo, I have an idea for the garden,\" said his father last spring.", alt: "Theo and his father standing together beneath the tree house" },
+      { image: "page-03.svg", sound: "man-happy", text: "He worked every weekend for a whole month.", alt: "Theo's father with his arms up beside a tall wooden ladder" },
+      { image: "page-04.svg", sound: "child-surprised", text: "First a strong floor between two thick branches. Then four walls, a door and a window.", alt: "Theo's father pointing at the tree house while a surprised Theo looks up" },
+      { image: "page-05.svg", sound: "child-happy", text: "Last of all, a green roof - so the tree house matches the leaves.", alt: "Theo with his arms up beneath the finished tree house and its ladder" },
+      { image: "page-06.svg", sound: "child-happy", text: "To get up, I climb the ladder. It has ten steps. One, two, three...", alt: "Theo beside the ladder with number cards showing one, two, three and four" },
+      { image: "page-07.svg", sound: "child-happy", text: "Inside there is a shelf for my books and a soft cushion to sit on.", alt: "Theo pointing at a shelf of books beneath the tree house" },
+      { image: "page-08.svg", sound: "child-happy", text: "On the bottom floor, my friend Sami and I read comics together.", alt: "Theo and Sami standing together beneath the tree house" },
+      { image: "page-09.svg", sound: "child-happy", text: "\"Can we come up too?\" asked Amal and Idris one afternoon.", alt: "Amal and little Idris with their arms up beneath the tree house" },
+      { image: "page-10.svg", sound: "child-happy", text: "\"Of course! But climb slowly, one step at a time.\"", alt: "Theo pointing at the ladder while Amal waits below" },
+      { image: "page-11.svg", sound: "child-happy", text: "We all sat together and shared a bag of dried apricots.", alt: "Theo beside a basket of fruit beneath the tree house" },
+      { image: "page-12.svg", sound: "child-happy", text: "From the window we could see the whole garden, and even the roof of my house.", alt: "Theo, Sami and Amal cheering beneath the tree house with confetti falling" },
+    ],
+  },
+  {
+    id: "bed-table-chair-sofa",
+    title: "Bed, Table, Chair, Sofa",
+    grades: [2],
+    units: [8],
+    level: "Level 2",
+    description: "Zuri goes through a whole house naming everything in it, one room at a time.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Bed, Table, Chair, Sofa is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 8 shelf. It names the unit's own rooms and things at home. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "Bed, Table, Chair, Sofa. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri with her arms up beside a blue sofa and a red rug under an acacia tree" },
+      { image: "page-02.svg", sound: "zuri-happy", text: "This is a bed. You sleep in a bed.", alt: "Zuri pointing at a low wooden bed with a blue blanket" },
+      { image: "page-03.svg", sound: "zuri-happy", text: "This is a table. You eat at a table.", alt: "Zuri standing beside a wooden table" },
+      { image: "page-04.svg", sound: "zuri-happy", text: "This is a chair. You sit on a chair.", alt: "Zuri pointing at a blue chair" },
+      { image: "page-05.svg", sound: "zuri-happy", text: "This is a sofa. A sofa is a very big, very soft chair.", alt: "Zuri standing beside a wide blue sofa with yellow cushions" },
+      { image: "page-06.svg", sound: "zuri-happy", text: "This is a sink. You wash the dishes in a sink.", alt: "Zuri with her arms up beside a sink with a tap above it" },
+      { image: "page-07.svg", sound: "zuri-happy", text: "This is a rug. A rug keeps your feet warm.", alt: "Zuri pointing at a large round red rug on the floor" },
+      { image: "page-08.svg", sound: "zuri-happy", text: "This is the bedroom. The bed lives here.", alt: "Zuri beside a cutaway view of a bedroom" },
+      { image: "page-09.svg", sound: "zuri-happy", text: "This is the kitchen. The cooker lives here.", alt: "Zuri beside a cutaway view of a kitchen" },
+      { image: "page-10.svg", sound: "zuri-happy", text: "This is the bathroom. The bath lives here.", alt: "Zuri beside a cutaway view of a bathroom" },
+      { image: "page-11.svg", sound: "zuri-happy", text: "And this is the living room, where everybody sits together.", alt: "Zuri with her arms up beside a cutaway view of a living room" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "\"Bed, table, chair, sofa,\" said Zuri. \"And a rug to put my feet on.\"", alt: "Zuri and Kiki cheering beside a sofa and a rug with confetti falling" },
+    ],
+  },
+  {
+    id: "the-stranger-with-the-map",
+    title: "The Stranger with the Map",
+    grades: [2],
+    units: [9],
+    level: "Level 2",
+    description: "On Amal's first big day in the city, an old man with a map turns it this way and that.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Stranger with the Map is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 9 shelf. It retells the Unit 9 story A Big Day in the City from the Ehel Year 2 English course, from the moment the day turns. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "The Stranger with the Map. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal and Adam on a busy city street with tall buildings and traffic behind them" },
+      { image: "page-02.svg", sound: "child-happy", text: "On Saturday morning, Amal took the bus into the city with her big brother Adam.", alt: "Amal and Adam standing beside the town bus" },
+      { image: "page-03.svg", sound: "child-surprised", text: "\"Look at all the traffic!\" said Amal. A helicopter flew high above the tall buildings.", alt: "A surprised Amal pointing up at a helicopter above the city buildings and traffic" },
+      { image: "page-04.svg", sound: "market", text: "The market was huge and busy. Amal smelled fresh bread and sweet mangoes.", alt: "Amal and Adam beside a busy market stall in front of the shops" },
+      { image: "page-05.svg", sound: "man-sad", text: "Near the shopping centre, an old man turned a small map this way and that.", alt: "A worried old man holding a map outside the shopping centre while Amal watches" },
+      { image: "page-06.svg", sound: "man-sad", text: "\"I am lost. I need the hospital. My daughter is there with a new baby.\"", alt: "The old man with his map beside Adam and Amal on the street" },
+      { image: "page-07.svg", sound: "man-happy", text: "\"Walk straight ahead to the traffic light,\" said Adam, \"then turn left.\"", alt: "Adam pointing down the road beside a red traffic light and the old man" },
+      { image: "page-08.svg", sound: "child-happy", text: "\"But my legs are slow, and the traffic is scary.\" \"Then we will walk with you.\"", alt: "Amal, the old man and Adam crossing at a striped crossing with a green light" },
+      { image: "page-09.svg", sound: "man-happy", text: "There stood the hospital, a big white building. \"You are here!\" said Amal.", alt: "The old man with his arms up outside the hospital while Amal smiles" },
+      { image: "page-10.svg", sound: "child-happy", text: "\"Helping him was better than the market,\" said Amal. \"I think so too,\" laughed Adam.", alt: "Amal and Adam standing together outside the city library" },
+      { image: "page-11.svg", sound: "child-surprised", text: "Then came the surprise: a ferry across the river, and the whole city from the water.", alt: "A surprised Amal and Adam on the shore beside a ferry boat and a Ferris wheel" },
+      { image: "page-12.svg", sound: "woman-happy", text: "\"You helped someone who needed you,\" said her mother. \"That is the best thing of all.\"", alt: "Amal telling her mother about the day at home, with confetti falling" },
+    ],
+  },
+  {
+    id: "at-the-zebra-crossing",
+    title: "At the Zebra Crossing",
+    grades: [2],
+    units: [9],
+    level: "Level 2",
+    description: "Look around at city places, look around at city faces - and mind your laces.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "At the Zebra Crossing is an original Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 9 shelf. It is built on the Unit 9 poem of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "At the Zebra Crossing. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal with her arms up at a striped zebra crossing with city buildings behind her" },
+      { image: "page-02.svg", sound: "child-happy", text: "A zebra crossing is a safe place to cross the road.", alt: "Amal standing at a striped crossing beside a red traffic light" },
+      { image: "page-03.svg", sound: "child-happy", text: "At the zebra crossing,", alt: "Amal pointing along a city street lined with tall buildings and shops" },
+      { image: "page-04.svg", sound: "market", text: "look around at city places,", alt: "Amal, Karim and Nadia on the street in front of the shops and a lamp post" },
+      { image: "page-05.svg", sound: "child-surprised", text: "look around at city faces.", alt: "A surprised Amal standing at the striped crossing looking about her" },
+      { image: "page-06.svg", sound: "child-sad", text: "I bend down to tie my laces... Oops!", alt: "Amal bending down at the crossing while the traffic light shows red" },
+      { image: "page-07.svg", sound: "child-surprised", text: "\"WALK!\" said Nora. \"Hurry up! Let's cross!\"", alt: "Nora with her arms up calling to a surprised Amal at the green light" },
+      { image: "page-08.svg", sound: "child-happy", text: "So they crossed together, quickly and carefully.", alt: "Amal and Nora crossing the striped crossing with dust at their feet" },
+      { image: "page-09.svg", sound: "child-happy", text: "The cars waited. That is what a zebra crossing is for.", alt: "Amal and Nora on the crossing while a row of cars waits behind them" },
+      { image: "page-10.svg", sound: "child-happy", text: "On the other side: the shops, and the library right beside them.", alt: "Amal pointing at the shops and the library building" },
+      { image: "page-11.svg", sound: "child-happy", text: "\"Next time,\" said Nora, \"tie your laces BEFORE we cross.\"", alt: "Amal and Nora standing together beside a lamp post on the city street" },
+      { image: "page-12.svg", sound: "child-happy", text: "At the zebra crossing - look, and look again, and then walk.", alt: "Amal and Nora cheering at the zebra crossing with confetti and music notes" },
+    ],
+  },
+  {
+    id: "the-city-from-the-sky",
+    title: "The City from the Sky",
+    grades: [2],
+    units: [9],
+    level: "Level 2",
+    description: "Leo rides in a helicopter above his own city, and everything he knows looks like a toy.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The City from the Sky is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 9 shelf. It is built on the Unit 9 listening text of the same name from the Ehel Year 2 English course. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "The City from the Sky. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Leo and his dad beside a helicopter with the city behind them" },
+      { image: "page-02.svg", sound: "man-happy", text: "\"Are you ready?\" asked Dad, buckling Leo's seatbelt. \"Hold on tight - we're going up!\"", alt: "Leo's dad pointing at the helicopter while a surprised Leo watches" },
+      { image: "page-03.svg", sound: "wind", text: "The helicopter lifted off, and Leo's stomach felt light and bouncy.", alt: "A helicopter high above the small city buildings beside a white cloud" },
+      { image: "page-04.svg", sound: "child-surprised", text: "\"Wow! Everything looks so small already! The cars look like tiny toys.\"", alt: "The city far below with a row of tiny cars, seen from the helicopter" },
+      { image: "page-05.svg", sound: "child-happy", text: "\"Do you see that tall building with all the windows?\" \"Yes! Is that the library?\"", alt: "The library and the shopping centre seen from high above beside the helicopter" },
+      { image: "page-06.svg", sound: "child-happy", text: "\"And next to it is the shopping centre, with the round glass roof.\"", alt: "The shopping centre's round roof seen from the air beside a cloud" },
+      { image: "page-07.svg", sound: "river", text: "The helicopter turned gently, and a wide blue river came into view.", alt: "A wide river far below with a small boat on it, seen from the helicopter" },
+      { image: "page-08.svg", sound: "child-surprised", text: "\"And there's the Ferris wheel! It looks like a coin standing on its edge.\"", alt: "The Ferris wheel seen from the air beside the helicopter and a cloud" },
+      { image: "page-09.svg", sound: "wind", text: "From up here, the whole city fitted inside one window.", alt: "The whole small city with its buildings and Ferris wheel seen from the sky" },
+      { image: "page-10.svg", sound: "child-happy", text: "Then, slowly, the helicopter came down again.", alt: "Leo and his dad on the ground with the helicopter landing behind them" },
+      { image: "page-11.svg", sound: "child-happy", text: "\"That is my library,\" said Leo, pointing. \"And I always get lost in the shopping centre.\"", alt: "Leo pointing at the city buildings while his dad laughs" },
+      { image: "page-12.svg", sound: "child-happy", text: "\"Can we go up again tomorrow?\" asked Leo. Dad only laughed.", alt: "Leo and his dad cheering beside the helicopter with confetti falling" },
+    ],
+  },
+  {
+    id: "amazing-huge-and-a-little-bit-scary",
+    title: "Amazing, Huge and a Little Bit Scary",
+    grades: [2],
+    units: [9],
+    level: "Level 2",
+    description: "Zuri goes to the aquarium and to the city, and finds a describing word for every single thing.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Amazing, Huge and a Little Bit Scary is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 9 shelf. It names the unit's own aquarium animals, city places and describing words. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "Amazing, Huge and a Little Bit Scary. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri with her arms up in the dark aquarium hall beside a lit tank with a turtle and an octopus" },
+      { image: "page-02.svg", sound: "zuri-happy", text: "An octopus has eight arms. That is amazing.", alt: "Zuri pointing at an octopus in a brightly lit aquarium tank" },
+      { image: "page-03.svg", sound: "zuri-happy", text: "A penguin cannot fly, but it can swim. That is clever.", alt: "Zuri standing beside a penguin in the aquarium tank" },
+      { image: "page-04.svg", sound: "zuri-happy", text: "A turtle carries a hard shell. That is beautiful.", alt: "Zuri with her arms up beside a sea turtle swimming in the tank" },
+      { image: "page-05.svg", sound: "zuri-surprised", text: "A shark has a lot of teeth. That is a little bit scary.", alt: "A surprised Zuri looking at a shark in the aquarium tank" },
+      { image: "page-06.svg", sound: "kiki-surprised", text: "\"Is it dangerous?\" asked Kiki. \"Not through the glass,\" said Zuri.", alt: "A surprised Zuri and Kiki in front of a tank with a shark and a penguin in it" },
+      { image: "page-07.svg", sound: "zuri-surprised", text: "Outside, the city buildings are huge.", alt: "A surprised Zuri with her arms up in front of tall city buildings" },
+      { image: "page-08.svg", sound: "bell", text: "The clock tower is high, and it goes ding-dong at ten o'clock.", alt: "Zuri pointing up at a tall city clock tower" },
+      { image: "page-09.svg", sound: "zuri-happy", text: "The Ferris wheel is beautiful when it turns.", alt: "Zuri with her arms up beside a big Ferris wheel" },
+      { image: "page-10.svg", sound: "zuri-happy", text: "The library is quiet inside. That is the best kind of quiet.", alt: "Zuri standing in front of the city library building" },
+      { image: "page-11.svg", sound: "kiki-happy", text: "The street is busy and loud, but the park beside it is calm.", alt: "Zuri and Kiki on a city street beside a lamp post and tall buildings" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "\"Amazing, huge and a little bit scary,\" said Zuri. \"What a day.\"", alt: "Zuri and Kiki with their arms up in front of a bright tank holding a turtle, a shark and a penguin" },
+    ],
+  },
+  {
+    id: "amals-english-world",
+    title: "Amal's English World",
+    grades: [2],
+    units: [10],
+    level: "Level 2",
+    description: "Six pages out of a whole year of work, one sentence corrected, and a table of her own on showcase day.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Amal's English World is an original Grade 2 picture book created for Ehel Academy in 2026, book four of the Unit 10 shelf. It retells the Unit 10 story Amal's English Year from the Ehel Year 2 English course; it is titled for the project she builds in it, so that it is not confused with the Grade 1 book of that name. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Amal's English World. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal in the classroom beside her open English folder, under a row of bunting" },
+      { image: "page-02.svg", sound: "child-happy", text: "Amal opened her folder on the last Monday of Year 2.", alt: "Amal pointing at her open learning folder full of coloured pages" },
+      { image: "page-03.svg", sound: "child-happy", text: "At the front was her welcome card from Unit 1, with her name in careful blue letters.", alt: "Amal standing beside a handmade greeting card" },
+      { image: "page-04.svg", sound: "child-happy", text: "Behind it, a poem about her neighbour Theo, and a drawing of Leila the firefighter.", alt: "Amal pointing at a poster of her written work on the wall" },
+      { image: "page-05.svg", sound: "child-happy", text: "Her shadow chart. A measuring table. A bug fact file. Her city map from Unit 9.", alt: "Amal beside a child's drawing pinned up in the classroom" },
+      { image: "page-06.svg", sound: "woman-happy", text: "\"This term you will build one last project,\" said Teacher Yasmin. \"My English World.\"", alt: "Teacher Yasmin pointing while Amal and Nora listen in the classroom" },
+      { image: "page-07.svg", sound: "child-happy", text: "Every child had to choose six pages from at least four different units.", alt: "Amal beside a table with an open book and a blue pencil on it" },
+      { image: "page-08.svg", sound: "child-happy", text: "Page one told her name. Page two showed a helpful neighbour. Page six showed the library.", alt: "Amal pointing at her finished booklet titled My English World" },
+      { image: "page-09.svg", sound: "child-happy", text: "She practised her talk in front of the easel until she knew it by heart.", alt: "Amal standing beside an easel holding her drawing" },
+      { image: "page-10.svg", sound: "child-surprised", text: "On showcase day her hands felt cold, so she breathed slowly.", alt: "A nervous Amal beside her easel while Nora waits nearby" },
+      { image: "page-11.svg", sound: "child-happy", text: "\"Welcome to my English world,\" she said. Nora and Leo listened, and Grandma Hana clapped.", alt: "Amal presenting with her arms up while Grandma Hana and Leo cheer" },
+      { image: "page-12.svg", sound: "child-happy", text: "\"Next year I want to read a long chapter book,\" she wrote. And she felt proud.", alt: "Amal standing quietly beside her closed folder" },
+    ],
+  },
+  {
+    id: "ten-units-one-year",
+    title: "Ten Units, One Year",
+    grades: [2],
+    units: [10],
+    level: "Level 2",
+    description: "Amal walks back through every unit of Year 2 and says out loud what each one taught her.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Ten Units, One Year is an original Grade 2 picture book created for Ehel Academy in 2026, book five of the Unit 10 shelf. Unit 10 is the only Grade 2 unit with no poem of its own, so this is a review rhyme built on the capstone's own unit-by-unit revision list. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "Ten Units, One Year. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal with her arms up beside her learning folder under bunting, with music notes floating" },
+      { image: "page-02.svg", sound: "child-happy", text: "Unit One gave me a name, a partner and a calendar.", alt: "Amal pointing at a large calendar board with the first day ringed" },
+      { image: "page-03.svg", sound: "child-happy", text: "Unit Two gave me a helmet, boots, gloves and a mask.", alt: "Amal pointing at a helmet, boots, gloves and a mask laid out in a row" },
+      { image: "page-04.svg", sound: "child-happy", text: "Unit Three gave me a head, an arm, a hand and a hop.", alt: "Amal with her arms up beside curving motion arcs" },
+      { image: "page-05.svg", sound: "child-happy", text: "Unit Four gave me a shadow, and it changed all day long.", alt: "Amal and Nora standing beside a long shadow stretching across the floor" },
+      { image: "page-06.svg", sound: "child-happy", text: "Unit Five gave me ten, twenty, thirty, all the way to a hundred.", alt: "Amal pointing at a counting line marked in tens" },
+      { image: "page-07.svg", sound: "child-happy", text: "Unit Six gave me six legs, two antennae and a web with eight.", alt: "Amal beside a card showing a butterfly" },
+      { image: "page-08.svg", sound: "child-happy", text: "Unit Seven gave me roots, a stem, leaves and a flower.", alt: "Amal beside a card showing the parts of a plant" },
+      { image: "page-09.svg", sound: "child-happy", text: "Unit Eight gave me a bedroom, a kitchen and a red rug.", alt: "Amal beside a cutaway view of a living room" },
+      { image: "page-10.svg", sound: "child-happy", text: "Unit Nine gave me a library, a ferry and a zebra crossing.", alt: "Amal pointing at a card showing the city library" },
+      { image: "page-11.svg", sound: "child-happy", text: "And Unit Ten gave me a book of my own, made out of all of them.", alt: "Amal with her arms up beside her finished booklet, with music notes floating" },
+      { image: "page-12.svg", sound: "child-happy", text: "Ten units, one year. \"Say it again,\" said Leo, \"and this time all together!\"", alt: "Amal, Teacher Yasmin and Leo cheering under bunting with confetti and music notes" },
+    ],
+  },
+  {
+    id: "the-sentence-i-fixed",
+    title: "The Sentence I Fixed",
+    grades: [2],
+    units: [10],
+    level: "Level 2",
+    description: "Amal reads her old work again and finds one small word in the wrong shape - and mends it.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "The Sentence I Fixed is an original Grade 2 picture book created for Ehel Academy in 2026, book six of the Unit 10 shelf. It is built on the revising step of the Unit 10 capstone, down to the sentence Amal corrects there. Story and vector illustrations by Ehel Academy Learning Studio. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "child-happy", text: "The Sentence I Fixed. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Amal in the classroom beside a table with an open book and a red pencil" },
+      { image: "page-02.svg", sound: "child-happy", text: "Before you finish a piece of work, you read it again. That is called revising.", alt: "Amal pointing at her open learning folder in the classroom" },
+      { image: "page-03.svg", sound: "child-surprised", text: "Amal read her helpers page from Unit 2. Something on it looked wrong.", alt: "A surprised Amal reading a poster of her own writing on the wall" },
+      { image: "page-04.svg", sound: "child-surprised", text: "\"The firefighters is working.\" One firefighter, or more than one?", alt: "A surprised Amal pointing at her writing beside a helmet, boots and gloves" },
+      { image: "page-05.svg", sound: "woman-happy", text: "\"More than one,\" said Teacher Yasmin. \"So which word has to change?\"", alt: "Teacher Yasmin pointing while Amal thinks in the classroom" },
+      { image: "page-06.svg", sound: "child-happy", text: "Amal took a red pencil. She crossed out \"is\" and wrote \"are\".", alt: "Amal beside a table with a red pencil lying on it" },
+      { image: "page-07.svg", sound: "child-happy", text: "\"The firefighters ARE working.\" Now it was right.", alt: "Amal with her arms up beside her corrected page on the wall" },
+      { image: "page-08.svg", sound: "child-happy", text: "Then she read her sky page. \"The shadow was long.\" She added two describing words.", alt: "Amal beside her sky page with a long shadow stretching across the floor" },
+      { image: "page-09.svg", sound: "child-happy", text: "\"The long, dark shadow.\" Unit 4 had taught her about adjectives.", alt: "Amal pointing at her corrected page while Nora listens" },
+      { image: "page-10.svg", sound: "child-happy", text: "One page at a time, she checked the whole booklet.", alt: "Amal beside a table with her finished booklet on it" },
+      { image: "page-11.svg", sound: "woman-happy", text: "\"A mistake you fix is not a mistake any more,\" said Teacher Yasmin.", alt: "Teacher Yasmin smiling while Amal cheers with her arms up" },
+      { image: "page-12.svg", sound: "child-happy", text: "\"I can read, write and speak more clearly now,\" wrote Amal in her reflection.", alt: "Amal and Teacher Yasmin celebrating under bunting with confetti falling" },
+    ],
+  },
+  {
+    id: "nine-words-for-year-three",
+    title: "Nine Words for Year Three",
+    grades: [2],
+    units: [10],
+    level: "Level 2",
+    description: "Zuri picks one word from every unit of the year and puts them in her pocket for next time.",
+    author: "Ehel Academy",
+    illustrator: "Ehel Academy Learning Studio",
+    attribution: "Nine Words for Year Three is an original Grade 2 picture book created for Ehel Academy in 2026, book seven of the Unit 10 shelf. It names one word from each of the nine review groups the Unit 10 capstone lists. Story and vector illustrations by Ehel Academy Learning Studio, drawn in the shared Zuri series style. No third-party story wording or artwork was reused.",
+    pages: [
+      { image: "page-01.svg", sound: "zuri-happy", text: "Nine Words for Year Three. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.", alt: "Cover illustration of Zuri and Kiki cheering under bunting on the savanna with confetti falling" },
+      { image: "page-02.svg", sound: "zuri-happy", text: "From Unit One: calendar. Seven days make one week.", alt: "Zuri pointing at a large calendar board with the first day ringed" },
+      { image: "page-03.svg", sound: "zuri-happy", text: "From Unit Two: firefighter. And a helmet, and boots, and gloves.", alt: "Zuri pointing at a helmet, boots, gloves and a mask on the savanna" },
+      { image: "page-04.svg", sound: "zuri-happy", text: "From Unit Three: hop. Zuri can still do it.", alt: "Zuri hopping with her arms up, dust puffs beneath her" },
+      { image: "page-05.svg", sound: "sun", text: "From Unit Four: shadow. Long in the morning, short at midday.", alt: "Zuri standing beside her own long shadow on the savanna" },
+      { image: "page-06.svg", sound: "zuri-happy", text: "From Unit Five: measure. Ten, twenty, thirty, all the way up.", alt: "Zuri pointing at a counting line marked in tens" },
+      { image: "page-07.svg", sound: "zuri-happy", text: "From Unit Six: insect. Six legs, and not one more.", alt: "Zuri beside a butterfly and an anthill on the savanna" },
+      { image: "page-08.svg", sound: "tree", text: "From Unit Seven: tree. It began as one small seed.", alt: "Zuri with her arms up beside a leafy plant and a young tree" },
+      { image: "page-09.svg", sound: "bird", text: "From Unit Eight: home. A burrow, a nest, or a house.", alt: "Zuri standing between a burrow and a nest" },
+      { image: "page-10.svg", sound: "zuri-happy", text: "From Unit Nine: library. Quiet inside, and full of everything.", alt: "Zuri pointing at the library building" },
+      { image: "page-11.svg", sound: "zuri-happy", text: "And from Unit Ten: my own book, with all of them inside it.", alt: "Zuri with her arms up beside a booklet titled My English World" },
+      { image: "page-12.svg", sound: "zuri-happy", text: "\"Nine words,\" said Zuri. \"I am taking every one of them to Year Three.\"", alt: "Zuri, Kiki and Miss Twiga celebrating under a rainbow and bunting with confetti falling" },
+    ],
+  },
+
   // ---------------------------------------------------------------- Grade 3
   // Grade 3 keeps the one-book-per-unit shape and drops the animals, because by
   // Grade 3 the course has a cast of its own: Amal, her friend Nora, Teacher
@@ -5693,6 +6798,480 @@ const ebookCatalog = [
   },
 ];
 
+// ===================== book comprehension (Grades 1-4) ======================
+// The question sets behind the `book-comprehension` section (owner,
+// 2026-08-31): interactive questions about the unit's picture-book shelf, ONE
+// combined set per unit, sitting in the chain directly after the shelf (which
+// those grades call "Reading" — see the sections table). A real step: it
+// counts toward the unit's 100% and Grammar waits for it, exactly as the old
+// text Comprehension did before it was hidden at these grades.
+//
+// Pure data, kept beside ebookCatalog because every question points INTO it —
+// a book id and 1-based page numbers — and the two must not drift.
+// tools/check-english-ebooks.mjs slices this literal out of the source (the
+// same literalBetweenBrackets read the catalogue gets) and fails the build on
+// a question naming a book that is not on that unit's shelf, a page that does
+// not exist, an answer index that does not resolve, or an order run that does
+// not climb. Three kinds:
+//   choice  — a question with three short word answers; `page` names the
+//             picture drawn beside it (never 1: that is the cover).
+//   picture — "tap the picture…": three {book, page} cards, exactly one right.
+//   order   — three pages of ONE book tapped into story order; `order` holds
+//             the correct page numbers ASCENDING, and the renderer shuffles
+//             what it shows, so the data states the truth rather than the
+//             puzzle.
+// The renderer also shuffles choice/picture answers on every visit, so the
+// authored `answer` index is a pointer into the authored arrays, never a
+// screen position.
+const BOOK_COMPREHENSION_SETS = [
+  {
+    grade: 1, unit: 1,
+    questions: [
+      { kind: "choice", book: "kiki-goes-to-school", page: 2, q: "What colour was Kiki's new bag?", options: ["blue", "red", "green"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of Miss Twiga.", pick: [{ book: "kiki-goes-to-school", page: 5 }, { book: "amals-first-day", page: 8 }, { book: "find-something-green", page: 7 }], answer: 0 },
+      { kind: "choice", book: "find-something-green", page: 5, q: "Who found a green crayon?", options: ["Amal", "Adam", "Samira"], answer: 2 },
+      { kind: "order", book: "the-lost-blue-crayon", q: "Tap the pictures from “The Lost Blue Crayon” in story order.", order: [3, 10, 12] },
+      { kind: "picture", q: "Tap the picture of the school bell.", pick: [{ book: "find-something-green", page: 9 }, { book: "amals-first-day", page: 6 }, { book: "kiki-goes-to-school", page: 11 }], answer: 2 },
+      { kind: "choice", book: "hello-school", page: 11, q: "Who said the last word by himself?", options: ["Leo", "Adam", "Samira"], answer: 0 },
+    ],
+  },
+  {
+    grade: 1, unit: 2,
+    questions: [
+      { kind: "choice", book: "kikis-family-day", page: 6, q: "Who dropped her banana?", options: ["Kiki", "Nia", "Mama"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of baby Idris.", pick: [{ book: "who-is-in-my-family", page: 6 }, { book: "kikis-family-day", page: 4 }, { book: "ten-little-eggs", page: 6 }], answer: 0 },
+      { kind: "choice", book: "ten-little-eggs", page: 2, q: "How many eggs did Koko have?", options: ["nine", "five", "ten"], answer: 2 },
+      { kind: "order", book: "ten-little-eggs", q: "Tap the pictures from “Ten Little Eggs” in story order.", order: [3, 9, 11] },
+      { kind: "picture", q: "Tap the picture of the family eating dinner.", pick: [{ book: "some-families-are-big", page: 3 }, { book: "kikis-family-day", page: 8 }, { book: "who-is-in-my-family", page: 5 }], answer: 1 },
+      { kind: "choice", book: "who-is-in-my-family", page: 7, q: "What do they call Grandma?", options: ["Ayeeyo", "Hodan", "Idris"], answer: 0 },
+    ],
+  },
+  {
+    grade: 1, unit: 3,
+    questions: [
+      { kind: "choice", book: "kiki-and-the-big-game", page: 8, q: "Where was the kite stuck?", options: ["in the tree", "in the water", "on the swing"], answer: 0 },
+      { kind: "order", book: "amal-and-the-big-ball", q: "Tap the pictures from “Amal and the Big Ball” in story order.", order: [6, 9, 11] },
+      { kind: "picture", q: "Tap the picture of the frog.", pick: [{ book: "where-is-the-ball", page: 3 }, { book: "where-is-the-ball", page: 5 }, { book: "where-is-the-ball", page: 6 }], answer: 2 },
+      { kind: "choice", book: "where-is-the-ball", page: 10, q: "Where was Kiki's ball?", options: ["on the bench", "under the chick", "in the water"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of children clapping.", pick: [{ book: "wind-the-bobbin-up", page: 6 }, { book: "wind-the-bobbin-up", page: 5 }, { book: "touch-your-toes", page: 5 }], answer: 1 },
+      { kind: "choice", book: "touch-your-toes", page: 2, q: "What can Amal bounce?", options: ["a ball", "a kite", "a drum"], answer: 0 },
+    ],
+  },
+  {
+    grade: 1, unit: 4,
+    questions: [
+      { kind: "picture", q: "Tap the picture of the scarecrow.", pick: [{ book: "amal-makes-a-mat", page: 2 }, { book: "higgledy-piggledy-my-black-hen", page: 3 }, { book: "duku-makes-a-scarecrow", page: 9 }], answer: 2 },
+      { kind: "choice", book: "amal-makes-a-mat", page: 5, q: "What was Amal's first mat like?", options: ["neat", "bumpy", "flat"], answer: 1 },
+      { kind: "order", book: "duku-makes-a-scarecrow", q: "Tap the pictures from “Duku Makes a Scarecrow” in story order.", order: [4, 8, 11] },
+      { kind: "choice", book: "party-time-look-at-me", page: 7, q: "What did Leo make?", options: ["a crown", "a mask", "a red cape"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of the blue circle.", pick: [{ book: "shapes-i-can-cut", page: 3 }, { book: "shapes-i-can-cut", page: 2 }, { book: "shapes-i-can-cut", page: 4 }], answer: 0 },
+      { kind: "choice", book: "higgledy-piggledy-my-black-hen", page: 6, q: "How many eggs did Koko lay on Monday?", options: ["nine", "ten", "eight"], answer: 0 },
+    ],
+  },
+  {
+    grade: 1, unit: 5,
+    questions: [
+      { kind: "choice", book: "the-little-lost-chick", page: 11, q: "Where was little Pip asleep?", options: ["in the barn", "by the pond", "in the hay"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of the cow.", pick: [{ book: "who-says-moo", page: 6 }, { book: "who-says-moo", page: 2 }, { book: "who-says-moo", page: 4 }], answer: 1 },
+      { kind: "order", book: "duku-plants-a-row", q: "Tap the pictures from “Duku Plants a Row” in story order.", order: [3, 7, 11] },
+      { kind: "choice", book: "who-says-moo", page: 2, q: "What does the cow say?", options: ["cluck", "moo", "baa"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of the egg.", pick: [{ book: "the-little-lost-chick", page: 11 }, { book: "duku-plants-a-row", page: 9 }, { book: "amal-and-the-little-hen", page: 8 }], answer: 2 },
+      { kind: "choice", book: "hello-to-the-farm", page: 11, q: "What grows tall on the farm?", options: ["the wheat", "the egg", "the barn"], answer: 0 },
+    ],
+  },
+  {
+    grade: 1, unit: 6,
+    questions: [
+      { kind: "choice", book: "dukus-five-senses", page: 7, q: "What crunchy food did Duku taste?", options: ["a carrot", "a mango", "bread"], answer: 0 },
+      { kind: "order", book: "kiki-makes-music", q: "Tap the pictures from “Kiki Makes Music” in story order.", order: [2, 4, 10] },
+      { kind: "choice", book: "amal-at-the-market", page: 7, q: "Who gave Amal a piece of mango?", options: ["Ayeeyo", "Adam", "Omar"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of the drum.", pick: [{ book: "kiki-makes-music", page: 7 }, { book: "kiki-makes-music", page: 3 }, { book: "kiki-makes-music", page: 8 }], answer: 1 },
+      { kind: "choice", book: "two-little-eyes", page: 8, q: "Which sense was not in the poem?", options: ["smell", "taste", "touch"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of the warm bread.", pick: [{ book: "which-sense-do-i-use", page: 4 }, { book: "which-sense-do-i-use", page: 5 }, { book: "amal-at-the-market", page: 10 }], answer: 0 },
+    ],
+  },
+  {
+    grade: 1, unit: 7,
+    questions: [
+      { kind: "choice", book: "lulu-says-lets-go", page: 10, q: "Who shared her seeds with Lulu?", options: ["Musa", "a kind bird", "Duku"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of the bicycle.", pick: [{ book: "how-do-you-go", page: 4 }, { book: "how-do-you-go", page: 7 }, { book: "how-do-you-go", page: 3 }], answer: 2 },
+      { kind: "choice", book: "amals-big-bus-ride", page: 5, q: "What colour was the big bus?", options: ["yellow and red", "blue", "green"], answer: 0 },
+      { kind: "order", book: "lulu-and-the-slow-boat", q: "Tap the pictures from “Lulu and the Slow Boat” in story order.", order: [5, 7, 9] },
+      { kind: "choice", book: "how-do-you-go", page: 7, q: "What goes on the rails?", options: ["a boat", "a plane", "a train"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of Kiki in the boat.", pick: [{ book: "lulu-says-lets-go", page: 9 }, { book: "lulu-and-the-slow-boat", page: 3 }, { book: "the-wheels-on-the-bus", page: 6 }], answer: 1 },
+    ],
+  },
+  {
+    grade: 1, unit: 8,
+    questions: [
+      { kind: "choice", book: "lulu-and-the-wonderful-water", page: 5, q: "Where did Lulu hide from the rain?", options: ["under a leaf", "in a nest", "in a boat"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of the well.", pick: [{ book: "lulu-and-the-wonderful-water", page: 8 }, { book: "not-one-drop-wasted", page: 2 }, { book: "rain-on-the-green-grass", page: 4 }], answer: 1 },
+      { kind: "order", book: "the-well-in-the-village", q: "Tap the pictures from “The Well in the Village” in story order.", order: [8, 10, 11] },
+      { kind: "choice", book: "what-is-water-for", page: 8, q: "What floats on the water?", options: ["a stone", "a leaf", "a pot"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of the rainbow.", pick: [{ book: "the-well-in-the-village", page: 5 }, { book: "what-is-water-for", page: 7 }, { book: "lulu-and-the-wonderful-water", page: 6 }], answer: 2 },
+      { kind: "choice", book: "not-one-drop-wasted", page: 4, q: "Who spilled half his water?", options: ["Musa", "Duku", "Kiki"], answer: 0 },
+    ],
+  },
+  {
+    grade: 1, unit: 9,
+    questions: [
+      { kind: "picture", q: "Tap the picture of the clock tower.", pick: [{ book: "lulu-in-the-city", page: 7 }, { book: "who-works-here", page: 5 }, { book: "a-walk-around-town", page: 8 }], answer: 0 },
+      { kind: "choice", book: "red-means-stop", page: 3, q: "What does red mean?", options: ["go", "wait", "stop"], answer: 2 },
+      { kind: "order", book: "a-walk-around-town", q: "Tap the pictures from “A Walk Around Town” in story order.", order: [2, 6, 11] },
+      { kind: "choice", book: "who-works-here", page: 3, q: "Who is a doctor?", options: ["Faduma", "Omar", "Miss Yasmin"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of the green traffic light.", pick: [{ book: "red-means-stop", page: 3 }, { book: "red-means-stop", page: 4 }, { book: "the-busy-road-and-the-quiet-park", page: 5 }], answer: 1 },
+      { kind: "choice", book: "the-busy-road-and-the-quiet-park", page: 8, q: "Where was it quiet?", options: ["the road", "the shop", "the park"], answer: 2 },
+    ],
+  },
+  {
+    grade: 1, unit: 10,
+    questions: [
+      { kind: "choice", book: "the-big-friends-party", page: 3, q: "Who wanted a party for all the friends?", options: ["Musa", "Lulu", "Kiki"], answer: 0 },
+      { kind: "order", book: "amals-english-year", q: "Tap the pictures from “Amal's English Year” in story order.", order: [3, 10, 11] },
+      { kind: "picture", q: "Tap the picture of Amal reading her book.", pick: [{ book: "the-big-friends-party", page: 9 }, { book: "amals-english-year", page: 11 }, { book: "see-you-next-year-friends", page: 6 }], answer: 1 },
+      { kind: "choice", book: "see-you-next-year-friends", page: 5, q: "What did Duku bring?", options: ["eggs", "the ball", "carrots"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of the chicks asleep in the hay.", pick: [{ book: "the-big-friends-party", page: 11 }, { book: "show-me-your-book", page: 8 }, { book: "my-year-of-words", page: 4 }], answer: 0 },
+      { kind: "choice", book: "show-me-your-book", page: 11, q: "Which page did Amal like best?", options: ["the bus page", "her family page", "the school page"], answer: 1 },
+    ],
+  },
+  {
+    grade: 2, unit: 1,
+    questions: [
+      { kind: "choice", book: "zuris-first-week", page: 3, q: "Who was Zuri's partner in her first week?", options: ["Kiki", "Musa", "Leo"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of the class calendar.", pick: [{ book: "the-word-hunt", page: 5 }, { book: "zuris-first-week", page: 4 }, { book: "when-i-open-up-a-book", page: 6 }], answer: 1 },
+      { kind: "choice", book: "amals-first-week", page: 3, q: "Who welcomed Amal at the school gate?", options: ["Leo", "Nora", "Teacher Yasmin"], answer: 2 },
+      { kind: "order", book: "the-word-hunt", q: "Tap the pictures from “The Word Hunt” in story order. What happened first?", order: [3, 9, 11] },
+      { kind: "picture", q: "Tap the picture of children singing the days.", pick: [{ book: "the-word-hunt", page: 10 }, { book: "the-first-the-second-the-third", page: 9 }, { book: "amals-first-week", page: 7 }], answer: 2 },
+      { kind: "choice", book: "the-first-the-second-the-third", page: 10, q: "Whose birthday is on the twentieth day?", options: ["Zuri's", "Kiki's", "Miss Twiga's"], answer: 1 },
+    ],
+  },
+  {
+    grade: 2, unit: 2,
+    questions: [
+      { kind: "choice", book: "the-day-the-fire-bell-rang", page: 8, q: "What did Zuri hold for the firefighter?", options: ["The helmet", "The hose", "The ladder"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of the red fire engine.", pick: [{ book: "my-neighbourhood", page: 8 }, { book: "the-helpers-of-warta-street", page: 7 }, { book: "who-is-helping", page: 9 }], answer: 1 },
+      { kind: "choice", book: "my-neighbourhood", page: 7, q: "Who drives the bus?", options: ["Rami", "Doctor Sarah", "Nadia"], answer: 2 },
+      { kind: "order", book: "the-helpers-of-warta-street", q: "Tap the pictures from “The Helpers of Warta Street” in story order. What happened first?", order: [6, 7, 9] },
+      { kind: "picture", q: "Tap the picture of Rami the police officer.", pick: [{ book: "my-neighbourhood", page: 9 }, { book: "who-helps-our-street", page: 4 }, { book: "zuri-asks-the-questions", page: 5 }], answer: 0 },
+      { kind: "choice", book: "zuri-asks-the-questions", page: 8, q: "What did Miss Twiga say her job was?", options: ["Driving", "Teaching", "Selling"], answer: 1 },
+    ],
+  },
+  {
+    grade: 2, unit: 3,
+    questions: [
+      { kind: "choice", book: "the-big-race", page: 10, q: "Who won the race for the green team?", options: ["Theo", "Nora", "Amal"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of Kiki jumping high.", pick: [{ book: "sports-day-at-the-tree-school", page: 6 }, { book: "move-like-me", page: 9 }, { book: "miss-twiga-says", page: 6 }], answer: 0 },
+      { kind: "choice", book: "move-like-me", page: 9, q: "What did the class eat after moving?", options: ["Cake", "Fruit", "Bread"], answer: 1 },
+      { kind: "order", book: "miss-twiga-says", q: "Tap the pictures from “Miss Twiga Says” in story order. What happened first?", order: [2, 7, 9] },
+      { kind: "picture", q: "Tap the picture of children touching their toes.", pick: [{ book: "get-up-and-move-day", page: 8 }, { book: "reach-for-the-sky", page: 5 }, { book: "head-arm-hand-finger", page: 3 }], answer: 1 },
+      { kind: "choice", book: "get-up-and-move-day", page: 3, q: "What did Sami jump between?", options: ["Hoops", "Ropes", "Benches"], answer: 0 },
+    ],
+  },
+  {
+    grade: 2, unit: 4,
+    questions: [
+      { kind: "choice", book: "zuri-and-her-shadow", page: 5, q: "What was Zuri's shadow like at midday?", options: ["Very long", "Very short", "Blue"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of the rainbow.", pick: [{ book: "sunny-cloudy-windy-rainy", page: 10 }, { book: "zuri-and-her-shadow", page: 9 }, { book: "where-does-the-sun-go", page: 6 }], answer: 0 },
+      { kind: "choice", book: "why-we-have-day-and-night", page: 4, q: "What did Adam use as the sun?", options: ["A ball", "A candle", "A torch"], answer: 2 },
+      { kind: "order", book: "zuri-and-her-shadow", q: "Tap the pictures from “Zuri and Her Shadow” in story order. What happened first?", order: [2, 5, 9] },
+      { kind: "picture", q: "Tap the picture of the kite in the sky.", pick: [{ book: "my-shadow", page: 6 }, { book: "what-is-the-weather-today", page: 6 }, { book: "the-night-amal-counted-the-stars", page: 10 }], answer: 1 },
+      { kind: "choice", book: "the-night-amal-counted-the-stars", page: 12, q: "Who sat with Amal under the stars?", options: ["Grandma Hana", "Adam", "Nora"], answer: 0 },
+    ],
+  },
+  {
+    grade: 2, unit: 5,
+    questions: [
+      { kind: "choice", book: "a-fair-way-to-measure", page: 3, q: "What did Amal measure the floor with?", options: ["Her hands", "Her feet", "A ruler"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of the mango and the feather.", pick: [{ book: "the-shape-hunt", page: 6 }, { book: "one-hundred-little-fingers", page: 5 }, { book: "ten-twenty-one-hundred", page: 9 }], answer: 2 },
+      { kind: "choice", book: "the-shape-hunt", page: 4, q: "What shape is the roof of the house?", options: ["A circle", "A square", "A triangle"], answer: 2 },
+      { kind: "order", book: "a-fair-way-to-measure", q: "Tap the pictures from “A Fair Way to Measure” in story order. What happened first?", order: [3, 6, 8] },
+      { kind: "picture", q: "Tap the picture of the stone and the leaf.", pick: [{ book: "big-and-small-long-and-short", page: 9 }, { book: "how-people-measured-long-ago", page: 8 }, { book: "how-tall-how-long", page: 7 }], answer: 0 },
+      { kind: "choice", book: "how-people-measured-long-ago", page: 8, q: "What did people in Rome count?", options: ["Footsteps", "Fingers", "Stones"], answer: 0 },
+    ],
+  },
+  {
+    grade: 2, unit: 6,
+    questions: [
+      { kind: "choice", book: "the-six-leg-club", page: 10, q: "How many legs does a spider have?", options: ["Six", "Eight", "Ten"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of ants carrying the crumb.", pick: [{ book: "the-six-leg-club", page: 7 }, { book: "the-ants-and-the-big-crumb", page: 9 }, { book: "where-is-the-cricket", page: 4 }], answer: 1 },
+      { kind: "choice", book: "grandpas-cricket", page: 3, q: "Where was the cricket at first?", options: ["In his hat", "In a jar", "In his pocket"], answer: 2 },
+      { kind: "order", book: "where-is-the-cricket", q: "Tap the pictures from “Where Is the Cricket?” in story order. What happened first?", order: [2, 8, 9] },
+      { kind: "picture", q: "Tap the picture of the spider in its web.", pick: [{ book: "fly-jump-crawl-spin", page: 6 }, { book: "grandpas-cricket", page: 8 }, { book: "the-ants-and-the-big-crumb", page: 5 }], answer: 0 },
+      { kind: "choice", book: "amal-and-the-little-garden-friends", page: 3, q: "What did Amal do when the bee buzzed near?", options: ["She ran", "She sang", "She slept"], answer: 0 },
+    ],
+  },
+  {
+    grade: 2, unit: 7,
+    questions: [
+      { kind: "choice", book: "one-small-seed", page: 2, q: "Who gave every pupil a seed?", options: ["Miss Twiga", "Mama", "Kiki"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of the recycling bins.", pick: [{ book: "thank-you-tree", page: 11 }, { book: "the-stream-clean-up", page: 7 }, { book: "roots-stem-leaves-flower", page: 6 }], answer: 1 },
+      { kind: "choice", book: "the-stream-clean-up", page: 9, q: "What came back to drink at the stream?", options: ["A goat", "A bird", "An elephant"], answer: 1 },
+      { kind: "order", book: "one-small-seed", q: "Tap the pictures from “One Small Seed” in story order. What happened first?", order: [3, 6, 11] },
+      { kind: "picture", q: "Tap the picture of Grandmother Hana giving Amal seeds.", pick: [{ book: "amal-and-the-little-tree", page: 7 }, { book: "painted-blue-and-green", page: 11 }, { book: "a-family-on-mother-earth-day", page: 9 }], answer: 0 },
+      { kind: "choice", book: "a-family-on-mother-earth-day", page: 10, q: "What did Sami make with his grandmother?", options: ["Kites", "Clay pots", "Paper flowers"], answer: 2 },
+    ],
+  },
+  {
+    grade: 2, unit: 8,
+    questions: [
+      { kind: "choice", book: "every-home-is-different", page: 2, q: "Where did Zuri live?", options: ["In a tree house", "Under the ground", "In a nest"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of the house on stilts.", pick: [{ book: "far-away-homes", page: 4 }, { book: "theos-tree-house", page: 5 }, { book: "a-nest-is-a-home-for-a-bird", page: 4 }], answer: 0 },
+      { kind: "choice", book: "theos-tree-house", page: 6, q: "How many steps does the ladder have?", options: ["Ten", "Six", "Twelve"], answer: 0 },
+      { kind: "order", book: "helping-hands-at-home", q: "Tap the pictures from “Helping Hands at Home” in story order. What happened first?", order: [4, 7, 12] },
+      { kind: "picture", q: "Tap the picture of the bees' home.", pick: [{ book: "bed-table-chair-sofa", page: 6 }, { book: "a-nest-is-a-home-for-a-bird", page: 3 }, { book: "helping-hands-at-home", page: 6 }], answer: 1 },
+      { kind: "choice", book: "bed-table-chair-sofa", page: 7, q: "What keeps your feet warm?", options: ["A sink", "A chair", "A rug"], answer: 2 },
+    ],
+  },
+  {
+    grade: 2, unit: 9,
+    questions: [
+      { kind: "choice", book: "a-day-in-the-big-city", page: 8, q: "How did the class cross the water?", options: ["By train", "By helicopter", "By ferry"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of the shark.", pick: [{ book: "ten-oclock-at-the-aquarium", page: 6 }, { book: "a-day-in-the-big-city", page: 9 }, { book: "the-city-from-the-sky", page: 8 }], answer: 0 },
+      { kind: "choice", book: "the-stranger-with-the-map", page: 9, q: "Where did the old man need to go?", options: ["The library", "The hospital", "The market"], answer: 1 },
+      { kind: "order", book: "which-way-to-the-library", q: "Tap the pictures from “Which Way to the Library?” in story order. What happened first?", order: [4, 7, 11] },
+      { kind: "picture", q: "Tap the picture of the helicopter.", pick: [{ book: "at-the-zebra-crossing", page: 9 }, { book: "ten-oclock-at-the-aquarium", page: 8 }, { book: "the-city-from-the-sky", page: 3 }], answer: 2 },
+      { kind: "choice", book: "at-the-zebra-crossing", page: 6, q: "What did Amal bend down to do?", options: ["Tie her laces", "Pick up litter", "Wave at cars"], answer: 0 },
+    ],
+  },
+  {
+    grade: 2, unit: 10,
+    questions: [
+      { kind: "choice", book: "zuri-makes-a-plan", page: 10, q: "Which word did Zuri spell wrong?", options: ["Monday", "Wednesday", "Friday"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of Zuri's mama clapping.", pick: [{ book: "the-day-of-the-showcase", page: 10 }, { book: "zuris-book-of-the-year", page: 7 }, { book: "ten-units-one-year", page: 10 }], answer: 0 },
+      { kind: "choice", book: "the-sentence-i-fixed", page: 6, q: "Which word did Amal write with her red pencil?", options: ["was", "and", "are"], answer: 2 },
+      { kind: "order", book: "amals-english-world", q: "Tap the pictures from “Amal's English World” in story order. What happened first?", order: [2, 9, 11] },
+      { kind: "picture", q: "Tap the picture of Zuri hopping.", pick: [{ book: "ten-units-one-year", page: 6 }, { book: "nine-words-for-year-three", page: 4 }, { book: "amals-english-world", page: 3 }], answer: 1 },
+      { kind: "choice", book: "nine-words-for-year-three", page: 10, q: "Which word came from Unit Nine?", options: ["Library", "Shadow", "Insect"], answer: 0 },
+    ],
+  },
+  {
+    grade: 3, unit: 1,
+    questions: [
+      { kind: "choice", book: "the-family-who-helps", page: 5, q: "What does Dad ask everyone to name at dinner?", options: ["A new song", "A funny joke", "One good thing"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of Grandma Hana telling stories at night.", pick: [{ book: "the-interview", page: 9 }, { book: "the-family-who-helps", page: 4 }, { book: "minas-two-voices", page: 9 }], answer: 1 },
+      { kind: "choice", book: "junior", page: 2, q: "Why does the drama club call Amal Junior?", options: ["She is very quiet", "She is the youngest", "She is the tallest"], answer: 1 },
+      { kind: "order", book: "the-interview", q: "Tap the pictures from “The Interview” in story order. What happened first?", order: [3, 8, 12] },
+      { kind: "picture", q: "Tap the picture of Amal at the microphone.", pick: [{ book: "the-interview", page: 4 }, { book: "junior", page: 10 }, { book: "the-family-who-helps", page: 8 }], answer: 0 },
+      { kind: "choice", book: "minas-two-voices", page: 11, q: "Why did Mina use her big voice at the market?", options: ["A little boy was lost", "She wanted mangoes", "She was angry"], answer: 0 },
+    ],
+  },
+  {
+    grade: 3, unit: 2,
+    questions: [
+      { kind: "choice", book: "the-spelling-contest", page: 10, q: "How did Amal finally learn every spelling word?", options: ["Five words each evening", "All in one night", "Nora spelled for her"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of Adam reading in the library.", pick: [{ book: "the-grammar-champions", page: 6 }, { book: "the-spelling-contest", page: 4 }, { book: "a-normal-day-at-school", page: 7 }], answer: 2 },
+      { kind: "choice", book: "the-grammar-champions", page: 12, q: "Why did the Grammar Champions win?", options: ["They had funny cartoons", "Their lesson was clear", "They finished first"], answer: 1 },
+      { kind: "order", book: "the-spelling-contest", q: "Tap the pictures from “The Spelling Contest” in story order. What happened first?", order: [2, 8, 11] },
+      { kind: "picture", q: "Tap the picture of Grandma Hana talking to Amal.", pick: [{ book: "the-spelling-contest", page: 9 }, { book: "the-quietest-room", page: 8 }, { book: "a-normal-day-at-school", page: 11 }], answer: 0 },
+      { kind: "choice", book: "the-quietest-room", page: 10, q: "What topic did Amal choose in the end?", options: ["A clever camel", "A girl scientist", "The teacher in her book"], answer: 2 },
+    ],
+  },
+  {
+    grade: 3, unit: 3,
+    questions: [
+      { kind: "picture", q: "Tap the picture of Idris and Sami eating lunch under the tree.", pick: [{ book: "six-oclock-seven-oclock", page: 10 }, { book: "six-oclock-seven-oclock", page: 7 }, { book: "the-calendar-on-the-wall", page: 9 }], answer: 1 },
+      { kind: "choice", book: "six-oclock-seven-oclock", page: 2, q: "What does Idris do at six o'clock?", options: ["He wakes up", "He eats lunch", "He plays football"], answer: 0 },
+      { kind: "order", book: "samis-calendar", q: "Tap the pictures from “Sami's Calendar” in story order. What happened first?", order: [2, 6, 12] },
+      { kind: "choice", book: "samis-calendar", page: 8, q: "What happens in Sami's June?", options: ["The school games", "Picking mangoes", "A boat trip with Grandfather"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of Mina beside the class calendar.", pick: [{ book: "the-calendar-on-the-wall", page: 6 }, { book: "the-calendar-on-the-wall", page: 5 }, { book: "twelve-months-of-work", page: 6 }], answer: 0 },
+      { kind: "choice", book: "twelve-months-of-work", page: 7, q: "When does the long school holiday fall?", options: ["In January", "In December", "In June"], answer: 1 },
+    ],
+  },
+  {
+    grade: 3, unit: 4,
+    questions: [
+      { kind: "choice", book: "the-bus-to-the-county", page: 3, q: "Who met the class at the hospital?", options: ["Officer Rami", "Doctor Sarah", "Omar"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of Omar at his market stall.", pick: [{ book: "the-bus-to-the-county", page: 8 }, { book: "the-places-that-help-us", page: 5 }, { book: "places-i-know", page: 5 }], answer: 0 },
+      { kind: "order", book: "the-bus-to-the-county", q: "Tap the pictures from “The Bus to the County” in story order. What happened first?", order: [3, 6, 10] },
+      { kind: "choice", book: "friday-at-the-market", page: 8, q: "How does Amal stay safe in the market crowd?", options: ["She holds her mother's hand", "She carries a basket", "She stays by the gate"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of Sami with his enormous basket.", pick: [{ book: "friday-at-the-market", page: 8 }, { book: "friday-at-the-market", page: 10 }, { book: "the-bus-to-the-county", page: 9 }], answer: 1 },
+      { kind: "choice", book: "the-places-that-help-us", page: 10, q: "Why did the class learn their addresses by heart?", options: ["To write a poem", "To win a prize", "In case they are lost"], answer: 2 },
+    ],
+  },
+  {
+    grade: 3, unit: 5,
+    questions: [
+      { kind: "choice", book: "helping-hands", page: 4, q: "Why did Nora stop beside Omar's shop?", options: ["The basket looked too heavy", "She wanted some fruit", "It started to rain"], answer: 0 },
+      { kind: "order", book: "first-the-seeds", q: "Tap the pictures from “First the Seeds” in story order. What happened first?", order: [3, 5, 11] },
+      { kind: "choice", book: "the-wall-behind-the-garden", page: 5, q: "Why could the family not plant the garden yet?", options: ["It was raining", "The wall had fallen down", "They had no seeds"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of the goat testing the new fence.", pick: [{ book: "the-wall-behind-the-garden", page: 6 }, { book: "helping-hands", page: 8 }, { book: "first-the-seeds", page: 6 }], answer: 2 },
+      { kind: "choice", book: "the-night-the-wall-shook", page: 6, q: "How did Sami and Leo stop the wall from falling?", options: ["They called for Dad", "They added more water", "They held both sides"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of Nora and Omar carrying the basket together.", pick: [{ book: "helping-hands", page: 8 }, { book: "the-wall-behind-the-garden", page: 3 }, { book: "first-the-seeds", page: 7 }], answer: 0 },
+    ],
+  },
+  {
+    grade: 3, unit: 6,
+    questions: [
+      { kind: "choice", book: "the-girl-who-carried-kindness", page: 6, q: "Why does Nora take the long road to school?", options: ["To count her steps", "She walks with a junior student", "To pick flowers"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of Noah shutting in the neighbour's goats.", pick: [{ book: "my-cousin-noah", page: 4 }, { book: "two-roads", page: 7 }, { book: "my-cousin-noah", page: 5 }], answer: 2 },
+      { kind: "choice", book: "two-roads", page: 7, q: "Why does Dad take the rough road?", options: ["It is shorter", "It is smoother", "It is prettier"], answer: 0 },
+      { kind: "order", book: "the-girl-who-carried-kindness", q: "Tap the pictures from “The Girl Who Carried Kindness” in story order. What happened first?", order: [4, 6, 10] },
+      { kind: "picture", q: "Tap the picture of Theo and Leo on the smooth road.", pick: [{ book: "two-roads", page: 6 }, { book: "two-roads", page: 4 }, { book: "two-roads", page: 5 }], answer: 1 },
+      { kind: "choice", book: "who-is-kinder", page: 10, q: "What did Sami and Leo agree matters more?", options: ["Strength", "Speed", "Kindness"], answer: 2 },
+    ],
+  },
+  {
+    grade: 3, unit: 7,
+    questions: [
+      { kind: "choice", book: "from-coast-to-forest", page: 4, q: "Where did the class trip start?", options: ["On the mountain", "At the coast", "In the forest"], answer: 1 },
+      { kind: "order", book: "from-coast-to-forest", q: "Tap the pictures from “From Coast to Forest” in story order. What happened first?", order: [4, 7, 12] },
+      { kind: "choice", book: "have-you-ever", page: 8, q: "Who has climbed a mountain?", options: ["Amal", "Leo", "Nora"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of Amal and Leo under a rainbow.", pick: [{ book: "today-and-always", page: 2 }, { book: "have-you-ever", page: 11 }, { book: "nature-is-our-home", page: 10 }], answer: 1 },
+      { kind: "choice", book: "today-and-always", page: 2, q: "What is weather?", options: ["What today is doing", "What a place does for years", "The name of a mountain"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of children planting a young tree.", pick: [{ book: "nature-is-our-home", page: 10 }, { book: "today-and-always", page: 12 }, { book: "from-coast-to-forest", page: 6 }], answer: 0 },
+    ],
+  },
+  {
+    grade: 3, unit: 8,
+    questions: [
+      { kind: "choice", book: "the-mystery-of-the-million-shells", page: 6, q: "How many shells were in one square metre?", options: ["Sixty-four", "One hundred", "A million"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of Amal counting eggs in the kitchen.", pick: [{ book: "maths-before-dinner", page: 9 }, { book: "the-mystery-of-the-million-shells", page: 5 }, { book: "maths-before-dinner", page: 2 }], answer: 2 },
+      { kind: "choice", book: "the-measuring-challenge", page: 9, q: "What was the third thing to measure?", options: ["The desk's height", "The door's width", "The school bag's weight"], answer: 2 },
+      { kind: "order", book: "ten-to-a-million", q: "Tap the pictures from “Ten to a Million” in story order. What happened first?", order: [3, 8, 10] },
+      { kind: "choice", book: "maths-before-dinner", page: 7, q: "How did the cousins share the dates fairly?", options: ["By counting steps", "By using division", "By weighing them"], answer: 1 },
+      { kind: "picture", q: "Tap the picture where the school bag is weighed on the scales.", pick: [{ book: "the-measuring-challenge", page: 7 }, { book: "the-measuring-challenge", page: 9 }, { book: "the-mystery-of-the-million-shells", page: 7 }], answer: 1 },
+    ],
+  },
+  {
+    grade: 3, unit: 9,
+    questions: [
+      { kind: "choice", book: "rain-is-a-kind-of-weather", page: 5, q: "Why did Nora feel so sad?", options: ["Her cat did not come home", "She lost her book", "She failed a test"], answer: 0 },
+      { kind: "order", book: "rain-is-a-kind-of-weather", q: "Tap the pictures from “Rain Is a Kind of Weather” in story order. What happened first?", order: [5, 8, 12] },
+      { kind: "choice", book: "what-sami-said", page: 2, q: "What does Sami imagine he can do?", options: ["Sail a big boat", "Fly over the sea", "Climb the lighthouse"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of Sami's drawing of the lighthouse.", pick: [{ book: "what-sami-said", page: 11 }, { book: "rain-is-a-kind-of-weather", page: 6 }, { book: "everyone-gets-a-turn", page: 5 }], answer: 0 },
+      { kind: "choice", book: "everyone-gets-a-turn", page: 8, q: "How did the class choose which ideas to use first?", options: ["The teacher chose alone", "They drew names", "They voted with hands up"], answer: 2 },
+      { kind: "picture", q: "Tap the picture of the Box of Ideas in the classroom.", pick: [{ book: "everyone-gets-a-turn", page: 12 }, { book: "the-box-of-ideas", page: 2 }, { book: "rain-is-a-kind-of-weather", page: 9 }], answer: 1 },
+    ],
+  },
+  {
+    grade: 3, unit: 10,
+    questions: [
+      { kind: "choice", book: "showcase-day", page: 3, q: "Where did the class plan to put the tables?", options: ["In the school garden", "In the library", "In the classroom"], answer: 0 },
+      { kind: "picture", q: "Tap the picture of Maya measuring the long table.", pick: [{ book: "the-green-folder", page: 9 }, { book: "showcase-day", page: 4 }, { book: "the-last-friday", page: 4 }], answer: 1 },
+      { kind: "choice", book: "the-green-folder", page: 4, q: "What was on the first page of Amal's folder?", options: ["Her weather poster", "Her calendar chart", "Her family tree"], answer: 2 },
+      { kind: "order", book: "showcase-day", q: "Tap the pictures from “Showcase Day” in story order. What happened first?", order: [2, 7, 9] },
+      { kind: "choice", book: "the-last-friday", page: 3, q: "How many pages did they have to pick?", options: ["Four", "Six", "Nine"], answer: 1 },
+      { kind: "picture", q: "Tap the picture of the nine coloured doors on the wall.", pick: [{ book: "the-green-folder", page: 11 }, { book: "showcase-day", page: 6 }, { book: "nine-doors", page: 3 }], answer: 2 },
+    ],
+  },
+  {
+    grade: 4, unit: 1,
+    questions: [
+      { kind: "choice", book: "the-post-counter", page: 4, q: "Why does Omar read letters aloud for some neighbours?", options: ["Long words are hard", "They have no time", "They cannot see"], answer: 0 },
+      { kind: "picture", q: "Tap the picture that shows Amal sweeping the floor.", pick: [{ book: "the-post-counter", page: 3 }, { book: "amals-steady-day", page: 3 }, { book: "two-languages-at-the-counter", page: 2 }], answer: 1 },
+      { kind: "choice", book: "the-writing-contest", page: 12, q: "What prize did the winner of the writing contest gain?", options: ["A pencil", "A storybook", "A dictionary"], answer: 2 },
+      { kind: "order", book: "amals-steady-day", q: "Tap the pictures from “Amal's Steady Day” in story order. What happened first?", order: [3, 6, 11] },
+      { kind: "choice", book: "two-languages-at-the-counter", page: 5, q: "How did Omar help the man who could not fill in the form?", options: ["He sent him away", "He spoke his language", "He called Amal"], answer: 1 },
+      { kind: "picture", q: "Tap the picture that shows the queue outside Omar's shop.", pick: [{ book: "two-languages-at-the-counter", page: 2 }, { book: "may-i-interview-you", page: 12 }, { book: "amals-steady-day", page: 9 }], answer: 0 },
+    ],
+  },
+  {
+    grade: 4, unit: 2,
+    questions: [
+      { kind: "picture", q: "Tap the picture that shows snow falling in the mountains.", pick: [{ book: "weather-around-the-world", page: 4 }, { book: "the-foggy-morning", page: 5 }, { book: "weather-around-the-world", page: 6 }], answer: 2 },
+      { kind: "choice", book: "the-storm-and-the-science-tent", page: 7, q: "How did Nora work out how far away the storm was?", options: ["She counted the seconds", "She read a map", "She asked Teacher Yasmin"], answer: 0 },
+      { kind: "order", book: "the-foggy-morning", q: "Tap the pictures from “The Foggy Morning” in story order.", order: [4, 7, 10] },
+      { kind: "choice", book: "the-weather-report", page: 7, q: "What did the weather report tell people to do before the storm?", options: ["Water the garden", "Open the windows", "Bring washing in"], answer: 2 },
+      { kind: "picture", q: "Tap the picture that shows dust lifting from a stormy field.", pick: [{ book: "the-storm-and-the-science-tent", page: 9 }, { book: "weather-around-the-world", page: 11 }, { book: "weather-around-the-world", page: 3 }], answer: 1 },
+      { kind: "choice", book: "the-foggy-morning", page: 9, q: "What did Amal's father say fog does to a hill?", options: ["It hides it", "It takes it away", "It makes it wet"], answer: 0 },
+    ],
+  },
+  {
+    grade: 4, unit: 3,
+    questions: [
+      { kind: "choice", book: "the-bitter-lunch", page: 7, q: "Why did Amal eat the sandwich after Omar's warning?", options: ["She was too hungry", "She liked the smell", "Noah told her to"], answer: 0 },
+      { kind: "picture", q: "Tap the picture that shows Doctor Sarah checking Amal.", pick: [{ book: "the-market-song", page: 10 }, { book: "the-poster-on-the-wall", page: 12 }, { book: "the-bitter-lunch", page: 10 }], answer: 2 },
+      { kind: "order", book: "the-bitter-lunch", q: "Tap the pictures from “The Bitter Lunch” in story order. What happened first?", order: [6, 9, 12] },
+      { kind: "choice", book: "the-poster-on-the-wall", page: 9, q: "What colour pen did Teacher Yasmin use for the last line?", options: ["Blue", "Green", "Red"], answer: 2 },
+      { kind: "picture", q: "Tap the picture that shows Amal walking home with her water bottle.", pick: [{ book: "at-the-clinic", page: 12 }, { book: "from-farm-to-plate", page: 12 }, { book: "the-bitter-lunch", page: 6 }], answer: 0 },
+      { kind: "choice", book: "the-market-song", page: 9, q: "Why did Amal wash every piece of fruit at home?", options: ["To make it shiny", "Dust hides on it", "To cool it down"], answer: 1 },
+    ],
+  },
+  {
+    grade: 4, unit: 4,
+    questions: [
+      { kind: "choice", book: "the-library-that-came-by-cart", page: 3, q: "On which day does the library cart come to town?", options: ["Monday", "Thursday", "Saturday"], answer: 1 },
+      { kind: "picture", q: "Tap the picture that shows the news wheel by the school gate.", pick: [{ book: "the-library-that-came-by-cart", page: 3 }, { book: "maya-the-young-reporter", page: 10 }, { book: "the-circular-plan", page: 11 }], answer: 2 },
+      { kind: "choice", book: "the-town-meeting", page: 5, q: "Who will give health advice at the community centre every morning?", options: ["A nurse", "A teacher", "The mayor"], answer: 0 },
+      { kind: "order", book: "maya-the-young-reporter", q: "Tap the pictures from “Maya the Young Reporter” in story order.", order: [4, 5, 10] },
+      { kind: "choice", book: "samis-first-story", page: 6, q: "How many stalls did Sami count at the market?", options: ["Eleven", "Nineteen", "Four"], answer: 1 },
+      { kind: "picture", q: "Tap the picture that shows the mayor speaking in the town hall.", pick: [{ book: "the-town-meeting", page: 2 }, { book: "the-circular-plan", page: 9 }, { book: "samis-first-story", page: 7 }], answer: 0 },
+    ],
+  },
+  {
+    grade: 4, unit: 5,
+    questions: [
+      { kind: "choice", book: "the-spiral-cave", page: 5, q: "Why did Adam stop running when he was winning?", options: ["He was tired", "The goat had escaped", "It started to rain"], answer: 1 },
+      { kind: "picture", q: "Tap the picture that shows the cat squeezing through the fence.", pick: [{ book: "how-animals-move", page: 5 }, { book: "the-race-at-the-village-field", page: 9 }, { book: "how-animals-move", page: 6 }], answer: 2 },
+      { kind: "choice", book: "how-animals-move", page: 9, q: "Why does a whole flock of birds fly away together?", options: ["To stay safe", "To find water", "To keep warm"], answer: 0 },
+      { kind: "order", book: "the-lost-goat", q: "Tap the pictures from “The Lost Goat” in story order. What happened first?", order: [3, 10, 12] },
+      { kind: "choice", book: "the-posters-for-simba", page: 6, q: "Who drew Simba's picture for the poster?", options: ["Amal", "Nora", "Leo"], answer: 2 },
+      { kind: "picture", q: "Tap the picture that shows Simba running in the school yard.", pick: [{ book: "the-posters-for-simba", page: 11 }, { book: "the-race-at-the-village-field", page: 8 }, { book: "how-animals-move", page: 3 }], answer: 0 },
+    ],
+  },
+  {
+    grade: 4, unit: 6,
+    questions: [
+      { kind: "choice", book: "elenas-bridge", page: 7, q: "What does Elena wear to stay safe on the site?", options: ["A helmet and boots", "A coat and scarf", "A mask and gloves"], answer: 0 },
+      { kind: "picture", q: "Tap the picture that shows the caretaker sweeping the corridor.", pick: [{ book: "the-people-of-our-town", page: 4 }, { book: "the-caretakers-keys", page: 5 }, { book: "elenas-bridge", page: 12 }], answer: 1 },
+      { kind: "choice", book: "two-neighbours", page: 2, q: "Why did Theo's family leave their old home?", options: ["It was not safe", "To open a stall", "To visit family"], answer: 0 },
+      { kind: "order", book: "the-caretakers-keys", q: "Tap the pictures from “The Caretaker's Keys” in story order.", order: [4, 8, 12] },
+      { kind: "choice", book: "the-people-of-our-town", page: 8, q: "What is the governor deciding at the town hall?", options: ["Who wins a race", "Where to build roads", "How money is spent"], answer: 2 },
+      { kind: "picture", q: "Tap the picture that shows Omar giving fruit to the children.", pick: [{ book: "elenas-bridge", page: 3 }, { book: "the-caretakers-keys", page: 6 }, { book: "two-neighbours", page: 10 }], answer: 2 },
+    ],
+  },
+  {
+    grade: 4, unit: 7,
+    questions: [
+      { kind: "choice", book: "the-day-of-the-play", page: 6, q: "Where did Sami first practise saying his lines?", options: ["On the stage", "In the yard", "At home"], answer: 1 },
+      { kind: "picture", q: "Tap the picture that shows Grandmother baking by the cooking pot.", pick: [{ book: "the-day-of-the-play", page: 8 }, { book: "the-cultural-fair", page: 2 }, { book: "where-my-family-comes-from", page: 6 }], answer: 2 },
+      { kind: "choice", book: "the-day-before-the-test", page: 3, q: "How did Amal feel the day before her spelling test?", options: ["Nervous", "Excited", "Angry"], answer: 0 },
+      { kind: "order", book: "the-day-of-the-play", q: "Tap the pictures from “The Day of the Play” in story order. What happened first?", order: [3, 9, 11] },
+      { kind: "choice", book: "the-cultural-fair", page: 10, q: "How many new foods did Nora try at the fair?", options: ["Three", "Eleven", "Five"], answer: 2 },
+      { kind: "picture", q: "Tap the picture that shows Mum bringing Amal a warm drink.", pick: [{ book: "the-day-before-the-test", page: 10 }, { book: "where-my-family-comes-from", page: 8 }, { book: "getting-ready-for-the-play", page: 7 }], answer: 0 },
+    ],
+  },
+  {
+    grade: 4, unit: 8,
+    questions: [
+      { kind: "choice", book: "the-attic-clue", page: 7, q: "Who did the attic telescope belong to?", options: ["Grandma Hana's brother", "Teacher Yasmin", "Idris"], answer: 0 },
+      { kind: "picture", q: "Tap the picture that shows the moon and its craters up close.", pick: [{ book: "a-look-at-the-stars", page: 7 }, { book: "the-attic-clue", page: 10 }, { book: "a-look-at-the-stars", page: 6 }], answer: 2 },
+      { kind: "choice", book: "the-careful-cook", page: 5, q: "Why must you never put metal in the microwave?", options: ["It melts", "It causes sparks", "It gets cold"], answer: 1 },
+      { kind: "order", book: "the-careful-cook", q: "Tap the pictures from “The Careful Cook” in story order.", order: [3, 7, 12] },
+      { kind: "choice", book: "the-helper-vehicles", page: 5, q: "Why did everyone step back from the road?", options: ["A parade passed", "The ambulance came", "It started raining"], answer: 1 },
+      { kind: "picture", q: "Tap the picture that shows the fire engine in the street.", pick: [{ book: "the-helper-vehicles", page: 4 }, { book: "the-right-tool-for-the-job", page: 9 }, { book: "the-helper-vehicles", page: 7 }], answer: 2 },
+    ],
+  },
+  {
+    grade: 4, unit: 9,
+    questions: [
+      { kind: "choice", book: "the-day-we-got-lost", page: 8, q: "How did Nora find the way when they were lost?", options: ["She asked a stranger", "She found a signpost", "She guessed the way"], answer: 1 },
+      { kind: "picture", q: "Tap the picture that shows the fountain in the mall.", pick: [{ book: "directions-at-the-mall", page: 3 }, { book: "a-trip-to-the-capital", page: 3 }, { book: "directions-at-the-mall", page: 4 }], answer: 2 },
+      { kind: "choice", book: "making-a-plan", page: 8, q: "How will Nora and Leo travel to the capital?", options: ["By train", "By bus", "By car"], answer: 0 },
+      { kind: "order", book: "a-trip-to-the-capital", q: "Tap the pictures from “A Trip to the Capital” in story order. What happened first?", order: [3, 7, 11] },
+      { kind: "choice", book: "living-near-the-equator", page: 5, q: "Why do children walk to school in the early morning?", options: ["To avoid the heat", "To catch a train", "To feed the animals"], answer: 0 },
+      { kind: "picture", q: "Tap the picture that shows the train travelling towards the city.", pick: [{ book: "living-near-the-equator", page: 9 }, { book: "a-trip-to-the-capital", page: 6 }, { book: "directions-at-the-mall", page: 9 }], answer: 1 },
+    ],
+  },
+  {
+    grade: 4, unit: 10,
+    questions: [
+      { kind: "choice", book: "four-parts-and-a-friday", page: 3, q: "How many pages must each learner choose for the Exhibition?", options: ["Four", "Six", "Nine"], answer: 1 },
+      { kind: "picture", q: "Tap the picture that shows Elena explaining how to stand a board.", pick: [{ book: "planning-the-exhibition", page: 8 }, { book: "four-parts-and-a-friday", page: 5 }, { book: "exhibition-evening", page: 2 }], answer: 0 },
+      { kind: "choice", book: "amals-english-voice", page: 9, q: "What did Amal nearly do with her attic list page?", options: ["Lose it", "Bin it", "Tear it"], answer: 1 },
+      { kind: "order", book: "exhibition-evening", q: "Tap the pictures from “Exhibition Evening” in story order.", order: [2, 5, 11] },
+      { kind: "choice", book: "planning-the-exhibition", page: 5, q: "Who measured the long wall of the school hall?", options: ["Maya", "Nora", "Leo"], answer: 2 },
+      { kind: "picture", q: "Tap the picture that shows Amal reading aloud at the table.", pick: [{ book: "nine-rooms", page: 12 }, { book: "planning-the-exhibition", page: 12 }, { book: "amals-english-voice", page: 11 }], answer: 2 },
+    ],
+  },
+];
+
+// The set for the unit the learner is inside — empty where none is authored,
+// which is also what hides the section: visibleSections and
+// countableSectionIds both drop `book-comprehension` when this answers none
+// (the Games rule), so a unit without questions simply has no such step.
+const bookComprehensionQuestions = () => (BOOK_COMPREHENSION_SETS.find((set) => set.grade === gradeNumber && set.unit === unitNumber)?.questions) || [];
+
 let course;
 let dictionary;
 let manifest;
@@ -5786,6 +7365,7 @@ const TAP_VOICE_GROUPS = {
   samira: "child", hodan: "child", leo: "child",
   daniel: "child", theo: "child",
   yasmin: "woman", mum: "woman", hana: "woman", salma: "woman", faduma: "woman",
+  leila: "woman",
   nadia: "woman", sarah: "woman", elena: "woman", talia: "woman", librarian: "woman",
   governor: "woman",
   omar: "man", dad: "man", grandpa: "man", rami: "man", mayor: "man", karim: "man",
@@ -5995,7 +7575,7 @@ function visibleSections() {
   // unit's 100%, which is why those grades' progress bars stopped at 92% and
   // could never read complete. It is also what made the gate unsafe beyond
   // Grade 1: an uncompletable step in the chain shuts the learner out for good.
-  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || shelfEbooks().length) && (id !== "glossary" || (IS_TUTORING && Object.keys(sentenceGlossary).length)) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "story-library" || hasStoryLibrary()));
+  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || shelfEbooks().length) && (id !== "book-comprehension" || bookComprehensionQuestions().length) && (id !== "glossary" || (IS_TUTORING && Object.keys(sentenceGlossary).length)) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "story-library" || hasStoryLibrary()));
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
 
@@ -7052,7 +8632,7 @@ function renderDictionaryClassic() {
     // meaningAudio below: these buttons are drawn only once a clip exists, so
     // a newly-added word with no recording yet shows no control that could
     // only ever fail to play.
-    const wordAudioActions = item.master.audio?.available ? `<div class="audio-actions"><button class="icon-button" id="listen-word" type="button" title="Listen at 0.90x" aria-label="Listen to ${escapeHtml(item.master.displayWord)} at 0.90x">${icon("volume-2")}</button><button class="icon-button" id="slow-word" type="button" title="Replay at 0.90x" aria-label="Replay at 0.90x">${icon("rotate-ccw")}</button></div>` : "";
+    const wordAudioActions = item.master.audio?.available ? `<div class="audio-actions"><button class="icon-button" id="listen-word" type="button" title="Listen at ${AI_NARRATION_RATE_LABEL}" aria-label="Listen to ${escapeHtml(item.master.displayWord)} at ${AI_NARRATION_RATE_LABEL}">${icon("volume-2")}</button><button class="icon-button" id="slow-word" type="button" title="Replay at ${AI_NARRATION_RATE_LABEL}" aria-label="Replay at ${AI_NARRATION_RATE_LABEL}">${icon("rotate-ccw")}</button></div>` : "";
     // The picture leads the card, ahead of the part of speech: a Grade 1 reader
     // recognises the thing before they can read "noun · a naming word".
     const cardPicture = dictionaryPicture(item.master);
@@ -7340,7 +8920,7 @@ function renderWordCarousel() {
         <button class="gc-btn ghost" type="button" data-word-audio="${esc(item.vocabularyId)}">${icon("rotate-ccw")} Again</button>` : ""}
         ${item.meaningAudio?.available ? `<button class="gc-btn ghost" type="button" data-meaning-audio="${esc(item.vocabularyId)}">${icon("volume-2")} Meaning</button>` : ""}
       </div>
-      <small class="gc-source">ElevenLabs · approved Ehel voice · 0.90x</small>
+      <small class="gc-source">ElevenLabs · approved Ehel voice · ${AI_NARRATION_RATE_LABEL}</small>
       ${sentences.length ? `<div class="wc-sentence">
         <small>In a sentence · ${position + 1} of ${sentences.length}</small>
         <p>${linkGlossaryWords(sentences[position], item.master.displayWord)}</p>
@@ -7827,7 +9407,7 @@ async function prepareReadingNarration(reading, button) {
     if (button.isConnected) {
       button.hidden = true;
       const status = button.closest(".ebook-audio-wrap")?.querySelector("small");
-      if (status) status.textContent = "ElevenLabs · ready · 0.90x";
+      if (status) status.textContent = `ElevenLabs · ready · ${AI_NARRATION_RATE_LABEL}`;
       mountReadingAudioPlayer(reading);
       toast("Reading audio is ready. Press Play in the audio player.");
     }
@@ -8211,7 +9791,7 @@ function renderReadingClassic() {
     const readingMinutes = Math.max(1, Math.ceil(wordCount / (gradeNumber <= 2 ? 100 : gradeNumber <= 4 ? 135 : 170)));
     const audioReady = reading.audio?.available || readingVoiceSources.has(reading.readingId);
     const audioMode = reading.audio?.available ? "recorded" : audioReady ? "ready" : "on demand";
-    const audioControls = `<div class="ebook-audio-wrap"><small>ElevenLabs · ${audioMode} · 0.90x</small>${audioReady ? "" : `<button class="button secondary" id="prepare-reading-audio" type="button" aria-label="Prepare ElevenLabs narration for ${escapeHtml(reading.title)}">${icon("audio-lines")} Prepare audio</button>`}<audio id="ebook-reading-audio" class="ebook-native-audio" controls ${audioReady ? "" : "hidden"} aria-label="Reading narration for ${escapeHtml(reading.title)}"></audio></div>`;
+    const audioControls = `<div class="ebook-audio-wrap"><small>ElevenLabs · ${audioMode} · ${AI_NARRATION_RATE_LABEL}</small>${audioReady ? "" : `<button class="button secondary" id="prepare-reading-audio" type="button" aria-label="Prepare ElevenLabs narration for ${escapeHtml(reading.title)}">${icon("audio-lines")} Prepare audio</button>`}<audio id="ebook-reading-audio" class="ebook-native-audio" controls ${audioReady ? "" : "hidden"} aria-label="Reading narration for ${escapeHtml(reading.title)}"></audio></div>`;
     $("#reading-panel").innerHTML = `<div class="ebook-progress" aria-label="Text ${readingIndex + 1} of ${course.readings.length}"><span style="width:${((readingIndex + 1) / course.readings.length) * 100}%"></span></div><header class="ebook-toolbar"><div><span class="ebook-count">Book ${readingIndex + 1} of ${course.readings.length}</span><span>${wordCount} words · about ${readingMinutes} min</span></div><div class="ebook-toolbar-actions"><button class="button secondary" id="print-reading" type="button" aria-label="Print ${escapeHtml(reading.title)} as a PDF">${icon("printer")} Print</button>${audioControls}</div></header><figure class="ebook-cover"><img src="${course.visual.image}" alt="${escapeHtml(course.visual.alt || course.unit.unitTitle)}"><figcaption><span>${escapeHtml(reading.type)}</span><h2>${escapeHtml(reading.title)}</h2><p>${escapeHtml(course.unit.unitTitle)}</p></figcaption></figure><section class="ebook-page"><div class="ebook-page-heading"><span>${icon("bookmark")}</span><div><small>${reading.genre ? escapeHtml(reading.genre) : "Ehel Academy English"}</small><h2>${escapeHtml(reading.title)}</h2>${reading.setting ? `<p>${icon("map-pin")} ${escapeHtml(reading.setting)}</p>` : ""}</div></div><div class="reading-text ebook-copy">${readingBodyHtml(reading.passageScript)}</div><div class="ebook-page-number">${readingIndex + 1}</div></section><footer class="ebook-footer"><button class="button secondary" data-reading-step="-1" type="button" ${readingIndex === 0 ? "disabled" : ""}>${icon("arrow-left")} Previous text</button><button class="button primary" id="reading-done" type="button">Finished reading ${icon("check")}</button><button class="button secondary" data-reading-step="1" type="button" ${readingIndex === course.readings.length - 1 ? "disabled" : ""}>Next text ${icon("arrow-right")}</button></footer>`;
     $$('[data-reading]').forEach((button) => button.addEventListener("click", () => { selected = button.dataset.reading; stopAudio(); draw(); icons(); showReadingInDeck?.(selected); focusDynamicContent("#reading-panel .ebook-page-heading h2", "Reading selected. " + $("#reading-panel .ebook-page-heading h2").textContent); }));
     $$('[data-reading-step]').forEach((button) => button.addEventListener("click", () => {
@@ -8624,7 +10204,7 @@ function renderGrammarClassic() {
   // strip on the card and a letter-to-sound strip on the slide beneath it, for
   // one and the same lesson. phonicsDiagram returns "" for a rule that is not a
   // phonics shape, and the card then shows no diagram, exactly as its slide does.
-  $("#app").innerHTML = `${pageHeader("Language focus", "Grammar workshop", "Complete six practices: guided recognition followed by independent language use.")}<div class="grammar-grid">${course.grammar.map((lesson) => `<article class="panel grammar-card"><div class="word-card-head"><span class="lesson-number">${lesson.sequence}</span><span class="word-type">${escapeHtml(lesson.practiceType)}</span></div><h3>${escapeHtml(lesson.title)}</h3>${gradeNumber === 1 ? phonicsDiagram(lesson.ruleAndExamples) : grammarDiagram(lesson.title, lesson.explanation)}<p>${escapeHtml(lesson.explanation)}</p>${lesson.ruleAndExamples ? `<div class="rule-box">${escapeHtml(lesson.ruleAndExamples)}</div>` : ""}${lesson.commonMistake ? `<p class="mistake">${escapeHtml(lesson.commonMistake)}</p>` : ""}${lesson.memoryTip ? `<p><span class="field-label">Memory tip:</span> ${escapeHtml(lesson.memoryTip)}</p>` : ""}<details><summary>Show practice</summary><p class="rule-box">${escapeHtml(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="button secondary" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>${lesson.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Listen</button><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}</article>`).join("")}</div><p><button class="button primary" id="grammar-done" type="button">I practised all six lessons ${icon("check")}</button></p>`;
+  $("#app").innerHTML = `${pageHeader("Language focus", "Grammar workshop", "Complete six practices: guided recognition followed by independent language use.")}<div class="grammar-grid">${course.grammar.map((lesson) => `<article class="panel grammar-card"><div class="word-card-head"><span class="lesson-number">${lesson.sequence}</span><span class="word-type">${escapeHtml(lesson.practiceType)}</span></div><h3>${escapeHtml(lesson.title)}</h3>${gradeNumber === 1 ? phonicsDiagram(lesson.ruleAndExamples) : grammarDiagram(lesson.title, lesson.explanation)}<p>${escapeHtml(lesson.explanation)}</p>${lesson.ruleAndExamples ? `<div class="rule-box">${escapeHtml(lesson.ruleAndExamples)}</div>` : ""}${lesson.commonMistake ? `<p class="mistake">${escapeHtml(lesson.commonMistake)}</p>` : ""}${lesson.memoryTip ? `<p><span class="field-label">Memory tip:</span> ${escapeHtml(lesson.memoryTip)}</p>` : ""}<details><summary>Show practice</summary><p class="rule-box">${escapeHtml(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="button secondary" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>${lesson.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Listen</button><button class="button secondary" data-grammar-audio="${lesson.grammarId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · ${AI_NARRATION_RATE_LABEL}</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}</article>`).join("")}</div><p><button class="button primary" id="grammar-done" type="button">I practised all six lessons ${icon("check")}</button></p>`;
   $$('[data-grammar-audio]').forEach((button) => button.addEventListener("click", () => {
     const lesson = course.grammar.find((item) => item.grammarId === button.dataset.grammarAudio);
     playAudio(lesson.audio.source, { rate: Number(button.dataset.rate), button });
@@ -8666,7 +10246,7 @@ function renderGrammarCarousel() {
              <button class="gc-btn ghost" type="button" data-grammar-audio="${esc(lesson.grammarId)}" data-rate="${AI_NARRATION_RATE}">${icon("rotate-ccw")} Again</button>`
           : `<span class="audio-pending">${icon("clock-3")} ElevenLabs audio pending</span>`}
       </div>
-      ${lesson.audio?.available ? `<small class="gc-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : ""}
+      ${lesson.audio?.available ? `<small class="gc-source">ElevenLabs · approved Ehel voice · ${AI_NARRATION_RATE_LABEL}</small>` : ""}
       ${lesson.commonMistake ? `<p class="gc-note gc-mistake">${esc(lesson.commonMistake)}</p>` : ""}
       ${lesson.memoryTip ? `<p class="gc-note"><span class="field-label">Memory tip:</span> ${esc(lesson.memoryTip)}</p>` : ""}
       ${lesson.practice ? `<details class="gc-practice"><summary>Show practice</summary><p class="gc-note gc-try">${esc(lesson.practice)}</p>${lesson.practiceAudio?.available ? `<button class="gc-btn" data-practice-audio="${lesson.grammarId}" type="button">${icon("volume-2")} Hear the practice</button>` : ""}</details>` : ""}
@@ -8730,7 +10310,7 @@ function speakingCoachHtml(task, { idPrefix = "", buttonClass = "button primary"
 
 function renderSpeakingClassic() {
   const { $, $$ } = classicScope();
-  $("#app").innerHTML = `${pageHeader("Use your voice", "Dialogue & speaking", "Complete six speaking practices. Rehearse, record, and listen back.")}<div class="task-grid">${course.speaking.map((task) => `<article class="panel task-card"><span class="eyebrow">Practice ${task.sequence} · ${escapeHtml(task.activityType)}</span><h3>${escapeHtml(task.title)}</h3><p class="rule-box">${escapeHtml(task.instructionsAndModelLines)}</p>${task.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Hear model</button><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · 0.90x</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}${task.recordingRequired ? speakingCoachHtml(task) : ""}</article>`).join("")}</div><p><button class="button primary" id="speaking-done" type="button">Finish six speaking practices ${icon("check")}</button></p>`;
+  $("#app").innerHTML = `${pageHeader("Use your voice", "Dialogue & speaking", "Complete six speaking practices. Rehearse, record, and listen back.")}<div class="task-grid">${course.speaking.map((task) => `<article class="panel task-card"><span class="eyebrow">Practice ${task.sequence} · ${escapeHtml(task.activityType)}</span><h3>${escapeHtml(task.title)}</h3><p class="rule-box">${escapeHtml(task.instructionsAndModelLines)}</p>${task.audio?.available ? `<div class="audio-actions"><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("volume-2")} Hear model</button><button class="button secondary" data-model="${task.speakingId}" data-rate="${AI_NARRATION_RATE}" type="button">${icon("rotate-ccw")} Replay</button></div><small class="audio-source">ElevenLabs · approved Ehel voice · ${AI_NARRATION_RATE_LABEL}</small>` : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}${task.recordingRequired ? speakingCoachHtml(task) : ""}</article>`).join("")}</div><p><button class="button primary" id="speaking-done" type="button">Finish six speaking practices ${icon("check")}</button></p>`;
   $$('[data-model]').forEach((button) => button.addEventListener("click", () => {
     const task = course.speaking.find((item) => item.speakingId === button.dataset.model);
     playAudio(task.audio.source, { rate: Number(button.dataset.rate), button });
@@ -8776,7 +10356,7 @@ function renderSpeakingCarousel() {
              <button class="gc-btn play" type="button" data-model="${esc(task.speakingId)}" data-rate="${AI_NARRATION_RATE}">${icon("volume-2")} Hear model</button>
              <button class="gc-btn ghost" type="button" data-model="${esc(task.speakingId)}" data-rate="${AI_NARRATION_RATE}">${icon("rotate-ccw")} Replay</button>
            </div>
-           <small class="gc-source">ElevenLabs · approved Ehel voice · 0.90x</small>`
+           <small class="gc-source">ElevenLabs · approved Ehel voice · ${AI_NARRATION_RATE_LABEL}</small>`
         : `<span class="audio-pending">${icon("clock-3")} ElevenLabs model audio pending</span>`}
       ${task.recordingRequired ? speakingCoachHtml(task, { idPrefix: "deck-", buttonClass: "gc-btn" }) : ""}
     </div></section>`);
@@ -10559,7 +12139,7 @@ function renderEbooks() {
   ebookHadFullscreen = false;
   const gradeEbooks = shelfEbooks();
   if (!gradeEbooks.length) {
-    $("#app").innerHTML = `${pageHeader("Independent reading library", "Books", `Grade ${gradeNumber} illustrated books for this unit will appear here as they are approved.`, "Library being prepared")}
+    $("#app").innerHTML = `${pageHeader("Independent reading library", navLabelOf("ebooks", "Books"), `Grade ${gradeNumber} illustrated books for this unit will appear here as they are approved.`, "Library being prepared")}
       <section class="panel empty-library"><span>${icon("library-big")}</span><h2>Your Unit ${unitNumber} shelf</h2><p>There are no approved eBooks for this unit yet. Each unit gets its own story - keep learning!</p></section>`;
     return;
   }
@@ -10567,8 +12147,8 @@ function renderEbooks() {
   activeEbookId = book.id;
   activeEbookPage = Math.max(0, Math.min(activeEbookPage, book.pages.length - 1));
 
-  currentPageNarration = `Books. ${book.title}. ${book.description}`;
-  $("#app").innerHTML = `<header class="page-header books-header"><div><span class="eyebrow">Independent reading library</span><h1>Books</h1></div>
+  currentPageNarration = `${navLabelOf("ebooks", "Books")}. ${book.title}. ${book.description}`;
+  $("#app").innerHTML = `<header class="page-header books-header"><div><span class="eyebrow">Independent reading library</span><h1>${navLabelOf("ebooks", "Books")}</h1></div>
       <div class="books-header-side">
       <button class="button secondary" id="listen-whole-ebook" type="button">${icon("audio-lines")} Listen to whole book</button>
       <button class="button secondary" id="print-ebook" type="button" aria-label="Print ${escapeHtml(book.title)} as a PDF">${icon("printer")} Print book</button>
@@ -10728,6 +12308,160 @@ function renderEbooks() {
     focusDynamicContent(".course-ebook-header h2", `${selectedBook?.title || "Book"} selected.`);
   }));
   drawPage();
+}
+
+// ===================== the book comprehension page ==========================
+// The `book-comprehension` section (Grades 1-4): interactive questions about
+// the unit's picture-book shelf, drawn ONE at a time — a young learner faces
+// the question they are answering, the same reason the decks exist — with the
+// books' own pages as the answers wherever a picture can be the answer. Not a
+// deck and not a gc-* page: like the shelf it follows, it is its own design,
+// so it draws no deck chrome and deck-only CSS cannot reach it.
+//
+// Answering is tap-until-right, deliberately: a wrong tap wobbles, says try
+// again and costs nothing, because a six-year-old's comprehension check is
+// practice, not an exam — the Quiz later in the chain is where a score lives.
+// A question is DONE when answered right (a star on its dot), and the section
+// finishes by a button that appears once every dot has its star, the same
+// explicit-finish shape every other section uses.
+//
+// Every question can be heard: the speaker reads the question (and a choice
+// question's options) through the same runtime voice the books use, because
+// the learners this page is for cannot yet read fluently — that is the point
+// of the section.
+function renderBookComprehension() {
+  const questions = bookComprehensionQuestions();
+  currentPageNarration = "Comprehension. Questions about the books on your shelf.";
+  if (!questions.length) {
+    $("#app").innerHTML = `${pageHeader("Think about your books", sectionLabel("book-comprehension"), "Questions about this unit's books will appear here once they are ready.", "Being prepared")}`;
+    return;
+  }
+  const solved = new Set();
+  let index = 0;
+  // Order-type state: the display slots tapped so far, in tap order. Reset on
+  // every question change so half an attempt never leaks across questions.
+  let picked = [];
+  // Per-visit shuffles, one per question: the authored `answer` is an index
+  // into the AUTHORED arrays, so what the screen shows is a shuffled view with
+  // its own map back — the right answer is never a screen position.
+  const shuffleView = (count) => {
+    const view = [...Array(count).keys()];
+    for (let i = view.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [view[i], view[j]] = [view[j], view[i]];
+    }
+    return view;
+  };
+  const shuffled = questions.map((question) => shuffleView(question.kind === "order" ? question.order.length : (question.options || question.pick).length));
+
+  const bookOf = (id) => ebookCatalog.find((book) => book.id === id);
+  const pageArt = (id, pageNumber) => {
+    const book = bookOf(id);
+    const page = book.pages[pageNumber - 1];
+    return { src: ebookAsset(book, page.image), alt: page.alt };
+  };
+  const narrationOf = (question) => (question.kind === "choice" ? `${question.q} Is it ${question.options.join(", or ")}?` : question.q);
+
+  const draw = () => {
+    const question = questions[index];
+    const view = shuffled[index];
+    const done = solved.has(index);
+    const allDone = solved.size === questions.length;
+    const dots = questions.map((_, i) => `<button class="bookq-dot ${i === index ? "current" : ""} ${solved.has(i) ? "done" : ""}" data-q="${i}" type="button" aria-label="Question ${i + 1}${solved.has(i) ? ", answered" : ""}" aria-current="${i === index ? "step" : "false"}">${solved.has(i) ? icon("star") : i + 1}</button>`).join("");
+
+    let answers = "";
+    if (question.kind === "choice") {
+      const art = pageArt(question.book, question.page);
+      answers = `<figure class="bookq-scene"><img src="${art.src}" alt="${escapeHtml(art.alt)}"></figure>
+        <div class="bookq-pills">${view.map((optionIndex) => `<button class="bookq-pill" data-pick="${optionIndex}" type="button" ${done ? "disabled" : ""}>${escapeHtml(question.options[optionIndex])}</button>`).join("")}</div>`;
+    } else if (question.kind === "picture") {
+      answers = `<div class="bookq-pictures">${view.map((optionIndex) => {
+        const art = pageArt(question.pick[optionIndex].book, question.pick[optionIndex].page);
+        return `<button class="bookq-picture" data-pick="${optionIndex}" type="button" aria-label="${escapeHtml(art.alt)}" ${done ? "disabled" : ""}><img src="${art.src}" alt=""></button>`;
+      }).join("")}</div>`;
+    } else {
+      answers = `<div class="bookq-pictures bookq-order">${view.map((slot) => {
+        const art = pageArt(question.book, question.order[slot]);
+        const at = picked.indexOf(slot);
+        return `<button class="bookq-picture" data-order="${slot}" type="button" aria-label="${escapeHtml(art.alt)}" ${at > -1 || done ? "disabled" : ""}><img src="${art.src}" alt="">${at > -1 || done ? `<span class="bookq-order-badge">${done ? slot + 1 : at + 1}</span>` : ""}</button>`;
+      }).join("")}</div>`;
+    }
+
+    $("#app").innerHTML = `${pageHeader("Think about your books", sectionLabel("book-comprehension"), "Tap what you think is right. You can try again as many times as you like.")}
+      <section class="panel bookq-panel">
+        <nav class="bookq-dots" aria-label="Questions">${dots}</nav>
+        <article class="bookq-card ${done ? "is-done" : ""}">
+          <div class="bookq-question">
+            <button class="button secondary bookq-listen" id="bookq-listen" type="button" aria-label="Hear the question">${icon("audio-lines")}</button>
+            <h2>${escapeHtml(question.q)}</h2>
+          </div>
+          ${answers}
+          <div class="bookq-feedback" id="bookq-feedback" role="status" aria-live="polite" aria-atomic="true">${done ? `<p class="feedback good">Answered! ${allDone ? "Every question has a star." : "On to the next one."}</p>` : ""}</div>
+        </article>
+        <footer class="bookq-nav">
+          <button class="button secondary" id="bookq-prev" type="button" ${index === 0 ? "disabled" : ""}>${icon("arrow-left")} Back</button>
+          <span class="bookq-count">Question ${index + 1} of ${questions.length}</span>
+          <button class="button secondary" id="bookq-next" type="button" ${index === questions.length - 1 ? "disabled" : ""}>Next ${icon("arrow-right")}</button>
+        </footer>
+        ${allDone ? `<div class="bookq-finish"><p>Every question has a star. Wonderful reading!</p><button class="button primary" id="bookq-finish" type="button">Finish comprehension ${icon("check")}</button></div>` : ""}
+      </section>`;
+
+    $$(".bookq-dot").forEach((button) => button.addEventListener("click", () => { index = Number(button.dataset.q); picked = []; draw(); }));
+    $("#bookq-prev")?.addEventListener("click", () => { index -= 1; picked = []; draw(); });
+    $("#bookq-next")?.addEventListener("click", () => { index += 1; picked = []; draw(); });
+    $("#bookq-listen").addEventListener("click", async (event) => {
+      const source = await aiVoiceUrl(narrationOf(question));
+      playAudio(source, { rate: AI_NARRATION_RATE, button: event.currentTarget });
+    });
+    $("#bookq-finish")?.addEventListener("click", () => complete("book-comprehension", "Book comprehension complete. Wonderful reading!"));
+
+    // After a right answer: a beat on the green state, then the next question
+    // still to do — behind as well as ahead, so a learner who skipped around
+    // is walked back to the gap instead of running off the end.
+    const advance = () => {
+      if (route !== "book-comprehension") return;
+      const ahead = questions.findIndex((_, i) => i > index && !solved.has(i));
+      const anywhere = questions.findIndex((_, i) => !solved.has(i));
+      index = ahead > -1 ? ahead : anywhere > -1 ? anywhere : index;
+      picked = [];
+      draw();
+    };
+
+    $$("[data-pick]").forEach((button) => button.addEventListener("click", () => {
+      if (Number(button.dataset.pick) === question.answer) {
+        solved.add(index);
+        playStorySound("child-happy");
+        button.classList.add("is-right");
+        setTimeout(advance, 900);
+      } else {
+        playStorySound("child-surprised");
+        button.classList.add("is-wrong");
+        $("#bookq-feedback").innerHTML = `<p class="feedback try">Not that one — look again and try another.</p>`;
+        setTimeout(() => button.classList.remove("is-wrong"), 600);
+      }
+    }));
+    $$("[data-order]").forEach((button) => button.addEventListener("click", () => {
+      const slot = Number(button.dataset.order);
+      // `order` is authored in story order, so the k-th tap must be slot k.
+      if (slot === picked.length) {
+        picked.push(slot);
+        if (picked.length === question.order.length) {
+          solved.add(index);
+          playStorySound("child-happy");
+          setTimeout(advance, 900);
+        }
+        draw();
+      } else {
+        playStorySound("child-surprised");
+        picked = [];
+        button.classList.add("is-wrong");
+        $("#bookq-feedback").innerHTML = `<p class="feedback try">Almost! Start again from what happened first.</p>`;
+        setTimeout(draw, 650);
+      }
+    }));
+    icons();
+  };
+  draw();
 }
 
 function renderLive() {
@@ -12787,6 +14521,7 @@ const config = {
     dictionary: () => renderDictionary(),
     reading: () => renderReading(),
     comprehension: () => renderComprehension(),
+    "book-comprehension": () => renderBookComprehension(),
     grammar: () => renderGrammar(),
     speaking: () => renderSpeaking(),
     writing: () => renderWriting(),

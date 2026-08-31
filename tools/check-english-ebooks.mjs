@@ -49,7 +49,7 @@ const fail = (message) => problems.push(message);
 // read the same catalogue the same way. Two source-slicing copies is the drift
 // this file's own comments warn about, and the second one is always the copy
 // that stops matching english.js.
-const { readEbookCatalog } = createRequire(import.meta.url)("./lib/ehel-ebook-catalog.js");
+const { readEbookCatalog, ebooksFor, literalBetweenBrackets } = createRequire(import.meta.url)("./lib/ehel-ebook-catalog.js");
 const ebookCatalog = readEbookCatalog(path.join(root, "src", "prototypes", "ehel-academy"));
 
 // The alias table and the mood set decide what a data-tap can resolve to, so
@@ -177,6 +177,71 @@ for (const key of Object.keys(SUPERSEDED_PAGES)) {
   if (!supersededSeen.has(key)) fail(`SUPERSEDED_PAGES lists ${key}, but it is not on disk any more. Delete the entry.`);
 }
 
+// ---------------------------------------------------------------- book comprehension
+//
+// The `book-comprehension` section (Grades 1-4) points INTO the catalogue — a
+// book id and 1-based page numbers per question — and a broken pointer ships
+// as a blank answer card rather than an error, which is exactly the failure
+// shape the rest of this gate exists for. The literal is sliced out of
+// english.js the same way the catalogue is; an unreadable literal is exit 1,
+// never a skip, because a gate that cannot read its target and passes is
+// green about nothing.
+let questionsChecked = 0;
+let setsChecked = 0;
+try {
+  const sets = vm.runInNewContext(`(${literalBetweenBrackets(shellSource, "const BOOK_COMPREHENSION_SETS = [", "shell/subjects/english.js")})`);
+  const setKeys = new Set();
+  for (const set of sets) {
+    const key = `g${set.grade}-u${set.unit}`;
+    if (setKeys.has(key)) fail(`book-comprehension ${key}: duplicate set.`);
+    setKeys.add(key);
+    setsChecked += 1;
+    const shelf = ebooksFor(ebookCatalog, set.grade, set.unit);
+    const byId = new Map(shelf.map((book) => [book.id, book]));
+    const kinds = { choice: 0, picture: 0, order: 0 };
+    const used = new Set();
+    const checkRef = (where, id, page) => {
+      const book = byId.get(id);
+      if (!book) { fail(`book-comprehension ${key} ${where}: "${id}" is not on this unit's shelf.`); return; }
+      used.add(id);
+      if (!(Number.isInteger(page) && page >= 2 && page <= book.pages.length)) fail(`book-comprehension ${key} ${where}: page ${page} does not exist in ${id} (2..${book.pages.length} — 1 is the cover).`);
+    };
+    (set.questions || []).forEach((question, index) => {
+      const where = `q${index + 1}`;
+      questionsChecked += 1;
+      if (!question.q) fail(`book-comprehension ${key} ${where}: no question text.`);
+      kinds[question.kind] = (kinds[question.kind] || 0) + 1;
+      if (question.kind === "choice") {
+        checkRef(where, question.book, question.page);
+        if (!Array.isArray(question.options) || question.options.length !== 3 || new Set(question.options).size !== 3) fail(`book-comprehension ${key} ${where}: choice needs 3 unique options.`);
+        if (!(Number.isInteger(question.answer) && question.answer >= 0 && question.answer < (question.options || []).length)) fail(`book-comprehension ${key} ${where}: answer index does not resolve.`);
+      } else if (question.kind === "picture") {
+        (question.pick || []).forEach((item, j) => checkRef(`${where}.pick${j + 1}`, item.book, item.page));
+        if (!Array.isArray(question.pick) || question.pick.length !== 3) fail(`book-comprehension ${key} ${where}: picture needs 3 picks.`);
+        if (!(Number.isInteger(question.answer) && question.answer >= 0 && question.answer < (question.pick || []).length)) fail(`book-comprehension ${key} ${where}: answer index does not resolve.`);
+      } else if (question.kind === "order") {
+        (question.order || []).forEach((page) => checkRef(where, question.book, page));
+        if (!Array.isArray(question.order) || question.order.length !== 3) fail(`book-comprehension ${key} ${where}: order needs 3 pages.`);
+        for (let k = 1; k < (question.order || []).length; k += 1) {
+          if (!(question.order[k] > question.order[k - 1])) fail(`book-comprehension ${key} ${where}: order must be strictly ascending — the data states story order, the renderer does the shuffling.`);
+        }
+      } else fail(`book-comprehension ${key} ${where}: unknown kind "${question.kind}".`);
+    });
+    if ((set.questions || []).length && (kinds.choice !== 3 || kinds.picture !== 2 || kinds.order !== 1)) fail(`book-comprehension ${key}: kind mix choice ${kinds.choice}/picture ${kinds.picture}/order ${kinds.order}, expected 3/2/1.`);
+    if (used.size && used.size < 3) fail(`book-comprehension ${key}: only ${used.size} distinct book(s) used — the set is about the shelf, not one book.`);
+  }
+  // The floor: every Grade 1-4 unit 1-10 carries a set (40 — unit 0 is
+  // withdrawn and deliberately has none). A parser that matches nothing, or a
+  // grade dropped whole, lands here rather than passing on vacuous truth.
+  for (let grade = 1; grade <= 4; grade += 1) {
+    for (let unit = 1; unit <= 10; unit += 1) {
+      if (!setKeys.has(`g${grade}-u${unit}`)) fail(`book-comprehension: no question set for g${grade}-u${unit} — the section would silently vanish from that unit's nav and chain.`);
+    }
+  }
+} catch (error) {
+  fail(`book-comprehension: could not read BOOK_COMPREHENSION_SETS out of english.js (${error.message}).`);
+}
+
 // ---------------------------------------------------------------- report
 
 const byGrade = {};
@@ -193,6 +258,8 @@ console.log(JSON.stringify({
   books: ebookCatalog.length,
   pages: pagesChecked,
   tapTargets: tapTargetsChecked,
+  comprehensionSets: setsChecked,
+  comprehensionQuestions: questionsChecked,
   clips: clips.size,
   byGrade: Object.fromEntries(Object.entries(byGrade).map(([grade, ids]) => [`grade${grade}`, ids.length])),
 }, null, 2));

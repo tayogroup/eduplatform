@@ -1595,3 +1595,38 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 .grownup-guide { border: 2px dashed var(--line); border-radius: 12px; padding: 16px 18px; background: var(--canvas); }
 .grownup-guide .grownup-flag { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 999px; background: var(--teal-dark); color: #fff; font-size: 14px; font-weight: var(--weight-medium); line-height: 1.4; }
 .grownup-guide .checklist { margin-top: 12px; }
+
+/* ===== Book comprehension (Grades 1-4) =====
+   The interactive questions about the unit's picture-book shelf (english.js ::
+   renderBookComprehension). Its own classes, deliberately not gc-*: the page
+   is not a deck, so deck-scoped CSS must not be able to reach it and this
+   block must not be able to reach a deck. Big touch targets throughout — the
+   section belongs to Grades 1-4 and is answered by tapping. */
+.bookq-panel { display: grid; gap: 18px; }
+.bookq-dots { display: flex; flex-wrap: wrap; gap: 8px; }
+.bookq-dot { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: white; color: var(--ink); font: inherit; font-weight: var(--weight-medium); display: grid; place-items: center; cursor: pointer; }
+.bookq-dot.current { border-color: var(--teal-dark); box-shadow: 0 0 0 2px #d9efee; }
+.bookq-dot.done { background: var(--gold); border-color: var(--gold); }
+.bookq-dot.done svg { width: 18px; height: 18px; }
+.bookq-question { display: flex; align-items: center; gap: 12px; }
+.bookq-question h2 { margin: 0; font-size: 24px; line-height: 1.35; }
+.bookq-listen { flex: none; }
+.bookq-scene { margin: 14px 0 0; }
+.bookq-scene img { display: block; max-width: 420px; width: 100%; border: 1px solid var(--line); border-radius: 12px; background: white; }
+.bookq-pills { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+.bookq-pill { min-height: 56px; padding: 10px 26px; border-radius: 999px; border: 2px solid var(--line); background: white; color: var(--ink); font: inherit; font-size: 20px; font-weight: var(--weight-medium); cursor: pointer; }
+.bookq-pill:hover:not(:disabled) { border-color: var(--teal-dark); }
+.bookq-pictures { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 14px; }
+.bookq-picture { position: relative; padding: 0; border: 3px solid var(--line); border-radius: 12px; background: white; cursor: pointer; overflow: hidden; }
+.bookq-picture img { display: block; width: 100%; }
+.bookq-picture:hover:not(:disabled) { border-color: var(--teal-dark); }
+.bookq-order-badge { position: absolute; top: 8px; left: 8px; width: 34px; height: 34px; border-radius: 999px; background: var(--gold); color: var(--ink); font-weight: var(--weight-medium); display: grid; place-items: center; font-size: 18px; box-shadow: 0 1px 4px rgba(0, 0, 0, .25); }
+.bookq-pill.is-right, .bookq-picture.is-right { border-color: #2e9e6b; background: #e1f5e9; animation: bookq-pop .5s ease; }
+.bookq-pill.is-wrong, .bookq-picture.is-wrong { border-color: #d26248; animation: bookq-shake .5s ease; }
+.bookq-card.is-done .bookq-pill:disabled, .bookq-card.is-done .bookq-picture:disabled { opacity: .85; cursor: default; }
+.bookq-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.bookq-count { color: var(--ink); font-weight: var(--weight-medium); }
+.bookq-finish { border-top: 1px solid var(--line); padding-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+@keyframes bookq-pop { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
+@keyframes bookq-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@media (max-width: 720px) { .bookq-question h2 { font-size: 20px; } .bookq-pictures { grid-template-columns: 1fr 1fr; } }

@@ -34,10 +34,14 @@ const DRY = process.argv.slice(2).includes("--dry");
 // (shared/course-ui.css, shared/grade-redirect.js) that happened to differ from
 // the manifest — code goes out through deploy-app-version.js, on purpose.
 //
-// This is the only uploader that has it. The comment here used to say the flag
-// was "the same shape as upload-media-to-bunny.js's --only", and that tool has
-// never had one — `git log -S'--only'` against it returns nothing. Do not reach
-// for --only in the content or media uploaders; all three do share --dry.
+// upload-content-to-bunny.js has one too, and this comment used to deny it —
+// it said "do not reach for --only in the content or media uploaders", which
+// is now false for content and cost a real reader a wrong turn: a scoped
+// `upload-content-to-bunny.js english --only units/` is exactly how you ship
+// unit JSONs while another session has lecture-media.json uncommitted in the
+// shared tree. upload-media-to-bunny.js still has NONE — `git log -S'--only'`
+// against it returns nothing — so that half of the old warning stands. All
+// three share --dry.
 const onlyArg = process.argv.indexOf("--only");
 const ONLY = onlyArg >= 0 ? String(process.argv[onlyArg + 1] || "").split(",").map((s) => s.trim()).filter(Boolean) : null;
 if (!KEY && !DRY) { console.error("BUNNY_KEY not set (use --dry to preview without uploading)"); process.exit(1); }

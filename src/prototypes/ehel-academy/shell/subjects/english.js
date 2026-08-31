@@ -11,6 +11,7 @@ import { grammarDiagram, phonicsDiagram } from "../../english/shared/grammar-vis
 import { createCourseApp } from "../course-app.js?v=t2";
 import { createDeck } from "../deck.js?v=deck-1";
 import { wordPicture } from "./word-pictures.js?v=pictures-1";
+import { coreWordScene } from "./english-core-word-scenes.js?v=scenes-1";
 import { cursiveWord, cursiveCanWrite } from "./cursive-strokes.js?v=cursive-1";
 import { SCHOOL_CALENDAR, calendarTerm, termDatesLabel, termWeekTotal, halfTermRow, formatDay } from "../study-plan.js?v=study-plan-2";
 import { platformHeaders, askWehel, focusModule, setFocusModule, onFocusChange, modulesFromSections, outlineFromManifest, unitFetcher, browserSpeechSupported, speakBrowser, speechRateForGrade, stopBrowserSpeech, speechRecognitionCtor, recognizeSpeech, wehelIcon, platformUrl, PLATFORM_ORIGIN } from "../wehel.js?v=wehel-4";
@@ -7301,10 +7302,14 @@ function renderWordCarousel() {
     const position = Math.min(sentenceAt.get(item.vocabularyId) || 0, Math.max(0, sentences.length - 1));
     const known = progress.knownWords.includes(item.vocabularyId);
     const sentenceAudio = item.sentenceAudio?.[position];
-    const picture = dictionaryPicture(item.master);
+    // An action word acts itself out (english-core-word-scenes.js); a word
+    // with no scene keeps its static picture, and one with neither shows the
+    // word alone — the same honesty ladder word-pictures.js already climbs.
+    const actionScene = item.master ? coreWordScene(item.master.lemma) : "";
+    const picture = actionScene ? "" : dictionaryPicture(item.master);
     return `<section class="gc-slide gc-v${index % 5}" data-slide="${esc(item.vocabularyId)}"><div class="gc-inner">
       <span class="gc-eyebrow">Word ${index + 1} of ${words.length} · ${esc(item.master.partOfSpeech)}${item.groupTitle ? ` · ${esc(item.groupTitle)}` : ""}</span>
-      ${picture ? `<div class="wc-picture" aria-hidden="true">${picture}</div>` : ""}
+      ${actionScene ? `<div class="wc-scene" aria-hidden="true">${actionScene}</div>` : picture ? `<div class="wc-picture" aria-hidden="true">${picture}</div>` : ""}
       <div class="gc-pattern" lang="en">${esc(item.master.displayWord)}</div>
       <p class="gc-lead">${esc(item.childMeaning)}</p>
       <div class="gc-actions">
@@ -7382,6 +7387,7 @@ function renderWordCarousel() {
     // Sits below the dots, not in .gc-top, which the full-bleed CSS hides. A unit
     // holds up to 423 words, so the deck itself is what the search narrows.
     tools: `<div class="wc-tools">
+        <button class="gc-btn play" type="button" id="word-show" aria-pressed="false">${icon("play")} Play the words</button>
         <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search vocabulary"></label>
         <select id="group-filter" aria-label="Filter vocabulary group"${namedDeck ? " hidden" : ""}><option value="all">All vocabulary groups</option>${course.vocabularyGroups.filter((group) => !DECK_TEACHES_TAUGHT_ONLY || taught.some((item) => item.groupId === group.id)).map((group) => `<option value="${group.id}">${esc(group.title)}</option>`).join("")}</select>
         <span class="status-chip" id="wc-known">${learnedTaught()} of ${taught.length} new words</span>
@@ -7453,7 +7459,112 @@ function renderWordCarousel() {
   // ids, and it is painted first — a document-wide lookup would leave the deck
   // filtering itself by whatever the lab's box said.
   const inDeck = (selector) => deck.root.querySelector(selector);
+
+  // ===================== the word show =====================
+  // "Play the words" plays the deck like a video (owner, 2026-08-31): each
+  // word is spoken, its meaning read and its first sentence played — the same
+  // clips the slide's own buttons play, so the show costs no new audio and
+  // can never say anything those buttons would not — and the deck then moves
+  // itself on. The action words act themselves out meanwhile
+  // (english-core-word-scenes.js draws on every paint, show or no show).
+  //
+  // Three rules, each a decision rather than a default:
+  //  - The show marks NOTHING. Watching is not knowing, so "I know this
+  //    word" stays the only route to completing the section — the reasoning
+  //    that keeps Global Perspectives' self-marked quizzes unscored.
+  //  - Any touch on the deck stops it, arrows and dots included. A learner
+  //    reaching for a control must never wrestle the sequencer for the
+  //    carousel — the sequencer yields, always, and the touch then does
+  //    whatever it always did.
+  //  - A clip that never starts (missing recording, refused play) is skipped
+  //    after a guard rather than hanging the show on a promise nobody keeps.
+  let showTicket = null;
+  let showCounter = 0;
+  const paintShowButton = (playing) => {
+    const button = inDeck("#word-show");
+    if (!button) return;
+    button.innerHTML = playing ? `${icon("square")} Stop the show` : `${icon("play")} Play the words`;
+    button.setAttribute("aria-pressed", String(playing));
+    icons();
+  };
+  const stopShow = ({ finished = false } = {}) => {
+    if (showTicket === null) return;
+    showTicket = null;
+    // A natural finish leaves the player alone — its last clip already ended,
+    // and stopAudio would also knock over anything the learner starts next.
+    if (!finished) stopAudio();
+    paintShowButton(false);
+  };
+  const showLive = (ticket) => ticket === showTicket && deck.root.isConnected;
+  const showDelay = (ms, ticket) => new Promise((resolve) => setTimeout(resolve, ms)).then(() => showLive(ticket));
+  // Resolves when the shared player stops: a cueEnd pauses it, a natural end
+  // fires ended, and the stopAudio inside any interruption pauses it too. The
+  // listeners attach after playAudio() returns — its own take-over pause has
+  // already happened by then, so the previous clip's stop cannot resolve this
+  // wait early. The guard covers the clip that never starts at all.
+  const showClip = (ticket, play) => new Promise((resolve) => {
+    const player = $("#word-audio");
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(guard);
+      player.removeEventListener("pause", finish);
+      player.removeEventListener("ended", finish);
+      resolve();
+    };
+    const guard = setTimeout(finish, 20000);
+    play();
+    player.addEventListener("pause", finish);
+    player.addEventListener("ended", finish);
+  }).then(() => showLive(ticket));
+  const runShow = async (ticket) => {
+    for (let position = Math.max(0, deck.index); position < words.length; position += 1) {
+      if (!showLive(ticket)) return;
+      deck.goTo(position);
+      const item = words[position];
+      if (!(await showDelay(600, ticket))) return;
+      if (item.master?.audio?.available) {
+        if (!(await showClip(ticket, () => playAudio(item.master.audio.normal, { rate: AI_NARRATION_RATE, start: item.master.audio.cueStart, end: item.master.audio.cueEnd })))) return;
+        if (!(await showDelay(400, ticket))) return;
+      }
+      if (item.meaningAudio?.available) {
+        if (!(await showClip(ticket, () => playAudio(item.meaningAudio.source, { rate: AI_NARRATION_RATE, start: item.meaningAudio.cueStart, end: item.meaningAudio.cueEnd })))) return;
+        if (!(await showDelay(400, ticket))) return;
+      }
+      const sentence = item.sentenceAudio?.[sentenceAt.get(item.vocabularyId) || 0];
+      if (sentence?.available) {
+        if (!(await showClip(ticket, () => playAudio(sentence.source, { rate: AI_NARRATION_RATE, start: sentence.cueStart, end: sentence.cueEnd })))) return;
+      }
+      if (!(await showDelay(800, ticket))) return;
+    }
+    stopShow({ finished: true });
+    toast("That is every word! Mark the ones you know with “I know this word”.");
+  };
+  inDeck("#word-show").addEventListener("click", () => {
+    if (showTicket !== null) { stopShow(); return; }
+    if (!audioEnabled) { toast("Sound is muted. Use the sound button in the header to turn it on."); return; }
+    if (!words.length) { toast("No matching words. Clear the search to play the show."); return; }
+    showTicket = ++showCounter;
+    paintShowButton(true);
+    runShow(showTicket);
+  });
+  // Capture phase, so the show has already yielded by the time the arrow or
+  // dot handler runs its own goTo. The swipe path never fires a click, so the
+  // viewport's touchstart is covered separately.
+  deck.root.addEventListener("click", (event) => {
+    if (event.target.closest("#word-show")) return;
+    stopShow();
+  }, true);
+  deck.root.addEventListener("touchstart", (event) => {
+    if (event.target.closest("#word-show")) return;
+    stopShow();
+  }, { passive: true, capture: true });
+
   const drawDeck = () => {
+    // A re-deck moves every slide under the sequencer, so the show never
+    // survives one — stopped here rather than in each caller.
+    stopShow();
     const query = inDeck("#word-search").value.trim().toLowerCase();
     const group = inDeck("#group-filter").value;
     words = (DECK_TEACHES_TAUGHT_ONLY ? taught : allWords).filter((item) => (group === "all" || item.groupId === group)

@@ -307,6 +307,11 @@ body.deck-theatre .gc-wrap:not(.is-theatre) { display: none; }
    above the word, not beside the definition, so word and image read as one. */
 .wc-picture { font-size: 76px; line-height: 1; margin-bottom: -4px; }
 @media (max-width: 640px) { .wc-picture { font-size: 60px; } }
+/* An action word's animated scene stands where the picture would (Grade 1 Core
+   words pilot, english-core-word-scenes.js) — same slot, same one-image rule. */
+.wc-scene { width: min(320px, 84%); margin: 0 auto -2px; }
+.wc-scene svg { display: block; width: 100%; height: auto; }
+@media (max-width: 640px) { .wc-scene { width: min(250px, 90%); } }
 .wc-sentence { width: 100%; max-width: 520px; background: #eef4fa; border-radius: 14px; padding: 14px 16px; display: grid; gap: 8px; }
 .wc-sentence small { color: #5a6f88; letter-spacing: .04em; text-transform: uppercase; font-size: 12px; }
 .wc-sentence p { margin: 0; font-size: 18px; line-height: 1.5; color: #17324d; }

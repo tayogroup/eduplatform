@@ -145,7 +145,7 @@ export function createCourseApp(config) {
     const doneOf = (button) => Boolean(button.querySelector(".nav-state.done"));
     const doneCount = lesson.filter(doneOf).length;
     const slots = lesson.map((button) => doneOf(button) ? '<span class="slot full" aria-hidden="true">★</span>' : '<span class="slot empty" aria-hidden="true"></span>').join("");
-    album.innerHTML = `<b>My sticker board</b><span class="album-slots">${slots}</span><span class="album-count">${doneCount} of ${lesson.length} stickers</span>`;
+    album.innerHTML = `<b>Unit/Sections</b><span class="album-slots">${slots}</span><span class="album-count">${doneCount} of ${lesson.length} stickers</span>`;
   }
   // Start lands on the BOARD, not on "Welcome to School" (owner, 2026-09-01).
   // The gate's Start is the young learner's first tap, and the page behind it
@@ -187,7 +187,7 @@ export function createCourseApp(config) {
     sectionsToggle.className = "sections-toggle";
     sectionsToggle.setAttribute("aria-controls", "section-nav");
     sectionsToggle.setAttribute("aria-expanded", "false");
-    sectionsToggle.innerHTML = `${icon("star")}<span>My sticker board</span>`;
+    sectionsToggle.innerHTML = `${icon("star")}<span>Unit/Sections</span>`;
     sectionsToggle.addEventListener("click", () => { if (sheetOpen()) closeSectionsSheet(); else openSectionsSheet(); });
     sidebar.insertBefore(sectionsToggle, sidebar.firstChild);
     // The album row lives between the opener and the nav; display:none except

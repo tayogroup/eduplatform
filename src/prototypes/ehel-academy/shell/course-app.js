@@ -215,6 +215,28 @@ export function createCourseApp(config) {
   // still carrying `focus-mode`, and the listener below has already stripped it
   // — leaving fullscreen is what raised this dialog in the first place. It is
   // idempotent, so calling both is safe.
+  // "Keep learning" — put the learner back in the lesson they were in, not on
+  // the board (owner, 2026-09-01). The route never changed while the board was
+  // up, so the section is still rendered underneath it: closing the sheet
+  // reveals it, and enterFocusMode gives back the full screen it had.
+  //
+  // It also repairs a smaller thing on the Escape route, where no board is
+  // involved. Leaving fullscreen strips `focus-mode` (the listener further
+  // down), and the dialog used to re-request fullscreen without putting it
+  // back — so "Keep learning" returned the learner to a full screen with the
+  // topbar and sidebar still in it. enterFocusMode does both halves.
+  //
+  // Not claimed for the tutoring category: enterFocusMode deliberately does
+  // nothing but hide the sidebar there, and takes no fullscreen, so answering
+  // would leave the learner out of fullscreen with the dialog gone. Unclaimed,
+  // seb-session falls back to asking for fullscreen itself, exactly as before.
+  document.addEventListener("ehel:resume-lesson", (event) => {
+    const detail = event.detail;
+    if (!detail || IS_TUTORING) return;
+    closeSectionsSheet();
+    enterFocusMode();
+    detail.handled = true;
+  });
   document.addEventListener("ehel:leave-to-board", (event) => {
     const detail = event.detail;
     // Not when the board is ALREADY what they are looking at. The dialog can be

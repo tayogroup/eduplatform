@@ -257,6 +257,23 @@ export function mountSebSession() {
     stay.style.cssText = "border:0;cursor:pointer;padding:13px 24px;border-radius:999px;background:#1f5fa8;color:#fff;font:600 16px/1 inherit";
     stay.addEventListener("click", () => {
       veil.remove();
+      // "Keep learning" means back to the LESSON, not to the board (owner,
+      // 2026-09-01). It matters because of how the warning is reached: pressing
+      // Back opens the board and drops fullscreen, so the warning sits over the
+      // board, and re-entering fullscreen alone left the learner staring at the
+      // board they had just been asked to come back from.
+      //
+      // The app closes its board and re-enters focus mode, which takes
+      // fullscreen itself — this runs inside the click, so the gesture is still
+      // live and the request is allowed. Only if nothing answers do we ask for
+      // fullscreen ourselves, which is what this button always did.
+      let resumed = false;
+      try {
+        const detail = { handled: false };
+        document.dispatchEvent(new CustomEvent("ehel:resume-lesson", { detail }));
+        resumed = detail.handled === true;
+      } catch { /* an app that cannot answer just gets the fallback below */ }
+      if (resumed) return;
       const el = document.documentElement;
       if (!document.fullscreenElement && typeof el.requestFullscreen === "function") {
         try { const r = el.requestFullscreen(); if (r && r.catch) r.catch(() => {}); } catch {}

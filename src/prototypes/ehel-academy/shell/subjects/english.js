@@ -444,6 +444,12 @@ if (gradeNumber <= 4) {
   swapSectionRows(sections, "reading", "ebooks");
   const shelfRow = sections.find((row) => row[0] === "ebooks");
   if (shelfRow) shelfRow[2] = "Reading";
+  // And the unit's own texts are called "Stories" at these grades (owner,
+  // 2026-09-01) -- beside a shelf already called "Reading", the row's job is
+  // the stories themselves, and the shorter word is the one a six-year-old
+  // reads. Grades 5-8 keep "Reading & story", the same way they keep "Books".
+  const readingRow = sections.find((row) => row[0] === "reading");
+  if (readingRow) readingRow[2] = "Stories";
   const shelfAt = sections.findIndex((row) => row[0] === "ebooks");
   if (shelfAt > -1) sections.splice(shelfAt + 1, 0, ["book-comprehension", "list-checks", "Comprehension"]);
   const oldComprehension = sections.findIndex((row) => row[0] === "comprehension");
@@ -12286,7 +12292,7 @@ function printReading(reading) {
 function renderReadingClassic() {
   const { $, $$ } = classicScope();
   let selected = course.readings[0].readingId;
-  $("#app").innerHTML = `${pageHeader("Read, listen and imagine", "Reading & story", "Open a text, listen to the narration, and enjoy it like your own digital book.")}<div class="reading-layout ebook-layout"><nav class="reading-list ebook-library" id="reading-list" aria-label="Reading library"></nav><article class="ebook-reader" id="reading-panel"></article></div>`;
+  $("#app").innerHTML = `${pageHeader("Read, listen and imagine", navLabelOf("reading", "Reading & story"), "Open a text, listen to the narration, and enjoy it like your own digital book.")}<div class="reading-layout ebook-layout"><nav class="reading-list ebook-library" id="reading-list" aria-label="Reading library"></nav><article class="ebook-reader" id="reading-panel"></article></div>`;
   const draw = () => {
     $("#reading-list").innerHTML = `<div class="ebook-library-title"><span>${icon("library-big")}</span><div><strong>My reading shelf</strong><small>${course.readings.length} texts in this unit</small></div></div>${course.readings.map((reading, index) => `<button class="reading-button ebook-spine ${selected === reading.readingId ? "active" : ""}" data-reading="${reading.readingId}" type="button" aria-current="${selected === reading.readingId ? "page" : "false"}"><span>${index + 1}</span><div><strong>${escapeHtml(reading.title)}</strong><small>${escapeHtml(reading.type)}</small></div>${icon("chevron-right")}</button>`).join("")}`;
     const reading = course.readings.find((item) => item.readingId === selected);

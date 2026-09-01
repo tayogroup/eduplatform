@@ -75,7 +75,7 @@ EXTENTS.baby = [-70, -162, 70, 8];
 // silently not measured — and "not measured" prints the same ✓ as "outside the
 // frame" never firing. The last ten arrived with the Grade 4 second-to-fifth
 // books; keep this in step with CAST (grade 3), CAST4 and CAST_SHELF.
-for (const who of ["amal", "nora", "mina", "adam", "idris", "noah", "yasmin", "mum", "dad", "hana", "omar", "maya", "sami", "salma", "samira", "hodan", "leo", "faduma", "grandpa", "daniel", "theo", "nadia", "sarah", "rami", "elena", "talia", "librarian", "mayor", "karim", "uncle", "governor", "lawyer", "caretaker", "labourer"]) {
+for (const who of ["amal", "nora", "mina", "adam", "idris", "noah", "yasmin", "mum", "dad", "hana", "omar", "maya", "sami", "salma", "samira", "hodan", "leo", "faduma", "grandpa", "daniel", "theo", "nadia", "sarah", "rami", "elena", "talia", "librarian", "mayor", "karim", "uncle", "governor", "lawyer", "caretaker", "labourer", "leila"]) {
   EXTENTS[who] = PERSON;
 }
 

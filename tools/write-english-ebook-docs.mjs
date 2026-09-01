@@ -80,6 +80,14 @@ const grade1ShelfMap = grade1ShelfSource.slice(grade1ShelfSource.indexOf("const 
 const grade1ShelfBookIds = [...grade1ShelfMap.matchAll(/dir: "([a-z0-9-]+)"/g)].map((match) => match[1]);
 if (grade1ShelfBookIds.length !== 30) throw new Error(`Expected 30 Grade 1 shelf books, read ${grade1ShelfBookIds.length}.`);
 
+// And again for Grade 2's books four to seven. Grade 2 is now drawn by two
+// generators as well — the Zuri books from create-grade2-ebook-illustrations.js,
+// and these forty from their own.
+const grade2ShelfSource = fs.readFileSync(path.join(root, "tools", "create-grade2-shelf-ebook-illustrations.js"), "utf8");
+const grade2ShelfMap = grade2ShelfSource.slice(grade2ShelfSource.indexOf("const books = {"));
+const grade2ShelfBookIds = [...grade2ShelfMap.matchAll(/dir: "([a-z0-9-]+)"/g)].map((match) => match[1]);
+if (grade2ShelfBookIds.length !== 40) throw new Error(`Expected 40 Grade 2 shelf books, read ${grade2ShelfBookIds.length}.`);
+
 // The only authored content in this file: what each book is FOR. The unit
 // vocabulary lines are the words the story deliberately reuses, taken from that
 // unit's vocabularyGroups — a reviewer reads this to check the story is doing
@@ -1060,6 +1068,248 @@ const NOTES = {
     themes: "everybody brings one thing and says one word",
     cameos: "Musa, Kiki, Duku, Koko, Miss Twiga, the little elephant, the goat, the ostrich and Lulu - the whole Grade 1 animal cast in one book.",
   },
+  // ------------------------------------------------ Grade 2, books four to seven
+  // Forty books, four per unit, drawn by create-grade2-shelf-ebook-illustrations.js.
+  "amals-first-week": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 1", unit: "Unit 1: Welcome and Calendar",
+    vocabulary: "name, partner, spell, friend, hello, goodbye, calendar, day, week, month, date, birthday, book, tablet, chart, word, the colours, one to twelve, first to thirtieth",
+    themes: "Amal starts a new school, learns the days of the week, and on Thursday does for Nora what Leo did for her",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "when-i-open-up-a-book": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 1", unit: "Unit 1: Welcome and Calendar",
+    vocabulary: "name, partner, spell, friend, hello, goodbye, calendar, day, week, month, date, birthday, book, tablet, chart, word, the colours, one to twelve, first to thirtieth",
+    themes: "Every page whispers Look! Look! Look! - and out come sports and monkeys, trains and kings",
+    cameos: "Built on the unit's own poem.",
+  },
+  "seven-days-make-one-week": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 1", unit: "Unit 1: Welcome and Calendar",
+    vocabulary: "name, partner, spell, friend, hello, goodbye, calendar, day, week, month, date, birthday, book, tablet, chart, word, the colours, one to twelve, first to thirtieth",
+    themes: "The class sings the days of the week, one child and one day at a time, all the way to seven",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "the-first-the-second-the-third": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 1", unit: "Unit 1: Welcome and Calendar",
+    vocabulary: "name, partner, spell, friend, hello, goodbye, calendar, day, week, month, date, birthday, book, tablet, chart, word, the colours, one to twelve, first to thirtieth",
+    themes: "Zuri learns the words that go on a calendar - not one, two, three, but first, second, third",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
+  "the-helpers-of-warta-street": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 1", unit: "Unit 2: Good Neighbours and Jobs",
+    vocabulary: "neighbour, window cleaner, police officer, reporter, bus driver, firefighter, helmet, boots, gloves, mask, uniform, doctor, nurse, teacher, farmer, shopkeeper, helping, teaching, rescuing, growing, driving",
+    themes: "A window cleaner, a bus driver, two firefighters and a police officer - and the one job Amal thinks is the kindest",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "my-neighbourhood": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 1", unit: "Unit 2: Good Neighbours and Jobs",
+    vocabulary: "neighbour, window cleaner, police officer, reporter, bus driver, firefighter, helmet, boots, gloves, mask, uniform, doctor, nurse, teacher, farmer, shopkeeper, helping, teaching, rescuing, growing, driving",
+    themes: "Come and meet the people in my neighbourhood - the grandmas and grandpas, the mums and dads, and the children too",
+    cameos: "Built on the unit's own poem.",
+  },
+  "firefighter-leila-comes-to-class": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 1", unit: "Unit 2: Good Neighbours and Jobs",
+    vocabulary: "neighbour, window cleaner, police officer, reporter, bus driver, firefighter, helmet, boots, gloves, mask, uniform, doctor, nurse, teacher, farmer, shopkeeper, helping, teaching, rescuing, growing, driving",
+    themes: "One visitor, one uniform and a class full of questions - including the one nobody expected her to answer honestly",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "who-is-helping": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 1", unit: "Unit 2: Good Neighbours and Jobs",
+    vocabulary: "neighbour, window cleaner, police officer, reporter, bus driver, firefighter, helmet, boots, gloves, mask, uniform, doctor, nurse, teacher, farmer, shopkeeper, helping, teaching, rescuing, growing, driving",
+    themes: "Zuri walks round the whole savanna asking one question, and every answer is somebody doing their job",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
+  "the-big-race": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 1", unit: "Unit 3: Ready, Steady, Go!",
+    vocabulary: "head, arm, hand, finger, tummy, toe, wave, hop, jump, clap, wiggle, nod, exercise, healthy, strong, water, sleep, energy, touch, turn, stand, reach, flap",
+    themes: "Amal wins the relay, and then walks back down the field to the boy who lost it",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "reach-for-the-sky": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 1", unit: "Unit 3: Ready, Steady, Go!",
+    vocabulary: "head, arm, hand, finger, tummy, toe, wave, hop, jump, clap, wiggle, nod, exercise, healthy, strong, water, sleep, energy, touch, turn, stand, reach, flap",
+    themes: "Nine actions, one poem, and a whole class doing every single one of them",
+    cameos: "Built on the unit's own poem.",
+  },
+  "get-up-and-move-day": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 1", unit: "Unit 3: Ready, Steady, Go!",
+    vocabulary: "head, arm, hand, finger, tummy, toe, wave, hop, jump, clap, wiggle, nod, exercise, healthy, strong, water, sleep, energy, touch, turn, stand, reach, flap",
+    themes: "One morning a year, the whole school stops its lessons and goes outside to move",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "head-arm-hand-finger": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 1", unit: "Unit 3: Ready, Steady, Go!",
+    vocabulary: "head, arm, hand, finger, tummy, toe, wave, hop, jump, clap, wiggle, nod, exercise, healthy, strong, water, sleep, energy, touch, turn, stand, reach, flap",
+    themes: "Zuri names every part of herself she can point at, and then makes each one move",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
+  "the-night-amal-counted-the-stars": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 2", unit: "Unit 4: The Big Sky",
+    vocabulary: "shadow, light, sun, source, block, sky, morning, midday, evening, sunrise, sunset, moon, star, cloud, day, night, earth, long, short, high, low, bright, dark, sunny, cloudy, windy, rainy, dry",
+    themes: "A shadow that is long, then short, then gone - and a sky with more stars in it than anyone can count",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "my-shadow": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 2", unit: "Unit 4: The Big Sky",
+    vocabulary: "shadow, light, sun, source, block, sky, morning, midday, evening, sunrise, sunset, moon, star, cloud, day, night, earth, long, short, high, low, bright, dark, sunny, cloudy, windy, rainy, dry",
+    themes: "A little shadow that goes in and out with me - and jumps into bed before I do",
+    cameos: "Built on the unit's own poem.",
+  },
+  "why-we-have-day-and-night": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 2", unit: "Unit 4: The Big Sky",
+    vocabulary: "shadow, light, sun, source, block, sky, morning, midday, evening, sunrise, sunset, moon, star, cloud, day, night, earth, long, short, high, low, bright, dark, sunny, cloudy, windy, rainy, dry",
+    themes: "A torch, an orange ball and one small mark - and the answer to where the sun goes at night",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "sunny-cloudy-windy-rainy": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 2", unit: "Unit 4: The Big Sky",
+    vocabulary: "shadow, light, sun, source, block, sky, morning, midday, evening, sunrise, sunset, moon, star, cloud, day, night, earth, long, short, high, low, bright, dark, sunny, cloudy, windy, rainy, dry",
+    themes: "Zuri keeps a weather chart for one week, and no two days are the same",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
+  "a-fair-way-to-measure": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 2", unit: "Unit 5: Let's Measure",
+    vocabulary: "ten to one hundred, circle, square, triangle, rectangle, heart, pattern, measure, ruler, centimetre, metre, length, height, weight, size, big, small, long, short, tall, heavy, light, wide, narrow",
+    themes: "Amal says fourteen feet and Leo says eleven, and Nora works out why they are both right",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "one-hundred-little-fingers": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 2", unit: "Unit 5: Let's Measure",
+    vocabulary: "ten to one hundred, circle, square, triangle, rectangle, heart, pattern, measure, ruler, centimetre, metre, length, height, weight, size, big, small, long, short, tall, heavy, light, wide, narrow",
+    themes: "Count in tens all the way to a hundred, and hold every single finger in the air",
+    cameos: "Built on the unit's own poem.",
+  },
+  "how-people-measured-long-ago": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 2", unit: "Unit 5: Let's Measure",
+    vocabulary: "ten to one hundred, circle, square, triangle, rectangle, heart, pattern, measure, ruler, centimetre, metre, length, height, weight, size, big, small, long, short, tall, heavy, light, wide, narrow",
+    themes: "Before rulers, people measured with fingers, hands, arms and footsteps - and nobody's answer ever matched",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "big-and-small-long-and-short": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 2", unit: "Unit 5: Let's Measure",
+    vocabulary: "ten to one hundred, circle, square, triangle, rectangle, heart, pattern, measure, ruler, centimetre, metre, length, height, weight, size, big, small, long, short, tall, heavy, light, wide, narrow",
+    themes: "Zuri finds the biggest thing and the smallest thing on the savanna, and every pair in between",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
+  "amal-and-the-little-garden-friends": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 2", unit: "Unit 6: All About Bugs",
+    vocabulary: "butterfly, cricket, ant, bee, spider, worm, insect, legs, wings, antennae, anthill, web, on, under, in, between, above, in front of, fly, jump, crawl, spin, chirp, collect",
+    themes: "Amal is afraid of bugs, until Adam sits very still beside her and shows her what they are actually doing",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "theres-a-bug-on-me": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 2", unit: "Unit 6: All About Bugs",
+    vocabulary: "butterfly, cricket, ant, bee, spider, worm, insect, legs, wings, antennae, anthill, web, on, under, in, between, above, in front of, fly, jump, crawl, spin, chirp, collect",
+    themes: "One, two, three - there's a bug on me. Where did it go? Nobody knows",
+    cameos: "Built on the unit's own poem.",
+  },
+  "grandpas-cricket": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 2", unit: "Unit 6: All About Bugs",
+    vocabulary: "butterfly, cricket, ant, bee, spider, worm, insect, legs, wings, antennae, anthill, web, on, under, in, between, above, in front of, fly, jump, crawl, spin, chirp, collect",
+    themes: "Nora wants to keep the cricket, and Grandpa says yes - if she learns how to look after it properly",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "fly-jump-crawl-spin": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 2", unit: "Unit 6: All About Bugs",
+    vocabulary: "butterfly, cricket, ant, bee, spider, worm, insect, legs, wings, antennae, anthill, web, on, under, in, between, above, in front of, fly, jump, crawl, spin, chirp, collect",
+    themes: "Every little creature in the garden moves its own way, and Zuri names all of them",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
+  "amal-and-the-little-tree": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 3", unit: "Unit 7: The World Around Us",
+    vocabulary: "planting, watering, picking up, litter, recycling, roots, stem, leaves, flower, seeds, tree, air, water, soil, earth, glad, happy, thankful, appreciate, important",
+    themes: "The river is almost dry and the bank is brown, so Amal plants a handful of seeds and waits",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "painted-blue-and-green": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 3", unit: "Unit 7: The World Around Us",
+    vocabulary: "planting, watering, picking up, litter, recycling, roots, stem, leaves, flower, seeds, tree, air, water, soil, earth, glad, happy, thankful, appreciate, important",
+    themes: "The sky is painted blue and the Earth is painted green, with a lot of fresh air in between",
+    cameos: "Built on the unit's own poem.",
+  },
+  "a-family-on-mother-earth-day": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 3", unit: "Unit 7: The World Around Us",
+    vocabulary: "planting, watering, picking up, litter, recycling, roots, stem, leaves, flower, seeds, tree, air, water, soil, earth, glad, happy, thankful, appreciate, important",
+    themes: "One family, one day, and six different jobs - and Sami on the porch, watching all of them",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "roots-stem-leaves-flower": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 3", unit: "Unit 7: The World Around Us",
+    vocabulary: "planting, watering, picking up, litter, recycling, roots, stem, leaves, flower, seeds, tree, air, water, soil, earth, glad, happy, thankful, appreciate, important",
+    themes: "Zuri follows one seed all the way up, and learns the name of every part on the way",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
+  "helping-hands-at-home": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 3", unit: "Unit 8: Home, Sweet Home",
+    vocabulary: "house, apartment, hut, tree house, nest, hive, hole, bedroom, kitchen, bathroom, living room, dining room, bed, table, chair, sofa, sink, rug, window, adobe house, stilt house, cave house, skyscraper",
+    themes: "Grandma is coming tomorrow, and the house is not ready - so Amal and Idris make it ready",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "a-nest-is-a-home-for-a-bird": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 3", unit: "Unit 8: Home, Sweet Home",
+    vocabulary: "house, apartment, hut, tree house, nest, hive, hole, bedroom, kitchen, bathroom, living room, dining room, bed, table, chair, sofa, sink, rug, window, adobe house, stilt house, cave house, skyscraper",
+    themes: "A nest, a hive, a hole and a house - four homes, and every one of them is exactly right for somebody",
+    cameos: "Built on the unit's own poem.",
+  },
+  "theos-tree-house": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 3", unit: "Unit 8: Home, Sweet Home",
+    vocabulary: "house, apartment, hut, tree house, nest, hive, hole, bedroom, kitchen, bathroom, living room, dining room, bed, table, chair, sofa, sink, rug, window, adobe house, stilt house, cave house, skyscraper",
+    themes: "A floor, four walls, a little door and a green roof - and ten steps to climb before you get there",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "bed-table-chair-sofa": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 3", unit: "Unit 8: Home, Sweet Home",
+    vocabulary: "house, apartment, hut, tree house, nest, hive, hole, bedroom, kitchen, bathroom, living room, dining room, bed, table, chair, sofa, sink, rug, window, adobe house, stilt house, cave house, skyscraper",
+    themes: "Zuri goes through a whole house naming everything in it, one room at a time",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
+  "the-stranger-with-the-map": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 3", unit: "Unit 9: Let's Explore the City!",
+    vocabulary: "library, shopping centre, underground, ferry, Ferris wheel, market, traffic, helicopter, bus, map, directions, straight ahead, aquarium, octopus, penguin, turtle, shark, amazing, beautiful, clever, dangerous, huge, scary",
+    themes: "On Amal's first big day in the city, an old man with a map turns it this way and that",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "at-the-zebra-crossing": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 3", unit: "Unit 9: Let's Explore the City!",
+    vocabulary: "library, shopping centre, underground, ferry, Ferris wheel, market, traffic, helicopter, bus, map, directions, straight ahead, aquarium, octopus, penguin, turtle, shark, amazing, beautiful, clever, dangerous, huge, scary",
+    themes: "Look around at city places, look around at city faces - and mind your laces",
+    cameos: "Built on the unit's own poem.",
+  },
+  "the-city-from-the-sky": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 3", unit: "Unit 9: Let's Explore the City!",
+    vocabulary: "library, shopping centre, underground, ferry, Ferris wheel, market, traffic, helicopter, bus, map, directions, straight ahead, aquarium, octopus, penguin, turtle, shark, amazing, beautiful, clever, dangerous, huge, scary",
+    themes: "Leo rides in a helicopter above his own city, and everything he knows looks like a toy",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "amazing-huge-and-a-little-bit-scary": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 3", unit: "Unit 9: Let's Explore the City!",
+    vocabulary: "library, shopping centre, underground, ferry, Ferris wheel, market, traffic, helicopter, bus, map, directions, straight ahead, aquarium, octopus, penguin, turtle, shark, amazing, beautiful, clever, dangerous, huge, scary",
+    themes: "Zuri goes to the aquarium and to the city, and finds a describing word for every single thing",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
+  "amals-english-world": {
+    series: "Grade 2 shelf - Story", book: 4, term: "Term 3", unit: "Unit 10: My English World (capstone)",
+    vocabulary: "one word from each of the nine review groups: name, neighbour, head, shadow, ten, butterfly, planting, house, library",
+    themes: "Six pages out of a whole year of work, one sentence corrected, and a table of her own on showcase day",
+    cameos: "Built on the unit's own Story reading, which no Zuri book tells.",
+  },
+  "ten-units-one-year": {
+    series: "Grade 2 shelf - Poem", book: 5, term: "Term 3", unit: "Unit 10: My English World (capstone)",
+    vocabulary: "one word from each of the nine review groups: name, neighbour, head, shadow, ten, butterfly, planting, house, library",
+    themes: "Amal walks back through every unit of Year 2 and says out loud what each one taught her",
+    cameos: "Built on the unit's own poem.",
+  },
+  "the-sentence-i-fixed": {
+    series: "Grade 2 shelf - Listening", book: 6, term: "Term 3", unit: "Unit 10: My English World (capstone)",
+    vocabulary: "one word from each of the nine review groups: name, neighbour, head, shadow, ten, butterfly, planting, house, library",
+    themes: "Amal reads her old work again and finds one small word in the wrong shape - and mends it",
+    cameos: "Built on the unit's own listening text.",
+  },
+  "nine-words-for-year-three": {
+    series: "Grade 2 shelf - Words", book: 7, term: "Term 3", unit: "Unit 10: My English World (capstone)",
+    vocabulary: "one word from each of the nine review groups: name, neighbour, head, shadow, ten, butterfly, planting, house, library",
+    themes: "Zuri picks one word from every unit of the year and puts them in her pocket for next time",
+    cameos: "Built on the unit's own vocabularyGroups.",
+  },
 };
 
 let written = 0;
@@ -1114,10 +1364,17 @@ for (const book of catalog) {
   // generator's own book map so it cannot drift from it.
   const GRADE4_SHELF = new Set(shelfBookIds);
   const GRADE1_SHELF = new Set(grade1ShelfBookIds);
+  const GRADE2_SHELF = new Set(grade2ShelfBookIds);
   const drawnBy = GRADE4_SHELF.has(book.id)
     ? ["the shared series kit in tools/lib/ehel-ebook-kit.js and the Grade 4",
       "shelf additions in tools/lib/ehel-ebook-kit-grade4-shelf.js, composed by",
       "tools/create-grade4-shelf-ebook-illustrations.js."]
+    : GRADE2_SHELF.has(book.id)
+      ? ["the shared series kit in tools/lib/ehel-ebook-kit.js, the Zuri additions",
+        "in tools/lib/ehel-ebook-kit-grade2.js, the Amal-series cast in",
+        "tools/lib/ehel-ebook-kit-amal.js and the Grade 2 shelf additions in",
+        "tools/lib/ehel-ebook-kit-grade2-shelf.js, composed by",
+        "tools/create-grade2-shelf-ebook-illustrations.js."]
     : GRADE1_SHELF.has(book.id)
       ? ["the shared series kit in tools/lib/ehel-ebook-kit.js, the Amal-series",
         "cast in tools/lib/ehel-ebook-kit-amal.js and the Grade 1 shelf additions",

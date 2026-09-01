@@ -14817,12 +14817,16 @@ function renderYearPlan() {
     ? [
         ["Day 1", sectionLabel("dictionary"), "Watch the video lesson, then meet the unit's new words with the word cards and listen to each one."],
         ["Day 2", sectionLabel("ebooks"), "Read one of the unit's picture books, and answer the questions about the books."],
-        ["Day 3", "Grammar", "Work through two grammar lessons, said aloud and practised in the pattern lab."],
+        // "the practice", not "the pattern lab": that name is this repo's, used
+        // in comments and file names, and it appears nowhere a learner can read
+        // it. A plan that names a thing by a name the screen never shows is
+        // describing a different app.
+        ["Day 3", "Grammar", "Work through two grammar lessons, said aloud, then try the practice."],
         ["Day 4", "Speak & write", "Do two speaking tasks and two writing tasks from the unit."],
         ["Day 5", `Play, check & ${sectionLabel("reading").toLowerCase()}`, `Do the activities, play the games and take the quiz — that opens the unit's own ${sectionLabel("reading").toLowerCase()}. Join the live session when one is scheduled.`],
       ]
     : [
-        ["Day 1", "Words", "Meet the unit's new words with the word cards, and listen to each one."],
+        ["Day 1", sectionLabel("dictionary"), "Meet the unit's new words with the word cards, and listen to each one."],
         ["Day 2", "Reading", "Read one story with its narration, then answer its comprehension questions."],
         ["Day 3", "Grammar", "Work through two grammar lessons, said aloud and practised with examples."],
         ["Day 4", "Speak & write", "Do two speaking tasks and two writing tasks from the unit."],
@@ -14973,7 +14977,11 @@ function renderUnitStudyPlan() {
   // an aside that names the thing it is already inside. Named only when the
   // titles say something the day has not.
   const wordGroupTitles = titlesOf(newWordGroups);
-  const dayOneName = BOOKS_LEAD_THE_READING ? sectionLabel("dictionary") : "Words";
+  // The section's own label at EVERY grade, not only where the books lead. The
+  // rename to "Core words" (2026-08-28) is in the base table, so it reached
+  // Grades 5-8 too, and this page went on calling the day "Words" there —
+  // naming a row the nav beside it does not have.
+  const dayOneName = sectionLabel("dictionary");
   const namesGroups = Boolean(wordGroupTitles) && wordGroupTitles.toLowerCase() !== dayOneName.toLowerCase();
   const dayLine = (name, what) => `<li>${icon("circle-check-big")}<span><strong>${name}:</strong> ${what}</span></li>`;
   const weekPanel = (weekIndex) => {
@@ -14998,10 +15006,18 @@ function renderUnitStudyPlan() {
           : (weekReadings.length ? `Read <strong>${titlesOf(weekReadings)}</strong>, then answer ${weekReadings.length > 1 ? "their" : "its"} questions.` : "Read your favourite story from this unit again."))}
         ${dayLine("Day 3 · Grammar", grammar[weekIndex].length ? `${titlesOf(grammar[weekIndex])}.` : "Go back over the patterns you have learned.")}
         ${dayLine("Day 4 · Speak & write", speakWrite ? `${speakWrite}.` : "Practise saying and writing your favourite sentences.")}
+        ${/* The last day used to end "hand in your assignment and fill in My
+             progress". There is no assignment for a learner to hand in: the
+             unit's assignment is drawn by renderTeacher() and by nothing else,
+             so the one instruction on this page that a child could not carry
+             out was the one telling them how to finish. It is replaced by the
+             row that really does close a unit — the recap, "What I learned",
+             added 2026-08-31 and named by neither plan until now. Both labels
+             come from the sections table, so a rename moves them. */""}
         ${dayLine(`Day 5 · ${isLast && BOOKS_LEAD_THE_READING ? `Play, check & ${sectionLabel("reading").toLowerCase()}` : "Play & check"}`, isLast
           ? (BOOKS_LEAD_THE_READING
-              ? `Play the games and take the quiz — that opens the unit's own ${sectionLabel("reading").toLowerCase()}${unitTexts.length ? `, so read <strong>${titlesOf(unitTexts)}</strong>` : ""}. Then hand in your assignment and fill in My progress.`
-              : "Play the games, take the quiz, hand in your assignment and fill in My progress.")
+              ? `Play the games and take the quiz — that opens the unit's own ${sectionLabel("reading").toLowerCase()}${unitTexts.length ? `, so read <strong>${titlesOf(unitTexts)}</strong>` : ""}. Then look back at <strong>${escapeHtml(sectionLabel("capstone"))}</strong> and fill in ${escapeHtml(sectionLabel("reflect"))}.`
+              : `Play the games and take the quiz, then look back at <strong>${escapeHtml(sectionLabel("capstone"))}</strong> and fill in ${escapeHtml(sectionLabel("reflect"))}.`)
           : `${activities[weekIndex].length ? `Do ${rangeText(activities, weekIndex, "activity").replace("activitys", "activities")}, and play` : "Play"} the games.`)}
       </ol>
     </section>`;

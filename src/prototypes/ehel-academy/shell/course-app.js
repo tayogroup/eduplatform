@@ -1666,6 +1666,25 @@ export function createCourseApp(config) {
       try { sessionHere = Boolean(config.getHelp.sessionHere?.()); } catch { /* not loaded yet */ }
       if (sessionHere) navItems.push({ id: "help-session", iconName: "compass", label: "Help session", active: route === "help-session", done: false });
     }
+    // The board's own arrangement (owner, 2026-09-01), young stages only and
+    // by id, so subjects without these rows are untouched:
+    // - The Video lesson card is REPLACED by the Overview card in its slot --
+    //   the video is reached through Overview ("Start with Video lesson" is
+    //   the overview's own button), so the board starts with Unit Study Plan.
+    //   The SECTION is untouched: lecture still exists, still gates the
+    //   chain, still completes -- only its board card is gone, which is also
+    //   why this runs after the get-help append and before the paint: the
+    //   album counts painted cards, and a CSS-hidden card would leave it
+    //   claiming a sticker no card can show.
+    // - Teacher & Parent Guide moves to the very end, the last card above
+    //   the Student resources row.
+    if (pathNav) {
+      const lectureAt = navItems.findIndex((item) => item.id === "lecture");
+      const overviewAt = navItems.findIndex((item) => item.id === "overview");
+      if (lectureAt >= 0 && overviewAt >= 0) { navItems[lectureAt] = navItems[overviewAt]; navItems.splice(overviewAt, 1); }
+      const guideAt = navItems.findIndex((item) => item.id === "teacherguide");
+      if (guideAt >= 0) navItems.push(navItems.splice(guideAt, 1)[0]);
+    }
     $("#section-nav").innerHTML = sectionNavigation(navItems, { path: pathNav });
     // Board-only classification -- see STICKER_QUIET_ROUTES above. Toggle, not
     // add: renderNav runs on every completion, and the set is the one source.

@@ -2282,7 +2282,17 @@ html.young-stage body.sections-open #sticker-album {
   padding: 12px 18px; border-radius: 18px;
   background: #fff; border: 3px dashed #B7D3E4; color: #17324D;
 }
-html.young-stage body.sections-open #sticker-album b { font-size: 16px; font-weight: var(--weight-bold); }
+/* The label wears the display face (owner, 2026-09-01: "add style") -- the
+   serif the unit titles use, with a small gold star of its own, so the album
+   header reads as the board's title rather than a form label. */
+html.young-stage body.sections-open #sticker-album b {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: var(--weight-bold) 21px/1.1 var(--font-serif); color: #17324D; letter-spacing: .01em;
+}
+html.young-stage body.sections-open #sticker-album b::before {
+  content: "°5"; font-family: var(--font-sans); font-size: 17px; color: var(--kid-sun);
+  text-shadow: 0 2px 0 var(--kid-sun-press); transform: rotate(-12deg);
+}
 html.young-stage body.sections-open #sticker-album .album-count { color: #527082; font-size: 14px; font-weight: var(--weight-bold); }
 #sticker-album .album-slots { display: flex; flex-wrap: wrap; gap: 7px; }
 /* padding: 0 is load-bearing, not tidiness: an unfilled slot carries the

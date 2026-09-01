@@ -1814,6 +1814,18 @@ export function createCourseApp(config) {
   });
   function navigate(next) {
     if (config.onNavigate) config.onNavigate();
+    // Leaving the board is part of GOING somewhere, so it belongs here rather
+    // than at each call site. The section tiles closed it themselves and the
+    // two resource switches did not -- they bind their own handlers, the
+    // teacher's in this file and the student's in english.js -- so pressing
+    // Student resources from the board navigated correctly and then left the
+    // board sitting on top of the page it had just opened. That is not merely
+    // untidy: navigate() also enters focus mode, which hides the topbar, and
+    // the board hides the Menu button while it is open, so a learner on a
+    // touch device had no control at all until they tapped another tile.
+    // One line here covers every present and future caller (the completion
+    // card's Next up, the locked page's Go to, get-help's deep links).
+    closeSectionsSheet();
     stopVoice(); route = next; location.hash = next;
     // Report the move, and send it NOW -- see reportPosition(). Without this,
     // `resume` would only ever be written when

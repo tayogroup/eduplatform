@@ -29,6 +29,32 @@
 // One face was missing from the whole chain and is added in the kit: LEILA, the
 // firefighter of Unit 2, who has a name, a uniform and lines in two texts.
 //
+// ---------------------------------------------------------------- provenance
+//
+// **This file shipped its OUTPUT a day before it was tracked itself.** The forty
+// books and their catalogue entries went in with `cd951619b` on 2026-08-31 and
+// were deployed; this generator and `lib/ehel-ebook-kit-grade2-shelf.js` sat
+// untracked in the shared checkout until `8d8ed060e` the next day, adopted by a
+// different session on the owner's instruction. So for a day, forty live books
+// had exactly one copy of the thing that draws them, on one disk.
+//
+// Nothing reported it, and the reason is worth keeping. The pages are GENERATED
+// but they are also COMMITTED, so `git status` was clean about the books; the
+// gates read the catalogue against the files on disk (check-english-ebooks.mjs),
+// the rendered geometry (check-ebook-composition.mjs) and the derived topic
+// index — none of them asks git anything. Three tools in this directory ask git
+// anything at all: check-english-audio-staleness.py (has the text changed since
+// the recording), check-english-content.mjs (which commit last touched English,
+// for its report header) and upload-app-to-bunny.js. Not one asks whether a file
+// is TRACKED.
+//
+// The shape generalises past this file: a generator is the one thing whose
+// absence costs nothing until somebody needs to regenerate, because its output
+// is what everyone looks at — and a committed, deployed output is the strongest
+// possible evidence that the work is safe. Commit a generator in the same commit
+// as the first output it writes; where that has not happened,
+// `git ls-files --error-unmatch <tool>` answers in one line.
+//
 // Usage: node tools/create-grade2-shelf-ebook-illustrations.js [book-key|all]
 // Output: src/prototypes/ehel-academy/english/ebooks/<book>/page-NN.svg
 

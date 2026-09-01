@@ -26,6 +26,10 @@
 // learner has already read can move, and motion reuses the existing animation
 // classes only — a new @keyframes in STYLE is embedded verbatim in every SVG of
 // every book and would rewrite all 2,110 of them for a change nobody can see.
+//
+// This file and its generator were UNTRACKED for a day after the forty books
+// they draw had been committed and deployed. See the provenance note at the top
+// of tools/create-grade2-shelf-ebook-illustrations.js for why no gate said so.
 
 const kit = require("./ehel-ebook-kit-grade1-shelf.js");
 

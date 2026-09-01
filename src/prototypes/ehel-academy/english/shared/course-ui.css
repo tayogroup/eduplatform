@@ -2444,3 +2444,35 @@ html.young-stage body.sections-open .sidebar .student-switch:not([hidden]) > spa
   html.young-stage body.sections-open .nav-button--path { transition: none; }
   html.young-stage body.sections-open .nav-button--path:hover { transform: none; }
 }
+
+/* ---- The opener pill is GONE (owner, 2026-09-01) ---------------------------
+   "Remove My sticker board button. It is not needed." -- and it is not: Start
+   opens the board (v366) and the Menu button opens the board, so the pill was
+   a third door to a room with two, and inside the open board it sat as a
+   redundant header directly above an album row carrying the same words.
+
+   HIDDEN, NOT REMOVED FROM THE DOM: openSectionsSheet() returns early when
+   sectionsToggle is null -- the button is the aria-expanded carrier -- so
+   deleting the element in course-app.js would silently kill both remaining
+   doors. The !important is load-bearing: the desktop closed-state rule above
+   reveals the pill at (0,6,2), far above anything a clean selector here could
+   reach.
+
+   What each state loses and keeps:
+   - open board: the album row becomes the header. Escape (keyboards) or
+     picking a tile leaves it; on touch, picking a tile IS the way out, which
+     is what a board that is the menu means.
+   - desktop closed: the transparent bottom strip held only the pill, so the
+     sidebar hides entirely and the content gets its normal padding back.
+   - phone closed: the navy bottom rail held only the pill at these stages, so
+     it hides too -- an empty navy bar is chrome saying nothing. Grades 5-8
+     phones keep their rail: everything here needs html.young-stage. */
+html.young-stage .sections-toggle { display: none !important; }
+@media (min-width: 681px) {
+  html.young-stage body:not(.tutoring-nav) .content { padding-bottom: 70px; }
+  html.young-stage body:not(.tutoring-nav):not(.focus-mode):not(.sections-open) .sidebar { display: none; }
+}
+@media (max-width: 680px) {
+  html.young-stage body:not(.tutoring-nav):not(.sections-open) .sidebar { display: none; }
+  html.young-stage body:not(.tutoring-nav):not(.sections-open) .content { padding-bottom: 26px; }
+}

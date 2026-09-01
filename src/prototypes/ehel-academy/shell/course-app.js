@@ -217,10 +217,15 @@ export function createCourseApp(config) {
   // idempotent, so calling both is safe.
   document.addEventListener("ehel:leave-to-board", (event) => {
     const detail = event.detail;
-    if (!detail || !boardCanOpen()) return;
+    // Not when the board is ALREADY what they are looking at. The dialog can be
+    // raised from the board itself — that is where leaving the app is a real
+    // thing to be doing — and claiming it there would answer "I'm leaving" by
+    // returning the learner to the page they are standing on, with no way out
+    // of the course at all. Somewhere to go back TO is the whole condition.
+    if (!detail || sheetOpen() || !boardCanOpen()) return;
     detail.handled = true;
     if (detail.probe) return;
-    exitFocusMode();
+    exitFocusMode({ appInitiated: true });
     openSectionsSheet();
   });
   function mountSectionsSheet() {
@@ -1785,10 +1790,28 @@ export function createCourseApp(config) {
   // arrive already knowing where they are going. (The reverse coupling is
   // real: leaving fullscreen always drops focus mode, so the two can never
   // strand the learner in a page with no navigation and no browser chrome.)
-  function exitFocusMode() {
+  // `appInitiated` marks the presses that mean "show me my board" — Back, Menu,
+  // and the leave dialog's own return. It does NOT mark the Escape key, because
+  // there the learner is dropping fullscreen themselves and that is exactly the
+  // event the focus-mode session is watching for.
+  //
+  // The distinction exists because seb-session.js cannot otherwise tell the two
+  // apart: any fullscreen exit looked like a learner walking out, so pressing
+  // Back raised "You're not finished yet!" over the board they had just asked
+  // for, and told the teacher they had left the lesson. Same shape as that
+  // file's own movingInsideCourse() — a page of this course replacing another
+  // is not leaving either.
+  function exitFocusMode({ appInitiated = false } = {}) {
     const wasFocus = document.body.classList.contains("focus-mode");
     document.body.classList.remove("focus-mode", "tutoring-nav");
-    if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+    if (document.fullscreenElement) {
+      // Announced only when we are the ones dropping it, and only from inside
+      // this branch: if the browser has already left fullscreen there is
+      // nothing of ours to explain away, and saying so anyway would swallow
+      // the learner's genuine Escape.
+      if (appInitiated) document.dispatchEvent(new CustomEvent("ehel:app-fullscreen-exit"));
+      document.exitFullscreen?.().catch(() => {});
+    }
     // A manual exit is a standing choice — strip the URL's own door back to
     // focus mode so reloading this page (or coming back to it later) does
     // not silently re-enter a layout the learner just left.
@@ -1840,7 +1863,7 @@ export function createCourseApp(config) {
     backButton.setAttribute("aria-label", pathNav ? "Back to the unit board" : "Back to the unit navigation");
     backButton.title = "Back";
     backButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>';
-    backButton.addEventListener("click", exitFocusMode);
+    backButton.addEventListener("click", () => exitFocusMode({ appInitiated: true }));
     document.body.appendChild(backButton);
     const exitButton = document.createElement("button");
     exitButton.id = "focus-exit";
@@ -1848,7 +1871,7 @@ export function createCourseApp(config) {
     exitButton.type = "button";
     exitButton.setAttribute("aria-label", "Show the menu and unit navigation");
     exitButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span>';
-    exitButton.addEventListener("click", exitFocusMode);
+    exitButton.addEventListener("click", () => exitFocusMode({ appInitiated: true }));
     document.body.appendChild(exitButton);
     document.addEventListener("keydown", (event) => { if (event.key === "Escape") exitFocusMode(); });
   }

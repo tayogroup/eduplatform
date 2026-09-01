@@ -71,6 +71,26 @@ function watchCourseNavigation() {
 // session.
 const movingInsideCourse = () => Date.now() - courseNavAt < 3000;
 
+// --- the app dropping fullscreen is not the learner leaving ------------------
+// Exactly the distinction movingInsideCourse() draws for navigation, for the
+// other signal this file reads. The course app leaves fullscreen deliberately
+// when the learner asks for their board — the Back arrow, the Menu pill, the
+// return out of the dialog below — and a fullscreen exit is indistinguishable
+// from ESC here, so all three were read as walking out: the board came up under
+// "You're not finished yet!", and the teacher was told the child had left the
+// lesson. course-app.js announces its own exits (exitFocusMode's `appInitiated`)
+// and never announces the Escape key, which is the one that really is the
+// learner leaving.
+//
+// Time-boxed for the same reason as above: an announcement whose fullscreenchange
+// never arrives must expire rather than mute the warning for the rest of the
+// session.
+let appLeftFullscreenAt = 0;
+if (typeof document !== "undefined") {
+  document.addEventListener("ehel:app-fullscreen-exit", () => { appLeftFullscreenAt = Date.now(); });
+}
+const appLeftFullscreen = () => Date.now() - appLeftFullscreenAt < 3000;
+
 function formatLeft(seconds) {
   const s = Math.max(0, Math.floor(seconds));
   const h = Math.floor(s / 3600);
@@ -372,6 +392,8 @@ export function mountSebSession() {
     // Loading the next page of the course drops fullscreen on the way out. That
     // is the navigation, not the learner pressing ESC.
     if (movingInsideCourse()) return;
+    // Nor is the app showing the learner their own board — see above.
+    if (appLeftFullscreen()) return;
     if (!document.fullscreenElement && leaveArmed && !timeDone()) showLeaveWarning();
   });
 
@@ -473,7 +495,11 @@ function mountFocusMode(p, bar) {
   // back, and the next tap restores it anyway.
   const paintFs = () => { fs.style.display = document.fullscreenElement ? "none" : ""; };
   document.addEventListener("fullscreenchange", () => {
-    if (!document.fullscreenElement) broke("fullscreen_exit");
+    // A learner pressing Back to reach their own board has not left the lesson,
+    // and reporting it as a focus break tells the teacher they did — the same
+    // false report movingInsideCourse() exists to prevent for unit changes. The
+    // button still repaints: fullscreen genuinely ended either way.
+    if (!document.fullscreenElement && !appLeftFullscreen()) broke("fullscreen_exit");
     paintFs();
   });
   paintFs();

@@ -20,14 +20,14 @@
 // The school's academic calendar as published for 2026-27, half terms
 // included. A term's teaching weeks are the Mondays from its opening week to
 // its closing week with the half-term week removed — so the three terms
-// really hold 14, 11 and 10 teaching weeks, not a nominal 12. English's own
+// really hold 12, 11 and 10 teaching weeks, not a nominal 12 each. English's own
 // renderers import these too, so every plan reads one calendar. When the
 // school publishes the next year's dates, this constant is the one place to
 // change.
 export const SCHOOL_CALENDAR = {
   yearLabel: "2026–27",
   terms: [
-    { termNo: 1, opens: "2026-08-25", ends: "2026-12-04", halfTerm: { from: "2026-10-12", to: "2026-10-16" } },
+    { termNo: 1, opens: "2026-09-07", ends: "2026-12-04", halfTerm: { from: "2026-10-12", to: "2026-10-16" } },
     { termNo: 2, opens: "2027-01-05", ends: "2027-03-25", halfTerm: { from: "2027-02-15", to: "2027-02-19" } },
     { termNo: 3, opens: "2027-04-20", ends: "2027-07-02", halfTerm: { from: "2027-05-24", to: "2027-05-28" } },
   ],

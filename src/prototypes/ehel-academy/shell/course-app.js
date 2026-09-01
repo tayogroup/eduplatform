@@ -53,23 +53,37 @@ export function createCourseApp(config) {
   const stageNumber = Number(params.get(config.param) || params.get("stage") || params.get("grade") || document.documentElement.dataset[config.param] || document.documentElement.dataset.stage || document.documentElement.dataset.grade || 2);
   const unitNumber = Number(params.get("unit") ?? (config.defaultUnit ? config.defaultUnit(stageNumber) : 1));
 
-  // --- the path nav ----------------------------------------------------------
-  // Grades/Stages 1-4 draw the section list as a PATH: a trail of circular
-  // nodes, filled green behind the learner and hollow ahead of them, with the
-  // label beside each. Above that the list stays the flat row of icons it is
-  // today, for the reason the deck is gated at the same number — by Stage 5 a
-  // learner scans a list rather than being walked along it, and a trail of
-  // beads is a six-year-old's affordance, not a thirteen-year-old's.
+  // --- the board nav ---------------------------------------------------------
+  // EVERY grade and stage draws its section list as the BOARD -- a grid of
+  // coloured tiles with stickers, padlocks and a you-are-here ring -- rather
+  // than as a list in a sidebar. Owner, 2026-09-01: "extend the new UI to the
+  // remaining grades."
+  //
+  // That REVERSES the split the owner set earlier the same day ("the current
+  // design will be used for grades 5 and up"), and it reverses the argument
+  // this comment used to carry -- that a trail of beads is a six-year-old's
+  // affordance, not a thirteen-year-old's. Both are recorded rather than
+  // deleted, because the next person to read `= 8` should be able to see that
+  // the number was argued down as well as up.
+  //
+  // WHAT THIS DOES NOT TOUCH, and the distinction is the whole reason the
+  // change is safe: the hard rule that Grades/Stages 5-8 keep their design is
+  // about section CONTENT -- the deck (gc-*, shell/deck.js) must never replace
+  // an upper stage's grids, tabs and two-column labs, and DECK_MAX_STAGE still
+  // says 4 in every subject. This constant governs NAVIGATION only. An upper
+  // stage still renders every section exactly as it did; it is reached from a
+  // different menu.
   //
   // ONE constant, and it lives here rather than in each subject, because unlike
   // DECK_MAX_STAGE this decides nothing but paint: no route, no gate, no count.
   // Every subject reaches this line -- English included, which renders its own
   // sections but takes nav, boot and routing from this core.
   //
-  // Levelled courses are excluded rather than compared. Intensive English is
-  // Levels 1-2, and a level says nothing about how old the learner is, so
-  // `<= 4` would be an accident there rather than a decision.
-  const PATH_NAV_MAX_STAGE = 4;
+  // Levelled courses are STILL excluded, and now they are the only exclusion
+  // left. Intensive English sends its CEFR LEVEL as the stage, so a comparison
+  // here would be measuring the wrong thing whatever the number is -- the
+  // owner was asked and kept it out (2026-09-01).
+  const PATH_NAV_MAX_STAGE = 8;
   const pathNav = config.param !== "level" && stageNumber >= 1 && stageNumber <= PATH_NAV_MAX_STAGE;
   // The same decision, published for CSS that has no markup to hang a class on.
   // The section list gets .nav-button--path per row because sectionNavigation()
@@ -82,11 +96,18 @@ export function createCourseApp(config) {
   // every subject today, but <html> exists from the first byte of the parse, so
   // the class cannot land after the topbar has already painted unstyled if that
   // ever changes.
+  // The class is still called `young-stage`, and the name is now wider than
+  // its meaning: since the board went to every grade it reads "this course is
+  // staged, not levelled". Kept rather than renamed because it is the hook for
+  // ~60 rules in course-ui.css, including the phone sections-sheet block that
+  // predates the board -- a rename is pure churn in a stylesheet several
+  // sessions share, and it would touch none of the behaviour. The gate is
+  // live, not vestigial: Intensive English still fails it.
   document.documentElement.classList.toggle("young-stage", pathNav);
 
-  // The sticker board (owner, 2026-09-01) splits the young learner's nav into
+  // The sticker board (owner, 2026-09-01) splits the learner's nav into
   // LESSON tiles and META rows -- Overview, the study plan, the grown-up guide,
-  // and the "my stuff" routes are things a child visits once or a parent reads,
+  // and the "my stuff" routes are things a learner visits once or a parent reads,
   // not steps of the unit, so they sit under the board as quiet pills rather
   // than as equal-looking tiles. ONE definition: the CSS keys on the .nav-quiet
   // class this set produces, and the album count excludes the same class, so

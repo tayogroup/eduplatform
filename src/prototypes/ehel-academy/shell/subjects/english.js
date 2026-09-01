@@ -452,9 +452,12 @@ if (gradeNumber <= 4) {
 
 // One line under each row of the overview's unit guide: what a learner does in
 // the section, and what finishes it. Each line is written from the section's
-// own completion rule — every word known, the eight-word draft, the 60% pass
-// mark are the numbers the renderers enforce, so a line here that drifts from
-// its renderer is telling the learner the wrong thing. Written for the
+// own completion rule — every word known, the 60% pass mark are the numbers the
+// renderers enforce, so a line here that drifts from its renderer is telling the
+// learner the wrong thing. Writing used to be listed here as "the eight-word
+// draft" and is the worked example of the drift this warns about: the renderer
+// stopped demanding eight words on 2026-09-01 and this line went on promising
+// them, on the overview, at Grade 1, where no task asks for that many. Written for the
 // youngest reader who meets it (Grade 1), so every grade gets the plain form.
 const SECTION_HINTS = {
   "unit-plan": "See what you will do each week of this unit — it is not required to move on.",
@@ -466,7 +469,7 @@ const SECTION_HINTS = {
   comprehension: "Answer the questions about the story, then press the button to finish.",
   grammar: "Look at the pattern and try the practice, then press the button to finish.",
   speaking: "Say the sentences out loud. Record yourself if you can, then press the button to finish.",
-  writing: "Write your own sentences — at least eight words — and press Submit.",
+  writing: "Write your sentences, or draw your picture, then press Submit.",
   activities: "Do each activity, tick off its steps, then press the button to finish.",
   games: "Play every game once.",
   quiz: "Answer all the questions. Get more than half right to pass. You can try again.",

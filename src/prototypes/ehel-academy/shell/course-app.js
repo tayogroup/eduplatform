@@ -192,6 +192,37 @@ export function createCourseApp(config) {
   // it; the tutoring category has no board by design, and a levelled course
   // (Intensive English) is not pathNav at all.
   const boardCanOpen = () => pathNav && !IS_TUTORING && Boolean(sectionsToggle) && $$("#section-nav .nav-button:not(.nav-quiet)").length > 1;
+  // Where "You're not finished yet!" belongs (owner, 2026-09-01): the LEARNING
+  // sections, and nowhere else. A learner on the Study Plan, the Teacher &
+  // Parent Guide, What I learned, Live sessions or the board itself is not
+  // mid-lesson, and warning them there asks whether they have finished work
+  // they were never doing.
+  //
+  // Derived from unitSectionIds() — the shell's own countable list, which is
+  // what the progress bar divides by — so it cannot drift from what the course
+  // treats as a step. Two rows are countable without being the learner doing
+  // the teaching, and both are excluded: the video lesson they watch on the way
+  // in, and My progress they fill in on the way out.
+  //
+  // At Grades 5-8 this resolves to exactly the nine the owner named — Core
+  // words, Reading, Comprehension, Grammar, Speaking, Writing, Activities,
+  // Games, Quiz. At Grades 1-4 it is those nine plus Stories, the unit's own
+  // texts, which is a learning section by the same test (countable, gated,
+  // teaching text) and reads as one to a child. The owner's list named the
+  // Grades 5-8 labels; if Stories is meant to be exempt it is one id here.
+  // Both spellings of each row, because this file is shared and the six
+  // subjects do not agree on the ids. The progress page is `reflect` in English
+  // and Intensive English and `progress` in Mathematics, Science, Computing and
+  // Global Perspectives; the video lesson is `lecture` in the two English
+  // courses and does not exist elsewhere; and Live sessions is nonCountable in
+  // English but countable in Mathematics, Science and Computing — so naming it
+  // here is what stops a scheduled class counting as a section to warn about.
+  //
+  // Listing only English's spellings was the first version of this, and Science
+  // showed what that costs: `progress` and `live` both came back as learning
+  // sections there. Verified per subject afterwards, not reasoned about.
+  const LEARNING_EXCLUDED = new Set(["lecture", "reflect", "progress", "live"]);
+  const isLearningSection = (id) => Boolean(id) && unitSectionIds().includes(id) && !LEARNING_EXCLUDED.has(id);
   document.addEventListener("lesson-gate:start", () => {
     if (!pathNav || IS_TUTORING) return;
     const hash = (location.hash || "").replace(/^#/, "");
@@ -239,12 +270,21 @@ export function createCourseApp(config) {
   });
   document.addEventListener("ehel:leave-to-board", (event) => {
     const detail = event.detail;
-    // Not when the board is ALREADY what they are looking at. The dialog can be
-    // raised from the board itself — that is where leaving the app is a real
-    // thing to be doing — and claiming it there would answer "I'm leaving" by
-    // returning the learner to the page they are standing on, with no way out
-    // of the course at all. Somewhere to go back TO is the whole condition.
-    if (!detail || sheetOpen() || !boardCanOpen()) return;
+    if (!detail) return;
+    // Answered even when the board cannot open, and BEFORE that test, because
+    // this is the question the warning itself is gated on — see
+    // isLearningSection. `answered` is what lets seb-session tell "the app says
+    // no" from "no app is listening" (an ordinary page outside the course),
+    // which must keep the warning it always had.
+    detail.answered = true;
+    detail.learningSection = isLearningSection(route);
+    if (!boardCanOpen()) return;
+    // Claimed even when the board is ALREADY open, which is the case that
+    // matters: Back opens the board and raises the warning over it, so by the
+    // time the learner presses "I'm leaving" the board is underneath them. The
+    // owner's rule is that leaving a section returns to the board and does NOT
+    // exit to the student dashboard, so "already there" is a reason to claim
+    // this, not to refuse it. Leaving the course is "I'm done" and the browser.
     detail.handled = true;
     if (detail.probe) return;
     exitFocusMode({ fromLeaveDialog: true });

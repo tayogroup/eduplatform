@@ -86,6 +86,16 @@ const movingInsideCourse = () => Date.now() - courseNavAt < 3000;
 // Time-boxed like movingInsideCourse() above: an announcement whose
 // fullscreenchange never arrives must expire rather than mute the warning for
 // the rest of the session.
+// What the course app knows about where the learner is standing, asked at the
+// moment we would warn. `answered` distinguishes "the app says no" from "no app
+// is listening" — an ordinary page outside a course must keep the warning it
+// always had rather than lose it to a question nobody heard.
+function leaveContext(probe = true) {
+  const detail = { probe: !!probe, answered: false, handled: false, learningSection: false };
+  try { document.dispatchEvent(new CustomEvent("ehel:leave-to-board", { detail })); }
+  catch { /* an app that cannot answer is one we treat as absent */ }
+  return detail;
+}
 let appLeftFullscreenAt = 0;
 if (typeof document !== "undefined") {
   document.addEventListener("ehel:app-fullscreen-exit", () => { appLeftFullscreenAt = Date.now(); });
@@ -293,13 +303,7 @@ export function mountSebSession() {
     // app answers only when its board can actually open (course-app.js ::
     // boardCanOpen), so a levelled course, the tutoring category and a locked
     // unit all fall through to the behaviour this dialog always had.
-    const askApp = (probe) => {
-      try {
-        const detail = { probe: !!probe, handled: false };
-        document.dispatchEvent(new CustomEvent("ehel:leave-to-board", { detail }));
-        return detail.handled === true;
-      } catch { return false; } // an app that cannot answer is one we leave
-    };
+    const askApp = (probe) => leaveContext(probe).handled === true;
     const backToBoard = askApp(true);
     // "I'm leaving" — asks for a short reason first and saves it
     // (fire-and-forget: a failed save must never trap a child on the form).
@@ -412,7 +416,13 @@ export function mountSebSession() {
     if (movingInsideCourse()) return;
     // Nor is the dialog's own return, which would re-ask what was just answered.
     if (appLeftFullscreen()) return;
-    if (!document.fullscreenElement && leaveArmed && !timeDone()) showLeaveWarning();
+    if (document.fullscreenElement || !leaveArmed || timeDone()) return;
+    // Only where the learner is actually mid-lesson (owner, 2026-09-01). The
+    // course app answers for the route it is on; anything that does not answer
+    // keeps the warning, so this can only ever narrow a course page.
+    const where = leaveContext();
+    if (where.answered && !where.learningSection) return;
+    showLeaveWarning();
   });
 
   mountFocusMode(p, bar);

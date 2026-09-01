@@ -225,7 +225,7 @@ export function createCourseApp(config) {
     if (!detail || sheetOpen() || !boardCanOpen()) return;
     detail.handled = true;
     if (detail.probe) return;
-    exitFocusMode({ appInitiated: true });
+    exitFocusMode({ fromLeaveDialog: true });
     openSectionsSheet();
   });
   function mountSectionsSheet() {
@@ -1790,26 +1790,28 @@ export function createCourseApp(config) {
   // arrive already knowing where they are going. (The reverse coupling is
   // real: leaving fullscreen always drops focus mode, so the two can never
   // strand the learner in a page with no navigation and no browser chrome.)
-  // `appInitiated` marks the presses that mean "show me my board" — Back, Menu,
-  // and the leave dialog's own return. It does NOT mark the Escape key, because
-  // there the learner is dropping fullscreen themselves and that is exactly the
-  // event the focus-mode session is watching for.
+  // `fromLeaveDialog` marks ONE caller: the leave dialog's own "go back to the
+  // board". Nothing else, and deliberately not Back or Menu.
   //
-  // The distinction exists because seb-session.js cannot otherwise tell the two
-  // apart: any fullscreen exit looked like a learner walking out, so pressing
-  // Back raised "You're not finished yet!" over the board they had just asked
-  // for, and told the teacher they had left the lesson. Same shape as that
-  // file's own movingInsideCourse() — a page of this course replacing another
-  // is not leaving either.
-  function exitFocusMode({ appInitiated = false } = {}) {
+  // v379 marked those two as well, which suppressed "You're not finished yet!"
+  // when a learner left a section by pressing Back. The owner wants that warning
+  // at the SECTION level, as it was — leaving a section is what it is there to
+  // ask about — so Back and Menu announce nothing and raise it exactly as they
+  // did before.
+  //
+  // What must stay suppressed is the dialog re-raising ITSELF. Touching the
+  // dialog re-enters fullscreen (focus mode takes any tap as the gesture,
+  // including a tap on the dialog), so its own return dropped fullscreen again
+  // and the warning the learner had just answered came straight back. That was
+  // the reported double, and it is the only case this flag now covers.
+  function exitFocusMode({ fromLeaveDialog = false } = {}) {
     const wasFocus = document.body.classList.contains("focus-mode");
     document.body.classList.remove("focus-mode", "tutoring-nav");
     if (document.fullscreenElement) {
-      // Announced only when we are the ones dropping it, and only from inside
-      // this branch: if the browser has already left fullscreen there is
-      // nothing of ours to explain away, and saying so anyway would swallow
-      // the learner's genuine Escape.
-      if (appInitiated) document.dispatchEvent(new CustomEvent("ehel:app-fullscreen-exit"));
+      // Announced from inside this branch only: if the browser has already left
+      // fullscreen there is nothing of ours to explain away, and saying so
+      // anyway would swallow the learner's genuine Escape.
+      if (fromLeaveDialog) document.dispatchEvent(new CustomEvent("ehel:app-fullscreen-exit"));
       document.exitFullscreen?.().catch(() => {});
     }
     // A manual exit is a standing choice — strip the URL's own door back to
@@ -1863,7 +1865,7 @@ export function createCourseApp(config) {
     backButton.setAttribute("aria-label", pathNav ? "Back to the unit board" : "Back to the unit navigation");
     backButton.title = "Back";
     backButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>';
-    backButton.addEventListener("click", () => exitFocusMode({ appInitiated: true }));
+    backButton.addEventListener("click", exitFocusMode);
     document.body.appendChild(backButton);
     const exitButton = document.createElement("button");
     exitButton.id = "focus-exit";
@@ -1871,7 +1873,7 @@ export function createCourseApp(config) {
     exitButton.type = "button";
     exitButton.setAttribute("aria-label", "Show the menu and unit navigation");
     exitButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span>';
-    exitButton.addEventListener("click", () => exitFocusMode({ appInitiated: true }));
+    exitButton.addEventListener("click", exitFocusMode);
     document.body.appendChild(exitButton);
     document.addEventListener("keydown", (event) => { if (event.key === "Escape") exitFocusMode(); });
   }

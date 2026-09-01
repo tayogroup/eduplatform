@@ -71,20 +71,21 @@ function watchCourseNavigation() {
 // session.
 const movingInsideCourse = () => Date.now() - courseNavAt < 3000;
 
-// --- the app dropping fullscreen is not the learner leaving ------------------
-// Exactly the distinction movingInsideCourse() draws for navigation, for the
-// other signal this file reads. The course app leaves fullscreen deliberately
-// when the learner asks for their board — the Back arrow, the Menu pill, the
-// return out of the dialog below — and a fullscreen exit is indistinguishable
-// from ESC here, so all three were read as walking out: the board came up under
-// "You're not finished yet!", and the teacher was told the child had left the
-// lesson. course-app.js announces its own exits (exitFocusMode's `appInitiated`)
-// and never announces the Escape key, which is the one that really is the
-// learner leaving.
+// --- the warning must not re-raise itself ------------------------------------
+// Narrower than it first looks, and deliberately so. The warning belongs at the
+// SECTION level: a learner leaving a section — by Escape, by Back, by Menu —
+// should be asked whether they are finished, exactly as they always were.
 //
-// Time-boxed for the same reason as above: an announcement whose fullscreenchange
-// never arrives must expire rather than mute the warning for the rest of the
-// session.
+// The one exit that must NOT ask again is the dialog's own. Touching it
+// re-enters fullscreen (focus mode takes any tap as the gesture, the dialog's
+// buttons included), so "go back to the board" dropped fullscreen a second time
+// and the warning the learner had just answered came straight back — the
+// reported double. course-app.js announces that one case and no other
+// (exitFocusMode's `fromLeaveDialog`); the Escape key is never announced.
+//
+// Time-boxed like movingInsideCourse() above: an announcement whose
+// fullscreenchange never arrives must expire rather than mute the warning for
+// the rest of the session.
 let appLeftFullscreenAt = 0;
 if (typeof document !== "undefined") {
   document.addEventListener("ehel:app-fullscreen-exit", () => { appLeftFullscreenAt = Date.now(); });
@@ -392,7 +393,7 @@ export function mountSebSession() {
     // Loading the next page of the course drops fullscreen on the way out. That
     // is the navigation, not the learner pressing ESC.
     if (movingInsideCourse()) return;
-    // Nor is the app showing the learner their own board — see above.
+    // Nor is the dialog's own return, which would re-ask what was just answered.
     if (appLeftFullscreen()) return;
     if (!document.fullscreenElement && leaveArmed && !timeDone()) showLeaveWarning();
   });
@@ -495,10 +496,12 @@ function mountFocusMode(p, bar) {
   // back, and the next tap restores it anyway.
   const paintFs = () => { fs.style.display = document.fullscreenElement ? "none" : ""; };
   document.addEventListener("fullscreenchange", () => {
-    // A learner pressing Back to reach their own board has not left the lesson,
-    // and reporting it as a focus break tells the teacher they did — the same
-    // false report movingInsideCourse() exists to prevent for unit changes. The
-    // button still repaints: fullscreen genuinely ended either way.
+    // The dialog's own return is not a second break: the learner already broke
+    // focus by leaving fullscreen, that was counted then, and counting the
+    // return would tell the teacher they left twice for one departure. Back and
+    // Menu are NOT exempt — those are ordinary fullscreen exits again, as they
+    // were before v379. The button repaints either way: fullscreen genuinely
+    // ended.
     if (!document.fullscreenElement && !appLeftFullscreen()) broke("fullscreen_exit");
     paintFs();
   });

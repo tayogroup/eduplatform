@@ -2227,8 +2227,14 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
   --kid-blue: #0369A1;   --kid-blue-press: #024568;
   --kid-grass: #15803D;  --kid-grass-press: #0C5428;
   --kid-sun: #D97706;    --kid-sun-press: #92500A;
-  --kid-locked: #E8EFF5; --kid-locked-press: #C9D8E3;
-  --kid-locked-ink: #5D7488;
+  /* The board rainbow (owner, 2026-09-01: "all sticker board cards should be
+     coloured"). Six hues cycling by position, each the darkest member of its
+     family that still reads as that colour -- the tile carries white bold
+     15.5px text, so every one must hold 4.5:1. The amber here is #B45309, one
+     step deeper than --kid-sun, precisely for that reason. */
+  --kid-rose: #BE123C;   --kid-rose-press: #8B0E2D;
+  --kid-grape: #6D28D9;  --kid-grape-press: #4C1D95;
+  --kid-amber: #B45309;  --kid-amber-press: #7C3D08;
 }
 
 /* ---- The opener: one gold pill, every width -------------------------------
@@ -2335,12 +2341,24 @@ html.young-stage body.sections-open .nav-button--path {
   grid-template-columns: 1fr; grid-template-rows: auto auto;
   justify-items: center; align-content: center; gap: 10px;
   padding: 16px 12px; border-radius: 22px; border: 3px solid #fff;
-  background: var(--kid-blue); color: #fff;
-  box-shadow: 0 5px 0 var(--kid-blue-press);
-  transition: transform .08s ease, box-shadow .08s ease;
+  color: #fff;
+  transition: transform .08s ease, box-shadow .08s ease, filter .15s ease;
 }
-html.young-stage body.sections-open .nav-button--path:hover { background: var(--kid-blue); transform: translateY(-2px); }
-html.young-stage body.sections-open .nav-button--path:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 var(--kid-blue-press); }
+/* Every card its own colour, cycling by POSITION -- so the board is fully
+   colourful whatever the unit's state, including a brand-new unit where
+   everything ahead is locked. State lives on the corner sticker (gold tick =
+   done, padlock = not yet) and the gold ring (you are here), not in the hue.
+   The tile's own press-shadow colour rides a custom property so the pressed
+   state needs one rule, not six. */
+html.young-stage body.sections-open .nav-button--path:nth-child(6n + 1) { --tile: var(--kid-blue); --tile-press: var(--kid-blue-press); }
+html.young-stage body.sections-open .nav-button--path:nth-child(6n + 2) { --tile: var(--kid-rose); --tile-press: var(--kid-rose-press); }
+html.young-stage body.sections-open .nav-button--path:nth-child(6n + 3) { --tile: var(--kid-grape); --tile-press: var(--kid-grape-press); }
+html.young-stage body.sections-open .nav-button--path:nth-child(6n + 4) { --tile: var(--teal); --tile-press: var(--teal-press); }
+html.young-stage body.sections-open .nav-button--path:nth-child(6n + 5) { --tile: var(--kid-amber); --tile-press: var(--kid-amber-press); }
+html.young-stage body.sections-open .nav-button--path:nth-child(6n + 6) { --tile: var(--kid-grass); --tile-press: var(--kid-grass-press); }
+html.young-stage body.sections-open .nav-button--path { background: var(--tile, var(--kid-blue)); box-shadow: 0 5px 0 var(--tile-press, var(--kid-blue-press)); }
+html.young-stage body.sections-open .nav-button--path:hover { transform: translateY(-2px); }
+html.young-stage body.sections-open .nav-button--path:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 var(--tile-press, var(--kid-blue-press)); }
 html.young-stage body.sections-open .nav-button--path::before { display: none; }
 html.young-stage body.sections-open .nav-button--path > i,
 html.young-stage body.sections-open .nav-button--path > svg {
@@ -2359,64 +2377,44 @@ html.young-stage body.sections-open .nav-button--path .nav-state {
 }
 html.young-stage body.sections-open .nav-state:not(:empty) { display: grid; }
 
-/* Finished: grass green, gold star sticker. */
-html.young-stage body.sections-open .nav-button--path:has(.nav-state.done) { background: var(--kid-grass); box-shadow: 0 5px 0 var(--kid-grass-press); }
-html.young-stage body.sections-open .nav-button--path:has(.nav-state.done):active:not(:disabled) { box-shadow: 0 1px 0 var(--kid-grass-press); }
-html.young-stage body.sections-open .nav-button--path:has(.nav-state.done) > i,
-html.young-stage body.sections-open .nav-button--path:has(.nav-state.done) > svg { border-color: transparent; background: rgba(255, 255, 255, .3); color: #fff; box-shadow: none; }
+/* Finished: the gold sticker alone says so -- the card keeps its own colour
+   (the rainbow decision), and the album along the top carries the count. */
 html.young-stage body.sections-open .nav-button--path .nav-state.done { background: var(--gold); border-color: #fff; color: #7A4B00; box-shadow: 0 3px 0 rgba(146, 80, 10, .55); }
 
-/* The meta rows: quiet white pills, sunk to the foot of the board by grid
-   order — DOM (and so tab) order is untouched. */
-html.young-stage body.sections-open .nav-button--path.nav-quiet {
-  order: 20; min-height: 104px; gap: 7px; padding: 12px 10px;
-  background: #fff; color: #17324D; border-color: #E2EBF1;
-  box-shadow: 0 4px 0 #D3E0E8;
-}
-html.young-stage body.sections-open .nav-button--path.nav-quiet:hover { background: #fff; }
-html.young-stage body.sections-open .nav-button--path.nav-quiet:active:not(:disabled) { box-shadow: 0 1px 0 #D3E0E8; }
-html.young-stage body.sections-open .nav-button--path.nav-quiet > i,
-html.young-stage body.sections-open .nav-button--path.nav-quiet > svg { width: 42px; height: 42px; padding: 10px; background: #EAF3F2; color: var(--teal-dark); }
-html.young-stage body.sections-open .nav-button--path.nav-quiet > span:not(.nav-state) { color: #17324D; font-size: 14px; font-weight: var(--weight-medium); }
-html.young-stage body.sections-open .nav-button--path.nav-quiet .nav-state { width: 30px; height: 30px; font-size: 14px; right: -6px; top: -8px; }
-html.young-stage body.sections-open .nav-button--path.nav-quiet .nav-state.done { background: var(--teal); color: #fff; box-shadow: 0 2px 0 var(--teal-press); }
-/* Restated WITH :has, not relying on order: the green done rule above carries
-   :has(.nav-state.done) and so outweighs a bare .nav-quiet — without these a
-   finished study plan painted itself as a green lesson tile (seen, 2026-09-01). */
-html.young-stage body.sections-open .nav-button--path.nav-quiet:has(.nav-state.done) { background: #fff; box-shadow: 0 4px 0 #D3E0E8; }
-html.young-stage body.sections-open .nav-button--path.nav-quiet:has(.nav-state.done) > i,
-html.young-stage body.sections-open .nav-button--path.nav-quiet:has(.nav-state.done) > svg { background: #EAF3F2; color: var(--teal-dark); }
+/* The meta rows are ordinary rainbow tiles in the LIST'S OWN ORDER (owner,
+   2026-09-01: "use the original sorting/order of the list links") -- the
+   order:20 sink and the white-pill face are gone. The .nav-quiet class STAYS
+   in the JS untouched, because the album's sticker count excludes it: the
+   Study Plan is not a sticker, even though its tile is now as colourful as
+   Reading's. */
 
 /* You are here: amber, ringed. Written after done and quiet so it wins over
    both — a finished section the learner has reopened reads as where they
    stand, and its star sticker stays. */
-html.young-stage body.sections-open .nav-button--path.active { background: var(--kid-sun); box-shadow: 0 5px 0 var(--kid-sun-press); outline: 4px solid #fff; outline-offset: 3px; }
-html.young-stage body.sections-open .nav-button--path.active:active:not(:disabled) { box-shadow: 0 1px 0 var(--kid-sun-press); }
-html.young-stage body.sections-open .nav-button--path.nav-quiet.active { background: #fff; box-shadow: 0 4px 0 #D3E0E8; outline: 4px solid var(--gold); }
+html.young-stage body.sections-open .nav-button--path.active { outline: 4px solid var(--gold); outline-offset: 3px; }
 /* The base sheet's you-are-here node ring carries #section-nav's id weight,
    so these carry it too or the gold node styling bleeds onto the tile chip. */
 html.young-stage body.sections-open #section-nav .nav-button--path.active > i,
 html.young-stage body.sections-open #section-nav .nav-button--path.active > svg { box-shadow: none; border: 0; background: rgba(255, 255, 255, .3); color: #fff; }
-html.young-stage body.sections-open #section-nav .nav-button--path.nav-quiet.active > i,
-html.young-stage body.sections-open #section-nav .nav-button--path.nav-quiet.active > svg { background: #EAF3F2; color: var(--teal-dark); }
 
 /* Locked (english writes disabled + a padlock into the badge). Last, so pale
    beats every colour above — including a finished section english has
    re-locked, its own one-state-one-icon rule. The !important is the only way
    past the inline opacity:.55 paintSectionLocks sets for the list design; a
    solid pale tile is the same statement made legibly. */
+/* Locked: the card keeps its OWN colour, softened -- saturate() rather than a
+   grey repaint, because the owner's rule is that no card on the board is
+   uncoloured, and one filter softens any of the six hues. saturate alone (no
+   brightness change) keeps the white text's contrast roughly where the
+   full-strength hue put it. The padlock sticker is the state. The !important
+   is still the only way past the inline opacity:.55 that paintSectionLocks
+   sets for the list design. */
 html.young-stage body.sections-open .nav-button--path:disabled {
   opacity: 1 !important;
-  background: var(--kid-locked); color: var(--kid-locked-ink);
-  border-color: #fff; box-shadow: 0 5px 0 var(--kid-locked-press);
+  filter: saturate(.38);
   outline: none; transform: none;
 }
-html.young-stage body.sections-open .nav-button--path:disabled > i,
-html.young-stage body.sections-open .nav-button--path:disabled > svg,
-html.young-stage body.sections-open #section-nav .nav-button--path.active:disabled > i,
-html.young-stage body.sections-open #section-nav .nav-button--path.active:disabled > svg { background: #fff; color: #93A9BC; box-shadow: none; }
-html.young-stage body.sections-open .nav-button--path:disabled > span:not(.nav-state) { color: var(--kid-locked-ink); }
-html.young-stage body.sections-open .nav-button--path:disabled .nav-state { background: #fff; border-color: var(--kid-locked-press); color: #6B8398; transform: rotate(0deg); font-size: 15px; }
+html.young-stage body.sections-open .nav-button--path:disabled .nav-state { background: #fff; border-color: #fff; color: #6B8398; transform: rotate(0deg); font-size: 15px; box-shadow: 0 2px 0 rgba(0, 0, 0, .18); }
 
 /* The switches inside the open board: the phone sheet already moves them in
    (order 9); these restate their colours for the sky ground at every width —

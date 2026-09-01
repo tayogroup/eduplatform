@@ -170,7 +170,10 @@ export function createCourseApp(config) {
     if (!pathNav || IS_TUTORING) return;
     const hash = (location.hash || "").replace(/^#/, "");
     if (hash && hash !== "overview") return;
-    if (sectionsToggle) openSectionsSheet(); else boardOnGateStart = true;
+    // Same refusal as the deferred flush below: a locked unit's nav is one
+    // row, and a one-tile board says less than the locked page behind it.
+    if (sectionsToggle) { if ($$("#section-nav .nav-button:not(.nav-quiet)").length > 1) openSectionsSheet(); }
+    else boardOnGateStart = true;
   });
   function mountSectionsSheet() {
     if (!pathNav || sectionsToggle) return;
@@ -309,6 +312,21 @@ export function createCourseApp(config) {
   // Tutoring learners land on the search, not the unit overview — coming with
   // a problem rather than a curriculum position is their defining trait.
   let route = location.hash.slice(1) || (IS_TUTORING && config.getHelp ? "get-help" : "overview");
+  // A plain landing on a young learner's overview opens the BOARD (owner,
+  // 2026-09-01, extending the gate-Start decision): switching unit or grade in
+  // the topbar is a full page reload, and the gate does not re-show
+  // mid-session, so a learner who picked "Unit 3" from the dropdown arrived on
+  // the overview with the board shut and no pill to open it. The rule that
+  // covers every such arrival is the landing itself, not how it happened --
+  // Start, the dropdowns, or a reload all end here. Excluded, each for its own
+  // reason: a #hash names a section and keeps its promise; ?focus=1 boots
+  // straight into a lesson (a board under focus mode is two answers to one
+  // question); tutoring has no board; unit < 1 is the placement exam, whose
+  // page is not the board's unit. The flag rides the same deferred flush as
+  // the gate event -- renderNav's end, after english's lock pass -- and that
+  // flush now also refuses a board with nothing on it (a LOCKED unit's nav is
+  // one row, and a one-tile board says less than the locked page behind it).
+  if (pathNav && !IS_TUTORING && unitNumber >= 1 && params.get("focus") !== "1" && (route === "overview")) boardOnGateStart = true;
   let currentPageNarration = "";
   let speakingButton = null;
   let voiceRequestId = 0;
@@ -1664,7 +1682,10 @@ export function createCourseApp(config) {
     // has run, so the album the open will paint counts the real board -- a
     // flush before the innerHTML above opened over an empty nav and said
     // "0 of 0 stickers".
-    if (boardOnGateStart && sectionsToggle) { boardOnGateStart = false; openSectionsSheet(); }
+    if (boardOnGateStart && sectionsToggle) {
+      boardOnGateStart = false;
+      if ($$("#section-nav .nav-button:not(.nav-quiet)").length > 1) openSectionsSheet();
+    }
     // The Study Plan is already in TUTORING_HIDDEN — dropped from the nav and
     // from the countable list — but every subject ALSO prints it in the unit
     // picker, which for this category is the door actually in front of the

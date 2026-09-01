@@ -84,6 +84,16 @@ export function createCourseApp(config) {
   // ever changes.
   document.documentElement.classList.toggle("young-stage", pathNav);
 
+  // The sticker board (owner, 2026-09-01) splits the young learner's nav into
+  // LESSON tiles and META rows -- Overview, the study plan, the grown-up guide,
+  // and the "my stuff" routes are things a child visits once or a parent reads,
+  // not steps of the unit, so they sit under the board as quiet pills rather
+  // than as equal-looking tiles. ONE definition: the CSS keys on the .nav-quiet
+  // class this set produces, and the album count excludes the same class, so
+  // the two cannot disagree about what counts as a sticker. Ids missing from a
+  // subject simply never match -- teacherguide, live and reflect are English's.
+  const STICKER_QUIET_ROUTES = new Set(["overview", "unit-plan", "teacherguide", "capstone", "live", "reflect", "get-help", "help-session"]);
+
   // --- the sections sheet (phones, Grades/Stages 1-4) ------------------------
   // On a phone the sidebar becomes a horizontal rail, and for a young learner
   // that is the wrong shape: eighteen 84px tiles is 1,512px of strip inside a
@@ -107,6 +117,36 @@ export function createCourseApp(config) {
     document.body.classList.remove("sections-open");
     sectionsToggle?.setAttribute("aria-expanded", "false");
   }
+  function openSectionsSheet() {
+    if (!sectionsToggle || sheetOpen()) return;
+    // Painted on OPEN rather than on every renderNav: the album is only
+    // visible while the board is, and opening is the one moment the nav-state
+    // ticks are guaranteed final -- english's paintSectionLocks rewrites them
+    // after renderNav, so a count taken mid-render would read relocked rows
+    // as done.
+    paintStickerAlbum();
+    document.body.classList.add("sections-open");
+    sectionsToggle.setAttribute("aria-expanded", "true");
+    // Opening puts the learner at the top of their own board rather than
+    // wherever the sheet happened to be scrolled to. The sheet's scroll
+    // container is the sidebar at desktop widths and the nav on the phone,
+    // so both are reset.
+    const sidebar = $(".sidebar"); if (sidebar) sidebar.scrollTop = 0;
+    const nav = $("#section-nav"); if (nav) nav.scrollTop = 0;
+  }
+  // The album row: one star slot per lesson tile, filled as sections finish.
+  // Derived from the painted nav rather than from progress directly, so it can
+  // never disagree with the ticks under it -- including english's rule that a
+  // finished-but-relocked section reads as not-done.
+  function paintStickerAlbum() {
+    const album = document.getElementById("sticker-album");
+    if (!album) return;
+    const lesson = $$("#section-nav .nav-button:not(.nav-quiet)");
+    const doneOf = (button) => Boolean(button.querySelector(".nav-state.done"));
+    const doneCount = lesson.filter(doneOf).length;
+    const slots = lesson.map((button) => doneOf(button) ? '<span class="slot full" aria-hidden="true">★</span>' : '<span class="slot empty" aria-hidden="true"></span>').join("");
+    album.innerHTML = `<b>My sticker board</b><span class="album-slots">${slots}</span><span class="album-count">${doneCount} of ${lesson.length} stickers</span>`;
+  }
   function mountSectionsSheet() {
     if (!pathNav || sectionsToggle) return;
     const sidebar = $(".sidebar");
@@ -119,16 +159,14 @@ export function createCourseApp(config) {
     sectionsToggle.className = "sections-toggle";
     sectionsToggle.setAttribute("aria-controls", "section-nav");
     sectionsToggle.setAttribute("aria-expanded", "false");
-    sectionsToggle.innerHTML = `${icon("list")}<span>Sections</span>`;
-    sectionsToggle.addEventListener("click", () => {
-      const open = !sheetOpen();
-      document.body.classList.toggle("sections-open", open);
-      sectionsToggle.setAttribute("aria-expanded", String(open));
-      // Opening puts the learner at the top of their own path rather than
-      // wherever the rail happened to be scrolled to.
-      if (open) nav.scrollTop = 0;
-    });
+    sectionsToggle.innerHTML = `${icon("star")}<span>My sticker board</span>`;
+    sectionsToggle.addEventListener("click", () => { if (sheetOpen()) closeSectionsSheet(); else openSectionsSheet(); });
     sidebar.insertBefore(sectionsToggle, sidebar.firstChild);
+    // The album row lives between the opener and the nav; display:none except
+    // while the board is open, so every other stage and width never sees it.
+    const album = document.createElement("div");
+    album.id = "sticker-album";
+    sidebar.insertBefore(album, sectionsToggle.nextSibling);
     // Escape closes it, the same key that leaves focus mode — one habit, not two.
     document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeSectionsSheet(); });
   }
@@ -1586,6 +1624,9 @@ export function createCourseApp(config) {
       if (sessionHere) navItems.push({ id: "help-session", iconName: "compass", label: "Help session", active: route === "help-session", done: false });
     }
     $("#section-nav").innerHTML = sectionNavigation(navItems, { path: pathNav });
+    // Board-only classification -- see STICKER_QUIET_ROUTES above. Toggle, not
+    // add: renderNav runs on every completion, and the set is the one source.
+    if (pathNav) for (const navButton of $$("#section-nav .nav-button")) navButton.classList.toggle("nav-quiet", STICKER_QUIET_ROUTES.has(navButton.dataset.route));
     $$('[data-route]').forEach((button) => button.addEventListener("click", () => { closeSectionsSheet(); navigate(button.dataset.route); }));
     const teacherSwitch = $("#teacher-switch");
     if (teacherSwitch) {
@@ -1626,6 +1667,7 @@ export function createCourseApp(config) {
   // real: leaving fullscreen always drops focus mode, so the two can never
   // strand the learner in a page with no navigation and no browser chrome.)
   function exitFocusMode() {
+    const wasFocus = document.body.classList.contains("focus-mode");
     document.body.classList.remove("focus-mode", "tutoring-nav");
     if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
     // A manual exit is a standing choice — strip the URL's own door back to
@@ -1636,6 +1678,15 @@ export function createCourseApp(config) {
       url.searchParams.delete("focus");
       history.replaceState(null, "", url.href);
     }
+    // At Grades/Stages 1-4 the sticker board IS the menu: the Menu button's
+    // whole job is "show me where I can go", and the board is the answer, not
+    // a page with a pill at the foot of it. Guarded on wasFocus so the Escape
+    // that CLOSES an open board (closeSectionsSheet's listener, registered
+    // first, runs before this one) does not bounce it straight back open --
+    // without the guard, Escape toggles the board forever. Tutoring is
+    // excluded for the reason it has no Menu button at all: search is that
+    // category's route into a section, never the nav.
+    if (wasFocus && pathNav && !IS_TUTORING) openSectionsSheet();
   }
   // The Menu button is the only way back while the lesson gate's Keyboard Lock
   // is swallowing Escape, so it has to exist before the navigation disappears.

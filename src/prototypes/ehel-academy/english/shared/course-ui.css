@@ -1775,3 +1775,672 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 @keyframes bookq-pop { 0% { transform: scale(1); } 40% { transform: scale(1.06); } 100% { transform: scale(1); } }
 @keyframes bookq-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 @media (max-width: 720px) { .bookq-question h2 { font-size: 20px; } .bookq-pictures { grid-template-columns: 1fr 1fr; } }
+
+/* ============================================================================
+   THE PLAY LAYER — Ehel's colours in Duolingo's FORM
+   ============================================================================
+   Owner, 2026-09-01: "a design revamp for the content UI that is more
+   attractive and engaging for the students", modelled on Duolingo's learning
+   path, and — said in the same breath — "app functionality should not change".
+   Both halves are honoured literally: nothing below changes what a control
+   does, what a page contains, or which learner sees it. Only how it looks.
+
+   TWO DECISIONS, both the owner's, both worth stating because the obvious
+   alternative was available and was not taken:
+
+   1. EHEL'S BRAND, DUOLINGO'S FORM. Not Duolingo's palette. The teal, the
+      gold, the navy and the Fraunces/Inter pair stay exactly as the design
+      system above defines them; what is borrowed is the SHAPE language —
+      chunky radii, 2px borders instead of hairlines, the 3D press button that
+      sits on a coloured shadow and drops onto it when tapped, circular path
+      nodes, pill chips, fat progress bars with a gloss. A learner should read
+      this as Ehel Academy at play, not as a Duolingo clone in school colours.
+
+   2. ALL SIX SUBJECTS, ALL GRADES. This file IS the design system — every
+      subject imports it — so a scoped variant would be a second design system
+      to keep in step, and the repo has enough of those. Note what that does
+      NOT mean: the hard rule that Grades/Stages 5-8 keep their design is about
+      LAYOUT — the grids, tabs and two-column labs that a deck must never
+      replace. Nothing here converts anything. An upper-stage grid renders the
+      same nodes in the same places; they are rounder.
+
+   WHY A LAYER RATHER THAN ~300 EDITS IN PLACE. This file is shared by six
+   subjects and, routinely, by more than one session at once. A skin that only
+   ever appends can be read as one block, reviewed as one block and reverted as
+   one block; the base above stays the base, and `git blame` on any original
+   rule still answers about the decision that produced it rather than about a
+   restyle. The cost is that a component's paint is now described in two
+   places, which is the price paid for the three properties above.
+
+   THE ONE RULE THIS LAYER KEEPS, AND WHY IT IS NOT OPTIONAL:
+
+       set colour, radius, border, shadow, weight, size and spacing.
+       NEVER set display, position, grid-template-*, flex-direction or float.
+
+   Those belong to the base and to the responsive blocks — and every one of
+   those blocks sits ABOVE this comment, so an equal-specificity rule down here
+   silently outranks it at every width. `@media (max-width: 680px)` already
+   sets `.page-header { display: block }` and `.app-shell { display: block }`;
+   a stray `display` in this layer would undo the phone layout everywhere, with
+   nothing to report it but a screenshot at 390px. Where a visual property here
+   genuinely does collide with a responsive rule — the path trail's width, and
+   so its centring — the restatement is at the FOOT of this layer, in a media
+   query of its own, rather than fudged in the base rule.
+   ========================================================================= */
+
+/* ---- Tokens ---------------------------------------------------------------
+   Every name already used above keeps its meaning; these are additions plus
+   two redefinitions (--shadow, --line). A press colour is the same hue with
+   the light taken out of it: it is the face the button sits on, so it must
+   read as the SAME colour in shadow, never as a second colour. */
+:root {
+  --teal-press: #0a544e;
+  --teal-bright: #12857c;
+  --gold-press: #d0a326;
+  --coral-press: #94341e;
+  --blue-press: #1f52ad;
+  --green-press: #17603f;
+  --danger-press: #8e2c26;
+
+  /* Hairlines become edges. 2px is what makes a card look drawn rather than
+     faded, and it is the single biggest difference between the two designs. */
+  --line: #dbe3ea;
+  --line-press: #cfdae3;
+
+  /* One radius scale, so nothing has to guess. */
+  --r-xs: 10px;
+  --r-sm: 14px;
+  --r-md: 18px;
+  --r-lg: 24px;
+  --r-xl: 30px;
+  --r-pill: 999px;
+
+  /* How far a 3D control stands above its own shadow — and therefore how far
+     it travels when pressed. One number, so every control on the page presses
+     by the same amount. */
+  --press: 4px;
+
+  --shadow: 0 6px 18px rgba(23, 50, 77, .10);
+}
+
+/* ---- Controls -------------------------------------------------------------
+   The press button. `box-shadow` rather than `border-bottom` on purpose: a
+   border changes the box, so a button that grew a 4px edge would move every
+   row it sits in, and a pressed state that removed it would move them back.
+   A shadow is paint. The transform is what the finger feels. */
+.button {
+  min-height: 48px;
+  padding: 11px 20px;
+  border-radius: var(--r-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: .01em;
+  transition: transform .07s ease, box-shadow .07s ease, background-color .15s ease, border-color .15s ease;
+}
+.button.primary { background: var(--teal); color: #fff; box-shadow: 0 var(--press) 0 var(--teal-press); }
+.button.primary:hover { background: var(--teal-bright); }
+.button.gold { background: var(--gold); color: #17324d; box-shadow: 0 var(--press) 0 var(--gold-press); }
+.button.gold:hover { background: #f8d478; }
+.button.secondary { background: #fff; color: var(--ink); border: 2px solid var(--line); box-shadow: 0 var(--press) 0 var(--line-press); }
+.button.secondary:hover { border-color: var(--teal); color: var(--teal-dark); box-shadow: 0 var(--press) 0 #b9dbd6; }
+.button.ghost { background: transparent; color: var(--teal-dark); font-weight: var(--weight-medium); box-shadow: none; }
+.button:active:not(:disabled) { transform: translateY(var(--press)); box-shadow: none; }
+/* A disabled control must not look pressable. Losing the shadow is what says
+   so at a glance, before anyone has tried it. */
+.button:disabled { box-shadow: none; transform: none; opacity: .45; }
+
+.icon-button {
+  width: 44px; height: 44px;
+  border: 2px solid var(--line); border-radius: 50%;
+  box-shadow: 0 3px 0 var(--line-press);
+  transition: transform .07s ease, box-shadow .07s ease, border-color .15s ease;
+}
+.icon-button:hover { border-color: var(--teal); color: var(--teal-dark); }
+.icon-button:active { transform: translateY(3px); box-shadow: none; }
+
+/* Fields and pickers. Widths are set by the responsive blocks above and are
+   deliberately not touched here. */
+.search-box input, .toolbar select, .top-unit-picker, .top-grade-picker, .unit-picker,
+.practice-box input, .question textarea, .task-card textarea, .activity-response,
+.gc-inner textarea, #writing-draft, .wc-act-line {
+  border: 2px solid var(--line);
+  border-radius: var(--r-sm);
+}
+.search-box input, .toolbar select { min-height: 48px; }
+.top-unit-picker, .top-grade-picker, .unit-picker { font-weight: var(--weight-bold); }
+.search-box input:focus, .toolbar select:focus { border-color: var(--teal); }
+
+/* ---- Surfaces -------------------------------------------------------------
+   The card. Flat, edged, generously rounded — a Duolingo panel has no drop
+   shadow at all, and adding one back is what makes a rounded card look
+   floaty rather than solid. */
+.panel {
+  border: 2px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  box-shadow: none;
+}
+.question, .recorder, .sentence-card, .grammar-visual, .glossary-popover,
+.cw-check, .cw-preview, .story-held, .grownup-guide, .bookq-scene img {
+  border-radius: var(--r-md);
+}
+.question, .cw-check, .cw-preview { border: 2px solid var(--line); }
+.model, .game-passage, .feedback, .unit-guide-howto, .word-card .meaning,
+.game-round-feedback, .hw-steps li, .wc-act-step, .wc-w-item, .wc-sentence, .toast {
+  border-radius: var(--r-sm);
+}
+.feedback { border: 2px solid transparent; font-weight: var(--weight-medium); }
+.feedback.good { border-color: #b7e3c9; }
+.feedback.try { border-color: #f3c9bd; }
+.unit-banner, .video-shell, .ebook-reader, .course-ebook-reader, .final-quiz-hero,
+.game-stage, .quiz-shell .panel, .ebook-library-title, .course-ebook-shelf-title {
+  border-radius: var(--r-lg);
+}
+.stat { border: 2px solid var(--line); border-radius: var(--r-md); }
+.stat strong { font-size: 26px; font-weight: var(--weight-bold); color: var(--teal-dark); }
+.status-chip { border: 2px solid #bfe0dc; border-radius: var(--r-pill); padding: 8px 14px; font-weight: var(--weight-bold); }
+.eyebrow { letter-spacing: .09em; font-weight: var(--weight-bold); }
+.word-type, .hw-word, .grownup-guide .grownup-flag { border-radius: var(--r-pill); font-weight: var(--weight-bold); }
+.hw-word { border: 2px solid var(--line); }
+
+/* ---- Chrome: the top bar --------------------------------------------------
+   The progress readout becomes a stat pill, which is the shape Duolingo uses
+   for every number it wants a learner to watch. The bar inside it gets the
+   gloss: an inset white highlight along the top of the FILL only, so the
+   groove stays flat and the fill reads as a raised lozenge sliding along it. */
+.topbar { border-bottom: 2px solid var(--line); }
+.unit-progress {
+  padding: 7px 15px 7px 13px;
+  border-radius: var(--r-pill);
+  background: var(--teal-soft);
+  color: var(--teal-dark);
+  font-weight: var(--weight-medium);
+}
+.unit-progress strong { color: var(--teal-dark); font-size: 15px; font-weight: var(--weight-bold); }
+.progress-track { height: 14px; background: #c9e4e0; }
+.progress-track span { background: var(--teal); border-radius: var(--r-pill); box-shadow: inset 0 4px 0 rgba(255, 255, 255, .28); }
+.profile-button { gap: 9px; padding: 4px 14px 4px 4px; border-radius: var(--r-pill); background: var(--gold-soft); }
+.profile-button span { box-shadow: 0 2px 0 var(--gold-press); font-weight: var(--weight-bold); }
+.profile-button small { color: #7a5a00; font-weight: var(--weight-bold); }
+
+/* ---- Chrome: the learning path -------------------------------------------
+   The sidebar path already existed (`.nav-button--path`, Grades/Stages 1-4);
+   what it lacked was weight. The node gains a press shadow so it reads as a
+   button on a board rather than a dot on a line, and the trail is thickened to
+   match — which is the one change in this layer that a responsive block above
+   also has an opinion about, restated at the foot of the file. */
+.nav-button, .teacher-switch, .student-switch { border-radius: var(--r-sm); }
+/* `:not(.nav-button--path)` is load-bearing, not tidiness. A path row carries
+   BOTH classes, and the base cancels the inset bar on it on purpose -- the node
+   already says you-are-here, and the two together are two answers to one
+   question. Widening the bar without the exclusion put it back, and at the
+   row's 18px radius it rendered as a gold crescent bulging out of the left of
+   the current row. Only the phone sheet, where the row is full width, made it
+   obvious enough to name. */
+.nav-button.active:not(.nav-button--path) { box-shadow: inset 4px 0 var(--gold); }
+.nav-button--path { border-radius: var(--r-md); }
+.nav-button--path::before { width: 6px; left: 27px; background: rgba(255, 255, 255, .16); }
+.nav-button--path:has(.nav-state.done)::before { background: #2f8f57; }
+.nav-button--path > i, .nav-button--path > svg {
+  border-width: 3px;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, .3);
+  transition: transform .12s ease;
+}
+.nav-button--path:hover > i, .nav-button--path:hover > svg { transform: translateY(-2px); }
+.nav-button--path:has(.nav-state.done) > i, .nav-button--path:has(.nav-state.done) > svg { box-shadow: 0 3px 0 #2f8f57; }
+/* You-are-here is the ONE node with no press shadow, and that is deliberate
+   rather than an omission. The base rule rings it in solid gold with a 4px
+   spread; a drop shadow behind a spread ring does not read as depth, it reads
+   as a second, darker ring peeling off the bottom of the first — checked in
+   the phone sheet, where it came out as a gold crescent. Restated at the base
+   rule's own specificity (#section-nav) because a bare class down here would
+   lose to it on the one node that matters most. */
+#section-nav .nav-button--path.active > i, #section-nav .nav-button--path.active > svg {
+  box-shadow: 0 0 0 4px var(--gold);
+}
+.nav-button--path .nav-state { border-width: 3px; }
+.nav-button--path .nav-state.done { box-shadow: 0 2px 0 rgba(0, 0, 0, .25); }
+
+/* ---- The section banner ---------------------------------------------------
+   `pageHeader()` in shared/course-shell.js draws the same three things on
+   every section of every subject — eyebrow, title, lead — and every subject
+   drew them as loose text on the page background. Duolingo's equivalent is the
+   coloured section header, and it is the single most recognisable thing in the
+   reference, so this is where the look is spent.
+
+   Everything inside it has to be re-lit for a dark ground: the eyebrow goes
+   gold, the lead goes to a tinted white, and the two controls that can appear
+   in `.page-actions` — the status chip and the page-voice button — become
+   translucent white rather than keeping their on-paper colours, which would
+   read as holes cut in the banner. */
+.page-header {
+  padding: 26px 28px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(135deg, #0f766e 0%, #12857c 52%, #189a80 100%);
+  color: #fff;
+  box-shadow: 0 5px 0 var(--teal-press);
+}
+.page-header .eyebrow { color: var(--gold); }
+.page-header h1 { color: #fff; }
+.page-header p { color: #dff1ee; }
+.page-header .status-chip { background: rgba(255, 255, 255, .16); border-color: rgba(255, 255, 255, .32); color: #fff; }
+.page-header .button.secondary,
+.page-header .course-ebook-shelf-title {
+  background: rgba(255, 255, 255, .14);
+  border: 2px solid rgba(255, 255, 255, .3);
+  color: #fff;
+  box-shadow: 0 var(--press) 0 rgba(0, 0, 0, .16);
+}
+.page-header .button.secondary:hover { background: rgba(255, 255, 255, .24); border-color: rgba(255, 255, 255, .55); color: #fff; }
+.page-header .course-ebook-shelf-title small { color: #dff1ee; }
+/* is-playing on the banner: gold, because the teal it uses on paper is the
+   banner's own colour and would disappear into it. */
+.page-header .page-voice.is-playing { background: var(--gold); border-color: var(--gold); color: #17324d; box-shadow: 0 var(--press) 0 var(--gold-press); }
+
+/* ---- The unit checklist ---------------------------------------------------
+   "How this unit works" is the closest thing the course has to Duolingo's own
+   path list, so it gets the same treatment: a fat tappable row, a circular
+   mark that fills in when the section is finished, and the next step lit. */
+.unit-guide { border-left-width: 6px; }
+.unit-guide-row { padding: 11px 12px; border-radius: var(--r-sm); }
+.unit-guide-mark { width: 26px; height: 26px; border-width: 3px; font-weight: var(--weight-bold); }
+/* An inset ring rather than a border: a real border would grow the row and
+   nudge every row under it as the learner advances. */
+.unit-guide-row.is-next { box-shadow: inset 0 0 0 2px #9fd3cc; }
+.unit-guide-row.is-done .unit-guide-mark { box-shadow: 0 2px 0 var(--teal-press); }
+.outcome span { width: 30px; height: 30px; font-weight: var(--weight-bold); }
+.section-guide { border-radius: var(--r-md); border-width: 2px; border-left-width: 6px; }
+.section-guide-finish, .section-guide-deck { border-radius: var(--r-sm); }
+.section-complete { border-radius: var(--r-lg); border-width: 2px; border-left-width: 6px; }
+.section-complete-mark { box-shadow: 0 var(--press) 0 var(--teal-press); }
+.section-complete.is-unit .section-complete-mark { box-shadow: 0 var(--press) 0 var(--gold-press); }
+.lesson-number, .game-number, .final-section-card > span { font-weight: var(--weight-bold); }
+
+/* ---- Tabs -----------------------------------------------------------------
+   Underlines become a segmented pill group. The row still scrolls sideways —
+   `overflow-x` is the base rule's and is not touched. */
+.subtabs { border-bottom: 0; gap: 8px; padding-bottom: 2px; }
+.subtab {
+  border: 2px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 8px 18px;
+  background: #fff;
+  font-weight: var(--weight-bold);
+}
+.subtab:hover { border-color: var(--teal); color: var(--teal-dark); }
+.subtab.active { background: var(--teal); border-color: var(--teal); color: #fff; box-shadow: 0 3px 0 var(--teal-press); }
+
+/* ---- Answering ------------------------------------------------------------
+   Every surface a learner taps to answer something is one control with one
+   behaviour: it stands on a shadow, it drops when pressed, and it turns green
+   or red without moving. Right and wrong keep the colours the base already
+   chose; what is added is the edge and the shadow, so a marked answer is
+   readable from across a classroom. */
+.quiz-option, .game-choices button, .bookq-pill, .self-choice, .review-list a, .cw-check {
+  transition: transform .07s ease, box-shadow .07s ease, border-color .15s ease, background-color .15s ease;
+}
+.quiz-option {
+  min-height: 58px;
+  padding: 14px 18px;
+  border: 2px solid var(--line);
+  border-radius: var(--r-md);
+  box-shadow: 0 3px 0 var(--line-press);
+  font-weight: var(--weight-medium);
+}
+.quiz-option:hover:not(:disabled) { border-color: var(--teal); background: var(--teal-soft); }
+.quiz-option:active:not(:disabled) { transform: translateY(3px); box-shadow: none; }
+.quiz-option.correct, .game-choices button.correct { box-shadow: 0 3px 0 var(--green-press); }
+.quiz-option.wrong, .game-choices button.wrong { box-shadow: 0 3px 0 var(--danger-press); }
+.game-choices button { border-radius: var(--r-md); box-shadow: 0 3px 0 var(--line-press); font-weight: var(--weight-medium); }
+.game-choices button:active:not(:disabled) { transform: translateY(3px); box-shadow: none; }
+.bookq-pill, .self-choice { border-radius: var(--r-pill); border-width: 2px; box-shadow: 0 3px 0 var(--line-press); font-weight: var(--weight-bold); }
+.bookq-pill:active:not(:disabled), .self-choice:active { transform: translateY(3px); box-shadow: none; }
+.self-choice.selected { box-shadow: 0 3px 0 var(--teal-press); }
+.bookq-pill.is-right, .bookq-picture.is-right { box-shadow: 0 3px 0 var(--green-press); }
+.bookq-pill.is-wrong, .bookq-picture.is-wrong { box-shadow: 0 3px 0 var(--danger-press); }
+.bookq-picture { border-radius: var(--r-md); }
+.bookq-dot { width: 44px; height: 44px; border-width: 2px; font-weight: var(--weight-bold); }
+.bookq-dot.done { box-shadow: 0 3px 0 var(--gold-press); }
+.review-list a { border-width: 2px; border-radius: var(--r-md); }
+.game-tiles button, .game-word-tiles button { border-radius: var(--r-sm); border-width: 2px; }
+.game-answer-slots span { border-bottom-width: 4px; }
+.game-sentence-answer { border-radius: var(--r-md); border-width: 3px; }
+.record-button { width: 56px; height: 56px; box-shadow: 0 var(--press) 0 var(--coral-press); }
+.record-button:active { transform: translateY(var(--press)); box-shadow: none; }
+.score-ring { width: 128px; height: 128px; border-width: 12px; font-size: 30px; }
+.final-quiz-mark { box-shadow: 0 var(--press) 0 var(--gold-press); }
+
+/* ---- Games ----------------------------------------------------------------
+   A game card is the one card on the platform that is also a button, so it is
+   the one card allowed to lift on hover. */
+.game-card {
+  border: 2px solid var(--line);
+  border-top-width: 6px;
+  border-radius: var(--r-lg);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.game-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 var(--line-press); }
+.game-icon { border-radius: var(--r-sm); box-shadow: 0 3px 0 var(--teal-press); }
+.game-stars span.earned { text-shadow: 0 2px 0 #b47f05; }
+.game-progress { height: 12px; }
+.game-progress span { border-radius: var(--r-pill); box-shadow: inset 0 4px 0 rgba(255, 255, 255, .28); }
+
+/* ---- The slide deck (Grades/Stages 1-4) -----------------------------------
+   The deck was already the most playful surface in the course; it gets the
+   same button and the same fatter dots so it belongs to the rest. */
+.gc-inner { border-radius: var(--r-xl); }
+.gc-btn { font-weight: var(--weight-bold); box-shadow: 0 var(--press) 0 #1d4d80; }
+.gc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #1d4d80; }
+.gc-btn:active { transform: translateY(var(--press)); box-shadow: none; }
+.gc-btn.ghost { box-shadow: 0 var(--press) 0 #cbd9e6; }
+.gc-btn.ghost:hover { box-shadow: 0 6px 0 #cbd9e6; }
+.gc-btn.done { box-shadow: 0 var(--press) 0 #0b2338; }
+.gc-btn.gc-gold { color: #17324d; box-shadow: 0 var(--press) 0 var(--gold-press); }
+.gc-arrow { box-shadow: 0 var(--press) 0 #c3d2e0; }
+.gc-arrow:hover:not([disabled]) { box-shadow: 0 6px 0 #d8a91c; }
+.gc-dot { width: 15px; height: 15px; }
+.gc-theatre { border-width: 2px; font-weight: var(--weight-bold); }
+.gc-closing-mark { box-shadow: 0 var(--press) 0 #1d4d80; }
+.wc-act-tick { border-width: 3px; box-shadow: 0 3px 0 #b9cadb; }
+.wc-act-step.is-done .wc-act-tick { box-shadow: 0 3px 0 var(--green-press); }
+.wc-act-say { box-shadow: 0 3px 0 #c3d2e0; }
+.wc-w-chip { box-shadow: 0 3px 0 var(--gold-press); }
+.wc-w-chip:active { transform: translateY(3px); box-shadow: none; }
+.wc-tapcheck-card { border-radius: var(--r-lg); box-shadow: 0 5px 0 rgba(0, 0, 0, .28); }
+.wc-w-goal, .wc-act-count, .wc-w-count { font-weight: var(--weight-bold); }
+
+/* ---- Reading and vocabulary ----------------------------------------------- */
+.word-row { border-radius: var(--r-sm); }
+.word-row.active { box-shadow: inset 0 0 0 2px #9fd3cc; }
+.word-card .meaning { border-left-width: 5px; }
+.sentence-dot { width: 10px; height: 10px; }
+.reading-button { border: 2px solid var(--line); border-radius: var(--r-md); transition: transform .1s ease, box-shadow .1s ease, border-color .15s ease; }
+.reading-button:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--line-press); }
+.ebook-spine { border-left-width: 6px; }
+.reading-button.active { border-color: var(--teal); box-shadow: inset 0 0 0 1px var(--teal); }
+.ebook-progress, .course-ebook-progress { height: 10px; }
+.ebook-progress span { border-radius: var(--r-pill); }
+.ebook-library-title > span, .course-ebook-shelf-title > i { border-radius: var(--r-xs); }
+
+/* ---- Motion ---------------------------------------------------------------
+   Everything above animates transform and box-shadow only, both of which are
+   cheap and both of which a learner who has asked for less motion should not
+   get. The base file already has a reduced-motion block; this is the one for
+   the controls added here. */
+@media (prefers-reduced-motion: reduce) {
+  .button, .icon-button, .quiz-option, .game-choices button, .bookq-pill, .self-choice,
+  .game-card, .reading-button, .gc-btn, .nav-button--path > i, .nav-button--path > svg,
+  .record-button, .wc-w-chip { transition: none; }
+  .game-card:hover, .reading-button:hover, .gc-btn:hover,
+  .nav-button--path:hover > i, .nav-button--path:hover > svg { transform: none; }
+}
+
+/* ---- Restating what the responsive blocks above already decided -----------
+   The trail went from 4px to 6px, so every rule that centres it by hand is out
+   by a pixel. These are the only two, and they are here rather than edited in
+   place so the collapsed rail and the phone sheet stay described where they
+   were written. */
+@media (max-width: 980px) {
+  .nav-button--path::before { left: calc(50% - 3px); }
+}
+@media (max-width: 680px) {
+  /* The phone rail draws no trail at all (`display: none` above), so only the
+     young-stage sheet — where the full path comes back — needs the offset. */
+  html.young-stage body.sections-open .nav-button--path::before { left: 27px; }
+  /* The banner tightens up where the content column is 14px from each edge. */
+  .page-header { padding: 20px 18px; border-radius: var(--r-md); }
+  .panel { padding: 18px; border-radius: var(--r-md); }
+}
+
+/* ============================================================================
+   THE STICKER BOARD — the Grades/Stages 1-4 navigation (owner, 2026-09-01)
+   ============================================================================
+   Direction C of the four samples: the young learner's section list is no
+   longer a list. Closed, it is one gold pill; open, it is a full-screen board
+   of big picture tiles — green with a star sticker when finished, amber where
+   the learner stands, pale behind a padlock where english has not opened it
+   yet — with a sticker album filling up along the top. Grades/Stages 5-8 keep
+   the sidebar untouched: EVERY rule below needs html.young-stage, which
+   course-app.js sets from the same one constant that decides the path nav
+   (PATH_NAV_MAX_STAGE, levelled courses excluded).
+
+   It is built ON the sections-sheet machinery, not beside it: the phone
+   already opened #section-nav as a full-screen sheet (body.sections-open), so
+   the board is that sheet at every width, restyled. Same DOM, same open/close
+   JS, same Escape. The markup contract is untouched — button.nav-button--path
+   rows with a .nav-state badge — which is what keeps english's
+   paintSectionLocks() and every done-tick working with no subject edited.
+
+   The DEEPENED palette is deliberate. The concept sheet's sky/grass/sun were
+   picked for white cards on a pale ground; as FILLED TILES carrying white
+   15px labels they have to hold 4.5:1 against that text, so each hue steps
+   down to the darkest member of its own family that still reads as that
+   colour. Same world, AA-legible.
+
+   Ordering inside this layer is load-bearing: base tile, then done, then
+   quiet, then active, then :disabled — later state wins where two apply, so a
+   locked-but-finished tile is pale (english's own rule), and an active quiet
+   row keeps its white face with a gold ring. */
+
+:root {
+  --kid-sky-1: #EAF6FE;
+  --kid-sky-2: #E4F6EA;
+  --kid-blue: #0369A1;   --kid-blue-press: #024568;
+  --kid-grass: #15803D;  --kid-grass-press: #0C5428;
+  --kid-sun: #D97706;    --kid-sun-press: #92500A;
+  --kid-locked: #E8EFF5; --kid-locked-press: #C9D8E3;
+  --kid-locked-ink: #5D7488;
+}
+
+/* ---- The opener: one gold pill, every width -------------------------------
+   The phone block above styles it as a translucent tile on the navy rail;
+   these later, equal-specificity rules replace that with the board's own
+   pill, so the control looks the same wherever it appears. */
+html.young-stage .sections-toggle {
+  border: 0; border-radius: 999px; min-height: 54px; padding: 0 24px;
+  background: var(--gold); color: #17324D;
+  font-size: 16px; font-weight: var(--weight-bold);
+  box-shadow: 0 4px 0 var(--gold-press), 0 10px 24px rgba(23, 50, 77, .18);
+  transition: transform .08s ease, box-shadow .08s ease;
+}
+html.young-stage .sections-toggle:active { transform: translateY(4px); box-shadow: 0 0 0 var(--gold-press); }
+html.young-stage .sections-toggle svg, html.young-stage .sections-toggle i { color: #17324D; }
+
+/* ---- Desktop and tablet: the sidebar column is GONE at these stages -------
+   Closed, the sidebar element becomes a transparent fixed strip at the foot
+   of the page holding only the opener; the content takes the full width. The
+   course context, the switches and the nav wait inside the board. Scoped
+   :not(.tutoring-nav) (that category has no sidebar by decision) and
+   :not(.focus-mode) (a lesson owns the whole screen; the Menu pill is the one
+   control there, and it opens the board). */
+@media (min-width: 681px) {
+  html.young-stage body:not(.tutoring-nav) .app-shell { grid-template-columns: 1fr; }
+  html.young-stage body:not(.tutoring-nav) .content { padding-bottom: 132px; }
+  html.young-stage body:not(.tutoring-nav):not(.focus-mode):not(.sections-open) .sidebar {
+    position: fixed; left: 0; right: 0; bottom: 0; top: auto;
+    height: auto; padding: 0 0 16px; overflow: visible;
+    display: grid; justify-items: center;
+    background: transparent; pointer-events: none; z-index: 18;
+  }
+  html.young-stage body:not(.tutoring-nav):not(.focus-mode):not(.sections-open) .sections-toggle { display: inline-flex; align-items: center; gap: 10px; pointer-events: auto; }
+  html.young-stage body:not(.tutoring-nav):not(.focus-mode):not(.sections-open) .sidebar .course-context,
+  html.young-stage body:not(.tutoring-nav):not(.focus-mode):not(.sections-open) .sidebar #section-nav,
+  html.young-stage body:not(.tutoring-nav):not(.focus-mode):not(.sections-open) .sidebar .teacher-switch,
+  html.young-stage body:not(.tutoring-nav):not(.focus-mode):not(.sections-open) .sidebar .student-switch,
+  html.young-stage body:not(.tutoring-nav):not(.focus-mode):not(.sections-open) .sidebar #sticker-album { display: none; }
+
+  /* Open: the board takes the screen below the 72px topbar, exactly as the
+     phone sheet takes it below its 62px one — the pickers stay reachable. */
+  html.young-stage body.sections-open .sidebar {
+    position: fixed; left: 0; right: 0; top: 72px; bottom: 0;
+    height: auto; overflow-y: auto; z-index: 19;
+    display: flex; flex-direction: column; align-items: stretch; gap: 14px;
+    padding: 18px clamp(16px, 4vw, 44px) 30px;
+  }
+  html.young-stage body.sections-open .sidebar .course-context { display: none; }
+  html.young-stage body.sections-open .sections-toggle { align-self: center; flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; }
+  html.young-stage body.sections-open #section-nav { display: grid; }
+}
+
+/* ---- The open board, every width ------------------------------------------
+   Width-independent: the phone block above already lays the sheet out at
+   680px and below, and each property set here overrides its counterpart
+   there by coming later at the same specificity. */
+html.young-stage body.sections-open .sidebar { background: linear-gradient(180deg, var(--kid-sky-1) 0%, var(--kid-sky-2) 100%); }
+html.young-stage body.sections-open #section-nav {
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px; padding: 4px 2px 12px;
+  width: min(1020px, 100%); margin-inline: auto; overflow: visible;
+}
+/* The dock and the Menu pill sit above the sidebar's z-index; the board is
+   the whole screen, so nothing floats over it. Mirrors the phone rule. */
+html.young-stage body.sections-open .wehel-dock-button,
+html.young-stage body.sections-open .focus-exit { display: none !important; }
+
+/* The album. Hidden everywhere except the open board. */
+#sticker-album { display: none; }
+html.young-stage body.sections-open #sticker-album {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+  width: min(1020px, 100%); margin-inline: auto; flex: 0 0 auto;
+  padding: 12px 18px; border-radius: 18px;
+  background: #fff; border: 3px dashed #B7D3E4; color: #17324D;
+}
+html.young-stage body.sections-open #sticker-album b { font-size: 16px; font-weight: var(--weight-bold); }
+html.young-stage body.sections-open #sticker-album .album-count { color: #527082; font-size: 14px; font-weight: var(--weight-bold); }
+#sticker-album .album-slots { display: flex; flex-wrap: wrap; gap: 7px; }
+/* padding: 0 is load-bearing, not tidiness: an unfilled slot carries the
+   class "empty", and .empty is already this app's empty-state panel — 28px of
+   padding — which inflated every unfilled slot to a 59px circle. The id-weight
+   here outranks it. */
+#sticker-album .slot { width: 30px; height: 30px; padding: 0; border-radius: 50%; display: grid; place-items: center; }
+#sticker-album .slot.full { background: var(--kid-sun); color: #fff; font-size: 15px; box-shadow: 0 3px 0 var(--kid-sun-press); }
+#sticker-album .slot.empty { border: 3px dashed #C2D4E1; }
+/* A phone gives the album eleven slots in ~340px of row; at 30px they wrap
+   into three rows of mostly empty circles before the first tile. Smaller
+   slots keep the album one or two rows tall on the one width that scrolls. */
+@media (max-width: 680px) {
+  html.young-stage body.sections-open #sticker-album { gap: 8px 12px; padding: 10px 14px; }
+  #sticker-album .slot { width: 22px; height: 22px; }
+  #sticker-album .slot.full { font-size: 12px; box-shadow: 0 2px 0 var(--kid-sun-press); }
+  #sticker-album .slot.empty { border-width: 2px; }
+}
+
+/* ---- The tiles -------------------------------------------------------------
+   One nav row becomes one tile: picture chip on top, name under it, the
+   .nav-state badge riding the corner as a sticker. Every geometry property
+   the base path rules or the phone sheet set is restated, because both of
+   those describe a ROW and a leftover grid-template or justify-items from
+   either reads as a broken tile. */
+html.young-stage body.sections-open .nav-button--path {
+  position: relative; min-width: 0; min-height: 150px;
+  grid-template-columns: 1fr; grid-template-rows: auto auto;
+  justify-items: center; align-content: center; gap: 10px;
+  padding: 16px 12px; border-radius: 22px; border: 3px solid #fff;
+  background: var(--kid-blue); color: #fff;
+  box-shadow: 0 5px 0 var(--kid-blue-press);
+  transition: transform .08s ease, box-shadow .08s ease;
+}
+html.young-stage body.sections-open .nav-button--path:hover { background: var(--kid-blue); transform: translateY(-2px); }
+html.young-stage body.sections-open .nav-button--path:active:not(:disabled) { transform: translateY(4px); box-shadow: 0 1px 0 var(--kid-blue-press); }
+html.young-stage body.sections-open .nav-button--path::before { display: none; }
+html.young-stage body.sections-open .nav-button--path > i,
+html.young-stage body.sections-open .nav-button--path > svg {
+  width: 56px; height: 56px; padding: 13px; border: 0; border-radius: 18px;
+  background: rgba(255, 255, 255, .3); color: #fff; box-shadow: none; transform: none;
+}
+html.young-stage body.sections-open .nav-button--path > span:not(.nav-state) {
+  max-width: 100%; font-size: 15.5px; font-weight: var(--weight-bold); line-height: 1.2;
+  color: #fff; text-align: center; white-space: normal; overflow: visible;
+}
+/* The badge becomes the corner sticker. */
+html.young-stage body.sections-open .nav-button--path .nav-state {
+  position: absolute; left: auto; right: -8px; top: -10px; bottom: auto;
+  width: 40px; height: 40px; border: 3px solid #fff; border-radius: 50%;
+  font-size: 18px; transform: rotate(12deg); z-index: 2;
+}
+html.young-stage body.sections-open .nav-state:not(:empty) { display: grid; }
+
+/* Finished: grass green, gold star sticker. */
+html.young-stage body.sections-open .nav-button--path:has(.nav-state.done) { background: var(--kid-grass); box-shadow: 0 5px 0 var(--kid-grass-press); }
+html.young-stage body.sections-open .nav-button--path:has(.nav-state.done):active:not(:disabled) { box-shadow: 0 1px 0 var(--kid-grass-press); }
+html.young-stage body.sections-open .nav-button--path:has(.nav-state.done) > i,
+html.young-stage body.sections-open .nav-button--path:has(.nav-state.done) > svg { border-color: transparent; background: rgba(255, 255, 255, .3); color: #fff; box-shadow: none; }
+html.young-stage body.sections-open .nav-button--path .nav-state.done { background: var(--gold); border-color: #fff; color: #7A4B00; box-shadow: 0 3px 0 rgba(146, 80, 10, .55); }
+
+/* The meta rows: quiet white pills, sunk to the foot of the board by grid
+   order — DOM (and so tab) order is untouched. */
+html.young-stage body.sections-open .nav-button--path.nav-quiet {
+  order: 20; min-height: 104px; gap: 7px; padding: 12px 10px;
+  background: #fff; color: #17324D; border-color: #E2EBF1;
+  box-shadow: 0 4px 0 #D3E0E8;
+}
+html.young-stage body.sections-open .nav-button--path.nav-quiet:hover { background: #fff; }
+html.young-stage body.sections-open .nav-button--path.nav-quiet:active:not(:disabled) { box-shadow: 0 1px 0 #D3E0E8; }
+html.young-stage body.sections-open .nav-button--path.nav-quiet > i,
+html.young-stage body.sections-open .nav-button--path.nav-quiet > svg { width: 42px; height: 42px; padding: 10px; background: #EAF3F2; color: var(--teal-dark); }
+html.young-stage body.sections-open .nav-button--path.nav-quiet > span:not(.nav-state) { color: #17324D; font-size: 14px; font-weight: var(--weight-medium); }
+html.young-stage body.sections-open .nav-button--path.nav-quiet .nav-state { width: 30px; height: 30px; font-size: 14px; right: -6px; top: -8px; }
+html.young-stage body.sections-open .nav-button--path.nav-quiet .nav-state.done { background: var(--teal); color: #fff; box-shadow: 0 2px 0 var(--teal-press); }
+/* Restated WITH :has, not relying on order: the green done rule above carries
+   :has(.nav-state.done) and so outweighs a bare .nav-quiet — without these a
+   finished study plan painted itself as a green lesson tile (seen, 2026-09-01). */
+html.young-stage body.sections-open .nav-button--path.nav-quiet:has(.nav-state.done) { background: #fff; box-shadow: 0 4px 0 #D3E0E8; }
+html.young-stage body.sections-open .nav-button--path.nav-quiet:has(.nav-state.done) > i,
+html.young-stage body.sections-open .nav-button--path.nav-quiet:has(.nav-state.done) > svg { background: #EAF3F2; color: var(--teal-dark); }
+
+/* You are here: amber, ringed. Written after done and quiet so it wins over
+   both — a finished section the learner has reopened reads as where they
+   stand, and its star sticker stays. */
+html.young-stage body.sections-open .nav-button--path.active { background: var(--kid-sun); box-shadow: 0 5px 0 var(--kid-sun-press); outline: 4px solid #fff; outline-offset: 3px; }
+html.young-stage body.sections-open .nav-button--path.active:active:not(:disabled) { box-shadow: 0 1px 0 var(--kid-sun-press); }
+html.young-stage body.sections-open .nav-button--path.nav-quiet.active { background: #fff; box-shadow: 0 4px 0 #D3E0E8; outline: 4px solid var(--gold); }
+/* The base sheet's you-are-here node ring carries #section-nav's id weight,
+   so these carry it too or the gold node styling bleeds onto the tile chip. */
+html.young-stage body.sections-open #section-nav .nav-button--path.active > i,
+html.young-stage body.sections-open #section-nav .nav-button--path.active > svg { box-shadow: none; border: 0; background: rgba(255, 255, 255, .3); color: #fff; }
+html.young-stage body.sections-open #section-nav .nav-button--path.nav-quiet.active > i,
+html.young-stage body.sections-open #section-nav .nav-button--path.nav-quiet.active > svg { background: #EAF3F2; color: var(--teal-dark); }
+
+/* Locked (english writes disabled + a padlock into the badge). Last, so pale
+   beats every colour above — including a finished section english has
+   re-locked, its own one-state-one-icon rule. The !important is the only way
+   past the inline opacity:.55 paintSectionLocks sets for the list design; a
+   solid pale tile is the same statement made legibly. */
+html.young-stage body.sections-open .nav-button--path:disabled {
+  opacity: 1 !important;
+  background: var(--kid-locked); color: var(--kid-locked-ink);
+  border-color: #fff; box-shadow: 0 5px 0 var(--kid-locked-press);
+  outline: none; transform: none;
+}
+html.young-stage body.sections-open .nav-button--path:disabled > i,
+html.young-stage body.sections-open .nav-button--path:disabled > svg,
+html.young-stage body.sections-open #section-nav .nav-button--path.active:disabled > i,
+html.young-stage body.sections-open #section-nav .nav-button--path.active:disabled > svg { background: #fff; color: #93A9BC; box-shadow: none; }
+html.young-stage body.sections-open .nav-button--path:disabled > span:not(.nav-state) { color: var(--kid-locked-ink); }
+html.young-stage body.sections-open .nav-button--path:disabled .nav-state { background: #fff; border-color: var(--kid-locked-press); color: #6B8398; transform: rotate(0deg); font-size: 15px; }
+
+/* The switches inside the open board: the phone sheet already moves them in
+   (order 9); these restate their colours for the sky ground at every width —
+   their navy-rail styling is white-on-navy, which on this ground is white on
+   sky. */
+html.young-stage body.sections-open .sidebar .teacher-switch:not([hidden]),
+html.young-stage body.sections-open .sidebar .student-switch:not([hidden]) {
+  order: 30; width: min(1020px, 100%); margin: 0 auto; flex: 0 0 auto;
+  display: grid; grid-template-columns: 34px 1fr; grid-template-rows: none;
+  align-items: center; justify-items: start; gap: 11px;
+  min-height: 52px; padding: 9px 14px; border: 0; border-radius: 14px;
+  background: rgba(23, 50, 77, .08); color: #17324D;
+}
+html.young-stage body.sections-open .sidebar .teacher-switch:not([hidden]):hover,
+html.young-stage body.sections-open .sidebar .student-switch:not([hidden]):hover { background: rgba(23, 50, 77, .14); color: #17324D; }
+html.young-stage body.sections-open .sidebar .teacher-switch:not([hidden]) span,
+html.young-stage body.sections-open .sidebar .student-switch:not([hidden]) span { display: block; }
+html.young-stage body.sections-open .sidebar .teacher-switch:not([hidden]) > span[aria-hidden],
+html.young-stage body.sections-open .sidebar .student-switch:not([hidden]) > span[aria-hidden] { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: rgba(23, 50, 77, .12); font-size: 13px; font-weight: var(--weight-bold); }
+html.young-stage body.sections-open .sidebar .teacher-switch:not([hidden]) > span:last-child,
+html.young-stage body.sections-open .sidebar .student-switch:not([hidden]) > span:last-child { font-size: 15px; text-align: left; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.young-stage .sections-toggle,
+  html.young-stage body.sections-open .nav-button--path { transition: none; }
+  html.young-stage body.sections-open .nav-button--path:hover { transform: none; }
+}

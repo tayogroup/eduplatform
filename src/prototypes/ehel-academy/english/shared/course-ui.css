@@ -1255,6 +1255,24 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 .final-quiz-facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0; }
 .final-quiz-facts span { min-width: 130px; padding: 11px 13px; border: 1px solid rgba(255,255,255,.2); border-radius: 6px; color: #c7d9e3; }
 .final-quiz-facts strong { display: block; color: white; font-size: 20px; }
+/* The strip is used on TWO backgrounds, and the rules above describe only one
+   of them. It was written for .final-quiz-hero — navy, white text — and the
+   placement and final-quiz pages still put it there, correctly: three of the
+   seven uses. The other four are the Study Plans (the grade plan and the unit
+   plan, here and in shell/study-plan.js for the other five subjects), which
+   draw it on a plain .panel. A .panel is white, and has been since long before
+   the play layer, so on those four the NUMBER has been white on white — the
+   figures invisible, the labels a pale grey — for as long as the pages have
+   existed. Reported by the owner as "the invisible facts strip numbers".
+
+   Written as an override rather than by editing the rules above, so the hero
+   keeps the palette it was designed for and nothing has to be re-checked on
+   three working pages to fix four broken ones. :not(.final-quiz-hero) is what
+   makes "the panel that is not the hero" the condition, rather than naming the
+   plans — a fifth page that draws the strip on an ordinary panel gets readable
+   numbers without knowing this rule is here. */
+.panel:not(.final-quiz-hero) .final-quiz-facts span { border-color: var(--line); color: var(--muted); }
+.panel:not(.final-quiz-hero) .final-quiz-facts strong { color: var(--ink); }
 .final-section-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .final-section-card > span { display: inline-grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; color: var(--teal); background: var(--teal-soft); font-weight: var(--weight-bold); }
 .final-section-card h3 { margin-top: 18px; }

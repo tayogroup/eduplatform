@@ -174,6 +174,30 @@ body.focus-mode .app-shell { grid-template-columns: 1fr; min-height: 100vh; }
 body.focus-mode .focus-exit { position: fixed; top: 12px; left: 12px; z-index: 60; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 13px; border: 0; border-radius: 999px; background: #102c43; color: #fff; font: inherit; font-size: 14px; font-weight: var(--weight-medium); cursor: pointer; box-shadow: 0 6px 20px rgba(16,44,67,.35); }
 body.focus-mode .focus-exit:hover { background: #1d4360; }
 .focus-exit svg { width: 18px; height: 18px; }
+/* Back — the Menu pill's twin, added 2026-09-01 (owner). Icon only, and it
+   takes the pill's old spot at the left edge; the pill moves right by its own
+   width to sit beside it. It shares the .focus-exit class on purpose, so every
+   rule above and every rule that HIDES the pill (deck theatre, a book being
+   watched, the open board at both widths) already covers it — see
+   ensureFocusChrome(). Only the two rules here tell them apart, and both are
+   written .focus-exit.focus-exit--back rather than relying on source order,
+   because equal specificity would let a later edit silently reorder them.
+
+   The label is the part that has to give way. The floating pair sits OVER the
+   page: the content column is 960px centred, so the gutter it can occupy is
+   (viewport - 960) / 2, and the labelled pair needs ~157px of it. Below that
+   the Menu pill already covered the section heading before this change — at
+   1000px it hid half of "Core words" — so dropping the word leaves two 44px
+   icons ending at 108px, within 3px of the single pill's old footprint. That
+   keeps a known overlap exactly as bad as it was rather than 52px worse; it
+   does not fix it, and the fix is not a Back button's to make. */
+body.focus-mode .focus-exit.focus-exit--back { left: 12px; width: 44px; padding: 0; justify-content: center; gap: 0; }
+body.focus-mode .focus-exit:not(.focus-exit--back) { left: 64px; }
+.focus-exit--back svg { width: 20px; height: 20px; }
+@media (max-width: 1299px) {
+  body.focus-mode .focus-exit:not(.focus-exit--back) { width: 44px; padding: 0; justify-content: center; gap: 0; }
+  body.focus-mode .focus-exit:not(.focus-exit--back) span { display: none; }
+}
 /* The tutoring category hides the LEFT SIDEBAR on every page, and keeps the
    topbar: the sidebar's course context states a school position these learners
    do not have ("Grade 5 · English · Term 2") and its unit menu is course

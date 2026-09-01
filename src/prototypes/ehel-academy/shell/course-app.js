@@ -1784,6 +1784,37 @@ export function createCourseApp(config) {
   // is swallowing Escape, so it has to exist before the navigation disappears.
   function ensureFocusChrome() {
     if (document.getElementById("focus-exit")) return;
+    // TWO floating controls, not one (owner, 2026-09-01). They lead to the same
+    // place, and that is the point rather than an oversight: "Menu" is a
+    // hamburger, which offers a list of everywhere a learner could go, and a
+    // six-year-old halfway through a word deck is asking the other question —
+    // "let me out of this page". A back arrow answers that in one glyph, with
+    // no word to read.
+    //
+    // It carries the `focus-exit` CLASS rather than one of its own, and that is
+    // load-bearing. Four separate rules deliberately suppress the Menu pill —
+    // deck theatre, a book being watched, and the open board at each width —
+    // and every one of them names `.focus-exit`. A `.focus-back` would have had
+    // to be added to all four, and the one that got missed would float a Back
+    // arrow over a full-screen deck. Sharing the class means a fifth rule
+    // added later covers this button without knowing it exists; the modifier
+    // only moves it and drops the label.
+    //
+    // Appended BEFORE the Menu pill so the tab order matches the reading order:
+    // both are position:fixed with their own `left`, so the DOM cannot be read
+    // off the screen.
+    const backButton = document.createElement("button");
+    backButton.id = "focus-back";
+    backButton.className = "focus-exit focus-exit--back";
+    backButton.type = "button";
+    // Honest about where it actually lands. exitFocusMode() opens the board
+    // where pathNav is on, which since v375 is every staged subject; Intensive
+    // English is levelled, has no board, and gets its sidebar back instead.
+    backButton.setAttribute("aria-label", pathNav ? "Back to the unit board" : "Back to the unit navigation");
+    backButton.title = "Back";
+    backButton.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>';
+    backButton.addEventListener("click", exitFocusMode);
+    document.body.appendChild(backButton);
     const exitButton = document.createElement("button");
     exitButton.id = "focus-exit";
     exitButton.className = "focus-exit";

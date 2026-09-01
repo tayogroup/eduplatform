@@ -11046,6 +11046,35 @@ function renderDictionaryClassic() {
   const words = linkedWords();
   // The lab LISTS every word and COMPLETES on the taught ones (see taughtWords).
   const taught = taughtWords();
+  // Which week each word belongs to, from the unit Study Plan's own count —
+  // the same map the Grades 1-4 deck labels its cards with (coreWordWeekOf), so
+  // "Week 2" means one thing across the course.
+  //
+  // The lab is the Grades 5-8 half of that, added on the owner's request after
+  // the deck: those grades draw no deck at all, so the plan was naming weeks
+  // their words never showed.
+  //
+  // Only the TAUGHT words carry one, and here that distinction does real work
+  // rather than being defensive. This lab lists the story glossary alongside
+  // the taught set, and the glossary is deliberately not scheduled by the plan
+  // — 79% of a Grade 8 unit's list is reference to look up while reading, not a
+  // week's work. An unmapped word therefore gets no chip, which is the honest
+  // answer rather than a guess at a week it was never given.
+  // Not for the tutoring category, which is the case this lab reaches and the
+  // deck never does: at Grades 1-4 a tutoring learner is sent here rather than
+  // to the deck (DECK_PAGE), so without this they would be the only learners
+  // shown a week number for a plan they cannot open — `unit-plan` is in
+  // TUTORING_HIDDEN. They arrive from a search with one word and no position in
+  // the school year, which is the same reason they have no unit gate and a
+  // ±2-grade window. A week is a timetable, and they are not on it.
+  const showWeeks = !IS_TUTORING;
+  const wordWeeks = coreWordWeekOf();
+  const weekCount = unitWeekCount();
+  const weekChip = (item) => {
+    if (!showWeeks || weekCount < 2) return "";
+    const week = wordWeeks.get(item.vocabularyId);
+    return week ? `<span class="word-week">Week ${week}</span>` : "";
+  };
   activeWordId = activeWordId || words[0].vocabularyId;
   $("#app").innerHTML = `${pageHeader("Linked master dictionary", "Core words", `Search the ${gradeLabel} sub-dictionary. Every word links to one reusable master entry and approved pronunciation.`, `${dictionary.entryCount} master entries`)}
     <div class="toolbar"><label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search dictionary"></label><select id="group-filter" aria-label="Filter vocabulary group"><option value="all">All vocabulary groups</option>${course.vocabularyGroups.map((group) => `<option value="${group.id}">${escapeHtml(group.title)}</option>`).join("")}</select><span id="dictionary-count" class="status-chip">${words.length} words</span></div>
@@ -11087,7 +11116,7 @@ function renderDictionaryClassic() {
     // The picture leads the card, ahead of the part of speech: a Grade 1 reader
     // recognises the thing before they can read "noun · a naming word".
     const cardPicture = dictionaryPicture(item.master);
-    $("#word-card").innerHTML = `<div class="word-card-head">${cardPicture ? `<div class="word-card-picture" aria-hidden="true">${cardPicture}</div>` : ""}<div>${item.master.partOfSpeech ? `<span class="word-type">${escapeHtml(item.master.partOfSpeech)}</span>` : ""}<h2>${escapeHtml(item.master.displayWord)}</h2>${item.master.partOfSpeechDefinition ? `<small>${escapeHtml(item.master.partOfSpeechDefinition)}</small>` : ""}</div>${wordAudioActions}</div><p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(item.childMeaning)}${item.meaningAudio?.available ? ` <button class="icon-button" id="hear-meaning" type="button" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(item.master.displayWord)}">${icon("volume-2")}</button>` : ""}</p><div class="sentence-card"><small>In a sentence · ${activeSentence + 1} of ${shown.length}</small><p>${linkGlossaryWords(sentence, item.master.displayWord)}</p><div class="sentence-controls"><button class="icon-button" id="previous-sentence" type="button" aria-label="Previous sentence">${icon("arrow-left")}</button><div class="sentence-dots">${shown.map((_, index) => `<button class="sentence-dot ${index === activeSentence ? "active" : ""}" data-sentence="${index}" type="button" aria-label="Sentence ${index + 1}"></button>`).join("")}</div><button class="button ghost" id="hear-sentence" type="button">${icon("volume-2")} Hear sentence</button><button class="icon-button" id="next-sentence" type="button" aria-label="Next sentence">${icon("arrow-right")}</button></div></div><div><span class="field-label">Spelling:</span> ${escapeHtml(item.spellingPractice)}</div><div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="${escapeHtml(item.sentenceStarter)}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div><div id="word-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button secondary" id="know-word" type="button">${progress.knownWords.includes(item.vocabularyId) ? icon("check-circle") + " Learned" : icon("bookmark-plus") + " I know this word"}</button>`;
+    $("#word-card").innerHTML = `<div class="word-card-head">${cardPicture ? `<div class="word-card-picture" aria-hidden="true">${cardPicture}</div>` : ""}<div>${item.master.partOfSpeech ? `<span class="word-type">${escapeHtml(item.master.partOfSpeech)}</span>` : ""}${weekChip(item)}<h2>${escapeHtml(item.master.displayWord)}</h2>${item.master.partOfSpeechDefinition ? `<small>${escapeHtml(item.master.partOfSpeechDefinition)}</small>` : ""}</div>${wordAudioActions}</div><p class="meaning"><span class="field-label">Meaning:</span> ${escapeHtml(item.childMeaning)}${item.meaningAudio?.available ? ` <button class="icon-button" id="hear-meaning" type="button" title="Listen to the meaning" aria-label="Listen to the meaning of ${escapeHtml(item.master.displayWord)}">${icon("volume-2")}</button>` : ""}</p><div class="sentence-card"><small>In a sentence · ${activeSentence + 1} of ${shown.length}</small><p>${linkGlossaryWords(sentence, item.master.displayWord)}</p><div class="sentence-controls"><button class="icon-button" id="previous-sentence" type="button" aria-label="Previous sentence">${icon("arrow-left")}</button><div class="sentence-dots">${shown.map((_, index) => `<button class="sentence-dot ${index === activeSentence ? "active" : ""}" data-sentence="${index}" type="button" aria-label="Sentence ${index + 1}"></button>`).join("")}</div><button class="button ghost" id="hear-sentence" type="button">${icon("volume-2")} Hear sentence</button><button class="icon-button" id="next-sentence" type="button" aria-label="Next sentence">${icon("arrow-right")}</button></div></div><div><span class="field-label">Spelling:</span> ${escapeHtml(item.spellingPractice)}</div><div class="practice-box"><input id="word-sentence" maxlength="180" placeholder="${escapeHtml(item.sentenceStarter)}…" aria-label="Write your own sentence"><button class="button primary" id="check-word-sentence" type="button">Check sentence</button></div><div id="word-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button secondary" id="know-word" type="button">${progress.knownWords.includes(item.vocabularyId) ? icon("check-circle") + " Learned" : icon("bookmark-plus") + " I know this word"}</button>`;
     if (item.master.audio?.available) {
       const play = (button = null) => playAudio(item.master.audio.normal, {
         rate: AI_NARRATION_RATE,

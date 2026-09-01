@@ -913,6 +913,14 @@ html.young-stage .profile-button small { padding: 4px 11px; border-radius: 999px
 .word-card-head .word-card-picture { flex: 0 0 auto; font-size: 62px; line-height: 1; margin-top: 2px; }
 @media (max-width: 640px) { .word-card-head .word-card-picture { font-size: 48px; } }
 .word-type { display: inline-block; padding: 5px 8px; color: var(--blue); background: var(--blue-soft); border-radius: 4px; font-size: 14px; font-weight: var(--weight-medium); text-transform: capitalize; }
+/* Which week of the unit this word belongs to, beside the part of speech on the
+   Grades 5-8 lab card — the counterpart of the "· Week 2" the Grades 1-4 deck
+   prints in its eyebrow. Deliberately a QUIETER chip than .word-type: the part
+   of speech is about the word, the week is about the timetable, and the word
+   should still be the loudest thing in its own card. Outlined rather than
+   filled for the same reason, and it takes the play layer's pill radius from
+   the shared rule below by carrying its own name there. */
+.word-week { display: inline-block; margin-left: 6px; padding: 5px 8px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; font-size: 13px; font-weight: var(--weight-medium); }
 .word-card h2 { margin: 12px 0 5px; font: var(--weight-bold) 40px var(--font-serif); letter-spacing: 0; }
 .word-card .meaning { margin: 15px 0; padding: 14px 16px; background: var(--gold-soft); border-left: 4px solid var(--gold); border-radius: 4px; font-size: 17px; }
 .audio-actions { display: flex; gap: 8px; }
@@ -1981,7 +1989,7 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 .stat strong { font-size: 26px; font-weight: var(--weight-bold); color: var(--teal-dark); }
 .status-chip { border: 2px solid #bfe0dc; border-radius: var(--r-pill); padding: 8px 14px; font-weight: var(--weight-bold); }
 .eyebrow { letter-spacing: .09em; font-weight: var(--weight-bold); }
-.word-type, .hw-word, .grownup-guide .grownup-flag { border-radius: var(--r-pill); font-weight: var(--weight-bold); }
+.word-type, .word-week, .hw-word, .grownup-guide .grownup-flag { border-radius: var(--r-pill); font-weight: var(--weight-bold); }
 .hw-word { border: 2px solid var(--line); }
 
 /* ---- Chrome: the top bar --------------------------------------------------

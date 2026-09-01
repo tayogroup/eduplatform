@@ -1086,6 +1086,35 @@ export function createCourseApp(config) {
   if (voicePlayer) voicePlayer.addEventListener("timeupdate", voiceSyncTick);
 
   // --- voice engine (shared) ------------------------------------------------
+
+  // Younger learners need it slower (owner, 2026-08-28: Stages 1-4 read too
+  // fast). The pacing lives in the PLAYER rather than in the render, because
+  // the pre-rendered clips carry no speed of their own — tools/lib/ehel-tts.js
+  // sends none, so every clip on the CDN is at the voice's natural 1x, and a
+  // render-time fix would re-bill all of them AND leave the ones already on the
+  // CDN at the old pace. One constant, gated on the stage, never per section.
+  //
+  // Levels are not stages, so Intensive English gets its own band rather than
+  // being read as "Stages 1-2". It runs this same shell with param "level" and
+  // two levels, and its learners are adults and older teenagers (the manifest's
+  // own `audience`), so what makes it hard to follow is PROFICIENCY, not age.
+  // The two levels are a real progression — Level 1 is CEFR A1-A2 (beginner and
+  // elementary), Level 2 is B1 (intermediate) — so they take the two bands in
+  // order. Flattening both onto 0.80 would read a whole course as one band and
+  // hand a B1 learner the pace built for a five-year-old.
+  const NARRATION_RATE = config.param === "level"
+    ? (stageNumber <= 1 ? 0.80 : 0.85)
+    : stageNumber <= 2 ? 0.80
+    : stageNumber <= 4 ? 0.85
+    : 1;
+  // Stages 1-4 therefore ask the voice for its natural speed and let the player
+  // do the slowing, so a runtime chunk and a pre-rendered clip on the same page
+  // sound alike. Stages 5+ are untouched — paced at render time as before, and
+  // played at 1. Counting stays the same fraction slower than prose either way
+  // (0.78 / 0.90 = 0.87), which is what keeps the number-sequence slowdown
+  // meaningful instead of merely absolute.
+  const PROSE_SPEED = NARRATION_RATE < 1 ? 1 : 0.90;
+  const COUNTING_SPEED = NARRATION_RATE < 1 ? 0.87 : 0.78;
   function cyrb53(str, seed = 0) {
     let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
     for (let i = 0; i < str.length; i += 1) { const ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
@@ -1132,17 +1161,17 @@ export function createCourseApp(config) {
       return pieces.map((piece) => {
         const isCounting = containsNumberSequence(piece);
         const pacedPiece = paceNumberSequences(piece);
-        return { text: `${/[.!?;:]$/.test(pacedPiece) ? pacedPiece : `${pacedPiece}.`} <break time="0.65s" />`, speed: isCounting ? 0.78 : 0.90, isCounting };
+        return { text: `${/[.!?;:]$/.test(pacedPiece) ? pacedPiece : `${pacedPiece}.`} <break time="0.65s" />`, speed: isCounting ? COUNTING_SPEED : PROSE_SPEED, isCounting };
       });
     });
     const chunks = [];
     let current = "";
     for (const line of pacedLines) {
-      if (line.isCounting) { if (current) chunks.push({ text: current, speed: 0.90 }); current = ""; chunks.push({ text: line.text, speed: line.speed }); }
+      if (line.isCounting) { if (current) chunks.push({ text: current, speed: PROSE_SPEED }); current = ""; chunks.push({ text: line.text, speed: line.speed }); }
       else if (`${current} ${line.text}`.trim().length <= maximum) current = `${current} ${line.text}`.trim();
-      else { if (current) chunks.push({ text: current, speed: 0.90 }); current = line.text; }
+      else { if (current) chunks.push({ text: current, speed: PROSE_SPEED }); current = line.text; }
     }
-    if (current) chunks.push({ text: current, speed: 0.90 });
+    if (current) chunks.push({ text: current, speed: PROSE_SPEED });
     return chunks;
   }
   function collectPageNarration() {
@@ -1194,6 +1223,10 @@ export function createCourseApp(config) {
     return new Promise((resolve, reject) => {
       if (requestId !== voiceRequestId) return resolve();
       voicePlayer.src = source; voicePlayer.onended = resolve; voicePlayer.onemptied = resolve;
+      // Set per source, not once: stopVoice() calls load(), which resets
+      // playbackRate to defaultPlaybackRate, so a rate set at boot survives
+      // exactly until the learner stops one clip.
+      voicePlayer.playbackRate = NARRATION_RATE;
       voicePlayer.onerror = () => reject(new Error("The ElevenLabs recording could not be played."));
       voicePlayer.play().catch(reject);
     });

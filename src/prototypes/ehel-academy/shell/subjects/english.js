@@ -11347,6 +11347,21 @@ function renderWordCarousel() {
   // the section was called Vocabulary and only Grade 1 had a group called Core
   // words; the moment the nav was renamed (owner, 2026-08-28) it left Grade 2
   // reading "Core words" in the nav and "Say the words" on the page it opened.
+  // Which week each taught word belongs to, from the unit Study Plan's own week
+  // count (coreWordWeekOf). Built once per render rather than per slide: the map
+  // is the same for every card and the deck redraws slides individually.
+  //
+  // Only where the weeks say something. A one-week unit would print "Week 1" on
+  // every card, which is a label that divides nothing, and a word outside the
+  // map — the deck off the taught-only gate walks the glossary too — gets none
+  // rather than a guess.
+  const wordWeeks = coreWordWeekOf();
+  const weekCount = unitWeekCount();
+  const weekLabelFor = (item) => {
+    if (weekCount < 2) return "";
+    const week = wordWeeks.get(item.vocabularyId);
+    return week ? ` · Week ${week}` : "";
+  };
   const taughtGroups = [...new Set(taught.map((item) => item.groupTitle).filter(Boolean))];
   // Naming the section after its one taught group only makes sense where the
   // deck IS that group. Off the gate the deck still walks the glossary too, so
@@ -11366,7 +11381,7 @@ function renderWordCarousel() {
     const actionScene = item.master ? coreWordScene(item.master.lemma) : "";
     const picture = actionScene ? "" : dictionaryPicture(item.master);
     return `<section class="gc-slide gc-v${index % 5}" data-slide="${esc(item.vocabularyId)}"><div class="gc-inner">
-      <span class="gc-eyebrow">Word ${index + 1} of ${words.length}${item.master.partOfSpeech ? ` · ${esc(item.master.partOfSpeech)}` : ""}${item.groupTitle ? ` · ${esc(item.groupTitle)}` : ""}</span>
+      <span class="gc-eyebrow">Word ${index + 1} of ${words.length}${weekLabelFor(item)}${item.master.partOfSpeech ? ` · ${esc(item.master.partOfSpeech)}` : ""}${item.groupTitle ? ` · ${esc(item.groupTitle)}` : ""}</span>
       ${actionScene ? `<div class="wc-scene" aria-hidden="true">${actionScene}</div>` : picture ? `<div class="wc-picture" aria-hidden="true">${picture}</div>` : ""}
       <div class="gc-pattern" lang="en">${esc(item.master.displayWord)}</div>
       <p class="gc-lead">${esc(item.childMeaning)}</p>
@@ -14917,9 +14932,37 @@ function spreadAcrossWeeks(items, weeks) {
     return slice;
   });
 }
+// How many weeks this unit runs for. Extracted from renderUnitStudyPlan below,
+// which was its only caller, because the Core words deck now labels its words
+// with the same weeks — and a deck saying "Week 3" of a unit this page calls two
+// weeks long would be two answers to one question. The fallback is Unit 0's,
+// which has no calendar slot and runs alongside the regular units.
+function unitWeekCount() {
+  const span = unitPlanWeekSpan();
+  return Math.max(1, span ? span.to - span.from + 1 : Math.max(3, (course.readings || []).length));
+}
+// The unit's taught words dealt across those weeks — spreadAcrossWeeks' rule,
+// remainder to the earlier weeks, so Week 1 is never lighter than Week 4. Keyed
+// by word rather than by position, because the deck filters itself and a word's
+// index moves under it (the reason redrawWord addresses slides by id).
+//
+// PACING ONLY (owner, 2026-09-01, option A). This does NOT move the gate: Core
+// words still completes only when every taught word is marked, and Reading still
+// waits for that. The weeks tell a six-year-old which ten of forty are this
+// week's, so the deck reads as four short walks instead of one wall of forty.
+// They do not promise the section can be finished a week at a time, and Day 1 of
+// the plan is worded to match — it names the week's words AND says the books
+// open when every word is ticked.
+function coreWordWeekOf() {
+  const map = new Map();
+  spreadAcrossWeeks(taughtWords(), unitWeekCount()).forEach((slice, index) => {
+    for (const item of slice) map.set(item.vocabularyId, index + 1);
+  });
+  return map;
+}
 function renderUnitStudyPlan() {
   const span = unitPlanWeekSpan();
-  const weekCount = span ? span.to - span.from + 1 : Math.max(3, (course.readings || []).length);
+  const weekCount = unitWeekCount();
   const titlesOf = (items) => items.map((item) => item.title).filter(Boolean).map((title) => escapeHtml(title)).join(" · ");
   // Speaking, writing and activities carry formulaic titles ("Speaking 1 —
   // Listen and point"), so the plan names them by number range instead; words,
@@ -14976,6 +15019,18 @@ function renderUnitStudyPlan() {
   // there the clause came out as "new words — Core words — and mark every one":
   // an aside that names the thing it is already inside. Named only when the
   // titles say something the day has not.
+  // "this week's 10 words (words 11 to 20 of 40)" — the same division the deck
+  // labels, so a learner reading Week 2 here finds Week 2 on the cards. Falls
+  // back to the old undivided wording where the split says nothing: a one-week
+  // unit, or a unit whose words this page cannot count.
+  const wordWeekSlices = spreadAcrossWeeks(taughtWords(), weekCount);
+  const weekWordsPhrase = (weekIndex) => {
+    const slice = wordWeekSlices[weekIndex] || [];
+    if (weekCount < 2 || !slice.length) return "this unit's new words";
+    const before = wordWeekSlices.slice(0, weekIndex).reduce((sum, part) => sum + part.length, 0);
+    const range = slice.length === 1 ? `word ${before + 1}` : `words ${before + 1} to ${before + slice.length}`;
+    return `<strong>Week ${weekIndex + 1}</strong>'s ${slice.length} word${slice.length === 1 ? "" : "s"} (${range} of ${newWordCount})`;
+  };
   const wordGroupTitles = titlesOf(newWordGroups);
   // The section's own label at EVERY grade, not only where the books lead. The
   // rename to "Core words" (2026-08-28) is in the base table, so it reached
@@ -14997,8 +15052,8 @@ function renderUnitStudyPlan() {
       <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}${span.cal ? ` · week of ${formatDay(span.cal.weeks[span.from + weekIndex - 1])}${span.cal.halfIndex === span.from + weekIndex - 1 ? " (after half term)" : ""}` : ""}` : `Week ${weekIndex + 1} of the review programme`}</span>
       <ol class="path-list">
         ${dayLine(`Day 1 · ${dayOneName}`, isFirst
-          ? `Start with ${lectureLabel}. Then meet all this unit's new words${namesGroups ? ` — <strong>${wordGroupTitles}</strong> —` : ""} and mark every one, which is what opens ${BOOKS_LEAD_THE_READING ? "the picture books" : "the reading"}.`
-          : `Go back over your new words${storyWordCount ? ", and look up any story word you meet while you read" : ""}.`)}
+          ? `Start with ${lectureLabel}. Then meet ${weekWordsPhrase(weekIndex)}${namesGroups ? ` — <strong>${wordGroupTitles}</strong> —` : ""}. Every word in the unit has to be ticked before ${BOOKS_LEAD_THE_READING ? "the picture books open" : "the reading opens"}, so keep going whenever you can.`
+          : `Go back over ${weekWordsPhrase(weekIndex)}${storyWordCount ? ", and look up any story word you meet while you read" : ""}.`)}
         ${dayLine(`Day 2 · ${BOOKS_LEAD_THE_READING ? sectionLabel("ebooks") : "Reading"}`, BOOKS_LEAD_THE_READING
           ? (weekBooks.length
               ? `Read <strong>${titlesOf(weekBooks)}</strong>${isFirst && bookQuestionCount ? `, then answer the ${bookQuestionCount} questions about the books` : ""}.`

@@ -178,6 +178,14 @@ export function mountLessonGate(opts = {}) {
       setDismissed();
       goFullscreen(); // a real gesture, so the browser grants it
       gate.remove();
+      // Announced as a DOM event rather than an opts callback, deliberately:
+      // this module mounts TWICE on every page (self-mount at import, then the
+      // shell's explicit call), the first mount wins the element and its click
+      // handler, so an option passed by the second mount would never fire. An
+      // event on document reaches every listener whichever mount built the
+      // gate. course-app.js uses it to open the Grades/Stages 1-4 sticker
+      // board on Start (owner, 2026-09-01).
+      try { document.dispatchEvent(new CustomEvent("lesson-gate:start")); } catch { /* embedder without CustomEvent */ }
     };
     gate.addEventListener("click", open);
     gate.addEventListener("keydown", (e) => {

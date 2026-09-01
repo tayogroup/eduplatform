@@ -147,6 +147,31 @@ export function createCourseApp(config) {
     const slots = lesson.map((button) => doneOf(button) ? '<span class="slot full" aria-hidden="true">★</span>' : '<span class="slot empty" aria-hidden="true"></span>').join("");
     album.innerHTML = `<b>My sticker board</b><span class="album-slots">${slots}</span><span class="album-count">${doneCount} of ${lesson.length} stickers</span>`;
   }
+  // Start lands on the BOARD, not on "Welcome to School" (owner, 2026-09-01).
+  // The gate's Start is the young learner's first tap, and the page behind it
+  // used to be the overview -- a page of prose about how the unit works. The
+  // board is the answer to the question that tap is asking ("where do I go?"),
+  // so it opens over the overview; closing it (Escape, the pill, or picking a
+  // tile) reveals the overview exactly as before, so nothing is lost.
+  //
+  // A launch that names a SECTION keeps its promise: get-help's deep links and
+  // any #hash arrive wanting one place, and a board over the top of it would
+  // be chrome in the way. Only a plain launch -- no hash, or the overview
+  // itself -- gets the board.
+  //
+  // The race is real and both sides are handled: the gate paints before any
+  // data load, so Start can fire before renderNav has built the nav (toggle
+  // not yet mounted -> remember and open on the first paint), or after it
+  // (open now). Note the gate only renders where fullscreen is supported, so
+  // an iPhone learner never fires this and simply lands on the overview with
+  // the board pill at the foot -- the pre-existing behaviour.
+  let boardOnGateStart = false;
+  document.addEventListener("lesson-gate:start", () => {
+    if (!pathNav || IS_TUTORING) return;
+    const hash = (location.hash || "").replace(/^#/, "");
+    if (hash && hash !== "overview") return;
+    if (sectionsToggle) openSectionsSheet(); else boardOnGateStart = true;
+  });
   function mountSectionsSheet() {
     if (!pathNav || sectionsToggle) return;
     const sidebar = $(".sidebar");
@@ -1634,6 +1659,12 @@ export function createCourseApp(config) {
       if (!teacherSwitch.dataset.bound) { teacherSwitch.dataset.bound = "true"; teacherSwitch.addEventListener("click", () => navigate("teacher")); }
     }
     if (config.onNavRendered) config.onNavRendered();
+    // The deferred half of the gate-Start board (see the listener above): by
+    // here the nav is painted, .nav-quiet is tagged and english's lock pass
+    // has run, so the album the open will paint counts the real board -- a
+    // flush before the innerHTML above opened over an empty nav and said
+    // "0 of 0 stickers".
+    if (boardOnGateStart && sectionsToggle) { boardOnGateStart = false; openSectionsSheet(); }
     // The Study Plan is already in TUTORING_HIDDEN — dropped from the nav and
     // from the countable list — but every subject ALSO prints it in the unit
     // picker, which for this category is the door actually in front of the

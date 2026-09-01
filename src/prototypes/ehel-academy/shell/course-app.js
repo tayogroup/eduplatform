@@ -187,14 +187,41 @@ export function createCourseApp(config) {
   // an iPhone learner never fires this and simply lands on the overview with
   // the board pill at the foot -- the pre-existing behaviour.
   let boardOnGateStart = false;
+  // The board is worth offering only where it has something to show. A locked
+  // unit's nav is ONE row, and a one-tile board says less than the page behind
+  // it; the tutoring category has no board by design, and a levelled course
+  // (Intensive English) is not pathNav at all.
+  const boardCanOpen = () => pathNav && !IS_TUTORING && Boolean(sectionsToggle) && $$("#section-nav .nav-button:not(.nav-quiet)").length > 1;
   document.addEventListener("lesson-gate:start", () => {
     if (!pathNav || IS_TUTORING) return;
     const hash = (location.hash || "").replace(/^#/, "");
     if (hash && hash !== "overview") return;
-    // Same refusal as the deferred flush below: a locked unit's nav is one
-    // row, and a one-tile board says less than the locked page behind it.
-    if (sectionsToggle) { if ($$("#section-nav .nav-button:not(.nav-quiet)").length > 1) openSectionsSheet(); }
+    if (sectionsToggle) { if (boardCanOpen()) openSectionsSheet(); }
     else boardOnGateStart = true;
+  });
+  // "I'm leaving", pressed on a content page, means leaving the PAGE — not the
+  // app (owner, 2026-09-01). The dialog belongs to the focus-mode session bar
+  // (shared/seb-session.js), which knows nothing about the board, so it asks
+  // here: a PROBE while it draws the dialog, so the button can say "Send and go
+  // back" instead of promising an exit it is not going to make, and the real
+  // call on the press.
+  //
+  // Answering only when the board can actually open is what keeps that promise
+  // honest — a levelled course, the tutoring category and a locked unit all
+  // leave `handled` false and get the old behaviour untouched.
+  //
+  // openSectionsSheet() is called here rather than left to exitFocusMode's own
+  // board-open, which cannot fire on this path: that one is guarded on the body
+  // still carrying `focus-mode`, and the listener below has already stripped it
+  // — leaving fullscreen is what raised this dialog in the first place. It is
+  // idempotent, so calling both is safe.
+  document.addEventListener("ehel:leave-to-board", (event) => {
+    const detail = event.detail;
+    if (!detail || !boardCanOpen()) return;
+    detail.handled = true;
+    if (detail.probe) return;
+    exitFocusMode();
+    openSectionsSheet();
   });
   function mountSectionsSheet() {
     if (!pathNav || sectionsToggle) return;
@@ -1724,7 +1751,7 @@ export function createCourseApp(config) {
     // "0 of 0 stickers".
     if (boardOnGateStart && sectionsToggle) {
       boardOnGateStart = false;
-      if ($$("#section-nav .nav-button:not(.nav-quiet)").length > 1) openSectionsSheet();
+      if (boardCanOpen()) openSectionsSheet();
     }
     // The Study Plan is already in TUTORING_HIDDEN — dropped from the nav and
     // from the countable list — but every subject ALSO prints it in the unit

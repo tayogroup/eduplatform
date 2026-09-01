@@ -249,9 +249,31 @@ export function mountSebSession() {
     if (hasExit) {
       try { dashUrl = new URL(exitUrl).origin + "/local/hubredirect/student_dashboard.php"; } catch {}
     }
-    // "I'm leaving" — asks for a short reason first, saves it (fire-and-forget:
-    // a failed save must never trap a child on the form), then goes to the
-    // courses page. Progress and the session clock survive for their return.
+    // Can the course app take them back to its own navigation instead of out?
+    // Asked as a PROBE now, so the confirm button below can be honest about
+    // where it goes; the same event, without `probe`, performs the move. The
+    // app answers only when its board can actually open (course-app.js ::
+    // boardCanOpen), so a levelled course, the tutoring category and a locked
+    // unit all fall through to the behaviour this dialog always had.
+    const askApp = (probe) => {
+      try {
+        const detail = { probe: !!probe, handled: false };
+        document.dispatchEvent(new CustomEvent("ehel:leave-to-board", { detail }));
+        return detail.handled === true;
+      } catch { return false; } // an app that cannot answer is one we leave
+    };
+    const backToBoard = askApp(true);
+    // "I'm leaving" — asks for a short reason first and saves it
+    // (fire-and-forget: a failed save must never trap a child on the form).
+    //
+    // Where it goes then depends on what is behind the dialog. On a CONTENT
+    // page it goes back to the unit board and stays in the app (owner,
+    // 2026-09-01): a child who has stopped one lesson has not necessarily
+    // finished for the day, and putting them out of the course to pick another
+    // one is a longer way round than showing them the board they came from.
+    // Otherwise, unchanged — the courses page, or simply closing the dialog on
+    // a launch that carries no exit route. Progress and the session clock
+    // survive either way.
     const later = document.createElement("button");
     later.type = "button";
     later.textContent = "I'm leaving";
@@ -269,10 +291,9 @@ export function mountSebSession() {
       box.style.cssText = "width:100%;box-sizing:border-box;border:1px solid #cfd9e4;border-radius:10px;padding:10px 12px;font:inherit;resize:none";
       const go = document.createElement("button");
       go.type = "button";
-      go.textContent = "Send and leave";
+      go.textContent = backToBoard ? "Send and go back" : "Send and leave";
       go.style.cssText = "border:0;cursor:pointer;padding:13px 24px;border-radius:999px;background:#1f5fa8;color:#fff;font:600 16px/1 inherit";
       go.addEventListener("click", () => {
-        disarmLeave();
         const endpoint = (p.get("focusEndpoint") || "").trim();
         const token = (p.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
         if (/^https?:\/\//i.test(endpoint) && token) {
@@ -286,6 +307,23 @@ export function mountSebSession() {
             }
           } catch { /* leaving must never be blocked by the save */ }
         }
+        // The reason is sent either way — it is the teacher's signal that this
+        // learner stopped early, and that is as true of stopping a lesson as of
+        // leaving the app.
+        //
+        // The app is asked AGAIN rather than trusted from the probe: the two
+        // are a click apart, and a board that has become unopenable in between
+        // must fall through to leaving rather than strand the learner on a
+        // dialog that has just removed itself.
+        if (backToBoard && askApp(false)) { veil.remove(); return; }
+        // Disarmed only here, on the paths that actually LEAVE. Going back to
+        // the board keeps the learner in the session, so the beforeunload guard
+        // must stay armed — disarming for that case would silently drop the
+        // tab-close warning for the rest of the afternoon. Doing it after the
+        // question above rather than before it is what keeps the fall-through
+        // from navigating with the guard still up, which the browser would
+        // answer with its own "Leave site?" dialog.
+        disarmLeave();
         if (dashUrl) { location.href = dashUrl; } else { veil.remove(); }
       });
       card.appendChild(box);

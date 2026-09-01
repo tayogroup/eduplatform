@@ -221,7 +221,16 @@ export function createCourseApp(config) {
   // Listing only English's spellings was the first version of this, and Science
   // showed what that costs: `progress` and `live` both came back as learning
   // sections there. Verified per subject afterwards, not reasoned about.
-  const LEARNING_EXCLUDED = new Set(["lecture", "reflect", "progress", "live"]);
+  //
+  // A subject may exempt further rows through `config.warnExcludedSections`,
+  // the same way it exempts a row from TUTORING_HIDDEN with `tutoringShows`.
+  // That door exists because an id alone is not always enough to decide: at
+  // Grades 1-4 English's `reading` row is "Stories", the unit's own texts after
+  // the Quiz, and the owner has excluded it — but at Grades 5-8 the same id is
+  // "Reading & story", which is one of the nine that MUST warn. Only the
+  // subject knows which of its arrangements it is in, so it says so rather than
+  // this file guessing from the id.
+  const LEARNING_EXCLUDED = new Set(["lecture", "reflect", "progress", "live", ...(config.warnExcludedSections || [])]);
   const isLearningSection = (id) => Boolean(id) && unitSectionIds().includes(id) && !LEARNING_EXCLUDED.has(id);
   document.addEventListener("lesson-gate:start", () => {
     if (!pathNav || IS_TUTORING) return;

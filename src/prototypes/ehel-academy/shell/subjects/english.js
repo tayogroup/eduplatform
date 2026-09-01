@@ -18088,6 +18088,14 @@ const config = {
   // `capstone` row is this unit's own recap rather than a stage project, so
   // the reason the category cannot see the other five does not describe it.
   tutoringShows: ["capstone"],
+  // "You're not finished yet!" does not belong to Stories (owner, 2026-09-01).
+  // Only at Grades 1-4, and the guard is why this is declared here rather than
+  // in the shell: `reading` is TWO different rows across the bands. At 1-4 the
+  // books lead and `reading` is "Stories", the unit's own texts sitting after
+  // the Quiz; at 5-8 the same id is "Reading & story", which is one of the nine
+  // sections the warning is FOR. An id alone cannot tell them apart, and the
+  // shell has no business knowing which arrangement English is in.
+  warnExcludedSections: BOOKS_LEAD_THE_READING ? ["reading"] : [],
   param: "grade",
   mediaSubject: "english",
   ttsPurpose: "ehel_english",

@@ -1213,6 +1213,15 @@ if (gradeNumber <= 4) {
   swapSectionRows(SECTION_CHAIN, "reading", "ebooks");
   SECTION_CHAIN.splice(SECTION_CHAIN.indexOf("ebooks") + 1, 0, "book-comprehension");
 }
+// Both Study Plans describe the walk, so they have to know which walk this
+// grade has — and they ask the CHAIN rather than the grade number, because the
+// chain is where the rearrangement above is written. A revert of that block
+// therefore moves the plans back with it, in the same edit, and no third copy
+// of "Grades 1-4" can go stale against the first two. What it names is the
+// substantive difference for a plan: the picture-book shelf leads the reading
+// and the unit's own texts come after the Quiz, so a plan that schedules the
+// texts mid-unit is describing a padlock.
+const BOOKS_LEAD_THE_READING = SECTION_CHAIN.indexOf("ebooks") < SECTION_CHAIN.indexOf("reading");
 // Built against what this unit actually shows: a unit with no game pack has no
 // Games entry, and a chain that still demanded it would stall the learner at
 // the Quiz forever. `final-quiz` only exists on Unit 10, and comes last there.
@@ -14797,13 +14806,28 @@ function renderYearPlan() {
   const allUnits = terms.flatMap((term) => term.units);
   const totalWords = allUnits.reduce((sum, unit) => sum + (Number(unit.vocabularyCount) || 0), 0);
   const finalQuiz = manifest.finalAssessment;
-  const rhythm = [
-    ["Day 1", "Words", "Meet the unit's new words with the word cards, and listen to each one."],
-    ["Day 2", "Reading", "Read one story with its narration, then answer its comprehension questions."],
-    ["Day 3", "Grammar", "Work through two grammar lessons, said aloud and practised with examples."],
-    ["Day 4", "Speak & write", "Do two speaking tasks and two writing tasks from the unit."],
-    ["Day 5", "Play & check", "Play the unit games, try the quiz, and join the live session when one is scheduled."],
-  ];
+  // The week runs in the unit's own order, so the day names are the section
+  // labels themselves (sectionLabel reads the same table the nav draws — a
+  // rename there moves this page with it). Grades 1-4 walk a different order
+  // since 2026-08-31: the picture-book shelf is the reading a unit opens with,
+  // its questions follow, and the unit's own texts — "Stories" there — are the
+  // last step, opened by the Quiz. A rhythm still sending a six-year-old to
+  // those texts on Day 2 would be naming a padlock.
+  const rhythm = BOOKS_LEAD_THE_READING
+    ? [
+        ["Day 1", sectionLabel("dictionary"), "Watch the video lesson, then meet the unit's new words with the word cards and listen to each one."],
+        ["Day 2", sectionLabel("ebooks"), "Read one of the unit's picture books, and answer the questions about the books."],
+        ["Day 3", "Grammar", "Work through two grammar lessons, said aloud and practised in the pattern lab."],
+        ["Day 4", "Speak & write", "Do two speaking tasks and two writing tasks from the unit."],
+        ["Day 5", `Play, check & ${sectionLabel("reading").toLowerCase()}`, `Do the activities, play the games and take the quiz — that opens the unit's own ${sectionLabel("reading").toLowerCase()}. Join the live session when one is scheduled.`],
+      ]
+    : [
+        ["Day 1", "Words", "Meet the unit's new words with the word cards, and listen to each one."],
+        ["Day 2", "Reading", "Read one story with its narration, then answer its comprehension questions."],
+        ["Day 3", "Grammar", "Work through two grammar lessons, said aloud and practised with examples."],
+        ["Day 4", "Speak & write", "Do two speaking tasks and two writing tasks from the unit."],
+        ["Day 5", "Play & check", "Play the unit games, try the quiz, and join the live session when one is scheduled."],
+      ];
   const termTable = (term) => {
     const cal = calendarTerm(term.termNo);
     const weekTotal = termWeekTotal(term.termNo);
@@ -14921,17 +14945,42 @@ function renderUnitStudyPlan() {
   const wordsIn = (groups) => groups.reduce((sum, group) => sum + (group.vocabularyIds?.length || 0), 0);
   const newWordCount = wordsIn(newWordGroups);
   const storyWordCount = wordsIn(course.vocabularyGroups || []) - newWordCount;
-  const readings = spreadAcrossWeeks(course.readings, weekCount);
+  // Grades 1-4 read the unit in a different ORDER since 2026-08-31, so this
+  // page has to plan a different week (BOOKS_LEAD_THE_READING, derived from
+  // SECTION_CHAIN itself). The picture-book shelf is what Core words opens, its
+  // questions come straight after it, and the unit's own texts — "Stories"
+  // there — sit BEHIND the Quiz as the unit's last step.
+  //
+  // Which means the same rule the vocabulary note above records applies again,
+  // to the other end of the walk: scheduling those texts on Day 2 of week 1
+  // would send a six-year-old to a padlock they cannot open until the Quiz is
+  // done, and every day after it would describe a unit they were not in. So the
+  // BOOKS are what the reading day spreads across the weeks, and the texts are
+  // named once, on the day the app can actually open them.
+  const books = spreadAcrossWeeks(BOOKS_LEAD_THE_READING ? unitEbooks() : [], weekCount);
+  const bookQuestionCount = BOOKS_LEAD_THE_READING ? bookComprehensionQuestions().length : 0;
+  const unitTexts = course.readings || [];
+  const readings = spreadAcrossWeeks(BOOKS_LEAD_THE_READING ? [] : course.readings, weekCount);
   const grammar = spreadAcrossWeeks(course.grammar, weekCount);
   const speaking = spreadAcrossWeeks(course.speaking, weekCount);
   const writing = spreadAcrossWeeks(course.writing, weekCount);
   const activities = spreadAcrossWeeks(course.activities, weekCount);
   const lectureLabel = unitNumber === CAPSTONE_UNIT ? "the capstone launch" : "the video lesson";
+  // Day 1 names the taught groups so a learner knows what the words are ABOUT
+  // — "Days of the week · Weather". Grade 1's single taught group is itself
+  // called "Core words" since 2026-08-28, which is the section's own name, so
+  // there the clause came out as "new words — Core words — and mark every one":
+  // an aside that names the thing it is already inside. Named only when the
+  // titles say something the day has not.
+  const wordGroupTitles = titlesOf(newWordGroups);
+  const dayOneName = BOOKS_LEAD_THE_READING ? sectionLabel("dictionary") : "Words";
+  const namesGroups = Boolean(wordGroupTitles) && wordGroupTitles.toLowerCase() !== dayOneName.toLowerCase();
   const dayLine = (name, what) => `<li>${icon("circle-check-big")}<span><strong>${name}:</strong> ${what}</span></li>`;
   const weekPanel = (weekIndex) => {
     const isFirst = weekIndex === 0;
     const isLast = weekIndex === weekCount - 1;
     const weekReadings = readings[weekIndex];
+    const weekBooks = books[weekIndex];
     const speakWrite = [
       speaking[weekIndex].length ? `Do speaking ${rangeText(speaking, weekIndex, "task")}` : "",
       writing[weekIndex].length ? `writing ${rangeText(writing, weekIndex, "task")}` : "",
@@ -14939,13 +14988,21 @@ function renderUnitStudyPlan() {
     return `<section class="panel">
       <span class="eyebrow">${span ? `Week ${span.from + weekIndex} · Term ${span.termNo}${span.cal ? ` · week of ${formatDay(span.cal.weeks[span.from + weekIndex - 1])}${span.cal.halfIndex === span.from + weekIndex - 1 ? " (after half term)" : ""}` : ""}` : `Week ${weekIndex + 1} of the review programme`}</span>
       <ol class="path-list">
-        ${dayLine("Day 1 · Words", isFirst
-          ? `Start with ${lectureLabel}. Then meet all this unit's new words${newWordGroups.length ? ` — <strong>${titlesOf(newWordGroups)}</strong>` : ""} — and mark every one, which is what opens the reading.`
+        ${dayLine(`Day 1 · ${dayOneName}`, isFirst
+          ? `Start with ${lectureLabel}. Then meet all this unit's new words${namesGroups ? ` — <strong>${wordGroupTitles}</strong> —` : ""} and mark every one, which is what opens ${BOOKS_LEAD_THE_READING ? "the picture books" : "the reading"}.`
           : `Go back over your new words${storyWordCount ? ", and look up any story word you meet while you read" : ""}.`)}
-        ${dayLine("Day 2 · Reading", weekReadings.length ? `Read <strong>${titlesOf(weekReadings)}</strong>, then answer ${weekReadings.length > 1 ? "their" : "its"} questions.` : "Read your favourite story from this unit again.")}
+        ${dayLine(`Day 2 · ${BOOKS_LEAD_THE_READING ? sectionLabel("ebooks") : "Reading"}`, BOOKS_LEAD_THE_READING
+          ? (weekBooks.length
+              ? `Read <strong>${titlesOf(weekBooks)}</strong>${isFirst && bookQuestionCount ? `, then answer the ${bookQuestionCount} questions about the books` : ""}.`
+              : "Read your favourite book from this unit again, or listen to it.")
+          : (weekReadings.length ? `Read <strong>${titlesOf(weekReadings)}</strong>, then answer ${weekReadings.length > 1 ? "their" : "its"} questions.` : "Read your favourite story from this unit again."))}
         ${dayLine("Day 3 · Grammar", grammar[weekIndex].length ? `${titlesOf(grammar[weekIndex])}.` : "Go back over the patterns you have learned.")}
         ${dayLine("Day 4 · Speak & write", speakWrite ? `${speakWrite}.` : "Practise saying and writing your favourite sentences.")}
-        ${dayLine("Day 5 · Play & check", isLast ? "Play the games, take the quiz, hand in your assignment and fill in My progress." : `${activities[weekIndex].length ? `Do ${rangeText(activities, weekIndex, "activity").replace("activitys", "activities")}, and play` : "Play"} the games.`)}
+        ${dayLine(`Day 5 · ${isLast && BOOKS_LEAD_THE_READING ? `Play, check & ${sectionLabel("reading").toLowerCase()}` : "Play & check"}`, isLast
+          ? (BOOKS_LEAD_THE_READING
+              ? `Play the games and take the quiz — that opens the unit's own ${sectionLabel("reading").toLowerCase()}${unitTexts.length ? `, so read <strong>${titlesOf(unitTexts)}</strong>` : ""}. Then hand in your assignment and fill in My progress.`
+              : "Play the games, take the quiz, hand in your assignment and fill in My progress.")
+          : `${activities[weekIndex].length ? `Do ${rangeText(activities, weekIndex, "activity").replace("activitys", "activities")}, and play` : "Play"} the games.`)}
       </ol>
     </section>`;
   };
@@ -14959,7 +15016,7 @@ function renderUnitStudyPlan() {
   )}
     <div class="final-quiz-intro">
       <section class="panel">
-        <div class="final-quiz-facts"><span><strong>${weekCount}</strong> weeks</span>${newWordCount ? `<span><strong>${newWordCount}</strong> new words</span>` : ""}${storyWordCount > 0 ? `<span><strong>${storyWordCount}</strong> story words to look up</span>` : ""}<span><strong>${(course.readings || []).length}</strong> readings</span><span><strong>${(course.grammar || []).length}</strong> grammar lessons</span></div>
+        <div class="final-quiz-facts"><span><strong>${weekCount}</strong> weeks</span>${newWordCount ? `<span><strong>${newWordCount}</strong> new words</span>` : ""}${storyWordCount > 0 ? `<span><strong>${storyWordCount}</strong> story words to look up</span>` : ""}${BOOKS_LEAD_THE_READING && unitEbooks().length ? `<span><strong>${unitEbooks().length}</strong> picture books</span>` : ""}<span><strong>${unitTexts.length}</strong> ${BOOKS_LEAD_THE_READING ? sectionLabel("reading").toLowerCase() : "readings"}</span><span><strong>${(course.grammar || []).length}</strong> grammar lessons</span></div>
       </section>
       ${Array.from({ length: weekCount }, (_, index) => weekPanel(index)).join("")}
       <div class="audio-actions"><button class="button gold" data-go="lecture" type="button">Start with ${lectureLabel} ${icon("arrow-right")}</button><button class="button secondary" data-go="overview" type="button">Back to the overview</button></div>

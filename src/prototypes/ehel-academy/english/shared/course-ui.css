@@ -2000,41 +2000,15 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
 .nav-button--path .nav-state { border-width: 3px; }
 .nav-button--path .nav-state.done { box-shadow: 0 2px 0 rgba(0, 0, 0, .25); }
 
-/* ---- The section banner ---------------------------------------------------
-   `pageHeader()` in shared/course-shell.js draws the same three things on
-   every section of every subject — eyebrow, title, lead — and every subject
-   drew them as loose text on the page background. Duolingo's equivalent is the
-   coloured section header, and it is the single most recognisable thing in the
-   reference, so this is where the look is spent.
-
-   Everything inside it has to be re-lit for a dark ground: the eyebrow goes
-   gold, the lead goes to a tinted white, and the two controls that can appear
-   in `.page-actions` — the status chip and the page-voice button — become
-   translucent white rather than keeping their on-paper colours, which would
-   read as holes cut in the banner. */
-.page-header {
-  padding: 26px 28px;
-  border-radius: var(--r-lg);
-  background: linear-gradient(135deg, #0f766e 0%, #12857c 52%, #189a80 100%);
-  color: #fff;
-  box-shadow: 0 5px 0 var(--teal-press);
-}
-.page-header .eyebrow { color: var(--gold); }
-.page-header h1 { color: #fff; }
-.page-header p { color: #dff1ee; }
-.page-header .status-chip { background: rgba(255, 255, 255, .16); border-color: rgba(255, 255, 255, .32); color: #fff; }
-.page-header .button.secondary,
-.page-header .course-ebook-shelf-title {
-  background: rgba(255, 255, 255, .14);
-  border: 2px solid rgba(255, 255, 255, .3);
-  color: #fff;
-  box-shadow: 0 var(--press) 0 rgba(0, 0, 0, .16);
-}
-.page-header .button.secondary:hover { background: rgba(255, 255, 255, .24); border-color: rgba(255, 255, 255, .55); color: #fff; }
-.page-header .course-ebook-shelf-title small { color: #dff1ee; }
-/* is-playing on the banner: gold, because the teal it uses on paper is the
-   banner's own colour and would disappear into it. */
-.page-header .page-voice.is-playing { background: var(--gold); border-color: var(--gold); color: #17324d; box-shadow: 0 var(--press) 0 var(--gold-press); }
+/* ---- The section banner: BUILT, SHIPPED (v365-v369), REVERTED -------------
+   Owner, 2026-09-01: "return to the original color - not the new green
+   change." The play layer used to paint pageHeader()'s output as a teal
+   gradient card with re-lit contents (gold eyebrow, white title, translucent
+   chip and voice button); the owner prefers the ORIGINAL header -- serif navy
+   title straight on the page ground, teal eyebrow, no box. So this block is
+   deliberately empty: the base .page-header rules above this layer are the
+   whole design again. Do not re-add a banner treatment here without the
+   owner asking for one -- it has now been seen in production and removed. */
 
 /* ---- The unit checklist ---------------------------------------------------
    "How this unit works" is the closest thing the course has to Duolingo's own
@@ -2186,8 +2160,6 @@ body.ebook-watching .course-ebook-illustration img, body.ebook-watching svg.cour
   /* The phone rail draws no trail at all (`display: none` above), so only the
      young-stage sheet — where the full path comes back — needs the offset. */
   html.young-stage body.sections-open .nav-button--path::before { left: 27px; }
-  /* The banner tightens up where the content column is 14px from each edge. */
-  .page-header { padding: 20px 18px; border-radius: var(--r-md); }
   .panel { padding: 18px; border-radius: var(--r-md); }
 }
 

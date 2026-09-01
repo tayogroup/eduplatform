@@ -18367,14 +18367,40 @@ const config = {
     return { manifest, course };
   },
   async onReady(ctx) {
-    // Lecture-version cache-bust: a re-recorded lecture resets its completion.
+    // Lecture-version cache-bust: a RE-RECORDED lecture resets its completion.
+    //
+    // "Changed" and "absent" are not the same answer, and treating them as one
+    // was the bug. The test used to be `stored !== current`, which a missing key
+    // satisfies — so this fired not only when a video was re-cut but whenever
+    // this BROWSER had never opened this unit: a second device, another browser,
+    // cleared site data, a private window.
+    //
+    // That mattered because of the order in course-app.js :: init():
+    // hydrateRemoteResume() runs BEFORE onReady. On a real school launch the
+    // server restores `lecture` into progress.completed, and this then stripped
+    // it straight back out — so a learner who watched the lecture at school and
+    // opened the unit at home was re-locked by their own progress arriving.
+    //
+    // And it does not stop at the lecture: `lecture` sits before `dictionary` in
+    // SECTION_CHAIN, so losing it re-locked Core words, Reading, Comprehension,
+    // Grammar, Speaking, Writing, Activities, Games, Quiz and Stories. Without a
+    // launch token there is no remote half in unitSectionsDone() either, so the
+    // unit read as incomplete and every later unit re-locked too.
+    //
+    // An absent key means "this device has not seen this unit". Record the
+    // version and leave completion alone; only a version that has actually MOVED
+    // is a video worth watching again.
     if (course.visual.lectureVersion) {
       const versionKey = `${STORAGE_KEY}-lecture-version`;
-      if (localStorage.getItem(versionKey) !== course.visual.lectureVersion) {
+      const seen = localStorage.getItem(versionKey);
+      if (seen !== null && seen !== course.visual.lectureVersion) {
         ctx.progress.completed = ctx.progress.completed.filter((section) => section !== "lecture");
         localStorage.setItem(STORAGE_KEY, JSON.stringify(ctx.progress));
-        localStorage.setItem(versionKey, course.visual.lectureVersion);
       }
+      // Written on the first visit as well as on a change, so the next load has
+      // a baseline to compare against — that first write is the whole point of
+      // the key, and it is what makes a later re-record detectable.
+      if (seen !== course.visual.lectureVersion) localStorage.setItem(versionKey, course.visual.lectureVersion);
     }
     if (location.hash.slice(1) === "final-quiz" && unitNumber !== 10) location.hash = "overview";
     if (location.hash.slice(1) === "games" && !gamePack) location.hash = "overview";

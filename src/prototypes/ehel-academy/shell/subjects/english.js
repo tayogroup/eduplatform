@@ -200,19 +200,23 @@ async function attachCaptions(video) {
     /* keep the original src; captions are an enhancement, not a gate */
   }
 }
-// Grade 1 opened at Unit 0 (Alphabet & Sounds) until 2026-08-20, when the
-// owner withdrew it from learners — hidden, not deleted. Its data, games and
-// audio stay published, and two explicit doors still reach it: the teacher
-// preview (#teacher) and a placement-remediation visit (?review=1) — the
-// Grade 1 readiness check prescribes Unit 0 in all four of its sections, and
-// remediation is already the mechanism that opens exactly one unit outside
-// the learner's sequence. Everywhere else Grade 1 now behaves like every
-// other grade: it opens at Unit 1, the unit gate chains from Unit 1, and
-// Unit 0 is out of the pickers. To restore Unit 0, make this
-// `gradeNumber === 1 ? 0 : 1` again, mirror it in config.defaultUnit at the
-// bottom of this file and in placementLocation()'s fallback, and drop the
-// `unit0Visit` escape below, the filter in renderUnitPickers() and the one in
-// renderFinalQuizResults().
+// Grade 1 opened at Unit 0 (Alphabet & Sounds) until 2026-08-20, when the owner
+// withdrew it from learners — hidden but still reachable through two doors, and
+// still shipped. On 2026-09-03 the owner said it is "no longer used or needed",
+// and it is now GONE: unit-0.json, games/unit-0.json, media/unit-0 and its 234
+// audio clips deleted, the manifest entry removed, and the `unit0Visit` escape
+// that resolved `?unit=0` deleted with them. `?unit=0` clamps to Unit 1 like any
+// other out-of-range unit.
+//
+// The readiness check used to prescribe Unit 0 in all four of its sections, and
+// that was the load-bearing reference — the report's only learner-facing path
+// in. It survives the removal because every section already carried a SECOND
+// remediation target, the Intensive English foundation course, which is now the
+// only one. A learner who struggles is still sent somewhere real.
+//
+// TEACHER_PREVIEW and REVIEW_VISIT are deliberately untouched. They read as
+// Unit 0 machinery and are not: the unit gate, the serialised story parts and
+// the capstone door all depend on them.
 const defaultUnit = 1;
 // Unit -1 is the Prerequisite unit, present on every grade before Unit 1: a
 // placement exam over the previous grades' essential outcomes. It has no
@@ -221,11 +225,7 @@ const defaultUnit = 1;
 const PREREQ_UNIT = -1;
 const requestedUnit = Number(routeParams.get("unit") ?? defaultUnit);
 const isPrereqUnit = requestedUnit === PREREQ_UNIT;
-// The two doors into withdrawn Unit 0. TEACHER_PREVIEW and REVIEW_VISIT are
-// declared hundreds of lines down and this line runs first at module scope,
-// so the same two markers are read inline here rather than referenced.
-const unit0Visit = gradeNumber === 1 && requestedUnit === 0 && (location.hash.slice(1) === "teacher" || routeParams.get("review") === "1");
-const unitNumber = isPrereqUnit ? PREREQ_UNIT : unit0Visit ? 0 : (requestedUnit >= defaultUnit && requestedUnit <= 10 ? requestedUnit : defaultUnit);
+const unitNumber = isPrereqUnit ? PREREQ_UNIT : (requestedUnit >= defaultUnit && requestedUnit <= 10 ? requestedUnit : defaultUnit);
 const STORAGE_KEY = `ehel-english-g${gradeNumber}-u${unitNumber}-progress-v1`;
 const FINAL_QUIZ_STORAGE_KEY = `ehel-english-g${gradeNumber}-course-final-quiz-v1`;
 const PLACEMENT_STORAGE_KEY = `ehel-english-g${gradeNumber}-placement-exam-v1`;
@@ -14694,9 +14694,10 @@ function renderFinalQuizResults(results) {
 function placementLocation(targetGrade, targetUnit, nextRoute = "overview", { review = false, focus = false, topic = "", ghLabel = "", ghQuery = "" } = {}) {
   const url = new URL(location.href);
   url.searchParams.set("grade", targetGrade);
-  // Every grade opens at Unit 1 now that Grade 1's Unit 0 is withdrawn from
-  // learners; a remediation item that means Unit 0 names it explicitly and
-  // arrives with the ?review=1 marker that unit0Visit honours.
+  // Every grade opens at Unit 1. Grade 1's Unit 0 was the one exception and is
+  // gone (owner, 2026-09-03), so a remediation item can no longer name it; the
+  // `?review=1` marker below now only reopens a unit inside the normal 1-10
+  // range, which is what it did for every other grade all along.
   url.searchParams.set("unit", targetUnit ?? 1);
   // Set for remediation, deleted for everything else. "Start Grade 2 English"
   // is a course to begin at its first unit and walk in order, not a unit to

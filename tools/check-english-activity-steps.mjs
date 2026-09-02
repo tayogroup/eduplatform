@@ -60,12 +60,23 @@ const GRADES = [1, 2, 3, 4];
 // the shape this splitter reads, so coverage went 150/246 -> 396/492 and
 // per-step answers 46 -> 158. Locking that in is the point of a floor: the
 // old values would now pass while two thirds of the checklists vanished.
-const FLOORS = { 1: 83, 2: 98, 3: 103, 4: 112 };
-const STEP_FLOOR = 1670;
+// LOWERED 2026-09-03, the one thing a floor is normally not allowed to do, and
+// only because content was deliberately deleted: the owner removed Grade 1
+// Unit 0 (Alphabet & Sounds) as no longer used or needed. Grade 1 83 -> 76,
+// steps 1670 -> 1641, per-step answers 158 -> 156.
+//
+// The drop was PROVED to be Unit 0's own contribution before these numbers
+// moved, because a broken splitter looks identical from here: unit-0.json was
+// restored from git and the manifest entry put back, the gate re-run, and all
+// three counts returned to exactly 83 / 1670 / 158. Anything less than an exact
+// return would have meant something else had regressed and the floor was hiding
+// it. Do the same before lowering these again.
+const FLOORS = { 1: 76, 2: 98, 3: 103, 4: 112 };
+const STEP_FLOOR = 1641;
 // Stepped activities whose marking notes carry a per-step answer run. Floored
 // for the same reason as the steps: a key run that stops parsing shows the
 // child nothing and looks exactly like an activity that never had answers.
-const KEY_FLOOR = 158;
+const KEY_FLOOR = 156;   // 158 before Grade 1 Unit 0 was deleted — see above
 // Deliberately the gate's OWN copy of the two key patterns rather than the
 // extracted ones. Everything else here runs the shipped code, because a copy
 // would pass while the real thing was broken — but the numbering check below

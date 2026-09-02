@@ -16,7 +16,11 @@
 // by the other tools and are unaffected. Shared modules (course-shell.js,
 // progress-client.js) go to app/shared/ (short-cached; imported via ../../shared/).
 //
-// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2] [--shell] [--verify] [--dry] [--force-tag] [--force-lock] [subject…]
+// Usage: BUNNY_KEY=… node tools/deploy-app-version.js [v2] [--shell] [--verify] [--dry] [--force-tag] [--force-lock] [--skip-print-check] [subject…]
+//   An english release first renders the three Student-resources print sheets
+//   through Chrome and REFUSES to upload if any is wrong (--skip-print-check
+//   overrides). No other subject has a print path, so no other subject pays
+//   for it. See lib/require-print-sheets.js.
 //   A real upload takes a machine-wide lock on the storage zone first (see
 //   lib/release-lock.js) and holds it until the manifest is written back, so two
 //   releases on one machine cannot interleave. --dry and --plan-json neither take
@@ -40,6 +44,7 @@ const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const { requireTiersInStep } = require("./lib/require-tiers-in-step");
 const { requirePlatformCors } = require("./lib/require-platform-cors");
 const { acquireReleaseLock } = require("./lib/release-lock");
+const { requirePrintSheets } = require("./lib/require-print-sheets");
 const ROOT = path.resolve(__dirname, "..");
 const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 const ZONE = "ehelacademy";
@@ -549,6 +554,14 @@ for (const signal of ["SIGINT", "SIGTERM"]) {
 process.on("exit", dropReleaseLock);
 
 (async () => {
+  // Before the lock, not after: this renders for two and a half minutes, and it
+  // asks about the working tree rather than about the zone, so holding the lock
+  // across it would block every other subject's release for nothing. English
+  // only — see require-print-sheets.js for why, and why it blocks rather than
+  // reporting after the fact like the two post-deploy hooks.
+  if (!DRY && !PLAN_JSON && !requirePrintSheets(SUBJECTS, { skip: argv.includes("--skip-print-check") })) {
+    process.exit(1);
+  }
   // BEFORE the manifest is read. The manifest is a read-modify-write across the
   // whole run — read here, written back after the last PUT — so a lock taken
   // after the read would protect the uploads and lose the record of them, which

@@ -2425,10 +2425,12 @@ gate is pulling its weight, and here it is not.
 
 ### The one print path, and the page count that runs short
 
-`printCursiveWorksheet` in `shell/subjects/english.js` is the **only** thing in
-this repo that prints — the sole `@page` rules, the sole `window.print()`, the
-sole `break-inside: avoid`. So anything learned about pagination here has no
-second example to compare against, and is worth writing down the first time.
+`printCursiveWorksheet` in `shell/subjects/english.js` was the **only** thing in
+this repo that printed until v390 — the sole `@page` rules, the sole
+`window.print()`, the sole `break-inside: avoid`. Everything below was learned
+while it had no second example to compare against, which is why it was worth
+writing down the first time. There are four print paths now; the other three are
+the section after this one, and they are the second example.
 
 **`break-inside: avoid` cannot save an element taller than the page.** The engine
 breaks it regardless, and it spans as many pages as it needs. A page counter that
@@ -2451,6 +2453,90 @@ Two things about how it was found, which is the transferable half:
 
 If a second print path is ever added, this is the first thing to check, and
 `worksheetPageCount` is the worked example.
+
+### There are FOUR print paths now, and the full sweep is a release step
+
+`printCursiveWorksheet` stopped being the only one in v390. Student resources
+draws three more — Core words by week, the Unit plan, the Grade plan — built by
+`printSheetCss()` / `openPrintSheet()` in `shell/subjects/english.js`. The
+section above still holds for the worksheet; what follows is what the other
+three cost to check.
+
+```bash
+npm run check:print-sheets      # all 240 sheets, ~2m20s
+npm run check:english           # includes --quick: 24 sheets, ~30s
+```
+
+**An english release runs the FULL sweep and refuses to upload on a finding**
+(owner, 2026-09-02). `deploy-app-version.js` calls `requirePrintSheets(SUBJECTS)`
+before the upload AND before the zone lock: before the upload because this is the
+one thing here whose damage lands on paper, where nothing reports back and no
+rollback reaches the copies already in a folder; before the lock because it
+renders for two minutes and asks about the working tree rather than about the
+zone, so holding the lock across it would stall every other subject's release.
+Its two siblings — `requireTiersInStep`, `requirePlatformCors` — run AFTER the
+PUTs, because they ask whether what shipped is usable and the deploy stands
+either way. `--skip-print-check` overrides, on the `--skip-route-check`
+precedent.
+
+**ENGLISH ONLY, and that is measured**: `data-print` / `printSheetCss` /
+`openPrintSheet` appear 2/2/4 times in `shell/subjects/english.js` and **zero**
+times in the other five subject modules, Intensive English included. The gate
+only ever loads `/english/`, so aiming it at another subject would check nothing
+while looking busy.
+
+**The hook runs the full sweep; `check:english` chains `--quick`, and they are
+not the same check.** Every assertion but one is a property of the SHEET rather
+than of a unit's content — the four CSS rules and the `<thead>` come out of
+`printSheetCss()` and the builders, so one sheet exercises them and more samples
+add nothing. **Page count is the only thing that varies per unit**: the full
+sweep sees Core words span 1-4 pages, `--quick` (unit 1 of each grade, ~30s)
+sees 2-3. A Unit or Grade plan that grew onto a second page at unit 7 is exactly
+what `--quick` cannot see and exactly what a content release changes.
+
+Exit 1 is findings; **exit 2 means it could not run** (bad argument, no Chromium,
+fewer than 12 sheets rendered) and the hook refuses on it too — a tick over a
+comparison that never ran is this file's most-repeated failure, and the same rule
+as `--after-deploy` exit 3. It renders the WORKING TREE off a static server, so
+run it from the repo and not from a `git archive` release tree.
+
+**It prints through Chrome, because nothing else answers the question.** The
+gate renders each sheet with Playwright's `page.pdf()` — the same fragmenter
+Ctrl+P uses. Two cheaper proxies were tried first and both produced FALSE
+defects, which is the transferable half:
+
+- **paged.js** is a JS polyfill that does not implement `table-header-group`, so
+  it reported a missing column header on every continuation page and a stranded
+  Week 4 heading. Chrome's real output has neither.
+- **CSS multicolumn** is Chrome's own fragmenter and still wrong here, because
+  print reprints a spanning table's `<thead>` and multicol does not — content
+  therefore sits at different offsets and headings fall on different sides of a
+  boundary. That version reported 8 orphaned headings across Grades 2-8; all 8
+  were checked against the real print output and all 8 were fine.
+
+So the orphan/split question is deliberately NOT asserted. Answering it
+faithfully needs a PDF text layer — Chrome writes one glyph id per `Tj` against
+a per-font ToUnicode CMap — for a question whose causes are all asserted
+already. **A check that reports false failures is worse than an absent one: it
+gets routed around, and then so does the rest of the gate.**
+
+Two traps found by mutation-testing it, both bugs in the GATE rather than in the
+sheets, and neither reachable by watching it pass:
+
+- **The PDF page tree is NESTED.** A 20-page document carries `/Count` values
+  `[8, 8, 4, 20]` — three subtrees and the root — so reading the first one
+  returns a subtree size. Take the maximum, and cross-check it against the count
+  of `/Type /Page` objects.
+- **Row heights must be measured at the page box**, not at a default 1280px
+  viewport. Text wraps differently at 182mm, so heights measured in a wide
+  viewport describe a page nobody prints — and that assertion is what stands in
+  for `break-inside: avoid`'s real limit.
+
+The harness also aborted rather than mutate when the `@page` anchor matched
+twice: `worksheetPrintChromeCss()` carries a byte-identical copy of
+`@page { size: A4 portrait; margin: 14mm; }`. That is this file's own "a
+mutation that survives is a claim about the mutation first" rule, arriving
+before it could cost anything.
 
 ### The illustrated picture books (English "Books")
 

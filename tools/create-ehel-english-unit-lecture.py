@@ -16,6 +16,7 @@ from PIL import Image, ImageDraw, ImageEnhance, ImageFont
 sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
 from ehel_lecture_captions import balance_lines, chunk_narration, render_vtt  # noqa: E402
 import ehel_lecture_alignment as alignment_lib  # noqa: E402
+from ehel_speakable_frames import speakable_frames  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -288,8 +289,14 @@ def build_slides(unit: dict, dictionary: dict) -> list[dict]:
 # fix, same reasoning, lives in tools/lib/ehel-tts.js's speakableBlanks() for
 # the other narration pipeline (generate-ehel-english-audio.js); Python and
 # Node don't share a module here, so keep the two in step by hand.
+#
+# Superseded 2026-09-03 by speakable_frames (lib/ehel_speakable_frames.py), the
+# port of speakableFrames() in tools/lib/ehel-tts.js: the blank is a PAUSE
+# introduced by "Fill in the blank:", and a slash is read as the words a
+# teacher would say ("a or an", "am, is, are") — never "blank", never "slash".
+# Kept as a name because the comment above documents the failure it fixed.
 def speakable_blanks(text: str) -> str:
-    return re.sub(r"_{2,}", "blank", text)
+    return speakable_frames(text)
 
 
 # A bare hyphen between two single letters ("A-Z", "a-m") is not reliably read

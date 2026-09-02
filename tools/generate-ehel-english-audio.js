@@ -56,7 +56,7 @@ const ENGLISH = path.join(ROOT, "src", "prototypes", "ehel-academy", "english");
 // voiceId, model`), so the clip's own metadata names the voice that made it —
 // which means the constant a run reads and the constant it writes down can
 // never disagree.
-const { tts, speakableBlanks, speakableLetterRanges, FatalTtsError, PermanentTtsError, VOICE_ID, MODEL_ID, DELIVERIES } = require("./lib/ehel-tts");
+const { tts, speakableFrames, speakableLetterRanges, FatalTtsError, PermanentTtsError, VOICE_ID, MODEL_ID, DELIVERIES } = require("./lib/ehel-tts");
 
 // --- args ---
 const args = process.argv.slice(2);
@@ -146,8 +146,11 @@ loadDotEnv();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Clean text for narration: strip emoji/boilerplate, collapse whitespace.
+// speakableFrames() (lib/ehel-tts.js) is what turns "___" into a pause and a
+// "/" into the words a teacher would say — it replaced speakableBlanks() here
+// on 2026-09-03, so the word "blank" is no longer narrated anywhere in English.
 function narration(value) {
-  return speakableLetterRanges(speakableBlanks(String(value || "")
+  return speakableLetterRanges(speakableFrames(String(value || "")
     .replace(/🤖|💡|📚|✨|[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "")
     // Only a genuinely bracketed aside. The optional parens here used to make this
     // match bare instruction text too, and `[^)]*` then ran to the next ")" -- or
@@ -816,10 +819,12 @@ async function main() {
     // button at all.
     //
     // That spoken form arrived twelve days later and this check has been
-    // UNREACHABLE ever since: narration() runs speakableBlanks() (lib/ehel-tts.js),
-    // which rewrites _{2,} to "blank" in the narrated text alone, so by the time
-    // item.text reaches this line it carries no blank to match. It stays as a
-    // backstop against that transform being removed, not as live policy.
+    // UNREACHABLE ever since: narration() runs speakableFrames() (lib/ehel-tts.js;
+    // speakableBlanks() until 2026-09-03), which rewrites _{2,} in the narrated
+    // text alone — to a pause behind "Fill in the blank:" now, to the word
+    // "blank" before — so by the time item.text reaches this line it carries no
+    // blank to match. It stays as a backstop against that transform being
+    // removed, not as live policy.
     //
     // The cost of nobody noticing: 297 descriptors sat at available:false with a
     // "needs a spoken form" status for thirteen days after the need had been met,

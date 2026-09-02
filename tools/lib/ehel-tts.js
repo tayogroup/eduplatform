@@ -34,6 +34,193 @@ function speakableBlanks(text) {
   return String(text).replace(/_{2,}/g, "blank");
 }
 
+// The owner's rule for frames and slashes, 2026-09-03: "This is a / an ___" is
+// narrated as
+//
+//   Fill in the blank: This is a ... Fill in the blank: This is an ...
+//
+// — one sentence per alternative, the blank a PAUSE rather than the word
+// "blank" (a child hears "This is a blank" as a sentence about an object called
+// a blank), and never a slash. The voice reads "/" as "slash", drops it, or
+// runs "a an" together; none of those is the frame the page shows.
+//
+// A slash means four different things in this content, and each is read the
+// way a teacher would read it aloud:
+//
+//   a choice in brackets   "___ (two / too)"          →  "..., two or too,"
+//   two bare alternatives  "a / an", "There is / There are"
+//                            in a frame WITH a blank  →  the expansion above
+//                            anywhere else            →  "a or an"
+//   a list of three+       "am / is / are"            →  "am, is, are"
+//                          "is / Karim / cleaning"    →  "is, Karim, cleaning"
+//   a line break           "Stop. / Go.", poem lines  →  dropped
+//
+// A tight pair with no spaces ("Yes/No", "he/she/it") is a choice too.
+//
+// "Fill in the blank:" is said once per clip, before the FIRST sentence with a
+// blank — unless something earlier in the same clip has already told the
+// learner there is a gap ("Write the missing word", "Fill each gap", "Finish
+// each sentence"), in which case saying it again is noise. The a / an
+// expansion carries it on every alternative regardless, because that is what
+// separates the two readings for the ear.
+//
+// Same contract as speakableBlanks(): narration text only, never display text.
+// It REPLACES speakableBlanks() in English narration; that function stays for
+// the tools that mirror its rule. Python and Node do not share a module, so
+// tools/lib/ehel_speakable_frames.py is a hand-kept port — the gate
+// check-ehel-speakable-frames.mjs runs the same cases through both.
+const BLANK_RE = /_{2,}/g;
+// The pause and the comma this transform INSERTS are held as private-use
+// characters while the text is tidied, and written out as "..." (the form
+// ElevenLabs documents as a pause) and "," at the end. Tidying only ever
+// touches these two, so text with no blank and no slash comes out byte for
+// byte as it went in — the first version tidied every comma and ellipsis in
+// the course and would have re-recorded 60 clips that had nothing to fix.
+const PAUSE = "\uE000";
+const CHOICE_COMMA = "\uE001";
+const GAP_ANNOUNCED_RE = /\b(blank|gap|missing|fill|complete|finish)\w*/i;
+// Where a span may be split for the frame rules: sentence ends (with a closing
+// quote), colons and semicolons, the " | " and line-marker separators the
+// grammar practice uses, opening quotes, and line breaks. Kept as a capture so
+// the delimiters survive the split and are written back unchanged.
+const SPAN_SPLIT_RE = /(\|\s+|\d{1,2}[.)]\s+|(?:[.!?]+|…)["”’']?\s+|[:;]\s+|(?:^|\s)\(?[a-h]\)\s|[“"‘]|\n+)/;
+
+function joinChoices(items) {
+  if (items.length <= 1) return items.join("");
+  if (/^(not|no)$/i.test(items[0])) return items.join(", ");
+  return `${items.slice(0, -1).join(", ")} or ${items[items.length - 1]}`;
+}
+
+function wordCount(s) {
+  return String(s).trim().split(/\s+/).filter(Boolean).length;
+}
+
+// The start of the sentence a blank belongs to, inside a span that has already
+// been split at the coarse boundaries: after a quote that opens a spoken model
+// ("Say 'This is my ___'"). An apostrophe inside a word ("don't") is not one.
+function anchorIndex(span) {
+  const first = span.search(/_{2,}|\s\/\s/);
+  const head = first >= 0 ? span.slice(0, first) : span;
+  const re = /(?:^|[\s:(])['‘"“]/g;
+  let best = 0;
+  let m;
+  while ((m = re.exec(head))) best = m.index + m[0].length;
+  return best;
+}
+
+const BLANK_TEST = /_{2,}/;
+
+function tidy(s) {
+  return s
+    .replace(/(\uE000\s*){2,}/g, "\uE000 ")           // two blanks in a row are one pause
+    .replace(/\uE000\s*\.(?!\.)/g, "\uE000")           // a full stop straight after the pause
+    .replace(/\s+\uE001/g, "\uE001")
+    .replace(/\uE001\s*\uE001/g, "\uE001")
+    .replace(/\uE001\s*([.!?;:,])/g, "$1")
+    .replace(/([.!?;:,])\s*\uE001\s*/g, "$1 ")         // a bracket choice after a sentence end
+    .replace(/(^|\d[.)]\s|\|\s|[“"‘]|\s')\s*\uE001\s*/g, "$1")
+    .replace(/\uE001(?=\s+\d{1,2}[.)]\s|\s*$|\s*\|\s)/g, ".")
+    .replace(/\uE001/g, ",")
+    .replace(/\uE000/g, "...")
+    .replace(/[ \t]{2,}/g, " ")
+    .trim();
+}
+
+function speakableSpan(span, state) {
+  const lead = span.slice(0, anchorIndex(span));
+  let body = span.slice(lead.length);
+  // A slash after punctuation or after a blank is a line break, not a choice.
+  body = body.replace(/^\s*\/\s+/, "").replace(/([_.,!?;:”"’'])\s\/\s/g, "$1 ");
+  // The sentence's own closing punctuation and quote are set aside so the
+  // expansion below can write two sentences and close the quote once, after
+  // the second — "…is an ...”", not "…is a ...”. Fill in the blank: …an ...”".
+  const tail = (body.match(/[.!?]*["”’']*\s*$/) || [""])[0];
+  body = body.slice(0, body.length - tail.length);
+  const hasBlank = BLANK_TEST.test(body);
+  const parts = body.split(/\s\/\s/);
+  if (parts.length > 1) {
+    // Group consecutive slashes into runs: a slash joins the run before it when
+    // the text between them is a short item (three words or fewer).
+    const runs = [];
+    for (let i = 1; i < parts.length; i += 1) {
+      const last = runs[runs.length - 1];
+      if (last && wordCount(parts[i - 1]) <= 3 && last.end === i - 1) last.end = i;
+      else runs.push({ start: i - 1, end: i });
+    }
+    const allPairs = runs.every((r) => r.end - r.start === 1);
+    if (hasBlank && allPairs) {
+      // The frame expansion. For each pair the right-hand item is the words
+      // after the slash up to the blank (three at most), and the left-hand item
+      // is the same number of words before the slash — "There is / There are
+      // ___" pairs "There is" with "There are", "a / an ___" pairs "a" with "an".
+      const pairs = [];
+      let ok = true;
+      for (const r of runs) {
+        const after = parts[r.end].match(/^((?:[^\s_]+\s+){0,2}[^\s_]+)(?=\s*_{2,})/);
+        if (!after) { ok = false; break; }
+        const n = wordCount(after[1]);
+        const before = parts[r.start].match(new RegExp(`((?:\\S+\\s+){${n - 1}}\\S+)\\s*$`));
+        if (!before) { ok = false; break; }
+        pairs.push({ left: before[1], right: after[1] });
+      }
+      if (ok) {
+        const version = (side) => {
+          let out = "";
+          for (let i = 0; i < parts.length; i += 1) {
+            if (i === 0) out += parts[0];
+            else {
+              const pair = pairs[i - 1];
+              out = side === "left"
+                ? `${out}${parts[i].slice(pair.right.length)}`
+                : `${out.slice(0, out.length - pair.left.length)}${pair.right}${parts[i].slice(pair.right.length)}`;
+            }
+          }
+          return out.replace(BLANK_RE, PAUSE).trim();
+        };
+        state.prefixed = true;
+        return `${lead}Fill in the blank: ${version("left")}. Fill in the blank: ${version("right")}${tail}`;
+      }
+    }
+    // No frame to expand: a pair is "X or Y", a longer run is a comma list.
+    let out = parts[0];
+    for (const r of runs) {
+      const sep = r.end - r.start === 1 ? " or " : ", ";
+      for (let i = r.start + 1; i <= r.end; i += 1) out += sep + parts[i];
+    }
+    body = out;
+  }
+  if (hasBlank) {
+    const announce = !state.prefixed && !state.gapAnnounced;
+    state.prefixed = state.prefixed || announce;
+    body = `${announce ? "Fill in the blank: " : ""}${body.replace(BLANK_RE, PAUSE)}`;
+  }
+  return lead + body + tail;
+}
+
+function speakableFrames(text) {
+  let s = String(text);
+  // Choices in brackets: "(two / too)" → ", two or too,".
+  s = s.replace(/\(([^()]*?\s\/\s[^()]*?)\)/g, (_, inner) => `${CHOICE_COMMA} ${joinChoices(inner.split(/\s\/\s/).map((t) => t.trim()).filter(Boolean))}${CHOICE_COMMA}`);
+  // Tight pairs and chains: "Yes/No" → "Yes or No", "he/she/it" → "he, she, it".
+  s = s.replace(/\b[A-Za-z][A-Za-z'’-]*(?:\/[A-Za-z][A-Za-z'’-]*)+\b/g, (chain) => {
+    const items = chain.split("/");
+    return items.length === 2 ? `${items[0]} or ${items[1]}` : items.join(", ");
+  });
+  const pieces = s.split(SPAN_SPLIT_RE);
+  const state = { prefixed: false, gapAnnounced: false };
+  let seen = "";
+  const out = [];
+  for (let i = 0; i < pieces.length; i += 1) {
+    const piece = pieces[i] ?? "";
+    if (i % 2 === 1) { out.push(piece); seen += piece; continue; }
+    state.gapAnnounced = GAP_ANNOUNCED_RE.test(seen);
+    const spoken = speakableSpan(piece, state);
+    out.push(spoken);
+    seen += piece;
+  }
+  return tidy(out.join(""));
+}
+
 // A bare hyphen between two single letters ("A-Z", "a-m", "Parts A-C") is not
 // reliably read as "to" — ElevenLabs drops it, says "dash", or runs the
 // letters together. Confirmed 2026-08-18 from a user report on Grade 1 Unit
@@ -160,6 +347,6 @@ async function tts(text, { voiceId = VOICE_ID, modelId = MODEL_ID, voiceSettings
 }
 
 module.exports = {
-  tts, speakableBlanks, speakableLetterRanges, FatalTtsError, PermanentTtsError,
+  tts, speakableBlanks, speakableFrames, speakableLetterRanges, FatalTtsError, PermanentTtsError,
   API_BASE, VOICE_ID, MODEL_ID, VOICE_SETTINGS, DELIVERIES, OUTPUT_FORMAT, TIMEOUT_MS,
 };

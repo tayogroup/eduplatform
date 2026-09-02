@@ -2142,6 +2142,45 @@ rather than reasoning about it. Same shape as the dead second gate in Science:
 a line that is correct, unreachable, and one upstream change away from meaning
 something else.
 
+#### A blank is a pause and a slash is never spoken (owner, 2026-09-03)
+
+```bash
+npm run check:speakable-frames   # also chained into check:english, ~10s
+```
+
+The owner heard "This is a / an ___" narrated with the slash and the word
+"blank" in it and set the rule: **"Fill in the blank: This is a ... Fill in
+the blank: This is an ..."** — one sentence per alternative, the blank a pause,
+never a "/". `speakableFrames()` in `tools/lib/ehel-tts.js` is the one
+definition and REPLACED `speakableBlanks()` in `narration()`; the word "blank"
+is no longer narrated anywhere in English. The slash means four things in this
+content and each is read as a teacher would read it: a bracketed choice
+`(two / too)` → ", two or too,"; two bare alternatives `a / an` → the
+expansion above inside a frame with a blank, "a or an" anywhere else; a list
+of three or more `am / is / are` → "am, is, are"; a slash after punctuation
+(`Stop. / Go.`, poem lines) → dropped. "Fill in the blank:" is said once per
+clip unless the clip has already announced the gap ("Write the missing word").
+
+Three things worth knowing before touching it:
+
+- **The Python mirror is `tools/lib/ehel_speakable_frames.py`**, imported by
+  the lecture tool and the suppression tool, and the gate runs the same cases
+  through both — "keep in step by hand" is only a rule if something checks.
+- **The transform inserts private-use characters for the pause and the comma
+  it adds, and tidies only those.** The first version tidied every comma and
+  ellipsis in the course, and the before/after script diff showed 60 clips
+  with no blank and no slash re-recording for nothing. The diff of emitted
+  scripts (`--emit-scripts`, before and after) is the review surface for any
+  change here; the gate cannot see collateral, only leftovers.
+- **Phoneme notation `/m/` is not a slash between words** and the gate strips
+  it before looking. It survives only in the withdrawn Grade 1 Unit 0 teacher
+  plans, already a recorded finding of `check-english-content`.
+
+Changing the rule moves the fingerprint of every clip whose script it touches,
+so the generator re-narrates them on its next run of that category — 745 clips
+and ~418k characters at the time of the change. That is a paid step and an
+owner decision; the code change alone ships nothing.
+
 #### The defect no check here can catch: the voice says the wrong word
 
 `toe` in the Grade 2 dictionary was narrated as "two". The entry was right, the

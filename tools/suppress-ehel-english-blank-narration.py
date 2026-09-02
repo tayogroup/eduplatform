@@ -51,6 +51,8 @@ import sys
 from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
+from ehel_speakable_frames import speakable_frames  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGLISH = ROOT / "src" / "prototypes" / "ehel-academy" / "english"
@@ -60,18 +62,20 @@ BLANK = re.compile(r"_{2,}")
 def speakable(text):
     """The generator's narration() transform, for the part that matters here.
 
-    lib/ehel-tts.js :: speakableBlanks() rewrites a run of underscores to the
-    word "blank" in the text SENT to ElevenLabs, never in the text displayed.
-    generate-ehel-english-audio.js applies it before its refusal tests for a
-    blank, so a script that still looks unnarratable in the raw field is
-    perfectly narratable by the time the refusal sees it.
+    lib/ehel-tts.js :: speakableFrames() (speakableBlanks() until 2026-09-03)
+    rewrites a run of underscores in the text SENT to ElevenLabs, never in the
+    text displayed — since 2026-09-03 to a pause introduced by "Fill in the
+    blank:", before that to the word "blank". generate-ehel-english-audio.js
+    applies it before its refusal tests for a blank, so a script that still
+    looks unnarratable in the raw field is perfectly narratable by the time the
+    refusal sees it.
 
     Mirroring it here is what keeps this tool and that refusal answering the
     same question. Without it this tool answers a question the generator
     stopped asking on 2026-08-18, and every clip recorded since is a candidate
-    for deletion.
+    for deletion. The mirror is the shared Python port, not a second copy.
     """
-    return BLANK.sub("blank", str(text))
+    return speakable_frames(str(text))
 REASON = "Refused - the script is a fill-in-the-blank frame; needs a spoken form"
 
 # (list key, descriptor key, how the generator builds the script for that item)

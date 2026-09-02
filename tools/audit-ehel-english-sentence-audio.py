@@ -37,6 +37,9 @@ import sys
 import warnings
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent / "lib"))
+from ehel_speakable_frames import speakable_frames  # noqa: E402
+
 warnings.filterwarnings("ignore")
 
 # A sweep runs for hours and prints only as it finds things, so the output is
@@ -272,7 +275,11 @@ def similarity(script: str, heard: str) -> float:
     Whisper's errors are word-shaped (a homophone, a split name), not
     character-shaped.
     """
-    return difflib.SequenceMatcher(None, normalise(script).split(), normalise(heard).split()).ratio()
+    # The script side is what the generator SENDS, not what the page prints:
+    # since 2026-09-03 a blank is narrated as a pause behind "Fill in the blank:"
+    # and a slash as "or" or a list (lib/ehel_speakable_frames.py), so comparing
+    # against the raw text scored every correct re-recording at ~0.8.
+    return difflib.SequenceMatcher(None, normalise(speakable_frames(script)).split(), normalise(heard).split()).ratio()
 
 
 def missing_names(script: str, heard: str) -> list:

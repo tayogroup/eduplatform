@@ -11492,6 +11492,7 @@ function renderWordCarousel() {
         <button class="gc-btn play" type="button" id="word-show" aria-pressed="false">${icon("play")} Play the words</button>
         <label class="search-box">${icon("search")}<input id="word-search" type="search" placeholder="Search words or meanings" aria-label="Search vocabulary"></label>
         <select id="group-filter" aria-label="Filter vocabulary group"${namedDeck ? " hidden" : ""}><option value="all">All vocabulary groups</option>${course.vocabularyGroups.filter((group) => !DECK_TEACHES_TAUGHT_ONLY || taught.some((item) => item.groupId === group.id)).map((group) => `<option value="${group.id}">${esc(group.title)}</option>`).join("")}</select>
+        ${weekCount > 1 ? `<select id="week-filter" aria-label="Filter by week"><option value="all">All weeks</option>${Array.from({ length: weekCount }, (_, i) => `<option value="${i + 1}">Week ${i + 1}</option>`).join("")}</select>` : ""}
         <span class="status-chip" id="wc-known">${learnedTaught()} of ${taught.length} new words</span>
       </div>`,
     onSlide: (position) => { activeWordId = words[position]?.vocabularyId || activeWordId; },
@@ -11733,12 +11734,18 @@ function renderWordCarousel() {
     stopShow();
     const query = inDeck("#word-search").value.trim().toLowerCase();
     const group = inDeck("#group-filter").value;
+    // The week filter only exists on a multi-week unit (see the toolbar), so
+    // ask for it rather than assume it — inDeck returns null where it was not
+    // drawn, and "all" is the right answer when there is nothing to choose.
+    const week = inDeck("#week-filter")?.value || "all";
     words = (DECK_TEACHES_TAUGHT_ONLY ? taught : allWords).filter((item) => (group === "all" || item.groupId === group)
+      && (week === "all" || wordWeeks.get(item.vocabularyId) === Number(week))
       && (!query || `${item.master.displayWord} ${item.childMeaning}`.toLowerCase().includes(query)));
     deck.setSlides(words.map(wordSlide));
   };
   inDeck("#word-search").addEventListener("input", drawDeck);
   inDeck("#group-filter").addEventListener("change", drawDeck);
+  inDeck("#week-filter")?.addEventListener("change", drawDeck);
   drawDeck();
 }
 
@@ -17669,6 +17676,165 @@ function printCursiveWorksheet(chosenGroups, size, widths, { sentences = false, 
   printWindow.addEventListener("afterprint", () => printWindow.close());
 }
 
+// ===================== printable sheets =====================================
+// Core words by week, and the two Study Plans, as paper.
+//
+// One window opener for all three, modelled on printCursiveWorksheet above —
+// which was the repo's ONLY print path, and therefore the only place its
+// pagination lessons live. Two are inherited here deliberately: print is
+// triggered after `document.fonts.ready` rather than on load (a loaded document
+// has not necessarily loaded its faces, and printing early sets the sheet in the
+// fallback), and the window closes on `afterprint` so a learner is not left with
+// a blank tab they have to find and shut.
+//
+// No page-count estimate here, and that is the point of the third lesson: the
+// worksheet counts pages because it draws ruled lines that must not be split,
+// and it got that wrong until `break-inside: avoid` was found not to hold for an
+// element taller than the page. These sheets are ordinary flowing tables, so
+// they have nothing to estimate and cannot make that mistake — a row is short
+// enough for the rule to be honoured.
+function openPrintSheet(title, bodyHtml, extraCss = "") {
+  const printWindow = window.open("", "_blank", "popup=yes,width=900,height=1000,resizable=yes,scrollbars=yes");
+  if (!printWindow) {
+    toast("Allow pop-ups to print this sheet.");
+    return;
+  }
+  printWindow.document.open();
+  printWindow.document.write(`<!doctype html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <title>${escapeHtml(title)} | Ehel Academy English</title>
+      <style>${printSheetCss()}${extraCss}</style>
+    </head>
+    <body>${bodyHtml}</body>
+    </html>`);
+  printWindow.document.close();
+  printWindow.focus();
+  const send = () => {
+    const ready = printWindow.document.fonts?.ready || Promise.resolve();
+    ready.then(() => printWindow.print()).catch(() => printWindow.print());
+  };
+  if (printWindow.document.readyState === "complete") send();
+  else printWindow.addEventListener("load", send);
+  printWindow.addEventListener("afterprint", () => printWindow.close());
+}
+// Millimetres throughout, like the worksheet's chrome: this is paper, and a
+// sheet described in px is a sheet whose margins change with the print dialog's
+// scale setting. `thead { display: table-header-group }` is what repeats a
+// table's header on every page it runs onto — without it a week's table breaking
+// across a page boundary leaves the second half of the words unlabelled.
+function printSheetCss() {
+  return `
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    @page { size: A4 portrait; margin: 14mm; }
+    body { margin: 0; color: #17324d; background: white; font: 3.1mm/1.45 Arial, Helvetica, sans-serif; }
+    .ps-head { margin: 0 0 6mm; padding-bottom: 3mm; border-bottom: .4mm solid #dce4ea; }
+    .ps-head span { display: block; color: #0f766e; font-weight: 700; font-size: 2.6mm; text-transform: uppercase; letter-spacing: .06em; }
+    .ps-head h1 { margin: 1.5mm 0 0; font-size: 6mm; line-height: 1.15; }
+    .ps-head p { margin: 1.5mm 0 0; color: #5d6b80; font-size: 3mm; }
+    h2.ps-week { margin: 7mm 0 2mm; padding: 1.5mm 3mm; background: #eef3f8; border-radius: 1.5mm; font-size: 4mm; break-after: avoid; }
+    table { width: 100%; border-collapse: collapse; margin: 0 0 4mm; }
+    thead { display: table-header-group; }
+    th { text-align: left; padding: 1.6mm 2mm; border-bottom: .4mm solid #17324d; font-size: 2.7mm; text-transform: uppercase; letter-spacing: .04em; }
+    td { padding: 1.8mm 2mm; border-bottom: .25mm solid #dce4ea; vertical-align: top; break-inside: avoid; }
+    td.ps-word { font-weight: 700; white-space: nowrap; }
+    td.ps-pos { color: #5d6b80; white-space: nowrap; }
+    .ps-eg { color: #5d6b80; font-style: italic; }
+    .ps-foot { margin-top: 6mm; padding-top: 2mm; border-top: .25mm solid #dce4ea; color: #5d6b80; font-size: 2.6mm; }
+    tr { break-inside: avoid; }
+  `;
+}
+function printSheetHead(kicker, heading, note) {
+  return `<div class="ps-head"><span>${escapeHtml(kicker)}</span><h1>${escapeHtml(heading)}</h1><p>${escapeHtml(note)}</p></div>`;
+}
+// CORE WORDS BY WEEK. The same division the deck labels and the unit plan
+// schedules (coreWordWeekOf), so a printed Week 2 and an on-screen Week 2 are
+// the same ten words — the sheet is a copy of the walk, not a second opinion
+// about it. Only the TAUGHT words: the story glossary is reference to look up
+// while reading and is never a week's work, which is the rule the plan already
+// keeps.
+function printCoreWordsByWeek() {
+  const words = taughtWords();
+  if (!words.length) { toast("This unit has no core words to print."); return; }
+  const weeks = spreadAcrossWeeks(words, unitWeekCount());
+  const rows = (slice) => slice.map((item) => {
+    const example = shownSentences(item)[0] || "";
+    return `<tr>
+      <td class="ps-word">${escapeHtml(item.master?.displayWord || item.displayWord)}</td>
+      <td class="ps-pos">${escapeHtml(item.master?.partOfSpeech || "")}</td>
+      <td>${escapeHtml(item.childMeaning || "")}${example ? `<br><span class="ps-eg">${escapeHtml(example)}</span>` : ""}</td>
+    </tr>`;
+  }).join("");
+  const body = weeks.map((slice, index) => slice.length ? `
+    <h2 class="ps-week">Week ${index + 1} — ${slice.length} word${slice.length === 1 ? "" : "s"}</h2>
+    <table><thead><tr><th style="width:26mm">Word</th><th style="width:20mm">Type</th><th>What it means, and an example</th></tr></thead><tbody>${rows(slice)}</tbody></table>` : "").join("");
+  openPrintSheet(
+    `Core words · ${gradeLabel} Unit ${course.unit.unitNo}`,
+    `${printSheetHead(
+      `${gradeLabel} · Unit ${course.unit.unitNo} · ${course.unit.unitTitle}`,
+      "Core words, week by week",
+      `${words.length} words across ${weeks.filter((s) => s.length).length} weeks. Every word has to be ticked in the app before Reading opens — these are the same words, in the same order, to keep by you.`,
+    )}${body}<p class="ps-foot">Ehel Academy · ${gradeLabel} English · printed from Student resources</p>`,
+  );
+}
+// THE TWO STUDY PLANS, on paper. Built from the same helpers the pages draw
+// from — unitPlanWeekSpan/unitWeekCount for the unit plan, yearPlanTerms and
+// yearPlanWeekRows for the grade plan — so the sheet cannot describe a different
+// year from the screen. Neither re-derives a calendar of its own.
+function printUnitStudyPlan() {
+  const span = unitPlanWeekSpan();
+  const weeks = unitWeekCount();
+  const wordWeeks = spreadAcrossWeeks(taughtWords(), weeks);
+  const readings = (course.readings || []).map((item) => item.title).filter(Boolean);
+  const rows = Array.from({ length: weeks }, (_, index) => {
+    const slice = wordWeeks[index] || [];
+    const when = span && span.cal
+      ? `Week ${span.from + index}<br><small>${formatDay(span.cal.weeks[span.from + index - 1])}</small>`
+      : `Week ${index + 1}`;
+    return `<tr>
+      <td class="ps-word">${when}</td>
+      <td>${slice.length ? `<strong>Core words:</strong> Week ${index + 1} — ${escapeHtml(slice.map((w) => w.master?.displayWord || w.displayWord).join(", "))}` : "<strong>Core words:</strong> go back over your words"}</td>
+    </tr>`;
+  }).join("");
+  openPrintSheet(
+    `Unit plan · ${gradeLabel} Unit ${course.unit.unitNo}`,
+    `${printSheetHead(
+      `${gradeLabel} · Unit ${course.unit.unitNo}`,
+      `Your plan for ${course.unit.unitTitle}`,
+      span
+        ? `${weeks} week${weeks === 1 ? "" : "s"} — weeks ${span.from} to ${span.to} of Term ${span.termNo}. Five short days a week.`
+        : `${weeks} weeks, five short days a week.`,
+    )}
+    <table><thead><tr><th style="width:30mm">When</th><th>What the week brings</th></tr></thead><tbody>${rows}</tbody></table>
+    ${readings.length ? `<h2 class="ps-week">The unit's own ${sectionLabel("reading").toLowerCase()}</h2><p>${escapeHtml(readings.join(" · "))}</p>` : ""}
+    <p class="ps-foot">Ehel Academy · ${gradeLabel} English · printed from Student resources</p>`,
+  );
+}
+function printGradeStudyPlan() {
+  const terms = yearPlanTerms();
+  const body = terms.map((term) => {
+    const cal = calendarTerm(term.termNo);
+    const rows = yearPlanWeekRows(term.units, termWeekTotal(term.termNo)).map((row) => `<tr>
+      <td class="ps-word">${row.from === row.to ? `Week ${row.from}` : `Weeks ${row.from}–${row.to}`}${cal ? `<br><small>${formatDay(cal.weeks[row.from - 1])}</small>` : ""}</td>
+      <td>Unit ${row.unit.number}: ${escapeHtml(row.unit.title)}</td>
+      <td class="ps-pos">${Number(row.unit.vocabularyCount) || "—"}</td>
+    </tr>`).join("");
+    return `<h2 class="ps-week">Term ${term.termNo}${cal ? ` — ${termDatesLabel(term.termNo)}` : ""}</h2>
+      <table><thead><tr><th style="width:30mm">Weeks</th><th>Unit</th><th style="width:24mm">Words</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }).join("");
+  const allUnits = terms.flatMap((term) => term.units);
+  openPrintSheet(
+    `${gradeLabel} Study Plan`,
+    `${printSheetHead(
+      `${gradeLabel} · ${SCHOOL_CALENDAR.yearLabel}`,
+      `${gradeLabel} English Study Plan`,
+      `${terms.length} terms, ${allUnits.length} units, and where each one falls. The dates follow the school calendar, half terms included.`,
+    )}${body}<p class="ps-foot">Ehel Academy · ${gradeLabel} English · printed from Student resources</p>`,
+  );
+}
+
 // ===================== the handwriting animation =====================
 // The worksheet's companion on screen: the same words, but showing HOW the pen
 // moves rather than what the finished letter looks like. A printed model tells a
@@ -18087,6 +18253,14 @@ function studentResourceCards() {
   cards.push({ route: "live", iconName: "video", title: navLabelOf("live", "Live sessions"), blurb: "When your class meets your teacher online, the link is here." });
   // Grades 1-4 only, on the same line the picture dictionary and the picture
   // books already draw — see the worksheet section above for why.
+  // The three printables. `print` rather than `route`: these open a print sheet
+  // in their own window and never navigate, so they must not carry a route the
+  // section gate would then try to lock — printing a word list is not a step.
+  // In "worksheets" for the same reason the handwriting sheet is: the category
+  // is what a learner takes to a table with a pencil.
+  if (!isPrereqUnit) cards.push({ category: "worksheets", print: "core-words-weeks", iconName: "printer", title: "Core words by week", blurb: "Print this unit's core words split into its weeks, with what each one means and an example." });
+  if (!isPrereqUnit) cards.push({ category: "worksheets", print: "unit-plan", iconName: "printer", title: "Print the Unit Study Plan", blurb: "The week-by-week plan for this unit on one sheet, with each week's words." });
+  cards.push({ category: "worksheets", print: "grade-plan", iconName: "printer", title: `Print the ${gradeLabel} Study Plan`, blurb: "The whole year: every unit, the weeks it takes and where it falls in the terms." });
   if (BOTH_DESIGNS) cards.push({ category: "worksheets", route: "worksheet", iconName: "pen-line", title: "Handwriting worksheet", blurb: "Print this unit's words on handwriting lines. Trace each word, then write it yourself." });
   // Grades 1-2 only, and its own constant rather than BOTH_DESIGNS: the printable
   // runs to Grade 4, this covers the story glossary and stops at 2.
@@ -18099,9 +18273,11 @@ function renderStudentResources() {
     const locked = card.route ? !sectionUnlocked(card.route) : false;
     const action = locked
       ? `<small>${icon("lock")} Opens when you get there</small>`
-      : card.href
-        ? `<a class="button secondary" href="${card.href}">Open ${icon("arrow-right")}</a>`
-        : `<button class="button secondary" data-go="${escapeHtml(card.route)}" type="button">Open ${icon("arrow-right")}</button>`;
+      : card.print
+        ? `<button class="button secondary" data-print="${escapeHtml(card.print)}" type="button">Print ${icon("printer")}</button>`
+        : card.href
+          ? `<a class="button secondary" href="${card.href}">Open ${icon("arrow-right")}</a>`
+          : `<button class="button secondary" data-go="${escapeHtml(card.route)}" type="button">Open ${icon("arrow-right")}</button>`;
     return `<article class="panel final-section-card student-resource-card${locked ? " is-locked" : ""}">
       <span>${icon(card.iconName)}</span>
       <h3>${escapeHtml(card.title)}</h3>
@@ -18132,6 +18308,10 @@ function renderStudentResources() {
       <section class="panel"><h2>Stuck on something?</h2><p>Press <strong>Wehel Tutor</strong> at the bottom of any page and ask. Wehel knows which page you are on, so you can say “I don't understand this” and get help there and then.</p></section>
     </div>`;
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+  $$('[data-print]').forEach((button) => button.addEventListener("click", () => {
+    const sheet = { "core-words-weeks": printCoreWordsByWeek, "unit-plan": printUnitStudyPlan, "grade-plan": printGradeStudyPlan }[button.dataset.print];
+    if (sheet) sheet();
+  }));
   icons();
 }
 

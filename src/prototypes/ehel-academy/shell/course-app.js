@@ -2267,6 +2267,13 @@ export function createCourseApp(config) {
 
   function renderRoute() {
     if (config.onBeforeRender) config.onBeforeRender();
+    // Cleared HERE, and set by deck.js on mount, so a deck page keeps the
+    // topbar (owner, 2026-09-02) without any subject having to know. The
+    // sibling marker `gc-full` is cleared in all six subjects' onBeforeRender
+    // instead, which is six places to forget; one clear in the shared renderer
+    // covers every subject and every route, including the ones that draw no
+    // deck at all.
+    document.body.classList.remove("has-deck");
     $("#app").innerHTML = "";
     // The shared help page dispatches ahead of the subject's renderers, so it
     // is reachable from anywhere — including a unit English's gate has locked.

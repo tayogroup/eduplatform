@@ -146,6 +146,17 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     // already hides the topbar/sidebar and requests browser fullscreen on the nav
     // click). Cleared in onBeforeRender when leaving the section.
     if (fullBleed) document.body.classList.add("gc-full");
+    // A deck is on this page — which is what lets the topbar stay visible here
+    // while focus mode goes on hiding it everywhere else (owner, 2026-09-02).
+    // The learner wants the progress bar, Class chat and Raise hand in reach
+    // while working through slides; those live in the topbar and nowhere else.
+    //
+    // Set for EVERY deck, full-bleed or not, because it says "a deck is here"
+    // and nothing more — the CSS decides what that is worth, and it excludes
+    // the two states where the deck deliberately owns the whole screen
+    // (`gc-full`, and the deck's own theatre mode). Cleared centrally in
+    // course-app.js :: renderRoute, so no subject has to remember to.
+    document.body.classList.add("has-deck");
 
     // Found inside the host, not across the document: on a page that also shows
     // another design of the same section, #gc-track and #gc-count are no longer

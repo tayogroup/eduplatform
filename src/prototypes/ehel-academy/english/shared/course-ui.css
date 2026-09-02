@@ -170,6 +170,28 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-
    Menu button (or Escape) restores the topbar + sidebar. */
 body.focus-mode .topbar, body.focus-mode .sidebar { display: none; }
 body.focus-mode .app-shell { grid-template-columns: 1fr; min-height: 100vh; }
+/* …except on a DECK page, where the topbar stays (owner, 2026-09-02). A learner
+   working through slides wants the unit progress bar, Class chat and Raise hand
+   in reach, and those live in the topbar and nowhere else — the floating Menu
+   and Back buttons carry none of them.
+   `has-deck` is set by shell/deck.js on every mount and cleared centrally in
+   course-app.js :: renderRoute, so this reaches all six subjects' decks with no
+   per-subject rule. The sidebar is NOT restored: it is the column focus mode
+   exists to reclaim, and the board replaced it as the navigation anyway.
+   Both exclusions are load-bearing rather than defensive, and both would
+   otherwise be broken BY specificity — `.deck-theatre .topbar` and the
+   `gc-full` rules are (0,2,1) and this selector outranks them, so a deck that
+   has deliberately taken the whole screen would get a topbar back across the
+   top of it. `gc-full` is the full-bleed mount; `deck-theatre` is the deck's own
+   Full screen button. */
+body.focus-mode.has-deck:not(.gc-full):not(.deck-theatre) .topbar { display: grid; }
+/* …and the floating Back and Menu drop below it. They are `position: fixed` at
+   top:12px, which was clear while focus mode hid the topbar and lands squarely
+   on it now — measured: a 62px sticky topbar against buttons at 12-56px. They
+   are NOT removed instead: the topbar carries the progress bar, Class chat and
+   Raise hand but no way back to the board, so those two are still the only exit.
+   62 + the same 12px gap they already keep from the top. */
+body.focus-mode.has-deck:not(.gc-full):not(.deck-theatre) .focus-exit { top: 74px; }
 .focus-exit { display: none; }
 body.focus-mode .focus-exit { position: fixed; top: 12px; left: 12px; z-index: 60; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px 0 13px; border: 0; border-radius: 999px; background: #102c43; color: #fff; font: inherit; font-size: 14px; font-weight: var(--weight-medium); cursor: pointer; box-shadow: 0 6px 20px rgba(16,44,67,.35); }
 body.focus-mode .focus-exit:hover { background: #1d4360; }

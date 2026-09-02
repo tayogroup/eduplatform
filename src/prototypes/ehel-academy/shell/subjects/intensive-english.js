@@ -251,7 +251,25 @@ function renderOverview() {
 
 function renderLecture() {
   const script = course.visual?.lectureScript || "";
-  $("#app").innerHTML = `${pageHeader("Begin here", "The lesson", "Read it and listen to it. This explains all six — everything else in the unit practises what is here.", "Audio pending")}
+  // No badge. This page carried "Audio pending" — hardcoded, so it showed on
+  // all 40 units of both levels regardless of state, and it was wrong on every
+  // one of them: the narration exists and plays. Verified 40/40 against storage
+  // by the key the shell actually looks a clip up with (staticVoiceKey =
+  // cyrb53 of the text with whitespace collapsed), with the computed name for
+  // Level 2 Unit 12 matching the clip a browser was watched to fetch.
+  //
+  // Telling a learner the audio is not ready, on a page whose Listen button
+  // plays it, is worse than saying nothing. Dropping the argument does not
+  // leave the slot empty: pageHeader defaults it to "Approved content", which
+  // is what every other page here already shows — Texts, Questions, Speaking,
+  // Writing, Practice, Quiz, Answers and My progress all pass no badge. So this
+  // page stops being the odd one out rather than losing a label.
+  //
+  // The slot is still worth passing where it says something true: the Word list
+  // counts its entries, and the Teacher view really is awaiting sign-off.
+  // "Pending" was a real caveat once too, and stopped being one when the clips
+  // were generated, with nothing anywhere to notice that it had.
+  $("#app").innerHTML = `${pageHeader("Begin here", "The lesson", "Read it and listen to it. This explains all six — everything else in the unit practises what is here.")}
     <div class="lecture-layout">
       <section class="panel">
         <h2>${escapeHtml(course.unit.unitTitle)}</h2>

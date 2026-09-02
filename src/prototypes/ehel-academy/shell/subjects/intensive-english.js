@@ -408,6 +408,23 @@ function renderGrammar() {
   // shared full-screen toggle has to be wired here as well — same button, same
   // helper, same CSS as the other five subjects.
   mountTheatre($(".gc-wrap"), $(".gc-theatre"));
+  // And for the same reason, the announcement mountDeck makes has to be made
+  // here too, or Raise hand and Class chat never reach this header (owner,
+  // 2026-09-03). Measured on live v392 before this line existed: pressing Full
+  // screen on Patterns hid the topbar and took BOTH controls with it, leaving an
+  // adult learner mid-lesson with no way to reach their teacher — the exact gap
+  // the deck-header move was made to close, still open in the one deck that does
+  // not go through mountDeck.
+  //
+  // renderRoute pushes them back to the topbar just before #app is emptied, so
+  // without this nothing ever claims them again: navigating to Patterns actively
+  // returns them to a bar this section then hides.
+  //
+  // `has-deck` is deliberately NOT set alongside it. That marker only decides
+  // whether focus mode keeps the topbar on a deck page, and this section already
+  // sets `gc-full` to take the whole screen; the controls are in the header now,
+  // which is the reachable place either way.
+  document.dispatchEvent(new CustomEvent("ehel:deck-mounted", { detail: { root: $("#app") } }));
 
   const track = $(".gc-track");
   const dots = $$("[data-dot]");

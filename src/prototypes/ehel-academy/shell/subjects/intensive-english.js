@@ -812,6 +812,31 @@ const config = {
     return { manifest, course };
   },
   async onReady() {
+    // Lesson-version reset: a REWRITTEN lesson resets its completion, so a
+    // learner who ticked "I have read and listened" is asked to read the new one.
+    // English's counterpart versions a re-recorded video; here the lecture is a
+    // text lesson with narration (renderLecture reads `visual.lectureScript`),
+    // so what a version can mean is that the words changed.
+    //
+    // Ported deliberately WITH english.js's fix rather than as it first stood
+    // there: the test is `seen !== null && seen !== current`, never a bare
+    // inequality. A MISSING key means only that this browser has not opened this
+    // unit — a second device, another browser, cleared site data — and treating
+    // that as "changed" re-locked the lesson for learners whose progress had just
+    // arrived from the server, along with every section behind it in the chain.
+    // Absent is not changed: record the version and leave completion alone.
+    if (course.visual?.lectureVersion) {
+      const versionKey = `${STORAGE_KEY}-lecture-version`;
+      const seen = localStorage.getItem(versionKey);
+      if (seen !== null && seen !== course.visual.lectureVersion) {
+        progress.completed = progress.completed.filter((section) => section !== "lecture");
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      }
+      // Written on the first visit too, so the next load has a baseline to
+      // compare against — that first write is what makes a later rewrite
+      // detectable at all.
+      if (seen !== course.visual.lectureVersion) localStorage.setItem(versionKey, course.visual.lectureVersion);
+    }
     if (isPrereqUnit && !["overview", "placement", "year-plan", "teacher"].includes(location.hash.slice(1))) location.hash = "overview";
     if (!isPrereqUnit && ["placement", "year-plan"].includes(location.hash.slice(1))) location.hash = "overview";
     document.title = `${course.level.label} | Unit ${course.unit.unitNo}: ${course.unit.unitTitle}`;

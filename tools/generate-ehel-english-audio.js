@@ -56,7 +56,7 @@ const ENGLISH = path.join(ROOT, "src", "prototypes", "ehel-academy", "english");
 // voiceId, model`), so the clip's own metadata names the voice that made it —
 // which means the constant a run reads and the constant it writes down can
 // never disagree.
-const { tts, speakableBlanks, speakableLetterRanges, FatalTtsError, PermanentTtsError, VOICE_ID, MODEL_ID } = require("./lib/ehel-tts");
+const { tts, speakableBlanks, speakableLetterRanges, FatalTtsError, PermanentTtsError, VOICE_ID, MODEL_ID, DELIVERIES } = require("./lib/ehel-tts");
 
 // --- args ---
 const args = process.argv.slice(2);
@@ -66,7 +66,29 @@ const category = args.find((a) => /^(readings|grammar-practice|grammar|speaking|
 // so a run meant to cap itself at five clips quietly widened to a second grade
 // and billed for it. Flag values are consumed here rather than filtered later,
 // so a new flag with a numeric argument gets the same protection by listing it.
-const FLAGS_WITH_VALUES = new Set(["--limit", "--only", "--emit-scripts"]);
+const FLAGS_WITH_VALUES = new Set(["--limit", "--only", "--emit-scripts", "--delivery"]);
+// --delivery <name>: which DELIVERY of the approved voice to record with — one of
+// the named presets in lib/ehel-tts.js (`standard`, the course default, or
+// `lively`). Same voice, same script, read differently. An unknown name is
+// refused rather than defaulted, because a typo here would bill a whole run in
+// the wrong voice. Every descriptor this run writes records the name it used
+// (see voiceMeta), so a clip's metadata says how it was read as well as by whom.
+const deliveryArg = args.indexOf("--delivery");
+const delivery = deliveryArg >= 0 ? args[deliveryArg + 1] : "standard";
+if (!Object.prototype.hasOwnProperty.call(DELIVERIES, delivery)) {
+  console.error(`Unknown --delivery "${delivery}". Known: ${Object.keys(DELIVERIES).join(", ")}`);
+  process.exit(2);
+}
+const voiceSettings = DELIVERIES[delivery];
+// The provenance every descriptor carries. `delivery` is written only when it is
+// not the default, so the thousands of existing descriptors and a standard run's
+// output stay byte-identical — a diff on this field means the read changed.
+function voiceMeta() {
+  return {
+    provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+    ...(delivery !== "standard" ? { delivery } : {}),
+  };
+}
 const grades = args
   .filter((a, i) => /^[1-8]$/.test(a) && !FLAGS_WITH_VALUES.has(args[i - 1]))
   .map(Number);
@@ -170,7 +192,7 @@ function dictionaryItems(dictionary, grade) {
       done: prev.available === true && prev.normal === source,
       apply() {
         entry.audio = {
-          provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+          ...voiceMeta(),
           normal: source, slow: source,
           slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
           cueStart: 0, cueEnd: null,
@@ -263,7 +285,7 @@ function glossaryItems(glossary, grade) {
       apply() {
         entry.wordAudio = {
           source: wordSource, normal: wordSource, slow: wordSource,
-          provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+          ...voiceMeta(),
           slowPlaybackRate: prevWord.slowPlaybackRate ?? 0.76,
           cueStart: 0, cueEnd: null,
           available: true, status: "Generated",
@@ -287,7 +309,7 @@ function glossaryItems(glossary, grade) {
       apply() {
         entry.definitionAudio = {
           source: defSource, normal: defSource, slow: defSource,
-          provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+          ...voiceMeta(),
           slowPlaybackRate: prevDef.slowPlaybackRate ?? 0.76,
           cueStart: 0, cueEnd: null,
           available: true, status: "Generated",
@@ -332,7 +354,7 @@ function quizItems(quiz, grade) {
       apply() {
         question.audio = {
           ...prev, source, normal: source, slow: source,
-          provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+          ...voiceMeta(),
           slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
           available: true, status: "Generated",
         };
@@ -407,7 +429,7 @@ function overviewItems(holder, panels, idPrefix, grade) {
         holder.overviewAudio = holder.overviewAudio || {};
         holder.overviewAudio[key] = {
           ...prev, source, normal: source, slow: source,
-          provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+          ...voiceMeta(),
           slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
           available: true, status: "Generated",
           ...(prev.audioRevision ? { audioRevision: prev.audioRevision } : {}),
@@ -492,7 +514,7 @@ function itemsForUnit(unit, grade) {
             const prev = entry.sentenceAudio[i] || {};
             entry.sentenceAudio[i] = {
               source, normal: source, slow: source,
-              provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+              ...voiceMeta(),
               slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
               available: true, status: "Generated",
               // Carried forward, or the next run would derive the pre-rename
@@ -505,9 +527,14 @@ function itemsForUnit(unit, grade) {
       // One clip narrating the word's definition (entry.childMeaning) -- distinct
       // from the practice-sentence clips above, which only ever model usage.
       if (meanings && entry.childMeaning) {
-        const id = `${entry.vocabularyId}-meaning`;
-        const source = `./${dir}/${id}.mp3`;
+        // Same `audioRevision` rename as the sentences above, for the same
+        // reason: a meaning re-recorded under its old filename reaches nobody
+        // whose edge already holds it. It was missing here until the Grade 1
+        // Core words were re-read in a new delivery (2026-09-02), the first
+        // re-record of a meaning clip with its text unchanged.
         const prevMeaning = entry.meaningAudio || {};
+        const id = `${entry.vocabularyId}-meaning${prevMeaning.audioRevision || ""}`;
+        const source = `./${dir}/${id}.mp3`;
         items.push({
           id, ref: entry, title: entry.vocabularyId,
           text: narration(entry.childMeaning),
@@ -517,9 +544,10 @@ function itemsForUnit(unit, grade) {
           apply() {
             entry.meaningAudio = {
               source, normal: source, slow: source,
-              provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+              ...voiceMeta(),
               slowPlaybackRate: prevMeaning.slowPlaybackRate ?? 0.76,
               available: true, status: "Generated",
+              ...(prevMeaning.audioRevision ? { audioRevision: prevMeaning.audioRevision } : {}),
             };
           },
         });
@@ -544,7 +572,7 @@ function itemsForUnit(unit, grade) {
         apply() {
           g.practiceAudio = {
             ...prev, source, normal: source, slow: source,
-            provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+            ...voiceMeta(),
             slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
             available: true, status: "Generated",
             ...(prev.audioRevision ? { audioRevision: prev.audioRevision } : {}),
@@ -574,7 +602,7 @@ function itemsForUnit(unit, grade) {
         apply() {
           entry.audio = {
             ...prev, source, normal: source, slow: source,
-            provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+            ...voiceMeta(),
             slowPlaybackRate: prev.slowPlaybackRate ?? 0.76,
             available: true, status: "Generated",
             ...(prev.audioRevision ? { audioRevision: prev.audioRevision } : {}),
@@ -835,7 +863,7 @@ async function main() {
         // exists (the old date-stamped names), and keying off `available` alone
         // left those dangling: the clip was counted as "reused" because the file
         // was on disk, yet the descriptor still named the missing one.
-        item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, available: true };
+        item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, ...(delivery !== "standard" ? { delivery } : {}), available: true };
         return true;
       }
       return false;
@@ -849,14 +877,14 @@ async function main() {
     for (let attempt = 1; attempt <= 3 && !ok; attempt += 1) {
       try {
         process.stdout.write(`g${grade} ${category} ${item.id} (${item.text.length} chars)… `);
-        const buf = await tts(item.text);
+        const buf = await tts(item.text, { voiceSettings });
         fs.writeFileSync(clipOutput, buf);
         charsSent += item.text.length; generated += 1; count += 1; ok = true;
         narrationIndex[key] = fingerprint;
         myFingerprints.set(key, fingerprint);
         if (myFingerprints.size % FLUSH_EVERY === 0) saveNarrationIndex(myFingerprints);
         if (item.apply) item.apply();
-        else item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, available: true };
+        else item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, ...(delivery !== "standard" ? { delivery } : {}), available: true };
         changed = true;
         console.log(`ok ${(buf.length / 1024).toFixed(0)} KB`);
       } catch (e) {

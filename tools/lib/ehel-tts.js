@@ -73,6 +73,24 @@ const API_BASE = "https://api.elevenlabs.io/v1";
 const VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const MODEL_ID = "eleven_multilingual_v2";
 const VOICE_SETTINGS = { stability: 0.62, similarity_boost: 0.82, style: 0.18, use_speaker_boost: true };
+// Named DELIVERIES of the one approved voice: the same speaker, read differently.
+// `standard` is VOICE_SETTINGS above and what every clip in the course was made
+// with. `lively` is the owner's ask of 2026-09-02 for the Grade 1 Core words —
+// "a voice style children can relate to" — with the scripts untouched: lower
+// stability lets the pitch move the way a storyteller's does, and a higher
+// style weight brings out the speaker's own warmth rather than a flat read.
+// similarity_boost stays where it is, because it is what keeps this the SAME
+// voice; pushing style much past 0.5 on eleven_multilingual_v2 starts to buy
+// artefacts rather than expression, so this sits below that line.
+//
+// A preset is a name so the descriptor a generator writes can record which one
+// made the clip (`delivery`), and so two runs cannot hold two slightly
+// different "lively" objects. A change here is a voice change for every clip
+// recorded under the name — same rule as VOICE_ID.
+const DELIVERIES = {
+  standard: VOICE_SETTINGS,
+  lively: { stability: 0.42, similarity_boost: 0.82, style: 0.45, use_speaker_boost: true },
+};
 const OUTPUT_FORMAT = "mp3_44100_128";
 // Long enough for the slowest legitimate clip, short enough that a dead
 // connection fails instead of hanging the run until someone notices.
@@ -131,5 +149,5 @@ async function tts(text, { voiceId = VOICE_ID, modelId = MODEL_ID, voiceSettings
 
 module.exports = {
   tts, speakableBlanks, speakableLetterRanges, FatalTtsError, PermanentTtsError,
-  API_BASE, VOICE_ID, MODEL_ID, VOICE_SETTINGS, OUTPUT_FORMAT, TIMEOUT_MS,
+  API_BASE, VOICE_ID, MODEL_ID, VOICE_SETTINGS, DELIVERIES, OUTPUT_FORMAT, TIMEOUT_MS,
 };

@@ -3610,6 +3610,34 @@ outage and a burned tag. An entry path is cheap to be wrong about, because it
 clears itself in five minutes. Storage reads with the access key are passive and
 answer the same question without minting anything.
 
+**The rule is about PROVING ABSENCE, not about `v{TAG}/`, and filing it under
+the path shape is what let two sessions break it in one evening (2026-08-31).**
+Both had this passage, both applied it correctly to version paths all night, and
+both then fetched a MEDIA path through the edge to confirm a file was missing.
+Media carries `max-age=31536000`, so each miss minted a year-long cached 404:
+one on `app/english/v356/english.js`, two on
+`app/english/grade-8/media/unit-1/teacher-lecture.3f8b63f5.mp4` and its poster
+(`CDN-Cache: HIT`, `CDN-CachedAt` stamped at the moment of the probe). **To
+prove a file is absent, ask STORAGE with the access key. A storage read is
+passive; an edge read is a WRITE to the cache.**
+
+Note the failure shape, because it is the opposite of the ones this file mostly
+records. A broken check announces itself — a total-failure verdict on something
+known-good, three of which happened the same evening. This one returns exactly
+the answer you expected and costs nothing you can see; the damage is created BY
+the confirmation and is invisible until somebody goes looking.
+
+**Two of those three 404s are recoverable-by-luck and one carries a live trap.**
+Nothing references any of them today. But `version-lecture-video.js --salt` is
+DETERMINISTIC — `shortHash` is `sha1(contents + salt)` — so re-running it with
+the same salt over the same bytes reproduces the same name. Verified: for Grade 8
+Unit 1's trimmed lecture, `sha1(bytes + "tail-20260831")[:8]` is `3f8b63f5`,
+which is now a cached 404 until 2027-08. **Never reuse the salt
+`tail-20260831`**, and treat any salt as burned once its output has been probed:
+a salt is not a nonce, and picking a fresh string costs nothing. Its whole
+purpose is to mint a path nothing has ever requested, which a reused salt is
+not.
+
 It cuts the other way too, and that half is about `app/shared/fonts/`. Assets
 exempted from the version path sit on ENTRY paths, so a correction to one lands
 within five minutes instead of waiting on a new tag — but the same fact means a

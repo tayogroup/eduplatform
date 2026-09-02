@@ -79,13 +79,17 @@ if (!Object.prototype.hasOwnProperty.call(DELIVERIES, delivery)) {
   console.error(`Unknown --delivery "${delivery}". Known: ${Object.keys(DELIVERIES).join(", ")}`);
   process.exit(2);
 }
-const voiceSettings = DELIVERIES[delivery];
+// A preset names its voice as well as its settings (`alice` is a different
+// speaker), so BOTH are read from it and the constant VOICE_ID is only the
+// standard preset's voice from here on.
+const { voiceId: DELIVERY_VOICE, settings: voiceSettings } = DELIVERIES[delivery];
 // The provenance every descriptor carries. `delivery` is written only when it is
 // not the default, so the thousands of existing descriptors and a standard run's
-// output stay byte-identical — a diff on this field means the read changed.
+// output stay byte-identical — a diff on this field means the read changed. The
+// voiceId is the preset's, so a clip recorded by another speaker says so.
 function voiceMeta() {
   return {
-    provider: "ElevenLabs", voiceId: VOICE_ID, model: MODEL_ID,
+    provider: "ElevenLabs", voiceId: DELIVERY_VOICE, model: MODEL_ID,
     ...(delivery !== "standard" ? { delivery } : {}),
   };
 }
@@ -863,7 +867,7 @@ async function main() {
         // exists (the old date-stamped names), and keying off `available` alone
         // left those dangling: the clip was counted as "reused" because the file
         // was on disk, yet the descriptor still named the missing one.
-        item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, ...(delivery !== "standard" ? { delivery } : {}), available: true };
+        item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: DELIVERY_VOICE, ...(delivery !== "standard" ? { delivery } : {}), available: true };
         return true;
       }
       return false;
@@ -877,14 +881,14 @@ async function main() {
     for (let attempt = 1; attempt <= 3 && !ok; attempt += 1) {
       try {
         process.stdout.write(`g${grade} ${category} ${item.id} (${item.text.length} chars)… `);
-        const buf = await tts(item.text, { voiceSettings });
+        const buf = await tts(item.text, { voiceId: DELIVERY_VOICE, voiceSettings });
         fs.writeFileSync(clipOutput, buf);
         charsSent += item.text.length; generated += 1; count += 1; ok = true;
         narrationIndex[key] = fingerprint;
         myFingerprints.set(key, fingerprint);
         if (myFingerprints.size % FLUSH_EVERY === 0) saveNarrationIndex(myFingerprints);
         if (item.apply) item.apply();
-        else item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: VOICE_ID, ...(delivery !== "standard" ? { delivery } : {}), available: true };
+        else item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: DELIVERY_VOICE, ...(delivery !== "standard" ? { delivery } : {}), available: true };
         changed = true;
         console.log(`ok ${(buf.length / 1024).toFixed(0)} KB`);
       } catch (e) {

@@ -3,6 +3,7 @@
 // generator run records them under NEW filenames.
 //
 //   node tools/stamp-english-audio-revision.mjs --grade 1 --unit 1 --group g1-u1-core --revision b [--meanings] [--dry]
+//   node tools/stamp-english-audio-revision.mjs … --revision c --from b     # move descriptors already at "b"
 //
 // Why a tool rather than an edit: generate-ehel-english-audio.js DERIVES each
 // clip's filename from its descriptor (`…-sentence-1b.mp3`, `…-meaningb.mp3`),
@@ -26,13 +27,17 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const argv = process.argv.slice(2);
-const opt = { grade: null, unit: null, group: null, revision: null, meanings: false, dry: false };
+const opt = { grade: null, unit: null, group: null, revision: null, from: "", meanings: false, dry: false };
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
   if (a === "--grade") { opt.grade = Number(argv[++i]); continue; }
   if (a === "--unit") { opt.unit = Number(argv[++i]); continue; }
   if (a === "--group") { opt.group = argv[++i]; continue; }
   if (a === "--revision") { opt.revision = argv[++i]; continue; }
+  // --from <rev>: the ONE revision this run may replace. Without it a stamped
+  // descriptor is refused (see below); naming the revision you expect to find
+  // is what makes overwriting it deliberate rather than accidental.
+  if (a === "--from") { opt.from = argv[++i]; continue; }
   if (a === "--meanings") { opt.meanings = true; continue; }
   if (a === "--dry") { opt.dry = true; continue; }
   console.error(`Unrecognised argument: ${a}`);
@@ -44,6 +49,8 @@ if (!opt.group) { console.error("--group <vocabulary group id> is required"); pr
 // A revision is a filename suffix. Letters only, so it can never collide with
 // the `-sentence-N` index it sits beside, and never carry a path separator.
 if (!/^[a-z]{1,3}$/.test(opt.revision || "")) { console.error("--revision must be 1-3 lowercase letters"); process.exit(2); }
+if (opt.from && !/^[a-z]{1,3}$/.test(opt.from)) { console.error("--from must be 1-3 lowercase letters"); process.exit(2); }
+if (opt.from === opt.revision) { console.error("--from and --revision are the same; nothing would move"); process.exit(2); }
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const file = path.join(ROOT, "src", "prototypes", "ehel-academy", "english", `grade-${opt.grade}`, "data", "units", `unit-${opt.unit}.json`);
@@ -71,7 +78,7 @@ const stamp = (descriptor, label) => {
   if (!descriptor) { refused.push(`${label}: no descriptor`); return; }
   const current = descriptor.audioRevision || "";
   if (current === opt.revision) { already += 1; return; }
-  if (current) { refused.push(`${label}: already at revision "${current}"`); return; }
+  if (current && current !== opt.from) { refused.push(`${label}: already at revision "${current}"${opt.from ? ` (expected "${opt.from}")` : ""}`); return; }
   descriptor.audioRevision = opt.revision;
   stamped += 1;
 };

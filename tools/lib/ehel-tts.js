@@ -87,9 +87,21 @@ const VOICE_SETTINGS = { stability: 0.62, similarity_boost: 0.82, style: 0.18, u
 // made the clip (`delivery`), and so two runs cannot hold two slightly
 // different "lively" objects. A change here is a voice change for every clip
 // recorded under the name — same rule as VOICE_ID.
+//
+// Each preset names its VOICE as well as its settings, since 2026-09-02
+// evening: `lively` was measured against the standard read across all 240
+// Grade 1 Unit 1 Core-words clips and made no audible difference (pitch
+// movement 2.34 vs 2.38 semitones, same duration, same loudness range) — the
+// stability/style knobs barely move this voice on eleven_multilingual_v2. A
+// read children relate to had to be a different SPEAKER. `alice` is ElevenLabs'
+// stock British voice of that name, chosen by the owner from eight samples: the
+// widest pitch movement of the set (17 semitones against the standard read's
+// 7), clear articulation, and a pace the app's 0.80x Grade 1 playback brings
+// back to today's. In use for Grade 1 Unit 1 Core words only, as a test.
 const DELIVERIES = {
-  standard: VOICE_SETTINGS,
-  lively: { stability: 0.42, similarity_boost: 0.82, style: 0.45, use_speaker_boost: true },
+  standard: { voiceId: VOICE_ID, settings: VOICE_SETTINGS },
+  lively: { voiceId: VOICE_ID, settings: { stability: 0.42, similarity_boost: 0.82, style: 0.45, use_speaker_boost: true } },
+  alice: { voiceId: "Xb7hH8MSUJpSbSDYk0k2", settings: { stability: 0.45, similarity_boost: 0.8, style: 0.4, use_speaker_boost: true } },
 };
 const OUTPUT_FORMAT = "mp3_44100_128";
 // Long enough for the slowest legitimate clip, short enough that a dead

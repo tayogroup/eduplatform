@@ -158,6 +158,18 @@ export function createDeck({ $, escapeHtml, icon, stopAudio = () => {}, afterPai
     // course-app.js :: renderRoute, so no subject has to remember to.
     document.body.classList.add("has-deck");
 
+    // The deck header is built above, so Raise hand and Class chat can be moved
+    // into it (owner, 2026-09-03) — the deck's Full screen button hides the
+    // topbar, and losing both ways of reaching a teacher at exactly the moment a
+    // learner is deep in a slide is the wrong trade.
+    //
+    // Announced rather than called: this module is shared by all six subjects
+    // and imports nothing from the shell, so course-app.js listens instead —
+    // the seam ehel:leave-to-board and ehel:resume-lesson already use. It fires
+    // on EVERY mount because host.innerHTML above has just destroyed the
+    // previous .gc-top along with anything parented in it.
+    document.dispatchEvent(new CustomEvent("ehel:deck-mounted", { detail: { root: host } }));
+
     // Found inside the host, not across the document: on a page that also shows
     // another design of the same section, #gc-track and #gc-count are no longer
     // guaranteed unique, and a document-wide lookup would wire this deck's arrows

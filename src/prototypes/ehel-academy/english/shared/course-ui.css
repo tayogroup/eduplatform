@@ -248,6 +248,18 @@ body.tutoring-nav .app-shell { grid-template-columns: 1fr; }
 .gc-theatre { display: inline-flex; align-items: center; gap: 7px; min-height: 38px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--ink); font: inherit; font-size: 14px; font-weight: var(--weight-medium); cursor: pointer; }
 .gc-theatre:hover { border-color: var(--teal); color: var(--teal-dark); }
 .gc-theatre svg { width: 17px; height: 17px; }
+/* Raise hand and Class chat, while they are living in the deck's own header
+   (owner, 2026-09-03; course-app.js :: placeLearnerControls MOVES them here, so
+   these are the same nodes the topbar otherwise holds — never a second copy).
+   They keep the topbar's pill shape; only the sizing that assumed a <select>
+   needs undoing. */
+.gc-top .in-deck-header { width: auto; min-height: 38px; padding: 0 13px; border-radius: 999px; font-size: 14px; }
+/* Heading and count left, the three controls grouped right. `space-between` was
+   written for three children and spreads five evenly, which reads as five
+   unrelated things rather than a title and its tools. Cosmetic only: where
+   :has() is unsupported the controls still work and are merely evenly spaced. */
+.gc-top:has(.in-deck-header) { justify-content: flex-start; }
+.gc-top:has(.in-deck-header) .gc-count { margin-right: auto; }
 /* Theatre mode: the deck, and nothing else.
    Every rule is under body.deck-theatre, which only the deck's own button sets
    and which therefore cannot exist on a Grade/Stage 5-8 page — those never mount

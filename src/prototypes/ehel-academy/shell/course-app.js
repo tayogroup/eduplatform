@@ -661,6 +661,47 @@ export function createCourseApp(config) {
   const HAND_ENDPOINT = platformUrl("/local/hubredirect/course_hand_raise.php");
   const CHAT_ENDPOINT = platformUrl("/local/hubredirect/course_group_chat.php");
 
+  // WHERE Raise hand and Class chat live, in ONE place (owner, 2026-09-03).
+  //
+  // They sit in the deck's own header when a deck is on the page, and in the
+  // topbar otherwise. The learner asked for them in the deck header because the
+  // deck's Full screen button (theatre mode) hides the topbar — so a child deep
+  // in a slide deck, which is exactly when they are stuck, lost the only two
+  // ways of reaching their teacher.
+  //
+  // MOVED, never cloned. Both controls are singletons that own polling state and
+  // an unread dot; a second copy would poll twice and disagree with itself about
+  // whether a hand is up.
+  //
+  // Called again on every deck mount, and that is not belt-and-braces:
+  // mountDeck() rebuilds its host with innerHTML, so a button parented into
+  // .gc-top is DESTROYED by the next mount — a filter change, a section change.
+  // mountHandRaise/mountClassChat run once at init and are guarded by an
+  // existence check, so nothing would ever recreate it and the control would be
+  // gone until a reload. Re-placing on each mount is what makes the move safe.
+  function placeLearnerControls({ toTopbar = false } = {}) {
+    const deckTop = toTopbar ? null : $(".gc-top");
+    const actions = $(".top-actions");
+    for (const id of ["class-chat-toggle", "hand-raise"]) {
+      const button = document.getElementById(id);
+      if (!button) continue;
+      // Before the Full screen button, so the header reads
+      // heading · count · chat · hand · Full screen.
+      const home = deckTop || actions;
+      if (!home || button.parentElement === home) continue;
+      const theatre = deckTop && deckTop.querySelector(".gc-theatre");
+      if (theatre) deckTop.insertBefore(button, theatre);
+      else if (deckTop) deckTop.appendChild(button);
+      else actions.prepend(button);
+      button.classList.toggle("in-deck-header", !!deckTop);
+    }
+  }
+  // deck.js says a deck has been built; it cannot call in here (it is shared by
+  // all six subjects and imports nothing from the shell), so it announces and
+  // this listens — the seam already used for ehel:leave-to-board and
+  // ehel:resume-lesson. One listener serves every subject.
+  document.addEventListener("ehel:deck-mounted", placeLearnerControls);
+
   function mountHandRaise() {
     const actions = $(".top-actions");
     if (!actions || !launchToken || !launchEndpoint || $("#hand-raise")) return;
@@ -741,6 +782,9 @@ export function createCourseApp(config) {
       paint();
       button.addEventListener("click", toggle);
       actions.prepend(button);
+      // The server answers after the page has rendered, so a deck is usually
+      // already on screen by now; placement decides which header it belongs to.
+      placeLearnerControls();
       watch();
     });
   }
@@ -1011,7 +1055,12 @@ export function createCourseApp(config) {
         const dataUrl = scaled.toDataURL("image/jpeg", 0.7);
 
         const overlay = document.createElement("div");
-        overlay.style.cssText = "position:fixed;inset:0;z-index:70;background:rgba(10,30,45,.75);"
+        // Above the chat panel in BOTH states (55/76 — see the toggle above), so
+        // "your teacher will see exactly this" is never covered by the panel it
+        // was opened from. It used to win on DOM order alone at an equal 70,
+        // which stopped being true once the panel could outrank it in theatre.
+        const shotZ = document.body.classList.contains("deck-theatre") ? 78 : 70;
+        overlay.style.cssText = `position:fixed;inset:0;z-index:${shotZ};background:rgba(10,30,45,.75);`
           + "display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px";
         overlay.innerHTML = '<div style="color:#fff;font:700 14px system-ui,sans-serif">'
           + "Send this picture to your teacher? Your teacher will see exactly this.</div>"
@@ -1114,6 +1163,13 @@ export function createCourseApp(config) {
       button.addEventListener("click", () => {
         open = !open;
         panel.style.display = open ? "flex" : "none";
+        // The deck's theatre mode is a position:fixed overlay at z-index 70, so
+        // the panel's usual 55 would put it BEHIND the slides — invisible at the
+        // one moment the button was moved into the deck header for. Read at open
+        // time rather than set once, because theatre is toggled after this panel
+        // is built. The screenshot preview overlay is lifted with it (it is 70,
+        // and must stay above the panel, not behind it).
+        panel.style.zIndex = document.body.classList.contains("deck-theatre") ? "76" : "55";
         if (open) {
           unread = false;
           chimed = false;
@@ -1125,6 +1181,7 @@ export function createCourseApp(config) {
         }
       });
       actions.prepend(button);
+      placeLearnerControls();
       paintLive(state.livesession);
       // Polled CLOSED as well as open, so a teacher's "everyone stop and
       // listen" reaches a child who never opened the panel — the unread dot is
@@ -2274,6 +2331,13 @@ export function createCourseApp(config) {
     // covers every subject and every route, including the ones that draw no
     // deck at all.
     document.body.classList.remove("has-deck");
+    // BEFORE the line below, which is the whole point of its being here: those
+    // two controls may be parented inside this deck's .gc-top, and emptying #app
+    // would destroy them. Nothing recreates them — mountHandRaise and
+    // mountClassChat run once at init — so they would be gone until a reload.
+    // Rescued to the topbar; a deck on the next route re-claims them through
+    // ehel:deck-mounted.
+    placeLearnerControls({ toTopbar: true });
     $("#app").innerHTML = "";
     // The shared help page dispatches ahead of the subject's renderers, so it
     // is reachable from anywhere — including a unit English's gate has locked.

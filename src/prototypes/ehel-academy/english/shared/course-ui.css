@@ -251,8 +251,20 @@ body.tutoring-nav .app-shell { grid-template-columns: 1fr; }
 /* Raise hand and Class chat, while they are living in the deck's own header
    (owner, 2026-09-03; course-app.js :: placeLearnerControls MOVES them here, so
    these are the same nodes the topbar otherwise holds — never a second copy).
-   They keep the topbar's pill shape; only the sizing that assumed a <select>
-   needs undoing. */
+   Only the sizing that assumed a <select> needs undoing; everything else is
+   inherited so the control looks the same in either home.
+
+   `border-radius` here is the base shape and is NOT what a school learner sees:
+   `html.young-stage .top-grade-picker` (0,2,1) outranks this selector (0,2,0)
+   and wins with 14px. That is the right outcome rather than a bug to fix — the
+   same button measures 14px in the topbar, so the deck header matches where it
+   came from — but do not read the 999px as describing the rendered pill.
+   young-stage spans stages 1-8 (PATH_NAV_MAX_STAGE) while decks stop at 4, so
+   it covers every deck the five school subjects mount. The one place 999px does
+   apply is Intensive English, which is excluded from young-stage by
+   `config.param !== "level"` and hand-writes its own .gc-top for Patterns
+   (bypassing mountDeck, so it fires no ehel:deck-mounted — placeLearnerControls
+   still finds that header, because it queries the document). */
 .gc-top .in-deck-header { width: auto; min-height: 38px; padding: 0 13px; border-radius: 999px; font-size: 14px; }
 /* Heading and count left, the three controls grouped right. `space-between` was
    written for three children and spreads five evenly, which reads as five

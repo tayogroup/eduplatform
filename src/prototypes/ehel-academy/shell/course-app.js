@@ -2660,6 +2660,10 @@ export function createCourseApp(config) {
     } catch (e) { /* offline / gateway unreachable → per-device resume */ }
   }
 
+  // Set once init() has bound the subject and painted the first frame; the
+  // hashchange listener above refuses to call into the subject before it.
+  let bootRenderDone = false;
+
   async function init() {
     try {
       // Hydration runs BEFORE the data load, not after. It reads nothing the
@@ -2676,6 +2680,7 @@ export function createCourseApp(config) {
       await config.onReady(ctx); // title, pickers
       $("#loading")?.remove();
       $("#app").hidden = false;
+      bootRenderDone = true;
       renderNav(); updateProgress(); renderRoute();
       mountWehelDock();
       // A get-help link opens straight into focus mode — see enterFocusMode's
@@ -2706,7 +2711,24 @@ export function createCourseApp(config) {
     const next = location.hash.slice(1);
     // Back/forward and a pasted link reach a section without going through
     // navigate(), so they report here for the same reason it does.
-    if (next && next !== route) { route = next; reportPosition(); renderNav(); renderRoute(); }
+    if (!next || next === route) return;
+    route = next;
+    // BUT NOT BEFORE THE SUBJECT IS BOUND. This listener is registered at module
+    // scope while init() is still awaiting config.load(), and config.bind(ctx) —
+    // where a subject assigns the module-scope state its renderers read — does
+    // not run until that resolves. A hash change inside that window called
+    // straight into an unbound subject: observed live on v395 (2026-09-03) as
+    // "Cannot read properties of undefined (reading 'completed')" from english's
+    // isSectionDone and from sectionUnlocked, and again as "(reading 'route')"
+    // from its onBeforeRender. Each was a different unassigned binding, which is
+    // why this is fixed here once rather than defended against in each subject.
+    //
+    // `route` is still updated above, so nothing is lost: init() renders after
+    // binding and reads `route` then, so the learner lands on the section they
+    // asked for. The window is a real one for a learner on a slow connection
+    // pressing back during the unit fetch, not only for a script.
+    if (!bootRenderDone) return;
+    reportPosition(); renderNav(); renderRoute();
   });
   // Ehel Academy logo: back to the learner's Moodle dashboard. pwsEndpoint
   // carries the Moodle host on a real launch; derive the dashboard from its

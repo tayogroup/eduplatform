@@ -1,5 +1,5 @@
 {
- "note": "Booklet answer keys for every Science unit, extracted from the source Practice booklets. Ground truth for tools/check-science-answer-keys.mjs. Regenerate with --write-fixture after re-running extract:science-content.",
+ "note": "Booklet answer keys for every Science unit, extracted from the source Practice booklets. Ground truth for tools/check-science-answer-keys.mjs. Regenerate with --write-fixture after re-running extract:science-content. RETIRED_STEMS in this script are excluded from every regeneration — see its comment for why.",
  "generatedFrom": "outputs/science-content/science-content-model.json",
  "minimumCovered": 479,
  "units": {
@@ -1143,10 +1143,6 @@
     "answer": "it reflects the Sun's light"
    },
    {
-    "stem": "Which phase marks the start of a new month in the Islamic (Hijri) calendar?",
-    "answer": "new crescent"
-   },
-   {
     "stem": "The Sun appears to rise in the ____ and set in the ____.",
     "answer": "east, west"
    },
@@ -1293,10 +1289,6 @@
    {
     "stem": "Biodiversity means:",
     "answer": "the variety of different species in an area"
-   },
-   {
-    "stem": "Being a khalifah of the Earth means being a:",
-    "answer": "caretaker and protector"
    }
   ],
   "6/3": [

@@ -293,6 +293,25 @@ function speakableLetterRanges(text) {
   });
 }
 
+// Words this voice reliably mispronounces as a more common homophone-adjacent
+// word — "Pistil" came back as "Pistol" on every trial (4/4), including the
+// full-sentence context, not just the bare word. Never guess a respelling:
+// generate short candidates, transcribe each one back, and keep only what the
+// model hears as the intended word (see CLAUDE.md, the "toe"->"tow" method).
+// "Pis til" (a space, not a hyphen) is what survived that test 4/4 times;
+// "Pisstil" also worked but visually contains "piss", wrong for a children's
+// course even though it is never displayed — this is sent to the API only,
+// the printed word is untouched and the cyrb53 hash stays on the printed
+// word, so this can never rename or re-key a clip.
+const PRONUNCIATION_RESPELLINGS = [[/\bpistil\b/gi, "pis til"]];
+function speakableWords(text) {
+  let s = String(text);
+  for (const [re, respelling] of PRONUNCIATION_RESPELLINGS) {
+    s = s.replace(re, (m) => (m[0] === m[0].toUpperCase() ? respelling[0].toUpperCase() + respelling.slice(1) : respelling));
+  }
+  return s;
+}
+
 const API_BASE = "https://api.elevenlabs.io/v1";
 const VOICE_ID = "XfNU2rGpBa01ckF309OY";
 const MODEL_ID = "eleven_multilingual_v2";
@@ -384,6 +403,6 @@ async function tts(text, { voiceId = VOICE_ID, modelId = MODEL_ID, voiceSettings
 }
 
 module.exports = {
-  tts, speakableBlanks, speakableFrames, speakableLetterRanges, FatalTtsError, PermanentTtsError,
+  tts, speakableBlanks, speakableFrames, speakableLetterRanges, speakableWords, FatalTtsError, PermanentTtsError,
   API_BASE, VOICE_ID, MODEL_ID, VOICE_SETTINGS, DELIVERIES, OUTPUT_FORMAT, TIMEOUT_MS,
 };

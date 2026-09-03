@@ -589,6 +589,57 @@ const REMOVED_SENTENCES = [
   { text: "The Prophet (peace be upon him) taught that cleanliness is a beautiful part of our faith." },
   { text: " — one scientific reason the Prophet (peace be upon him) encouraged keeping the mouth clean.", replacement: "." },
   { text: " — which is one reason the Prophet (peace be upon him) recommended breaking the fast with dates at iftar.", replacement: "." },
+
+  // Widened again (2026-09-03, later the same evening): the owner's "Islam
+  // teaches us to be khalifah, caretakers of the Earth" framing, and the
+  // parallel "Allah made X" attributions in explanatory prose, spread across
+  // Grades 1-8 — 20 distinct sentences, several duplicated where the same
+  // pack paragraph feeds more than one field (a concept explanation and a
+  // reasoning-prompt model answer; a concept and its truncated copies in an
+  // exploration and a visual model). NOT included here, deliberately held for
+  // a separate decision: the Hijri (Islamic) lunar calendar used as a real
+  // Moon-phases teaching example, the qibla used as a real compass-bearing
+  // example, "the adhan" used as an everyday sound in a list alongside a
+  // rooster crowing, and "reciting Bismillah" used as an example utterance in
+  // a vibration lesson. Those are a different shape of reference — a real
+  // cultural practice used AS the science content, the way Mathematics uses
+  // dates at iftar for a division problem — not an attribution of the
+  // science itself to Allah or a khalifah-as-Islamic-duty framing, which is
+  // what every entry below removes.
+  { text: "Every living thing around you is a gift from Allah — the chickens that give eggs, the goats that give milk, the plants that give mangoes and bananas, and your own living body. Saying Alhamdulillah is a beautiful way to thank Allah for all of them.", replacement: "Every living thing around you is precious — the chickens that give eggs, the goats that give milk, the plants that give mangoes and bananas, and your own living body. Being thankful for all of them is a beautiful habit." },
+  { text: "Allah made it with special parts.", replacement: "It has special parts." },
+  { text: "Allah gave you a wonderful body.", replacement: "You have a wonderful body." },
+  { text: "Allah made every person special.", replacement: "Every person is special." },
+  { text: "A date tastes sweet. Before we eat we say Bismillah, and after we eat we say Alhamdulillah, to thank Allah for our food.", replacement: "A date tastes sweet." },
+  { text: "Allah made our ears so we can hear all these sounds.", replacement: "Our ears let us hear all these sounds." },
+  { text: "This is one of the beautiful ways that Allah has made the living world fit together.", replacement: "This is one of the beautiful ways that the living world fits together." },
+  { text: "The earth is a gift, and Allah has made people the khalifah — the carers and guardians of the earth.", replacement: "The earth is a gift, and it is everyone's job to be its carers and guardians." },
+  { text: "When you do these things, you are being a good khalifah. You are caring for the world that Allah has trusted to us, and you are helping animals and plants get the things they need to live.", replacement: "When you do these things, you are being a good caretaker of the world. You are helping animals and plants get the things they need to live." },
+  { text: "[*] Remember — You Are a Khalifah!", replacement: "[*] Remember — You Are a Caretaker!" },
+  { text: "Third, we will learn how to protect the environment and care for the earth, which Allah has trusted us to look after.", replacement: "Third, we will learn how to protect the environment and care for the earth we all share." },
+  { text: "Being a khalifah and caring for animals and nature connects your science to your faith.", replacement: "Caring for animals and nature is part of being a good caretaker of the earth." },
+  { text: "As a khalifah of the Earth, even you can help", replacement: "Even you can help" },
+  { text: "caretaker (khalifah) of the world.", replacement: "caretaker of the world." },
+  { text: "This is one of the amazing patterns in Allah's creation:", replacement: "This is one of the amazing patterns in nature:" },
+  { text: "Isn't that a beautiful design in Allah's creation?", replacement: "Isn't that a beautiful design?" },
+  { text: "caretaker (khalifah) of Allah's creation.", replacement: "caretaker of nature." },
+  { text: "a good khalifah, a caretaker of the earth.", replacement: "a good caretaker of the earth." },
+  { text: "In Islam, taking good care of the Earth is part of being a good khalifah, or caretaker, of Allah's creation, and avoiding waste is something our faith teaches us to value.", replacement: "Taking good care of the Earth means avoiding waste wherever we can." },
+  { text: "caring for the Earth as a khalifah connects science to your duty to protect Allah's creation.", replacement: "caring for the Earth connects science to your everyday life." },
+  { text: "steward (khalifah) of the earth.", replacement: "steward of the earth." },
+  { text: "a good khalifah, a caretaker of the earth that we have been trusted with.", replacement: "a good caretaker of the earth." },
+  { text: "caretakers (khalifah) of the earth.", replacement: "caretakers of the earth." },
+  { text: "For a Muslim, caring for the Earth is part of faith. The Qur'an describes people as khalifah, meaning stewards or caretakers entrusted with looking after the world.", replacement: "Caring for the Earth is part of being a responsible person: people act as stewards or caretakers, entrusted with looking after the world." },
+  { text: "Observing creation closely, with wonder and care, is one of the beautiful ways to reflect on the One who made it all.", replacement: "Observing nature closely, with wonder and care, is one of the best ways to understand it." },
+  { text: "Being a khalifah, a caretaker of the Earth, connects science to the value of protecting creation.", replacement: "Being a caretaker of the Earth connects science to the value of protecting nature." },
+  { text: "Caring for the earth (khalifah):", replacement: "Caring for the earth:" },
+  { text: "And it reminds us of our duty, as Muslims, to be careful stewards (khalifah) of water, never wasting it, because it is a trust and a mercy that the whole community shares.", replacement: "And it reminds us of our duty to be careful stewards of water, never wasting it, because it is a resource the whole community shares." },
+  { text: "a way of caring for the earth as khalifah.", replacement: "a way of caring for the earth." },
+  { text: "In caring for the earth and not wasting what it provides, a Muslim acts as a khalifah, a steward or caretaker of the land.", replacement: "Caring for the earth means not wasting what it provides." },
+  { text: "cleanliness as part of faith, and caring for the earth as a steward (khalifah).", replacement: "cleanliness, and caring for the earth as a steward." },
+  { text: "steward (khalifah) of the earth; the greening of dry land after rain is a sign to reflect on.", replacement: "steward of the earth; the greening of dry land after rain shows how quickly nature can recover." },
+  { text: "is part of our duty as khalifah, careful guardians of the land.", replacement: "is part of our duty as careful guardians of the land." },
+  { text: "and caring for it is part of being a khalifah.", replacement: "and caring for it matters." },
 ];
 const removedStats = [];
 function stripRemovedSentences(value, where = "") {

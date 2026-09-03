@@ -560,29 +560,43 @@ const tidy = (value = "") => punctuateKnownHeadings(String(value)
   .replace(/\s+/g, " ")
   .trim());
 
-// Sentences the owner asked to be taken out of the course (2026-09-03): three
-// references to the Prophet Muhammad in the Year 4 Unit 4, Year 5 Unit 1 and
-// Year 6 Unit 2 Lesson packs. Removed from the FINISHED unit, after the review
-// overlay, because the Year 6 one reaches the page through a reviewer's
-// override (script-review.json, grade-6 / unit-2 / concept-6) rather than from
-// the pack text, so a filter on the source blocks alone would leave it in
-// place. The Year 4 and Year 5 sentences sit in pack paragraphs the builder does
+// References to the Prophet Muhammad the owner asked to be taken out of the
+// course (2026-09-03, widened 2026-09-03 evening to "every grade and
+// subject"). A repo-wide search found the reference confined to Science, in
+// seven Lesson packs across Grades 1, 4, 5, 6, 7 and 8 (Grade 1 has it twice —
+// the same paragraph appears in a concept explanation and, verbatim, in a
+// reasoning-prompt model answer). Removed from the FINISHED unit, after the
+// review overlay, because the Grade 6, 7 and 8 references each reach the page
+// through a reviewer's override (script-review.json) rather than the pack
+// text directly, so a filter on the source blocks alone would leave them in
+// place — those three overrides are corrected to match in the same change.
+// The Grade 4 and Grade 5 sentences sit in pack paragraphs the builder does
 // not carry today (the overview takes an earlier paragraph; the "A Thought to
 // Begin With" cell is not a section), so for those this is a guard against a
-// future change of the overview rule rather than a change to the output. Only
-// the sentence goes; the paragraph around it stays.
+// future change of the overview rule rather than a change to the output.
+//
+// Two shapes: a standalone sentence is deleted outright (default replacement
+// ""); a reference embedded as a clause inside a longer sentence — Grade 7's
+// "...protecting your teeth — one scientific reason..." and Grade 8's "A date
+// gives you a quick burst of energy — which is one reason..." — is replaced
+// with "." so the host sentence, which is ordinary science content with no
+// religious reference of its own, keeps its terminal punctuation rather than
+// being deleted along with the clause.
 const REMOVED_SENTENCES = [
-  "The Prophet Muhammad, peace be upon him, taught us to care for the land, the animals and the water.",
-  "The Prophet Muhammad (peace be upon him) said that if a Muslim plants a tree and a person or animal eats from it, it is counted as a charity.",
-  "The Prophet Muhammad, peace be upon him, taught kindness to animals and even encouraged the planting of trees.",
+  { text: "The Prophet Muhammad, peace be upon him, taught us to care for the land, the animals and the water." },
+  { text: "The Prophet Muhammad (peace be upon him) said that if a Muslim plants a tree and a person or animal eats from it, it is counted as a charity." },
+  { text: "The Prophet Muhammad, peace be upon him, taught kindness to animals and even encouraged the planting of trees." },
+  { text: "The Prophet (peace be upon him) taught that cleanliness is a beautiful part of our faith." },
+  { text: " — one scientific reason the Prophet (peace be upon him) encouraged keeping the mouth clean.", replacement: "." },
+  { text: " — which is one reason the Prophet (peace be upon him) recommended breaking the fast with dates at iftar.", replacement: "." },
 ];
 const removedStats = [];
 function stripRemovedSentences(value, where = "") {
   if (typeof value === "string") {
     let text = value;
-    for (const removed of REMOVED_SENTENCES) {
+    for (const { text: removed, replacement = "" } of REMOVED_SENTENCES) {
       if (!text.includes(removed)) continue;
-      text = text.split(removed).join("");
+      text = text.split(removed).join(replacement);
       removedStats.push(where);
     }
     if (text === value) return value;

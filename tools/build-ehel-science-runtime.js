@@ -701,6 +701,79 @@ const REMOVED_SENTENCES = [
   { text: "caring for your body is caring for a gift, and cleanliness is part of faith.", replacement: "caring for your body means keeping it clean and healthy." },
   { text: "In Islam, cleanliness is greatly encouraged, and keeping yourself and your surroundings clean is one of the best defences against these invisible particles.", replacement: "Keeping yourself and your surroundings clean is one of the best defences against these invisible particles." },
   { text: "In Islam, keeping clean is highly valued — Muslims wash carefully before each prayer, and cleanliness is described as part of faith. Science shows us exactly why this care with cleanliness and clean water keeps whole communities healthy.", replacement: "Washing your hands carefully, every time, is one of the simplest habits there is. Science shows us exactly why this care with cleanliness and clean water keeps whole communities healthy." },
+
+  // Widened a fifth time (2026-09-03, same evening): the Hijri calendar and
+  // Ramadan/Eid — the last of the four items originally held back, and by far
+  // the largest, because two whole units (Grade 3 Unit 6 and Grade 5 Unit 6,
+  // both "the Moon and its phases") use it as their real-world payoff
+  // throughout — narrative, glossary, worked examples, and a multiple-choice
+  // question repeated across practice, fluency, assessment and four game
+  // instances each. Every entry below keeps the astronomy (a lunar month is
+  // about 29-30 days; the new crescent marks the start of a month; the same
+  // Moon that lights the night also sets a calendar) and removes only the
+  // naming of a specific religious calendar or observance.
+  //
+  // A repo-wide search for "Hijri", "Ramadan", "Eid" and "Islamic calendar"
+  // found four false positives from a broad "crescent...month" pattern used
+  // during triage — ordinary astronomy sentences that happen to use both
+  // words with no religious framing at all (Grade 3 Unit 6's worked example,
+  // Grade 5 Unit 6's "Waris watches for the crescent" reading passage and one
+  // reasoning-prompt answer, Grade 8 Unit 6's unit overview). None of the
+  // four names Ramadan, Hijri, Eid or Islam, so none is touched — the Waris
+  // passage in particular clearly depicts the same real practice without
+  // ever naming it, and stays exactly as it reads.
+  { text: "The Islamic calendar follows these moon shapes, which is how your family knows when the blessed month of Ramadan begins and ends.", replacement: "Many calendars around the world follow these moon shapes to mark the months." },
+  { text: "Did You Know? Muslims all over the world use the Moon and the Sun to keep time for worship. The five daily prayers follow the Sun's position — Fajr near sunrise, Dhuhr after midday, and Maghrib right at sunset. And the month of Ramadan is found by watching for the thin crescent Moon. Watching the sky has always helped people order their days.", replacement: "Did You Know? People all over the world have used the Moon and the Sun to keep track of time. The Sun's position in the sky marks sunrise, midday and sunset, and the thin crescent Moon marks the start of a new month. Watching the sky has always helped people order their days." },
+  { text: "The Sun's position marks the times of the daily prayers, and the crescent Moon marks the start of months like Ramadan.", replacement: "The Sun's position marks the time of day, and the crescent Moon marks the start of a new month." },
+  { text: "long before the dawn prayer.", replacement: "long before sunrise." },
+  { text: "This is why the moon can look so bright at night during Ramadan even though the moon makes no light of its own", replacement: "This is why the moon can look so bright at night even though the moon makes no light of its own" },
+  { text: "the reflected light of the new moon marks the start of Ramadan.", replacement: "the reflected light of the new moon marks the start of a new month." },
+  { text: "During Ramadan, people look for the thin new moon just after sunset.", replacement: "At the start of each month, people look for the thin new moon just after sunset." },
+  { text: "That is exactly how real astronomers, and how families watching for the Ramadan crescent, learn to read the sky.", replacement: "That is exactly how real astronomers learn to read the sky." },
+  { text: "The phases of the Moon matter deeply in the lives of Muslim families. The Islamic calendar, the Hijri calendar, is a lunar calendar, which means each month follows the Moon. A new month begins when the thin new crescent Moon is first sighted in the evening sky. This is why the beginning of Ramadan, the blessed month of fasting, is announced when people look for and see the new crescent. And the end of Ramadan, the joyful festival of Eid al-Fitr, also begins with the sighting of the next new crescent. When you learn to read the Moon's phases, you are learning to read a calendar that your family and your community have followed for many, many centuries. Each lunar month is about 29 or 30 days, which is why the Islamic year is a little shorter than the ordinary school-year calendar, and why Ramadan moves to a slightly earlier time each year." },
+  { text: "The thin crescent Moon in the evening sky is important to Muslim families because it can mark: (a) the start of the school day (b) the beginning of Ramadan (c) the end of the year (d) high tide", replacement: "The thin crescent Moon in the evening sky is important to skywatchers because it can mark: (a) the start of the school day (b) the start of a new lunar month (c) the end of the year (d) high tide" },
+  { text: "b — beginning of Ramadan The Islamic lunar calendar begins each month with the new crescent.", replacement: "b — the start of a new lunar month A lunar calendar begins each month with the new crescent." },
+  // "the beginning of Ramadan" below is a substring of Grade 5 Unit 4's
+  // sentence just below it, so that entry must run FIRST — an earlier draft
+  // had the generic one first, which fired on the substring and stranded
+  // "and the Islamic months" in the output; found only because the built
+  // text still read that way after this entry was added and should have
+  // caught it. A script scanning REMOVED_SENTENCES for any entry that is a
+  // substring of a later one would have caught this before a rebuild did.
+  { text: "This same moon marks the beginning of Ramadan and the Islamic months, and now you know the science of why it glows.", replacement: "This same moon marks the start of each new month in a lunar calendar, and now you know the science of why it glows." },
+  { text: "the beginning of Ramadan", replacement: "the start of a new lunar month" },
+  { text: "beginning of Ramadan The Islamic lunar calendar begins each month with the new crescent.", replacement: "the start of a new lunar month A lunar calendar begins each month with the new crescent." },
+  { text: "The Islamic calendar, called the Hijri calendar, follows the Moon, so every month begins with a new Moon.", replacement: "A lunar calendar follows the Moon, so every month begins with a new Moon." },
+  { text: "The lunar calendar, the Ramadan and Eid crescent, and reflecting on the order of creation all connect to this unit.", replacement: "The lunar calendar and the phases of the Moon all connect to this unit." },
+  { text: "Halima wants to look for the new Ramadan crescent.", replacement: "Halima wants to look for the new crescent Moon that marks the start of a new month." },
+  { text: "A lunar month is one full cycle of Moon phases, from new Moon to the next new Moon. It lasts about 29 to 30 days. This is the length of a month in the Islamic calendar.", replacement: "A lunar month is one full cycle of Moon phases, from new Moon to the next new Moon. It lasts about 29 to 30 days." },
+  { text: "Why does the new crescent Moon matter for Ramadan and Eid?", replacement: "Why does the new crescent Moon matter for a lunar calendar?" },
+  { text: "The Islamic calendar follows the Moon, so a new month begins when the new crescent is sighted. This marks the start of Ramadan and, later, Eid. Families watch the evening sky for the thin crescent.", replacement: "A lunar calendar follows the Moon, so a new month begins when the new crescent is sighted. Skywatchers watch the evening sky for the thin crescent." },
+  { text: "[*] Did You Know? Dates are one of the best natural energy foods in the world. That is one reason many people break their fast in Ramadan by eating dates, because they give quick energy after a long day.", replacement: "[*] Did You Know? Dates are one of the best natural energy foods in the world. That is one reason many people choose dates as a quick energy snack after a long day." },
+  { text: "the sun lights the moon and gives us day and night; the new moon marks the Islamic months.", replacement: "the sun lights the moon and gives us day and night; the new moon marks the start of a new month." },
+  { text: "When your family watches for the new crescent moon to know that Ramadan or Eid has begun, you are doing exactly what scientists and travellers have done for thousands of years — reading the sky.", replacement: "When you watch for the new crescent moon to know that a new month has begun, you are doing exactly what scientists and travellers have done for thousands of years — reading the sky." },
+  { text: "and connect this to the lunar (Hijri) calendar.", replacement: "and connect this to a lunar calendar." },
+  { text: "This slim crescent is the very sign your family looks for to announce the start of a new month in the Islamic (Hijri) calendar.", replacement: "This slim crescent is the very sign that a new month has begun in a lunar calendar." },
+  { text: "Did You Know? The Islamic (Hijri) calendar is a lunar calendar — each month begins with the sighting of the new crescent moon. Because 12 lunar months are about 11 days shorter than a solar year, Ramadan and Eid move earlier each year on the ordinary calendar. This is why Ramadan slowly shifts through all the seasons over a person's lifetime — a beautiful pattern written into the sky.", replacement: "Did You Know? A lunar calendar is a calendar where each month begins with the sighting of the new crescent moon. Because 12 lunar months are about 11 days shorter than a solar year, a lunar calendar drifts slowly against the ordinary solar calendar, moving through all the seasons over many years — a beautiful pattern written into the sky." },
+  { text: "and to see why the Moon has phases like the crescent that marks the start of a Hijri month.", replacement: "and to see why the Moon has phases like the crescent that marks the start of a new lunar month." },
+  { text: "Why is this phase special for the Islamic calendar?", replacement: "Why is this phase special for a lunar calendar?" },
+  { text: "Which phase marks the start of a new month in the Islamic (Hijri) calendar? (a) full moon (b) third quarter (c) new crescent (d) waning gibbous", replacement: "Which phase marks the start of a new lunar month? (a) full moon (b) third quarter (c) new crescent (d) waning gibbous" },
+  { text: "Which phase marks the start of a new month in the Islamic (Hijri) calendar?", replacement: "Which phase marks the start of a new lunar month?" },
+  { text: "(c) new crescent. The thin crescent after sunset marks the start of a Hijri month.", replacement: "(c) new crescent. The thin crescent after sunset marks the start of a new lunar month." },
+  { text: "new crescent. The thin crescent after sunset marks the start of a Hijri month.", replacement: "new crescent. The thin crescent after sunset marks the start of a new lunar month." },
+  { text: "A thin curved sliver of the Moon; the new crescent marks the start of a Hijri month.", replacement: "A thin curved sliver of the Moon; the new crescent marks the start of a new lunar month." },
+  { text: "A thin crescent phase marks the start of a new Hijri month.", replacement: "A thin crescent phase marks the start of a new lunar month." },
+  { text: "the lunar Hijri calendar and sighting the crescent.", replacement: "the lunar calendar and sighting the crescent." },
+  { text: "Halima's family is watching for the crescent moon to know when Ramadan starts.", replacement: "Halima's family is watching for the crescent moon to know when a new month starts." },
+  { text: "Why do people watch for the new crescent moon rather than a full moon to know a new Hijri month has begun?", replacement: "Why do people watch for the new crescent moon rather than a full moon to know a new lunar month has begun?" },
+  { text: "the bright companion that lights the savanna night and marks the months of the Hijri calendar.", replacement: "the bright companion that lights the savanna night and marks the months of a lunar calendar." },
+  { text: "Because the Moon controls the tides, and because the Moon is also what the Hijri calendar follows, the coastal people of East Africa have long connected the rhythm of the sea with the phases of the Moon.", replacement: "Because the Moon controls the tides, and because the Moon is also what a lunar calendar follows, the coastal people of East Africa have long connected the rhythm of the sea with the phases of the Moon." },
+  { text: "the lunar (Hijri) calendar, moon sighting for Ramadan and Eid, and the eclipse prayer (salat al-kusuf) connect the sky to daily worship.", replacement: "the phases of the Moon connect this unit to how people have tracked time and tides for thousands of years." },
+  { text: "Just as the lunar calendar guides the months of Ramadan and the seasons of the year, the female body follows its own gentle monthly rhythm.", replacement: "Just as a lunar calendar tracks the months by the Moon's cycle, the female body follows its own gentle monthly rhythm." },
+  { text: "The beautiful crescent that announces the start of Ramadan is sunlight bouncing off the moon.", replacement: "The beautiful crescent Moon you see in the evening sky is sunlight bouncing off the moon." },
+  { text: "During Ramadan, when many Muslims fast from dawn to sunset, a balanced diet becomes even more important. At suhoor (the meal before dawn), foods that release energy slowly — like whole grains, beans, and canjeero — help you feel full and strong through the day. Plenty of water at suhoor helps you stay hydrated. At iftar, breaking the fast gently with dates and water, then eating a balanced meal, is both a beautiful tradition and wise nutrition. Eating well during Ramadan lets you worship and study with strength.", replacement: "When someone fasts from dawn to sunset, a balanced diet becomes even more important. Before dawn, foods that release energy slowly — like whole grains, beans, and canjeero — help you feel full and strong through the day. Plenty of water before dawn helps you stay hydrated. After sunset, breaking a fast gently with dates and water, then eating a balanced meal, is both a wise and gentle way to refuel. Eating well while fasting lets you study and go about your day with strength." },
+  { text: "hygiene, clean water, and balanced eating — including good suhoor and iftar in Ramadan.", replacement: "hygiene, clean water, and balanced eating — including good meal timing around a fast." },
+  { text: "During Ramadan, Yusuf wants a suhoor that keeps him full and strong all day.", replacement: "Yusuf is fasting and wants a pre-dawn meal that keeps him full and strong all day." },
 ];
 const removedStats = [];
 // Close the seam a removal leaves: a doubled space mid-paragraph, a trailing

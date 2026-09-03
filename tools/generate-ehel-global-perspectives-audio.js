@@ -71,7 +71,7 @@ const { cyrb53, clean, MIN_CHARS, textsForUnit } = narration;
 // kinds a failure is — fatal (the credential or the account, stop the run),
 // permanent (this text, one attempt) or transient (retry). See
 // tools/lib/ehel-tts.js.
-const { tts, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
+const { tts, speakableFrames, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
 
 (async () => {
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -82,11 +82,17 @@ const { tts, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
   const enqueue = (raw, category) => {
     const c = clean(raw);
     if (c.length < MIN_CHARS) return;
+    // The clip is looked up by cyrb53 of the DISPLAYED text — the UI knows
+    // nothing of this transform — so `key` stays on `c`, unchanged. `spoken`
+    // is what actually goes to ElevenLabs: speakableFrames() reads a slash
+    // the way a teacher would ("yes/no answer" -> "yes or no answer") rather
+    // than saying "/" aloud, and leaves a citation URL's "/" alone.
     const key = cyrb53(c);
     byCategory.set(category, (byCategory.get(category) || 0) + 1);
     if (seen.has(key)) return;
     seen.add(key);
-    queue.push({ key, text: c, chars: c.length, category });
+    const spoken = speakableFrames(c);
+    queue.push({ key, text: c, spoken, chars: spoken.length, category });
   };
   for (const grade of gradeList) {
     const dir = path.join(COURSE, `grade-${grade}`, "data", "units");
@@ -132,7 +138,7 @@ const { tts, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
     for (let attempt = 1; attempt <= 3 && !ok; attempt += 1) {
       try {
         process.stdout.write(`${item.key} (${item.chars} chars, ${item.category})… `);
-        fs.writeFileSync(out, await tts(item.text));
+        fs.writeFileSync(out, await tts(item.spoken));
         sent += item.chars; made += 1; ok = true;
         console.log("ok");
       } catch (e) {

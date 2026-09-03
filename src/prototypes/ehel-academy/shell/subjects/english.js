@@ -156,7 +156,7 @@ const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
 //   The ordering rule below is what decides this, and it turns on when the
 //   stamp goes LIVE rather than when it is committed. A stamp sitting in the
 //   repo pins nothing.
-const AUDIO_RELEASE = "20260903b";
+const AUDIO_RELEASE = "20260903c";
 function withAudioRelease(url) {
   // Dev serves from disk with no caching worth defeating, and a bare filename
   // is easier to grep for in the network panel.

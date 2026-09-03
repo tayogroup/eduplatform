@@ -327,6 +327,27 @@ const SENTENCE_START_RESPELLINGS = [
   [/^solute\./i, "Chemical solute."],
 ];
 
+// Two Mathematics glossary cards, matched on the whole post-speakableFrames
+// string rather than any word or pattern — deliberately not a general rule.
+// "Litre" and "Metre" together appear in ~106 other Mathematics clips
+// (mostly mid-sentence measurements, e.g. "1 metre is longer than 90
+// centimetres") that were never tested and are not known to be broken; a
+// word-level rule here would silently rewrite all of them. Both fixes below
+// combine a spelling swap with a structural change (a trailing bare unit
+// abbreviation, an unspoken "=" sign) that only made sense worked out
+// together against these two exact clips, so an exact-string match is the
+// only thing that cannot leak onto the other 106.
+const EXACT_TEXT_RESPELLINGS = new Map([
+  [
+    "Metre (m). A large unit, about one big step; 100 cm.",
+    "Meter (m). A large unit, about one big step; 100 centimetres.",
+  ],
+  [
+    "Millilitre or Litre. Units of capacity (1 l = 1000 ml).",
+    "Milliliter or one liter. Units of capacity: 1 liter equals 1000 milliliters.",
+  ],
+]);
+
 function speakableWords(text) {
   let s = String(text);
   for (const [re, respelling] of PRONUNCIATION_RESPELLINGS) {
@@ -335,6 +356,7 @@ function speakableWords(text) {
   for (const [re, replacement] of SENTENCE_START_RESPELLINGS) {
     s = s.replace(re, replacement);
   }
+  if (EXACT_TEXT_RESPELLINGS.has(s)) s = EXACT_TEXT_RESPELLINGS.get(s);
   return s;
 }
 

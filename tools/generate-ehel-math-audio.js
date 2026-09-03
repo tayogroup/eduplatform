@@ -59,7 +59,7 @@ const { cyrb53, clean, textsForUnit, textsForCapstone } = narration;
 // kinds a failure is — fatal (the credential or the account, stop the run),
 // permanent (this text, one attempt) or transient (retry). See
 // tools/lib/ehel-tts.js.
-const { tts, speakableFrames, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
+const { tts, speakableFrames, speakableWords, FatalTtsError, PermanentTtsError } = require("./lib/ehel-tts");
 
 (async () => {
   fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -77,7 +77,7 @@ const { tts, speakableFrames, FatalTtsError, PermanentTtsError } = require("./li
     const key = cyrb53(c);
     if (seen.has(key)) return;
     seen.add(key);
-    const spoken = speakableFrames(c);
+    const spoken = speakableWords(speakableFrames(c));
     queue.push({ key, text: c, spoken, chars: spoken.length });
   };
   for (const grade of gradeList) {

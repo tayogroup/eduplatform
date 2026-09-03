@@ -83,7 +83,9 @@ function collect() {
     for (const file of files) {
       const unit = JSON.parse(fs.readFileSync(path.join(unitDir, file), "utf8"));
       for (const clip of narration.clipsForUnit(unit, catList)) {
-        if (!byHash.has(clip.hash)) byHash.set(clip.hash, { ...clip, chars: clip.text.length });
+        // chars counts what is actually SENT (clip.spoken), which is what
+        // ElevenLabs bills — not the displayed text the hash is keyed on.
+        if (!byHash.has(clip.hash)) byHash.set(clip.hash, { ...clip, chars: clip.spoken.length });
       }
     }
   }
@@ -159,7 +161,10 @@ async function main() {
       break;
     }
     const file = path.join(OUT_DIR, `${item.hash}.mp3`);
-    const audio = await speak(item.text);
+    // Sent text, not displayed text: the filename is the hash of item.text
+    // (what the button on the page shows and hashes itself), so that must
+    // stay untouched — only what reaches the voice is transformed.
+    const audio = await speak(item.spoken);
     // Written via a temp file so an interrupted run cannot leave a short mp3
     // that the next run mistakes for a finished clip.
     const tmp = `${file}.part`;

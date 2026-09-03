@@ -134,6 +134,8 @@ def speakable_frames(text: str) -> str:
     )
 
     def chain(m: re.Match) -> str:
+        if re.fullmatch(r"(?i)n/a", m.group(0)):
+            return "not applicable"
         items = m.group(0).split("/")
         return f"{items[0]} or {items[1]}" if len(items) == 2 else ", ".join(items)
 

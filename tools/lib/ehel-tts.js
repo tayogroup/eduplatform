@@ -202,7 +202,14 @@ function speakableFrames(text) {
   // Choices in brackets: "(two / too)" → ", two or too,".
   s = s.replace(/\(([^()]*?\s\/\s[^()]*?)\)/g, (_, inner) => `${CHOICE_COMMA} ${joinChoices(inner.split(/\s\/\s/).map((t) => t.trim()).filter(Boolean))}${CHOICE_COMMA}`);
   // Tight pairs and chains: "Yes/No" → "Yes or No", "he/she/it" → "he, she, it".
+  // Found on Intensive English content 2026-09-03: the same shape matches
+  // "N/A", and "N or A" is wrong — N/A is one fixed abbreviation ("not
+  // applicable"), not two single-letter word choices. Recognised by exact
+  // match, case-insensitive, before the generic split; nothing else in the
+  // course used a slash this way when this was checked (English: zero hits;
+  // Intensive English: one, in a form-filling lecture).
   s = s.replace(/\b[A-Za-z][A-Za-z'’-]*(?:\/[A-Za-z][A-Za-z'’-]*)+\b/g, (chain) => {
+    if (/^n\/a$/i.test(chain)) return "not applicable";
     const items = chain.split("/");
     return items.length === 2 ? `${items[0]} or ${items[1]}` : items.join(", ");
   });

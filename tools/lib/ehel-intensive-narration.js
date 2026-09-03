@@ -13,6 +13,7 @@ const fs = require("fs");
 const path = require("path");
 
 const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
+const { speakableFrames } = require("./ehel-tts");
 
 const CATEGORIES = ["lecture", "readings", "grammar", "words", "wordSentences", "speaking"];
 
@@ -67,7 +68,17 @@ function clipsForUnit(unit, categories = CATEGORIES) {
       // Below the floor the request is not worth making; the UI speaks these
       // through the runtime voice instead.
       if (!text || text.length < MIN_CHARS) continue;
-      out.push({ category, text, hash: cyrb53(text) });
+      // The clip is looked up by cyrb53 of the DISPLAYED text (staticVoiceKey
+      // in shell/course-app.js knows nothing of this transform), so `hash`
+      // stays on `text`, unchanged. `spoken` is what actually goes to
+      // ElevenLabs: speakableFrames() (lib/ehel-tts.js) reads a slash the way
+      // a teacher would ("sit / seat" -> "sit, seat"; two full sentences
+      // joined by "/" -> two sentences) rather than saying "/" aloud or
+      // running the words together. Added 2026-09-03 for the 21 clips across
+      // both levels — almost entirely "speaking" drills pairing full
+      // sentences or minimal pairs with "/" — that carried a literal slash
+      // into the recording with no transform at all.
+      out.push({ category, text, spoken: speakableFrames(text), hash: cyrb53(text) });
     }
   }
   return out;

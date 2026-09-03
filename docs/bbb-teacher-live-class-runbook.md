@@ -128,3 +128,20 @@ Grid layout above is always the teacher's face alone.
   the participants list → **Lock viewers** → turn **Share webcam** to locked
   → **Apply**. Lock settings are baked in at room creation, so an
   already-running room keeps whatever it started with until it ends.
+
+## Whiteboard text tool: default font and size
+
+BBB's whiteboard (the multi-user annotation layer, tldraw-based since 2.6) opens
+its Text tool at **Sans** font, **XL** size, set owner-side 2026-09-03 via
+`/etc/bigbluebutton/bbb-html5.yml` → `public.whiteboard.styles.fontStyle: 'sans'`
+/ `sizeStyle: 'xl'` on the BBB server (Hetzner), applied with
+`sudo bbb-conf --restart`. Stock BBB opens at Draw font, M size; the change
+exists so text a teacher draws on the board is legible from the back of a
+student's screen without them resizing it first.
+
+- **This is a "first use" default, not an enforced setting.** tldraw remembers
+  each browser's most recent style choice locally, so a teacher (or student)
+  who has already used the Text tool once with a different font/size keeps
+  their own last-used pick from then on — the config only decides what a
+  fresh browser profile starts at.
+- Applies to every room on this server; it is not per-course or per-teacher.

@@ -303,11 +303,37 @@ function speakableLetterRanges(text) {
 // course even though it is never displayed — this is sent to the API only,
 // the printed word is untouched and the cyrb53 hash stays on the printed
 // word, so this can never rename or re-key a clip.
-const PRONUNCIATION_RESPELLINGS = [[/\bpistil\b/gi, "pis til"]];
+const PRONUNCIATION_RESPELLINGS = [
+  [/\bpistil\b/gi, "pis til"],
+  // "Ammeter" -> "Amateur" every time, wherever it sits in a sentence — this
+  // one is a plain whole-word swap, both correct-sounding and semantically
+  // on the nose (an ammeter is literally a meter for amps).
+  [/\bammeter\b/gi, "amp meter"],
+];
+
+// "Organ" -> "Oregon" and "Solute" -> "salute", but ONLY as the opening word
+// of a clip, immediately before a period — the `${term}. ${meaning}` shape
+// every glossary entry is composed in. Confirmed clean in ordinary
+// mid-sentence use ("The heart is an organ...", "sugar is the solute...",
+// tested 4/4) so this must not be a whole-word rule: that would prefix
+// "bodily"/"chemical" onto every ordinary sentence use of either word
+// throughout the course, most of which have nothing to do with a glossary
+// card. A leading disambiguating word is what survived repeated testing —
+// respelling the word itself ("Or-gan", "Orgen", "Sol-yoot", …) came back
+// wrong 2 times out of 3 or worse; "Bodily organ" and "Chemical solute" came
+// back correct 6/6.
+const SENTENCE_START_RESPELLINGS = [
+  [/^organ\./i, "Bodily organ."],
+  [/^solute\./i, "Chemical solute."],
+];
+
 function speakableWords(text) {
   let s = String(text);
   for (const [re, respelling] of PRONUNCIATION_RESPELLINGS) {
     s = s.replace(re, (m) => (m[0] === m[0].toUpperCase() ? respelling[0].toUpperCase() + respelling.slice(1) : respelling));
+  }
+  for (const [re, replacement] of SENTENCE_START_RESPELLINGS) {
+    s = s.replace(re, replacement);
   }
   return s;
 }

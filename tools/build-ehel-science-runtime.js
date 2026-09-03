@@ -640,6 +640,46 @@ const REMOVED_SENTENCES = [
   { text: "steward (khalifah) of the earth; the greening of dry land after rain is a sign to reflect on.", replacement: "steward of the earth; the greening of dry land after rain shows how quickly nature can recover." },
   { text: "is part of our duty as khalifah, careful guardians of the land.", replacement: "is part of our duty as careful guardians of the land." },
   { text: "and caring for it is part of being a khalifah.", replacement: "and caring for it matters." },
+
+  // Widened a third time (2026-09-03, same evening): the adhan and the
+  // qibla, which the two rounds above deliberately held back as a different
+  // shape of reference — a real practice used AS the science content (a
+  // sound loud enough to carry across a town; a real reason people have
+  // always needed to find a direction), not an attribution of the science to
+  // Allah. The owner asked for these two specifically, so the Hijri-calendar
+  // Moon-phases lesson and "Muslims wash before each prayer" hygiene framing
+  // — still held back, not asked for — are untouched.
+  //
+  // Every adhan reference sits inside a sound-propagation example (the call
+  // travels from a source to a listener's home, which is the physics being
+  // taught), so the source is swapped for something else that carries the
+  // same distance — a market bell — rather than deleted, so the diagram of
+  // "vibration travels from A to B" still has an A and a B. Grade 7 Unit 6's
+  // concept explanation names "the mosque" three times as that source and
+  // all three go together, so the scene stays consistent throughout one
+  // explanation rather than switching location mid-paragraph.
+  { text: "In the morning we hear the adhan calling us to prayer.", replacement: "In the morning we hear music from someone's radio." },
+  { text: "When the muezzin calls the adhan, sound energy travels across the whole neighbourhood.", replacement: "When a loudspeaker plays music at the market, sound energy travels across the whole neighbourhood." },
+  { text: "When the muadhin calls the adhan at the mosque, how does that sound reach your house far away?", replacement: "When someone rings a bell at the market, how does that sound reach your house far away?" },
+  { text: "The vibration happens at the mosque, but you hear it in your home.", replacement: "The vibration happens at the market, but you hear it in your home." },
+  { text: "The particles themselves do not travel all the way from the mosque to your house.", replacement: "The particles themselves do not travel all the way from the market to your house." },
+  { text: "The adhan is called from a tall minaret in Hargeisa and is heard across the town.", replacement: "A bell is rung from a tall clock tower in Hargeisa and is heard across the town." },
+
+  // Every qibla reference sits inside a real navigation example (a compass,
+  // the stars, the setting sun, all genuinely used to find a direction), so
+  // it is replaced with the general "find your direction" the surrounding
+  // sentence is actually teaching, never deleted outright — a "such as" list
+  // or a real-world problem loses its worked answer if the one concrete
+  // reason it gives is simply cut.
+  { text: "Travellers, sailors and many Muslims use a compass to help find the qibla, the direction of prayer, when they are far from home.", replacement: "Travellers and sailors use a compass to help find their direction when they are far from home." },
+  { text: "This skill also helped people work out the direction of the qibla for prayer when they were far from home.", replacement: "This skill also helped people work out which direction to travel when they were far from home." },
+  { text: "the lunar Hijri calendar, sighting the crescent, and finding the qibla.", replacement: "the lunar Hijri calendar and sighting the crescent." },
+  { text: "Omar wants to face the qibla to pray but has no compass.", replacement: "Omar wants to find north but has no compass." },
+  { text: "The Sun sets in the west, so Omar can face the sunset to find west, then work out the other directions and turn towards the qibla.", replacement: "The Sun sets in the west, so Omar can face the sunset to find west, then work out the other directions from there." },
+  { text: "For a Muslim family far from home, a compass helps find the qibla — the direction of the Kaaba in Makkah — so they can face the right way for prayer.", replacement: "A compass helps a family far from home find their way, so they know which direction to travel." },
+  { text: "Geography / navigation — the Earth's magnetic field, compasses and finding the qibla.", replacement: "Geography / navigation — the Earth's magnetic field, compasses and finding direction." },
+  { text: "A traveller in the savanna uses a compass to find north, and a family uses one to find the qibla.", replacement: "A traveller in the savanna uses a compass to find north, and a family uses one to find their way home." },
+  { text: "From north the traveller can work out any direction, including the qibla for prayer.", replacement: "From north the traveller can work out any direction they need." },
 ];
 const removedStats = [];
 function stripRemovedSentences(value, where = "") {

@@ -254,10 +254,10 @@ const AI_STT_ENDPOINT = platformUrl("/local/hubredirect/quiz_stt.php");
 
 // Shell-provided bindings (populated by bind(ctx)). English keeps its own
 // pageHeader/toast/escapeHtml/icon(s) — only progress + nav come from the shell.
-let progress, complete, updateProgress, saveProgress, navigate, renderNav, emitProgress, unitSectionIds, dataRootUrl, PROGRESS_UNIT;
+let progress, complete, updateProgress, saveProgress, navigate, exitFocusMode, renderNav, emitProgress, unitSectionIds, dataRootUrl, PROGRESS_UNIT;
 let shellCtx;
 function bind(ctx) {
-  ({ complete, updateProgress, saveProgress, navigate, renderNav, emitProgress, unitSectionIds, dataRootUrl, PROGRESS_UNIT } = ctx);
+  ({ complete, updateProgress, saveProgress, navigate, exitFocusMode, renderNav, emitProgress, unitSectionIds, dataRootUrl, PROGRESS_UNIT } = ctx);
   progress = ctx.progress;
   shellCtx = ctx;
   // Every renderer in this file finishes a section through complete(), so this
@@ -15127,9 +15127,10 @@ function renderUnitStudyPlan() {
         <div class="final-quiz-facts"><span><strong>${weekCount}</strong> weeks</span>${newWordCount ? `<span><strong>${newWordCount}</strong> new words</span>` : ""}${storyWordCount > 0 ? `<span><strong>${storyWordCount}</strong> story words to look up</span>` : ""}${BOOKS_LEAD_THE_READING && unitEbooks().length ? `<span><strong>${unitEbooks().length}</strong> picture books</span>` : ""}<span><strong>${unitTexts.length}</strong> ${BOOKS_LEAD_THE_READING ? sectionLabel("reading").toLowerCase() : "readings"}</span><span><strong>${(course.grammar || []).length}</strong> grammar lessons</span></div>
       </section>
       ${Array.from({ length: weekCount }, (_, index) => weekPanel(index)).join("")}
-      <div class="audio-actions"><button class="button gold" data-go="lecture" type="button">Start with ${lectureLabel} ${icon("arrow-right")}</button><button class="button secondary" data-go="overview" type="button">Back to the overview</button></div>
+      <div class="audio-actions"><button class="button gold" id="unit-plan-back" type="button">${icon("arrow-left")} Back to Menu Board</button></div>
     </div>`;
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => navigate(button.dataset.go)));
+  $("#unit-plan-back")?.addEventListener("click", () => exitFocusMode());
   icons();
 }
 

@@ -40,12 +40,12 @@ let placement;
 
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, toast, readAlongSpans;
-let complete, saveProgress, navigate, emitProgress;
+let complete, saveProgress, navigate, exitFocusMode, pathNav, emitProgress;
 let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, learnerCategory;
 let course, progress, manifest, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, toast, readAlongSpans, complete, saveProgress, navigate,
-     emitProgress, bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds,
+     exitFocusMode, pathNav, emitProgress, bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds,
      stageNumber, learnerCategory } = ctx);
   course = ctx.course; progress = ctx.progress; manifest = ctx.manifest; dataRootUrl = ctx.dataRootUrl;
   if (isPrereqUnit) {
@@ -1233,7 +1233,7 @@ const config = {
       ],
     }) : navigate("overview")),
     "unit-plan": () => (isPrereqUnit ? navigate("overview") : renderUnitStudyPlan({
-      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate, exitFocusMode, pathNav }),
       stageLabel: `Stage ${stageNumber}`,
       unitNumber: course.unit.unitNo,
       unitTitle: course.unit.unitTitle,

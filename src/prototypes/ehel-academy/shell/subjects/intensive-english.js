@@ -97,10 +97,10 @@ let activeRecordingId = null;
 let recordedChunks = [];
 const recordings = new Map();
 
-let progress, complete, saveProgress, navigate, renderNav, emitProgress, voiceButton, toast, pageHeader, readAlongLinesHtml, PROGRESS_UNIT;
+let progress, complete, saveProgress, navigate, exitFocusMode, pathNav, renderNav, emitProgress, voiceButton, toast, pageHeader, readAlongLinesHtml, PROGRESS_UNIT;
 let shellCtx;
 function bind(ctx) {
-  ({ complete, saveProgress, navigate, renderNav, emitProgress, voiceButton, toast, pageHeader, readAlongLinesHtml, PROGRESS_UNIT } = ctx);
+  ({ complete, saveProgress, navigate, exitFocusMode, pathNav, renderNav, emitProgress, voiceButton, toast, pageHeader, readAlongLinesHtml, PROGRESS_UNIT } = ctx);
   progress = ctx.progress;
   shellCtx = ctx;
   if (isPrereqUnit) {
@@ -774,7 +774,7 @@ const config = {
       ],
     }) : navigate("overview")),
     "unit-plan": () => (isPrereqUnit ? navigate("overview") : renderUnitStudyPlan({
-      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate, exitFocusMode, pathNav }),
       stageLabel: `Level ${levelNumber}`,
       unitNumber: course.unit.unitNo,
       unitTitle: course.unit.unitTitle,

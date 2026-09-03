@@ -29,12 +29,12 @@ let placement;
 
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans;
-let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
+let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, exitFocusMode, pathNav, emitProgress;
 let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, speakText, learnerCategory;
 let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans, complete, completeGradeSection,
-     saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
+     saveProgress, saveGradeProgress, navigate, exitFocusMode, pathNav, emitProgress, bindVoiceControls, updateVoiceUI,
      stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, speakText, learnerCategory } = ctx);
   // Every spoken string passes through spokenText() before it reaches the
   // voice engine — one choke point instead of a wrapper at forty call sites,
@@ -1915,7 +1915,7 @@ const config = {
       finalRow: () => (manifest.finalAssessment ? { title: `Stage capstone project & ${manifest.finalAssessment.title}`, note: `${manifest.finalAssessment.questionCount} questions, mastery at ${manifest.finalAssessment.passPercent}%` } : null),
     }) : navigate("overview")),
     "unit-plan": () => (isPrereqUnit ? navigate("overview") : renderUnitStudyPlan({
-      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate, exitFocusMode, pathNav }),
       stageLabel: `Stage ${stageNumber}`,
       unitNumber: course.unit.unitNo,
       unitTitle: course.unit.unitTitle,

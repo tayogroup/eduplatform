@@ -2607,6 +2607,12 @@ export function createCourseApp(config) {
     // behaviour — English stands its sequential gate down and shows the grade
     // picker, because this learner roams grades by design.
     learnerCategory: IS_TUTORING ? "tutoring" : "",
+    // pathNav: is exitFocusMode()'s "Back" actually going to a BOARD? True for
+    // every staged subject; false only for Intensive English (config.param ===
+    // "level", no sticker board at all — see ensureFocusChrome's own
+    // pathNav-conditional aria-label). A "Back to Menu Board" control needs
+    // this to say so only where a board exists.
+    pathNav,
     // readAlongLinesHtml: wraps a text's lines in the .rd-line spans a
     // voiceButton's data-readalong selector then walks. See the read-along
     // block above.
@@ -2620,7 +2626,14 @@ export function createCourseApp(config) {
     // stopVoice: a slide deck silences the current narration when the learner
     // swipes to the next slide. navigate() already does this on a route change,
     // but a deck changes what is on screen without changing route.
-    navigate, emitProgress, bindVoiceControls, updateVoiceUI, renderNav, renderRoute, speakText, stopVoice,
+    // exitFocusMode: for a subject's own "Back to Menu Board" control (the
+    // Unit Study Plan's, for one) — leaves focus mode and, for a staged
+    // (pathNav) subject, opens the sticker board, exactly what the floating
+    // Menu/Back buttons already do (see ensureFocusChrome's aria-label "Back
+    // to the unit board"). A subject calls this rather than navigate("overview")
+    // because the board IS the destination now, not a page with a pill at the
+    // foot of it.
+    navigate, exitFocusMode, emitProgress, bindVoiceControls, updateVoiceUI, renderNav, renderRoute, speakText, stopVoice,
     unitSectionIds, updateProgress, unitGuide, stageNumber, unitNumber, params, dataRootUrl,
     STORAGE_KEY, STAGE_STORAGE_KEY, PROGRESS_UNIT,
     progress, gradeProgress,

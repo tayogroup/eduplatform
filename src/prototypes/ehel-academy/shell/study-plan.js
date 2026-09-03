@@ -298,7 +298,8 @@ export function renderUnitStudyPlan(options) {
         <div class="final-quiz-facts"><span><strong>${weekCount}</strong> week${weekCount === 1 ? "" : "s"}</span><span><strong>${parts.length}</strong> parts</span><span><strong>5</strong> short sessions a week</span></div>
       </section>
       ${Array.from({ length: weekCount }, (_, index) => weekPanel(index)).join("")}
-      <div class="audio-actions"><button class="button gold" data-go="${parts.length ? parts[0][0] : "overview"}" type="button">Start with ${parts.length ? ui.escapeHtml(parts[0][2]) : "the overview"} ${ui.icon("arrow-right")}</button><button class="button secondary" data-go="overview" type="button">Back to the overview</button></div>
+      <div class="audio-actions"><button class="button gold" id="unit-plan-back" type="button">${ui.icon("arrow-left")} Back to ${ui.pathNav ? "Menu Board" : "Menu"}</button></div>
     </div>`;
   for (const button of ui.$$("[data-go]")) button.addEventListener("click", () => ui.navigate(button.dataset.go));
+  ui.$("#unit-plan-back")?.addEventListener("click", () => ui.exitFocusMode());
 }

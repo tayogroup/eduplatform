@@ -30,13 +30,13 @@ let placement;
 
 // Shell-provided bindings (populated by bind(ctx)).
 let $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans;
-let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, emitProgress;
+let complete, completeGradeSection, saveProgress, saveGradeProgress, navigate, exitFocusMode, pathNav, emitProgress;
 let bindVoiceControls, updateVoiceUI, stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, learnerCategory;
 let course, progress, gradeProgress, manifest, gradeCapstone, dataRootUrl;
 let shellCtx;
 function bind(ctx) {
   ({ $, $$, escapeHtml, icon, voiceButton, pageHeader, toast, readAlongSpans, complete, completeGradeSection,
-     saveProgress, saveGradeProgress, navigate, emitProgress, bindVoiceControls, updateVoiceUI,
+     saveProgress, saveGradeProgress, navigate, exitFocusMode, pathNav, emitProgress, bindVoiceControls, updateVoiceUI,
      stopVoice, renderNav, unitSectionIds, stageNumber, STAGE_STORAGE_KEY, PROGRESS_UNIT, learnerCategory } = ctx);
   shellCtx = ctx;
   course = ctx.course; progress = ctx.progress; gradeProgress = ctx.gradeProgress;
@@ -1975,7 +1975,7 @@ const config = {
       finalRow: () => ({ title: "Stage capstone project & capstone quiz", note: "brings the whole stage together" }),
     }) : navigate("overview")),
     "unit-plan": () => (isPrereqUnit ? navigate("overview") : renderUnitStudyPlan({
-      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate }),
+      deps: () => ({ $, $$, escapeHtml, icon, pageHeader, navigate, exitFocusMode, pathNav }),
       stageLabel: `Stage ${stageNumber}`,
       unitNumber: course.unit.unitNo,
       unitTitle: course.unit.unitTitle,

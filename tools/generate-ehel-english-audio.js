@@ -461,12 +461,21 @@ function itemsForUnit(unit, grade) {
     return overviewItems(unit, overviewPanels(unit), (unit.unit || {}).unitId, grade);
   }
   if (category === "readings") {
-    return (unit.readings || []).map((r) => ({
-      id: r.readingId, ref: r, title: r.title,
-      text: narration(r.passageScript),
-      source: `./${dir}/${r.readingId}.mp3`,
-      output: path.join(ENGLISH, dir, `${r.readingId}.mp3`),
-    }));
+    // `audioRevision` renames the clip, exactly as it does for activities and
+    // writing below: the edge caches media by path for a year and ignores query
+    // strings, so a re-recording that keeps its filename keeps serving the old
+    // bytes wherever the old clip was ever played. Added 2026-09-03 when six
+    // Grade 1 readings stayed stale on the Johannesburg node through two purges.
+    return (unit.readings || []).map((r) => {
+      const revision = r.audio?.audioRevision || "";
+      const id = `${r.readingId}${revision}`;
+      return {
+        id, ref: r, title: r.title,
+        text: narration(r.passageScript),
+        source: `./${dir}/${id}.mp3`,
+        output: path.join(ENGLISH, dir, `${id}.mp3`),
+      };
+    });
   }
   if (category === "grammar") {
     // The title is already on screen above the Listen button, so narrating it
@@ -872,7 +881,7 @@ async function main() {
         // exists (the old date-stamped names), and keying off `available` alone
         // left those dangling: the clip was counted as "reused" because the file
         // was on disk, yet the descriptor still named the missing one.
-        item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: DELIVERY_VOICE, ...(delivery !== "standard" ? { delivery } : {}), available: true };
+        item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: DELIVERY_VOICE, ...(delivery !== "standard" ? { delivery } : {}), available: true, ...(item.ref.audio?.audioRevision ? { audioRevision: item.ref.audio.audioRevision } : {}) };
         return true;
       }
       return false;
@@ -893,7 +902,7 @@ async function main() {
         myFingerprints.set(key, fingerprint);
         if (myFingerprints.size % FLUSH_EVERY === 0) saveNarrationIndex(myFingerprints);
         if (item.apply) item.apply();
-        else item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: DELIVERY_VOICE, ...(delivery !== "standard" ? { delivery } : {}), available: true };
+        else item.ref.audio = { source: item.source, provider: "ElevenLabs", voiceId: DELIVERY_VOICE, ...(delivery !== "standard" ? { delivery } : {}), available: true, ...(item.ref.audio?.audioRevision ? { audioRevision: item.ref.audio.audioRevision } : {}) };
         changed = true;
         console.log(`ok ${(buf.length / 1024).toFixed(0)} KB`);
       } catch (e) {

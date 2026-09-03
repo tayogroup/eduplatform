@@ -2270,6 +2270,23 @@ The other five subjects have no such stamp. If one ever re-renders audio without
 changing the text, it needs one — copying English's is a few lines — or a purge,
 which needs an account-level key that is not in `.env`.
 
+**The stamp does not reach the EDGE, and the edge does not refresh on a storage
+overwrite either — measured 2026-09-03.** After the frame-narration re-record
+(745 clips under their existing names, stamp bumped twice, v394/v395 live), a
+sweep fetched every one of the 745 through the pull zone and compared bytes
+with the committed recording: 737 fresh, **8 stale** — all Grade 1, all
+`CDN-Cache: HIT` with a `CDN-CachedAt` between 2026-08-26 and 2026-09-02, i.e.
+cached by a learner's play BEFORE the new bytes reached storage. Storage held
+the new file; the edge kept serving the old one, with the `?a=` stamp on the
+request. So "the repair itself reached storage and the edge correctly"
+(connoisseur, above) was true of a clip nobody had played, not a property of
+the pipeline. The exposure is exactly the clips that were popular before the
+repair, which is the worst possible selection. The only remedies are a purge
+by URL (dashboard, or the account key) or a rename. **After any same-name
+re-upload, sweep the edge** — fetch each clip through the pull zone and compare
+sha1 with the file — and hand the stale URLs to whoever holds the account key;
+the fact that a stamp went live proves nothing about the edge.
+
 #### The English CDN orphan pruner, and why it needed writing
 
 **`tools/prune-english-audio-on-bunny.mjs`** now covers this. Report by default,

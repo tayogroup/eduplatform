@@ -89,6 +89,16 @@ const CASES = [
   ["Ask and answer “Can you ___?” with “Yes, I can.” / “No, I can't.”",
     "Ask and answer “Fill in the blank: Can you ...?” with “Yes, I can.” “No, I can't.”"],
   ["Adjective + noun phrases with a / an chosen by sound.", "Adjective + noun phrases with a or an chosen by sound."],
+  // Found checking Science, Mathematics, Computing and Global Perspectives
+  // 2026-09-03: a rate unit ("A car travelling at 60 km/h" -> "60 km or h"
+  // was wrong twice over), a fixed compound that is one thing rather than two
+  // alternatives ("TCP/IP" -> "TCP or IP" was wrong), and the tail of a
+  // domain or filename, which must be left completely alone.
+  ["A car travelling at 60 km/h takes 4 hours for a journey.", "A car travelling at 60 km per h takes 4 hours for a journey."],
+  ["Its weight on Earth (g = 10 N/kg) is:", "Its weight on Earth (g = 10 N per kg) is:"],
+  ["A few you should know: TCP/IP — the core rules of the internet.", "A few you should know: TCP IP — the core rules of the internet."],
+  ["Available at: www.example.org/water-hargeisa (Accessed 12/03/2024).", "Available at: www.example.org/water-hargeisa (Accessed 12/03/2024)."],
+  ["Go to www.mathsisfun.com/data/data-graph.php. Click Bar at the top.", "Go to www.mathsisfun.com/data/data-graph.php. Click Bar at the top."],
   // Text with neither a blank nor a slash passes through untouched.
   ["Sami has a red apple. He likes it.", "Sami has a red apple. He likes it."],
 ];
@@ -99,9 +109,14 @@ const CASES = [
 // Unit 0 teacher plans (already a recorded finding of check-english-content),
 // and this rule is about frames and choices.
 const PHONEME_RE = /\/[^\s/]{1,3}\//g;
+// A whole chain immediately after a dot is the tail of a domain or filename
+// ("example.org/path", "mathsisfun.com/data/data-graph.php") —
+// speakableFrames() deliberately leaves the entire thing untouched, slash and
+// all, so the gate must not flag slashes it correctly chose not to touch.
+const DOMAIN_TAIL_RE = /(?<=\.)[A-Za-z][A-Za-z'’-]*(?:\/[A-Za-z][A-Za-z'’-]*)+/g;
 const SPOKEN_SLASH_RE = /(?:^|[\s\w)”"’'])\/(?:[\s\w(“"‘']|$)/;
 const BLANK_RE = /_{2,}/;
-const spokenSlash = (text) => SPOKEN_SLASH_RE.test(String(text).replace(PHONEME_RE, " "));
+const spokenSlash = (text) => SPOKEN_SLASH_RE.test(String(text).replace(PHONEME_RE, " ").replace(DOMAIN_TAIL_RE, (m) => m.replace(/\//g, " ")));
 
 let findings = 0;
 const fail = (msg) => { findings += 1; console.log(`✗ ${msg}`); };

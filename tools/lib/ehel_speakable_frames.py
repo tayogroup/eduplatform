@@ -28,6 +28,10 @@ LINE_BREAK_SLASH_RE = re.compile(r"([_.,!?;:”\"’'])\s/\s")
 TAIL_RE = re.compile(r"[.!?]*[\"”’']*\s*$")
 ANCHOR_RE = re.compile(r"(?:^|[\s:(])['‘\"“]")
 AFTER_ITEM_RE = re.compile(r"^((?:[^\s_]+\s+){0,2}[^\s_]+)(?=\s*_{2,})")
+# Bare SI abbreviations found paired across a slash ("km/h", "m/s", "N/kg") —
+# see the JS file's comment above its own copy of this set for the reasoning.
+RATE_UNITS = {"mm", "cm", "m", "km", "mg", "g", "kg", "ml", "l", "s", "min", "h", "hr", "hrs", "n"}
+FIXED_COMPOUNDS = {"TCP/IP"}
 
 
 def _join_choices(items: list[str]) -> str:
@@ -134,9 +138,18 @@ def speakable_frames(text: str) -> str:
     )
 
     def chain(m: re.Match) -> str:
+        # The tail of a domain or filename ("example.org/path") is preceded by
+        # a dot with no space, which a real word never is — leave it whole.
+        start = m.start()
+        if start > 0 and m.string[start - 1] == ".":
+            return m.group(0)
         if re.fullmatch(r"(?i)n/a", m.group(0)):
             return "not applicable"
         items = m.group(0).split("/")
+        if len(items) == 2 and items[0].lower() in RATE_UNITS and items[1].lower() in RATE_UNITS:
+            return f"{items[0]} per {items[1]}"
+        if m.group(0).upper() in FIXED_COMPOUNDS:
+            return " ".join(items)
         return f"{items[0]} or {items[1]}" if len(items) == 2 else ", ".join(items)
 
     s = TIGHT_CHAIN_RE.sub(chain, s)

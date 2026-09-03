@@ -197,6 +197,17 @@ function speakableSpan(span, state) {
   return lead + body + tail;
 }
 
+// Bare SI abbreviations found paired across a slash in Science and
+// Mathematics ("km/h", "m/s", "N/kg") — every one confirmed against the real
+// content on 2026-09-03, not a general unit list. Matched lowercase; "N" for
+// Newton is the only one whose case ever mattered in what was found, and
+// lower-casing both sides before the lookup loses nothing a real sentence
+// would use this way.
+const RATE_UNITS = new Set(["mm", "cm", "m", "km", "mg", "g", "kg", "ml", "l", "s", "min", "h", "hr", "hrs", "n"]);
+// A compound term that names ONE thing, never two alternatives. Found in
+// Computing: "TCP/IP" is the protocol suite, not a choice between TCP and IP.
+const FIXED_COMPOUNDS = new Set(["TCP/IP"]);
+
 function speakableFrames(text) {
   let s = String(text);
   // Choices in brackets: "(two / too)" → ", two or too,".
@@ -208,9 +219,28 @@ function speakableFrames(text) {
   // match, case-insensitive, before the generic split; nothing else in the
   // course used a slash this way when this was checked (English: zero hits;
   // Intensive English: one, in a form-filling lecture).
-  s = s.replace(/\b[A-Za-z][A-Za-z'’-]*(?:\/[A-Za-z][A-Za-z'’-]*)+\b/g, (chain) => {
+  //
+  // Checking Science, Mathematics, Computing and Global Perspectives the same
+  // day found two more shapes the generic rule gets wrong, plus a third that
+  // is not a word at all:
+  //   - a RATE UNIT, both sides a bare SI abbreviation with no digit in
+  //     sight to mark it as numeric ("km/h", "m/s", "N/kg") — "60 km or h"
+  //     is wrong twice over, as arithmetic and as English. Read "X per Y".
+  //   - a FIXED COMPOUND term that is one named thing, not two alternatives
+  //     ("TCP/IP" is the protocol suite, never "TCP or IP") — the slash is
+  //     dropped, nothing inserted in its place.
+  //   - the tail of a DOMAIN or FILENAME ("example.org/water-hargeisa",
+  //     "mathsisfun.com/data/data-graph.php") — the dot immediately before it
+  //     is what a real word never has, so a chain starting right after a dot
+  //     with no space is left completely alone, slash and all.
+  s = s.replace(/\b[A-Za-z][A-Za-z'’-]*(?:\/[A-Za-z][A-Za-z'’-]*)+\b/g, (chain, offset, whole) => {
+    if (whole[offset - 1] === ".") return chain;
     if (/^n\/a$/i.test(chain)) return "not applicable";
     const items = chain.split("/");
+    if (items.length === 2 && RATE_UNITS.has(items[0].toLowerCase()) && RATE_UNITS.has(items[1].toLowerCase())) {
+      return `${items[0]} per ${items[1]}`;
+    }
+    if (FIXED_COMPOUNDS.has(chain.toUpperCase())) return items.join(" ");
     return items.length === 2 ? `${items[0]} or ${items[1]}` : items.join(", ");
   });
   const pieces = s.split(SPAN_SPLIT_RE);

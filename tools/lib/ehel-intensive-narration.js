@@ -13,7 +13,7 @@ const fs = require("fs");
 const path = require("path");
 
 const { cyrb53, clean, MIN_CHARS } = require("./ehel-narration-hash");
-const { speakableFrames } = require("./ehel-tts");
+const { speakableFrames, speakableWords } = require("./ehel-tts");
 
 const CATEGORIES = ["lecture", "readings", "grammar", "words", "wordSentences", "speaking"];
 
@@ -78,7 +78,7 @@ function clipsForUnit(unit, categories = CATEGORIES) {
       // both levels — almost entirely "speaking" drills pairing full
       // sentences or minimal pairs with "/" — that carried a literal slash
       // into the recording with no transform at all.
-      out.push({ category, text, spoken: speakableFrames(text), hash: cyrb53(text) });
+      out.push({ category, text, spoken: speakableWords(speakableFrames(text)), hash: cyrb53(text) });
     }
   }
   return out;

@@ -322,9 +322,20 @@ const PRONUNCIATION_RESPELLINGS = [
 // respelling the word itself ("Or-gan", "Orgen", "Sol-yoot", …) came back
 // wrong 2 times out of 3 or worse; "Bodily organ" and "Chemical solute" came
 // back correct 6/6.
+// "Pictogram" as the opening word of a clip is dropped or split ("Pick to
+// Gram") roughly half the time in BOTH Mathematics and Computing, which
+// share this glossary-card pattern. Respelling the word alone ("Picto-gram",
+// "Pictograhm") was no more reliable than the original; what worked 7/7 in
+// testing (both subjects, several different meaning sentences) was "The
+// pictogram." — the same leading-word shape as organ/solute. Confirmed the
+// anchor only matches the isolated glossary card in both courses (4 clips
+// each) and never the many mid-sentence/title uses ("Reading a Pictogram.",
+// "Pictograms and the Key.", …), which do not begin the string with the bare
+// word.
 const SENTENCE_START_RESPELLINGS = [
   [/^organ\./i, "Bodily organ."],
   [/^solute\./i, "Chemical solute."],
+  [/^pictogram\./i, "The pictogram."],
 ];
 
 // Two Mathematics glossary cards, matched on the whole post-speakableFrames
@@ -337,6 +348,14 @@ const SENTENCE_START_RESPELLINGS = [
 // abbreviation, an unspoken "=" sign) that only made sense worked out
 // together against these two exact clips, so an exact-string match is the
 // only thing that cannot leak onto the other 106.
+// "Obtuse angle" (leading word — see SENTENCE_START_RESPELLINGS above for
+// why that alone is not enough here) also carries a raw, unhandled "°"
+// degree sign, which the voice reads unreliably. The degree sign appears in
+// 732 Mathematics clips overall, in shapes this pair doesn't cover —
+// negative degrees ("−5°"), Celsius/Fahrenheit ("19°C"), comma lists
+// ("−5°, 2°, −1°, 0°") — none of them tested, so a general "°" handler is
+// deliberately NOT added here; these two are exact-string entries for
+// exactly that reason, same as Metre/Litre above.
 const EXACT_TEXT_RESPELLINGS = new Map([
   [
     "Metre (m). A large unit, about one big step; 100 cm.",
@@ -346,6 +365,28 @@ const EXACT_TEXT_RESPELLINGS = new Map([
     "Millilitre or Litre. Units of capacity (1 l = 1000 ml).",
     "Milliliter or one liter. Units of capacity: 1 liter equals 1000 milliliters.",
   ],
+  [
+    "Obtuse angle. Bigger than a right angle but less than 180°.",
+    "The obtuse angle. Bigger than a right angle but less than 180 degrees.",
+  ],
+  [
+    "Obtuse angle. Between 90° and 180°.",
+    "The obtuse angle. Between 90 degrees and 180 degrees.",
+  ],
+  // Intensive English's dictionary "words" clip is the bare term alone, no
+  // sentence — the hardest case tested this pass, since a short isolated
+  // clip gives Whisper (and apparently the voice itself) the least context.
+  // "secondment" as a whole word came back "Second Mint" 5/6 tries, even
+  // respelled; only pairing an article WITH "temporary" fixed it (8/8).
+  // "surcharge" needed only the article (8/8) — respelling it alone
+  // ("Surcharj") got worse, not better, on repeat. Both are exact-string
+  // matches, not PRONUNCIATION_RESPELLINGS whole-word rules, because a
+  // whole-word rule would also rewrite the two words' sentence examples in
+  // wordSentences ("The surcharge was not mentioned." -> "...the a
+  // surcharge...") — those were flagged as still-partial in the audit and
+  // are a separate, unfixed problem, not addressed here.
+  ["secondment", "A temporary secondment"],
+  ["surcharge", "A surcharge"],
 ]);
 
 function speakableWords(text) {

@@ -774,6 +774,147 @@ const REMOVED_SENTENCES = [
   { text: "During Ramadan, when many Muslims fast from dawn to sunset, a balanced diet becomes even more important. At suhoor (the meal before dawn), foods that release energy slowly — like whole grains, beans, and canjeero — help you feel full and strong through the day. Plenty of water at suhoor helps you stay hydrated. At iftar, breaking the fast gently with dates and water, then eating a balanced meal, is both a beautiful tradition and wise nutrition. Eating well during Ramadan lets you worship and study with strength.", replacement: "When someone fasts from dawn to sunset, a balanced diet becomes even more important. Before dawn, foods that release energy slowly — like whole grains, beans, and canjeero — help you feel full and strong through the day. Plenty of water before dawn helps you stay hydrated. After sunset, breaking a fast gently with dates and water, then eating a balanced meal, is both a wise and gentle way to refuel. Eating well while fasting lets you study and go about your day with strength." },
   { text: "hygiene, clean water, and balanced eating — including good suhoor and iftar in Ramadan.", replacement: "hygiene, clean water, and balanced eating — including good meal timing around a fast." },
   { text: "During Ramadan, Yusuf wants a suhoor that keeps him full and strong all day.", replacement: "Yusuf is fasting and wants a pre-dawn meal that keeps him full and strong all day." },
+
+  // Widened a sixth time (2026-09-03, later the same evening): the owner asked
+  // for the subject to be religion-neutral outright, which closes the four
+  // shapes the earlier rounds had each held back for a separate decision and
+  // sweeps up the remainder — every "In Islam, X is valued" attribution of an
+  // ordinary virtue, the named prayer times used as clock readings, the mosque
+  // as a stock building, the Qur'an as the thing a child reads by lamplight,
+  // "Bismillah" as an example utterance, "God willing" as a story idiom, and
+  // the deistic "wonders/miracles/order of creation" phrasing the audit
+  // flagged beside them.
+  //
+  // Two rules govern the replacements, both inherited from the rounds above.
+  // Where the reference IS the science vehicle — a sound that carries across a
+  // town, a shadow that tells the time, a direction a traveller needs, a lamp
+  // that lets someone read after dark — it is swapped for a secular vehicle
+  // that teaches the identical physics, never deleted, because deleting it
+  // leaves a worked example with no worked case. Where it is an attribution or
+  // a devotional aside sitting beside ordinary science prose, it is dropped or
+  // restated plainly.
+  //
+  // EVERY entry below is appended AFTER the fifth round on purpose. Three of
+  // them are substrings of entries above (the crescent-Moon quiz stem is the
+  // prefix of the round-five entry that carries its options; "the wonders of
+  // creation" and "prayer times" each appear inside longer entries), and the
+  // loop applies entries in array order, so an earlier placement would fire on
+  // the substring and strand the rest of the longer entry — the exact failure
+  // recorded at "the beginning of Ramadan" above.
+
+  // Ordinary virtues attributed to Islam, and religious framing of a habit.
+  { text: "In Islam, we are taught to be kind to all creatures, even the smallest ones.", replacement: "We should be kind to all creatures, even the smallest ones." },
+  { text: "and being truthful and careful is a value that Islam praises highly.", replacement: "and being truthful and careful is a value worth holding on to." },
+  { text: "honest conversation with a trusted parent or elder, prayer and patience all help a great deal.", replacement: "honest conversation with a trusted parent or elder, quiet reflection and patience all help a great deal." },
+
+  // The named prayer times used as clock readings. The times themselves are
+  // the science (the Sun's position through the day), so each is replaced with
+  // the plain time of day it names rather than cut.
+  { text: "(for example, after fajr or midday)", replacement: "(for example, early morning or midday)" },
+  { text: "He loved to wake early for the Fajr prayer, before the sky was light.", replacement: "He loved to wake early, before the sky was light." },
+  { text: "One morning, after prayers, his grandmother took his hand", replacement: "One morning, his grandmother took his hand" },
+  { text: "and your family wakes for the Fajr prayer.", replacement: "and your family wakes for the new day." },
+  { text: "and prepare for the dawn prayer.", replacement: "and get ready for the day." },
+  { text: "to finish her homework after Maghrib,", replacement: "to finish her homework after sunset," },
+  { text: "from the moment you wake before Fajr to the moment you sleep at night", replacement: "from the moment you wake at dawn to the moment you sleep at night" },
+  { text: "listen to a lesson, or hear the time for prayer.", replacement: "listen to a lesson, or hear the time signal." },
+
+  // Grade 5 Unit 5 is the shadow-clock unit, so the prayer timetable is its
+  // worked example throughout — an outcome, a self-assessment can-do, a
+  // Reference connection, two concept examples and a real problem. The
+  // timetable is replaced by the ordinary divisions of the day it tracks
+  // (dawn, midday, mid-afternoon, sunset, night), which is the same reading of
+  // the same shadow and keeps every question answerable.
+  { text: ", including prayer times.", replacement: "." },
+  { text: "sundials and shadow sticks were used for centuries, including to help mark the five daily prayer times.", replacement: "sundials and shadow sticks were used for centuries to mark the hours of the day." },
+  { text: "Long before clocks and phones, Muslim communities used the length of a shadow to know when to pray. One old method for the Asr prayer says its time begins when the shadow of an object grows to equal the object's own height (plus its short midday shadow).", replacement: "Long before clocks and phones, communities used the length of a shadow to divide up the day. One old method marks the mid-afternoon as the moment when the shadow of an object grows to equal the object's own height (plus its short midday shadow)." },
+  { text: "For Muslim families this is more than a game. The times of the five daily prayers follow the sun. Fajr comes before sunrise; Dhuhr comes just after the sun passes its highest point, when the midday shadow is shortest and begins to lengthen again; Asr comes in the afternoon when shadows have grown longer; Maghrib comes at sunset; and Isha comes after the last light fades.", replacement: "For many families this is more than a game. People have always divided the day by the sun. Dawn comes before sunrise; midday is when the sun passes its highest point, when the midday shadow is shortest and begins to lengthen again; mid-afternoon comes when shadows have grown longer; dusk comes at sunset; and night falls after the last light fades." },
+  { text: "Before clocks, a grandmother told the Dhuhr prayer time by watching a shadow.", replacement: "Before clocks, a grandmother told midday by watching a shadow." },
+  { text: "Around the start of Dhuhr, the stick's shadow reaches its shortest length", replacement: "Around midday, the stick's shadow reaches its shortest length" },
+
+  // The adhan, a third time: two remaining sound-energy lists the round-three
+  // sweep did not reach, both naming the call as the everyday loud sound.
+  { text: "When you hear the call to prayer travel across the town, you are hearing sound energy.", replacement: "When you hear a bell ring across the town, you are hearing sound energy." },
+  { text: "and the sound energy of the call to prayer.", replacement: "and the sound energy of a ringing bell." },
+  { text: "the call to prayer you hear, the warm sun you feel", replacement: "the school bell you hear, the warm sun you feel" },
+  { text: "or softly recite 'Bismillah'.", replacement: "or softly hum a tune." },
+
+  // The qibla, a second time: Grade 3 Unit 5's real problem, whose prompt and
+  // answer both name the direction of prayer as the reason for the compass.
+  { text: "how does it help them find the direction of prayer?", replacement: "how does it help them find their way?" },
+  { text: "From north, people can work out the direction of prayer even in an unfamiliar place.", replacement: "From north, people can work out any direction they need, even in an unfamiliar place." },
+
+  // The mosque as a stock building or a scale comparison, and the Qur'an as
+  // the thing being read. Each is swapped for an equivalent everyday object so
+  // the comparison still has both of its terms.
+  { text: "When you remember the way from your home to the mosque, that is your brain.", replacement: "When you remember the way from your home to the market, that is your brain." },
+  { text: "wider than a whole house or a mosque!", replacement: "wider than a whole house or a school!" },
+  { text: "to the shadow of a mosque minaret at dusk", replacement: "to the shadow of a tall tower at dusk" },
+  { text: "The acacia trees, the mosque wall, the camels", replacement: "The acacia trees, the courtyard wall, the camels" },
+  { text: "to build houses and mosques for centuries.", replacement: "to build houses and public buildings for centuries." },
+  { text: "the beautiful decoration of grand buildings and mosques.", replacement: "the beautiful decoration of grand buildings." },
+  { text: "a simple electric light lets a child keep reading the Qur'an or finishing schoolwork.", replacement: "a simple electric light lets a child keep reading a book or finishing schoolwork." },
+  { text: "you cannot read the Qur'an in a pitch-black room", replacement: "you cannot read a book in a pitch-black room" },
+
+  // The lunar eclipse keeps its science and loses the named prayer.
+  { text: "When the moon passes into the Earth's shadow, we see a lunar eclipse, which Muslims mark with a special prayer called Salat al-Khusuf.", replacement: "When the moon passes into the Earth's shadow, we see a lunar eclipse." },
+
+  // The last two Muslims-as-a-demographic framings of an astronomy fact. The
+  // fact is kept and the audience widened, exactly as round five did for the
+  // "Muslims all over the world use the Moon and the Sun" Did-You-Know.
+  { text: "The thin crescent Moon is very special to Muslims all over the world.", replacement: "The thin crescent Moon is very special to skywatchers all over the world." },
+  { text: "The thin crescent Moon in the evening sky is important to Muslim families because it can mark:", replacement: "The thin crescent Moon in the evening sky is important to skywatchers because it can mark:" },
+
+  // "God willing" as a story idiom — the one hit in the subject that is a
+  // common English phrase rather than a proper noun. Dropped rather than
+  // reworded; the mother's line reads naturally without it.
+  { text: "as tall as this one, God willing.", replacement: "as tall as this one." },
+
+  // The deistic "creation" phrasing. None of these names a religion, and each
+  // was left alone by the rounds above for that reason; the owner's neutrality
+  // decision covers them because in this subject the word is used as a synonym
+  // for "the created world" beside the explicit references now removed. Each
+  // becomes the plain scientific noun it stands in for.
+  { text: "gentle patterns of creation everywhere", replacement: "gentle patterns of nature everywhere" },
+  { text: "is also a beautiful way to reflect on the wonders of creation.", replacement: "is also a beautiful way to explore the natural world." },
+  { text: "one of the countless wonders of creation worth thinking about.", replacement: "one of the countless wonders of the natural world worth thinking about." },
+  { text: "one of the most wonderful things in all of creation", replacement: "one of the most wonderful things in all of nature" },
+  { text: "This is one of the quiet miracles of creation", replacement: "This is one of the quiet marvels of nature" },
+  { text: "Observing creation closely and thinking carefully about it", replacement: "Observing nature closely and thinking carefully about it" },
+  { text: "finding meaning and beauty in creation.", replacement: "finding meaning and beauty in the night sky." },
+  { text: "a beautiful invitation to reflect on the design of creation.", replacement: "a beautiful invitation to study the intricate design found in nature." },
+  { text: "The lunar calendar, the phases of the Moon, and reflecting on the order of creation connect this science to daily life and to gratitude.", replacement: "The lunar calendar and the phases of the Moon connect this science to daily life." },
+  { text: "Classification is not just naming; it can protect creation.", replacement: "Classification is not just naming; it can protect nature." },
+  { text: "This is one of the great wonders of creation, and studying it is a way of reflecting on how carefully we have been made.", replacement: "This is one of the great wonders of the natural world, and studying it is a way of appreciating how remarkable the human body is." },
+  { text: "is part of the ordered pattern of creation that careful observers have always noticed.", replacement: "is part of the ordered pattern of nature that careful observers have always noticed." },
+
+  // Grade 8 Unit 7's remaining suhoor, in a real problem's answer and in the
+  // error feedback that quotes it back.
+  { text: "A good suhoor: canjeero", replacement: "A good pre-dawn meal: canjeero" },
+
+  // Widened a seventh time (2026-09-03, still the same evening): two gaps an
+  // independent verification sweep found after round six — neither was in the
+  // audit's Grade 2/3/4/5/7/8 findings, because neither is a "religious
+  // reference" in the sense the audit was scanning for (a named practice,
+  // festival or figure); one is a greeting and the other only surfaces once
+  // fully spelled out.
+  //
+  // "Assalaamu alaykum" opens the unitOverview of nine units across six
+  // grades (Grade 2 units 1, 2, 4, 5, 6; Grade 3 units 1, 5; Grade 4 unit 1;
+  // Grade 5 unit 1; Grade 7 unit 3; Grade 8 unit 3) in one of two fixed
+  // phrasings, always as the opening clause before the unit's own content
+  // begins — a stock greeting from the source pack's narrator voice, not
+  // part of any lesson. Replaced with a plain "Hello" that keeps the same
+  // warm direct-address opening.
+  { text: "Assalaamu alaykum, young scientist!", replacement: "Hello, young scientist!" },
+  { text: "Assalaamu alaykum, and welcome", replacement: "Hello, and welcome" },
+
+  // Grade 2 Unit 5's electrical-safety real problem names wudu (the Islamic
+  // ablution before prayer) as the reason a character's hands are wet — the
+  // science being tested (water conducts electricity, so dry your hands
+  // before touching a switch) does not depend on why the hands are wet, so
+  // the cause is swapped for an equally everyday one.
+  { text: "Yusuf's hands are wet after making wudu.", replacement: "Yusuf's hands are wet after washing them." },
 ];
 const removedStats = [];
 // Close the seam a removal leaves: a doubled space mid-paragraph, a trailing

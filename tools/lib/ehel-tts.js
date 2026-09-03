@@ -383,10 +383,27 @@ const EXACT_TEXT_RESPELLINGS = new Map([
   // matches, not PRONUNCIATION_RESPELLINGS whole-word rules, because a
   // whole-word rule would also rewrite the two words' sentence examples in
   // wordSentences ("The surcharge was not mentioned." -> "...the a
-  // surcharge...") — those were flagged as still-partial in the audit and
-  // are a separate, unfixed problem, not addressed here.
+  // surcharge...").
   ["secondment", "A temporary secondment"],
   ["surcharge", "A surcharge"],
+  // The wordSentences examples for both words, fixed the same session after
+  // the bare terms above. 4 of 8 sentences were already clean (not listed
+  // here) — only the failing ones needed a rewrite, and each needed its own:
+  // no single respelling of the word survived being dropped into every
+  // sentence shape. "The temporary secondment was extended twice." adds the
+  // same adjective that fixed the bare word (7/9 across two rounds — the
+  // stubbornest of the five, "The temporary secondment role..." and "The
+  // staff secondment..." were both tried and were worse). The other two
+  // secondment sentences took the adjective plus an inserted article ("on
+  // secondment" -> "on A temporary secondment") to place it grammatically;
+  // 3/4 and 4/4. Both surcharge sentences needed only a leading word ahead
+  // of "surcharge" rather than at the very start of the clip — "There IS no
+  // surcharge..." / "The EXTRA surcharge appears..." — both 4/4.
+  ["The secondment was extended twice.", "The temporary secondment was extended twice."],
+  ["A secondment is not a promotion.", "A temporary secondment is not a promotion."],
+  ["Two staff are on secondment.", "Two staff are on a temporary secondment."],
+  ["No surcharge on this order.", "There is no surcharge on this order."],
+  ["The surcharge appears on the invoice only.", "The extra surcharge appears on the invoice only."],
 ]);
 
 function speakableWords(text) {

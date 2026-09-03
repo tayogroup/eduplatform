@@ -559,6 +559,44 @@ const tidy = (value = "") => punctuateKnownHeadings(String(value)
   .replace(SOURCE_MARKER, "")
   .replace(/\s+/g, " ")
   .trim());
+
+// Sentences the owner asked to be taken out of the course (2026-09-03): three
+// references to the Prophet Muhammad in the Year 4 Unit 4, Year 5 Unit 1 and
+// Year 6 Unit 2 Lesson packs. Removed from the FINISHED unit, after the review
+// overlay, because the Year 6 one reaches the page through a reviewer's
+// override (script-review.json, grade-6 / unit-2 / concept-6) rather than from
+// the pack text, so a filter on the source blocks alone would leave it in
+// place. The Year 4 and Year 5 sentences sit in pack paragraphs the builder does
+// not carry today (the overview takes an earlier paragraph; the "A Thought to
+// Begin With" cell is not a section), so for those this is a guard against a
+// future change of the overview rule rather than a change to the output. Only
+// the sentence goes; the paragraph around it stays.
+const REMOVED_SENTENCES = [
+  "The Prophet Muhammad, peace be upon him, taught us to care for the land, the animals and the water.",
+  "The Prophet Muhammad (peace be upon him) said that if a Muslim plants a tree and a person or animal eats from it, it is counted as a charity.",
+  "The Prophet Muhammad, peace be upon him, taught kindness to animals and even encouraged the planting of trees.",
+];
+const removedStats = [];
+function stripRemovedSentences(value, where = "") {
+  if (typeof value === "string") {
+    let text = value;
+    for (const removed of REMOVED_SENTENCES) {
+      if (!text.includes(removed)) continue;
+      text = text.split(removed).join("");
+      removedStats.push(where);
+    }
+    if (text === value) return value;
+    // Close the seam the sentence leaves: a doubled space mid-paragraph, a
+    // trailing space before a paragraph break, or an empty paragraph.
+    return text.replace(/[ \t]{2,}/g, " ").replace(/ +\n/g, "\n").replace(/\n +/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+  }
+  if (Array.isArray(value)) return value.map((item, index) => stripRemovedSentences(item, `${where}[${index}]`));
+  if (value && typeof value === "object") {
+    for (const key of Object.keys(value)) value[key] = stripRemovedSentences(value[key], where ? `${where}.${key}` : key);
+    return value;
+  }
+  return value;
+}
 const slug = (value = "") => tidy(value).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const sentence = (value = "", max = 250) => {
   const text = tidy(value);
@@ -2533,6 +2571,9 @@ function buildGrade(grade) {
     // with the teaching absent. Running last makes the reviewer's prose the base
     // and checks the anchor against the text that actually ships.
     runtime.concepts = applyConceptInserts(grade, unitMeta.unit, runtime.concepts);
+    // Last of all, so it sees the text that ships — reviewed prose and inserts
+    // included — and before the capstone samples this unit's questions.
+    stripRemovedSentences(runtime, `grade ${grade} unit ${unitMeta.unit}`);
     builtUnits.push(runtime);
     for (const key of ["outcomes", "concepts", "practice", "workedExamples", "activities"]) {
       if (!runtime[key] || !runtime[key].length) warnings.push(`grade ${grade} unit ${unitMeta.unit}: empty ${key}`);
@@ -2657,6 +2698,7 @@ function buildGrade(grade) {
 const allWarnings = [];
 for (const grade of grades) allWarnings.push(...buildGrade(grade));
 console.log(`\nReviewer corrections applied: ${reviewStats.applied}`);
+console.log(`Removed sentences taken out: ${removedStats.length}${removedStats.length ? ` (${removedStats.join("; ")})` : ""}`);
 if (tidiedExplanations.length) {
   console.log(`Restated-answer stutters removed from quiz explanations (${tidiedExplanations.length}) — `
     + `"texture. Texture is how a surface feels" opened by naming the option, then said it again.`);

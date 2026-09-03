@@ -680,20 +680,51 @@ const REMOVED_SENTENCES = [
   { text: "Geography / navigation — the Earth's magnetic field, compasses and finding the qibla.", replacement: "Geography / navigation — the Earth's magnetic field, compasses and finding direction." },
   { text: "A traveller in the savanna uses a compass to find north, and a family uses one to find the qibla.", replacement: "A traveller in the savanna uses a compass to find north, and a family uses one to find their way home." },
   { text: "From north the traveller can work out any direction, including the qibla for prayer.", replacement: "From north the traveller can work out any direction they need." },
+
+  // Widened a fourth time (2026-09-03, same evening): "hygiene/prayer-washing
+  // framing" — cleanliness taught as an Islamic religious value or tied to
+  // washing before prayer, rather than a plain health habit. The remaining
+  // held-back item, the Hijri-calendar Moon-phases lesson, is still untouched
+  // — not asked for. One near-miss found while searching for this: Grade 5
+  // Unit 5's shadow concept mentions "clean glass" and, unrelated, "Muslims
+  // mark [an eclipse] with a special prayer called Salat al-Khusuf" — two
+  // matches for an "AND" search that happen to share a paragraph and nothing
+  // else; left alone, because it is neither hygiene nor prayer-washing.
+  //
+  // One entry here also repairs a case-sensitivity gap in the "khalifah"
+  // round two above: that pass matched only lower-case "khalifah" and missed
+  // Grade 2 Unit 2's heading "Khalifah of the Earth", capitalised at the
+  // start of a Reference connection. Caught while re-sweeping for this round;
+  // fixed here rather than left for a fifth pass.
+  { text: "In Islam, being clean is loved and important. So washing and keeping clean is healthy AND a good deed at the same time.", replacement: "Keeping clean is healthy, and it feels good too." },
+  { text: "Khalifah of the Earth In Islam we are taught to care for the land and not to waste. Protect soil, reuse man-made things, and keep water and land clean. Looking closely at rocks and soil is a way of reflecting on the wonders of creation.", replacement: "Caring for the Earth: protect soil, reuse man-made things, and keep water and land clean. Looking closely at rocks and soil is a way of appreciating the natural world." },
+  { text: "caring for your body is caring for a gift, and cleanliness is part of faith.", replacement: "caring for your body means keeping it clean and healthy." },
+  { text: "In Islam, cleanliness is greatly encouraged, and keeping yourself and your surroundings clean is one of the best defences against these invisible particles.", replacement: "Keeping yourself and your surroundings clean is one of the best defences against these invisible particles." },
+  { text: "In Islam, keeping clean is highly valued — Muslims wash carefully before each prayer, and cleanliness is described as part of faith. Science shows us exactly why this care with cleanliness and clean water keeps whole communities healthy.", replacement: "Washing your hands carefully, every time, is one of the simplest habits there is. Science shows us exactly why this care with cleanliness and clean water keeps whole communities healthy." },
 ];
 const removedStats = [];
+// Close the seam a removal leaves: a doubled space mid-paragraph, a trailing
+// space before a paragraph break, or an empty paragraph.
+const closeSentenceSeam = (text) => text.replace(/[ \t]{2,}/g, " ").replace(/ +\n/g, "\n").replace(/\n +/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
 function stripRemovedSentences(value, where = "") {
   if (typeof value === "string") {
     let text = value;
     for (const { text: removed, replacement = "" } of REMOVED_SENTENCES) {
       if (!text.includes(removed)) continue;
-      text = text.split(removed).join(replacement);
+      // Close the seam BEFORE the next entry is tested, not only once at the
+      // end — two removals from the same paragraph are common (Grade 1's
+      // "Staying Healthy and Clean" concept carries both the Prophet
+      // citation and the "In Islam, being clean..." framing), and the first
+      // removal's doubled space sits exactly where the second entry's text
+      // expects a single one. An end-of-loop-only cleanup left the second
+      // entry's `includes()` check silently false — found only because the
+      // built output still read "In Islam, being clean is loved..." after
+      // this entry was added and should have removed it.
+      text = closeSentenceSeam(text.split(removed).join(replacement));
       removedStats.push(where);
     }
     if (text === value) return value;
-    // Close the seam the sentence leaves: a doubled space mid-paragraph, a
-    // trailing space before a paragraph break, or an empty paragraph.
-    return text.replace(/[ \t]{2,}/g, " ").replace(/ +\n/g, "\n").replace(/\n +/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+    return text;
   }
   if (Array.isArray(value)) return value.map((item, index) => stripRemovedSentences(item, `${where}[${index}]`));
   if (value && typeof value === "object") {

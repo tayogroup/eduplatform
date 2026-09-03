@@ -54,6 +54,9 @@ const CSS = `
   padding:14px 34px;background:#f2c14e;color:#17324d;font-size:19px;font-weight:900;
   box-shadow:0 12px 30px #f2c14e4d}
 .lg-gate:hover .lg-gate-btn{background:#ffd469}
+.lg-gate-plan{margin-top:2px;color:#cfe0f0;font-size:14.5px;font-weight:700;
+  text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.lg-gate-plan:hover,.lg-gate-plan:focus-visible{color:#fff}
 @keyframes lgTileIn{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.lg-gate-inner{animation:none}}
 .lg-gate-diag{position:absolute;left:0;right:0;bottom:9px;font-size:11px;line-height:1.4;
@@ -163,7 +166,8 @@ export function mountLessonGate(opts = {}) {
     const mark = `<span class="lg-gate-mark" style="background:${subject.tint}" aria-hidden="true">${subject.mark}</span>`;
     gate.innerHTML = `<div class="lg-gate-inner">${mark}`
       + `<h2></h2><p>Tap to begin — the lesson fills the whole screen.</p>`
-      + `<span class="lg-gate-btn">▶ Start</span></div>`
+      + `<span class="lg-gate-btn">▶ Start</span>`
+      + `<a class="lg-gate-plan" href="#unit-plan">View Unit plan</a></div>`
       + `<small class="lg-gate-diag" aria-hidden="true"></small>`;
     // h2, not h1: the page behind the gate already carries the unit's h1, and
     // both are exposed at once while the gate is up — two h1s on one page. The
@@ -173,6 +177,17 @@ export function mountLessonGate(opts = {}) {
     // textContent, same reason; aria-hidden because the console already carries
     // this line and screen readers gain nothing from a build stamp.
     gate.querySelector(".lg-gate-diag").textContent = diag;
+
+    // A peek at the plan, not a start: stays short of goFullscreen() and
+    // setDismissed(), so the gate is exactly where it was when the learner
+    // comes back to the hub route. Stopped from bubbling to the gate's own
+    // click/keydown handlers below, which would otherwise treat this as the
+    // Start tap (fullscreen + dismissed) on top of the link's own navigation.
+    const planLink = gate.querySelector(".lg-gate-plan");
+    planLink.addEventListener("click", (event) => event.stopPropagation());
+    planLink.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") event.stopPropagation();
+    });
 
     const open = () => {
       setDismissed();

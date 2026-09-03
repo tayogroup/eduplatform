@@ -239,6 +239,15 @@ export function createCourseApp(config) {
     if (sectionsToggle) { if (boardCanOpen()) openSectionsSheet(); }
     else boardOnGateStart = true;
   });
+  // The gate's "View Unit plan" link (shared/lesson-gate.js) asks for this
+  // rather than changing location.hash itself: it has no access to navigate(),
+  // and a plain hash change only reaches the "pasted link" hashchange handler
+  // below, which correctly skips enterFocusMode()/closeSectionsSheet() for an
+  // actual pasted link — leaving the sidebar or board sheet on screen beside
+  // the plan instead of the plan replacing it. navigate() does both, and is
+  // the same call a nav click makes, so this section opens exactly as it would
+  // from the sidebar or board.
+  document.addEventListener("lesson-gate:view-plan", () => navigate("unit-plan"));
   // "I'm leaving", pressed on a content page, means leaving the PAGE — not the
   // app (owner, 2026-09-01). The dialog belongs to the focus-mode session bar
   // (shared/seb-session.js), which knows nothing about the board, so it asks

@@ -183,10 +183,27 @@ export function mountLessonGate(opts = {}) {
     // comes back to the hub route. Stopped from bubbling to the gate's own
     // click/keydown handlers below, which would otherwise treat this as the
     // Start tap (fullscreen + dismissed) on top of the link's own navigation.
+    //
+    // Routed through an event rather than left as a bare href: this module
+    // has no access to the shell's own navigate(), and a plain hash change
+    // only reaches course-app.js's "pasted link" hashchange handler, which
+    // (correctly, for a real pasted link) skips enterFocusMode() and
+    // closeSectionsSheet() — so the sidebar/board stayed on screen beside the
+    // plan instead of the plan replacing it. navigate() does both. Mirrors
+    // "lesson-gate:start" below: the shell owns the actual navigation, this
+    // module just asks for it. The catch is a plain hash change same as
+    // before, for an embedder with no CustomEvent — something happens either
+    // way, never nothing.
     const planLink = gate.querySelector(".lg-gate-plan");
-    planLink.addEventListener("click", (event) => event.stopPropagation());
+    const viewPlan = (event) => {
+      event.stopPropagation();
+      event.preventDefault();
+      try { document.dispatchEvent(new CustomEvent("lesson-gate:view-plan")); }
+      catch { location.hash = "unit-plan"; }
+    };
+    planLink.addEventListener("click", viewPlan);
     planLink.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") event.stopPropagation();
+      if (event.key === "Enter" || event.key === " ") viewPlan(event);
     });
 
     const open = () => {

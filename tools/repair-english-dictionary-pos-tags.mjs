@@ -1,13 +1,26 @@
 // Repair the part-of-speech tags the Core-words verb census flagged
-// (2026-08-31): entries whose taught childMeaning contradicts their tag.
+// (2026-08-31), plus the ones the picture/scene coverage pass turned up
+// (2026-09-04): entries whose taught childMeaning contradicts their tag.
 //
 //   g1 king      "A man in stories who rules a whole country"      -> noun
 //   g1 mouth     "The part of your face you use to eat and talk"   -> noun
 //   g2+g3 beginning "The start of something, before the middle..." -> noun
+//   g1 school    "The place where children go to learn and play"   -> noun (was adjective)
+//   g2 cook      "A person who makes food for other people to eat" -> noun (was verb)
+//   g4 rhyme     "A rhyme is a short poem with words that end..."  -> noun (was verb)
+//   g4 judge     id is literally judge-NOUN-01, sourceType "verb / noun",
+//                taught in a people/work/community group alongside baker,
+//                dentist, mayor — all occupations, all nouns             -> noun (was verb)
 //
 // NOT touched, each checked against its taught meaning and found correct:
 //   g3 pound  "To hit something hard, again and again"  — a real verb
 //   left      g1 adjective (a side) / g2-4 verb (went away) — split by sense
+//
+// judge's canonicalMeaning still reads as two senses fused into one
+// ("To decide if something is good or bad; a person who decides in court.")
+// — that is a content-prose issue, not a tag issue, and is left for whoever
+// owns that text. Fixing the tag is enough to stop the wrong picture/scene
+// class being offered for it.
 //
 // Entry IDS are never changed, even where they now read oddly
 // (ehel-dict-en-beginning-verb-01 stays): unit dictionaryLinks point at them,
@@ -22,10 +35,14 @@
 import fs from "node:fs";
 
 const FIXES = [
-  { file: "src/prototypes/ehel-academy/english/grade-1/data/master-dictionary.grade1.json", id: "ehel-en-g1-king", fromDef: "An action word", toDef: "A naming word" },
-  { file: "src/prototypes/ehel-academy/english/grade-1/data/master-dictionary.grade1.json", id: "ehel-en-g1-mouth", fromDef: "An action word", toDef: "A naming word" },
-  { file: "src/prototypes/ehel-academy/english/grade-2/data/master-dictionary.grade2.json", id: "ehel-dict-en-beginning-verb-01", fromDef: "Shows an action or a state.", toDef: "Names a person, place, thing or idea." },
-  { file: "src/prototypes/ehel-academy/english/grade-3/data/master-dictionary.grade3.json", id: "ehel-dict-en-beginning-verb-01", fromDef: "Shows an action or a state.", toDef: "Names a person, place, thing or idea." },
+  { file: "src/prototypes/ehel-academy/english/grade-1/data/master-dictionary.grade1.json", id: "ehel-en-g1-king", fromPos: "verb", fromDef: "An action word", toDef: "A naming word" },
+  { file: "src/prototypes/ehel-academy/english/grade-1/data/master-dictionary.grade1.json", id: "ehel-en-g1-mouth", fromPos: "verb", fromDef: "An action word", toDef: "A naming word" },
+  { file: "src/prototypes/ehel-academy/english/grade-2/data/master-dictionary.grade2.json", id: "ehel-dict-en-beginning-verb-01", fromPos: "verb", fromDef: "Shows an action or a state.", toDef: "Names a person, place, thing or idea." },
+  { file: "src/prototypes/ehel-academy/english/grade-3/data/master-dictionary.grade3.json", id: "ehel-dict-en-beginning-verb-01", fromPos: "verb", fromDef: "Shows an action or a state.", toDef: "Names a person, place, thing or idea." },
+  { file: "src/prototypes/ehel-academy/english/grade-1/data/master-dictionary.grade1.json", id: "ehel-en-g1-school", fromPos: "adjective", fromDef: "A describing word", toDef: "A naming word" },
+  { file: "src/prototypes/ehel-academy/english/grade-2/data/master-dictionary.grade2.json", id: "ehel-en-g2-cook", fromPos: "verb", fromDef: "Shows an action or a state.", toDef: "Names a person, place, thing or idea." },
+  { file: "src/prototypes/ehel-academy/english/grade-4/data/master-dictionary.grade4.json", id: "ehel-en-g2-rhyme", fromPos: "verb", fromDef: "Shows an action or a state.", toDef: "Names a person, place, thing or idea." },
+  { file: "src/prototypes/ehel-academy/english/grade-4/data/master-dictionary.grade4.json", id: "ehel-dict-en-judge-noun-01", fromPos: "verb", fromDef: "Shows an action or a state.", toDef: "Names a person, place, thing or idea." },
 ];
 
 let failed = false;
@@ -42,10 +59,10 @@ for (const fix of FIXES) {
   const block = raw.slice(start, end);
 
   if (block.includes('"partOfSpeech": "noun"')) { console.log(`= ${fix.id}: already noun, skipped`); continue; }
-  const posFrom = '"partOfSpeech": "verb"';
+  const posFrom = `"partOfSpeech": "${fix.fromPos}"`;
   const defFrom = `"partOfSpeechDefinition": "${fix.fromDef}"`;
   if (!block.includes(posFrom) || !block.includes(defFrom)) {
-    console.error(`✗ ${fix.id}: expected verb tag + "${fix.fromDef}" not found in block — refusing to guess`);
+    console.error(`✗ ${fix.id}: expected ${fix.fromPos} tag + "${fix.fromDef}" not found in block — refusing to guess`);
     failed = true; continue;
   }
   const fixedBlock = block
@@ -53,7 +70,7 @@ for (const fix of FIXES) {
     .replace(defFrom, `"partOfSpeechDefinition": "${fix.toDef}"`);
   raw = raw.slice(0, start) + fixedBlock + raw.slice(end);
   byFile.set(fix.file, raw);
-  console.log(`✓ ${fix.id}: verb -> noun`);
+  console.log(`✓ ${fix.id}: ${fix.fromPos} -> noun`);
 }
 
 if (failed) process.exit(1);

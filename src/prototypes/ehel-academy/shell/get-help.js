@@ -837,6 +837,26 @@ export function createGetHelp(options) {
     .gh-stage .gh-step-body { padding: 0; border-top: 0; }
     .gh-stage-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 18px; padding-top: 14px; border-top: 2px solid #eef3f4; }
     .gh-stage-foot .gh-note { margin: 0; }
+    .gh-prog { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 6px; margin-bottom: 14px; }
+    .gh-prog span { height: 10px; border-radius: 99px; background: #dfe7ea; }
+    .gh-prog span.done { background: var(--teal); }
+    .gh-prog span.now { background: var(--gold); }
+    .gh-qtext { margin: 6px 0 16px; font-family: var(--font-serif); font-size: 24px; line-height: 1.3; }
+    .gh-opts { display: flex; flex-direction: column; gap: 10px; }
+    .gh-opt { position: relative; display: flex; align-items: center; gap: 14px; padding: 14px 18px; border: 2px solid var(--line); border-radius: 16px; background: #fff; font-size: 16px; cursor: pointer; }
+    .gh-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .gh-opt:hover { border-color: var(--teal); }
+    .gh-opt:focus-within { outline: 3px solid var(--teal); outline-offset: 2px; }
+    .gh-key { width: 32px; height: 32px; border-radius: 10px; background: #eef3f4; color: var(--muted); display: grid; place-items: center; font-weight: var(--weight-bold); font-size: 14px; flex: none; }
+    .gh-opt.is-picked { border-color: var(--teal); background: var(--teal-soft); }
+    .gh-opt.is-picked .gh-key { background: var(--teal); color: #fff; }
+    .gh-opt.is-right { border-color: var(--green, #23845b); background: #e3f4ec; }
+    .gh-opt.is-right .gh-key { background: var(--green, #23845b); color: #fff; }
+    .gh-opt.is-wrong { border-color: var(--coral, #c2482c); background: var(--coral-soft, #ffebe5); }
+    .gh-opt.is-wrong .gh-key { background: var(--coral, #c2482c); color: #fff; }
+    .gh-stage-nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 18px; }
+    .gh-stage .gh-model { margin-top: 14px; font-size: 15px; }
+    .gh-stage textarea { width: 100%; min-height: 96px; border: 2px solid var(--line); border-radius: 14px; padding: 12px; font: inherit; resize: vertical; }
     @media (max-width: 980px) {
       .gh-desk { grid-template-columns: 1fr; }
       .gh-rail { flex-direction: row; flex-wrap: wrap; }
@@ -1092,37 +1112,88 @@ export function createGetHelp(options) {
     // before it has loaded again, names a step this render does not draw.
     if (!steps.some((step) => step.id === openStep)) openStep = firstOpenStep(session, steps);
 
+    // --- one screen at a time (direction B, folded in 2026-09-04) ---------
+    // The two checks and the lesson walk ONE item per screen — a segment bar,
+    // the question or the page, one button — with the answer marked the moment
+    // it is checked. Practise deliberately stays a scannable list: a tutoring
+    // learner arrived with one problem and browses practice, but a check
+    // should feel like a short quiz and a lesson like pages. The cursor is
+    // part of the session record, so a reload lands on the same screen; a
+    // session from before this carries none and starts at the first.
+    if (!session.cursor || typeof session.cursor !== "object") session.cursor = {};
+    const cursorOf = (id) => Math.max(0, Number(session.cursor[id]) || 0);
+    const segments = (n, at) => `<div class="gh-prog" aria-hidden="true">${Array.from({ length: n }, (_, i) => `<span class="${i < at ? "done" : i === at ? "now" : ""}"></span>`).join("")}</div>`;
+    const backButton = (id, at) => (at > 0 ? `<button class="button ghost" data-gh-back="${id}" type="button">${ui.icon("arrow-left")} Back</button>` : "<span></span>");
     const stepBody = (id) => {
       if (id === "check" || id === "recheck") {
         const part = session[id === "check" ? "check" : "recheck"];
         const set = id === "check" ? checkSet : recheckSet;
         if (!set.length) return `<p class="gh-note">This ${unitNoun()} has no questions for this step — carry on to the next one.</p>
           <div class="gh-actions"><button class="button primary" data-gh-skip="${id}" type="button">Continue ${ui.icon("arrow-right")}</button></div>`;
+        const at = Math.min(cursorOf(id), set.length - 1);
+        const q = set[at];
+        const last = at === set.length - 1;
         if (scored) {
-          return `<p class="gh-note">${id === "check" ? `Five quick questions from this ${unitNoun()}, before you study — so you can see how far you come.` : `Five different questions from the same ${unitNoun()} — compare with your first try.`}</p>
-            ${set.map((q, at) => {
-              const picked = part.answers[q.id];
-              const markedRight = part.submitted && norm(picked) === norm(q.answer);
-              return `<div class="gh-q"><p><strong>${at + 1}.</strong> ${esc(q.prompt)}</p>
-                ${q.options.map((option) => `<label><input type="radio" name="gh-${id}-${at}" value="${esc(option)}" ${norm(picked) === norm(option) ? "checked" : ""} ${part.submitted ? "disabled" : ""}><span class="${part.submitted ? (norm(option) === norm(q.answer) ? "right" : norm(picked) === norm(option) ? "wrong" : "") : ""}">${esc(option)}</span></label>`).join("")}
-                ${part.submitted && !markedRight && q.explanation ? `<div class="gh-model">${esc(q.explanation)}</div>` : ""}
-              </div>`;
-            }).join("")}
-            ${part.submitted
-              ? `<div class="gh-score"><span><strong>${part.score} of ${part.total}</strong> right</span></div><div class="gh-actions"><button class="button primary" data-gh-skip="${id}" type="button">Continue ${ui.icon("arrow-right")}</button></div>`
-              : `<div class="gh-actions"><button class="button primary" data-gh-submit="${id}" type="button">Check my answers</button></div>`}`;
+          // Submitted: the review — every question with its mark, scannable,
+          // then Continue. This is also what a learner sees coming back to a
+          // finished check from the rail.
+          if (part.submitted) {
+            return `<div class="gh-score"><span><strong>${part.score} of ${part.total || set.length}</strong> right</span></div>
+              ${set.map((question, i) => {
+                const picked = part.answers[question.id];
+                const right = norm(picked) === norm(question.answer);
+                return `<div class="gh-q"><p><strong>${i + 1}.</strong> ${esc(question.prompt)}</p>
+                  <p class="${right ? "right" : "wrong"}">${right ? "✓" : "✗"} ${esc(picked ?? "no answer")}${right ? "" : ` <span class="gh-note">· answer: ${esc(question.answer)}</span>`}</p>
+                  ${!right && question.explanation ? `<div class="gh-model">${esc(question.explanation)}</div>` : ""}
+                </div>`;
+              }).join("")}
+              <div class="gh-actions"><button class="button primary" data-gh-skip="${id}" type="button">Continue ${ui.icon("arrow-right")}</button></div>`;
+          }
+          // One question. An answer in the record means it has been checked:
+          // the options lock, the right one goes green, a wrong pick goes red,
+          // and the explanation appears under them.
+          const picked = part.answers[q.id];
+          const checked = picked != null;
+          const right = checked && norm(picked) === norm(q.answer);
+          return `${segments(set.length, at)}
+            <p class="gh-note">Question ${at + 1} of ${set.length}${id === "check" ? " — before you study, so you can see how far you come." : " — different questions on the same idea; compare with your first try."}</p>
+            <p class="gh-qtext">${esc(q.prompt)}</p>
+            <div class="gh-opts">${q.options.map((option, i) => {
+              const isPicked = norm(picked) === norm(option);
+              const cls = checked ? (norm(option) === norm(q.answer) ? " is-right" : isPicked ? " is-wrong" : "") : "";
+              return `<label class="gh-opt${cls}"><input type="radio" name="gh-${id}-${at}" value="${esc(option)}" ${isPicked ? "checked" : ""} ${checked ? "disabled" : ""}><span class="gh-key">${String.fromCharCode(65 + i)}</span><span>${esc(option)}</span></label>`;
+            }).join("")}</div>
+            ${checked ? `<div class="gh-model">${right ? "<strong>Right.</strong> " : `<strong>Not this time.</strong> The answer is <strong>${esc(q.answer)}</strong>. `}${esc(q.explanation || "")}</div>` : ""}
+            <div class="gh-stage-nav">
+              ${backButton(id, at)}
+              ${checked
+                ? `<button class="button primary" data-gh-next="${id}" type="button">${last ? "See my score" : "Next question"} ${ui.icon("arrow-right")}</button>`
+                : `<button class="button primary" data-gh-check="${id}" type="button" disabled>Check ${ui.icon("check")}</button>`}
+            </div>`;
         }
         // Open questions: written answer against a model, counted as
         // attempted — never scored, because nothing marks it (the same rule
-        // Global Perspectives' own quiz follows).
-        return `<p class="gh-note">Write your answer, then compare it with the model. Nobody marks this — the comparing is the learning.</p>
-          ${set.map((q, at) => `<div class="gh-q"><p><strong>${at + 1}.</strong> ${esc(q.prompt)}</p>
-            <textarea data-gh-open="${id}-${at}" ${part.submitted ? "disabled" : ""}>${esc(part.answers[q.id] || "")}</textarea>
-            ${part.submitted ? `<div class="gh-model"><strong>Model answer:</strong> ${esc(q.model)}</div>` : ""}
-          </div>`).join("")}
-          ${part.submitted
-            ? `<div class="gh-score"><span><strong>${part.attempted} of ${set.length}</strong> attempted</span></div><div class="gh-actions"><button class="button primary" data-gh-skip="${id}" type="button">Continue ${ui.icon("arrow-right")}</button></div>`
-            : `<div class="gh-actions"><button class="button primary" data-gh-submit-open="${id}" type="button">Show the model answers</button></div>`}`;
+        // Global Perspectives' own quiz follows). One per screen too.
+        if (part.submitted) {
+          return `<div class="gh-score"><span><strong>${part.attempted} of ${set.length}</strong> attempted</span></div>
+            ${set.map((question, i) => `<div class="gh-q"><p><strong>${i + 1}.</strong> ${esc(question.prompt)}</p>
+              ${part.answers[question.id] ? `<p>${esc(part.answers[question.id])}</p>` : `<p class="gh-note">No answer written.</p>`}
+              <div class="gh-model"><strong>Model answer:</strong> ${esc(question.model)}</div>
+            </div>`).join("")}
+            <div class="gh-actions"><button class="button primary" data-gh-skip="${id}" type="button">Continue ${ui.icon("arrow-right")}</button></div>`;
+        }
+        const shown = Boolean(part.shown && part.shown[q.id]);
+        return `${segments(set.length, at)}
+          <p class="gh-note">Question ${at + 1} of ${set.length}. Write your answer, then compare it with the model — nobody marks this; the comparing is the learning.</p>
+          <p class="gh-qtext">${esc(q.prompt)}</p>
+          <textarea data-gh-open="${id}-${at}" ${shown ? "disabled" : ""}>${esc(part.answers[q.id] || "")}</textarea>
+          ${shown ? `<div class="gh-model"><strong>Model answer:</strong> ${esc(q.model)}</div>` : ""}
+          <div class="gh-stage-nav">
+            ${backButton(id, at)}
+            ${shown
+              ? `<button class="button primary" data-gh-next="${id}" type="button">${last ? "Finish" : "Next question"} ${ui.icon("arrow-right")}</button>`
+              : `<button class="button primary" data-gh-reveal="${id}" type="button">Show the model answer</button>`}
+          </div>`;
       }
       if (id === "understand") {
         // The authored second teaching, from zero — read before the unit's
@@ -1139,18 +1210,32 @@ export function createGetHelp(options) {
         // template is what the gate compares.
         const exampleTail = (s) => (s.example ? ` For example: ${s.example}` : "");
         const speak = (text) => (lesson.narrated ? `<button class="button secondary voice-button" data-speak="${esc(text)}" type="button" aria-label="Listen">${ui.icon("volume-2")} <span>Listen</span></button>` : "");
-        const sections = (lesson.sections || []).map((s, at) => `<div class="gh-q">
-            <p><strong>${at + 1}. ${esc(s.heading)}</strong></p>
+        // One page per section, then "Watch out for these" as the last page
+        // where the lesson has any. The spoken string below is the contract
+        // line the gate compares; it is unchanged by the paging.
+        const pages = (lesson.sections || []).map((s, i) => ({ kind: "section", s, i }));
+        if ((lesson.mistakes || []).length) pages.push({ kind: "mistakes" });
+        const at = Math.min(cursorOf("understand"), Math.max(0, pages.length - 1));
+        const page = pages[at];
+        const s = page && page.kind === "section" ? page.s : null;
+        const last = at >= pages.length - 1;
+        const body = !page ? "" : page.kind === "section" ? `<div class="gh-q">
+            <p><strong>${page.i + 1}. ${esc(s.heading)}</strong></p>
             ${String(s.body || "").split("\n").filter(Boolean).map((line) => `<p>${esc(line)}</p>`).join("")}
             ${s.example ? `<div class="gh-model"><strong>Example:</strong> ${esc(s.example)}</div>` : ""}
             ${speak(`${s.heading}. ${s.body}${exampleTail(s)}`)}
-          </div>`).join("");
-        const mistakes = (lesson.mistakes || []).length ? `<div class="gh-q"><p><strong>Watch out for these</strong></p>
+          </div>` : `<div class="gh-q"><p><strong>Watch out for these</strong></p>
             ${lesson.mistakes.map((m) => `<p>✗ ${esc(m.wrong)}<br>✓ ${esc(m.right)}${m.why ? `<br><small class="gh-note">${esc(m.why)}</small>` : ""}</p>`).join("")}
-          </div>` : "";
-        return `<p class="gh-note">${esc(lesson.promise || "Read this first — it starts from the very beginning, then the lesson pages will make sense.")}</p>
-          ${sections}${mistakes}
-          <div class="gh-actions"><button class="button primary" data-gh-understood type="button">I understand this ${ui.icon("arrow-right")}</button></div>`;
+          </div>`;
+        return `${segments(pages.length, at)}
+          <p class="gh-note">${at === 0 ? esc(lesson.promise || "Read this first — it starts from the very beginning, then the lesson pages will make sense.") : `Part ${at + 1} of ${pages.length}`}</p>
+          ${body}
+          <div class="gh-stage-nav">
+            ${backButton("understand", at)}
+            ${last
+              ? `<button class="button primary" data-gh-understood type="button">I understand this ${ui.icon("arrow-right")}</button>`
+              : `<button class="button primary" data-gh-next="understand" type="button">Next ${ui.icon("arrow-right")}</button>`}
+          </div>`;
       }
       if (id === "learn") {
         const items = learnItems(unit);
@@ -1211,6 +1296,7 @@ export function createGetHelp(options) {
         const part = session[id];
         const set = id === "check" ? checkSet : recheckSet;
         if (part.submitted) return scored ? `${part.score} of ${part.total || set.length}` : `${part.attempted} attempted`;
+        if (set.length && cursorOf(id) > 0) return `question ${Math.min(cursorOf(id), set.length - 1) + 1} of ${set.length}`;
         return set.length ? `${set.length} questions` : "";
       }
       if (id === "understand") return "read first";
@@ -1320,6 +1406,71 @@ export function createGetHelp(options) {
       document.querySelector(`[data-gh-skip="${id}"]`)?.addEventListener("click", () => {
         session[id].submitted = true;
         session.stepOpen = null;
+        rerender();
+      });
+    }
+    // One screen at a time: a pick enables Check, Check marks the question
+    // and locks it, Next moves the cursor, and stepping past the last question
+    // is what submits the part — the same fields the whole-page submit wrote,
+    // so the summary, the parent card and the wrap-up read nothing new.
+    if (!session.cursor || typeof session.cursor !== "object") session.cursor = {};
+    const cursor = (id) => Math.max(0, Number(session.cursor[id]) || 0);
+    const setOf = (id) => (id === "check" ? sets.checkSet : sets.recheckSet);
+    const finish = (id) => {
+      const part = session[id];
+      const set = setOf(id);
+      part.total = set.length;
+      part.score = set.filter((q) => norm(part.answers[q.id]) === norm(q.answer)).length;
+      part.attempted = set.filter((q) => part.answers[q.id]).length;
+      part.submitted = true;
+      if (id === "check") part.afterLesson = Boolean(session.understand && session.understand.completed);
+      session.stepOpen = id; // stay to show the review
+    };
+    for (const label of document.querySelectorAll(".gh-opt")) {
+      label.addEventListener("change", () => {
+        for (const other of label.parentElement.querySelectorAll(".gh-opt")) other.classList.remove("is-picked");
+        label.classList.add("is-picked");
+        const check = document.querySelector("[data-gh-check]");
+        if (check) check.disabled = false;
+      });
+    }
+    for (const button of document.querySelectorAll("[data-gh-check]")) {
+      button.addEventListener("click", () => {
+        const id = button.dataset.ghCheck;
+        const set = setOf(id);
+        const at = Math.min(cursor(id), set.length - 1);
+        const picked = document.querySelector(`input[name="gh-${id}-${at}"]:checked`)?.value;
+        if (picked == null) return;
+        session[id].answers[set[at].id] = picked;
+        rerender();
+      });
+    }
+    for (const button of document.querySelectorAll("[data-gh-reveal]")) {
+      button.addEventListener("click", () => {
+        const id = button.dataset.ghReveal;
+        const set = setOf(id);
+        const at = Math.min(cursor(id), set.length - 1);
+        const typed = document.querySelector(`[data-gh-open="${id}-${at}"]`)?.value?.trim();
+        const part = session[id];
+        if (typed) part.answers[set[at].id] = typed;
+        if (!part.shown || typeof part.shown !== "object") part.shown = {};
+        part.shown[set[at].id] = true;
+        rerender();
+      });
+    }
+    for (const button of document.querySelectorAll("[data-gh-next]")) {
+      button.addEventListener("click", () => {
+        const id = button.dataset.ghNext;
+        if (id === "understand") { session.cursor.understand = cursor("understand") + 1; rerender(); return; }
+        const next = cursor(id) + 1;
+        if (next >= setOf(id).length) finish(id); else session.cursor[id] = next;
+        rerender();
+      });
+    }
+    for (const button of document.querySelectorAll("[data-gh-back]")) {
+      button.addEventListener("click", () => {
+        const id = button.dataset.ghBack;
+        session.cursor[id] = Math.max(0, cursor(id) - 1);
         rerender();
       });
     }

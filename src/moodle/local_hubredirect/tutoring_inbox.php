@@ -125,7 +125,7 @@ echo pqh_design_shell_html('pqtut-shell', 'tutoring', [
   <noscript><div class="pqtut-noscript">This inbox refreshes itself and needs JavaScript. Without it the list would freeze with nothing to say it had, so it is not shown.</div></noscript>
   <div class="pqtut-grid">
     <section class="pqtut-list" aria-label="Conversations">
-      <div class="pqtut-list-head"><span id="pqtut-count">…</span><span id="pqtut-fresh">just updated</span></div>
+      <div class="pqtut-list-head"><span id="pqtut-count">…</span><span><button type="button" id="pqtut-alerts" class="pqtut-tag" style="border:0;cursor:pointer" title="Get a desktop notification when a learner writes while this tab is in the background">🔔 Desktop alerts</button> <span id="pqtut-fresh">just updated</span></span></div>
       <div id="pqtut-items"></div>
     </section>
     <section class="pqtut-thread" aria-label="Conversation">
@@ -266,22 +266,82 @@ echo pqh_design_shell_html('pqtut-shell', 'tutoring', [
     });
   });
 
+  // NOTICE, in the page. The server mails the tutor group when a learner
+  // writes (throttled per thread); this is the same news for a tutor who has
+  // the inbox open: the tab title carries the waiting count, a new or newer
+  // waiting thread plays one soft chime, and -- if the tutor turned it on --
+  // a desktop notification reaches them while the tab is in the background.
+  // Permission is asked only on the tutor's own click, never on load.
+  var audioCtx = null;
+  var chime = function () {
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      var at = audioCtx.currentTime;
+      [[523.25, 0], [659.25, 0.16]].forEach(function (pair) {
+        var osc = audioCtx.createOscillator(); var gain = audioCtx.createGain();
+        osc.frequency.value = pair[0]; osc.type = 'sine';
+        gain.gain.setValueAtTime(0.0001, at + pair[1]);
+        gain.gain.exponentialRampToValueAtTime(0.06, at + pair[1] + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, at + pair[1] + 0.35);
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start(at + pair[1]); osc.stop(at + pair[1] + 0.4);
+      });
+    } catch (e) { /* audio is a courtesy; the title and the list still say it */ }
+  };
+  var alertsBtn = document.getElementById('pqtut-alerts');
+  var paintAlertsButton = function () {
+    if (!('Notification' in window)) { alertsBtn.hidden = true; return; }
+    alertsBtn.textContent = Notification.permission === 'granted' ? '🔔 Desktop alerts on' : (Notification.permission === 'denied' ? '🔕 Desktop alerts blocked' : '🔔 Turn on desktop alerts');
+  };
+  alertsBtn.addEventListener('click', function () {
+    if (!('Notification' in window)) return;
+    if (Notification.permission === 'default') Notification.requestPermission().then(paintAlertsButton);
+    else paintAlertsButton();
+  });
+  paintAlertsButton();
+  var desktopNotice = function (t) {
+    if (!('Notification' in window) || Notification.permission !== 'granted' || !document.hidden) return;
+    try {
+      var n = new Notification(t.learner + ' wrote in ' + t.subjectlabel, { body: t.lastbody || 'Waiting for a tutor', tag: 'pqtut-' + t.threadid });
+      n.onclick = function () { window.focus(); openThread(t.threadid); n.close(); };
+    } catch (e) { /* a refused notification is not a failure of the inbox */ }
+  };
+  var baseTitle = document.title;
+  var seenWaiting = {};
+  threads.forEach(function (t) { if (t.unanswered) seenWaiting[t.threadid] = t.lastat; });
+  var noticeNews = function () {
+    var waiting = threads.filter(function (t) { return t.unanswered; });
+    document.title = (waiting.length ? '(' + waiting.length + ') ' : '') + baseTitle;
+    var fresh = waiting.filter(function (t) { return !(t.threadid in seenWaiting) || t.lastat > seenWaiting[t.threadid]; });
+    var next = {};
+    waiting.forEach(function (t) { next[t.threadid] = t.lastat; });
+    seenWaiting = next;
+    if (!fresh.length) return;
+    chime();
+    fresh.forEach(desktopNotice);
+  };
+
   var refreshList = function () {
     post({ verb: 'list' }).then(function (state) {
       if (!state || !state.ok) return;
       threads = state.threads || [];
       paintList();
+      noticeNews();
       document.getElementById('pqtut-fresh').textContent = 'updated ' + timeOf(state.servertime);
     });
   };
 
   paintSubjects();
   paintList();
+  noticeNews();
   setInterval(function () {
     if (document.hidden) return;
     if (openId) post({ verb: 'thread', threadid: openId, since: lastId }).then(function (s) { if (s && s.ok) append(s.messages); });
   }, 8000);
-  setInterval(function () { if (!document.hidden) refreshList(); }, 30000);
+  // The list is polled in the background too -- that is what the desktop
+  // notice and the title count are for; the open thread only while visible.
+  setInterval(refreshList, 15000);
 })();
 </script>
 <?php

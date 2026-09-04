@@ -8712,6 +8712,81 @@ $validate = [
     }
 
     /**
+     * Tell the subject's tutors a learner has written (owner, 2026-09-05). A
+     * Moodle message on the plugin's staff provider -- the bell, and email by
+     * each tutor's own preferences -- the same channel the helpdesk's SLA
+     * monitor uses to reach staff, so nothing new has to be registered.
+     *
+     * THROTTLED PER THREAD, by the audit trail rather than a new column: a
+     * notice goes out when the learner's message turns the thread unanswered
+     * (the previous message was a tutor's, or there was none), and again at
+     * most every TUTORING_CHAT_NOTIFY_GAP_SECONDS while it stays unanswered --
+     * a child who sends five lines in a minute is one notice, not five. Only
+     * learner messages notify; a tutor's reply is what the other tutors see
+     * in the inbox, not something to mail them about.
+     */
+    const TUTORING_CHAT_NOTIFY_GAP_SECONDS = 1800;
+
+    protected static function tutoring_chat_notify_tutors(int $threadid, int $studentid, string $label, array $tutors, string $preview, bool $wasunanswered): int {
+        global $DB, $CFG;
+        if (!$tutors) {
+            return 0;
+        }
+        $now = time();
+        if ($wasunanswered) {
+            $lastnotified = (int)$DB->get_field_sql(
+                "SELECT MAX(timecreated) FROM {local_prequran_comm_audit} WHERE threadid = :t AND action = 'tutoring_notified'",
+                ['t' => $threadid]);
+            if ($lastnotified > 0 && ($now - $lastnotified) < self::TUTORING_CHAT_NOTIFY_GAP_SECONDS) {
+                return 0;
+            }
+        }
+        $student = \core_user::get_user($studentid);
+        $firstname = $student && trim((string)$student->firstname) !== '' ? (string)$student->firstname : 'A learner';
+        $subject = 'Tutoring: ' . $firstname . ' wrote in ' . $label;
+        $url = new \moodle_url('/local/hubredirect/tutoring_inbox.php');
+        $body = $firstname . ' sent a message in ' . $label . ' tutoring and is waiting for a tutor.'
+            . ($preview !== '' ? "\n\n\"" . core_text::substr($preview, 0, 240) . "\"" : '')
+            . "\n\nOpen the tutoring inbox: " . $url->out(false);
+        $sent = 0;
+        foreach ($tutors as $tutorid) {
+            $tutor = \core_user::get_user($tutorid);
+            if (!$tutor || !empty($tutor->deleted) || !empty($tutor->suspended)) {
+                continue;
+            }
+            try {
+                $message = new \core\message\message();
+                $message->component = 'local_prequran';
+                $message->name = 'live_session_update';
+                $message->userfrom = \core_user::get_noreply_user();
+                $message->userto = $tutor;
+                $message->subject = $subject;
+                $message->fullmessage = $body;
+                $message->fullmessageformat = FORMAT_PLAIN;
+                $message->fullmessagehtml = nl2br(s($body));
+                $message->smallmessage = $subject;
+                $message->notification = 1;
+                $message->contexturl = $url->out(false);
+                $message->contexturlname = 'Tutoring inbox';
+                $message->courseid = SITEID;
+                message_send($message);
+                $sent++;
+            } catch (\Throwable $e) {
+                // Best effort: a failed notice must never fail the child's message.
+            }
+        }
+        $DB->insert_record('local_prequran_comm_audit', (object)[
+            'threadid' => $threadid,
+            'messageid' => 0,
+            'actorid' => $studentid,
+            'action' => 'tutoring_notified',
+            'details' => json_encode(['tutors' => count($tutors), 'sent' => $sent]),
+            'timecreated' => $now,
+        ]);
+        return $sent;
+    }
+
+    /**
      * One exchange on a tutoring thread: optionally send a message and/or a
      * file, then return what is new. $viewerid is the caller (the learner from
      * the token door, a tutor from the inbox door); $studentid names the thread.
@@ -8744,6 +8819,21 @@ $validate = [
         $threadid = (int)$thread->id;
         $now = time();
         $policy = self::support_effective_policy(0, 0);
+
+        // Whether the learner was ALREADY waiting before this exchange -- read
+        // first, because it decides whether a new learner message is news to
+        // the tutors or one more line on a thread they were told about.
+        $wasunanswered = false;
+        $notifypreview = null;
+        if ($isstudent) {
+            $prevstudent = (int)$DB->get_field_sql(
+                "SELECT MAX(id) FROM {local_prequran_comm_message} WHERE threadid = :t AND status = 'visible' AND senderid = :s",
+                ['t' => $threadid, 's' => $studentid]);
+            $prevstaff = (int)$DB->get_field_sql(
+                "SELECT MAX(id) FROM {local_prequran_comm_message} WHERE threadid = :t AND status = 'visible' AND senderid <> :s",
+                ['t' => $threadid, 's' => $studentid]);
+            $wasunanswered = $prevstudent > $prevstaff;
+        }
 
         // A learner's message passes the contact-details filter the helpdesk
         // already applies -- and here a refusal is SAID, with its own code, so
@@ -8779,6 +8869,7 @@ $validate = [
                     'timemodified' => $now,
                 ]);
                 $DB->set_field('local_prequran_comm_thread', 'lastmessageat', $now, ['id' => $threadid]);
+                $notifypreview = $clean;
             }
         }
 
@@ -8806,7 +8897,14 @@ $validate = [
                 ]);
                 self::tutoring_chat_store_file($fileid, (string)$checked['filename'], (string)$checked['bytes']);
                 $DB->set_field('local_prequran_comm_thread', 'lastmessageat', $now, ['id' => $threadid]);
+                if ($notifypreview === null) {
+                    $notifypreview = 'Sent a file: ' . (string)$checked['filename'];
+                }
             }
+        }
+
+        if ($isstudent && $notifypreview !== null) {
+            self::tutoring_chat_notify_tutors($threadid, $studentid, $label, $tutors, $notifypreview, $wasunanswered);
         }
 
         $limit = max(1, min(200, $limit));

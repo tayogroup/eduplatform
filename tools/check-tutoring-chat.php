@@ -125,6 +125,29 @@ if (preg_match('/\'tutoring_chat_file\'/', $ext) && !preg_match('/pluginfile|moo
     $fail('no public URL is minted for a stored file', 'a pluginfile URL would bypass the doors');
 }
 
+// 3b. Tutors are told, and only tutors, throttled by the audit trail.
+$exchange = tut_extract_fn($ext, 'tutoring_chat_exchange');
+$notify = tut_extract_fn($ext, 'tutoring_chat_notify_tutors');
+if ($exchange === null || $notify === null) {
+    fwrite(STDERR, "FAIL: could not extract tutoring_chat_exchange()/tutoring_chat_notify_tutors() -- renamed or removed.\n");
+    exit(2);
+}
+if (preg_match('/if \(\$isstudent && \$notifypreview !== null\) \{\s*self::tutoring_chat_notify_tutors\(\$threadid, \$studentid, \$label, \$tutors,/', $exchange)) {
+    $ok('a learner\'s message notifies the tutor group, a tutor\'s reply does not');
+} else {
+    $fail('a learner\'s message notifies the tutor group, a tutor\'s reply does not', 'the exchange no longer calls tutoring_chat_notify_tutors() under $isstudent');
+}
+if (strpos($notify, "foreach (\$tutors as \$tutorid)") !== false && strpos($notify, '$studentid') !== false && !preg_match('/userto = .*student/', $notify)) {
+    $ok('notices go to the cohort members, never to the learner');
+} else {
+    $fail('notices go to the cohort members, never to the learner', 'the recipient loop changed');
+}
+if (strpos($notify, "'tutoring_notified'") !== false && strpos($notify, 'TUTORING_CHAT_NOTIFY_GAP_SECONDS') !== false && strpos($exchange, '$wasunanswered = $prevstudent > $prevstaff;') !== false) {
+    $ok('notices are throttled per thread by the audit trail while the thread stays unanswered');
+} else {
+    $fail('notices are throttled per thread by the audit trail while the thread stays unanswered', 'the throttle (audit row + gap + was-unanswered read) is incomplete -- five lines in a minute would be five emails');
+}
+
 // 4. The tutor door trusts the thread row, not the request.
 if (strpos($tutordoor, '(int)$cohort->id === (int)$thread->cohortid') !== false
         && strpos($tutordoor, "['id' => \$threadid, 'type' => 'tutoring']") !== false) {
@@ -156,7 +179,7 @@ foreach ($expected as $slug => $idnumber) {
     }
 }
 
-echo "\n" . (count($expected) + 15 - $failures) . " passed, {$failures} failed\n";
+echo "\n" . (count($expected) + 18 - $failures) . " passed, {$failures} failed\n";
 if ($failures > 0) {
     exit(1);
 }

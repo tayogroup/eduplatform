@@ -8497,6 +8497,498 @@ $validate = [
         ];
     }
 
+    // ======================================================================
+    // TUTORING CHAT (owner, 2026-09-05): the classroom chat for the tutoring
+    // category, with the variation the category forces.
+    //
+    // A tutoring learner has no class group and no assigned teacher; what they
+    // have is a SUBJECT (their launch token names the umbrella course) and, on
+    // the other side, a TEACHER GROUP per subject -- a Moodle cohort whose
+    // idnumber local_hubredirect/tutoring_chatlib.php maps from the subject
+    // (math_tutoring, science_tutoring, ...). The room is therefore ONE THREAD
+    // PER LEARNER PER SUBJECT with the whole tutor cohort as participants:
+    // every tutor sees every learner's thread, no learner sees another, and a
+    // reply to one child never reaches the others. That is why this is NOT one
+    // shared room per subject with visibility stamps: in a class room the
+    // teacher's reply is public to nine children who share a lesson; in a
+    // subject room it would be public to dozens of unrelated ones.
+    //
+    // Everything else is inherited unchanged: participant-based reading,
+    // support_can_reply_thread, the contact-details filter on a learner's
+    // message, moderation and audit. Both doors -- course_group_chat.php for
+    // the learner, tutoring_inbox_data.php for tutors -- call the one exchange.
+    //
+    // Files: a learner may attach homework (JPEG, PNG, PDF, Word, PowerPoint).
+    // The type is proven by MAGIC BYTES, never taken from the client's declared
+    // mime; per-type caps; stored through the file API with no public URL, so
+    // the only way out is a door that re-runs the visibility check; swept
+    // after thirty days, the message row staying. The lesson-page screenshot
+    // (a DOM render, never the screen-capture API -- see the classroom chat)
+    // rides the same store under its own kind so the panel can caption it.
+    // ======================================================================
+
+    const TUTORING_CHAT_FILE_KEEP_DAYS = 30;
+    const TUTORING_CHAT_IMAGE_MAX_BYTES = 640000;
+    const TUTORING_CHAT_DOC_MAX_BYTES = 3145728;
+
+    /** The tutor cohort for a subject slug, or null when none exists (= chat off). */
+    protected static function tutoring_chat_cohort(string $slug): ?\stdClass {
+        global $DB;
+        if (!function_exists('pqtut_cohort_idnumber')) {
+            return null;
+        }
+        $idnumber = pqtut_cohort_idnumber($slug);
+        if ($idnumber === null) {
+            return null;
+        }
+        $cohort = $DB->get_record('cohort', ['idnumber' => $idnumber]);
+        return $cohort ?: null;
+    }
+
+    /** Live members of a tutor cohort: not deleted, not suspended. */
+    protected static function tutoring_chat_tutors(int $cohortid): array {
+        global $DB;
+        $ids = $DB->get_fieldset_sql(
+            "SELECT cm.userid
+               FROM {cohort_members} cm
+               JOIN {user} u ON u.id = cm.userid
+              WHERE cm.cohortid = :c AND u.deleted = 0 AND u.suspended = 0",
+            ['c' => $cohortid]);
+        return array_values(array_unique(array_map('intval', $ids ?: [])));
+    }
+
+    /**
+     * Validate one attachment {name, data(base64)} into
+     * [bytes, filename, mime] or ['rejected' => code]. Type by magic bytes.
+     */
+    protected static function tutoring_chat_check_attachment(array $attachment): array {
+        $data = (string)($attachment['data'] ?? '');
+        $data = preg_replace('/^data:[^;]+;base64,/', '', $data);
+        $raw = base64_decode($data, true);
+        if ($raw === false || strlen($raw) < 100) {
+            return ['rejected' => 'unreadable'];
+        }
+        $head = substr($raw, 0, 8);
+        $name = clean_param((string)($attachment['name'] ?? ''), PARAM_FILE);
+        $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+        $mime = '';
+        if (substr($head, 0, 2) === "\xFF\xD8") {
+            $mime = 'image/jpeg';
+            $ext = 'jpg';
+        } else if (substr($head, 0, 4) === "\x89PNG") {
+            $mime = 'image/png';
+            $ext = 'png';
+        } else if (substr($head, 0, 4) === '%PDF') {
+            $mime = 'application/pdf';
+            $ext = 'pdf';
+        } else if (substr($head, 0, 4) === "PK\x03\x04" && in_array($ext, ['docx', 'pptx'], true)) {
+            // Word and PowerPoint are zipped XML; the extension says which. A
+            // zip under any other name is refused rather than guessed at.
+            $mime = $ext === 'docx'
+                ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                : 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+        } else {
+            return ['rejected' => 'type'];
+        }
+        $cap = strpos($mime, 'image/') === 0 ? self::TUTORING_CHAT_IMAGE_MAX_BYTES : self::TUTORING_CHAT_DOC_MAX_BYTES;
+        if (strlen($raw) > $cap) {
+            return ['rejected' => 'too-big'];
+        }
+        $base = trim((string)preg_replace('/[^A-Za-z0-9 _.-]+/', '', pathinfo($name, PATHINFO_FILENAME)));
+        if ($base === '') {
+            $base = 'homework';
+        }
+        return ['bytes' => $raw, 'filename' => core_text::substr($base, 0, 80) . '.' . $ext, 'mime' => $mime];
+    }
+
+    protected static function tutoring_chat_store_file(int $messageid, string $filename, string $bytes): void {
+        global $DB;
+        $fs = get_file_storage();
+        $ctx = \context_system::instance();
+        $fs->delete_area_files($ctx->id, 'local_prequran', 'tutoring_chat_file', $messageid);
+        $fs->create_file_from_string([
+            'contextid' => $ctx->id, 'component' => 'local_prequran',
+            'filearea' => 'tutoring_chat_file', 'itemid' => $messageid,
+            'filepath' => '/', 'filename' => $filename,
+        ], $bytes);
+        // Opportunistic retention sweep, bounded so a store never stalls.
+        $cut = time() - (self::TUTORING_CHAT_FILE_KEEP_DAYS * DAYSECS);
+        $old = $DB->get_records_select('files',
+            "component = 'local_prequran' AND filearea = 'tutoring_chat_file'
+             AND filename <> '.' AND timecreated < :cut",
+            ['cut' => $cut], 'timecreated ASC', 'id, itemid', 0, 50);
+        foreach ($old as $f) {
+            $fs->delete_area_files($ctx->id, 'local_prequran', 'tutoring_chat_file', (int)$f->itemid);
+        }
+    }
+
+    /** Mime for a stored filename's extension -- the store proved the type. */
+    protected static function tutoring_chat_mime(string $filename): string {
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        return [
+            'jpg' => 'image/jpeg', 'png' => 'image/png', 'pdf' => 'application/pdf',
+            'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        ][$ext] ?? 'application/octet-stream';
+    }
+
+    /**
+     * The thread for one learner in one subject -- created on first use by the
+     * learner, never by a tutor -- with the tutor cohort seeded as participants
+     * and tutors who left the cohort muted. Null when the viewer may not be here.
+     */
+    protected static function tutoring_chat_thread(int $viewerid, int $studentid, \stdClass $cohort, string $label, array $tutors, bool $create): ?\stdClass {
+        global $DB;
+        $isstudent = $viewerid === $studentid;
+        $isstaff = in_array($viewerid, $tutors, true) || is_siteadmin($viewerid)
+            || has_capability('local/prequran:supportviewqueue', \context_system::instance(), $viewerid);
+        if (!$isstudent && !$isstaff) {
+            return null;
+        }
+        $now = time();
+        $thread = $DB->get_record('local_prequran_comm_thread',
+            ['type' => 'tutoring', 'studentid' => $studentid, 'cohortid' => (int)$cohort->id]);
+        if (!$thread) {
+            if (!$create) {
+                return null;
+            }
+            $firstname = trim((string)$DB->get_field('user', 'firstname', ['id' => $studentid]));
+            $threadid = (int)$DB->insert_record('local_prequran_comm_thread', (object)[
+                'type' => 'tutoring',
+                'workspaceid' => 0,
+                'cohortid' => (int)$cohort->id,
+                // About ONE child, unlike the class room: moderation tools that
+                // read thread.studentid should treat it as exactly that.
+                'studentid' => $studentid,
+                'createdby' => $viewerid,
+                'status' => 'active',
+                'subject' => $label . ' tutoring' . ($firstname !== '' ? ' — ' . $firstname : ''),
+                'category' => 'tutoring',
+                'priority' => 'normal',
+                'assignedto' => 0,
+                'assignmentgroupid' => 0,
+                'visibility' => 'public',
+                'linkedticketid' => 0,
+                'lastmessageat' => $now,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ]);
+            $DB->insert_record('local_prequran_comm_audit', (object)[
+                'threadid' => $threadid,
+                'messageid' => 0,
+                'actorid' => $viewerid,
+                'action' => 'support_conversation_created',
+                'details' => json_encode(['type' => 'tutoring', 'cohortid' => (int)$cohort->id, 'studentid' => $studentid]),
+                'timecreated' => $now,
+            ]);
+            if (function_exists('local_prequran_support_audit')) {
+                local_prequran_support_audit(0, 'conversation_created', 'conversation',
+                    $threadid, ['type' => 'tutoring', 'cohortid' => (int)$cohort->id], $studentid, $threadid, 0);
+            }
+            $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', MUST_EXIST);
+        }
+        $threadid = (int)$thread->id;
+        self::support_seed_participant($threadid, $studentid, 'student', 1, 0, $now);
+        foreach ($tutors as $tutorid) {
+            self::support_seed_participant($threadid, $tutorid, 'teacher', 1, 0, $now);
+        }
+        // The teacher group can change; the thread follows the cohort. Student
+        // rows are never touched here.
+        foreach ($DB->get_records('local_prequran_comm_participant', ['threadid' => $threadid, 'role' => 'teacher']) as $row) {
+            $stale = !in_array((int)$row->userid, $tutors, true);
+            if ($stale && (empty($row->muted) || !empty($row->canreply))) {
+                $row->muted = 1;
+                $row->canreply = 0;
+                $row->timemodified = $now;
+                $DB->update_record('local_prequran_comm_participant', $row);
+            } else if (!$stale && !empty($row->muted)) {
+                $row->muted = 0;
+                $row->canreply = 1;
+                $row->timemodified = $now;
+                $DB->update_record('local_prequran_comm_participant', $row);
+            }
+        }
+        return $thread;
+    }
+
+    /**
+     * One exchange on a tutoring thread: optionally send a message and/or a
+     * file, then return what is new. $viewerid is the caller (the learner from
+     * the token door, a tutor from the inbox door); $studentid names the thread.
+     * $attachment is ['name' => .., 'data' => base64]; $attachmentkind is 'file'
+     * or 'screenshot'.
+     */
+    public static function tutoring_chat_exchange(int $viewerid, int $studentid, string $slug, string $body = '', int $sincemessageid = 0, int $limit = 60, ?array $attachment = null, string $attachmentkind = 'file'): array {
+        global $DB;
+        if ($viewerid <= 0 || $studentid <= 0 || $slug === '') {
+            return ['ok' => false, 'message' => 'Not available.'];
+        }
+        $cohort = self::tutoring_chat_cohort($slug);
+        if (!$cohort) {
+            // No teacher group for this subject: the off switch. The panel does
+            // not mount on enabled:false -- no control that reaches nobody.
+            return ['ok' => true, 'enabled' => false, 'tutoring' => true, 'messages' => []];
+        }
+        $tutors = self::tutoring_chat_tutors((int)$cohort->id);
+        $label = function_exists('pqtut_subject_label') ? pqtut_subject_label($slug) : $slug;
+        $isstudent = $viewerid === $studentid;
+        if ($isstudent && !$tutors) {
+            // A group with nobody in it reaches nobody -- the child would wait
+            // for a reply that is not coming instead of asking Wehel.
+            return ['ok' => true, 'enabled' => false, 'tutoring' => true, 'messages' => []];
+        }
+        $thread = self::tutoring_chat_thread($viewerid, $studentid, $cohort, $label, $tutors, $isstudent);
+        if (!$thread) {
+            return ['ok' => false, 'enabled' => true, 'tutoring' => true, 'message' => 'Not available.'];
+        }
+        $threadid = (int)$thread->id;
+        $now = time();
+        $policy = self::support_effective_policy(0, 0);
+
+        // A learner's message passes the contact-details filter the helpdesk
+        // already applies -- and here a refusal is SAID, with its own code, so
+        // the panel can tell the child why rather than dropping the message in
+        // silence (the kindness the classroom chat still owes).
+        $refused = '';
+        $body = trim($body);
+        if ($body !== '') {
+            $clean = '';
+            try {
+                $clean = self::support_clean_message_body($body, $policy, $isstudent, 1200);
+            } catch (\invalid_parameter_exception $e) {
+                $refused = 'contact-details';
+            } catch (\moodle_exception $e) {
+                $refused = 'not-allowed';
+            }
+            if ($clean !== '') {
+                $DB->insert_record('local_prequran_comm_message', (object)[
+                    'threadid' => $threadid,
+                    'senderid' => $viewerid,
+                    'senderrole' => $isstudent ? 'student' : 'teacher',
+                    'studentid' => $studentid,
+                    'messagekind' => 'text',
+                    'body' => $clean,
+                    'templatekey' => '',
+                    'status' => 'visible',
+                    'moderationflags' => '',
+                    // 'public' for this type: the thread's participants are one
+                    // child and their subject's tutors, so public IS private.
+                    'visibility' => self::support_message_visibility_for($thread, $viewerid, $isstudent),
+                    'ticketid' => 0,
+                    'timecreated' => $now,
+                    'timemodified' => $now,
+                ]);
+                $DB->set_field('local_prequran_comm_thread', 'lastmessageat', $now, ['id' => $threadid]);
+            }
+        }
+
+        $filerejected = '';
+        if (is_array($attachment)) {
+            $checked = self::tutoring_chat_check_attachment($attachment);
+            if (!empty($checked['rejected'])) {
+                $filerejected = (string)$checked['rejected'];
+            } else {
+                $kind = $attachmentkind === 'screenshot' ? 'screenshot' : 'file';
+                $fileid = (int)$DB->insert_record('local_prequran_comm_message', (object)[
+                    'threadid' => $threadid,
+                    'senderid' => $viewerid,
+                    'senderrole' => $isstudent ? 'student' : 'teacher',
+                    'studentid' => $studentid,
+                    'messagekind' => $kind,
+                    'body' => (string)$checked['filename'],
+                    'templatekey' => '',
+                    'status' => 'visible',
+                    'moderationflags' => '',
+                    'visibility' => 'public',
+                    'ticketid' => 0,
+                    'timecreated' => $now,
+                    'timemodified' => $now,
+                ]);
+                self::tutoring_chat_store_file($fileid, (string)$checked['filename'], (string)$checked['bytes']);
+                $DB->set_field('local_prequran_comm_thread', 'lastmessageat', $now, ['id' => $threadid]);
+            }
+        }
+
+        $limit = max(1, min(200, $limit));
+        $rows = $DB->get_records_select('local_prequran_comm_message',
+            "threadid = :t AND id > :since AND status = 'visible'",
+            ['t' => $threadid, 'since' => max(0, $sincemessageid)], 'id ASC', '*', 0, $limit);
+
+        $names = [];
+        $senderids = [];
+        foreach ($rows as $row) {
+            $senderids[(int)$row->senderid] = true;
+        }
+        if ($senderids) {
+            [$insql, $inparams] = $DB->get_in_or_equal(array_keys($senderids));
+            foreach ($DB->get_records_select('user', "id $insql", $inparams, '', 'id, firstname') as $u) {
+                $names[(int)$u->id] = trim((string)$u->firstname) !== '' ? (string)$u->firstname : ('User ' . (int)$u->id);
+            }
+        }
+
+        $messages = [];
+        foreach ($rows as $row) {
+            if (!self::support_message_visible_to_user($row, $thread, $viewerid)) {
+                continue;
+            }
+            $senderstudent = (int)$row->senderid === $studentid;
+            $kind = (string)$row->messagekind;
+            $isfile = $kind === 'file' || $kind === 'screenshot';
+            $messages[] = [
+                'id' => (int)$row->id,
+                'senderid' => (int)$row->senderid,
+                // A child sees "Tutor" whoever in the group is speaking; tutors
+                // see each other's first names, because a pool needs to know
+                // who already answered.
+                'name' => $senderstudent
+                    ? ($names[(int)$row->senderid] ?? ('User ' . (int)$row->senderid))
+                    : ($isstudent ? 'Tutor' : ($names[(int)$row->senderid] ?? 'Tutor')),
+                'teacher' => !$senderstudent,
+                'mine' => (int)$row->senderid === $viewerid,
+                'toteacheronly' => false,
+                'body' => (string)$row->body,
+                'kind' => $isfile ? $kind : 'text',
+                'file' => $isfile ? ['name' => (string)$row->body, 'mime' => self::tutoring_chat_mime((string)$row->body)] : null,
+                'screenshot' => $kind === 'screenshot',
+                'announcement' => false,
+                'quote' => null,
+                'at' => (int)$row->timecreated,
+            ];
+        }
+
+        // Is the learner waiting on a tutor? The last message is theirs.
+        $laststudent = (int)$DB->get_field_sql(
+            "SELECT MAX(id) FROM {local_prequran_comm_message} WHERE threadid = :t AND status = 'visible' AND senderid = :s",
+            ['t' => $threadid, 's' => $studentid]);
+        $laststaff = (int)$DB->get_field_sql(
+            "SELECT MAX(id) FROM {local_prequran_comm_message} WHERE threadid = :t AND status = 'visible' AND senderid <> :s",
+            ['t' => $threadid, 's' => $studentid]);
+
+        return [
+            'ok' => true,
+            'enabled' => true,
+            'tutoring' => true,
+            'threadid' => $threadid,
+            'subject' => $slug,
+            'subjectlabel' => $label,
+            'studentid' => $studentid,
+            'tutorcount' => count($tutors),
+            'unanswered' => $laststudent > $laststaff,
+            'refused' => $refused,
+            'filerejected' => $filerejected,
+            'messages' => $messages,
+            'servertime' => time(),
+        ];
+    }
+
+    /**
+     * One stored file, as base64 -- or null when the viewer may not see the
+     * thread or the message. Visibility is the same check the list runs.
+     */
+    public static function tutoring_chat_file(int $viewerid, int $threadid, int $messageid): ?array {
+        global $DB;
+        if ($viewerid <= 0 || $threadid <= 0 || $messageid <= 0) {
+            return null;
+        }
+        $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid, 'type' => 'tutoring']);
+        if (!$thread || !self::support_can_read_thread_as($thread, $viewerid)) {
+            return null;
+        }
+        $msg = $DB->get_record('local_prequran_comm_message', ['id' => $messageid]);
+        if (!$msg || (int)$msg->threadid !== $threadid
+                || !in_array((string)$msg->messagekind, ['file', 'screenshot'], true)
+                || !self::support_message_visible_to_user($msg, $thread, $viewerid)) {
+            return null;
+        }
+        $fs = get_file_storage();
+        $files = $fs->get_area_files(\context_system::instance()->id, 'local_prequran',
+            'tutoring_chat_file', $messageid, 'itemid, filepath, filename', false);
+        $file = $files ? reset($files) : null;
+        if (!$file) {
+            return ['ok' => true, 'gone' => true];
+        }
+        return [
+            'ok' => true,
+            'gone' => false,
+            'name' => $file->get_filename(),
+            'mime' => self::tutoring_chat_mime($file->get_filename()),
+            'base64' => base64_encode($file->get_content()),
+        ];
+    }
+
+    /**
+     * The tutor inbox: every active tutoring thread in the given cohorts, the
+     * unanswered ones first and among those the longest-waiting first -- the
+     * board's sort applied to an inbox. $cohorts is [slug => cohort record],
+     * already limited to what the caller may see by the door.
+     */
+    public static function tutoring_inbox_threads(array $cohorts): array {
+        global $DB;
+        if (!$cohorts) {
+            return [];
+        }
+        $slugbycohort = [];
+        foreach ($cohorts as $slug => $cohort) {
+            $slugbycohort[(int)$cohort->id] = (string)$slug;
+        }
+        [$insql, $params] = $DB->get_in_or_equal(array_keys($slugbycohort), SQL_PARAMS_NAMED, 'co');
+        $threads = $DB->get_records_select('local_prequran_comm_thread',
+            "type = 'tutoring' AND status = 'active' AND cohortid $insql", $params, 'lastmessageat DESC', '*', 0, 300);
+        if (!$threads) {
+            return [];
+        }
+        $studentids = [];
+        foreach ($threads as $t) {
+            $studentids[(int)$t->studentid] = true;
+        }
+        [$usql, $uparams] = $DB->get_in_or_equal(array_keys($studentids));
+        $names = [];
+        foreach ($DB->get_records_select('user', "id $usql", $uparams, '', 'id, firstname') as $u) {
+            $names[(int)$u->id] = trim((string)$u->firstname) !== '' ? (string)$u->firstname : ('Learner ' . (int)$u->id);
+        }
+        $out = [];
+        $now = time();
+        foreach ($threads as $t) {
+            $tid = (int)$t->id;
+            $sid = (int)$t->studentid;
+            $last = $DB->get_records_select('local_prequran_comm_message',
+                "threadid = :t AND status = 'visible'", ['t' => $tid], 'id DESC', 'id, senderid, body, messagekind, timecreated', 0, 1);
+            $last = $last ? reset($last) : null;
+            $laststudentat = (int)$DB->get_field_sql(
+                "SELECT MAX(timecreated) FROM {local_prequran_comm_message} WHERE threadid = :t AND status = 'visible' AND senderid = :s",
+                ['t' => $tid, 's' => $sid]);
+            $laststaffat = (int)$DB->get_field_sql(
+                "SELECT MAX(timecreated) FROM {local_prequran_comm_message} WHERE threadid = :t AND status = 'visible' AND senderid <> :s",
+                ['t' => $tid, 's' => $sid]);
+            $unanswered = $laststudentat > $laststaffat;
+            $slug = $slugbycohort[(int)$t->cohortid] ?? '';
+            $out[] = [
+                'threadid' => $tid,
+                'studentid' => $sid,
+                'learner' => $names[$sid] ?? ('Learner ' . $sid),
+                'subject' => $slug,
+                'subjectlabel' => function_exists('pqtut_subject_label') ? pqtut_subject_label($slug) : $slug,
+                'unanswered' => $unanswered,
+                'waitingseconds' => $unanswered ? max(0, $now - $laststudentat) : 0,
+                'lastat' => $last ? (int)$last->timecreated : (int)$t->lastmessageat,
+                'lastfromlearner' => $last ? (int)$last->senderid === $sid : false,
+                'lastbody' => $last ? ((string)$last->messagekind === 'text'
+                    ? core_text::substr((string)$last->body, 0, 120)
+                    : ('📎 ' . (string)$last->body)) : '',
+            ];
+        }
+        usort($out, static function (array $a, array $b): int {
+            if ($a['unanswered'] !== $b['unanswered']) {
+                return $a['unanswered'] ? -1 : 1;
+            }
+            if ($a['unanswered']) {
+                return $b['waitingseconds'] <=> $a['waitingseconds'];
+            }
+            return $b['lastat'] <=> $a['lastat'];
+        });
+        return $out;
+    }
+
     protected static function support_open_class_group_thread(int $groupid, array $policy, string $subject, string $body, int $asuserid = 0, int $replytoid = 0): array {
         global $DB, $USER;
 

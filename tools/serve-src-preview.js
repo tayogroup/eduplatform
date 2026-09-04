@@ -138,6 +138,11 @@ async function handleElevenLabs(req, res) {
 // Wehel chat: the shared dev handler (also mounted by vite.config.js at the
 // production path). Assembly logic lives once, in tools/lib/wehel-dev-chat.js.
 const { createWehelChatHandler, createWehelHomeworkHandler } = require(path.join(__dirname, 'lib', 'wehel-dev-chat.js'));
+// The tutoring chat's learner door, in-memory, at the PRODUCTION path: the
+// app resolves platformUrl() to a bare path on this server, so the twin has to
+// answer where course_group_chat.php would (tools/lib/tutoring-chat-dev.js).
+const { createTutoringChatDevHandler } = require(path.join(__dirname, 'lib', 'tutoring-chat-dev.js'));
+const handleTutoringChat = createTutoringChatDevHandler();
 const handleWehelChat = createWehelChatHandler({
   apiKey: () => process.env.ANTHROPIC_API_KEY,
   model: () => process.env.WEHEL_MODEL
@@ -186,7 +191,8 @@ const apiRoutes = {
   '/api/wehel-chat': handleWehelChat,
   '/api/wehel-homework': handleWehelHomework,
   '/api/wehel-speak': handleWehelSpeak,
-  '/api/wehel-listen': handleWehelListen
+  '/api/wehel-listen': handleWehelListen,
+  '/local/hubredirect/course_group_chat.php': handleTutoringChat
 };
 
 const server = http.createServer(async (req, res) => {

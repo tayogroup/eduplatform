@@ -845,6 +845,14 @@ export function createCourseApp(config) {
     let panel = null;
     let msgsEl = null;
     let button = null;
+    // THE TUTORING SHAPE (owner, 2026-09-05). The same door answers a tutoring
+    // learner with tutoring:true: their room is one thread per learner per
+    // subject with the subject's teacher group on the other side, so the panel
+    // says "Tutor chat", captions staff as "Tutor", offers a homework file
+    // (JPEG, PNG, PDF, Word, PowerPoint) beside the camera, and says a reply
+    // can take a while. Set from the first state read; null for a class room.
+    let TUT = null;
+    let threadId = 0;
 
     // NOTIFY, not just mark. The unread dot alone assumes a child scans the
     // topbar; a five-year-old deep in an exercise does not. So a new message
@@ -890,10 +898,13 @@ export function createCourseApp(config) {
     }
 
     const paintButton = () => {
-      button.textContent = unread ? "💬 Class chat •" : "💬 Class chat";
+      const label = TUT ? "💬 Tutor chat" : "💬 Class chat";
+      button.textContent = unread ? label + " •" : label;
       button.title = unread
-        ? "Your teacher wrote something new."
-        : "Talk to your teacher. The class sees what your teacher writes; only your teacher sees what you write.";
+        ? (TUT ? "A tutor wrote something new." : "Your teacher wrote something new.")
+        : (TUT
+          ? `Write to your ${TUT.subjectlabel} tutors. Only they see what you write.`
+          : "Talk to your teacher. The class sees what your teacher writes; only your teacher sees what you write.");
       button.style.background = unread ? "#1a67a3" : "white";
       button.style.color = unread ? "#fff" : "";
     };
@@ -908,6 +919,10 @@ export function createCourseApp(config) {
         if (!m.mine) sawOther = true;
         if (m.screenshot) {
           appendShotBubble(m);
+          continue;
+        }
+        if (m.kind === "file") {
+          appendFileBubble(m);
           continue;
         }
         const el = document.createElement("div");
@@ -1005,8 +1020,102 @@ export function createCourseApp(config) {
       if (state && state.ok && state.enabled) {
         append(state.messages);
         paintLive(state.livesession);
+        // A refused message is SAID, kindly: the filter keeps phone numbers,
+        // emails and links out of a child's message to an adult, and a message
+        // that silently never appears reads as a broken chat.
+        if (body && state.refused === "contact-details") {
+          shotFailNote("Messages cannot include phone numbers, email addresses or links — that keeps you safe. Say it another way.");
+        } else if (body && state.refused) {
+          shotFailNote("That message could not be sent here.");
+        }
       }
       return state;
+    };
+
+    // A homework file in the tutoring thread: fetched lazily through the same
+    // door, which re-runs the visibility check. Images show inline; a PDF,
+    // Word or PowerPoint file opens as a download. "Expired" is a real state:
+    // files age out after 30 days while the message row stays.
+    const appendFileBubble = (m) => {
+      const el = document.createElement("div");
+      el.style.cssText = "max-width:92%;padding:" + PAD + ";border-radius:" + RADIUS + "px;"
+        + "font-size:" + (FS - 1) + "px;"
+        + (m.mine ? "align-self:flex-end;background:#d7ecff;" : "background:#f2f4f6;");
+      const name = (m.file && m.file.name) || "file";
+      el.innerHTML = (m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`)
+        + `<span>📎 ${escapeHtml(name)}</span>`;
+      msgsEl.appendChild(el);
+      post({ file: m.id, thread: threadId }).then((f) => {
+        if (!f || !f.ok) return;
+        const span = el.querySelector("span");
+        if (f.gone) { span.textContent = `📎 ${name} (expired)`; return; }
+        if (/^image\//.test(f.mime || "")) {
+          const pic = document.createElement("img");
+          pic.src = `data:${f.mime};base64,${f.base64}`;
+          pic.alt = name;
+          pic.style.cssText = "display:block;max-width:100%;border-radius:8px;margin-top:4px";
+          el.appendChild(pic);
+          span.remove();
+          return;
+        }
+        const link = document.createElement("a");
+        link.href = `data:${f.mime};base64,${f.base64}`;
+        link.download = f.name || name;
+        link.textContent = `⬇ Open ${f.name || name}`;
+        link.style.cssText = "display:inline-block;margin-top:4px;color:#0b5f59;font-weight:700";
+        el.appendChild(link);
+      });
+    };
+
+    // A homework file, prepared in the browser the way Wehel's attachments
+    // are: a photo is downscaled and re-encoded as JPEG (a phone photo is
+    // 3-8MB and the homework on it is readable at 1280px); a PDF, Word or
+    // PowerPoint file travels as it is, size-capped. The server proves the
+    // type by magic bytes whatever is claimed here.
+    const FILE_ACCEPT = ".pdf,.docx,.pptx,image/png,image/jpeg";
+    const prepareFile = async (file) => {
+      const name = String(file.name || "homework");
+      const isImage = /^image\//.test(String(file.type));
+      if (!isImage) {
+        if (!/\.(pdf|docx|pptx)$/i.test(name)) throw new Error("PDF, Word (.docx), PowerPoint (.pptx), PNG and JPEG files work here.");
+        if (file.size > 3 * 1024 * 1024) throw new Error(`${name} is too big — files up to 3MB work here.`);
+        const data = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.addEventListener("load", () => resolve(String(reader.result).split(",")[1] || ""));
+          reader.addEventListener("error", () => reject(reader.error));
+          reader.readAsDataURL(file);
+        });
+        return { name, data };
+      }
+      const bitmap = await createImageBitmap(file).catch(() => null);
+      if (!bitmap) throw new Error(`${name} could not be read — try a JPG or PNG photo.`);
+      const scale = Math.min(1, 1280 / Math.max(bitmap.width, bitmap.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+      canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+      canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+      if (bitmap.close) bitmap.close();
+      const data = canvas.toDataURL("image/jpeg", 0.8).split(",")[1] || "";
+      if (!data) throw new Error(`${name} could not be read.`);
+      return { name: name.replace(/\.[^.]*$/, "") + ".jpg", data };
+    };
+    const sendFile = async (file, attachBtn) => {
+      attachBtn.disabled = true;
+      try {
+        const prepared = await prepareFile(file);
+        const state = await post({ attachment: prepared, since: lastId });
+        if (state && state.ok && state.enabled) append(state.messages);
+        if (!state || !state.ok || state.filerejected) {
+          const why = state && state.filerejected === "too-big" ? "That file is too big — up to 3MB works here."
+            : state && state.filerejected === "type" ? "PDF, Word, PowerPoint, PNG and JPEG files work here."
+            : "The file did not send. Try again, or describe the problem in a message.";
+          shotFailNote(why);
+        }
+      } catch (e) {
+        shotFailNote(e && e.message ? e.message : "The file could not be read.");
+      } finally {
+        attachBtn.disabled = false;
+      }
     };
 
     // A screenshot bubble: the image is fetched lazily per message through the
@@ -1020,13 +1129,15 @@ export function createCourseApp(config) {
         + (m.mine ? "align-self:flex-end;background:#fff3cd;border:2px solid #ffe69c;" : "background:#f2f4f6;");
       el.innerHTML = (m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`)
         + '<span>📷 Screenshot</span>'
-        + (m.mine ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "");
+        + (m.mine ? `<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">${TUT ? "Only your tutors can see this" : "Only your teacher can see this"}</small>` : "");
       msgsEl.appendChild(el);
-      post({ image: m.id }).then((img) => {
+      // The tutoring door serves every stored file through one verb; the
+      // classroom door keeps its image verb. Both re-run the visibility check.
+      post(TUT ? { file: m.id, thread: threadId } : { image: m.id }).then((img) => {
         if (!img || !img.ok) return;
         if (img.gone) { el.querySelector("span").textContent = "📷 Screenshot (expired)"; return; }
         const pic = document.createElement("img");
-        pic.src = "data:image/jpeg;base64," + img.jpegbase64;
+        pic.src = img.base64 ? `data:${img.mime || "image/jpeg"};base64,${img.base64}` : "data:image/jpeg;base64," + img.jpegbase64;
         pic.alt = "Screenshot";
         pic.style.cssText = "display:block;max-width:100%;border-radius:8px;margin-top:4px";
         el.insertBefore(pic, el.querySelector("small"));
@@ -1143,17 +1254,26 @@ export function createCourseApp(config) {
       // the whole privacy rule in words a child reads: who can see what.
       panel.innerHTML = '<div style="padding:' + (YOUNG ? 13 : 10) + 'px 15px;'
         + 'background:linear-gradient(90deg,#cfe9ff,#e9f6ff);border-bottom:2px solid #bcd9f0">'
-        + '<div style="font-weight:900;font-size:' + (FS + 1) + 'px;color:#0a2c47">\uD83D\uDCAC Class chat</div>'
+        + '<div style="font-weight:900;font-size:' + (FS + 1) + 'px;color:#0a2c47">\uD83D\uDCAC '
+        + (TUT ? "Tutor chat \u00B7 " + escapeHtml(TUT.subjectlabel) : "Class chat") + '</div>'
         + '<div style="font-weight:600;font-size:' + (FS - 4) + 'px;color:#3d6a8c;margin-top:1px">'
-        + 'Everyone sees your teacher. Only your teacher sees you.</div></div>'
+        + (TUT
+          ? "Your " + escapeHtml(TUT.subjectlabel) + " tutors see what you write. A reply can take a while \u2014 ask Wehel while you wait."
+          : "Everyone sees your teacher. Only your teacher sees you.") + '</div></div>'
         + '<div id="class-chat-msgs" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;'
         + 'flex-direction:column;gap:9px;min-height:110px;background:#fdfdfb"></div>'
         + '<form id="class-chat-form" style="display:flex;gap:8px;padding:11px 13px;'
         + 'border-top:2px solid #e3eef7;background:#f4f9fd">'
-        + '<button type="button" id="class-chat-shot" title="Send a picture of this page to your teacher" '
+        + '<button type="button" id="class-chat-shot" title="Send a picture of this page to your ' + (TUT ? "tutors" : "teacher") + '" '
         + 'style="border:2px solid #bcd9f0;background:#fff;border-radius:999px;'
         + 'padding:' + (YOUNG ? "9px 13px" : "7px 11px") + ';font-size:' + (FS + 2) + 'px;cursor:pointer;line-height:1">\uD83D\uDCF7</button>'
-        + '<input id="class-chat-input" type="text" maxlength="1200" autocomplete="off" placeholder="Ask your teacher…" '
+        + (TUT
+          ? '<button type="button" id="class-chat-attach" title="Attach your homework: a photo, PDF, Word or PowerPoint file" '
+            + 'style="border:2px solid #bcd9f0;background:#fff;border-radius:999px;'
+            + 'padding:' + (YOUNG ? "9px 13px" : "7px 11px") + ';font-size:' + (FS + 2) + 'px;cursor:pointer;line-height:1">\uD83D\uDCCE</button>'
+            + '<input id="class-chat-file" type="file" accept="' + FILE_ACCEPT + '" hidden>'
+          : "")
+        + '<input id="class-chat-input" type="text" maxlength="1200" autocomplete="off" placeholder="' + (TUT ? "Ask your tutors…" : "Ask your teacher…") + '" '
         + 'style="flex:1;border:2px solid #bcd9f0;border-radius:999px;padding:' + (YOUNG ? "9px 15px" : "7px 13px") + ';'
         + 'font:inherit;font-size:' + FS + 'px;min-width:0;background:#fff">'
         + '<button type="submit" style="border:none;background:#1a67a3;color:#fff;border-radius:999px;'
@@ -1162,6 +1282,16 @@ export function createCourseApp(config) {
       msgsEl = panel.querySelector("#class-chat-msgs");
       const shotBtn = panel.querySelector("#class-chat-shot");
       shotBtn.addEventListener("click", () => captureAndPreview(shotBtn));
+      const attachBtn = panel.querySelector("#class-chat-attach");
+      const fileInput = panel.querySelector("#class-chat-file");
+      if (attachBtn && fileInput) {
+        attachBtn.addEventListener("click", () => fileInput.click());
+        fileInput.addEventListener("change", () => {
+          const file = fileInput.files && fileInput.files[0];
+          fileInput.value = "";
+          if (file) sendFile(file, attachBtn);
+        });
+      }
       panel.querySelector("#class-chat-form").addEventListener("submit", (event) => {
         event.preventDefault();
         const inputEl = panel.querySelector("#class-chat-input");
@@ -1174,6 +1304,8 @@ export function createCourseApp(config) {
 
     post({}).then((state) => {
       if (!state || !state.ok || state.enabled === false) return;
+      TUT = state.tutoring ? state : null;
+      threadId = Number(state.threadid) || 0;
       button = document.createElement("button");
       button.type = "button";
       button.id = "class-chat-toggle";

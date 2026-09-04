@@ -80,6 +80,51 @@ if ($userid <= 0) {
     exit;
 }
 
+// THE TUTORING CATEGORY (owner, 2026-09-05): a tutoring learner has no class
+// group; their room is ONE THREAD PER LEARNER PER SUBJECT with the subject's
+// tutor cohort on the other side (tutoring_chatlib.php names the cohorts). The
+// subject is the umbrella course the token was minted for -- derived from the
+// claim, never taken from the payload, for the same reason the group above is
+// not: a subject in the body would let any token read any subject's thread.
+// Verbs beyond the classroom ones:
+//   {token, attachment: {name, data}}   a homework file (jpeg/png/pdf/docx/pptx)
+//   {token, file: <messageid>, thread}  one stored attachment back, base64
+$tutoringslug = pqpg_tutoring_subject((string)($claims['course'] ?? ''));
+if ($tutoringslug !== null) {
+    require_once(__DIR__ . '/tutoring_chatlib.php');
+    $fileid = (int)($payload['file'] ?? 0);
+    if ($fileid > 0) {
+        $file = local_prequran_external::tutoring_chat_file($userid, (int)($payload['thread'] ?? 0), $fileid);
+        echo json_encode($file ?: ['ok' => false], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
+    $attachment = null;
+    $kind = 'file';
+    $shot = (string)($payload['screenshot'] ?? '');
+    if ($shot !== '') {
+        // The lesson-page render, as the classroom chat sends it; stored under
+        // its own kind so the panel can caption it as a screenshot.
+        $attachment = ['name' => 'screenshot.jpg', 'data' => $shot];
+        $kind = 'screenshot';
+    } else if (is_array($payload['attachment'] ?? null)) {
+        $attachment = [
+            'name' => (string)($payload['attachment']['name'] ?? ''),
+            'data' => (string)($payload['attachment']['data'] ?? ''),
+        ];
+    }
+    // Size-capped before decoding, as the screenshot is: a grossly oversized
+    // body is refused before it costs anything.
+    if ($attachment !== null && strlen($attachment['data']) > 4400000) {
+        echo json_encode(['ok' => false, 'filerejected' => 'too-big'], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
+    $result = local_prequran_external::tutoring_chat_exchange(
+        $userid, $userid, $tutoringslug,
+        trim((string)($payload['body'] ?? '')), max(0, (int)($payload['since'] ?? 0)), 60, $attachment, $kind);
+    echo json_encode($result, JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
 // The learner's own active group with a teacher on it — the same condition
 // pqlgb_learner_is_watched() gates the Raise hand button on, resolved to WHICH
 // group. Newest assignment wins if data ever holds more than one.

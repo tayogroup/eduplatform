@@ -2900,6 +2900,17 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
       <span class="pqh-gnav__label">Group Board</span>
     </a>
+    <?php // The tutoring inbox (owner, 2026-09-05): drawn only for a teacher who
+          // is in a tutoring teacher group (math_tutoring, science_tutoring, …)
+          // or supervises them -- a link to an inbox the teacher cannot open is
+          // the Raise-hand rule broken on the dashboard.
+          require_once(__DIR__ . '/tutoring_chatlib.php');
+          if (pqtut_user_is_tutor((int)$USER->id)): ?>
+    <a class="pqh-gnav__item" href="<?php echo pqh_hub_link('tutoring_inbox.php')->out(false); ?>">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span class="pqh-gnav__label">Tutoring Inbox</span>
+    </a>
+    <?php endif; ?>
     <a class="pqh-gnav__item" href="<?php echo pqh_live_teacher_schedule_link((int)$USER->id)->out(false); ?>">
       <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       <span class="pqh-gnav__label">Schedule</span>

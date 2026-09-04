@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from "vite";
 import { createWehelChatHandler, createWehelHomeworkHandler } from "./tools/lib/wehel-dev-chat.js";
 import { createWehelSpeakHandler, createWehelListenHandler } from "./tools/lib/wehel-deepgram.js";
+import { createTutoringChatDevHandler } from "./tools/lib/tutoring-chat-dev.js";
 
 const EHEL_ENGLISH_VOICE_ID = "XfNU2rGpBa01ckF309OY";
 
@@ -91,6 +92,10 @@ function ehelEnglishVoicePlugin(env) {
         "/local/hubredirect/wehel_homework.php",
         createWehelHomeworkHandler({ enabled: () => env.WEHEL_DEV_HOMEWORK }),
       );
+      // The tutoring chat's learner door, in-memory (tools/lib/tutoring-chat-dev.js):
+      // lets the tutor-chat panel mount and exchange without a Moodle. Open a
+      // subject with ?category=tutoring&pwsToken=dev&pwsEndpoint=http://127.0.0.1:1/
+      server.middlewares.use("/local/hubredirect/course_group_chat.php", createTutoringChatDevHandler());
       // Wehel's Deepgram voice (Aura-2 Thalia replies, nova-3 mic input) —
       // Wehel ONLY; quiz_tts/quiz_stt below stay on ElevenLabs for the lesson
       // voice and pronunciation check.

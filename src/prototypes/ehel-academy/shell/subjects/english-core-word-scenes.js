@@ -2654,6 +2654,155 @@ SCENES.which = () => scene(`${gQ(84, 58)}
 SCENES.not = () => scene(`${sun(38, 30)}${sBall(150, 112)}
   <path d="M132 94 L168 130 M168 94 L132 130" stroke="${P.red}" stroke-width="6" stroke-linecap="round"/>`);
 
+// ============================================================ gesture words, Grades 2-3
+// The same idiom as the Grade 1 gesture tranche, carried to every Grade 2-3
+// word it honestly fits (owner, 2026-09-04). Grade 4 gets nothing here: its
+// seven open function words (whereas, whilst, according, besides, concerning,
+// considering, regarding) are clause and discourse words with nothing to draw
+// on either side but a sentence.
+//
+// Three families, each held to one construction:
+//
+//   QUANTITY   the balls of these/those, counted: both, each, every, few,
+//              several, many, fewer/more (a faint row before, a solid row
+//              after), most, only, same, other, another, various.
+//   SOME/ANY/  a GREY child or ball is one you cannot name; three grey ones
+//   EVERY/NO   are "any"; a full ring is "every"; a dashed empty spot is "no".
+//   SELF       the mirror. "myself" is a child and their reflection, hands to
+//              chest; the plural selves are the group with hands to chest.
+//
+// Skipped on the file's one rule: the clause-joiners (although, however, if,
+// nor, since, therefore, unless, until, while, as) and the discourse
+// prepositions (about, during, despite, via, throughout) have no thing to put
+// the word between; himself/herself are defined by gender; enough/plenty are
+// relative to a need the picture cannot show; always/never/sometimes/now/then
+// are about time, which a still frame cannot carry honestly.
+
+const gGrey = (opts) => `<g opacity="0.42">${kid({ shirt: P.grey, armLBase: 10, armRBase: -10, ...opts })}</g>`;
+const gRing = (cx, cy, rx, ry) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="${P.grey}" stroke-width="2.5" stroke-dasharray="6 5"/>`;
+const gRow = (xs, y, colors = null, anim = "") => xs.map((x, i) => sBall(x, y, anim, colors ? colors[i % colors.length] : P.red)).join("");
+const gFaintRow = (xs, y) => `<g opacity="0.3">${gRow(xs, y)}</g>`;
+const gMirror = (x, y) => `<rect x="${x - 34}" y="${y - 100}" width="68" height="108" rx="10" fill="#dff0f8" stroke="${P.grey}" stroke-width="3"/><path d="M${x - 22} ${y - 90} L${x - 8} ${y - 60}" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.8"/>`;
+const gChest = { armLBase: -56, armRBase: 56 };
+
+// ------------------------------------------------------------ quantity (Grade 2)
+SCENES.both = () => scene(`${sun(38, 30)}${gRing(150, 130, 44, 24)}${gRow([132, 168], 132)}`);
+
+SCENES.each = () => scene(`${sun(38, 30)}
+  ${[96, 150, 204].map((x) => `${gRing(x, 132, 20, 18)}${sBall(x, 132)}`).join("")}`);
+
+SCENES.every = () => scene(`${sun(38, 30)}${gRing(150, 130, 100, 26)}${gRow([76, 113, 150, 187, 224], 132)}`);
+
+SCENES.few = () => scene(`${sun(38, 30)}${gRow([124, 176], 132)}`);
+SCENES.several = () => scene(`${sun(38, 30)}${gRow([96, 132, 168, 204], 132)}`);
+SCENES.many = () => scene(`${sun(38, 30)}
+  ${gRow([60, 90, 120, 150, 180, 210], 112)}
+  ${gRow([75, 105, 135, 165, 195, 225], 138)}`);
+
+// fewer / more: a faint row is "before", the solid row is now.
+SCENES.fewer = () => scene(`${gFaintRow([70, 110, 150, 190, 230], 76)}
+  <path d="M150 90 v14" stroke="${P.teal}" stroke-width="3" stroke-linecap="round"/><path d="M144 100 L150 108 L156 100 Z" fill="${P.teal}"/>
+  ${gRow([124, 176], 136)}`);
+SCENES.more = () => scene(`${gFaintRow([124, 176], 76)}
+  <path d="M150 90 v14" stroke="${P.teal}" stroke-width="3" stroke-linecap="round"/><path d="M144 100 L150 108 L156 100 Z" fill="${P.teal}"/>
+  ${gRow([70, 110, 150, 190, 230], 136)}`);
+
+SCENES.most = () => scene(`${sun(38, 30)}
+  ${gRow([76, 113, 150, 187], 132)}${sBall(224, 132, "", P.grey)}`);
+
+SCENES.only = () => scene(`${sun(38, 30)}${gRing(150, 130, 24, 20)}${sBall(150, 132)}`);
+
+SCENES.same = () => scene(`${sun(38, 30)}${gRow([104, 196], 132)}
+  <text x="150" y="141" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="30" font-weight="bold" fill="${P.line}">=</text>`);
+
+// other: the finger is on one; the OTHER one is the word.
+SCENES.other = () => scene(`${sun(38, 30)}
+  ${sBall(146, 137, "", P.grey)}${gRing(210, 135, 20, 18)}${sBall(210, 137)}
+  ${kid({ x: 106, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gDown })}`);
+
+SCENES.another = () => scene(`${sun(38, 30)}${gRow([90, 126, 162], 132)}
+  ${sArrow(198, 100, 226)}${sBall(232, 132, shift(2.2, "0 -30;0 0;0 0", 'keyTimes="0;0.5;1"'))}`);
+
+SCENES.various = () => scene(`${sun(38, 30)}
+  ${sBall(82, 132)}<rect x="118" y="120" width="24" height="24" rx="4" fill="${P.gold}"/>
+  <path d="M176 118 L192 146 H160 Z" fill="${P.teal}"/><circle cx="222" cy="132" r="11" fill="${P.purple}"/>`);
+
+// ------------------------------------------------------------ pairs and joins (Grade 2)
+SCENES.together = () => scene(`${sun(38, 30)}${gRing(150, 128, 56, 30)}
+  ${kid({ x: 128, y: 148, s: 1.0, shirt: P.teal, armLBase: 12, armRBase: -40 })}
+  ${kid({ x: 172, y: 148, s: 1.0, shirt: P.gold, flip: true, armLBase: 12, armRBase: -40 })}`);
+
+SCENES.apart = () => scene(`${sun(38, 30)}
+  ${kid({ x: 52, y: 148, s: 1.0, shirt: P.teal, armLBase: 12, armRBase: -12 })}
+  ${kid({ x: 208, y: 148, s: 1.0, shirt: P.gold, flip: true, armLBase: 12, armRBase: -12 })}
+  <path d="M84 120 H176" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 5"/>`);
+
+// than: two stacks that differ, the word between — the comparison is the height.
+SCENES.than = () => nPaper(`
+  ${[0, 1, 2].map((i) => sBall(70, 130 - i * 24)).join("")}
+  ${gWord("than", 130, 116, 26)}
+  ${sBall(190, 130)}`);
+
+SCENES.whether = () => SCENES.or();
+
+SCENES.per = () => scene(`${sun(38, 30)}
+  ${[84, 150, 216].map((x, i) => kid({ x, y: 148, s: 0.95, shirt: [P.teal, P.gold, P.purple][i], armLBase: 12, armRBase: -55,
+    armRHold: `<g transform="translate(2 20)"><circle r="8" fill="${P.red}" stroke="#b03a37" stroke-width="1.4"/></g>` })).join("")}`);
+
+// including: the reverse of excluding — one is brought IN to the row.
+SCENES.including = () => scene(`${sun(38, 30)}${gRing(146, 130, 96, 26)}
+  ${gRow([70, 106, 142, 178], 132)}
+  ${sBall(214, 132, shift(2.4, "0 -40;0 0;0 0", 'keyTimes="0;0.5;1"'))}`);
+
+SCENES.whose = () => scene(`${gQ(150, 62)}${sBall(150, 137)}
+  ${kid({ x: 84, y: 148, s: 1.05, shirt: P.teal, mouth: "o", ...gAt })}
+  ${kid({ x: 216, y: 148, s: 1.05, shirt: P.gold, flip: true, mouth: "o", ...gAt })}`);
+
+// ------------------------------------------------------------ some / any / every / no (Grade 3)
+SCENES.someone = () => scene(`${sun(38, 30)}${gGrey({ x: 150, y: 148, s: 1.15 })}`);
+SCENES.somebody = () => SCENES.someone();
+
+SCENES.anyone = () => scene(`${sun(38, 30)}
+  ${[96, 150, 204].map((x) => gGrey({ x, y: 148, s: 0.95 })).join("")}`);
+SCENES.anybody = () => SCENES.anyone();
+SCENES.whoever = () => SCENES.anyone();
+
+SCENES.everybody = () => scene(`${sun(38, 30)}${gRing(150, 128, 110, 32)}
+  ${[62, 106, 150, 194, 238].map((x, i) => kid({ x, y: 148, s: 0.82, shirt: [P.teal, P.gold, P.purple, P.red, P.green][i], armLBase: 10, armRBase: -10 })).join("")}`);
+
+SCENES.nobody = () => scene(`${sun(38, 30)}
+  ${kid({ x: 84, y: 148, s: 1.0, shirt: P.teal, armLBase: 12, armRBase: -12 })}
+  ${gRing(150, 120, 22, 30)}
+  ${kid({ x: 216, y: 148, s: 1.0, shirt: P.gold, flip: true, armLBase: 12, armRBase: -12 })}`);
+
+SCENES.something = () => scene(`${sun(38, 30)}${sBall(150, 132, "", P.grey)}`);
+
+SCENES.anything = () => scene(`${sun(38, 30)}${gRow([96, 150, 204], 132, [P.grey])}`);
+SCENES.whatever = () => SCENES.anything();
+
+SCENES.everything = () => scene(`${sun(38, 30)}${gRing(150, 124, 104, 34)}
+  ${gRow([76, 113, 150, 187, 224], 112, [P.red, P.gold, P.teal, P.purple, P.blue])}
+  ${gRow([94, 131, 168, 205], 138, [P.green, P.red, P.gold, P.teal])}`);
+
+SCENES.nothing = () => scene(`${sCrate(150, 116)}`);
+
+// ------------------------------------------------------------ the selves (Grade 3)
+SCENES.myself = () => scene(`${gMirror(190, 148)}
+  <g opacity="0.55">${kid({ x: 190, y: 146, s: 1.0, shirt: P.teal, flip: true, ...gChest })}</g>
+  ${kid({ x: 100, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gChest })}`);
+
+SCENES.yourself = () => scene(`${sun(38, 30)}
+  ${kid({ x: 78, y: 148, s: 1.05, shirt: P.teal, mouth: "o", ...gAt })}
+  ${kid({ x: 196, y: 148, s: 1.1, shirt: P.gold, flip: true, ...gChest })}`);
+
+SCENES.ourselves = () => scene(`${sun(38, 30)}${gRing(150, 130, 92, 30)}
+  ${[96, 150, 204].map((x, i) => kid({ x, y: 148, s: 0.95, shirt: [P.gold, P.teal, P.purple][i], mouth: i === 1 ? "o" : "smile", ...gChest })).join("")}`);
+
+SCENES.themselves = () => scene(`${sun(38, 30)}
+  ${kid({ x: 66, y: 148, s: 1.0, shirt: P.teal, mouth: "o", ...gAt })}
+  ${[164, 204, 244].map((x, i) => kid({ x, y: 148, s: 0.82, shirt: [P.gold, P.purple, P.green][i], flip: true, ...gChest })).join("")}`);
+SCENES.yourselves = () => SCENES.themselves();
+
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the
 // animation tags are stripped and the still tableau remains. Read once — the

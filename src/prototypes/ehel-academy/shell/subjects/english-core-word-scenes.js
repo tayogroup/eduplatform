@@ -1953,6 +1953,227 @@ SCENES.useless = () => scene(`
   <rect x="150" y="96" width="26" height="8" rx="2" fill="${P.grey}" transform="rotate(-30 163 100)"/>
   ${kid({ x: 122, y: 148, s: 1.1, shirt: P.red, mouth: "frown", armLBase: 15, armRBase: -15 })}`);
 
+// ============================================================ spatial words
+// The 50 position and direction words of the Grades 1-4 Core words (owner,
+// 2026-09-04). These are the words a picture teaches BETTER than a sentence
+// does — "under" is one drawing and three paragraphs of prose — and they had
+// no cover at all, because word-pictures.js is one emoji per word and there is
+// no emoji for "between".
+//
+// ONE VISUAL GRAMMAR, HELD STILL ON PURPOSE. Every scene is the same red ball
+// and the same wooden reference object, and the only thing that changes from
+// "on" to "under" is the thing the word means. A child who has read three of
+// these can read the fourth, which is the whole reason not to draw fifty
+// different pictures.
+//
+// Synonyms SHARE a drawing rather than inventing a difference the language
+// does not have: in/inside, on/upon, under/beneath/underneath, toward/towards.
+//
+// Not every preposition is here. "of", "for", "about", "during", "per",
+// "despite", "including", "via", "according", "regarding", "concerning",
+// "considering" and "besides" are grammatical rather than spatial — there is
+// nowhere to put the ball for "of" — so they get nothing, on the same rule the
+// rest of this file keeps.
+const sBall = (x, y, anim = "", color = P.red) =>
+  `<g transform="translate(${x} ${y})"><g>${anim}<circle r="11" fill="${color}" stroke="#b03a37" stroke-width="1.6"/><circle cx="-3.6" cy="-3.6" r="3.4" fill="#ffffff" opacity="0.4"/></g></g>`;
+const sTable = (x = 152, y = 104, w = 88) => tableProp(x, y, w);
+const sBox = (x = 152, y = 122) =>
+  `<g transform="translate(${x} ${y})"><rect x="-38" y="-26" width="76" height="52" rx="4" fill="${P.wood}" stroke="#7d5227" stroke-width="2"/><path d="M-38 -12 H38" stroke="#7d5227" stroke-width="1.6" opacity="0.6"/></g>`;
+const sCrate = (x = 156, y = 116) =>
+  `<g transform="translate(${x} ${y})"><path d="M-30 -28 V20 H30 V-28" fill="none" stroke="${P.wood}" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/></g>`;
+const sMark = (x, y, r = 18) =>
+  `<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="${P.grey}" stroke-width="2.2" stroke-dasharray="5 5"/>`;
+const sArrow = (x1, y, x2, color = P.teal) => {
+  const d = x2 > x1 ? 1 : -1;
+  return `<path d="M${x1} ${y} H${x2 - 10 * d}" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 5"/><path d="M${x2 - 11 * d} ${y - 6} L${x2} ${y} L${x2 - 11 * d} ${y + 6} Z" fill="${color}"/>`;
+};
+
+// --- on the vertical axis: one table, the ball at five heights --------------
+SCENES.on = () => scene(`${sTable()}${sBall(152, 93, shift(2.4, "0 0;0 -2;0 0"))}`);
+SCENES.upon = () => SCENES.on();
+
+SCENES.above = () => scene(`${sTable()}
+  <path d="M152 76 V96" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 4"/>
+  ${sBall(152, 60, shift(2.8, "0 0;0 -5;0 0"))}`);
+
+SCENES.under = () => scene(`${sTable()}${sBall(152, 124, shift(2.8, "0 0;0 -3;0 0"))}`);
+SCENES.beneath = () => SCENES.under();
+SCENES.underneath = () => SCENES.under();
+
+SCENES.below = () => scene(`
+  <rect x="104" y="78" width="96" height="9" rx="3" fill="${P.wood}"/>
+  <path d="M152 92 V106" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 4"/>
+  ${sBall(152, 122, shift(2.8, "0 0;0 -3;0 0"))}`);
+
+SCENES.over = () => scene(`${sTable()}
+  <path d="M92 122 Q152 38 212 122" fill="none" stroke="${P.grey}" stroke-width="2" stroke-dasharray="5 5"/>
+  <g><animateMotion path="M92 122 Q152 38 212 122" dur="2.8s" repeatCount="indefinite"/><circle r="11" fill="${P.red}" stroke="#b03a37" stroke-width="1.6"/><circle cx="-3.6" cy="-3.6" r="3.4" fill="#ffffff" opacity="0.4"/></g>`);
+
+// --- in and out: one open crate --------------------------------------------
+SCENES.in = () => scene(`${sCrate()}${sBall(156, 122, shift(2.8, "0 0;0 -2;0 0"))}`);
+SCENES.inside = () => SCENES.in();
+
+SCENES.into = () => scene(`${sCrate()}
+  ${sBall(156, 122, shift(2.6, "0 -70;0 -70;0 0;0 0", 'keyTimes="0;0.15;0.6;1"'))}`);
+
+SCENES.out = () => scene(`${sCrate()}
+  ${sBall(156, 122, shift(2.8, "0 0;0 0;0 -62;52 -62;52 -62", 'keyTimes="0;0.15;0.5;0.8;1"'))}`);
+
+SCENES.outside = () => scene(`
+  <g transform="translate(104 120)"><rect x="-30" y="-30" width="60" height="46" fill="${P.wood}"/><path d="M-38 -30 L0 -58 L38 -30 Z" fill="#c23e3a"/><rect x="-9" y="-8" width="18" height="24" rx="2" fill="#7d5227"/></g>
+  ${sBall(198, 128, shift(2.8, "0 0;0 -3;0 0"))}`);
+
+SCENES.within = () => scene(`
+  <rect x="100" y="70" width="108" height="74" rx="12" fill="none" stroke="${P.teal}" stroke-width="3" stroke-dasharray="7 6"/>
+  ${sBall(154, 108, shift(3, "0 0;0 -3;0 0"))}`);
+
+// --- around the sides: the ball moves, the box stays ------------------------
+// "behind" draws the ball FIRST so the box hides part of it; "front" draws it
+// last and lower. The order of the two lines is the whole difference.
+SCENES.behind = () => scene(`${sBall(152, 92)}${sBox(152, 122)}`);
+SCENES.front = () => scene(`${sBox(152, 116)}${sBall(152, 140)}`);
+
+SCENES.beside = () => scene(`${sBox(134, 122)}${sBall(202, 137, shift(2.6, "0 0;0 -3;0 0"))}`);
+
+SCENES.between = () => scene(`${sBox(70, 122)}${sBox(220, 122)}${sBall(146, 130, shift(2.6, "0 0;0 -3;0 0"))}`);
+
+SCENES.near = () => scene(`${sBox(116, 122)}
+  <path d="M158 137 H172" stroke="${P.grey}" stroke-width="2" stroke-dasharray="3 3"/>
+  ${sBall(186, 137)}`);
+
+SCENES.nearby = () => scene(`${sun(38, 30)}
+  <path d="M128 140 H154" stroke="${P.grey}" stroke-width="2" stroke-dasharray="3 3"/>
+  ${sBall(170, 137)}
+  ${kid({ x: 104, y: 148, s: 1.05, shirt: P.teal, armLBase: 12, armRBase: -12 })}`);
+
+SCENES.against = () => scene(`
+  <rect x="176" y="62" width="18" height="80" rx="3" fill="${P.grey}"/>
+  ${sBall(165, 130)}`);
+
+SCENES.among = () => scene(`
+  ${[[92, 118], [140, 100], [190, 118], [110, 140], [172, 142]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="11" fill="${P.grey}" opacity="0.7"/>`).join("")}
+  ${sBall(142, 126, shift(2.6, "0 0;0 -3;0 0"))}`);
+
+SCENES.off = () => scene(`${sTable()}
+  ${sBall(180, 93, shift(2.6, "0 0;0 0;24 46;24 46", 'keyTimes="0;0.35;0.7;1"'))}`);
+
+// --- journeys: where it starts, where it is going, what it passes -----------
+SCENES.from = () => scene(`${sMark(58, 126)}
+  ${sArrow(84, 126, 190)}
+  ${sBall(58, 126, shift(2.8, "0 0;140 0;140 0", 'keyTimes="0;0.75;1"'))}`);
+
+SCENES.to = () => scene(`${sMark(200, 126)}
+  ${sArrow(84, 126, 174)}
+  ${sBall(62, 126, shift(2.8, "0 0;138 0;138 0", 'keyTimes="0;0.75;1"'))}`);
+
+SCENES.toward = () => scene(`${sMark(210, 126)}
+  ${sArrow(96, 126, 178)}
+  ${sBall(68, 126, shift(2.6, "0 0;62 0;62 0", 'keyTimes="0;0.8;1"'))}`);
+SCENES.towards = () => SCENES.toward();
+
+SCENES.across = () => scene(`
+  <rect x="0" y="94" width="260" height="46" fill="${P.water}"/>
+  <path d="M0 99 Q13 94 26 99 T52 99 T78 99 T104 99 T130 99 T156 99 T182 99 T208 99 T234 99 T260 99" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  ${sBall(32, 117, shift(3, "0 0;196 0;196 0", 'keyTimes="0;0.8;1"'))}`);
+
+SCENES.through = () => scene(`
+  <path d="M56 142 Q152 40 248 142 Z" fill="#c9a24a" opacity="0.5"/>
+  <path d="M124 142 V114 A28 28 0 0 1 180 114 V142 Z" fill="${P.line}" opacity="0.85"/>
+  ${sBall(34, 130, shift(3.2, "0 0;118 0;214 0;214 0", 'keyTimes="0;0.45;0.85;1"'))}`);
+
+SCENES.along = () => scene(`
+  <path d="M16 134 H244" stroke="${P.wood}" stroke-width="6" stroke-linecap="round"/>
+  ${[44, 84, 124, 164, 204].map((x) => `<rect x="${x - 3}" y="112" width="6" height="24" rx="2" fill="${P.wood}"/>`).join("")}
+  ${sBall(48, 100, shift(3.4, "0 0;152 0;152 0", 'keyTimes="0;0.85;1"'))}`);
+
+SCENES.past = () => scene(`
+  <rect x="148" y="94" width="9" height="46" rx="3" fill="${P.wood}"/>
+  <circle cx="152" cy="84" r="23" fill="${P.green}"/>
+  ${sBall(32, 132, shift(3, "0 0;192 0;192 0", 'keyTimes="0;0.85;1"'))}`);
+
+SCENES.around = () => scene(`${sBox(152, 112)}
+  <ellipse cx="152" cy="112" rx="70" ry="40" fill="none" stroke="${P.grey}" stroke-width="2" stroke-dasharray="5 5"/>
+  <g><animateMotion path="M222 112 A70 40 0 1 1 82 112 A70 40 0 1 1 222 112" dur="4.4s" repeatCount="indefinite"/><circle r="10" fill="${P.red}" stroke="#b03a37" stroke-width="1.6"/></g>`);
+
+SCENES.beyond = () => scene(`
+  ${sArrow(56, 74, 214)}
+  <path d="M92 142 Q140 68 188 142 Z" fill="#c9a24a" opacity="0.55"/>
+  ${sBall(224, 132, shift(2.8, "0 0;0 -3;0 0"))}`);
+
+SCENES.alongside = () => scene(`
+  <g>${shift(3.2, "0 0;132 0;132 0", 'keyTimes="0;0.82;1"')}
+    <circle cx="52" cy="124" r="11" fill="${P.red}" stroke="#b03a37" stroke-width="1.6"/>
+    <circle cx="82" cy="124" r="11" fill="${P.teal}" stroke="#1c7f78" stroke-width="1.6"/>
+  </g>`);
+
+SCENES.opposite = () => scene(`
+  ${sBall(66, 116)}
+  <circle cx="216" cy="116" r="11" fill="${P.teal}" stroke="#1c7f78" stroke-width="1.6"/><circle cx="212.4" cy="112.4" r="3.4" fill="#ffffff" opacity="0.4"/>
+  <path d="M100 116 H184" stroke="${P.grey}" stroke-width="2.6" stroke-dasharray="6 5"/>
+  <path d="M98 110 L86 116 L98 122 Z" fill="${P.grey}"/><path d="M186 110 L198 116 L186 122 Z" fill="${P.grey}"/>`);
+
+// --- where you are standing -------------------------------------------------
+// here and there are the same drawing at two distances: what changes is how
+// far the marker is from the child, which is exactly what the words carry.
+SCENES.here = () => scene(`${sun(38, 30)}${sMark(140, 138, 20)}${sBall(140, 132)}
+  ${kid({ x: 104, y: 146, s: 1.1, shirt: P.teal, mouth: "o", armLBase: 12, armRBase: -52 })}`);
+
+SCENES.there = () => scene(`${sun(38, 30)}${sMark(216, 138, 20)}${sBall(216, 132)}
+  ${kid({ x: 82, y: 146, s: 1.1, shirt: P.gold, mouth: "o", armLBase: 12, armRBase: -98 })}`);
+
+SCENES.at = () => scene(`${doorProp(196, 142)}${sMark(150, 136, 20)}
+  ${kid({ x: 150, y: 142, s: 1.05, shirt: P.blue, armLBase: 12, armRBase: -12 })}`);
+
+// --- having it, and not having it ------------------------------------------
+SCENES.with = () => scene(`${sun(38, 30)}
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.teal, mouth: "o", armLBase: 12, armRBase: -55,
+    armRHold: `<g transform="translate(2 20)"><circle r="10" fill="${P.red}" stroke="#b03a37" stroke-width="1.4"/></g>` })}`);
+
+SCENES.without = () => scene(`${sun(38, 30)}${sMark(192, 116, 16)}
+  ${kid({ x: 122, y: 148, s: 1.15, shirt: P.grey, mouth: "frown", armLBase: 22, armRBase: -22 })}`);
+
+// --- order, parts and directions -------------------------------------------
+// The dashed ring is the thing being counted from; the red one is the word.
+const sSeq = (hit) => `${sArrow(46, 60, 218)}
+  ${sMark(132, 108, 23)}
+  ${[82, 132, 182].map((x, i) => `<circle cx="${x}" cy="108" r="15" fill="${i === hit ? P.red : P.grey}" opacity="${i === hit ? 1 : 0.5}"/>`).join("")}`;
+SCENES.before = () => scene(sSeq(0));
+SCENES.after = () => scene(sSeq(2));
+
+SCENES.bottom = () => scene(`
+  <rect x="112" y="54" width="72" height="90" rx="5" fill="${P.wood}" opacity="0.45"/>
+  <path d="M112 118 H184 V139 Q184 144 179 144 H117 Q112 144 112 139 Z" fill="${P.red}"/>
+  ${sArrow(236, 131, 196)}`);
+
+SCENES.side = () => scene(`
+  <rect x="102" y="74" width="88" height="70" rx="5" fill="${P.wood}" opacity="0.45"/>
+  <path d="M186 78 V140" stroke="${P.red}" stroke-width="9" stroke-linecap="round"/>
+  ${sArrow(238, 109, 204)}`);
+
+const sCompass = (lbl, ang) => `<circle cx="152" cy="98" r="47" fill="#fffdf5" stroke="${P.grey}" stroke-width="2.5"/>
+  ${[["N", 0], ["E", 90], ["S", 180], ["W", 270]].map(([t, a]) => {
+    const rad = ((a - 90) * Math.PI) / 180;
+    const x = 152 + Math.cos(rad) * 34;
+    const y = 98 + Math.sin(rad) * 34;
+    return `<text x="${x}" y="${y + 6}" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="16" font-weight="bold" fill="${t === lbl ? P.red : P.grey}">${t}</text>`;
+  }).join("")}
+  <g transform="translate(152 98) rotate(${ang})"><path d="M0 -27 L7 6 L0 1 L-7 6 Z" fill="${P.red}"/></g>`;
+SCENES.north = () => scene(sCompass("N", 0));
+SCENES.south = () => scene(sCompass("S", 180));
+SCENES.east = () => scene(`${sCompass("E", 90)}${sun(228, 40)}`);
+SCENES.west = () => scene(`${sCompass("W", 270)}${sun(32, 40)}`);
+
+SCENES.except = () => scene(`
+  ${[70, 106, 142, 178].map((x) => `<circle cx="${x}" cy="112" r="13" fill="${P.teal}"/>`).join("")}
+  <circle cx="216" cy="112" r="13" fill="${P.grey}" opacity="0.45"/>
+  <path d="M207 103 L225 121 M225 103 L207 121" stroke="${P.red}" stroke-width="3.4" stroke-linecap="round"/>`);
+
+SCENES.excluding = () => scene(`
+  ${[68, 104, 140, 176].map((x) => `<circle cx="${x}" cy="128" r="13" fill="${P.teal}"/>`).join("")}
+  <circle cx="212" cy="128" r="13" fill="none" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 4"/>
+  <path d="M212 112 V84" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 4"/>
+  <circle cx="212" cy="68" r="13" fill="${P.grey}" opacity="0.5"/>`);
+
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the
 // animation tags are stripped and the still tableau remains. Read once — the

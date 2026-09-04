@@ -1665,6 +1665,178 @@ SCENES.short = () => scene(`${sun(38, 30)}
   </g>
   ${kid({ x: 96, y: 148, s: 1.05, shirt: P.purple, mouth: "o", armLBase: -30, armRBase: 30 })}`);
 
+// -------------------------------------------------------------- Grade 3 (owner, 2026-09-04)
+// Two more concrete verbs the census missed, plus 22 of the grade's 35 new
+// adjectives — the ones with one fixed, concrete referent. The other 13
+// (famous, better, less, several, various, plenty, simple, strange,
+// interesting, lovely, perfect, wonderful) are subjective evaluations with no
+// single fixed thing behind them — what counts as "interesting" or "lovely"
+// isn't fixed the way "hungry" or "broken" is — so no one tableau can be
+// honest about them, the same reasoning "fun" and "enough"/"fewer" were left
+// out on.
+
+// care — the wilting plant is tended, and stands back up.
+SCENES.care = () => scene(`${sun(38, 30)}
+  <path d="M150 152 Q172 132 196 152 Z" fill="#8a6a48"/>
+  <g transform="translate(173 150)"><g>${rot(2.4, "-25 0 0;4 0 0;-25 0 0")}<path d="M0 -4 Q-5 -18 3 -28" fill="none" stroke="${P.green}" stroke-width="3" stroke-linecap="round"/><ellipse cx="3" cy="-28" rx="4" ry="2.4" fill="${P.green}" transform="rotate(-20 3 -28)"/></g></g>
+  ${kid({ x: 122, y: 148, s: 1.1, shirt: P.teal, mouth: "o", armLBase: 20,
+    armRBase: -55, armRAnim: rot(2.4, "-55 0 0;-40 0 0;-55 0 0") })}`);
+
+// drop — the apple slips from a hand and falls.
+SCENES.drop = () => scene(`${sun(38, 30)}
+  <g>${shift(1.6, "0 0;0 46;0 46", 'keyTimes="0;0.5;1"')}<circle cx="150" cy="104" r="6.5" fill="${P.red}"/><path d="M150 98 Q151 95 153 94" fill="none" stroke="${P.green}" stroke-width="2" stroke-linecap="round"/></g>
+  <ellipse cx="150" cy="152" rx="10" ry="3" fill="#0a0a0a" opacity="0">${fade(1.6, "0;0;0.15", 'keyTimes="0;0.45;0.6"')}</ellipse>
+  ${kid({ x: 118, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: 15,
+    armRBase: -85, armRAnim: rot(1.6, "-85 0 0;-40 0 0;-40 0 0", 'keyTimes="0;0.4;1"') })}`);
+
+// warm — the thermometer sits high, cosy under the sun.
+SCENES.warm = () => scene(`${sun(38, 30)}
+  <g transform="translate(196 100)"><rect x="-4" y="-32" width="8" height="34" rx="4" fill="#fffdf5" stroke="${P.grey}" stroke-width="1.6"/><circle cy="6" r="7" fill="${P.red}"/><rect x="-2.4" y="-26" width="4.8" height="34" fill="${P.red}"/></g>
+  ${kid({ x: 122, y: 148, s: 1.15, shirt: P.gold, armLBase: 20, armRBase: -20,
+    headAnim: rot(2, "-3 0 -47;3 0 -47;-3 0 -47") })}`);
+
+// weak — too heavy to lift, arms trembling.
+SCENES.weak = () => scene(`
+  <g transform="translate(160 130)"><rect x="-11" y="-16" width="22" height="16" rx="2" fill="${P.wood}"/></g>
+  ${kid({ x: 122, y: 148, s: 1.1, shirt: P.blue, mouth: "frown", armLBase: 20,
+    armRBase: -60, armRAnim: rot(0.4, "-64 0 0;-56 0 0;-64 0 0") })}`);
+
+// bored — nothing to do, and the "..." will not end.
+SCENES.bored = () => scene(`
+  ${speechBubble(196, 60, 46, 30, bubbleText("...", 18), fade(3.4, "0;1;1;0", 'keyTimes="0;0.3;0.85;1"'))}
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.teal, mouth: "frown", armLBase: 8, armRBase: -8,
+    headAnim: rot(3.4, "6 0 -47;6 0 -47") })}`);
+
+// upset — a tear, and the day has gone wrong.
+SCENES.upset = () => scene(`
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.red, mouth: "frown", armLBase: -10, armRBase: 10 })}
+  <path d="M124 118 q-2 5 0 8 q2 -3 0 -8" fill="${P.blue}">${fade(1.4, "0;1;0")}${shift(1.4, "0 0;0 6;0 6")}</path>`);
+
+// alive — the seed becomes a green shoot.
+SCENES.alive = () => scene(`${sun(38, 30)}
+  <path d="M140 152 Q160 132 180 152 Z" fill="#8a6a48"/>
+  <g transform="translate(160 150)"><g>${grow(2.2, "0.2 0.2;1 1;1 1", 'keyTimes="0;0.6;1"')}<path d="M0 0 V-22" stroke="${P.green}" stroke-width="3" stroke-linecap="round"/><path d="M0 -14 Q-10 -18 -12 -28" fill="none" stroke="${P.green}" stroke-width="3" stroke-linecap="round"/><path d="M0 -18 Q10 -22 13 -30" fill="none" stroke="${P.green}" stroke-width="3" stroke-linecap="round"/></g></g>
+  ${kid({ x: 112, y: 148, s: 1.1, shirt: P.gold, mouth: "o", armLBase: 15, armRBase: -15 })}`);
+
+// awake — eyes open, and the alarm is ringing.
+SCENES.awake = () => scene(`${sun(38, 30)}
+  <path d="M100 148 H180 V158 Q180 164 174 164 H106 Q100 164 100 158 Z" fill="${P.blue}" opacity="0.35"/>
+  <g transform="translate(196 66)">${[0, 1, 2].map((i) => `<path d="M${8 + i * 8} -12 A ${14 + i * 8} ${14 + i * 8} 0 0 1 ${8 + i * 8} 12" fill="none" stroke="${P.gold}" stroke-width="2.4" stroke-linecap="round">${fade(1, "0;1;0", `begin="${-i * 0.3}s"`)}</path>`).join("")}</g>
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.red, mouth: "o", armLBase: 12, armRBase: -160 })}`);
+
+// brave — standing tall, unafraid of the shadow.
+SCENES.brave = () => scene(`
+  <path d="M186 152 Q186 108 210 108 Q198 122 200 152 Z" fill="${P.line}" opacity="0.5"/>
+  ${kid({ x: 122, y: 148, s: 1.2, shirt: P.red, armLBase: 65, armRBase: -65 })}`);
+
+// busy — three things bobbing at once.
+SCENES.busy = () => scene(`${sun(38, 30)}
+  ${[0, 1, 2].map((i) => `<circle cx="${112 + i * 18}" cy="76" r="7" fill="${[P.red, P.gold, P.teal][i]}">${shift(0.8, "0 0;0 -20;0 0", `begin="${-i * 0.27}s"`)}</circle>`).join("")}
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.purple, mouth: "o",
+    armLBase: -30, armLAnim: rot(0.8, "-30 0 0;-15 0 0;-30 0 0"),
+    armRBase: 30, armRAnim: rot(0.8, "30 0 0;15 0 0;30 0 0") })}`);
+
+// careful — balancing the cup on its tray, without a spill.
+SCENES.careful = () => scene(`
+  ${kid({ x: 122, y: 148, s: 1.15, shirt: P.teal, armLBase: 15,
+    armRBase: -55, armRAnim: rot(1.8, "-55 0 0;-48 0 0;-55 0 0"),
+    armRHold: `<g transform="translate(4 22) rotate(55)"><rect x="-11" y="-2" width="22" height="4" rx="2" fill="${P.wood}"/><path d="M-6 -8 L6 -8 L4.5 -2 L-4.5 -2 Z" fill="${P.gold}" stroke="#d88f22" stroke-width="1"/></g>` })}`);
+
+// helpful — the dropped book is picked up and handed back.
+SCENES.helpful = () => scene(`
+  ${kid({ x: 96, y: 148, s: 1.05, shirt: P.gold, armLBase: 15,
+    armRBase: -60, armRAnim: rot(1.8, "-60 0 0;-85 0 0;-60 0 0"),
+    armRHold: `<g transform="translate(2 20) rotate(90)">${openBook(0, 0, 0.55)}</g>` })}
+  ${kid({ x: 168, y: 148, s: 1.05, shirt: P.teal, flip: true, mouth: "o", armLBase: 12, armRBase: -35 })}`);
+
+// noisy — the pot lid clangs, and the sound spreads.
+SCENES.noisy = () => scene(`
+  <g transform="translate(186 84)">${[0, 1, 2].map((i) => `<path d="M${8 + i * 9} -14 A ${14 + i * 9} ${14 + i * 9} 0 0 1 ${8 + i * 9} 14" fill="none" stroke="${P.red}" stroke-width="2.6" stroke-linecap="round">${fade(0.9, "0;1;0", `begin="${-i * 0.28}s"`)}</path>`).join("")}</g>
+  ${kid({ x: 124, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: 12,
+    armRBase: -95, armRAnim: rot(0.5, "-95 0 0;-75 0 0;-95 0 0"),
+    armRHold: `<circle cx="2" cy="20" r="9" fill="${P.grey}" stroke="#7a8792" stroke-width="1.4"/>` })}`);
+
+// poor — one coin, and an empty pocket.
+SCENES.poor = () => scene(`
+  <circle cx="150" cy="140" r="6" fill="${P.gold}" stroke="#d88f22" stroke-width="1"/>
+  ${kid({ x: 120, y: 148, s: 1.1, shirt: P.grey, mouth: "frown", armLBase: 15, armRBase: -15 })}`);
+
+// alone — one child, and a lot of empty space.
+SCENES.alone = () => scene(`${sun(38, 30)}
+  ${kid({ x: 130, y: 148, s: 1.1, shirt: P.blue, armLBase: 15, armRBase: -15 })}`);
+
+// lonely — watching two friends play, from far away.
+SCENES.lonely = () => scene(`${sun(38, 30)}
+  ${kid({ x: 172, y: 140, s: 0.55, shirt: P.gold, armLBase: -60, armRBase: 60, bodyAnim: shift(0.6, "0 0;0 -3;0 0") })}
+  ${kid({ x: 190, y: 140, s: 0.55, shirt: P.red, flip: true, armLBase: -60, armRBase: 60, bodyAnim: shift(0.6, "0 0;0 -3;0 0") })}
+  ${kid({ x: 90, y: 148, s: 1.15, shirt: P.teal, mouth: "frown", armLBase: 12, armRBase: -12,
+    headAnim: rot(2, "10 0 -47;10 0 -47") })}`);
+
+// difficult — the piece will not go in.
+SCENES.difficult = () => scene(`
+  <rect x="140" y="70" width="80" height="56" rx="6" fill="#fffdf5" stroke="${P.grey}" stroke-width="2"/>
+  <rect x="146" y="76" width="34" height="44" rx="3" fill="#dfe8ee"/>
+  <g>${shift(1.6, "0 0;-3 0;3 0;0 0", 'keyTimes="0;0.3;0.6;1"')}<rect x="186" y="76" width="30" height="30" rx="3" fill="${P.gold}"/></g>
+  ${kid({ x: 100, y: 148, s: 1.1, shirt: P.red, mouth: "frown", armLBase: 15,
+    armRBase: -50, armRAnim: rot(0.9, "-50 0 0;-42 0 0;-50 0 0") })}`);
+
+// equal — the scale sits level.
+SCENES.equal = () => scene(`
+  <g transform="translate(176 90)">
+    <path d="M0 -30 V20" stroke="${P.line}" stroke-width="3"/>
+    <path d="M-40 -12 H40" stroke="${P.line}" stroke-width="2.4"/>
+    <path d="M-40 -12 L-48 6 H-32 Z" fill="none" stroke="${P.gold}" stroke-width="2.2" stroke-linejoin="round"/>
+    <path d="M40 -12 L48 6 H32 Z" fill="none" stroke="${P.gold}" stroke-width="2.2" stroke-linejoin="round"/>
+    <circle cx="-40" cy="-2" r="5" fill="${P.teal}"/><circle cx="40" cy="-2" r="5" fill="${P.teal}"/>
+  </g>
+  ${kid({ x: 108, y: 148, s: 1.1, shirt: P.purple, mouth: "o", armLBase: 15,
+    armRBase: -80, armRAnim: rot(1.6, "-80 0 0;-72 0 0;-80 0 0") })}`);
+
+// wild — the lion roams free in the long grass.
+SCENES.wild = () => scene(`
+  <path d="M0 140 Q20 128 40 140 T80 140 T120 140 T160 140 T200 140 T240 140 V170 H0 Z" fill="#c9a24a" opacity="0.35"/>
+  <g transform="translate(184 126)">
+    ${[0, 45, 90, 135, 180, 225, 270, 315].map((a) => `<path d="M0 0 L-6 -23 L6 -23 Z" fill="#c9863f" transform="rotate(${a})"/>`).join("")}
+    <path d="M-14 -20 L-21 -29 L-9 -25 Z" fill="#c9863f"/><path d="M14 -20 L21 -29 L9 -25 Z" fill="#c9863f"/>
+    <circle r="13" fill="#e8b56c"/><ellipse cy="5" rx="7" ry="5" fill="#f3d3a0"/>
+    <circle cx="4" cy="-2" r="1.4" fill="${P.line}"/><circle cx="-4" cy="-2" r="1.4" fill="${P.line}"/>
+    <ellipse cy="2" rx="1.8" ry="1.3" fill="${P.line}"/>
+    <path d="M-3 6.5 Q0 8.5 3 6.5" fill="none" stroke="#8a5a33" stroke-width="1.4" stroke-linecap="round"/>
+  </g>
+  ${kid({ x: 96, y: 148, s: 1.05, shirt: P.green, mouth: "o", armLBase: 12, armRBase: -12 })}`);
+
+// clear — see right through to the fish inside.
+SCENES.clear = () => scene(`
+  <path d="M154 74 L154 132 Q154 140 164 140 L196 140 Q206 140 206 132 L206 74 Z" fill="none" stroke="${P.grey}" stroke-width="3"/>
+  <path d="M148 70 H212" stroke="${P.grey}" stroke-width="3" stroke-linecap="round"/>
+  <g transform="translate(180 116)"><g>${shift(2, "0 0;-12 0;0 0")}<ellipse rx="9" ry="5" fill="${P.gold}"/><path d="M9 0 L15 -4 L15 4 Z" fill="${P.gold}"/><circle cx="-4" cy="-1" r="1" fill="${P.line}"/></g></g>
+  ${kid({ x: 116, y: 148, s: 1.1, shirt: P.blue, mouth: "o", armLBase: 15, armRBase: -15 })}`);
+
+// broken — the bowl cracks into two pieces.
+SCENES.broken = () => scene(`
+  <g>${shift(2, "0 0;0 0;-8 4;-8 4", 'keyTimes="0;0.4;0.55;1"')}<path d="M148 128 Q159 120 170 122 L168 140 Q158 146 150 140 Z" fill="${P.gold}" stroke="#d88f22" stroke-width="1.6"/></g>
+  <g>${shift(2, "0 0;0 0;8 4;8 4", 'keyTimes="0;0.4;0.55;1"')}<path d="M170 122 Q181 120 192 128 L190 140 Q180 146 172 140 Z" fill="${P.gold}" stroke="#d88f22" stroke-width="1.6"/></g>
+  ${kid({ x: 122, y: 148, s: 1.15, shirt: P.red, mouth: "frown", armLBase: 15, armRBase: -15,
+    headAnim: rot(2, "0 0 -47;0 0 -47;-8 0 -47;-8 0 -47", 'keyTimes="0;0.4;0.55;1"') })}`);
+
+// whole — every slice still in its place.
+SCENES.whole = () => scene(`
+  <g transform="translate(176 108)"><circle r="30" fill="${P.gold}" stroke="#d88f22" stroke-width="2.4"/>${[0, 60, 120, 180, 240, 300].map((a) => `<path d="M0 0 L0 -30" stroke="#d88f22" stroke-width="1.6" transform="rotate(${a})"/>`).join("")}</g>
+  ${kid({ x: 108, y: 148, s: 1.1, shirt: P.teal, mouth: "o", armLBase: 15, armRBase: -15 })}`);
+
+// deep — the well goes a long way down.
+SCENES.deep = () => scene(`
+  <ellipse cx="176" cy="76" rx="34" ry="10" fill="${P.line}" opacity="0.75"/>
+  <rect x="142" y="76" width="68" height="10" fill="${P.wood}"/>
+  <path d="M176 88 V150" stroke="#b7cede" stroke-width="2" stroke-dasharray="4 4">${fade(1.6, "1;0.4;1")}</path>
+  ${kid({ x: 118, y: 148, s: 1.1, shirt: P.blue, mouth: "o", armLBase: 15, armRBase: -15,
+    headAnim: rot(1.6, "8 0 -47;8 0 -47") })}`);
+
+// steep — leaning into the climb.
+SCENES.steep = () => scene(`
+  <path d="M0 170 L120 40 L260 170 Z" fill="${P.ground}"/>
+  <g transform="translate(150 108) rotate(-28)">${kid({ x: 0, y: 40, s: 1, shirt: P.gold, mouth: "o", armLBase: 40, armRBase: -100 })}</g>`);
+
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the
 // animation tags are stripped and the still tableau remains. Read once — the

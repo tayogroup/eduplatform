@@ -43,7 +43,7 @@ export const WORD_PICTURES = {
   // --- animals -------------------------------------------------------------
   cat: "🐈", dog: "🐕", puppy: "🐶", elephant: "🐘", fish: "🐟", goat: "🐐",
   lion: "🦁", zebra: "🦓", rabbit: "🐇", duck: "🦆", frog: "🐸", bee: "🐝",
-  bug: "🐛", cow: "🐄", hen: "🐔", chick: "🐤", goose: "🦢", pig: "🐖",
+  bug: "🐛", gnat: "🦟", cow: "🐄", hen: "🐔", chick: "🐤", goose: "🦢", pig: "🐖", deer: "🦌",
   sheep: "🐑", horse: "🐎", turtle: "🐢", whale: "🐋", crocodile: "🐊",
   // Animal sounds show the animal that makes them.
   moo: "🐄", cluck: "🐔", quack: "🦆", baa: "🐑", neigh: "🐎", oink: "🐖", honk: "🦢",
@@ -66,12 +66,12 @@ export const WORD_PICTURES = {
   teacher: "🧑🏾‍🏫", friend: "🧑🏾‍🤝‍🧑🏾", boy: "👦🏾", girl: "👧🏾", mother: "👩🏾", mum: "👩🏾",
   father: "👨🏾", dad: "👨🏾", sister: "👧🏾", brother: "👦🏾", grandma: "👵🏾",
   grandpa: "👴🏾", family: "👨🏾‍👩🏾‍👧🏾‍👦🏾", baby: "👶🏾", children: "🧒🏾", queen: "👑",
-  clown: "🤡", princess: "👸🏾", superhero: "🦸🏾", pilot: "🧑🏾‍✈️", cook: "🧑🏾‍🍳",
+  clown: "🤡", princess: "👸🏾", superhero: "🦸🏾", pilot: "🧑🏾‍✈️", cook: "🧑🏾‍🍳", baker: "🧑🏾‍🍳",
   doctor: "🧑🏾‍⚕️",
 
   // --- body ----------------------------------------------------------------
   hand: "✋🏾", hands: "✋🏾", foot: "🦶🏾", feet: "🦶🏾", ear: "👂🏾", ears: "👂🏾",
-  nose: "👃🏾", finger: "👆🏾", fingers: "👆🏾", arm: "💪🏾", leg: "🦵🏾", eyes: "👀", sight: "👀",
+  nose: "👃🏾", finger: "👆🏾", fingers: "👆🏾", arm: "💪🏾", leg: "🦵🏾", eyes: "👀", sight: "👀", thumb: "👍🏾",
   tongue: "👅", mouth: "👄", hair: "🦱",
 
   // --- clothes -------------------------------------------------------------
@@ -170,7 +170,7 @@ export const WORD_PICTURES = {
   snowy: "🌨️", volcano: "🌋", solar: "☀️", royal: "👑",
   sandwich: "🥪", lamb: "🐑", rice: "🍚", spice: "🌶️", bakery: "🥖",
   brain: "🧠", cattle: "🐄", deliver: "📦", thought: "💭", discover: "🔍",
-  knowledge: "📚", judge: "⚖️", scientist: "🔬", fiction: "📖", story: "📖",
+  knowledge: "📚", judge: "⚖️", scientist: "🔬", fiction: "📖", story: "📖", tale: "📖",
   circular: "⭕", population: "👥", gallop: "🐎", spiral: "🌀",
   peek: "👀", gaze: "👀", check: "✅", signal: "🚦", rescue: "🛟",
   rescuing: "🛟", defend: "🛡️", janitor: "🧹", carpenter: "🔨",
@@ -387,7 +387,7 @@ export const WORD_PICTURES = {
 
   // --- Grade 3 -------------------------------------------------------------
   // The day, the year, the place
-  routine: "📆", wake: "⏰", teeth: "🦷", brush: "🪥", breakfast: "🥣",
+  routine: "📆", wake: "⏰", teeth: "🦷", brush: "🪥", comb: "🪮", breakfast: "🥣",
   tea: "🍵", lamp: "💡", tap: "🚰", maps: "🗺️", sweeping: "🧹",
   cleaned: "🧼", fields: "🌾", crops: "🌾", golden: "🟡", rivers: "🏞️",
   birthdays: "🎂", coldest: "🥶", frozen: "🧊", frost: "❄️", holiday: "🏖️",
@@ -398,7 +398,7 @@ export const WORD_PICTURES = {
   climbed: "🧗🏾", rabbits: "🐇", bird: "🐦", seagulls: "🐦",
   seashells: "🐚", cliffs: "🏔️", hillside: "⛰️", coastal: "🏖️", sand: "🏜️",
   waterfall: "🌊", splash: "💦", foam: "🫧", herbs: "🌿", natural: "🌿",
-  leaf: "🍃", dirt: "🪴", breeze: "🌬️", blows: "🌬️", raining: "🌧️",
+  leaf: "🍃", dirt: "🪴", breeze: "🌬️", blows: "🌬️", raining: "🌧️", thunder: "⛈️",
   // Talking, showing, deciding
   interview: "🎙️", interviewer: "🎙️", microphone: "🎙️", newspaper: "📰",
   shout: "📣", laughter: "😄", laughing: "😄", joy: "😄", drums: "🥁",
@@ -546,7 +546,7 @@ export const WORD_PICTURES = {
   civilisation: "🏛️", architecture: "🏛️", politician: "🏛️",
   blockade: "🚧", barricade: "🚧", voltage: "⚡", electric: "⚡",
   generator: "⚡", weaving: "🧶", wove: "🧶", woven: "🧶", weaver: "🧶",
-  threads: "🧵", thread: "🧵", seam: "🧵", needle: "🪡", stitched: "🪡",
+  threads: "🧵", thread: "🧵", string: "🧵", seam: "🧵", needle: "🪡", stitched: "🪡",
   seamstress: "🪡", merchants: "🏪", kiosk: "🏪", swirling: "🌀",
   shimmer: "✨", flashing: "✨", spark: "✨", doorstep: "🚪",
   soaked: "💦", wreckage: "🧱", brick: "🧱", monsoon: "🌧️",

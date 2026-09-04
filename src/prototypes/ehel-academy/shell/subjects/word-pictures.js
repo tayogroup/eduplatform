@@ -55,7 +55,7 @@ export const WORD_PICTURES = {
   carrots: "🥕", beans: "🫘", wheat: "🌾", seed: "🌱",
 
   // --- home, school, town --------------------------------------------------
-  chair: "🪑", clock: "🕐", book: "📖", pencil: "✏️", pen: "🖊️", ruler: "📏",
+  chair: "🪑", clock: "🕐", book: "📖", pencil: "✏️", pen: "🖊️", ruler: "📏", alphabet: "🔤", test: "📝",
   crayon: "🖍️", lunchbox: "🍱", box: "📦", kite: "🪁", ball: "⚽", "yo-yo": "🪀",
   hat: "🎩", umbrella: "☂️", glasses: "👓", bell: "🔔", nest: "🪹",
   school: "🏫", library: "📚", shop: "🏬", market: "🏪", hospital: "🏥",
@@ -67,7 +67,8 @@ export const WORD_PICTURES = {
   father: "👨🏾", dad: "👨🏾", sister: "👧🏾", brother: "👦🏾", grandma: "👵🏾",
   grandpa: "👴🏾", family: "👨🏾‍👩🏾‍👧🏾‍👦🏾", baby: "👶🏾", children: "🧒🏾", queen: "👑",
   clown: "🤡", princess: "👸🏾", superhero: "🦸🏾", pilot: "🧑🏾‍✈️", cook: "🧑🏾‍🍳", baker: "🧑🏾‍🍳",
-  doctor: "🧑🏾‍⚕️",
+  doctor: "🧑🏾‍⚕️", dentist: "🧑🏾‍⚕️", actor: "🎭", actress: "🎭", athlete: "🏃🏾", human: "🧑🏾",
+  musician: "🧑🏾‍🎤", soldier: "🪖",
 
   // --- body ----------------------------------------------------------------
   hand: "✋🏾", hands: "✋🏾", foot: "🦶🏾", feet: "🦶🏾", ear: "👂🏾", ears: "👂🏾",
@@ -121,7 +122,7 @@ export const WORD_PICTURES = {
   mask: "😷", uniform: "👔", nurse: "🧑🏾‍⚕️", farmer: "🧑🏾‍🌾",
   head: "🙂", tummy: "🫃🏾", toe: "🦶🏾", wave: "👋🏾", hop: "🦘", exercise: "🏋🏾",
   healthy: "💪🏾", strong: "💪🏾", sleep: "😴", energy: "⚡", turn: "🔄",
-  stand: "🧍🏾", flap: "🪽", light: "💡", sky: "🌌", morning: "🌅", midday: "🌞",
+  stand: "🧍🏾", flap: "🪽", light: "💡", sky: "🌌", space: "🌌", morning: "🌅", midday: "🌞",
   evening: "🌆", sunrise: "🌅", sunset: "🌇", star: "⭐", cloud: "☁️",
   night: "🌙", earth: "🌍", high: "⬆️", low: "⬇️", bright: "🔆", dark: "🌑",
   heart: "❤️", measure: "📏", centimetre: "📏", metre: "📏", length: "📏",
@@ -170,7 +171,8 @@ export const WORD_PICTURES = {
   snowy: "🌨️", volcano: "🌋", solar: "☀️", royal: "👑",
   sandwich: "🥪", lamb: "🐑", rice: "🍚", spice: "🌶️", bakery: "🥖",
   brain: "🧠", cattle: "🐄", deliver: "📦", thought: "💭", discover: "🔍",
-  knowledge: "📚", judge: "⚖️", scientist: "🔬", fiction: "📖", story: "📖", tale: "📖",
+  knowledge: "📚", judge: "⚖️", scientist: "🔬", fiction: "📖", story: "📖", tale: "📖", reader: "📖",
+  experiment: "🧪",
   circular: "⭕", population: "👥", gallop: "🐎", spiral: "🌀",
   peek: "👀", gaze: "👀", check: "✅", signal: "🚦", rescue: "🛟",
   rescuing: "🛟", defend: "🛡️", janitor: "🧹", carpenter: "🔨",
@@ -391,7 +393,7 @@ export const WORD_PICTURES = {
   tea: "🍵", lamp: "💡", tap: "🚰", maps: "🗺️", sweeping: "🧹",
   cleaned: "🧼", fields: "🌾", crops: "🌾", golden: "🟡", rivers: "🏞️",
   birthdays: "🎂", coldest: "🥶", frozen: "🧊", frost: "❄️", holiday: "🏖️",
-  "o'clock": "🕐", street: "🛣️", lane: "🛣️", centre: "🎯", middle: "🎯",
+  "o'clock": "🕐", street: "🛣️", lane: "🛣️", centre: "🎯", middle: "🎯", central: "🎯",
   focus: "🎯", junior: "🧒🏾", senior: "🧓🏾", elderly: "🧓🏾", youngest: "🧒🏾",
   nurses: "🧑🏾‍⚕️", nursing: "🧑🏾‍⚕️", medicine: "💊", sick: "🤒",
   sellers: "💰", prices: "💰", shoppers: "🛒", builders: "👷🏾",
@@ -400,7 +402,7 @@ export const WORD_PICTURES = {
   waterfall: "🌊", splash: "💦", foam: "🫧", herbs: "🌿", natural: "🌿",
   leaf: "🍃", dirt: "🪴", breeze: "🌬️", blows: "🌬️", raining: "🌧️", thunder: "⛈️",
   // Talking, showing, deciding
-  interview: "🎙️", interviewer: "🎙️", microphone: "🎙️", newspaper: "📰",
+  interview: "🎙️", interviewer: "🎙️", microphone: "🎙️", newspaper: "📰", conversation: "💬",
   shout: "📣", laughter: "😄", laughing: "😄", joy: "😄", drums: "🥁",
   // vest is "a piece of clothing worn on the top of your body" at Grade 3 — a
   // plain garment. 🦺 is the hi-vis safety vest, which is a different object.

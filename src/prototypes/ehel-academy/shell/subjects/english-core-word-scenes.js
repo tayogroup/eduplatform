@@ -1837,6 +1837,122 @@ SCENES.steep = () => scene(`
   <path d="M0 170 L120 40 L260 170 Z" fill="${P.ground}"/>
   <g transform="translate(150 108) rotate(-28)">${kid({ x: 0, y: 40, s: 1, shirt: P.gold, mouth: "o", armLBase: 40, armRBase: -100 })}</g>`);
 
+// -------------------------------------------------------------- Grade 4 (owner, 2026-09-04)
+// No verb gaps this grade: the census's two remaining candidates aren't real
+// gaps. "rhyme" is tagged verb but its own canonicalMeaning teaches the NOUN
+// ("a short poem with words that end in the same sound") — a tagging bug like
+// Grade 1's "school"=adjective and Grade 2's "cook", and no scene should teach
+// a sense the unit doesn't. "judge" mixes both senses in one definition, but
+// word-pictures.js already carries a picture for it (the scales, ⚖️) that
+// covers the sense actually on offer.
+//
+// 15 of the grade's 48 new adjectives — this grade's list is the most
+// abstract yet (successful, possible, certain, honest, popular, rare, common,
+// normal...), so the excluded set is the majority for the first time. Left
+// out for being subjective/evaluative with no fixed referent (the "fun" and
+// "interesting" reasoning): attractive, certain, cheerful, exact, hopeful,
+// hopeless, honest, impossible, miserable, national, normal, ordinary,
+// popular, possible, rare, real, recent, sensible, successful, unfair,
+// unusual, worse, worst. Left out for being relative/comparative with no
+// fixed anchor (the "enough"/"fewer" reasoning): basic, common, double,
+// following, international, main, regular, single. "central" got a picture
+// instead of a scene — it is the adjective of "centre"/"middle", which
+// word-pictures.js already draws (🎯). "relaxed" was dropped as a
+// near-duplicate of "comfortable" once both were drafted side by side.
+
+// active — jumping on the spot, full of energy.
+SCENES.active = () => scene(`${sun(38, 30)}
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.red, mouth: "o", legs: "hop",
+    armLBase: -35, armRBase: 35, bodyAnim: shift(0.6, "0 0;0 -16;0 0", 'keyTimes="0;0.4;1"') })}
+  ${[0, 1].map((i) => `<path d="M${94 + i * 4} ${100 + i * 10} l-6 4" stroke="${P.gold}" stroke-width="2.4" stroke-linecap="round">${fade(0.6, "0;1;0", `begin="${-i * 0.2}s"`)}</path>`).join("")}`);
+
+// ancient — a very old jar, cracked with age.
+SCENES.ancient = () => scene(`
+  <g transform="translate(176 132)"><path d="M-16 -46 Q-20 -20 -14 0 Q0 8 14 0 Q20 -20 16 -46 Z" fill="#c9a24a" stroke="#8a6a3d" stroke-width="2"/><path d="M-10 -30 L-4 -20 M8 -34 L4 -22" stroke="#8a6a3d" stroke-width="1.4" opacity="0.7"/></g>
+  ${kid({ x: 120, y: 148, s: 1.1, shirt: P.teal, mouth: "o", armLBase: 15, armRBase: -15 })}`);
+
+// annoyed — the same little bug, buzzing round the head again and again.
+SCENES.annoyed = () => scene(`
+  <g transform="translate(150 78)"><g>${shift(0.9, "0 0;20 -10;10 8;-14 -4;0 0")}<ellipse rx="6" ry="4.5" fill="${P.line}"/><path d="M-6 -2 L-13 -6 M6 -2 L13 -6" stroke="${P.line}" stroke-width="1.4"/></g></g>
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.gold, mouth: "frown", armLBase: 15,
+    armRBase: -100, armRAnim: rot(0.7, "-100 0 0;-70 0 0;-100 0 0") })}`);
+
+// careless — not looking, and the cup goes over the edge.
+SCENES.careless = () => scene(`${tableProp(184, 122, 46)}
+  <g>${shift(1.8, "0 0;0 0;10 40;10 40", 'keyTimes="0;0.4;0.7;1"')}<path d="M172 100 L184 100 L182 112 L174 112 Z" fill="${P.gold}" stroke="#d88f22" stroke-width="1.4"/></g>
+  ${kid({ x: 128, y: 148, s: 1.15, shirt: P.blue, mouth: "o", armLBase: 15, armRBase: -15,
+    headAnim: rot(1.8, "22 0 -47;22 0 -47") })}`);
+
+// comfortable — sunk into the cushion, nothing hurts.
+SCENES.comfortable = () => scene(`
+  <ellipse cx="130" cy="142" rx="46" ry="14" fill="${P.purple}"/>
+  ${kid({ x: 128, y: 138, s: 1.05, shirt: P.gold, legs: "seated", armLBase: 20, armRBase: -20,
+    bodyAnim: shift(2.2, "0 0;0 -1.5;0 0") })}`);
+
+// crowded — very little room, and everyone is in it.
+SCENES.crowded = () => scene(`
+  <rect x="70" y="70" width="120" height="80" rx="8" fill="none" stroke="${P.grey}" stroke-width="3" stroke-dasharray="6 4"/>
+  ${kid({ x: 100, y: 148, s: 0.75, shirt: P.red, armLBase: 10, armRBase: -10 })}
+  ${kid({ x: 130, y: 148, s: 0.75, shirt: P.teal, flip: true, armLBase: 10, armRBase: -10 })}
+  ${kid({ x: 116, y: 148, s: 0.75, shirt: P.gold, mouth: "o", armLBase: 10, armRBase: -10 })}
+  ${kid({ x: 146, y: 148, s: 0.75, shirt: P.green, flip: true, armLBase: 10, armRBase: -10 })}`);
+
+// expensive — a big price, and it costs a lot.
+SCENES.expensive = () => scene(`
+  <g transform="translate(178 90)"><path d="M-30 -14 L10 -14 L30 6 L10 26 L-30 26 Z" fill="${P.gold}" stroke="#d88f22" stroke-width="2"/><circle cx="-16" cy="6" r="4" fill="#fffdf5"/>${boardText("$$", 18, "#7a4a12", 6)}</g>
+  ${kid({ x: 116, y: 148, s: 1.1, shirt: P.blue, mouth: "o", armLBase: 15, armRBase: -15 })}`);
+
+// jealous — watching the other kid's toy, wanting it too.
+SCENES.jealous = () => scene(`
+  ${kid({ x: 170, y: 148, s: 1.05, shirt: P.gold, mouth: "o", flip: true, armLBase: 12,
+    armRBase: -60, armRHold: `<circle cx="2" cy="20" r="8" fill="${P.red}"/>` })}
+  ${kid({ x: 108, y: 148, s: 1.1, shirt: P.purple, mouth: "frown", armLBase: 15, armRBase: -15,
+    headAnim: rot(1.8, "12 0 -47;12 0 -47") })}`);
+
+// modern — the newest screen, glowing.
+SCENES.modern = () => scene(`
+  <g transform="translate(176 108)"><rect x="-24" y="-30" width="48" height="60" rx="8" fill="${P.line}"/><rect x="-19" y="-24" width="38" height="46" rx="3" fill="${P.teal}">${fade(1.6, "0.7;1;0.7")}</rect></g>
+  ${kid({ x: 112, y: 148, s: 1.1, shirt: P.red, mouth: "o", armLBase: 15, armRBase: -15 })}`);
+
+// selfish — everything pulled in close, and nothing shared.
+SCENES.selfish = () => scene(`
+  ${kid({ x: 176, y: 148, s: 1.1, shirt: P.purple,
+    armLBase: 60, armLAnim: rot(1.4, "60 0 0;72 0 0;60 0 0"),
+    armRBase: -60, armRAnim: rot(1.4, "-60 0 0;-72 0 0;-60 0 0") })}
+  <circle cx="164" cy="142" r="9" fill="${P.red}"/><rect x="177" y="134" width="15" height="15" rx="3" fill="${P.gold}"/><circle cx="188" cy="146" r="7" fill="${P.teal}"/>
+  ${kid({ x: 108, y: 148, s: 1.05, shirt: P.blue, mouth: "frown", flip: true, armLBase: 12, armRBase: -12 })}`);
+
+// smooth — no rough parts under the hand.
+SCENES.smooth = () => scene(`
+  <ellipse cx="176" cy="120" rx="40" ry="18" fill="#dfe8ee" stroke="${P.grey}" stroke-width="2"/>
+  <ellipse cx="166" cy="112" rx="10" ry="4" fill="#ffffff" opacity="0.6"/>
+  ${kid({ x: 118, y: 148, s: 1.1, shirt: P.teal, mouth: "o", armLBase: 15,
+    armRBase: -55, armRAnim: rot(1.6, "-55 0 0;-40 0 0;-55 0 0") })}`);
+
+// solid — a block that will not move.
+SCENES.solid = () => scene(`
+  <rect x="156" y="94" width="52" height="52" rx="4" fill="${P.wood}" stroke="#7d5227" stroke-width="2"/>
+  ${kid({ x: 122, y: 148, s: 1.1, shirt: P.blue, mouth: "o", armLBase: 15,
+    armRBase: -80, armRAnim: rot(0.6, "-80 0 0;-76 0 0;-80 0 0"), bodyAnim: shift(0.6, "0 0;-1 0;0 0") })}`);
+
+// unkind — turning away, and not sharing.
+SCENES.unkind = () => scene(`
+  ${kid({ x: 170, y: 148, s: 1.05, shirt: P.grey, armLBase: -12, armRBase: 12,
+    headAnim: rot(1.6, "-14 0 -47;-14 0 -47") })}
+  ${kid({ x: 108, y: 148, s: 1.05, shirt: P.blue, mouth: "frown", armLBase: 15, armRBase: -15 })}`);
+
+// useful — the hammer does exactly the job.
+SCENES.useful = () => scene(`
+  <rect x="168" y="118" width="4" height="20" fill="#8a8f94"/>
+  <g transform="translate(170 108)"><g>${rot(0.8, "-40 0 30;10 0 30;-40 0 30")}<rect x="-3" y="-2" width="26" height="8" rx="2" fill="${P.grey}"/><rect x="-3" y="-14" width="8" height="26" rx="2" fill="${P.wood}"/></g></g>
+  ${kid({ x: 122, y: 148, s: 1.1, shirt: P.gold, mouth: "o", armLBase: 15, armRBase: -15 })}`);
+
+// useless — broken in half, and no good for the job.
+SCENES.useless = () => scene(`
+  <rect x="168" y="112" width="8" height="26" rx="2" fill="${P.wood}" transform="rotate(20 172 125)"/>
+  <rect x="150" y="96" width="26" height="8" rx="2" fill="${P.grey}" transform="rotate(-30 163 100)"/>
+  ${kid({ x: 122, y: 148, s: 1.1, shirt: P.red, mouth: "frown", armLBase: 15, armRBase: -15 })}`);
+
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the
 // animation tags are stripped and the still tableau remains. Read once — the

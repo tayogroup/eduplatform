@@ -71,7 +71,7 @@ export const WORD_PICTURES = {
 
   // --- body ----------------------------------------------------------------
   hand: "✋🏾", hands: "✋🏾", foot: "🦶🏾", feet: "🦶🏾", ear: "👂🏾", ears: "👂🏾",
-  nose: "👃🏾", finger: "👆🏾", fingers: "👆🏾", arm: "💪🏾", leg: "🦵🏾", eyes: "👀",
+  nose: "👃🏾", finger: "👆🏾", fingers: "👆🏾", arm: "💪🏾", leg: "🦵🏾", eyes: "👀", sight: "👀",
   tongue: "👅", mouth: "👄", hair: "🦱",
 
   // --- clothes -------------------------------------------------------------
@@ -170,7 +170,7 @@ export const WORD_PICTURES = {
   snowy: "🌨️", volcano: "🌋", solar: "☀️", royal: "👑",
   sandwich: "🥪", lamb: "🐑", rice: "🍚", spice: "🌶️", bakery: "🥖",
   brain: "🧠", cattle: "🐄", deliver: "📦", thought: "💭", discover: "🔍",
-  knowledge: "📚", judge: "⚖️", scientist: "🔬", fiction: "📖",
+  knowledge: "📚", judge: "⚖️", scientist: "🔬", fiction: "📖", story: "📖",
   circular: "⭕", population: "👥", gallop: "🐎", spiral: "🌀",
   peek: "👀", gaze: "👀", check: "✅", signal: "🚦", rescue: "🛟",
   rescuing: "🛟", defend: "🛡️", janitor: "🧹", carpenter: "🔨",
@@ -813,7 +813,7 @@ export const WORD_PICTURES = {
   // compared for sense. Six differ only in wording (person, rock, wood,
   // whisper, screen, disappointed all mean the same thing at every grade they
   // appear), so none needed a per-grade override.
-  snail: "🐌", boot: "🥾", rock: "🪨", wood: "🪵", wall: "🧱", branch: "🌿",
+  snail: "🐌", boot: "🥾", rock: "🪨", stone: "🪨", wood: "🪵", wall: "🧱", branch: "🌿",
   clothes: "👕", toy: "🧸", money: "💰", coin: "🪙", bike: "🚲", gate: "🚪",
   mosque: "🕌", church: "⛪", computer: "💻", screen: "🖥️", cube: "🧊",
   tune: "🎵", game: "🎲", rubbish: "🗑️", paragraph: "📄", message: "💬",

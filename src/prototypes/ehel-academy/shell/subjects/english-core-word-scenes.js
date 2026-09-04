@@ -109,13 +109,20 @@ function legsSeated() {
   return `<path d="M-5 -8 L4 -6 L4 1" fill="none" stroke="${P.skin}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" transform="translate(-9 0)"/><path d="M-5 -8 L4 -6 L4 1" fill="none" stroke="${P.skin}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" transform="translate(3 0)"/><ellipse cx="-4" cy="2.5" rx="5" ry="3" fill="${P.line}"/><ellipse cx="8" cy="2.5" rx="5" ry="3" fill="${P.line}"/>`;
 }
 
+function legsWalk() {
+  // Mid-stride: one foot forward and flat, the other back with its heel
+  // lifted — unlike legsHop's full lift, the back foot's toe stays down,
+  // which is the whole difference between walking and hopping.
+  return `<path d="M-5 -8 L-13 -2" stroke="${P.skin}" stroke-width="7" stroke-linecap="round"/><ellipse cx="-14" cy="0.5" rx="5.5" ry="3" fill="${P.line}"/><path d="M5 -8 Q11 -6 10 0" fill="none" stroke="${P.skin}" stroke-width="7" stroke-linecap="round"/><ellipse cx="12" cy="1.5" rx="5" ry="3" fill="${P.line}" transform="rotate(-22 12 1.5)"/>`;
+}
+
 function kid({
   x = 0, y = 0, s = 1, shirt = P.blue, mouth = "smile",
   armLBase = 8, armRBase = -8, armLAnim = "", armRAnim = "",
   armLHold = "", armRHold = "", headAnim = "", bodyAnim = "",
   legs = "stand", flip = false, hair = P.hair,
 } = {}) {
-  const legsHtml = legs === "hop" ? legsHop() : legs === "seated" ? legsSeated() : legsStanding();
+  const legsHtml = legs === "hop" ? legsHop() : legs === "seated" ? legsSeated() : legs === "walk" ? legsWalk() : legsStanding();
   return `<g transform="translate(${x} ${y}) scale(${flip ? -s : s} ${s})"><g>${bodyAnim}
     ${legsHtml}
     <rect x="-14" y="-37" width="28" height="31" rx="10" fill="${shirt}"/>
@@ -1568,6 +1575,95 @@ SCENES.thick = () => scene(`${sun(38, 30)}
 SCENES.thin = () => scene(`${sun(38, 30)}
   ${kid({ x: 130, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: 15, armRBase: -75,
     armRHold: `<g transform="translate(2 20)"><rect x="-2" y="-15" width="4" height="30" rx="2" fill="${P.wood}"/></g>` })}`);
+
+// -------------------------------------------------------------- Grade 2 (owner, 2026-09-04)
+// Two concrete action verbs the original 2-4 tranche's census missed — "walk"
+// sits in a describing-and-daily-life topic group and "clean" beside it, so
+// neither read as an action verb on a first pass. ("cook" is also tagged verb
+// in this grade's dictionary, but its own canonicalMeaning teaches the PERSON
+// ("a person who makes food") — a dictionary tagging bug, not a scene gap:
+// word-pictures.js already carries "cook" as a picture for exactly that sense.)
+// Plus 8 of the grade's 10 new adjectives — "enough" and "fewer" are relative
+// to a comparison the word itself doesn't name, so no single tableau can be
+// honest about them and neither gets a scene.
+
+// walk — mid-stride, an easy stroll with arms swinging.
+SCENES.walk = () => scene(`${sun(38, 30)}
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.blue, legs: "walk",
+    armLBase: 12, armRBase: -12,
+    armLAnim: rot(1.1, "12 0 0;-16 0 0;12 0 0"),
+    armRAnim: rot(1.1, "-12 0 0;16 0 0;-12 0 0"),
+    bodyAnim: shift(1.1, "0 0;0 -2;0 0") })}`);
+
+// clean — the cloth wipes the table shiny.
+SCENES.clean = () => scene(`${tableProp(184, 122, 60)}
+  ${sparkle(178, 112, 0.8, P.gold, fade(1.2, "0;1;0"))}
+  ${sparkle(196, 116, 0.7, P.teal, fade(1.2, "0;1;0", 'begin="-0.4s"'))}
+  ${kid({ x: 132, y: 148, s: 1.1, shirt: P.green, armLBase: 15,
+    armRBase: -80, armRAnim: rot(1.2, "-80 0 0;-55 0 0;-80 0 0"),
+    armRHold: `<g transform="translate(2 20)"><rect x="-8" y="-4" width="16" height="10" rx="2" fill="${P.teal}"/></g>` })}`);
+
+// cool — a breeze in the shade, and the thermometer sits low but not cold.
+SCENES.cool = () => scene(`
+  <ellipse cx="196" cy="46" rx="34" ry="14" fill="#eef4f8"/><ellipse cx="176" cy="56" rx="24" ry="11" fill="#eef4f8"/>
+  ${[0, 1, 2].map((i) => `<path d="M${60 + i * 10} ${70 + i * 6} h14" stroke="#c7dce8" stroke-width="3" stroke-linecap="round">${shift(1.4, "0 0;10 0;0 0", `begin="${-i * 0.3}s"`)}${fade(1.4, "0;1;0", `begin="${-i * 0.3}s"`)}</path>`).join("")}
+  <g transform="translate(206 100)"><rect x="-4" y="-32" width="8" height="34" rx="4" fill="#fffdf5" stroke="${P.grey}" stroke-width="1.6"/><circle cy="6" r="7" fill="${P.blue}"/><rect x="-2.4" y="-16" width="4.8" height="24" fill="${P.blue}"/></g>
+  ${kid({ x: 122, y: 148, s: 1.15, shirt: P.blue, armLBase: 15, armRBase: -15,
+    headAnim: rot(2, "-4 0 -47;4 0 -47;-4 0 -47") })}`);
+
+// easy — one piece slots straight in.
+SCENES.easy = () => scene(`
+  <rect x="140" y="70" width="80" height="56" rx="6" fill="#fffdf5" stroke="${P.grey}" stroke-width="2"/>
+  <rect x="146" y="76" width="34" height="44" rx="3" fill="#dfe8ee"/>
+  <g>${shift(1.6, "0 -30;0 0;0 0", 'keyTimes="0;0.4;1"')}<rect x="186" y="76" width="28" height="38" rx="3" fill="${P.gold}"/></g>
+  ${kid({ x: 100, y: 148, s: 1.1, shirt: P.teal, mouth: "o", armLBase: 15,
+    armRBase: -50, armRAnim: rot(1.6, "-50 0 0;-25 0 0;-50 0 0", 'keyTimes="0;0.4;1"') })}`);
+
+// empty — nothing left inside the jar.
+SCENES.empty = () => scene(`
+  <path d="M154 74 L154 132 Q154 140 164 140 L196 140 Q206 140 206 132 L206 74 Z" fill="none" stroke="${P.grey}" stroke-width="3"/>
+  <path d="M148 70 H212" stroke="${P.grey}" stroke-width="3" stroke-linecap="round"/>
+  ${kid({ x: 116, y: 148, s: 1.1, shirt: P.red, mouth: "frown", armLBase: 15, armRBase: -15,
+    headAnim: rot(1.8, "0 0 -47;-6 0 -47;0 0 -47") })}`);
+
+// full — packed right up to the top, and spilling over.
+SCENES.full = () => scene(`
+  <path d="M154 74 L154 132 Q154 140 164 140 L196 140 Q206 140 206 132 L206 74 Z" fill="${P.gold}" stroke="${P.grey}" stroke-width="3"/>
+  <path d="M148 70 H212" stroke="${P.grey}" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="166" cy="64" r="6" fill="${P.red}"/><circle cx="180" cy="60" r="6" fill="${P.green}">${shift(1.2, "0 0;0 -3;0 0")}</circle><circle cx="194" cy="64" r="6" fill="${P.teal}"/>
+  ${kid({ x: 116, y: 148, s: 1.1, shirt: P.blue, mouth: "o", armLBase: 15, armRBase: -15 })}`);
+
+// grey — the colour between black and white.
+SCENES.grey = () => scene(`
+  <ellipse cx="176" cy="100" rx="48" ry="30" fill="#fffdf5" stroke="${P.grey}" stroke-width="2"/>
+  <circle cx="156" cy="88" r="8" fill="${P.red}"/><circle cx="178" cy="82" r="8" fill="${P.blue}"/><circle cx="198" cy="92" r="8" fill="${P.gold}"/>
+  <g transform="translate(176 108)"><g>${grow(1.4, "1 1;1.25 1.25;1 1")}<circle r="10" fill="#9aa4ab"/><circle r="10" fill="none" stroke="${P.line}" stroke-width="1.6"/></g></g>
+  ${kid({ x: 108, y: 148, s: 1.1, shirt: P.teal, armLBase: 15,
+    armRBase: -100, armRAnim: rot(1.4, "-100 0 0;-92 0 0;-100 0 0") })}`);
+
+// hungry — a rumbling tummy, and eyes on the apple.
+SCENES.hungry = () => scene(`
+  <g transform="translate(196 112)"><g>${grow(1.1, "0.9 0.9;1.1 1.1;0.9 0.9")}<circle r="9" fill="${P.red}"/><path d="M0 -9 Q1 -13 4 -14" fill="none" stroke="${P.green}" stroke-width="2" stroke-linecap="round"/></g></g>
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: 12,
+    armRBase: -20, armRHold: `<g transform="translate(2 20)"><path d="M-4 0 a4 4 0 1 0 8 0" fill="none" stroke="${P.line}" stroke-width="1.6"/></g>`,
+    bodyAnim: shift(0.8, "0 0;0 1.5;0 0") })}`);
+
+// late — the clock says go, and the rush is on.
+SCENES.late = () => scene(`
+  <circle cx="196" cy="56" r="20" fill="#fffdf5" stroke="${P.line}" stroke-width="2.4"/>
+  <path d="M196 56 V44" stroke="${P.line}" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M196 56 L206 60" stroke="${P.line}" stroke-width="2.2" stroke-linecap="round"/>
+  <g transform="translate(70 96)">${[0, 14, 28].map((dy, i) => `<path d="M0 ${dy} H24" stroke="#b7cede" stroke-width="4" stroke-linecap="round">${fade(0.55, "0;1;0", `begin="${-i * 0.18}s"`)}</path>`).join("")}</g>
+  ${kid({ x: 138, y: 149, s: 1.1, shirt: P.red, mouth: "o", armLBase: -60, armRBase: 60,
+    bodyAnim: shift(0.4, "0 0;0 -3;0 0"), headAnim: rot(0.8, "10 0 -47;10 0 -47") })}`);
+
+// short — the little rope barely reaches.
+SCENES.short = () => scene(`${sun(38, 30)}
+  <g>${shift(1.6, "0 0;2 -2;0 0")}
+    <path d="M110 140 Q126 126 142 140" fill="none" stroke="${P.green}" stroke-width="11" stroke-linecap="round"/>
+    <circle cx="146" cy="140" r="7" fill="${P.green}"/><circle cx="149" cy="137.5" r="1.3" fill="${P.line}"/>
+  </g>
+  ${kid({ x: 96, y: 148, s: 1.05, shirt: P.purple, mouth: "o", armLBase: -30, armRBase: 30 })}`);
 
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the

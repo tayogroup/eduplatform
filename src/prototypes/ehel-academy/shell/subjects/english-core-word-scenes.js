@@ -2538,6 +2538,122 @@ SCENES.land = () => scene(`
   <path d="M196 108 q10 4 20 2" stroke="#ffffff" stroke-width="2" opacity="0.6" fill="none"/>
   ${sMark(92, 116, 28)}`);
 
+// ============================================================ gesture words
+// The pronouns, pointers and joins of the Grade 1 Core words, drawn the way a
+// child would act them out (owner, 2026-09-04): "I" is somebody pointing at
+// themselves, "you" is somebody pointing at somebody else, "and" is a book AND
+// a pencil with the word between them.
+//
+// This corrects an earlier reading of this file's own rule. "A word with no
+// honest drawing has no entry" is right; "a function word has no honest
+// drawing" was not — the GESTURE is what these words mean, and the course's
+// dictionary says so in its own definitions ("this: points to something close
+// to you", "who: asks about a person", "what: asks about a thing"). A picture
+// of a gesture is not a guess. What stays out is what was always out: an
+// invented sentence, and any word whose only picture would have to invent a
+// fact — he/she/him/her/his are defined by gender, and this kit draws one
+// child with no gender marker, so a drawing would be making one up.
+//
+// One idiom, held still: the same child, pointing. AT THEMSELVES for I/me/my,
+// AT ONE OTHER for you/your/who, AT A THING for it/what/this/that, AT A GROUP
+// for they/them/their, and with the group AROUND them for we/us/our. The
+// question words add the "?" bubble the ask scene already uses; the joins put
+// the word itself between the two things it joins.
+
+const gFinger = `<path d="M1.8 18.5 v11" stroke="${P.skin}" stroke-width="4" stroke-linecap="round"/>`;
+const gSelf = { armLBase: -56, armRBase: 56 };                         // both hands to own chest
+const gHug = (x, y, s) => sBall(x, y - 22 * s);                          // a ball held to the chest, drawn AFTER the kid
+const gAt = { armLBase: 12, armRBase: -98, armRHold: gFinger };      // straight out, at someone or something
+const gDown = { armLBase: 12, armRBase: -52, armRHold: gFinger };    // down and close
+const gQ = (x, y) => speechBubble(x, y, 36, 28, bubbleText("?", 18), fade(2.4, "0;1;1;0", 'keyTimes="0;0.15;0.85;1"'));
+const gPencil = (x, y) => `<g transform="translate(${x} ${y}) rotate(-28)"><rect x="-5" y="-34" width="10" height="6" rx="2" fill="#e88a8a"/><rect x="-5" y="-28" width="10" height="50" rx="1.5" fill="${P.gold}"/><path d="M-5 22 L0 36 L5 22 Z" fill="#f0d9a6"/><path d="M-1.6 31.5 L0 36 L1.6 31.5 Z" fill="${P.line}"/></g>`;
+const gWord = (text, x = 130, y = 104, size = 30) => `<text x="${x}" y="${y}" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="${size}" font-weight="bold" fill="${P.red}">${text}</text>`;
+const gOthers = (xs, ys = 148, s = 0.78) => xs.map((x, i) => kid({ x, y: ys, s, shirt: [P.gold, P.purple, P.green][i % 3], flip: true, armLBase: 10, armRBase: -10 })).join("");
+
+// --- pointing at yourself ---------------------------------------------------
+SCENES.i = () => scene(`${sun(38, 30)}
+  ${kid({ x: 130, y: 148, s: 1.2, shirt: P.teal, mouth: "o", ...gSelf })}`);
+SCENES.me = () => SCENES.i();
+
+SCENES.my = () => scene(`${sun(38, 30)}
+  ${kid({ x: 130, y: 148, s: 1.2, shirt: P.teal, mouth: "o", ...gSelf })}${gHug(130, 148, 1.2)}`);
+
+// --- pointing at one other person -------------------------------------------
+SCENES.you = () => scene(`${sun(38, 30)}
+  ${kid({ x: 84, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}
+  ${kid({ x: 190, y: 148, s: 1.1, shirt: P.gold, flip: true, armLBase: 12, armRBase: -12 })}`);
+
+SCENES.your = () => scene(`${sun(38, 30)}
+  ${kid({ x: 84, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}
+  ${kid({ x: 190, y: 148, s: 1.1, shirt: P.gold, flip: true, armLBase: 12, armRBase: -55,
+    armRHold: `<g transform="translate(2 20)"><circle r="9" fill="${P.red}" stroke="#b03a37" stroke-width="1.4"/></g>` })}`);
+
+SCENES.who = () => scene(`${gQ(84, 58)}
+  ${kid({ x: 84, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}
+  ${kid({ x: 190, y: 148, s: 1.1, shirt: P.gold, flip: true, armLBase: 12, armRBase: -12 })}`);
+
+// --- pointing at a thing ------------------------------------------------------
+SCENES.it = () => scene(`${sun(38, 30)}${sBall(206, 137)}
+  ${kid({ x: 96, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}`);
+
+SCENES.what = () => scene(`${gQ(96, 58)}${sBall(206, 137)}
+  ${kid({ x: 96, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}`);
+
+// this/that/these/those are here/there with the THING as the subject — no
+// place marker, the finger on the object, one object or three.
+SCENES.this = () => scene(`${sun(38, 30)}${sBall(146, 137)}
+  ${kid({ x: 106, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gDown })}`);
+
+SCENES.that = () => scene(`${sun(38, 30)}${sBall(222, 137)}
+  ${kid({ x: 82, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}`);
+
+SCENES.these = () => scene(`${sun(38, 30)}
+  ${[138, 160, 182].map((x, i) => sBall(x, 137, "", [P.red, P.gold, P.blue][i])).join("")}
+  ${kid({ x: 98, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gDown })}`);
+
+SCENES.those = () => scene(`${sun(38, 30)}
+  ${[200, 222, 244].map((x, i) => sBall(x, 137, "", [P.red, P.gold, P.blue][i])).join("")}
+  ${kid({ x: 74, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}`);
+
+// --- pointing at a group, and being in one ------------------------------------
+SCENES.they = () => scene(`${sun(38, 30)}
+  ${kid({ x: 78, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}
+  ${gOthers([176, 204, 232])}`);
+SCENES.them = () => SCENES.they();
+
+SCENES.their = () => scene(`${sun(38, 30)}
+  ${kid({ x: 78, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}
+  ${gOthers([176, 232])}${sBall(204, 137)}`);
+
+SCENES.we = () => scene(`${sun(38, 30)}
+  <ellipse cx="150" cy="132" rx="74" ry="30" fill="none" stroke="${P.grey}" stroke-width="2.5" stroke-dasharray="6 5"/>
+  ${gOthers([100, 200])}
+  ${kid({ x: 150, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gSelf })}`);
+SCENES.us = () => SCENES.we();
+
+SCENES.our = () => scene(`${sun(38, 30)}
+  <ellipse cx="150" cy="132" rx="74" ry="30" fill="none" stroke="${P.grey}" stroke-width="2.5" stroke-dasharray="6 5"/>
+  ${gOthers([98, 202])}
+  ${kid({ x: 150, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gSelf })}${gHug(150, 148, 1.1)}`);
+
+// --- the joins: the word itself sits between the things it joins --------------
+SCENES.and = () => nPaper(`
+  ${openBook(64, 92, 1.15)}
+  ${gWord("and", 130, 110)}
+  ${gPencil(200, 100)}`);
+
+SCENES.or = () => nPaper(`${gQ(130, 46)}
+  ${openBook(64, 96, 1.15)}
+  ${gWord("or", 130, 114)}
+  ${gPencil(200, 104)}`);
+
+SCENES.which = () => scene(`${gQ(84, 58)}
+  ${[150, 184, 218].map((x, i) => sBall(x, 137, "", [P.red, P.gold, P.blue][i])).join("")}
+  ${kid({ x: 84, y: 148, s: 1.1, shirt: P.teal, mouth: "o", ...gAt })}`);
+
+SCENES.not = () => scene(`${sun(38, 30)}${sBall(150, 112)}
+  <path d="M132 94 L168 130 M168 94 L132 130" stroke="${P.red}" stroke-width="6" stroke-linecap="round"/>`);
+
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the
 // animation tags are stripped and the still tableau remains. Read once — the

@@ -336,6 +336,19 @@ const SENTENCE_START_RESPELLINGS = [
   [/^organ\./i, "Bodily organ."],
   [/^solute\./i, "Chemical solute."],
   [/^pictogram\./i, "The pictogram."],
+  // "Pseudocode" as the opening word reads as "Sudo code" — the Unix command,
+  // a real different word, not just a garble. "The pseudocode" fixed it 6/6.
+  // Unlike the others above, the risk here is not punctuation-adjacent (no
+  // clip in this course opens "Pseudocode is..." with a period/colon right
+  // after the word), so this matches on the word alone. Global and repeated
+  // at every sentence-like start, not just the very first: several of the 10
+  // Computing clips this touches repeat the word mid-clip, once after a
+  // period ("Pseudocode. Pseudocode is a tool…") and once after a colon
+  // ("…quantity is 0: Pseudocode: NOT reverses the condition") — the first
+  // version of this rule only matched after a period and missed the
+  // colon-led case, caught by re-verifying the actual recorded clip
+  // afterward, not by reasoning about the source text up front.
+  [/(?:^|(?<=[.:]\s))pseudocode\b/gi, "The pseudocode"],
 ];
 
 // Two Mathematics glossary cards, matched on the whole post-speakableFrames
@@ -404,6 +417,43 @@ const EXACT_TEXT_RESPELLINGS = new Map([
   ["Two staff are on secondment.", "Two staff are on a temporary secondment."],
   ["No surcharge on this order.", "There is no surcharge on this order."],
   ["The surcharge appears on the invoice only.", "The extra surcharge appears on the invoice only."],
+  // Found by a full audit of Mathematics/Science/Computing games, quizzes,
+  // assessment and practice content (10,866 clips) for the same class of
+  // defect, after the vocabulary-list audit above. Two names/words below;
+  // most of the ~151 other Mathematics clips carrying "Yusuf" and both of
+  // Science's other "sepal" quiz options were NOT individually tested and
+  // are not touched — only the confirmed-broken exact clips are, same
+  // reasoning as Metre/Litre above.
+  //
+  // "Yusuf" said 12/12 wrong ("use of") specifically as the second sentence
+  // of a two-sentence word problem, right before a verb — first word of a
+  // whole clip was fine (4/4), same word after "and"/"then"/a comma was
+  // still wrong, so it is not simply about sentence position. Respelling to
+  // "Yousef" (a real, equally valid transliteration of the same name) fixed
+  // it 10/12; no restructuring of the surrounding sentence did better.
+  [
+    "A rope is 24 metres long. Yusuf cuts off 14 metres. How much rope is left?",
+    "A rope is 24 metres long. Yousef cuts off 14 metres. How much rope is left?",
+  ],
+  [
+    "A jug already holds 2 litres of water. Yusuf pours in another 750 ml. How many millilitres are in the jug now?",
+    "A jug already holds 2 litres of water. Yousef pours in another 750 ml. How many millilitres are in the jug now?",
+  ],
+  // "sepal" as a multiple-choice option ("(c) sepal" / "(d) sepal") read as
+  // "Cepal"/"C. Paul" 0/12 across two questions and every position tried in
+  // the option list — genuinely broken, not position-dependent noise, and no
+  // respelling reached full reliability. "sepahl" was the least-bad found
+  // (fixed it in later, not earlier, testing) at 3/8 — better than 0/12, not
+  // solved; the recording was retried until each of these two specific clips
+  // came back clean (see the commit for how many takes that needed).
+  [
+    "Which part of the flower grows into a fruit after fertilisation? (a) stamen (b) petal (c) ovary (d) sepal",
+    "Which part of the flower grows into a fruit after fertilisation? (a) stamen (b) petal (c) ovary (d) sepahl",
+  ],
+  [
+    "Fertilisation happens when a male cell joins with a: (a) petal (b) ovule (c) sepal (d) stigma",
+    "Fertilisation happens when a male cell joins with a: (a) petal (b) ovule (c) sepahl (d) stigma",
+  ],
 ]);
 
 function speakableWords(text) {

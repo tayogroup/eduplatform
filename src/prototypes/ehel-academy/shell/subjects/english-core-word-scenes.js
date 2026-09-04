@@ -80,7 +80,9 @@ function face(mouth) {
   return `<circle cx="-4.5" cy="-2" r="1.7" fill="${P.line}"/><circle cx="4.5" cy="-2" r="1.7" fill="${P.line}"/>${
     mouth === "o"
       ? `<circle cx="0" cy="5.5" r="2.6" fill="#7c3f21"/>`
-      : `<path d="M-4 4.5 Q0 8 4 4.5" fill="none" stroke="#7c3f21" stroke-width="1.8" stroke-linecap="round"/>`
+      : mouth === "frown"
+        ? `<path d="M-4 7 Q0 4 4 7" fill="none" stroke="#7c3f21" stroke-width="1.8" stroke-linecap="round"/>`
+        : `<path d="M-4 4.5 Q0 8 4 4.5" fill="none" stroke="#7c3f21" stroke-width="1.8" stroke-linecap="round"/>`
   }`;
 }
 
@@ -1505,6 +1507,67 @@ SCENES.wonder = () => scene(`
   <circle cx="196" cy="40" r="13" fill="#f6ecc9"/><circle cx="190" cy="36" r="11.6" fill="#3a4a6b"/>
   ${thoughtBubble(112, 58, 52, 38, `${bubbleText("?", 18)}${starShape(16, -8, 0.55)}`, fade(3, "1;1"))}
   ${kid({ x: 152, y: 148, s: 1.15, shirt: P.purple, armLBase: 12, armRBase: -12, headAnim: rot(3, "-9 0 -47;-9 0 -47") })}`, { sky: "#3a4a6b", ground: "#41595e" });
+
+// ================================================================ adjectives
+// Grade 1's 7 concrete describing words (owner, 2026-09-04). A still picture
+// answers "what does this word look like"; most adjectives here are relative
+// (thick compared with what?) or emotional, which a single tableau can only
+// show by CONTRAST — the same move "become" and "continue" already use for an
+// abstract verb. The other 27 Grade 1 adjectives (little, all, this, hot,
+// black...) are function words, colours or sizes word-pictures.js already
+// draws honestly with a plain emoji, or genuinely have no honest scene —
+// this file only takes the words neither route already covers.
+const gift = `<g transform="translate(2 20)"><circle r="6" fill="${P.red}"/></g>`;
+
+// good — a gift offered, and a heart for the kindness.
+SCENES.good = () => scene(`${sun(38, 30)}
+  <g transform="translate(176 58)"><g>${grow(1.6, "0.85 0.85;1.15 1.15;0.85 0.85")}${heartShape(0, 0, 1.3)}</g></g>
+  ${kid({ x: 96, y: 148, s: 1.1, shirt: P.gold,
+    armLBase: 12, armRBase: -70, armRAnim: rot(1.6, "-70 0 0;-55 0 0;-70 0 0"), armRHold: gift })}
+  ${kid({ x: 160, y: 148, s: 1.1, shirt: P.teal, flip: true, mouth: "o", armLBase: 12, armRBase: -60 })}`);
+
+// bad — the cup tips off the table, and the good afternoon goes wrong.
+SCENES.bad = () => scene(`${tableProp(184, 122, 46)}
+  <g transform="translate(178 116)"><g>${rot(2.4, "0 0 0;0 0 0;95 0 0;95 0 0;0 0 0", 'keyTimes="0;0.3;0.5;0.85;1"')}<path d="M-6 -7 L6 -7 L4.5 7 L-4.5 7 Z" fill="${P.gold}" stroke="#d88f22" stroke-width="1.4"/></g></g>
+  <ellipse cx="192" cy="146" rx="4" ry="2" fill="${P.water}" opacity="0">${fade(2.4, "0;0;1;1;0", 'keyTimes="0;0.4;0.5;0.85;1"')}${grow(2.4, "0.3 0.3;0.3 0.3;1 1;1 1;0.3 0.3", 'keyTimes="0;0.4;0.55;0.85;1"')}</ellipse>
+  ${kid({ x: 128, y: 148, s: 1.15, shirt: P.blue, mouth: "frown", armLBase: 12, armRBase: -40,
+    headAnim: rot(2.4, "0 0 -47;0 0 -47;-9 0 -47;-9 0 -47;0 0 -47", 'keyTimes="0;0.35;0.5;0.85;1"') })}`);
+
+// long — the snake winds almost the whole way across.
+SCENES.long = () => scene(`${sun(38, 30)}
+  <g>${shift(2.2, "0 0;3 -3;0 0")}
+    <path d="M8 140 Q34 116 60 140 T112 140 T164 140 T216 140" fill="none" stroke="${P.green}" stroke-width="11" stroke-linecap="round"/>
+    <circle cx="222" cy="140" r="7" fill="${P.green}"/><circle cx="225" cy="137.5" r="1.3" fill="${P.line}"/>
+  </g>
+  ${kid({ x: 60, y: 148, s: 1.05, shirt: P.gold, mouth: "o", armLBase: -30, armRBase: 30,
+    headAnim: rot(2.4, "0 0 -47;10 0 -47;0 0 -47", 'keyTimes="0;0.5;1"') })}`);
+
+// new — the box opens, and it is shiny and never touched before.
+SCENES.new = () => scene(`${sun(38, 30)}
+  ${boxProp(176, 148, 46, 28, P.red)}
+  <g transform="translate(153 120)"><g>${rot(2.2, "0 0 0;0 0 0;-120 0 0;-120 0 0;0 0 0", 'keyTimes="0;0.3;0.5;0.85;1"')}<rect x="0" y="-6" width="46" height="6" rx="2" fill="#c23e3a"/></g></g>
+  ${[0, 1, 2].map((i, idx) => sparkle(156 + idx * 20, 104 - (idx % 2) * 10, 0.9, [P.gold, P.teal, P.red][idx],
+    `${fade(2.2, "0;0;1;0;0", `keyTimes="0;0.32;0.5;0.68;1" begin="${-idx * 0.1}s"`)}${grow(2.2, "0.4 0.4;0.4 0.4;1.2 1.2;0.4 0.4;0.4 0.4", `keyTimes="0;0.32;0.5;0.68;1" begin="${-idx * 0.1}s"`)}`)).join("")}
+  ${kid({ x: 112, y: 148, s: 1.15, shirt: P.teal, mouth: "o", armLBase: 140, armRBase: -140,
+    bodyAnim: shift(2.2, "0 0;0 0;0 -6;0 0;0 0", 'keyTimes="0;0.3;0.5;0.7;1"') })}`);
+
+// rich — the chest is full of gold, spilling over.
+SCENES.rich = () => scene(`${sun(38, 30)}
+  <g transform="translate(176 148)"><rect x="-30" y="-26" width="60" height="26" rx="4" fill="${P.wood}" stroke="#7d5227" stroke-width="2"/><path d="M-30 -26 Q0 -42 30 -26 Z" fill="#8a6a3d" stroke="#7d5227" stroke-width="2"/></g>
+  ${[0, 1, 2, 3].map((i) => `<circle cx="${152 + i * 12}" cy="${126 - (i % 2) * 6}" r="5" fill="${P.gold}" stroke="#d88f22" stroke-width="1">${shift(1.8, "0 0;0 -4;0 0", `begin="${-i * 0.22}s"`)}</circle>`).join("")}
+  ${sparkle(202, 92, 1, P.gold, fade(1.4, "0;1;0"))}
+  ${kid({ x: 108, y: 148, s: 1.1, shirt: P.purple, mouth: "o", armLBase: 140, armRBase: -140,
+    headAnim: rot(2, "0 0 -47;-8 0 -47;0 0 -47", 'keyTimes="0;0.5;1"') })}`);
+
+// thick — a log too wide for one hand to close around.
+SCENES.thick = () => scene(`${sun(38, 30)}
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.green, mouth: "o", armLBase: 15, armRBase: -75,
+    armRHold: `<g transform="translate(2 20)"><rect x="-13" y="-16" width="26" height="32" rx="12" fill="${P.wood}"/><ellipse cx="0" cy="-16" rx="13" ry="5" fill="#c68a4e" stroke="#7d5227" stroke-width="1.4"/></g>` })}`);
+
+// thin — a twig thin enough to hold between two fingers.
+SCENES.thin = () => scene(`${sun(38, 30)}
+  ${kid({ x: 130, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: 15, armRBase: -75,
+    armRHold: `<g transform="translate(2 20)"><rect x="-2" y="-15" width="4" height="30" rx="2" fill="${P.wood}"/></g>` })}`);
 
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the

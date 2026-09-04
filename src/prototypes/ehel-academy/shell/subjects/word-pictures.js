@@ -72,7 +72,7 @@ export const WORD_PICTURES = {
   // --- body ----------------------------------------------------------------
   hand: "✋🏾", hands: "✋🏾", foot: "🦶🏾", feet: "🦶🏾", ear: "👂🏾", ears: "👂🏾",
   nose: "👃🏾", finger: "👆🏾", fingers: "👆🏾", arm: "💪🏾", leg: "🦵🏾", eyes: "👀",
-  tongue: "👅", mouth: "👄",
+  tongue: "👅", mouth: "👄", hair: "🦱",
 
   // --- clothes -------------------------------------------------------------
   shirt: "👕", dress: "👗", jacket: "🧥", trousers: "👖", shoes: "👟", boots: "🥾",
@@ -396,7 +396,7 @@ export const WORD_PICTURES = {
   nurses: "🧑🏾‍⚕️", nursing: "🧑🏾‍⚕️", medicine: "💊", sick: "🤒",
   sellers: "💰", prices: "💰", shoppers: "🛒", builders: "👷🏾",
   climbed: "🧗🏾", rabbits: "🐇", bird: "🐦", seagulls: "🐦",
-  seashells: "🐚", cliffs: "🏔️", hillside: "⛰️", coastal: "🏖️",
+  seashells: "🐚", cliffs: "🏔️", hillside: "⛰️", coastal: "🏖️", sand: "🏜️",
   waterfall: "🌊", splash: "💦", foam: "🫧", herbs: "🌿", natural: "🌿",
   leaf: "🍃", dirt: "🪴", breeze: "🌬️", blows: "🌬️", raining: "🌧️",
   // Talking, showing, deciding

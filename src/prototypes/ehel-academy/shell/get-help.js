@@ -373,8 +373,9 @@ export function createGetHelp(options) {
     } catch { return false; }
   }
 
-  function startSession(hit, query) {
-    const topic = hit.topics[0] || null;
+  // `topic` is the card's own topic — a session starts on the topic the
+  // learner picked, not on whichever topic the unit ranked first.
+  function startSession(hit, query, topic = hit.topics[0] || null) {
     const session = {
       id: `hs-${Date.now().toString(36)}`,
       subject: options.subjectKey,
@@ -420,7 +421,10 @@ export function createGetHelp(options) {
     }
     const topicTotal = [...topicScores.values()].reduce((a, b) => a + b, 0);
     const topics = [...topicScores.entries()].sort((a, b) => b[1] - a[1]).map(([t]) => t);
-    return { score: unitScore + topicTotal, topics };
+    // topicScores rides along so the ladder can order CARDS, which are topics,
+    // rather than units: within one unit the topic that matched the search
+    // outranks the one that merely lives beside it.
+    return { score: unitScore + topicTotal, topics, topicScores };
   }
 
   async function runSearch(query, ui) {
@@ -455,7 +459,7 @@ export function createGetHelp(options) {
     indexes.forEach((index, at) => {
       if (!index) return;
       for (const unit of index.units) {
-        const { score, topics } = scoreUnit(unit, tokens);
+        const { score, topics, topicScores } = scoreUnit(unit, tokens);
         if (score <= 0) continue;
         // Under a section filter the TOPICS decide, not the unit's own score: a
         // unit whose title matched the word but which teaches none of it in this
@@ -463,7 +467,7 @@ export function createGetHelp(options) {
         const inReach = topics.filter(reachable);
         const kept = section ? inReach.filter((topic) => topic.section === section.id) : inReach;
         if (!kept.length) continue;
-        hits.push({ stage: stages[at], unit, score, topics: kept, hasLesson: lessonIndexes[at].has(Number(unit.unit)) });
+        hits.push({ stage: stages[at], unit, score, topics: kept, topicScores, hasLesson: lessonIndexes[at].has(Number(unit.unit)) });
       }
     });
     if (section && !hits.length) {
@@ -474,8 +478,9 @@ export function createGetHelp(options) {
       bindSectionFilter(ui);
       return;
     }
-    resultsBox.innerHTML = (section ? sectionFilterHtml(section, ui) : "") + resultsHtml(hits, current, ui, query);
-    bindResults(hits, query, ui);
+    const results = resultsHtml(hits, current, ui, query);
+    resultsBox.innerHTML = (section ? sectionFilterHtml(section, ui) : "") + results.html;
+    bindResults(results.cards, query, ui);
     if (section) bindSectionFilter(ui);
   }
 
@@ -497,117 +502,183 @@ export function createGetHelp(options) {
     });
   }
 
-  function resultCard(hit, at, ui, query) {
+  // --- results: the ladder -----------------------------------------------------
+  // One CARD PER TOPIC, in three columns around the learner's stage — "Build up
+  // first" below it, "Your level", "Stretch" above. A topic is what the learner
+  // typed ("food chains"), so the card is titled by the topic and names the
+  // unit it lives in underneath — the reverse of the unit-led card this
+  // replaced, whose one strong element was a "Start a help session on this"
+  // button repeated identically down the page while the topics that answered
+  // the search sat under it as grey chips (owner review, 2026-09-04).
+  //
+  // Each card starts a session on ITS topic in its unit, and carries the deep
+  // link the chips used to: English's hrefFor opens the exact section (its
+  // review-topic exemption), the others land in focus mode on the section
+  // itself. Every link carries the topic label and the search, so Wehel is
+  // scoped from that landing even without a session (defaultHrefFor). The
+  // unit-level "Or open the unit yourself" link went with the unit card — for
+  // the tutoring category that framing is what the page exists to avoid
+  // (owner, 2026-08-25), and a school learner has the sidebar.
+  const CARDS_PER_COLUMN = 6;
+
+  function topicCard(card, ui, query) {
     const esc = ui.escapeHtml;
-    const overviewHref = hrefFor(hit.stage, hit.unit.unit, "overview");
-    // Chips deep-link into the unit's own sections. English's hrefFor opens
-    // that exact section too (its own review-topic exemption), so the label
-    // is never just a hint here — worst case, a subject with no such
-    // exemption still shows the topic labels, so the learner knows what to
-    // look for once inside. Each chip also carries its own label and the
-    // search that found it, so Wehel is scoped from this landing even when
-    // the learner never starts a guided help session (see defaultHrefFor).
-    const chips = hit.topics.slice(0, 5).map((t) =>
-      `<a class="gh-chip" href="${esc(hrefFor(hit.stage, hit.unit.unit, t.section, { label: t.label, query }))}">${ui.icon("corner-down-right")}<span>${esc(t.label)}</span><small>${esc(sectionLabel(t.section))}</small></a>`).join("");
-    // The help session is the targeted path — a focused walk on just this
-    // topic, opened in focus mode — so it leads, styled primary and placed
-    // first. The unit link and chips still work, for a learner who would
-    // rather browse the unit itself; they carry the same focus-mode door.
-    // The tutoring category gets no browse link at all (owner request
-    // 2026-08-25): those learners come with a problem, not a course position,
-    // so "open the unit yourself" is the school-run framing the category
-    // exists to avoid — the session and the topic chips are their doors.
-    const browse = shellHooks?.tutoring ? "" : `<a class="gh-hit-browse" href="${esc(overviewHref)}">${ui.icon("arrow-right")} <span>Or open the unit yourself</span></a>`;
-    // A unit with an authored topic lesson says so on the card, and its button
-    // names what the learner actually gets. Without this the in-depth lesson
-    // was invisible until after committing to a session, so a search that
-    // happened to rank lesson-less units first looked like the feature was
-    // missing entirely.
-    const badge = hit.hasLesson ? `<span class="gh-lesson-badge">${ui.icon("lightbulb")} Full lesson</span>` : "";
-    const startLabel = hit.hasLesson ? "Teach me this, then practise" : "Start a help session on this";
-    return `<article class="gh-hit">
-      <p class="gh-hit-heading"><strong>${esc(`${options.stageWord} ${hit.stage}`)} · Unit ${hit.unit.unit}:</strong> ${esc(hit.unit.title)}${badge}</p>
-      <button class="button primary gh-start" data-gh-start="${at}" type="button">${ui.icon("compass")} <span>${startLabel}</span></button>
-      ${browse}
-      ${chips ? `<div class="gh-chips">${chips}</div>` : ""}
+    const { hit, topic, at, lead } = card;
+    const current = stageNow();
+    const tone = hit.stage === current ? " teal" : hit.stage > current ? " blue" : "";
+    const badge = hit.hasLesson ? `<span class="gh-tag gold">${ui.icon("lightbulb")} Full lesson</span>` : "";
+    const startLabel = hit.hasLesson ? "Teach me this, then practise" : "Start a help session";
+    const open = hrefFor(hit.stage, hit.unit.unit, topic.section, { label: topic.label, query });
+    return `<article class="gh-tcard${lead ? " is-lead" : ""}"${card.hidden ? " hidden" : ""}>
+      <div class="gh-tags"><span class="gh-tag${tone}">${esc(`${options.stageWord} ${hit.stage}`)}</span><span class="gh-tag">${esc(sectionLabel(topic.section))}</span>${badge}</div>
+      <h3>${esc(topic.label)}</h3>
+      <p>${esc(`Unit ${hit.unit.unit} · ${hit.unit.title}`)}</p>
+      <button class="button ${lead ? "primary" : "secondary"}" data-gh-start="${at}" type="button">${ui.icon("compass")} <span>${startLabel}</span></button>
+      <a class="gh-open" href="${esc(open)}">${ui.icon("corner-down-right")} <span>Open ${esc(sectionLabel(topic.section))} in the ${unitNoun()}</span></a>
     </article>`;
   }
 
-  function bindResults(hits, query, ui) {
+  function bindResults(cards, query, ui) {
     for (const button of document.querySelectorAll("[data-gh-start]")) {
-      button.addEventListener("click", () => startSession(hits[Number(button.dataset.ghStart)], query));
+      button.addEventListener("click", () => {
+        const card = cards[Number(button.dataset.ghStart)];
+        if (card) startSession(card.hit, query, card.topic);
+      });
     }
-    bindIntro(ui);
+    // "Show N more" reveals the column's hidden cards in place — they were
+    // rendered and indexed all along, so nothing is re-bound.
+    for (const button of document.querySelectorAll("[data-gh-more]")) {
+      button.addEventListener("click", () => {
+        for (const card of button.parentElement.querySelectorAll(".gh-tcard[hidden]")) card.hidden = false;
+        button.remove();
+      });
+    }
   }
 
+  // Returns { html, cards }: `cards` is the flattened render order, which is
+  // what data-gh-start indexes into, so the two cannot disagree.
   function resultsHtml(hits, current, ui, query) {
+    const esc = ui.escapeHtml;
     if (!hits.length) {
-      return `<section class="panel gh-status"><p><strong>No matches${showAllStages ? "" : " nearby"}.</strong> Try a different word — the name your school uses may differ${showAllStages ? "" : `, or widen the search to every ${options.stageWord.toLowerCase()} below`}.</p></section>`;
+      return { cards: [], html: `<section class="panel gh-status"><p><strong>No matches${showAllStages ? "" : " nearby"}.</strong> Try a different word — the name your school uses may differ${showAllStages ? "" : `, or look in every ${options.stageWord.toLowerCase()} using the button above`}.</p></section>` };
     }
-    // Ranked lists carry their index into bindResults through data-gh-start,
-    // so the flattened order here must match the order the cards render in.
-    const groups = [
-      { title: `Your level — ${options.stageWord} ${current}`, note: "Where this topic lives in your own course.", filter: (h) => h.stage === current },
-      { title: "Foundations", note: `Earlier ${options.stageWord.toLowerCase()}s that build up to it — start here if it feels shaky.`, filter: (h) => h.stage < current },
-      { title: "Next steps", note: "The same topic, taken further.", filter: (h) => h.stage > current },
+    const word = options.stageWord.toLowerCase();
+    const columns = [
+      { title: "Build up first", note: `Earlier ${word}s — start here if it feels shaky.`, filter: (h) => h.stage < current },
+      { title: "Your level", note: `${options.stageWord} ${current} — where this lives in your own course.`, filter: (h) => h.stage === current },
+      { title: "Stretch", note: "The same topic, taken further.", filter: (h) => h.stage > current },
     ];
-    const ranked = [];
-    const sectionsHtml = groups.map((group) => {
-      const members = hits.filter(group.filter)
-        .sort((a, b) => b.score - a.score || Math.abs(a.stage - current) - Math.abs(b.stage - current))
-        .slice(0, 8);
-      if (!members.length) return "";
-      const cards = members.map((hit) => { ranked.push(hit); return resultCard(hit, ranked.length - 1, ui, query); }).join("");
-      return `<section class="panel">
-        <span class="eyebrow">${group.title}</span>
-        <p class="gh-note">${group.note}</p>
-        ${cards}
-      </section>`;
-    }).join("");
-    hits.length = 0;
-    hits.push(...ranked);
-    return sectionsHtml || `<section class="panel gh-status"><p><strong>No matches.</strong></p></section>`;
+    const cards = [];
+    const built = columns.map((column) => {
+      const members = hits.filter(column.filter)
+        // A topic's own match outranks its unit's, so the card that answers
+        // the search leads the column even when a lower-scoring unit's title
+        // happened to contain the word.
+        .flatMap((hit) => hit.topics.map((topic) => ({ hit, topic, score: (hit.topicScores?.get(topic) || 0) * 10 + hit.score })))
+        .sort((a, b) => b.score - a.score || Math.abs(a.hit.stage - current) - Math.abs(b.hit.stage - current))
+        .map((member, i) => {
+          const card = { ...member, at: cards.length, lead: false, hidden: i >= CARDS_PER_COLUMN };
+          cards.push(card);
+          return card;
+        });
+      return { ...column, members };
+    }).filter((column) => column.members.length);
+    // ONE lead card — the best match at the learner's own level, or the best
+    // anywhere when their level has none — gets the filled button. One strong
+    // element on the page, which is the whole correction.
+    const lead = cards.find((card) => card.hit.stage === current) || cards[0];
+    if (lead) lead.lead = true;
+    const html = `<div class="gh-ladder">${built.map((column) => {
+      const hidden = column.members.length - CARDS_PER_COLUMN;
+      return `<div class="gh-col"><div class="gh-col-h"><b>${esc(column.title)}</b><span>${esc(column.note)}</span></div>
+        ${column.members.map((card) => topicCard(card, ui, query)).join("")}
+        ${hidden > 0 ? `<button class="button ghost gh-more" data-gh-more type="button">Show ${hidden} more ${ui.icon("chevron-down")}</button>` : ""}
+      </div>`;
+    }).join("")}</div>`;
+    return { html, cards };
   }
 
-  function resumeCardHtml(ui) {
+  // --- the rail -------------------------------------------------------------
+  // The learner's own state, kept beside whatever they are doing. Every card
+  // draws only when it has something to say: no session, no Continue; no
+  // allowance reading, no Wehel card; no finished session, no Recent; no
+  // launch token, no subjects.
+  const clock = (seconds) => { const t = Math.max(0, Math.round(Number(seconds) || 0)); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`; };
+
+  function continueCardHtml(ui) {
     const session = activeSession();
     if (!session) return "";
     const esc = ui.escapeHtml;
-    return `<section class="panel gh-resume">
-      <span class="eyebrow">Session in progress</span>
-      <p class="gh-note">You are part-way through a help session on <strong>${esc(session.topicLabel)}</strong> — ${esc(`${options.stageWord} ${session.target.stage}`)} · Unit ${session.target.unit}: ${esc(session.target.title)}.</p>
-      <a class="button gold" href="${esc(sessionHref(session.target.stage, session.target.unit))}">Resume the session ${ui.icon("arrow-right")}</a>
+    // Six steps where the unit has a topic lesson, five where it does not.
+    // Only a lesson already in the cache counts: this page must not fetch one
+    // (tutorLesson would, and its repaint only reaches the session page), and
+    // an unknown lesson reads as five. The ring is a hint, not the record.
+    const cached = lessonCache.get(`${session.target.stage}:${session.target.unit}`);
+    const steps = sessionSteps(cached && typeof cached.then !== "function" ? cached : null);
+    const done = steps.filter((step) => stepDone(session, step.id)).length;
+    const open = steps.find((step) => !stepDone(session, step.id)) || steps[steps.length - 1];
+    const pct = Math.round((done / steps.length) * 100);
+    return `<section class="panel gh-cont">
+      <span class="eyebrow">Continue</span>
+      <div class="gh-cont-row"><div class="gh-ring" style="--gh-pct: ${pct}"><span>${done} / ${steps.length}</span></div>
+        <div><strong>${esc(session.topicLabel)}</strong><span class="gh-note" style="margin: 0">${esc(stepTitle(open.id, true))} · step ${steps.indexOf(open) + 1} of ${steps.length}</span></div></div>
+      <a class="button primary" href="${esc(sessionHref(session.target.stage, session.target.unit))}">Carry on ${ui.icon("arrow-right")}</a>
+    </section>`;
+  }
+
+  // The day's allowance, as the shell reads it (course-app.js :: attachShell's
+  // wehelTime — the dock's own two readings, in seconds). Shown here so a
+  // learner knows what they have BEFORE reaching for the tutor, and told in
+  // the same breath that the lessons and practice cost nothing.
+  function wehelCardHtml(ui) {
+    const time = shellHooks?.wehelTime?.();
+    if (!time || !(time.limit > 0)) return "";
+    const spent = time.left <= 0 || time.tokensSpent;
+    return `<section class="panel">
+      <div class="gh-rail-head"><span class="eyebrow">Wehel today</span><span class="gh-tag${spent ? "" : " teal"}">${ui.icon("clock")} ${spent ? "used up" : `${clock(time.left)} left`}</span></div>
+      <div class="gh-bar"><div style="width: ${spent ? 100 : time.percentUsed}%"></div></div>
+      <p class="gh-note" style="margin: 8px 0 0">${spent ? "Wehel is back tomorrow." : "Ask about the exact part you are stuck on."} Lessons and practice never use your minutes.</p>
+    </section>`;
+  }
+
+  // The last four finished sessions, newest first, with the before/after on
+  // their face — the shelf a parent comes back to when booking a tutor.
+  // Each carries the summary captured at wrap-up; a record from before
+  // summaries were stored simply offers no copy.
+  function recentHtml(ui) {
+    const finished = store.sessions.filter((s) => s.status === "finished").slice(-4).reverse();
+    if (!finished.length) return "";
+    const esc = ui.escapeHtml;
+    const market = marketplaceHref();
+    const marks = (s) => {
+      const before = s.check.submitted && s.check.total > 0 ? `${s.check.score}/${s.check.total}` : "";
+      const after = s.recheck.submitted && s.recheck.total > 0 ? `${s.recheck.score}/${s.recheck.total}` : "";
+      if (!before && !after) return `<span class="gh-tag">${s.check.attempted + s.recheck.attempted} attempted</span>`;
+      // Green only on improvement — the same rule the parent card keeps — and
+      // "check" rather than "before" for a first check taken after the lesson.
+      const better = before && after && s.recheck.score > s.check.score;
+      return `${before ? `<span class="gh-tag">${s.check.afterLesson ? "check" : "before"} ${before}</span>` : ""}${after ? `<span class="gh-tag ${better ? "green" : "gold"}">after ${after}</span>` : ""}`;
+    };
+    return `<section class="panel">
+      <span class="eyebrow">Recent help sessions</span>
+      <div class="gh-recent">${finished.map((s) => `<article>
+        <strong>${esc(s.topicLabel)}</strong>
+        <div class="gh-tags"><span>${esc(`${options.stageWord} ${s.target.stage} · Unit ${s.target.unit}`)}${s.finishedAt ? ` · ${esc(s.finishedAt.slice(0, 10))}` : ""}</span>${marks(s)}</div>
+        <div class="gh-actions">
+          ${s.summary ? `<button class="button secondary" data-gh-recent-copy="${esc(s.id)}" type="button">${ui.icon("copy")} Copy summary</button>` : ""}
+          ${market ? `<a class="button secondary" href="${esc(market)}" target="_blank" rel="noopener">${ui.icon("users")} Find a tutor</a>` : ""}
+        </div>
+      </article>`).join("")}</div>
     </section>`;
   }
 
   const marketplaceHref = () => (options.marketplaceHref ? options.marketplaceHref() : "");
 
-  // Finished sessions, newest first — the shelf a parent comes back to when
-  // booking a tutor after the fact. Each carries the summary captured at
-  // wrap-up; a record from before summaries were stored simply offers no copy.
-  function recentSessionsHtml(ui) {
-    const finished = store.sessions.filter((s) => s.status === "finished").slice(-4).reverse();
-    if (!finished.length) return "";
-    const esc = ui.escapeHtml;
-    const market = marketplaceHref();
-    return `<section class="panel">
-      <span class="eyebrow">Recent help sessions</span>
-      <p class="gh-note">What was worked on and how it went — copy a summary to share with a tutor when you book one.</p>
-      ${finished.map((s) => `<article class="gh-hit">
-        <p class="gh-recent-line"><strong>${esc(s.topicLabel)}</strong> — ${esc(`${options.stageWord} ${s.target.stage}`)} · Unit ${s.target.unit}${s.finishedAt ? ` <small>${esc(s.finishedAt.slice(0, 10))}</small>` : ""}</p>
-        <div class="gh-actions">
-          ${s.summary ? `<button class="button secondary" data-gh-recent-copy="${esc(s.id)}" type="button">${ui.icon("copy")} Copy the summary</button>` : ""}
-          ${market ? `<a class="button secondary" href="${esc(market)}" target="_blank" rel="noopener">${ui.icon("users")} Find a tutor</a>` : ""}
-        </div>
-      </article>`).join("")}
-    </section>`;
-  }
-
   function introHtml(ui) {
     const esc = ui.escapeHtml;
-    return `${resumeCardHtml(ui)}${recentSessionsHtml(ui)}<section class="panel">
+    return `<section class="panel">
       <span class="eyebrow">How this works</span>
-      <p class="gh-note">Type what you are stuck on — a topic, a word from your homework, anything. Results come from every ${unitNoun()} of ${esc(options.subjectLabel)}, grouped as <strong>Foundations</strong> (earlier work that builds up to it), <strong>your level</strong>, and <strong>next steps</strong>. <strong>Start a help session</strong> on a result and it walks you through: a quick check, the lesson, practice, then a check again.</p>
+      <p class="gh-note">Type what you are stuck on — a topic, a word from your homework, anything. You get the exact ${unitNoun()}s that teach it, laid out as <strong>build up first</strong>, <strong>your level</strong> and <strong>stretch</strong>. Pick one and the help session walks you through it: a quick check, the lesson, practice, then a check again.</p>
       <div class="gh-chips">${(options.examples || []).map((example) => `<button class="gh-chip" data-gh-example="${esc(example)}" type="button">${ui.icon("search")}<span>${esc(example)}</span></button>`).join("")}</div>
     </section>`;
   }
@@ -632,6 +703,11 @@ export function createGetHelp(options) {
         runSearch(input.value, ui);
       });
     }
+  }
+
+  // The rail is drawn once per render() and outlives every search, so its
+  // buttons are bound once here rather than with each results paint.
+  function bindRail(ui) {
     for (const button of document.querySelectorAll("[data-gh-recent-copy]")) {
       button.addEventListener("click", () => {
         const session = store.sessions.find((s) => s.id === button.dataset.ghRecentCopy);
@@ -652,21 +728,12 @@ export function createGetHelp(options) {
     .gh-section-filter { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 12px; padding: 8px 12px; border-radius: 10px; background: var(--teal-soft, #e6f7f5); color: var(--teal-dark, #0e7490); font-size: 14px; }
     .gh-section-filter i, .gh-section-filter svg { width: 14px; height: 14px; flex: none; }
     .gh-section-clear { border: 0; background: none; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
-    .gh-hit { padding: 12px 0; border-top: 1px solid var(--line); }
-    .gh-hit:first-of-type { border-top: 0; }
-    .gh-hit-heading { margin: 0 0 10px; font-size: 15px; }
-    .gh-lesson-badge { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; padding: 2px 9px; border-radius: 99px; background: var(--teal-soft, #e6f7f5); color: var(--teal-dark, #0e7490); font-size: 12px; font-weight: var(--weight-medium); white-space: nowrap; }
-    .gh-lesson-badge i, .gh-lesson-badge svg { width: 12px; height: 12px; }
-    .gh-hit-browse { display: inline-flex; gap: 6px; align-items: baseline; flex-wrap: wrap; text-decoration: none; color: var(--muted); font-size: 13px; margin-top: 10px; }
-    .gh-hit-browse:hover { text-decoration: underline; }
-    .gh-hit-browse i { width: 13px; height: 13px; align-self: center; }
     .gh-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 9px; }
     .gh-chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border: 1px solid var(--line); border-radius: 99px; background: #fff; color: inherit; text-decoration: none; font-size: 13px; cursor: pointer; }
     .gh-chip:hover { border-color: var(--teal); }
     .gh-chip i { width: 13px; height: 13px; color: var(--teal); }
     .gh-chip small { color: var(--muted); }
     .gh-status p { display: flex; gap: 8px; align-items: center; color: var(--muted); }
-    .gh-start { width: 100%; justify-content: center; }
     .gh-step { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
     .gh-step-head { display: flex; align-items: center; gap: 10px; width: 100%; padding: 13px 15px; background: none; border: 0; text-align: left; font: inherit; cursor: pointer; }
     .gh-step-head[disabled] { cursor: default; color: var(--muted); }
@@ -687,17 +754,94 @@ export function createGetHelp(options) {
     .gh-learn-item:last-of-type { border-bottom: 0; }
     .gh-learn-item input { width: 17px; height: 17px; flex: none; }
     .gh-learn-item a { color: inherit; }
-    .gh-recent-line { margin: 0; } .gh-recent-line small { color: var(--muted); margin-left: 6px; }
     .gh-score { display: flex; gap: 14px; flex-wrap: wrap; margin: 10px 0; }
     .gh-score span { background: var(--teal-soft, #e6f7f5); border-radius: 10px; padding: 10px 14px; font-size: 14px; }
-    .gh-subjects h2 { margin: 0; font-size: 16px; }
-    .gh-subject-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 11px; }
-    .gh-subject { display: flex; flex-direction: column; gap: 1px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: inherit; }
-    .gh-subject strong { font-size: 14px; }
-    .gh-subject span { font-size: 12px; color: var(--muted); }
-    a.gh-subject:hover { border-color: var(--teal); }
-    a.gh-subject:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
-    .gh-subject.is-here { background: var(--teal-soft, #e6f7f5); border-color: var(--teal); }
+
+    /* The Tutor Desk (owner, 2026-09-04, direction A of three). One workspace
+       instead of a stack of equal panels: a RAIL that carries the learner's
+       own state — the session to continue, the day's Wehel minutes, recent
+       sessions, the subjects — and stays beside the results and beside the
+       session walk; and results as TOPIC cards on a three-column ladder,
+       because a topic is what the learner searched for and the unit button
+       that used to lead every hit carried no information at all. */
+    .gh-desk { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; align-items: start; }
+    .gh-rail { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+    .gh-rail .panel { padding: 18px; border-radius: var(--r-md, 18px); }
+    .gh-rail h2 { margin: 0; font-size: 16px; line-height: 1.3; }
+    .gh-rail-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .gh-rail-head .button.ghost { min-height: 32px; padding: 4px 8px; font-size: 13px; }
+    .gh-main { min-width: 0; display: flex; flex-direction: column; gap: 22px; }
+    .gh-main .page-header { margin-bottom: 0; }
+    .gh-search { padding: 6px 6px 6px 16px; border: 2px solid var(--line); border-radius: var(--r-md, 18px); background: #fff; }
+    .gh-search > i, .gh-search > svg { width: 20px; height: 20px; color: var(--muted); flex: none; }
+    .gh-search input { flex: 1 1 120px; border: 0; padding: 12px 6px; font-size: 17px; }
+    .gh-search input:focus { outline: none; }
+    .gh-search:focus-within { border-color: var(--teal); }
+    .gh-cont { border-color: var(--teal); background: var(--teal-soft); }
+    .gh-cont-row { display: flex; gap: 14px; align-items: center; margin-top: 8px; }
+    .gh-cont-row strong { display: block; font-size: 15px; line-height: 1.3; }
+    .gh-ring { width: 56px; height: 56px; border-radius: 50%; flex: none; background: conic-gradient(var(--teal) calc(var(--gh-pct, 0) * 1%), #fff 0); display: grid; place-items: center; }
+    .gh-ring span { width: 42px; height: 42px; border-radius: 50%; background: var(--teal-soft); display: grid; place-items: center; font-size: 12px; font-weight: var(--weight-bold); color: var(--teal-dark); }
+    .gh-cont .button { width: 100%; margin-top: 14px; }
+    .gh-tag { display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 10px; border-radius: 99px; font-size: 12px; font-weight: var(--weight-medium); background: #eef3f4; color: var(--muted); white-space: nowrap; }
+    .gh-tag i, .gh-tag svg { width: 12px; height: 12px; }
+    .gh-tag.teal { background: var(--teal-soft); color: var(--teal-dark); }
+    .gh-tag.gold { background: var(--gold-soft, #fff5cf); color: #7a5a00; }
+    .gh-tag.blue { background: var(--blue-soft, #eaf1ff); color: #1f52ad; }
+    .gh-tag.green { background: #e3f4ec; color: #17603f; }
+    .gh-bar { height: 10px; border-radius: 99px; background: #eef3f4; overflow: hidden; margin-top: 10px; }
+    .gh-bar > div { height: 100%; border-radius: 99px; background: var(--teal); }
+    .gh-recent { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+    .gh-recent article { display: flex; flex-direction: column; gap: 4px; }
+    .gh-recent strong { font-size: 14px; }
+    .gh-recent .gh-tags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--muted); }
+    .gh-recent .gh-actions { margin-top: 4px; gap: 6px; }
+    .gh-recent .gh-actions .button { min-height: 36px; padding: 6px 12px; font-size: 13px; }
+    .gh-subj-list { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; }
+    .gh-subj { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 9px 10px; border-radius: 12px; font-size: 14px; font-weight: var(--weight-medium); text-decoration: none; color: inherit; }
+    .gh-subj small { color: var(--muted); font-size: 12px; font-weight: var(--weight-medium); }
+    a.gh-subj:hover { background: #eef3f4; }
+    a.gh-subj:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+    .gh-subj.is-here { background: var(--teal-soft); color: var(--teal-dark); }
+    .gh-ladder { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; align-items: start; }
+    .gh-col-h { display: flex; flex-direction: column; gap: 2px; margin-bottom: 10px; }
+    .gh-col-h b { font-size: 15px; }
+    .gh-col-h span { color: var(--muted); font-size: 13px; }
+    .gh-col { display: flex; flex-direction: column; gap: 12px; }
+    .gh-tcard { background: #fff; border: 2px solid var(--line); border-radius: var(--r-md, 18px); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .gh-tcard[hidden] { display: none; }
+    .gh-tcard.is-lead { border-color: var(--teal); box-shadow: var(--shadow); }
+    .gh-tcard h3 { margin: 0; font-size: 17px; line-height: 1.3; }
+    .gh-tcard p { margin: 0; color: var(--muted); font-size: 13px; }
+    .gh-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .gh-tcard .button { justify-content: center; }
+    .gh-open { align-self: flex-start; display: inline-flex; gap: 5px; align-items: center; font-size: 13px; color: var(--muted); text-decoration: none; }
+    .gh-open:hover { text-decoration: underline; color: var(--teal-dark); }
+    .gh-open i, .gh-open svg { width: 13px; height: 13px; color: var(--teal); }
+    .gh-more { align-self: flex-start; }
+    .gh-steps { display: flex; flex-direction: column; gap: 4px; margin-top: 12px; }
+    .gh-step { border: 0; border-radius: 14px; margin: 0; overflow: visible; }
+    .gh-step-head { padding: 10px 12px; border-radius: 14px; }
+    .gh-n { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: var(--weight-bold); border: 2px solid var(--line); color: var(--muted); background: #fff; flex: none; }
+    .gh-n i, .gh-n svg { width: 14px; height: 14px; color: inherit; }
+    .gh-step.is-done .gh-n { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .gh-step.is-open .gh-step-head { background: var(--teal-soft); }
+    .gh-step.is-open .gh-n { border-color: var(--teal); color: var(--teal-dark); }
+    .gh-step-head[disabled] .gh-n { border-style: dashed; }
+    .gh-stuck { border-color: var(--blue, #2d6cdf); background: var(--blue-soft, #eaf1ff); }
+    .gh-stuck .eyebrow { color: #1f52ad; }
+    .gh-stuck .gh-actions { flex-direction: column; gap: 6px; margin-top: 10px; }
+    .gh-stuck .button { justify-content: flex-start; min-height: 40px; padding: 8px 14px; font-size: 14px; }
+    .gh-stage { padding: 28px; }
+    .gh-stage > h2 { margin: 4px 0 10px; font-family: var(--font-serif); font-size: 28px; line-height: 1.15; }
+    .gh-stage .gh-step-body { padding: 0; border-top: 0; }
+    .gh-stage-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 18px; padding-top: 14px; border-top: 2px solid #eef3f4; }
+    .gh-stage-foot .gh-note { margin: 0; }
+    @media (max-width: 980px) {
+      .gh-desk { grid-template-columns: 1fr; }
+      .gh-rail { flex-direction: row; flex-wrap: wrap; }
+      .gh-rail > * { flex: 1 1 240px; }
+    }
   </style>`;
 
   // The tutoring category's way OUT of one subject and into another.
@@ -727,21 +871,20 @@ export function createGetHelp(options) {
     if (!Array.isArray(subjects) || !subjects.length) return "";
     const cards = subjects.map((entry) => {
       const level = entry.stage > 0 ? `${entry.stageWord} ${entry.stage}` : "";
-      const inner = `<strong>${esc(entry.label)}</strong>${level ? `<span>${esc(level)}</span>` : ""}`;
+      const inner = `<span>${esc(entry.label)}</span>${level ? `<small>${esc(level)}</small>` : ""}`;
       // The subject in front of them is marked, never linked: a link back to
       // this page would spend a full launch to arrive where they already are.
-      if (entry.here) return `<span class="gh-subject is-here" aria-current="true">${inner}</span>`;
+      if (entry.here) return `<span class="gh-subj is-here" aria-current="true">${inner}</span>`;
       // No resolvable platform origin means no launch to send them on. Same
       // rule the marketplace buttons follow: draw nothing rather than a
       // root-relative link that 404s on the CDN origin.
       if (!entry.href) return "";
-      return `<a class="gh-subject" href="${esc(entry.href)}">${inner}</a>`;
+      return `<a class="gh-subj" href="${esc(entry.href)}">${inner}</a>`;
     }).join("");
     if (!cards) return "";
-    return `<section class="panel gh-subjects">
-        <h2>Your subjects</h2>
-        <p class="gh-note">Pick a subject to get help with — each one opens at your own level in that subject.</p>
-        <div class="gh-subject-row">${cards}</div>
+    return `<section class="panel">
+        <span class="eyebrow">Your subjects</span>
+        <div class="gh-subj-list">${cards}</div>
       </section>`;
   }
 
@@ -751,23 +894,26 @@ export function createGetHelp(options) {
     const current = stageNow();
     const from = Math.max(1, current - 2);
     const to = Math.min(options.maxStage, current + 2);
-    ui.$("#app").innerHTML = `${STYLE}${ui.pageHeader(
-      `${options.stageWord} ${current} · ${esc(options.subjectLabel)}`,
-      "Get help with…",
-      `Stuck on homework, or on something your school teaches in a different order? Search the whole ${esc(options.subjectLabel)} course and open the exact lesson that teaches it — including the ${options.stageWord.toLowerCase()}s before and after yours.`,
-      "Help",
-    )}${subjectSwitcher(ui)}
+    const word = options.stageWord.toLowerCase();
+    // The rail leads in the DOM so that on a narrow screen, where the desk
+    // stacks, "Continue" is the first thing on the page — continue first,
+    // choose second.
+    ui.$("#app").innerHTML = `${STYLE}<div class="gh-desk">
+      <aside class="gh-rail">${continueCardHtml(ui)}${wehelCardHtml(ui)}${recentHtml(ui)}${subjectSwitcher(ui)}</aside>
+      <main class="gh-main">${ui.pageHeader(
+        `${options.stageWord} ${current} · ${options.subjectLabel}`,
+        "What are you stuck on?",
+        `Search the whole ${options.subjectLabel} course — the ${word}s before and after yours included — and open the exact ${unitNoun()} that teaches it.`,
+        "Help",
+      )}
       <section class="panel">
-        <div class="gh-search">
-          <input id="gh-query" type="search" placeholder="What are you stuck on? e.g. ${esc((options.examples || [])[0] || "a topic")}" aria-label="Search ${esc(options.subjectLabel)} topics">
-          <button class="button primary" id="gh-go" type="button">${ui.icon("search")} <span>Search</span></button>
-        </div>
+        <div class="gh-search">${ui.icon("search")}<input id="gh-query" type="search" placeholder="e.g. ${esc((options.examples || [])[0] || "a topic")}" aria-label="Search ${esc(options.subjectLabel)} topics"><button class="button primary" id="gh-go" type="button">${ui.icon("search")} <span>Search</span></button></div>
         <div class="gh-window">
-          <span>${showAllStages ? `Searching every ${options.stageWord.toLowerCase()} (1–${options.maxStage})` : `Searching ${options.stageWord.toLowerCase()}s ${from}–${to}, ${stageOverride == null ? "around yours" : `around ${options.stageWord} ${current}`}`}</span>
-          <button class="button secondary" id="gh-widen" type="button">${showAllStages ? `Back to ${options.stageWord.toLowerCase()}s ${from}–${to}` : `Show all ${options.stageWord.toLowerCase()}s`}</button>
+          <span>${showAllStages ? `Looking in every ${word} (1–${options.maxStage})` : `Looking in ${word}s ${from}–${to}, ${stageOverride == null ? "around yours" : `around ${options.stageWord} ${current}`}`}</span>
+          <button class="button ghost" id="gh-widen" type="button">${showAllStages ? `Back to ${word}s ${from}–${to}` : `Look in every ${word}`}</button>
         </div>
       </section>
-      <div id="gh-results" aria-live="polite">${introHtml(ui)}</div>`;
+      <div id="gh-results" aria-live="polite">${introHtml(ui)}</div></main></div>`;
     const input = ui.$("#gh-query");
     let debounce = null;
     input.addEventListener("input", () => {
@@ -786,6 +932,7 @@ export function createGetHelp(options) {
       nextInput.focus();
     });
     bindIntro(ui);
+    bindRail(ui);
   }
 
   // ==========================================================================
@@ -940,7 +1087,10 @@ export function createGetHelp(options) {
     // "before" half of the before/after if they want it — it is simply no
     // longer in the way.
     const opensOnLesson = lesson && !session.understand?.completed && !session.check.submitted;
-    const openStep = session.stepOpen || (opensOnLesson ? "understand" : firstOpenStep(session, steps));
+    let openStep = session.stepOpen || (opensOnLesson ? "understand" : firstOpenStep(session, steps));
+    // A remembered "understand" from a visit where the lesson was loaded, met
+    // before it has loaded again, names a step this render does not draw.
+    if (!steps.some((step) => step.id === openStep)) openStep = firstOpenStep(session, steps);
 
     const stepBody = (id) => {
       if (id === "check" || id === "recheck") {
@@ -1053,25 +1203,72 @@ export function createGetHelp(options) {
         ${market ? `<p class="gh-note">Find a human tutor opens the tutor marketplace and copies your summary — paste it into “Learning goals” when you request a tutor, and it reaches them with your request.</p>` : ""}`;
     };
 
+    // What each step says about itself on the rail — the count it holds, or
+    // the score once it is taken — so the stepper reads as a map of the walk
+    // rather than six labels.
+    const stepMeta = (id) => {
+      if (id === "check" || id === "recheck") {
+        const part = session[id];
+        const set = id === "check" ? checkSet : recheckSet;
+        if (part.submitted) return scored ? `${part.score} of ${part.total || set.length}` : `${part.attempted} attempted`;
+        return set.length ? `${set.length} questions` : "";
+      }
+      if (id === "understand") return "read first";
+      if (id === "learn") return `${learnItems(unit).length} stops`;
+      if (id === "practice") return practice.length ? `${practice.length} questions` : `in the ${unitNoun()}`;
+      return "";
+    };
+    const stepAt = Math.max(0, steps.findIndex((step) => step.id === openStep));
+    const stepsHtml = steps.map((step, at) => {
+      const done = stepDone(session, step.id);
+      const isOpen = openStep === step.id;
+      const reachable = done || isOpen || steps.slice(0, at).every((s) => stepDone(session, s.id));
+      return `<div class="gh-step${done ? " is-done" : ""}${isOpen ? " is-open" : ""}">
+        <button class="gh-step-head" data-gh-step="${step.id}" type="button" ${reachable ? "" : "disabled"} ${isOpen ? 'aria-current="step"' : ""}>
+          <span class="gh-n">${done && step.id !== "wrap" ? ui.icon("check") : at + 1}</span><strong>${esc(stepTitle(step.id, scored))}</strong>
+          <small>${esc(isOpen ? "now" : stepMeta(step.id) || (done ? "done" : reachable ? "open" : "up next"))}</small>
+        </button>
+      </div>`;
+    }).join("");
+    // The escalation ladder beside EVERY step, not only at the wrap-up: a
+    // worked example where the unit has them, Wehel, a human tutor. Each rung
+    // draws only when it reaches something — the raise-hand rule. No worked
+    // example for a chained subject (English), whose deep links open the
+    // overview rather than the section.
+    const market = marketplaceHref();
+    const hasExamples = !options.orderedUnit && options.sections().some(([id]) => id === "examples") && unit.workedExamples?.length;
+    const examplesHref = hasExamples ? hrefFor(session.target.stage, session.target.unit, "examples", { label: session.topicLabel, query: session.query }) : "";
+    const time = shellHooks?.wehelTime?.();
     app.innerHTML = `${STYLE}${ui.pageHeader(
-      `${esc(`${options.stageWord} ${session.target.stage}`)} · Unit ${session.target.unit}: ${esc(session.target.title)}`,
-      `Help session — ${esc(session.topicLabel)}`,
-      `${session.query ? `From your search for “${esc(session.query)}”. ` : ""}A short walk: check what you know, learn it, practise it, check again.`,
+      `${options.stageWord} ${session.target.stage} · Unit ${session.target.unit}: ${session.target.title}`,
+      `Help session — ${session.topicLabel}`,
+      `${session.query ? `From your search for “${session.query}”. ` : ""}A short walk: check what you know, learn it, practise it, check again.`,
       "Help session",
     )}
-      ${steps.map((step, at) => {
-        const done = stepDone(session, step.id);
-        const isOpen = openStep === step.id;
-        const reachable = done || isOpen || steps.slice(0, at).every((s) => stepDone(session, s.id));
-        return `<section class="gh-step">
-          <button class="gh-step-head" data-gh-step="${step.id}" type="button" ${reachable ? "" : "disabled"}>
-            ${ui.icon(done ? "circle-check-big" : step.icon)}<strong>${at + 1}. ${esc(stepTitle(step.id, scored))}</strong>
-            <small>${done && step.id !== "wrap" ? "done" : isOpen ? "" : reachable ? "open" : "up next"}</small>
-          </button>
-          ${isOpen ? `<div class="gh-step-body">${stepBody(step.id)}</div>` : ""}
-        </section>`;
-      }).join("")}`;
+    <div class="gh-desk">
+      <aside class="gh-rail">
+        <section class="panel">
+          <div class="gh-rail-head"><span class="eyebrow">Help session</span><button class="button ghost" data-gh-nav="get-help" type="button">${ui.icon("arrow-left")} Search</button></div>
+          <div class="gh-steps">${stepsHtml}</div>
+        </section>
+        <section class="panel gh-stuck">
+          <div class="gh-rail-head"><span class="eyebrow">Stuck on this step?</span>${time && time.limit > 0 ? `<span class="gh-tag blue">${ui.icon("clock")} ${clock(time.left)}</span>` : ""}</div>
+          <div class="gh-actions">
+            ${examplesHref ? `<a class="button secondary" href="${esc(examplesHref)}">${ui.icon("book-open")} See a worked example</a>` : ""}
+            <button class="button secondary" data-gh-wehel type="button">${ui.icon("sparkles")} Ask Wehel about this part</button>
+            ${market ? `<a class="button secondary" data-gh-market href="${esc(market)}" target="_blank" rel="noopener">${ui.icon("users")} Find a human tutor</a>` : ""}
+          </div>
+        </section>
+      </aside>
+      <main class="panel gh-stage">
+        <span class="eyebrow">Step ${stepAt + 1} of ${steps.length}</span>
+        <h2>${esc(stepTitle(openStep, scored))}</h2>
+        <div class="gh-step-body">${stepBody(openStep)}</div>
+        <div class="gh-stage-foot"><p class="gh-note">Your place is saved as you go — come back any time from Get help.</p><button class="button ghost" data-gh-abandon type="button">Stop this session</button></div>
+      </main>
+    </div>`;
     bindSession(session, { checkSet, recheckSet, practice, scored }, ui);
+    bindSessionNav(ui);
   }
 
   function bindSessionNav(ui) {
@@ -1154,11 +1351,15 @@ export function createGetHelp(options) {
     }
     document.querySelector("[data-gh-practice-done]")?.addEventListener("click", () => { session.practice.completed = true; session.stepOpen = null; rerender(); });
     // The dock button opens the same Wehel chat every page carries; hidden
-    // means the drawer is already open, so there is nothing to do.
-    document.querySelector("[data-gh-wehel]")?.addEventListener("click", () => {
-      const dock = document.querySelector(".wehel-dock-button");
-      if (dock && !dock.hidden) dock.click();
-    });
+    // means the drawer is already open, so there is nothing to do. Bound on
+    // every step now, not only the wrap-up: the rail's "Stuck on this step?"
+    // card offers it beside whatever the learner is looking at.
+    for (const button of document.querySelectorAll("[data-gh-wehel]")) {
+      button.addEventListener("click", () => {
+        const dock = document.querySelector(".wehel-dock-button");
+        if (dock && !dock.hidden) dock.click();
+      });
+    }
     document.querySelector("[data-gh-copy]")?.addEventListener("click", (event) => {
       copyText(tutorSummary(session, sets), event.target.closest("button"), "✓ Copied — paste it to your tutor");
     });
@@ -1167,9 +1368,11 @@ export function createGetHelp(options) {
     // the summary on the clipboard. No prompt fallback here — a dialog would
     // fight the opening tab, and the Copy button beside it still covers a
     // refused clipboard.
-    document.querySelector("[data-gh-market]")?.addEventListener("click", () => {
-      navigator.clipboard?.writeText(tutorSummary(session, sets)).catch(() => { /* Copy button covers it */ });
-    });
+    for (const anchor of document.querySelectorAll("[data-gh-market]")) {
+      anchor.addEventListener("click", () => {
+        navigator.clipboard?.writeText(tutorSummary(session, sets)).catch(() => { /* Copy button covers it */ });
+      });
+    }
     document.querySelector("[data-gh-finish]")?.addEventListener("click", () => {
       session.status = "finished";
       session.finishedAt = new Date().toISOString();
@@ -1331,8 +1534,9 @@ export function createGetHelp(options) {
       resultsBox.innerHTML = `<section class="panel gh-status"><p><strong>No ${ui.escapeHtml(name)} lessons are indexed${showAllStages ? "" : ` for ${options.stageWord.toLowerCase()}s ${stages[0]}–${stages[stages.length - 1]}`}.</strong> Try another part of the course, or type what you are stuck on in the box above.</p></section>`;
       return true;
     }
-    resultsBox.innerHTML = resultsHtml(hits, stageNow(), ui, name);
-    bindResults(hits, name, ui);
+    const results = resultsHtml(hits, stageNow(), ui, name);
+    resultsBox.innerHTML = results.html;
+    bindResults(results.cards, name, ui);
     return true;
   }
 

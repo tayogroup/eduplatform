@@ -22,7 +22,7 @@ import { createProgressClient } from "../shared/progress-client.js?v=20260722a";
 import "../shared/seb-session.js?v=20260724a";
 // Welcome gate (adopted from PreQuraan): one tap into fullscreen, every launch.
 import { mountLessonGate } from "../shared/lesson-gate.js?v=20260724a";
-import { mountWehelChat, platformUrl } from "./wehel.js?v=wehel-4";
+import { mountWehelChat, platformUrl, wehelTimeLedger, wehelDailyMinutes } from "./wehel.js?v=wehel-4";
 
 const pad2 = (n) => String(n).padStart(2, "0");
 
@@ -578,7 +578,25 @@ export function createCourseApp(config) {
         href: platformUrl(`/local/hubredirect/course_launch.php?course=${encodeURIComponent(entry.course)}`),
       }))
     : [];
-  if (config.getHelp?.attachShell) config.getHelp.attachShell({ tutoring: IS_TUTORING, emitEvent: emitProgress, hiddenSections: TUTORING_HIDDEN, subjects: TUTORING_SUBJECTS });
+  if (config.getHelp?.attachShell) config.getHelp.attachShell({
+    tutoring: IS_TUTORING, emitEvent: emitProgress, hiddenSections: TUTORING_HIDDEN, subjects: TUTORING_SUBJECTS,
+    // The day's Wehel allowance, for get-help's rail: the server's own ledger
+    // once a question has been asked today, the band table before that — so
+    // the rail reads "20:00 left" and never "0:00" to a learner who has not
+    // started. The same two readings the dock's chip makes (wehel.js ::
+    // timeLeftSeconds), in seconds. Lazy and guarded because wehelOptions()
+    // reads the loaded unit, which does not exist at boot. Null when nothing
+    // can be said, and the rail then draws no card rather than a wrong one.
+    wehelTime: () => {
+      const ledger = wehelTimeLedger();
+      if (ledger) return ledger;
+      try {
+        const meta = config.wehelOptions?.()?.meta || {};
+        const limit = wehelDailyMinutes({ grade: meta.grade, subject: meta.subject, learnerCategory: IS_TUTORING ? "tutoring" : "" }) * 60;
+        return limit > 0 ? { limit, used: 0, left: limit, percentUsed: 0 } : null;
+      } catch { return null; }
+    },
+  });
 
   // The same list again, in the TOPBAR, so it is reachable from a content page.
   //

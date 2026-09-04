@@ -2803,6 +2803,217 @@ SCENES.themselves = () => scene(`${sun(38, 30)}
   ${[164, 204, 244].map((x, i) => kid({ x, y: 148, s: 0.82, shirt: [P.gold, P.purple, P.green][i], flip: true, ...gChest })).join("")}`);
 SCENES.yourselves = () => SCENES.themselves();
 
+// ============================================================ Grade 4, through the idioms
+// Grade 4 was called the abstract wall twice in this file's history, and both
+// times the owner found pictures in it (2026-09-04). Re-read against the
+// idioms this file NOW has — the gesture, the grey silhouette, the ring, the
+// before/after rows, the word-between-things, the thought bubble, the
+// puzzle — 36 of its open words draw honestly and 6 more are plain aliases.
+//
+//   PEOPLE     stranger (a grey silhouette met), visitor (arriving at a door),
+//              member (the ring, one pointed at), community (the ring, with
+//              houses), owner (the hug, pointed at), mayor / president (the
+//              leader, with the town / with a flag), popular (ringed by
+//              hearts), disagreement (opposite, with people), character (a
+//              child inside the pages of a book).
+//   AMOUNT     total (rows, =, the sum ringed), double (2 -> 4), common /
+//              rare (many red among grey / one red among grey), main (the
+//              big one), unusual (the odd one out), single -> only.
+//   BEFORE/    correction (crossed -> ticked), decision (two, one picked),
+//   AFTER      solution (the piece slotted in, ticked), possible /
+//              impossible (a piece that fits / one that never can), worse /
+//              worst (whole, cracked, shattered), gradually (three stages),
+//              following -> after.
+//   FEELING    hopeful / hopeless (the state-verb thought bubble: sun /
+//              rain), cheerful, miserable, successful (the cup), suddenly (a
+//              pop), safely (the crossing, ticked), unfair (per, broken),
+//              rule (a sign), display (a stand, looked at), national /
+//              international (one flag / several).
+//
+// Still out, each for a reason the picture cannot fix: the clause and
+// discourse words (whereas, whilst, according, regarding, nevertheless,
+// moreover, hence ...); the grammar terms (noun, verb, plural, spelling);
+// and every word whose drawing would have to CHOOSE a cause, a topic or a
+// judgement the word itself does not name — reason, result, opinion,
+// detail, topic, certain, exact, real, honest, sensible. Those are the
+// ceiling here, and it is a real one.
+
+const g4Flag = (x, y, color, s = 1) => `<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0 V-60" stroke="${P.line}" stroke-width="3" stroke-linecap="round"/><path d="M2 -58 H40 L32 -44 L40 -30 H2 Z" fill="${color}" stroke="#20303f" stroke-width="1.4"><animateTransform attributeName="transform" type="skewY" values="0;-4;0;4;0" dur="2.4s" repeatCount="indefinite"/></path></g>`;
+const g4Tick = (x, y) => `<path d="M${x - 8} ${y} l6 7 l12 -14" fill="none" stroke="${P.green}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+const g4Cross = (x, y, r = 12) => `<path d="M${x - r} ${y - r} L${x + r} ${y + r} M${x + r} ${y - r} L${x - r} ${y + r}" stroke="${P.red}" stroke-width="5" stroke-linecap="round"/>`;
+const g4Board = (x, y) => `<rect x="${x - 40}" y="${y - 28}" width="80" height="56" rx="6" fill="#fffdf5" stroke="${P.grey}" stroke-width="2"/><rect x="${x - 34}" y="${y - 22}" width="34" height="44" rx="3" fill="#dfe8ee"/>`;
+const g4House = (x, y, roof) => `<g transform="translate(${x} ${y})"><rect x="-22" y="-18" width="44" height="32" fill="#e8d9bd" stroke="${P.wood}" stroke-width="1.8"/><path d="M-28 -18 L0 -38 L28 -18 Z" fill="${roof}"/><rect x="-6" y="-4" width="12" height="18" rx="1.5" fill="${P.wood}"/></g>`;
+const g4Cracked = (x, y) => `${sBall(x, y)}<path d="M${x - 4} ${y - 11} l3 6 l-4 5 l5 6 l-2 5" fill="none" stroke="#7a2b28" stroke-width="2" stroke-linecap="round"/>`;
+const g4Shards = (x, y) => [[-12, -4, -30], [6, -10, 20], [10, 6, 50], [-6, 9, -60]].map(([dx, dy, a]) => `<path d="M${x + dx} ${y + dy} l6 -8 l6 6 l-4 8 Z" fill="${P.red}" stroke="#b03a37" stroke-width="1.2" transform="rotate(${a} ${x + dx} ${y + dy})"/>`).join("");
+
+// ------------------------------------------------------------ people
+SCENES.stranger = () => scene(`${sun(38, 30)}
+  ${kid({ x: 84, y: 148, s: 1.05, shirt: P.teal, mouth: "o", armLBase: 12, armRBase: -12 })}
+  <path d="M112 118 H160" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 5"/>
+  ${gGrey({ x: 196, y: 148, s: 1.05, flip: true })}`);
+
+SCENES.visitor = () => scene(`${sun(38, 30)}${doorProp(212, 148)}
+  ${kid({ x: 212, y: 148, s: 0.98, shirt: P.gold, flip: true, mouth: "o", armLBase: 12, armRBase: -110 })}
+  <g>${shift(2.8, "0 0;56 0;56 0", 'keyTimes="0;0.7;1"')}${kid({ x: 72, y: 148, s: 1.05, shirt: P.teal, legs: "walk", armLBase: 14, armRBase: -14, bodyAnim: shift(0.5, "0 0;0 -2;0 0") })}</g>`);
+
+SCENES.member = () => scene(`${sun(38, 30)}${gRing(160, 130, 84, 30)}
+  ${[112, 160, 208].map((x, i) => kid({ x, y: 148, s: 0.88, shirt: [P.gold, P.purple, P.green][i], armLBase: 10, armRBase: -10 })).join("")}
+  ${sMark(160, 118, 26)}
+  ${kid({ x: 40, y: 148, s: 0.9, shirt: P.teal, mouth: "o", ...gAt })}`);
+
+SCENES.community = () => scene(`
+  ${g4House(70, 96, "#c23e3a")}${g4House(150, 90, "#3f7fb0")}${g4House(226, 96, "#3f9c5c")}
+  ${gRing(150, 134, 108, 26)}
+  ${[70, 110, 150, 190, 230].map((x, i) => kid({ x, y: 150, s: 0.74, shirt: [P.teal, P.gold, P.purple, P.red, P.green][i], armLBase: 10, armRBase: -10 })).join("")}`);
+
+SCENES.owner = () => scene(`${sun(38, 30)}
+  ${kid({ x: 190, y: 148, s: 1.1, shirt: P.gold, flip: true, ...gChest })}${gHug(190, 148, 1.1)}
+  ${kid({ x: 84, y: 148, s: 1.05, shirt: P.teal, mouth: "o", ...gAt })}`);
+
+SCENES.mayor = () => scene(`
+  ${g4House(196, 88, "#c23e3a")}${g4House(240, 94, "#3f9c5c")}
+  ${[186, 222].map((x, i) => kid({ x, y: 150, s: 0.72, shirt: [P.gold, P.purple][i], flip: true, armLBase: 10, armRBase: -10 })).join("")}
+  ${kid({ x: 110, y: 148, s: 1.1, shirt: P.red, flip: true, mouth: "o", armLBase: 12, armRBase: -104 })}
+  ${sArrow(86, 78, 40)}`);
+
+SCENES.president = () => scene(`${g4Flag(206, 140, P.red)}
+  ${[196, 232].map((x, i) => kid({ x, y: 150, s: 0.72, shirt: [P.gold, P.purple][i], flip: true, armLBase: 10, armRBase: -10 })).join("")}
+  ${kid({ x: 110, y: 148, s: 1.1, shirt: P.blue, flip: true, mouth: "o", armLBase: 12, armRBase: -104 })}
+  ${sArrow(86, 78, 40)}`);
+
+SCENES.popular = () => scene(`
+  ${[[150, 46], [96, 70], [204, 70]].map(([x, y]) => `<g transform="translate(${x} ${y})"><g>${grow(1.6, "0.85 0.85;1.15 1.15;0.85 0.85")}${heartShape(0, 0, 1.2)}</g></g>`).join("")}
+  ${[86, 214].map((x, i) => kid({ x, y: 148, s: 0.9, shirt: [P.gold, P.purple][i], flip: i === 1, mouth: "o", ...gAt })).join("")}
+  ${kid({ x: 150, y: 148, s: 1.1, shirt: P.teal, mouth: "o", armLBase: 140, armRBase: -140 })}`);
+
+SCENES.disagreement = () => scene(`
+  ${speechBubble(84, 54, 34, 26, `<circle r="7" fill="${P.red}"/>`, fade(2.6, "1;1"))}
+  ${speechBubble(216, 54, 34, 26, `<rect x="-7" y="-7" width="14" height="14" rx="2" fill="${P.blue}"/>`, fade(2.6, "1;1"))}
+  ${kid({ x: 92, y: 148, s: 1.05, shirt: P.red, mouth: "frown", armLBase: -46, armRBase: 46 })}
+  ${kid({ x: 208, y: 148, s: 1.05, shirt: P.blue, flip: true, mouth: "frown", armLBase: -46, armRBase: 46 })}`);
+
+SCENES.character = () => nPaper(`${openBook(150, 90, 2.2)}
+  ${kid({ x: 128, y: 118, s: 0.62, shirt: P.gold, mouth: "o", armLBase: -30, armRBase: 30 })}`);
+
+// ------------------------------------------------------------ amount
+SCENES.total = () => scene(`${sun(38, 30)}
+  ${gRow([46, 70], 132)}<text x="90" y="141" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="24" font-weight="bold" fill="${P.line}">+</text>
+  ${gRow([110, 134, 158], 132)}<text x="180" y="141" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="24" font-weight="bold" fill="${P.line}">=</text>
+  <text x="222" y="142" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="30" font-weight="bold" fill="${P.red}">5</text>`);
+
+SCENES.double = () => scene(`${gFaintRow([124, 176], 76)}
+  <path d="M150 90 v14" stroke="${P.teal}" stroke-width="3" stroke-linecap="round"/><path d="M144 100 L150 108 L156 100 Z" fill="${P.teal}"/>
+  ${gRow([84, 128, 172, 216], 136)}`);
+SCENES.single = () => SCENES.only();
+
+SCENES.common = () => scene(`
+  ${[[52, 96], [96, 84], [140, 100], [186, 86], [226, 98], [70, 128], [116, 136], [162, 128], [206, 136]].map(([x, y], i) => sBall(x, y, "", i % 3 === 1 ? P.grey : P.red)).join("")}`);
+SCENES.rare = () => scene(`
+  ${[[52, 96], [96, 84], [140, 100], [186, 86], [226, 98], [70, 128], [116, 136], [162, 128], [206, 136]].map(([x, y], i) => sBall(x, y, "", i === 3 ? P.red : P.grey)).join("")}
+  ${sMark(186, 86, 20)}`);
+
+SCENES.main = () => scene(`${sun(38, 30)}
+  ${gRow([76, 224], 134, [P.grey])}${sBall(112, 136, "", P.grey)}${sBall(188, 136, "", P.grey)}
+  <g transform="translate(150 122)"><g>${grow(2.2, "1 1;1.06 1.06;1 1")}<circle r="22" fill="${P.red}" stroke="#b03a37" stroke-width="2"/><circle cx="-7" cy="-7" r="6" fill="#ffffff" opacity="0.4"/></g></g>`);
+
+SCENES.unusual = () => scene(`${sun(38, 30)}
+  ${gRow([70, 110, 150, 230], 132)}<path d="M174 116 L206 146 H158 Z" fill="${P.teal}" stroke="#1c7f78" stroke-width="2"/>
+  ${sMark(186, 132, 22)}`);
+
+// ------------------------------------------------------------ before / after
+SCENES.correction = () => scene(`
+  ${sBall(76, 112, "", P.grey)}${g4Cross(76, 112)}
+  ${sArrow(104, 112, 170)}
+  ${sBall(198, 112)}${g4Tick(198, 84)}`);
+
+SCENES.decision = () => scene(`${gQ(150, 46)}
+  <g opacity="0.35">${sBall(96, 124)}</g>
+  ${sMark(204, 122, 24)}${sBall(204, 124, "", P.teal)}${g4Tick(204, 92)}
+  ${kid({ x: 150, y: 152, s: 0.8, shirt: P.gold, mouth: "o", ...gAt })}`);
+
+SCENES.solution = () => scene(`${g4Board(160, 96)}
+  <rect x="164" y="76" width="30" height="40" rx="3" fill="${P.gold}"/>
+  ${g4Tick(160, 132)}
+  ${kid({ x: 92, y: 148, s: 1.05, shirt: P.teal, mouth: "o", armLBase: 140, armRBase: -140 })}`);
+
+SCENES.possible = () => scene(`${g4Board(160, 96)}
+  <g>${shift(2.2, "0 -34;0 0;0 0", 'keyTimes="0;0.45;1"')}<rect x="164" y="76" width="30" height="40" rx="3" fill="${P.gold}"/></g>
+  ${g4Tick(206, 60)}
+  ${kid({ x: 92, y: 148, s: 1.05, shirt: P.teal, mouth: "o", armLBase: 15, armRBase: -50 })}`);
+SCENES.impossible = () => scene(`${g4Board(160, 96)}
+  <g>${shift(1.4, "0 -30;0 -30;0 -26;0 -30", 'keyTimes="0;0.4;0.6;1"')}<circle cx="179" cy="96" r="24" fill="${P.gold}"/></g>
+  ${g4Cross(206, 60, 9)}
+  ${kid({ x: 92, y: 148, s: 1.05, shirt: P.red, mouth: "frown", armLBase: 15, armRBase: -50 })}`);
+
+SCENES.worse = () => nPaper(`${sBall(72, 108)}
+  ${gWord("than", 130, 116, 22)}
+  ${g4Cracked(196, 108)}`);
+SCENES.worst = () => nPaper(`${sBall(56, 108)}${g4Cracked(130, 108)}
+  ${g4Shards(206, 108)}${sMark(206, 108, 26)}`);
+
+SCENES.gradually = () => scene(`${sun(38, 30)}
+  ${[[68, 0.5], [150, 0.8], [232, 1.1]].map(([x, s]) => `<g transform="translate(${x} 150) scale(${s})"><path d="M-22 0 Q0 -14 22 0 Z" fill="#8a6a48"/><path d="M0 -4 V-40" stroke="${P.green}" stroke-width="4" stroke-linecap="round"/><path d="M0 -24 Q-14 -30 -18 -44 M0 -30 Q14 -36 20 -50" fill="none" stroke="${P.green}" stroke-width="4" stroke-linecap="round"/></g>`).join("")}
+  ${sArrow(96, 70, 130)}${sArrow(178, 70, 212)}`);
+SCENES.following = () => SCENES.after();
+
+// ------------------------------------------------------------ feeling and state
+SCENES.hopeful = () => scene(`
+  ${thoughtBubble(184, 58, 56, 40, `<circle r="12" fill="#ffd166"/>${[0, 45, 90, 135].map((a) => `<path d="M-18 0 H-14 M14 0 H18" stroke="#ffd166" stroke-width="3" stroke-linecap="round" transform="rotate(${a})"/>`).join("")}`, fade(3, "1;1"))}
+  ${kid({ x: 118, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: -20, armRBase: 20, headAnim: rot(3, "-8 0 -47;-8 0 -47") })}`);
+SCENES.hopeless = () => scene(`
+  ${thoughtBubble(184, 58, 56, 40, `<ellipse rx="16" ry="9" fill="#9fb4c4"/><ellipse cx="9" cy="-4" rx="10" ry="6" fill="#9fb4c4"/>${[-8, 0, 8].map((dx, i) => `<path d="M${dx} 8 l-2 7" stroke="${P.water}" stroke-width="2" stroke-linecap="round">${fade(1, "0;1;0", `begin="${-i * 0.33}s"`)}</path>`).join("")}`, fade(3, "1;1"))}
+  ${kid({ x: 118, y: 148, s: 1.15, shirt: P.grey, mouth: "frown", armLBase: 6, armRBase: -6, headAnim: rot(3, "10 0 -47;10 0 -47") })}`);
+
+SCENES.cheerful = () => scene(`${sun(38, 30)}
+  ${[0, 1].map((i) => sparkle(100 + i * 100, 66, 0.9, P.gold, fade(1.2, "0;1;0", `begin="${-i * 0.6}s"`))).join("")}
+  ${kid({ x: 150, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: 140, armRBase: -140, bodyAnim: shift(0.7, "0 0;0 -6;0 0") })}`);
+SCENES.miserable = () => scene(`
+  <g transform="translate(150 44)"><ellipse rx="26" ry="12" fill="#9fb4c4"/><ellipse cx="14" cy="-6" rx="16" ry="9" fill="#9fb4c4"/>${[-14, 0, 14].map((dx, i) => `<path d="M${dx} 12 l-3 12" stroke="${P.water}" stroke-width="2.4" stroke-linecap="round">${fade(1.1, "0;1;0", `begin="${-i * 0.36}s"`)}</path>`).join("")}</g>
+  ${kid({ x: 150, y: 148, s: 1.15, shirt: P.grey, mouth: "frown", armLBase: 6, armRBase: -6, headAnim: rot(3, "12 0 -47;12 0 -47") })}
+  <path d="M144 118 q-2 5 0 8 q2 -3 0 -8" fill="${P.blue}">${fade(1.4, "0;1;0")}${shift(1.4, "0 0;0 6;0 6")}</path>`, { sky: "#dfe6ee" });
+
+SCENES.successful = () => scene(`${sun(38, 30)}
+  ${[0, 1, 2].map((i) => sparkle(110 + i * 40, 56 - (i % 2) * 12, 0.9, P.gold, fade(1.4, "0;1;0", `begin="${-i * 0.45}s"`))).join("")}
+  ${kid({ x: 150, y: 148, s: 1.15, shirt: P.teal, mouth: "o", armLBase: 140, armRBase: -140,
+    armRHold: `<g transform="translate(2 22) rotate(140)"><path d="M-9 0 h18 l-3 14 q-6 4 -12 0 Z" fill="${P.gold}" stroke="#d88f22" stroke-width="1.4"/><rect x="-4" y="14" width="8" height="5" fill="#d88f22"/><rect x="-7" y="19" width="14" height="3" rx="1" fill="#d88f22"/></g>` })}`);
+
+SCENES.suddenly = () => scene(`
+  <g transform="translate(200 70)"><g>${grow(1.6, "1 1;1 1;1.6 1.6;0 0;0 0", 'keyTimes="0;0.45;0.55;0.6;1"')}<circle r="16" fill="${P.red}"/></g>
+  ${[0, 45, 90, 135, 180, 225, 270, 315].map((a) => `<path d="M0 -20 V-30" stroke="${P.gold}" stroke-width="3" stroke-linecap="round" transform="rotate(${a})">${fade(1.6, "0;0;0;1;0", 'keyTimes="0;0.5;0.55;0.62;1"')}</path>`).join("")}</g>
+  ${kid({ x: 116, y: 148, s: 1.15, shirt: P.gold, mouth: "o", armLBase: -120, armRBase: 120,
+    bodyAnim: shift(1.6, "0 0;0 0;0 -12;0 0;0 0", 'keyTimes="0;0.5;0.6;0.72;1"') })}`);
+
+SCENES.safely = () => scene(`
+  <rect x="0" y="118" width="260" height="30" fill="${P.grey}"/>
+  ${[0, 1, 2, 3, 4, 5].map((i) => `<rect x="${44 + i * 30}" y="118" width="16" height="30" fill="#ffffff"/>`).join("")}
+  ${g4Tick(218, 64)}
+  ${kid({ x: 132, y: 148, s: 1.05, shirt: P.gold, legs: "walk", armLBase: 12, armRBase: -12, bodyAnim: shift(0.5, "0 0;0 -2;0 0") })}
+  <path d="M116 88 a16 10 0 0 1 32 0 Z" fill="${P.red}" stroke="#b03a37" stroke-width="1.4"/>`);
+SCENES.sadly = () => SCENES.upset();
+
+SCENES.unfair = () => scene(`${sun(38, 30)}
+  ${kid({ x: 90, y: 148, s: 1.05, shirt: P.teal, mouth: "o", armLBase: 12, armRBase: -12 })}
+  ${[70, 98, 126].map((x) => sBall(x, 100, "", P.red)).join("")}
+  ${kid({ x: 210, y: 148, s: 1.05, shirt: P.gold, flip: true, mouth: "frown", armLBase: 22, armRBase: -22 })}
+  ${sMark(210, 100, 16)}`);
+
+SCENES.rule = () => scene(`
+  <rect x="120" y="140" width="6" height="30" fill="${P.line}"/>
+  <g transform="translate(150 92)"><circle r="42" fill="#ffffff" stroke="${P.red}" stroke-width="8"/><path d="M-28 -28 L28 28" stroke="${P.red}" stroke-width="8" stroke-linecap="round"/>${sBall(0, 0)}</g>`);
+
+SCENES.display = () => scene(`
+  <rect x="70" y="96" width="120" height="7" rx="3" fill="${P.wood}"/><rect x="76" y="103" width="6" height="30" fill="${P.wood}"/><rect x="178" y="103" width="6" height="30" fill="${P.wood}"/>
+  ${gRow([94, 130, 166], 86, [P.red, P.gold, P.teal])}
+  ${kid({ x: 40, y: 150, s: 0.86, shirt: P.purple, mouth: "o", ...gAt })}
+  ${kid({ x: 222, y: 150, s: 0.86, shirt: P.green, flip: true, mouth: "o", ...gAt })}`);
+
+SCENES.national = () => scene(`${g4Flag(150, 148, P.red, 1.3)}`);
+SCENES.international = () => scene(`${g4Flag(60, 148, P.red)}${g4Flag(130, 148, P.blue)}${g4Flag(200, 148, P.green)}`);
+
+SCENES.rarely = () => SCENES.rare();
+SCENES.mostly = () => SCENES.most();
+SCENES.mainly = () => SCENES.main();
+
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the
 // animation tags are stripped and the still tableau remains. Read once — the

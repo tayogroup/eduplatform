@@ -327,6 +327,10 @@
    part of the lesson — it is the one thing on the slide not addressed to the
    child sitting in front of it. */
 .gc-grownup > summary { color: #6b7f90; }
+/* deckIcon() emits a viewBox-only SVG and relies on the caller to size it; an
+   unsized SVG fills its container, and this summary was the one place nothing
+   did — the eye rendered 520px square in every Stage 1 concept card. */
+.gc-grownup > summary svg { width: 16px; height: 16px; vertical-align: -3px; margin-right: 4px; }
 .gc-grownup .gc-prose { border-left: 3px solid #cfdae3; padding-left: 13px; color: #52627a; }
 .gc-grownup .gc-prose > p { font-size: 15px; }
 /* Same treatment where the grid design shows it (Stage 2+ carries no guide

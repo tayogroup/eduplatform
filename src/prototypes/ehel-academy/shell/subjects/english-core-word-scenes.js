@@ -1,4 +1,11 @@
-// The action words of the Grade 1 Core words, acted out.
+// The drawn pictures of the Grades 1-4 Core words: what a word DOES, WHERE it
+// is, and — for the nouns no emoji reaches — what it IS.
+//
+// This file began as the action words of Grade 1 (2026-08-31) and has grown
+// in four documented tranches, each with its own section below: the verbs of
+// Grades 1-4, the state verbs, the adjectives, the spatial words, and the
+// concrete nouns. The one rule running through all of them is unchanged from
+// the first day — a word with no honest drawing has no entry.
 //
 // word-pictures.js answers "what does this word LOOK like" and honestly cannot
 // answer it for a verb: a still picture of a child mid-air says "child", not
@@ -2173,6 +2180,363 @@ SCENES.excluding = () => scene(`
   <circle cx="212" cy="128" r="13" fill="none" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 4"/>
   <path d="M212 112 V84" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 4"/>
   <circle cx="212" cy="68" r="13" fill="${P.grey}" opacity="0.5"/>`);
+
+// ============================================================ drawn nouns
+// The 54 concrete nouns of the Grades 1-4 Core words that Unicode has no
+// honest emoji for (owner, 2026-09-04). word-pictures.js is one emoji per word
+// and there is no emoji for a chin, a rug, a tray, a patch or a knight — so
+// these words showed nothing at all, not because they are hard to picture but
+// because nobody has drawn that particular glyph.
+//
+// Everything ABSTRACT is still absent and stays absent: reason, opinion,
+// decision, meaning, theme, fact, place, choice, title, subject, amount, and
+// the grammar terms (noun, verb, plural, spelling). A drawing of "reason"
+// would be a guess wearing a picture's clothes.
+//
+// Three drawing habits, so 54 pictures look like one set:
+//
+//   1. A PART is shown on the whole it belongs to, in red, with a pointer.
+//      "Chin" is a face with the chin red, not a chin floating alone — a part
+//      cut out of its body is a shape, and a child cannot name it.
+//   2. A pair is drawn as a pair. half/quarter, africa/asia/europe and
+//      top/bottom share a construction so the contrast does the teaching.
+//   3. Where the dictionary gives the word a job, the job is in the picture:
+//      a tray is being carried, a towel is drying, a rod is being held.
+
+// A part of something, named in red with a line pointing at it.
+const nPoint = (x1, y, x2) => sArrow(x1, y, x2, P.red);
+const nPaper = (inner) => scene(inner, { sky: "#fffdf5", ground: "#f0ece0" });
+
+// A big head-and-shoulders, for the face and neck parts. Drawn once and
+// reused so chin, neck and throat are the same child three times.
+const nBust = (hi = "") => `
+  <path d="M92 152 Q92 118 130 112 Q168 118 168 152 Z" fill="${P.teal}"/>
+  <rect x="118" y="92" width="24" height="26" fill="${P.skin}"/>
+  <circle cx="130" cy="70" r="34" fill="${P.skin}"/>
+  <path d="M96 70 a34 34 0 0 1 68 0 z" fill="${P.hair}"/>
+  <circle cx="119" cy="66" r="3.2" fill="${P.line}"/><circle cx="141" cy="66" r="3.2" fill="${P.line}"/>
+  <path d="M122 84 Q130 90 138 84" fill="none" stroke="#7c3f21" stroke-width="2.6" stroke-linecap="round"/>
+  ${hi}`;
+
+// ------------------------------------------------------------ Grade 1
+SCENES.chin = () => scene(`${nBust(`<path d="M112 92 Q130 106 148 92" fill="none" stroke="${P.red}" stroke-width="7" stroke-linecap="round"/>`)}
+  ${nPoint(232, 96, 158)}`);
+
+SCENES.bun = () => scene(`${sTable(152, 116, 92)}
+  <ellipse cx="152" cy="104" rx="30" ry="21" fill="#d8a25c" stroke="#a9713d" stroke-width="2"/>
+  <path d="M132 96 Q152 88 172 96" fill="none" stroke="#a9713d" stroke-width="2" opacity="0.7"/>`);
+
+SCENES.mat = () => scene(`
+  <path d="M74 148 L106 118 H214 L182 148 Z" fill="#c98f56" stroke="#8a5a33" stroke-width="2.4" stroke-linejoin="round"/>
+  ${[0, 1, 2].map((i) => `<path d="M${96 + i * 26} 144 L${128 + i * 26} 122" stroke="#8a5a33" stroke-width="1.6" opacity="0.55"/>`).join("")}`);
+
+SCENES.rug = () => scene(`
+  <path d="M66 150 L100 114 H220 L186 150 Z" fill="#b0524f" stroke="#7f3936" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M84 142 L112 122 H196 L168 142 Z" fill="none" stroke="#f0d9a6" stroke-width="3"/>
+  <path d="M100 132 L188 132" stroke="#f0d9a6" stroke-width="2" opacity="0.7"/>
+  ${[70, 80, 90].map((x) => `<path d="M${x} 150 l-5 6" stroke="#7f3936" stroke-width="2" stroke-linecap="round"/>`).join("")}`);
+
+SCENES.mud = () => scene(`
+  <ellipse cx="150" cy="140" rx="62" ry="18" fill="#7a5230"/>
+  <ellipse cx="150" cy="136" rx="48" ry="12" fill="#8f6238"/>
+  ${[[112, 120], [150, 112], [188, 122]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${5 - i * 0.6}" fill="#7a5230">${shift(1.6, "0 0;0 -10;0 0", `begin="${-i * 0.35}s"`)}${fade(1.6, "0;1;0", `begin="${-i * 0.35}s"`)}</circle>`).join("")}`, { ground: "#c9b48f" });
+
+SCENES.rod = () => scene(`${sun(38, 30)}
+  ${kid({ x: 116, y: 148, s: 1.15, shirt: P.blue, armLBase: 15, armRBase: -70,
+    armRHold: `<g transform="translate(2 20) rotate(-20)"><rect x="-2.5" y="-42" width="5" height="84" rx="2.5" fill="${P.wood}"/></g>` })}`);
+
+SCENES.fin = () => scene(`
+  <rect x="0" y="86" width="260" height="54" fill="${P.water}"/>
+  <g transform="translate(150 116)">
+    <ellipse rx="42" ry="24" fill="${P.gold}" stroke="#d88f22" stroke-width="2"/>
+    <path d="M40 0 L64 -18 L64 18 Z" fill="${P.gold}" stroke="#d88f22" stroke-width="2"/>
+    <circle cx="-22" cy="-6" r="3.4" fill="${P.line}"/>
+    <path d="M-6 -22 L2 -44 L18 -22 Z" fill="${P.red}" stroke="#b03a37" stroke-width="2"/>
+  </g>
+  ${nPoint(56, 62, 130)}`);
+
+SCENES.top = () => scene(`
+  <rect x="112" y="54" width="72" height="90" rx="5" fill="${P.wood}" opacity="0.45"/>
+  <path d="M112 59 Q112 54 117 54 H179 Q184 54 184 59 V80 H112 Z" fill="${P.red}"/>
+  ${nPoint(236, 67, 196)}`);
+
+SCENES.class = () => scene(`
+  <rect x="150" y="46" width="92" height="60" rx="5" fill="#3f5d4a" stroke="#2b4133" stroke-width="2.5"/>
+  ${[0, 1, 2].map((i) => `<path d="M162 ${62 + i * 14} H${206 + (i % 2) * 18}" stroke="#e8efe8" stroke-width="2.6" stroke-linecap="round"/>`).join("")}
+  ${kid({ x: 200, y: 150, s: 0.95, shirt: P.purple, armLBase: 12, armRBase: -66 })}
+  ${[[70, P.red], [104, P.gold], [138, P.teal]].map(([x, c]) => kid({ x, y: 150, s: 0.8, shirt: c, armLBase: 10, armRBase: -10 })).join("")}`);
+
+// ------------------------------------------------------------ Grade 2
+SCENES.neck = () => scene(`${nBust(`<rect x="117" y="93" width="26" height="24" fill="${P.red}"/>`)}
+  ${nPoint(232, 104, 158)}`);
+
+SCENES.tail = () => scene(`
+  <g transform="translate(140 118)">
+    <ellipse rx="40" ry="24" fill="#c8965c"/>
+    <circle cx="34" cy="-16" r="17" fill="#c8965c"/>
+    <circle cx="40" cy="-19" r="2.6" fill="${P.line}"/>
+    <path d="M28 -30 Q26 -40 33 -40 Q39 -34 37 -28 Z" fill="#8a5a33"/>
+    <path d="M-14 16 V30 M12 16 V30" stroke="#8a5a33" stroke-width="6" stroke-linecap="round"/>
+    <path d="M-38 -8 Q-64 -18 -62 -42" fill="none" stroke="${P.red}" stroke-width="7" stroke-linecap="round">${rot(2.2, "-8 -38 -8;8 -38 -8;-8 -38 -8")}</path>
+  </g>
+  ${nPoint(48, 66, 92)}`);
+
+SCENES.desk = () => scene(`
+  <path d="M96 104 H214 L206 116 H88 Z" fill="#c98f56" stroke="#8a5a33" stroke-width="2" stroke-linejoin="round"/>
+  <rect x="92" y="116" width="8" height="34" fill="#8a5a33"/><rect x="196" y="116" width="8" height="34" fill="#8a5a33"/>
+  <rect x="104" y="120" width="88" height="20" rx="3" fill="#a9713d"/>
+  ${openBook(150, 92, 0.8)}`);
+
+SCENES.board = () => scene(`
+  <rect x="60" y="44" width="140" height="82" rx="5" fill="#3f5d4a" stroke="#2b4133" stroke-width="3"/>
+  <rect x="60" y="126" width="140" height="8" rx="3" fill="${P.wood}"/>
+  ${[0, 1, 2].map((i) => `<path d="M76 ${66 + i * 18} H${150 + (i % 2) * 28}" stroke="#e8efe8" stroke-width="3" stroke-linecap="round"/>`).join("")}
+  <rect x="206" y="122" width="16" height="6" rx="3" fill="#f0d9a6"/>`);
+
+SCENES.tray = () => scene(`${sun(38, 30)}
+  ${kid({ x: 122, y: 148, s: 1.15, shirt: P.gold, armLBase: 15, armRBase: -58,
+    armRHold: `<g transform="translate(4 22) rotate(58)"><rect x="-26" y="-3" width="52" height="7" rx="3.5" fill="${P.grey}" stroke="#7a8792" stroke-width="1.4"/><rect x="-26" y="-6" width="6" height="10" rx="2" fill="#7a8792"/><rect x="20" y="-6" width="6" height="10" rx="2" fill="#7a8792"/><circle cx="-8" cy="-9" r="6" fill="${P.red}"/><rect x="4" y="-14" width="12" height="10" rx="2" fill="${P.gold}"/></g>` })}`);
+
+SCENES.floor = () => scene(`
+  <path d="M70 66 H210 V112 H70 Z" fill="none" stroke="${P.wood}" stroke-width="4"/>
+  <path d="M70 112 L44 150 H236 L210 112 Z" fill="${P.red}" opacity="0.85"/>
+  ${[0, 1, 2, 3].map((i) => `<path d="M${76 + i * 34} 112 L${58 + i * 44} 150" stroke="#8a3d3a" stroke-width="1.8" opacity="0.5"/>`).join("")}
+  ${nPoint(240, 132, 208)}`);
+
+SCENES.room = () => scene(`
+  <path d="M62 52 H206 V132 H62 Z" fill="#f4efe2" stroke="${P.wood}" stroke-width="4"/>
+  <path d="M62 132 L40 152 H228 L206 132 Z" fill="#c98f56" stroke="${P.wood}" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="160" y="72" width="34" height="60" rx="3" fill="${P.wood}"/><circle cx="167" cy="104" r="2.6" fill="#f2c94c"/>
+  <rect x="80" y="70" width="40" height="30" rx="3" fill="${P.sky}" stroke="${P.wood}" stroke-width="3"/>`);
+
+SCENES.line = () => nPaper(`
+  <path d="M40 74 H220" stroke="${P.red}" stroke-width="6" stroke-linecap="round"/>
+  <path d="M40 122 Q88 96 130 122 T220 122" fill="none" stroke="${P.red}" stroke-width="6" stroke-linecap="round"/>`);
+
+SCENES.shape = () => nPaper(`
+  <circle cx="76" cy="98" r="30" fill="none" stroke="${P.red}" stroke-width="6"/>
+  <rect x="120" y="68" width="60" height="60" rx="4" fill="none" stroke="${P.blue}" stroke-width="6"/>
+  <path d="M212 68 L242 128 H182 Z" fill="none" stroke="${P.green}" stroke-width="6" stroke-linejoin="round"/>`);
+
+// ------------------------------------------------------------ Grade 3
+SCENES.throat = () => scene(`${nBust(`<path d="M130 96 V120" stroke="${P.red}" stroke-width="9" stroke-linecap="round"/>`)}
+  ${nPoint(232, 108, 158)}`);
+
+SCENES.wrist = () => scene(`
+  <g transform="translate(150 100)">
+    <path d="M-70 0 H-6" stroke="${P.skin}" stroke-width="30" stroke-linecap="round"/>
+    <path d="M6 -18 q26 -4 30 8 q10 -2 12 8 q10 0 10 10 q0 18 -22 22 h-30 q-14 0 -14 -14 Z" fill="${P.skin}"/>
+    <path d="M-4 -16 V16" stroke="${P.red}" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  ${sMark(146, 100, 24)}`);
+
+SCENES.roof = () => scene(`
+  <rect x="94" y="98" width="112" height="48" fill="#e8d9bd" stroke="${P.wood}" stroke-width="2.5"/>
+  <rect x="136" y="114" width="28" height="32" rx="2" fill="${P.wood}"/>
+  <path d="M82 98 L150 54 L218 98 Z" fill="${P.red}" stroke="#8a3d3a" stroke-width="2.5" stroke-linejoin="round"/>
+  ${nPoint(244, 74, 214)}`);
+
+SCENES.stairs = () => scene(`
+  ${[0, 1, 2, 3].map((i) => `<path d="M${70 + i * 32} ${146 - i * 22} h32 v22 h-32 Z" fill="${i % 2 ? "#c98f56" : "#b8834e"}" stroke="#8a5a33" stroke-width="2" stroke-linejoin="round"/>`).join("")}
+  <path d="M70 124 L198 36" stroke="${P.wood}" stroke-width="4" stroke-linecap="round"/>`);
+
+SCENES.towel = () => scene(`
+  <path d="M56 56 H214" stroke="${P.grey}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M96 58 H176 V132 Q136 148 96 132 Z" fill="#7fbfe0" stroke="#4f93b8" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M96 82 H176 M96 96 H176" stroke="#ffffff" stroke-width="4" opacity="0.75"/>
+  ${[104, 168].map((x) => `<circle cx="${x}" cy="58" r="5" fill="${P.grey}"/>`).join("")}`);
+
+SCENES.bottle = () => scene(`${sTable(152, 138, 92)}
+  <g transform="translate(150 96)">
+    <rect x="-8" y="-38" width="16" height="16" rx="3" fill="#3f8f6a"/>
+    <path d="M-8 -22 q0 10 -12 20 v34 q0 6 6 6 h28 q6 0 6 -6 v-34 q-12 -10 -12 -20 Z" fill="#6fc39a" stroke="#3f8f6a" stroke-width="2"/>
+    <rect x="-14" y="6" width="28" height="18" rx="2" fill="#fffdf5" opacity="0.85"/>
+  </g>`);
+
+SCENES.glass = () => scene(`
+  <path d="M96 52 H206 L196 140 H106 Z" fill="#cfe8f5" opacity="0.55" stroke="#8fbdd4" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M116 62 L134 130 M142 62 L160 130" stroke="#ffffff" stroke-width="7" opacity="0.8" stroke-linecap="round"/>
+  <circle cx="176" cy="104" r="14" fill="${P.red}" opacity="0.9"/>
+  <path d="M162 104 a14 14 0 0 0 28 0" fill="none" stroke="#b03a37" stroke-width="2" opacity="0.6"/>`);
+
+SCENES.toast = () => scene(`${sTable(152, 132, 92)}
+  <path d="M108 118 V78 q0 -18 20 -18 h44 q20 0 20 18 v40 q0 6 -6 6 h-72 q-6 0 -6 -6 Z" fill="#c98f56" stroke="#8a5a33" stroke-width="2.5"/>
+  <path d="M120 96 h56 M120 108 h44" stroke="#8a5a33" stroke-width="2" opacity="0.45"/>
+  <rect x="126" y="70" width="34" height="22" rx="3" fill="#f2c94c" opacity="0.9"/>`);
+
+SCENES.patch = () => scene(`
+  <path d="M62 56 H198 V140 H62 Z" fill="${P.blue}" opacity="0.8"/>
+  <g transform="translate(140 100) rotate(-8)">
+    <rect x="-30" y="-26" width="60" height="52" rx="4" fill="${P.gold}" stroke="#d88f22" stroke-width="2"/>
+    ${[-30, -14, 2, 18].map((d) => `<path d="M${d} -30 l6 8 M${d} 30 l6 -8" stroke="#8a5a33" stroke-width="2" stroke-linecap="round"/>`).join("")}
+    <path d="M-34 -8 l8 6 M-34 12 l8 -6 M34 -8 l-8 6 M34 12 l-8 -6" stroke="#8a5a33" stroke-width="2" stroke-linecap="round"/>
+  </g>`);
+
+SCENES.rectangle = () => nPaper(`
+  <rect x="66" y="62" width="128" height="72" fill="none" stroke="${P.red}" stroke-width="7"/>
+  <path d="M66 50 H194" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 4"/>
+  <path d="M206 62 V134" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 4"/>`);
+
+SCENES.half = () => nPaper(`
+  <path d="M130 96 m0 -44 a44 44 0 0 1 0 88 Z" fill="${P.red}"/>
+  <circle cx="130" cy="96" r="44" fill="none" stroke="${P.line}" stroke-width="3"/>
+  <path d="M130 46 V146" stroke="${P.line}" stroke-width="3"/>
+  <text x="196" y="90" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="26" font-weight="bold" fill="${P.line}">1</text>
+  <path d="M182 98 H210" stroke="${P.line}" stroke-width="3"/>
+  <text x="196" y="126" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="26" font-weight="bold" fill="${P.line}">2</text>`);
+
+SCENES.pair = () => scene(`
+  ${[104, 168].map((x) => `<g transform="translate(${x} 116)"><path d="M-26 10 q-4 -22 6 -30 q10 -8 18 -2 q10 8 24 10 q10 2 10 12 q0 10 -12 10 h-38 q-8 0 -8 -0 Z" fill="${P.red}" stroke="#b03a37" stroke-width="2"/><path d="M-20 -8 q8 6 20 8" stroke="#ffffff" stroke-width="2.6" opacity="0.7" fill="none"/></g>`).join("")}
+  <path d="M136 96 v-16" stroke="${P.grey}" stroke-width="2" stroke-dasharray="4 4"/>`);
+
+SCENES.ground = () => scene(`
+  <rect x="0" y="104" width="260" height="12" fill="#4f9c5c"/>
+  <rect x="0" y="116" width="260" height="22" fill="#8f6238"/>
+  <rect x="0" y="138" width="260" height="18" fill="#7a5230"/>
+  ${[46, 96, 150, 206].map((x) => `<path d="M${x} 104 q3 -10 7 -13 q-1 9 2 13" fill="${P.green}"/>`).join("")}
+  ${[[70, 128], [140, 132], [196, 126]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="#5f4326"/>`).join("")}
+  ${nPoint(238, 122, 214)}`);
+
+SCENES.shadow = () => scene(`${sun(214, 34)}
+  <ellipse cx="112" cy="150" rx="46" ry="9" fill="${P.line}" opacity="0.42" transform="rotate(-6 112 150)"/>
+  ${kid({ x: 150, y: 148, s: 1.15, shirt: P.teal, armLBase: 20, armRBase: -20 })}
+  ${nPoint(52, 132, 84)}`);
+
+SCENES.group = () => scene(`
+  <ellipse cx="146" cy="126" rx="76" ry="32" fill="none" stroke="${P.grey}" stroke-width="2.5" stroke-dasharray="6 5"/>
+  ${[[96, P.red, 0.72], [128, P.gold, 0.8], [162, P.teal, 0.76], [194, P.purple, 0.72]].map(([x, c, s]) => kid({ x, y: 146, s, shirt: c, armLBase: 10, armRBase: -10 })).join("")}`);
+
+SCENES.leader = () => scene(`${sun(38, 30)}
+  ${[[186, P.gold, 0.68], [212, P.teal, 0.68]].map(([x, c, s]) => kid({ x, y: 148, s, shirt: c, flip: true, armLBase: 10, armRBase: -10 })).join("")}
+  ${kid({ x: 132, y: 148, s: 1.05, shirt: P.red, flip: true, mouth: "o", armLBase: 12, armRBase: -104 })}
+  ${sArrow(108, 78, 58)}`);
+
+SCENES.neighbour = () => scene(`
+  ${[[74, "#c23e3a"], [186, "#3f7fb0"]].map(([x, c]) => `<g transform="translate(${x} 122)"><rect x="-30" y="-24" width="60" height="42" fill="#e8d9bd" stroke="${P.wood}" stroke-width="2"/><path d="M-38 -24 L0 -50 L38 -24 Z" fill="${c}"/><rect x="-9" y="-6" width="18" height="24" rx="2" fill="${P.wood}"/></g>`).join("")}
+  ${kid({ x: 116, y: 150, s: 0.72, shirt: P.gold, armLBase: 12, armRBase: -46 })}
+  ${kid({ x: 148, y: 150, s: 0.72, shirt: P.teal, flip: true, armLBase: 12, armRBase: -46 })}`);
+
+SCENES.knight = () => scene(`
+  <g transform="translate(150 104)">
+    <path d="M-26 -6 q0 -32 26 -32 q26 0 26 32 v18 q0 12 -12 12 h-28 q-12 0 -12 -12 Z" fill="${P.grey}" stroke="#6f7d88" stroke-width="2.5"/>
+    <path d="M-16 -8 h32 v9 h-32 Z" fill="${P.line}"/>
+    <path d="M0 -38 v-14 M-6 -52 h12" stroke="${P.red}" stroke-width="4" stroke-linecap="round"/>
+    <path d="M-34 20 h68 v10 h-68 Z" fill="#6f7d88"/>
+  </g>
+  <g transform="translate(88 120)"><path d="M0 -26 q22 0 22 16 q0 22 -22 32 q-22 -10 -22 -32 q0 -16 22 -16 Z" fill="${P.blue}" stroke="#25587f" stroke-width="2.5"/><path d="M0 -20 v40 M-16 -2 h32" stroke="#f0d9a6" stroke-width="3"/></g>
+  <path d="M212 142 V64 l8 -14 l8 14 v78 Z" fill="${P.grey}" stroke="#6f7d88" stroke-width="2"/>`);
+
+SCENES.match = () => scene(`
+  <rect x="0" y="88" width="260" height="60" fill="#5aa06a"/>
+  <path d="M130 88 V148" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
+  <circle cx="130" cy="118" r="16" fill="none" stroke="#ffffff" stroke-width="2.5" opacity="0.8"/>
+  ${[[26, 1], [234, -1]].map(([x, d]) => `<path d="M${x} 96 h${18 * d} v40 h${-18 * d} Z" fill="none" stroke="#ffffff" stroke-width="3"/>`).join("")}
+  ${kid({ x: 84, y: 146, s: 0.78, shirt: P.red, armLBase: -30, armRBase: 30 })}
+  ${kid({ x: 178, y: 146, s: 0.78, shirt: P.blue, flip: true, armLBase: -30, armRBase: 30 })}
+  <g transform="translate(130 132)">${football(9)}</g>`);
+
+SCENES.season = () => nPaper(`
+  ${[[70, 74, "#6fc39a", "#f6b6c8"], [190, 74, "#3f9c5c", "#3f9c5c"], [70, 126, "#d88f22", "#c9863f"], [190, 126, "#cfe8f5", "#ffffff"]].map(([x, y, leaf, extra], i) => `
+    <g transform="translate(${x} ${y})">
+      <rect x="-3" y="4" width="6" height="18" fill="${P.wood}"/>
+      ${i === 3 ? `<path d="M0 -14 l10 18 h-20 Z" fill="#8a5a33"/><circle cx="0" cy="-2" r="13" fill="${extra}" opacity="0.9"/>` : `<circle cx="0" cy="-4" r="15" fill="${leaf}"/>`}
+      ${i === 0 ? `<circle cx="-8" cy="-10" r="3" fill="${extra}"/><circle cx="7" cy="-12" r="3" fill="${extra}"/><circle cx="2" cy="2" r="3" fill="${extra}"/>` : ""}
+      ${i === 2 ? `<circle cx="-14" cy="14" r="3" fill="${extra}"/><circle cx="10" cy="16" r="3" fill="${extra}"/>` : ""}
+    </g>`).join("")}
+  <path d="M130 44 V152 M18 100 H242" stroke="${P.grey}" stroke-width="2" stroke-dasharray="5 5"/>`);
+
+// ------------------------------------------------------------ Grade 4
+SCENES.comma = () => nPaper(`
+  <text x="130" y="104" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="96" font-weight="bold" fill="${P.red}">,</text>
+  <text x="130" y="140" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="15" font-weight="bold" fill="${P.line}">red, blue and green</text>`);
+
+SCENES.heading = () => nPaper(`
+  <rect x="62" y="40" width="136" height="112" rx="4" fill="#ffffff" stroke="${P.grey}" stroke-width="2"/>
+  <path d="M78 62 H182" stroke="${P.red}" stroke-width="8" stroke-linecap="round"/>
+  ${[0, 1, 2, 3, 4].map((i) => `<path d="M78 ${84 + i * 13} H${168 - (i % 2) * 26}" stroke="#c6d2dc" stroke-width="4" stroke-linecap="round"/>`).join("")}
+  ${nPoint(238, 62, 206)}`);
+
+SCENES.diagram = () => nPaper(`
+  <rect x="52" y="66" width="52" height="34" rx="4" fill="${P.teal}"/>
+  <rect x="156" y="66" width="52" height="34" rx="4" fill="${P.gold}"/>
+  <rect x="104" y="118" width="52" height="30" rx="4" fill="${P.purple}"/>
+  ${sArrow(106, 83, 154)}
+  <path d="M78 102 L124 116 M182 102 L138 116" stroke="${P.grey}" stroke-width="2.6" stroke-dasharray="5 4"/>`);
+
+SCENES.timeline = () => nPaper(`
+  <path d="M26 100 H226" stroke="${P.line}" stroke-width="4" stroke-linecap="round"/>
+  <path d="M226 100 l-12 -7 v14 Z" fill="${P.line}"/>
+  ${[56, 106, 156, 200].map((x, i) => `<circle cx="${x}" cy="100" r="8" fill="${[P.red, P.gold, P.teal, P.purple][i]}"/><path d="M${x} 92 V${i % 2 ? 74 : 78}" stroke="${P.grey}" stroke-width="2"/><text x="${x}" y="${i % 2 ? 70 : 74}" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="13" font-weight="bold" fill="${P.line}">${i + 1}</text>`).join("")}`);
+
+SCENES.quarter = () => nPaper(`
+  <path d="M130 96 m0 -44 a44 44 0 0 1 44 44 h-44 Z" fill="${P.red}"/>
+  <circle cx="130" cy="96" r="44" fill="none" stroke="${P.line}" stroke-width="3"/>
+  <path d="M130 46 V146 M80 96 H180" stroke="${P.line}" stroke-width="3"/>
+  <text x="204" y="90" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="26" font-weight="bold" fill="${P.line}">1</text>
+  <path d="M190 98 H218" stroke="${P.line}" stroke-width="3"/>
+  <text x="204" y="126" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="26" font-weight="bold" fill="${P.line}">4</text>`);
+
+SCENES.dozen = () => scene(`
+  <rect x="58" y="66" width="150" height="76" rx="8" fill="#d8c9a8" stroke="#a9713d" stroke-width="2.5"/>
+  ${[0, 1, 2].map((r) => [0, 1, 2, 3].map((c) => `<ellipse cx="${80 + c * 34}" cy="${86 + r * 24}" rx="13" ry="10.5" fill="#fffdf5" stroke="#c7b28c" stroke-width="1.6"/>`).join("")).join("")}
+  <text x="133" y="160" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="15" font-weight="bold" fill="${P.line}">12</text>`, { ground: "#efe6d2" });
+
+SCENES.litre = () => scene(`
+  <path d="M100 52 h64 v88 q0 10 -10 10 h-44 q-10 0 -10 -10 Z" fill="none" stroke="${P.grey}" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M104 96 h56 v44 q0 6 -6 6 h-44 q-6 0 -6 -6 Z" fill="${P.water}" opacity="0.85"/>
+  <path d="M164 78 q18 4 18 20 q0 16 -18 20" fill="none" stroke="${P.grey}" stroke-width="3.5"/>
+  ${[70, 96].map((y) => `<path d="M104 ${y} h16" stroke="${P.grey}" stroke-width="2.5"/>`).join("")}
+  <text x="196" y="102" text-anchor="middle" font-family="'Comic Sans MS','Segoe UI',sans-serif" font-size="19" font-weight="bold" fill="${P.line}">1 L</text>`);
+
+SCENES.captain = () => scene(`
+  ${[[188, P.gold], [216, P.teal]].map(([x, c]) => kid({ x, y: 150, s: 0.7, shirt: c, flip: true, armLBase: 10, armRBase: -10 })).join("")}
+  ${kid({ x: 128, y: 150, s: 1.1, shirt: P.blue, flip: true, armLBase: 12, armRBase: -40 })}
+  <g transform="translate(128 96)"><path d="M-17 0 h34 v-6 q0 -12 -17 -12 q-17 0 -17 12 Z" fill="${P.line}"/><path d="M-21 0 h42 v6 h-42 Z" fill="${P.line}"/><path d="M-8 -8 h16 v4 h-16 Z" fill="${P.gold}"/></g>
+  <path d="M104 116 l-4 22 h12 Z" fill="${P.gold}"/>`);
+
+SCENES.passenger = () => scene(`
+  <rect x="42" y="62" width="182" height="70" rx="10" fill="${P.gold}" stroke="#d88f22" stroke-width="2.5"/>
+  ${[70, 122, 174].map((x) => `<rect x="${x}" y="76" width="38" height="30" rx="3" fill="${P.sky}" stroke="#d88f22" stroke-width="2"/>`).join("")}
+  <circle cx="80" cy="138" r="13" fill="${P.line}"/><circle cx="188" cy="138" r="13" fill="${P.line}"/>
+  <g transform="translate(141 92) scale(0.52)"><circle r="13.5" fill="${P.skin}"/><path d="M-13.5 -1.5 a13.5 13.5 0 0 1 27 0 z" fill="${P.hair}"/><circle cx="-4.5" cy="-2" r="1.7" fill="${P.line}"/><circle cx="4.5" cy="-2" r="1.7" fill="${P.line}"/></g>
+  ${nPoint(238, 92, 186)}`);
+
+SCENES.guest = () => scene(`${doorProp(196, 148)}
+  ${kid({ x: 196, y: 148, s: 1.0, shirt: P.teal, flip: true, mouth: "o", armLBase: 12, armRBase: -96 })}
+  ${kid({ x: 116, y: 148, s: 1.05, shirt: P.red, mouth: "o", armLBase: 12, armRBase: -70,
+    armRHold: `<g transform="translate(2 20)"><rect x="-9" y="-8" width="18" height="16" rx="2" fill="${P.gold}"/><path d="M-9 -2 H9 M0 -8 V8" stroke="${P.red}" stroke-width="2.4"/></g>` })}`);
+
+SCENES.collection = () => scene(`
+  <rect x="54" y="56" width="152" height="88" rx="6" fill="#f4efe2" stroke="${P.wood}" stroke-width="3"/>
+  <path d="M54 100 H206" stroke="${P.wood}" stroke-width="3"/>
+  ${[[80, 82], [116, 82], [152, 82], [182, 82]].map(([x, y], i) => `<path d="M${x} ${y} m0 -12 q12 0 12 9 q0 12 -12 17 q-12 -5 -12 -17 q0 -9 12 -9 Z" fill="${[P.red, P.gold, P.teal, P.purple][i]}"/>`).join("")}
+  ${[[82, 126], [118, 126], [154, 126], [184, 126]].map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="11" fill="${[P.purple, P.teal, P.red, P.gold][i]}"/>`).join("")}`);
+
+SCENES.wildlife = () => scene(`
+  <path d="M0 116 Q40 96 78 116 T160 116 T260 112 V170 H0 Z" fill="#8fbf72" opacity="0.5"/>
+  ${[[44, 128], [214, 124]].map(([x, y]) => `<g transform="translate(${x} ${y})"><rect x="-3" y="0" width="6" height="18" fill="${P.wood}"/><circle cy="-8" r="16" fill="${P.green}"/></g>`).join("")}
+  <g transform="translate(120 122)"><ellipse rx="26" ry="15" fill="#e0a75e"/><circle cx="22" cy="-10" r="11" fill="#e0a75e"/><path d="M16 -19 l4 -8 l6 7 Z" fill="#c9863f"/><circle cx="26" cy="-12" r="1.8" fill="${P.line}"/><path d="M-12 12 v10 M8 12 v10" stroke="#c9863f" stroke-width="5" stroke-linecap="round"/></g>
+  <g transform="translate(176 74)"><path d="M0 0 q7 -5 13 0 q-4 5 -13 4 Z" fill="${P.teal}"/><circle cx="10" cy="-1" r="4" fill="${P.teal}"/></g>
+  <ellipse cx="72" cy="146" rx="11" ry="8" fill="#a9713d"/>`);
+
+// The three continents share one map, and only the named one is filled. The
+// emoji cannot do this: the globe that shows Africa shows Europe beside it.
+const nMap = (fill) => nPaper(`
+  <rect x="26" y="42" width="208" height="112" rx="6" fill="#cfe8f5" stroke="#8fbdd4" stroke-width="2"/>
+  <path d="M96 74 q18 -10 34 -4 q10 4 8 14 q-2 12 -10 18 q-4 16 -12 26 q-8 10 -14 -2 q-6 -12 -10 -26 q-4 -14 4 -26 Z" fill="${fill === "africa" ? P.red : "#bcd6c2"}" stroke="#7f9a86" stroke-width="1.6"/>
+  <path d="M92 52 q26 -8 44 0 q8 4 2 12 q-14 8 -30 6 q-18 -2 -16 -18 Z" fill="${fill === "europe" ? P.red : "#bcd6c2"}" stroke="#7f9a86" stroke-width="1.6"/>
+  <path d="M140 50 q42 -4 66 12 q10 8 -2 18 q-16 12 -38 12 q-22 0 -30 -14 q-8 -14 4 -28 Z" fill="${fill === "asia" ? P.red : "#bcd6c2"}" stroke="#7f9a86" stroke-width="1.6"/>
+  <path d="M52 96 q14 -6 20 6 q4 12 -6 20 q-12 8 -18 -4 q-6 -14 4 -22 Z" fill="#bcd6c2" stroke="#7f9a86" stroke-width="1.6"/>`);
+SCENES.africa = () => nMap("africa");
+SCENES.europe = () => nMap("europe");
+SCENES.asia = () => nMap("asia");
+
+SCENES.land = () => scene(`
+  <rect x="0" y="96" width="260" height="60" fill="${P.water}"/>
+  <path d="M0 96 H150 q18 0 26 12 q10 14 34 14 q26 0 50 -8 V170 H0 Z" fill="#8fbf72" stroke="#5f8f4e" stroke-width="2.5"/>
+  ${[40, 88, 136].map((x) => `<path d="M${x} 118 q3 -10 7 -13 q-1 9 2 13" fill="${P.green}"/>`).join("")}
+  <path d="M196 108 q10 4 20 2" stroke="#ffffff" stroke-width="2" opacity="0.6" fill="none"/>
+  ${sMark(92, 116, 28)}`);
 
 // ---------------------------------------------------------------- exports
 // SMIL cannot be paused from CSS, so reduced motion is honoured here: the

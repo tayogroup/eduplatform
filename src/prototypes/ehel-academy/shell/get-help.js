@@ -375,7 +375,7 @@ export function createGetHelp(options) {
 
   // `topic` is the card's own topic — a session starts on the topic the
   // learner picked, not on whichever topic the unit ranked first.
-  function startSession(hit, query, topic = hit.topics[0] || null) {
+  function startSession(hit, query, topic = hit.topics[0] || null, extra = {}) {
     const session = {
       id: `hs-${Date.now().toString(36)}`,
       subject: options.subjectKey,
@@ -391,6 +391,9 @@ export function createGetHelp(options) {
       practice: { marks: {}, completed: false },
       recheck: { answers: {}, submitted: false, score: 0, total: 0, attempted: 0 },
       status: "active",
+      // homework (the question as typed) and stepOpen ("practice" for "try one
+      // like it") ride in from the homework entry; nothing else sets them.
+      ...extra,
     };
     store.sessions.push(session);
     store.activeId = session.id;
@@ -857,6 +860,24 @@ export function createGetHelp(options) {
     .gh-stage-nav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 18px; }
     .gh-stage .gh-model { margin-top: 14px; font-size: 15px; }
     .gh-stage textarea { width: 100%; min-height: 96px; border: 2px solid var(--line); border-radius: 14px; padding: 12px; font: inherit; resize: vertical; }
+    .gh-hw textarea { width: 100%; min-height: 84px; border: 2px solid var(--line); border-radius: 14px; padding: 12px 14px; font: inherit; resize: vertical; background: #fbfcfc; }
+    .gh-hw textarea:focus { outline: none; border-color: var(--teal); }
+    .gh-hw .gh-actions { align-items: center; }
+    .gh-hw .gh-actions .gh-note { margin: 0; }
+    .gh-about { border-color: var(--teal); }
+    .gh-about h2 { margin: 6px 0 4px; font-family: var(--font-serif); font-size: 26px; line-height: 1.2; }
+    .gh-about > .gh-note { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .gh-routes { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+    .gh-route { display: grid; grid-template-columns: 44px 1fr auto; gap: 14px; align-items: center; padding: 14px 16px; border: 2px solid var(--line); border-radius: 16px; background: #fff; }
+    .gh-route.is-lead { border-color: var(--teal); background: var(--teal-soft); }
+    .gh-route-k { width: 44px; height: 44px; border-radius: 12px; background: #eef3f4; color: var(--teal-dark); display: grid; place-items: center; }
+    .gh-route-k i, .gh-route-k svg { width: 22px; height: 22px; }
+    .gh-route.is-lead .gh-route-k { background: var(--teal); color: #fff; }
+    .gh-route b { display: block; font-size: 15px; }
+    .gh-route > div > span { font-size: 13px; color: var(--muted); }
+    .gh-alts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 14px; }
+    .gh-alts .gh-note { margin: 0; }
+    @media (max-width: 640px) { .gh-route { grid-template-columns: 1fr; } .gh-route-k { display: none; } }
     @media (max-width: 980px) {
       .gh-desk { grid-template-columns: 1fr; }
       .gh-rail { flex-direction: row; flex-wrap: wrap; }
@@ -908,6 +929,168 @@ export function createGetHelp(options) {
       </section>`;
   }
 
+  // --- bring your homework (direction C, folded in 2026-09-04) --------------
+  // The learner types the question as it is on the page and the topic index
+  // says where Ehel teaches it. Classification is LOCAL: the same index the
+  // search reads, scored by how many of the question's content words a topic
+  // carries and with no penalty for the words it does not — a whole question
+  // is mostly words no index lists, which is why the search's own scorer
+  // (which subtracts for every unmatched token) cannot be reused for it.
+  // Nothing is sent anywhere and no Wehel minutes are spent; Wehel is offered
+  // only when the index cannot place the question, as something the learner
+  // can ASK about it, never as the classifier. Photo entry is deliberately
+  // absent: a child uploading photographs is a safeguarding decision for the
+  // owner, not a feature.
+  const HOMEWORK_STOPWORDS = new Set("a an the and or of to in on at by for from with as is are was were be been being it its this that these those there here what which who whom whose why how when where explain describe name give state write list find work out show tell say two three four one first second next do does did can could would should will you your yours we our us they their them he she his her him not no yes than then so if into onto about above below each every all any some more most much many part parts using use used make makes made means mean called between".split(" "));
+  const questionTokens = (text) => [...new Set(tokenize(text).filter((t) => t.length >= 3 && !HOMEWORK_STOPWORDS.has(t)))];
+
+  // Every topic in the unit that shares at least one content word with the
+  // question, with how much and on which words. A topic's own label or
+  // keywords count for more than the unit's title, so the card names the
+  // topic the question is about, not merely the unit it lives in.
+  function scoreQuestion(unit, tokens) {
+    const title = String(unit.title || "").toLowerCase();
+    const out = [];
+    for (const topic of unit.topics || []) {
+      const label = String(topic.label || "").toLowerCase();
+      let score = 0;
+      const matched = new Set();
+      for (const token of tokens) {
+        let hit = 0;
+        if (label.includes(token)) hit = 3;
+        else if ((topic.keywords || []).some((k) => k.startsWith(token))) hit = 2;
+        else if (title.includes(token) || (unit.keywords || []).some((k) => k.startsWith(token))) hit = 1;
+        if (hit) { score += hit; matched.add(token); }
+      }
+      if (matched.size) out.push({ topic, score, matched: [...matched] });
+    }
+    return out;
+  }
+
+  async function classifyHomework(text, ui) {
+    const resultsBox = ui.$("#gh-results");
+    if (!resultsBox) return;
+    const question = String(text || "").trim();
+    const tokens = questionTokens(question);
+    if (!tokens.length) { resultsBox.innerHTML = noMatchHtml(ui); bindHomeworkResult([], question, ui); return; }
+    // What Wehel is told the learner is stuck on, if they open it from here.
+    currentQuery = question.slice(0, 160);
+    activeSection = null;
+    const token = ++searchToken;
+    resultsBox.innerHTML = `<section class="panel gh-status"><p>${ui.icon("loader-circle")} Finding the lesson…</p></section>`;
+    const stages = windowStages();
+    const [indexes, lessonIndexes] = await Promise.all([
+      Promise.all(stages.map((stage) => loadIndex(stage))),
+      Promise.all(stages.map((stage) => loadLessonIndex(stage))),
+    ]);
+    if (token !== searchToken) return;
+    const current = stageNow();
+    // Two content words in common, or every word of a very short question.
+    const need = Math.min(2, tokens.length);
+    const candidates = [];
+    indexes.forEach((index, at) => {
+      if (!index) return;
+      for (const unit of index.units || []) {
+        for (const r of scoreQuestion(unit, tokens)) {
+          if (r.matched.length < need || !reachable(r.topic)) continue;
+          candidates.push({
+            hit: { stage: stages[at], unit, score: r.score, topics: [r.topic], hasLesson: lessonIndexes[at].has(Number(unit.unit)) },
+            topic: r.topic, score: r.score, matched: r.matched,
+          });
+        }
+      }
+    });
+    candidates.sort((a, b) => b.score - a.score || Math.abs(a.hit.stage - current) - Math.abs(b.hit.stage - current));
+    const picks = [];
+    const seen = new Set();
+    for (const c of candidates) {
+      const key = `${c.hit.stage}:${c.hit.unit.unit}:${c.topic.label}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      picks.push(c);
+      if (picks.length === 4) break;
+    }
+    resultsBox.innerHTML = picks.length ? homeworkResultHtml(picks, 0, question, ui) : noMatchHtml(ui);
+    bindHomeworkResult(picks, question, ui);
+  }
+
+  const noMatchHtml = (ui) => `<section class="panel gh-status">
+      <p><strong>Ehel could not match that question to a lesson.</strong></p>
+      <p class="gh-note">Try the search above with one or two words from it — the name your school uses may differ — or ask Wehel about the question itself.</p>
+      <div class="gh-actions"><button class="button secondary" data-gh-wehel type="button">${ui.icon("sparkles")} Ask Wehel about this question</button></div>
+    </section>`;
+
+  // The help card: what the question is about, and three ways in — the
+  // authored lesson (or a plain help session), the unit's worked examples
+  // where it has any, and straight to practice. Alternatives are the next
+  // best placements, one click to swap.
+  function homeworkResultHtml(picks, chosen, question, ui) {
+    const esc = ui.escapeHtml;
+    const pick = picks[chosen];
+    const { hit, topic } = pick;
+    const hint = { label: topic.label, query: question.slice(0, 160) };
+    const hasExamples = !options.orderedUnit && (hit.unit.topics || []).some((t) => t.section === "examples");
+    const exampleHref = hasExamples ? hrefFor(hit.stage, hit.unit.unit, "examples", hint) : "";
+    const openHref = hrefFor(hit.stage, hit.unit.unit, topic.section, hint);
+    const alts = picks.map((p, i) => ({ p, i })).filter(({ i }) => i !== chosen);
+    return `<section class="panel gh-about">
+      <div class="gh-rail-head"><span class="eyebrow">This is about</span><span class="gh-tag">matched on ${esc(pick.matched.slice(0, 4).join(", "))}</span></div>
+      <h2>${esc(topic.label)}</h2>
+      <p class="gh-note">${esc(`${options.stageWord} ${hit.stage} · Unit ${hit.unit.unit} · ${hit.unit.title} · ${sectionLabel(topic.section)}`)}${hit.hasLesson ? ` <span class="gh-tag gold">${ui.icon("lightbulb")} Full lesson</span>` : ""}</p>
+      <div class="gh-routes">
+        <div class="gh-route is-lead"><span class="gh-route-k">${ui.icon("lightbulb")}</span><div><b>${hit.hasLesson ? "Teach me this from the beginning" : "Start a help session on this"}</b><span>${hit.hasLesson ? "The authored lesson, then practice, with a check before and after." : "A short walk: a quick check, the lesson pages, practice, a check again."}</span></div><button class="button primary" data-gh-hw-start="session" data-gh-hw-pick="${chosen}" type="button">Start ${ui.icon("arrow-right")}</button></div>
+        ${exampleHref ? `<div class="gh-route"><span class="gh-route-k">${ui.icon("book-open")}</span><div><b>Show me a worked example like mine</b><span>The ${unitNoun()}'s worked examples, with this topic as the context.</span></div><a class="button secondary" href="${esc(exampleHref)}">Open</a></div>` : ""}
+        <div class="gh-route"><span class="gh-route-k">${ui.icon("pencil-line")}</span><div><b>Let me try one like it</b><span>Straight to the practice questions, marked as you go — the session opens on Practise.</span></div><button class="button secondary" data-gh-hw-start="practice" data-gh-hw-pick="${chosen}" type="button">Try</button></div>
+        <div class="gh-route"><span class="gh-route-k">${ui.icon("corner-down-right")}</span><div><b>Open ${esc(sectionLabel(topic.section))} in the ${unitNoun()}</b><span>Read the page it lives on.</span></div><a class="button secondary" href="${esc(openHref)}">Open</a></div>
+      </div>
+      <div class="gh-alts"><span class="gh-note">Not the right topic?</span>${alts.map(({ p, i }) => `<button class="gh-chip" data-gh-hw-alt="${i}" type="button">${ui.icon("corner-down-right")}<span>${esc(p.topic.label)}</span><small>${esc(`${options.stageWord} ${p.hit.stage}`)}</small></button>`).join("")}<button class="gh-chip" data-gh-hw-search type="button">${ui.icon("search")}<span>Search a topic instead</span></button></div>
+    </section>`;
+  }
+
+  function bindHomeworkResult(picks, question, ui) {
+    const resultsBox = ui.$("#gh-results");
+    for (const button of resultsBox.querySelectorAll("[data-gh-hw-alt]")) {
+      button.addEventListener("click", () => {
+        resultsBox.innerHTML = homeworkResultHtml(picks, Number(button.dataset.ghHwAlt), question, ui);
+        bindHomeworkResult(picks, question, ui);
+      });
+    }
+    for (const button of resultsBox.querySelectorAll("[data-gh-hw-start]")) {
+      button.addEventListener("click", () => {
+        const pick = picks[Number(button.dataset.ghHwPick)];
+        if (!pick) return;
+        // The question rides on the session (homework), not as the search
+        // query: the summary a tutor reads then quotes the homework itself,
+        // and "Try" opens the walk on Practise rather than at its first step.
+        startSession(pick.hit, "", pick.topic, {
+          homework: question.slice(0, 300),
+          ...(button.dataset.ghHwStart === "practice" ? { stepOpen: "practice" } : {}),
+        });
+      });
+    }
+    resultsBox.querySelector("[data-gh-hw-search]")?.addEventListener("click", () => {
+      resultsBox.innerHTML = introHtml(ui);
+      bindIntro(ui);
+      ui.$("#gh-query")?.focus();
+    });
+    // The dock button opens the same Wehel chat every page carries — with
+    // currentQuery holding the question, it opens already knowing it.
+    resultsBox.querySelector("[data-gh-wehel]")?.addEventListener("click", () => {
+      const dock = document.querySelector(".wehel-dock-button");
+      if (dock && !dock.hidden) dock.click();
+    });
+  }
+
+  function bindHomework(ui) {
+    const box = ui.$("#gh-homework");
+    const go = ui.$("#gh-hw-go");
+    if (!box || !go) return;
+    go.addEventListener("click", () => classifyHomework(box.value, ui));
+    box.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) { event.preventDefault(); classifyHomework(box.value, ui); }
+    });
+  }
+
   function render() {
     const ui = options.deps();
     const esc = ui.escapeHtml;
@@ -933,6 +1116,12 @@ export function createGetHelp(options) {
           <button class="button ghost" id="gh-widen" type="button">${showAllStages ? `Back to ${word}s ${from}–${to}` : `Look in every ${word}`}</button>
         </div>
       </section>
+      <section class="panel gh-hw">
+        <span class="eyebrow">Or bring your homework</span>
+        <p class="gh-note">Type the question as it is on the page. Ehel finds the ${unitNoun()} that teaches it and offers a worked example first.</p>
+        <textarea id="gh-homework" rows="3" placeholder="e.g. ${esc(options.homeworkExample || "Explain what this topic means and give one example.")}" aria-label="Your homework question"></textarea>
+        <div class="gh-actions"><button class="button primary" id="gh-hw-go" type="button">${ui.icon("lightbulb")} Find the lesson</button><span class="gh-note">Nothing is sent anywhere, and this never uses your Wehel minutes.</span></div>
+      </section>
       <div id="gh-results" aria-live="polite">${introHtml(ui)}</div></main></div>`;
     const input = ui.$("#gh-query");
     let debounce = null;
@@ -953,6 +1142,7 @@ export function createGetHelp(options) {
     });
     bindIntro(ui);
     bindRail(ui);
+    bindHomework(ui);
   }
 
   // ==========================================================================
@@ -1328,7 +1518,7 @@ export function createGetHelp(options) {
     app.innerHTML = `${STYLE}${ui.pageHeader(
       `${options.stageWord} ${session.target.stage} · Unit ${session.target.unit}: ${session.target.title}`,
       `Help session — ${session.topicLabel}`,
-      `${session.query ? `From your search for “${session.query}”. ` : ""}A short walk: check what you know, learn it, practise it, check again.`,
+      `${session.homework ? "From your homework question. " : session.query ? `From your search for “${session.query}”. ` : ""}A short walk: check what you know, learn it, practise it, check again.`,
       "Help session",
     )}
     <div class="gh-desk">
@@ -1571,6 +1761,7 @@ export function createGetHelp(options) {
     const lines = [
       `Ehel tutoring session — ${options.subjectLabel}`,
       `Topic: ${session.topicLabel}${session.query ? ` (searched for "${session.query}")` : ""}`,
+      ...(session.homework ? [`Homework question: ${session.homework}`] : []),
       `Lesson used: ${options.stageWord} ${session.target.stage}, Unit ${session.target.unit}: ${session.target.title}`,
       `Learner's own level: ${options.stageWord} ${session.from.stage}`,
     ];
@@ -1616,7 +1807,7 @@ export function createGetHelp(options) {
   function sessionHint() {
     const session = activeSession();
     if (!session || !sessionHere()) return null;
-    return { id: session.section, label: session.topicLabel, query: session.query };
+    return { id: session.section, label: session.topicLabel, query: session.homework || session.query };
   }
 
   // The live search-box query, for the shell's Wehel dock: on the get-help

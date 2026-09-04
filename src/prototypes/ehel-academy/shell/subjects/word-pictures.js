@@ -173,6 +173,41 @@ export const WORD_PICTURES = {
   brain: "🧠", cattle: "🐄", deliver: "📦", thought: "💭", discover: "🔍",
   knowledge: "📚", judge: "⚖️", scientist: "🔬", fiction: "📖", story: "📖", tale: "📖", reader: "📖",
   experiment: "🧪",
+
+  // --- Grades 5-8: science ---------------------------------------------------
+  // The upper-grade Core words are mostly abstract, so the few that DO have an
+  // honest picture cluster here, in science. The reuses are deliberate and each
+  // is a near-synonym or the same object at a different scale, not a stretch:
+  // an isotope and an ion are both drawn as the atom they are a form of.
+  chemical: "🧪", element: "🧪", acid: "🧪", hydrocarbon: "🧪", oxidation: "🧪", ph: "🧪",
+  atom: "⚛️", molecule: "⚛️", molecular: "⚛️", isotope: "⚛️", ion: "⚛️",
+  radioactive: "☢️", toxic: "☠️", toxin: "☠️", germ: "🦠", pathogen: "🦠",
+  larva: "🐛", vitamin: "💊", vaccine: "💉", vaccination: "💉",
+  laboratory: "🔬", microbiology: "🔬", thermal: "🌡️", organic: "🌿",
+
+  // --- Grades 5-8: earth, sky and weather ------------------------------------
+  galaxy: "🌌", universe: "🌌", orbit: "🪐", drought: "🏜️", flood: "🌊",
+  steam: "♨️", spectrum: "🌈", global: "🌍",
+
+  // --- Grades 5-8: computing and data ----------------------------------------
+  // "phishing" takes the fishing rod the word itself is a pun on — the hook is
+  // the standard picture for it wherever the word is taught.
+  network: "🌐", browser: "🌐", digital: "💻", electronic: "💻", technology: "💻",
+  wireless: "📶", graphics: "🖼️", robotics: "🤖", phishing: "🎣",
+  spreadsheet: "📊", histogram: "📊", scatter: "📊", presentation: "📊",
+
+  // --- Grades 5-8: stories, stage and documents ------------------------------
+  // legend/myth/fable join tale and story on the open book: they are four words
+  // for a told story, which is the tightest kind of reuse this file allows.
+  // The masks are the stage, and tragedy and soliloquy live only there.
+  legend: "📖", myth: "📖", fable: "📖",
+  scene: "🎭", tragedy: "🎭", soliloquy: "🎭",
+  essay: "📝", transcript: "📝", survey: "📝", treaty: "📜", documentary: "🎬",
+
+  // --- Grades 5-8: civic life, work and things -------------------------------
+  journalist: "🎙️", volunteer: "🙋🏾", election: "🗳️", jury: "⚖️", trade: "🤝",
+  cemetery: "🪦", vehicle: "🚗", yacht: "⛵", fuel: "⛽", mineral: "🪨",
+  agriculture: "🚜", angle: "📐",
   circular: "⭕", population: "👥", gallop: "🐎", spiral: "🌀",
   peek: "👀", gaze: "👀", check: "✅", signal: "🚦", rescue: "🛟",
   rescuing: "🛟", defend: "🛡️", janitor: "🧹", carpenter: "🔨",

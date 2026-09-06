@@ -30,6 +30,20 @@ if ($hassiteconfig) {
         PARAM_URL
     ));
 
+    // Per-course launch overrides, so pointing one grade at a different build
+    // and putting it back are both edits to this box rather than deploys of
+    // progress_gatewaylib.php, which ten entry points require.
+    $settings->add(new admin_setting_configtextarea(
+        'local_prequran/ehel_app_url_overrides',
+        'Ehel app URL overrides',
+        'JSON map of course idnumber to app entry URL, for pointing a single grade at a different build. '
+        . 'Example: {"ehel-math-g01":"https://ehelacademy.b-cdn.net/Ehel%20Primary/app/mathematics/grade-1-preview/index.html"}. '
+        . 'Only https URLs on ehelacademy.b-cdn.net are honoured; anything else is ignored and the subject default is used. '
+        . 'Leave blank so every course launches at its subject entry.',
+        '',
+        PARAM_RAW_TRIMMED
+    ));
+
     $settings->add(new admin_setting_configtext(
         'local_prequran/bunny_shared_cdn_base_url',
         'EduPlatform shared resource CDN base URL',

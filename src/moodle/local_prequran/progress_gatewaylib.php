@@ -259,11 +259,41 @@ function pqpg_ehel_app_base(string $coursekey): ?array {
     if ($m[2] !== $letter) {
         return null;
     }
+    // A single COURSE may be pointed somewhere other than its subject's entry.
+    //
+    // app/<subject>/index.html serves all eight stages and the stage arrives as
+    // a query parameter, so there is no per-grade pointer on the CDN to flip:
+    // repointing that file would move every stage of the subject at once. Here
+    // is the only place a single grade can be sent elsewhere, because here the
+    // course key — which carries the stage — is still known.
+    //
+    // Read from config rather than written in. This file is required by ten
+    // entry points including the progress gateway, the live group board and the
+    // classroom chat, so a rollback has to be a setting change on the server
+    // rather than another deploy of it.
+    //
+    // The candidate is host-locked to the app zone. A typo in an admin setting
+    // must not send a learner's launch token — which names them and is valid
+    // for twelve hours — to somebody else's host.
+    $appurl = 'https://ehelacademy.b-cdn.net/Ehel%20Primary/app/' . $subjectdir . '/index.html';
+    if (function_exists('get_config')) {
+        $raw = trim((string)get_config('local_prequran', 'ehel_app_url_overrides'));
+        if ($raw !== '') {
+            $map = json_decode($raw, true);
+            if (is_array($map) && isset($map[$coursekey]) && is_string($map[$coursekey])) {
+                $candidate = trim($map[$coursekey]);
+                if ($candidate !== '' && preg_match('~^https://ehelacademy\.b-cdn\.net/~', $candidate)) {
+                    $appurl = $candidate;
+                }
+            }
+        }
+    }
+
     return [
         'subjectdir' => $subjectdir,
         'stage' => (int)$m[3],
         'levelparam' => $levelparam,
-        'appurl' => 'https://ehelacademy.b-cdn.net/Ehel%20Primary/app/' . $subjectdir . '/index.html',
+        'appurl' => $appurl,
     ];
 }
 

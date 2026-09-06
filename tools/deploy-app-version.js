@@ -293,6 +293,18 @@ function shellComponents(subject) {
     .filter((item) => item.name !== "course-app.js")
     .filter((item) => (seen.has(item.name) ? false : seen.add(item.name)));
 }
+/* The import rewrite every module inside v{TAG}/ needs, in ONE place.
+ *
+ * It used to live only in shellCore(), because course-app.js was the only file
+ * with imports to fix — the shell siblings had none. That stopped being true
+ * with learner-controls.js and v413 shipped broken; see the call site in
+ * buildItems(). Both paths call this now so they cannot drift apart again. */
+function flattenShellImports(source) {
+  return source
+    .replace(/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate)\.js(\?v=[^"']*)?/g, "./$1.js")
+    .replace(/\.\/([A-Za-z0-9_-]+\.js)\?v=[^"']*/g, "./$1");
+}
+
 function shellCore() {
   return fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8")
     .replace(/\.\.\/shared\/(course-shell|progress-client|seb-session|lesson-gate)\.js(\?v=[^"']*)?/g, "./$1.js")
@@ -355,7 +367,19 @@ function buildItems() {
           throw new Error(`shell/subjects/${subject}.js imports ${from}, which is not in the working tree — `
             + "the release would ship an entry module that cannot resolve it.");
         }
-        items.push({ remote: `app/${subject}/${TAG}/${name}`, buf: fs.readFileSync(src) });
+        // A sibling's OWN imports need the same rewrite course-app.js gets from
+        // shellCore(). Siblings shipped verbatim for as long as none of them had
+        // any — wehel.js imports nothing. learner-controls.js was the first that
+        // did, and v413 shipped it importing `../shared/course-shell.js?v=…`,
+        // which 404s inside v{TAG}/ (everything is flat in there), and
+        // `./wehel.js?v=wehel-4`, which loads a SECOND copy of a module the
+        // bundle already has — two URLs for one file is the double-instantiation
+        // shellCore's own comment describes. English boot-looped on
+        // "Preparing your English lesson…" until this was fixed.
+        items.push({
+          remote: `app/${subject}/${TAG}/${name}`,
+          buf: /\.js$/.test(name) ? Buffer.from(flattenShellImports(fs.readFileSync(src, "utf8"))) : fs.readFileSync(src),
+        });
       }
     }
     items.push(...sharedModuleItems(subject));

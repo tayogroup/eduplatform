@@ -1,0 +1,2248 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shapes and Sizes</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(24px, 4.6vw, 34px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 22px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { font-size: 17px; color: var(--muted); font-weight: 700; }
+
+  .word { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: clamp(24px, 5vw, 34px); color: var(--teal); }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; min-height: 72px; padding: 10px 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 24px; transition: transform 100ms ease; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* shapes, flat and solid */
+  .shapebox { width: min(62vw, 250px); }
+  .shapebox svg { width: 100%; height: auto; display: block; }
+  .flat { fill: var(--accent); stroke: var(--ink); stroke-width: 5; stroke-linejoin: round; }
+  .flat.b { fill: var(--teal); } .flat.c { fill: var(--plum); } .flat.d { fill: var(--gold); }
+  .sideline { stroke: var(--ink); stroke-width: 9; stroke-linecap: round; opacity: 0; }
+  .sideline.lit { stroke: #fff; opacity: 1; }
+  .solid .top { fill: var(--accent); stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+  .solid .left { fill: #B14C18; stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+  .solid .right { fill: #D65A1E; stroke: var(--ink); stroke-width: 4; stroke-linejoin: round; }
+  .solid .curve { fill: var(--accent); stroke: var(--ink); stroke-width: 4; }
+  .solid .shade { fill: rgba(0,0,0,0.18); stroke: none; }
+  .solid .hidden { fill: none; stroke: var(--ink); stroke-width: 3; stroke-dasharray: 7 6; opacity: 0.55; }
+
+  .facts { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .fact { padding: 8px 16px; border-radius: 999px; background: var(--teal-soft); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 19px; }
+  .fact.a { background: var(--accent-soft); }
+
+  /* a row of small tappable shapes */
+  .picks { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .pick { width: 96px; height: 96px; border-radius: 18px; border: 4px solid var(--line); background: var(--card); display: grid; place-items: center; padding: 8px; }
+  .pick svg { width: 100%; height: 100%; }
+  .pick.good { border-color: var(--good); background: var(--good-soft); }
+  .pick.oops { border-color: var(--bad); background: var(--bad-soft); }
+  .pick.gone { opacity: 0.35; }
+  .pick:disabled { cursor: default; }
+
+  /* ordering cards */
+  .ocards { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .ocard { position: relative; min-width: 104px; min-height: 104px; padding: 10px; border-radius: 18px; border: 4px solid var(--line); background: var(--card); display: grid; place-items: center; gap: 4px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 19px; }
+  .ocard .pos { position: absolute; top: -14px; left: -14px; width: 34px; height: 34px; border-radius: 50%; background: var(--teal); color: #fff; font-size: 18px; display: grid; place-items: center; opacity: 0; }
+  .ocard.picked { border-color: var(--teal); } .ocard.picked .pos { opacity: 1; }
+  .ocard.good { border-color: var(--good); background: var(--good-soft); } .ocard.good .pos { background: var(--good); }
+  .ocard.oops { border-color: var(--bad); background: var(--bad-soft); } .ocard.oops .pos { background: var(--bad); }
+  .ocard svg { width: 74px; height: 74px; display: block; }
+  .ocard .cap { font-size: 17px; }
+  .ocard.wide { min-width: 150px; }
+  .ocard .bar { height: 22px; border-radius: 11px; background: var(--accent); }
+
+  /* pictures that are drawn wide, like ribbons and trees */
+  .picwrap { width: 100%; max-width: 560px; }
+  .picwrap svg { width: 100%; height: auto; display: block; }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 19px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+
+  /* the clock */
+  .big-clock { max-width: 280px; }
+  .big-clock .face { fill: var(--card); stroke: var(--ink); stroke-width: 4; }
+  .big-clock .tick { stroke: var(--ink); stroke-width: 2; } .big-clock .tick.big { stroke-width: 4; }
+  .big-clock .num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 16px; fill: var(--ink); text-anchor: middle; dominant-baseline: middle; }
+  .big-clock .hour { stroke: var(--accent); stroke-width: 8; stroke-linecap: round; transition: transform 300ms ease; transform-origin: 110px 110px; }
+  .big-clock .minute { stroke: var(--teal); stroke-width: 5; stroke-linecap: round; transition: transform 300ms ease; transform-origin: 110px 110px; }
+  .big-clock .hub { fill: var(--ink); }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to
+     the viewer's setting. The selector list carries the same specificity
+     as the prefers-color-scheme block above it and comes later, so it
+     wins in both light and dark.
+
+     The palette is Ehel Academy's own. Gold #f4c95d is the action
+     colour, exactly as on the Wehel page. Teal #0f766e and coral
+     #c2482c are lifted to the same hues at a lightness that is legible
+     on a dark ground; nothing else is invented.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;      /* Ehel ink #17324d, darkened to a page ground */
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;      /* Ehel coral, lifted — the counters and shapes */
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;        /* Ehel teal, lifted */
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;        /* Ehel gold — every action */
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* two rules used --ink as a SURFACE, which inverts on a dark ground */
+  .tenframe { background: #07131D; }
+  .machine .box { background: #07131D; color: var(--ink); border: 1px solid var(--line); }
+
+  /* white on the lifted teal is only about 2.3:1; these badges take dark ink */
+  .card .pos, .ocard .pos { color: #06231F; }
+
+  /* cards, chips and tiles that were white surfaces */
+  .group, .chip, .pick, .acard, .kid, .ocard, .card, .numbox, .keys button,
+  .tray, .purse, .field, .queue .runner, .seqbox span { background: var(--card); }
+  .group.right, .pick.good, .acard.good, .ocard.good, .kid.asked { background: var(--good-soft); }
+  .group.wrong, .pick.oops, .acard.oops, .ocard.oops { background: var(--bad-soft); }
+
+  /* ==================================================================
+     The ground and the activity cards.
+
+     The page sits on one fixed gradient rather than a gradient stretched
+     down 17,000 pixels of document, so 135 degrees means 135 degrees on
+     every screen instead of flattening to almost vertical on a long lesson.
+     It is painted by a fixed pseudo-element rather than background-attachment,
+     which iOS Safari does not honour.
+
+     The card colour is translucent, so the three surfaces below it had to
+     move with it: at 88% over this ground a card lands on #152A42, which
+     the old #112A3D panel colour sat four points away from - inner cards
+     would have disappeared into the card holding them.
+     ================================================================== */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+
+  .step, .deck { background: rgba(20, 43, 62, 0.88); }
+  .steps-nav { background: rgba(24, 59, 86, 0.88); }
+
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+  /* ==================================================================
+     The way back to the grade page - drawn ONLY when the learner arrived
+     from it (?from=g1). A lesson opened on its own, or published as an
+     artifact, has nowhere to go back to, and a link that leads nowhere is
+     worse than no link at all.
+     ================================================================== */
+  .g1-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 17px 9px 13px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+  }
+  .g1-back:hover, .g1-back:focus-visible { border-color: var(--teal); }
+
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 1</p>
+      <h1>Shapes and <em>Sizes</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 flat shapes -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A flat shape is one you could draw on paper.</s><s>It has sides and it has corners.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take the square.</s><s>Press count the sides and watch each one light up as we say it.</s><s>One, two, three, four.</s><s>Four sides.</s><s>And look where two sides meet, at each corner.</s><s>Four of those as well.</s><s>A triangle lights up three sides and three corners.</s><s>A circle has one edge that curves all the way round, and no corners at all.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count a corner twice, or start counting again where they began and get one too many.</s><s>It is easy to lose your place going round a shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start at one corner and remember it.</s><s>Go round once.</s><s>Stop when you are back where you started.</s></mstts:express-as>' data-say="Here is a flat shape. Press count the sides and I will count them with you. Then press next shape.">
+      <div class="slide-head"><span class="n">1</span><h2>Flat shapes</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">This is a flat shape. Press <b>Count the sides</b>, then <b>Next shape</b>.</span></div>
+      <div class="stage">
+        <div class="shapebox"><svg id="sv1" viewBox="0 0 200 200" role="img" aria-label="A flat shape"></svg></div>
+        <div class="word" id="name1"></div>
+        <div class="facts" id="facts1"></div>
+        <div class="bigbtns"><button type="button" class="big teal" id="count1">Count the sides</button><button type="button" class="big" id="next1">Next shape</button></div>
+        <p class="fb" id="fb1"></p>
+      </div>
+    </section>
+
+    <!-- 2 sort the flat shapes -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sorting means picking out only the shapes that follow one rule, and leaving the rest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If the rule is four sides, then squares and rectangles go in, because they both have four.</s><s>Triangles stay out, because they have three.</s><s>The colour does not matter.</s><s>The size does not matter.</s><s>Only the rule matters.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children pick shapes that look alike, or ones they like the look of.</s><s>A big red square and a small blue square both follow four sides, even though they look different.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read the rule again.</s><s>Then take each shape and ask it that one question.</s></mstts:express-as>' data-say="Read the rule, then tap every shape that follows it.">
+      <div class="slide-head"><span class="n">2</span><h2>Sort the shapes</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Tap every shape that follows the rule.</span></div>
+      <div class="stage">
+        <div class="picks" id="picks2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="score" id="sc2"></p>
+      </div>
+    </section>
+
+    <!-- 3 solid shapes -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A solid shape is not flat.</s><s>It is a thing you could pick up and hold in your hand.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press next shape to meet them.</s><s>A cube is like a dice, with flat square faces.</s><s>A sphere is like a ball, and it rolls.</s><s>A cylinder is like a tin, flat at each end and round in the middle.</s><s>A cone has a point at the top, like a party hat.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children mix up a circle and a sphere, or a square and a cube.</s><s>A circle is drawn on paper.</s><s>A sphere is a ball you can hold.</s><s>The flat one and the solid one are not the same shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask yourself, could I pick this up, or is it drawn flat.</s></mstts:express-as>' data-say="A solid shape is not flat. You can hold it. Press next shape to meet them all.">
+      <div class="slide-head"><span class="n">3</span><h2>Solid shapes</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">A <b>solid</b> shape is not flat: you can hold it in your hand. Press <b>Next shape</b>.</span></div>
+      <div class="stage">
+        <div class="shapebox"><svg id="sv3" viewBox="0 0 200 200" class="solid" role="img" aria-label="A solid shape"></svg></div>
+        <div class="word" id="name3"></div>
+        <div class="facts" id="facts3"></div>
+        <div class="bigbtns"><button type="button" class="big" id="next3">Next shape</button></div>
+        <p class="fb" id="fb3"></p>
+      </div>
+    </section>
+
+    <!-- 4 flat or solid -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every shape here is either flat or solid, and you can tell by asking one question.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Could you hold it in your hand and turn it over?</s><s>A ball, yes, so it is solid.</s><s>A triangle drawn on the page, no, so it is flat.</s><s>That one question sorts every shape on the screen.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A picture of a solid shape is still a picture, and that catches children out.</s><s>The drawing of a cube is flat on your screen, but the shape it shows is a solid one.</s><s>Think about the real thing, not the paper.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the shape and ask, is this a thing I could pick up.</s></mstts:express-as>' data-say="Look at the shape. Is it flat, or is it solid? Tap your answer.">
+      <div class="slide-head"><span class="n">4</span><h2>Flat or solid?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Is this shape <b>flat</b> or <b>solid</b>? Tap the answer.</span></div>
+      <div class="stage" id="stage4"></div>
+      <div class="choices" id="ch4"></div>
+      <p class="fb" id="fb4"></p>
+      <p class="score" id="sc4"></p>
+    </section>
+
+    <!-- 5 turning -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Turning a shape moves it round without changing it.</s><s>It is the same shape, just facing a different way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press turn it and the shape swings round, the way the hand of a clock moves from twelve round to three.</s><s>That is a quarter turn.</s><s>A square looks exactly the same after a quarter turn, because all its sides match.</s><s>A rectangle does not.</s><s>It was lying down and now it is standing up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a turned shape has become a new shape.</s><s>It has not.</s><s>Nothing was added and nothing was taken away.</s><s>It only moved.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So watch one corner as it turns.</s><s>Follow that corner and you will see the shape is the same one.</s></mstts:express-as>' data-say="Press turn it. The shape makes a quarter turn. Does it look the same as before?">
+      <div class="slide-head"><span class="n">5</span><h2>Turn it round</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Press <b>Turn it</b>. Does the shape look <b>the same</b> after the turn, or <b>different</b>?</span></div>
+      <div class="stage">
+        <div class="shapebox"><svg id="sv5" viewBox="0 0 200 200" role="img" aria-label="A shape that turns"></svg></div>
+        <div class="bigbtns"><button type="button" class="big teal" id="turn5">Turn it</button></div>
+        <div class="choices" id="ch5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="score" id="sc5"></p>
+      </div>
+    </section>
+
+    <!-- 6 length -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To put things in order by length, you compare them two at a time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the pencil and the ruler.</s><s>Line up one end of each and see which one goes further.</s><s>The one that goes further is longer.</s><s>Find the shortest of all, tap that first, then the next shortest, and keep going.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children compare things that are not lined up at the same end, and pick wrong.</s><s>A short pencil held high can look longer than a long one lying low.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So imagine both ends starting in the same place, then see which one reaches further.</s></mstts:express-as>' data-say="Tap the pictures in order, from the shortest to the longest.">
+      <div class="slide-head"><span class="n">6</span><h2>Long, longer, longest</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Tap them in order.</span></div>
+      <div class="stage" id="stage6"></div>
+      <p class="fb" id="fb6"></p>
+      <p class="score" id="sc6"></p>
+    </section>
+
+    <!-- 7 mass -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A balance tells you which thing is heavier without you having to guess.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Put an apple on one side and a feather on the other.</s><s>The side that goes down is holding the heavier thing.</s><s>The side that rises is holding the lighter one.</s><s>If the balance stays level, they weigh the same.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think the bigger thing must be heavier.</s><s>Size and weight are not the same.</s><s>A big empty box can be lighter than a small stone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look only at which side of the balance has gone down.</s></mstts:express-as>' data-say="Two things on a balance. The heavier one goes down. Tap the answer.">
+      <div class="slide-head"><span class="n">7</span><h2>Heavy and light</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Which one is it? Tap the answer.</span></div>
+      <div class="stage" id="stage7"></div>
+      <div class="choices" id="ch7"></div>
+      <p class="fb" id="fb7"></p>
+      <p class="score" id="sc7"></p>
+    </section>
+
+    <!-- 8 capacity -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Capacity is how much a container holds, and you can see it by looking at the water.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A full jug has water right up to the top.</s><s>An empty one has none at all.</s><s>Between the two, one jug holds more than another if its water comes up higher, when the jugs are the same shape and size.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say a tall jug holds more just because it is tall.</s><s>A tall thin jug can hold less than a short wide one.</s><s>Look at how much water is in it, not how high the jug is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the water itself, and compare how much of the jug it fills.</s></mstts:express-as>' data-say="These jugs hold water. Full, empty, more or less. Tap the answer.">
+      <div class="slide-head"><span class="n">8</span><h2>Full and empty</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the answer.</span></div>
+      <div class="stage" id="stage8"></div>
+      <div class="choices" id="ch8"></div>
+      <p class="fb" id="fb8"></p>
+      <p class="score" id="sc8"></p>
+    </section>
+
+    <!-- 9 instruments -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Different jobs need different tools, and each tool has numbers on it for its own kind of measuring.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>To find out how long something is, you use a ruler or a tape.</s><s>To find out how heavy, you use scales.</s><s>To find out how much a jug holds, you use a measuring jug.</s><s>To find out how long something takes, you use a clock.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children pick the tool they have seen most often, rather than the one for this job.</s><s>A ruler cannot tell you how heavy something is, however many numbers it has on it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask what the question wants to know.</s><s>How long, how heavy, how much, or how much time.</s></mstts:express-as>' data-say="Every measuring tool has numbers on it. Which one would you use for this job? Tap it.">
+      <div class="slide-head"><span class="n">9</span><h2>Which tool measures it?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Which tool would you use? Tap it.</span></div>
+      <div class="stage" id="stage9"></div>
+      <div class="choices" id="ch9"></div>
+      <p class="fb" id="fb9"></p>
+      <p class="score" id="sc9"></p>
+    </section>
+
+    <!-- 10 position -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Position words say where something is compared with something else.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the ball and the box.</s><s>If the ball sits on top, that is above.</s><s>Underneath is below.</s><s>Tucked inside is in.</s><s>Off to one side is beside, and hidden round the back is behind.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say the word for where they would put it, instead of where it actually is.</s><s>Look at the picture in front of you and describe what you can see.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find the ball, find the box, and say out loud where the ball is compared to the box.</s></mstts:express-as>' data-say="Where is the ball? Look at the box, then tap the word that says where the ball is.">
+      <div class="slide-head"><span class="n">10</span><h2>Where is it?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the word that says where it is.</span></div>
+      <div class="stage" id="stage10"></div>
+      <div class="choices" id="ch10"></div>
+      <p class="fb" id="fb10"></p>
+      <p class="score" id="sc10"></p>
+    </section>
+
+    <!-- 11 days -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The days of the week always come round in the same order, and that order never changes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.</s><s>Seven of them.</s><s>Say them out loud with me, and after Sunday it starts at Monday again, round and round.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start at whatever day it is today.</s><s>The list on this screen always starts at Monday, whatever day it happens to be outside.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say the whole seven out loud from Monday, then tap them in that order.</s></mstts:express-as>' data-say="Seven days make a week. Tap the days in order, starting with Monday.">
+      <div class="slide-head"><span class="n">11</span><h2>Days of the week</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the days in order, starting with <b>Monday</b>.</span></div>
+      <div class="stage" id="stage11"></div>
+      <div class="choices" id="ch11"></div>
+      <p class="fb" id="fb11"></p>
+      <p class="score" id="sc11"></p>
+    </section>
+
+    <!-- 12 months -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Twelve months make one year, and they always come in the same order too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>January, February, March, April, May, June, July, August, September, October, November, December.</s><s>One is missing from the line.</s><s>Say the months out loud and listen for the one your voice says where the gap is.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children guess from what the missing month sounds like, or pick a month they like.</s><s>Say the list instead.</s><s>Your voice knows the order better than your guess does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start at January and say them out loud until you reach the gap.</s><s>Whatever you say there is the answer.</s></mstts:express-as>' data-say="Twelve months make a year. One month is missing. Tap the one that belongs in the gap.">
+      <div class="slide-head"><span class="n">12</span><h2>Months of the year</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">One month is missing. Which one belongs in the gap?</span></div>
+      <div class="stage" id="stage12"></div>
+      <div class="choices" id="ch12"></div>
+      <p class="fb" id="fb12"></p>
+      <p class="score" id="sc12"></p>
+    </section>
+
+    <!-- 13 units of time -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some things take a tiny amount of time and some take a very long time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A second is about as long as saying one elephant.</s><s>A minute is sixty of those.</s><s>An hour is long enough for a film.</s><s>A day is one whole sleep to the next.</s><s>A week is seven days, and a year is all twelve months.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put them in the order they meet them in the day, rather than by how long they last.</s><s>Order them by length of time, from the shortest to the longest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start with the very shortest one you can find, then keep asking which of the ones left is shortest now.</s></mstts:express-as>' data-say="A second is very short. A year is very long. Tap them in order, from the shortest to the longest.">
+      <div class="slide-head"><span class="n">13</span><h2>Short times and long times</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say13">Tap them in order, from the <b>shortest</b> to the <b>longest</b>.</span></div>
+      <div class="stage" id="stage13"></div>
+      <div class="choices" id="ch13"></div>
+      <p class="fb" id="fb13"></p>
+      <p class="score" id="sc13"></p>
+    </section>
+
+    <!-- 14 telling the time -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A clock has two hands, and they do two different jobs.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The short hand tells you the hour.</s><s>The long hand tells you how far through the hour you are.</s><s>When the long hand points straight up to twelve, the hour has just begun, and we say o clock.</s><s>If the short hand is on three and the long hand is on twelve, it is three o clock.</s><s>When the long hand points straight down to six, we are halfway through, and we say half past.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children read the long hand as the hour, because it is bigger and easier to see.</s><s>It is the short hand that tells you the hour, every time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find the short hand first and see which number it is nearest.</s><s>Then look at the long hand to see whether it is o clock or half past.</s></mstts:express-as>' data-say="A clock. The short hand tells the hour. When the long hand points to twelve, it is something o'clock. Press next hour.">
+      <div class="slide-head"><span class="n">14</span><h2>Telling the time</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say14">The <b>short</b> hand tells the hour. When the <b>long</b> hand points to 12, it is something <b>o'clock</b>. Press <b>Next hour</b>.</span></div>
+      <div class="stage">
+        <svg class="clock big-clock" id="clock14" viewBox="0 0 220 220" role="img" aria-label="A clock face"></svg>
+        <div class="word" id="timesay"></div>
+        <div class="bigbtns"><button type="button" class="big" id="nexthour">Next hour</button></div>
+        <div class="choices" id="chtime"></div>
+        <p class="fb" id="fbtime"></p>
+        <p class="score" id="scoretime"></p>
+      </div>
+    </section>
+
+    <!-- check -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it shows a shape, count the sides or ask whether you could hold it.</s><s>If it asks about size, compare the two things.</s><s>If it shows a clock, find the short hand first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayck">Tap the answer.</span></div>
+      <div class="stage" id="stageck"></div>
+      <div class="choices" id="chck"></div>
+      <p class="fb" id="fbck"></p>
+      <p class="score" id="scck"></p>
+    </section>
+
+    <!-- stickers -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fbstick"></p>
+        <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Start again</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  (function () {
+    if (new URLSearchParams(location.search).get("from") !== "g1") return;
+    const wrap = document.querySelector(".wrap");
+    if (!wrap) return;
+    const back = document.createElement("a");
+    back.className = "g1-back";
+    back.href = "index.html";
+    back.innerHTML = '<span aria-hidden="true">←</span> Grade 1 Maths';
+    wrap.insertBefore(back, wrap.firstChild);
+  })();
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+  const art = (w) => (/^[aeiou]/i.test(w) ? "an " : "a ") + w;
+  const artB = (w) => (/^[aeiou]/i.test(w) ? "an " : "a ") + "<b>" + w + "</b>";
+  const cap1 = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+  const plain = (html) => html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+
+  /* ---- speech: the browser's own voice, only ever after a tap ---- */
+
+  /* ---- deck ---- */
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() {
+    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join("");
+  }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0;
+    $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots();
+    if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+
+  /* ---- one question after another: the shape six of these steps share ---- */
+  function sequence(o) {
+    let i = 0, right = 0, lock = false;
+    const el = o.el;
+    function draw() {
+      lock = false;
+      const it = o.items[i];
+      $(el.say).innerHTML = it.ask;
+      $(el.stage).innerHTML = it.pic;
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (o.label || "Question") + " " + (i + 1) + " of " + o.items.length;
+      say(plain(it.ask));
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const ok = b.dataset.ok === "1", it = o.items[i];
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad");
+      $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
+      say((ok ? cheer() + " " : "") + it.why);
+      i++;
+      setTimeout(() => {
+        if (i >= o.items.length) {
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          finish(o.finish, o.done);
+        } else draw();
+      }, 2600);
+    });
+    draw();
+  }
+
+  /* ---- tap them into order: the shape three of these steps share ---- */
+  function orderer(o) {
+    let r = 0, picks = [], lock = false;
+    const el = o.el;
+    function draw() {
+      const R = o.rounds[r];
+      picks = []; lock = false;
+      $(el.say).innerHTML = R.ask;
+      $(el.stage).innerHTML = '<div class="ocards">' + shuffle(R.cards.map((c, i) => i))
+        .map((i) => '<button type="button" class="ocard' + (R.wide ? " wide" : "") + '" data-i="' + i + '"><span class="pos"></span>' + R.cards[i].h + "</button>").join("") + "</div>";
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = "Set " + (r + 1) + " of " + o.rounds.length;
+      say(plain(R.ask));
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".ocard"); if (!b || lock || b.disabled) return;
+      const R = o.rounds[r], i = Number(b.dataset.i);
+      if (picks.includes(i)) return;
+      picks.push(i);
+      b.classList.add("picked"); b.querySelector(".pos").textContent = picks.length;
+      if (picks.length < R.cards.length) return;
+      lock = true;
+      const correct = R.cards.map((c, j) => j).sort((a, b2) => R.cards[a].v - R.cards[b2].v);
+      let wrong = 0;
+      $(el.stage).querySelectorAll(".ocard").forEach((c) => {
+        c.disabled = true;
+        const j = Number(c.dataset.i), good = picks.indexOf(j) === correct.indexOf(j);
+        c.classList.add(good ? "good" : "oops"); if (!good) wrong++;
+      });
+      const order = correct.map((j) => R.cards[j].n).join(", ");
+      $(el.fb).className = "fb " + (wrong === 0 ? "good" : "bad");
+      $(el.fb).textContent = (wrong === 0 ? cheer() + " " : "Not quite. ") + R.tell + " " + order + ".";
+      say((wrong === 0 ? cheer() + " " : "Not quite. ") + R.tell + " " + order);
+      r++;
+      setTimeout(() => {
+        if (r >= o.rounds.length) {
+          $(el.stage).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
+          finish(o.finish, o.done);
+        } else draw();
+      }, 3000);
+    });
+    draw();
+  }
+
+  /* ================= shape drawings ================= */
+  const poly = (pts, cls) => '<polygon class="flat ' + (cls || "") + '" points="' + pts.map((p) => p[0] + "," + p[1]).join(" ") + '"></polygon>';
+  function ngon(n, cx, cy, r, rot) {
+    const p = [];
+    for (let i = 0; i < n; i++) { const a = rot + i * 2 * Math.PI / n; p.push([+(cx + r * Math.cos(a)).toFixed(1), +(cy + r * Math.sin(a)).toFixed(1)]); }
+    return p;
+  }
+  const FLAT = [
+    { name: "circle", sides: 0, straight: false, svg: '<circle class="flat" cx="100" cy="100" r="78"></circle>', lines: [] },
+    { name: "triangle", sides: 3, straight: true, pts: ngon(3, 100, 105, 82, -Math.PI / 2) },
+    { name: "square", sides: 4, straight: true, pts: [[30, 30], [170, 30], [170, 170], [30, 170]] },
+    { name: "rectangle", sides: 4, straight: true, pts: [[18, 55], [182, 55], [182, 145], [18, 145]] },
+    { name: "pentagon", sides: 5, straight: true, pts: ngon(5, 100, 103, 80, -Math.PI / 2) },
+    { name: "hexagon", sides: 6, straight: true, pts: ngon(6, 100, 100, 80, 0) },
+    { name: "oval", sides: 0, straight: false, svg: '<ellipse class="flat" cx="100" cy="100" rx="86" ry="60"></ellipse>', lines: [] },
+  ];
+  function flatSvg(f, cls) {
+    if (f.svg) return cls ? f.svg.replace('class="flat"', 'class="flat ' + cls + '"') : f.svg;
+    return poly(f.pts, cls);
+  }
+  function flatSides(f) {
+    if (!f.pts) return "";
+    let h = "";
+    for (let i = 0; i < f.pts.length; i++) {
+      const a = f.pts[i], b = f.pts[(i + 1) % f.pts.length];
+      h += '<line class="sideline" data-s="' + i + '" x1="' + a[0] + '" y1="' + a[1] + '" x2="' + b[0] + '" y2="' + b[1] + '"></line>';
+    }
+    return h;
+  }
+
+  const SOLID = {
+    cube: '<polygon class="top" points="100,26 168,62 100,98 32,62"></polygon><polygon class="left" points="32,62 100,98 100,172 32,136"></polygon><polygon class="right" points="168,62 100,98 100,172 168,136"></polygon>',
+    cuboid: '<polygon class="top" points="100,30 178,58 100,86 22,58"></polygon><polygon class="left" points="22,58 100,86 100,168 22,140"></polygon><polygon class="right" points="178,58 100,86 100,168 178,140"></polygon>',
+    sphere: '<circle class="curve" cx="100" cy="100" r="76"></circle><ellipse class="shade" cx="118" cy="120" rx="48" ry="40"></ellipse>',
+    cylinder: '<path class="right" d="M36,58 L36,142 A64,22 0 0 0 164,142 L164,58 Z"></path><ellipse class="curve" cx="100" cy="58" rx="64" ry="22"></ellipse><path class="hidden" d="M36,142 A64,22 0 0 1 164,142"></path>',
+    cone: '<path class="right" d="M100,24 L164,150 A64,22 0 0 1 36,150 Z"></path><path class="hidden" d="M36,150 A64,22 0 0 0 164,150"></path>',
+    pyramid: '<polygon class="left" points="100,24 26,152 100,178"></polygon><polygon class="right" points="100,24 174,152 100,178"></polygon><path class="hidden" d="M26,152 L100,126 L174,152"></path>',
+  };
+  const SOLIDS = [
+    { key: "cube", name: "cube", faces: 6, edges: 12, flat: true, note: "Every face is a square." },
+    { key: "cuboid", name: "cuboid", faces: 6, edges: 12, flat: true, note: "Like a cereal box." },
+    { key: "sphere", name: "sphere", faces: 1, edges: 0, flat: false, note: "One curved face and no edges at all." },
+    { key: "cylinder", name: "cylinder", faces: 3, edges: 2, flat: null, note: "Two flat circles and one curved face, like a tin." },
+    { key: "cone", name: "cone", faces: 2, edges: 1, flat: null, note: "One flat circle and one curved face, with a point on top." },
+    { key: "pyramid", name: "pyramid", faces: 5, edges: 8, flat: true, note: "A square underneath and four triangles." },
+  ];
+  const solidSvg = (k) => SOLID[k];
+
+  /* ---- 1: flat shapes ---- */
+  let f1 = 0, counting = false;
+  function paint1() {
+    const f = FLAT[f1];
+    $("sv1").innerHTML = flatSvg(f, ["", "b", "c", "d"][f1 % 4]) + flatSides(f);
+    $("name1").textContent = art(f.name);
+    $("facts1").innerHTML = '<span class="fact">' + (f.sides ? f.sides + " sides" : "no straight sides") + '</span>' +
+      '<span class="fact a">' + (f.straight ? "straight sides" : "a curved edge") + "</span>" +
+      '<span class="fact">' + (f.sides ? f.sides + " corners" : "no corners") + "</span>";
+    $("count1").disabled = !f.sides;
+    $("fb1").className = "fb"; $("fb1").textContent = f.sides ? "" : "Round and round, with no corners to stop at.";
+    $("say1").innerHTML = "This is " + artB(f.name) + ". " + (f.sides ? "Press <b>Count the sides</b>." : "It has <b>no straight sides</b> and <b>no corners</b>.");
+  }
+  function countSides() {
+    if (counting) return;
+    const f = FLAT[f1]; if (!f.sides) return;
+    counting = true;
+    const ls = [...$("sv1").querySelectorAll(".sideline")];
+    ls.forEach((l) => l.classList.remove("lit"));
+    let k = 0;
+    say("one");
+    const step = () => {
+      ls[k].classList.add("lit");
+      $("fb1").className = "fb good";
+      $("fb1").textContent = (k + 1) + (k + 1 === 1 ? " side" : " sides");
+      if (k > 0) say(String(k + 1));
+      k++;
+      if (k < ls.length) setTimeout(step, 700);
+      else {
+        counting = false;
+        $("fb1").textContent = "A " + f.name + " has " + f.sides + " straight sides and " + f.sides + " corners.";
+        say("A " + f.name + " has " + f.sides + " straight sides.");
+        seen1.add(f1);
+        if (seen1.size === FLAT.length) finish(0, "You know your flat shapes. Brilliant!");
+      }
+    };
+    step();
+  }
+  const seen1 = new Set([0]);
+  $("count1").addEventListener("click", countSides);
+  $("next1").addEventListener("click", () => {
+    if (counting) return;
+    f1 = (f1 + 1) % FLAT.length; paint1(); seen1.add(f1);
+    say(art(FLAT[f1].name));
+    if (seen1.size === FLAT.length) finish(0, "You have met every flat shape. Brilliant!");
+  });
+  paint1();
+
+  /* ---- 2: sort the flat shapes ---- */
+  const SORT_ROUNDS = [
+    { rule: "Tap every shape with <b>4 sides</b>.", test: (f) => f.sides === 4, tell: "A square and a rectangle both have 4 sides." },
+    { rule: "Tap every shape with a <b>curved</b> edge.", test: (f) => !f.straight, tell: "A circle and an oval curve all the way round." },
+    { rule: "Tap every shape with <b>3 sides</b>.", test: (f) => f.sides === 3, tell: "Only the triangle has 3 sides." },
+    { rule: "Tap every shape with <b>more than 4 sides</b>.", test: (f) => f.sides > 4, tell: "A pentagon has 5 and a hexagon has 6." },
+  ];
+  let r2 = 0, lock2 = false;
+  function round2() {
+    const R = SORT_ROUNDS[r2]; lock2 = false;
+    $("say2").innerHTML = R.rule;
+    $("picks2").innerHTML = FLAT.map((f, i) => '<button type="button" class="pick" data-i="' + i + '" aria-label="' + f.name + '"><svg viewBox="0 0 200 200">' + flatSvg(f, ["", "b", "c", "d"][i % 4]) + "</svg></button>").join("");
+    $("fb2").textContent = ""; $("fb2").className = "fb";
+    $("sc2").textContent = "Rule " + (r2 + 1) + " of " + SORT_ROUNDS.length;
+    say(plain(R.rule));
+  }
+  $("picks2").addEventListener("click", (e) => {
+    const b = e.target.closest(".pick"); if (!b || lock2 || b.disabled) return;
+    const R = SORT_ROUNDS[r2], i = Number(b.dataset.i), f = FLAT[i], want = R.test(f);
+    if (!want) {
+      b.classList.add("oops"); b.disabled = true;
+      $("fb2").className = "fb bad"; $("fb2").textContent = cap1(art(f.name)) + " does not follow that rule.";
+      say(cap1(art(f.name)) + " does not follow that rule.");
+      return;
+    }
+    b.classList.add("good"); b.disabled = true;
+    const wanted = FLAT.filter(R.test).length;
+    const found = $("picks2").querySelectorAll(".pick.good").length;
+    $("fb2").className = "fb good";
+    $("fb2").textContent = found < wanted ? cheer() + " " + (wanted - found) + " more to find." : R.tell;
+    say(found < wanted ? cheer() : R.tell);
+    if (found === wanted) {
+      lock2 = true; r2++;
+      setTimeout(() => {
+        if (r2 >= SORT_ROUNDS.length) {
+          $("picks2").innerHTML = ""; $("sc2").textContent = "";
+          $("fb2").className = "fb good"; $("fb2").textContent = "You sorted every rule. Brilliant!";
+          finish(1, "You can sort shapes by their sides. Brilliant!");
+        } else round2();
+      }, 2600);
+    }
+  });
+  round2();
+
+  /* ---- 3: solid shapes ---- */
+  let s3 = 0;
+  const seen3 = new Set([0]);
+  function paint3() {
+    const s = SOLIDS[s3];
+    $("sv3").innerHTML = solidSvg(s.key);
+    $("name3").textContent = art(s.name);
+    $("facts3").innerHTML = '<span class="fact">' + s.faces + (s.faces === 1 ? " face" : " faces") + "</span>" +
+      '<span class="fact a">' + s.edges + (s.edges === 1 ? " edge" : " edges") + "</span>" +
+      '<span class="fact">' + (s.flat === true ? "all faces flat" : s.flat === false ? "a curved face" : "flat and curved") + "</span>";
+    $("say3").innerHTML = "This is " + artB(s.name) + ". " + s.note;
+    $("fb3").className = "fb"; $("fb3").textContent = "";
+  }
+  $("next3").addEventListener("click", () => {
+    s3 = (s3 + 1) % SOLIDS.length; paint3(); seen3.add(s3);
+    say(art(SOLIDS[s3].name) + ". " + SOLIDS[s3].note);
+    if (seen3.size === SOLIDS.length) finish(2, "You have met every solid shape. Brilliant!");
+  });
+  paint3();
+
+  /* ---- 4: flat or solid ---- */
+  const FS = [
+    { f: 2, i: 1, n: "triangle" }, { f: 3, i: "cube", n: "cube" }, { f: 2, i: 0, n: "circle" },
+    { f: 3, i: "cylinder", n: "cylinder" }, { f: 2, i: 3, n: "rectangle" }, { f: 3, i: "sphere", n: "sphere" },
+    { f: 2, i: 5, n: "hexagon" }, { f: 3, i: "cone", n: "cone" },
+  ];
+  sequence({
+    el: { say: "say4", stage: "stage4", ch: "ch4", fb: "fb4", score: "sc4" },
+    label: "Shape",
+    items: shuffle(FS).slice(0, 6).map((x) => ({
+      ask: "Is this <b>flat</b> or <b>solid</b>?",
+      pic: '<div class="shapebox"><svg viewBox="0 0 200 200" class="' + (x.f === 3 ? "solid" : "") + '">' +
+        (x.f === 3 ? solidSvg(x.i) : flatSvg(FLAT[x.i], "b")) + "</svg></div>",
+      opts: [{ t: "Flat", ok: x.f === 2 }, { t: "Solid", ok: x.f === 3 }],
+      why: x.f === 2
+        ? "A " + x.n + " is flat. You can draw it on paper."
+        : "A " + x.n + " is solid. You can pick it up and hold it.",
+    })),
+    finish: 3,
+    done: "You can tell a flat shape from a solid one.",
+  });
+
+  /* ---- 5: turning ---- */
+  const TURNS = [
+    { name: "square", pts: [[40, 40], [160, 40], [160, 160], [40, 160]], same: true, why: "A square looks exactly the same after a quarter turn." },
+    { name: "rectangle", pts: [[20, 62], [180, 62], [180, 138], [20, 138]], same: false, why: "A rectangle is long one way, so a quarter turn stands it up. It looks different." },
+    { name: "circle", circle: true, same: true, why: "A circle looks the same however you turn it." },
+    { name: "arrow", pts: [[100, 20], [150, 90], [122, 90], [122, 178], [78, 178], [78, 90], [50, 90]], same: false, why: "An arrow points a new way after a turn, so it looks different." },
+  ];
+  let t5 = 0, ang5 = 0, phase5 = "turn", lock5 = false;
+  function paint5(anim) {
+    const T = TURNS[t5];
+    const body = T.circle ? '<circle class="flat b" cx="100" cy="100" r="76"></circle><circle cx="140" cy="70" r="12" fill="#fff"></circle>' : poly(T.pts, "b");
+    $("sv5").innerHTML = '<g id="g5" style="transform-origin:100px 100px; transition:' + (anim ? "transform 700ms ease" : "none") + '; transform:rotate(' + ang5 + 'deg)">' + body + "</g>";
+  }
+  function round5() {
+    ang5 = 0; phase5 = "turn"; lock5 = false;
+    paint5(false);
+    $("say5").innerHTML = "Here is " + artB(TURNS[t5].name) + ". Press <b>Turn it</b> and watch.";
+    $("turn5").disabled = false;
+    $("ch5").innerHTML = "";
+    $("fb5").textContent = ""; $("fb5").className = "fb";
+    $("sc5").textContent = "Shape " + (t5 + 1) + " of " + TURNS.length;
+    say("Here is " + art(TURNS[t5].name) + ". Press turn it.");
+  }
+  $("turn5").addEventListener("click", () => {
+    if (phase5 !== "turn") return;
+    phase5 = "ask"; $("turn5").disabled = true;
+    ang5 = 90; paint5(true);
+    say("A quarter turn.");
+    setTimeout(() => {
+      $("say5").innerHTML = "Does it look <b>the same</b> as before, or <b>different</b>?";
+      $("ch5").innerHTML = shuffle([
+        '<button type="button" class="choice" data-v="same">The same</button>',
+        '<button type="button" class="choice" data-v="diff">Different</button>',
+      ]).join("");
+      say("Does it look the same, or different?");
+    }, 800);
+  });
+  $("ch5").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock5) return;
+    lock5 = true;
+    const T = TURNS[t5], ok = (b.dataset.v === "same") === T.same;
+    $("ch5").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if ((c.dataset.v === "same") === T.same) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong");
+    $("fb5").className = "fb " + (ok ? "good" : "bad");
+    $("fb5").textContent = (ok ? cheer() + " " : "") + T.why;
+    say((ok ? cheer() + " " : "") + T.why);
+    t5++;
+    setTimeout(() => {
+      if (t5 >= TURNS.length) {
+        $("ch5").innerHTML = ""; $("sc5").textContent = "";
+        $("fb5").className = "fb good"; $("fb5").textContent = "You can spot a shape that looks the same as it turns.";
+        finish(4, "You can spot a shape that looks the same as it turns. Brilliant!");
+      } else round5();
+    }, 3000);
+  });
+  round5();
+
+  /* ---- 6: length, height and thickness ---- */
+  function ribbon(len, col) {
+    return '<svg viewBox="0 0 140 40"><rect x="4" y="12" width="' + (len * 1.28) + '" height="16" rx="8" fill="var(--' + col + ')"></rect></svg>';
+  }
+  function tree(h, col) {
+    const top = 96 - h;
+    return '<svg viewBox="0 0 60 100"><rect x="25" y="' + (top + 26) + '" width="10" height="' + (70 - top) + '" fill="#8B5A2B"></rect>' +
+      '<circle cx="30" cy="' + (top + 22) + '" r="20" fill="var(--' + col + ')"></circle></svg>';
+  }
+  function worm(th, col) {
+    return '<svg viewBox="0 0 120 60"><rect x="8" y="' + (30 - th / 2) + '" width="104" height="' + th + '" rx="' + (th / 2) + '" fill="var(--' + col + ')"></rect></svg>';
+  }
+  orderer({
+    el: { say: "say6", stage: "stage6", fb: "fb6", score: "sc6" },
+    rounds: [
+      {
+        ask: "Tap the ribbons in order: <b>shortest</b> first, <b>longest</b> last.",
+        tell: "Short, longer, longest:",
+        cards: [
+          { v: 1, n: "the short one", h: ribbon(30, "accent") + '<span class="cap">short</span>' },
+          { v: 2, n: "the longer one", h: ribbon(62, "teal") + '<span class="cap">longer</span>' },
+          { v: 3, n: "the longest one", h: ribbon(100, "plum") + '<span class="cap">longest</span>' },
+        ],
+        wide: true,
+      },
+      {
+        ask: "Tap the trees in order: <b>shortest</b> first, <b>tallest</b> last.",
+        tell: "Short, taller, tallest:",
+        cards: [
+          { v: 3, n: "the tallest tree", h: tree(70, "good") + '<span class="cap">tallest</span>' },
+          { v: 1, n: "the short tree", h: tree(24, "good") + '<span class="cap">short</span>' },
+          { v: 2, n: "the taller tree", h: tree(46, "good") + '<span class="cap">taller</span>' },
+        ],
+      },
+      {
+        ask: "Tap the worms in order: <b>thinnest</b> first, <b>thickest</b> last.",
+        tell: "Thin, thicker, thickest:",
+        cards: [
+          { v: 2, n: "the thicker worm", h: worm(18, "plum") + '<span class="cap">thicker</span>' },
+          { v: 3, n: "the thickest worm", h: worm(34, "plum") + '<span class="cap">thickest</span>' },
+          { v: 1, n: "the thinnest worm", h: worm(7, "plum") + '<span class="cap">thin</span>' },
+        ],
+        wide: true,
+      },
+    ],
+    finish: 5,
+    done: "You can put things in order by how long, how tall and how thin they are.",
+  });
+
+  /* ---- 7: mass ---- */
+  function balance(tiltLeftDown, leftEmoji, rightEmoji) {
+    const t = tiltLeftDown === 0 ? 0 : (tiltLeftDown > 0 ? 10 : -10);
+    const ly = 60 + (tiltLeftDown > 0 ? 22 : tiltLeftDown < 0 ? -12 : 5);
+    const ry = 60 + (tiltLeftDown < 0 ? 22 : tiltLeftDown > 0 ? -12 : 5);
+    return '<div class="picwrap"><svg viewBox="0 0 300 190" role="img" aria-label="A balance">' +
+      '<rect x="140" y="70" width="20" height="90" rx="6" fill="var(--muted)"></rect>' +
+      '<rect x="100" y="158" width="100" height="14" rx="7" fill="var(--muted)"></rect>' +
+      '<g style="transform-origin:150px 70px; transform:rotate(' + t + 'deg); transition:transform 400ms ease">' +
+      '<rect x="40" y="64" width="220" height="12" rx="6" fill="var(--ink)"></rect>' +
+      '<line x1="52" y1="70" x2="52" y2="' + (ly + 26) + '" stroke="var(--ink)" stroke-width="4"></line>' +
+      '<line x1="248" y1="70" x2="248" y2="' + (ry + 26) + '" stroke="var(--ink)" stroke-width="4"></line>' +
+      '<rect x="12" y="' + (ly + 26) + '" width="80" height="12" rx="6" fill="var(--teal)"></rect>' +
+      '<rect x="208" y="' + (ry + 26) + '" width="80" height="12" rx="6" fill="var(--teal)"></rect>' +
+      '<text x="52" y="' + (ly + 20) + '" font-size="34" text-anchor="middle">' + leftEmoji + "</text>" +
+      '<text x="248" y="' + (ry + 20) + '" font-size="34" text-anchor="middle">' + rightEmoji + "</text>" +
+      "</g></svg></div>";
+  }
+  sequence({
+    el: { say: "say7", stage: "stage7", ch: "ch7", fb: "fb7", score: "sc7" },
+    label: "Question",
+    items: [
+      { ask: "Which one is <b>heavier</b>?", pic: balance(1, "🍉", "🍓"),
+        opts: [{ t: "🍉 melon", ok: true }, { t: "🍓 strawberry", ok: false }],
+        why: "The melon is heavier, so its side went DOWN." },
+      { ask: "Which one is <b>lighter</b>?", pic: balance(-1, "🪨", "🪶"),
+        opts: [{ t: "🪶 feather", ok: true }, { t: "🪨 stone", ok: false }],
+        why: "The feather is lighter, so its side went UP." },
+      { ask: "This balance is <b>level</b>. What does that tell you?", pic: balance(0, "🧱", "🧱"),
+        opts: [{ t: "They weigh the same", ok: true }, { t: "One is heavier", ok: false }, { t: "Both are empty", ok: false }],
+        why: "A level balance means the two sides weigh the same." },
+      { ask: "Which side has <b>more</b> on it?", pic: balance(1, "📚", "📗"),
+        opts: [{ t: "📚 the pile of books", ok: true }, { t: "📗 the one book", ok: false }],
+        why: "More books means more mass, so that side goes down." },
+      { ask: "The bag of rice goes <b>down</b>. So the bag of rice is…", pic: balance(1, "🍚", "🍞"),
+        opts: [{ t: "heavier", ok: true }, { t: "lighter", ok: false }],
+        why: "The side that goes down is always the heavier one." },
+    ],
+    finish: 6,
+    done: "You can say which is heavier and which is lighter.",
+  });
+
+  /* ---- 8: capacity ---- */
+  function jug(fill) {
+    const h = 100, top = 28 + (1 - fill) * h;
+    return '<svg viewBox="0 0 90 140" role="img" aria-label="A jug">' +
+      '<rect x="16" y="' + top.toFixed(1) + '" width="58" height="' + (128 - top).toFixed(1) + '" fill="var(--teal)" opacity="0.85"></rect>' +
+      '<path d="M16,24 L16,128 A8,8 0 0 0 24,136 L66,136 A8,8 0 0 0 74,128 L74,24" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round"></path>' +
+      '<line x1="12" y1="24" x2="78" y2="24" stroke="var(--ink)" stroke-width="5"></line>' +
+      "</svg>";
+  }
+  const jugRow = (list) => '<div class="picks">' + list.map((j) =>
+    '<div style="display:grid;justify-items:center;gap:4px"><div style="width:104px">' + jug(j[0]) +
+    '</div><div class="word" style="font-size:26px">' + j[1] + "</div></div>").join("") + "</div>";
+  sequence({
+    el: { say: "say8", stage: "stage8", ch: "ch8", fb: "fb8", score: "sc8" },
+    label: "Question",
+    items: [
+      { ask: "Which jug is <b>full</b>?", pic: jugRow([[1, "A"], [0.45, "B"], [0, "C"]]),
+        opts: [{ t: "A", ok: true }, { t: "B", ok: false }, { t: "C", ok: false }],
+        why: "Jug A is full: there is no room left for any more." },
+      { ask: "Which jug is <b>empty</b>?", pic: jugRow([[0.7, "A"], [0, "B"], [0.3, "C"]]),
+        opts: [{ t: "A", ok: false }, { t: "B", ok: true }, { t: "C", ok: false }],
+        why: "Jug B is empty: it holds nothing at all." },
+      { ask: "Which jug holds <b>more</b>?", pic: jugRow([[0.3, "A"], [0.8, "B"]]),
+        opts: [{ t: "A", ok: false }, { t: "B", ok: true }],
+        why: "Jug B holds more water, because the water comes up higher." },
+      { ask: "Which jug holds <b>less</b>?", pic: jugRow([[0.85, "A"], [0.25, "B"]]),
+        opts: [{ t: "A", ok: false }, { t: "B", ok: true }],
+        why: "Jug B holds less: there is only a little water in it." },
+      { ask: "Jug A is <b>half full</b>. Pour a little out. Now it holds…", pic: jugRow([[0.5, "A"]]),
+        opts: [{ t: "less", ok: true }, { t: "more", ok: false }, { t: "the same", ok: false }],
+        why: "Pouring water out always leaves less than before." },
+    ],
+    finish: 7,
+    done: "You can say full, empty, more and less.",
+  });
+
+  /* ---- 9: measuring instruments with numbered scales ---- */
+  function ruler() {
+    let t = "";
+    for (let i = 0; i <= 10; i++) {
+      const x = 14 + i * 15.2;
+      t += '<line x1="' + x + '" y1="14" x2="' + x + '" y2="' + (i % 5 === 0 ? 34 : 26) + '" stroke="var(--ink)" stroke-width="2"></line>';
+      if (i % 5 === 0) t += '<text x="' + x + '" y="48" font-size="11" text-anchor="middle" font-family="Inter" fill="var(--ink)">' + i + "</text>";
+    }
+    return '<svg viewBox="0 0 180 60"><rect x="6" y="10" width="168" height="42" rx="6" fill="var(--gold)" stroke="var(--ink)" stroke-width="3"></rect>' + t + "</svg>";
+  }
+  function scales() {
+    let t = "";
+    for (let i = 0; i <= 5; i++) {
+      const a = Math.PI * (1 + i / 5), x = 60 + 34 * Math.cos(a), y = 62 + 34 * Math.sin(a);
+      t += '<text x="' + x.toFixed(1) + '" y="' + (y + 4).toFixed(1) + '" font-size="10" text-anchor="middle" font-family="Inter" fill="var(--ink)">' + i + "</text>";
+    }
+    return '<svg viewBox="0 0 120 110"><rect x="14" y="66" width="92" height="34" rx="8" fill="var(--muted)" stroke="var(--ink)" stroke-width="3"></rect>' +
+      '<circle cx="60" cy="62" r="44" fill="var(--card)" stroke="var(--ink)" stroke-width="3"></circle>' + t +
+      '<line x1="60" y1="62" x2="34" y2="40" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"></line>' +
+      '<circle cx="60" cy="62" r="5" fill="var(--ink)"></circle><rect x="30" y="14" width="60" height="8" rx="4" fill="var(--teal)"></rect></svg>';
+  }
+  function beaker() {
+    let t = "";
+    for (let i = 1; i <= 4; i++) {
+      const y = 108 - i * 20;
+      t += '<line x1="20" y1="' + y + '" x2="40" y2="' + y + '" stroke="var(--ink)" stroke-width="2"></line>' +
+        '<text x="46" y="' + (y + 4) + '" font-size="11" font-family="Inter" fill="var(--ink)">' + (i * 100) + "</text>";
+    }
+    return '<svg viewBox="0 0 110 130"><rect x="18" y="68" width="66" height="52" fill="var(--teal)" opacity="0.85"></rect>' +
+      '<path d="M18,20 L18,120 L84,120 L84,20" fill="none" stroke="var(--ink)" stroke-width="4"></path>' + t + "</svg>";
+  }
+  function thermometer() {
+    let t = "";
+    for (let i = 0; i <= 5; i++) {
+      const y = 108 - i * 17;
+      t += '<line x1="46" y1="' + y + '" x2="58" y2="' + y + '" stroke="var(--ink)" stroke-width="2"></line>' +
+        '<text x="62" y="' + (y + 4) + '" font-size="10" font-family="Inter" fill="var(--ink)">' + (i * 10) + "</text>";
+    }
+    return '<svg viewBox="0 0 100 140"><rect x="32" y="14" width="16" height="104" rx="8" fill="var(--cell)" stroke="var(--ink)" stroke-width="3"></rect>' +
+      '<rect x="35" y="66" width="10" height="52" fill="var(--bad)"></rect>' +
+      '<circle cx="40" cy="122" r="14" fill="var(--bad)" stroke="var(--ink)" stroke-width="3"></circle>' + t + "</svg>";
+  }
+  const TOOLS = { ruler: ruler(), scales: scales(), jug: beaker(), thermo: thermometer() };
+  function toolPic(job, emoji) {
+    return '<div style="font-size:64px">' + emoji + '</div><div class="word">' + job + "</div>" +
+      '<div class="picks">' +
+      '<div class="pick" style="width:104px;height:104px">' + TOOLS.ruler + "</div>" +
+      '<div class="pick" style="width:104px;height:104px">' + TOOLS.scales + "</div>" +
+      '<div class="pick" style="width:104px;height:104px">' + TOOLS.jug + "</div>" +
+      '<div class="pick" style="width:104px;height:104px">' + TOOLS.thermo + "</div>" +
+      "</div>";
+  }
+  sequence({
+    el: { say: "say9", stage: "stage9", ch: "ch9", fb: "fb9", score: "sc9" },
+    label: "Job",
+    items: [
+      { ask: "How <b>long</b> is the pencil? Which tool?", pic: toolPic("How long is it?", "✏️"),
+        opts: [{ t: "Ruler", ok: true }, { t: "Scales", ok: false }, { t: "Jug", ok: false }, { t: "Thermometer", ok: false }],
+        why: "A ruler has numbers along it, so it measures how long something is." },
+      { ask: "How <b>heavy</b> is the melon? Which tool?", pic: toolPic("How heavy is it?", "🍉"),
+        opts: [{ t: "Scales", ok: true }, { t: "Ruler", ok: false }, { t: "Jug", ok: false }, { t: "Thermometer", ok: false }],
+        why: "Scales have numbers on a dial, and they measure how heavy something is." },
+      { ask: "How much <b>milk</b> is in the pan? Which tool?", pic: toolPic("How much does it hold?", "🥛"),
+        opts: [{ t: "Jug", ok: true }, { t: "Ruler", ok: false }, { t: "Scales", ok: false }, { t: "Thermometer", ok: false }],
+        why: "A measuring jug has numbers up its side, and it measures how much it holds." },
+      { ask: "How <b>hot</b> is the tea? Which tool?", pic: toolPic("How hot is it?", "🍵"),
+        opts: [{ t: "Thermometer", ok: true }, { t: "Ruler", ok: false }, { t: "Scales", ok: false }, { t: "Jug", ok: false }],
+        why: "A thermometer has numbers up its side, and it measures how hot or cold something is." },
+      { ask: "How <b>tall</b> is the door? Which tool?", pic: toolPic("How tall is it?", "🚪"),
+        opts: [{ t: "Ruler", ok: true }, { t: "Scales", ok: false }, { t: "Jug", ok: false }, { t: "Thermometer", ok: false }],
+        why: "How tall is a length, so you measure it with a ruler or a tape." },
+      { ask: "What do <b>all four</b> of these tools have on them?", pic: toolPic("Look carefully", "🔍"),
+        opts: [{ t: "Numbers", ok: true }, { t: "Water", ok: false }, { t: "Wheels", ok: false }],
+        why: "Every measuring tool has a scale of numbers. That is how it tells you the amount." },
+    ],
+    finish: 8,
+    done: "You can pick the right tool for the job.",
+  });
+
+  /* ---- 10: position and direction ---- */
+  function scene(where) {
+    const box = '<rect x="110" y="96" width="90" height="62" rx="6" fill="var(--gold)" stroke="var(--ink)" stroke-width="4"></rect>' +
+      '<line x1="110" y1="118" x2="200" y2="118" stroke="var(--ink)" stroke-width="3"></line>';
+    const ball = (x, y) => '<circle cx="' + x + '" cy="' + y + '" r="20" fill="var(--accent)" stroke="var(--ink)" stroke-width="4"></circle>';
+    const spots = { on: [155, 74], under: [155, 176], left: [66, 128], right: [244, 128], in: [155, 130], behind: [200, 84] };
+    const p = spots[where] || spots.on;
+    let extra = "";
+    if (where === "behind") extra = '<circle cx="200" cy="84" r="20" fill="var(--accent)" stroke="var(--ink)" stroke-width="4" opacity="0.55"></circle>';
+    return '<div class="picwrap"><svg viewBox="0 0 310 200" role="img" aria-label="A box and a ball">' +
+      '<line x1="10" y1="176" x2="300" y2="176" stroke="var(--line)" stroke-width="6"></line>' +
+      (where === "in" || where === "behind" ? "" : box) +
+      (where === "behind" ? extra + box : where === "in" ? ball(p[0], p[1]) + '<rect x="110" y="96" width="90" height="62" rx="6" fill="none" stroke="var(--ink)" stroke-width="4"></rect>' : ball(p[0], p[1])) +
+      (where === "behind" ? "" : "") +
+      "</svg></div>";
+  }
+  sequence({
+    el: { say: "say10", stage: "stage10", ch: "ch10", fb: "fb10", score: "sc10" },
+    label: "Question",
+    items: [
+      { ask: "Where is the ball?", pic: scene("on"),
+        opts: [{ t: "on the box", ok: true }, { t: "under the box", ok: false }, { t: "next to the box", ok: false }],
+        why: "The ball is sitting ON TOP of the box." },
+      { ask: "Where is the ball?", pic: scene("under"),
+        opts: [{ t: "under the box", ok: true }, { t: "on the box", ok: false }, { t: "in the box", ok: false }],
+        why: "The ball is UNDER the box, below it." },
+      { ask: "Where is the ball?", pic: scene("in"),
+        opts: [{ t: "in the box", ok: true }, { t: "on the box", ok: false }, { t: "under the box", ok: false }],
+        why: "The ball is INSIDE the box." },
+      { ask: "Where is the ball?", pic: scene("left"),
+        opts: [{ t: "next to the box", ok: true }, { t: "on the box", ok: false }, { t: "in the box", ok: false }],
+        why: "The ball is beside the box: NEXT TO it." },
+      { ask: "Is the ball on the <b>left</b> of the box, or the <b>right</b>?", pic: scene("right"),
+        opts: [{ t: "on the right", ok: true }, { t: "on the left", ok: false }],
+        why: "The ball is on the RIGHT of the box, the side your right hand is on." },
+      { ask: "You walk to the door, then turn round and walk back. You went…", pic: '<div style="font-size:64px">🚶‍♀️🚪</div>',
+        opts: [{ t: "forwards, then backwards", ok: true }, { t: "up, then down", ok: false }, { t: "over, then under", ok: false }],
+        why: "Going the way you face is FORWARDS. Coming back the other way is BACKWARDS." },
+    ],
+    finish: 9,
+    done: "You can say where something is.",
+  });
+
+  /* ---- 11: days of the week ---- */
+  const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  let phase11 = "order", picks11 = [], q11 = 0, right11 = 0, lock11 = false;
+  const DAYQ = [
+    { q: "Which day comes <b>after</b> Wednesday?", a: "Thursday", opts: ["Thursday", "Tuesday", "Sunday"], why: "Wednesday, then Thursday." },
+    { q: "Which day comes <b>before</b> Saturday?", a: "Friday", opts: ["Friday", "Sunday", "Monday"], why: "Friday, then Saturday." },
+    { q: "How many days are there in a <b>week</b>?", a: "7", opts: ["7", "5", "12"], why: "A week is 7 days, Monday to Sunday." },
+  ];
+  function draw11() {
+    picks11 = []; lock11 = false;
+    $("say11").innerHTML = "Tap the days in order, starting with <b>Monday</b>.";
+    $("stage11").innerHTML = '<div class="ocards">' + shuffle(DAYS.map((d, i) => i))
+      .map((i) => '<button type="button" class="ocard" data-i="' + i + '" style="min-width:132px;min-height:64px"><span class="pos"></span>' + DAYS[i] + "</button>").join("") + "</div>";
+    $("ch11").innerHTML = ""; $("fb11").textContent = ""; $("fb11").className = "fb";
+    $("sc11").textContent = "Put the 7 days in order";
+  }
+  $("stage11").addEventListener("click", (e) => {
+    if (phase11 !== "order") return;
+    const b = e.target.closest(".ocard"); if (!b || lock11 || b.disabled) return;
+    const i = Number(b.dataset.i);
+    if (picks11.includes(i)) return;
+    if (i !== picks11.length) {
+      b.classList.add("oops");
+      $("fb11").className = "fb bad"; $("fb11").textContent = picks11.length ? "Not that one. After " + DAYS[picks11.length - 1] + " comes " + DAYS[picks11.length] + "." : "Start with Monday, the first day of the week.";
+      say("Not that one. " + DAYS[picks11.length] + " comes next.");
+      setTimeout(() => b.classList.remove("oops"), 900);
+      return;
+    }
+    picks11.push(i); b.classList.add("good"); b.disabled = true;
+    b.querySelector(".pos").textContent = picks11.length;
+    say(DAYS[i]);
+    $("fb11").className = "fb good"; $("fb11").textContent = DAYS[i];
+    if (picks11.length === DAYS.length) {
+      lock11 = true;
+      $("fb11").textContent = "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. Seven days make a week.";
+      say("Seven days make a week.");
+      setTimeout(() => { phase11 = "quiz"; q11 = 0; ask11(); }, 3000);
+    }
+  });
+  function ask11() {
+    lock11 = false;
+    const Q = DAYQ[q11];
+    $("stage11").innerHTML = '<div class="picwrap" style="text-align:center;font-size:56px">📅</div>';
+    $("say11").innerHTML = Q.q;
+    $("ch11").innerHTML = shuffle(Q.opts).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("fb11").textContent = ""; $("fb11").className = "fb";
+    $("sc11").textContent = "Question " + (q11 + 1) + " of " + DAYQ.length;
+    say(plain(Q.q));
+  }
+  $("ch11").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock11) return;
+    lock11 = true;
+    const Q = DAYQ[q11], ok = b.dataset.v === Q.a;
+    $("ch11").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === Q.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right11++;
+    $("fb11").className = "fb " + (ok ? "good" : "bad");
+    $("fb11").textContent = (ok ? cheer() + " " : "") + Q.why;
+    say((ok ? cheer() + " " : "") + Q.why);
+    q11++;
+    setTimeout(() => {
+      if (q11 >= DAYQ.length) {
+        $("ch11").innerHTML = ""; $("sc11").textContent = "";
+        $("fb11").className = "fb good"; $("fb11").textContent = "You know the days of the week.";
+        finish(10, "You know the days of the week. Brilliant!");
+      } else ask11();
+    }, 2600);
+  });
+  draw11();
+
+  /* ---- 12: months of the year ---- */
+  const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const GAPS = [2, 6, 9, 0];
+  let g12 = 0, lock12 = false, right12 = 0;
+  function draw12() {
+    lock12 = false;
+    const hole = GAPS[g12];
+    $("say12").innerHTML = "Which month belongs in the <b>gap</b>?";
+    $("stage12").innerHTML = '<div class="picks" style="max-width:640px">' + MONTHS.map((m, i) =>
+      '<span class="fact' + (i === hole ? " a" : "") + '" style="font-size:16px' + (i === hole ? ";background:var(--accent-soft);border:3px dashed var(--accent)" : "") + '">' + (i === hole ? "?" : m) + "</span>").join("") + "</div>";
+    const wrong = shuffle(MONTHS.filter((m, i) => i !== hole)).slice(0, 2);
+    $("ch12").innerHTML = shuffle([MONTHS[hole]].concat(wrong)).map((m) => '<button type="button" class="choice" style="font-size:20px" data-v="' + m + '">' + m + "</button>").join("");
+    $("fb12").textContent = ""; $("fb12").className = "fb";
+    $("sc12").textContent = "Gap " + (g12 + 1) + " of " + GAPS.length;
+    say("Which month belongs in the gap?");
+  }
+  $("ch12").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock12) return;
+    lock12 = true;
+    const hole = GAPS[g12], want = MONTHS[hole], ok = b.dataset.v === want;
+    $("ch12").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === want) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right12++;
+    const before = hole > 0 ? MONTHS[hole - 1] : null, after = hole < 11 ? MONTHS[hole + 1] : null;
+    const why = before ? want + " comes after " + before + "." : want + " is the first month of the year, before " + after + ".";
+    $("fb12").className = "fb " + (ok ? "good" : "bad");
+    $("fb12").textContent = (ok ? cheer() + " " : "") + why;
+    say((ok ? cheer() + " " : "") + why);
+    g12++;
+    setTimeout(() => {
+      if (g12 >= GAPS.length) {
+        $("ch12").innerHTML = ""; $("sc12").textContent = "";
+        $("stage12").innerHTML = '<div class="picks" style="max-width:640px">' + MONTHS.map((m) => '<span class="fact" style="font-size:16px">' + m + "</span>").join("") + "</div>";
+        $("fb12").className = "fb good"; $("fb12").textContent = "Twelve months make one year.";
+        finish(11, "Twelve months make one year. Brilliant!");
+      } else draw12();
+    }, 2800);
+  });
+  draw12();
+
+  /* ---- 13: units of time ---- */
+  let phase13 = "order", picks13 = [], q13 = 0, lock13 = false;
+  const UNITS = [
+    { n: "a second", v: 1, e: "👏" },
+    { n: "a minute", v: 2, e: "🪥" },
+    { n: "an hour", v: 3, e: "📚" },
+    { n: "a day", v: 4, e: "🌞" },
+    { n: "a week", v: 5, e: "🗓️" },
+  ];
+  const TIMEQ = [
+    { q: "About how long does it take to <b>clap your hands once</b>?", a: "a second", opts: ["a second", "an hour", "a week"], why: "One clap takes about a second. A second is very short." },
+    { q: "About how long does it take to <b>brush your teeth</b>?", a: "a minute", opts: ["a minute", "a second", "a day"], why: "Brushing your teeth takes about two minutes." },
+    { q: "How long is <b>one lesson</b> at school?", a: "about an hour", opts: ["about an hour", "about a second", "about a year"], why: "A lesson is about an hour. Sixty minutes make an hour." },
+    { q: "Which is <b>longer</b>: a week or a day?", a: "a week", opts: ["a week", "a day"], why: "A week is 7 days, so a week is much longer." },
+  ];
+  function draw13() {
+    picks13 = []; lock13 = false;
+    $("say13").innerHTML = "Tap them in order, from the <b>shortest</b> to the <b>longest</b>.";
+    $("stage13").innerHTML = '<div class="ocards">' + shuffle(UNITS.map((u, i) => i))
+      .map((i) => '<button type="button" class="ocard" data-i="' + i + '"><span class="pos"></span><span style="font-size:34px">' + UNITS[i].e + '</span><span class="cap">' + UNITS[i].n + "</span></button>").join("") + "</div>";
+    $("ch13").innerHTML = ""; $("fb13").textContent = ""; $("fb13").className = "fb";
+    $("sc13").textContent = "Shortest first";
+  }
+  $("stage13").addEventListener("click", (e) => {
+    if (phase13 !== "order") return;
+    const b = e.target.closest(".ocard"); if (!b || lock13 || b.disabled) return;
+    const i = Number(b.dataset.i);
+    if (picks13.includes(i)) return;
+    if (UNITS[i].v !== picks13.length + 1) {
+      b.classList.add("oops");
+      $("fb13").className = "fb bad"; $("fb13").textContent = "Not that one. " + UNITS[picks13.length].n + " comes next.";
+      say("Not that one.");
+      setTimeout(() => b.classList.remove("oops"), 900);
+      return;
+    }
+    picks13.push(i); b.classList.add("good"); b.disabled = true;
+    b.querySelector(".pos").textContent = picks13.length;
+    say(UNITS[i].n);
+    $("fb13").className = "fb good"; $("fb13").textContent = UNITS[i].n;
+    if (picks13.length === UNITS.length) {
+      lock13 = true;
+      $("fb13").textContent = "A second, a minute, an hour, a day, a week. Each one is longer than the one before.";
+      say("A second, a minute, an hour, a day, a week.");
+      setTimeout(() => { phase13 = "quiz"; q13 = 0; ask13(); }, 3200);
+    }
+  });
+  function ask13() {
+    lock13 = false;
+    const Q = TIMEQ[q13];
+    $("stage13").innerHTML = '<div style="font-size:60px">⏳</div>';
+    $("say13").innerHTML = Q.q;
+    $("ch13").innerHTML = shuffle(Q.opts).map((o) => '<button type="button" class="choice" style="font-size:20px" data-v="' + o + '">' + o + "</button>").join("");
+    $("fb13").textContent = ""; $("fb13").className = "fb";
+    $("sc13").textContent = "Question " + (q13 + 1) + " of " + TIMEQ.length;
+    say(plain(Q.q));
+  }
+  $("ch13").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock13) return;
+    lock13 = true;
+    const Q = TIMEQ[q13], ok = b.dataset.v === Q.a;
+    $("ch13").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === Q.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong");
+    $("fb13").className = "fb " + (ok ? "good" : "bad");
+    $("fb13").textContent = (ok ? cheer() + " " : "") + Q.why;
+    say((ok ? cheer() + " " : "") + Q.why);
+    q13++;
+    setTimeout(() => {
+      if (q13 >= TIMEQ.length) {
+        $("ch13").innerHTML = ""; $("sc13").textContent = "";
+        $("fb13").className = "fb good"; $("fb13").textContent = "You can talk about short times and long times.";
+        finish(12, "You can talk about short times and long times. Brilliant!");
+      } else ask13();
+    }, 2800);
+  });
+  draw13();
+
+  /* ---- 14: telling the time ---- */
+  let hour14 = 0, qTime = null, askedTime = 0, rightTime = 0; const QTIME = 4;
+  function drawClock14(h, half) {
+    const cx = 110, cy = 110, r = 96;
+    let svg = '<circle class="face" cx="' + cx + '" cy="' + cy + '" r="' + r + '"></circle>';
+    for (let i = 0; i < 60; i++) {
+      const a = (i / 60) * Math.PI * 2 - Math.PI / 2, big = i % 5 === 0, r1 = big ? r - 12 : r - 6;
+      svg += '<line class="tick' + (big ? " big" : "") + '" x1="' + (cx + r1 * Math.cos(a)).toFixed(1) + '" y1="' + (cy + r1 * Math.sin(a)).toFixed(1) + '" x2="' + (cx + r * Math.cos(a)).toFixed(1) + '" y2="' + (cy + r * Math.sin(a)).toFixed(1) + '"></line>';
+      if (big) svg += '<text class="num" x="' + (cx + (r - 26) * Math.cos(a)).toFixed(1) + '" y="' + (cy + (r - 26) * Math.sin(a)).toFixed(1) + '">' + (i === 0 ? 12 : i / 5) + "</text>";
+    }
+    const hourDeg = ((h % 12) * 30) + (half ? 15 : 0), minDeg = half ? 180 : 0;
+    svg += '<line class="hour" x1="' + cx + '" y1="' + cy + '" x2="' + cx + '" y2="' + (cy - 50) + '" style="transform:rotate(' + hourDeg + 'deg)"></line>';
+    svg += '<line class="minute" x1="' + cx + '" y1="' + cy + '" x2="' + cx + '" y2="' + (cy - 76) + '" style="transform:rotate(' + minDeg + 'deg)"></line>';
+    svg += '<circle class="hub" cx="' + cx + '" cy="' + cy + '" r="6"></circle>';
+    $("clock14").innerHTML = svg;
+  }
+  const timeName = (h, half) => (half ? "half past " + h : h + " o'clock");
+  const HWORDS = ["twelve", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+  function paintHours() {
+    drawClock14(hour14 || 12, false);
+    $("timesay").textContent = hour14 ? timeName(hour14, false) : "";
+    $("nexthour").disabled = hour14 >= 12;
+    $("fbtime").className = "fb " + (hour14 >= 12 ? "good" : "");
+    $("fbtime").textContent = hour14 >= 12 ? "12 o'clock! Right round the clock." : hour14 ? "The short hand points to " + hour14 + "." : "";
+  }
+  $("nexthour").addEventListener("click", () => {
+    if (hour14 >= 12) return;
+    hour14++; paintHours(); say(HWORDS[hour14] + " o'clock");
+    if (hour14 === 12) setTimeout(startHalf, 1600);
+  });
+  function startHalf() {
+    $("nexthour").hidden = true; askedTime = 0;
+    $("say14").innerHTML = "When the long hand points to <b>6</b>, it is <b>half past</b>. What time is this? Tap the answer.";
+    say("When the long hand points to six, it is half past.");
+    setTimeout(askTime, 1200);
+  }
+  function askTime() {
+    if (askedTime >= QTIME) { endTime(); return; }
+    const h = rnd(1, 12), half = askedTime === 0 ? true : rnd(0, 1) === 1;
+    qTime = { h, half }; askedTime++;
+    drawClock14(h, half); $("timesay").textContent = "";
+    $("scoretime").textContent = "What time " + askedTime + " of " + QTIME;
+    $("say14").innerHTML = "What time is it? Look at the <b>long</b> hand first, then the <b>short</b> hand.";
+    const other = h === 12 ? 1 : h + 1;
+    $("chtime").innerHTML = shuffle([timeName(h, half), timeName(h, !half), timeName(other, half)])
+      .map((t) => '<button type="button" class="choice" style="font-size:20px" data-t="' + t + '">' + t + "</button>").join("");
+    $("fbtime").textContent = ""; $("fbtime").className = "fb";
+    say("What time is it?");
+  }
+  $("chtime").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+    const want = timeName(qTime.h, qTime.half), ok = b.dataset.t === want;
+    $("chtime").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.t === want) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else rightTime++;
+    $("timesay").textContent = want;
+    const why = qTime.half
+      ? "The long hand is on 6, so it is half past. The short hand is just past " + qTime.h + "."
+      : "The long hand is on 12, so it is o'clock. The short hand points to " + qTime.h + ".";
+    $("fbtime").className = "fb " + (ok ? "good" : "bad");
+    $("fbtime").textContent = (ok ? cheer() + " " : "") + "It is " + want + ". " + why;
+    say((ok ? cheer() + " " : "") + "It is " + want + ". " + why);
+    setTimeout(askTime, 2600);
+  });
+  function endTime() {
+    $("chtime").innerHTML = ""; $("timesay").textContent = "";
+    drawClock14(12, false);
+    $("scoretime").textContent = "You read " + rightTime + " of " + QTIME + " clocks.";
+    $("say14").innerHTML = "The <b>short</b> hand tells the hour. The <b>long</b> hand on 12 means <b>o'clock</b>, and on 6 it means <b>half past</b>.";
+    $("fbtime").className = "fb good"; $("fbtime").textContent = "12 o'clock. Right round the clock and back to the start.";
+    say("The short hand tells the hour. The long hand on twelve means o'clock, and on six means half past.");
+    finish(13, "You can read the time to the hour and the half hour. Brilliant!");
+  }
+  paintHours();
+
+  /* ---- check ---- */
+  const CHECK = [
+    { q: "How many <b>sides</b> does a triangle have?", pic: '<div class="shapebox" style="max-width:150px"><svg viewBox="0 0 200 200">' + flatSvg(FLAT[1], "b") + "</svg></div>", opts: ["3", "4", "5"], a: "3", why: "A triangle has 3 straight sides and 3 corners." },
+    { q: "Which shape has <b>no corners</b>?", pic: "", opts: ["circle", "square", "hexagon"], a: "circle", why: "A circle curves all the way round, so it has no corners." },
+    { q: "How many sides does a <b>hexagon</b> have?", pic: '<div class="shapebox" style="max-width:150px"><svg viewBox="0 0 200 200">' + flatSvg(FLAT[5], "c") + "</svg></div>", opts: ["6", "5", "8"], a: "6", why: "A hexagon has 6 sides. Hex means six." },
+    { q: "How many <b>faces</b> does a cube have?", pic: '<div class="shapebox" style="max-width:150px"><svg viewBox="0 0 200 200" class="solid">' + solidSvg("cube") + "</svg></div>", opts: ["6", "4", "12"], a: "6", why: "A cube has 6 square faces, like a dice." },
+    { q: "Which solid shape has <b>no edges at all</b>?", pic: "", opts: ["sphere", "cube", "pyramid"], a: "sphere", why: "A sphere is round all over: one curved face and no edges." },
+    { q: "Is a <b>cylinder</b> flat or solid?", pic: '<div class="shapebox" style="max-width:150px"><svg viewBox="0 0 200 200" class="solid">' + solidSvg("cylinder") + "</svg></div>", opts: ["solid", "flat"], a: "solid", why: "You can hold a cylinder, like a tin. It is solid." },
+    { q: "A square is turned a <b>quarter turn</b>. Does it look the same?", pic: "", opts: ["Yes", "No"], a: "Yes", why: "A square looks exactly the same after a quarter turn." },
+    { q: "Amina is <b>taller</b> than Musa. Musa is taller than Kiki. Who is the <b>tallest</b>?", pic: "", opts: ["Amina", "Musa", "Kiki"], a: "Amina", why: "Amina is taller than Musa, and Musa is taller than Kiki, so Amina is tallest." },
+    { q: "On a balance, the side that goes <b>down</b> holds the…", pic: "", opts: ["heavier thing", "lighter thing"], a: "heavier thing", why: "Heavier things push their side of the balance down." },
+    { q: "A jug with <b>no water in it</b> is…", pic: "", opts: ["empty", "full", "half full"], a: "empty", why: "No water at all means the jug is empty." },
+    { q: "Which tool would you use to see <b>how heavy</b> a bag is?", pic: '<div style="max-width:130px">' + TOOLS.scales + "</div>", opts: ["scales", "a ruler", "a jug"], a: "scales", why: "Scales measure how heavy something is." },
+    { q: "Which tool would you use to see <b>how hot</b> the water is?", pic: '<div style="max-width:90px">' + TOOLS.thermo + "</div>", opts: ["a thermometer", "a ruler", "scales"], a: "a thermometer", why: "A thermometer measures how hot or cold something is." },
+    { q: "The cat is <b>below</b> the table. So the cat is…", pic: '<div style="font-size:56px">🪑🐈</div>', opts: ["under the table", "on the table", "behind the table"], a: "under the table", why: "Below means UNDER." },
+    { q: "Which day comes <b>after</b> Sunday?", pic: "", opts: ["Monday", "Saturday", "Friday"], a: "Monday", why: "Sunday is the last day of the week, and then it starts again with Monday." },
+    { q: "How many <b>months</b> are there in a year?", pic: "", opts: ["12", "7", "10"], a: "12", why: "There are 12 months, from January to December." },
+    { q: "Which is the <b>shortest</b>?", pic: "", opts: ["a second", "an hour", "a week"], a: "a second", why: "A second is the shortest of the three. A week is the longest." },
+    { q: "The long hand is on <b>12</b> and the short hand is on <b>3</b>. What time is it?", pic: "", opts: ["3 o'clock", "half past 3", "12 o'clock"], a: "3 o'clock", why: "The long hand on 12 means o'clock, and the short hand says which hour." },
+    { q: "The long hand is on <b>6</b> and the short hand is just past <b>4</b>. What time is it?", pic: "", opts: ["half past 4", "6 o'clock", "4 o'clock"], a: "half past 4", why: "The long hand on 6 means half past, and the short hand is just past 4." },
+  ];
+  let qc = 0, rightc = 0, lockc = false;
+  function askCheck() {
+    lockc = false;
+    const Q = CHECK[qc];
+    $("sayck").innerHTML = Q.q;
+    $("stageck").innerHTML = Q.pic || "";
+    $("chck").innerHTML = shuffle(Q.opts).map((o) => '<button type="button" class="choice" style="font-size:20px" data-v="' + o + '">' + o + "</button>").join("");
+    $("fbck").textContent = ""; $("fbck").className = "fb";
+    $("scck").textContent = "Question " + (qc + 1) + " of " + CHECK.length;
+    say(plain(Q.q));
+  }
+  $("chck").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lockc) return;
+    lockc = true;
+    const Q = CHECK[qc], ok = b.dataset.v === Q.a;
+    $("chck").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === Q.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else rightc++;
+    $("fbck").className = "fb " + (ok ? "good" : "bad");
+    $("fbck").textContent = (ok ? cheer() + " " : "") + Q.why;
+    say((ok ? cheer() + " " : "") + Q.why);
+    qc++;
+    setTimeout(() => {
+      if (qc >= CHECK.length) {
+        $("chck").innerHTML = ""; $("stageck").innerHTML = ""; $("scck").textContent = "";
+        $("fbck").className = "fb good";
+        $("fbck").textContent = "You got " + rightc + " out of " + CHECK.length + "!";
+        say("You got " + rightc + " out of " + CHECK.length + "!");
+        finish(14, "Well done!");
+      } else askCheck();
+    }, 2800);
+  });
+  askCheck();
+
+  /* ---- stickers ---- */
+  const STICKERS = [
+    ["🔺", "Flat shapes"], ["🧺", "I can sort shapes"], ["🧊", "Solid shapes"], ["📄", "Flat or solid"],
+    ["🔄", "Turning shapes"], ["📏", "Long and tall"], ["⚖️", "Heavy and light"], ["🥛", "Full and empty"],
+    ["🧰", "The right tool"], ["🧭", "Where it is"], ["📅", "Days of the week"], ["🗓️", "Months of the year"],
+    ["⏳", "Short and long times"], ["⏰", "Telling the time"], ["✅", "Show what I know"],
+  ];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] +
+      (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, 15).filter(Boolean).length;
+    $("fbstick").className = "fb " + (got === 15 ? "good" : "");
+    $("fbstick").textContent = got === 15 ? "All 15 stickers! You are a shape star." : got + " of 15 stickers so far.";
+  }
+  $("restart").addEventListener("click", () => location.reload());
+
+  show(0, false);
+})();
+</script>

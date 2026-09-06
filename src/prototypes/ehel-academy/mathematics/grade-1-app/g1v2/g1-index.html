@@ -1,0 +1,248 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 1 Mathematics</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /* ==================================================================
+     Grade 1 Mathematics - the way in.
+
+     Four lessons, one per Cambridge strand, and nothing else on the page.
+     A six-year-old arriving here should be able to point at the one they
+     want without reading a word of chrome: the cards are large, each
+     carries its own colour and mark, and the only control on a card is
+     the card.
+
+     The palette and the type are the lessons' own, so opening one is a
+     continuation rather than a jump to somewhere else.
+     ================================================================== */
+  :root {
+    --ground-a: #183B56;
+    --ground-b: #24556B;
+    --card: rgba(20, 43, 62, 0.88);
+    --cell: #22485F;
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --teal: #35BFB2;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --accent: #E9744F;
+    --plum: #B78BD1;
+    --green: #4FD1A0;
+      --sky: #6FB6E8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--ground-a); }
+  body {
+    margin: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* a fixed ground, so 135 degrees stays 135 degrees however long the page */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, var(--ground-a) 0%, var(--ground-b) 100%);
+  }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; margin: 0; line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 64px; }
+
+  header { padding: 8px 4px 26px; }
+  .eyebrow {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--teal);
+  }
+  h1 { font-size: clamp(32px, 6vw, 52px); font-weight: 800; margin-top: 6px; }
+  h1 em { font-style: normal; color: var(--teal); }
+  .lede { color: #C3D3DF; max-width: 34em; margin-top: 12px; font-size: 19px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+
+  a.lesson {
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 10px;
+    padding: 22px 22px 18px;
+    border-radius: 26px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    color: inherit;
+    text-decoration: none;
+    transition: transform 140ms ease, border-color 140ms ease;
+  }
+  a.lesson:hover, a.lesson:focus-visible { transform: translateY(-3px); border-color: var(--mark); outline: none; }
+  a.lesson:focus-visible { box-shadow: var(--shadow), 0 0 0 3px var(--mark); }
+  a.lesson:active { transform: translateY(0); }
+
+  .mark {
+    width: 62px; height: 62px;
+    border-radius: 20px;
+    display: grid; place-items: center;
+    background: var(--mark);
+    color: #06231F;
+  }
+  .mark svg { width: 34px; height: 34px; display: block; }
+
+  .strand {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--mark);
+  }
+  a.lesson h2 { font-size: 27px; font-weight: 800; }
+  .covers { color: #C3D3DF; font-size: 17px; }
+  .foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-top: 6px; padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .steps {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .go {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 16px; font-weight: 800;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #2A1F05;
+    box-shadow: 0 4px 0 var(--gold-press);
+  }
+  a.lesson:active .go { transform: translateY(2px); box-shadow: 0 2px 0 var(--gold-press); }
+
+  .c-number { --mark: var(--teal); }
+  .c-pattern { --mark: var(--gold); }
+  .c-shape { --mark: var(--accent); }
+  .c-data { --mark: var(--plum); }
+  .c-frac { --mark: var(--green); }
+    .c-time { --mark: var(--sky); }
+  .c-pattern .mark, .c-shape .mark, .c-data .mark, .c-frac .mark, .c-time .mark { color: #2A1F05; }
+
+  .note {
+    margin-top: 28px;
+    padding: 16px 18px;
+    border-radius: 16px;
+    background: rgba(244, 201, 93, 0.10);
+    border-left: 4px solid var(--gold);
+    color: #C3D3DF;
+    font-size: 16px;
+    max-width: 44em;
+  }
+  .note b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    a.lesson { transition: none; }
+    a.lesson:hover, a.lesson:focus-visible { transform: none; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
+    <h1>Grade 1 <em>Mathematics</em></h1>
+    <p class="lede">Seven lessons, in the order they are meant to be done. Start at the top &mdash; each one gets you ready for the next.</p>
+  </header>
+
+  <div class="grid">
+    <a class="lesson c-number" href="counting-to-twenty.html?from=g1">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2.5" y="6" width="19" height="12" rx="2"></rect><path d="M7 6v12M12 6v12M17 6v12"></path>
+        </svg>
+      </span>
+      <span class="strand">Number</span>
+      <h2>Counting to Twenty</h2>
+      <p class="covers">Count to 20 and know what the numbers mean: read them, write them, count in twos and tens, put them in order, compare them, say which is odd and which is even, and estimate before you count.</p>
+      <span class="foot"><span class="steps">16 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-number" href="adding-and-taking-away.html?from=g1">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 8.5h7M7.5 5v7M13.5 16h7"></path><circle cx="12" cy="12" r="9.2" opacity=".35"></circle>
+        </svg>
+      </span>
+      <span class="strand">Number</span>
+      <h2>Adding and Taking Away</h2>
+      <p class="covers">Add by counting on and by putting two groups together, take away, find how many more, make ten, learn your doubles, and pay with coins.</p>
+      <span class="foot"><span class="steps">8 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-frac" href="halves-and-wholes.html?from=g1">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"></path><path d="M12 3v18"></path>
+        </svg>
+      </span>
+      <span class="strand">Halves</span>
+      <h2>Halves and Wholes</h2>
+      <p class="covers">Split a shape into two equal parts, colour one half, find half of a group and half of a number, and put two halves back together to make a whole.</p>
+      <span class="foot"><span class="steps">8 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-pattern" href="what-comes-next.html?from=g1">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="5" cy="12" r="2.6"></circle><rect x="10" y="9.4" width="5.2" height="5.2" rx="1"></rect><path d="M19.5 9.2v5.6M16.8 12h5.4"></path>
+        </svg>
+      </span>
+      <span class="strand">Patterns</span>
+      <h2>What Comes Next</h2>
+      <p class="covers">Find the part that repeats, fill the missing shape and the missing number, count on in jumps, balance both sides, and make a pattern of your own.</p>
+      <span class="foot"><span class="steps">14 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-shape" href="shapes-and-sizes.html?from=g1">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="7.5" cy="7.5" r="4.4"></circle><rect x="12.6" y="12.4" width="8.4" height="8.4" rx="1.2"></rect><path d="M3 21h7.5L6.7 14.2 3 21z"></path>
+        </svg>
+      </span>
+      <span class="strand">Shape and measure</span>
+      <h2>Shapes and Sizes</h2>
+      <p class="covers">Name flat and solid shapes and sort them by their sides, faces and edges, turn a shape round, compare length, weight and how much a jug holds, pick the right measuring tool, and say where something is.</p>
+      <span class="foot"><span class="steps">10 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-time" href="days-months-and-clocks.html?from=g1">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle><path d="M12 7v5.4l3.4 2"></path>
+        </svg>
+      </span>
+      <span class="strand">Time</span>
+      <h2>Days, Months and Clocks</h2>
+      <p class="covers">Say the days of the week and the months of the year in order, work out which things take longer, and read the clock at o'clock and half past.</p>
+      <span class="foot"><span class="steps">4 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-data" href="asking-and-sorting.html?from=g1">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 20V11M10 20V5M16 20v-6M22 20H2"></path>
+        </svg>
+      </span>
+      <span class="strand">Data</span>
+      <h2>Asking and Sorting</h2>
+      <p class="covers">Ask everyone a question, write the answers in a list and a table, build a block graph and a pictogram, sort into hoops and a Carroll diagram, then say what the data shows.</p>
+      <span class="foot"><span class="steps">11 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+  </div>
+
+  <p class="note"><b>For the grown-up.</b> These seven lessons cover the Cambridge Primary Mathematics Stage 1 strands: number, fractions, pattern, geometry and measure, time, and statistics. They are ordered so that each lesson only needs what the ones above it have already taught &mdash; halving comes straight after doubling, and the data lesson comes last because it needs counting and sorting. Fractions at Stage 1 is halves only &mdash; quarters, thirds and equivalence are Stage 2, so nothing here is ever cut into more than two parts.</p>
+</div>

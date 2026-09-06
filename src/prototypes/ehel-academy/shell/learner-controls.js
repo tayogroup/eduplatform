@@ -21,6 +21,46 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHtml = (v = "") => sharedEscapeHtml(v);
 
+/* The controls carry their own baseline, the way wehel.js carries PANEL_STYLE.
+ *
+ * Until this existed the ONLY thing shaping them was
+ *   .gc-top .in-deck-header { min-height:38px; padding:0 13px; border-radius:999px }
+ * in english/shared/course-ui.css, and placeLearnerControls adds that class only
+ * when it parents them into a DECK header. Anywhere else — the topbar case in
+ * the shell, and every page of the standalone Grade 1 Maths build, which loads
+ * no course-ui.css at all — they rendered as unstyled white boxes with the label
+ * invisible against them.
+ *
+ * Deliberately LOW specificity (one class), so the deck rule above still wins
+ * and the shell's deck header is untouched. Colours come from the host's own
+ * tokens with fallbacks, so the same button reads correctly on the light shell
+ * and on the dark Grade 1 pages.
+ */
+const CONTROL_STYLE_ID = "ehel-learner-controls-style";
+const CONTROL_STYLE = `
+.top-hand-raise, .top-class-chat, .top-class-live {
+  display: inline-flex; align-items: center; gap: 7px; width: auto;
+  min-height: 38px; padding: 0 14px; border-radius: 999px;
+  border: 1px solid var(--line, #d5dee3);
+  background: var(--card, #fff); color: var(--ink, #12222e);
+  font: inherit; font-size: 14px; font-weight: 700; line-height: 1;
+  cursor: pointer; white-space: nowrap;
+}
+.top-hand-raise:hover, .top-class-chat:hover, .top-class-live:hover { filter: brightness(1.06); }
+.top-hand-raise[aria-pressed="true"] {
+  background: var(--teal, #1e8c86); border-color: transparent; color: #06231f;
+}
+.top-class-live { background: var(--bad, #c4453a); border-color: transparent; color: #fff; }
+`;
+
+function ensureControlStyle() {
+  if (document.getElementById(CONTROL_STYLE_ID)) return;
+  const tag = document.createElement("style");
+  tag.id = CONTROL_STYLE_ID;
+  tag.textContent = CONTROL_STYLE;
+  document.head.appendChild(tag);
+}
+
 const HAND_ENDPOINT = platformUrl("/local/hubredirect/course_hand_raise.php");
 const CHAT_ENDPOINT = platformUrl("/local/hubredirect/course_group_chat.php");
 
@@ -30,6 +70,7 @@ const CHAT_ENDPOINT = platformUrl("/local/hubredirect/course_group_chat.php");
 export function mountLearnerControls({ token = "", launchToken = "", launchEndpoint = "",
                                        progressUnit = "" } = {}) {
   const PROGRESS_UNIT = progressUnit;
+  ensureControlStyle();
     // --- raise a hand ---------------------------------------------------------
     //
     // One live teacher runs two groups of nine out of phase: while one group is
@@ -125,7 +166,7 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
         // design-system.css, so one cosmetic rule there makes five other
         // subjects' app tiers stale (CLAUDE.md, the shared-stylesheet coupling).
         // seb-session.js styles its injected controls the same way.
-        button.style.background = up ? "#1a67a3" : "white";
+        button.style.background = up ? "#1a67a3" : "var(--card, #fff)";
         button.style.color = up ? "#fff" : "";
         button.style.borderColor = up ? "#1a67a3" : "";
       };
@@ -273,7 +314,7 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
           : (TUT
             ? `Write to your ${TUT.subjectlabel} tutors. Only they see what you write.`
             : "Talk to your teacher. The class sees what your teacher writes; only your teacher sees what you write.");
-        button.style.background = unread ? "#1a67a3" : "white";
+        button.style.background = unread ? "#1a67a3" : "var(--card, #fff)";
         button.style.color = unread ? "#fff" : "";
       };
 
@@ -377,7 +418,7 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
           const hh = ("0" + when.getHours()).slice(-2) + ":" + ("0" + when.getMinutes()).slice(-2);
           liveBtn.textContent = "🔴 Class at " + hh;
           liveBtn.title = "Your class starts at " + hh + ". The button turns red when you can join.";
-          liveBtn.style.background = "white";
+          liveBtn.style.background = "var(--card, #fff)";
           liveBtn.style.color = "";
           liveBtn.style.borderColor = "";
         }

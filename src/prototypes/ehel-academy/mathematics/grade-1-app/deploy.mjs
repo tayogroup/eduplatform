@@ -46,10 +46,38 @@ const enc = (p) => p.split("/").map(encodeURIComponent).join("/");
 const UPLOAD = process.argv.includes("--upload");
 const K = key();
 
+/* The three shell modules the lesson pages import, deployed BESIDE them.
+ *
+ * One source, copied - not a second implementation. learner-controls.js holds
+ * the hand-raise and class-chat singletons that course-app.js mounts for every
+ * other subject; the file here is that same file. Two copies in ONE page would
+ * poll twice, which is what "MOVED, never cloned" forbids; two pages each with
+ * one copy are two documents and cannot see each other anyway.
+ *
+ * Imports are flattened to ./x.js exactly as deploy-app-version.js flattens
+ * them for v{TAG}/: everything sits in one directory here, so `../shared/`
+ * would point outside it, and a query string would give the browser two URLs
+ * for one file and instantiate the module twice.
+ */
+const SHELL = path.resolve(HERE, "../../shell");
+const SHARED = path.resolve(HERE, "../../shared");
+const MODULES = [
+  [path.join(SHELL, "learner-controls.js"), "learner-controls.js"],
+  [path.join(SHELL, "wehel.js"), "wehel.js"],
+  [path.join(SHARED, "course-shell.js"), "course-shell.js"],
+];
+const flatten = (s) => s
+  .replace(/from\s*(["'])\.\.\/shared\/([A-Za-z0-9_-]+\.js)(\?[^"']*)?\1/g, 'from "./$2"')
+  .replace(/from\s*(["'])\.\/([A-Za-z0-9_-]+\.js)(\?[^"']*)?\1/g, 'from "./$2"');
+
 const plan = FILES.map(([local, remote]) => {
   const buf = fs.readFileSync(path.join(SRC, local));
   return { local, remote, buf, sha1: sha1(buf) };
 });
+for (const [src, remote] of MODULES) {
+  const buf = Buffer.from(flatten(fs.readFileSync(src, "utf8")));
+  plan.push({ local: path.basename(src), remote, buf, sha1: sha1(buf) });
+}
 
 console.log((UPLOAD ? "Uploading" : "PLAN (add --upload)") + " to " + CDN + "/" + enc(REMOTE) + "/\n");
 for (const f of plan) console.log("  " + f.remote.padEnd(30) + String(f.buf.length).padStart(8) + "  " + f.sha1.slice(0, 12));

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Validate the composed seven-lesson set before it goes anywhere near a browser."""
-import re, io, os, subprocess, sys
+import re, io, os, subprocess, sys, tempfile
 
 SP = os.path.dirname(os.path.abspath(__file__))
 V2 = os.path.join(SP, "g1v2")
@@ -18,7 +18,9 @@ for f in FILES:
     js = " ".join(re.findall(r"<script[^>]*>(.*?)</script>", s, re.S))
 
     # 1 syntax
-    tmp = os.path.join(SP, "_syn.mjs")
+    # the OS temp dir, not beside the script: written next to it, this scratch
+    # file gets swept into the next commit (it was, once)
+    tmp = os.path.join(tempfile.gettempdir(), "_ehel_g1_syn.mjs")
     io.open(tmp, "w", encoding="utf-8").write(js)
     r = subprocess.run(["node", "--check", tmp], capture_output=True, text=True)
     syn = "ok" if r.returncode == 0 else "PARSE FAIL"

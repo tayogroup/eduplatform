@@ -246,3 +246,17 @@
 
   <p class="note"><b>For the grown-up.</b> These seven lessons cover the Cambridge Primary Mathematics Stage 1 strands: number, fractions, pattern, geometry and measure, time, and statistics. They are ordered so that each lesson only needs what the ones above it have already taught &mdash; halving comes straight after doubling, and the data lesson comes last because it needs counting and sorting. Fractions at Stage 1 is halves only &mdash; quarters, thirds and equivalence are Stage 2, so nothing here is ever cut into more than two parts.</p>
 </div>
+
+<script>
+  /* keep ?pwsToken, ?pwsEndpoint, ?studentid, ?stage, ?unit alive across the hop
+     from the hub to a lesson; ?from=g1 is ours and is added back */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    document.querySelectorAll("a.lesson").forEach(function (a) {
+      var href = a.getAttribute("href").split("?")[0];
+      var carry = q.toString();
+      a.setAttribute("href", href + "?from=g1" + (carry ? "&" + carry : ""));
+    });
+  })();
+</script>

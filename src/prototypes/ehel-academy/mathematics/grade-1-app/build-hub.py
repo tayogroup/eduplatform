@@ -83,6 +83,33 @@ out = re.sub(
  'because it needs counting and sorting. Fractions at Stage 1 is halves only &mdash; quarters, thirds and equivalence are '
  'Stage 2, so nothing here is ever cut into more than two parts.</p>', out, count=1, flags=re.S)
 
+# Carry the launch parameters through to the lesson pages.
+#
+# The Moodle launch lands on this hub as
+#   .../grade-1-v2/index.html?stage=1&unit=1&pwsEndpoint=...&pwsToken=...
+# and the cards were plain `lesson.html?from=g1`, so every launch parameter died
+# at the first click. pwsToken is the credential the whole platform surface
+# authenticates with - Wehel, the class chat, raise-a-hand, the Join class pill
+# and the progress gateway all read it from location.search - so without this a
+# lesson page can only ever be an anonymous visitor. One script, at the end,
+# rather than baked into each href: the params are only known at run time.
+PROPAGATE = """
+<script>
+  /* keep ?pwsToken, ?pwsEndpoint, ?studentid, ?stage, ?unit alive across the hop
+     from the hub to a lesson; ?from=g1 is ours and is added back */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    document.querySelectorAll("a.lesson").forEach(function (a) {
+      var href = a.getAttribute("href").split("?")[0];
+      var carry = q.toString();
+      a.setAttribute("href", href + "?from=g1" + (carry ? "&" + carry : ""));
+    });
+  })();
+</script>
+"""
+out = out.rstrip() + "\n" + PROPAGATE
+
 io.open(os.path.join(SP, "g1v2", "g1-index.html"), "w", encoding="utf-8", newline="").write(out)
 print("  g1v2/g1-index.html written: %d cards, %d bytes" % (len(CARDS), len(out)))
 for c in CARDS:

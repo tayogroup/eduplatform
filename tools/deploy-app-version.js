@@ -257,6 +257,18 @@ function shellSubjectModule(subject) {
 // packaged separately through shellCore(). Read from the module's own imports so
 // a component added later ships without this file changing.
 function shellComponents(subject) {
+  // BOTH modules' imports, not just the subject's. course-app.js is packaged by
+  // shellCore(), but its own shell/ siblings were only ever carried in because
+  // the subject module happened to import the same file (wehel.js). The first
+  // sibling course-app.js imports ALONE — learner-controls.js, which holds the
+  // hand-raise and class-chat singletons — was therefore left out of v{TAG}/,
+  // and the entry module 404s on its own import: the same failure as
+  // word-pictures.js below, and it takes every subject down at boot, not one.
+  //
+  // Scanned SEPARATELY, because `./x.js` resolves against the importer: from
+  // shell/subjects/ it is a file in shell/subjects/, from course-app.js — which
+  // lives in shell/ — it is a file in shell/. Concatenating the two sources
+  // sends course-app's siblings to the wrong directory.
   const src = fs.readFileSync(path.join(EHEL, "shell", "subjects", `${subject}.js`), "utf8");
   // BOTH sibling shapes a subject module uses: `../x.js` is a file in shell/,
   // `./x.js` one in shell/subjects/ — english's word-pictures.js. Only `../`
@@ -266,9 +278,20 @@ function shellComponents(subject) {
   // forever. The self-containment check passed because `./word-pictures.js`
   // does not reach outside the version path — it only pointed at a file the
   // release had not put there.
-  return [...src.matchAll(/^import\s[^"']*["'](\.\.?)\/([A-Za-z0-9_-]+\.js)(?:\?[^"']*)?["']/gm)]
-    .map((m) => ({ name: m[2], from: `${m[1]}/${m[2]}`, src: path.join(EHEL, "shell", m[1] === ".." ? "." : "subjects", m[2]) }))
-    .filter((item) => item.name !== "course-app.js");
+  const found = [...src.matchAll(/^import\s[^"']*["'](\.\.?)\/([A-Za-z0-9_-]+\.js)(?:\?[^"']*)?["']/gm)]
+    .map((m) => ({ name: m[2], from: `${m[1]}/${m[2]}`, src: path.join(EHEL, "shell", m[1] === ".." ? "." : "subjects", m[2]) }));
+
+  // course-app.js sits in shell/, so BOTH `./x.js` and `../x.js` from it name a
+  // file in shell/ (the latter would escape the shell, which it never does).
+  const appSrc = fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8");
+  for (const m of appSrc.matchAll(/^import\s[^"']*["']\.\/([A-Za-z0-9_-]+\.js)(?:\?[^"']*)?["']/gm)) {
+    found.push({ name: m[1], from: `./${m[1]}`, src: path.join(EHEL, "shell", m[1]) });
+  }
+
+  const seen = new Set();
+  return found
+    .filter((item) => item.name !== "course-app.js")
+    .filter((item) => (seen.has(item.name) ? false : seen.add(item.name)));
 }
 function shellCore() {
   return fs.readFileSync(path.join(EHEL, "shell", "course-app.js"), "utf8")

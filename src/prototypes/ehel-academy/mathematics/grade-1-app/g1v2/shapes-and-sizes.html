@@ -1,5 +1,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="modulepreload" href="./learner-controls.js">
+<link rel="modulepreload" href="./wehel.js">
+<link rel="modulepreload" href="./course-shell.js">
+<script>
+  /* preconnect to whichever platform the launch names: DNS and TLS happen
+     while the page parses, instead of in front of the first POST */
+  (function () {
+    try {
+      var ep = new URLSearchParams(location.search).get("pwsEndpoint");
+      if (!ep) return;
+      var origin = new URL(ep, location.href).origin;
+      var l = document.createElement("link");
+      l.rel = "preconnect"; l.href = origin; l.crossOrigin = "anonymous";
+      document.head.appendChild(l);
+    } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
+  })();
+</script>
 <title>Shapes and Sizes</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>

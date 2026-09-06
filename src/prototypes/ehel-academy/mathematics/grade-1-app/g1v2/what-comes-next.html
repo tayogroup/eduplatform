@@ -2207,3 +2207,25 @@
     document.body.append(dock, drawer);
   }
 </script>
+
+<script>
+  /* Keep ?pwsToken and ?pwsEndpoint alive on every in-app link.
+     Without both, the class controls and Wehel do not mount at all - see
+     keep-launch-params.py. The picker already appended location.search; the
+     back arrow and the brand logo did not, which is what made the controls
+     look intermittent. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    var carry = q.toString();
+    if (!carry) return;
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app links only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams((href.split("?")[1] || ""));
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>

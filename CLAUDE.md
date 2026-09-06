@@ -3936,6 +3936,72 @@ references and one file), essentially all of them 404 on the CDN. A "small
 spelling migration" by description; thousands of silent paid fallbacks in fact.
 Count the references, never the description.
 
+### The shell's learner controls are a module now, and the deploy scan had a hole
+
+`shell/learner-controls.js` (2026-09-07) holds `placeLearnerControls`,
+`mountHandRaise` and `mountClassChat` — the last of which carries Join class,
+the screenshot capture, the polling and the unread dot. They were 693 lines
+inside `course-app.js`; the standalone Grade 1 Maths lesson pages needed them,
+and that file's own comment forbids the obvious answer: **"MOVED, never cloned.
+Both controls are singletons that own polling state and an unread dot; a second
+copy would poll twice and disagree with itself about whether a hand is up."**
+
+`course-app.js` imports it and destructures `placeLearnerControls` back out,
+because `mountDeck()` rebuilds `.gc-top` with `innerHTML` and a button parented
+there is destroyed by the next mount. The boundary was small — the region took
+seven names from `course-app` scope and nothing else — and `HAND_ENDPOINT` /
+`CHAT_ENDPOINT` stay assigned from `platformUrl()` at module top level, because
+that is the shape `check-platform-cors.mjs` parses to discover endpoints. It
+globs `shell/*.js`, so the new file is scanned and the gate still probes all
+nine.
+
+**The move exposed a real hole in `deploy-app-version.js`, and it is the
+interesting half.** `shellComponents()` derived which shell siblings to bundle
+into `v{TAG}/` by reading the SUBJECT module's imports. That was complete only
+by accident: `course-app.js` had never imported a shell sibling that some
+subject module did not also import (`wehel.js`). `learner-controls.js` is the
+first it imports **alone**, so a release would have shipped an entry module
+importing a file absent from the version path — a 404 on `course-app.js`'s own
+import, every subject dead at boot, and no console error the app can show. It
+now scans both, with the right base for each: `./x.js` means `shell/subjects/`
+from a subject module and `shell/` from `course-app.js`. Concatenating the two
+sources sends `course-app`'s siblings to the wrong directory, which was the
+first attempt.
+
+Caught by `--plan-json`, not by a gate: the release plan simply did not list the
+file. **A new `shell/` sibling is worth one `--plan-json` before it ships.**
+
+**An inline style beats every stylesheet, and these controls set them.** The
+buttons do `button.style.background = "white"`, hardcoded from when the shell
+was always light, so they render white-on-white on any dark host — the Grade 1
+pages, and the shell's own topbar case (`placeLearnerControls({toTopbar:true})`,
+on leaving a deck), where the `.gc-top .in-deck-header` rule does not apply. The
+module now carries its own baseline the way `wehel.js` carries `PANEL_STYLE`,
+and the literal is `var(--card, #fff)`. `course-ui.css` defines no `--card`, so
+the shell falls back to white and is unchanged. Adding CSS alone fixed nothing
+and was deployed before that was noticed — **read `getAttribute("style")` before
+concluding one rule is losing to another.**
+
+### `check:print-sheets` can deadlock, and it gates every English release
+
+Observed 2026-09-07: **25 minutes of wall clock for 19s of CPU**, no output,
+Chromium and node both resident. Against its own ~2m20s estimate. It happened
+three times running — twice inside `deploy-app-version.js`, which calls
+`requirePrintSheets()` before the upload, so the release never started.
+
+Low CPU against long wall clock is what separates deadlocked from slow, and it
+is worth measuring before concluding either: an earlier call of "hung" here
+rested on a 60-second timeout against a 140-second job, which proved nothing.
+
+The suspected cause is contention — Playwright wants its own Chromium, and this
+machine was running five other dev servers. Not diagnosed further. `--skip-print-check`
+exists and was used for v413/v414 with the owner's explicit go-ahead, on the
+narrow grounds that no commit in those releases touched a print path
+(`shell/subjects/english.js` last moved 2026-09-04, by somebody else). **That is
+a per-release justification, not a standing one**, and a release gate that
+cannot run is the same failure this file keeps recording from the other
+direction.
+
 ## Verification before committing
 
 1. `npm run validate:units` and `npm run check:alphabet` must pass.

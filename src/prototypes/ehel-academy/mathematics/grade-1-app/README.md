@@ -28,26 +28,36 @@ place one grade can be sent elsewhere is `pqpg_ehel_app_base()` in
 `local_prequran/ehel_app_url_overrides` setting. Candidates are host-locked to
 `https://ehelacademy.b-cdn.net/`.
 
-Currently Grade 1 points at **grade-1-preview** (the five). `repoint-grade-1.php`
-is a CLI script that moves it to `grade-1-v2`; it reports by default and needs
-`--apply` to write. Rolling back is the same setting.
+Grade 1 points at **grade-1-v2** (the seven). `repoint-grade-1.php` moves it
+between the two builds; it reports by default and needs `--apply` to write.
+Rolling back is the same setting, and `grade-1-preview` is kept intact and
+current precisely so that rollback is complete rather than partial.
 
 ## The tools
 
 ```bash
+# build, in this order - the patchers are NOT idempotent and each assumes the last
 python compose-lessons.py        # derive g1v2/ from the five originals
-python build-hub.py              # rebuild g1v2/g1-index.html (7 cards)
-python add-header-bars.py        # add the two header bars + fix the <h1>s
+python build-hub.py              # rebuild g1v2/g1-index.html (7 cards, carries launch params)
+python add-header-bars.py        # the two header bars + fix the <h1>s
+python add-platform-controls.py  # Class chat, Hand up, Join class, Wehel
+python keep-launch-params.py     # carry pwsToken/pwsEndpoint across every in-app link
+python preload-platform.py       # modulepreload + preconnect, so the controls are not late
+
+# check
 python check-lessons.py          # structure: badges, finish(), stickers, dangling ids
 python check-stage1-coverage.py  # all 36 Cambridge 0096 Stage 1 objectives
 node   run-lessons.mjs           # execute each lesson against its original as control
-node   deploy.mjs                # plan; --upload to send to grade-1-v2
+
+# ship
+node   deploy.mjs                # plan; --upload sends the 8 pages + 3 shell modules
 python fix-coverage-gaps.py      # the two curriculum fixes already applied to the live five
 ```
 
-`compose-lessons.py` and `add-header-bars.py` are **not idempotent** — they
-rewrite `g1v2/` from the originals, so run them in that order from a clean
-`g1v2/` if you re-derive.
+Every patcher after `compose-lessons.py` edits the files in place and assumes
+the previous step ran, so a re-derive means running the whole build list in
+order from a clean `g1v2/`. Each one is guarded - it skips a file it has already
+touched - so a second run is safe but does nothing.
 
 ## Things that will bite
 
@@ -62,26 +72,62 @@ rewrite `g1v2/` from the originals, so run them in that order from a clean
   outside the closure and `slides`/`done`/`show` are out of scope.
 - **The palette is dark: `--ink` is `#FFFFFF`.** A "dark pill with white text"
   renders white-on-white. Header controls use `--teal` with `#06231F`.
+- **An inline style beats every stylesheet, and this code sets them.** The class
+  controls do `button.style.background = "white"` from when the shell was always
+  light. Adding CSS to fix their contrast changed nothing until that literal
+  became `var(--card, #fff)`. Check `getAttribute("style")` before concluding a
+  rule is being overridden by another rule.
+- **The launch parameters must survive EVERY hop.** `mountHandRaise` opens with
+  `if (!actions || !launchToken || !launchEndpoint || …) return;` so a page
+  reached without `?pwsToken` and `?pwsEndpoint` silently mounts nothing - no
+  Class chat, no Hand up, no Wehel. The lesson picker carried `location.search`
+  and the back arrow and brand logo did not, so pressing Back made all three
+  disappear for the rest of the session. `keep-launch-params.py` now carries them
+  on every in-app link; do not add a link that hardcodes a bare `href`.
 - **Check arrays are not portable between lessons.** `up-to-twenty` writes
   `pic: 7` (a counter count), `shapes-and-sizes` writes `pic: '<svg…>'`,
   `what-comes-next` writes `beads: […]`, each with its own renderer. A slide
   moved across files arrives with no check coverage — which is why every
   composed lesson draws from exactly one base file.
 
-## What the header bars deliberately omit
+## The platform controls
 
-`add-header-bars.py` builds brand, lesson progress, lesson picker, voice toggle,
-back, Menu, lesson name and Full screen. It does **not** build Join class, Class
-chat, Hand up or XP. Those need the signed launch token and the platform
-endpoints, which this standalone build has neither of, and `course-app.js`
-mounts Hand up only when the server confirms a teacher is watching — precisely
-so a child cannot press a control that reaches nobody and then wait instead of
-asking for help.
+Class chat, Hand up, Join class and Wehel are mounted, and none of them is
+reimplemented here. The pages import the SAME modules the shell mounts,
+deployed beside them by `deploy.mjs` with imports flattened to `./x.js`:
+
+| module | entry point |
+| --- | --- |
+| `learner-controls.js` | `mountLearnerControls()` - Class chat, Hand up, Join class |
+| `wehel.js` | `mountWehelChat()` - the tutor |
+| `course-shell.js` | `escapeHtml` |
+
+`learner-controls.js` was lifted out of `course-app.js` for this. Its own
+comment explains why it could not simply be copied: both controls are
+SINGLETONS owning polling state and an unread dot, so two copies in one page
+poll twice and disagree about whether a hand is up. Two pages each holding one
+copy are separate documents and cannot see each other, which is why deploying
+the file beside the lessons is a copy of the source rather than a second
+implementation.
+
+**Where the buttons go is not decided here.** `placeLearnerControls()` prepends
+into `.top-actions`, so bar 2 carries that class and they land before Full
+screen - the order English already shows.
+
+**What you will and will not see.** Hand up and Class chat mount only when the
+server answers `watched` - this learner is in an active class group with a
+teacher on it - and Join class only while a session is live. Outside a live
+class, hidden is correct, not broken. Wehel appears for every learner, so it is
+the honest test that the wiring works.
 
 ## Known limitation
 
 **This path records no progress.** No gradebook, no live-group-board position,
-no Wehel, no study plan, no placement exam. Progress shown in the header is
-computed from the lesson's own `done[]` and stays in the tab. That is a property
-of being off the standard content path, not of the restructure, and it is the
-open question for both builds.
+no study plan, no placement exam. Progress shown in the header is computed from
+the lesson's own `done[]` and stays in the tab. That is a property of being off
+the standard content path, not of the restructure, and it is the open question
+for both builds.
+
+Wehel and the class controls are NOT in that list any more - they are mounted
+and working. Wehel's daily allowance is server-side and per learner per day, so
+it is metered correctly here even though lesson progress is not.

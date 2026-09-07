@@ -74,6 +74,7 @@
 
     function drawShelf() {
       $(el.ask).innerHTML = o.ask || "Choose a book to read.";
+      $(el.stage).className = "stagewide";
       $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
       $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
       $(el.shelf).innerHTML = books.map((b, k) =>
@@ -156,4 +157,167 @@
     }
 
     drawShelf();
+  }
+
+  /* ==================================================================
+     STORY QUESTIONS FOR EACH BOOK
+
+     BOOK_COMPREHENSION_SETS in shell/subjects/english.js, read by the
+     builder rather than copied - 18 questions for every Grade 1 unit, in
+     three kinds, and all three are kept because dropping the two harder
+     ones would leave the text MCQs alone and quietly halve the section:
+
+       choice   the book's own page as a scene, then three text options
+       picture  three book PAGES, tap the one the question describes
+       order    three pages of one book, tap them in story order
+
+     A question's `answer` is an index into the AUTHORED array, so the
+     options are rendered through a per-question shuffled VIEW and the
+     right answer is never a screen position - the same guard the shell's
+     own renderer carries, and the same one the fluency author had to add
+     after a section turned out to be passable by tapping the top option
+     fifteen times.
+
+     `page` is 1-BASED, matching the shell (`book.pages[pageNumber - 1]`).
+
+     WRONG IS FREE HERE. A wrong tap says so and lets the child try again
+     rather than marking and moving on: the answer is in a book they have,
+     and going back to look it up is reading, not cheating. So there is no
+     score - the step is finished when every question has a star.
+     ================================================================== */
+  function bookQuestions(o) {
+    const el = o.el;
+    const questions = o.items || [];
+    const books = o.books || [];
+    const solved = new Set();
+    let index = 0;
+    let picked = [];          // order-type taps so far, reset on every move
+
+    const bookOf = (id) => books.find((b) => b.id === id);
+    const pageArt = (id, pageNumber) => {
+      const book = bookOf(id);
+      const page = book && book.pages[pageNumber - 1];
+      return page ? { src: ebookAsset(id, page.image), alt: page.alt || "" } : null;
+    };
+    const view = questions.map((q) =>
+      shuffle([...Array(q.kind === "order" ? q.order.length : (q.options || q.pick).length).keys()]));
+
+    function draw() {
+      const q = questions[index];
+      const v = view[index];
+      const done = solved.has(index);
+      const allDone = solved.size === questions.length;
+
+      let answers = "";
+      if (q.kind === "choice") {
+        const art = pageArt(q.book, q.page);
+        answers =
+          (art ? '<figure class="bookq-scene"><img src="' + art.src + '" alt="' + esc(art.alt) + '"></figure>' : "") +
+          '<div class="bigbtns">' + v.map((i) =>
+            '<button type="button" class="choice" data-pick="' + i + '"' + (done ? " disabled" : "") + ">" +
+            esc(q.options[i]) + "</button>").join("") + "</div>";
+      } else if (q.kind === "picture") {
+        answers = '<div class="bookq-pictures">' + v.map((i) => {
+          const art = pageArt(q.pick[i].book, q.pick[i].page);
+          return '<button type="button" class="bookq-picture" data-pick="' + i + '" aria-label="' +
+            esc(art ? art.alt : "a page") + '"' + (done ? " disabled" : "") + ">" +
+            (art ? '<img src="' + art.src + '" alt="">' : "") + "</button>";
+        }).join("") + "</div>";
+      } else {
+        answers = '<div class="bookq-pictures bookq-order">' + v.map((slot) => {
+          const art = pageArt(q.book, q.order[slot]);
+          const at = picked.indexOf(slot);
+          return '<button type="button" class="bookq-picture" data-order="' + slot + '" aria-label="' +
+            esc(art ? art.alt : "a page") + '"' + (at > -1 || done ? " disabled" : "") + ">" +
+            (art ? '<img src="' + art.src + '" alt="">' : "") +
+            (at > -1 || done ? '<span class="bookq-order-badge">' + (done ? slot + 1 : at + 1) + "</span>" : "") +
+            "</button>";
+        }).join("") + "</div>";
+      }
+
+      $(el.ask).innerHTML = esc(q.q);
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        '<div class="bookq" id="' + el.bq + '">' + answers + "</div>" +
+        '<div class="bigbtns bookq-nav">' +
+        '<button type="button" class="big small ghost" id="' + el.bq + 'prev"' + (index === 0 ? " disabled" : "") + ">&#9664; Back</button>" +
+        '<button type="button" class="big small ghost" id="' + el.bq + 'next"' + (index === questions.length - 1 ? " disabled" : "") + ">Next &#9654;</button>" +
+        "</div>";
+      $(el.score).textContent = "Question " + (index + 1) + " of " + questions.length +
+        "  \u00b7  " + solved.size + " answered";
+      if (!done) { $(el.fb).textContent = ""; $(el.fb).className = "fb"; }
+
+      $(el.bq).addEventListener("click", onTap);
+      $(el.bq + "prev").addEventListener("click", () => { index--; picked = []; draw(); });
+      $(el.bq + "next").addEventListener("click", () => { index++; picked = []; draw(); });
+
+      /* The question read aloud, options included on a choice question -
+         these are five- and six-year-olds, and not being able to read the
+         question yet is the whole reason the section exists. */
+      say(q.kind === "choice" ? q.q + " Is it " + q.options.join(", or ") + "?" : q.q);
+
+      if (allDone) {
+        $(el.fb).className = "fb good";
+        $(el.fb).textContent = "Every question has a star. " + o.done;
+        finish(o.finish, o.done);
+      }
+    }
+
+    /* After a right answer, move to the next question still to do - behind
+       as well as ahead, so a child who skipped around is walked back to the
+       gap instead of running off the end. */
+    function advance() {
+      const ahead = questions.findIndex((_, i) => i > index && !solved.has(i));
+      const anywhere = questions.findIndex((_, i) => !solved.has(i));
+      index = ahead > -1 ? ahead : anywhere > -1 ? anywhere : index;
+      picked = [];
+      draw();
+    }
+
+    function onTap(e) {
+      const q = questions[index];
+      const pick = e.target.closest("[data-pick]");
+      const step = e.target.closest("[data-order]");
+      if (pick) {
+        if (Number(pick.dataset.pick) === q.answer) {
+          solved.add(index);
+          playStorySound("child-happy");
+          pick.classList.add("right");
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = cheer();
+          setTimeout(advance, 900);
+        } else {
+          playStorySound("child-surprised");
+          pick.classList.add("wrong");
+          $(el.fb).className = "fb bad";
+          $(el.fb).textContent = "Not that one - look again and try another.";
+          setTimeout(() => pick.classList.remove("wrong"), 600);
+        }
+        return;
+      }
+      if (step) {
+        const slot = Number(step.dataset.order);
+        /* `order` is authored in story order, so the k-th tap must be slot k. */
+        if (slot === picked.length) {
+          picked.push(slot);
+          if (picked.length === q.order.length) {
+            solved.add(index);
+            playStorySound("child-happy");
+            $(el.fb).className = "fb good";
+            $(el.fb).textContent = cheer() + " That is the order it happened in.";
+            setTimeout(advance, 900);
+            return;
+          }
+          draw();
+        } else {
+          playStorySound("child-surprised");
+          picked = [];
+          $(el.fb).className = "fb bad";
+          $(el.fb).textContent = "Almost! Start again from what happened first.";
+          setTimeout(draw, 650);
+        }
+      }
+    }
+
+    draw();
   }

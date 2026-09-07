@@ -453,74 +453,50 @@
     draw();
   }
 
-  /* ---- Memory Pairs: reveal on tap, connect word to meaning --------
-     The pack's own description is "Reveal tiles and connect each word
-     with its meaning", so tiles start face-down (a "?" back) and the tap
-     reveals the text underneath - not just a plain tap-to-select grid.
-     Round after round, the same shape every other step here uses; a round
-     is done when its three pairs are all matched.
+  /* ---- the unit's video lesson ------------------------------------
+     The recording the course already ships at
+     english/grade-1/media/unit-N/, reached through ../grade-1/ - which
+     resolves to the same place in local dev and on the CDN, exactly as
+     ../ebooks/ does for the picture books. Nothing is copied.
+
+     Units 1-9 only: lecture-media.json has no key 10, because Unit 10
+     opens on the capstone instead. The builder makes this step only where
+     a video actually exists rather than assuming ten of them.
+
+     THE STEP IS FINISHED BY WATCHING, NOT BY PRESSING. `ended` marks it
+     done on its own. The button beneath is there because a video can
+     legitimately be watched elsewhere, or already have been watched last
+     week, and a step a child cannot leave is a trap - but it says what it
+     is ("I have watched it"), so pressing it is a claim the child makes
+     rather than a way past.
      ------------------------------------------------------------------ */
-  function memoryPairs(o) {
-    let r = 0;
+  function lectureStep(o) {
     const el = o.el;
-    function draw() {
-      const round = o.items[r];
-      let tiles = round.pairs.flatMap((p, pi) => [
-        { text: p[0], pair: pi },
-        { text: p[1], pair: pi },
-      ]);
-      tiles = shuffle(tiles).map((t, k) => ({ ...t, k }));
-      let picked = [];
-      let matched = 0;
-      let lock = false;
-      $(el.ask).innerHTML = round.prompt || "Tap two tiles that go together.";
-      $(el.stage).innerHTML = '<div class="pairsgrid" id="' + el.grid + '"></div>';
-      $(el.score).textContent = "Round " + (r + 1) + " of " + o.items.length;
-      $(el.fb).textContent = ""; $(el.fb).className = "fb";
-      const grid = $(el.grid);
-      grid.innerHTML = tiles.map((t) =>
-        '<button type="button" class="pairtile" data-k="' + t.k + '">' +
-        '<span class="back" aria-hidden="true">?</span>' +
-        '<span class="face">' + esc(t.text) + "</span></button>").join("");
-      grid.addEventListener("click", (e) => {
-        const b = e.target.closest(".pairtile");
-        if (!b || lock) return;
-        const k = Number(b.dataset.k);
-        if (b.classList.contains("matched") || b.classList.contains("revealed")) return;
-        b.classList.add("revealed");
-        picked.push({ k, pair: tiles[k].pair, el: b });
-        if (picked.length < 2) return;
-        lock = true;
-        const [a, c] = picked;
-        if (a.pair === c.pair) {
-          a.el.classList.add("matched"); c.el.classList.add("matched");
-          a.el.disabled = true; c.el.disabled = true;
-          matched++;
-          picked = []; lock = false;
-          if (matched === round.pairs.length) {
-            $(el.fb).className = "fb good";
-            $(el.fb).textContent = cheer() + " Round " + (r + 1) + " matched.";
-            setTimeout(() => {
-              r++;
-              if (r >= o.items.length) {
-                $(el.stage).innerHTML = ""; $(el.score).textContent = "";
-                $(el.fb).className = "fb good";
-                $(el.fb).textContent = o.done;
-                finish(o.finish, o.done);
-              } else draw();
-            }, 1100);
-          }
-        } else {
-          a.el.classList.add("wrong"); c.el.classList.add("wrong");
-          setTimeout(() => {
-            a.el.classList.remove("revealed", "wrong");
-            c.el.classList.remove("revealed", "wrong");
-            picked = []; lock = false;
-          }, 900);
-        }
-      });
-    }
-    draw();
+    const lec = o.lecture || {};
+    if (!lec.video) return;
+    $(el.stage).innerHTML =
+      '<div class="lecture">' +
+      '<video id="' + el.video + '" class="lecturevideo" controls preload="metadata"' +
+      (lec.poster ? ' poster="' + esc(lec.poster) + '"' : "") + ">" +
+      '<source src="' + esc(lec.video) + '" type="video/mp4">' +
+      (lec.captions ? '<track kind="captions" srclang="en" label="English" src="' + esc(lec.captions) + '" default>' : "") +
+      "</video></div>" +
+      '<div class="bigbtns"><button type="button" class="big small ghost" id="' + el.next + '">I have watched it</button></div>';
+    const video = $(el.video);
+    /* Never autoplay. Every other step here plays its own recording when
+       the child arrives, because those are two-second word clips; a lesson
+       video starting itself is a room full of six-year-olds all playing
+       different minutes of the same teacher. */
+    video.addEventListener("ended", () => {
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You watched the whole lesson.";
+      finish(o.finish, o.done);
+    });
+    video.addEventListener("play", () => VOICE.stop && VOICE.stop());
+    $(el.next).addEventListener("click", () => {
+      try { video.pause(); } catch (_) { /* nothing to pause */ }
+      finish(o.finish, o.done);
+    });
   }
 
   /* ---- the stickers, one per step that can be earned --------------- */

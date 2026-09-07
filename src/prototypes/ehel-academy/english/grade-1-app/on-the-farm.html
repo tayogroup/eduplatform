@@ -329,6 +329,12 @@
   .pairtile:disabled { cursor: default; }
 
   /* ---- Picture books: the shelf, and the full-screen reader ---- */
+  /* a stage that holds a shelf fills the slide - see the note in
+     lesson-app-tools' sibling scripts: #stageN is a flex ITEM, so a
+     child's width:100% resolves against a box shrunk to one card. */
+  .stagewide { width: 100%; }
+  .reviewnote { color: var(--muted); font-size: 13.5px; text-align: center;
+    margin: 0; font-style: italic; }
   .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; width: 100%; }
   .bookcard { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px;
     border: 3px solid var(--line); background: var(--card); text-align: left; }
@@ -352,6 +358,45 @@
   .book-stage [data-tap].tap-play { animation: tapPulse 700ms ease; }
   .book-reader-bottom { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 14px 18px; flex-wrap: wrap; }
   .book-page-count { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; min-width: 5em; text-align: center; }
+
+  /* ---- the unit's video lesson ---- */
+  .lecture { width: 100%; max-width: 720px; }
+  .lecturevideo { width: 100%; display: block; border-radius: 18px; border: 1px solid var(--line);
+    background: #000; aspect-ratio: 16 / 9; }
+
+  /* ---- the Game Zone shelf ---- */
+  .gamelist .gamecard.played { border-color: var(--good); background: var(--good-soft); }
+  .game-overlay .game-stage { width: 100%; max-width: 720px; display: flex; flex-direction: column;
+    align-items: center; gap: 14px; padding: 10px 0; }
+  .game-overlay .gameprompt { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 21px; text-align: center; margin: 0; }
+  .game-overlay .gameclue { color: var(--muted); font-size: 17px; text-align: center; margin: 0; max-width: 30em; }
+  .game-overlay .fb { min-height: 1.6em; }
+  .game-overlay .pairsgrid { max-width: 640px; }
+  .tile.letter { min-width: 54px; text-align: center; text-transform: lowercase; font-size: 26px; }
+  .game-done { text-align: center; }
+  .game-done .gamebig { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 30px; margin: 0 0 6px; }
+
+  /* ---- story questions for each book ---- */
+  .bookq { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+  .bookq-scene { margin: 0; width: 100%; max-width: 520px; border-radius: 18px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--card); }
+  .bookq-scene img { width: 100%; display: block; aspect-ratio: 1600 / 1000; object-fit: cover; }
+  .bookq-pictures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; max-width: 640px; }
+  .bookq-picture { position: relative; padding: 0; border-radius: 16px; overflow: hidden;
+    border: 4px solid var(--line); background: var(--card); }
+  .bookq-picture img { width: 100%; display: block; aspect-ratio: 1600 / 1000; object-fit: cover; }
+  .bookq-picture.right { border-color: var(--good); }
+  .bookq-picture.wrong { border-color: var(--bad); }
+  .bookq-picture:disabled { cursor: default; opacity: 0.85; }
+  .bookq-order-badge { position: absolute; top: 6px; left: 6px; min-width: 28px; height: 28px;
+    border-radius: 999px; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 800; font-size: 15px; display: grid; place-items: center; }
+  .bookq-nav { margin-top: 4px; }
+  @media (max-width: 560px) {
+    .bookq-pictures { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .bookq-picture { border-width: 3px; }
+  }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -480,9 +525,9 @@
   </header>
 
   <div class="deck" id="deck">
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These words all share one sound.</s><s>Your ears do this step, not your eyes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>I will say a word.</s><s>Listen right to the end of it.</s><s>Then look at the words and tap the one you heard.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>It is easy to tap the first word you can read.</s><s>Wait for the whole word before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it again as many times as you like.</s><s>Now listen.</s></mstts:express-as>' data-say="Listen to the word, then tap the word you heard.">
-      <div class="slide-head"><span class="n">1</span><h2>Phonics: short u</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask1">Listen to the word, then tap the word you heard.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Your teacher recorded this for the start of the unit.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Watch it all the way to the end.</s><s>You can turn the captions on if you want to read along.</s><s>Watch it again any time - it does not disappear.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watching is not the same as listening.</s><s>Put it on, and actually listen to her.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press play.</s></mstts:express-as>' data-say="Watch the lesson. It ticks itself off when it ends.">
+      <div class="slide-head"><span class="n">1</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask1">Watch the lesson. It ticks itself off when it ends.</span></div>
       <div class="stage">
         <div id="stage1"></div>
         <div class="choices" id="ch1"></div>
@@ -490,9 +535,9 @@
         <p class="score" id="score1"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the new words for this unit.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One word at a time.</s><s>Look at the picture.</s><s>Say the word out loud.</s><s>Then press Next word.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Reading a word in your head is not the same as saying it.</s><s>Your mouth has to learn it too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it to hear the word said properly.</s><s>Then say it with me.</s></mstts:express-as>' data-say="Say this word out loud.">
-      <div class="slide-head"><span class="n">2</span><h2>Words: animals</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Say this word out loud.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These words all share one sound.</s><s>Your ears do this step, not your eyes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>I will say a word.</s><s>Listen right to the end of it.</s><s>Then look at the words and tap the one you heard.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>It is easy to tap the first word you can read.</s><s>Wait for the whole word before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it again as many times as you like.</s><s>Now listen.</s></mstts:express-as>' data-say="Listen to the word, then tap the word you heard.">
+      <div class="slide-head"><span class="n">2</span><h2>Phonics: short u</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Listen to the word, then tap the word you heard.</span></div>
       <div class="stage">
         <div id="stage2"></div>
         <div class="choices" id="ch2"></div>
@@ -500,9 +545,9 @@
         <p class="score" id="score2"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A word is a picture you can say.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the picture.</s><s>Say what it is, out loud.</s><s>Then find that word and tap it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two words can start with the same letter.</s><s>Read to the end of the word before you tap.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say it first.</s><s>Then tap it.</s></mstts:express-as>' data-say="Which word is this?">
-      <div class="slide-head"><span class="n">3</span><h2>Word and picture</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask3">Which word is this?</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the new words for this unit.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One word at a time.</s><s>Look at the picture.</s><s>Say the word out loud.</s><s>Then press Next word.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Reading a word in your head is not the same as saying it.</s><s>Your mouth has to learn it too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it to hear the word said properly.</s><s>Then say it with me.</s></mstts:express-as>' data-say="Say this word out loud.">
+      <div class="slide-head"><span class="n">3</span><h2>Words: animals</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask3">Say this word out loud.</span></div>
       <div class="stage">
         <div id="stage3"></div>
         <div class="choices" id="ch3"></div>
@@ -510,9 +555,9 @@
         <p class="score" id="score3"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These little words have no picture.</s><s>You cannot draw the word the.</s><s>You just have to know it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>They turn up in nearly every sentence you will ever read.</s><s>So knowing them by sight makes reading much faster.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not try to sound these out letter by letter.</s><s>Look at the whole word and know it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Listen, and tap the one you heard.</s></mstts:express-as>' data-say="Listen, then tap the word you heard.">
-      <div class="slide-head"><span class="n">4</span><h2>Words we see everywhere</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Listen, then tap the word you heard.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A word is a picture you can say.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the picture.</s><s>Say what it is, out loud.</s><s>Then find that word and tap it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two words can start with the same letter.</s><s>Read to the end of the word before you tap.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say it first.</s><s>Then tap it.</s></mstts:express-as>' data-say="Which word is this?">
+      <div class="slide-head"><span class="n">4</span><h2>Word and picture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Which word is this?</span></div>
       <div class="stage">
         <div id="stage4"></div>
         <div class="choices" id="ch4"></div>
@@ -520,9 +565,9 @@
         <p class="score" id="score4"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now a whole story, read to you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press Listen and let it play.</s><s>Follow the words with your finger as you hear them.</s><s>That is how the sound and the letters join up in your head.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not stop to work out every word.</s><s>Keep following.</s><s>You can hear it again afterwards.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen, and off we go.</s></mstts:express-as>' data-say="Press Listen, then follow the words with your finger.">
-      <div class="slide-head"><span class="n">5</span><h2>The story</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Press Listen, then follow the words with your finger.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These little words have no picture.</s><s>You cannot draw the word the.</s><s>You just have to know it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>They turn up in nearly every sentence you will ever read.</s><s>So knowing them by sight makes reading much faster.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not try to sound these out letter by letter.</s><s>Look at the whole word and know it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Listen, and tap the one you heard.</s></mstts:express-as>' data-say="Listen, then tap the word you heard.">
+      <div class="slide-head"><span class="n">5</span><h2>Words we see everywhere</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Listen, then tap the word you heard.</span></div>
       <div class="stage">
         <div id="stage5"></div>
         <div class="choices" id="ch5"></div>
@@ -530,9 +575,9 @@
         <p class="score" id="score5"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every answer here is in the story you just read.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, that is fine.</s><s>Go back a step and read it again.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">6</span><h2>Story questions</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Tap the answer.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This unit has its own shelf of picture books.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap Read on a book that looks good.</s><s>Tap the pictures - some of them make a sound.</s><s>Press Listen if you want the page read to you.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A tap sound is a little extra.</s><s>If nothing happens when you tap, that is fine - keep reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a book and press Read.</s></mstts:express-as>' data-say="Choose a book to read.">
+      <div class="slide-head"><span class="n">6</span><h2>Reading books</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Choose a book to read.</span></div>
       <div class="stage">
         <div id="stage6"></div>
         <div class="choices" id="ch6"></div>
@@ -540,9 +585,9 @@
         <p class="score" id="score6"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>English is a language before it is anything on a page.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the speaker to hear the line.</s><s>Then say it yourself, out loud.</s><s>Say it to a grown-up if one is near you, or just say it to yourself.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody is marking this and nothing is listening.</s><s>Tick it when you have said it, and be honest with yourself.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Your turn. Out loud.</s></mstts:express-as>' data-say="Listen, then say it out loud.">
-      <div class="slide-head"><span class="n">7</span><h2>Say it out loud</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Listen, then say it out loud.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These questions are about the books on your shelf.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Some ask you to tap the right answer.</s><s>Some show you three pictures and ask you to tap one.</s><s>Some ask you to put things in the right order.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, go back and read the book again.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Answer the questions about the books you read.">
+      <div class="slide-head"><span class="n">7</span><h2>Story questions for each book</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Answer the questions about the books you read.</span></div>
       <div class="stage">
         <div id="stage7"></div>
         <div class="choices" id="ch7"></div>
@@ -550,9 +595,9 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>English has patterns, and a pattern is a thing you can reuse.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The gold line is the pattern.</s><s>Learn that, and you can say a hundred sentences,</s><s>not just the one on the screen.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read the Watch out box.</s><s>It is there because almost every child slips on that exact thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it, then read it once more, then press Next.</s></mstts:express-as>' data-say="Name a farm animal">
-      <div class="slide-head"><span class="n">8</span><h2>How English works</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Name a farm animal</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>English is a language before it is anything on a page.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the speaker to hear the line.</s><s>Then say it yourself, out loud.</s><s>Say it to a grown-up if one is near you, or just say it to yourself.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody is marking this and nothing is listening.</s><s>Tick it when you have said it, and be honest with yourself.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Your turn. Out loud.</s></mstts:express-as>' data-say="Listen, then say it out loud.">
+      <div class="slide-head"><span class="n">8</span><h2>Say it out loud</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Listen, then say it out loud.</span></div>
       <div class="stage">
         <div id="stage8"></div>
         <div class="choices" id="ch8"></div>
@@ -560,9 +605,9 @@
         <p class="score" id="score8"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Writing a sentence is putting words in an order that means something.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap the words one at a time to put them on the line.</s><s>Tap a word on the line to take it back off.</s><s>When it reads like a real sentence, press Check it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A sentence needs its full stop at the end.</s><s>Without one it never finishes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read your line out loud before you check it.</s><s>Your ears will tell you if a word is in the wrong place.</s></mstts:express-as>' data-say="Draw a farm with two animals and one plant growing. Tell an adult what the farmer does every morning if one is nearby, or say it out loud to yourself.">
-      <div class="slide-head"><span class="n">9</span><h2>Write a sentence</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Draw a farm with two animals and one plant growing. Tell an adult what the farmer does every morning if one is nearby, or say it out loud to yourself.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>English has patterns, and a pattern is a thing you can reuse.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The gold line is the pattern.</s><s>Learn that, and you can say a hundred sentences,</s><s>not just the one on the screen.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read the Watch out box.</s><s>It is there because almost every child slips on that exact thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it, then read it once more, then press Next.</s></mstts:express-as>' data-say="Name a farm animal">
+      <div class="slide-head"><span class="n">9</span><h2>How English works</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Name a farm animal</span></div>
       <div class="stage">
         <div id="stage9"></div>
         <div class="choices" id="ch9"></div>
@@ -570,9 +615,9 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">10</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Tap the answer.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Writing a sentence is putting words in an order that means something.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap the words one at a time to put them on the line.</s><s>Tap a word on the line to take it back off.</s><s>When it reads like a real sentence, press Check it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A sentence needs its full stop at the end.</s><s>Without one it never finishes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read your line out loud before you check it.</s><s>Your ears will tell you if a word is in the wrong place.</s></mstts:express-as>' data-say="Draw a farm with two animals and one plant growing. Tell an adult what the farmer does every morning if one is nearby, or say it out loud to yourself.">
+      <div class="slide-head"><span class="n">10</span><h2>Write a sentence</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Draw a farm with two animals and one plant growing. Tell an adult what the farmer does every morning if one is nearby, or say it out loud to yourself.</span></div>
       <div class="stage">
         <div id="stage10"></div>
         <div class="choices" id="ch10"></div>
@@ -580,19 +625,20 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
-      <div class="slide-head"><span class="n">11</span><h2>Fluency Practice</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Tap the answer. Nothing here is new.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Talking is why you are learning any of this.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what is happening.</s><s>Then tap the thing you would say.</s><s>Say it out loud too - that is the part that counts.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>More than one answer can be real English.</s><s>Only one of them answers what was asked.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, choose it, then say it out loud.</s></mstts:express-as>' data-say="What do you say?">
+      <div class="slide-head"><span class="n">11</span><h2>Let us talk</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">What do you say?</span></div>
       <div class="stage">
         <div id="stage11"></div>
         <div class="choices" id="ch11"></div>
         <p class="fb" id="fb11"></p>
         <p class="score" id="score11"></p>
+        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the game from this unit&#39;s Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what the meaning says.</s><s>Then tap the word it is describing.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two words can look similar.</s><s>Read the whole meaning before you tap, not just the start.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the word that matches the meaning.">
-      <div class="slide-head"><span class="n">12</span><h2>Meaning Match</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Tap the word that matches the meaning.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the unit&#39;s own Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game card to play it.</s><s>Each game asks you a few short questions.</s><s>Play as many as you like, then come back for another.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play.">
+      <div class="slide-head"><span class="n">12</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Choose a game to play.</span></div>
       <div class="stage">
         <div id="stage12"></div>
         <div class="choices" id="ch12"></div>
@@ -600,9 +646,9 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every tile is face down until you tap it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap one tile to see what is on it.</s><s>Tap a second tile.</s><s>If a word and its meaning match, they stay face up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If they do not match, both tiles turn back over.</s><s>Remember what you saw - that is the whole game.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your first tile.</s></mstts:express-as>' data-say="Tap two tiles that go together.">
-      <div class="slide-head"><span class="n">13</span><h2>Memory Pairs</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Tap two tiles that go together.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now a whole story, read to you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press Listen and let it play.</s><s>Follow the words with your finger as you hear them.</s><s>That is how the sound and the letters join up in your head.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not stop to work out every word.</s><s>Keep following.</s><s>You can hear it again afterwards.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen, and off we go.</s></mstts:express-as>' data-say="Press Listen, then follow the words with your finger.">
+      <div class="slide-head"><span class="n">13</span><h2>The unit story</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Press Listen, then follow the words with your finger.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
@@ -610,14 +656,35 @@
         <p class="score" id="score13"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This unit has its own shelf of picture books.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap Read on a book that looks good.</s><s>Tap the pictures - some of them make a sound.</s><s>Press Listen if you want the page read to you.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A tap sound is a little extra.</s><s>If nothing happens when you tap, that is fine - keep reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a book and press Read.</s></mstts:express-as>' data-say="Choose a book to read.">
-      <div class="slide-head"><span class="n">14</span><h2>Picture books</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Choose a book to read.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every answer here is in the story you just read.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, that is fine.</s><s>Go back a step and read it again.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">14</span><h2>Story questions</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Tap the answer.</span></div>
       <div class="stage">
         <div id="stage14"></div>
         <div class="choices" id="ch14"></div>
         <p class="fb" id="fb14"></p>
         <p class="score" id="score14"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
+      <div class="slide-head"><span class="n">15</span><h2>Fluency Practice</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Tap the answer. Nothing here is new.</span></div>
+      <div class="stage">
+        <div id="stage15"></div>
+        <div class="choices" id="ch15"></div>
+        <p class="fb" id="fb15"></p>
+        <p class="score" id="score15"></p>
+        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">16</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Tap the answer.</span></div>
+      <div class="stage">
+        <div id="stage16"></div>
+        <div class="choices" id="ch16"></div>
+        <p class="fb" id="fb16"></p>
+        <p class="score" id="score16"></p>
       </div>
     </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -651,6 +718,48 @@
      ================================================================== */
 
   const LESSON = {
+    "lecture": {
+      "video": "../grade-1/media/unit-5/teacher-lecture.dfbda24d.mp4",
+      "poster": "../grade-1/media/unit-5/teacher-lecture-poster.ab3549df.jpg",
+      "captions": "../grade-1/media/unit-5/teacher-lecture.4c5976ea.vtt",
+      "slides": [
+        {
+          "start": 0,
+          "end": 38.67,
+          "title": "On the Farm"
+        },
+        {
+          "start": 38.67,
+          "end": 62.6,
+          "title": "What you will achieve"
+        },
+        {
+          "start": 62.6,
+          "end": 74.88,
+          "title": "Words to learn"
+        },
+        {
+          "start": 74.88,
+          "end": 90.05,
+          "title": "Read and think"
+        },
+        {
+          "start": 90.05,
+          "end": 107.06,
+          "title": "Name a farm animal"
+        },
+        {
+          "start": 107.06,
+          "end": 122.09,
+          "title": "Use English for a real purpose"
+        },
+        {
+          "start": 122.09,
+          "end": 136.905,
+          "title": "You are ready to begin"
+        }
+      ]
+    },
     "sounds": [
       {
         "w": "sun",
@@ -1922,220 +2031,822 @@
         "why": "does: We use does with he, she and it to ask about doing something."
       }
     ],
-    "meaningmatch": [
-      {
-        "ask": "Which word means: The big hot star that gives us light in the day.",
-        "opts": [
-          {
-            "t": "sun",
-            "ok": 1
-          },
-          {
-            "t": "fun",
-            "ok": 0
-          },
-          {
-            "t": "rug",
-            "ok": 0
-          }
-        ],
-        "why": "sun: The big hot star that gives us light in the day."
-      },
-      {
-        "ask": "Which word means: A big wild cat with a loud roar and golden fur.",
-        "opts": [
-          {
-            "t": "sun",
-            "ok": 0
-          },
-          {
-            "t": "fun",
-            "ok": 0
-          },
-          {
-            "t": "lion",
-            "ok": 1
-          }
-        ],
-        "why": "lion: A big wild cat with a loud roar and golden fur."
-      },
-      {
-        "ask": "Which word means: This word asks in what way something happens.",
-        "opts": [
-          {
-            "t": "fun",
-            "ok": 0
-          },
-          {
-            "t": "how",
-            "ok": 1
-          },
-          {
-            "t": "sun",
-            "ok": 0
-          }
-        ],
-        "why": "how: This word asks in what way something happens."
-      },
-      {
-        "ask": "Which word means: Liked means you enjoyed something or thought it was nice.",
-        "opts": [
-          {
-            "t": "liked",
-            "ok": 1
-          },
-          {
-            "t": "sun",
-            "ok": 0
-          },
-          {
-            "t": "fun",
-            "ok": 0
-          }
-        ],
-        "why": "liked: Liked means you enjoyed something or thought it was nice."
-      },
-      {
-        "ask": "Which word means: The short, snuffly sound that a pig makes in the mud.",
-        "opts": [
-          {
-            "t": "sun",
-            "ok": 0
-          },
-          {
-            "t": "fun",
-            "ok": 0
-          },
-          {
-            "t": "oink",
-            "ok": 1
-          }
-        ],
-        "why": "oink: The short, snuffly sound that a pig makes in the mud."
-      },
-      {
-        "ask": "Which word means: Getting bigger, like a plant or a child.",
-        "opts": [
-          {
-            "t": "fun",
-            "ok": 0
-          },
-          {
-            "t": "growing",
-            "ok": 1
-          },
-          {
-            "t": "sun",
-            "ok": 0
-          }
-        ],
-        "why": "growing: Getting bigger, like a plant or a child."
-      }
-    ],
-    "memorypairs": [
-      {
-        "prompt": "Match vocabulary set 1.",
-        "pairs": [
-          [
-            "bus",
-            "A long vehicle that carries many people at once."
-          ],
-          [
-            "mud",
-            "Mud is soft wet earth."
-          ],
-          [
-            "bird",
-            "A bird is an animal with feathers and wings."
+    "games": {
+      "games": [
+        {
+          "id": "definition-dash",
+          "type": "choice",
+          "title": "Definition Dash",
+          "skill": "Meaning in context",
+          "description": "Choose the approved meaning before moving to the next clue.",
+          "rounds": [
+            {
+              "prompt": "What does 'fun' mean in this unit?",
+              "choices": [
+                "Fun means enjoying yourself.",
+                "The big hot star that gives us light in the day.",
+                "A rug is a soft mat that covers part of a floor."
+              ],
+              "answer": "Fun means enjoying yourself.",
+              "explanation": "fun: Fun means enjoying yourself."
+            },
+            {
+              "prompt": "What does 'he' mean in this unit?",
+              "choices": [
+                "The big hot star that gives us light in the day.",
+                "Fun means enjoying yourself.",
+                "This word means a boy or a man."
+              ],
+              "answer": "This word means a boy or a man.",
+              "explanation": "he: This word means a boy or a man."
+            },
+            {
+              "prompt": "What does 'must' mean in this unit?",
+              "choices": [
+                "Fun means enjoying yourself.",
+                "Must means you have to do something.",
+                "The big hot star that gives us light in the day."
+              ],
+              "answer": "Must means you have to do something.",
+              "explanation": "must: Must means you have to do something."
+            },
+            {
+              "prompt": "What does 'peep' mean in this unit?",
+              "choices": [
+                "Peep is the small sound a baby chick makes.",
+                "The big hot star that gives us light in the day.",
+                "Fun means enjoying yourself."
+              ],
+              "answer": "Peep is the small sound a baby chick makes.",
+              "explanation": "peep: Peep is the small sound a baby chick makes."
+            },
+            {
+              "prompt": "What does 'field' mean in this unit?",
+              "choices": [
+                "The big hot star that gives us light in the day.",
+                "Fun means enjoying yourself.",
+                "Wide open land where grass or food plants grow."
+              ],
+              "answer": "Wide open land where grass or food plants grow.",
+              "explanation": "field: Wide open land where grass or food plants grow."
+            },
+            {
+              "prompt": "What does 'carrots' mean in this unit?",
+              "choices": [
+                "Fun means enjoying yourself.",
+                "Long orange vegetables that grow under the soil.",
+                "The big hot star that gives us light in the day."
+              ],
+              "answer": "Long orange vegetables that grow under the soil.",
+              "explanation": "carrots: Long orange vegetables that grow under the soil."
+            }
           ]
-        ]
-      },
-      {
-        "prompt": "Match vocabulary set 2.",
-        "pairs": [
-          [
-            "her",
-            "This word means belonging to a girl or a woman."
-          ],
-          [
-            "are",
-            "We use are with you, we and they to say what something is."
-          ],
-          [
-            "want",
-            "Want means you would like to have something."
+        },
+        {
+          "id": "language-choice",
+          "type": "choice",
+          "title": "Language Choice",
+          "skill": "Grammar and usage",
+          "description": "Choose the form that makes the unit language accurate.",
+          "rounds": [
+            {
+              "prompt": "Which word names a farm animal?",
+              "choices": [
+                "tractor",
+                "barn",
+                "goat",
+                "grass"
+              ],
+              "answer": "goat",
+              "explanation": "A goat is an animal; a tractor, a barn and grass are all found on a farm but they are not alive animals."
+            },
+            {
+              "prompt": "Which farm animal gives us milk?",
+              "choices": [
+                "horse",
+                "hen",
+                "duck",
+                "cow"
+              ],
+              "answer": "cow",
+              "explanation": "A cow gives milk; a hen and a duck give eggs and we do not milk a horse."
+            },
+            {
+              "prompt": "Which farm animal lays the eggs we eat for breakfast?",
+              "choices": [
+                "hen",
+                "sheep",
+                "cow",
+                "horse"
+              ],
+              "answer": "hen",
+              "explanation": "A hen lays eggs; a sheep, a cow and a horse do not lay eggs at all."
+            },
+            {
+              "prompt": "What sound does a cow make?",
+              "choices": [
+                "neigh",
+                "moo",
+                "quack",
+                "baa"
+              ],
+              "answer": "moo",
+              "explanation": "A cow says moo; quack is a duck, baa is a sheep and neigh is a horse."
+            },
+            {
+              "prompt": "Which animal says baa?",
+              "choices": [
+                "duck",
+                "hen",
+                "sheep",
+                "cow"
+              ],
+              "answer": "sheep",
+              "explanation": "A sheep says baa; a duck quacks, a cow moos and a hen clucks."
+            },
+            {
+              "prompt": "What do we call a baby hen?",
+              "choices": [
+                "calf",
+                "foal",
+                "lamb",
+                "chick"
+              ],
+              "answer": "chick",
+              "explanation": "A baby hen is a chick; a calf is a baby cow, a lamb is a baby sheep and a foal is a baby horse."
+            }
           ]
-        ]
-      },
-      {
-        "prompt": "Match vocabulary set 3.",
-        "pairs": [
-          [
-            "loved",
-            "Loved means you liked someone or something very much."
-          ],
-          [
-            "drove",
-            "Drove means you made a vehicle move and go somewhere."
-          ],
-          [
-            "verse",
-            "Verse means one part of a song or poem."
+        },
+        {
+          "id": "meaning-match",
+          "type": "choice",
+          "title": "Meaning Match",
+          "skill": "Vocabulary",
+          "description": "Match each unit word to its approved child-friendly meaning.",
+          "rounds": [
+            {
+              "prompt": "Which word means: The big hot star that gives us light in the day.",
+              "choices": [
+                "sun",
+                "fun",
+                "rug"
+              ],
+              "answer": "sun",
+              "explanation": "sun: The big hot star that gives us light in the day."
+            },
+            {
+              "prompt": "Which word means: A big wild cat with a loud roar and golden fur.",
+              "choices": [
+                "sun",
+                "fun",
+                "lion"
+              ],
+              "answer": "lion",
+              "explanation": "lion: A big wild cat with a loud roar and golden fur."
+            },
+            {
+              "prompt": "Which word means: This word asks in what way something happens.",
+              "choices": [
+                "fun",
+                "how",
+                "sun"
+              ],
+              "answer": "how",
+              "explanation": "how: This word asks in what way something happens."
+            },
+            {
+              "prompt": "Which word means: Liked means you enjoyed something or thought it was nice.",
+              "choices": [
+                "liked",
+                "sun",
+                "fun"
+              ],
+              "answer": "liked",
+              "explanation": "liked: Liked means you enjoyed something or thought it was nice."
+            },
+            {
+              "prompt": "Which word means: The short, snuffly sound that a pig makes in the mud.",
+              "choices": [
+                "sun",
+                "fun",
+                "oink"
+              ],
+              "answer": "oink",
+              "explanation": "oink: The short, snuffly sound that a pig makes in the mud."
+            },
+            {
+              "prompt": "Which word means: Getting bigger, like a plant or a child.",
+              "choices": [
+                "fun",
+                "growing",
+                "sun"
+              ],
+              "answer": "growing",
+              "explanation": "growing: Getting bigger, like a plant or a child."
+            }
           ]
-        ]
-      },
-      {
-        "prompt": "Match vocabulary set 4.",
-        "pairs": [
-          [
-            "heard",
-            "Heard means you noticed a sound with your ears."
-          ],
-          [
-            "duck",
-            "A farm bird that swims and has flat feet."
-          ],
-          [
-            "quack",
-            "The loud, short sound that a duck makes near the water."
+        },
+        {
+          "id": "memory-pairs",
+          "type": "pairs",
+          "title": "Memory Pairs",
+          "skill": "Vocabulary recall",
+          "description": "Reveal tiles and connect each word with its meaning.",
+          "rounds": [
+            {
+              "prompt": "Match vocabulary set 1.",
+              "pairs": [
+                [
+                  "bus",
+                  "A long vehicle that carries many people at once."
+                ],
+                [
+                  "mud",
+                  "Mud is soft wet earth."
+                ],
+                [
+                  "bird",
+                  "A bird is an animal with feathers and wings."
+                ]
+              ]
+            },
+            {
+              "prompt": "Match vocabulary set 2.",
+              "pairs": [
+                [
+                  "her",
+                  "This word means belonging to a girl or a woman."
+                ],
+                [
+                  "are",
+                  "We use are with you, we and they to say what something is."
+                ],
+                [
+                  "want",
+                  "Want means you would like to have something."
+                ]
+              ]
+            },
+            {
+              "prompt": "Match vocabulary set 3.",
+              "pairs": [
+                [
+                  "loved",
+                  "Loved means you liked someone or something very much."
+                ],
+                [
+                  "drove",
+                  "Drove means you made a vehicle move and go somewhere."
+                ],
+                [
+                  "verse",
+                  "Verse means one part of a song or poem."
+                ]
+              ]
+            },
+            {
+              "prompt": "Match vocabulary set 4.",
+              "pairs": [
+                [
+                  "heard",
+                  "Heard means you noticed a sound with your ears."
+                ],
+                [
+                  "duck",
+                  "A farm bird that swims and has flat feet."
+                ],
+                [
+                  "quack",
+                  "The loud, short sound that a duck makes near the water."
+                ]
+              ]
+            },
+            {
+              "prompt": "Match vocabulary set 5.",
+              "pairs": [
+                [
+                  "farm",
+                  "A place where people grow food and keep animals."
+                ],
+                [
+                  "wheat",
+                  "A tall farm plant we use to make bread."
+                ],
+                [
+                  "picking",
+                  "Taking fruit or vegetables off a plant with your hands."
+                ]
+              ]
+            },
+            {
+              "prompt": "Match vocabulary set 6.",
+              "pairs": [
+                [
+                  "onions",
+                  "Round vegetables with layers that make your eyes water."
+                ],
+                [
+                  "animal",
+                  "An animal is a living thing that moves about, like a cat or a bird."
+                ],
+                [
+                  "elephant",
+                  "A very big grey animal with a long trunk and huge ears."
+                ]
+              ]
+            }
           ]
-        ]
-      },
-      {
-        "prompt": "Match vocabulary set 5.",
-        "pairs": [
-          [
-            "farm",
-            "A place where people grow food and keep animals."
-          ],
-          [
-            "wheat",
-            "A tall farm plant we use to make bread."
-          ],
-          [
-            "picking",
-            "Taking fruit or vegetables off a plant with your hands."
+        },
+        {
+          "id": "question-quest",
+          "type": "choice",
+          "title": "Question Quest",
+          "skill": "Question answering",
+          "description": "Read each unit question carefully and choose the best answer.",
+          "rounds": [
+            {
+              "prompt": "What do we call a baby hen?",
+              "choices": [
+                "calf",
+                "foal",
+                "lamb",
+                "chick"
+              ],
+              "answer": "chick",
+              "explanation": "A baby hen is a chick; a calf is a baby cow, a lamb is a baby sheep and a foal is a baby horse."
+            },
+            {
+              "prompt": "Which farm animal can swim on the pond?",
+              "choices": [
+                "duck",
+                "sheep",
+                "hen",
+                "goat"
+              ],
+              "answer": "duck",
+              "explanation": "A duck swims on water; hens, sheep and goats stay on the land."
+            },
+            {
+              "prompt": "Which sentence tells what the horse is doing right now?",
+              "choices": [
+                "This is a horse.",
+                "The horse is running.",
+                "The horse is brown.",
+                "The horse has a long tail."
+              ],
+              "answer": "The horse is running.",
+              "explanation": "The -ing word running shows an action happening now; the others tell us a colour, a body part or a name."
+            },
+            {
+              "prompt": "Which sentence tells us what a sheep has?",
+              "choices": [
+                "It has feathers.",
+                "It has wings.",
+                "It has soft wool.",
+                "It has fins."
+              ],
+              "answer": "It has soft wool.",
+              "explanation": "Sheep are covered in wool; feathers and wings belong to birds and fins belong to fish."
+            },
+            {
+              "prompt": "Which word do we use to tell what happens at the beginning of a story?",
+              "choices": [
+                "Last",
+                "Next",
+                "Then",
+                "First"
+              ],
+              "answer": "First",
+              "explanation": "First shows the beginning; then and next come in the middle and last comes at the end."
+            },
+            {
+              "prompt": "Which word names a farm animal?",
+              "choices": [
+                "tractor",
+                "barn",
+                "goat",
+                "grass"
+              ],
+              "answer": "goat",
+              "explanation": "A goat is an animal; a tractor, a barn and grass are all found on a farm but they are not alive animals."
+            }
           ]
-        ]
-      },
-      {
-        "prompt": "Match vocabulary set 6.",
-        "pairs": [
-          [
-            "onions",
-            "Round vegetables with layers that make your eyes water."
-          ],
-          [
-            "animal",
-            "An animal is a living thing that moves about, like a cat or a bird."
-          ],
-          [
-            "elephant",
-            "A very big grey animal with a long trunk and huge ears."
+        },
+        {
+          "id": "reading-detective",
+          "type": "choice",
+          "title": "Reading Detective",
+          "skill": "Comprehension",
+          "description": "Use unit evidence to solve each reading clue.",
+          "rounds": [
+            {
+              "prompt": "Which animal did Amal and Grandma go to see first?",
+              "choices": [
+                "The cow",
+                "A little white egg",
+                "The ___ says ___. (for example: The cow says moo.)"
+              ],
+              "answer": "The cow",
+              "explanation": "The story says, 'First they went to see the cow.'"
+            },
+            {
+              "prompt": "Which animal wanted to eat Amal's hat?",
+              "choices": [
+                "Tired, but happy",
+                "The ___ is ___ing.",
+                "The goat"
+              ],
+              "answer": "The goat",
+              "explanation": "The story says the goat wanted to eat Amal's hat, and Amal laughed."
+            },
+            {
+              "prompt": "What did Amal find in the straw after she fed the hen?",
+              "choices": [
+                "The cow",
+                "A little white egg",
+                "Because Amal was kind and fed her"
+              ],
+              "answer": "A little white egg",
+              "explanation": "Amal saw something warm in the straw: it was a little white egg."
+            },
+            {
+              "prompt": "How did Amal feel at the end of her farm day?",
+              "choices": [
+                "Tired, but happy",
+                "The ___ says ___. (for example: The cow says moo.)",
+                "The goat"
+              ],
+              "answer": "Tired, but happy",
+              "explanation": "After waving to Adam the story says she was tired, but she was happy."
+            },
+            {
+              "prompt": "Why did the hen give Amal an egg?",
+              "choices": [
+                "The ___ is ___ing.",
+                "A little white egg",
+                "Because Amal was kind and fed her"
+              ],
+              "answer": "Because Amal was kind and fed her",
+              "explanation": "Grandma says, 'When you are kind to the animals, they are kind to you.'"
+            },
+            {
+              "prompt": "Which talk line makes an animal sound?",
+              "choices": [
+                "Tired, but happy",
+                "The ___ says ___. (for example: The cow says moo.)",
+                "The cow"
+              ],
+              "answer": "The ___ says ___. (for example: The cow says moo.)",
+              "explanation": "'The ___ says ___' is the line for animal sounds."
+            }
           ]
-        ]
-      }
-    ],
+        },
+        {
+          "id": "sentence-puzzle",
+          "type": "sentence",
+          "title": "Sentence Puzzle",
+          "skill": "Sentence building",
+          "description": "Put unit words into the correct sentence order.",
+          "rounds": [
+            {
+              "prompt": "Build the complete model sentence.",
+              "tokens": [
+                "school.",
+                "our",
+                "on",
+                "shines",
+                "sun",
+                "The"
+              ],
+              "answer": "The sun shines on our school."
+            },
+            {
+              "prompt": "Build the complete model sentence.",
+              "tokens": [
+                "wall.",
+                "the",
+                "on",
+                "sat",
+                "bird",
+                "little",
+                "A"
+              ],
+              "answer": "A little bird sat on the wall."
+            },
+            {
+              "prompt": "Build the complete model sentence.",
+              "tokens": [
+                "book.",
+                "new",
+                "a",
+                "have",
+                "I"
+              ],
+              "answer": "I have a new book."
+            },
+            {
+              "prompt": "Build the complete model sentence.",
+              "tokens": [
+                "spring.",
+                "in",
+                "grows",
+                "farm",
+                "the",
+                "on",
+                "Everything"
+              ],
+              "answer": "Everything on the farm grows in spring."
+            },
+            {
+              "prompt": "Build the complete model sentence.",
+              "tokens": [
+                "peep.",
+                "soft",
+                "a",
+                "made",
+                "chick",
+                "little",
+                "The"
+              ],
+              "answer": "The little chick made a soft peep."
+            },
+            {
+              "prompt": "Build the complete model sentence.",
+              "tokens": [
+                "mud.",
+                "the",
+                "in",
+                "oink",
+                "says",
+                "pig",
+                "The"
+              ],
+              "answer": "The pig says oink in the mud."
+            }
+          ]
+        },
+        {
+          "id": "spelling-builder",
+          "type": "spelling",
+          "title": "Spelling Builder",
+          "skill": "Spelling",
+          "description": "Choose letter tiles to build important unit words.",
+          "rounds": [
+            {
+              "prompt": "Build the word that matches the clue.",
+              "clue": "A cup is a small container you drink from.",
+              "answer": "cup"
+            },
+            {
+              "prompt": "Build the word that matches the clue.",
+              "clue": "A big wild cat with a loud roar and golden fur.",
+              "answer": "lion"
+            },
+            {
+              "prompt": "Build the word that matches the clue.",
+              "clue": "Must means you have to do something.",
+              "answer": "must"
+            },
+            {
+              "prompt": "Build the word that matches the clue.",
+              "clue": "Peep is the small sound a baby chick makes.",
+              "answer": "peep"
+            },
+            {
+              "prompt": "Build the word that matches the clue.",
+              "clue": "A big farm building where animals and hay stay.",
+              "answer": "barn"
+            },
+            {
+              "prompt": "Build the word that matches the clue.",
+              "clue": "Round vegetables with layers that make your eyes water.",
+              "answer": "onions"
+            }
+          ]
+        },
+        {
+          "id": "unit-mission",
+          "type": "choice",
+          "title": "Unit Mission",
+          "skill": "Mixed review",
+          "description": "Finish with a mixed challenge across the whole unit.",
+          "rounds": [
+            {
+              "prompt": "Which sentence tells us what a sheep has?",
+              "choices": [
+                "It has feathers.",
+                "It has wings.",
+                "It has soft wool.",
+                "It has fins."
+              ],
+              "answer": "It has soft wool.",
+              "explanation": "Sheep are covered in wool; feathers and wings belong to birds and fins belong to fish."
+            },
+            {
+              "prompt": "Which word do we use to tell what happens at the beginning of a story?",
+              "choices": [
+                "Last",
+                "Next",
+                "Then",
+                "First"
+              ],
+              "answer": "First",
+              "explanation": "First shows the beginning; then and next come in the middle and last comes at the end."
+            },
+            {
+              "prompt": "Which word means: A bird is an animal with feathers and wings.",
+              "choices": [
+                "bird",
+                "sun",
+                "fun"
+              ],
+              "answer": "bird",
+              "explanation": "bird: A bird is an animal with feathers and wings."
+            },
+            {
+              "prompt": "Which word means: Must means you have to do something.",
+              "choices": [
+                "sun",
+                "fun",
+                "must"
+              ],
+              "answer": "must",
+              "explanation": "must: Must means you have to do something."
+            },
+            {
+              "prompt": "What type of word is 'quack'?",
+              "choices": [
+                "Noun",
+                "Verb",
+                "Adjective"
+              ],
+              "answer": "Noun",
+              "explanation": "Quack is used as a noun in this dictionary sense."
+            },
+            {
+              "prompt": "What type of word is 'carrots'?",
+              "choices": [
+                "Verb",
+                "Adjective",
+                "Noun"
+              ],
+              "answer": "Noun",
+              "explanation": "Carrots is used as a noun in this dictionary sense."
+            }
+          ]
+        },
+        {
+          "id": "word-order-race",
+          "type": "sequence",
+          "title": "Word Order Race",
+          "skill": "Fluency and order",
+          "description": "Arrange unit language in a clear, accurate order.",
+          "rounds": [
+            {
+              "prompt": "Put this unit sentence in order.",
+              "tokens": [
+                "tomatoes.",
+                "ripe",
+                "picking",
+                "is",
+                "Maya"
+              ],
+              "answer": "Maya is picking ripe tomatoes."
+            },
+            {
+              "prompt": "Put this unit sentence in order.",
+              "tokens": [
+                "hill.",
+                "the",
+                "on",
+                "grass",
+                "eats",
+                "goat",
+                "The"
+              ],
+              "answer": "The goat eats grass on the hill."
+            },
+            {
+              "prompt": "Put this unit sentence in order.",
+              "tokens": [
+                "Adam.",
+                "to",
+                "ball",
+                "the",
+                "threw",
+                "Sami"
+              ],
+              "answer": "Sami threw the ball to Adam."
+            },
+            {
+              "prompt": "Put this unit sentence in order.",
+              "tokens": [
+                "chick?",
+                "a",
+                "like",
+                "hop",
+                "you",
+                "Can"
+              ],
+              "answer": "Can you hop like a chick?"
+            },
+            {
+              "prompt": "Put this unit sentence in order.",
+              "tokens": [
+                "neigh.",
+                "goes",
+                "horse",
+                "happy",
+                "The"
+              ],
+              "answer": "The happy horse goes neigh."
+            },
+            {
+              "prompt": "Put this unit sentence in order.",
+              "tokens": [
+                "hands.",
+                "gentle",
+                "takes",
+                "seeds",
+                "Planting"
+              ],
+              "answer": "Planting seeds takes gentle hands."
+            }
+          ]
+        },
+        {
+          "id": "word-type-power",
+          "type": "choice",
+          "title": "Word Type Power",
+          "skill": "Parts of speech",
+          "description": "Identify how each vocabulary word works in English.",
+          "rounds": [
+            {
+              "prompt": "What type of word is 'rug'?",
+              "choices": [
+                "Noun",
+                "Verb",
+                "Adjective"
+              ],
+              "answer": "Noun",
+              "explanation": "Rug is used as a noun in this dictionary sense."
+            },
+            {
+              "prompt": "What type of word is 'were'?",
+              "choices": [
+                "Noun",
+                "Adjective",
+                "Verb"
+              ],
+              "answer": "Verb",
+              "explanation": "Were is used as a verb in this dictionary sense."
+            },
+            {
+              "prompt": "What type of word is 'drove'?",
+              "choices": [
+                "Adjective",
+                "Verb",
+                "Noun"
+              ],
+              "answer": "Verb",
+              "explanation": "Drove is used as a verb in this dictionary sense."
+            },
+            {
+              "prompt": "What type of word is 'goose'?",
+              "choices": [
+                "Noun",
+                "Verb",
+                "Adjective"
+              ],
+              "answer": "Noun",
+              "explanation": "Goose is used as a noun in this dictionary sense."
+            },
+            {
+              "prompt": "What type of word is 'seed'?",
+              "choices": [
+                "Verb",
+                "Adjective",
+                "Noun"
+              ],
+              "answer": "Noun",
+              "explanation": "Seed is used as a noun in this dictionary sense."
+            },
+            {
+              "prompt": "What type of word is 'animal'?",
+              "choices": [
+                "Adjective",
+                "Noun",
+                "Verb"
+              ],
+              "answer": "Noun",
+              "explanation": "Animal is used as a noun in this dictionary sense."
+            }
+          ]
+        }
+      ],
+      "skipped": 1,
+      "mastery": 4
+    },
     "books": [
       {
         "id": "the-little-lost-chick",
@@ -2689,6 +3400,370 @@
             "sound": "child-happy"
           }
         ]
+      }
+    ],
+    "bookquestions": [
+      {
+        "kind": "choice",
+        "book": "the-little-lost-chick",
+        "page": 11,
+        "q": "Where was little Pip asleep?",
+        "options": [
+          "in the barn",
+          "by the pond",
+          "in the hay"
+        ],
+        "answer": 2
+      },
+      {
+        "kind": "choice",
+        "book": "the-little-lost-chick",
+        "page": 7,
+        "q": "Where did Duku look for Pip?",
+        "options": [
+          "in the barn",
+          "by the pond",
+          "in the grass"
+        ],
+        "answer": 0
+      },
+      {
+        "kind": "picture",
+        "q": "Tap the picture of the cow.",
+        "pick": [
+          {
+            "book": "who-says-moo",
+            "page": 6
+          },
+          {
+            "book": "who-says-moo",
+            "page": 2
+          },
+          {
+            "book": "who-says-moo",
+            "page": 4
+          }
+        ],
+        "answer": 1
+      },
+      {
+        "kind": "picture",
+        "q": "Tap the picture of the duck.",
+        "pick": [
+          {
+            "book": "who-says-moo",
+            "page": 6
+          },
+          {
+            "book": "hello-to-the-farm",
+            "page": 4
+          },
+          {
+            "book": "who-says-moo",
+            "page": 5
+          }
+        ],
+        "answer": 2
+      },
+      {
+        "kind": "order",
+        "book": "duku-plants-a-row",
+        "q": "Tap the pictures from “Duku Plants a Row” in story order.",
+        "order": [
+          3,
+          7,
+          11
+        ]
+      },
+      {
+        "kind": "choice",
+        "book": "amal-and-the-little-hen",
+        "page": 12,
+        "q": "What did Amal drink at night?",
+        "options": [
+          "water",
+          "milk",
+          "juice"
+        ],
+        "answer": 1
+      },
+      {
+        "kind": "choice",
+        "book": "who-says-moo",
+        "page": 2,
+        "q": "What does the cow say?",
+        "options": [
+          "cluck",
+          "moo",
+          "baa"
+        ],
+        "answer": 1
+      },
+      {
+        "kind": "order",
+        "book": "the-little-lost-chick",
+        "q": "Tap the pictures from “The Little Lost Chick” in story order.",
+        "order": [
+          4,
+          6,
+          12
+        ]
+      },
+      {
+        "kind": "picture",
+        "q": "Tap the picture of the egg.",
+        "pick": [
+          {
+            "book": "the-little-lost-chick",
+            "page": 11
+          },
+          {
+            "book": "duku-plants-a-row",
+            "page": 9
+          },
+          {
+            "book": "amal-and-the-little-hen",
+            "page": 8
+          }
+        ],
+        "answer": 2
+      },
+      {
+        "kind": "picture",
+        "q": "Tap the picture of the tractor.",
+        "pick": [
+          {
+            "book": "hello-to-the-farm",
+            "page": 4
+          },
+          {
+            "book": "the-little-lost-chick",
+            "page": 8
+          },
+          {
+            "book": "duku-plants-a-row",
+            "page": 7
+          }
+        ],
+        "answer": 0
+      },
+      {
+        "kind": "choice",
+        "book": "hello-to-the-farm",
+        "page": 11,
+        "q": "What grows tall on the farm?",
+        "options": [
+          "the wheat",
+          "the egg",
+          "the barn"
+        ],
+        "answer": 0
+      },
+      {
+        "kind": "choice",
+        "book": "duku-plants-a-row",
+        "page": 11,
+        "q": "What grew in Duku's row?",
+        "options": [
+          "mangoes",
+          "bananas",
+          "carrots"
+        ],
+        "answer": 2
+      },
+      {
+        "kind": "choice",
+        "book": "the-chick-and-the-duck",
+        "page": 3,
+        "q": "Who did Pip meet?",
+        "options": [
+          "a duck",
+          "a cow",
+          "a frog"
+        ],
+        "answer": 0
+      },
+      {
+        "kind": "picture",
+        "q": "Tap the picture of the steaming pot.",
+        "pick": [
+          {
+            "book": "the-chick-and-the-duck",
+            "page": 4
+          },
+          {
+            "book": "vegetables-for-the-pot",
+            "page": 11
+          },
+          {
+            "book": "vegetables-for-the-pot",
+            "page": 8
+          }
+        ],
+        "answer": 1
+      },
+      {
+        "kind": "choice",
+        "book": "vegetables-for-the-pot",
+        "page": 5,
+        "q": "Who dug up the potatoes?",
+        "options": [
+          "Amal",
+          "Ayeeyo",
+          "Adam"
+        ],
+        "answer": 1
+      },
+      {
+        "kind": "order",
+        "book": "the-chick-and-the-duck",
+        "q": "Tap the pictures from “The Chick and the Duck” in story order.",
+        "order": [
+          3,
+          8,
+          12
+        ]
+      },
+      {
+        "kind": "picture",
+        "q": "Tap the picture of Pip hopping.",
+        "pick": [
+          {
+            "book": "the-chick-and-the-duck",
+            "page": 7
+          },
+          {
+            "book": "the-chick-and-the-duck",
+            "page": 2
+          },
+          {
+            "book": "vegetables-for-the-pot",
+            "page": 3
+          }
+        ],
+        "answer": 0
+      },
+      {
+        "kind": "choice",
+        "book": "vegetables-for-the-pot",
+        "page": 4,
+        "q": "How many carrots did Amal pull?",
+        "options": [
+          "three",
+          "one",
+          "two"
+        ],
+        "answer": 2
+      }
+    ],
+    "talk": [
+      {
+        "ask": "Your friend wants you to name a farm animal. What do you say?",
+        "opts": [
+          {
+            "t": "This is a cow.",
+            "ok": 1
+          },
+          {
+            "t": "The sheep says baa.",
+            "ok": 0
+          },
+          {
+            "t": "The goat is running.",
+            "ok": 0
+          }
+        ],
+        "why": "Name one farm animal. Say 'a' before most words, but 'an' before a vowel sound: a cow, an ox."
+      },
+      {
+        "ask": "Your friend wants you to match the animal to its sound. What do you say?",
+        "opts": [
+          {
+            "t": "The goat is running.",
+            "ok": 0
+          },
+          {
+            "t": "The cow says moo.",
+            "ok": 1
+          },
+          {
+            "t": "It has horns.",
+            "ok": 0
+          }
+        ],
+        "why": "Name the animal first, then copy the sound it makes. Make the sound nice and big!"
+      },
+      {
+        "ask": "Your friend wants you to say what a farm animal is doing. What do you say?",
+        "opts": [
+          {
+            "t": "It has horns.",
+            "ok": 0
+          },
+          {
+            "t": "First we milk the cow, then we clean the shed.",
+            "ok": 0
+          },
+          {
+            "t": "The hen is pecking.",
+            "ok": 1
+          }
+        ],
+        "why": "Watch one animal and describe what it is doing now. Add -ing to the action word."
+      },
+      {
+        "ask": "Your friend wants you to describe what an animal has. What do you say?",
+        "opts": [
+          {
+            "t": "It has horns.",
+            "ok": 1
+          },
+          {
+            "t": "First we milk the cow, then we clean the shed.",
+            "ok": 0
+          },
+          {
+            "t": "I can see a sheep.",
+            "ok": 0
+          }
+        ],
+        "why": "Tell us the parts an animal has, like horns, wings or wool. Say 'It has' and add the part."
+      },
+      {
+        "ask": "Your friend wants you to put two farm jobs in order. What do you say?",
+        "opts": [
+          {
+            "t": "I can see a sheep.",
+            "ok": 0
+          },
+          {
+            "t": "First we feed the hens, then we collect the eggs.",
+            "ok": 1
+          },
+          {
+            "t": "This is a cow.",
+            "ok": 0
+          }
+        ],
+        "why": "Say which farm job happens first, then say what happens next. Order words keep the story clear."
+      },
+      {
+        "ask": "Your friend wants you to spot and name what you see on the farm. What do you say?",
+        "opts": [
+          {
+            "t": "This is a cow.",
+            "ok": 0
+          },
+          {
+            "t": "The sheep says baa.",
+            "ok": 0
+          },
+          {
+            "t": "I can see a barn.",
+            "ok": 1
+          }
+        ],
+        "why": "Name one thing you spot on the farm. Say 'a' before most words, but 'an' before a vowel sound: a barn, an ox."
       }
     ],
     "audioRelease": "20260903c",
@@ -3992,74 +5067,50 @@
     draw();
   }
 
-  /* ---- Memory Pairs: reveal on tap, connect word to meaning --------
-     The pack's own description is "Reveal tiles and connect each word
-     with its meaning", so tiles start face-down (a "?" back) and the tap
-     reveals the text underneath - not just a plain tap-to-select grid.
-     Round after round, the same shape every other step here uses; a round
-     is done when its three pairs are all matched.
+  /* ---- the unit's video lesson ------------------------------------
+     The recording the course already ships at
+     english/grade-1/media/unit-N/, reached through ../grade-1/ - which
+     resolves to the same place in local dev and on the CDN, exactly as
+     ../ebooks/ does for the picture books. Nothing is copied.
+
+     Units 1-9 only: lecture-media.json has no key 10, because Unit 10
+     opens on the capstone instead. The builder makes this step only where
+     a video actually exists rather than assuming ten of them.
+
+     THE STEP IS FINISHED BY WATCHING, NOT BY PRESSING. `ended` marks it
+     done on its own. The button beneath is there because a video can
+     legitimately be watched elsewhere, or already have been watched last
+     week, and a step a child cannot leave is a trap - but it says what it
+     is ("I have watched it"), so pressing it is a claim the child makes
+     rather than a way past.
      ------------------------------------------------------------------ */
-  function memoryPairs(o) {
-    let r = 0;
+  function lectureStep(o) {
     const el = o.el;
-    function draw() {
-      const round = o.items[r];
-      let tiles = round.pairs.flatMap((p, pi) => [
-        { text: p[0], pair: pi },
-        { text: p[1], pair: pi },
-      ]);
-      tiles = shuffle(tiles).map((t, k) => ({ ...t, k }));
-      let picked = [];
-      let matched = 0;
-      let lock = false;
-      $(el.ask).innerHTML = round.prompt || "Tap two tiles that go together.";
-      $(el.stage).innerHTML = '<div class="pairsgrid" id="' + el.grid + '"></div>';
-      $(el.score).textContent = "Round " + (r + 1) + " of " + o.items.length;
-      $(el.fb).textContent = ""; $(el.fb).className = "fb";
-      const grid = $(el.grid);
-      grid.innerHTML = tiles.map((t) =>
-        '<button type="button" class="pairtile" data-k="' + t.k + '">' +
-        '<span class="back" aria-hidden="true">?</span>' +
-        '<span class="face">' + esc(t.text) + "</span></button>").join("");
-      grid.addEventListener("click", (e) => {
-        const b = e.target.closest(".pairtile");
-        if (!b || lock) return;
-        const k = Number(b.dataset.k);
-        if (b.classList.contains("matched") || b.classList.contains("revealed")) return;
-        b.classList.add("revealed");
-        picked.push({ k, pair: tiles[k].pair, el: b });
-        if (picked.length < 2) return;
-        lock = true;
-        const [a, c] = picked;
-        if (a.pair === c.pair) {
-          a.el.classList.add("matched"); c.el.classList.add("matched");
-          a.el.disabled = true; c.el.disabled = true;
-          matched++;
-          picked = []; lock = false;
-          if (matched === round.pairs.length) {
-            $(el.fb).className = "fb good";
-            $(el.fb).textContent = cheer() + " Round " + (r + 1) + " matched.";
-            setTimeout(() => {
-              r++;
-              if (r >= o.items.length) {
-                $(el.stage).innerHTML = ""; $(el.score).textContent = "";
-                $(el.fb).className = "fb good";
-                $(el.fb).textContent = o.done;
-                finish(o.finish, o.done);
-              } else draw();
-            }, 1100);
-          }
-        } else {
-          a.el.classList.add("wrong"); c.el.classList.add("wrong");
-          setTimeout(() => {
-            a.el.classList.remove("revealed", "wrong");
-            c.el.classList.remove("revealed", "wrong");
-            picked = []; lock = false;
-          }, 900);
-        }
-      });
-    }
-    draw();
+    const lec = o.lecture || {};
+    if (!lec.video) return;
+    $(el.stage).innerHTML =
+      '<div class="lecture">' +
+      '<video id="' + el.video + '" class="lecturevideo" controls preload="metadata"' +
+      (lec.poster ? ' poster="' + esc(lec.poster) + '"' : "") + ">" +
+      '<source src="' + esc(lec.video) + '" type="video/mp4">' +
+      (lec.captions ? '<track kind="captions" srclang="en" label="English" src="' + esc(lec.captions) + '" default>' : "") +
+      "</video></div>" +
+      '<div class="bigbtns"><button type="button" class="big small ghost" id="' + el.next + '">I have watched it</button></div>';
+    const video = $(el.video);
+    /* Never autoplay. Every other step here plays its own recording when
+       the child arrives, because those are two-second word clips; a lesson
+       video starting itself is a room full of six-year-olds all playing
+       different minutes of the same teacher. */
+    video.addEventListener("ended", () => {
+      $(el.fb).className = "fb good";
+      $(el.fb).textContent = "You watched the whole lesson.";
+      finish(o.finish, o.done);
+    });
+    video.addEventListener("play", () => VOICE.stop && VOICE.stop());
+    $(el.next).addEventListener("click", () => {
+      try { video.pause(); } catch (_) { /* nothing to pause */ }
+      finish(o.finish, o.done);
+    });
   }
 
   /* ---- the stickers, one per step that can be earned --------------- */
@@ -4152,6 +5203,7 @@
 
     function drawShelf() {
       $(el.ask).innerHTML = o.ask || "Choose a book to read.";
+      $(el.stage).className = "stagewide";
       $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
       $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
       $(el.shelf).innerHTML = books.map((b, k) =>
@@ -4236,45 +5288,512 @@
     drawShelf();
   }
 
+  /* ==================================================================
+     STORY QUESTIONS FOR EACH BOOK
 
-  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"], ["🔁", "I practised what I know"], ["🎮", "I played Meaning Match"], ["🪄", "I played Memory Pairs"], ["📚", "I read a picture book"]];
+     BOOK_COMPREHENSION_SETS in shell/subjects/english.js, read by the
+     builder rather than copied - 18 questions for every Grade 1 unit, in
+     three kinds, and all three are kept because dropping the two harder
+     ones would leave the text MCQs alone and quietly halve the section:
 
-  hearAndTap({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", replay: "replay1" }, items: LESSON.sounds, finish: 0,
+       choice   the book's own page as a scene, then three text options
+       picture  three book PAGES, tap the one the question describes
+       order    three pages of one book, tap them in story order
+
+     A question's `answer` is an index into the AUTHORED array, so the
+     options are rendered through a per-question shuffled VIEW and the
+     right answer is never a screen position - the same guard the shell's
+     own renderer carries, and the same one the fluency author had to add
+     after a section turned out to be passable by tapping the top option
+     fifteen times.
+
+     `page` is 1-BASED, matching the shell (`book.pages[pageNumber - 1]`).
+
+     WRONG IS FREE HERE. A wrong tap says so and lets the child try again
+     rather than marking and moving on: the answer is in a book they have,
+     and going back to look it up is reading, not cheating. So there is no
+     score - the step is finished when every question has a star.
+     ================================================================== */
+  function bookQuestions(o) {
+    const el = o.el;
+    const questions = o.items || [];
+    const books = o.books || [];
+    const solved = new Set();
+    let index = 0;
+    let picked = [];          // order-type taps so far, reset on every move
+
+    const bookOf = (id) => books.find((b) => b.id === id);
+    const pageArt = (id, pageNumber) => {
+      const book = bookOf(id);
+      const page = book && book.pages[pageNumber - 1];
+      return page ? { src: ebookAsset(id, page.image), alt: page.alt || "" } : null;
+    };
+    const view = questions.map((q) =>
+      shuffle([...Array(q.kind === "order" ? q.order.length : (q.options || q.pick).length).keys()]));
+
+    function draw() {
+      const q = questions[index];
+      const v = view[index];
+      const done = solved.has(index);
+      const allDone = solved.size === questions.length;
+
+      let answers = "";
+      if (q.kind === "choice") {
+        const art = pageArt(q.book, q.page);
+        answers =
+          (art ? '<figure class="bookq-scene"><img src="' + art.src + '" alt="' + esc(art.alt) + '"></figure>' : "") +
+          '<div class="bigbtns">' + v.map((i) =>
+            '<button type="button" class="choice" data-pick="' + i + '"' + (done ? " disabled" : "") + ">" +
+            esc(q.options[i]) + "</button>").join("") + "</div>";
+      } else if (q.kind === "picture") {
+        answers = '<div class="bookq-pictures">' + v.map((i) => {
+          const art = pageArt(q.pick[i].book, q.pick[i].page);
+          return '<button type="button" class="bookq-picture" data-pick="' + i + '" aria-label="' +
+            esc(art ? art.alt : "a page") + '"' + (done ? " disabled" : "") + ">" +
+            (art ? '<img src="' + art.src + '" alt="">' : "") + "</button>";
+        }).join("") + "</div>";
+      } else {
+        answers = '<div class="bookq-pictures bookq-order">' + v.map((slot) => {
+          const art = pageArt(q.book, q.order[slot]);
+          const at = picked.indexOf(slot);
+          return '<button type="button" class="bookq-picture" data-order="' + slot + '" aria-label="' +
+            esc(art ? art.alt : "a page") + '"' + (at > -1 || done ? " disabled" : "") + ">" +
+            (art ? '<img src="' + art.src + '" alt="">' : "") +
+            (at > -1 || done ? '<span class="bookq-order-badge">' + (done ? slot + 1 : at + 1) + "</span>" : "") +
+            "</button>";
+        }).join("") + "</div>";
+      }
+
+      $(el.ask).innerHTML = esc(q.q);
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        '<div class="bookq" id="' + el.bq + '">' + answers + "</div>" +
+        '<div class="bigbtns bookq-nav">' +
+        '<button type="button" class="big small ghost" id="' + el.bq + 'prev"' + (index === 0 ? " disabled" : "") + ">&#9664; Back</button>" +
+        '<button type="button" class="big small ghost" id="' + el.bq + 'next"' + (index === questions.length - 1 ? " disabled" : "") + ">Next &#9654;</button>" +
+        "</div>";
+      $(el.score).textContent = "Question " + (index + 1) + " of " + questions.length +
+        "  \u00b7  " + solved.size + " answered";
+      if (!done) { $(el.fb).textContent = ""; $(el.fb).className = "fb"; }
+
+      $(el.bq).addEventListener("click", onTap);
+      $(el.bq + "prev").addEventListener("click", () => { index--; picked = []; draw(); });
+      $(el.bq + "next").addEventListener("click", () => { index++; picked = []; draw(); });
+
+      /* The question read aloud, options included on a choice question -
+         these are five- and six-year-olds, and not being able to read the
+         question yet is the whole reason the section exists. */
+      say(q.kind === "choice" ? q.q + " Is it " + q.options.join(", or ") + "?" : q.q);
+
+      if (allDone) {
+        $(el.fb).className = "fb good";
+        $(el.fb).textContent = "Every question has a star. " + o.done;
+        finish(o.finish, o.done);
+      }
+    }
+
+    /* After a right answer, move to the next question still to do - behind
+       as well as ahead, so a child who skipped around is walked back to the
+       gap instead of running off the end. */
+    function advance() {
+      const ahead = questions.findIndex((_, i) => i > index && !solved.has(i));
+      const anywhere = questions.findIndex((_, i) => !solved.has(i));
+      index = ahead > -1 ? ahead : anywhere > -1 ? anywhere : index;
+      picked = [];
+      draw();
+    }
+
+    function onTap(e) {
+      const q = questions[index];
+      const pick = e.target.closest("[data-pick]");
+      const step = e.target.closest("[data-order]");
+      if (pick) {
+        if (Number(pick.dataset.pick) === q.answer) {
+          solved.add(index);
+          playStorySound("child-happy");
+          pick.classList.add("right");
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = cheer();
+          setTimeout(advance, 900);
+        } else {
+          playStorySound("child-surprised");
+          pick.classList.add("wrong");
+          $(el.fb).className = "fb bad";
+          $(el.fb).textContent = "Not that one - look again and try another.";
+          setTimeout(() => pick.classList.remove("wrong"), 600);
+        }
+        return;
+      }
+      if (step) {
+        const slot = Number(step.dataset.order);
+        /* `order` is authored in story order, so the k-th tap must be slot k. */
+        if (slot === picked.length) {
+          picked.push(slot);
+          if (picked.length === q.order.length) {
+            solved.add(index);
+            playStorySound("child-happy");
+            $(el.fb).className = "fb good";
+            $(el.fb).textContent = cheer() + " That is the order it happened in.";
+            setTimeout(advance, 900);
+            return;
+          }
+          draw();
+        } else {
+          playStorySound("child-surprised");
+          picked = [];
+          $(el.fb).className = "fb bad";
+          $(el.fb).textContent = "Almost! Start again from what happened first.";
+          setTimeout(draw, 650);
+        }
+      }
+    }
+
+    draw();
+  }
+
+
+  /* ==================================================================
+     THE GAME ZONE - the unit's whole authored game pack, one step.
+
+     WHY A PICKER AND NOT A MARCH. Every Grade 1 unit ships twelve games
+     of six rounds each in english/grade-1/data/games/unit-N.json. Eleven
+     of them are playable here (the twelfth is `speaking`, which needs a
+     recorder this build does not have and is reported as skipped rather
+     than dropped in silence), so the pack is 66 rounds. An earlier
+     version of this lesson carried TWO hand-picked games as two ordinary
+     steps, which left nine authored games unreachable; rendering all
+     eleven as one 66-round sequence would replace that with a step no
+     six-year-old finishes. So this is the shape the shell's own Game Park
+     uses: a shelf of cards, tap one, play its six rounds, come back.
+
+     THE STICKER IS EARNED BY PLAYING TWO. One game is a tap-through;
+     eleven is a school day. Two is twelve rounds, and the card shelf says
+     so on its face and counts down, because a sticker whose condition is
+     invisible is a sticker a child cannot aim at.
+
+     FIVE MECHANICS, all read from the pack's own round shape rather than
+     from any list here:
+       choice    prompt + choices[] + answer + explanation
+       spelling  prompt + clue + answer            -> letter tiles
+       sentence  prompt + tokens[] + answer        -> word tiles
+       sequence  the same shape as sentence
+       pairs     prompt + pairs[[word, meaning]]   -> reveal-and-match
+
+     A game plays in a full-viewport overlay, like the book reader above
+     it, for the same reason: six rounds of tiles need the screen, not a
+     third of it under a slide heading.
+     ================================================================== */
+  function gameZone(o) {
+    const el = o.el;
+    const pack = o.pack || {};
+    const games = pack.games || [];
+    const played = new Set();
+    const NEEDED = Math.min(2, games.length);
+
+    const tidy = (s) => String(s).replace(/\s+([.!?])/g, "$1").replace(/\s+/g, " ").trim();
+    const same = (a, b) => tidy(a).toLowerCase() === tidy(b).toLowerCase();
+
+    function drawShelf() {
+      $(el.ask).innerHTML = o.ask || "Choose a game to play.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="shelf gamelist" id="' + el.gamelist + '"></div>';
+      $(el.gamelist).innerHTML = games.map((g, k) =>
+        '<div class="bookcard gamecard' + (played.has(g.id) ? " played" : "") + '">' +
+        '<span class="bookicon" aria-hidden="true">' + (played.has(g.id) ? "✅" : "\u{1F3AE}") + "</span>" +
+        '<span class="booktitle">' + esc(g.title) + "</span>" +
+        (g.skill ? '<span class="bookmeta">' + esc(g.skill) + "</span>" : "") +
+        '<span class="bookmeta">' + g.rounds.length + " rounds</span>" +
+        '<button type="button" class="big small teal" data-game="' + k + '">' +
+        (played.has(g.id) ? "Play again ▶" : "Play ▶") + "</button></div>").join("");
+      $(el.gamelist).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-game]");
+        if (b) openGame(games[Number(b.dataset.game)]);
+      });
+      paintCount();
+    }
+
+    /* The condition for the sticker, said out loud and kept current -
+       "play two games" is only a goal if the child can see how far off it
+       is. The skipped speaking game is named here too rather than being
+       quietly absent from a count of twelve. */
+    function paintCount() {
+      const left = Math.max(0, NEEDED - played.size);
+      $(el.score).textContent = games.length + " games"
+        + (pack.skipped ? " (" + pack.skipped + " speaking game needs a grown-up, so it is not here)" : "");
+      $(el.fb).className = "fb" + (left ? "" : " good");
+      $(el.fb).textContent = left
+        ? "Play " + left + (left === 1 ? " more game" : " games") + " to earn this step's sticker."
+        : "You played " + played.size + ". " + o.done;
+    }
+
+    function openGame(game) {
+      let r = 0, right = 0;
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader game-overlay";
+      document.body.appendChild(overlay);
+
+      function close() {
+        overlay.remove();
+        document.removeEventListener("keydown", onKey);
+        drawShelf();
+      }
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+
+      function frame(bodyHtml, footHtml) {
+        overlay.innerHTML =
+          '<div class="book-reader-top"><span class="booktitle">' + esc(game.title) + "</span>" +
+          '<button type="button" class="book-close" aria-label="Close the game">&#10005;</button></div>' +
+          '<div class="book-stage-wrap"><div class="game-stage">' + bodyHtml + "</div></div>" +
+          '<div class="book-reader-bottom">' +
+          '<button type="button" class="big small ghost" id="gameQuit">&#9664; Back to games</button>' +
+          '<span class="book-page-count">Round ' + Math.min(r + 1, game.rounds.length) + " of " + game.rounds.length + "</span>" +
+          (footHtml || "") + "</div>";
+        overlay.querySelector(".book-close").addEventListener("click", close);
+        overlay.querySelector("#gameQuit").addEventListener("click", close);
+      }
+
+      function nextRound() {
+        r++;
+        if (r >= game.rounds.length) return endGame();
+        setTimeout(drawRound, 900);
+      }
+
+      function endGame() {
+        played.add(game.id);
+        /* No cheer over a bad round. "Brilliant! 0 of 6 right" was the
+           first version, and a child who can count can read that as the
+           page not paying attention. */
+        const well = right * 2 >= game.rounds.length;
+        frame(
+          '<div class="game-done"><p class="gamebig">' + (well ? cheer() : "That is the game played.") + "</p>" +
+          "<p>You finished <strong>" + esc(game.title) + "</strong> — " +
+          right + " of " + game.rounds.length + " right.</p>" +
+          "<p>Getting one wrong costs nothing in a game. It is for practising.</p></div>",
+          '<button type="button" class="big small" id="gameOut">Back to the games &#10003;</button>');
+        overlay.querySelector("#gameOut").addEventListener("click", close);
+        say("You finished " + game.title + ".");
+        if (played.size >= NEEDED) finish(o.finish, o.done);
+      }
+
+      /* ---- one round, dispatched on the pack's own `type` ---- */
+      function drawRound() {
+        const round = game.rounds[r];
+        if (game.type === "choice") return drawChoice(round);
+        if (game.type === "spelling") return drawSpelling(round);
+        if (game.type === "pairs") return drawPairs(round);
+        return drawTokens(round);   // sentence and sequence share a shape
+      }
+
+      function feedback(ok, message) {
+        const fb = overlay.querySelector("#gameFb");
+        if (!fb) return;
+        fb.className = "fb " + (ok ? "good" : "bad");
+        fb.textContent = message;
+        say(message);
+      }
+
+      function drawChoice(round) {
+        frame(
+          '<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+          '<div class="bigbtns" id="gameCh">' +
+          shuffle(round.choices).map((c) =>
+            '<button type="button" class="choice" data-c="' + esc(c) + '">' + esc(c) + "</button>").join("") +
+          "</div><div class='fb' id='gameFb'></div>");
+        say(plain(round.prompt));
+        let lock = false;
+        overlay.querySelector("#gameCh").addEventListener("click", (e) => {
+          const b = e.target.closest(".choice"); if (!b || lock) return;
+          lock = true;
+          const ok = same(b.dataset.c, round.answer);
+          overlay.querySelectorAll("#gameCh .choice").forEach((c) => {
+            c.disabled = true;
+            if (same(c.dataset.c, round.answer)) c.classList.add("right");
+          });
+          if (!ok) b.classList.add("wrong"); else right++;
+          feedback(ok, (ok ? cheer() + " " : "") + (round.explanation || round.answer));
+          nextRound();
+        });
+      }
+
+      /* Letter tiles. The pool is the answer's own letters plus two more
+         drawn from the alphabet, so a word cannot be built by tapping every
+         tile in the order they are given. */
+      function drawSpelling(round) {
+        const answer = String(round.answer);
+        const letters = answer.replace(/[^A-Za-z]/g, "").split("");
+        const extra = "abcdefghijklmnopqrstuvwxyz".split("")
+          .filter((c) => !letters.includes(c)).slice(0, 26);
+        const pool = shuffle(letters.concat([extra[letters.length % extra.length], extra[(letters.length + 7) % extra.length]]));
+        let line = [];
+        function paint() {
+          frame(
+            '<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+            (round.clue ? '<p class="gameclue">' + esc(round.clue) + "</p>" : "") +
+            '<div class="buildline" id="gameLine">' +
+            (line.length ? line.map((t, k) => '<button type="button" class="tile letter" data-line="' + k + '">' + esc(pool[t]) + "</button>").join("")
+                         : '<span style="color:var(--muted);font-size:17px">Tap the letters to build the word.</span>') +
+            "</div>" +
+            '<div class="bigbtns" id="gameTiles">' +
+            pool.map((t, k) => '<button type="button" class="tile letter" data-tile="' + k + '"' +
+              (line.includes(k) ? " disabled" : "") + ">" + esc(t) + "</button>").join("") +
+            "</div><div class='fb' id='gameFb'></div>",
+            '<button type="button" class="big small" id="gameCheck">Check it</button>');
+          overlay.querySelector("#gameTiles").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-tile]"); if (!b || b.disabled) return;
+            line.push(Number(b.dataset.tile)); paint();
+          });
+          overlay.querySelector("#gameLine").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-line]"); if (!b) return;
+            line.splice(Number(b.dataset.line), 1); paint();
+          });
+          overlay.querySelector("#gameCheck").addEventListener("click", () => {
+            const got = line.map((k) => pool[k]).join("");
+            const ok = got.toLowerCase() === letters.join("").toLowerCase();
+            overlay.querySelector("#gameLine").className = "buildline " + (ok ? "right" : "wrong");
+            if (ok) right++;
+            feedback(ok, ok ? cheer() + " " + answer : "Not yet. The word is " + answer + ".");
+            nextRound();
+          });
+        }
+        /* `line` holds tile INDEXES, not letters, so a word with the same
+           letter twice ("egg") does not disable both tiles on the first tap. */
+        paint();
+        say(plain(round.clue || round.prompt));
+      }
+
+      function drawTokens(round) {
+        let line = [];
+        function paint() {
+          frame(
+            '<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+            '<div class="buildline" id="gameLine">' +
+            (line.length ? line.map((t, k) => '<button type="button" class="tile" data-line="' + k + '">' + esc(round.tokens[t]) + "</button>").join("")
+                         : '<span style="color:var(--muted);font-size:17px">Tap the words to build the sentence.</span>') +
+            "</div>" +
+            '<div class="bigbtns" id="gameTiles">' +
+            round.tokens.map((t, k) => '<button type="button" class="tile" data-tile="' + k + '"' +
+              (line.includes(k) ? " disabled" : "") + ">" + esc(t) + "</button>").join("") +
+            "</div><div class='fb' id='gameFb'></div>",
+            '<button type="button" class="big small" id="gameCheck">Check it</button>');
+          overlay.querySelector("#gameTiles").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-tile]"); if (!b || b.disabled) return;
+            line.push(Number(b.dataset.tile)); paint();
+          });
+          overlay.querySelector("#gameLine").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-line]"); if (!b) return;
+            line.splice(Number(b.dataset.line), 1); paint();
+          });
+          overlay.querySelector("#gameCheck").addEventListener("click", () => {
+            /* Both sides through the same tidy-up, for the reason the
+               buildSentence step records: the tokens carry their own full
+               stop, so a raw join is " ." where the answer is "." and the
+               round would be impossible to pass on every sentence. */
+            const ok = same(line.map((k) => round.tokens[k]).join(" "), round.answer);
+            overlay.querySelector("#gameLine").className = "buildline " + (ok ? "right" : "wrong");
+            if (ok) right++;
+            feedback(ok, ok ? cheer() + " " + tidy(round.answer) : "Not yet. It goes: " + tidy(round.answer));
+            nextRound();
+          });
+        }
+        paint();
+        say(plain(round.prompt));
+      }
+
+      /* Reveal-and-match, the pack's own description ("Reveal tiles and
+         connect each word with its meaning"), so the tiles start face down.
+         A round is over when all its pairs are matched - there is no wrong
+         answer to score, so the round counts as right once finished. */
+      function drawPairs(round) {
+        let tiles = round.pairs.flatMap((p, pi) => [{ text: p[0], pair: pi }, { text: p[1], pair: pi }]);
+        tiles = shuffle(tiles).map((t, k) => ({ ...t, k }));
+        let picked = [], matched = 0, lock = false;
+        frame(
+          '<p class="gameprompt">' + esc(round.prompt || "Tap two tiles that go together.") + "</p>" +
+          '<div class="pairsgrid" id="gameGrid">' +
+          tiles.map((t) => '<button type="button" class="pairtile" data-k="' + t.k + '">' +
+            '<span class="back" aria-hidden="true">?</span>' +
+            '<span class="face">' + esc(t.text) + "</span></button>").join("") +
+          "</div><div class='fb' id='gameFb'></div>");
+        say(plain(round.prompt || "Tap two tiles that go together."));
+        overlay.querySelector("#gameGrid").addEventListener("click", (e) => {
+          const b = e.target.closest(".pairtile");
+          if (!b || lock) return;
+          if (b.classList.contains("matched") || b.classList.contains("revealed")) return;
+          b.classList.add("revealed");
+          picked.push({ pair: tiles[Number(b.dataset.k)].pair, el: b });
+          if (picked.length < 2) return;
+          lock = true;
+          const [a, c] = picked;
+          if (a.pair === c.pair) {
+            a.el.classList.add("matched"); c.el.classList.add("matched");
+            a.el.disabled = true; c.el.disabled = true;
+            matched++; picked = []; lock = false;
+            if (matched === round.pairs.length) {
+              right++;
+              feedback(true, cheer() + " Every pair matched.");
+              nextRound();
+            }
+          } else {
+            a.el.classList.add("wrong"); c.el.classList.add("wrong");
+            setTimeout(() => {
+              a.el.classList.remove("revealed", "wrong");
+              c.el.classList.remove("revealed", "wrong");
+              picked = []; lock = false;
+            }, 900);
+          }
+        });
+      }
+
+      drawRound();
+    }
+
+    drawShelf();
+  }
+
+
+  const STICKERS = [["🎬", "I watched the lesson"], ["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"]];
+
+  lectureStep({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", video: "video1", next: "next1" }, lecture: LESSON.lecture, finish: 0,
+    done: "You watched the whole lesson." });
+  hearAndTap({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2" }, items: LESSON.sounds, finish: 1,
     ask: "Which word did you hear?", label: "Word",
     done: "You know these words by their sound now." });
-  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2", hearSent: "hearSent2", nextSent: "nextSent2" }, items: LESSON.newwords, finish: 1,
+  wordWalk({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3", replay: "replay3", next: "next3", hearSent: "hearSent3", nextSent: "nextSent3" }, items: LESSON.newwords, finish: 2,
     ask: "Say this word out loud.", label: "Word",
     done: "Now you have met them, you will see them all through the unit." });
-  pictureMatch({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, items: LESSON.match, finish: 2,
+  pictureMatch({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, items: LESSON.match, finish: 3,
     ask: "Which word is this?", label: "Picture",
     done: "You can read those words on their own now." });
-  hearAndTap({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4", replay: "replay4" }, items: LESSON.sight, finish: 3,
+  hearAndTap({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5", replay: "replay5" }, items: LESSON.sight, finish: 4,
     ask: "Which word did you hear?", label: "Word",
     done: "You know these words by their sound now." });
-  storyRead({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5", replay: "replay5", next: "next5" }, title: LESSON.story.title, pages: LESSON.story.pages,
-    audio: LESSON.story.audio, finish: 4,
-    done: "You read the whole story." });
-  sequence({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, items: LESSON.questions, finish: 5,
-    label: "Question", done: "You remembered the story well." });
-  sayOutLoud({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, items: LESSON.sayit, finish: 6,
-    ask: "Listen, then say it out loud.",
-    done: "Well said. Speaking is how the words stick." });
-  ruleWalk({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8", replay: "replay8", next: "next8" }, items: LESSON.rules, finish: 7,
-    done: "Those are the patterns this unit is built on." });
-  buildSentence({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9", line: "line9", tiles: "tiles9", check: "check9", clear: "clear9" }, ask: LESSON.write.ask, tiles: LESSON.write.tiles,
-    answer: LESSON.write.answer, finish: 8,
-    done: "That is a real sentence, written by you." });
-  sequence({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, items: LESSON.quiz, finish: 9,
-    label: "Question", done: "That is the whole unit finished." });
-  sequence({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, items: LESSON.fluency, finish: 10,
-    label: "Question", done: "That is this unit's words and patterns practised." });
-  sequence({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, items: LESSON.meaningmatch, finish: 11,
-    label: "Round", done: "That is Meaning Match finished." });
-  memoryPairs({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", grid: "grid13" }, items: LESSON.memorypairs, finish: 12,
-    done: "That is every pair matched." });
-  bookShelf({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14", shelf: "shelf14" }, items: LESSON.books, finish: 13,
+  bookShelf({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6", shelf: "shelf6" }, items: LESSON.books, finish: 5,
     ask: "Choose a book to read.",
     done: "You finished a book from this unit's shelf." });
+  bookQuestions({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7", bq: "bq7" }, items: LESSON.bookquestions, books: LESSON.books,
+    finish: 6, done: "You answered the book questions." });
+  sayOutLoud({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, items: LESSON.sayit, finish: 7,
+    ask: "Listen, then say it out loud.",
+    done: "Well said. Speaking is how the words stick." });
+  ruleWalk({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9", replay: "replay9", next: "next9" }, items: LESSON.rules, finish: 8,
+    done: "Those are the patterns this unit is built on." });
+  buildSentence({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10", line: "line10", tiles: "tiles10", check: "check10", clear: "clear10" }, ask: LESSON.write.ask, tiles: LESSON.write.tiles,
+    answer: LESSON.write.answer, finish: 9,
+    done: "That is a real sentence, written by you." });
+  sequence({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, items: LESSON.talk, finish: 10,
+    label: "Round", done: "That is talking practised." });
+  gameZone({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12", gamelist: "gamelist12" }, pack: LESSON.games, finish: 11,
+    done: "That is the Game Zone played." });
+  storyRead({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", replay: "replay13", next: "next13" }, title: LESSON.story.title, pages: LESSON.story.pages,
+    audio: LESSON.story.audio, finish: 12,
+    done: "You read the whole story." });
+  sequence({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, items: LESSON.questions, finish: 13,
+    label: "Question", done: "You remembered the story well." });
+  sequence({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, items: LESSON.fluency, finish: 14,
+    label: "Question", done: "That is this unit's words and patterns practised." });
+  sequence({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, items: LESSON.quiz, finish: 15,
+    label: "Question", done: "That is the whole unit finished." });
 
   show(0, false);
 

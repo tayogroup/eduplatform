@@ -119,6 +119,48 @@ def dictionary_index():
 # sentence i. Taking any other subset would play the wrong recording.
 SENTENCES_SHOWN = 3
 
+# The order a learner walks a unit. Owner, 2026-09-08, matching the shell
+# course's own Grades 1-4 arrangement: the picture books LEAD the reading,
+# their questions come straight after them, and the unit's own text sits near
+# the end — english.js's BOOKS_LEAD_THE_READING, decided 2026-08-31.
+#
+# Two names carry the weight of that swap and are deliberately not "Reading"
+# both: step 6 is "Reading books" (the shelf) and step 13 is "The unit story"
+# (the unit's own text). Calling them both Reading, nine steps apart, is a
+# navigation trap for a six-year-old.
+#
+# A step named here that a unit cannot build is skipped; a step BUILT that is
+# not named here aborts the build rather than vanishing quietly.
+STEP_ORDER = [
+    "lecture",        # the unit's video lesson (units 1-9; Unit 10 has none)
+    "sounds",
+    "newwords",
+    "match",
+    "sight",
+    "books",          # "Reading books" — the shelf, moved up from last
+    "bookquestions",  # the shelf's own questions, already authored
+    "sayit",
+    "rules",
+    "write",
+    "talk",           # "Let us talk" — situational dialogue choice
+    "games",          # the whole game pack, one step
+    "story",          # "The unit story" — moved down from second
+    "questions",
+    "fluency",
+    "check",
+]
+
+
+# Fluency Practice and Let us talk are built from items this course did NOT
+# put through curriculum review - the fluency array is stamped
+# reviewStatus "Needs curriculum review" in the unit JSON, and the talk
+# rounds are assembled here from the unit's own grammar titles. Nine other
+# steps on this page ARE reviewed content. A page that shows all sixteen
+# the same way claims a review of two that has not happened, so those two
+# say so on their face, the way the shell course's section badge does.
+REVIEW_NOTE = ("Practice, not marked work - a teacher has not checked these "
+               "questions yet.")
+
 
 def ebook_catalog():
     """The picture-book catalogue, read out of the shell rather than a copy.
@@ -155,6 +197,143 @@ def ebook_catalog():
         sys.exit("REFUSED: could not extract ebookCatalog from shell/subjects/english.js.\n" +
                  r.stderr.decode("utf-8", "replace"))
     return json.loads(r.stdout.decode("utf-8"))
+
+
+def book_comprehension_sets():
+    """BOOK_COMPREHENSION_SETS out of the shell, by the same bracket-balance
+    read ebook_catalog() uses and for the same reason - it is a non-exported
+    const in a file too DOM-dependent to import.
+
+    18 questions per unit for Grade 1, in three kinds: `choice` (text
+    options), `picture` (tap the right book PAGE out of three) and `order`
+    (put events in sequence). All three are already authored; none of it is
+    written here.
+    """
+    src_path = os.path.join(SHELL, "english.js").replace("\\", "/")
+    script = (
+        'const fs = require("fs");\n'
+        'const src = fs.readFileSync("%s", "utf8");\n'
+        'const marker = "const BOOK_COMPREHENSION_SETS = [";\n'
+        'const start = src.indexOf(marker);\n'
+        'if (start < 0) throw new Error("BOOK_COMPREHENSION_SETS not found");\n'
+        'let i = start + marker.length - 1, depth = 0, end = -1;\n'
+        'for (; i < src.length; i++) {\n'
+        '  const c = src[i];\n'
+        '  if (c === "[") depth++;\n'
+        '  else if (c === "]") { depth--; if (depth === 0) { end = i; break; } }\n'
+        '}\n'
+        'if (end < 0) throw new Error("no matching bracket");\n'
+        'const arr = new Function("return " + src.slice(start + marker.length - 1, end + 1))();\n'
+        'process.stdout.write(JSON.stringify(arr));\n' % src_path
+    )
+    r = subprocess.run(["node", "-e", script], capture_output=True)
+    if r.returncode != 0:
+        sys.exit("REFUSED: could not extract BOOK_COMPREHENSION_SETS.\n" +
+                 r.stderr.decode("utf-8", "replace"))
+    return json.loads(r.stdout.decode("utf-8"))
+
+
+def lecture_media():
+    """Per-unit video lesson, from the course's own lecture-media.json.
+
+    Keys are the literal unit-N folder names, so "0" is the WITHDRAWN Unit 0
+    and units 1-9 are keys 1-9. There is no key 10: Unit 10 has no video (its
+    first step launches the capstone instead), which is why the lecture step
+    below is built only where a video actually exists rather than assuming
+    ten of them.
+
+    Paths are "./media/unit-N/...", relative to the course root - which sits
+    beside this build both on disk and on the CDN, so ../grade-1/media/...
+    reaches it in dev and in production alike, exactly as ../ebooks/ does.
+    """
+    path = os.path.join(DATA, "lecture-media.json")
+    if not os.path.isfile(path):
+        return {}
+    return load_json(path).get("units") or {}
+
+
+def lecture_asset(rel):
+    return "../grade-1/" + str(rel).replace("./", "", 1) if rel else ""
+
+
+def load_games_meta(unit_no):
+    path = os.path.join(DATA, "games", "unit-%d.json" % unit_no)
+    if not os.path.isfile(path):
+        return {}
+    d = load_json(path)
+    return {"masteryScore": d.get("masteryScore"), "title": d.get("title")}
+
+
+def talk_items(unit):
+    """"Let us talk" - one situational round per grammar concept.
+
+    Distinct from Fluency on purpose, though both read the same grammar
+    array. Fluency asks a FORM question: "which sentence uses the pattern
+    'I can ___.'" - pattern recognition. This asks an INTENT question:
+    "your friend wants you to say what you can do - what do you say?" A
+    child can answer the first by matching shapes and the second only by
+    knowing what the sentence is FOR.
+
+    The situation comes from the grammar item's own `title`, which is
+    already written as an instruction ("Introduce yourself by name", "Say
+    how old you are"), so the unit's words carry the round and only the
+    framing sentence around them is new. Distractors are other patterns'
+    real example sentences from the same unit - every option is correct
+    English, and only one answers what was asked.
+    """
+    grammar = unit.get("grammar") or []
+    per_item = [practice_examples(g) for g in grammar]
+    n = len(grammar)
+    rounds = []
+    for i, g in enumerate(grammar):
+        mine = per_item[i]
+        title = (g.get("title") or "").strip().rstrip(".")
+        if not mine or not title:
+            continue
+        answer = mine[0]
+        distractors = []
+        for step in range(1, n):
+            other = (i + step) % n
+            ex = per_item[other]
+            if not ex:
+                continue
+            pick = ex[(i + step) % len(ex)]
+            if pick not in distractors and pick != answer:
+                distractors.append(pick)
+            if len(distractors) >= 2:
+                break
+        if len(distractors) < 2:
+            continue
+        # answer position rotates, for the reason the fluency author records:
+        # a renderer that does not shuffle plus an answer always first is a
+        # section a child passes by tapping the same spot.
+        opts = list(distractors)
+        opts.insert(i % (len(distractors) + 1), answer)
+        first = title[0].lower() + title[1:]
+        rounds.append({
+            "ask": "Your friend wants you to %s. What do you say?" % first,
+            "opts": [{"t": o, "ok": 1 if o == answer else 0} for o in opts],
+            "why": g.get("explanation") or ("You would say: %s" % answer),
+        })
+    return rounds
+
+
+def practice_examples(grammar_item):
+    """The real example sentences inside a grammar item's `practice` line.
+
+    Same parse the fluency author uses (tools/author-ehel-english-g1-fluency.py):
+    "<instruction>: <ex1>. <ex2>. <ex3>." across all 10 units.
+    """
+    text = grammar_item.get("practice") or ""
+    if ":" not in text:
+        return []
+    tail = text.split(":", 1)[1].strip()
+    out = []
+    for p in [x.strip() for x in re.split(r"(?<=[.!?])\s+", tail) if x.strip()]:
+        if not re.search(r"[A-Za-z]", p):
+            continue
+        out.append(p if p.endswith((".", "!", "?")) else p + ".")
+    return out
 
 
 def load_games(unit_no):
@@ -295,7 +474,7 @@ def distractors(pool, right, n, key=lambda x: x):
 # ----------------------------------------------------------------------
 # the slides
 # ----------------------------------------------------------------------
-def build_slides(unit, cw_unit, pics, dic, games, shelf):
+def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, book_questions, talk_rounds):
     """Return (slides, stickers, data) for one unit.
 
     A slide is only built where its content exists. Units 4, 7, 9 and 10 have
@@ -329,16 +508,63 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
 
     n = 0
 
-    def add(kind, title, icon, sticker, ask, explain_ssml, extra_ids=(), block=None):
-        nonlocal n
-        n += 1
-        slides.append({
-            "n": n, "kind": kind, "title": title, "icon": icon,
+    # A step is DECLARED where its content is read and ORDERED by STEP_ORDER
+    # below, rather than by where its code happens to sit in this function.
+    #
+    # The order changed on 2026-09-08 (owner) to match the shell course's own
+    # Grades 1-4 arrangement — the picture books lead the reading, their
+    # questions follow immediately, and the unit's own text sits near the end
+    # (english.js :: BOOKS_LEAD_THE_READING, owner 2026-08-31). Physically
+    # moving nine blocks of content-reading code to express that would have
+    # made a diff nobody could review, and would have to be done again the
+    # next time the order moves. Only STEP_ORDER moves now.
+    pending = {}
+
+    def add(kind, title, icon, sticker, ask, explain_ssml, extra_ids=(), block=None, note=""):
+        pending[kind] = {
+            "kind": kind, "title": title, "icon": icon, "sticker": sticker,
             "ask": ask, "explain": explain_ssml, "extra": list(extra_ids),
-            "say": block or ask,
-        })
-        stickers.append([icon, sticker])
-        return n
+            "say": block or ask, "note": note,
+        }
+        return kind
+
+    def emit_in_order():
+        nonlocal n
+        for kind in STEP_ORDER:
+            spec = pending.get(kind)
+            if not spec:
+                continue
+            n += 1
+            slides.append({
+                "n": n, "kind": spec["kind"], "title": spec["title"], "icon": spec["icon"],
+                "ask": spec["ask"], "explain": spec["explain"], "extra": spec["extra"],
+                "say": spec["say"], "note": spec["note"],
+            })
+            stickers.append([spec["icon"], spec["sticker"]])
+        missing = [k for k in pending if k not in STEP_ORDER]
+        if missing:
+            sys.exit("REFUSED: these steps were built but STEP_ORDER does not place them, "
+                     "so they would silently vanish from the lesson: " + ", ".join(missing))
+
+    # ---- The unit's video lesson -----------------------------------------
+    #         Units 1-9 only. lecture-media.json is keyed by the unit-N
+    #         FOLDER name, so key "0" is the withdrawn Unit 0 and there is no
+    #         key 10 at all - Unit 10 opens on the capstone instead, exactly
+    #         as the shell course has it. Built only where a video exists
+    #         rather than assuming ten of them.
+    if lecture:
+        data["lecture"] = lecture
+        i = add("lecture", "Unit lecture", "\U0001F3AC", "I watched the lesson",
+                "Watch the lesson. It ticks itself off when it ends.",
+                explain(
+                    ["Your teacher recorded this for the start of the unit."],
+                    ["Watch it all the way to the end.",
+                     "You can turn the captions on if you want to read along.",
+                     "Watch it again any time - it does not disappear."],
+                    ["Watching is not the same as listening.",
+                     "Put it on, and actually listen to her."],
+                    ["Press play."]),
+                ["video", "next"])
 
     # ---- 1  the sounds this unit teaches -----------------------------
     if groups.get("phonics") and len(groups["phonics"]["words"]) >= 4:
@@ -362,7 +588,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                          "Wait for the whole word before you choose."],
                         ["Press Hear it again as many times as you like.", "Now listen."]),
                     ["replay"])
-            data["sounds_slide"] = i
 
     # ---- 2  the unit's new words, one at a time ----------------------
     topic = groups.get("topic") or groups.get("phonics")
@@ -385,7 +610,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                      "Your mouth has to learn it too."],
                     ["Press Hear it to hear the word said properly.", "Then say it with me."]),
                 ["replay", "next", "hearSent", "nextSent"])
-        data["newwords_slide"] = i
 
     # ---- 3  the picture is the question ------------------------------
     pictured = []
@@ -412,7 +636,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                      "Read to the end of the word before you tap."],
                     ["Say it first.", "Then tap it."]),
                 ())
-        data["match_slide"] = i
 
     # ---- 4  the words we see everywhere ------------------------------
     if groups.get("sight") and len(groups["sight"]["words"]) >= 4:
@@ -437,7 +660,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                          "Look at the whole word and know it."],
                         ["Listen, and tap the one you heard."]),
                     ["replay"])
-            data["sight_slide"] = i
 
     # ---- 5  the story ------------------------------------------------
     story = next((r for r in unit["readings"] if r.get("type") == "Story"), None) or unit["readings"][0]
@@ -446,7 +668,7 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
         "pages": sentence_pages(story.get("passageScript") or ""),
         "audio": source_of(story),
     }
-    i = add("story", "The story", "\U0001F4DA", "I read the story",
+    i = add("story", "The unit story", "\U0001F4DA", "I read the story",
             "Press Listen, then follow the words with your finger.",
             explain(
                 ["Now a whole story, read to you."],
@@ -456,7 +678,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                  "Keep following.", "You can hear it again afterwards."],
                 ["Press Listen, and off we go."]),
             ["replay", "next"])
-    data["story_slide"] = i
 
     # ---- 6  the story questions --------------------------------------
     #        Only the factual ones. A question whose accepted answer is a
@@ -515,7 +736,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                      "Go back a step and read it again.", "That is not cheating, that is reading."],
                     ["Take your time, then tap."]),
                 ())
-        data["questions_slide"] = i
 
     # ---- 7  say it out loud ------------------------------------------
     lines = []
@@ -538,7 +758,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                      "Tick it when you have said it, and be honest with yourself."],
                     ["Your turn. Out loud."]),
                 ())
-        data["sayit_slide"] = i
 
     # ---- 8  what English does ----------------------------------------
     rules = []
@@ -564,7 +783,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                      "It is there because almost every child slips on that exact thing."],
                     ["Press Hear it, then read it once more, then press Next."]),
                 ["replay", "next"])
-        data["rules_slide"] = i
 
     # ---- 9  write it -------------------------------------------------
     #        The model sentence is the answer; the extra tiles are the unit's
@@ -666,7 +884,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                     ["Read your line out loud before you check it.",
                      "Your ears will tell you if a word is in the wrong place."]),
                 ["line", "tiles", "check", "clear"])
-        data["write_slide"] = i
 
     # ---- 10  the check -----------------------------------------------
     quiz = []
@@ -689,7 +906,6 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                     ["The answer that catches your eye first is often the one put there to catch it."],
                     ["Take your time. Then tap."]),
                 ())
-        data["quiz_slide"] = i
 
     # ---- 11  Fluency Practice ------------------------------------------
     #         Consolidation of what this unit already taught - no new words,
@@ -720,49 +936,50 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                     ["If you get one wrong, read the reason underneath.",
                      "That is the part that makes it stick."],
                     ["Take your time, then tap."]),
-                ())
-        data["fluency_slide"] = i
+                (),
+                note=REVIEW_NOTE)
 
-    # ---- 12  Meaning Match ---------------------------------------------
-    #         Two of the unit's own twelve games, picked by id rather than
-    #         by scanning types - both ids are present in all 10 units'
-    #         packs (checked directly, not assumed). The other ten
-    #         mechanics (spelling, sentence-building, speaking, sequencing)
-    #         are real gaps this build leaves open, not an oversight; two
-    #         faithful games are worth more than twelve half-built ones.
-    mm = games.get("meaning-match")
-    if mm and mm.get("rounds"):
-        items = [{
-            "ask": r["prompt"],
-            "opts": [{"t": c, "ok": 1 if c == r["answer"] else 0} for c in r["choices"]],
-            "why": r.get("explanation") or "",
-        } for r in mm["rounds"]]
-        data["meaningmatch"] = items
-        i = add("meaningmatch", mm.get("title") or "Meaning Match", "\U0001F3AE", "I played Meaning Match",
-                "Tap the word that matches the meaning.",
+    # ---- Games -----------------------------------------------------------
+    #         THE WHOLE PACK, one step. This used to be two steps carrying
+    #         two hand-picked games of the unit's twelve, which left ten
+    #         authored games unreachable. The pack is already written -
+    #         12 games, 72 rounds per unit - so the step is a picker: cards
+    #         for every game, tap one to play it, the way the shell's own
+    #         Game Park works. Rendering 72 rounds as one march would be a
+    #         step no six-year-old finishes.
+    #
+    #         Four of the six mechanics are covered (choice, spelling,
+    #         sentence/sequence builders, pairs). `speaking` games need a
+    #         recorder this build does not have, and are dropped with the
+    #         count said out loud on the page rather than silently.
+    playable, skipped = [], 0
+    for g in (games or {}).values():
+        rounds = g.get("rounds") or []
+        if not rounds:
+            continue
+        if g.get("type") == "speaking":
+            skipped += 1
+            continue
+        playable.append({
+            "id": g["id"], "type": g["type"], "title": g.get("title") or g["id"],
+            "skill": g.get("skill") or "", "description": g.get("description") or "",
+            "rounds": rounds,
+        })
+    if playable:
+        playable.sort(key=lambda x: x["id"])
+        data["games"] = {"games": playable, "skipped": skipped,
+                         "mastery": (games_meta or {}).get("masteryScore") or 4}
+        i = add("games", "Games", "\U0001F3AE", "I played the games",
+                "Choose a game to play.",
                 explain(
-                    ["This is the game from this unit's Game Zone."],
-                    ["Read what the meaning says.", "Then tap the word it is describing."],
-                    ["Two words can look similar.", "Read the whole meaning before you tap, not just the start."],
-                    ["Take your time, then tap."]),
-                ())
-        data["meaningmatch_slide"] = i
-
-    # ---- 12  Memory Pairs -----------------------------------------------
-    mp = games.get("memory-pairs")
-    if mp and mp.get("rounds"):
-        data["memorypairs"] = mp["rounds"]
-        i = add("memorypairs", mp.get("title") or "Memory Pairs", "\U0001FA84", "I played Memory Pairs",
-                "Tap two tiles that go together.",
-                explain(
-                    ["Every tile is face down until you tap it."],
-                    ["Tap one tile to see what is on it.", "Tap a second tile.",
-                     "If a word and its meaning match, they stay face up."],
-                    ["If they do not match, both tiles turn back over.",
-                     "Remember what you saw - that is the whole game."],
-                    ["Tap your first tile."]),
-                ["grid"])
-        data["memorypairs_slide"] = i
+                    ["This is the unit's own Game Zone."],
+                    ["Tap a game card to play it.",
+                     "Each game asks you a few short questions.",
+                     "Play as many as you like, then come back for another."],
+                    ["Getting one wrong costs nothing here.",
+                     "A game is for practising, not for marking."],
+                    ["Pick a game and play."]),
+                ["gamelist"])
 
     # ---- 13  Picture books -----------------------------------------------
     #         The full shelf, not one signature book - unitEbooks() decides
@@ -778,7 +995,7 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                       "alt": p.get("alt") or "", "sound": p.get("sound") or ""}
                      for p in b["pages"]],
         } for b in shelf]
-        i = add("books", "Picture books", "\U0001F4DA", "I read a picture book",
+        i = add("books", "Reading books", "\U0001F4DA", "I read a picture book",
                 "Choose a book to read.",
                 explain(
                     ["This unit has its own shelf of picture books."],
@@ -789,8 +1006,52 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                      "If nothing happens when you tap, that is fine - keep reading."],
                     ["Pick a book and press Read."]),
                 ["shelf"])
-        data["books_slide"] = i
 
+    # ---- Story questions for each book -----------------------------------
+    #         Already authored: BOOK_COMPREHENSION_SETS in english.js, 18 per
+    #         unit for Grade 1. Three kinds, and all three are kept because
+    #         dropping the two harder ones would leave only the text MCQs and
+    #         quietly halve the section: `choice` (text options), `picture`
+    #         (tap the right book PAGE out of three) and `order` (put events
+    #         in sequence). The picture kind is why this step needs the book
+    #         pages the shelf above already fetches.
+    if book_questions:
+        data["bookquestions"] = book_questions
+        i = add("bookquestions", "Story questions for each book", "\U0001F50D",
+                "I answered the book questions",
+                "Answer the questions about the books you read.",
+                explain(
+                    ["These questions are about the books on your shelf."],
+                    ["Some ask you to tap the right answer.",
+                     "Some show you three pictures and ask you to tap one.",
+                     "Some ask you to put things in the right order."],
+                    ["If you cannot remember, go back and read the book again.",
+                     "That is not cheating, that is reading."],
+                    ["Take your time, then tap."]),
+                ["bq"])
+
+    # ---- Let us talk ------------------------------------------------------
+    #         Situational dialogue: not "which sentence follows the pattern"
+    #         (that is Fluency) but "what do you SAY when someone asks you
+    #         this". Built from the unit's own grammar titles, which are
+    #         already written as instructions - "Introduce yourself by name",
+    #         "Say how old you are" - so the prompt is the unit's words and
+    #         only the framing around it is new.
+    if talk_rounds:
+        data["talk"] = talk_rounds
+        i = add("talk", "Let us talk", "\U0001F4AC", "I practised talking",
+                "What do you say?",
+                explain(
+                    ["Talking is why you are learning any of this."],
+                    ["Read what is happening.", "Then tap the thing you would say.",
+                     "Say it out loud too - that is the part that counts."],
+                    ["More than one answer can be real English.",
+                     "Only one of them answers what was asked."],
+                    ["Read it, choose it, then say it out loud."]),
+                (),
+                note=REVIEW_NOTE)
+
+    emit_in_order()
     return slides, stickers, data
 
 
@@ -805,7 +1066,7 @@ SLIDE = """    <section class="slide" data-explain='%(explain)s' data-say="%(say
         <div class="choices" id="ch%(n)d"></div>
         <p class="fb" id="fb%(n)d"></p>
         <p class="score" id="score%(n)d"></p>
-      </div>
+%(note)s      </div>
     </section>
 """
 
@@ -867,6 +1128,8 @@ PAGE = """<meta charset="utf-8">
 %(english)s
 
 %(books)s
+
+%(games)s
 
   const STICKERS = %(stickers)s;
 
@@ -938,12 +1201,18 @@ def bootstrap(slides, data):
         elif k == "fluency":
             out.append('  sequence({ el: %s, items: LESSON.fluency, finish: %d,\n'
                        '    label: "Question", done: "That is this unit\'s words and patterns practised." });' % (el, i))
-        elif k == "meaningmatch":
-            out.append('  sequence({ el: %s, items: LESSON.meaningmatch, finish: %d,\n'
-                       '    label: "Round", done: "That is Meaning Match finished." });' % (el, i))
-        elif k == "memorypairs":
-            out.append('  memoryPairs({ el: %s, items: LESSON.memorypairs, finish: %d,\n'
-                       '    done: "That is every pair matched." });' % (el, i))
+        elif k == "lecture":
+            out.append('  lectureStep({ el: %s, lecture: LESSON.lecture, finish: %d,\n'
+                       '    done: "You watched the whole lesson." });' % (el, i))
+        elif k == "games":
+            out.append('  gameZone({ el: %s, pack: LESSON.games, finish: %d,\n'
+                       '    done: "That is the Game Zone played." });' % (el, i))
+        elif k == "bookquestions":
+            out.append('  bookQuestions({ el: %s, items: LESSON.bookquestions, books: LESSON.books,\n'
+                       '    finish: %d, done: "You answered the book questions." });' % (el, i))
+        elif k == "talk":
+            out.append('  sequence({ el: %s, items: LESSON.talk, finish: %d,\n'
+                       '    label: "Round", done: "That is talking practised." });' % (el, i))
         elif k == "books":
             out.append('  bookShelf({ el: %s, items: LESSON.books, finish: %d,\n'
                        '    ask: "Choose a book to read.",\n'
@@ -951,7 +1220,8 @@ def bootstrap(slides, data):
     return "\n".join(out) + "\n"
 
 
-def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, ebooks, release):
+def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games_js,
+          ebooks, book_sets, lectures, release):
     entry = next(u for u in manifest["units"] if u["number"] == unit_no)
     unit = load_json(os.path.join(DATA, "units", "unit-%d.json" % unit_no))
     cw_unit = next(u for u in cw["units"] if u["unitNo"] == unit_no)
@@ -960,11 +1230,43 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, ebook
     pics = word_pictures(words)
 
     games = load_games(unit_no)
+    games_meta = load_games_meta(unit_no)
     # unitEbooks(): shell/subjects/english.js's own filter, matched exactly -
     # grades.includes(1) and (no units list, or units includes this one).
     shelf = [b for b in ebooks if 1 in b.get("grades", [])
              and (not b.get("units") or unit_no in b["units"])]
-    slides, stickers, data = build_slides(unit, cw_unit, pics, dic, games, shelf)
+    shelf_ids = {b["id"] for b in shelf}
+
+    # bookComprehensionQuestions(): the shell's own lookup, grade + unit.
+    # Filtered to books this unit's shelf actually carries, because a
+    # question about a book the child was never given is unanswerable - and
+    # a `picture` question needs every one of its three candidate pages to
+    # be a book on the shelf, not just the right one.
+    qset = next((s for s in book_sets if s.get("grade") == 1 and s.get("unit") == unit_no), None)
+    book_questions = []
+    for q in (qset or {}).get("questions") or []:
+        if q.get("kind") == "picture":
+            picks = q.get("pick") or []
+            if not picks or any(p.get("book") not in shelf_ids for p in picks):
+                continue
+        elif q.get("book") and q["book"] not in shelf_ids:
+            continue
+        book_questions.append(q)
+
+    lec = (lectures or {}).get(str(unit_no)) or {}
+    lecture = {}
+    if lec.get("lectureVideo"):
+        lecture = {
+            "video": lecture_asset(lec.get("lectureVideo")),
+            "poster": lecture_asset(lec.get("lecturePoster")),
+            "captions": lecture_asset(lec.get("lectureCaptions")),
+            "slides": lec.get("lectureSlides") or [],
+        }
+
+    talk_rounds = talk_items(unit)
+
+    slides, stickers, data = build_slides(unit, cw_unit, pics, dic, games, games_meta,
+                                          shelf, lecture, book_questions, talk_rounds)
     data = {k: v for k, v in data.items() if not k.endswith("_slide")}
     data["audioRelease"] = release
     data["unitNo"] = unit_no
@@ -976,6 +1278,7 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, ebook
 
     body = "".join(SLIDE % {
         "n": s["n"], "title": text(s["title"]), "ask": text(s["ask"]),
+        "note": ('        <p class="reviewnote">' + text(s["note"]) + "</p>\n") if s["note"] else "",
         "explain": ssml_attr(s["explain"]), "say": attr(s["say"]).replace('"', "&quot;"),
     } for s in slides)
     body += STICKER_SLIDE % {"explain": ssml_attr(explain(
@@ -988,6 +1291,7 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, ebook
         "slides": body,
         "data": json.dumps(data, ensure_ascii=False, indent=2).replace("\n", "\n  "),
         "voice": voice, "deck": deck, "english": english, "books": books_js,
+        "games": games_js,
         "stickers": json.dumps(stickers, ensure_ascii=False),
         "bootstrap": bootstrap(slides, data),
     }
@@ -1010,11 +1314,15 @@ def main():
     deck = io.open(os.path.join(LIB, "deck.js"), encoding="utf-8").read()
     english = io.open(os.path.join(LIB, "english.js"), encoding="utf-8").read()
     books_js = io.open(os.path.join(LIB, "books.js"), encoding="utf-8").read()
+    games_js = io.open(os.path.join(LIB, "games.js"), encoding="utf-8").read()
     ebooks = ebook_catalog()
+    book_sets = book_comprehension_sets()
+    lectures = lecture_media()
 
     units = wanted or [u["number"] for u in manifest["units"]]
     print("\n  Building Grade 1 English lessons  (audio stamp %s)\n" % release)
-    built = [build(n, manifest, cw, dic, css, voice, deck, english, books_js, ebooks, release) for n in units]
+    built = [build(n, manifest, cw, dic, css, voice, deck, english, books_js, games_js, ebooks,
+                   book_sets, lectures, release) for n in units]
     print("\n  %d page(s). Now run the shared pipeline - see the docstring.\n" % len(built))
 
 

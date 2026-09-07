@@ -307,6 +307,12 @@
   .pairtile:disabled { cursor: default; }
 
   /* ---- Picture books: the shelf, and the full-screen reader ---- */
+  /* a stage that holds a shelf fills the slide - see the note in
+     lesson-app-tools' sibling scripts: #stageN is a flex ITEM, so a
+     child's width:100% resolves against a box shrunk to one card. */
+  .stagewide { width: 100%; }
+  .reviewnote { color: var(--muted); font-size: 13.5px; text-align: center;
+    margin: 0; font-style: italic; }
   .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; width: 100%; }
   .bookcard { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px;
     border: 3px solid var(--line); background: var(--card); text-align: left; }
@@ -330,3 +336,42 @@
   .book-stage [data-tap].tap-play { animation: tapPulse 700ms ease; }
   .book-reader-bottom { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 14px 18px; flex-wrap: wrap; }
   .book-page-count { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; min-width: 5em; text-align: center; }
+
+  /* ---- the unit's video lesson ---- */
+  .lecture { width: 100%; max-width: 720px; }
+  .lecturevideo { width: 100%; display: block; border-radius: 18px; border: 1px solid var(--line);
+    background: #000; aspect-ratio: 16 / 9; }
+
+  /* ---- the Game Zone shelf ---- */
+  .gamelist .gamecard.played { border-color: var(--good); background: var(--good-soft); }
+  .game-overlay .game-stage { width: 100%; max-width: 720px; display: flex; flex-direction: column;
+    align-items: center; gap: 14px; padding: 10px 0; }
+  .game-overlay .gameprompt { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 21px; text-align: center; margin: 0; }
+  .game-overlay .gameclue { color: var(--muted); font-size: 17px; text-align: center; margin: 0; max-width: 30em; }
+  .game-overlay .fb { min-height: 1.6em; }
+  .game-overlay .pairsgrid { max-width: 640px; }
+  .tile.letter { min-width: 54px; text-align: center; text-transform: lowercase; font-size: 26px; }
+  .game-done { text-align: center; }
+  .game-done .gamebig { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 30px; margin: 0 0 6px; }
+
+  /* ---- story questions for each book ---- */
+  .bookq { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+  .bookq-scene { margin: 0; width: 100%; max-width: 520px; border-radius: 18px; overflow: hidden;
+    border: 1px solid var(--line); background: var(--card); }
+  .bookq-scene img { width: 100%; display: block; aspect-ratio: 1600 / 1000; object-fit: cover; }
+  .bookq-pictures { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; max-width: 640px; }
+  .bookq-picture { position: relative; padding: 0; border-radius: 16px; overflow: hidden;
+    border: 4px solid var(--line); background: var(--card); }
+  .bookq-picture img { width: 100%; display: block; aspect-ratio: 1600 / 1000; object-fit: cover; }
+  .bookq-picture.right { border-color: var(--good); }
+  .bookq-picture.wrong { border-color: var(--bad); }
+  .bookq-picture:disabled { cursor: default; opacity: 0.85; }
+  .bookq-order-badge { position: absolute; top: 6px; left: 6px; min-width: 28px; height: 28px;
+    border-radius: 999px; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 800; font-size: 15px; display: grid; place-items: center; }
+  .bookq-nav { margin-top: 4px; }
+  @media (max-width: 560px) {
+    .bookq-pictures { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .bookq-picture { border-width: 3px; }
+  }

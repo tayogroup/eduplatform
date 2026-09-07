@@ -1,0 +1,130 @@
+# -*- coding: utf-8 -*-
+"""Build the Grade 1 English hub - the page a learner lands on.
+
+Ten cards, one per unit of the course, in the order the course teaches them.
+The card's blurb and its step count come from the built lesson page rather
+than from a list written here, so the hub cannot promise a step the page does
+not have.
+
+A unit whose page has not been built yet is drawn as a card with no link and
+"Coming soon" where the Start button goes. A card that looks like a link and
+goes nowhere is worse than a card that says it is not ready - the same rule
+the lesson build follows about a control that reaches nobody.
+
+    python build-hub.py
+"""
+import io
+import json
+import os
+import re
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ACADEMY = os.path.abspath(os.path.join(HERE, "..", ".."))
+DATA = os.path.join(ACADEMY, "english", "grade-1", "data")
+LIB = os.path.join(HERE, "lib")
+
+# What each unit is about, in a sentence a six-year-old's grown-up can read at
+# a glance. Drawn from the unit's own unitOverview, first sentence, because a
+# hand-written blurb goes stale the first time the content is corrected.
+def blurb(unit_json):
+    t = (unit_json.get("unit", {}).get("unitOverview") or "").strip()
+    t = re.sub(r"\s+", " ", t)
+    parts = re.split(r"(?<=[.!?])\s+", t)
+    # the first sentence is a welcome on unit 1 ("Welcome to your first unit
+    # of Year 1 English"), which says nothing about the unit; take the one
+    # that names what is taught
+    for p in parts:
+        if re.search(r"\byou will\b|\blearn\b|\bpractis|\bread\b", p, re.I):
+            return p.strip()
+    return (parts[0] if parts else "").strip()
+
+
+CARD = """      <%(tag)s class="card%(cls)s"%(href)s>
+        <span class="cardno">Unit %(n)d</span>
+        <h2>%(title)s</h2>
+        <p>%(blurb)s</p>
+        <span class="cardfoot"><span class="meta">%(meta)s</span>%(cta)s</span>
+      </%(tag)s>
+"""
+
+PAGE = """<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 1 English</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+%(css)s
+  /* ---- the hub ---- */
+  .hubhead { padding: 26px 4px 18px; }
+  .hubhead h1 { font-size: clamp(34px, 7vw, 54px); }
+  .hubhead h1 em { font-style: normal; color: var(--teal); }
+  .hubhead p { color: var(--muted); max-width: 46ch; margin-top: 10px; font-size: 19px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .card { display: flex; flex-direction: column; gap: 10px; padding: 20px;
+    border-radius: 22px; border: 1px solid var(--line); background: rgba(20, 43, 62, 0.88);
+    box-shadow: var(--shadow); color: var(--ink); text-decoration: none; }
+  a.card:hover, a.card:focus-visible { border-color: var(--teal); }
+  .card h2 { font-size: 25px; }
+  .card p { color: var(--muted); font-size: 16.5px; }
+  .cardno { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+  .cardfoot { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .meta { color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .go { flex: 0 0 auto; border-radius: 999px; background: var(--gold); color: var(--accent-ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; padding: 9px 20px; }
+  .soon { flex: 0 0 auto; color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .card.locked { opacity: 0.62; }
+  .hubfoot { color: var(--muted); font-size: 14.5px; padding: 26px 4px 0; max-width: 60ch; }
+</style>
+
+<div class="wrap">
+  <header class="hubhead">
+    <p class="eyebrow">Ehel Academy &middot; English</p>
+    <h1>Grade 1 <em>English</em></h1>
+    <p>Ten units, in the order they are meant to be done. Start at the top &mdash; each one gets you ready for the next.</p>
+  </header>
+
+  <main class="cards">
+%(cards)s  </main>
+
+  <p class="hubfoot">Every word, story and recording here is the Grade 1 English course content, shown a different way.</p>
+</div>
+"""
+
+
+def main():
+    manifest = json.load(io.open(os.path.join(DATA, "course-manifest.json"), encoding="utf-8"))
+    cfg = json.load(io.open(os.path.join(HERE, "app.config.json"), encoding="utf-8"))
+    built = {l["file"]: l for l in cfg["lessons"]}
+
+    def slug(t):
+        s = t.lower().replace("&", "and")
+        return re.sub(r"[^a-z0-9]+", "-", s).strip("-") + ".html"
+
+    cards = ""
+    live = 0
+    for u in manifest["units"]:
+        unit = json.load(io.open(os.path.join(DATA, "units", "unit-%d.json" % u["number"]), encoding="utf-8"))
+        f = slug(u["title"])
+        here = os.path.isfile(os.path.join(HERE, f))
+        if here and f in built:
+            live += 1
+            page = io.open(os.path.join(HERE, f), encoding="utf-8").read()
+            steps = len(re.findall(r'<section class="slide"', page)) - 1
+            meta = "%d steps &middot; stickers" % steps
+            cta = '<span class="go">Start</span>'
+            tag, href, cls = "a", ' href="%s?from=%s"' % (f, cfg["fromParam"]), ""
+        else:
+            meta, cta = "", '<span class="soon">Coming soon</span>'
+            tag, href, cls = "div", "", " locked"
+        cards += CARD % {
+            "tag": tag, "href": href, "cls": cls, "n": u["number"],
+            "title": u["title"], "blurb": blurb(unit), "meta": meta, "cta": cta,
+        }
+
+    css = io.open(os.path.join(LIB, "lesson.css"), encoding="utf-8").read()
+    io.open(os.path.join(HERE, cfg["hub"]), "w", encoding="utf-8", newline="").write(
+        PAGE % {"css": css, "cards": cards})
+    print("\n  ok   %s  -  %d of %d units live\n" % (cfg["hub"], live, len(manifest["units"])))
+
+
+main()

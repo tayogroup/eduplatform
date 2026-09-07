@@ -1,0 +1,3046 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="modulepreload" href="./learner-controls.js">
+<link rel="modulepreload" href="./wehel.js">
+<link rel="modulepreload" href="./course-shell.js">
+<script>
+  /* preconnect to whichever platform the launch names: DNS and TLS happen
+     while the page parses, instead of in front of the first POST */
+  (function () {
+    try {
+      var ep = new URLSearchParams(location.search).get("pwsEndpoint");
+      if (!ep) return;
+      var origin = new URL(ep, location.href).origin;
+      var l = document.createElement("link");
+      l.rel = "preconnect"; l.href = origin; l.crossOrigin = "anonymous";
+      document.head.appendChild(l);
+    } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
+  })();
+</script>
+<title>Welcome to School</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /* ==================================================================
+     THE BASE - lifted verbatim from the Grade 1 Mathematics standalone
+     build (mathematics/grade-1-app/g1v2), because these two are meant to
+     be one product. Everything above the ENGLISH heading further down is
+     that build's design system unchanged: the same tokens, the same deck,
+     the same gold action colour, the same voice bar.
+
+     The light palette is declared first and then overridden by the Wehel
+     block below, exactly as it is there. It is kept rather than deleted
+     so a token the override forgets still resolves to something legible
+     instead of to nothing.
+     ================================================================== */
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; }
+  .choice.small { min-width: 80px; height: 64px; font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { border-radius: 18px; border: 3px solid var(--line); background: var(--card); padding: 14px 10px; text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .sticker .ic { display: block; font-size: 38px; line-height: 1.2; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker:not(.got) .ic { filter: grayscale(1); opacity: 0.35; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px 0; }
+  .foot .mid { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to the
+     viewer's setting. The selector list carries the same specificity as
+     the light block above and comes later, so it wins in both light and
+     dark. The palette is Ehel Academy's own - gold #f4c95d is the action
+     colour, teal #0f766e and coral #c2482c lifted to the same hues at a
+     lightness that is legible on a dark ground.
+
+     Copied from the Grade 1 Mathematics build. Do not re-solve it here:
+     the two builds are meant to be indistinguishable in colour.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* the fixed ground, painted by a pseudo-element rather than
+     background-attachment, which iOS Safari does not honour */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+  .deck { background: rgba(20, 43, 62, 0.88); }
+
+  /* ---- the voice bar: the speaker reads the step, Explain walks
+          through the idea behind it ---- */
+  .say button.explain {
+    flex: 0 0 auto;
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+  @media (max-width: 420px) {
+    .say button.explain .explain-t { display: none; }
+    .say button.explain { width: 44px; height: 44px; padding: 0; justify-content: center; font-size: 18px; }
+  }
+
+  /* ==================================================================
+     ENGLISH
+
+     Everything below is this build's own. The rule it follows is that a
+     new control borrows an existing token rather than introducing a
+     colour: gold is the action, teal is the voice and the taught thing,
+     coral is the thing being counted or pointed at, good/bad are the
+     only verdicts. Nothing here invents a hue.
+     ================================================================== */
+
+  /* ---- a word card: the picture, the word, what it means ---- */
+  .wordcard { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+  .wordpic { font-size: clamp(64px, 15vw, 104px); line-height: 1.1; }
+  .wordpic.none { font-size: clamp(40px, 9vw, 60px); opacity: 0.5; }
+  .bigword { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: clamp(40px, 9vw, 68px); line-height: 1.05; color: var(--teal); }
+  .wordmeaning { max-width: 30ch; color: var(--ink); font-size: 19px; }
+  .wordpos { color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .wordsentence { max-width: 34ch; color: var(--muted); font-size: 17px; font-style: italic; }
+
+  /* ---- a strip of word buttons, for tapping the word you heard ---- */
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 14px 20px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 30px; }
+  .wordbtn .pic { display: block; font-size: 42px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
+
+  /* ---- the story, one page at a time, with the line being read lit up.
+          Gold, because it is the same "here you are" the dot rail uses. ---- */
+  .story { width: 100%; max-width: 34em; display: flex; flex-direction: column; gap: 14px; }
+  .story p { font-size: clamp(19px, 3.4vw, 23px); line-height: 1.6; }
+  .story p.now { color: var(--gold); }
+  .storytitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 26px; color: var(--teal); text-align: center; }
+
+  /* ---- a rule card: what English does, said once and shown once ---- */
+  .rule { width: 100%; max-width: 34em; display: flex; flex-direction: column; gap: 12px; }
+  .rulepattern { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: clamp(26px, 5vw, 38px); text-align: center; color: var(--gold); }
+  .note { border-radius: 16px; border: 1px solid var(--line); background: var(--cell); padding: 12px 16px; font-size: 17px; }
+  .note b { color: var(--teal); }
+  .note.watch { border-color: var(--accent); background: var(--accent-soft); }
+  .note.watch b { color: var(--accent); }
+
+  /* ---- building a sentence by tapping words ---- */
+  .build { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .buildline { min-height: 74px; width: 100%; max-width: 30em; display: flex; flex-wrap: wrap; gap: 8px;
+    align-items: center; justify-content: center; padding: 12px;
+    border-radius: 18px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
+  .tile { padding: 10px 16px; border-radius: 14px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 24px; }
+  .tile:active { transform: scale(0.96); }
+  .buildline .tile { border-color: var(--teal); }
+  .buildline.right { border-color: var(--good); border-style: solid; }
+  .buildline.wrong { border-color: var(--bad); border-style: solid; }
+
+  /* ---- say-it-out-loud: a model line, then the child's turn ---- */
+  .saylines { width: 100%; max-width: 32em; display: flex; flex-direction: column; gap: 10px; }
+  .sayline { display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+    border-radius: 16px; border: 1px solid var(--line); background: var(--cell); font-size: 19px; }
+  .sayline button.hear { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0;
+    background: var(--teal); color: #06231F; font-size: 20px; display: grid; place-items: center; }
+  .sayline.said { border-color: var(--good); background: var(--good-soft); }
+  .sayline .tick { margin-left: auto; flex: 0 0 auto; border-radius: 999px; border: 2px solid var(--line);
+    background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; }
+  .sayline.said .tick { border-color: var(--good); color: var(--good); }
+
+  /* ---- the question text above a set of choices ---- */
+  .ask { max-width: 32ch; text-align: center; font-size: clamp(20px, 4vw, 26px); font-weight: 700;
+    font-family: "Inter", "Segoe UI", sans-serif; }
+  .askpic { font-size: clamp(70px, 17vw, 120px); line-height: 1.1; }
+
+  /* ---- long answers do not fit a 34px chunky button ---- */
+  .choice.text { min-width: 0; width: 100%; max-width: 30em; height: auto; min-height: 62px;
+    padding: 14px 18px; font-size: 20px; line-height: 1.35; text-align: left; }
+  .choices.stack { flex-direction: column; align-items: stretch; width: 100%; }
+
+  /* --- the way back to the hub, drawn only when the learner arrived from it;
+         see lesson-app-tools/wire-navigation.py --- */
+  .lesson-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 17px 9px 13px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+  }
+  .lesson-back:hover, .lesson-back:focus-visible { border-color: var(--teal); }
+
+  /* --- a home for the class controls, and the tutor dock;
+         see lesson-app-tools/wire-platform-controls.py --- */
+  .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
+  .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
+    align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
+    background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
+    padding: 12px 18px; box-shadow: var(--shadow); }
+  .w-dock[hidden] { display: none; }
+  .w-drawer { position: fixed; right: 14px; bottom: 14px; z-index: 71; width: min(420px, calc(100vw - 28px));
+    height: min(620px, calc(100vh - 28px)); background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+  .w-drawer[hidden] { display: none; }
+  .w-drawer-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+    border-bottom: 1px solid var(--line); font-weight: 800; }
+  .w-drawer-head button { margin-left: auto; border: 1px solid var(--line); background: var(--cell);
+    color: var(--ink); border-radius: 999px; width: 34px; height: 34px; font-size: 17px; cursor: pointer; }
+  .w-drawer-body { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
+    background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
+    font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* --- said on the learner's own screen when their work is not reaching the
+         school; see lesson-app-tools/wire-progress.py --- */
+  .progress-notice {
+    margin: 0 0 12px; padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--bad-soft); border: 1px solid var(--bad);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 600;
+  }
+
+  /* ---- the two header bars, modelled on the English shell ---- */
+  .eh-bar1, .eh-bar2 { position: sticky; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); }
+  .eh-bar1 { top: 0; padding: 8px 16px; }
+  .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
+  .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+    color: var(--ink); font-size: 17px; cursor: pointer; }
+  .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
+    cursor: pointer; text-decoration: none; }
+  .eh-round.back { padding: 9px 13px; }
+  .eh-section { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; }
+  .eh-b2right { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
+  .eh-pill { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 15px; cursor: pointer; }
+  .eh-steps { position: sticky; top: 104px; z-index: 39; background: var(--card); border-bottom: 1px solid var(--line);
+    max-height: 55vh; overflow-y: auto; padding: 8px; }
+  .eh-steps button { display: block; width: 100%; text-align: left; font: inherit; font-size: 16px;
+    background: none; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--ink); }
+  .eh-steps button:hover { background: var(--cell); }
+  .eh-steps button.now { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 700; }
+  .eh-steps button.done::after { content: " \2713"; color: var(--good); font-weight: 700; }
+  .eh-steps button.now.done::after { color: var(--teal-ink, #06231F); }
+  .hero .eyebrow { display: none; }   /* the brand bar says Primary Mathematics now */
+  @media (max-width: 720px) {
+    .eh-progtext, .eh-brandtext { display: none; }
+    .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
+    .eh-picker { max-width: 130px; }
+  }
+</style>
+
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="welcome-to-school.html" selected>Welcome to School</option></select>
+    <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
+  </div>
+</header>
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">Welcome to School</span>
+  <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Ehel Academy &middot; Grade 1 English &middot; Unit 1</p>
+      <h1>Welcome to <em>School</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These words all share one sound.</s><s>Your ears do this step, not your eyes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>I will say a word.</s><s>Listen right to the end of it.</s><s>Then look at the words and tap the one you heard.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>It is easy to tap the first word you can read.</s><s>Wait for the whole word before you choose.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it again as many times as you like.</s><s>Now listen.</s></mstts:express-as>' data-say="Listen to the word, then tap the word you heard.">
+      <div class="slide-head"><span class="n">1</span><h2>Phonics: short a</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask1">Listen to the word, then tap the word you heard.</span></div>
+      <div class="stage">
+        <div id="stage1"></div>
+        <div class="choices" id="ch1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="score" id="score1"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the new words for this unit.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One word at a time.</s><s>Look at the picture.</s><s>Say the word out loud.</s><s>Then press Next word.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Reading a word in your head is not the same as saying it.</s><s>Your mouth has to learn it too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it to hear the word said properly.</s><s>Then say it with me.</s></mstts:express-as>' data-say="Say this word out loud.">
+      <div class="slide-head"><span class="n">2</span><h2>Words: home and classroom</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Say this word out loud.</span></div>
+      <div class="stage">
+        <div id="stage2"></div>
+        <div class="choices" id="ch2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="score" id="score2"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A word is a picture you can say.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the picture.</s><s>Say what it is, out loud.</s><s>Then find that word and tap it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two words can start with the same letter.</s><s>Read to the end of the word before you tap.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say it first.</s><s>Then tap it.</s></mstts:express-as>' data-say="Which word is this?">
+      <div class="slide-head"><span class="n">3</span><h2>Word and picture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask3">Which word is this?</span></div>
+      <div class="stage">
+        <div id="stage3"></div>
+        <div class="choices" id="ch3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="score" id="score3"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These little words have no picture.</s><s>You cannot draw the word the.</s><s>You just have to know it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>They turn up in nearly every sentence you will ever read.</s><s>So knowing them by sight makes reading much faster.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not try to sound these out letter by letter.</s><s>Look at the whole word and know it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Listen, and tap the one you heard.</s></mstts:express-as>' data-say="Listen, then tap the word you heard.">
+      <div class="slide-head"><span class="n">4</span><h2>Words we see everywhere</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Listen, then tap the word you heard.</span></div>
+      <div class="stage">
+        <div id="stage4"></div>
+        <div class="choices" id="ch4"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="score" id="score4"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now a whole story, read to you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press Listen and let it play.</s><s>Follow the words with your finger as you hear them.</s><s>That is how the sound and the letters join up in your head.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not stop to work out every word.</s><s>Keep following.</s><s>You can hear it again afterwards.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen, and off we go.</s></mstts:express-as>' data-say="Press Listen, then follow the words with your finger.">
+      <div class="slide-head"><span class="n">5</span><h2>The story</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Press Listen, then follow the words with your finger.</span></div>
+      <div class="stage">
+        <div id="stage5"></div>
+        <div class="choices" id="ch5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="score" id="score5"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every answer here is in the story you just read.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, that is fine.</s><s>Go back a step and read it again.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">6</span><h2>Story questions</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Tap the answer.</span></div>
+      <div class="stage">
+        <div id="stage6"></div>
+        <div class="choices" id="ch6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="score" id="score6"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>English is a language before it is anything on a page.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the speaker to hear the line.</s><s>Then say it yourself, out loud.</s><s>Say it to a grown-up if one is near you, or just say it to yourself.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nobody is marking this and nothing is listening.</s><s>Tick it when you have said it, and be honest with yourself.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Your turn. Out loud.</s></mstts:express-as>' data-say="Listen, then say it out loud.">
+      <div class="slide-head"><span class="n">7</span><h2>Say it out loud</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Listen, then say it out loud.</span></div>
+      <div class="stage">
+        <div id="stage7"></div>
+        <div class="choices" id="ch7"></div>
+        <p class="fb" id="fb7"></p>
+        <p class="score" id="score7"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>English has patterns, and a pattern is a thing you can reuse.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The gold line is the pattern.</s><s>Learn that, and you can say a hundred sentences,</s><s>not just the one on the screen.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Read the Watch out box.</s><s>It is there because almost every child slips on that exact thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it, then read it once more, then press Next.</s></mstts:express-as>' data-say="Name a thing in your classroom">
+      <div class="slide-head"><span class="n">8</span><h2>How English works</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Name a thing in your classroom</span></div>
+      <div class="stage">
+        <div id="stage8"></div>
+        <div class="choices" id="ch8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="score" id="score8"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Writing a sentence is putting words in an order that means something.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap the words one at a time to put them on the line.</s><s>Tap a word on the line to take it back off.</s><s>When it reads like a real sentence, press Check it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A sentence needs its full stop at the end.</s><s>Without one it never finishes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read your line out loud before you check it.</s><s>Your ears will tell you if a word is in the wrong place.</s></mstts:express-as>' data-say="Draw your classroom with one thing you love in it: your desk, your book or your chair. Then tell an adult one sentence about your picture if one is nearby, or say the sentence out loud to yourself.">
+      <div class="slide-head"><span class="n">9</span><h2>Write a sentence</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Draw your classroom with one thing you love in it: your desk, your book or your chair. Then tell an adult one sentence about your picture if one is nearby, or say the sentence out loud to yourself.</span></div>
+      <div class="stage">
+        <div id="stage9"></div>
+        <div class="choices" id="ch9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="score" id="score9"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">10</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Tap the answer.</span></div>
+      <div class="stage">
+        <div id="stage10"></div>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="score" id="score10"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">&#9733;</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fbstick"></p>
+        <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">&#9664; Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next &#9654;</button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  /* ==================================================================
+     Welcome to School - Grade 1 English, Unit 1.
+
+     GENERATED by english/grade-1-app/build-lessons.py from
+     english/grade-1/data. Do not hand-edit: the next build overwrites it,
+     and the fix for anything wrong on this page is either in the course
+     content or in the builder.
+     ================================================================== */
+
+  const LESSON = {
+    "sounds": [
+      {
+        "w": "cat",
+        "audio": "./media/audio/grade-1/dictionary/cat.mp3",
+        "opts": [
+          {
+            "w": "cat",
+            "pic": "🐈",
+            "ok": 1
+          },
+          {
+            "w": "bat",
+            "pic": "🏏",
+            "ok": 0
+          },
+          {
+            "w": "hat",
+            "pic": "🎩",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "bat",
+        "audio": "./media/audio/grade-1/dictionary/bat.mp3",
+        "opts": [
+          {
+            "w": "bat",
+            "pic": "🏏",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "pic": "🐈",
+            "ok": 0
+          },
+          {
+            "w": "hat",
+            "pic": "🎩",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "hat",
+        "audio": "./media/audio/grade-1/dictionary/hat.mp3",
+        "opts": [
+          {
+            "w": "hat",
+            "pic": "🎩",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "pic": "🐈",
+            "ok": 0
+          },
+          {
+            "w": "bat",
+            "pic": "🏏",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "mat",
+        "audio": "./media/audio/grade-1/dictionary/mat.mp3",
+        "opts": [
+          {
+            "w": "mat",
+            "pic": "",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "pic": "🐈",
+            "ok": 0
+          },
+          {
+            "w": "bat",
+            "pic": "🏏",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "map",
+        "audio": "./media/audio/grade-1/dictionary/map.mp3",
+        "opts": [
+          {
+            "w": "map",
+            "pic": "🗺️",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "pic": "🐈",
+            "ok": 0
+          },
+          {
+            "w": "bat",
+            "pic": "🏏",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "can",
+        "audio": "./media/audio/grade-1/dictionary/can.mp3",
+        "opts": [
+          {
+            "w": "can",
+            "pic": "",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "pic": "🐈",
+            "ok": 0
+          },
+          {
+            "w": "bat",
+            "pic": "🏏",
+            "ok": 0
+          }
+        ]
+      }
+    ],
+    "newwords": [
+      {
+        "w": "home",
+        "pic": "🏠",
+        "meaning": "The place where you live with your family.",
+        "pos": "noun",
+        "audio": "./media/audio/grade-1/dictionary/home.mp3"
+      },
+      {
+        "w": "house",
+        "pic": "🏠",
+        "meaning": "A house is the building where a family lives.",
+        "pos": "noun",
+        "audio": "./media/audio/grade-1/dictionary/house.mp3"
+      },
+      {
+        "w": "door",
+        "pic": "🚪",
+        "meaning": "The part of a room you open to go in or out.",
+        "pos": "noun",
+        "audio": "./media/audio/grade-1/dictionary/door.mp3"
+      },
+      {
+        "w": "chair",
+        "pic": "🪑",
+        "meaning": "A seat for one person.",
+        "pos": "noun",
+        "audio": "./media/audio/grade-1/dictionary/chair.mp3"
+      },
+      {
+        "w": "school",
+        "pic": "🏫",
+        "meaning": "The place where children go to learn and play.",
+        "pos": "noun",
+        "audio": "./media/audio/grade-1/dictionary/school.mp3"
+      },
+      {
+        "w": "class",
+        "pic": "",
+        "meaning": "All the children who learn together with one teacher.",
+        "pos": "noun",
+        "audio": "./media/audio/grade-1/dictionary/class.mp3"
+      },
+      {
+        "w": "book",
+        "pic": "📖",
+        "meaning": "Pages with words or pictures joined together.",
+        "pos": "noun",
+        "audio": "./media/audio/grade-1/dictionary/book.mp3"
+      },
+      {
+        "w": "pencil",
+        "pic": "✏️",
+        "meaning": "A thin wooden stick we write and draw with.",
+        "pos": "noun",
+        "audio": "./media/audio/grade-1/dictionary/pencil.mp3"
+      }
+    ],
+    "match": [
+      {
+        "w": "cat",
+        "pic": "🐈",
+        "audio": "./media/audio/grade-1/dictionary/cat.mp3",
+        "opts": [
+          {
+            "w": "cat",
+            "ok": 1
+          },
+          {
+            "w": "bat",
+            "ok": 0
+          },
+          {
+            "w": "hat",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "bat",
+        "pic": "🏏",
+        "audio": "./media/audio/grade-1/dictionary/bat.mp3",
+        "opts": [
+          {
+            "w": "bat",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "ok": 0
+          },
+          {
+            "w": "hat",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "hat",
+        "pic": "🎩",
+        "audio": "./media/audio/grade-1/dictionary/hat.mp3",
+        "opts": [
+          {
+            "w": "hat",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "ok": 0
+          },
+          {
+            "w": "bat",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "map",
+        "pic": "🗺️",
+        "audio": "./media/audio/grade-1/dictionary/map.mp3",
+        "opts": [
+          {
+            "w": "map",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "ok": 0
+          },
+          {
+            "w": "bat",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "man",
+        "pic": "👨🏾",
+        "audio": "./media/audio/grade-1/dictionary/man.mp3",
+        "opts": [
+          {
+            "w": "man",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "ok": 0
+          },
+          {
+            "w": "bat",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "ran",
+        "pic": "🏃🏾",
+        "audio": "./media/audio/grade-1/dictionary/ran.mp3",
+        "opts": [
+          {
+            "w": "ran",
+            "ok": 1
+          },
+          {
+            "w": "cat",
+            "ok": 0
+          },
+          {
+            "w": "bat",
+            "ok": 0
+          }
+        ]
+      }
+    ],
+    "sight": [
+      {
+        "w": "a",
+        "audio": "./media/audio/grade-1/dictionary/a.mp3",
+        "opts": [
+          {
+            "w": "a",
+            "pic": "",
+            "ok": 1
+          },
+          {
+            "w": "the",
+            "pic": "",
+            "ok": 0
+          },
+          {
+            "w": "is",
+            "pic": "",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "the",
+        "audio": "./media/audio/grade-1/dictionary/the.mp3",
+        "opts": [
+          {
+            "w": "the",
+            "pic": "",
+            "ok": 1
+          },
+          {
+            "w": "a",
+            "pic": "",
+            "ok": 0
+          },
+          {
+            "w": "is",
+            "pic": "",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "is",
+        "audio": "./media/audio/grade-1/dictionary/is.mp3",
+        "opts": [
+          {
+            "w": "is",
+            "pic": "",
+            "ok": 1
+          },
+          {
+            "w": "a",
+            "pic": "",
+            "ok": 0
+          },
+          {
+            "w": "the",
+            "pic": "",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "it",
+        "audio": "./media/audio/grade-1/dictionary/it.mp3",
+        "opts": [
+          {
+            "w": "it",
+            "pic": "",
+            "ok": 1
+          },
+          {
+            "w": "a",
+            "pic": "",
+            "ok": 0
+          },
+          {
+            "w": "the",
+            "pic": "",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "in",
+        "audio": "./media/audio/grade-1/dictionary/in.mp3",
+        "opts": [
+          {
+            "w": "in",
+            "pic": "",
+            "ok": 1
+          },
+          {
+            "w": "a",
+            "pic": "",
+            "ok": 0
+          },
+          {
+            "w": "the",
+            "pic": "",
+            "ok": 0
+          }
+        ]
+      },
+      {
+        "w": "I",
+        "audio": "./media/audio/grade-1/dictionary/i.mp3",
+        "opts": [
+          {
+            "w": "I",
+            "pic": "",
+            "ok": 1
+          },
+          {
+            "w": "a",
+            "pic": "",
+            "ok": 0
+          },
+          {
+            "w": "the",
+            "pic": "",
+            "ok": 0
+          }
+        ]
+      }
+    ],
+    "story": {
+      "title": "Amal's First Day",
+      "pages": [
+        [
+          "Today was Amal's first day at school. She wore her new dress and held her mother's hand.",
+          "“Hello!” said a kind lady at the door. “I am your teacher. What is your name?”",
+          "“My name is Amal,” she said softly. “I am six years old.”",
+          "“Welcome, Amal!” said the teacher. “Come and see our classroom.”"
+        ],
+        [
+          "Inside, Amal saw many things. There were tables and chairs. There were books and crayons. There was a big clock on the wall.",
+          "“Look!” said Amal. “A red book! And a blue pencil!”",
+          "A boy smiled at her. “Hello, my name is Adam,” he said. “Do you want to be my friend?”",
+          "“Yes!” said Amal. She was happy now."
+        ],
+        [
+          "The teacher said, “Let us sing!” All the children sang the alphabet song: “A, B, C, D…” Amal sang too.",
+          "Then the children did a treasure hunt. “Find something green!” said the teacher. Amal found a green crayon. “I can see a green crayon!” she said.",
+          "At the end of the day, Amal drew a picture of her school. She drew the tables, the chairs, and her new friend Adam.",
+          "“I like my school,” said Amal."
+        ],
+        [
+          "On the way home, her mother asked, “What did you do today?”",
+          "Amal smiled. “I learned new words. I made a friend. And I can sing the alphabet song!”"
+        ]
+      ],
+      "audio": "./media/audio/grade-1/readings/eng-g01-t01-u01-read01.mp3"
+    },
+    "questions": [
+      {
+        "ask": "What is the name of the boy who smiles at Amal?",
+        "opts": [
+          {
+            "t": "Adam",
+            "ok": 1
+          },
+          {
+            "t": "Six years old",
+            "ok": 0
+          },
+          {
+            "t": "Quietly",
+            "ok": 0
+          }
+        ],
+        "why": "The boy says, 'Hello, my name is Adam.'"
+      },
+      {
+        "ask": "How old does Amal tell her teacher she is?",
+        "opts": [
+          {
+            "t": "Six years old",
+            "ok": 1
+          },
+          {
+            "t": "Adam",
+            "ok": 0
+          },
+          {
+            "t": "Quietly",
+            "ok": 0
+          }
+        ],
+        "why": "At the door Amal says, 'I am six years old.'"
+      },
+      {
+        "ask": "Amal spoke softly. Does softly mean loudly or quietly?",
+        "opts": [
+          {
+            "t": "Quietly",
+            "ok": 1
+          },
+          {
+            "t": "Adam",
+            "ok": 0
+          },
+          {
+            "t": "Six years old",
+            "ok": 0
+          }
+        ],
+        "why": "Amal says her name softly at the door, in a small quiet voice."
+      },
+      {
+        "ask": "What did the children do after the teacher said, 'Let us sing'?",
+        "opts": [
+          {
+            "t": "They sang the alphabet song",
+            "ok": 1
+          },
+          {
+            "t": "Adam",
+            "ok": 0
+          },
+          {
+            "t": "Six years old",
+            "ok": 0
+          }
+        ],
+        "why": "Straight after 'Let us sing!' all the children sang 'A, B, C, D...'"
+      },
+      {
+        "ask": "What green thing did Amal find in the treasure hunt?",
+        "opts": [
+          {
+            "t": "A green crayon",
+            "ok": 1
+          },
+          {
+            "t": "Adam",
+            "ok": 0
+          },
+          {
+            "t": "Six years old",
+            "ok": 0
+          }
+        ],
+        "why": "The teacher says 'Find something green!' and Amal finds a green crayon."
+      },
+      {
+        "ask": "How did Amal feel when Adam asked to be her friend?",
+        "opts": [
+          {
+            "t": "Happy",
+            "ok": 1
+          },
+          {
+            "t": "Adam",
+            "ok": 0
+          },
+          {
+            "t": "Six years old",
+            "ok": 0
+          }
+        ],
+        "why": "Amal says 'Yes!' to Adam and the story says she was happy now."
+      }
+    ],
+    "sayit": [
+      {
+        "text": "Point to school things as an adult names them if one is nearby, or as the audio names them, then name them yourself. Say: 'This is a pencil.' 'This is a book.' 'This is a bag.'",
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t01-u01-speak01.mp3"
+      },
+      {
+        "text": "An adult can hold up a school object and say its colour, or you can listen to the audio say it. Copy, then try one alone. Say: 'It is red.' 'It is a blue pencil.' 'It is big.'",
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t01-u01-speak02.mp3"
+      },
+      {
+        "text": "Take turns asking a friend their name. Say: 'What is your name?' 'My name is Sami.' 'Hello, Sami. My name is Maya.'",
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t01-u01-speak03.mp3"
+      },
+      {
+        "text": "Which talk line do you use to tell somebody your name?",
+        "audio": ""
+      },
+      {
+        "text": "Say the line 'I am ___ years old' about you.",
+        "audio": ""
+      },
+      {
+        "text": "Point to something in your classroom and say, 'This is a ___.'",
+        "audio": ""
+      }
+    ],
+    "rules": [
+      {
+        "title": "Name a thing in your classroom",
+        "pattern": "This is a / an ___.",
+        "explanation": "Hold up one classroom object and name it. Say 'a' before most words, but 'an' before a vowel sound: a pen, an apple.",
+        "mistake": "Children pop 'a' before apple by mistake. Before an a, e, i, o, u sound we say 'an': an apple, an egg. Try it slowly.",
+        "tip": "If the word begins with an open-mouth sound — a, e, i, o, u — use 'an'.",
+        "practice": "Name three things: This is a pen. This is an apple. This is a book.",
+        "audio": "./media/audio/grade-1/grammar/eng-g01-t01-u01-grammar01.mp3"
+      },
+      {
+        "title": "Describe it with one word",
+        "pattern": "It is ___.",
+        "explanation": "After naming something, tell us about it. Say 'It is' and add a colour or size word.",
+        "mistake": "Some children say 'It big.' The word 'is' must stay in the middle: 'It is big.'",
+        "tip": "Point at the thing and say 'It is' first, then your describing word.",
+        "practice": "Describe three school things: It is big. It is red. It is new.",
+        "audio": "./media/audio/grade-1/grammar/eng-g01-t01-u01-grammar02.mp3"
+      },
+      {
+        "title": "Introduce yourself by name",
+        "pattern": "My name is ___.",
+        "explanation": "Stand tall, smile, and say your own name. Use this sentence whenever you meet someone new.",
+        "mistake": "Children sometimes answer with only their name. Say the full sentence: 'My name is...'.",
+        "tip": "Put your hand on your chest as you say 'My name is'.",
+        "practice": "Practise three times with a friend: My name is Sami. My name is Maya. My name is Theo.",
+        "audio": "./media/audio/grade-1/grammar/eng-g01-t01-u01-grammar03.mp3"
+      },
+      {
+        "title": "Say how old you are",
+        "pattern": "I am ___ years old.",
+        "explanation": "Hold up your fingers for your age, then say the whole sentence: I am six years old.",
+        "mistake": "Some children say 'I have six years.' In English we say 'I am six years old.'",
+        "tip": "Show your age on your fingers while you speak: fingers first, words after.",
+        "practice": "Say your own age, then a friend's: I am six years old. I am five years old. I am seven years old.",
+        "audio": "./media/audio/grade-1/grammar/eng-g01-t01-u01-grammar04.mp3"
+      },
+      {
+        "title": "Share a school skill you have",
+        "pattern": "I can ___.",
+        "explanation": "Tell your class one thing you do well at school. Begin with 'I can' and add the action.",
+        "mistake": "'I can to write' is a common slip. Drop the little word 'to': 'I can write.'",
+        "tip": "Count your skills on your fingers as you say each 'I can' sentence.",
+        "practice": "Say three school skills: I can write. I can count. I can tidy up.",
+        "audio": "./media/audio/grade-1/grammar/eng-g01-t01-u01-grammar05.mp3"
+      },
+      {
+        "title": "Say what you like at school",
+        "pattern": "I like ___.",
+        "explanation": "Share something you enjoy. Say 'I like' and then add the thing or the activity.",
+        "mistake": "Children may stop after 'I like' with nothing after it. The sentence needs a thing at the end: 'I like apples.'",
+        "tip": "Give a thumbs up every time you say 'I like'.",
+        "practice": "Say three things you enjoy: I like books. I like painting. I like break time.",
+        "audio": "./media/audio/grade-1/grammar/eng-g01-t01-u01-grammar06.mp3"
+      }
+    ],
+    "write": {
+      "ask": "Draw your classroom with one thing you love in it: your desk, your book or your chair. Then tell an adult one sentence about your picture if one is nearby, or say the sentence out loud to yourself.",
+      "title": "Writing 1 - Draw and tell",
+      "answer": "This is a chair .",
+      "tiles": [
+        "This",
+        "is",
+        "a",
+        "chair",
+        ".",
+        "cat",
+        "bat",
+        "hat"
+      ],
+      "audio": "./media/audio/grade-1/writing/eng-g01-t01-u01-write01.mp3"
+    },
+    "quiz": [
+      {
+        "ask": "Which word names something you find in your classroom?",
+        "opts": [
+          {
+            "t": "cloud",
+            "ok": 0
+          },
+          {
+            "t": "river",
+            "ok": 0
+          },
+          {
+            "t": "whiteboard",
+            "ok": 1
+          },
+          {
+            "t": "camel",
+            "ok": 0
+          }
+        ],
+        "why": "A whiteboard is in the classroom; a camel, a river and a cloud are all found outside."
+      },
+      {
+        "ask": "Which classroom thing do you sit on?",
+        "opts": [
+          {
+            "t": "ruler",
+            "ok": 0
+          },
+          {
+            "t": "book",
+            "ok": 0
+          },
+          {
+            "t": "clock",
+            "ok": 0
+          },
+          {
+            "t": "chair",
+            "ok": 1
+          }
+        ],
+        "why": "We sit on a chair; a book is for reading, a clock shows the time and a ruler helps us measure."
+      },
+      {
+        "ask": "Which classroom thing tells you the time?",
+        "opts": [
+          {
+            "t": "clock",
+            "ok": 1
+          },
+          {
+            "t": "door",
+            "ok": 0
+          },
+          {
+            "t": "crayon",
+            "ok": 0
+          },
+          {
+            "t": "table",
+            "ok": 0
+          }
+        ],
+        "why": "A clock shows the time; a crayon colours, a table holds our work and a door opens and closes."
+      },
+      {
+        "ask": "Which word begins with the same sound as book?",
+        "opts": [
+          {
+            "t": "cup",
+            "ok": 0
+          },
+          {
+            "t": "bag",
+            "ok": 1
+          },
+          {
+            "t": "mat",
+            "ok": 0
+          },
+          {
+            "t": "pen",
+            "ok": 0
+          }
+        ],
+        "why": "Book and bag both start with /b/; pen starts with /p/, cup with /k/ and mat with /m/."
+      },
+      {
+        "ask": "What do you say to your teacher when you arrive at school in the morning?",
+        "opts": [
+          {
+            "t": "Good night.",
+            "ok": 0
+          },
+          {
+            "t": "Sit down.",
+            "ok": 0
+          },
+          {
+            "t": "Good morning.",
+            "ok": 1
+          },
+          {
+            "t": "Goodbye.",
+            "ok": 0
+          }
+        ],
+        "why": "We greet people in the morning with Good morning; good night and goodbye are for leaving."
+      },
+      {
+        "ask": "Which sentence tells someone your name?",
+        "opts": [
+          {
+            "t": "I am six years old.",
+            "ok": 0
+          },
+          {
+            "t": "I can hop.",
+            "ok": 0
+          },
+          {
+            "t": "This is a book.",
+            "ok": 0
+          },
+          {
+            "t": "My name is Samira.",
+            "ok": 1
+          }
+        ],
+        "why": "Only this sentence gives a name; the others tell an age, point at a thing, or tell what you can do."
+      },
+      {
+        "ask": "Which sentence tells someone how old you are?",
+        "opts": [
+          {
+            "t": "I am six years old.",
+            "ok": 1
+          },
+          {
+            "t": "This is a chair.",
+            "ok": 0
+          },
+          {
+            "t": "I like red.",
+            "ok": 0
+          },
+          {
+            "t": "My name is Theo.",
+            "ok": 0
+          }
+        ],
+        "why": "Only this sentence gives an age; the others give a name, name a thing, or tell what you like."
+      },
+      {
+        "ask": "Sami is holding up a pencil to show the class. What should he say?",
+        "opts": [
+          {
+            "t": "This is a clock.",
+            "ok": 0
+          },
+          {
+            "t": "This is a pencil.",
+            "ok": 1
+          },
+          {
+            "t": "I am six years old.",
+            "ok": 0
+          },
+          {
+            "t": "My name is Sami.",
+            "ok": 0
+          }
+        ],
+        "why": "He is showing a pencil, so he names that thing; the other sentences do not describe what he is holding."
+      },
+      {
+        "ask": "Which sentence tells something you are able to do?",
+        "opts": [
+          {
+            "t": "My name is Maya.",
+            "ok": 0
+          },
+          {
+            "t": "This is a book.",
+            "ok": 0
+          },
+          {
+            "t": "I can read.",
+            "ok": 1
+          },
+          {
+            "t": "It is a pen.",
+            "ok": 0
+          }
+        ],
+        "why": "The word can tells what you are able to do; the other sentences only name things or a person."
+      },
+      {
+        "ask": "Where should you put your book when the lesson has finished?",
+        "opts": [
+          {
+            "t": "out of the window",
+            "ok": 0
+          },
+          {
+            "t": "on the floor",
+            "ok": 0
+          },
+          {
+            "t": "in the bin",
+            "ok": 0
+          },
+          {
+            "t": "on the shelf",
+            "ok": 1
+          }
+        ],
+        "why": "We look after school things by putting books back on the shelf, not throwing them away."
+      }
+    ],
+    "audioRelease": "20260903c",
+    "unitNo": 1,
+    "unitTitle": "Welcome to School"
+  };
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+
+  /* ==================================================================
+     THE DECK - lifted verbatim from mathematics/grade-1-app/g1v2 with
+     the two progress hooks REMOVED, because the shared progress step in
+     lesson-app-tools puts them back and its anchors only match the
+     unwired shape. Do not re-add them by hand: the gate asserts the
+     call sites, and a second copy would report every step twice.
+
+     Do not name that tool's FILE anywhere in a generated page either.
+     Its own filename is the marker it tests for idempotence, so a
+     comment mentioning it makes the tool skip a page it has never
+     touched - and the page then ships reporting nothing, silently.
+     This comment used to do exactly that.
+     ================================================================== */
+  const $ = (id) => document.getElementById(id);
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+  const plain = (html) => String(html).replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+
+
+  /* ---- deck ---- */
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() {
+    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join("");
+  }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0;
+    $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots();
+    if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
+
+  /* ---- one question after another ---- */
+  function sequence(o) {
+    let i = 0, right = 0, lock = false;
+    const el = o.el;
+    function draw() {
+      lock = false;
+      const it = o.items[i];
+      $(el.say).innerHTML = it.ask;
+      $(el.stage).innerHTML = it.pic || "";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (o.label || "Question") + " " + (i + 1) + " of " + o.items.length;
+      say(plain(it.ask));
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const ok = b.dataset.ok === "1", it = o.items[i];
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad");
+      $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
+      say((ok ? cheer() + " " : "") + it.why);
+      i++;
+      setTimeout(() => {
+        if (i >= o.items.length) {
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          finish(o.finish, o.done);
+        } else draw();
+      }, 2700);
+    });
+    draw();
+  }
+
+  /* ==================================================================
+     THE ENGLISH ACTIVITIES
+
+     The Mathematics build's own rounds are one function per idea, each
+     drawing into one slide's ids and calling finish(i) when the child has
+     done the thing. These are the same shape, and the reason there are
+     eight of them rather than one generic renderer is the same reason
+     there are eight there: a step is a KIND of doing, and a renderer that
+     covers every kind covers none of them well.
+
+     What differs from Mathematics is where the sound comes from. Maths has
+     no recordings, so every line is spoken by the voice engine. English
+     has 93,065 committed clips of this exact content read by the approved
+     Ehel voice, so a word, a story, a rule and a model sentence are PLAYED,
+     and the voice engine is left to do what only it can - react to what the
+     child just did, and read an instruction that nobody recorded.
+
+     playClip() therefore falls back to say() rather than failing silently:
+     a missing clip costs the child the recording, not the instruction.
+     ================================================================== */
+
+  /* ---- where a clip lives -----------------------------------------
+     Descriptors in the unit JSON carry the course's own dev path
+     (./media/audio/grade-1/<category>/<file>.mp3). Two things have to
+     happen to it here, and both are shell/subjects/english.js's rules
+     rather than new ones:
+
+       - on the CDN the media tree is at the zone root, not beside the
+         app, so the path is rewritten the way resolveMediaUrl does. One
+         extra ../ over the shell's, because this build sits one level
+         deeper than app/english/index.html.
+       - the ?a= stamp is what makes a REPAIRED recording reach a child
+         who already heard the broken one: English names its clips for
+         their content, so a re-recording keeps its URL, and Bunny serves
+         media max-age=31536000 with no ETag. The stamp is read out of
+         english.js at build time so this build cannot drift behind it.
+
+     "Dev" is the same test english.js makes - the hostname, not the path -
+     so a lesson opened from a file:// URL or an artifact resolves as
+     production and simply finds nothing, which is the honest answer.
+     ------------------------------------------------------------------ */
+  const AUDIO_IS_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
+  function clip(source) {
+    if (!source) return "";
+    let s = String(source).replace(/^\.\//, "");
+    if (AUDIO_IS_DEV) return "../" + s;
+    const m = s.match(/media\/audio\/grade-(\d+)\/([a-z]+)\/(.+)$/i);
+    if (!m) return "../" + s;
+    return "../../../media/english/g" + String(m[1]).padStart(2, "0") +
+      "/audio/" + m[2] + "/" + m[3] + "?a=" + LESSON.audioRelease;
+  }
+
+  /* One element, because two would talk over each other - the same reason
+     the class controls are singletons. A clip that cannot be played hands
+     the words to the voice engine instead. */
+  const player = new Audio();
+  player.preload = "none";
+  function playClip(source, spokenFallback) {
+    const url = clip(source);
+    if (!url) { if (spokenFallback) say(spokenFallback); return Promise.resolve(false); }
+    try { VOICE.stop && VOICE.stop(); } catch (_) { /* the voice may be mid-sentence */ }
+    return new Promise((resolve) => {
+      let settled = false;
+      const finish = (ok) => { if (settled) return; settled = true; resolve(ok); };
+      player.onended = () => finish(true);
+      player.onerror = () => { if (spokenFallback) say(spokenFallback); finish(false); };
+      player.src = url;
+      const p = player.play();
+      if (p && p.catch) p.catch(() => { if (spokenFallback) say(spokenFallback); finish(false); });
+    });
+  }
+
+  const esc = (s) => String(s == null ? "" : s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  const picOf = (w) => (w.pic ? '<span class="pic" aria-hidden="true">' + w.pic + "</span>" : "");
+
+  /* ---- a clip belongs to a slide, and every slide is in the DOM ----
+     Every renderer draws once, at load, because the deck paints all its
+     slides and hides them with CSS. So an unguarded auto-play on draw fires
+     EVERY step's first clip the moment the page opens - measured: three
+     recordings racing for one <audio> element before the child has done
+     anything. They share the player, so the last one wins and a five-year-old
+     hears a grammar rule read over a step they cannot see.
+
+     Two halves to the fix, and both are needed. playHere() refuses to play
+     for a slide that is not the one on screen, and ONSHOW gives a step a way
+     to say its line when the learner actually arrives at it - otherwise
+     silencing the load would silence the step for good.
+
+     show() is wrapped rather than edited: it is lifted verbatim from the
+     Mathematics build and the shared progress step patches it by matching
+     its exact text. The header-bar step wraps it again afterwards for the
+     same reason. (Neither of those tools is named here on purpose - see
+     the note in the deck section.)
+     ------------------------------------------------------------------ */
+  const ONSHOW = [];
+  const showWithoutClips = show;
+  show = function (i, speak) {
+    showWithoutClips(i, speak);
+    const f = ONSHOW[cur];
+    if (f) { try { f(); } catch (_) { /* a step must never break the deck */ } }
+  };
+  function playHere(idx, source, fallback) {
+    if (cur === idx) playClip(source, fallback);
+  }
+  /* show(i, true) speaks the slide's data-say - the instruction - and the
+     recording is the thing the instruction is about, so playing it straight
+     away cuts the instruction off mid-sentence (playClip stops the voice on
+     purpose, so the two cannot overlap either). Wait for her to finish, with
+     a ceiling so a voice that never reports finishing cannot leave the step
+     silent. */
+  function afterVoice(fn) {
+    let waited = 0;
+    const t = setInterval(() => {
+      waited += 200;
+      if (!VOICE.speaking() || waited > 12000) { clearInterval(t); fn(); }
+    }, 200);
+  }
+
+  /* ---- hear the word, tap the word --------------------------------
+     The clip plays on its own, then the child picks. The distractors are
+     other words from THIS unit, so a wrong tap is a word they are also
+     learning rather than a word invented to be wrong.
+
+     Pictures ride on the buttons where every option has one. Where any
+     option is bare the whole round goes to words alone: a set where three
+     choices carry a picture and one does not tells the child which one is
+     the odd one out without their reading anything.
+     ------------------------------------------------------------------ */
+  function hearAndTap(o) {
+    let i = 0, right = 0, lock = false;
+    const el = o.el;
+    function draw() {
+      lock = false;
+      const it = o.items[i];
+      const opts = shuffle(it.opts);
+      const withPics = opts.every((c) => c.pic);
+      $(el.ask).innerHTML = o.ask || "Which word did you hear?";
+      $(el.stage).innerHTML =
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.replay +
+        '">&#128266; Hear it again</button></div>';
+      $(el.ch).className = "wordbtns";
+      $(el.ch).innerHTML = opts.map((c) =>
+        '<button type="button" class="wordbtn" data-ok="' + (c.ok ? 1 : 0) + '">' +
+        (withPics ? picOf(c) : "") + esc(c.w) + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (o.label || "Word") + " " + (i + 1) + " of " + o.items.length;
+      $(el.replay).addEventListener("click", () => playClip(it.audio, it.w));
+      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
+      playHere(o.finish, it.audio, it.w);
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".wordbtn"); if (!b || lock) return;
+      lock = true;
+      const ok = b.dataset.ok === "1", it = o.items[i];
+      $(el.ch).querySelectorAll(".wordbtn").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad");
+      $(el.fb).textContent = ok ? cheer() + " " + it.w : "That word was " + it.w + ".";
+      i++;
+      setTimeout(() => {
+        if (i >= o.items.length) {
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          $(el.stage).innerHTML = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          finish(o.finish, o.done);
+        } else draw();
+      }, 2200);
+    });
+    draw();
+  }
+
+  /* ---- the picture is the question, the word is the answer --------- */
+  function pictureMatch(o) {
+    let i = 0, right = 0, lock = false;
+    const el = o.el;
+    function draw() {
+      lock = false;
+      const it = o.items[i];
+      $(el.ask).innerHTML = o.ask || "Which word is this?";
+      $(el.stage).innerHTML = '<div class="askpic" aria-hidden="true">' + it.pic + "</div>";
+      $(el.ch).className = "wordbtns";
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) =>
+        '<button type="button" class="wordbtn" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.w) + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = (o.label || "Picture") + " " + (i + 1) + " of " + o.items.length;
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".wordbtn"); if (!b || lock) return;
+      lock = true;
+      const ok = b.dataset.ok === "1", it = o.items[i];
+      $(el.ch).querySelectorAll(".wordbtn").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad");
+      $(el.fb).textContent = ok ? cheer() + " " + it.w : "It is " + it.w + ".";
+      playClip(it.audio, it.w);
+      i++;
+      setTimeout(() => {
+        if (i >= o.items.length) {
+          $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.stage).innerHTML = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          finish(o.finish, o.done);
+        } else draw();
+      }, 2200);
+    });
+    draw();
+  }
+
+  /* ---- one word at a time: the picture, the word, what it means ----
+     Not a test. The child presses Next when they have said it, and the
+     step is finished by reaching the end rather than by being right about
+     anything - there is nothing here to be right about yet.
+     ------------------------------------------------------------------ */
+  function wordWalk(o) {
+    let i = 0;
+    const el = o.el;
+    function draw() {
+      const it = o.items[i];
+      $(el.ask).innerHTML = o.ask || "Say this word out loud.";
+      $(el.stage).innerHTML =
+        '<div class="wordcard">' +
+        (it.pic ? '<div class="wordpic" aria-hidden="true">' + it.pic + "</div>"
+                : '<div class="wordpic none" aria-hidden="true">&#128172;</div>') +
+        '<div class="bigword">' + esc(it.w) + "</div>" +
+        (it.pos ? '<div class="wordpos">' + esc(it.pos) + "</div>" : "") +
+        (it.meaning ? '<p class="wordmeaning">' + esc(it.meaning) + "</p>" : "") +
+        "</div>" +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Hear it</button>' +
+        '<button type="button" class="big small" id="' + el.next + '">' +
+        (i === o.items.length - 1 ? "Done &#9654;" : "Next word &#9654;") + "</button></div>";
+      $(el.score).textContent = (o.label || "Word") + " " + (i + 1) + " of " + o.items.length;
+      $(el.replay).addEventListener("click", () => playClip(it.audio, it.w));
+      $(el.next).addEventListener("click", () => {
+        i++;
+        if (i >= o.items.length) {
+          $(el.stage).innerHTML = "";
+          $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You met all " + o.items.length + " words. " + o.done;
+          finish(o.finish, o.done);
+        } else draw();
+      });
+      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
+      playHere(o.finish, it.audio, it.w);
+    }
+    draw();
+  }
+
+  /* ---- the story, a page at a time, read by the recording ----------
+     ONE recording covers the whole text, which is why the shell's e-book
+     refuses to put a Listen button on page four - it would start the story
+     from the beginning. Here the pages are only a way of not showing a
+     five-year-old nineteen paragraphs at once, and Listen is offered ONCE,
+     on the page that starts the story. The line being looked at is lit in
+     gold, the same "you are here" the dot rail uses.
+     ------------------------------------------------------------------ */
+  function storyRead(o) {
+    let page = 0;
+    const el = o.el;
+    function draw() {
+      const p = o.pages[page];
+      $(el.ask).innerHTML = page === 0
+        ? "Press Listen, then follow the words with your finger."
+        : "Keep reading. Press Next when you are ready.";
+      $(el.stage).innerHTML =
+        (page === 0 ? '<div class="storytitle">' + esc(o.title) + "</div>" : "") +
+        '<div class="story">' + p.map((t) => "<p>" + esc(t) + "</p>").join("") + "</div>" +
+        '<div class="bigbtns">' +
+        (page === 0
+          ? '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Listen to the story</button>'
+          : "") +
+        '<button type="button" class="big small" id="' + el.next + '">' +
+        (page === o.pages.length - 1 ? "I have read it &#9654;" : "Next page &#9654;") + "</button></div>";
+      $(el.score).textContent = "Page " + (page + 1) + " of " + o.pages.length;
+      if (page === 0) $(el.replay).addEventListener("click", () => playClip(o.audio, ""));
+      $(el.next).addEventListener("click", () => {
+        page++;
+        if (page >= o.pages.length) {
+          $(el.stage).innerHTML = "";
+          $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = o.done;
+          finish(o.finish, o.done);
+        } else draw();
+      });
+    }
+    draw();
+  }
+
+  /* ---- what English does, one rule at a time ----------------------
+     The pattern in gold is the thing to remember; the two notes under it
+     are the unit's own commonMistake and memoryTip, which is teaching a
+     Grade 1 child cannot get from an example alone.
+     ------------------------------------------------------------------ */
+  function ruleWalk(o) {
+    let i = 0;
+    const el = o.el;
+    function draw() {
+      const it = o.items[i];
+      $(el.ask).innerHTML = esc(it.title);
+      $(el.stage).innerHTML =
+        '<div class="rule">' +
+        (it.pattern ? '<div class="rulepattern">' + esc(it.pattern) + "</div>" : "") +
+        (it.explanation ? "<p>" + esc(it.explanation) + "</p>" : "") +
+        (it.mistake ? '<div class="note watch"><b>Watch out.</b> ' + esc(it.mistake) + "</div>" : "") +
+        (it.tip ? '<div class="note"><b>Remember.</b> ' + esc(it.tip) + "</div>" : "") +
+        (it.practice ? '<div class="note"><b>Your turn.</b> ' + esc(it.practice) + "</div>" : "") +
+        "</div>" +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Hear it</button>' +
+        '<button type="button" class="big small" id="' + el.next + '">' +
+        (i === o.items.length - 1 ? "Done &#9654;" : "Next &#9654;") + "</button></div>";
+      $(el.score).textContent = "Rule " + (i + 1) + " of " + o.items.length;
+      $(el.replay).addEventListener("click", () => playClip(it.audio, it.explanation));
+      $(el.next).addEventListener("click", () => {
+        i++;
+        if (i >= o.items.length) {
+          $(el.stage).innerHTML = ""; $(el.score).textContent = "";
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = o.done;
+          finish(o.finish, o.done);
+        } else draw();
+      });
+      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.explanation));
+      playHere(o.finish, it.audio, it.explanation);
+    }
+    draw();
+  }
+
+  /* ---- say it out loud --------------------------------------------
+     Nothing here can be marked, and the page does not pretend otherwise.
+     The child hears the model and ticks that they said it; the tick is a
+     record of having done it, not a score. Same rule the unit recap keeps
+     about self-assessment - an unmeasured claim is not put on a child's
+     page as if it were measured.
+     ------------------------------------------------------------------ */
+  function sayOutLoud(o) {
+    const el = o.el;
+    const said = new Array(o.items.length).fill(false);
+    $(el.ask).innerHTML = o.ask || "Listen, then say it out loud.";
+    $(el.stage).innerHTML = '<div class="saylines">' + o.items.map((it, k) =>
+      '<div class="sayline" data-k="' + k + '">' +
+      '<button type="button" class="hear" aria-label="Hear this line">&#128266;</button>' +
+      "<span>" + esc(it.text) + "</span>" +
+      '<button type="button" class="tick">I said it</button></div>').join("") + "</div>";
+    $(el.score).textContent = "0 of " + o.items.length + " said";
+    $(el.stage).addEventListener("click", (e) => {
+      const row = e.target.closest(".sayline"); if (!row) return;
+      const k = Number(row.dataset.k);
+      if (e.target.closest(".hear")) { playClip(o.items[k].audio, o.items[k].text); return; }
+      if (!e.target.closest(".tick")) return;
+      said[k] = true;
+      row.classList.add("said");
+      row.querySelector(".tick").textContent = "✓ said";
+      const n = said.filter(Boolean).length;
+      $(el.score).textContent = n + " of " + o.items.length + " said";
+      if (n === o.items.length) {
+        $(el.fb).className = "fb good";
+        $(el.fb).textContent = o.done;
+        finish(o.finish, o.done);
+      }
+    });
+  }
+
+  /* ---- build the sentence by tapping words ------------------------
+     The tiles are the model sentence's own words plus two the unit
+     teaches, shuffled. Tapping a tile moves it to the line and tapping it
+     again sends it back, because a five-year-old's first tap is often a
+     mistake and there is no undo worse than starting again.
+     ------------------------------------------------------------------ */
+  function buildSentence(o) {
+    const el = o.el;
+    let line = [];
+    function draw() {
+      const used = line.slice();
+      $(el.ask).innerHTML = esc(o.ask);
+      $(el.stage).innerHTML =
+        '<div class="build">' +
+        '<div class="buildline" id="' + el.line + '">' +
+        (line.length ? line.map((t, k) => '<button type="button" class="tile" data-line="' + k + '">' + esc(t) + "</button>").join("")
+                     : '<span style="color:var(--muted);font-size:17px">Tap the words to build the sentence.</span>') +
+        "</div>" +
+        '<div class="bigbtns" id="' + el.tiles + '">' +
+        o.tiles.map((t, k) => used.includes(t) && used.filter((x) => x === t).length >= o.tiles.filter((x) => x === t).length
+          ? "" : '<button type="button" class="tile" data-tile="' + k + '">' + esc(t) + "</button>").join("") +
+        "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small" id="' + el.check + '">Check it</button>' +
+        '<button type="button" class="big small ghost" id="' + el.clear + '">Start again</button></div>' +
+        "</div>";
+      $(el.tiles).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-tile]"); if (!b) return;
+        line.push(o.tiles[Number(b.dataset.tile)]); draw();
+      });
+      $(el.line).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-line]"); if (!b) return;
+        line.splice(Number(b.dataset.line), 1); draw();
+      });
+      $(el.clear).addEventListener("click", () => { line = []; draw(); });
+      $(el.check).addEventListener("click", () => {
+        /* Both sides through the same tidy-up. The answer is a list of tiles
+           joined with spaces, so it carries " ." exactly as the child's line
+           does; normalising only the child's would make the step impossible
+           to pass on every sentence that ends in a full stop, which is all of
+           them. */
+        const tidy = (s) => String(s).replace(/\s+([.!?])/g, "$1").replace(/\s+/g, " ").trim().toLowerCase();
+        const got = tidy(line.join(" "));
+        const want = tidy(o.answer);
+        const ok = got === want;
+        $(el.line).className = "buildline " + (ok ? "right" : "wrong");
+        $(el.fb).className = "fb " + (ok ? "good" : "bad");
+        /* the sentence read back to the child, not the tile list: "This is a
+           chair ." is what the answer literally is, and it is not a sentence */
+        const written = o.answer.replace(/\s+([.!?])/g, "$1").replace(/\s+/g, " ").trim();
+        $(el.fb).textContent = ok ? cheer() + " " + written : "Not yet. Try the words in another order.";
+        if (ok) finish(o.finish, o.done);
+      });
+    }
+    draw();
+  }
+
+  /* ---- the stickers, one per step that can be earned --------------- */
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) =>
+      '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] +
+      (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fbstick").className = "fb " + (got === STICKERS.length ? "good" : "");
+    $("fbstick").textContent = got === STICKERS.length
+      ? "All " + STICKERS.length + " stickers! You finished the whole unit."
+      : got + " of " + STICKERS.length + " stickers so far.";
+    if (got === STICKERS.length) REACTION.lessonDone();
+  }
+
+
+  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"]];
+
+  hearAndTap({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", replay: "replay1" }, items: LESSON.sounds, finish: 0,
+    ask: "Which word did you hear?", label: "Word",
+    done: "You know these words by their sound now." });
+  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2" }, items: LESSON.newwords, finish: 1,
+    ask: "Say this word out loud.", label: "Word",
+    done: "Now you have met them, you will see them all through the unit." });
+  pictureMatch({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, items: LESSON.match, finish: 2,
+    ask: "Which word is this?", label: "Picture",
+    done: "You can read those words on their own now." });
+  hearAndTap({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4", replay: "replay4" }, items: LESSON.sight, finish: 3,
+    ask: "Which word did you hear?", label: "Word",
+    done: "You know these words by their sound now." });
+  storyRead({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5", replay: "replay5", next: "next5" }, title: LESSON.story.title, pages: LESSON.story.pages,
+    audio: LESSON.story.audio, finish: 4,
+    done: "You read the whole story." });
+  sequence({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, items: LESSON.questions, finish: 5,
+    label: "Question", done: "You remembered the story well." });
+  sayOutLoud({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, items: LESSON.sayit, finish: 6,
+    ask: "Listen, then say it out loud.",
+    done: "Well said. Speaking is how the words stick." });
+  ruleWalk({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8", replay: "replay8", next: "next8" }, items: LESSON.rules, finish: 7,
+    done: "Those are the patterns this unit is built on." });
+  buildSentence({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9", line: "line9", tiles: "tiles9", check: "check9", clear: "clear9" }, ask: LESSON.write.ask, tiles: LESSON.write.tiles,
+    answer: LESSON.write.answer, finish: 8,
+    done: "That is a real sentence, written by you." });
+  sequence({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, items: LESSON.quiz, finish: 9,
+    label: "Question", done: "That is the whole unit finished." });
+
+  show(0, false);
+
+
+  /* ================= the two header bars =================
+     Everything here is answered by this page. The class controls are not
+     painted here - they mount themselves into .top-actions on bar 2, and only
+     when the server confirms a teacher is watching. */
+  (function () {
+    const earnable = slides.length - 1;            // teaching slides + the check
+    const pctEl = $("ehPct"), fillEl = $("ehFill");
+    function ehPaint() {
+      const n = done.slice(0, earnable).filter(Boolean).length;
+      const p = earnable ? Math.round((n / earnable) * 100) : 0;
+      pctEl.textContent = p + "%";
+      fillEl.style.width = p + "%";
+      const box = $("ehSteps");
+      if (box && !box.hidden) ehSteps();
+    }
+    function ehSteps() {
+      $("ehSteps").innerHTML = slides.map(function (s, i) {
+        const h = s.querySelector("h2");
+        return '<button type="button" data-i="' + i + '" class="' +
+          (i === cur ? "now " : "") + (done[i] ? "done" : "") + '">' +
+          (i + 1) + ". " + (h ? h.textContent : "Step " + (i + 1)) + "</button>";
+      }).join("");
+    }
+    $("ehSteps").addEventListener("click", function (e) {
+      const b = e.target.closest("button[data-i]");
+      if (!b) return;
+      show(+b.dataset.i, true);
+      $("ehSteps").hidden = true;
+      $("ehMenu").setAttribute("aria-expanded", "false");
+    });
+    $("ehMenu").addEventListener("click", function () {
+      const box = $("ehSteps"), open = box.hidden;
+      if (open) ehSteps();
+      box.hidden = !open;
+      $("ehMenu").setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    $("ehPicker").addEventListener("change", function (e) {
+      if (e.target.value) location.href = e.target.value + location.search;
+    });
+    $("ehFull").addEventListener("click", function () {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    });
+    document.addEventListener("fullscreenchange", function () {
+      $("ehFull").innerHTML = document.fullscreenElement ? "\u26f6 Leave full screen" : "\u26f6 Full screen";
+    });
+    /* the voice toggle mutes what SHE says; it does not touch the Listen
+       buttons, which a child presses on purpose */
+    let muted = false;
+    const realSay = say;
+    say = function (t) { if (!muted) realSay(t); };
+    $("ehAudio").addEventListener("click", function () {
+      muted = !muted;
+      if (muted && window.VOICE && VOICE.stop) VOICE.stop();
+      $("ehAudio").setAttribute("aria-pressed", muted ? "true" : "false");
+      $("ehAudio").title = muted ? "Turn the voice on" : "Turn the voice off";
+    });
+    /* every completion repaints the rail, so that is where the pill hangs */
+    const realPaintDots = paintDots;
+    paintDots = function () { realPaintDots(); ehPaint(); };
+    const realShow = show;
+    show = function (i, speak) { realShow(i, speak); ehPaint(); };
+    ehPaint();
+  })();
+
+  })();
+</script>
+
+<script>
+  /* wire-navigation.py :: back
+     Only when ?from=eng1: a lesson opened on its own has nowhere to go back to. */
+  (function () {
+    if (new URLSearchParams(location.search).get("from") !== "eng1") return;
+    var wrap = document.querySelector(".wrap");
+    if (!wrap) return;
+    var back = document.createElement("a");
+    back.className = "lesson-back";
+    back.href = "index.html";
+    back.innerHTML = '<span aria-hidden="true">\u2190</span> Grade 1 English';
+    wrap.insertBefore(back, wrap.firstChild);
+  })();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>
+
+<script type="module">
+  /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
+     learner-controls.js holds the SAME singletons the shell mounts. */
+  import { mountLearnerControls } from "./learner-controls.js";
+  import { mountWehelChat } from "./wehel.js";
+  import { escapeHtml } from "./course-shell.js";
+
+  const q = new URLSearchParams(location.search);
+  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
+
+  let toastEl = null;
+  function toast(message) {
+    if (toastEl) toastEl.remove();
+    toastEl = document.createElement("div");
+    toastEl.className = "w-toast";
+    toastEl.textContent = message;
+    document.body.appendChild(toastEl);
+    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
+  }
+
+  /* 1. Class chat, Hand up and the Join class pill. They place themselves into
+        .top-actions and mount ONLY when the server says a teacher is watching,
+        so nothing appears to a child working alone. */
+  try {
+    mountLearnerControls({
+      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
+      progressUnit: "l01",
+    });
+  } catch (e) { console.error("learner controls:", e); }
+
+  /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
+        the day's allowance, and a lesson nobody opens the tutor on should not
+        spend a request. */
+  if (launchToken) {
+    const dock = document.createElement("button");
+    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
+    const drawer = document.createElement("div");
+    drawer.className = "w-drawer"; drawer.hidden = true;
+    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
+    let panel = null;
+    function open() {
+      drawer.hidden = false; dock.hidden = true;
+      if (panel) return;
+      try {
+        panel = mountWehelChat({
+          container: drawer.querySelector(".w-drawer-body"),
+          meta: {
+            subject: "english", subjectLabel: "English", grade: 1,
+            unitNo: 1, unitTitle: "Welcome to School",
+            learnerCategory: q.get("category") || "",
+          },
+          store: {},
+          ui: { escapeHtml, toast },
+          tutorLabel: "Wehel Tutor",
+          placeholder: "Ask about Welcome to School\u2026",
+          quickPrompts: [
+            { label: "Explain it simply", message: "Explain this step in a simpler way." },
+            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
+            { label: "An easier one", message: "Give me an easier question to build up with." },
+          ],
+        });
+      } catch (e) {
+        console.error("wehel:", e);
+        drawer.hidden = true; dock.hidden = false;
+        toast("Wehel is not available on this page.");
+      }
+    }
+    function close() { drawer.hidden = true; dock.hidden = false; }
+    dock.addEventListener("click", open);
+    drawer.querySelector("button").addEventListener("click", close);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
+    document.body.append(dock, drawer);
+  }
+</script>
+
+<script type="module">
+  /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
+     THE UNIT PROBLEM for why this writes lNN and not uNN. */
+  import { createProgressClient } from "./progress-client.js";
+
+  const q = new URLSearchParams(location.search);
+  const endpoint = (q.get("pwsEndpoint") || "").trim();
+  const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+
+  const COURSE = "ehel-eng-g01";
+  const UNIT = "l01";
+  const STUDENT = q.get("studentid") || "local";
+
+  /* Without a launch endpoint the backend is "local": everything still
+     reduces into localStorage so resume works, and nothing is sent. That is
+     the same rule the shell follows, and it is why opening a lesson as a file
+     or an artifact costs nothing and reports nothing. */
+  const ws = createProgressClient({
+    course: COURSE, student: STUDENT,
+    backend: endpoint ? "remote" : "local",
+    endpoint: endpoint || undefined,
+    token: token || undefined,
+    /* A blocked or expired write path is INVISIBLE otherwise - the throw is
+       caught, the events queue, and the learner is told nothing while their
+       work stops reaching the school. Said on the learner's own screen
+       because the server cannot tell a blocked learner from a closed tab. */
+    onAuthLost: () => notice("Your session has expired. Your work is saved on this device \u2014 open the lesson again from your class page."),
+    onDeliveryFailing: () => notice(navigator.onLine
+      ? "Your work is saved here, but it is not reaching your school right now."
+      : "You are offline. Your work is saved here and will be sent when you are back."),
+    onDeliveryRecovered: () => clearNotice(),
+  });
+
+  const emit = (e) => { try { ws.emit(e); } catch (_) { /* never break the lesson */ } };
+
+  let noticeEl = null;
+  function notice(text) {
+    if (!noticeEl) {
+      noticeEl = document.createElement("p");
+      noticeEl.className = "progress-notice";
+      noticeEl.setAttribute("role", "status");
+      document.querySelector(".wrap")?.prepend(noticeEl);
+    }
+    noticeEl.textContent = text;
+  }
+  function clearNotice() { if (noticeEl) { noticeEl.remove(); noticeEl = null; } }
+
+  const slides = [...document.querySelectorAll(".slide")];
+  /* The lesson's own arithmetic: show() prints "Step n of slides.length - 1",
+     so the last slide is the sticker shelf and not a step. Read from the
+     lesson rather than counted here, so the two cannot disagree. */
+  const STEPS = Math.max(1, slides.length - 1);
+  const sectionId = (i) => "step-" + String(i + 1).padStart(2, "0");
+  const labelOf = (i) => (slides[i]?.querySelector("h2")?.textContent || "").trim() || sectionId(i);
+
+  const doneIds = new Set();
+  let unitSent = false;
+
+  /* WHERE the learner is, which is not what sectionsDone says: a learner
+     stuck twenty minutes into the next step is exactly the one a supervising
+     teacher needs to see. `resumeLabel` rides beside the id because a board
+     printing "step-04" shows a teacher a word that appears nowhere on the
+     child's screen. */
+  function report(i) {
+    emit({
+      type: "progress.summary", unit: UNIT,
+      sectionsDone: [...doneIds],
+      resume: sectionId(i), resumeLabel: labelOf(i),
+      xp: doneIds.size,
+    });
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  }
+
+  window.__ehelStep = function (i, done) {
+    const id = sectionId(i);
+    if (!doneIds.has(id)) {
+      doneIds.add(id);
+      emit({ type: "section.completed", unit: UNIT, section: id, title: labelOf(i) });
+    }
+    if (!unitSent && doneIds.size >= STEPS) {
+      unitSent = true;
+      emit({ type: "unit.completed", unit: UNIT, sectionsDone: [...doneIds], total: STEPS });
+    }
+    report(i);
+  };
+  window.__ehelAt = function (i) { report(i); };
+</script>

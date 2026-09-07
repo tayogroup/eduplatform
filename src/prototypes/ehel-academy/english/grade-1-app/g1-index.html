@@ -1,0 +1,411 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 1 English</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /* ==================================================================
+     THE BASE - lifted verbatim from the Grade 1 Mathematics standalone
+     build (mathematics/grade-1-app/g1v2), because these two are meant to
+     be one product. Everything above the ENGLISH heading further down is
+     that build's design system unchanged: the same tokens, the same deck,
+     the same gold action colour, the same voice bar.
+
+     The light palette is declared first and then overridden by the Wehel
+     block below, exactly as it is there. It is kept rather than deleted
+     so a token the override forgets still resolves to something legible
+     instead of to nothing.
+     ================================================================== */
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; }
+  .choice.small { min-width: 80px; height: 64px; font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { border-radius: 18px; border: 3px solid var(--line); background: var(--card); padding: 14px 10px; text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .sticker .ic { display: block; font-size: 38px; line-height: 1.2; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker:not(.got) .ic { filter: grayscale(1); opacity: 0.35; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px 0; }
+  .foot .mid { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to the
+     viewer's setting. The selector list carries the same specificity as
+     the light block above and comes later, so it wins in both light and
+     dark. The palette is Ehel Academy's own - gold #f4c95d is the action
+     colour, teal #0f766e and coral #c2482c lifted to the same hues at a
+     lightness that is legible on a dark ground.
+
+     Copied from the Grade 1 Mathematics build. Do not re-solve it here:
+     the two builds are meant to be indistinguishable in colour.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* the fixed ground, painted by a pseudo-element rather than
+     background-attachment, which iOS Safari does not honour */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+  .deck { background: rgba(20, 43, 62, 0.88); }
+
+  /* ---- the voice bar: the speaker reads the step, Explain walks
+          through the idea behind it ---- */
+  .say button.explain {
+    flex: 0 0 auto;
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+  @media (max-width: 420px) {
+    .say button.explain .explain-t { display: none; }
+    .say button.explain { width: 44px; height: 44px; padding: 0; justify-content: center; font-size: 18px; }
+  }
+
+  /* ==================================================================
+     ENGLISH
+
+     Everything below is this build's own. The rule it follows is that a
+     new control borrows an existing token rather than introducing a
+     colour: gold is the action, teal is the voice and the taught thing,
+     coral is the thing being counted or pointed at, good/bad are the
+     only verdicts. Nothing here invents a hue.
+     ================================================================== */
+
+  /* ---- a word card: the picture, the word, what it means ---- */
+  .wordcard { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+  .wordpic { font-size: clamp(64px, 15vw, 104px); line-height: 1.1; }
+  .wordpic.none { font-size: clamp(40px, 9vw, 60px); opacity: 0.5; }
+  .bigword { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: clamp(40px, 9vw, 68px); line-height: 1.05; color: var(--teal); }
+  .wordmeaning { max-width: 30ch; color: var(--ink); font-size: 19px; }
+  .wordpos { color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .wordsentence { max-width: 34ch; color: var(--muted); font-size: 17px; font-style: italic; }
+
+  /* ---- a strip of word buttons, for tapping the word you heard ---- */
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 14px 20px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 30px; }
+  .wordbtn .pic { display: block; font-size: 42px; line-height: 1.15; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
+
+  /* ---- the story, one page at a time, with the line being read lit up.
+          Gold, because it is the same "here you are" the dot rail uses. ---- */
+  .story { width: 100%; max-width: 34em; display: flex; flex-direction: column; gap: 14px; }
+  .story p { font-size: clamp(19px, 3.4vw, 23px); line-height: 1.6; }
+  .story p.now { color: var(--gold); }
+  .storytitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 26px; color: var(--teal); text-align: center; }
+
+  /* ---- a rule card: what English does, said once and shown once ---- */
+  .rule { width: 100%; max-width: 34em; display: flex; flex-direction: column; gap: 12px; }
+  .rulepattern { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: clamp(26px, 5vw, 38px); text-align: center; color: var(--gold); }
+  .note { border-radius: 16px; border: 1px solid var(--line); background: var(--cell); padding: 12px 16px; font-size: 17px; }
+  .note b { color: var(--teal); }
+  .note.watch { border-color: var(--accent); background: var(--accent-soft); }
+  .note.watch b { color: var(--accent); }
+
+  /* ---- building a sentence by tapping words ---- */
+  .build { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .buildline { min-height: 74px; width: 100%; max-width: 30em; display: flex; flex-wrap: wrap; gap: 8px;
+    align-items: center; justify-content: center; padding: 12px;
+    border-radius: 18px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
+  .tile { padding: 10px 16px; border-radius: 14px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 24px; }
+  .tile:active { transform: scale(0.96); }
+  .buildline .tile { border-color: var(--teal); }
+  .buildline.right { border-color: var(--good); border-style: solid; }
+  .buildline.wrong { border-color: var(--bad); border-style: solid; }
+
+  /* ---- say-it-out-loud: a model line, then the child's turn ---- */
+  .saylines { width: 100%; max-width: 32em; display: flex; flex-direction: column; gap: 10px; }
+  .sayline { display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+    border-radius: 16px; border: 1px solid var(--line); background: var(--cell); font-size: 19px; }
+  .sayline button.hear { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; border: 0;
+    background: var(--teal); color: #06231F; font-size: 20px; display: grid; place-items: center; }
+  .sayline.said { border-color: var(--good); background: var(--good-soft); }
+  .sayline .tick { margin-left: auto; flex: 0 0 auto; border-radius: 999px; border: 2px solid var(--line);
+    background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; }
+  .sayline.said .tick { border-color: var(--good); color: var(--good); }
+
+  /* ---- the question text above a set of choices ---- */
+  .ask { max-width: 32ch; text-align: center; font-size: clamp(20px, 4vw, 26px); font-weight: 700;
+    font-family: "Inter", "Segoe UI", sans-serif; }
+  .askpic { font-size: clamp(70px, 17vw, 120px); line-height: 1.1; }
+
+  /* ---- long answers do not fit a 34px chunky button ---- */
+  .choice.text { min-width: 0; width: 100%; max-width: 30em; height: auto; min-height: 62px;
+    padding: 14px 18px; font-size: 20px; line-height: 1.35; text-align: left; }
+  .choices.stack { flex-direction: column; align-items: stretch; width: 100%; }
+
+  /* ---- the hub ---- */
+  .hubhead { padding: 26px 4px 18px; }
+  .hubhead h1 { font-size: clamp(34px, 7vw, 54px); }
+  .hubhead h1 em { font-style: normal; color: var(--teal); }
+  .hubhead p { color: var(--muted); max-width: 46ch; margin-top: 10px; font-size: 19px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .card { display: flex; flex-direction: column; gap: 10px; padding: 20px;
+    border-radius: 22px; border: 1px solid var(--line); background: rgba(20, 43, 62, 0.88);
+    box-shadow: var(--shadow); color: var(--ink); text-decoration: none; }
+  a.card:hover, a.card:focus-visible { border-color: var(--teal); }
+  .card h2 { font-size: 25px; }
+  .card p { color: var(--muted); font-size: 16.5px; }
+  .cardno { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+  .cardfoot { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .meta { color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .go { flex: 0 0 auto; border-radius: 999px; background: var(--gold); color: var(--accent-ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; padding: 9px 20px; }
+  .soon { flex: 0 0 auto; color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .card.locked { opacity: 0.62; }
+  .hubfoot { color: var(--muted); font-size: 14.5px; padding: 26px 4px 0; max-width: 60ch; }
+</style>
+
+<div class="wrap">
+  <header class="hubhead">
+    <p class="eyebrow">Ehel Academy &middot; English</p>
+    <h1>Grade 1 <em>English</em></h1>
+    <p>Ten units, in the order they are meant to be done. Start at the top &mdash; each one gets you ready for the next.</p>
+  </header>
+
+  <main class="cards">
+      <a class="card" href="welcome-to-school.html?from=eng1">
+        <span class="cardno">Unit 1</span>
+        <h2>Welcome to School</h2>
+        <p>You will learn the words for things in your classroom, some colour words, and how to say your own name and how old you are.</p>
+        <span class="cardfoot"><span class="meta">10 steps &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <div class="card locked">
+        <span class="cardno">Unit 2</span>
+        <h2>Family Time</h2>
+        <p>In this unit you will learn the words for the people in your family — mum, dad, sister, brother, grandma and grandpa.</p>
+        <span class="cardfoot"><span class="meta"></span><span class="soon">Coming soon</span></span>
+      </div>
+      <div class="card locked">
+        <span class="cardno">Unit 3</span>
+        <h2>Fun and Games</h2>
+        <p>In this unit you will learn the words for games and play, like bounce, roll, throw and catch.</p>
+        <span class="cardfoot"><span class="meta"></span><span class="soon">Coming soon</span></span>
+      </div>
+      <div class="card locked">
+        <span class="cardno">Unit 4</span>
+        <h2>Making Things</h2>
+        <p>In this unit you will learn the words for shapes, colours and clothes.</p>
+        <span class="cardfoot"><span class="meta"></span><span class="soon">Coming soon</span></span>
+      </div>
+      <div class="card locked">
+        <span class="cardno">Unit 5</span>
+        <h2>On the Farm</h2>
+        <p>In this unit you will learn about the farm.</p>
+        <span class="cardfoot"><span class="meta"></span><span class="soon">Coming soon</span></span>
+      </div>
+      <div class="card locked">
+        <span class="cardno">Unit 6</span>
+        <h2>My Five Senses</h2>
+        <p>In this unit you will learn about your five senses — seeing, hearing, smelling, tasting and touching — and the parts of your body you use for each one.</p>
+        <span class="cardfoot"><span class="meta"></span><span class="soon">Coming soon</span></span>
+      </div>
+      <div class="card locked">
+        <span class="cardno">Unit 7</span>
+        <h2>Let's Go!</h2>
+        <p>In this unit you will learn how we travel and get around.</p>
+        <span class="cardfoot"><span class="meta"></span><span class="soon">Coming soon</span></span>
+      </div>
+      <div class="card locked">
+        <span class="cardno">Unit 8</span>
+        <h2>Wonderful Water</h2>
+        <p>In this unit you will learn about water — where it comes from, where we find it, and all the ways we use it every day.</p>
+        <span class="cardfoot"><span class="meta"></span><span class="soon">Coming soon</span></span>
+      </div>
+      <div class="card locked">
+        <span class="cardno">Unit 9</span>
+        <h2>City Places</h2>
+        <p>In this unit you will learn the words for places in a town — the shop, the market, the school, the hospital and the library.</p>
+        <span class="cardfoot"><span class="meta"></span><span class="soon">Coming soon</span></span>
+      </div>
+      <div class="card locked">
+        <span class="cardno">Unit 10</span>
+        <h2>My First English World</h2>
+        <p>You will choose your favourite work for a picture-and-word portfolio, make a six-page mini-book, give a one-minute presentation, and think about what you would like to learn next.</p>
+        <span class="cardfoot"><span class="meta"></span><span class="soon">Coming soon</span></span>
+      </div>
+  </main>
+
+  <p class="hubfoot">Every word, story and recording here is the Grade 1 English course content, shown a different way.</p>
+</div>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>

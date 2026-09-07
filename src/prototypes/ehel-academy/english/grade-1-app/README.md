@@ -48,7 +48,8 @@ other patchers cost.
 | `lib/lesson.css` | the Mathematics build's design system verbatim — the same tokens, deck, gold action colour and voice bar — then this build's own English activity styles |
 | `lib/voice.js` | the voice engine, **lifted verbatim**: SSML authored for `en-GB-SoniaNeural`, walked into Web Speech, with the platform TTS path and the reaction banks |
 | `lib/deck.js` | the deck, lifted verbatim **with the two progress hooks removed** |
-| `lib/english.js` | this build's own: eight activity renderers and the clip player |
+| `lib/english.js` | this build's own: activity renderers and the clip player |
+| `lib/books.js` | the picture-book shelf and reader; the tap-sound tables ported from the shell (see below) |
 
 `voice.js` and `deck.js` are copies of a live file rather than imports because
 these pages have no build step of their own on the CDN — everything they need
@@ -74,34 +75,104 @@ Caught by the gate, which asserts `createProgressClient` is present.
 ## What is a step
 
 One lesson is one unit, and the slides are built from what that unit actually
-has. Unit 1 gets ten steps plus the sticker shelf:
+has. Unit 1 gets thirteen steps plus the sticker shelf:
 
 | step | from | doing |
 | --- | --- | --- |
 | Phonics | the unit's `phonics` core-word group | hear the word, tap the word |
-| New words | the `topic` group + the master dictionary | one card at a time: picture, word, meaning, Hear it |
+| New words | the `topic` group + `dictionaryLinks` | one card at a time: picture, word, meaning, up to 3 example sentences, Hear it |
 | Word and picture | any taught word with a picture | the picture is the question |
 | Everyday words | the `sight` group | hear it and tap it |
 | The story | `readings[type=Story]` + its recording | paged, Listen once, read along |
-| Story questions | `comprehension` (`Oral response` only) | multiple choice |
+| Story questions | `comprehension` (the factual items — see below) | multiple choice |
 | Say it out loud | `speaking` + the open comprehension lines | listen to the model, tick when said |
 | How English works | `grammar` | the pattern, the common mistake, the memory tip |
-| Write a sentence | `writing[0].modelText` | build it by tapping word tiles |
+| Write a sentence | `writing[0]` | build it by tapping word tiles |
 | Show what you know | `quizzes` | the unit's own checkpoint, 10 questions |
+| Meaning Match | `data/games/unit-N.json`, game id `meaning-match` | multiple choice, the unit's own game |
+| Memory Pairs | `data/games/unit-N.json`, game id `memory-pairs` | tap two tiles to reveal, connect word to meaning |
+| Picture books | `ebookCatalog` in `shell/subjects/english.js` | a shelf, then a real page-by-page reader |
 
 **A step is only built where its content exists.** Units 4, 7, 9 and 10 have no
-`sight` group and units 7 and 9 no `topic` group, so those pages have fewer
-steps. An empty step is worse than an absent one — it can never be completed,
-and the progress report, the dot rail and the sticker shelf would all be
-counting something nobody can finish.
+`sight` group and units 7 and 9 no `topic` group (unit 7's New Words step
+falls back to the phonics list, titled "Meet the words" so it doesn't read as
+the Phonics step duplicated), so those pages have fewer steps. An empty step
+is worse than an absent one — it can never be completed, and the progress
+report, the dot rail and the sticker shelf would all be counting something
+nobody can finish.
 
 **The check questions come from the unit's own quiz**, which authors real
 options and a real key. Comprehension does not: it stores a question and one
 answer, so the distractors are other comprehension answers from the same unit —
-a wrong tap lands on something the child is also learning. Only the factual
-`Oral response` items are used. The `Point, act or say` items have no single
-answer to be right about and go to the speaking step instead of being turned
-into a multiple choice they are not.
+a wrong tap lands on something the child is also learning. `is_factual()`
+picks which comprehension items have one — a single, non-templated answer
+under 70 characters — rather than trusting the `questionType` label, because
+unit 10's factual items are typed differently from units 1–9's ("Oral, point
+or choose" vs "Oral response") and a label match silently dropped all twelve.
+Classifying by the ANSWER's shape instead recovers unit 10 and agrees with the
+label test everywhere it applied. The non-factual items (open answers like
+"This is a chair. (any object named correctly)", or talk-line templates like
+"My name is ___.") go to Say it out loud instead of being turned into a
+multiple choice they are not.
+
+### Definitions and example sentences
+
+The unit's own `dictionaryLinks` (not just the master dictionary) carry a
+child-facing `childMeaning` and up to 5 `practiceSentences`, each with its own
+recorded audio, index-paired. New Words shows the first 3 — the same
+`SENTENCES_SHOWN` rule `shell/subjects/english.js` uses for a course learner
+(a tutoring learner sees 5; this build only serves course learners). THE
+FIRST N, never a sample: `sentenceAudio[i]` is sentence `i`, so slicing from
+anywhere else plays the wrong recording. A "Another sentence" button cycles
+through them without re-triggering the word's own audio — that pairing lives
+in `wordWalk()`'s `draw()`, not its `paint()`, which repaints for both a new
+word and a cycled sentence.
+
+### Picture books
+
+The shelf shows the unit's WHOLE shelf (`unitEbooks()`'s own filter,
+`grades.includes(1) && (!units || units.includes(unitNo))`, matched exactly —
+seven books for Unit 1, not a hardcoded "one signature book"). Nothing is
+copied: this build ships to `app/english/grade-1-v2/`, one directory below
+`app/english/`, the same level `../ebooks/` already lives at — the assets the
+shell's own reader fetches from `./ebooks/`. The reader fetches each page's
+SVG at read time from that existing, already-deployed path; it resolves in
+local dev too, because `english/grade-1-app/` sits beside `english/ebooks/`
+on disk in exactly the same shape.
+
+`ebookCatalog` is a plain `const` in `shell/subjects/english.js`, not
+exported, in a file full of top-level `document`/`location` references that
+make a straight ES-module import unsafe (unlike `word_pictures()`'s import of
+`word-pictures.js`, which has none). `ebook_catalog()` in build-lessons.py
+instead finds the declaration, balances brackets to its matching close, and
+evaluates that slice alone through node — the same "read the real bytes, not
+a regex over them" rule as `word_pictures()`, applied to a shape a plain
+import cannot reach.
+
+**Book narration is NOT ported.** The shell's reader calls a paid runtime TTS
+endpoint (`aiVoiceUrl`) per page, which this standalone page has no business
+calling on its own; a page's Listen button instead reads its text through
+this build's own `VOICE.say()` — the same engine every Explain button already
+uses. **Tap-sound resolution IS ported, verbatim** (`TAP_VOICE_GROUPS`,
+`TAP_SOUND_MOOD_TYPES`, `TAP_SOUND_ALIASES` in `lib/books.js`, copied from
+`shell/subjects/english.js`), because it's forty lines of pure data and a tap
+that resolves to the wrong clip — or to nothing — is a worse experience than
+porting it. A page's own story-sound cue (`page.sound`) plays on arrival, the
+same as the shell's `playStorySound`.
+
+### Games
+
+Two of the unit's twelve games, not all twelve. Both ids (`meaning-match`,
+`memory-pairs`) are present in every one of the 10 units' packs — checked
+directly, not assumed. Meaning Match reuses `sequence()` unchanged, because a
+`choice`-type round (`{prompt, choices, answer, explanation}`) is the same
+shape `sequence()` already consumes. Memory Pairs is new: the pack's own
+description is "Reveal tiles and connect each word with its meaning", so
+tiles start face-down and a tap reveals the text underneath, not a
+plain always-visible tap-to-select grid. The other ten mechanics in each pack
+(spelling, sentence-building, speaking, sequencing) are real gaps this build
+leaves open, not an oversight — two faithful games are worth more than twelve
+half-built ones.
 
 ## Things that will bite
 
@@ -131,6 +202,17 @@ into a multiple choice they are not.
   `local_prequran/ehel_app_url_overrides`, a Moodle setting behind the
   staged-script and cPanel loop. Uploading this build makes it reachable by URL
   and by nobody's course.
+- **The Picture books step depends on a SIBLING directory this deploy does
+  not ship.** Every other asset this build touches is either embedded at
+  build time or in the shared `MODULES` list `deploy.mjs` uploads. Book pages
+  are neither: the reader fetches `../ebooks/<id>/page-NN.svg` and
+  `../ebooks/tap-sounds/<key>.mp3` from `app/english/ebooks/`, which exists
+  today only because the shell's own app deploy put it there. If that path
+  is ever moved or that content is ever pruned without checking who else
+  reads it, this build's book reader breaks silently — a page that fails to
+  fetch shows "This page could not be loaded" rather than crashing, so the
+  failure is quiet rather than loud. Confirmed live via a HEAD request
+  before this was written, not assumed.
 
 ## Progress: `l01`, and why not `u01`
 
@@ -145,9 +227,11 @@ by strand and their course has fifteen term-ordered units, so the two cannot be
 mapped. Here one lesson IS one unit: same number, same title, same content. But
 a unit of the shell course is complete when its **sections** are — Overview,
 Video lesson, Core words, Reading, Comprehension, Grammar, Speaking, Writing,
-Activities, Games, Quiz, Stories — and this page covers six of them. Emitting
-`u01` would put `unit.completed` for a unit whose video lesson, games and story
-shelf the child has not opened, into the same document the shell reads back.
+Activities, Games, Quiz, Stories — and this page now covers eight of them
+(Core words, Reading, Comprehension, Grammar, Writing, Quiz, Games, Stories).
+Overview, the Video lesson and Activities are still not built. Emitting `u01`
+would put `unit.completed` for a unit whose video lesson and activities the
+child has not opened, into the same document the shell reads back.
 
 So it stays `l`. Changing it is one line in `app.config.json` and a curriculum
 decision, not a wiring one.

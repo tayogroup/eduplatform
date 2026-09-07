@@ -249,6 +249,10 @@
   .wordmeaning { max-width: 30ch; color: var(--ink); font-size: 19px; }
   .wordpos { color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .wordsentence { max-width: 34ch; color: var(--muted); font-size: 17px; font-style: italic; }
+  .wordsentencebox { width: 100%; max-width: 30em; border-radius: 16px; border: 1px solid var(--line);
+    background: var(--cell); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+  .sentlabel { color: var(--teal); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .wordsentencebox .wordsentence { font-style: normal; color: var(--ink); font-size: 19px; max-width: none; }
 
   /* ---- a strip of word buttons, for tapping the word you heard ---- */
   .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
@@ -309,6 +313,45 @@
   .choice.text { min-width: 0; width: 100%; max-width: 30em; height: auto; min-height: 62px;
     padding: 14px 18px; font-size: 20px; line-height: 1.35; text-align: left; }
   .choices.stack { flex-direction: column; align-items: stretch; width: 100%; }
+
+  /* ---- Memory Pairs: reveal on tap, stay revealed once matched ---- */
+  .pairsgrid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 10px; width: 100%; max-width: 30em; }
+  .pairtile { min-height: 76px; border-radius: 16px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px;
+    line-height: 1.3; padding: 10px 12px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .pairtile .face { display: none; }
+  .pairtile .back { font-size: 26px; opacity: 0.6; }
+  .pairtile.revealed .face, .pairtile.matched .face { display: block; }
+  .pairtile.revealed .back, .pairtile.matched .back { display: none; }
+  .pairtile.revealed { border-color: var(--teal); background: var(--teal-soft); }
+  .pairtile.matched { border-color: var(--good); background: var(--good-soft); cursor: default; }
+  .pairtile.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .pairtile:disabled { cursor: default; }
+
+  /* ---- Picture books: the shelf, and the full-screen reader ---- */
+  .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; width: 100%; }
+  .bookcard { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); text-align: left; }
+  .bookcard .bookicon { font-size: 34px; line-height: 1; }
+  .bookcard .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .bookcard .bookmeta { color: var(--muted); font-size: 13.5px; }
+  .bookcard .big { margin-top: auto; align-self: flex-start; }
+
+  .book-reader { position: fixed; inset: 0; z-index: 200; background: var(--ground);
+    display: flex; flex-direction: column; }
+  .book-reader-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; }
+  .book-reader-top .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .book-close { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font-size: 18px; }
+  .book-stage-wrap { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 0 10px; }
+  .book-stage { position: relative; width: 100%; max-width: 720px; aspect-ratio: 1600 / 1000;
+    border-radius: 18px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+  .book-stage svg { width: 100%; height: 100%; display: block; }
+  .book-stage [data-tap] { cursor: pointer; }
+  @keyframes tapPulse { 0% { filter: brightness(1); } 40% { filter: brightness(1.35); } 100% { filter: brightness(1); } }
+  .book-stage [data-tap].tap-play { animation: tapPulse 700ms ease; }
+  .book-reader-bottom { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 14px 18px; flex-wrap: wrap; }
+  .book-page-count { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; min-width: 5em; text-align: center; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -448,7 +491,7 @@
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the new words for this unit.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One word at a time.</s><s>Look at the picture.</s><s>Say the word out loud.</s><s>Then press Next word.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Reading a word in your head is not the same as saying it.</s><s>Your mouth has to learn it too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Hear it to hear the word said properly.</s><s>Then say it with me.</s></mstts:express-as>' data-say="Say this word out loud.">
-      <div class="slide-head"><span class="n">2</span><h2>Phonics: th and ng</h2></div>
+      <div class="slide-head"><span class="n">2</span><h2>Meet the words</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Say this word out loud.</span></div>
       <div class="stage">
         <div id="stage2"></div>
@@ -535,6 +578,36 @@
         <div class="choices" id="ch10"></div>
         <p class="fb" id="fb10"></p>
         <p class="score" id="score10"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the game from this unit&#39;s Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what the meaning says.</s><s>Then tap the word it is describing.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two words can look similar.</s><s>Read the whole meaning before you tap, not just the start.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the word that matches the meaning.">
+      <div class="slide-head"><span class="n">11</span><h2>Meaning Match</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Tap the word that matches the meaning.</span></div>
+      <div class="stage">
+        <div id="stage11"></div>
+        <div class="choices" id="ch11"></div>
+        <p class="fb" id="fb11"></p>
+        <p class="score" id="score11"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every tile is face down until you tap it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap one tile to see what is on it.</s><s>Tap a second tile.</s><s>If a word and its meaning match, they stay face up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If they do not match, both tiles turn back over.</s><s>Remember what you saw - that is the whole game.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your first tile.</s></mstts:express-as>' data-say="Tap two tiles that go together.">
+      <div class="slide-head"><span class="n">12</span><h2>Memory Pairs</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Tap two tiles that go together.</span></div>
+      <div class="stage">
+        <div id="stage12"></div>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12"></p>
+        <p class="score" id="score12"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This unit has its own shelf of picture books.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap Read on a book that looks good.</s><s>Tap the pictures - some of them make a sound.</s><s>Press Listen if you want the page read to you.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A tap sound is a little extra.</s><s>If nothing happens when you tap, that is fine - keep reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a book and press Read.</s></mstts:express-as>' data-say="Choose a book to read.">
+      <div class="slide-head"><span class="n">13</span><h2>Picture books</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Choose a book to read.</span></div>
+      <div class="stage">
+        <div id="stage13"></div>
+        <div class="choices" id="ch13"></div>
+        <p class="fb" id="fb13"></p>
+        <p class="score" id="score13"></p>
       </div>
     </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -700,51 +773,149 @@
       {
         "w": "long",
         "pic": "",
-        "meaning": "Reaching a great distance from one end to the other.",
+        "meaning": "Something long goes a big way from end to end.",
         "pos": "adjective",
-        "audio": "./media/audio/grade-1/dictionary/long.mp3"
+        "audio": "./media/audio/grade-1/dictionary/long.mp3",
+        "sentences": [
+          {
+            "text": "My scarf is warm and long.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-long-sentence-1b.mp3"
+          },
+          {
+            "text": "Is your hair long, Amal?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-long-sentence-2b.mp3"
+          },
+          {
+            "text": "Adam, that train is long!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-long-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "sing",
         "pic": "🎤",
         "meaning": "To make a tune with your voice, like a song.",
         "pos": "verb",
-        "audio": "./media/audio/grade-1/dictionary/sing.mp3"
+        "audio": "./media/audio/grade-1/dictionary/sing.mp3",
+        "sentences": [
+          {
+            "text": "The children sing every Monday.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-sing-sentence-1b.mp3"
+          },
+          {
+            "text": "Can you sing the letter song?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-sing-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, let us sing it now!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-sing-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "ring",
         "pic": "🔔",
         "meaning": "Ring means to make a clear, loud sound like a bell.",
         "pos": "verb",
-        "audio": "./media/audio/grade-1/dictionary/ring.mp3"
+        "audio": "./media/audio/grade-1/dictionary/ring.mp3",
+        "sentences": [
+          {
+            "text": "The bell will ring at nine o'clock.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-ring-sentence-1b.mp3"
+          },
+          {
+            "text": "Did you hear the bell ring?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-ring-sentence-2b.mp3"
+          },
+          {
+            "text": "Ring the bell for playtime!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-ring-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "king",
         "pic": "🤴🏾",
         "meaning": "A man in stories who rules a whole country.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/king.mp3"
+        "audio": "./media/audio/grade-1/dictionary/king.mp3",
+        "sentences": [
+          {
+            "text": "The king sits on a big chair.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-king-sentence-1b.mp3"
+          },
+          {
+            "text": "Who is the king in this story?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-king-sentence-2b.mp3"
+          },
+          {
+            "text": "Adam, please be the king with me!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-king-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "song",
         "pic": "🎵",
         "meaning": "A song is words you sing to music.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/song.mp3"
+        "audio": "./media/audio/grade-1/dictionary/song.mp3",
+        "sentences": [
+          {
+            "text": "We sing a song every morning.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-song-sentence-1b.mp3"
+          },
+          {
+            "text": "Do you know this song, Adam?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-song-sentence-2b.mp3"
+          },
+          {
+            "text": "What a happy song that is!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-song-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "thin",
         "pic": "",
         "meaning": "Thin means not thick, like a thin line or thin paper.",
         "pos": "adjective",
-        "audio": "./media/audio/grade-1/dictionary/thin.mp3"
+        "audio": "./media/audio/grade-1/dictionary/thin.mp3",
+        "sentences": [
+          {
+            "text": "Amal drew a thin line.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-thin-sentence-1b.mp3"
+          },
+          {
+            "text": "Is this paper too thin, Adam?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-thin-sentence-2b.mp3"
+          },
+          {
+            "text": "What a thin little stick!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-thin-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "thick",
         "pic": "",
         "meaning": "Thick means wide from one side to the other. It is not thin.",
         "pos": "adjective",
-        "audio": "./media/audio/grade-1/dictionary/thick.mp3"
+        "audio": "./media/audio/grade-1/dictionary/thick.mp3",
+        "sentences": [
+          {
+            "text": "The book has a thick cover.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-thick-sentence-1b.mp3"
+          },
+          {
+            "text": "Is the mud thick today?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-thick-sentence-2b.mp3"
+          },
+          {
+            "text": "What thick fog there is!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u7-core-thick-sentence-3b.mp3"
+          }
+        ]
       }
     ],
     "match": [
@@ -1454,6 +1625,775 @@
           }
         ],
         "why": "After we are we use the -ing word walking to show it is happening now."
+      }
+    ],
+    "meaningmatch": [
+      {
+        "ask": "Which word means: Something long goes a big way from end to end.",
+        "opts": [
+          {
+            "t": "long",
+            "ok": 1
+          },
+          {
+            "t": "king",
+            "ok": 0
+          },
+          {
+            "t": "these",
+            "ok": 0
+          }
+        ],
+        "why": "long: Something long goes a big way from end to end."
+      },
+      {
+        "ask": "Which word means: This word means those people or those things.",
+        "opts": [
+          {
+            "t": "long",
+            "ok": 0
+          },
+          {
+            "t": "king",
+            "ok": 0
+          },
+          {
+            "t": "they",
+            "ok": 1
+          }
+        ],
+        "why": "they: This word means those people or those things."
+      },
+      {
+        "ask": "Which word means: Shall is used to ask or say what will happen next.",
+        "opts": [
+          {
+            "t": "king",
+            "ok": 0
+          },
+          {
+            "t": "shall",
+            "ok": 1
+          },
+          {
+            "t": "long",
+            "ok": 0
+          }
+        ],
+        "why": "shall: Shall is used to ask or say what will happen next."
+      },
+      {
+        "ask": "Which word means: A long vehicle that carries many people at once.",
+        "opts": [
+          {
+            "t": "bus",
+            "ok": 1
+          },
+          {
+            "t": "long",
+            "ok": 0
+          },
+          {
+            "t": "king",
+            "ok": 0
+          }
+        ],
+        "why": "bus: A long vehicle that carries many people at once."
+      },
+      {
+        "ask": "Which word means: To stay on top of water without sinking.",
+        "opts": [
+          {
+            "t": "long",
+            "ok": 0
+          },
+          {
+            "t": "king",
+            "ok": 0
+          },
+          {
+            "t": "float",
+            "ok": 1
+          }
+        ],
+        "why": "float: To stay on top of water without sinking."
+      },
+      {
+        "ask": "Which word means: The colour of the sky and the deep sea.",
+        "opts": [
+          {
+            "t": "king",
+            "ok": 0
+          },
+          {
+            "t": "blue",
+            "ok": 1
+          },
+          {
+            "t": "long",
+            "ok": 0
+          }
+        ],
+        "why": "blue: The colour of the sky and the deep sea."
+      }
+    ],
+    "memorypairs": [
+      {
+        "prompt": "Match vocabulary set 1.",
+        "pairs": [
+          [
+            "ring",
+            "Ring means to make a clear, loud sound like a bell."
+          ],
+          [
+            "these",
+            "This word points to more than one thing close to you."
+          ],
+          [
+            "our",
+            "This word means belonging to us."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 2.",
+        "pairs": [
+          [
+            "was",
+            "Was means the same as is, but it already happened."
+          ],
+          [
+            "make",
+            "To build or create something new with your hands."
+          ],
+          [
+            "beep",
+            "A beep is a short, sharp sound that a horn makes."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 3.",
+        "pairs": [
+          [
+            "ding",
+            "A ding is a short, ringing sound that a bell makes."
+          ],
+          [
+            "swallow",
+            "A swallow is a small bird with pointed wings that flies fast."
+          ],
+          [
+            "wings",
+            "Wings are the parts of a bird's body that it uses to fly."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 4.",
+        "pairs": [
+          [
+            "bicycle",
+            "A vehicle with two wheels that you ride by pedalling."
+          ],
+          [
+            "wheels",
+            "Round parts that turn so a vehicle can move."
+          ],
+          [
+            "drive",
+            "To make a car or bus go where you want."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 5.",
+        "pairs": [
+          [
+            "sit down",
+            "To put your body onto a chair or the floor."
+          ],
+          [
+            "up",
+            "Towards a higher place, like the sky above your head."
+          ],
+          [
+            "big",
+            "Large in size, taking up lots of space."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 6.",
+        "pairs": [
+          [
+            "yellow",
+            "The colour of the sun and school buses."
+          ],
+          [
+            "behind",
+            "Behind means at the back of something."
+          ],
+          [
+            "near",
+            "Close to something, only a short walk away."
+          ]
+        ]
+      }
+    ],
+    "books": [
+      {
+        "id": "lulu-says-lets-go",
+        "title": "Lulu Says Let's Go!",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Lulu Says Let's Go! Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Lulu the little swallow flying high over the savanna while Musa and the monkey wave below",
+            "sound": "lulu-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Lulu was a little swallow. She lived by the big acacia.",
+            "alt": "Lulu the blue swallow perched in the big acacia tree",
+            "sound": "bird"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "It was time to fly to the great lake. \"Let's go!\"",
+            "alt": "Lulu taking off into the sky with another bird",
+            "sound": "lulu-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "\"Goodbye, Musa!\" called Lulu. \"See you soon!\"",
+            "alt": "Musa the zebra by his puddle waving goodbye as Lulu flies over",
+            "sound": "zebra-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "She flew over Duku's farm. \"Good luck, Lulu!\"",
+            "alt": "Lulu flying over the farm while Duku the donkey calls up from below",
+            "sound": "duku-happy"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Up, up, up went Lulu. The world looked small.",
+            "alt": "Lulu high in the sky with tiny trees and a tiny barn far below",
+            "sound": "wind"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "She flew fast. She flew far.",
+            "alt": "Lulu speeding through the sky with wind lines behind her",
+            "sound": "wind"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Then Lulu felt tired. Her wings were slow.",
+            "alt": "A tired Lulu flying slowly under a gray sky",
+            "sound": "lulu-sad"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "She stopped to rest in a tall tree.",
+            "alt": "Lulu resting quietly in a tall acacia tree",
+            "sound": "tree"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "A kind old bird shared her seeds.",
+            "alt": "A kind bird sharing seeds with Lulu in the tree",
+            "sound": "bird"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "\"Thank you! Now I can go on,\" said Lulu.",
+            "alt": "Lulu flying strongly again while the kind bird waves",
+            "sound": "lulu-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"The great lake is near. Let's go, let's go!\"",
+            "alt": "Lulu flying toward the sparkling water shining on the horizon",
+            "sound": "lulu-happy"
+          }
+        ]
+      },
+      {
+        "id": "amals-big-bus-ride",
+        "title": "Amal's Big Bus Ride",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Amal's Big Bus Ride. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal and her mother beside the yellow and red bus",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "\"How will we get there?\" asked Amal. \"First we walk. Then we go by bus.\"",
+            "alt": "Amal asking her mother how they will travel",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Amal and Mum walked down the road. They walked past the market.",
+            "alt": "Amal and her mother walking past a market stall",
+            "sound": ""
+          },
+          {
+            "image": "page-04.svg",
+            "text": "They walked to the bus stop and waited.",
+            "alt": "Amal and her mother standing at the bus stop sign",
+            "sound": ""
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Soon a big bus came. It was yellow and red. \"Beep, beep!\" went the bus.",
+            "alt": "The big yellow and red bus arriving at the bus stop",
+            "sound": "child-surprised"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "\"Find a seat. Then sit down,\" said Mum. Amal found a seat by the window.",
+            "alt": "Mum pointing to a seat as Amal climbs onto the bus",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "The wheels on the bus went round and round.",
+            "alt": "The bus driving along the road with motion lines behind it",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "\"Look, Mum! A boy on a bicycle!\" The boy waved. His name was Adam.",
+            "alt": "Adam waving from his green bicycle as the bus passes",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "\"And look - a red car!\" The car went fast. The bus went slow and bumpy.",
+            "alt": "A red car speeding past the slow yellow bus",
+            "sound": ""
+          },
+          {
+            "image": "page-10.svg",
+            "text": "Amal saw a girl named Samira, going to school. Samira waved too.",
+            "alt": "Samira waving outside the school as the bus goes by",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "The bus drove past the shops. It drove past the library. It drove to the sea.",
+            "alt": "The bus passing the shop row and the library",
+            "sound": ""
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"Amal!\" called Grandmother, by the little blue boat. \"You came to see me!\"",
+            "alt": "Grandmother waving beside a sailing boat at the sea as Amal and Mum arrive",
+            "sound": "woman-happy"
+          }
+        ]
+      },
+      {
+        "id": "the-wheels-on-the-bus",
+        "title": "The Wheels on the Bus",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "The Wheels on the Bus. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal and Adam with their arms up at the bus stop beside a red and yellow town bus",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Amal and Adam sing on the bus. Roll your hands like wheels.",
+            "alt": "Amal and Adam standing at the bus stop beside the town bus",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "The wheels on the bus go round and round.",
+            "alt": "The town bus on the road with motion arcs curving beside it and Amal watching",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Round and round. Round and round.",
+            "alt": "Adam beside the town bus with motion arcs and music notes around it",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "The wheels on the bus go round and round, all day long!",
+            "alt": "The town bus rolling along the road with motion arcs and music notes beside it",
+            "sound": "wind"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "The wipers on the bus go swish, swish, swish.",
+            "alt": "The town bus in the rain with a puddle on the road beside it",
+            "sound": "rain"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "The bell on the bus goes ding, ding, ding.",
+            "alt": "Amal with her arms up beside the town bus while music notes float above it",
+            "sound": "bell"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "\"Bus driver, bus driver, may I have a ride?\"",
+            "alt": "Amal pointing at the bus while she waits at the bus stop",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "\"Yes, of course. Please come inside.\"",
+            "alt": "Omar the bus driver smiling beside the town bus while Amal waits",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "Find a seat. Then sit down. Buckle up!",
+            "alt": "Amal and Adam inside the bus beside an empty seat",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "We'll drive through the town.",
+            "alt": "The town bus passing a row of shops with Amal beside it",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "They sang it again, a little louder. Ding, ding, ding!",
+            "alt": "Amal and Adam cheering beside the bus with confetti and music notes around them",
+            "sound": "bell"
+          }
+        ]
+      },
+      {
+        "id": "how-do-you-go",
+        "title": "How Do You Go?",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "How Do You Go? Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal with her arms up on the road beside a bicycle and a town bus",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "How do you go to school? I go by bus.",
+            "alt": "Amal pointing at the town bus from the bus stop",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Adam goes by bicycle. It has two wheels.",
+            "alt": "Adam pointing at a green bicycle standing on the road",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Samira goes by car. She sits down and buckles up.",
+            "alt": "Samira standing beside a red car on the road",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Some children walk. Walk, walk, walk!",
+            "alt": "Amal and Leo walking beside a striped crossing on the road",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "A boat goes on the water. It has sails. It floats.",
+            "alt": "Amal on the sand pointing at a small sailing boat out on the sea",
+            "sound": "wind"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "A train goes on the rails. It is very long.",
+            "alt": "A surprised Amal pointing at a long train standing on the road",
+            "sound": "child-surprised"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "A plane goes in the sky. It has wings. It can fly!",
+            "alt": "Amal and Adam with their arms up looking at an aeroplane high in the sky",
+            "sound": "child-surprised"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "A helicopter can fly too. It is loud.",
+            "alt": "Leo with his arms up looking at a helicopter hovering above the road",
+            "sound": "child-surprised"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "The bus is big. The bicycle is little.",
+            "alt": "Amal pointing at a big town bus beside a small green bicycle",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "The plane is fast. The boat is slow.",
+            "alt": "Amal on the sand pointing at an aeroplane in the sky above a sailing boat",
+            "sound": "wind"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"I can name them all,\" said Amal. \"Let's go!\"",
+            "alt": "Amal and Adam cheering beside the town bus with confetti falling",
+            "sound": "child-happy"
+          }
+        ]
+      },
+      {
+        "id": "lulu-and-the-slow-boat",
+        "title": "Lulu and the Slow Boat",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Lulu and the Slow Boat. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Lulu the little bird flying above the lake while Kiki sits in a small sailing boat",
+            "sound": "lulu-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Lulu the little bird can fly fast. Whoosh!",
+            "alt": "Lulu flying high and fast above the tall savanna grass",
+            "sound": "wind"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Kiki went to the lake in a boat. The boat was slow.",
+            "alt": "Kiki sitting in a small sailing boat on the lake while Lulu flies above",
+            "sound": "kiki-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "\"Come with me,\" said Kiki. \"We can go together.\"",
+            "alt": "Kiki waving from the boat while Lulu flies past over the water",
+            "sound": "kiki-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "\"No,\" said Lulu. \"I am fast. I will get there first.\"",
+            "alt": "A cheerful Lulu flying away above the lake while Kiki sits in her boat",
+            "sound": "lulu-happy"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Lulu flew high above the acacia trees.",
+            "alt": "Lulu flying very high between two big acacia trees",
+            "sound": "wind"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Then the wind came. It was strong. Lulu had to stop and wait.",
+            "alt": "A sad Lulu struggling in the wind above the bending savanna grass",
+            "sound": "lulu-sad"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "The little boat floated on. Slow, slow, slow.",
+            "alt": "Kiki's small sailing boat moving steadily across the wide lake",
+            "sound": "river"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "When Lulu got to the other side, Kiki was already there.",
+            "alt": "Kiki waving from the shore while a surprised Lulu flies in above her",
+            "sound": "lulu-surprised"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "\"You are slow,\" said Lulu, \"but you did not stop.\"",
+            "alt": "Lulu perched in the air beside Kiki near the edge of the lake",
+            "sound": "lulu-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "\"Slow is fine,\" said Kiki. \"Come and sit down.\"",
+            "alt": "Kiki beside a wooden bench under the acacia tree with Lulu nearby",
+            "sound": "kiki-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "So they went home together, slowly, and watched the sun go down.",
+            "alt": "Kiki and Lulu by the lake at night, with the boat moored and a nest up in the tree",
+            "sound": "lullaby"
+          }
+        ]
+      },
+      {
+        "id": "a-day-by-the-sea",
+        "title": "A Day by the Sea",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "A Day by the Sea. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal and Grandmother on the sand with the little sailing boat on the sea",
+            "sound": ""
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Amal is at the sea with Grandmother.",
+            "alt": "Amal and Grandmother standing together on the sunny beach",
+            "sound": ""
+          },
+          {
+            "image": "page-03.svg",
+            "text": "A little blue boat floats by.",
+            "alt": "Amal pointing at the little sailing boat floating on the sea",
+            "sound": "river"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "\"A boat has sails,\" says Grandmother.",
+            "alt": "Grandmother pointing at the boat's sails while Amal watches",
+            "sound": ""
+          },
+          {
+            "image": "page-05.svg",
+            "text": "A little fish jumps. Splash!",
+            "alt": "A fish jumping out of the sea with a splash while Amal points in surprise",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "A plane flies high above.",
+            "alt": "Amal pointing up at a plane flying high above the sea",
+            "sound": ""
+          },
+          {
+            "image": "page-07.svg",
+            "text": "\"Hello, plane!\" waves Amal.",
+            "alt": "Amal waving with both arms at the plane in the sky",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "A helicopter goes by. It is loud!",
+            "alt": "A helicopter flying over the beach while Amal looks up in surprise",
+            "sound": "wind"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "Adam comes on his bicycle.",
+            "alt": "Adam arriving at the beach on his bicycle, waving to Amal",
+            "sound": ""
+          },
+          {
+            "image": "page-10.svg",
+            "text": "\"Time to go home now,\" says Grandmother.",
+            "alt": "Grandmother, Amal and Adam standing on the sand as the boat floats by",
+            "sound": ""
+          },
+          {
+            "image": "page-11.svg",
+            "text": "They go home on the big bus.",
+            "alt": "Amal and Adam at the bus stop as the big yellow bus arrives",
+            "sound": ""
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"What a lovely day!\" says Amal.",
+            "alt": "Amal celebrating at home with Grandmother under falling confetti",
+            "sound": ""
+          }
+        ]
+      },
+      {
+        "id": "duku-plays-hide-and-seek",
+        "title": "Duku Plays Hide-and-Seek",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Duku Plays Hide-and-Seek. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Duku the donkey, Kiki the monkey and two chicks by the barn",
+            "sound": ""
+          },
+          {
+            "image": "page-02.svg",
+            "text": "\"Let's play hide-and-seek!\" says Kiki.",
+            "alt": "Kiki with her arms up beside Duku and a chick near the barn",
+            "sound": "kiki-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Duku closes his eyes and counts.",
+            "alt": "Duku standing by the fence while everyone runs to hide",
+            "sound": ""
+          },
+          {
+            "image": "page-04.svg",
+            "text": "One chick hides behind the haystack.",
+            "alt": "A little chick peeking out from behind the big haystack",
+            "sound": ""
+          },
+          {
+            "image": "page-05.svg",
+            "text": "One chick hides under the bench.",
+            "alt": "A little chick tucked under the wooden bench",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "One chick hides inside the barn.",
+            "alt": "A little chick standing inside the dark barn doorway",
+            "sound": ""
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Kiki hides up in the tall tree.",
+            "alt": "Kiki hiding high up in the leaves of the acacia tree",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Duku looks near. Duku looks far.",
+            "alt": "Duku searching in the tall grass with a surprised face",
+            "sound": "duku-surprised"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "He finds the chick behind the haystack!",
+            "alt": "Duku finding the happy chick beside the haystack",
+            "sound": "chick"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "He finds the chicks under and inside!",
+            "alt": "Duku between the bench and the barn with two found chicks",
+            "sound": ""
+          },
+          {
+            "image": "page-11.svg",
+            "text": "\"Where is Kiki?\" \"Up here, above you!\"",
+            "alt": "Duku looking up in surprise at Kiki waving from the tree",
+            "sound": "kiki-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"Found you all!\" laughs Duku.",
+            "alt": "Duku, Kiki and three chicks celebrating with confetti by the barn",
+            "sound": "duku-happy"
+          }
+        ]
       }
     ],
     "audioRelease": "20260903c",
@@ -2522,10 +3462,22 @@
      anything - there is nothing here to be right about yet.
      ------------------------------------------------------------------ */
   function wordWalk(o) {
-    let i = 0;
+    let i = 0, si = 0;
     const el = o.el;
+    // Cycling sentences within one word must NOT replay the word's own
+    // audio - paint() redraws for both "next word" and "another sentence",
+    // and only the FORMER should trigger it. Registered once per word in
+    // draw(), not on every paint().
     function draw() {
+      si = 0;
       const it = o.items[i];
+      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
+      playHere(o.finish, it.audio, it.w);
+      paint();
+    }
+    function paint() {
+      const it = o.items[i];
+      const sentences = it.sentences || [];
       $(el.ask).innerHTML = o.ask || "Say this word out loud.";
       $(el.stage).innerHTML =
         '<div class="wordcard">' +
@@ -2534,13 +3486,31 @@
         '<div class="bigword">' + esc(it.w) + "</div>" +
         (it.pos ? '<div class="wordpos">' + esc(it.pos) + "</div>" : "") +
         (it.meaning ? '<p class="wordmeaning">' + esc(it.meaning) + "</p>" : "") +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.replay +
+        '">&#128266; Hear it</button></div>' +
+        (sentences.length
+          ? '<div class="wordsentencebox">' +
+            '<p class="sentlabel">In a sentence &middot; ' + (si + 1) + " of " + sentences.length + "</p>" +
+            '<p class="wordsentence">' + esc(sentences[si].text) + "</p>" +
+            '<div class="bigbtns">' +
+            '<button type="button" class="big small ghost" id="' + el.hearSent + '">&#128266; Hear the sentence</button>' +
+            (sentences.length > 1
+              ? '<button type="button" class="big small ghost" id="' + el.nextSent + '">Another sentence &#9654;</button>'
+              : "") +
+            "</div></div>"
+          : "") +
         "</div>" +
         '<div class="bigbtns">' +
-        '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Hear it</button>' +
         '<button type="button" class="big small" id="' + el.next + '">' +
         (i === o.items.length - 1 ? "Done &#9654;" : "Next word &#9654;") + "</button></div>";
       $(el.score).textContent = (o.label || "Word") + " " + (i + 1) + " of " + o.items.length;
       $(el.replay).addEventListener("click", () => playClip(it.audio, it.w));
+      if (sentences.length) {
+        $(el.hearSent).addEventListener("click", () => playClip(sentences[si].audio, sentences[si].text));
+        if (sentences.length > 1) {
+          $(el.nextSent).addEventListener("click", () => { si = (si + 1) % sentences.length; paint(); });
+        }
+      }
       $(el.next).addEventListener("click", () => {
         i++;
         if (i >= o.items.length) {
@@ -2551,8 +3521,6 @@
           finish(o.finish, o.done);
         } else draw();
       });
-      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
-      playHere(o.finish, it.audio, it.w);
     }
     draw();
   }
@@ -2729,6 +3697,76 @@
     draw();
   }
 
+  /* ---- Memory Pairs: reveal on tap, connect word to meaning --------
+     The pack's own description is "Reveal tiles and connect each word
+     with its meaning", so tiles start face-down (a "?" back) and the tap
+     reveals the text underneath - not just a plain tap-to-select grid.
+     Round after round, the same shape every other step here uses; a round
+     is done when its three pairs are all matched.
+     ------------------------------------------------------------------ */
+  function memoryPairs(o) {
+    let r = 0;
+    const el = o.el;
+    function draw() {
+      const round = o.items[r];
+      let tiles = round.pairs.flatMap((p, pi) => [
+        { text: p[0], pair: pi },
+        { text: p[1], pair: pi },
+      ]);
+      tiles = shuffle(tiles).map((t, k) => ({ ...t, k }));
+      let picked = [];
+      let matched = 0;
+      let lock = false;
+      $(el.ask).innerHTML = round.prompt || "Tap two tiles that go together.";
+      $(el.stage).innerHTML = '<div class="pairsgrid" id="' + el.grid + '"></div>';
+      $(el.score).textContent = "Round " + (r + 1) + " of " + o.items.length;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      const grid = $(el.grid);
+      grid.innerHTML = tiles.map((t) =>
+        '<button type="button" class="pairtile" data-k="' + t.k + '">' +
+        '<span class="back" aria-hidden="true">?</span>' +
+        '<span class="face">' + esc(t.text) + "</span></button>").join("");
+      grid.addEventListener("click", (e) => {
+        const b = e.target.closest(".pairtile");
+        if (!b || lock) return;
+        const k = Number(b.dataset.k);
+        if (b.classList.contains("matched") || b.classList.contains("revealed")) return;
+        b.classList.add("revealed");
+        picked.push({ k, pair: tiles[k].pair, el: b });
+        if (picked.length < 2) return;
+        lock = true;
+        const [a, c] = picked;
+        if (a.pair === c.pair) {
+          a.el.classList.add("matched"); c.el.classList.add("matched");
+          a.el.disabled = true; c.el.disabled = true;
+          matched++;
+          picked = []; lock = false;
+          if (matched === round.pairs.length) {
+            $(el.fb).className = "fb good";
+            $(el.fb).textContent = cheer() + " Round " + (r + 1) + " matched.";
+            setTimeout(() => {
+              r++;
+              if (r >= o.items.length) {
+                $(el.stage).innerHTML = ""; $(el.score).textContent = "";
+                $(el.fb).className = "fb good";
+                $(el.fb).textContent = o.done;
+                finish(o.finish, o.done);
+              } else draw();
+            }, 1100);
+          }
+        } else {
+          a.el.classList.add("wrong"); c.el.classList.add("wrong");
+          setTimeout(() => {
+            a.el.classList.remove("revealed", "wrong");
+            c.el.classList.remove("revealed", "wrong");
+            picked = []; lock = false;
+          }, 900);
+        }
+      });
+    }
+    draw();
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>
@@ -2743,12 +3781,173 @@
   }
 
 
-  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"]];
+  /* ==================================================================
+     PICTURE BOOKS
+
+     The shelf and reader do NOT copy the story pages anywhere. This build
+     ships to app/english/grade-1-v2/, one directory below app/english/,
+     the same level ../ebooks/ already lives at - the assets the shell's
+     own reader already fetches from ./ebooks/. So the path from here is
+     ../ebooks/<id>/<file>, and it resolves in local dev too: this page's
+     own directory (english/grade-1-app/) sits beside english/ebooks/ on
+     disk, exactly the same relative shape.
+
+     Nothing is duplicated because nothing needs to be: the SVGs are
+     fetched at READ time, one page at a time, same as the shell does.
+
+     What is NOT ported: story narration is runtime TTS in the shell
+     (aiVoiceUrl, a paid endpoint this standalone page has no business
+     calling on its own), so a page's Listen button reads its text through
+     this page's OWN voice engine (VOICE.say) instead - the same engine
+     every other step's Explain button already uses. The tap-sound
+     resolution tables ARE ported, verbatim, because they are small, pure
+     data, and a tap that resolves to the wrong clip is a worse experience
+     than porting forty lines.
+     ================================================================== */
+
+  const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki", "duku", "lulu", "zuri", "goat", "hen", "monkey"]);
+  const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
+  const TAP_SOUND_ALIASES = { kite: "wind", moon: "lullaby", carrot: "crunch", scarecrow: "tree", lake: "puddle", fish: "puddle", boat: "wind", clock: "bell" };
+  const TAP_VOICE_GROUPS = {
+    amal: "child", nora: "child", mina: "child", adam: "child", idris: "child",
+    noah: "child", sami: "child", maya: "child",
+    samira: "child", hodan: "child", leo: "child",
+    daniel: "child", theo: "child",
+    yasmin: "woman", mum: "woman", hana: "woman", salma: "woman", faduma: "woman",
+    leila: "woman",
+    nadia: "woman", sarah: "woman", elena: "woman", talia: "woman", librarian: "woman",
+    governor: "woman",
+    omar: "man", dad: "man", grandpa: "man", rami: "man", mayor: "man", karim: "man",
+    uncle: "man", lawyer: "man", caretaker: "man", labourer: "man",
+  };
+
+  const tapPlayer = new Audio();
+  function ebookAsset(bookId, filename) {
+    return new URL("../ebooks/" + bookId + "/" + filename, document.baseURI).href;
+  }
+  function playTapSound(type, mood) {
+    if (!type) return;
+    const voiceGroup = TAP_VOICE_GROUPS[type];
+    const soundKey = voiceGroup
+      ? voiceGroup + "-" + (TAP_SOUND_MOODS.has(mood) ? mood : "happy")
+      : TAP_SOUND_MOOD_TYPES.has(type)
+        ? type + "-" + (TAP_SOUND_MOODS.has(mood) ? mood : "happy")
+        : TAP_SOUND_ALIASES[type] || type;
+    try {
+      tapPlayer.pause();
+      tapPlayer.src = ebookAsset("tap-sounds", soundKey + ".mp3");
+      tapPlayer.currentTime = 0;
+      tapPlayer.play().catch(() => {});
+    } catch (_) { /* a tap sound is a garnish; never let it break the reader */ }
+  }
+  function playStorySound(key) {
+    if (!key) return;
+    try {
+      tapPlayer.pause();
+      tapPlayer.src = ebookAsset("tap-sounds", key + ".mp3");
+      tapPlayer.currentTime = 0;
+      tapPlayer.play().catch(() => {});
+    } catch (_) { /* same */ }
+  }
+
+  function bookShelf(o) {
+    const el = o.el;
+    const books = o.items;
+    let opened = false;
+
+    function drawShelf() {
+      $(el.ask).innerHTML = o.ask || "Choose a book to read.";
+      $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
+      $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
+      $(el.shelf).innerHTML = books.map((b, k) =>
+        '<div class="bookcard"><span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
+        '<span class="booktitle">' + esc(b.title) + "</span>" +
+        (b.author ? '<span class="bookmeta">by ' + esc(b.author) + "</span>" : "") +
+        '<span class="bookmeta">' + b.pages.length + " pages</span>" +
+        '<button type="button" class="big small teal" data-book="' + k + '">Read ▶</button></div>').join("");
+      $(el.shelf).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-book]");
+        if (!b) return;
+        openReader(books[Number(b.dataset.book)]);
+      });
+    }
+
+    function openReader(book) {
+      opened = true;
+      let page = 0;
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader";
+      document.body.appendChild(overlay);
+
+      function renderPage() {
+        const p = book.pages[page];
+        const last = page === book.pages.length - 1;
+        overlay.innerHTML =
+          '<div class="book-reader-top"><span class="booktitle">' + esc(book.title) + "</span>" +
+          '<button type="button" class="book-close" aria-label="Close the book">&#10005;</button></div>' +
+          '<div class="book-stage-wrap"><div class="book-stage" id="bookStage"></div></div>' +
+          '<div class="book-reader-bottom">' +
+          '<button type="button" class="big small ghost" id="bookBack"' + (page === 0 ? " disabled" : "") + '>&#9664; Back</button>' +
+          '<button type="button" class="big small teal" id="bookListen">&#128266; Listen</button>' +
+          '<span class="book-page-count">Page ' + (page + 1) + " of " + book.pages.length + "</span>" +
+          (last
+            ? '<button type="button" class="big small" id="bookFinish">Finish book &#10003;</button>'
+            : '<button type="button" class="big small" id="bookNext">Next &#9654;</button>') +
+          "</div>";
+        overlay.querySelector(".book-close").addEventListener("click", closeReader);
+        const backBtn = overlay.querySelector("#bookBack");
+        if (backBtn) backBtn.addEventListener("click", () => { page--; renderPage(); });
+        const nextBtn = overlay.querySelector("#bookNext");
+        if (nextBtn) nextBtn.addEventListener("click", () => { page++; renderPage(); });
+        const finishBtn = overlay.querySelector("#bookFinish");
+        if (finishBtn) finishBtn.addEventListener("click", () => {
+          closeReader();
+          finish(o.finish, o.done);
+        });
+        overlay.querySelector("#bookListen").addEventListener("click", () => VOICE.speak(p.text));
+
+        const stage = overlay.querySelector("#bookStage");
+        fetch(ebookAsset(book.id, p.image))
+          .then((r) => (r.ok ? r.text() : Promise.reject(new Error("page fetch failed"))))
+          .then((markup) => {
+            if (!stage.isConnected) return;
+            const svg = new DOMParser().parseFromString(markup, "image/svg+xml").documentElement;
+            if (!svg || svg.nodeName.toLowerCase() !== "svg") return;
+            svg.setAttribute("role", "img");
+            if (p.alt) svg.setAttribute("aria-label", p.alt);
+            stage.innerHTML = "";
+            stage.appendChild(svg);
+            svg.addEventListener("pointerdown", (e) => {
+              const target = e.target.closest && e.target.closest("[data-tap]");
+              if (!target) return;
+              playTapSound(target.dataset.tap, target.dataset.mood);
+              target.classList.remove("tap-play");
+              void target.getBoundingClientRect();
+              target.classList.add("tap-play");
+            });
+          })
+          .catch(() => { stage.innerHTML = '<p style="padding:20px;color:var(--muted)">This page could not be loaded.</p>'; });
+        if (p.sound) playStorySound(p.sound);
+      }
+      function closeReader() {
+        overlay.remove();
+        document.removeEventListener("keydown", onKey);
+      }
+      function onKey(e) { if (e.key === "Escape") closeReader(); }
+      document.addEventListener("keydown", onKey);
+      renderPage();
+    }
+
+    drawShelf();
+  }
+
+
+  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"], ["🎮", "I played Meaning Match"], ["🪄", "I played Memory Pairs"], ["📚", "I read a picture book"]];
 
   hearAndTap({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", replay: "replay1" }, items: LESSON.sounds, finish: 0,
     ask: "Which word did you hear?", label: "Word",
     done: "You know these words by their sound now." });
-  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2" }, items: LESSON.newwords, finish: 1,
+  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2", hearSent: "hearSent2", nextSent: "nextSent2" }, items: LESSON.newwords, finish: 1,
     ask: "Say this word out loud.", label: "Word",
     done: "Now you have met them, you will see them all through the unit." });
   pictureMatch({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, items: LESSON.match, finish: 2,
@@ -2772,6 +3971,13 @@
     done: "That is a real sentence, written by you." });
   sequence({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, items: LESSON.quiz, finish: 9,
     label: "Question", done: "That is the whole unit finished." });
+  sequence({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, items: LESSON.meaningmatch, finish: 10,
+    label: "Round", done: "That is Meaning Match finished." });
+  memoryPairs({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12", grid: "grid12" }, items: LESSON.memorypairs, finish: 11,
+    done: "That is every pair matched." });
+  bookShelf({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", shelf: "shelf13" }, items: LESSON.books, finish: 12,
+    ask: "Choose a book to read.",
+    done: "You finished a book from this unit's shelf." });
 
   show(0, false);
 

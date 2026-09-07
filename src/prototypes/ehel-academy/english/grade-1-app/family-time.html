@@ -249,6 +249,10 @@
   .wordmeaning { max-width: 30ch; color: var(--ink); font-size: 19px; }
   .wordpos { color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .wordsentence { max-width: 34ch; color: var(--muted); font-size: 17px; font-style: italic; }
+  .wordsentencebox { width: 100%; max-width: 30em; border-radius: 16px; border: 1px solid var(--line);
+    background: var(--cell); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+  .sentlabel { color: var(--teal); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .wordsentencebox .wordsentence { font-style: normal; color: var(--ink); font-size: 19px; max-width: none; }
 
   /* ---- a strip of word buttons, for tapping the word you heard ---- */
   .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
@@ -309,6 +313,45 @@
   .choice.text { min-width: 0; width: 100%; max-width: 30em; height: auto; min-height: 62px;
     padding: 14px 18px; font-size: 20px; line-height: 1.35; text-align: left; }
   .choices.stack { flex-direction: column; align-items: stretch; width: 100%; }
+
+  /* ---- Memory Pairs: reveal on tap, stay revealed once matched ---- */
+  .pairsgrid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 10px; width: 100%; max-width: 30em; }
+  .pairtile { min-height: 76px; border-radius: 16px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px;
+    line-height: 1.3; padding: 10px 12px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .pairtile .face { display: none; }
+  .pairtile .back { font-size: 26px; opacity: 0.6; }
+  .pairtile.revealed .face, .pairtile.matched .face { display: block; }
+  .pairtile.revealed .back, .pairtile.matched .back { display: none; }
+  .pairtile.revealed { border-color: var(--teal); background: var(--teal-soft); }
+  .pairtile.matched { border-color: var(--good); background: var(--good-soft); cursor: default; }
+  .pairtile.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .pairtile:disabled { cursor: default; }
+
+  /* ---- Picture books: the shelf, and the full-screen reader ---- */
+  .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; width: 100%; }
+  .bookcard { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); text-align: left; }
+  .bookcard .bookicon { font-size: 34px; line-height: 1; }
+  .bookcard .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .bookcard .bookmeta { color: var(--muted); font-size: 13.5px; }
+  .bookcard .big { margin-top: auto; align-self: flex-start; }
+
+  .book-reader { position: fixed; inset: 0; z-index: 200; background: var(--ground);
+    display: flex; flex-direction: column; }
+  .book-reader-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; }
+  .book-reader-top .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .book-close { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font-size: 18px; }
+  .book-stage-wrap { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 0 10px; }
+  .book-stage { position: relative; width: 100%; max-width: 720px; aspect-ratio: 1600 / 1000;
+    border-radius: 18px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+  .book-stage svg { width: 100%; height: 100%; display: block; }
+  .book-stage [data-tap] { cursor: pointer; }
+  @keyframes tapPulse { 0% { filter: brightness(1); } 40% { filter: brightness(1.35); } 100% { filter: brightness(1); } }
+  .book-stage [data-tap].tap-play { animation: tapPulse 700ms ease; }
+  .book-reader-bottom { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 14px 18px; flex-wrap: wrap; }
+  .book-page-count { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; min-width: 5em; text-align: center; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -537,6 +580,36 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the game from this unit&#39;s Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what the meaning says.</s><s>Then tap the word it is describing.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two words can look similar.</s><s>Read the whole meaning before you tap, not just the start.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the word that matches the meaning.">
+      <div class="slide-head"><span class="n">11</span><h2>Meaning Match</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Tap the word that matches the meaning.</span></div>
+      <div class="stage">
+        <div id="stage11"></div>
+        <div class="choices" id="ch11"></div>
+        <p class="fb" id="fb11"></p>
+        <p class="score" id="score11"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every tile is face down until you tap it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap one tile to see what is on it.</s><s>Tap a second tile.</s><s>If a word and its meaning match, they stay face up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If they do not match, both tiles turn back over.</s><s>Remember what you saw - that is the whole game.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your first tile.</s></mstts:express-as>' data-say="Tap two tiles that go together.">
+      <div class="slide-head"><span class="n">12</span><h2>Memory Pairs</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Tap two tiles that go together.</span></div>
+      <div class="stage">
+        <div id="stage12"></div>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12"></p>
+        <p class="score" id="score12"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This unit has its own shelf of picture books.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap Read on a book that looks good.</s><s>Tap the pictures - some of them make a sound.</s><s>Press Listen if you want the page read to you.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A tap sound is a little extra.</s><s>If nothing happens when you tap, that is fine - keep reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a book and press Read.</s></mstts:express-as>' data-say="Choose a book to read.">
+      <div class="slide-head"><span class="n">13</span><h2>Picture books</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Choose a book to read.</span></div>
+      <div class="stage">
+        <div id="stage13"></div>
+        <div class="choices" id="ch13"></div>
+        <p class="fb" id="fb13"></p>
+        <p class="score" id="score13"></p>
+      </div>
+    </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
       <div class="slide-head"><span class="n">&#9733;</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span>Every step you finished earned a sticker.</span></div>
@@ -702,98 +775,294 @@
         "pic": "👦🏾",
         "meaning": "A young male child, like a brother or a school friend.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/boy.mp3"
+        "audio": "./media/audio/grade-1/dictionary/boy.mp3",
+        "sentences": [
+          {
+            "text": "That boy is called Adam.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-boy-sentence-1b.mp3"
+          },
+          {
+            "text": "Which boy is your brother?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-boy-sentence-2b.mp3"
+          },
+          {
+            "text": "The tall boy is my brother!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-boy-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "girl",
         "pic": "👧🏾",
         "meaning": "A young female child, like a sister or a school friend.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/girl.mp3"
+        "audio": "./media/audio/grade-1/dictionary/girl.mp3",
+        "sentences": [
+          {
+            "text": "That girl is called Amal.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-girl-sentence-1b.mp3"
+          },
+          {
+            "text": "Is the girl in your class?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-girl-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, the girl sits near me!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-girl-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "baby",
         "pic": "👶🏾",
         "meaning": "A very young child who cannot walk or talk yet.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/baby.mp3"
+        "audio": "./media/audio/grade-1/dictionary/baby.mp3",
+        "sentences": [
+          {
+            "text": "The baby laughs at the cat.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-baby-sentence-1b.mp3"
+          },
+          {
+            "text": "Is the baby asleep?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-baby-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, the baby is sleeping!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-baby-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "mother",
         "pic": "👩🏾",
         "meaning": "The woman who has you as her child and cares for you.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/mother.mp3"
+        "audio": "./media/audio/grade-1/dictionary/mother.mp3",
+        "sentences": [
+          {
+            "text": "Amal's mother works at the shop.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-mother-sentence-1b.mp3"
+          },
+          {
+            "text": "Where is your mother?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-mother-sentence-2b.mp3"
+          },
+          {
+            "text": "My mother is in the kitchen.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-mother-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "father",
         "pic": "👨🏾",
         "meaning": "The man who has you as his child and cares for you.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/father.mp3"
+        "audio": "./media/audio/grade-1/dictionary/father.mp3",
+        "sentences": [
+          {
+            "text": "Adam's father works in a shop.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-father-sentence-1b.mp3"
+          },
+          {
+            "text": "Where does your father work?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-father-sentence-2b.mp3"
+          },
+          {
+            "text": "My father works at the hospital.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-father-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "mum",
         "pic": "👩🏾",
         "meaning": "Another word for mother that we use at home.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/mum.mp3"
+        "audio": "./media/audio/grade-1/dictionary/mum.mp3",
+        "sentences": [
+          {
+            "text": "Adam hugs his mum.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-mum-sentence-1b.mp3"
+          },
+          {
+            "text": "Is your mum at home?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-mum-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, my mum is here!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-mum-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "dad",
         "pic": "👨🏾",
         "meaning": "Another word for father that we use at home.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/dad.mp3"
+        "audio": "./media/audio/grade-1/dictionary/dad.mp3",
+        "sentences": [
+          {
+            "text": "Dad helps me with my reading.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-dad-sentence-1b.mp3"
+          },
+          {
+            "text": "Is your dad home yet?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-dad-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, my dad just came home!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-dad-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "sister",
         "pic": "👧🏾",
         "meaning": "A girl who has the same mother or father as you.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/sister.mp3"
+        "audio": "./media/audio/grade-1/dictionary/sister.mp3",
+        "sentences": [
+          {
+            "text": "Amal has one little sister.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-sister-sentence-1b.mp3"
+          },
+          {
+            "text": "How old is your sister?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-sister-sentence-2b.mp3"
+          },
+          {
+            "text": "My sister is three today!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-sister-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "brother",
         "pic": "👦🏾",
         "meaning": "A boy who has the same mother or father as you.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/brother.mp3"
+        "audio": "./media/audio/grade-1/dictionary/brother.mp3",
+        "sentences": [
+          {
+            "text": "Adam has a baby brother.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-brother-sentence-1b.mp3"
+          },
+          {
+            "text": "Does your brother go to school?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-brother-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, my brother is in Grade 3!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-brother-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "grandma",
         "pic": "👵🏾",
         "meaning": "Your grandma is the mother of your mum or your dad.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/grandma.mp3"
+        "audio": "./media/audio/grade-1/dictionary/grandma.mp3",
+        "sentences": [
+          {
+            "text": "Amal's grandma was there.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-grandma-sentence-1b.mp3"
+          },
+          {
+            "text": "Her grandma kept animals there.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-grandma-sentence-2b.mp3"
+          },
+          {
+            "text": "Is your grandma at home, Adam?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-grandma-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "grandpa",
         "pic": "👴🏾",
         "meaning": "Your grandpa is the father of your mum or your dad.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/grandpa.mp3"
+        "audio": "./media/audio/grade-1/dictionary/grandpa.mp3",
+        "sentences": [
+          {
+            "text": "Amal sat with her grandpa.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-grandpa-sentence-1b.mp3"
+          },
+          {
+            "text": "Is your grandpa at home, Adam?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-grandpa-sentence-2b.mp3"
+          },
+          {
+            "text": "What a kind grandpa you have!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-grandpa-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "family",
         "pic": "👨🏾‍👩🏾‍👧🏾‍👦🏾",
         "meaning": "The people you live with and love, like parents and children.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/family.mp3"
+        "audio": "./media/audio/grade-1/dictionary/family.mp3",
+        "sentences": [
+          {
+            "text": "Our family visits grandma on Friday.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-family-sentence-1b.mp3"
+          },
+          {
+            "text": "How big is your family?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-family-sentence-2b.mp3"
+          },
+          {
+            "text": "My family has five people!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-family-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "friend",
         "pic": "🧑🏾‍🤝‍🧑🏾",
-        "meaning": "A person you like and spend time with.",
+        "meaning": "Someone you like, play with and are kind to.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/friend.mp3"
+        "audio": "./media/audio/grade-1/dictionary/friend.mp3",
+        "sentences": [
+          {
+            "text": "Amal helps her friend tidy up.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-friend-sentence-1b.mp3"
+          },
+          {
+            "text": "Who is your best friend?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-friend-sentence-2b.mp3"
+          },
+          {
+            "text": "Amal is my friend!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-friend-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "teacher",
         "pic": "🧑🏾‍🏫",
-        "meaning": "A person who helps others learn.",
+        "meaning": "A grown-up who helps you learn new things at school.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/teacher.mp3"
+        "audio": "./media/audio/grade-1/dictionary/teacher.mp3",
+        "sentences": [
+          {
+            "text": "Our teacher smiles every morning.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-teacher-sentence-1b.mp3"
+          },
+          {
+            "text": "May I ask the teacher?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-teacher-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, the teacher is by the door.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u2-core-teacher-sentence-3b.mp3"
+          }
+        ]
       }
     ],
     "match": [
@@ -1498,6 +1767,775 @@
           }
         ],
         "why": "Sister and sun both start with /s/; mat, dog and pen start with /m/, /d/ and /p/."
+      }
+    ],
+    "meaningmatch": [
+      {
+        "ask": "Which word means: Something a hen lays that we can cook and eat.",
+        "opts": [
+          {
+            "t": "egg",
+            "ok": 1
+          },
+          {
+            "t": "wet",
+            "ok": 0
+          },
+          {
+            "t": "men",
+            "ok": 0
+          }
+        ],
+        "why": "egg: Something a hen lays that we can cook and eat."
+      },
+      {
+        "ask": "Which word means: Another word for mother that we use at home.",
+        "opts": [
+          {
+            "t": "egg",
+            "ok": 0
+          },
+          {
+            "t": "wet",
+            "ok": 0
+          },
+          {
+            "t": "mum",
+            "ok": 1
+          }
+        ],
+        "why": "mum: Another word for mother that we use at home."
+      },
+      {
+        "ask": "Which word means: All means every one of them, with none left out.",
+        "opts": [
+          {
+            "t": "wet",
+            "ok": 0
+          },
+          {
+            "t": "all",
+            "ok": 1
+          },
+          {
+            "t": "egg",
+            "ok": 0
+          }
+        ],
+        "why": "all: All means every one of them, with none left out."
+      },
+      {
+        "ask": "Which word means: A kiss is a gentle touch with your lips to show love.",
+        "opts": [
+          {
+            "t": "kiss",
+            "ok": 1
+          },
+          {
+            "t": "egg",
+            "ok": 0
+          },
+          {
+            "t": "wet",
+            "ok": 0
+          }
+        ],
+        "why": "kiss: A kiss is a gentle touch with your lips to show love."
+      },
+      {
+        "ask": "Which word means: Brave means not afraid, even when something feels scary.",
+        "opts": [
+          {
+            "t": "egg",
+            "ok": 0
+          },
+          {
+            "t": "wet",
+            "ok": 0
+          },
+          {
+            "t": "brave",
+            "ok": 1
+          }
+        ],
+        "why": "brave: Brave means not afraid, even when something feels scary."
+      },
+      {
+        "ask": "Which word means: The number 1. It means just a single thing.",
+        "opts": [
+          {
+            "t": "wet",
+            "ok": 0
+          },
+          {
+            "t": "one",
+            "ok": 1
+          },
+          {
+            "t": "egg",
+            "ok": 0
+          }
+        ],
+        "why": "one: The number 1. It means just a single thing."
+      }
+    ],
+    "memorypairs": [
+      {
+        "prompt": "Match vocabulary set 1.",
+        "pairs": [
+          [
+            "bed",
+            "A bed is where you lie down and sleep."
+          ],
+          [
+            "pet",
+            "A pet is an animal you keep at home and look after."
+          ],
+          [
+            "girl",
+            "A young female child, like a sister or a school friend."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 2.",
+        "pairs": [
+          [
+            "sister",
+            "A girl who has the same mother or father as you."
+          ],
+          [
+            "friend",
+            "Someone you like, play with and are kind to."
+          ],
+          [
+            "see",
+            "To look at something and know it with your eyes."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 3.",
+        "pairs": [
+          [
+            "said",
+            "Said means spoke. It already happened."
+          ],
+          [
+            "house",
+            "A house is the building where a family lives."
+          ],
+          [
+            "kitchen",
+            "A kitchen is the room where food is cooked."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 4.",
+        "pairs": [
+          [
+            "talked",
+            "Talked means spoke with another person."
+          ],
+          [
+            "practise",
+            "Practise means do something again and again to get better at it."
+          ],
+          [
+            "dropped",
+            "Dropped means let something fall by accident."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 5.",
+        "pairs": [
+          [
+            "slept",
+            "Slept means rested with your eyes closed at night."
+          ],
+          [
+            "cereal",
+            "Small dry food we eat in a bowl with milk."
+          ],
+          [
+            "grapes",
+            "Small round fruits that grow together in a bunch."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 6.",
+        "pairs": [
+          [
+            "four",
+            "The number 4. It comes after three and before five."
+          ],
+          [
+            "help",
+            "To do something kind that makes things easier for someone."
+          ],
+          [
+            "laugh",
+            "To make a happy sound when something is funny."
+          ]
+        ]
+      }
+    ],
+    "books": [
+      {
+        "id": "kikis-family-day",
+        "title": "Kiki's Family Day",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Kiki's Family Day. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Kiki with Mama, Papa and little sister Nia in front of the big baobab tree",
+            "sound": "kiki-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Kiki's home was in the big baobab tree.",
+            "alt": "The big baobab tree home with its round door and window",
+            "sound": "tree"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "This is Mama. This is Papa. And this is her little sister, Nia.",
+            "alt": "Mama with a flower behind her ear, big Papa, and tiny little sister Nia",
+            "sound": "monkey"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Mama cooked dinner. Kiki helped stir the pot.",
+            "alt": "Mama and Kiki cooking dinner in a big pot over the fire",
+            "sound": ""
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Papa picked mangoes. Kiki helped carry them.",
+            "alt": "Papa picking mangoes from the tree while Kiki carries some",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Little Nia dropped her banana. She cried and cried.",
+            "alt": "Little Nia crying over her dropped banana while Kiki looks around in surprise",
+            "sound": "kiki-sad"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "\"Do not cry,\" said Kiki. \"You can have mine.\"",
+            "alt": "Kiki giving her own banana to little Nia with a small heart floating in the air",
+            "sound": "kiki-happy"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "The family ate dinner together. Yum, yum!",
+            "alt": "The whole monkey family eating dinner together around the pot",
+            "sound": "monkey"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "Papa told a story about a brave little zebra.",
+            "alt": "Papa telling a bedtime story while a little zebra runs through a thought bubble",
+            "sound": "zebra-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "Mama sang a soft, sweet song.",
+            "alt": "Mama singing a lullaby under the stars with music notes floating",
+            "sound": "lullaby"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Kiki hugged her family. \"Good night, good night!\"",
+            "alt": "Kiki and Nia hugging Mama and Papa good night by the lit baobab home",
+            "sound": ""
+          },
+          {
+            "image": "page-12.svg",
+            "text": "Kiki slept and dreamed of her happy home.",
+            "alt": "The quiet baobab home at night under the moon and stars",
+            "sound": "crickets"
+          }
+        ]
+      },
+      {
+        "id": "breakfast-at-grandmas-house",
+        "title": "Breakfast at Grandma's House",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Breakfast at Grandma's House. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Grandma and Grandpa either side of the breakfast table with Amal beside them",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "It was Saturday. Amal woke up early. \"We are going to Grandma's house!\"",
+            "alt": "Amal waking up beside her bed with both arms in the air",
+            "sound": "child-surprised"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Amal has a mother and a father. She has a little brother, Idris. He is a baby.",
+            "alt": "Amal's mother and father standing with Amal and baby Idris in his blue blanket",
+            "sound": ""
+          },
+          {
+            "image": "page-04.svg",
+            "text": "\"Come, Amal,\" said her mum. \"Hold my hand.\" They walked together.",
+            "alt": "Amal and her mother walking towards Grandma's house",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Grandma opened the door. \"Hello, my dear ones!\" She gave everyone a big hug.",
+            "alt": "Grandma with her arms up in welcome as Amal arrives",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Grandpa was in the kitchen. \"Who is hungry? It is time to eat!\"",
+            "alt": "Grandpa pointing at a bowl of cereal on the table",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "On the table there was one mango, one banana, ten grapes and four strawberries.",
+            "alt": "The breakfast table with a mango, a banana, a bunch of grapes and strawberries",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "\"Let us count the grapes,\" said Grandpa. \"One, two, three... ten!\" said Amal.",
+            "alt": "Amal counting the bunch of grapes on the table while Grandpa points",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "\"Can I help?\" asked Amal. She laid the table. One, two, three, four, five bowls.",
+            "alt": "Amal carrying a bowl to a table already laid with four more",
+            "sound": ""
+          },
+          {
+            "image": "page-10.svg",
+            "text": "Baby Idris ate his cereal with milk. Some of it went on his nose!",
+            "alt": "Baby Idris with cereal on his nose beside the breakfast bowl and cup of milk",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Everyone began to laugh. \"Idris is a funny baby,\" said Amal.",
+            "alt": "The whole family laughing together around baby Idris",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "After breakfast, the grown-ups talked and Amal helped to tidy the bowls.",
+            "alt": "Grandma and Mum talking while Amal carries a bowl to the table",
+            "sound": ""
+          }
+        ]
+      },
+      {
+        "id": "some-families-are-big",
+        "title": "Some Families Are Big",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Some Families Are Big. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal's whole family standing together in their home: Ayeeyo, Grandpa, Mum, Amal, Adam and baby Idris",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Amal knows a little poem about families.",
+            "alt": "Amal smiling beside her sister Hodan in their home",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Some families are big.",
+            "alt": "Amal with her arms up in front of Mum, Dad, Adam, Hodan and Ayeeyo all standing in a row",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Some families are small.",
+            "alt": "Amal standing with her mother alone in the room",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "I love my family best of all.",
+            "alt": "Amal with her arms up beside her mother and baby Idris",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Amal counted her family. One, two, three.",
+            "alt": "Amal pointing at three big number cards showing three, two and one",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Four, five, six.",
+            "alt": "Amal pointing at three number cards showing six, five and four",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Seven, eight, nine, ten - with Ayeeyo and Grandpa.",
+            "alt": "Ayeeyo and Grandpa standing either side of four number cards showing ten, nine, eight and seven",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "\"Is our family big or small?\" she asked Mum.",
+            "alt": "Amal pointing as she asks her mother a question",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "\"It is just right,\" said Mum.",
+            "alt": "Amal's mother smiling down at her in their home",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Then they said the poem again, a little louder.",
+            "alt": "Amal, Adam and Hodan with their arms up while music notes float beside them",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"I love my family best of all,\" said Amal.",
+            "alt": "The whole family together with confetti falling: Ayeeyo, Mum, Amal, Adam, Dad and baby Idris",
+            "sound": "child-happy"
+          }
+        ]
+      },
+      {
+        "id": "who-is-in-my-family",
+        "title": "Who Is in My Family?",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Who Is in My Family? Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal pointing at her mother, her father, Ayeeyo and baby Idris in their home",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "This is my mother. She is my mum.",
+            "alt": "Amal pointing at her mother, who is smiling beside her",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "This is my father. He is my dad.",
+            "alt": "Amal pointing at her father, who is smiling beside her",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "This is my brother. His name is Adam.",
+            "alt": "Amal pointing at her big brother Adam",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "This is my sister. Her name is Hodan.",
+            "alt": "Amal pointing at her sister Hodan",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "This is my baby brother, Idris. He is one.",
+            "alt": "Amal pointing at baby Idris sitting in his blanket beside the bed",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "This is my grandma. We call her Ayeeyo.",
+            "alt": "Amal pointing at her grandmother Ayeeyo",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "This is my grandpa.",
+            "alt": "Amal pointing at her grandfather",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "In the morning we eat together.",
+            "alt": "A bowl of cereal and a cup of milk on the floor while Mum and Amal stand beside them",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "There are pancakes. There is milk. There is fruit.",
+            "alt": "Amal pointing at a basket of bananas, a bowl and a cup of milk",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "I can help. I lay the table.",
+            "alt": "Amal and Hodan standing beside a bowl and a cup of milk",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "One, two, three, four, five, six, seven. That is my family.",
+            "alt": "Amal, Adam and Hodan with their arms up beside four number cards showing seven, six, five and four",
+            "sound": "child-happy"
+          }
+        ]
+      },
+      {
+        "id": "ten-little-eggs",
+        "title": "Ten Little Eggs",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Ten Little Eggs. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Koko the hen beside a nest of eggs with two chicks in front of the barn",
+            "sound": "hen-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Koko the hen had ten eggs in her nest.",
+            "alt": "Koko the hen sitting beside a nest holding five round white eggs",
+            "sound": "hen-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Crack! One egg opened. Nine eggs left.",
+            "alt": "A surprised Koko beside the nest while one small chick stands nearby",
+            "sound": "chick"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Crack! Two little chicks. Eight eggs left.",
+            "alt": "Koko beside her nest with two chicks standing together on the grass",
+            "sound": "chick"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Crack, crack. Four little chicks. Six eggs left.",
+            "alt": "Koko beside a smaller nest of eggs while four chicks line up beside the fence",
+            "sound": "chick"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Duku the donkey came to look. \"Peep!\" said the chicks.",
+            "alt": "Duku the donkey looking surprised at Koko and three chicks in front of the barn",
+            "sound": "duku-surprised"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Crack, crack. Eight little chicks. Two eggs left.",
+            "alt": "Koko beside two eggs while six chicks stand in a long row",
+            "sound": "chick"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Crack! Nine little chicks. One egg left.",
+            "alt": "Koko beside one last egg while five chicks stand around her",
+            "sound": "chick"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "The last egg did not open. Koko waited.",
+            "alt": "A sad Koko sitting alone beside one unopened egg in front of the barn",
+            "sound": "hen-sad"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "The goat waited. Duku waited. The chicks waited.",
+            "alt": "Duku, the goat, Koko and two chicks all standing quietly around one egg",
+            "sound": "goat"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Crack! Ten little chicks! Everybody cheered.",
+            "alt": "A happy Koko with six chicks around her and confetti falling over the barnyard",
+            "sound": "chick"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"Ten in the nest,\" said Koko. \"And one big family.\"",
+            "alt": "Koko and five chicks in front of the barn under a soft rainbow",
+            "sound": "hen-happy"
+          }
+        ]
+      },
+      {
+        "id": "after-breakfast-at-grandmas",
+        "title": "After Breakfast",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "After Breakfast. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Grandma, Grandpa and Amal beside the breakfast bowls at Grandma's house",
+            "sound": ""
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Breakfast was over at Grandma's house.",
+            "alt": "Grandma standing beside the empty bowls and a cup",
+            "sound": ""
+          },
+          {
+            "image": "page-03.svg",
+            "text": "\"Can I help?\" asked Amal.",
+            "alt": "Amal with her arms up beside Grandma",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Amal carried the bowls, one by one.",
+            "alt": "Amal standing beside two bowls at Grandma's house",
+            "sound": ""
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Adam carried the cups. Careful, Adam!",
+            "alt": "Adam standing near two cups while Grandma watches",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Baby Idris rested on the soft mat.",
+            "alt": "Baby Idris resting on the soft mat while Amal watches quietly",
+            "sound": "lullaby"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Grandpa told a funny story.",
+            "alt": "Grandpa with his arms up telling a story to Amal and Adam",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Everyone laughed. Ha, ha, ha!",
+            "alt": "Grandpa, Amal, Adam and Grandma all laughing together",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "Amal counted five clean bowls.",
+            "alt": "Amal pointing at a row of five bowls",
+            "sound": ""
+          },
+          {
+            "image": "page-10.svg",
+            "text": "\"Thank you, Grandma,\" said Amal.",
+            "alt": "Amal and Grandma smiling at each other",
+            "sound": ""
+          },
+          {
+            "image": "page-11.svg",
+            "text": "\"Come again soon, dear ones!\"",
+            "alt": "Grandma with her arms up beside Amal, Adam and baby Idris",
+            "sound": ""
+          },
+          {
+            "image": "page-12.svg",
+            "text": "Amal waved all the way home.",
+            "alt": "Mum, Dad, Amal and Adam waving on the village path under confetti",
+            "sound": "child-happy"
+          }
+        ]
+      },
+      {
+        "id": "fruit-for-breakfast",
+        "title": "Fruit for Breakfast",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Fruit for Breakfast. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal and Mum at Omar's market stall with a banana and a mango",
+            "sound": "market"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Amal and Mum go to the market.",
+            "alt": "Amal and Mum walking to the market stall under an acacia tree",
+            "sound": "market"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "\"Hello, Omar!\" says Amal.",
+            "alt": "Amal with her arms up greeting Omar at his stall",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "\"We want fruit for breakfast, please.\"",
+            "alt": "Mum pointing at the stall while Omar and Amal smile",
+            "sound": ""
+          },
+          {
+            "image": "page-05.svg",
+            "text": "One big mango for Grandma.",
+            "alt": "Amal pointing at one big mango by the stall",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Two yellow bananas for Dad.",
+            "alt": "Amal pointing at two yellow bananas by the stall",
+            "sound": ""
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Ten little grapes for Idris.",
+            "alt": "Amal pointing at a bunch of purple grapes by the stall",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Four red strawberries for Amal.",
+            "alt": "Amal pointing at four red strawberries by the stall",
+            "sound": ""
+          },
+          {
+            "image": "page-09.svg",
+            "text": "Amal counts the fruit in the basket.",
+            "alt": "Amal pointing at a basket holding a banana and a strawberry",
+            "sound": ""
+          },
+          {
+            "image": "page-10.svg",
+            "text": "\"Thank you, Omar!\" they say.",
+            "alt": "Omar with his arms up while Mum and Amal say thank you",
+            "sound": ""
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Amal carries the basket home.",
+            "alt": "Mum and Amal on the village path beside the basket of fruit",
+            "sound": ""
+          },
+          {
+            "image": "page-12.svg",
+            "text": "A good breakfast for the family!",
+            "alt": "Grandma, Amal and Adam at home with a bowl and a banana under confetti",
+            "sound": "child-happy"
+          }
+        ]
       }
     ],
     "audioRelease": "20260903c",
@@ -2566,10 +3604,22 @@
      anything - there is nothing here to be right about yet.
      ------------------------------------------------------------------ */
   function wordWalk(o) {
-    let i = 0;
+    let i = 0, si = 0;
     const el = o.el;
+    // Cycling sentences within one word must NOT replay the word's own
+    // audio - paint() redraws for both "next word" and "another sentence",
+    // and only the FORMER should trigger it. Registered once per word in
+    // draw(), not on every paint().
     function draw() {
+      si = 0;
       const it = o.items[i];
+      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
+      playHere(o.finish, it.audio, it.w);
+      paint();
+    }
+    function paint() {
+      const it = o.items[i];
+      const sentences = it.sentences || [];
       $(el.ask).innerHTML = o.ask || "Say this word out loud.";
       $(el.stage).innerHTML =
         '<div class="wordcard">' +
@@ -2578,13 +3628,31 @@
         '<div class="bigword">' + esc(it.w) + "</div>" +
         (it.pos ? '<div class="wordpos">' + esc(it.pos) + "</div>" : "") +
         (it.meaning ? '<p class="wordmeaning">' + esc(it.meaning) + "</p>" : "") +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.replay +
+        '">&#128266; Hear it</button></div>' +
+        (sentences.length
+          ? '<div class="wordsentencebox">' +
+            '<p class="sentlabel">In a sentence &middot; ' + (si + 1) + " of " + sentences.length + "</p>" +
+            '<p class="wordsentence">' + esc(sentences[si].text) + "</p>" +
+            '<div class="bigbtns">' +
+            '<button type="button" class="big small ghost" id="' + el.hearSent + '">&#128266; Hear the sentence</button>' +
+            (sentences.length > 1
+              ? '<button type="button" class="big small ghost" id="' + el.nextSent + '">Another sentence &#9654;</button>'
+              : "") +
+            "</div></div>"
+          : "") +
         "</div>" +
         '<div class="bigbtns">' +
-        '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Hear it</button>' +
         '<button type="button" class="big small" id="' + el.next + '">' +
         (i === o.items.length - 1 ? "Done &#9654;" : "Next word &#9654;") + "</button></div>";
       $(el.score).textContent = (o.label || "Word") + " " + (i + 1) + " of " + o.items.length;
       $(el.replay).addEventListener("click", () => playClip(it.audio, it.w));
+      if (sentences.length) {
+        $(el.hearSent).addEventListener("click", () => playClip(sentences[si].audio, sentences[si].text));
+        if (sentences.length > 1) {
+          $(el.nextSent).addEventListener("click", () => { si = (si + 1) % sentences.length; paint(); });
+        }
+      }
       $(el.next).addEventListener("click", () => {
         i++;
         if (i >= o.items.length) {
@@ -2595,8 +3663,6 @@
           finish(o.finish, o.done);
         } else draw();
       });
-      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
-      playHere(o.finish, it.audio, it.w);
     }
     draw();
   }
@@ -2773,6 +3839,76 @@
     draw();
   }
 
+  /* ---- Memory Pairs: reveal on tap, connect word to meaning --------
+     The pack's own description is "Reveal tiles and connect each word
+     with its meaning", so tiles start face-down (a "?" back) and the tap
+     reveals the text underneath - not just a plain tap-to-select grid.
+     Round after round, the same shape every other step here uses; a round
+     is done when its three pairs are all matched.
+     ------------------------------------------------------------------ */
+  function memoryPairs(o) {
+    let r = 0;
+    const el = o.el;
+    function draw() {
+      const round = o.items[r];
+      let tiles = round.pairs.flatMap((p, pi) => [
+        { text: p[0], pair: pi },
+        { text: p[1], pair: pi },
+      ]);
+      tiles = shuffle(tiles).map((t, k) => ({ ...t, k }));
+      let picked = [];
+      let matched = 0;
+      let lock = false;
+      $(el.ask).innerHTML = round.prompt || "Tap two tiles that go together.";
+      $(el.stage).innerHTML = '<div class="pairsgrid" id="' + el.grid + '"></div>';
+      $(el.score).textContent = "Round " + (r + 1) + " of " + o.items.length;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      const grid = $(el.grid);
+      grid.innerHTML = tiles.map((t) =>
+        '<button type="button" class="pairtile" data-k="' + t.k + '">' +
+        '<span class="back" aria-hidden="true">?</span>' +
+        '<span class="face">' + esc(t.text) + "</span></button>").join("");
+      grid.addEventListener("click", (e) => {
+        const b = e.target.closest(".pairtile");
+        if (!b || lock) return;
+        const k = Number(b.dataset.k);
+        if (b.classList.contains("matched") || b.classList.contains("revealed")) return;
+        b.classList.add("revealed");
+        picked.push({ k, pair: tiles[k].pair, el: b });
+        if (picked.length < 2) return;
+        lock = true;
+        const [a, c] = picked;
+        if (a.pair === c.pair) {
+          a.el.classList.add("matched"); c.el.classList.add("matched");
+          a.el.disabled = true; c.el.disabled = true;
+          matched++;
+          picked = []; lock = false;
+          if (matched === round.pairs.length) {
+            $(el.fb).className = "fb good";
+            $(el.fb).textContent = cheer() + " Round " + (r + 1) + " matched.";
+            setTimeout(() => {
+              r++;
+              if (r >= o.items.length) {
+                $(el.stage).innerHTML = ""; $(el.score).textContent = "";
+                $(el.fb).className = "fb good";
+                $(el.fb).textContent = o.done;
+                finish(o.finish, o.done);
+              } else draw();
+            }, 1100);
+          }
+        } else {
+          a.el.classList.add("wrong"); c.el.classList.add("wrong");
+          setTimeout(() => {
+            a.el.classList.remove("revealed", "wrong");
+            c.el.classList.remove("revealed", "wrong");
+            picked = []; lock = false;
+          }, 900);
+        }
+      });
+    }
+    draw();
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>
@@ -2787,12 +3923,173 @@
   }
 
 
-  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"]];
+  /* ==================================================================
+     PICTURE BOOKS
+
+     The shelf and reader do NOT copy the story pages anywhere. This build
+     ships to app/english/grade-1-v2/, one directory below app/english/,
+     the same level ../ebooks/ already lives at - the assets the shell's
+     own reader already fetches from ./ebooks/. So the path from here is
+     ../ebooks/<id>/<file>, and it resolves in local dev too: this page's
+     own directory (english/grade-1-app/) sits beside english/ebooks/ on
+     disk, exactly the same relative shape.
+
+     Nothing is duplicated because nothing needs to be: the SVGs are
+     fetched at READ time, one page at a time, same as the shell does.
+
+     What is NOT ported: story narration is runtime TTS in the shell
+     (aiVoiceUrl, a paid endpoint this standalone page has no business
+     calling on its own), so a page's Listen button reads its text through
+     this page's OWN voice engine (VOICE.say) instead - the same engine
+     every other step's Explain button already uses. The tap-sound
+     resolution tables ARE ported, verbatim, because they are small, pure
+     data, and a tap that resolves to the wrong clip is a worse experience
+     than porting forty lines.
+     ================================================================== */
+
+  const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki", "duku", "lulu", "zuri", "goat", "hen", "monkey"]);
+  const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
+  const TAP_SOUND_ALIASES = { kite: "wind", moon: "lullaby", carrot: "crunch", scarecrow: "tree", lake: "puddle", fish: "puddle", boat: "wind", clock: "bell" };
+  const TAP_VOICE_GROUPS = {
+    amal: "child", nora: "child", mina: "child", adam: "child", idris: "child",
+    noah: "child", sami: "child", maya: "child",
+    samira: "child", hodan: "child", leo: "child",
+    daniel: "child", theo: "child",
+    yasmin: "woman", mum: "woman", hana: "woman", salma: "woman", faduma: "woman",
+    leila: "woman",
+    nadia: "woman", sarah: "woman", elena: "woman", talia: "woman", librarian: "woman",
+    governor: "woman",
+    omar: "man", dad: "man", grandpa: "man", rami: "man", mayor: "man", karim: "man",
+    uncle: "man", lawyer: "man", caretaker: "man", labourer: "man",
+  };
+
+  const tapPlayer = new Audio();
+  function ebookAsset(bookId, filename) {
+    return new URL("../ebooks/" + bookId + "/" + filename, document.baseURI).href;
+  }
+  function playTapSound(type, mood) {
+    if (!type) return;
+    const voiceGroup = TAP_VOICE_GROUPS[type];
+    const soundKey = voiceGroup
+      ? voiceGroup + "-" + (TAP_SOUND_MOODS.has(mood) ? mood : "happy")
+      : TAP_SOUND_MOOD_TYPES.has(type)
+        ? type + "-" + (TAP_SOUND_MOODS.has(mood) ? mood : "happy")
+        : TAP_SOUND_ALIASES[type] || type;
+    try {
+      tapPlayer.pause();
+      tapPlayer.src = ebookAsset("tap-sounds", soundKey + ".mp3");
+      tapPlayer.currentTime = 0;
+      tapPlayer.play().catch(() => {});
+    } catch (_) { /* a tap sound is a garnish; never let it break the reader */ }
+  }
+  function playStorySound(key) {
+    if (!key) return;
+    try {
+      tapPlayer.pause();
+      tapPlayer.src = ebookAsset("tap-sounds", key + ".mp3");
+      tapPlayer.currentTime = 0;
+      tapPlayer.play().catch(() => {});
+    } catch (_) { /* same */ }
+  }
+
+  function bookShelf(o) {
+    const el = o.el;
+    const books = o.items;
+    let opened = false;
+
+    function drawShelf() {
+      $(el.ask).innerHTML = o.ask || "Choose a book to read.";
+      $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
+      $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
+      $(el.shelf).innerHTML = books.map((b, k) =>
+        '<div class="bookcard"><span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
+        '<span class="booktitle">' + esc(b.title) + "</span>" +
+        (b.author ? '<span class="bookmeta">by ' + esc(b.author) + "</span>" : "") +
+        '<span class="bookmeta">' + b.pages.length + " pages</span>" +
+        '<button type="button" class="big small teal" data-book="' + k + '">Read ▶</button></div>').join("");
+      $(el.shelf).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-book]");
+        if (!b) return;
+        openReader(books[Number(b.dataset.book)]);
+      });
+    }
+
+    function openReader(book) {
+      opened = true;
+      let page = 0;
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader";
+      document.body.appendChild(overlay);
+
+      function renderPage() {
+        const p = book.pages[page];
+        const last = page === book.pages.length - 1;
+        overlay.innerHTML =
+          '<div class="book-reader-top"><span class="booktitle">' + esc(book.title) + "</span>" +
+          '<button type="button" class="book-close" aria-label="Close the book">&#10005;</button></div>' +
+          '<div class="book-stage-wrap"><div class="book-stage" id="bookStage"></div></div>' +
+          '<div class="book-reader-bottom">' +
+          '<button type="button" class="big small ghost" id="bookBack"' + (page === 0 ? " disabled" : "") + '>&#9664; Back</button>' +
+          '<button type="button" class="big small teal" id="bookListen">&#128266; Listen</button>' +
+          '<span class="book-page-count">Page ' + (page + 1) + " of " + book.pages.length + "</span>" +
+          (last
+            ? '<button type="button" class="big small" id="bookFinish">Finish book &#10003;</button>'
+            : '<button type="button" class="big small" id="bookNext">Next &#9654;</button>') +
+          "</div>";
+        overlay.querySelector(".book-close").addEventListener("click", closeReader);
+        const backBtn = overlay.querySelector("#bookBack");
+        if (backBtn) backBtn.addEventListener("click", () => { page--; renderPage(); });
+        const nextBtn = overlay.querySelector("#bookNext");
+        if (nextBtn) nextBtn.addEventListener("click", () => { page++; renderPage(); });
+        const finishBtn = overlay.querySelector("#bookFinish");
+        if (finishBtn) finishBtn.addEventListener("click", () => {
+          closeReader();
+          finish(o.finish, o.done);
+        });
+        overlay.querySelector("#bookListen").addEventListener("click", () => VOICE.speak(p.text));
+
+        const stage = overlay.querySelector("#bookStage");
+        fetch(ebookAsset(book.id, p.image))
+          .then((r) => (r.ok ? r.text() : Promise.reject(new Error("page fetch failed"))))
+          .then((markup) => {
+            if (!stage.isConnected) return;
+            const svg = new DOMParser().parseFromString(markup, "image/svg+xml").documentElement;
+            if (!svg || svg.nodeName.toLowerCase() !== "svg") return;
+            svg.setAttribute("role", "img");
+            if (p.alt) svg.setAttribute("aria-label", p.alt);
+            stage.innerHTML = "";
+            stage.appendChild(svg);
+            svg.addEventListener("pointerdown", (e) => {
+              const target = e.target.closest && e.target.closest("[data-tap]");
+              if (!target) return;
+              playTapSound(target.dataset.tap, target.dataset.mood);
+              target.classList.remove("tap-play");
+              void target.getBoundingClientRect();
+              target.classList.add("tap-play");
+            });
+          })
+          .catch(() => { stage.innerHTML = '<p style="padding:20px;color:var(--muted)">This page could not be loaded.</p>'; });
+        if (p.sound) playStorySound(p.sound);
+      }
+      function closeReader() {
+        overlay.remove();
+        document.removeEventListener("keydown", onKey);
+      }
+      function onKey(e) { if (e.key === "Escape") closeReader(); }
+      document.addEventListener("keydown", onKey);
+      renderPage();
+    }
+
+    drawShelf();
+  }
+
+
+  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"], ["🎮", "I played Meaning Match"], ["🪄", "I played Memory Pairs"], ["📚", "I read a picture book"]];
 
   hearAndTap({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", replay: "replay1" }, items: LESSON.sounds, finish: 0,
     ask: "Which word did you hear?", label: "Word",
     done: "You know these words by their sound now." });
-  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2" }, items: LESSON.newwords, finish: 1,
+  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2", hearSent: "hearSent2", nextSent: "nextSent2" }, items: LESSON.newwords, finish: 1,
     ask: "Say this word out loud.", label: "Word",
     done: "Now you have met them, you will see them all through the unit." });
   pictureMatch({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, items: LESSON.match, finish: 2,
@@ -2816,6 +4113,13 @@
     done: "That is a real sentence, written by you." });
   sequence({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, items: LESSON.quiz, finish: 9,
     label: "Question", done: "That is the whole unit finished." });
+  sequence({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, items: LESSON.meaningmatch, finish: 10,
+    label: "Round", done: "That is Meaning Match finished." });
+  memoryPairs({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12", grid: "grid12" }, items: LESSON.memorypairs, finish: 11,
+    done: "That is every pair matched." });
+  bookShelf({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", shelf: "shelf13" }, items: LESSON.books, finish: 12,
+    ask: "Choose a book to read.",
+    done: "You finished a book from this unit's shelf." });
 
   show(0, false);
 

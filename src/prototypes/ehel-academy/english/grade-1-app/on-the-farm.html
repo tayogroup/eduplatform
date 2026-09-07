@@ -249,6 +249,10 @@
   .wordmeaning { max-width: 30ch; color: var(--ink); font-size: 19px; }
   .wordpos { color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .wordsentence { max-width: 34ch; color: var(--muted); font-size: 17px; font-style: italic; }
+  .wordsentencebox { width: 100%; max-width: 30em; border-radius: 16px; border: 1px solid var(--line);
+    background: var(--cell); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+  .sentlabel { color: var(--teal); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .wordsentencebox .wordsentence { font-style: normal; color: var(--ink); font-size: 19px; max-width: none; }
 
   /* ---- a strip of word buttons, for tapping the word you heard ---- */
   .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
@@ -309,6 +313,45 @@
   .choice.text { min-width: 0; width: 100%; max-width: 30em; height: auto; min-height: 62px;
     padding: 14px 18px; font-size: 20px; line-height: 1.35; text-align: left; }
   .choices.stack { flex-direction: column; align-items: stretch; width: 100%; }
+
+  /* ---- Memory Pairs: reveal on tap, stay revealed once matched ---- */
+  .pairsgrid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 10px; width: 100%; max-width: 30em; }
+  .pairtile { min-height: 76px; border-radius: 16px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px;
+    line-height: 1.3; padding: 10px 12px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .pairtile .face { display: none; }
+  .pairtile .back { font-size: 26px; opacity: 0.6; }
+  .pairtile.revealed .face, .pairtile.matched .face { display: block; }
+  .pairtile.revealed .back, .pairtile.matched .back { display: none; }
+  .pairtile.revealed { border-color: var(--teal); background: var(--teal-soft); }
+  .pairtile.matched { border-color: var(--good); background: var(--good-soft); cursor: default; }
+  .pairtile.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .pairtile:disabled { cursor: default; }
+
+  /* ---- Picture books: the shelf, and the full-screen reader ---- */
+  .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; width: 100%; }
+  .bookcard { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); text-align: left; }
+  .bookcard .bookicon { font-size: 34px; line-height: 1; }
+  .bookcard .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .bookcard .bookmeta { color: var(--muted); font-size: 13.5px; }
+  .bookcard .big { margin-top: auto; align-self: flex-start; }
+
+  .book-reader { position: fixed; inset: 0; z-index: 200; background: var(--ground);
+    display: flex; flex-direction: column; }
+  .book-reader-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; }
+  .book-reader-top .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .book-close { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font-size: 18px; }
+  .book-stage-wrap { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 0 10px; }
+  .book-stage { position: relative; width: 100%; max-width: 720px; aspect-ratio: 1600 / 1000;
+    border-radius: 18px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+  .book-stage svg { width: 100%; height: 100%; display: block; }
+  .book-stage [data-tap] { cursor: pointer; }
+  @keyframes tapPulse { 0% { filter: brightness(1); } 40% { filter: brightness(1.35); } 100% { filter: brightness(1); } }
+  .book-stage [data-tap].tap-play { animation: tapPulse 700ms ease; }
+  .book-reader-bottom { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 14px 18px; flex-wrap: wrap; }
+  .book-page-count { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; min-width: 5em; text-align: center; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -537,6 +580,36 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the game from this unit&#39;s Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what the meaning says.</s><s>Then tap the word it is describing.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two words can look similar.</s><s>Read the whole meaning before you tap, not just the start.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the word that matches the meaning.">
+      <div class="slide-head"><span class="n">11</span><h2>Meaning Match</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Tap the word that matches the meaning.</span></div>
+      <div class="stage">
+        <div id="stage11"></div>
+        <div class="choices" id="ch11"></div>
+        <p class="fb" id="fb11"></p>
+        <p class="score" id="score11"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every tile is face down until you tap it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap one tile to see what is on it.</s><s>Tap a second tile.</s><s>If a word and its meaning match, they stay face up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If they do not match, both tiles turn back over.</s><s>Remember what you saw - that is the whole game.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your first tile.</s></mstts:express-as>' data-say="Tap two tiles that go together.">
+      <div class="slide-head"><span class="n">12</span><h2>Memory Pairs</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Tap two tiles that go together.</span></div>
+      <div class="stage">
+        <div id="stage12"></div>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12"></p>
+        <p class="score" id="score12"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This unit has its own shelf of picture books.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap Read on a book that looks good.</s><s>Tap the pictures - some of them make a sound.</s><s>Press Listen if you want the page read to you.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A tap sound is a little extra.</s><s>If nothing happens when you tap, that is fine - keep reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a book and press Read.</s></mstts:express-as>' data-say="Choose a book to read.">
+      <div class="slide-head"><span class="n">13</span><h2>Picture books</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Choose a book to read.</span></div>
+      <div class="stage">
+        <div id="stage13"></div>
+        <div class="choices" id="ch13"></div>
+        <p class="fb" id="fb13"></p>
+        <p class="score" id="score13"></p>
+      </div>
+    </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
       <div class="slide-head"><span class="n">&#9733;</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span>Every step you finished earned a sticker.</span></div>
@@ -702,42 +775,126 @@
         "pic": "🐟",
         "meaning": "An animal that lives in water and swims with its tail.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/fish.mp3"
+        "audio": "./media/audio/grade-1/dictionary/fish.mp3",
+        "sentences": [
+          {
+            "text": "A little fish swims in the pond.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-fish-sentence-1b.mp3"
+          },
+          {
+            "text": "Can you see the orange fish?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-fish-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, the fish is hiding!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-fish-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "bird",
         "pic": "🐦",
         "meaning": "A bird is an animal with feathers and wings.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/bird.mp3"
+        "audio": "./media/audio/grade-1/dictionary/bird.mp3",
+        "sentences": [
+          {
+            "text": "A little bird sat on the wall.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-bird-sentence-1b.mp3"
+          },
+          {
+            "text": "Can you hear that bird, Adam?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-bird-sentence-2b.mp3"
+          },
+          {
+            "text": "What a bright bird that is!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-bird-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "cow",
         "pic": "🐄",
         "meaning": "A big farm animal that gives us milk.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/cow.mp3"
+        "audio": "./media/audio/grade-1/dictionary/cow.mp3",
+        "sentences": [
+          {
+            "text": "The brown cow is very gentle.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-cow-sentence-1b.mp3"
+          },
+          {
+            "text": "Have you ever milked a cow?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-cow-sentence-2b.mp3"
+          },
+          {
+            "text": "Adam, that cow is huge!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-cow-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "horse",
         "pic": "🐎",
         "meaning": "A big strong farm animal that people ride and look after.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/horse.mp3"
+        "audio": "./media/audio/grade-1/dictionary/horse.mp3",
+        "sentences": [
+          {
+            "text": "The brown horse is very fast.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-horse-sentence-1b.mp3"
+          },
+          {
+            "text": "Would you like to ride a horse?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-horse-sentence-2b.mp3"
+          },
+          {
+            "text": "Adam, that horse is beautiful!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-horse-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "lion",
         "pic": "🦁",
         "meaning": "A big wild cat with a loud roar and golden fur.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/lion.mp3"
+        "audio": "./media/audio/grade-1/dictionary/lion.mp3",
+        "sentences": [
+          {
+            "text": "The lion roars in the hot sun.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-lion-sentence-1b.mp3"
+          },
+          {
+            "text": "Is the lion sleeping now?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-lion-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, the lion is resting!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-lion-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "monkey",
         "pic": "🐒",
         "meaning": "A monkey is an animal with a long tail that climbs trees.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/monkey.mp3"
+        "audio": "./media/audio/grade-1/dictionary/monkey.mp3",
+        "sentences": [
+          {
+            "text": "The monkey climbed to the top.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-monkey-sentence-1b.mp3"
+          },
+          {
+            "text": "Look at that monkey, Adam!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-monkey-sentence-2b.mp3"
+          },
+          {
+            "text": "What a clever monkey it is!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u5-core-monkey-sentence-3b.mp3"
+          }
+        ]
       }
     ],
     "match": [
@@ -1421,6 +1578,775 @@
           }
         ],
         "why": "First shows the beginning; then and next come in the middle and last comes at the end."
+      }
+    ],
+    "meaningmatch": [
+      {
+        "ask": "Which word means: The big hot star that gives us light in the day.",
+        "opts": [
+          {
+            "t": "sun",
+            "ok": 1
+          },
+          {
+            "t": "fun",
+            "ok": 0
+          },
+          {
+            "t": "rug",
+            "ok": 0
+          }
+        ],
+        "why": "sun: The big hot star that gives us light in the day."
+      },
+      {
+        "ask": "Which word means: A big wild cat with a loud roar and golden fur.",
+        "opts": [
+          {
+            "t": "sun",
+            "ok": 0
+          },
+          {
+            "t": "fun",
+            "ok": 0
+          },
+          {
+            "t": "lion",
+            "ok": 1
+          }
+        ],
+        "why": "lion: A big wild cat with a loud roar and golden fur."
+      },
+      {
+        "ask": "Which word means: This word asks in what way something happens.",
+        "opts": [
+          {
+            "t": "fun",
+            "ok": 0
+          },
+          {
+            "t": "how",
+            "ok": 1
+          },
+          {
+            "t": "sun",
+            "ok": 0
+          }
+        ],
+        "why": "how: This word asks in what way something happens."
+      },
+      {
+        "ask": "Which word means: Liked means you enjoyed something or thought it was nice.",
+        "opts": [
+          {
+            "t": "liked",
+            "ok": 1
+          },
+          {
+            "t": "sun",
+            "ok": 0
+          },
+          {
+            "t": "fun",
+            "ok": 0
+          }
+        ],
+        "why": "liked: Liked means you enjoyed something or thought it was nice."
+      },
+      {
+        "ask": "Which word means: The short, snuffly sound that a pig makes in the mud.",
+        "opts": [
+          {
+            "t": "sun",
+            "ok": 0
+          },
+          {
+            "t": "fun",
+            "ok": 0
+          },
+          {
+            "t": "oink",
+            "ok": 1
+          }
+        ],
+        "why": "oink: The short, snuffly sound that a pig makes in the mud."
+      },
+      {
+        "ask": "Which word means: Getting bigger, like a plant or a child.",
+        "opts": [
+          {
+            "t": "fun",
+            "ok": 0
+          },
+          {
+            "t": "growing",
+            "ok": 1
+          },
+          {
+            "t": "sun",
+            "ok": 0
+          }
+        ],
+        "why": "growing: Getting bigger, like a plant or a child."
+      }
+    ],
+    "memorypairs": [
+      {
+        "prompt": "Match vocabulary set 1.",
+        "pairs": [
+          [
+            "bus",
+            "A long vehicle that carries many people at once."
+          ],
+          [
+            "mud",
+            "Mud is soft wet earth."
+          ],
+          [
+            "bird",
+            "A bird is an animal with feathers and wings."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 2.",
+        "pairs": [
+          [
+            "her",
+            "This word means belonging to a girl or a woman."
+          ],
+          [
+            "are",
+            "We use are with you, we and they to say what something is."
+          ],
+          [
+            "want",
+            "Want means you would like to have something."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 3.",
+        "pairs": [
+          [
+            "loved",
+            "Loved means you liked someone or something very much."
+          ],
+          [
+            "drove",
+            "Drove means you made a vehicle move and go somewhere."
+          ],
+          [
+            "verse",
+            "Verse means one part of a song or poem."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 4.",
+        "pairs": [
+          [
+            "heard",
+            "Heard means you noticed a sound with your ears."
+          ],
+          [
+            "duck",
+            "A farm bird that swims and has flat feet."
+          ],
+          [
+            "quack",
+            "The loud, short sound that a duck makes near the water."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 5.",
+        "pairs": [
+          [
+            "farm",
+            "A place where people grow food and keep animals."
+          ],
+          [
+            "wheat",
+            "A tall farm plant we use to make bread."
+          ],
+          [
+            "picking",
+            "Taking fruit or vegetables off a plant with your hands."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 6.",
+        "pairs": [
+          [
+            "onions",
+            "Round vegetables with layers that make your eyes water."
+          ],
+          [
+            "animal",
+            "An animal is a living thing that moves about, like a cat or a bird."
+          ],
+          [
+            "elephant",
+            "A very big grey animal with a long trunk and huge ears."
+          ]
+        ]
+      }
+    ],
+    "books": [
+      {
+        "id": "the-little-lost-chick",
+        "title": "The Little Lost Chick",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "The Little Lost Chick. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Koko the hen with her five little yellow chicks by the barn",
+            "sound": "hen"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Good morning, farm! The sun was up.",
+            "alt": "The farm on a bright morning with Duku by the barn",
+            "sound": "bird"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Koko the hen had five little chicks.",
+            "alt": "Koko proudly watching her five little chicks in a row",
+            "sound": "chick"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "One little chick liked to hop. Hop, hop, hop!",
+            "alt": "Little Pip the chick hopping happily while Koko watches",
+            "sound": "chick"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "At lunch, Koko counted: one, two, three, four... Oh no!",
+            "alt": "Koko counting only four chicks and looking surprised",
+            "sound": "hen"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "\"Where is little Pip?\" Everyone looked and looked.",
+            "alt": "Koko, Duku and Gigi looking worried about the missing chick",
+            "sound": "duku-sad"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Duku looked in the big barn.",
+            "alt": "Duku peering into the big red barn",
+            "sound": "duku-surprised"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Gigi looked by the pond.",
+            "alt": "Gigi the goat searching beside the blue pond",
+            "sound": "goat"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "Musa looked in the tall, tall grass.",
+            "alt": "Musa the zebra searching through the tall savanna grass",
+            "sound": "zebra-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "Then they heard a tiny sound. \"Peep! Peep!\"",
+            "alt": "The friends listening to a tiny sound coming from the haystack",
+            "sound": ""
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Little Pip was asleep in the soft hay.",
+            "alt": "Little Pip the chick asleep on top of the soft haystack",
+            "sound": "chick"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"Safe at home!\" said Koko. The whole farm was happy.",
+            "alt": "Koko with all five chicks together again while Duku and Gigi smile",
+            "sound": "hen"
+          }
+        ]
+      },
+      {
+        "id": "amal-and-the-little-hen",
+        "title": "Amal and the Little Hen",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Amal and the Little Hen. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal and Ayeeyo on the farm with the cow, the hen and a chick beside the barn",
+            "sound": "hen"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Amal loved the farm. \"Come,\" said Ayeeyo. \"There is much work to do today.\"",
+            "alt": "Ayeeyo pointing towards the barn while Amal listens",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "First they went to see the cow. \"Good morning, cow!\" The big cow said, \"Moo!\"",
+            "alt": "Amal greeting the big brown-and-white cow with her arms in the air",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "The sheep said, \"Baa!\" The goat wanted to eat Amal's hat. Amal laughed.",
+            "alt": "A woolly sheep and a goat beside Amal near the barn",
+            "sound": "goat-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "\"Now we must feed the hens,\" said Ayeeyo. She gave Amal a bowl of seed.",
+            "alt": "Ayeeyo handing Amal a small bowl of seed",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "The little hen looked hungry. \"I will feed her,\" said Amal.",
+            "alt": "A hungry hen beside the haystack while Amal looks on",
+            "sound": "hen-sad"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "She threw the seed on the ground. \"Cluck, cluck!\" said the happy hen.",
+            "alt": "The happy hen and a chick pecking at seed on the ground",
+            "sound": "hen-happy"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Then Amal saw something warm in the straw. It was a little white egg!",
+            "alt": "A single white egg in the straw with Amal's arms in the air",
+            "sound": "child-surprised"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "\"Well done, Amal. When you are kind to the animals, they are kind to you.\"",
+            "alt": "Ayeeyo smiling at Amal, who holds the egg carefully",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "In the field, Amal planted a tiny seed. \"With water and sun, it will grow.\"",
+            "alt": "Amal and Ayeeyo beside a row of planted seed and a small bean plant",
+            "sound": ""
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Adam drove past on the tractor. \"Hard work, little sister!\" he called.",
+            "alt": "Adam waving from the green tractor as Amal waves back",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "That night Amal ate warm bread and drank fresh milk. \"I love the farm.\"",
+            "alt": "Amal and Ayeeyo at the table at night with bread and a cup of milk, stars at the window",
+            "sound": "lullaby"
+          }
+        ]
+      },
+      {
+        "id": "hello-to-the-farm",
+        "title": "Hello to the Farm",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Hello to the Farm. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal waving on the farm beside a cow and a hen in front of the barn",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Amal went to the farm with Grandpa. She knows a farm poem.",
+            "alt": "Amal and her grandfather standing together beside the barn",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Hello to the farmer!",
+            "alt": "Grandpa with his arms up while Amal points at him in front of the barn",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Hello to the tractor!",
+            "alt": "Amal waving at a blue tractor standing on the farm",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Hello to the cows in their stall.",
+            "alt": "Amal waving at two cows standing beside the fence in front of the barn",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Hello to the fields.",
+            "alt": "Amal and Grandpa beside a long row of planted seedlings",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Hello to the chicks.",
+            "alt": "Amal waving at Koko the hen and three little chicks by the barn",
+            "sound": "chick"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Hello to you all!",
+            "alt": "Amal and Grandpa with their arms up while music notes and confetti float around them",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "\"Now point at each one,\" said Grandpa, \"and say its name.\"",
+            "alt": "Grandpa pointing at a row of seedlings while Amal watches",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "\"The barn. The field. The seed. The egg,\" said Amal.",
+            "alt": "Amal pointing at a row of seedlings and a nest of two eggs in front of the barn",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "\"And the wheat,\" said Grandpa. \"The wheat grows tall.\"",
+            "alt": "Grandpa with his arms up beside a tall haystack while Amal looks surprised",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"Hello to you all!\" said Amal, a little louder this time.",
+            "alt": "Amal and Grandpa cheering beside a cow and a hen with confetti and music notes around them",
+            "sound": "child-happy"
+          }
+        ]
+      },
+      {
+        "id": "who-says-moo",
+        "title": "Who Says Moo?",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Who Says Moo? Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal pointing at a cow and a hen in front of the barn",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "The cow says moo. Moo, moo!",
+            "alt": "Amal pointing at a big white and black cow beside the barn",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "The hen says cluck. Cluck, cluck!",
+            "alt": "Amal pointing at Koko the hen standing in the barnyard",
+            "sound": "hen"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "The chicks say peep. Peep, peep!",
+            "alt": "Amal pointing at three little chicks standing in a row",
+            "sound": "chick"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "The duck says quack. Quack, quack!",
+            "alt": "Amal pointing at a duck standing beside the farm pond",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "The sheep says baa. Baa, baa!",
+            "alt": "Amal pointing at a woolly sheep standing beside the fence",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "The tractor says brrm! Grandpa is driving.",
+            "alt": "Grandpa beside the tractor with dust puffs rising behind it",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Who is feeding the hens? Amal is feeding the hens.",
+            "alt": "Amal beside a bowl of seed with Koko and two chicks eating from it",
+            "sound": "hen"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "Who is planting seeds? Grandpa is planting seeds.",
+            "alt": "Grandpa beside a bowl of seed and a long planted row",
+            "sound": "man-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "First the seed, then the carrot.",
+            "alt": "Amal pointing at two orange carrots growing beside a planted row",
+            "sound": "crunch"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Look in the basket: tomatoes, onions, potatoes and beans.",
+            "alt": "Amal pointing at a basket of onions and potatoes with a tomato and green beans beside it",
+            "sound": "market"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"Moo, cluck, quack, baa,\" said Amal. \"I can say them all!\"",
+            "alt": "Amal with her arms up beside a cow, a hen and a sheep with confetti falling",
+            "sound": "child-happy"
+          }
+        ]
+      },
+      {
+        "id": "duku-plants-a-row",
+        "title": "Duku Plants a Row",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Duku Plants a Row. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Duku the donkey beside a bowl of seeds with Koko the hen in front of the barn",
+            "sound": "duku-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Duku the donkey had a bowl of seeds.",
+            "alt": "Duku standing beside a big bowl of golden seeds near the barn",
+            "sound": "duku-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "First he dug a row in the field.",
+            "alt": "Duku beside a long row of turned soil with dust puffs rising from it",
+            "sound": "duku-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Then he put one seed in each hole.",
+            "alt": "Duku beside a bowl of seed and a long planted row in the field",
+            "sound": "duku-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Koko the hen watched. \"Is that all?\" she asked.",
+            "alt": "A surprised Koko looking at Duku beside the freshly planted row",
+            "sound": "hen-surprised"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "\"No,\" said Duku. \"Now they need water. And they need days.\"",
+            "alt": "Duku speaking to Koko beside the planted row under the acacia tree",
+            "sound": "duku-happy"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "It rained. Duku waited.",
+            "alt": "Rain falling on the planted row while Duku stands beside a fresh puddle",
+            "sound": "rain"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "The sun came out. Duku waited.",
+            "alt": "Duku standing beside the planted row with dry grass in the sunshine",
+            "sound": "sun"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "One morning, little green leaves came up!",
+            "alt": "A surprised Duku and a surprised Koko looking at green shoots in the row",
+            "sound": "duku-surprised"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "The goat wanted to eat them. \"Not yet!\" said Duku.",
+            "alt": "A sad goat turning away from the row of green shoots while Duku looks on",
+            "sound": "goat-sad"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "They grew and grew. Carrots, tomatoes and beans.",
+            "alt": "Duku beside a row with two carrots, a red tomato and green beans growing",
+            "sound": "crunch"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"First the seed, then the food,\" said Duku. \"Thank you, rain!\"",
+            "alt": "Duku and Koko beside a basket of carrots and onions under a soft rainbow with confetti falling",
+            "sound": "duku-happy"
+          }
+        ]
+      },
+      {
+        "id": "the-chick-and-the-duck",
+        "title": "The Chick and the Duck",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "The Chick and the Duck. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of little Pip the chick with the duck by the pond and Koko the hen near the barn",
+            "sound": "chick"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Little Pip stayed close to Koko now.",
+            "alt": "Koko the hen with little Pip beside the fence and the barn",
+            "sound": "chick"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "One day Pip met a duck.",
+            "alt": "A surprised Pip looking at the duck on the pond",
+            "sound": ""
+          },
+          {
+            "image": "page-04.svg",
+            "text": "The duck went in. Splash, splash!",
+            "alt": "The duck on the pond with a big splash while Pip watches",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "\"Come in, Pip!\" said the duck.",
+            "alt": "The duck calling from the water while Pip stands in the grass",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "\"No, no! Chicks do not swim!\"",
+            "alt": "A surprised Pip beside the pond talking to the duck",
+            "sound": "chick"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Pip hopped along the side. Hop, hop!",
+            "alt": "Pip hopping beside the pond with jumping arcs and dust",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "The duck swam and Pip ran.",
+            "alt": "The duck splashing across the pond while Pip runs along the side",
+            "sound": ""
+          },
+          {
+            "image": "page-09.svg",
+            "text": "They played all the sunny morning.",
+            "alt": "Pip and the duck by the pond beside a big flower",
+            "sound": "sun"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "Koko called. \"Home time, little Pip!\"",
+            "alt": "Koko the hen calling Pip while the duck waits by the barn",
+            "sound": "hen"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "\"Goodbye, duck! See you tomorrow!\"",
+            "alt": "Pip waving goodbye to the duck by the pond",
+            "sound": ""
+          },
+          {
+            "image": "page-12.svg",
+            "text": "Pip told Koko all about it.",
+            "alt": "A happy Koko with Pip and two little chicks by the barn under confetti",
+            "sound": "chick"
+          }
+        ]
+      },
+      {
+        "id": "vegetables-for-the-pot",
+        "title": "Vegetables for the Pot",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Vegetables for the Pot. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal and Ayeeyo beside the big soup pot with a basket of vegetables",
+            "sound": ""
+          },
+          {
+            "image": "page-02.svg",
+            "text": "\"Come, Amal,\" said Ayeeyo. \"Soup today!\"",
+            "alt": "Ayeeyo and Amal under the village tree",
+            "sound": ""
+          },
+          {
+            "image": "page-03.svg",
+            "text": "They went to the little garden.",
+            "alt": "Ayeeyo and Amal beside the seed row and the fence",
+            "sound": ""
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Amal pulled up two orange carrots.",
+            "alt": "Amal pointing at two orange carrots by the seed row",
+            "sound": "crunch"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Ayeeyo dug up three brown potatoes.",
+            "alt": "Ayeeyo pointing at three brown potatoes by the seed row",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Amal found one round onion.",
+            "alt": "Amal pointing at a round onion by the seed row",
+            "sound": ""
+          },
+          {
+            "image": "page-07.svg",
+            "text": "They picked long green beans too.",
+            "alt": "Ayeeyo and Amal beside three green bean pods",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "One red tomato went in the basket.",
+            "alt": "Amal pointing at a red tomato beside the basket of vegetables",
+            "sound": ""
+          },
+          {
+            "image": "page-09.svg",
+            "text": "They washed everything at the well.",
+            "alt": "Ayeeyo and Amal beside the village well with water splashing",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "Into the big pot it all went!",
+            "alt": "Amal with her arms up beside the steaming pot while Ayeeyo watches",
+            "sound": ""
+          },
+          {
+            "image": "page-11.svg",
+            "text": "The soup smelled so good. Mmm!",
+            "alt": "Amal smiling beside the big steaming pot under the village tree",
+            "sound": ""
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"Yum!\" said everyone at dinner time.",
+            "alt": "Mum, Ayeeyo, Amal and Adam at home with two bowls under confetti",
+            "sound": "child-happy"
+          }
+        ]
       }
     ],
     "audioRelease": "20260903c",
@@ -2489,10 +3415,22 @@
      anything - there is nothing here to be right about yet.
      ------------------------------------------------------------------ */
   function wordWalk(o) {
-    let i = 0;
+    let i = 0, si = 0;
     const el = o.el;
+    // Cycling sentences within one word must NOT replay the word's own
+    // audio - paint() redraws for both "next word" and "another sentence",
+    // and only the FORMER should trigger it. Registered once per word in
+    // draw(), not on every paint().
     function draw() {
+      si = 0;
       const it = o.items[i];
+      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
+      playHere(o.finish, it.audio, it.w);
+      paint();
+    }
+    function paint() {
+      const it = o.items[i];
+      const sentences = it.sentences || [];
       $(el.ask).innerHTML = o.ask || "Say this word out loud.";
       $(el.stage).innerHTML =
         '<div class="wordcard">' +
@@ -2501,13 +3439,31 @@
         '<div class="bigword">' + esc(it.w) + "</div>" +
         (it.pos ? '<div class="wordpos">' + esc(it.pos) + "</div>" : "") +
         (it.meaning ? '<p class="wordmeaning">' + esc(it.meaning) + "</p>" : "") +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.replay +
+        '">&#128266; Hear it</button></div>' +
+        (sentences.length
+          ? '<div class="wordsentencebox">' +
+            '<p class="sentlabel">In a sentence &middot; ' + (si + 1) + " of " + sentences.length + "</p>" +
+            '<p class="wordsentence">' + esc(sentences[si].text) + "</p>" +
+            '<div class="bigbtns">' +
+            '<button type="button" class="big small ghost" id="' + el.hearSent + '">&#128266; Hear the sentence</button>' +
+            (sentences.length > 1
+              ? '<button type="button" class="big small ghost" id="' + el.nextSent + '">Another sentence &#9654;</button>'
+              : "") +
+            "</div></div>"
+          : "") +
         "</div>" +
         '<div class="bigbtns">' +
-        '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Hear it</button>' +
         '<button type="button" class="big small" id="' + el.next + '">' +
         (i === o.items.length - 1 ? "Done &#9654;" : "Next word &#9654;") + "</button></div>";
       $(el.score).textContent = (o.label || "Word") + " " + (i + 1) + " of " + o.items.length;
       $(el.replay).addEventListener("click", () => playClip(it.audio, it.w));
+      if (sentences.length) {
+        $(el.hearSent).addEventListener("click", () => playClip(sentences[si].audio, sentences[si].text));
+        if (sentences.length > 1) {
+          $(el.nextSent).addEventListener("click", () => { si = (si + 1) % sentences.length; paint(); });
+        }
+      }
       $(el.next).addEventListener("click", () => {
         i++;
         if (i >= o.items.length) {
@@ -2518,8 +3474,6 @@
           finish(o.finish, o.done);
         } else draw();
       });
-      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
-      playHere(o.finish, it.audio, it.w);
     }
     draw();
   }
@@ -2696,6 +3650,76 @@
     draw();
   }
 
+  /* ---- Memory Pairs: reveal on tap, connect word to meaning --------
+     The pack's own description is "Reveal tiles and connect each word
+     with its meaning", so tiles start face-down (a "?" back) and the tap
+     reveals the text underneath - not just a plain tap-to-select grid.
+     Round after round, the same shape every other step here uses; a round
+     is done when its three pairs are all matched.
+     ------------------------------------------------------------------ */
+  function memoryPairs(o) {
+    let r = 0;
+    const el = o.el;
+    function draw() {
+      const round = o.items[r];
+      let tiles = round.pairs.flatMap((p, pi) => [
+        { text: p[0], pair: pi },
+        { text: p[1], pair: pi },
+      ]);
+      tiles = shuffle(tiles).map((t, k) => ({ ...t, k }));
+      let picked = [];
+      let matched = 0;
+      let lock = false;
+      $(el.ask).innerHTML = round.prompt || "Tap two tiles that go together.";
+      $(el.stage).innerHTML = '<div class="pairsgrid" id="' + el.grid + '"></div>';
+      $(el.score).textContent = "Round " + (r + 1) + " of " + o.items.length;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      const grid = $(el.grid);
+      grid.innerHTML = tiles.map((t) =>
+        '<button type="button" class="pairtile" data-k="' + t.k + '">' +
+        '<span class="back" aria-hidden="true">?</span>' +
+        '<span class="face">' + esc(t.text) + "</span></button>").join("");
+      grid.addEventListener("click", (e) => {
+        const b = e.target.closest(".pairtile");
+        if (!b || lock) return;
+        const k = Number(b.dataset.k);
+        if (b.classList.contains("matched") || b.classList.contains("revealed")) return;
+        b.classList.add("revealed");
+        picked.push({ k, pair: tiles[k].pair, el: b });
+        if (picked.length < 2) return;
+        lock = true;
+        const [a, c] = picked;
+        if (a.pair === c.pair) {
+          a.el.classList.add("matched"); c.el.classList.add("matched");
+          a.el.disabled = true; c.el.disabled = true;
+          matched++;
+          picked = []; lock = false;
+          if (matched === round.pairs.length) {
+            $(el.fb).className = "fb good";
+            $(el.fb).textContent = cheer() + " Round " + (r + 1) + " matched.";
+            setTimeout(() => {
+              r++;
+              if (r >= o.items.length) {
+                $(el.stage).innerHTML = ""; $(el.score).textContent = "";
+                $(el.fb).className = "fb good";
+                $(el.fb).textContent = o.done;
+                finish(o.finish, o.done);
+              } else draw();
+            }, 1100);
+          }
+        } else {
+          a.el.classList.add("wrong"); c.el.classList.add("wrong");
+          setTimeout(() => {
+            a.el.classList.remove("revealed", "wrong");
+            c.el.classList.remove("revealed", "wrong");
+            picked = []; lock = false;
+          }, 900);
+        }
+      });
+    }
+    draw();
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>
@@ -2710,12 +3734,173 @@
   }
 
 
-  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"]];
+  /* ==================================================================
+     PICTURE BOOKS
+
+     The shelf and reader do NOT copy the story pages anywhere. This build
+     ships to app/english/grade-1-v2/, one directory below app/english/,
+     the same level ../ebooks/ already lives at - the assets the shell's
+     own reader already fetches from ./ebooks/. So the path from here is
+     ../ebooks/<id>/<file>, and it resolves in local dev too: this page's
+     own directory (english/grade-1-app/) sits beside english/ebooks/ on
+     disk, exactly the same relative shape.
+
+     Nothing is duplicated because nothing needs to be: the SVGs are
+     fetched at READ time, one page at a time, same as the shell does.
+
+     What is NOT ported: story narration is runtime TTS in the shell
+     (aiVoiceUrl, a paid endpoint this standalone page has no business
+     calling on its own), so a page's Listen button reads its text through
+     this page's OWN voice engine (VOICE.say) instead - the same engine
+     every other step's Explain button already uses. The tap-sound
+     resolution tables ARE ported, verbatim, because they are small, pure
+     data, and a tap that resolves to the wrong clip is a worse experience
+     than porting forty lines.
+     ================================================================== */
+
+  const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki", "duku", "lulu", "zuri", "goat", "hen", "monkey"]);
+  const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
+  const TAP_SOUND_ALIASES = { kite: "wind", moon: "lullaby", carrot: "crunch", scarecrow: "tree", lake: "puddle", fish: "puddle", boat: "wind", clock: "bell" };
+  const TAP_VOICE_GROUPS = {
+    amal: "child", nora: "child", mina: "child", adam: "child", idris: "child",
+    noah: "child", sami: "child", maya: "child",
+    samira: "child", hodan: "child", leo: "child",
+    daniel: "child", theo: "child",
+    yasmin: "woman", mum: "woman", hana: "woman", salma: "woman", faduma: "woman",
+    leila: "woman",
+    nadia: "woman", sarah: "woman", elena: "woman", talia: "woman", librarian: "woman",
+    governor: "woman",
+    omar: "man", dad: "man", grandpa: "man", rami: "man", mayor: "man", karim: "man",
+    uncle: "man", lawyer: "man", caretaker: "man", labourer: "man",
+  };
+
+  const tapPlayer = new Audio();
+  function ebookAsset(bookId, filename) {
+    return new URL("../ebooks/" + bookId + "/" + filename, document.baseURI).href;
+  }
+  function playTapSound(type, mood) {
+    if (!type) return;
+    const voiceGroup = TAP_VOICE_GROUPS[type];
+    const soundKey = voiceGroup
+      ? voiceGroup + "-" + (TAP_SOUND_MOODS.has(mood) ? mood : "happy")
+      : TAP_SOUND_MOOD_TYPES.has(type)
+        ? type + "-" + (TAP_SOUND_MOODS.has(mood) ? mood : "happy")
+        : TAP_SOUND_ALIASES[type] || type;
+    try {
+      tapPlayer.pause();
+      tapPlayer.src = ebookAsset("tap-sounds", soundKey + ".mp3");
+      tapPlayer.currentTime = 0;
+      tapPlayer.play().catch(() => {});
+    } catch (_) { /* a tap sound is a garnish; never let it break the reader */ }
+  }
+  function playStorySound(key) {
+    if (!key) return;
+    try {
+      tapPlayer.pause();
+      tapPlayer.src = ebookAsset("tap-sounds", key + ".mp3");
+      tapPlayer.currentTime = 0;
+      tapPlayer.play().catch(() => {});
+    } catch (_) { /* same */ }
+  }
+
+  function bookShelf(o) {
+    const el = o.el;
+    const books = o.items;
+    let opened = false;
+
+    function drawShelf() {
+      $(el.ask).innerHTML = o.ask || "Choose a book to read.";
+      $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
+      $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
+      $(el.shelf).innerHTML = books.map((b, k) =>
+        '<div class="bookcard"><span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
+        '<span class="booktitle">' + esc(b.title) + "</span>" +
+        (b.author ? '<span class="bookmeta">by ' + esc(b.author) + "</span>" : "") +
+        '<span class="bookmeta">' + b.pages.length + " pages</span>" +
+        '<button type="button" class="big small teal" data-book="' + k + '">Read ▶</button></div>').join("");
+      $(el.shelf).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-book]");
+        if (!b) return;
+        openReader(books[Number(b.dataset.book)]);
+      });
+    }
+
+    function openReader(book) {
+      opened = true;
+      let page = 0;
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader";
+      document.body.appendChild(overlay);
+
+      function renderPage() {
+        const p = book.pages[page];
+        const last = page === book.pages.length - 1;
+        overlay.innerHTML =
+          '<div class="book-reader-top"><span class="booktitle">' + esc(book.title) + "</span>" +
+          '<button type="button" class="book-close" aria-label="Close the book">&#10005;</button></div>' +
+          '<div class="book-stage-wrap"><div class="book-stage" id="bookStage"></div></div>' +
+          '<div class="book-reader-bottom">' +
+          '<button type="button" class="big small ghost" id="bookBack"' + (page === 0 ? " disabled" : "") + '>&#9664; Back</button>' +
+          '<button type="button" class="big small teal" id="bookListen">&#128266; Listen</button>' +
+          '<span class="book-page-count">Page ' + (page + 1) + " of " + book.pages.length + "</span>" +
+          (last
+            ? '<button type="button" class="big small" id="bookFinish">Finish book &#10003;</button>'
+            : '<button type="button" class="big small" id="bookNext">Next &#9654;</button>') +
+          "</div>";
+        overlay.querySelector(".book-close").addEventListener("click", closeReader);
+        const backBtn = overlay.querySelector("#bookBack");
+        if (backBtn) backBtn.addEventListener("click", () => { page--; renderPage(); });
+        const nextBtn = overlay.querySelector("#bookNext");
+        if (nextBtn) nextBtn.addEventListener("click", () => { page++; renderPage(); });
+        const finishBtn = overlay.querySelector("#bookFinish");
+        if (finishBtn) finishBtn.addEventListener("click", () => {
+          closeReader();
+          finish(o.finish, o.done);
+        });
+        overlay.querySelector("#bookListen").addEventListener("click", () => VOICE.speak(p.text));
+
+        const stage = overlay.querySelector("#bookStage");
+        fetch(ebookAsset(book.id, p.image))
+          .then((r) => (r.ok ? r.text() : Promise.reject(new Error("page fetch failed"))))
+          .then((markup) => {
+            if (!stage.isConnected) return;
+            const svg = new DOMParser().parseFromString(markup, "image/svg+xml").documentElement;
+            if (!svg || svg.nodeName.toLowerCase() !== "svg") return;
+            svg.setAttribute("role", "img");
+            if (p.alt) svg.setAttribute("aria-label", p.alt);
+            stage.innerHTML = "";
+            stage.appendChild(svg);
+            svg.addEventListener("pointerdown", (e) => {
+              const target = e.target.closest && e.target.closest("[data-tap]");
+              if (!target) return;
+              playTapSound(target.dataset.tap, target.dataset.mood);
+              target.classList.remove("tap-play");
+              void target.getBoundingClientRect();
+              target.classList.add("tap-play");
+            });
+          })
+          .catch(() => { stage.innerHTML = '<p style="padding:20px;color:var(--muted)">This page could not be loaded.</p>'; });
+        if (p.sound) playStorySound(p.sound);
+      }
+      function closeReader() {
+        overlay.remove();
+        document.removeEventListener("keydown", onKey);
+      }
+      function onKey(e) { if (e.key === "Escape") closeReader(); }
+      document.addEventListener("keydown", onKey);
+      renderPage();
+    }
+
+    drawShelf();
+  }
+
+
+  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"], ["🎮", "I played Meaning Match"], ["🪄", "I played Memory Pairs"], ["📚", "I read a picture book"]];
 
   hearAndTap({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", replay: "replay1" }, items: LESSON.sounds, finish: 0,
     ask: "Which word did you hear?", label: "Word",
     done: "You know these words by their sound now." });
-  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2" }, items: LESSON.newwords, finish: 1,
+  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2", hearSent: "hearSent2", nextSent: "nextSent2" }, items: LESSON.newwords, finish: 1,
     ask: "Say this word out loud.", label: "Word",
     done: "Now you have met them, you will see them all through the unit." });
   pictureMatch({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, items: LESSON.match, finish: 2,
@@ -2739,6 +3924,13 @@
     done: "That is a real sentence, written by you." });
   sequence({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, items: LESSON.quiz, finish: 9,
     label: "Question", done: "That is the whole unit finished." });
+  sequence({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, items: LESSON.meaningmatch, finish: 10,
+    label: "Round", done: "That is Meaning Match finished." });
+  memoryPairs({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12", grid: "grid12" }, items: LESSON.memorypairs, finish: 11,
+    done: "That is every pair matched." });
+  bookShelf({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", shelf: "shelf13" }, items: LESSON.books, finish: 12,
+    ask: "Choose a book to read.",
+    done: "You finished a book from this unit's shelf." });
 
   show(0, false);
 

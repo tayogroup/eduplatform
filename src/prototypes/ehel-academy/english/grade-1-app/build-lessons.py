@@ -111,6 +111,95 @@ def dictionary_index():
     return by_word
 
 
+# How many example sentences a word card offers. Mirrors shell/subjects/
+# english.js's own SENTENCES_SHOWN=3 for a course learner (5 for tutoring,
+# which this build does not serve) - see the comment at english.js line
+# ~536. THE FIRST N, never a sample: sentenceAudio pairs with
+# practiceSentences BY INDEX, so slicing from the front keeps clip i under
+# sentence i. Taking any other subset would play the wrong recording.
+SENTENCES_SHOWN = 3
+
+
+def ebook_catalog():
+    """The picture-book catalogue, read out of the shell rather than a copy.
+
+    `const ebookCatalog = [...]` in shell/subjects/english.js is a plain
+    module-scoped array of object/array/string literals - no function calls,
+    no DOM, no imports - but it is not exported and the file around it is
+    full of top-level `location`/`document` references, so it cannot be
+    ES-module-imported the way word_pictures() imports word-pictures.js.
+    Extracted by finding the declaration and BALANCING BRACKETS to its
+    matching close, then evaluating that slice alone through node - the
+    same "parse the real bytes, not a regex over them" rule word_pictures()
+    already follows, applied to a shape a straight import cannot reach.
+    """
+    src_path = os.path.join(SHELL, "english.js").replace("\\", "/")
+    script = (
+        'const fs = require("fs");\n'
+        'const src = fs.readFileSync("%s", "utf8");\n'
+        'const marker = "const ebookCatalog = [";\n'
+        'const start = src.indexOf(marker);\n'
+        'if (start < 0) throw new Error("ebookCatalog not found");\n'
+        'let i = start + marker.length - 1, depth = 0, end = -1;\n'
+        'for (; i < src.length; i++) {\n'
+        '  const c = src[i];\n'
+        '  if (c === "[") depth++;\n'
+        '  else if (c === "]") { depth--; if (depth === 0) { end = i; break; } }\n'
+        '}\n'
+        'if (end < 0) throw new Error("no matching bracket for ebookCatalog");\n'
+        'const arr = new Function("return " + src.slice(start + marker.length - 1, end + 1))();\n'
+        'process.stdout.write(JSON.stringify(arr));\n' % src_path
+    )
+    r = subprocess.run(["node", "-e", script], capture_output=True)
+    if r.returncode != 0:
+        sys.exit("REFUSED: could not extract ebookCatalog from shell/subjects/english.js.\n" +
+                 r.stderr.decode("utf-8", "replace"))
+    return json.loads(r.stdout.decode("utf-8"))
+
+
+def load_games(unit_no):
+    path = os.path.join(DATA, "games", "unit-%d.json" % unit_no)
+    if not os.path.isfile(path):
+        return {}
+    return {g["id"]: g for g in load_json(path)["games"]}
+
+
+def unit_dictionary_links(unit):
+    """word (lowercase) -> its dictionaryLinks entry, Core words group only.
+
+    A unit's dictionaryLinks carries two groups - "Core words" (the taught
+    40) and "Words from our stories" (background vocabulary the unit reads
+    but does not teach) - found by TITLE rather than a hardcoded id, because
+    the id itself is per-unit ("g1-u1-core", "g1-u2-core", ...). Restricting
+    to the taught group is what the shell's own linkedWords()/wordsFor() do.
+    """
+    core_group_ids = {g["id"] for g in unit.get("vocabularyGroups", [])
+                       if g.get("title") == "Core words"}
+    by_word = {}
+    for link in unit.get("dictionaryLinks", []):
+        if link.get("groupId") not in core_group_ids:
+            continue
+        key = str(link.get("masterWord") or link.get("displayWord") or "").strip().lower()
+        if key and key not in by_word:
+            by_word[key] = link
+    return by_word
+
+
+def word_sentences(link):
+    """Up to SENTENCES_SHOWN {text, audio} pairs, skipping any not yet voiced."""
+    if not link:
+        return []
+    texts = link.get("practiceSentences") or ([link["exampleSentence"]] if link.get("exampleSentence") else [])
+    clips = link.get("sentenceAudio") or []
+    out = []
+    for i, t in enumerate(texts[:SENTENCES_SHOWN]):
+        a = clips[i] if i < len(clips) else {}
+        if a.get("available") is False:
+            continue
+        out.append({"text": t, "audio": a.get("normal") or a.get("source") or ""})
+    return out
+
+
 # ----------------------------------------------------------------------
 # small helpers
 # ----------------------------------------------------------------------
@@ -206,7 +295,7 @@ def distractors(pool, right, n, key=lambda x: x):
 # ----------------------------------------------------------------------
 # the slides
 # ----------------------------------------------------------------------
-def build_slides(unit, cw_unit, pics, dic):
+def build_slides(unit, cw_unit, pics, dic, games, shelf):
     """Return (slides, stickers, data) for one unit.
 
     A slide is only built where its content exists. Units 4, 7, 9 and 10 have
@@ -218,16 +307,24 @@ def build_slides(unit, cw_unit, pics, dic):
 
     groups = {g["strand"]: g for g in cw_unit["groups"]}
     all_words = [w for g in cw_unit["groups"] for w in g["words"]]
+    links = unit_dictionary_links(unit)
 
     def word_obj(w):
         e = dic.get(w.lower(), {})
+        link = links.get(w.lower())
         a = e.get("audio") or {}
+        # childMeaning is the unit's own kid-facing wording ("A soft pet
+        # animal that says miaow..."); canonicalMeaning is the dictionary's
+        # more general one and is the fallback for a word this unit teaches
+        # but does not itself carry a link for.
+        meaning = (link or {}).get("childMeaning") or e.get("canonicalMeaning") or ""
         return {
-            "w": e.get("displayWord") or w,
+            "w": e.get("displayWord") or (link or {}).get("displayWord") or w,
             "pic": pics.get(w, ""),
-            "meaning": e.get("canonicalMeaning") or "",
+            "meaning": meaning,
             "pos": e.get("partOfSpeech") or "",
             "audio": a.get("normal") or a.get("slow") or "",
+            "sentences": word_sentences(link),
         }
 
     n = 0
@@ -270,9 +367,15 @@ def build_slides(unit, cw_unit, pics, dic):
     # ---- 2  the unit's new words, one at a time ----------------------
     topic = groups.get("topic") or groups.get("phonics")
     if topic:
+        # A unit missing a "topic" strand (7 and 9) falls back to the SAME
+        # words the Sounds step already drew from "phonics" - reusing that
+        # group's own title too gave the deck two steps in a row both
+        # headed "Phonics: th and ng", reading as one step duplicated
+        # rather than two different things to do with the same words.
+        newwords_title = topic["title"] if groups.get("topic") else "Meet the words"
         words = [word_obj(w) for w in topic["words"]]
         data["newwords"] = words
-        i = add("newwords", topic["title"], "\U0001F4D6", "I met the new words",
+        i = add("newwords", newwords_title, "\U0001F4D6", "I met the new words",
                 "Say this word out loud.",
                 explain(
                     ["These are the new words for this unit."],
@@ -281,7 +384,7 @@ def build_slides(unit, cw_unit, pics, dic):
                     ["Reading a word in your head is not the same as saying it.",
                      "Your mouth has to learn it too."],
                     ["Press Hear it to hear the word said properly.", "Then say it with me."]),
-                ["replay", "next"])
+                ["replay", "next", "hearSent", "nextSent"])
         data["newwords_slide"] = i
 
     # ---- 3  the picture is the question ------------------------------
@@ -588,6 +691,74 @@ def build_slides(unit, cw_unit, pics, dic):
                 ())
         data["quiz_slide"] = i
 
+    # ---- 11  Meaning Match ---------------------------------------------
+    #         Two of the unit's own twelve games, picked by id rather than
+    #         by scanning types - both ids are present in all 10 units'
+    #         packs (checked directly, not assumed). The other ten
+    #         mechanics (spelling, sentence-building, speaking, sequencing)
+    #         are real gaps this build leaves open, not an oversight; two
+    #         faithful games are worth more than twelve half-built ones.
+    mm = games.get("meaning-match")
+    if mm and mm.get("rounds"):
+        items = [{
+            "ask": r["prompt"],
+            "opts": [{"t": c, "ok": 1 if c == r["answer"] else 0} for c in r["choices"]],
+            "why": r.get("explanation") or "",
+        } for r in mm["rounds"]]
+        data["meaningmatch"] = items
+        i = add("meaningmatch", mm.get("title") or "Meaning Match", "\U0001F3AE", "I played Meaning Match",
+                "Tap the word that matches the meaning.",
+                explain(
+                    ["This is the game from this unit's Game Zone."],
+                    ["Read what the meaning says.", "Then tap the word it is describing."],
+                    ["Two words can look similar.", "Read the whole meaning before you tap, not just the start."],
+                    ["Take your time, then tap."]),
+                ())
+        data["meaningmatch_slide"] = i
+
+    # ---- 12  Memory Pairs -----------------------------------------------
+    mp = games.get("memory-pairs")
+    if mp and mp.get("rounds"):
+        data["memorypairs"] = mp["rounds"]
+        i = add("memorypairs", mp.get("title") or "Memory Pairs", "\U0001FA84", "I played Memory Pairs",
+                "Tap two tiles that go together.",
+                explain(
+                    ["Every tile is face down until you tap it."],
+                    ["Tap one tile to see what is on it.", "Tap a second tile.",
+                     "If a word and its meaning match, they stay face up."],
+                    ["If they do not match, both tiles turn back over.",
+                     "Remember what you saw - that is the whole game."],
+                    ["Tap your first tile."]),
+                ["grid"])
+        data["memorypairs_slide"] = i
+
+    # ---- 13  Picture books -----------------------------------------------
+    #         The full shelf, not one signature book - unitEbooks() decides
+    #         how many, and it is seven for this unit, not the "up to five"
+    #         a first read of the catalogue suggested. The pages themselves
+    #         are never copied; the reader fetches them from ../ebooks/ at
+    #         read time, the same relative shape the shell's own reader
+    #         uses one directory up.
+    if shelf:
+        data["books"] = [{
+            "id": b["id"], "title": b["title"], "author": b.get("author") or "",
+            "pages": [{"image": p["image"], "text": p.get("text") or "",
+                      "alt": p.get("alt") or "", "sound": p.get("sound") or ""}
+                     for p in b["pages"]],
+        } for b in shelf]
+        i = add("books", "Picture books", "\U0001F4DA", "I read a picture book",
+                "Choose a book to read.",
+                explain(
+                    ["This unit has its own shelf of picture books."],
+                    ["Tap Read on a book that looks good.",
+                     "Tap the pictures - some of them make a sound.",
+                     "Press Listen if you want the page read to you."],
+                    ["A tap sound is a little extra.",
+                     "If nothing happens when you tap, that is fine - keep reading."],
+                    ["Pick a book and press Read."]),
+                ["shelf"])
+        data["books_slide"] = i
+
     return slides, stickers, data
 
 
@@ -663,6 +834,8 @@ PAGE = """<meta charset="utf-8">
 
 %(english)s
 
+%(books)s
+
   const STICKERS = %(stickers)s;
 
 %(bootstrap)s
@@ -730,10 +903,20 @@ def bootstrap(slides, data):
         elif k == "check":
             out.append('  sequence({ el: %s, items: LESSON.quiz, finish: %d,\n'
                        '    label: "Question", done: "That is the whole unit finished." });' % (el, i))
+        elif k == "meaningmatch":
+            out.append('  sequence({ el: %s, items: LESSON.meaningmatch, finish: %d,\n'
+                       '    label: "Round", done: "That is Meaning Match finished." });' % (el, i))
+        elif k == "memorypairs":
+            out.append('  memoryPairs({ el: %s, items: LESSON.memorypairs, finish: %d,\n'
+                       '    done: "That is every pair matched." });' % (el, i))
+        elif k == "books":
+            out.append('  bookShelf({ el: %s, items: LESSON.books, finish: %d,\n'
+                       '    ask: "Choose a book to read.",\n'
+                       '    done: "You finished a book from this unit\'s shelf." });' % (el, i))
     return "\n".join(out) + "\n"
 
 
-def build(unit_no, manifest, cw, dic, css, voice, deck, english, release):
+def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, ebooks, release):
     entry = next(u for u in manifest["units"] if u["number"] == unit_no)
     unit = load_json(os.path.join(DATA, "units", "unit-%d.json" % unit_no))
     cw_unit = next(u for u in cw["units"] if u["unitNo"] == unit_no)
@@ -741,7 +924,12 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, release):
     words = [w for g in cw_unit["groups"] for w in g["words"]]
     pics = word_pictures(words)
 
-    slides, stickers, data = build_slides(unit, cw_unit, pics, dic)
+    games = load_games(unit_no)
+    # unitEbooks(): shell/subjects/english.js's own filter, matched exactly -
+    # grades.includes(1) and (no units list, or units includes this one).
+    shelf = [b for b in ebooks if 1 in b.get("grades", [])
+             and (not b.get("units") or unit_no in b["units"])]
+    slides, stickers, data = build_slides(unit, cw_unit, pics, dic, games, shelf)
     data = {k: v for k, v in data.items() if not k.endswith("_slide")}
     data["audioRelease"] = release
     data["unitNo"] = unit_no
@@ -764,7 +952,7 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, release):
         "title": title, "unit": unit_no, "h1": h1, "css": css,
         "slides": body,
         "data": json.dumps(data, ensure_ascii=False, indent=2).replace("\n", "\n  "),
-        "voice": voice, "deck": deck, "english": english,
+        "voice": voice, "deck": deck, "english": english, "books": books_js,
         "stickers": json.dumps(stickers, ensure_ascii=False),
         "bootstrap": bootstrap(slides, data),
     }
@@ -786,10 +974,12 @@ def main():
     voice = io.open(os.path.join(LIB, "voice.js"), encoding="utf-8").read()
     deck = io.open(os.path.join(LIB, "deck.js"), encoding="utf-8").read()
     english = io.open(os.path.join(LIB, "english.js"), encoding="utf-8").read()
+    books_js = io.open(os.path.join(LIB, "books.js"), encoding="utf-8").read()
+    ebooks = ebook_catalog()
 
     units = wanted or [u["number"] for u in manifest["units"]]
     print("\n  Building Grade 1 English lessons  (audio stamp %s)\n" % release)
-    built = [build(n, manifest, cw, dic, css, voice, deck, english, release) for n in units]
+    built = [build(n, manifest, cw, dic, css, voice, deck, english, books_js, ebooks, release) for n in units]
     print("\n  %d page(s). Now run the shared pipeline - see the docstring.\n" % len(built))
 
 

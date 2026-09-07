@@ -249,6 +249,10 @@
   .wordmeaning { max-width: 30ch; color: var(--ink); font-size: 19px; }
   .wordpos { color: var(--muted); font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .wordsentence { max-width: 34ch; color: var(--muted); font-size: 17px; font-style: italic; }
+  .wordsentencebox { width: 100%; max-width: 30em; border-radius: 16px; border: 1px solid var(--line);
+    background: var(--cell); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+  .sentlabel { color: var(--teal); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+  .wordsentencebox .wordsentence { font-style: normal; color: var(--ink); font-size: 19px; max-width: none; }
 
   /* ---- a strip of word buttons, for tapping the word you heard ---- */
   .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
@@ -309,6 +313,45 @@
   .choice.text { min-width: 0; width: 100%; max-width: 30em; height: auto; min-height: 62px;
     padding: 14px 18px; font-size: 20px; line-height: 1.35; text-align: left; }
   .choices.stack { flex-direction: column; align-items: stretch; width: 100%; }
+
+  /* ---- Memory Pairs: reveal on tap, stay revealed once matched ---- */
+  .pairsgrid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 10px; width: 100%; max-width: 30em; }
+  .pairtile { min-height: 76px; border-radius: 16px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px;
+    line-height: 1.3; padding: 10px 12px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .pairtile .face { display: none; }
+  .pairtile .back { font-size: 26px; opacity: 0.6; }
+  .pairtile.revealed .face, .pairtile.matched .face { display: block; }
+  .pairtile.revealed .back, .pairtile.matched .back { display: none; }
+  .pairtile.revealed { border-color: var(--teal); background: var(--teal-soft); }
+  .pairtile.matched { border-color: var(--good); background: var(--good-soft); cursor: default; }
+  .pairtile.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .pairtile:disabled { cursor: default; }
+
+  /* ---- Picture books: the shelf, and the full-screen reader ---- */
+  .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; width: 100%; }
+  .bookcard { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); text-align: left; }
+  .bookcard .bookicon { font-size: 34px; line-height: 1; }
+  .bookcard .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .bookcard .bookmeta { color: var(--muted); font-size: 13.5px; }
+  .bookcard .big { margin-top: auto; align-self: flex-start; }
+
+  .book-reader { position: fixed; inset: 0; z-index: 200; background: var(--ground);
+    display: flex; flex-direction: column; }
+  .book-reader-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; }
+  .book-reader-top .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .book-close { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font-size: 18px; }
+  .book-stage-wrap { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 0 10px; }
+  .book-stage { position: relative; width: 100%; max-width: 720px; aspect-ratio: 1600 / 1000;
+    border-radius: 18px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+  .book-stage svg { width: 100%; height: 100%; display: block; }
+  .book-stage [data-tap] { cursor: pointer; }
+  @keyframes tapPulse { 0% { filter: brightness(1); } 40% { filter: brightness(1.35); } 100% { filter: brightness(1); } }
+  .book-stage [data-tap].tap-play { animation: tapPulse 700ms ease; }
+  .book-reader-bottom { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 14px 18px; flex-wrap: wrap; }
+  .book-page-count { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; min-width: 5em; text-align: center; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -527,6 +570,36 @@
         <p class="score" id="score9"></p>
       </div>
     </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the game from this unit&#39;s Game Zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read what the meaning says.</s><s>Then tap the word it is describing.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Two words can look similar.</s><s>Read the whole meaning before you tap, not just the start.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the word that matches the meaning.">
+      <div class="slide-head"><span class="n">10</span><h2>Meaning Match</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Tap the word that matches the meaning.</span></div>
+      <div class="stage">
+        <div id="stage10"></div>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="score" id="score10"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every tile is face down until you tap it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap one tile to see what is on it.</s><s>Tap a second tile.</s><s>If a word and its meaning match, they stay face up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If they do not match, both tiles turn back over.</s><s>Remember what you saw - that is the whole game.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your first tile.</s></mstts:express-as>' data-say="Tap two tiles that go together.">
+      <div class="slide-head"><span class="n">11</span><h2>Memory Pairs</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Tap two tiles that go together.</span></div>
+      <div class="stage">
+        <div id="stage11"></div>
+        <div class="choices" id="ch11"></div>
+        <p class="fb" id="fb11"></p>
+        <p class="score" id="score11"></p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This unit has its own shelf of picture books.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap Read on a book that looks good.</s><s>Tap the pictures - some of them make a sound.</s><s>Press Listen if you want the page read to you.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A tap sound is a little extra.</s><s>If nothing happens when you tap, that is fine - keep reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a book and press Read.</s></mstts:express-as>' data-say="Choose a book to read.">
+      <div class="slide-head"><span class="n">12</span><h2>Picture books</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Choose a book to read.</span></div>
+      <div class="stage">
+        <div id="stage12"></div>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12"></p>
+        <p class="score" id="score12"></p>
+      </div>
+    </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
       <div class="slide-head"><span class="n">&#9733;</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span>Every step you finished earned a sticker.</span></div>
@@ -692,70 +765,210 @@
         "pic": "🥛",
         "meaning": "A white drink that comes from cows and goats.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/milk.mp3"
+        "audio": "./media/audio/grade-1/dictionary/milk.mp3",
+        "sentences": [
+          {
+            "text": "The baby drinks warm milk.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-milk-sentence-1b.mp3"
+          },
+          {
+            "text": "May I have some milk?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-milk-sentence-2b.mp3"
+          },
+          {
+            "text": "Here is your milk, Amal.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-milk-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "tree",
         "pic": "🌳",
-        "meaning": "A tall plant with a wooden trunk, branches and leaves.",
+        "meaning": "A tall plant with a wooden trunk, branches and green leaves.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/tree.mp3"
+        "audio": "./media/audio/grade-1/dictionary/tree.mp3",
+        "sentences": [
+          {
+            "text": "A tall tree grows near the library.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-tree-sentence-1b.mp3"
+          },
+          {
+            "text": "Can you climb that tree?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-tree-sentence-2b.mp3"
+          },
+          {
+            "text": "No, the tree is too tall!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-tree-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "water",
         "pic": "💧",
-        "meaning": "The clear drink your body needs every day.",
+        "meaning": "A clear drink with no colour. We need it every day.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/water.mp3"
+        "audio": "./media/audio/grade-1/dictionary/water.mp3",
+        "sentences": [
+          {
+            "text": "Amal drinks cool water after playing.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-water-sentence-1b.mp3"
+          },
+          {
+            "text": "May I have some water, please?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-water-sentence-2b.mp3"
+          },
+          {
+            "text": "Here is your water, Adam.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-water-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "food",
         "pic": "🍽️",
         "meaning": "Food is what we eat to keep us strong.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/food.mp3"
+        "audio": "./media/audio/grade-1/dictionary/food.mp3",
+        "sentences": [
+          {
+            "text": "Grandma cooked our food.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-food-sentence-1b.mp3"
+          },
+          {
+            "text": "Do you like this food, Adam?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-food-sentence-2b.mp3"
+          },
+          {
+            "text": "What lovely food that smells!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-food-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "bread",
         "pic": "🍞",
         "meaning": "Bread is a soft food made from flour and baked.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/bread.mp3"
+        "audio": "./media/audio/grade-1/dictionary/bread.mp3",
+        "sentences": [
+          {
+            "text": "I smelled sweet bread.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-bread-sentence-1b.mp3"
+          },
+          {
+            "text": "She smelled warm bread.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-bread-sentence-2b.mp3"
+          },
+          {
+            "text": "Would you like some bread, Adam?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-bread-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "apple",
         "pic": "🍎",
         "meaning": "A round fruit that is sweet and crunchy. It can be red or green.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/apple.mp3"
+        "audio": "./media/audio/grade-1/dictionary/apple.mp3",
+        "sentences": [
+          {
+            "text": "Adam has a red apple.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-apple-sentence-1b.mp3"
+          },
+          {
+            "text": "Is the apple red or green?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-apple-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, please, I want an apple!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-apple-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "banana",
         "pic": "🍌",
         "meaning": "A long, curved yellow fruit that is soft and white inside.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/banana.mp3"
+        "audio": "./media/audio/grade-1/dictionary/banana.mp3",
+        "sentences": [
+          {
+            "text": "The banana is yellow and curved.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-banana-sentence-1b.mp3"
+          },
+          {
+            "text": "Would you like a banana?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-banana-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, please, I want a banana.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-banana-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "mango",
         "pic": "🥭",
         "meaning": "A soft, sweet, yellow fruit with a big stone inside.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/mango.mp3"
+        "audio": "./media/audio/grade-1/dictionary/mango.mp3",
+        "sentences": [
+          {
+            "text": "The mango is soft and sweet.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-mango-sentence-1b.mp3"
+          },
+          {
+            "text": "May I have a mango, please?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-mango-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, take the big mango.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-mango-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "cake",
         "pic": "🍰",
         "meaning": "A cake is a sweet food we bake for special days.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/cake.mp3"
+        "audio": "./media/audio/grade-1/dictionary/cake.mp3",
+        "sentences": [
+          {
+            "text": "Amal had cake on her birthday.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-cake-sentence-1b.mp3"
+          },
+          {
+            "text": "Would you like some cake, Adam?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-cake-sentence-2b.mp3"
+          },
+          {
+            "text": "What a big cake that is!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-cake-sentence-3b.mp3"
+          }
+        ]
       },
       {
         "w": "moon",
         "pic": "🌙",
-        "meaning": "The bright round object we see in the night sky.",
+        "meaning": "The bright light we see in the night sky.",
         "pos": "noun",
-        "audio": "./media/audio/grade-1/dictionary/moon.mp3"
+        "audio": "./media/audio/grade-1/dictionary/moon.mp3",
+        "sentences": [
+          {
+            "text": "The moon is bright tonight.",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-moon-sentence-1b.mp3"
+          },
+          {
+            "text": "Can you see the moon, Adam?",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-moon-sentence-2b.mp3"
+          },
+          {
+            "text": "Yes, the moon looks round!",
+            "audio": "./media/audio/grade-1/vocabulary/g1-u8-core-moon-sentence-3b.mp3"
+          }
+        ]
       }
     ],
     "match": [
@@ -1332,6 +1545,775 @@
           }
         ],
         "why": "We say it is for the weather; the other sentences have the words muddled up."
+      }
+    ],
+    "meaningmatch": [
+      {
+        "ask": "Which word means: A bird that swims on water and says quack.",
+        "opts": [
+          {
+            "t": "duck",
+            "ok": 1
+          },
+          {
+            "t": "queen",
+            "ok": 0
+          },
+          {
+            "t": "tree",
+            "ok": 0
+          }
+        ],
+        "why": "duck: A bird that swims on water and says quack."
+      },
+      {
+        "ask": "Which word means: A cake is a sweet food we bake for special days.",
+        "opts": [
+          {
+            "t": "duck",
+            "ok": 0
+          },
+          {
+            "t": "queen",
+            "ok": 0
+          },
+          {
+            "t": "cake",
+            "ok": 1
+          }
+        ],
+        "why": "cake: A cake is a sweet food we bake for special days."
+      },
+      {
+        "ask": "Which word means: Grey is the colour between black and white, like rain clouds.",
+        "opts": [
+          {
+            "t": "queen",
+            "ok": 0
+          },
+          {
+            "t": "grey",
+            "ok": 1
+          },
+          {
+            "t": "duck",
+            "ok": 0
+          }
+        ],
+        "why": "grey: Grey is the colour between black and white, like rain clouds."
+      },
+      {
+        "ask": "Which word means: Splashing means water is moving and scattering about noisily.",
+        "opts": [
+          {
+            "t": "splashing",
+            "ok": 1
+          },
+          {
+            "t": "duck",
+            "ok": 0
+          },
+          {
+            "t": "queen",
+            "ok": 0
+          }
+        ],
+        "why": "splashing: Splashing means water is moving and scattering about noisily."
+      },
+      {
+        "ask": "Which word means: Describes a bright day with warm sun and few clouds.",
+        "opts": [
+          {
+            "t": "duck",
+            "ok": 0
+          },
+          {
+            "t": "queen",
+            "ok": 0
+          },
+          {
+            "t": "sunny",
+            "ok": 1
+          }
+        ],
+        "why": "sunny: Describes a bright day with warm sun and few clouds."
+      },
+      {
+        "ask": "Which word means: Hungry means you want something to eat.",
+        "opts": [
+          {
+            "t": "queen",
+            "ok": 0
+          },
+          {
+            "t": "hungry",
+            "ok": 1
+          },
+          {
+            "t": "duck",
+            "ok": 0
+          }
+        ],
+        "why": "hungry: Hungry means you want something to eat."
+      }
+    ],
+    "memorypairs": [
+      {
+        "prompt": "Match vocabulary set 1.",
+        "pairs": [
+          [
+            "clock",
+            "A round face with hands that tells us the time."
+          ],
+          [
+            "milk",
+            "A white drink that comes from cows and goats."
+          ],
+          [
+            "apple",
+            "A round fruit that is sweet and crunchy. It can be red or green."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 2.",
+        "pairs": [
+          [
+            "who",
+            "This word asks about a person."
+          ],
+          [
+            "heavy",
+            "Heavy means something is hard to lift because it weighs a lot."
+          ],
+          [
+            "nobody",
+            "Nobody means not one single person at all."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 3.",
+        "pairs": [
+          [
+            "shouted",
+            "Shouted means someone said something very loudly."
+          ],
+          [
+            "merrily",
+            "Merrily means doing something in a happy, cheerful way."
+          ],
+          [
+            "followed",
+            "Followed means someone went behind or after another person or thing."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 4.",
+        "pairs": [
+          [
+            "drop",
+            "One tiny round bit of water, smaller than your fingertip."
+          ],
+          [
+            "float",
+            "To stay on top of the water without sinking."
+          ],
+          [
+            "cook",
+            "To make food hot so we can eat it."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 5.",
+        "pairs": [
+          [
+            "windy",
+            "Describes weather when strong air pushes and moves things."
+          ],
+          [
+            "whale",
+            "A huge sea animal that blows water high in the air."
+          ],
+          [
+            "fruit",
+            "Sweet food that grows on trees and plants, like apples."
+          ]
+        ]
+      },
+      {
+        "prompt": "Match vocabulary set 6.",
+        "pairs": [
+          [
+            "sky",
+            "The sky is the space above us where clouds and the sun are."
+          ],
+          [
+            "leaf",
+            "A leaf is a flat green part that grows on a plant."
+          ],
+          [
+            "farm",
+            "A place where people grow food and keep animals."
+          ]
+        ]
+      }
+    ],
+    "books": [
+      {
+        "id": "lulu-and-the-wonderful-water",
+        "title": "Lulu and the Wonderful Water",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Lulu and the Wonderful Water. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Lulu flying over the sparkling lake with a sailboat and a jumping fish",
+            "sound": "lulu-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Lulu followed the little river.",
+            "alt": "Lulu flying above a winding blue river",
+            "sound": "river"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "The river ran down the hills. Splish, splash!",
+            "alt": "The river rushing down the hills while Lulu flies alongside",
+            "sound": "river"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Rain began to fall. Drip, drop, drip!",
+            "alt": "Rain falling from a big cloud around a surprised Lulu",
+            "sound": "rain"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Lulu hid under a big leaf.",
+            "alt": "Lulu sheltering from the rain under a big green leaf",
+            "sound": "rain"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "The rain stopped. A rainbow came out!",
+            "alt": "Lulu flying happily under a bright rainbow with fresh puddles below",
+            "sound": "sun"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "At last - the great lake! It was so big and blue.",
+            "alt": "Lulu seeing the huge blue lake spread out below her",
+            "sound": "lulu-surprised"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "A little fish jumped. Hello, fish!",
+            "alt": "A little orange fish jumping from the lake to greet Lulu",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "The little elephant was there too, splashing!",
+            "alt": "The little elephant splashing happily in the lake while Lulu flies over",
+            "sound": "elephant-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "A white boat sailed by. \"Hello, Lulu!\"",
+            "alt": "A little sailboat gliding across the lake as Lulu waves",
+            "sound": "wind"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Lulu drank the cool, clean water.",
+            "alt": "Lulu at the edge of the lake drinking the clean water beside a fish",
+            "sound": "river"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"Water is wonderful!\" sang Lulu.",
+            "alt": "Lulu flying joyfully over the lake under a rainbow with the fish and the sailboat",
+            "sound": "lulu-happy"
+          }
+        ]
+      },
+      {
+        "id": "the-well-in-the-village",
+        "title": "The Well in the Village",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "The Well in the Village. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal and her brother Adam beside the deep village well",
+            "sound": "river"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Every morning, Amal walked to the well with Adam. They carried an empty pot.",
+            "alt": "Amal carrying an empty pot beside Adam on the way to the well",
+            "sound": ""
+          },
+          {
+            "image": "page-03.svg",
+            "text": "\"Fill it slowly,\" said Adam. \"Water is precious. We must not waste one drop.\"",
+            "alt": "Adam pointing at the empty pot on the ground beside the well",
+            "sound": "child-sad"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Amal helped pull the rope. Up came the pot, full and heavy. \"We did it!\"",
+            "alt": "The full pot rising on the well rope while Amal and Adam cheer",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "At home, Mama used the water. \"We use water to cook,\" she said.",
+            "alt": "Mama beside a bowl of warm soup on the table",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "\"And we use water to wash,\" said Amal. She washed her hands until they were clean.",
+            "alt": "Amal beside the water pot, washing her hands",
+            "sound": ""
+          },
+          {
+            "image": "page-07.svg",
+            "text": "\"And we use water to drink,\" said little Hodan. She drank a big cup and smiled.",
+            "alt": "Hodan drinking from a big cup while Amal watches",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "One day, the land was very dry. No rain came. The grass was brown.",
+            "alt": "Amal standing sadly on dry brown ground with wilted grass",
+            "sound": "child-sad"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "\"The well is getting low,\" said Adam. \"We must share and be careful.\"",
+            "alt": "Adam and Amal looking at the low well on the dry ground",
+            "sound": "child-sad"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "Then the sky went grey. Big clouds came. Drip... drip... drip. \"Rain!\"",
+            "alt": "Grey clouds and falling rain over the village with Amal cheering",
+            "sound": "rain"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "The children ran outside and danced in the rain. The rain filled the well.",
+            "alt": "Amal, Hodan and Adam dancing in the rain among the puddles",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"How lucky we are to have water,\" said Amal. \"Water is wonderful.\"",
+            "alt": "Amal beside the full well at night under the stars",
+            "sound": "crickets"
+          }
+        ]
+      },
+      {
+        "id": "rain-on-the-green-grass",
+        "title": "Rain on the Green Grass",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Rain on the Green Grass. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal with her arms up in the rain beside a water pot and a fresh puddle",
+            "sound": "rain"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "It is raining. Amal knows a rainy-day poem. Wiggle your fingers!",
+            "alt": "Amal and Hodan standing together in the falling rain in the village",
+            "sound": "rain"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Rain on the green grass.",
+            "alt": "Amal with her arms up in the rain in the middle of the village",
+            "sound": "rain"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Rain on the tree.",
+            "alt": "Amal pointing up at a big acacia tree in the falling rain",
+            "sound": "tree"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Rain on the houses.",
+            "alt": "Amal pointing at the window while rain falls, with Hodan beside her indoors",
+            "sound": "rain"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "But not on me!",
+            "alt": "Amal indoors with her arms up beside the window and the bookshelf",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "Amal stood in the doorway and watched the drops.",
+            "alt": "Amal standing beside a wooden door while rain falls across the village",
+            "sound": "rain"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Drip, drip, drip. The pot was getting full.",
+            "alt": "Amal pointing at a big clay water pot filling up in the rain",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "\"Row, row, row your boat,\" sang Hodan, \"gently down the stream.\"",
+            "alt": "Hodan and Amal singing together indoors with music notes floating beside them",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "They sat facing each other, held hands, and rocked.",
+            "alt": "Amal and Hodan standing face to face indoors",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "\"Merrily, merrily, merrily, merrily.\"",
+            "alt": "Amal and Hodan singing indoors with music notes on both sides of them",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "Then the sun came out, and a rainbow came with it.",
+            "alt": "Amal and Hodan with their arms up under a rainbow beside a big puddle in the village",
+            "sound": "sun"
+          }
+        ]
+      },
+      {
+        "id": "what-is-water-for",
+        "title": "What Is Water For?",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "What Is Water For? Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal with her arms up beside the village well and a clay water pot",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "I use water to drink. The water is clean.",
+            "alt": "Amal indoors beside a tall cup of clean water",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "I use water to wash. My hands are wet.",
+            "alt": "Amal with her arms up beside a clay water pot in her home",
+            "sound": "child-happy"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Ayeeyo uses water to cook.",
+            "alt": "Ayeeyo standing beside a big cooking bowl in her home",
+            "sound": "woman-happy"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "We use water to grow plants.",
+            "alt": "Amal in the garden beside a watering can pouring onto the soil",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "It is rainy today. The road is wet.",
+            "alt": "Amal pointing at a wide puddle on the road while rain falls",
+            "sound": "rain"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "It is sunny now. The road is dry.",
+            "alt": "Amal standing on a dry road beside a clump of dry grass",
+            "sound": "sun"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "This leaf floats. That stone sinks.",
+            "alt": "Amal pointing at a big leaf on the lake and a stone on the bank beside it",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "A fish lives in water. A frog lives near water.",
+            "alt": "Amal pointing at two fish in the lake and a green frog on the bank",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "A turtle swims. A whale is very big.",
+            "alt": "A sea turtle swimming in the lake with a big blue whale spouting behind it",
+            "sound": "river"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "A crocodile lives in the river. Do not go too near!",
+            "alt": "A surprised Amal pointing at a green crocodile lying beside the river",
+            "sound": "river"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "We must not waste water. Not one drop.",
+            "alt": "Amal with her arms up beside the village well and a water pot with confetti falling",
+            "sound": "child-happy"
+          }
+        ]
+      },
+      {
+        "id": "not-one-drop-wasted",
+        "title": "Not One Drop Wasted",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Not One Drop Wasted. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Musa the zebra and Koko the hen beside the village well on dry yellow ground",
+            "sound": "zebra-sad"
+          },
+          {
+            "image": "page-02.svg",
+            "text": "The rain did not come. The well was getting low.",
+            "alt": "A sad Duku the donkey standing beside the village well on dry ground",
+            "sound": "duku-sad"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "The grass was dry. Duku was thirsty.",
+            "alt": "A sad Duku standing between two clumps of dry yellow grass",
+            "sound": "duku-sad"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Musa filled his pot to the top. Then he spilled half of it.",
+            "alt": "A surprised Musa beside a water pot with water splashing out of it near the well",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-05.svg",
+            "text": "\"Do not waste it,\" said Koko. \"The well is low.\"",
+            "alt": "A sad Koko the hen speaking to a sad Musa beside the village well",
+            "sound": "hen-sad"
+          },
+          {
+            "image": "page-06.svg",
+            "text": "So Musa carried his pot slowly. Not one drop fell.",
+            "alt": "Musa walking carefully beside a full water pot on the dry ground",
+            "sound": "zebra-happy"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "The goat washed her feet in the river instead.",
+            "alt": "A goat standing in the shallow river beside the dry grass",
+            "sound": "river"
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Kiki caught the drips from the roof in a little cup.",
+            "alt": "Kiki standing under the baobab home while two drops fall from its roof",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "The chicks drank from the cup, one at a time.",
+            "alt": "Kiki watching three little chicks lined up on the dry ground",
+            "sound": "chick"
+          },
+          {
+            "image": "page-10.svg",
+            "text": "For eight days, nobody wasted a single drop.",
+            "alt": "Duku, Koko and Kiki all standing quietly around the village well on dry ground",
+            "sound": "monkey-happy"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Then the sky went grey. Drip. Drip. Rain!",
+            "alt": "Rain falling on the village well while a happy Musa and Duku stand in a new puddle",
+            "sound": "rain"
+          },
+          {
+            "image": "page-12.svg",
+            "text": "Everybody danced in the puddles. The well was full again.",
+            "alt": "Musa, Kiki and Koko splashing in a big puddle beside the full well under a rainbow",
+            "sound": "puddle"
+          }
+        ]
+      },
+      {
+        "id": "after-the-rain",
+        "title": "After the Rain",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "After the Rain. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Amal and Hodan cheering beside the village well",
+            "sound": ""
+          },
+          {
+            "image": "page-02.svg",
+            "text": "The rain filled the well with water.",
+            "alt": "Rain falling on the village well and a puddle while Amal smiles",
+            "sound": "rain"
+          },
+          {
+            "image": "page-03.svg",
+            "text": "\"Now the garden can grow!\" says Amal.",
+            "alt": "Amal with her arms up beside Adam in the sunny garden",
+            "sound": ""
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Amal plants little seeds in a row.",
+            "alt": "Amal pointing at a row of seeds in the brown soil",
+            "sound": ""
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Adam waters them with the watering can.",
+            "alt": "Adam beside the watering can pouring water on the seed row",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Hodan helps too. Good work, Hodan!",
+            "alt": "Hodan carrying the seed bowl while Amal smiles",
+            "sound": ""
+          },
+          {
+            "image": "page-07.svg",
+            "text": "The warm sun shines on the soil.",
+            "alt": "Amal in the garden under the bright warm sun",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Little green shoots come up!",
+            "alt": "Amal pointing in surprise at little green shoots in the seed row",
+            "sound": "bird"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "The plants grow tall and green.",
+            "alt": "Amal and Adam beside the tall growing plants",
+            "sound": ""
+          },
+          {
+            "image": "page-10.svg",
+            "text": "A big pink flower opens!",
+            "alt": "Amal pointing at a big pink flower while Hodan smiles",
+            "sound": ""
+          },
+          {
+            "image": "page-11.svg",
+            "text": "Fat orange carrots grow under the soil.",
+            "alt": "Adam pointing at three big carrots in the garden bed",
+            "sound": ""
+          },
+          {
+            "image": "page-12.svg",
+            "text": "\"Thank you, rain!\" says Amal.",
+            "alt": "Amal, Adam and Hodan cheering under a rainbow beside the well",
+            "sound": ""
+          }
+        ]
+      },
+      {
+        "id": "musa-and-the-weather",
+        "title": "Musa and the Weather",
+        "author": "Ehel Academy",
+        "pages": [
+          {
+            "image": "page-01.svg",
+            "text": "Musa and the Weather. Written by Ehel Academy. Illustrated by Ehel Academy Learning Studio.",
+            "alt": "Cover illustration of Musa the zebra with a kite flying under the acacia tree",
+            "sound": ""
+          },
+          {
+            "image": "page-02.svg",
+            "text": "Musa looks at the sky every day.",
+            "alt": "Musa the zebra looking up at the wide savanna sky",
+            "sound": ""
+          },
+          {
+            "image": "page-03.svg",
+            "text": "Today it is sunny. It is hot!",
+            "alt": "Musa standing in the tall grass under the hot bright sun",
+            "sound": "sun"
+          },
+          {
+            "image": "page-04.svg",
+            "text": "Musa rests under the shady tree.",
+            "alt": "Musa resting in the shade of the big acacia tree",
+            "sound": ""
+          },
+          {
+            "image": "page-05.svg",
+            "text": "Now it is cloudy. Where is the sun?",
+            "alt": "Musa looking surprised under a grey cloudy sky",
+            "sound": ""
+          },
+          {
+            "image": "page-06.svg",
+            "text": "Now it is windy. Whoosh!",
+            "alt": "The wind blowing dust and a kite while Musa watches in surprise",
+            "sound": "wind"
+          },
+          {
+            "image": "page-07.svg",
+            "text": "The kite dances in the windy sky.",
+            "alt": "A red kite dancing high in the grey windy sky above Musa",
+            "sound": ""
+          },
+          {
+            "image": "page-08.svg",
+            "text": "Now it is rainy. Drip, drop, drip!",
+            "alt": "Rain falling on Musa, who looks up in surprise",
+            "sound": "rain"
+          },
+          {
+            "image": "page-09.svg",
+            "text": "Musa waits under the big tree.",
+            "alt": "Musa sheltering from the rain under the acacia tree",
+            "sound": ""
+          },
+          {
+            "image": "page-10.svg",
+            "text": "The chicks splash in the puddle!",
+            "alt": "Two chicks splashing in a rain puddle while Musa watches happily",
+            "sound": "puddle"
+          },
+          {
+            "image": "page-11.svg",
+            "text": "The rain stops. A rainbow comes!",
+            "alt": "Musa standing happily by the puddle under a big rainbow",
+            "sound": ""
+          },
+          {
+            "image": "page-12.svg",
+            "text": "Sunny, windy, rainy - Musa loves them all!",
+            "alt": "Musa celebrating with a chick, the kite and confetti under the sun",
+            "sound": ""
+          }
+        ]
       }
     ],
     "audioRelease": "20260903c",
@@ -2400,10 +3382,22 @@
      anything - there is nothing here to be right about yet.
      ------------------------------------------------------------------ */
   function wordWalk(o) {
-    let i = 0;
+    let i = 0, si = 0;
     const el = o.el;
+    // Cycling sentences within one word must NOT replay the word's own
+    // audio - paint() redraws for both "next word" and "another sentence",
+    // and only the FORMER should trigger it. Registered once per word in
+    // draw(), not on every paint().
     function draw() {
+      si = 0;
       const it = o.items[i];
+      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
+      playHere(o.finish, it.audio, it.w);
+      paint();
+    }
+    function paint() {
+      const it = o.items[i];
+      const sentences = it.sentences || [];
       $(el.ask).innerHTML = o.ask || "Say this word out loud.";
       $(el.stage).innerHTML =
         '<div class="wordcard">' +
@@ -2412,13 +3406,31 @@
         '<div class="bigword">' + esc(it.w) + "</div>" +
         (it.pos ? '<div class="wordpos">' + esc(it.pos) + "</div>" : "") +
         (it.meaning ? '<p class="wordmeaning">' + esc(it.meaning) + "</p>" : "") +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.replay +
+        '">&#128266; Hear it</button></div>' +
+        (sentences.length
+          ? '<div class="wordsentencebox">' +
+            '<p class="sentlabel">In a sentence &middot; ' + (si + 1) + " of " + sentences.length + "</p>" +
+            '<p class="wordsentence">' + esc(sentences[si].text) + "</p>" +
+            '<div class="bigbtns">' +
+            '<button type="button" class="big small ghost" id="' + el.hearSent + '">&#128266; Hear the sentence</button>' +
+            (sentences.length > 1
+              ? '<button type="button" class="big small ghost" id="' + el.nextSent + '">Another sentence &#9654;</button>'
+              : "") +
+            "</div></div>"
+          : "") +
         "</div>" +
         '<div class="bigbtns">' +
-        '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Hear it</button>' +
         '<button type="button" class="big small" id="' + el.next + '">' +
         (i === o.items.length - 1 ? "Done &#9654;" : "Next word &#9654;") + "</button></div>";
       $(el.score).textContent = (o.label || "Word") + " " + (i + 1) + " of " + o.items.length;
       $(el.replay).addEventListener("click", () => playClip(it.audio, it.w));
+      if (sentences.length) {
+        $(el.hearSent).addEventListener("click", () => playClip(sentences[si].audio, sentences[si].text));
+        if (sentences.length > 1) {
+          $(el.nextSent).addEventListener("click", () => { si = (si + 1) % sentences.length; paint(); });
+        }
+      }
       $(el.next).addEventListener("click", () => {
         i++;
         if (i >= o.items.length) {
@@ -2429,8 +3441,6 @@
           finish(o.finish, o.done);
         } else draw();
       });
-      ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
-      playHere(o.finish, it.audio, it.w);
     }
     draw();
   }
@@ -2607,6 +3617,76 @@
     draw();
   }
 
+  /* ---- Memory Pairs: reveal on tap, connect word to meaning --------
+     The pack's own description is "Reveal tiles and connect each word
+     with its meaning", so tiles start face-down (a "?" back) and the tap
+     reveals the text underneath - not just a plain tap-to-select grid.
+     Round after round, the same shape every other step here uses; a round
+     is done when its three pairs are all matched.
+     ------------------------------------------------------------------ */
+  function memoryPairs(o) {
+    let r = 0;
+    const el = o.el;
+    function draw() {
+      const round = o.items[r];
+      let tiles = round.pairs.flatMap((p, pi) => [
+        { text: p[0], pair: pi },
+        { text: p[1], pair: pi },
+      ]);
+      tiles = shuffle(tiles).map((t, k) => ({ ...t, k }));
+      let picked = [];
+      let matched = 0;
+      let lock = false;
+      $(el.ask).innerHTML = round.prompt || "Tap two tiles that go together.";
+      $(el.stage).innerHTML = '<div class="pairsgrid" id="' + el.grid + '"></div>';
+      $(el.score).textContent = "Round " + (r + 1) + " of " + o.items.length;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      const grid = $(el.grid);
+      grid.innerHTML = tiles.map((t) =>
+        '<button type="button" class="pairtile" data-k="' + t.k + '">' +
+        '<span class="back" aria-hidden="true">?</span>' +
+        '<span class="face">' + esc(t.text) + "</span></button>").join("");
+      grid.addEventListener("click", (e) => {
+        const b = e.target.closest(".pairtile");
+        if (!b || lock) return;
+        const k = Number(b.dataset.k);
+        if (b.classList.contains("matched") || b.classList.contains("revealed")) return;
+        b.classList.add("revealed");
+        picked.push({ k, pair: tiles[k].pair, el: b });
+        if (picked.length < 2) return;
+        lock = true;
+        const [a, c] = picked;
+        if (a.pair === c.pair) {
+          a.el.classList.add("matched"); c.el.classList.add("matched");
+          a.el.disabled = true; c.el.disabled = true;
+          matched++;
+          picked = []; lock = false;
+          if (matched === round.pairs.length) {
+            $(el.fb).className = "fb good";
+            $(el.fb).textContent = cheer() + " Round " + (r + 1) + " matched.";
+            setTimeout(() => {
+              r++;
+              if (r >= o.items.length) {
+                $(el.stage).innerHTML = ""; $(el.score).textContent = "";
+                $(el.fb).className = "fb good";
+                $(el.fb).textContent = o.done;
+                finish(o.finish, o.done);
+              } else draw();
+            }, 1100);
+          }
+        } else {
+          a.el.classList.add("wrong"); c.el.classList.add("wrong");
+          setTimeout(() => {
+            a.el.classList.remove("revealed", "wrong");
+            c.el.classList.remove("revealed", "wrong");
+            picked = []; lock = false;
+          }, 900);
+        }
+      });
+    }
+    draw();
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>
@@ -2621,12 +3701,173 @@
   }
 
 
-  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"]];
+  /* ==================================================================
+     PICTURE BOOKS
+
+     The shelf and reader do NOT copy the story pages anywhere. This build
+     ships to app/english/grade-1-v2/, one directory below app/english/,
+     the same level ../ebooks/ already lives at - the assets the shell's
+     own reader already fetches from ./ebooks/. So the path from here is
+     ../ebooks/<id>/<file>, and it resolves in local dev too: this page's
+     own directory (english/grade-1-app/) sits beside english/ebooks/ on
+     disk, exactly the same relative shape.
+
+     Nothing is duplicated because nothing needs to be: the SVGs are
+     fetched at READ time, one page at a time, same as the shell does.
+
+     What is NOT ported: story narration is runtime TTS in the shell
+     (aiVoiceUrl, a paid endpoint this standalone page has no business
+     calling on its own), so a page's Listen button reads its text through
+     this page's OWN voice engine (VOICE.say) instead - the same engine
+     every other step's Explain button already uses. The tap-sound
+     resolution tables ARE ported, verbatim, because they are small, pure
+     data, and a tap that resolves to the wrong clip is a worse experience
+     than porting forty lines.
+     ================================================================== */
+
+  const TAP_SOUND_MOOD_TYPES = new Set(["zebra", "elephant", "kiki", "duku", "lulu", "zuri", "goat", "hen", "monkey"]);
+  const TAP_SOUND_MOODS = new Set(["happy", "sad", "surprised"]);
+  const TAP_SOUND_ALIASES = { kite: "wind", moon: "lullaby", carrot: "crunch", scarecrow: "tree", lake: "puddle", fish: "puddle", boat: "wind", clock: "bell" };
+  const TAP_VOICE_GROUPS = {
+    amal: "child", nora: "child", mina: "child", adam: "child", idris: "child",
+    noah: "child", sami: "child", maya: "child",
+    samira: "child", hodan: "child", leo: "child",
+    daniel: "child", theo: "child",
+    yasmin: "woman", mum: "woman", hana: "woman", salma: "woman", faduma: "woman",
+    leila: "woman",
+    nadia: "woman", sarah: "woman", elena: "woman", talia: "woman", librarian: "woman",
+    governor: "woman",
+    omar: "man", dad: "man", grandpa: "man", rami: "man", mayor: "man", karim: "man",
+    uncle: "man", lawyer: "man", caretaker: "man", labourer: "man",
+  };
+
+  const tapPlayer = new Audio();
+  function ebookAsset(bookId, filename) {
+    return new URL("../ebooks/" + bookId + "/" + filename, document.baseURI).href;
+  }
+  function playTapSound(type, mood) {
+    if (!type) return;
+    const voiceGroup = TAP_VOICE_GROUPS[type];
+    const soundKey = voiceGroup
+      ? voiceGroup + "-" + (TAP_SOUND_MOODS.has(mood) ? mood : "happy")
+      : TAP_SOUND_MOOD_TYPES.has(type)
+        ? type + "-" + (TAP_SOUND_MOODS.has(mood) ? mood : "happy")
+        : TAP_SOUND_ALIASES[type] || type;
+    try {
+      tapPlayer.pause();
+      tapPlayer.src = ebookAsset("tap-sounds", soundKey + ".mp3");
+      tapPlayer.currentTime = 0;
+      tapPlayer.play().catch(() => {});
+    } catch (_) { /* a tap sound is a garnish; never let it break the reader */ }
+  }
+  function playStorySound(key) {
+    if (!key) return;
+    try {
+      tapPlayer.pause();
+      tapPlayer.src = ebookAsset("tap-sounds", key + ".mp3");
+      tapPlayer.currentTime = 0;
+      tapPlayer.play().catch(() => {});
+    } catch (_) { /* same */ }
+  }
+
+  function bookShelf(o) {
+    const el = o.el;
+    const books = o.items;
+    let opened = false;
+
+    function drawShelf() {
+      $(el.ask).innerHTML = o.ask || "Choose a book to read.";
+      $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
+      $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
+      $(el.shelf).innerHTML = books.map((b, k) =>
+        '<div class="bookcard"><span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
+        '<span class="booktitle">' + esc(b.title) + "</span>" +
+        (b.author ? '<span class="bookmeta">by ' + esc(b.author) + "</span>" : "") +
+        '<span class="bookmeta">' + b.pages.length + " pages</span>" +
+        '<button type="button" class="big small teal" data-book="' + k + '">Read ▶</button></div>').join("");
+      $(el.shelf).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-book]");
+        if (!b) return;
+        openReader(books[Number(b.dataset.book)]);
+      });
+    }
+
+    function openReader(book) {
+      opened = true;
+      let page = 0;
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader";
+      document.body.appendChild(overlay);
+
+      function renderPage() {
+        const p = book.pages[page];
+        const last = page === book.pages.length - 1;
+        overlay.innerHTML =
+          '<div class="book-reader-top"><span class="booktitle">' + esc(book.title) + "</span>" +
+          '<button type="button" class="book-close" aria-label="Close the book">&#10005;</button></div>' +
+          '<div class="book-stage-wrap"><div class="book-stage" id="bookStage"></div></div>' +
+          '<div class="book-reader-bottom">' +
+          '<button type="button" class="big small ghost" id="bookBack"' + (page === 0 ? " disabled" : "") + '>&#9664; Back</button>' +
+          '<button type="button" class="big small teal" id="bookListen">&#128266; Listen</button>' +
+          '<span class="book-page-count">Page ' + (page + 1) + " of " + book.pages.length + "</span>" +
+          (last
+            ? '<button type="button" class="big small" id="bookFinish">Finish book &#10003;</button>'
+            : '<button type="button" class="big small" id="bookNext">Next &#9654;</button>') +
+          "</div>";
+        overlay.querySelector(".book-close").addEventListener("click", closeReader);
+        const backBtn = overlay.querySelector("#bookBack");
+        if (backBtn) backBtn.addEventListener("click", () => { page--; renderPage(); });
+        const nextBtn = overlay.querySelector("#bookNext");
+        if (nextBtn) nextBtn.addEventListener("click", () => { page++; renderPage(); });
+        const finishBtn = overlay.querySelector("#bookFinish");
+        if (finishBtn) finishBtn.addEventListener("click", () => {
+          closeReader();
+          finish(o.finish, o.done);
+        });
+        overlay.querySelector("#bookListen").addEventListener("click", () => VOICE.speak(p.text));
+
+        const stage = overlay.querySelector("#bookStage");
+        fetch(ebookAsset(book.id, p.image))
+          .then((r) => (r.ok ? r.text() : Promise.reject(new Error("page fetch failed"))))
+          .then((markup) => {
+            if (!stage.isConnected) return;
+            const svg = new DOMParser().parseFromString(markup, "image/svg+xml").documentElement;
+            if (!svg || svg.nodeName.toLowerCase() !== "svg") return;
+            svg.setAttribute("role", "img");
+            if (p.alt) svg.setAttribute("aria-label", p.alt);
+            stage.innerHTML = "";
+            stage.appendChild(svg);
+            svg.addEventListener("pointerdown", (e) => {
+              const target = e.target.closest && e.target.closest("[data-tap]");
+              if (!target) return;
+              playTapSound(target.dataset.tap, target.dataset.mood);
+              target.classList.remove("tap-play");
+              void target.getBoundingClientRect();
+              target.classList.add("tap-play");
+            });
+          })
+          .catch(() => { stage.innerHTML = '<p style="padding:20px;color:var(--muted)">This page could not be loaded.</p>'; });
+        if (p.sound) playStorySound(p.sound);
+      }
+      function closeReader() {
+        overlay.remove();
+        document.removeEventListener("keydown", onKey);
+      }
+      function onKey(e) { if (e.key === "Escape") closeReader(); }
+      document.addEventListener("keydown", onKey);
+      renderPage();
+    }
+
+    drawShelf();
+  }
+
+
+  const STICKERS = [["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["✅", "I showed what I know"], ["🎮", "I played Meaning Match"], ["🪄", "I played Memory Pairs"], ["📚", "I read a picture book"]];
 
   hearAndTap({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", replay: "replay1" }, items: LESSON.sounds, finish: 0,
     ask: "Which word did you hear?", label: "Word",
     done: "You know these words by their sound now." });
-  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2" }, items: LESSON.newwords, finish: 1,
+  wordWalk({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2", replay: "replay2", next: "next2", hearSent: "hearSent2", nextSent: "nextSent2" }, items: LESSON.newwords, finish: 1,
     ask: "Say this word out loud.", label: "Word",
     done: "Now you have met them, you will see them all through the unit." });
   pictureMatch({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, items: LESSON.match, finish: 2,
@@ -2647,6 +3888,13 @@
     done: "That is a real sentence, written by you." });
   sequence({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, items: LESSON.quiz, finish: 8,
     label: "Question", done: "That is the whole unit finished." });
+  sequence({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, items: LESSON.meaningmatch, finish: 9,
+    label: "Round", done: "That is Meaning Match finished." });
+  memoryPairs({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11", grid: "grid11" }, items: LESSON.memorypairs, finish: 10,
+    done: "That is every pair matched." });
+  bookShelf({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12", shelf: "shelf12" }, items: LESSON.books, finish: 11,
+    ask: "Choose a book to read.",
+    done: "You finished a book from this unit's shelf." });
 
   show(0, false);
 

@@ -1,0 +1,16 @@
+{
+  "_comment": "Describes this standalone build for ../lesson-app-tools/. UNLIKE grades 1 to 4, this one is NOT wired to the platform shell: the unit is a single self-contained page with no module imports, no progress reporting, no Wehel and no hand-raise. deploy.mjs uploads the four shared modules unconditionally, so they will land in the remote directory and nothing will load them. The hub IS the unit, so it ships twice: as index.html for a stable route and under its own name.",
+  "grade": 5,
+  "gradeLabel": "Grade 5",
+  "subject": "mathematics",
+  "subjectLabel": "Mathematics",
+  "courseKey": "ehel-math-g05",
+  "progressUnitPrefix": "l",
+  "fromParam": "g5",
+  "backLabel": "Grade 5 Maths",
+  "hub": "squares-and-steps.html",
+  "remote": "Ehel Primary/app/mathematics/grade-5-v2",
+  "lessons": [
+    { "file": "squares-and-steps.html", "title": "Squares and Steps" }
+  ]
+}

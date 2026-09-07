@@ -666,7 +666,7 @@ export function createCourseApp(config) {
   // the same singletons instead of a copy. placeLearnerControls comes back out
   // because mountDeck() has to re-place the buttons after it rebuilds .gc-top.
   const { placeLearnerControls } = mountLearnerControls({
-    token, launchToken, launchEndpoint, progressUnit: PROGRESS_UNIT,
+    launchToken, launchEndpoint, progressUnit: PROGRESS_UNIT,
   });
 
   const emitProgressSummary = () => {

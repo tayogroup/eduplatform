@@ -1,0 +1,68 @@
+
+  /* ---------- Parts of a Whole: only what the shared lesson CSS lacks ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font-size: 15px; }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .chip .fr i, .chip .fr b { color: inherit; }
+  .picker-lab2 { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--muted); margin: 16px 0 6px; }
+  .qstem { font-size: 22px; font-weight: 700; margin: 8px 0 4px; }
+
+  /* the stacked fraction glyph, used everywhere */
+  .fr { display: inline-flex; flex-direction: column; align-items: center; vertical-align: -0.55em;
+    line-height: 1; margin: 0 2px; font-family: "Fredoka", sans-serif; font-weight: 600; }
+  .fr i { font-style: normal; font-size: .78em; padding: 0 3px; }
+  .fr b { font-size: .78em; padding: 0 3px; border-top: 2px solid currentColor; }
+
+  /* bars cut into parts */
+  .fbar { display: flex; gap: 3px; margin: 10px 0; }
+  .fbar i { flex: 1; height: 30px; border-radius: 5px; background: var(--cell);
+    border: 1.5px solid var(--line); display: block; }
+  .fbar i.on { background: var(--accent); border-color: var(--accent); }
+  .fbar.big i { height: 46px; }
+  .stack { display: grid; gap: 6px; margin-top: 6px; }
+  .srow2, .eqrow, .cmpside { display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: center; }
+  .slab { text-align: right; font-size: 15px; }
+  .sline { display: block; height: 20px; background: var(--cell); border: 1.5px solid var(--line);
+    border-radius: 5px; overflow: hidden; }
+  .sline i { display: block; height: 100%; background: var(--teal); }
+  .eqbar { display: flex; gap: 2px; }
+  .eqbar i { flex: 1; height: 24px; border-radius: 4px; background: var(--cell);
+    border: 1px solid var(--line); display: block; }
+  .eqbar i.on { background: var(--teal); border-color: var(--teal); }
+  .eqbars { display: grid; gap: 7px; margin-top: 4px; }
+
+  /* cakes */
+  .cakes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 12px 0 4px; }
+  .cake { width: 104px; height: 104px; }
+  .cake path { fill: var(--cell); stroke: var(--card); stroke-width: 2; }
+  .cake path.mine { fill: var(--accent); }
+
+  /* groups of counters */
+  .groups3 { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+  .g3 { display: flex; flex-wrap: wrap; gap: 4px; max-width: 92px; padding: 7px;
+    border: 2px dashed var(--line); border-radius: 12px; }
+  .g3.mine { border-style: solid; border-color: var(--accent); background: var(--accent-soft); }
+  .g3 i { display: block; width: 13px; height: 13px; border-radius: 50%; background: var(--teal); }
+  .g3.mine i { background: var(--accent); }
+
+  /* the hundred square */
+  .hund100 { display: grid; grid-template-columns: repeat(10, 24px); gap: 2px;
+    width: max-content; margin: 12px auto 4px; }
+  .hund100 i { display: block; width: 24px; height: 24px; border-radius: 3px; background: var(--cell);
+    border: 1px solid var(--line); }
+  .hund100 i.on { background: var(--accent); border-color: var(--accent); }
+  .reads3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+  .read3 { background: var(--cell); border: 1px solid var(--line); border-radius: 12px;
+    padding: 9px 10px; text-align: center; }
+  .read3.hero3 { background: var(--accent-soft); border-color: var(--accent); }
+  .r3lab { display: block; font-size: 10px; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .read3 b { font-family: "Fredoka", sans-serif; font-size: 21px; font-weight: 600; }
+  .read3.hero3 b { color: var(--accent); }
+
+  /* comparing */
+  .cmp { display: grid; gap: 10px; margin: 10px 0 14px; }
+  .choice.sign { font-family: "Fredoka", sans-serif; font-size: 26px; font-weight: 600;
+    min-width: 66px; padding: 6px 14px; }

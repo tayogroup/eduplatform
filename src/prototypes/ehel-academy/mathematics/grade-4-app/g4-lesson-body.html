@@ -1,0 +1,191 @@
+
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 4</p>
+      <h1>Four Digits <em>Strong</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+    <!-- 1 thousands -->
+    <section class="slide" data-say="Ten hundreds make a thousand. Build a number with thousands, hundreds, tens and ones.">
+      <div class="slide-head"><span class="n">1</span><h2>Numbers to 10,000</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Ten hundreds make a <b>thousand</b>, a big cube. Build the number you are asked for.</span></div>
+      <div class="stage">
+        <div class="blocks" id="blocks1"></div>
+        <div class="bignum" id="num1"></div>
+        <div class="word" id="word1"></div>
+        <div class="pv"><div class="thou"><div class="lab">thousands</div><div class="val" id="k1"></div></div><div class="hund"><div class="lab">hundreds</div><div class="val" id="h1"></div></div><div class="tens"><div class="lab">tens</div><div class="val" id="t1"></div></div><div class="ones"><div class="lab">ones</div><div class="val" id="o1"></div></div></div>
+        <div class="bigbtns"><button type="button" class="big gold small" data-d="1000">+1000</button><button type="button" class="big gold small ghost" data-d="-1000">−1000</button><button type="button" class="big plum small" data-d="100">+100</button><button type="button" class="big small ghost" data-d="-100">−100</button><button type="button" class="big teal small" data-d="10">+10</button><button type="button" class="big small ghost" data-d="-10">−10</button><button type="button" class="big small" data-d="1">+1</button><button type="button" class="big small ghost" data-d="-1">−1</button></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="find1"></p>
+      </div>
+    </section>
+
+    <!-- 2 negative numbers -->
+    <section class="slide" data-say="The thermometer goes below zero. Count down through zero into the negative numbers.">
+      <div class="slide-head"><span class="n">2</span><h2>Below zero</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Temperatures can go <b>below zero</b>. Count down through 0 into the <b>negative</b> numbers.</span></div>
+      <div class="stage">
+        <div class="thermo"><div class="scale" id="scale2"></div><div class="tube" id="tube2"><div class="zero" id="zero2"></div><div class="merc" id="merc2"></div></div><div><div class="tempnum" id="temp2"></div><div class="bigbtns" style="flex-direction:column"><button type="button" class="big small" id="warm2">warmer +1</button><button type="button" class="big small teal" id="cold2">colder −1</button></div></div></div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="task2"></p>
+      </div>
+    </section>
+
+    <!-- 3 rounding -->
+    <section class="slide" data-say="Round to the nearest ten, hundred or thousand. Which is nearer? Tap it.">
+      <div class="slide-head"><span class="n">3</span><h2>Round to 10, 100 and 1000</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Which is nearer? Tap it.</span></div>
+      <div class="stage">
+        <div class="bignum" id="num3"></div>
+        <div class="nline" id="nl3"></div>
+        <div class="choices" id="ch3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="score3"></p>
+      </div>
+    </section>
+
+    <!-- 4 grid method -->
+    <section class="slide" data-say="Multiply a two-digit number with the grid method. Split it into tens and ones, multiply each part, then add.">
+      <div class="slide-head"><span class="n">4</span><h2>Multiply with the grid</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Split the big number into <b>tens</b> and <b>ones</b>. Multiply each part, then <b>add</b> the two answers.</span></div>
+      <div class="stage">
+        <div class="bignum" id="mul4" style="font-size:clamp(32px,7vw,52px)"></div>
+        <div class="area" id="area4"></div>
+        <div class="gridm" id="grid4"></div>
+        <div class="working" id="work4"></div>
+        <div class="bigbtns"><button type="button" class="big teal small" id="step4">Show the next part</button></div>
+        <div class="choices" id="ch4"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="score4"></p>
+      </div>
+    </section>
+
+    <!-- 5 division with remainder -->
+    <section class="slide" data-say="Divide by taking out groups. Keep taking groups until there are not enough left for another one.">
+      <div class="slide-head"><span class="n">5</span><h2>Divide by taking groups</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Take out <b>groups</b> until there are not enough left for another. What is left is the <b>remainder</b>.</span></div>
+      <div class="stage">
+        <div class="bignum" id="div5" style="font-size:clamp(32px,7vw,52px)"></div>
+        <div class="dots-pool" id="pool5"></div>
+        <div class="groups" id="groups5"></div>
+        <div class="bigbtns"><button type="button" class="big" id="take5">Take a group</button><button type="button" class="big small teal" id="next5" hidden>Next one</button></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="score5"></p>
+      </div>
+    </section>
+
+    <!-- 6 tables 6 7 9 + factors -->
+    <section class="slide" data-say="The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.">
+      <div class="slide-head"><span class="n">6</span><h2>6s, 7s, 9s and factor pairs</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Every rectangle you can make from a number shows a <b>factor pair</b>. Pick a number to see all of them.</span></div>
+      <div class="stage">
+        <div class="bigbtns" id="nums6"></div>
+        <div class="rects" id="rects6"></div>
+        <div class="working" id="work6"></div>
+        <div class="choices" id="ch6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="score6"></p>
+      </div>
+    </section>
+
+    <!-- 7 tenths and hundredths -->
+    <section class="slide" data-say="The square is cut into one hundred parts. Each part is one hundredth. Ten of them make one tenth.">
+      <div class="slide-head"><span class="n">7</span><h2>Tenths and hundredths</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">100 little squares. Each is one <b>hundredth</b>, 0.01. A whole row is one <b>tenth</b>, 0.1. Tap to shade.</span></div>
+      <div class="stage">
+        <div class="hgrid" id="hgrid7"></div>
+        <div class="forms"><div class="form"><div class="lab">Shaded</div><div class="val" id="cnt7"></div></div><div class="form"><div class="lab">Fraction</div><div class="val" id="fr7"></div></div><div class="form"><div class="lab">Decimal</div><div class="val" id="dc7"></div></div></div>
+        <p class="fb" id="fb7"></p>
+        <div class="choices" id="ch7"></div>
+        <p class="fb small-fb" id="score7"></p>
+      </div>
+    </section>
+
+    <!-- 8 add fractions -->
+    <section class="slide" data-say="Add fractions with the same bottom number. Shade the first, then the second, and count the parts.">
+      <div class="slide-head"><span class="n">8</span><h2>Adding fractions</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Same bottom number, so just <b>count the parts</b>. Tap to shade the second fraction.</span></div>
+      <div class="stage">
+        <div class="bignum" id="sum8" style="font-size:clamp(26px,6vw,44px)"></div>
+        <div class="fracbar" id="bar8"></div>
+        <p class="fb" id="fb8"></p>
+        <div class="choices" id="ch8"></div>
+        <p class="fb small-fb" id="score8"></p>
+      </div>
+    </section>
+
+    <!-- 9 perimeter and area -->
+    <section class="slide" data-say="Area is the squares inside. Perimeter is the distance all the way round the edge.">
+      <div class="slide-head"><span class="n">9</span><h2>Perimeter and area</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9"><b>Area</b> is the squares inside. <b>Perimeter</b> is the distance all the way round the edge.</span></div>
+      <div class="stage">
+        <div class="shape" id="shape9"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="wMinus">− wide</button><button type="button" class="big small teal" id="wPlus">+ wide</button><button type="button" class="big small ghost" id="hMinus">− tall</button><button type="button" class="big small" id="hPlus">+ tall</button></div>
+        <div class="working" id="work9"></div>
+        <div class="choices" id="ch9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="fb small-fb" id="score9"></p>
+      </div>
+    </section>
+
+    <!-- 10 angles -->
+    <section class="slide" data-say="Turn the arm. A square corner is a right angle. Smaller is acute. Bigger is obtuse.">
+      <div class="slide-head"><span class="n">10</span><h2>Acute, right or obtuse?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">A square corner is a <b>right angle</b>, 90°. Smaller is <b>acute</b>. Bigger is <b>obtuse</b>. Turn the arm.</span></div>
+      <div class="stage">
+        <svg class="angle" id="angle10" viewBox="0 0 260 200" aria-hidden="true"></svg>
+        <input type="range" id="deg10" min="10" max="170" step="5" value="45" style="width:100%;max-width:320px;accent-color:var(--accent)">
+        <p class="fb" id="name10"></p>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="fb small-fb" id="score10"></p>
+      </div>
+    </section>
+
+    <!-- 11 coordinates -->
+    <section class="slide" data-say="Coordinates. Go along the bottom first, then up. Tap the point I ask for.">
+      <div class="slide-head"><span class="n">11</span><h2>Coordinates</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Go <b>along</b> first, then <b>up</b>. Tap the point.</span></div>
+      <div class="stage">
+        <svg class="coords" id="coords11" viewBox="0 0 260 260" role="img" aria-label="Coordinate grid"></svg>
+        <p class="fb" id="fb11"></p>
+        <p class="fb small-fb" id="score11"></p>
+      </div>
+    </section>
+
+    <!-- 12 check -->
+    <section class="slide" data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="fb" id="q12" style="font-size:24px"></p>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12"></p>
+        <p class="fb small-fb" id="score12"></p>
+      </div>
+    </section>
+
+    <!-- 13 stickers -->
+    <section class="slide" data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fb13"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+

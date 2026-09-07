@@ -1,0 +1,106 @@
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 4</p>
+      <h1>Telling the <em>Time</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 units of time -->
+    <section class="slide" data-say="Sixty seconds make a minute, sixty minutes make an hour. Pick a unit and see how the smaller ones group together inside it.">
+      <div class="slide-head"><span class="n">1</span><h2>How long is that?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Every unit of time is made of a fixed number of smaller ones. <b>Group them</b> and you can swap between the two.</span></div>
+      <div class="stage">
+        <div class="chips" id="pick1"></div>
+        <label class="lab" for="many1">How many: <span id="manyLab1">3</span></label>
+        <input type="range" id="many1" min="1" max="8" value="3" step="1">
+        <div class="tgroups" id="groups1" aria-hidden="true"></div>
+        <div class="working" id="work1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="task1"></p>
+        <div class="askwrap" id="ask1"></div>
+      </div>
+    </section>
+
+    <!-- 2 clocks -->
+    <section class="slide" data-say="One moment can be written three ways. On a clock face, as a twelve hour time, or as a twenty four hour time. The am or pm tells you which half of the day it is.">
+      <div class="slide-head"><span class="n">2</span><h2>Three ways to say one time</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">A clock face, a <b>12-hour</b> time with am or pm, and a <b>24-hour</b> time. One moment, three ways of writing it.</span></div>
+      <div class="stage">
+        <div class="clockrow">
+          <svg class="clock" id="clock2" viewBox="0 0 200 200" role="img" aria-label="A clock face"></svg>
+          <div class="reads">
+            <div class="read"><span class="rlab">12-hour</span><b id="r12">—</b></div>
+            <div class="read"><span class="rlab">24-hour</span><b id="r24">—</b></div>
+            <div class="bigbtns">
+              <button type="button" class="big small" id="h2">+1 hour</button>
+              <button type="button" class="big small teal" id="m2">+5 min</button>
+            </div>
+          </div>
+        </div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="task2"></p>
+        <div class="askwrap" id="ask2"></div>
+      </div>
+    </section>
+
+    <!-- 3 timetable -->
+    <section class="slide" data-say="A timetable reads down for one bus and across for one stop. Find the bus that gets you there in time.">
+      <div class="slide-head"><span class="n">3</span><h2>Reading a timetable</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Read <b>down</b> a column to follow one bus, and <b>across</b> a row to compare the same stop. Times are in 24-hour.</span></div>
+      <div class="stage">
+        <div class="ttwrap"><table class="tt" id="tt3"></table></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="task3"></p>
+      </div>
+    </section>
+
+    <!-- 4 intervals -->
+    <section class="slide" data-say="To find how long something lasted, count on from the start to the finish.">
+      <div class="slide-head"><span class="n">4</span><h2>How long between?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Count on from the start to the end. Do the <b>whole units</b> first, then the rest.</span></div>
+      <div class="stage">
+        <div class="chips" id="pick4"></div>
+        <div class="working" id="work4"></div>
+        <div class="nline" id="line4"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new4">Another one</button></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="task4"></p>
+        <div class="askwrap" id="ask4"></div>
+      </div>
+    </section>
+
+    <!-- 5 check -->
+    <section class="slide" data-say="Show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="qstem" id="stem5"></p>
+        <div class="choices" id="choices5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="score5"></p>
+      </div>
+    </section>
+
+    <!-- 6 stickers -->
+    <section class="slide" data-say="Every step you finished earned a sticker.">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>

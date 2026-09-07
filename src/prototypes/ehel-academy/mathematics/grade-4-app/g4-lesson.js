@@ -1,0 +1,1137 @@
+
+(function () {
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  function sub1000(n) { const h = Math.floor(n / 100), r = n % 100; const small = r < 20 ? ONES[r] : TENS[Math.floor(r / 10)] + (r % 10 ? "-" + ONES[r % 10] : ""); if (!h) return small; return ONES[h] + " hundred" + (r ? " and " + small : ""); }
+  function words(n) { if (n === 10000) return "ten thousand"; const k = Math.floor(n / 1000), r = n % 1000; if (!k) return sub1000(n); return ONES[k] + " thousand" + (r ? (r < 100 ? " and " : " ") + sub1000(r) : ""); }
+  const fmt = (n) => n.toLocaleString("en-GB");
+  const sg = (v) => (v < 0 ? "−" + (-v) : String(v)); // a real minus sign for negative temperatures
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0; $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots(); if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+  function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + (l.hidden ? " hidden" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
+  function nline(el, lo, hi, marks, labelEvery, tick) {
+    const x = (v) => "calc(14px + " + ((v - lo) / (hi - lo)) + " * (100% - 28px))"; let h = '<div class="bar"></div>';
+    for (let v = lo; v <= hi; v += tick) { const big = (v - lo) % labelEvery === 0; h += '<div class="t' + (big ? " mid" : "") + '" style="left:' + x(v) + '"></div>'; if (big) h += '<div class="l big" style="left:' + x(v) + '">' + fmt(v) + "</div>"; }
+    (marks || []).forEach((m) => { h += '<div class="m" style="left:' + x(m) + '"></div>'; }); el.innerHTML = h;
+  }
+
+  /* ---- 1: thousands ---- */
+  let n1 = 2345, finds1 = shuffle([4072, 6805, 1350, 9218, 3007]).slice(0, 3), found1 = 0;
+  function paint1() {
+    const k = Math.floor(n1 / 1000), h = Math.floor((n1 % 1000) / 100), t = Math.floor((n1 % 100) / 10), o = n1 % 10;
+    $("blocks1").innerHTML = '<div class="cubes">' + '<div class="cube"></div>'.repeat(k) + '</div><div class="flats">' + '<div class="flat"></div>'.repeat(h) + '</div><div class="rods">' + '<div class="rod"></div>'.repeat(t) + '</div><div class="units">' + '<div class="unit"></div>'.repeat(o) + "</div>";
+    $("num1").innerHTML = '<span class="k">' + k + '</span>,<span class="h">' + h + '</span><span class="t">' + t + '</span><span class="o">' + o + "</span>";
+    $("word1").textContent = words(n1); $("k1").textContent = k; $("h1").textContent = h; $("t1").textContent = t; $("o1").textContent = o;
+    document.querySelectorAll('#deck [data-d]').forEach((b) => { const d = Number(b.dataset.d); b.disabled = n1 + d < 1000 || n1 + d > 9999; });
+    if (found1 < 3 && n1 === finds1[found1]) { found1++; $("fb1").className = "fb good"; $("fb1").textContent = cheer() + " " + fmt(n1) + " = " + [k * 1000, h * 100, t * 10, o].filter(Boolean).map(fmt).join(" + ") + "."; say(cheer() + " " + words(n1)); if (found1 === 3) finish(0, "You built all three numbers!"); }
+    else { $("fb1").className = "fb"; $("fb1").textContent = ""; }
+    $("find1").textContent = found1 < 3 ? "Build " + fmt(finds1[found1]) + "." : "You built all three!";
+  }
+  document.querySelectorAll('#deck [data-d]').forEach((b) => b.addEventListener("click", () => { n1 += Number(b.dataset.d); paint1(); say(words(n1)); }));
+  paint1();
+
+  /* ---- 2: negative numbers ---- */
+  let temp2 = 3, tasks2 = [{ from: 3, to: -2 }, { from: -4, to: 1 }, { from: 2, to: -5 }], ti2 = 0;
+  const T_MIN = -10, T_MAX = 10;
+  $("scale2").innerHTML = Array.from({ length: 11 }, (_, i) => { const v = T_MAX - i * 2; return '<span class="' + (v === 0 ? "z" : v < 0 ? "neg" : "") + '" style="top:' + ((T_MAX - v) / (T_MAX - T_MIN) * 100) + '%">' + (v > 0 ? "" : "") + v + "°</span>"; }).join("");
+  $("zero2").style.top = ((T_MAX - 0) / (T_MAX - T_MIN) * 100) + "%";
+  function paint2() {
+    const pct = (temp2 - T_MIN) / (T_MAX - T_MIN) * 100;
+    $("merc2").style.height = pct + "%"; $("merc2").className = "merc" + (temp2 < 0 ? " cold" : "");
+    $("temp2").textContent = (temp2 < 0 ? "−" + (-temp2) : String(temp2)) + "°C"; $("temp2").className = "tempnum " + (temp2 < 0 ? "neg" : "pos");
+    $("warm2").disabled = temp2 >= T_MAX; $("cold2").disabled = temp2 <= T_MIN;
+    const T = tasks2[ti2];
+    if (T) {
+      $("task2").textContent = "It is " + sg(T.from) + "°C. It gets " + (T.to < T.from ? (T.from - T.to) + " degrees colder" : (T.to - T.from) + " degrees warmer") + ". Press until you get there.";
+      if (temp2 === T.to) { $("fb2").className = "fb good"; $("fb2").textContent = cheer() + " " + sg(T.from) + "°C " + (T.to < T.from ? "− " + (T.from - T.to) : "+ " + (T.to - T.from)) + " = " + sg(T.to) + "°C" + (T.to < 0 && T.from > 0 ? ". You went down through zero." : T.to > 0 && T.from < 0 ? ". You came up through zero." : "."); say(cheer() + " " + T.to + " degrees"); ti2++; if (ti2 >= tasks2.length) finish(1, "You can count below zero!"); else setTimeout(() => { temp2 = tasks2[ti2].from; $("fb2").textContent = ""; paint2(); say(tasks2[ti2].from + " degrees. " + $("task2").textContent); }, 2200); }
+      else { $("fb2").className = "fb"; $("fb2").textContent = temp2 < 0 ? "Below zero: minus " + (-temp2) : temp2 === 0 ? "Zero, the line between" : ""; }
+    } else { $("task2").textContent = "All three done."; }
+  }
+  $("warm2").addEventListener("click", () => { if (temp2 < T_MAX) { temp2++; paint2(); say(temp2 < 0 ? "minus " + (-temp2) : String(temp2)); } });
+  $("cold2").addEventListener("click", () => { if (temp2 > T_MIN) { temp2--; paint2(); say(temp2 < 0 ? "minus " + (-temp2) : String(temp2)); } });
+  paint2();
+
+  /* ---- 3: rounding ---- */
+  let r3 = 0, right3 = 0, lock3 = false, n3 = 0, to3 = 10; const ROUNDS3 = 6;
+  function round3() {
+    lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
+    if (r3 >= ROUNDS3) { $("num3").textContent = ""; $("nl3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You rounded " + right3 + " of " + ROUNDS3 + "!"; finish(2, "You can round to ten, a hundred and a thousand."); return; }
+    to3 = [10, 10, 100, 100, 1000, 1000][r3];
+    do { n3 = rnd(1001, 9899); } while (n3 % to3 === 0 || (n3 % to3) === to3 / 2);
+    const lo = Math.floor(n3 / to3) * to3, hi = lo + to3;
+    $("score3").textContent = "Number " + (r3 + 1) + " of " + ROUNDS3;
+    $("say3").innerHTML = "Round <b>" + fmt(n3) + "</b> to the nearest <b>" + fmt(to3) + "</b>. Which is nearer? Tap it.";
+    $("num3").textContent = fmt(n3); nline($("nl3"), lo, hi, [n3], to3 / 2, to3 / 10);
+    $("ch3").innerHTML = [lo, hi].map((v) => '<button type="button" class="choice" data-v="' + v + '">' + fmt(v) + "</button>").join("");
+    say("Round " + words(n3) + " to the nearest " + words(to3));
+  }
+  $("ch3").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock3) return; lock3 = true;
+    const lo = Math.floor(n3 / to3) * to3, hi = lo + to3, rem = n3 - lo, ans = rem >= to3 / 2 ? hi : lo, ok = Number(b.dataset.v) === ans;
+    $("ch3").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right3++;
+    const why = fmt(n3) + " is " + fmt(Math.min(rem, to3 - rem)) + " away from " + fmt(ans) + " but " + fmt(Math.max(rem, to3 - rem)) + " away from " + fmt(ans === hi ? lo : hi) + ". It rounds to " + fmt(ans) + ".";
+    $("fb3").className = "fb " + (ok ? "good" : "bad"); $("fb3").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
+    r3++; setTimeout(round3, 2300);
+  });
+  round3();
+
+  /* ---- 4: grid method ---- */
+  let r4 = 0, right4 = 0, a4 = 0, b4 = 0, stage4 = 0; const ROUNDS4 = 4;
+  function round4() {
+    $("fb4").textContent = ""; $("fb4").className = "fb"; $("ch4").innerHTML = ""; stage4 = 0; $("step4").disabled = false; $("step4").hidden = false;
+    if (r4 >= ROUNDS4) { $("mul4").textContent = ""; $("area4").innerHTML = ""; $("grid4").innerHTML = ""; $("work4").innerHTML = ""; $("step4").hidden = true; $("fb4").className = "fb good"; $("fb4").textContent = "You multiplied " + right4 + " of " + ROUNDS4 + "!"; finish(3, "You can multiply with the grid method."); return; }
+    a4 = rnd(13, 49); b4 = [3, 4, 6, 7, 8, 9][rnd(0, 5)];
+    $("score4").textContent = "Question " + (r4 + 1) + " of " + ROUNDS4; paint4(); say(words(a4) + " times " + words(b4) + ". Press the button to work through the grid.");
+  }
+  function paint4() {
+    const T = Math.floor(a4 / 10) * 10, O = a4 % 10, p1 = T * b4, p2 = O * b4, ans = a4 * b4;
+    $("mul4").innerHTML = a4 + ' <span class="t">×</span> ' + b4 + ' <span style="color:var(--muted)">= ?</span>';
+    // shrink the squares so a wide number still fits a phone screen
+    const cell = Math.max(3, Math.min(10, Math.floor(280 / a4) - 2)); // 2px gap per column counts too
+    $("area4").style.setProperty("--cell", cell + "px");
+    $("area4").style.gridTemplateColumns = "repeat(" + a4 + ", " + cell + "px)";
+    $("area4").innerHTML = Array.from({ length: a4 * b4 }, (_, i) => '<i class="' + ((i % a4) < T ? "a" : "b") + '"></i>').join("");
+    $("grid4").innerHTML = '<div></div><div class="hd">' + T + '</div><div class="hd">' + O + '</div><div class="side">× ' + b4 + '</div><div class="cell' + (stage4 >= 1 ? " on" : "") + '">' + (stage4 >= 1 ? p1 : "?") + '</div><div class="cell' + (stage4 >= 2 ? " on" : "") + '">' + (stage4 >= 2 ? p2 : "?") + "</div>";
+    lines($("work4"), [
+      { k: "Split " + a4, v: T + " and " + O },
+      { k: "Tens part", v: T + " × " + b4 + " = <b>" + p1 + "</b>", hidden: stage4 < 1 },
+      { k: "Ones part", v: O + " × " + b4 + " = <b>" + p2 + "</b>", hidden: stage4 < 2 },
+      { k: "Add them", v: p1 + " + " + p2 + " = <b>" + ans + "</b>", total: true, hidden: stage4 < 3 },
+    ]);
+    if (stage4 >= 2 && !$("ch4").children.length) { $("ch4").innerHTML = shuffle([ans, ans + b4, ans - 10]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join(""); $("step4").disabled = true; }
+  }
+  $("step4").addEventListener("click", () => { stage4 = Math.min(2, stage4 + 1); paint4(); const l = [...$("work4").querySelectorAll(".line:not(.hidden)")].pop(); if (l) say(l.textContent); });
+  $("ch4").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ans = a4 * b4, ok = Number(b.dataset.v) === ans;
+    $("ch4").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right4++;
+    stage4 = 3; paint4(); $("mul4").innerHTML = a4 + ' <span class="t">×</span> ' + b4 + " = " + ans;
+    $("fb4").className = "fb " + (ok ? "good" : "bad"); $("fb4").textContent = (ok ? cheer() + " " : "") + a4 + " × " + b4 + " = " + ans + "."; say((ok ? cheer() + " " : "") + a4 + " times " + b4 + " is " + ans);
+    r4++; setTimeout(round4, 2300);
+  });
+  round4();
+
+  /* ---- 5: division by grouping ---- */
+  let r5 = 0, n5 = 0, k5 = 0, pool5 = 0, groups5 = 0; const ROUNDS5 = 3;
+  function round5() {
+    $("fb5").textContent = ""; $("fb5").className = "fb"; $("next5").hidden = true; $("take5").hidden = false;
+    if (r5 >= ROUNDS5) { $("div5").textContent = ""; $("pool5").innerHTML = ""; $("groups5").innerHTML = ""; $("take5").hidden = true; $("fb5").className = "fb good"; $("fb5").textContent = "Three divisions done!"; finish(4, "You can divide by taking groups."); return; }
+    k5 = [3, 4, 5, 6, 7, 8, 9][rnd(0, 6)]; n5 = rnd(20, 60); if (n5 % k5 === 0) n5++;
+    pool5 = n5; groups5 = 0; $("score5").textContent = "Question " + (r5 + 1) + " of " + ROUNDS5; $("pool5").className = "dots-pool";
+    $("say5").innerHTML = "<b>" + n5 + " ÷ " + k5 + "</b>. Take out groups of <b>" + k5 + "</b> until fewer than " + k5 + " are left."; paint5(); say(n5 + " divided by " + k5 + ". Take out groups of " + k5 + ".");
+  }
+  function paint5() {
+    $("pool5").innerHTML = "<i></i>".repeat(pool5);
+    $("groups5").innerHTML = Array.from({ length: groups5 }, () => '<div class="grp">' + "<i></i>".repeat(k5) + "</div>").join("");
+    const doneNow = pool5 < k5, q = Math.floor(n5 / k5), rem = n5 % k5;
+    $("div5").innerHTML = n5 + " ÷ " + k5 + (doneNow ? ' = <span class="t">' + q + '</span> r <span class="o">' + rem + "</span>" : ' <span style="color:var(--muted)">= ?</span>');
+    $("take5").disabled = doneNow;
+    if (doneNow) { $("pool5").className = "dots-pool rem"; $("fb5").className = "fb good"; $("fb5").textContent = cheer() + " " + groups5 + " groups of " + k5 + " is " + groups5 * k5 + ", and " + rem + " left over. " + n5 + " ÷ " + k5 + " = " + q + " r " + rem + "."; say(cheer() + " " + n5 + " divided by " + k5 + " is " + q + " remainder " + rem); $("next5").hidden = false; $("take5").hidden = true; r5++; }
+    else { $("fb5").className = "fb"; $("fb5").textContent = groups5 ? groups5 + " groups so far, " + pool5 + " left" : ""; }
+  }
+  $("take5").addEventListener("click", () => { if (pool5 < k5) return; pool5 -= k5; groups5++; paint5(); if (pool5 >= k5) say(groups5 + " groups, " + pool5 + " left"); });
+  $("next5").addEventListener("click", round5);
+  round5();
+
+  /* ---- 6: factor pairs and the 6, 7, 9 tables ---- */
+  const NUMS6 = [12, 18, 24, 36, 42, 63];
+  let num6 = 24, quiz6 = null, right6 = 0;
+  function factorPairs(n) { const p = []; for (let a = 1; a * a <= n; a++) if (n % a === 0) p.push([a, n / a]); return p; }
+  function paint6() {
+    $("nums6").innerHTML = NUMS6.map((n) => '<button type="button" class="big small ' + (n === num6 ? "teal" : "ghost") + '" data-n="' + n + '">' + n + "</button>").join("");
+    const pairs = factorPairs(num6);
+    $("rects6").innerHTML = pairs.map((p) => '<div><div class="rect" style="grid-template-columns:repeat(' + p[1] + ', 9px)">' + "<i></i>".repeat(num6) + '</div><div class="rectlab">' + p[0] + " × " + p[1] + "</div></div>").join("");
+    lines($("work6"), [
+      { k: "Factor pairs of " + num6, v: pairs.map((p) => p[0] + " × " + p[1]).join(", ") },
+      { k: "Factors", v: [...new Set(pairs.flat())].sort((a, b) => a - b).join(", "), total: true },
+    ]);
+  }
+  $("nums6").addEventListener("click", (e) => { const b = e.target.closest("[data-n]"); if (!b) return; num6 = Number(b.dataset.n); paint6(); say(num6 + " has " + factorPairs(num6).length + " factor pairs"); });
+  function ask6() {
+    const t = [6, 7, 9][rnd(0, 2)], r = rnd(2, 10), kind = right6 % 3;
+    if (kind === 0) quiz6 = { q: r + " × " + t + " = ?", a: r * t, wrong: [r * t + t, r * t - t], say: r + " times " + t };
+    else if (kind === 1) quiz6 = { q: (r * t) + " ÷ " + t + " = ?", a: r, wrong: [r + 1, r - 1 > 0 ? r - 1 : r + 2], say: (r * t) + " divided by " + t };
+    else { const n = NUMS6[rnd(0, 5)], f = [...new Set(factorPairs(n).flat())], nf = [2, 3, 4, 5, 6, 7, 8, 9].filter((x) => n % x !== 0); quiz6 = { q: "Which is a factor of " + n + "?", a: f[rnd(1, f.length - 2)], wrong: shuffle(nf).slice(0, 2), say: "Which is a factor of " + n + "?" }; }
+    $("say6").innerHTML = "<b>" + quiz6.q + "</b> Tap the answer.";
+    $("ch6").innerHTML = shuffle([quiz6.a, ...quiz6.wrong]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("fb6").textContent = ""; $("fb6").className = "fb"; $("score6").textContent = right6 + " of 4 right so far"; say(quiz6.say);
+  }
+  $("ch6").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === quiz6.a;
+    $("ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === quiz6.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right6++;
+    const n6 = quiz6.q.includes("factor") ? Number(quiz6.q.match(/factor of (\d+)/)[1]) : null;
+    $("fb6").className = "fb " + (ok ? "good" : "bad"); $("fb6").textContent = (ok ? cheer() + " " : "") + (n6 ? quiz6.a + " is a factor of " + n6 + " because " + n6 + " ÷ " + quiz6.a + " = " + (n6 / quiz6.a) + "." : quiz6.q.replace("?", "") + quiz6.a + "."); say((ok ? cheer() + " " : "") + "It is " + quiz6.a);
+    if (right6 >= 4) finish(5, "Tables and factors: well done!"); setTimeout(ask6, 2000);
+  });
+  paint6(); ask6();
+
+  /* ---- 7: tenths and hundredths ---- */
+  let shaded7 = 35, quiz7 = null, right7 = 0;
+  $("hgrid7").innerHTML = Array.from({ length: 100 }, (_, i) => '<button type="button" data-i="' + i + '" aria-label="square ' + (i + 1) + '"></button>').join("");
+  function paint7() {
+    const tenths = Math.floor(shaded7 / 10), hund = shaded7 % 10;
+    $("hgrid7").querySelectorAll("button").forEach((b, i) => { b.className = i < shaded7 ? (i < tenths * 10 ? "on tenth" : "on") : ""; });
+    $("cnt7").textContent = shaded7 + " of 100";
+    $("fr7").innerHTML = '<span class="frac"><span>' + shaded7 + "</span><span>100</span></span>";
+    $("dc7").textContent = shaded7 === 100 ? "1" : "0." + String(shaded7).padStart(2, "0");
+    $("fb7").className = "fb"; $("fb7").textContent = shaded7 === 100 ? "The whole square: 100 hundredths = 1." : tenths + (tenths === 1 ? " tenth" : " tenths") + " (the full rows) and " + hund + (hund === 1 ? " hundredth" : " hundredths") + " = 0." + String(shaded7).padStart(2, "0") + ".";
+  }
+  $("hgrid7").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; shaded7 = Number(b.dataset.i) + 1; paint7(); say("0 point " + String(shaded7).padStart(2, "0").split("").join(" ")); });
+  function ask7() {
+    const kinds = ["dec", "frac", "tenths"]; const k = kinds[right7 % 3]; const n = rnd(1, 99);
+    if (k === "dec") { const swap = "0." + String(n % 10) + String(Math.floor(n / 10)), other = "0." + String((n + 11) % 100 || 22).padStart(2, "0"); quiz7 = { q: "Which decimal is " + n + "/100?", a: "0." + String(n).padStart(2, "0"), wrong: [swap === "0." + String(n).padStart(2, "0") ? "0." + String((n + 33) % 100).padStart(2, "0") : swap, other] }; }
+    else if (k === "frac") quiz7 = { q: "0." + String(n).padStart(2, "0") + " is how many hundredths?", a: String(n), wrong: [String(n + 10 > 99 ? n - 10 : n + 10), String(Math.floor(n / 10))] };
+    else { const tn = rnd(1, 9); quiz7 = { q: tn + "/10 as a decimal is…", a: "0." + tn, wrong: ["0.0" + tn, tn + ".0"] }; }
+    $("say7").innerHTML = "<b>" + quiz7.q + "</b> Tap the answer.";
+    $("ch7").innerHTML = shuffle([quiz7.a, ...quiz7.wrong.filter((w) => w !== quiz7.a)]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("score7").textContent = right7 + " of 3 right so far"; say(quiz7.q);
+  }
+  $("ch7").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = b.dataset.v === quiz7.a;
+    $("ch7").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === quiz7.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right7++;
+    const m = quiz7.a.match(/^0\.(\d)(\d)?$/); if (m) { shaded7 = Number(m[1]) * 10 + Number(m[2] || 0); } else if (/^\d+$/.test(quiz7.a)) shaded7 = Number(quiz7.a); paint7();
+    $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "") + "It is " + quiz7.a + ". Look at the square."; say((ok ? cheer() + " " : "") + "It is " + quiz7.a);
+    if (right7 >= 3) finish(6, "Tenths and hundredths: well done!"); setTimeout(ask7, 2000);
+  });
+  paint7(); ask7();
+
+  /* ---- 8: adding fractions with the same denominator ---- */
+  let d8 = 8, a8 = 3, b8 = 2, shadedB = 0, right8 = 0, lock8 = false;
+  function newSum8() {
+    d8 = [5, 6, 8, 10][rnd(0, 3)]; a8 = rnd(1, d8 - 2); b8 = rnd(1, d8 - a8 - 1); shadedB = 0; lock8 = false;
+    $("ch8").innerHTML = ""; $("fb8").textContent = ""; $("fb8").className = "fb";
+    $("say8").innerHTML = "<b>" + a8 + "/" + d8 + " + " + b8 + "/" + d8 + "</b>. The first is shaded. Tap <b>" + b8 + "</b> more parts, then tap the answer.";
+    paint8(); say(a8 + " " + ordDen(d8) + " add " + b8 + " " + ordDen(d8) + ". Tap " + b8 + " more parts.");
+  }
+  function ordDen(d) { return { 5: "fifths", 6: "sixths", 8: "eighths", 10: "tenths" }[d]; }
+  function paint8() {
+    $("sum8").innerHTML = '<span class="fraction" style="color:var(--accent)"><span>' + a8 + "</span><span>" + d8 + '</span></span> + <span class="fraction" style="color:var(--teal)"><span>' + b8 + "</span><span>" + d8 + "</span></span> = ?";
+    $("bar8").innerHTML = Array.from({ length: d8 }, (_, i) => '<button type="button" class="' + (i < a8 ? "a" : i < a8 + shadedB ? "b" : "") + '" data-i="' + i + '">1/' + d8 + "</button>").join("");
+    if (shadedB === b8 && !$("ch8").children.length) {
+      $("fb8").textContent = "Now count all the shaded parts."; const s = a8 + b8;
+      $("ch8").innerHTML = shuffle([s + "/" + d8, s + "/" + (d8 * 2), (s + 1) + "/" + d8]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    } else if (shadedB < b8) $("fb8").textContent = "Tap " + (b8 - shadedB) + " more part" + (b8 - shadedB === 1 ? "" : "s") + ".";
+  }
+  $("bar8").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || lock8) return; const i = Number(b.dataset.i); if (i < a8) return; if (i === a8 + shadedB && shadedB < b8) shadedB++; else if (i === a8 + shadedB - 1 && shadedB > 0 && !$("ch8").children.length) shadedB--; paint8(); });
+  $("ch8").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock8) return; lock8 = true; const s = a8 + b8, ans = s + "/" + d8, ok = b.dataset.v === ans;
+    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right8++;
+    $("sum8").innerHTML = $("sum8").innerHTML.replace("= ?", '= <span class="fraction"><span>' + s + "</span><span>" + d8 + "</span></span>");
+    $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "") + a8 + " parts + " + b8 + " parts = " + s + " parts. " + a8 + "/" + d8 + " + " + b8 + "/" + d8 + " = " + ans + ". The bottom number stays " + d8 + "."; say((ok ? cheer() + " " : "") + a8 + " " + ordDen(d8) + " add " + b8 + " " + ordDen(d8) + " is " + s + " " + ordDen(d8));
+    $("score8").textContent = right8 + " of 3 right so far"; if (right8 >= 3) finish(7, "Adding fractions: well done!"); setTimeout(newSum8, 2400);
+  });
+  newSum8();
+
+  /* ---- 9: perimeter and area ---- */
+  let w9 = 5, h9 = 3, quiz9 = null, right9 = 0;
+  function paint9() {
+    $("shape9").style.gridTemplateColumns = "repeat(" + w9 + ", auto)";
+    $("shape9").innerHTML = Array.from({ length: w9 * h9 }, (_, i) => { const r = Math.floor(i / w9), c = i % w9, edge = r === 0 || r === h9 - 1 || c === 0 || c === w9 - 1; return '<i class="' + (edge ? "edge" : "") + '">' + (i + 1) + "</i>"; }).join("");
+    $("wMinus").disabled = w9 <= 1; $("wPlus").disabled = w9 >= 10; $("hMinus").disabled = h9 <= 1; $("hPlus").disabled = h9 >= 6;
+    lines($("work9"), [
+      { k: "Area", v: w9 + " wide × " + h9 + " tall = <b>" + w9 * h9 + "</b> squares" },
+      { k: "Perimeter", v: w9 + " + " + h9 + " + " + w9 + " + " + h9 + " = <b>" + 2 * (w9 + h9) + "</b> around the edge", total: true },
+    ]);
+  }
+  ["wMinus", "wPlus", "hMinus", "hPlus"].forEach((id) => $(id).addEventListener("click", () => { if (id === "wMinus") w9--; if (id === "wPlus") w9++; if (id === "hMinus") h9--; if (id === "hPlus") h9++; paint9(); say("area " + w9 * h9 + ", perimeter " + 2 * (w9 + h9)); }));
+  function ask9() {
+    const w = rnd(2, 9), h = rnd(2, 6), area = right9 % 2 === 0;
+    quiz9 = { w, h, a: area ? w * h : 2 * (w + h), q: (area ? "What is the AREA" : "What is the PERIMETER") + " of a " + w + " by " + h + " rectangle?", area };
+    $("say9").innerHTML = "<b>" + quiz9.q + "</b> Build it if you like, then tap.";
+    $("ch9").innerHTML = shuffle([quiz9.a, area ? 2 * (w + h) : w * h, quiz9.a + 2]).filter((v, i, arr) => arr.indexOf(v) === i).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("fb9").textContent = ""; $("fb9").className = "fb"; $("score9").textContent = right9 + " of 4 right so far"; say(quiz9.q);
+  }
+  $("ch9").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === quiz9.a;
+    $("ch9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === quiz9.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right9++;
+    w9 = quiz9.w; h9 = quiz9.h; paint9();
+    $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + (quiz9.area ? "Area: " + quiz9.w + " × " + quiz9.h + " = " + quiz9.a + " squares." : "Perimeter: " + quiz9.w + " + " + quiz9.h + " + " + quiz9.w + " + " + quiz9.h + " = " + quiz9.a + "."); say((ok ? cheer() + " " : "") + "It is " + quiz9.a);
+    if (right9 >= 4) finish(8, "Perimeter and area: well done!"); setTimeout(ask9, 2200);
+  });
+  paint9(); ask9();
+
+  /* ---- 10: angles ---- */
+  let deg10 = 45, quiz10 = null, right10 = 0;
+  const angleName = (d) => d < 90 ? "acute" : d === 90 ? "right" : "obtuse";
+  function drawAngle() {
+    const cx = 40, cy = 160, L = 190, a = (-deg10 * Math.PI) / 180, x = cx + L * Math.cos(a), y = cy + L * Math.sin(a);
+    const r = 60, xs = cx + r, ys = cy, xe = cx + r * Math.cos(a), ye = cy + r * Math.sin(a);
+    let svg = '<path class="wedge" d="M' + cx + "," + cy + " L" + xs + "," + ys + " A" + r + "," + r + " 0 " + (deg10 > 180 ? 1 : 0) + ",0 " + xe.toFixed(1) + "," + ye.toFixed(1) + ' Z"></path>';
+    if (deg10 === 90) svg += '<path class="sq" d="M' + (cx + 22) + "," + cy + " L" + (cx + 22) + "," + (cy - 22) + " L" + cx + "," + (cy - 22) + '"></path>';
+    svg += '<line class="arm" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + L) + '" y2="' + cy + '"></line><line class="arm move" x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '"></line>';
+    svg += '<text class="deg" x="' + (cx + 75) + '" y="' + (cy - 20) + '">' + deg10 + "°</text>";
+    $("angle10").innerHTML = svg;
+    $("name10").className = "fb"; $("name10").textContent = deg10 + "° is " + (deg10 === 90 ? "a right angle, a square corner." : deg10 < 90 ? "acute: smaller than a right angle." : "obtuse: bigger than a right angle.");
+  }
+  $("deg10").addEventListener("input", (e) => { deg10 = Number(e.target.value); drawAngle(); });
+  function ask10() {
+    deg10 = [20, 35, 50, 65, 90, 110, 125, 145, 160][rnd(0, 8)]; $("deg10").value = deg10; drawAngle(); $("name10").textContent = "";
+    quiz10 = angleName(deg10);
+    $("say10").innerHTML = "Look at the angle. Is it <b>acute</b>, <b>right</b> or <b>obtuse</b>? Tap the answer.";
+    $("ch10").innerHTML = ["acute", "right", "obtuse"].map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
+    $("fb10").textContent = ""; $("fb10").className = "fb"; $("score10").textContent = right10 + " of 4 right so far"; say("Acute, right or obtuse?");
+  }
+  $("ch10").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = b.dataset.v === quiz10;
+    $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === quiz10) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right10++;
+    drawAngle(); $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "") + deg10 + "° is " + quiz10 + "."; say((ok ? cheer() + " " : "") + deg10 + " degrees is " + quiz10);
+    if (right10 >= 4) finish(9, "You know your angles!"); setTimeout(ask10, 2000);
+  });
+  drawAngle(); ask10();
+
+  /* ---- 11: coordinates ---- */
+  let target11 = null, right11 = 0, lock11 = false; const N = 8;
+  function drawGrid(marks) {
+    const L = 30, S = 220, step = S / N, X = (x) => L + x * step, Y = (y) => L + S - y * step;
+    let svg = "";
+    for (let i = 0; i <= N; i++) { svg += '<line class="gl" x1="' + X(i) + '" y1="' + Y(0) + '" x2="' + X(i) + '" y2="' + Y(N) + '"></line><line class="gl" x1="' + X(0) + '" y1="' + Y(i) + '" x2="' + X(N) + '" y2="' + Y(i) + '"></line>'; svg += '<text class="lab" x="' + X(i) + '" y="' + (Y(0) + 14) + '">' + i + '</text><text class="lab" x="' + (X(0) - 12) + '" y="' + (Y(i) + 4) + '">' + i + "</text>"; }
+    svg += '<line class="ax" x1="' + X(0) + '" y1="' + Y(0) + '" x2="' + X(N) + '" y2="' + Y(0) + '"></line><line class="ax" x1="' + X(0) + '" y1="' + Y(0) + '" x2="' + X(0) + '" y2="' + Y(N) + '"></line>';
+    (marks || []).forEach((m) => { svg += '<line class="guide" x1="' + X(m.x) + '" y1="' + Y(0) + '" x2="' + X(m.x) + '" y2="' + Y(m.y) + '"></line><line class="guide" x1="' + X(0) + '" y1="' + Y(m.y) + '" x2="' + X(m.x) + '" y2="' + Y(m.y) + '"></line>'; });
+    for (let x = 0; x <= N; x++) for (let y = 0; y <= N; y++) { const m = (marks || []).find((k) => k.x === x && k.y === y); svg += '<circle class="pt' + (m ? " " + m.cls : "") + '" cx="' + X(x) + '" cy="' + Y(y) + '" r="' + (m ? 8 : 5) + '" data-x="' + x + '" data-y="' + y + '" role="button" tabindex="0" aria-label="(' + x + ", " + y + ')"></circle>'; }
+    $("coords11").innerHTML = svg;
+  }
+  function ask11() {
+    lock11 = false; target11 = { x: rnd(1, N), y: rnd(1, N) }; drawGrid([]);
+    $("say11").innerHTML = "Tap the point <b>(" + target11.x + ", " + target11.y + ")</b>. Along " + target11.x + ", then up " + target11.y + ".";
+    $("fb11").textContent = ""; $("fb11").className = "fb"; $("score11").textContent = right11 + " of 4 right so far"; say("Tap the point " + target11.x + ", " + target11.y);
+  }
+  function pick11(el) {
+    if (lock11 || !el) return; lock11 = true; const x = Number(el.dataset.x), y = Number(el.dataset.y), ok = x === target11.x && y === target11.y;
+    drawGrid([{ x: target11.x, y: target11.y, cls: "good" }].concat(ok ? [] : [{ x, y, cls: "oops" }]));
+    if (ok) right11++;
+    $("fb11").className = "fb " + (ok ? "good" : "bad"); $("fb11").textContent = (ok ? cheer() + " " : "You tapped (" + x + ", " + y + "). ") + "(" + target11.x + ", " + target11.y + ") is " + target11.x + " along and " + target11.y + " up."; say((ok ? cheer() : "Not quite.") + " " + target11.x + " along, " + target11.y + " up");
+    if (right11 >= 4) finish(10, "Coordinates: well done!"); setTimeout(ask11, 2200);
+  }
+  $("coords11").addEventListener("click", (e) => pick11(e.target.closest(".pt")));
+  $("coords11").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick11(e.target.closest(".pt")); } });
+  ask11();
+
+  /* ---- 12: check ---- */
+  const CHECK = [
+    { q: "How many hundreds in 4,072?", opts: [0, 4, 7], a: 0 },
+    { q: "It is 3°C. It gets 5 degrees colder. What is the temperature?", opts: ["−2°C", "2°C", "−8°C"], a: "−2°C" },
+    { q: "Round 6,482 to the nearest 1000.", opts: [6000, 7000, 6500], a: 6000 },
+    { q: "23 × 4 = ?", opts: [92, 82, 27], a: 92 },
+    { q: "29 ÷ 6 = ?", opts: ["4 r 5", "4 r 3", "5 r 1"], a: "4 r 5" },
+    { q: "Which is a factor pair of 36?", opts: ["4 × 9", "5 × 7", "3 × 13"], a: "4 × 9" },
+    { q: "0.07 is how many hundredths?", opts: [7, 70, 17], a: 7 },
+    { q: "3/8 + 2/8 = ?", opts: ["5/8", "5/16", "6/8"], a: "5/8" },
+    { q: "Perimeter of a 6 by 2 rectangle?", opts: [16, 12, 8], a: 16 },
+    { q: "An angle of 120° is…", opts: ["obtuse", "acute", "right"], a: "obtuse" },
+    { q: "The point (3, 5) is 3 along and…", opts: ["5 up", "3 up", "5 along"], a: "5 up" },
+  ];
+  let c12 = 0, right12 = 0, lock12 = false;
+  function round12() {
+    lock12 = false; $("fb12").textContent = ""; $("fb12").className = "fb";
+    if (c12 >= CHECK.length) { $("q12").textContent = ""; $("ch12").innerHTML = ""; $("fb12").className = "fb good"; $("fb12").innerHTML = "You got <b>" + right12 + "</b> out of " + CHECK.length + "!"; $("score12").textContent = right12 === CHECK.length ? "Every single one!" : right12 >= 8 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(11, "You got " + right12 + " out of " + CHECK.length + "."); return; }
+    const q = CHECK[c12]; $("score12").textContent = "Question " + (c12 + 1) + " of " + CHECK.length; $("q12").textContent = q.q; $("say12").textContent = q.q;
+    $("ch12").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" && /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
+    say(q.q.replace(/×/g, "times").replace(/÷/g, "divided by").replace(/°/g, " degrees").replace(/\?/g, ""));
+  }
+  $("ch12").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock12) return; lock12 = true; const q = CHECK[c12], ok = String(b.dataset.v) === String(q.a);
+    $("ch12").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right12++;
+    $("fb12").className = "fb " + (ok ? "good" : "bad"); $("fb12").textContent = ok ? cheer() : "It is " + q.a + "."; say(ok ? cheer() : "It is " + q.a);
+    c12++; setTimeout(round12, 1300);
+  });
+  round12();
+
+  /* ---- 13: stickers ---- */
+  const STICKERS = [["🧊", "Numbers to 10,000"], ["🌡️", "Below zero"], ["🎯", "Rounding"], ["▦", "Grid multiplying"], ["🍬", "Dividing with remainders"], ["✖️", "Tables and factors"], ["🟧", "Tenths and hundredths"], ["🍫", "Adding fractions"], ["📐", "Perimeter and area"], ["📏", "Angles"], ["📍", "Coordinates"], ["✅", "Show what I know"]];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fb13").className = "fb " + (got === STICKERS.length ? "good" : ""); $("fb13").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You are a number star." : got + " of " + STICKERS.length + " stickers so far.";
+  }
+  $("restart").addEventListener("click", () => location.reload());
+
+  show(0, false);
+})();

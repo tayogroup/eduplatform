@@ -1,0 +1,89 @@
+
+  /* ---------- Asking, Sorting and Chance: only what the shared lesson CSS lacks ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font-size: 15px; }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .picker-lab2 { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--muted); margin: 16px 0 6px; }
+  .qstem { font-size: 19px; font-weight: 700; margin: 10px 0; }
+
+  /* 1 — the question card */
+  .qcard { background: var(--cell); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+  .qq { font-family: "Fredoka", sans-serif; font-size: 20px; font-weight: 600; margin: 0 0 8px; }
+  .qc { margin: 0; color: var(--muted); font-size: 15px; }
+
+  /* 2 — tally and frequency */
+  .ttable { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-top: 12px; }
+  .trow { display: grid; grid-template-columns: 92px 1fr 74px; gap: 8px; align-items: center;
+    padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .trow:last-child { border-bottom: 0; }
+  .trow.thead { background: var(--cell); font-size: 11px; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--muted); }
+  .trow.tfoot { background: var(--teal-soft); font-weight: 700; color: var(--teal); }
+  .trow .num { text-align: right; font-family: "Fredoka", sans-serif; font-size: 20px; font-weight: 600;
+    font-variant-numeric: tabular-nums; }
+  .trow.thead .num, .trow.tfoot .num { font-size: inherit; }
+  .tal { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 24px; }
+  .tal .gate, .tal .mark { font-family: ui-monospace, Menlo, monospace; font-weight: 700;
+    letter-spacing: 2px; color: var(--ink); }
+  .tal .gate { position: relative; }
+  .tal .gate::after { content: ""; position: absolute; left: -2px; right: -2px; top: 50%;
+    border-top: 2px solid var(--accent); transform: rotate(-18deg); }
+  .tal .none { color: var(--muted); }
+
+  /* 3 and 5 — pictogram, bars, dots */
+  .repbox { margin-top: 12px; }
+  .key { font-size: 13px; color: var(--muted); margin: 0 0 10px; }
+  .prow, .drow, .srow { display: grid; grid-template-columns: 54px 1fr 78px; gap: 8px;
+    align-items: center; padding: 6px 0; }
+  .plab { font-weight: 700; font-size: 14px; }
+  .pnum { text-align: right; font-family: "Fredoka", sans-serif; font-weight: 600;
+    font-variant-numeric: tabular-nums; font-size: 15px; }
+  .pics { display: flex; gap: 2px; align-items: center; }
+  .pic { font-size: 20px; line-height: 1; }
+  .pic.half { display: inline-block; width: .55em; overflow: hidden; }
+  .dots2 { display: flex; flex-wrap: wrap; gap: 4px; }
+  .dots2 i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--teal); }
+  .bars { display: flex; gap: 12px; align-items: flex-end; height: 150px; margin-top: 6px; }
+  .bcol { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
+  .bwrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
+  .bbar { width: 100%; background: var(--teal); border-radius: 8px 8px 0 0; min-height: 4px;
+    display: flex; justify-content: center; align-items: flex-start; }
+  .bbar span { color: #fff; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 14px; padding-top: 3px; }
+  .blab { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 6px; }
+  .twoup { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+  .mini .mlab { font-size: 12px; font-weight: 700; color: var(--muted); margin: 0 0 4px; }
+  @media (max-width: 460px) { .twoup { grid-template-columns: 1fr; } }
+
+  /* 4 — Venn and Carroll */
+  .sortbox { margin-top: 12px; }
+  .vennsvg { width: 100%; max-width: 340px; display: block; margin: 4px auto 0; }
+  .vennsvg .uni { fill: var(--ground); stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 6 4; }
+  .vennsvg .hoopA { fill: var(--teal); fill-opacity: .16; stroke: var(--teal); stroke-width: 2.5; }
+  .vennsvg .hoopB { fill: var(--plum); fill-opacity: .16; stroke: var(--plum); stroke-width: 2.5; }
+  .vennsvg .hl { font: 700 12px Inter, system-ui, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+  .vennsvg .hl.a { fill: var(--teal); text-anchor: middle; }
+  .vennsvg .hl.b { fill: var(--plum); text-anchor: middle; }
+  .vennsvg .vn { font-family: "Fredoka", sans-serif; font-size: 16px; font-weight: 600;
+    fill: var(--ink); text-anchor: middle; }
+  .vennsvg .out { font: 400 13px Inter, system-ui, sans-serif; fill: var(--muted); }
+  .carroll { width: 100%; border-collapse: collapse; }
+  .carroll th, .carroll td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; }
+  .carroll th { background: var(--cell); font-size: 11px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--muted); }
+  .carroll td { font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600; letter-spacing: 1px; }
+
+  /* 6 — the chance line */
+  .chanceline { position: relative; height: 74px; margin: 18px 0 6px; }
+  .cbar { position: absolute; left: 4%; right: 4%; top: 16px; height: 8px; border-radius: 99px;
+    background: linear-gradient(90deg, var(--bad-soft), var(--cell), var(--good-soft)); border: 1px solid var(--line); }
+  .cstop { position: absolute; top: 8px; transform: translateX(-50%); text-align: center; width: 74px; }
+  .cstop i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--teal);
+    margin: 4px auto 6px; }
+  .cstop span { font-size: 10.5px; font-weight: 700; color: var(--muted); line-height: 1.15; display: block; }
+
+  /* 7 — the spinner */
+  .spinner { width: 160px; height: 160px; display: block; margin: 6px auto 12px; }
+  .sbarwrap { display: block; height: 14px; background: var(--cell); border-radius: 99px; overflow: hidden; }
+  .sbar { display: block; height: 100%; border-radius: 99px; }

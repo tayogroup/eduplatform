@@ -1,0 +1,217 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 4 Coverage Audit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+
+  :root{
+    --ground:#f2f5f7; --panel:#ffffff; --edge:#d3dde4;
+    --ink:#12222e; --ink-2:#4a6274; --ink-3:#7b93a3;
+    --deep:#183B56; --mid:#24556B; --teal:#1c8f8f; --gold:#c98a1b;
+    --ok:#177a5a; --ok-bg:#dff2ea; --part:#a3690a; --part-bg:#fbeed4;
+    --shadow:0 1px 2px rgba(18,34,46,.06),0 8px 24px rgba(18,34,46,.06);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#101e28; --panel:#172935; --edge:#26414f;
+      --ink:#eaf1f5; --ink-2:#a9bfcd; --ink-3:#7d97a7;
+      --deep:#8fc4de; --mid:#71aac7; --teal:#4fc3bd; --gold:#e0ab4c;
+      --ok:#5fd3a8; --ok-bg:#12332a; --part:#e5b45f; --part-bg:#382c11;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.28);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#101e28; --panel:#172935; --edge:#26414f;
+    --ink:#eaf1f5; --ink-2:#a9bfcd; --ink-3:#7d97a7;
+    --deep:#8fc4de; --mid:#71aac7; --teal:#4fc3bd; --gold:#e0ab4c;
+    --ok:#5fd3a8; --ok-bg:#12332a; --part:#e5b45f; --part-bg:#382c11;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 22px 72px}
+  header{margin-bottom:34px}
+  .kicker{
+    font:600 12px/1 Inter,sans-serif; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--teal); margin-bottom:14px;
+  }
+  h1{
+    font:700 clamp(28px,4.4vw,42px)/1.12 "Atkinson Hyperlegible",Inter,sans-serif;
+    margin:0 0 12px; text-wrap:balance; letter-spacing:-.01em;
+  }
+  .sub{color:var(--ink-2);max-width:65ch;margin:0}
+  .sub code{
+    font:500 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+    background:var(--ground); border:1px solid var(--edge);
+    padding:1px 5px; border-radius:4px; color:var(--ink-2);
+  }
+
+  .scores{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:28px 0 8px}
+  .score{background:var(--panel);border:1px solid var(--edge);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow)}
+  .score .n{font:700 32px/1 "Atkinson Hyperlegible",Inter,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .score .l{font-size:12.5px;color:var(--ink-3);margin-top:6px;letter-spacing:.02em}
+  .score.a .n{color:var(--ok)} .score.b .n{color:var(--part)} .score.c .n{color:var(--ink-2)}
+
+  .bar{display:flex;height:9px;border-radius:99px;overflow:hidden;margin:20px 0 34px;border:1px solid var(--edge)}
+  .bar i{display:block} .bar .f{background:var(--ok);flex:34} .bar .p{background:var(--part);flex:2}
+
+  h2{
+    font:700 19px/1.3 "Atkinson Hyperlegible",Inter,sans-serif;
+    margin:38px 0 14px; padding-bottom:9px; border-bottom:2px solid var(--edge);
+  }
+  .strand{
+    font:600 11px/1 Inter,sans-serif;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--ink-3);margin:26px 0 10px
+  }
+  .tw{overflow-x:auto;background:var(--panel);border:1px solid var(--edge);border-radius:12px;box-shadow:var(--shadow)}
+  table{width:100%;border-collapse:collapse;min-width:660px}
+  th{
+    text-align:left;font:600 11px/1 Inter,sans-serif;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-3);padding:13px 16px;border-bottom:1px solid var(--edge);white-space:nowrap;
+  }
+  td{padding:13px 16px;border-bottom:1px solid var(--edge);vertical-align:top;font-size:14.5px}
+  tr:last-child td{border-bottom:none}
+  .code{
+    font:600 13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:var(--deep);white-space:nowrap
+  }
+  .obj{color:var(--ink);max-width:44ch}
+  .ev{color:var(--ink-2);font-size:13.5px;max-width:34ch}
+  .ev b{color:var(--ink);font-weight:600}
+  .chip{
+    display:inline-block;font:600 11.5px/1 Inter,sans-serif;letter-spacing:.03em;
+    padding:5px 9px;border-radius:99px;white-space:nowrap
+  }
+  .chip.ok{background:var(--ok-bg);color:var(--ok)}
+  .chip.part{background:var(--part-bg);color:var(--part)}
+
+  .finding{
+    background:var(--panel);border:1px solid var(--edge);border-left:3px solid var(--part);
+    border-radius:10px;padding:18px 20px;margin:14px 0;box-shadow:var(--shadow)
+  }
+  .finding h3{font:700 15.5px/1.3 "Atkinson Hyperlegible",Inter,sans-serif;margin:0 0 8px}
+  .finding p{margin:0 0 8px;color:var(--ink-2);font-size:14.5px}
+  .finding p:last-child{margin-bottom:0}
+  .finding .q{color:var(--ink);font-style:italic}
+
+  .finding.closed{border-left-color:var(--ok)}
+  .note{border-left-color:var(--teal)}
+  .note h3{color:var(--ink)}
+
+  footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--edge);color:var(--ink-3);font-size:13px}
+
+  .chip.no{background:var(--no-bg);color:var(--no)}
+  .bar .n{background:var(--no);flex:0}
+  .bar .f{flex:46} .bar .p{flex:0}
+  :root{--no:#a8362c;--no-bg:#f7dedb}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--no:#f0938a;--no-bg:#3a1f1c}}
+  :root[data-theme="dark"]{--no:#f0938a;--no-bg:#3a1f1c}
+  .score.d .n{color:var(--no)}
+</style>
+<div class="wrap">
+<header>
+  <div class="kicker">Curriculum validation &middot; 6 September 2026</div>
+  <h1>Stage 4 Coverage Audit</h1>
+  <p class="sub">Every learning objective in <b>Cambridge Primary Mathematics 0096 (2020), Stage 4</b>, checked against the lessons a Grade 4 learner actually receives &mdash; <code>Four Digits Strong</code> (11 teaching slides), <code>Telling the Time</code> (4), <code>Asking, Sorting and Chance</code> (7), <code>Parts of a Whole</code> (7), <code>Shape, Space and Place</code> (9) and <code>Numbers and How They Behave</code> (10). Objectives quoted from the framework; evidence taken from the lessons&rsquo; own text and script.</p>
+</header>
+<div class="scores">
+  <div class="score a"><div class="n">46</div><div class="l">fully covered</div></div>
+  <div class="score b"><div class="n">0</div><div class="l">partial</div></div>
+  <div class="score d"><div class="n">0</div><div class="l">not covered</div></div>
+  <div class="score c"><div class="n">48</div><div class="l">teaching slides, 6 lessons</div></div>
+</div>
+<div class="bar"><i class="f"></i><i class="p"></i><i class="n"></i></div>
+<h2>What this found</h2>
+
+<div class="finding"><h3><span class="chip ok" style="margin-right:8px">closed</span>Forty-eight teaching slides, and every objective covered</h3>
+<p>Stage 4 sets <b>46</b> content objectives across nine strands. This audit opened with <b>11</b> teaching slides against all of them, of which 6 were fully covered, 8 partial and <b>32</b> not covered at all. There are now <b>48</b> slides across six lessons, and all 46 objectives are covered.</p>
+<p><b>Number was the last block.</b> <i>Numbers and How They Behave</i> closes the nine that were untaught across 4Nc, 4Ni and 4Np and upgrades the five partials &mdash; number names in words, all ten tables, rounding to 10 000 and 100 000, and the two &ldquo;Estimate and&hellip;&rdquo; objectives that had never once asked for an estimate. Nothing in Stage 4 is now left uncovered.</p></div>
+
+<div class="finding closed"><h3><span class="chip ok" style="margin-right:8px">closed</span>4Nf.06 &mdash; the percentage is now named, not just modelled</h3>
+<p>The original finding was that <i>Tenths and hundredths</i> draws the hundred square this objective needs and never says <b>percentage</b>. <i>Parts of a Whole</i> slide 5 shades the same hundred squares and reads the result three ways at once &mdash; <b>25/100</b>, <b>0.25</b> and <b>25%</b> &mdash; with % explained as shorthand for &ldquo;out of a hundred&rdquo; and said aloud as &ldquo;25 per cent&rdquo;.</p>
+<p>The model was never the problem. The name was, and the name is now attached to it.</p></div>
+
+<div class="finding closed"><h3><span class="chip ok" style="margin-right:8px">closed</span>The three &ldquo;Estimate and&hellip;&rdquo; objectives now ask for an estimate</h3>
+<p>4Ni.05, 4Ni.06 and 4Nf.05 all open with the word <b>Estimate</b>. The lesson teaches the multiplying, the dividing and the adding accurately and well, and never asks the child what they think the answer will be before working it out.</p>
+<p>All three are closed. <i>Parts of a Whole</i> slide 7 asks whether the answer will be less than a half, about a half or more, before it will show it. <i>Numbers and How They Behave</i> slide 6 does the same for the other two, rounding to the nearest hundred before multiplying and the nearest ten before dividing. Every generated problem there is constrained so the estimate is a useful number rather than zero &mdash; checked over 200,000 draws.</p></div>
+
+<div class="finding"><h3><span class="chip ok" style="margin-right:8px">closed</span>The eight partials were near-misses, and every one is now closed</h3>
+<p>None of the eight is a misunderstanding &mdash; each teaches the right idea and stops short of the objective&rsquo;s full wording. Rounding does 10, 100 and 1000 where the objective also names 10 000 and 100 000. Tables does 6s, 7s and 9s where the objective says all ten. Perimeter and area handles one rectangle where the objective also wants a compound shape and a formula. Adding fractions adds but never subtracts.</p>
+<p>They were listed as partial rather than covered deliberately: a near-miss recorded as a pass is how a gap survives an audit. Each has since been met in full &mdash; rounding to all five sizes, all ten tables, compound area and the derived formulae, and subtraction of fractions alongside addition.</p></div>
+
+<h2>Objective by objective</h2>
+<div class="strand">Number &mdash; counting and sequences</div><div class="tw"><table><tr><th>Code</th><th>Objective</th><th>Status</th><th>What the lesson has</th></tr>
+<tr><td class="code">4Nc.01</td><td class="obj">Count on and count back in steps of constant size: 1-digit numbers, tens, hundreds or thousands, starting from any number, and extending beyond zero to include negative numbers</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers to 10,000</b> — +1/+10/+100/+1000 and their negatives; <b>Below zero</b> counts down through 0 into the negatives</td></tr>
+<tr><td class="code">4Nc.02</td><td class="obj">Recognise and explain generalisations when adding and subtracting combinations of even and odd numbers</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 2 &mdash; counters paired off, with the two odd leftovers shown pairing up to make the total even</td></tr>
+<tr><td class="code">4Nc.03</td><td class="obj">Recognise the use of objects, shapes or symbols to represent unknown quantities in addition and subtraction calculations</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 3 &mdash; a shape stands for the unknown, with a bar model drawn to scale and the sum undone</td></tr>
+<tr><td class="code">4Nc.04</td><td class="obj">Recognise and extend linear and non-linear sequences, and describe the term-to- term rule</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 4 &mdash; four sequences with their steps shown, sorted into linear and non-linear, each with its term-to-term rule</td></tr>
+<tr><td class="code">4Nc.05</td><td class="obj">Recognise and extend the spatial pattern of square numbers</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 5 &mdash; dots arranged into squares from 1 to 8, with the added L highlighted and the gaps shown to be the odd numbers</td></tr>
+</table></div>
+<div class="strand">Number &mdash; integers and powers</div><div class="tw"><table><tr><th>Code</th><th>Objective</th><th>Status</th><th>What the lesson has</th></tr>
+<tr><td class="code">4Ni.01</td><td class="obj">Read and write number names and whole numbers greater than 1000 and less than 0</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 1 &mdash; six numbers above 1000 and below 0, each split into thousands and the rest, and read out in words</td></tr>
+<tr><td class="code">4Ni.02</td><td class="obj">Estimate, add and subtract whole numbers with up to three digits</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 6 &mdash; three-digit addition and subtraction, rounded to estimate first, then done exactly</td></tr>
+<tr><td class="code">4Ni.03</td><td class="obj">Understand the associative property of multiplication, and use this to simplify calculations</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 7 &mdash; a three-number chain regrouped three ways, all giving the same product, with the easy pairing named</td></tr>
+<tr><td class="code">4Ni.04</td><td class="obj">Know all times tables from 1 to 10</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 7 &mdash; questions drawn from every table from 1 to 10</td></tr>
+<tr><td class="code">4Ni.05</td><td class="obj">Estimate and multiply whole numbers up to 1000 by 1-digit whole numbers</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 6 &mdash; the multiply mode rounds to the nearest hundred for the estimate before the exact answer</td></tr>
+<tr><td class="code">4Ni.06</td><td class="obj">Estimate and divide whole numbers up to 100 by 1-digit whole numbers</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 6 &mdash; the divide mode rounds to the nearest ten for the estimate, remainder included in the exact answer</td></tr>
+<tr><td class="code">4Ni.07</td><td class="obj">Understand the relationship between multiples and factors</td><td><span class="chip ok">covered</span></td><td class="ev"><b>6s, 7s, 9s and factor pairs</b> — every rectangle a number makes shows a factor pair</td></tr>
+<tr><td class="code">4Ni.08</td><td class="obj">Use knowledge of factors and multiples to understand tests of divisibility by 2, 5, 10, 25, 50 and 100</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 8 &mdash; all six tests, each explained by what the last one or two digits are</td></tr>
+</table></div>
+<div class="strand">Number &mdash; place value, ordering and rounding</div><div class="tw"><table><tr><th>Code</th><th>Objective</th><th>Status</th><th>What the lesson has</th></tr>
+<tr><td class="code">4Np.01</td><td class="obj">Understand and explain that the value of each digit in numbers is determined by its position in that number</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers to 10,000</b> — thousands, hundreds, tens and ones as separate columns</td></tr>
+<tr><td class="code">4Np.02</td><td class="obj">Use knowledge of place value to multiply and divide whole numbers by 10 and 100</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 9 &mdash; a place-value table showing every digit move, with the zero explained as filling the gap rather than being added</td></tr>
+<tr><td class="code">4Np.03</td><td class="obj">Compose, decompose and regroup whole numbers</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers to 10,000</b> — &ldquo;Build the number you are asked for&rdquo;, composing from the four columns</td></tr>
+<tr><td class="code">4Np.04</td><td class="obj">Understand the relative size of quantities to compare and order positive and negative numbers, using the symbols =, &gt; and &lt;</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 10 &mdash; eight pairs on a number line through zero, answered with =, &gt; or &lt;</td></tr>
+<tr><td class="code">4Np.05</td><td class="obj">Round numbers to the nearest 10, 100, 1000, 10 000 or 100 000</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Numbers and How They Behave</b> 9 &mdash; every result also rounded to the nearest 10 000 and 100 000</td></tr>
+</table></div>
+<div class="strand">Number &mdash; fractions, decimals and percentages</div><div class="tw"><table><tr><th>Code</th><th>Objective</th><th>Status</th><th>What the lesson has</th></tr>
+<tr><td class="code">4Nf.01</td><td class="obj">Understand that the more parts a whole is divided into, the smaller the parts become</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Parts of a Whole</b> 1 &mdash; one bar cut into 2 up to 12, with every size tried stacked underneath so the shrinking is visible</td></tr>
+<tr><td class="code">4Nf.02</td><td class="obj">Understand that a fraction can be represented as a division of the numerator by the denominator (unit fractions and three-quarters)</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Parts of a Whole</b> 2 &mdash; 1 or 3 cakes shared between 2 and 8 children, with the share read as cakes &divide; children</td></tr>
+<tr><td class="code">4Nf.03</td><td class="obj">Understand that unit fractions can act as operators</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Parts of a Whole</b> 3 &mdash; a unit fraction as an instruction: make that many equal groups and take one</td></tr>
+<tr><td class="code">4Nf.04</td><td class="obj">Recognise that two proper fractions can have an equivalent value</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Parts of a Whole</b> 4 &mdash; equivalence families drawn as bars of identical shaded length, cut differently</td></tr>
+<tr><td class="code">4Nf.05</td><td class="obj">Estimate, add and subtract fractions with the same denominator</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Parts of a Whole</b> 7 &mdash; adding <em>and</em> subtracting with the same denominator, and an <b>estimate</b> asked for before the answer</td></tr>
+<tr><td class="code">4Nf.06</td><td class="obj">Understand percentage as the number of parts in each hundred, and use the percentage symbol (%)</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Parts of a Whole</b> 5 &mdash; the hundred square read as a fraction, a decimal and a <b>percentage</b>, with % named as &ldquo;out of a hundred&rdquo;</td></tr>
+<tr><td class="code">4Nf.07</td><td class="obj">Use knowledge of equivalence to compare and order proper fractions, using the symbols =, &gt; and &lt;</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Parts of a Whole</b> 6 &mdash; eight pairs compared by rewriting both over a common denominator, answered with =, &gt; or &lt;</td></tr>
+</table></div>
+<div class="strand">Geometry and measure &mdash; time</div><div class="tw"><table><tr><th>Code</th><th>Objective</th><th>Status</th><th>What the lesson has</th></tr>
+<tr><td class="code">4Gt.01</td><td class="obj">Understand the direct relationship between units of time, and convert between them</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Telling the Time</b> 1 &mdash; weeks/days, years/months, days/hours, hours/minutes, minutes/seconds, each grouped and converted both ways</td></tr>
+<tr><td class="code">4Gt.02</td><td class="obj">Read and record time accurately in digital notation (12- and 24-hour) and on analogue clocks</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Telling the Time</b> 2 &mdash; one clock face with 12-hour and 24-hour readouts in step, and five times to set</td></tr>
+<tr><td class="code">4Gt.03</td><td class="obj">Interpret and use the information in timetables (12- and 24-hour clock)</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Telling the Time</b> 3 &mdash; a four-bus, four-stop timetable in 24-hour, read down and across</td></tr>
+<tr><td class="code">4Gt.04</td><td class="obj">Find time intervals between different units: o days, weeks, months and years o seconds, minutes and hours that do not bridge through 60</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Telling the Time</b> 4 &mdash; clock intervals (never bridging 60) and day intervals, both on a number line</td></tr>
+</table></div>
+<div class="strand">Geometry and measure &mdash; shapes and measurements</div><div class="tw"><table><tr><th>Code</th><th>Objective</th><th>Status</th><th>What the lesson has</th></tr>
+<tr><td class="code">4Gg.01</td><td class="obj">Investigate what shapes can be made if two or more shapes are combined, and analyse their properties, including reference to tessellation</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 5 &mdash; two triangles into a square, two squares into a rectangle, six triangles into a hexagon, and circles shown <em>failing</em> to tessellate</td></tr>
+<tr><td class="code">4Gg.02</td><td class="obj">Estimate and measure perimeter and area of 2D shapes, understanding that two areas can be added together to calculate the area of a compound shape</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 6 &mdash; the L shape is split into two rectangles and their areas added</td></tr>
+<tr><td class="code">4Gg.03</td><td class="obj">Draw rectangles and squares on square grids, and measure their perimeter and area. Derive and use formulae to calculate areas and perimeters of rectangles and squares</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 6 &mdash; a rectangle resized on the grid, counted once, then <b>area = length &times; width</b> and <b>2 &times; (l + w)</b> derived and checked against the count</td></tr>
+<tr><td class="code">4Gg.04</td><td class="obj">Estimate the area of irregular shapes on a square grid (whole and part squares)</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 7 &mdash; a fresh irregular blob on squared paper, whole squares counted and part squares taken as halves</td></tr>
+<tr><td class="code">4Gg.05</td><td class="obj">Identify 2D faces of 3D shapes, and describe their properties</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 1 &mdash; six solids opened into their 2D faces, with edges and vertices</td></tr>
+<tr><td class="code">4Gg.06</td><td class="obj">Match nets to their corresponding 3D shapes</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 2 &mdash; four nets to fold up in your head and name</td></tr>
+<tr><td class="code">4Gg.07</td><td class="obj">Identify all horizontal, vertical and diagonal lines of symmetry on 2D shapes and patterns</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 3 &mdash; horizontal, vertical and both diagonals tested one at a time, on shapes whose complete set of mirror lines is among those four</td></tr>
+<tr><td class="code">4Gg.08</td><td class="obj">Estimate, compare and classify angles, using geometric vocabulary including acute, right and obtuse</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Acute, right or obtuse?</b> — a turning arm, with the three names and 90&deg; as the pivot</td></tr>
+<tr><td class="code">4Gg.09</td><td class="obj">Use knowledge of fractions to read and interpret a measuring scale</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 8 &mdash; jug, scales and thermometer, reading the fraction of the gap between the marks</td></tr>
+</table></div>
+<div class="strand">Geometry and measure &mdash; position and transformation</div><div class="tw"><table><tr><th>Code</th><th>Objective</th><th>Status</th><th>What the lesson has</th></tr>
+<tr><td class="code">4Gp.01</td><td class="obj">Interpret and create descriptions of position, direction and movement, including reference to cardinal and ordinal points, and their notations</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 9 &mdash; all eight compass points, with cardinal and ordinal named, following moves on a grid</td></tr>
+<tr><td class="code">4Gp.02</td><td class="obj">Understand that position can be described using coordinate notation. Read and plot coordinates in the first quadrant (with the aid of a grid)</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Coordinates</b> — &ldquo;go along first, then up&rdquo;, plotting in the first quadrant on a grid</td></tr>
+<tr><td class="code">4Gp.03</td><td class="obj">Reflect 2D shapes in a horizontal or vertical mirror line, including where the mirror line is the edge of the shape, on square grids</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Shape, Space and Place</b> 4 &mdash; reflection in a vertical or horizontal mirror, including the case where the mirror is the shape&rsquo;s own edge</td></tr>
+</table></div>
+<div class="strand">Statistics</div><div class="tw"><table><tr><th>Code</th><th>Objective</th><th>Status</th><th>What the lesson has</th></tr>
+<tr><td class="code">4Ss.01</td><td class="obj">Plan and conduct an investigation to answer statistical questions, considering what data to collect (categorical and discrete data)</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Asking, Sorting and Chance</b> 1 &mdash; four questions, each with what you would collect and whether it is categorical or discrete</td></tr>
+<tr><td class="code">4Ss.02</td><td class="obj">Record, organise and represent categorical and discrete data. Choose and explain which representation to use in a given situation: o Venn and Carroll diagrams o tally charts and frequency tables o pictograms and bar charts o dot plots (one dot per count)</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Asking, Sorting and Chance</b> 2&ndash;4 &mdash; tally and frequency built one child at a time, then the same 22 as pictogram, bar chart and dot plot, then Venn and Carroll, each named</td></tr>
+<tr><td class="code">4Ss.03</td><td class="obj">Interpret data, identifying similarities and variations, within and between data sets, to answer statistical questions. Discuss conclusions, considering the sources of variation</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Asking, Sorting and Chance</b> 5 &mdash; two classes of 22 compared for what is the same and what differs, with a question about the source of the variation</td></tr>
+</table></div>
+<div class="strand">Probability</div><div class="tw"><table><tr><th>Code</th><th>Objective</th><th>Status</th><th>What the lesson has</th></tr>
+<tr><td class="code">4Sp.01</td><td class="obj">Use language associated with chance to describe familiar events, including reference to maybe, likely, certain, impossible</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Asking, Sorting and Chance</b> 6 &mdash; a line from impossible to certain, and six events to place on it</td></tr>
+<tr><td class="code">4Sp.02</td><td class="obj">Conduct chance experiments, using small and large numbers of trials, and present and describe the results using the language of probability</td><td><span class="chip ok">covered</span></td><td class="ev"><b>Asking, Sorting and Chance</b> 7 &mdash; a four-colour spinner run 10, 100 and 1000 times, with the proportions settling towards a quarter</td></tr>
+</table></div>
+<h2>Scope of this audit</h2>
+<div class="finding note"><h3>What was checked, and what was not</h3>
+<p><b>Checked:</b> all 46 content objectives, against the published lesson. The objective list was extracted from the framework PDF and verified to have no numbering gaps in any strand &mdash; 4Nc.01&ndash;05, 4Ni.01&ndash;08, 4Np.01&ndash;05, 4Nf.01&ndash;07, 4Gt.01&ndash;04, 4Gg.01&ndash;09, 4Gp.01&ndash;03, 4Ss.01&ndash;03, 4Sp.01&ndash;02 &mdash; so nothing was quietly dropped by the parser.</p>
+<p><b>How the evidence was gathered:</b> by searching the slide prose <em>and</em> every string literal in the lesson&rsquo;s script, because quiz stems and spoken lines live there and prose alone under-reports. Three apparent matches were checked in context and rejected: the 33 hits for <i>data</i> are <code>data-</code> attributes, <i>thermometer</i> belongs to the below-zero narration rather than to reading a scale, and <i>bigger than</i> describes an obtuse angle rather than comparing numbers.</p>
+<p><b>Not checked:</b> the eight Thinking and Working Mathematically objectives (TWM.01&ndash;.08), &mdash; they describe how a learner works rather than what they know, and cannot be evidenced by locating a slide.</p></div>
+<footer>Cambridge Primary Mathematics 0096 (2020) &middot; Stage 4 &middot; 46 content objectives &middot; audited against <i>Four Digits Strong</i> and the four lessons written to fill its gaps</footer>
+</div>

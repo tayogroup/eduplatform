@@ -1,0 +1,150 @@
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 4</p>
+      <h1>Parts of a <em>Whole</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 more parts, smaller parts -->
+    <section class="slide" data-say="The whole stays the same size. Cut it into more pieces and every piece has to get smaller.">
+      <div class="slide-head"><span class="n">1</span><h2>More parts, smaller parts</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">The whole never changes. Cut it into <b>more</b> pieces and each piece must get <b>smaller</b>.</span></div>
+      <div class="stage">
+        <label class="lab" for="parts1">Cut the bar into <span id="partsLab1">4</span> equal parts</label>
+        <input type="range" id="parts1" min="2" max="12" value="4" step="1">
+        <div class="fbar big" id="bar1" aria-hidden="true"></div>
+        <p class="picker-lab2">Every size you have tried, one part of each</p>
+        <div class="stack" id="stack1" aria-hidden="true"></div>
+        <div class="working" id="work1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="task1"></p>
+        <div class="askwrap" id="ask1"></div>
+      </div>
+    </section>
+
+    <!-- 2 a fraction is a division -->
+    <section class="slide" data-say="Share the cakes out fairly. The fraction each child gets is simply the cakes divided by the children.">
+      <div class="slide-head"><span class="n">2</span><h2>A fraction is a division</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Share the cakes <b>fairly</b>. What each child gets is the cakes <b>divided by</b> the children — and that is exactly what the fraction says.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickCakes"></div>
+        <label class="lab" for="kids2">Shared between <span id="kidsLab2">4</span> children</label>
+        <input type="range" id="kids2" min="2" max="8" value="4" step="1">
+        <div class="cakes" id="cakes2" aria-hidden="true"></div>
+        <div class="working" id="work2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="task2"></p>
+        <div class="askwrap" id="ask2"></div>
+      </div>
+    </section>
+
+    <!-- 3 a fraction of an amount -->
+    <section class="slide" data-say="A unit fraction tells you how many equal groups to make. One of those groups is the answer.">
+      <div class="slide-head"><span class="n">3</span><h2>A fraction of an amount</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">A <b>unit fraction</b> is an instruction: make that many <b>equal groups</b>, then take <b>one</b> of them.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickUnit"></div>
+        <label class="lab" for="amt3">of <span id="amtLab3">20</span></label>
+        <input type="range" id="amt3" min="1" max="12" value="5" step="1">
+        <div class="groups3" id="groups3" aria-hidden="true"></div>
+        <div class="working" id="work3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="task3"></p>
+        <div class="askwrap" id="ask3"></div>
+      </div>
+    </section>
+
+    <!-- 4 equivalent fractions -->
+    <section class="slide" data-say="Two fractions can look completely different and still be worth exactly the same.">
+      <div class="slide-head"><span class="n">4</span><h2>Same value, different name</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Two fractions can look different and be worth <b>exactly the same</b>. Line them up and see.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickEq"></div>
+        <div class="eqbars" id="eq4" aria-hidden="true"></div>
+        <div class="working" id="work4"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="task4"></p>
+        <div class="askwrap" id="ask4"></div>
+      </div>
+    </section>
+
+    <!-- 5 percentages -->
+    <section class="slide" data-say="A percentage is simply how many parts in every hundred. The sign per cent means out of a hundred.">
+      <div class="slide-head"><span class="n">5</span><h2>Out of a hundred</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">A <b>percentage</b> is how many parts in every <b>hundred</b>. The sign <b>%</b> is just shorthand for &ldquo;out of a hundred&rdquo;.</span></div>
+      <div class="stage">
+        <label class="lab" for="pct5">Shade <span id="pctLab5">25</span> of the 100 squares</label>
+        <input type="range" id="pct5" min="0" max="100" value="25" step="1">
+        <div class="hund100" id="hund5" aria-hidden="true"></div>
+        <div class="reads3" id="reads5"></div>
+        <div class="working" id="work5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="task5"></p>
+        <div class="askwrap" id="ask5"></div>
+      </div>
+    </section>
+
+    <!-- 6 comparing -->
+    <section class="slide" data-say="To compare two fractions, give them the same bottom number first. Then you are only comparing the top ones.">
+      <div class="slide-head"><span class="n">6</span><h2>Which is bigger?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Give them the <b>same bottom number</b> first. Then you are only comparing the top ones. Choose <b>&gt;</b>, <b>&lt;</b> or <b>=</b>.</span></div>
+      <div class="stage">
+        <div class="cmp" id="cmp6" aria-hidden="true"></div>
+        <div class="choices" id="signs6"></div>
+        <div class="working" id="work6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="task6"></p>
+      </div>
+    </section>
+
+    <!-- 7 adding and subtracting -->
+    <section class="slide" data-say="When the bottom numbers match, you are counting the same kind of piece. Guess first, then work it out.">
+      <div class="slide-head"><span class="n">7</span><h2>Adding and taking away</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Same bottom number means the pieces are the <b>same size</b>, so you just count them. <b>Estimate first</b>, then work it out.</span></div>
+      <div class="stage">
+        <p class="qstem" id="sum7"></p>
+        <p class="picker-lab2">First, estimate: will the answer be…</p>
+        <div class="choices" id="est7"></div>
+        <div class="fbar big" id="bar7" aria-hidden="true"></div>
+        <div class="working" id="work7"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new7">Another one</button></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="task7"></p>
+      </div>
+    </section>
+
+    <!-- 8 check -->
+    <section class="slide" data-say="Show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="qstem" id="stem8"></p>
+        <div class="choices" id="choices8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="score8"></p>
+      </div>
+    </section>
+
+    <!-- 9 stickers -->
+    <section class="slide" data-say="Every step you finished earned a sticker.">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>

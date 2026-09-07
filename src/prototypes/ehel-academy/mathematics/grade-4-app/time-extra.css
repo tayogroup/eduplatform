@@ -1,0 +1,56 @@
+
+  /* ---------- Telling the Time: only what the shared lesson CSS does not already carry ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+  .chip {
+    padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font-size: 15px;
+  }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+  /* slide 1 — a group per whole unit */
+  .tgroups { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 4px; }
+  .tgrp {
+    border: 2px solid var(--teal); background: var(--teal-soft); border-radius: 12px;
+    padding: 8px 10px; min-width: 62px; text-align: center;
+  }
+  .glab { display: block; font-size: 11px; font-weight: 700; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+  .gdots { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; justify-items: center; }
+  .gdots i { display: block; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+  .gnum { font-family: "Fredoka", sans-serif; font-size: 26px; font-weight: 600; color: var(--teal); line-height: 1.1; }
+  .tlines { margin-top: 14px; }
+
+  /* slide 2 — the clock face and its two readouts */
+  .clockrow { display: flex; flex-wrap: wrap; gap: 22px; align-items: center; margin-top: 10px; }
+  .clock { width: 200px; height: 200px; flex: 0 0 auto; }
+  .clock .face { fill: var(--card); stroke: var(--line); stroke-width: 3; }
+  .clock .tick { stroke: var(--line); stroke-width: 1.5; }
+  .clock .tick.big { stroke: var(--muted); stroke-width: 3; }
+  .clock .cnum { font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600;
+    fill: var(--muted); text-anchor: middle; }
+  .clock .hand { stroke-linecap: round; }
+  .clock .hand.hour { stroke: var(--ink); stroke-width: 7; }
+  .clock .hand.min { stroke: var(--accent); stroke-width: 4.5; }
+  .clock .pin { fill: var(--accent); }
+  .reads { display: grid; gap: 10px; min-width: 190px; }
+  .read { background: var(--cell); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
+  .rlab { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+  .read b { font-family: "Fredoka", sans-serif; font-size: 26px; font-weight: 600;
+    color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  /* slide 3 — the timetable */
+  .ttwrap { overflow-x: auto; margin-top: 12px; }
+  /* sized so all four buses fit a 375px phone without sideways scrolling */
+  .tt { width: 100%; border-collapse: collapse; min-width: 330px; font-variant-numeric: tabular-nums; }
+  .tt th, .tt td { padding: 9px 6px; border-bottom: 1px solid var(--line); text-align: left; font-size: 14px; }
+  .tt th:first-child, .tt td:first-child { padding-left: 2px; }
+  @media (min-width: 520px) { .tt th, .tt td { padding: 10px 12px; font-size: 15px; } }
+  .tt th { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .tt th.pick { cursor: pointer; color: var(--teal); border-bottom: 2px solid var(--teal); }
+  .tt th.pick:hover { background: var(--teal-soft); }
+  .tt td:first-child { font-weight: 700; }
+  .tt tr:last-child td { border-bottom: 0; }
+
+  /* slide 5 */
+  .qstem { font-size: 19px; font-weight: 700; margin: 6px 0 10px; }

@@ -1,0 +1,178 @@
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 4</p>
+      <h1>Shape, Space <em>and Place</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 faces of a solid -->
+    <section class="slide" data-say="Every flat face of a solid is a two dimensional shape you already know.">
+      <div class="slide-head"><span class="n">1</span><h2>The faces of a solid</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Every flat <b>face</b> of a solid is a 2D shape you already know. Pick a solid and take it apart.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickSolid"></div>
+        <div class="solidrow">
+          <svg class="solid" id="solid1" viewBox="0 0 140 140" role="img" aria-label="The solid"></svg>
+          <div class="faceset" id="faces1" aria-hidden="true"></div>
+        </div>
+        <div class="working" id="work1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="task1"></p>
+        <div class="askwrap" id="ask1"></div>
+      </div>
+    </section>
+
+    <!-- 2 nets -->
+    <section class="slide" data-say="A net is a solid opened out flat. Fold it up in your head and see what it makes.">
+      <div class="slide-head"><span class="n">2</span><h2>Fold it up: nets</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">A <b>net</b> is a solid opened out flat. Fold it up in your head. What does it make?</span></div>
+      <div class="stage">
+        <svg class="net" id="net2" viewBox="0 0 260 200" role="img" aria-label="A net"></svg>
+        <div class="choices" id="netpick"></div>
+        <div class="working" id="work2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="task2"></p>
+      </div>
+    </section>
+
+    <!-- 3 symmetry -->
+    <section class="slide" data-say="Test each line in turn. If folding along it makes the two halves match exactly, it is a line of symmetry.">
+      <div class="slide-head"><span class="n">3</span><h2>Every line of symmetry</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Test each line. If folding along it makes the halves match <b>exactly</b>, it is a line of symmetry. Find <b>all</b> of them.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickSym"></div>
+        <svg class="symbox" id="sym3" viewBox="0 0 200 200" role="img" aria-label="A shape with lines to test"></svg>
+        <div class="choices" id="lines3"></div>
+        <div class="working" id="work3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="task3"></p>
+      </div>
+    </section>
+
+    <!-- 4 reflection -->
+    <section class="slide" data-say="Every square of the shape has a partner the same distance on the other side of the mirror line.">
+      <div class="slide-head"><span class="n">4</span><h2>Reflect it in the mirror</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Each square has a partner the <b>same distance</b> on the other side of the mirror line. Tap the squares to build the reflection.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickRef"></div>
+        <svg class="grid8" id="ref4" viewBox="0 0 260 260" role="img" aria-label="A grid with a shape and a mirror line"></svg>
+        <div class="bigbtns">
+          <button type="button" class="big small ghost" id="clear4">Clear</button>
+          <button type="button" class="big small teal" id="show4">Show me</button>
+        </div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="task4"></p>
+        <div class="askwrap" id="ask4"></div>
+      </div>
+    </section>
+
+    <!-- 5 combining and tessellating -->
+    <section class="slide" data-say="Put shapes together and you make new ones. Some shapes tile a floor with no gaps at all.">
+      <div class="slide-head"><span class="n">5</span><h2>Putting shapes together</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Join shapes and you make new ones. Some shapes <b>tessellate</b> — they tile a floor with no gaps at all.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickTile"></div>
+        <svg class="tile" id="tile5" viewBox="0 0 260 180" role="img" aria-label="Shapes fitted together"></svg>
+        <div class="working" id="work5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="task5"></p>
+        <div class="askwrap" id="ask5"></div>
+      </div>
+    </section>
+
+    <!-- 6 rectangles, formulae and compound shapes -->
+    <section class="slide" data-say="Count the squares once, then find the rule that gives the same answer without counting.">
+      <div class="slide-head"><span class="n">6</span><h2>Area without counting</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Count the squares once. Then find the <b>rule</b> that gives the same answer every time without counting.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickArea"></div>
+        <label class="lab" for="w6">Width <span id="wLab6">5</span> · height <span id="hLab6">3</span></label>
+        <input type="range" id="w6" min="1" max="8" value="5" step="1">
+        <input type="range" id="h6" min="1" max="6" value="3" step="1">
+        <svg class="grid8" id="area6" viewBox="0 0 260 210" role="img" aria-label="A shape drawn on squared paper"></svg>
+        <div class="working" id="work6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="task6"></p>
+        <div class="askwrap" id="ask6"></div>
+      </div>
+    </section>
+
+    <!-- 7 irregular area -->
+    <section class="slide" data-say="An odd shape has no rule. Count the whole squares, then pair up the part squares.">
+      <div class="slide-head"><span class="n">7</span><h2>An odd shape on a grid</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">An odd shape has no formula. Count the <b>whole</b> squares, then treat each <b>part</b> square as about a half.</span></div>
+      <div class="stage">
+        <svg class="grid8" id="blob7" viewBox="0 0 260 260" role="img" aria-label="An irregular shape on squared paper"></svg>
+        <div class="working" id="work7"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new7">A different shape</button></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="task7"></p>
+        <div class="askwrap" id="ask7"></div>
+      </div>
+    </section>
+
+    <!-- 8 scales -->
+    <section class="slide" data-say="When the pointer sits between two marks, the fraction of the way tells you the reading.">
+      <div class="slide-head"><span class="n">8</span><h2>Reading between the marks</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">When the pointer sits <b>between</b> two marks, the fraction of the way across tells you the reading.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickScale"></div>
+        <svg class="scaleimg" id="scale8" viewBox="0 0 260 150" role="img" aria-label="A measuring scale"></svg>
+        <label class="lab" for="pos8">Move the pointer</label>
+        <input type="range" id="pos8" min="0" max="16" value="10" step="1">
+        <div class="working" id="work8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="task8"></p>
+        <div class="askwrap" id="ask8"></div>
+      </div>
+    </section>
+
+    <!-- 9 direction -->
+    <section class="slide" data-say="North, east, south and west, and the four in between. Follow the instructions and see where you land.">
+      <div class="slide-head"><span class="n">9</span><h2>Which way from here?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Four <b>cardinal</b> points, and four <b>ordinal</b> ones in between. Follow the instruction and see where you land.</span></div>
+      <div class="stage">
+        <svg class="grid8" id="map9" viewBox="0 0 260 260" role="img" aria-label="A map grid with a compass"></svg>
+        <p class="qstem" id="order9"></p>
+        <div class="choices" id="dirs9"></div>
+        <div class="working" id="work9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="fb small-fb" id="task9"></p>
+      </div>
+    </section>
+
+    <!-- 10 check -->
+    <section class="slide" data-say="Show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="qstem" id="stem10"></p>
+        <div class="choices" id="choices10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="fb small-fb" id="score10"></p>
+      </div>
+    </section>
+
+    <!-- 11 stickers -->
+    <section class="slide" data-say="Every step you finished earned a sticker.">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>

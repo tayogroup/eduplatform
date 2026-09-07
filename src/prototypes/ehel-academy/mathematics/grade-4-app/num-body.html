@@ -1,0 +1,196 @@
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 4</p>
+      <h1>Numbers and <em>How They Behave</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 numbers in words -->
+    <section class="slide" data-say="Every number has a name. Break it into thousands, hundreds, tens and ones and the name reads itself.">
+      <div class="slide-head"><span class="n">1</span><h2>Saying it in words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Split the number into <b>thousands</b>, <b>hundreds</b>, <b>tens</b> and <b>ones</b>, and the name reads itself.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickN1"></div>
+        <div class="bignum" id="num1"></div>
+        <div class="inwords" id="words1"></div>
+        <div class="working" id="work1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="task1"></p>
+        <div class="askwrap" id="ask1"></div>
+      </div>
+    </section>
+
+    <!-- 2 odd and even -->
+    <section class="slide" data-say="Pair the counters up. If one is left over the number is odd. Now see what happens when you add two of them together.">
+      <div class="slide-head"><span class="n">2</span><h2>Odd, even, and what happens</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Pair the counters. One left over means <b>odd</b>. Now add two numbers and watch what the leftovers do.</span></div>
+      <div class="stage">
+        <label class="lab" for="a2">First number: <span id="aLab2">7</span></label>
+        <input type="range" id="a2" min="1" max="12" value="7" step="1">
+        <label class="lab" for="b2">Second number: <span id="bLab2">5</span></label>
+        <input type="range" id="b2" min="1" max="12" value="5" step="1">
+        <div class="pairbox" id="pair2" aria-hidden="true"></div>
+        <div class="working" id="work2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="task2"></p>
+        <div class="askwrap" id="ask2"></div>
+      </div>
+    </section>
+
+    <!-- 3 the missing number -->
+    <section class="slide" data-say="The shape stands for a number nobody has told you yet. Work out what it must be.">
+      <div class="slide-head"><span class="n">3</span><h2>The shape that hides a number</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">The <b>shape</b> stands for a number nobody has told you. The rest of the sum tells you what it has to be.</span></div>
+      <div class="stage">
+        <p class="qstem big-eq" id="eq3"></p>
+        <div class="barmodel" id="bar3" aria-hidden="true"></div>
+        <div class="choices" id="opts3"></div>
+        <div class="working" id="work3"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new3">Another one</button></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="task3"></p>
+      </div>
+    </section>
+
+    <!-- 4 sequences -->
+    <section class="slide" data-say="Find the step from one term to the next. Some sequences add the same amount every time and some do not.">
+      <div class="slide-head"><span class="n">4</span><h2>What comes next?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Look at the <b>step</b> from each term to the next. Same step every time is <b>linear</b>. Changing step is <b>non-linear</b>.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickSeq"></div>
+        <div class="seqrow" id="seq4" aria-hidden="true"></div>
+        <div class="choices" id="next4"></div>
+        <div class="working" id="work4"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="task4"></p>
+      </div>
+    </section>
+
+    <!-- 5 square numbers -->
+    <section class="slide" data-say="A square number is one you can arrange into a perfect square of dots.">
+      <div class="slide-head"><span class="n">5</span><h2>Numbers that make squares</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">A <b>square number</b> is one whose dots make a perfect square. Watch what has to be added each time.</span></div>
+      <div class="stage">
+        <label class="lab" for="sq5">Side of <span id="sqLab5">4</span></label>
+        <input type="range" id="sq5" min="1" max="8" value="4" step="1">
+        <div class="sqdots" id="sq5box" aria-hidden="true"></div>
+        <div class="working" id="work5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="task5"></p>
+        <div class="askwrap" id="ask5"></div>
+      </div>
+    </section>
+
+    <!-- 6 estimate first -->
+    <section class="slide" data-say="Round the numbers to something easy, work out roughly what the answer should be, and only then do it exactly.">
+      <div class="slide-head"><span class="n">6</span><h2>Estimate before you work</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Round to something <b>easy</b> first. The estimate tells you roughly what to expect, so a silly answer stands out.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickEst"></div>
+        <p class="qstem big-eq" id="sum6"></p>
+        <p class="picker-lab2">Roughly, the answer will be about…</p>
+        <div class="choices" id="est6"></div>
+        <div class="working" id="work6"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new6">Another one</button></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="task6"></p>
+      </div>
+    </section>
+
+    <!-- 7 tables and the associative shortcut -->
+    <section class="slide" data-say="Multiplication can be regrouped. Choose the pair that is easy and do that one first.">
+      <div class="slide-head"><span class="n">7</span><h2>Tables, and a shortcut</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Every table from 1 to 10 — and a trick: in a chain of multiplications you may <b>regroup</b> and do the easy pair first.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickTab"></div>
+        <div id="tabWrap">
+          <p class="qstem big-eq" id="q7"></p>
+          <div class="choices" id="ans7"></div>
+        </div>
+        <div id="assocWrap" hidden>
+          <p class="qstem big-eq" id="chain7"></p>
+          <div class="choices" id="group7"></div>
+        </div>
+        <div class="working" id="work7"></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="task7"></p>
+      </div>
+    </section>
+
+    <!-- 8 divisibility -->
+    <section class="slide" data-say="You can tell whether a number divides exactly without doing the division at all. You only have to look at the end of it.">
+      <div class="slide-head"><span class="n">8</span><h2>Does it divide exactly?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">You can tell without dividing. Nearly every test only asks you to <b>look at the end</b> of the number.</span></div>
+      <div class="stage">
+        <div class="bignum" id="num8"></div>
+        <div class="choices" id="tests8"></div>
+        <div class="working" id="work8"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new8">A different number</button></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="task8"></p>
+      </div>
+    </section>
+
+    <!-- 9 x10, x100 and rounding -->
+    <section class="slide" data-say="Multiplying by ten does not add a zero. Every digit moves one place to the left.">
+      <div class="slide-head"><span class="n">9</span><h2>Ten times, a hundred times</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Multiplying by 10 does not &ldquo;add a zero&rdquo;. Every <b>digit moves one place</b> to the left, and the zero only fills the gap.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickTen"></div>
+        <div class="pvtable" id="pv9" aria-hidden="true"></div>
+        <div class="working" id="work9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="fb small-fb" id="task9"></p>
+        <div class="askwrap" id="ask9"></div>
+      </div>
+    </section>
+
+    <!-- 10 negatives in order -->
+    <section class="slide" data-say="On the number line, further right always means bigger, even when the numbers are below zero.">
+      <div class="slide-head"><span class="n">10</span><h2>Below zero, in order</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Further <b>right</b> on the line always means <b>bigger</b> — and that keeps working below zero, where &minus;2 is bigger than &minus;9.</span></div>
+      <div class="stage">
+        <div class="numline" id="nl10" aria-hidden="true"></div>
+        <p class="qstem big-eq" id="cmp10"></p>
+        <div class="choices" id="signs10"></div>
+        <div class="working" id="work10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="fb small-fb" id="task10"></p>
+      </div>
+    </section>
+
+    <!-- 11 check -->
+    <section class="slide" data-say="Show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="qstem" id="stem11"></p>
+        <div class="choices" id="choices11"></div>
+        <p class="fb" id="fb11"></p>
+        <p class="fb small-fb" id="score11"></p>
+      </div>
+    </section>
+
+    <!-- 12 stickers -->
+    <section class="slide" data-say="Every step you finished earned a sticker.">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>

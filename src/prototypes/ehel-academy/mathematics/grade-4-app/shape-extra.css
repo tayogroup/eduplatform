@@ -1,0 +1,62 @@
+
+  /* ---------- Shape, Space and Place: only what the shared lesson CSS lacks ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+  .chip { padding: 8px 13px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font-size: 14px; }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .qstem { font-size: 18px; font-weight: 700; margin: 10px 0 6px; }
+
+  /* 1 — solids and their faces */
+  .solidrow { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin: 10px 0 4px; }
+  .solid { width: 140px; height: 140px; flex: 0 0 auto; }
+  .solid .f1 { fill: var(--teal); }
+  .solid .f2 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 1.5; }
+  .solid .f3 { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+  .faceset { display: flex; flex-wrap: wrap; gap: 8px; }
+  .facechip { display: grid; place-items: center; gap: 2px; min-width: 74px; padding: 8px 6px;
+    border: 1.5px solid var(--line); border-radius: 12px; background: var(--ground); }
+  .facechip svg { width: 34px; height: 34px; }
+  .facechip svg rect, .facechip svg polygon, .facechip svg circle { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+  .facechip svg path { fill: none; stroke: var(--accent); stroke-width: 3; }
+  .facechip b { font-family: "Fredoka", sans-serif; font-size: 18px; font-weight: 600; }
+  .facechip span { font-size: 10.5px; color: var(--muted); font-weight: 700; text-align: center; }
+
+  /* 2 — nets */
+  .net { width: 100%; max-width: 260px; display: block; margin: 6px auto 10px; }
+  .net rect, .net polygon, .net circle { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+
+  /* 3 — symmetry */
+  .symbox { width: 100%; max-width: 210px; display: block; margin: 8px auto; }
+  .symbox .shape { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2.5; }
+  .symbox .mirror { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 8 5; }
+
+  /* 4, 6, 7, 9 — square grids */
+  .grid8 { width: 100%; max-width: 270px; display: block; margin: 8px auto; }
+  .grid8 .cell { fill: var(--card); stroke: var(--line); stroke-width: 1; }
+  .grid8 .orig { fill: var(--teal); opacity: .85; }
+  .grid8 .mine { fill: var(--accent); opacity: .85; }
+  .grid8 .fillA { fill: var(--teal); opacity: .8; }
+  .grid8 .fillB { fill: var(--accent); opacity: .38; }
+  .grid8 .mir { stroke: var(--accent); stroke-width: 3.5; stroke-dasharray: 7 5; }
+  .grid8 .blobline { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+  .grid8 .here { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .grid8 .there { fill: none; stroke: var(--teal); stroke-width: 3.5; }
+  .grid8 .compass { font: 700 13px Inter, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+
+  /* 5 — tiling */
+  .tile { width: 100%; max-width: 260px; display: block; margin: 8px auto; }
+  .tile .t1 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+  .tile .t2 { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+
+  /* 8 — the scale */
+  .scaleimg { width: 100%; max-width: 260px; display: block; margin: 6px auto 0; }
+  .scaleimg .axis8 { stroke: var(--ink); stroke-width: 2.5; }
+  .scaleimg .big8 { stroke: var(--ink); stroke-width: 2.5; }
+  .scaleimg .small8 { stroke: var(--muted); stroke-width: 1.4; }
+  .scaleimg .lab8 { font: 700 11px Inter, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+  .scaleimg .ptr { fill: var(--accent); }
+  .scaleimg .val8 { font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600;
+    fill: var(--accent); text-anchor: middle; }
+
+  /* 9 — compass buttons */
+  .choice.dir { min-width: 54px; font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600; }

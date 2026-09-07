@@ -1,0 +1,143 @@
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 4</p>
+      <h1>Asking, Sorting <em>and Chance</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 planning -->
+    <section class="slide" data-say="Before you collect anything, decide what would answer your question. Some answers are groups you can name, and some are numbers you can count.">
+      <div class="slide-head"><span class="n">1</span><h2>What would answer it?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Pick a question, then decide what to collect. Some answers are <b>groups you can name</b>. Some are <b>numbers you can count</b>.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickQ"></div>
+        <div class="qcard" id="qcard"></div>
+        <p class="picker-lab2">What kind of data would you collect?</p>
+        <div class="choices" id="kind1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="task1"></p>
+      </div>
+    </section>
+
+    <!-- 2 tally -->
+    <section class="slide" data-say="Twenty two children answer one at a time. Each answer is a tally mark, and every fifth mark is a gate.">
+      <div class="slide-head"><span class="n">2</span><h2>Tally, then count</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Twenty-two children answer one at a time. Mark each one, and cross the gate on every <b>fifth</b>. Then count the gates.</span></div>
+      <div class="stage">
+        <div class="ttable" id="tally2"></div>
+        <div class="bigbtns">
+          <button type="button" class="big small" id="one2">Next child</button>
+          <button type="button" class="big small teal" id="all2">Ask them all</button>
+          <button type="button" class="big small ghost" id="reset2">Start again</button>
+        </div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="task2"></p>
+        <div class="askwrap" id="ask2"></div>
+      </div>
+    </section>
+
+    <!-- 3 representations -->
+    <section class="slide" data-say="The same twenty two answers, drawn three ways. Each picture is good at showing something different.">
+      <div class="slide-head"><span class="n">3</span><h2>One set, three pictures</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">The same 22 answers, drawn three ways. Each one is <b>good at something different</b>.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickRep"></div>
+        <div class="repbox" id="rep3" aria-hidden="true"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="task3"></p>
+        <div class="askwrap" id="ask3"></div>
+      </div>
+    </section>
+
+    <!-- 4 venn and carroll -->
+    <section class="slide" data-say="Two questions at once. A Venn diagram uses hoops that overlap. A Carroll diagram uses four boxes.">
+      <div class="slide-head"><span class="n">4</span><h2>Sorting two ways at once</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Sort 1 to 20 by <b>two</b> questions at once: is it even, and is it more than 10? A <b>Venn diagram</b> overlaps two hoops. A <b>Carroll diagram</b> uses four boxes.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickSort"></div>
+        <div class="sortbox" id="sort4" aria-hidden="true"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="task4"></p>
+        <div class="askwrap" id="ask4"></div>
+      </div>
+    </section>
+
+    <!-- 5 interpret -->
+    <section class="slide" data-say="Two classes, the same question, the same number of children. Look for what is the same and what is different.">
+      <div class="slide-head"><span class="n">5</span><h2>Two classes, one question</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Both classes have <b>22</b> children and answered the same question. What is the <b>same</b>, and what is <b>different</b>?</span></div>
+      <div class="stage">
+        <div class="twoup" id="two5" aria-hidden="true"></div>
+        <p class="qstem" id="stem5"></p>
+        <div class="choices" id="choices5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="task5"></p>
+      </div>
+    </section>
+
+    <!-- 6 chance words -->
+    <section class="slide" data-say="Some things cannot happen, some are sure to. Most sit somewhere in between.">
+      <div class="slide-head"><span class="n">6</span><h2>Impossible to certain</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Some things <b>cannot</b> happen and some are <b>sure</b> to. Most sit somewhere in between. Put each one on the line.</span></div>
+      <div class="stage">
+        <div class="chanceline" id="cl6" aria-hidden="true"></div>
+        <p class="qstem" id="ev6"></p>
+        <div class="choices" id="words6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="task6"></p>
+      </div>
+    </section>
+
+    <!-- 7 experiment -->
+    <section class="slide" data-say="Spin it ten times and the counts are lumpy. Spin it a thousand times and they even out.">
+      <div class="slide-head"><span class="n">7</span><h2>Spin it, and spin it again</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Four equal parts, so each <b>should</b> come up a quarter of the time. A few spins are lumpy. <b>Many</b> spins even out.</span></div>
+      <div class="stage">
+        <svg class="spinner" id="sp7" viewBox="0 0 160 160" role="img" aria-label="A spinner with four equal parts"></svg>
+        <div class="bigbtns">
+          <button type="button" class="big small" data-n="10">Spin 10</button>
+          <button type="button" class="big small" data-n="100">Spin 100</button>
+          <button type="button" class="big small teal" data-n="1000">Spin 1000</button>
+        </div>
+        <div class="repbox" id="res7" aria-hidden="true"></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="task7"></p>
+        <div class="askwrap" id="ask7"></div>
+      </div>
+    </section>
+
+    <!-- 8 check -->
+    <section class="slide" data-say="Show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="qstem" id="stem8"></p>
+        <div class="choices" id="choices8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="score8"></p>
+      </div>
+    </section>
+
+    <!-- 9 stickers -->
+    <section class="slide" data-say="Every step you finished earned a sticker.">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>

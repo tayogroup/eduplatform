@@ -1,0 +1,1984 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shape, Space and Place</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --plum-soft: #EADDF2; --gold: #C99700; --gold-soft: #FBF0C8;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 19px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Fredoka", "Trebuchet MS", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 540px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(24px, 5vw, 33px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 19px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 6px 0; }
+  .fb { min-height: 1.6em; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 22px; text-align: center; max-width: 32em; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .small-fb { font-size: 16px; color: var(--muted); font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; }
+
+  .bignum { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(40px, 9vw, 70px); line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .bignum .k { color: var(--gold); } .bignum .h { color: var(--plum); } .bignum .t { color: var(--teal); } .bignum .o { color: var(--accent); }
+  .word { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: clamp(20px, 4.2vw, 28px); color: var(--teal); text-align: center; }
+
+  .bigbtns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 58px; height: 54px; padding: 0 16px; border-radius: 16px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; } .big.plum { background: var(--plum); color: #fff; } .big.gold { background: var(--gold); color: #2b2200; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 46px; font-size: 17px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+
+  /* the "your turn" panel -- a demonstration is not evidence the child can do it, so
+     every teaching slide ends with one question that can come back "not quite". */
+  .askwrap { margin: 18px 0 2px; padding: 13px 14px 15px; border: 3px dashed var(--line);
+    border-radius: 18px; background: var(--ground); text-align: center; }
+  .asklab { font-size: 11px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 7px; }
+  .askwrap .qstem { font-size: 18px; font-weight: 700; margin: 0 0 12px; line-height: 1.35; }
+  .askwrap .choice { height: 58px; font-size: 23px; min-width: 78px; border-width: 3px; }
+  .askwrap .choice.word { font-size: 17px; }
+  .askwrap .fb { margin: 10px 0 0; }
+  .askwrap .askmore { margin-top: 10px; }
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 92px; height: 68px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 27px; transition: transform 100ms ease; font-variant-numeric: tabular-nums; }
+  .choice.word { font-size: 20px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* place value */
+  .pv { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .pv div { min-width: 80px; padding: 8px 10px; border-radius: 14px; text-align: center; }
+  .pv .thou { background: var(--gold-soft); } .pv .hund { background: var(--plum-soft); } .pv .tens { background: var(--teal-soft); } .pv .ones { background: var(--accent-soft); }
+  .pv .lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .pv .val { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 32px; }
+  .pv .thou .val { color: var(--gold); } .pv .hund .val { color: var(--plum); } .pv .tens .val { color: var(--teal); } .pv .ones .val { color: var(--accent); }
+  .blocks { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; justify-content: center; min-height: 70px; }
+  .cubes { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 240px; }
+  .cube { width: 44px; height: 44px; border-radius: 5px; background: var(--gold); box-shadow: inset -8px -8px 0 rgba(0,0,0,0.18); }
+  .flats { display: flex; gap: 5px; flex-wrap: wrap; max-width: 200px; justify-content: center; }
+  .flat { width: 34px; height: 34px; border-radius: 3px; background: var(--plum); background-image: linear-gradient(to right, rgba(255,255,255,0.45) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.45) 1px, transparent 1px); background-size: 3.4px 3.4px; }
+  .rods { display: flex; gap: 4px; align-items: flex-end; }
+  .rod { width: 10px; height: 60px; border-radius: 3px; background: var(--teal); background-image: repeating-linear-gradient(to bottom, transparent 0 5px, rgba(255,255,255,0.5) 5px 6px); }
+  .units { display: grid; grid-template-columns: repeat(3, 10px); gap: 3px; align-content: end; }
+  .unit { width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
+
+  /* thermometer */
+  .thermo { display: flex; align-items: center; gap: 18px; }
+  .tube { position: relative; width: 44px; height: 300px; border-radius: 22px; background: var(--cell); border: 3px solid var(--ink); overflow: hidden; }
+  .tube .merc { position: absolute; left: 6px; right: 6px; bottom: 0; background: var(--accent); border-radius: 16px 16px 0 0; transition: height 200ms ease; }
+  .tube .merc.cold { background: var(--teal); }
+  .tube .zero { position: absolute; left: 0; right: 0; height: 3px; background: var(--ink); }
+  .scale { position: relative; height: 300px; width: 48px; }
+  .scale span { position: absolute; left: 0; transform: translateY(-50%); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .scale span.z { color: var(--ink); font-size: 15px; } .scale span.neg { color: var(--teal); }
+  .tempnum { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(44px, 10vw, 72px); font-variant-numeric: tabular-nums; }
+  .tempnum.neg { color: var(--teal); } .tempnum.pos { color: var(--accent); }
+
+  /* number line */
+  .nline { position: relative; width: 100%; max-width: 660px; height: 62px; }
+  .nline .bar { position: absolute; left: 14px; right: 14px; top: 28px; height: 4px; background: var(--ink); border-radius: 2px; }
+  .nline .t { position: absolute; top: 20px; width: 2px; height: 20px; background: var(--ink); transform: translateX(-50%); }
+  .nline .t.mid { height: 26px; top: 17px; width: 3px; }
+  .nline .l { position: absolute; top: 42px; transform: translateX(-50%); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .nline .l.big { font-size: 15px; font-family: "Fredoka", sans-serif; }
+  .nline .m { position: absolute; top: 16px; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); border: 3px solid var(--card); transform: translateX(-50%); }
+
+  /* grid method */
+  .gridm { display: grid; grid-template-columns: 52px 1fr 1fr; gap: 6px; width: 100%; max-width: 420px; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 24px; font-variant-numeric: tabular-nums; }
+  .gridm div { padding: 10px; border-radius: 10px; text-align: center; }
+  .gridm .hd { background: var(--teal-soft); color: var(--teal); } .gridm .side { background: var(--accent-soft); color: var(--accent); }
+  .gridm .cell { background: var(--cell); min-height: 56px; display: grid; place-items: center; color: var(--muted); }
+  .gridm .cell.on { background: var(--gold-soft); color: var(--ink); }
+  .area { display: grid; gap: 2px; padding: 6px; border-radius: 10px; background: var(--line); }
+  .area { --cell: 10px; max-width: 100%; overflow-x: auto; }
+  .area i { width: var(--cell); height: var(--cell); background: var(--card); border-radius: 1px; }
+  .area i.a { background: var(--teal); } .area i.b { background: var(--accent); }
+
+  /* working */
+  .working { display: grid; gap: 8px; width: 100%; max-width: 580px; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 9px 14px; border-radius: 12px; background: var(--teal-soft); font-variant-numeric: tabular-nums; }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Fredoka", sans-serif; font-weight: 600; }
+  .working .line .v b { color: var(--accent); }
+  .working .line.hidden { display: none; }
+
+  /* division groups */
+  .dots-pool { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 380px; padding: 8px; border-radius: 14px; border: 2px dashed var(--line); min-height: 40px; }
+  .dots-pool i { width: 16px; height: 16px; border-radius: 50%; background: var(--gold); border: 2px solid var(--ink); }
+  .dots-pool.rem { border-color: var(--bad); }
+  .groups { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 560px; }
+  .grp { display: grid; grid-template-columns: repeat(3, 16px); gap: 3px; padding: 6px; border-radius: 10px; border: 2px solid var(--teal); background: var(--teal-soft); }
+  .grp i { width: 16px; height: 16px; border-radius: 50%; background: var(--gold); border: 2px solid var(--ink); }
+
+  /* factors */
+  .rects { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: flex-end; }
+  .rect { display: grid; gap: 2px; padding: 6px; border-radius: 8px; background: var(--card); border: 2px solid var(--line); }
+  .rect i { width: 9px; height: 9px; background: var(--plum); border-radius: 1px; }
+  .rect.sel { border-color: var(--accent); background: var(--accent-soft); }
+  .rectlab { text-align: center; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 15px; margin-top: 4px; }
+  .skip { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; width: 100%; max-width: 620px; }
+  .skip span { padding: 6px 0; border-radius: 8px; background: var(--cell); text-align: center; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .skip span.on { background: var(--accent); color: var(--accent-ink); }
+
+  /* hundred square */
+  .hgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; width: 100%; max-width: 300px; aspect-ratio: 1; padding: 6px; border-radius: 10px; background: var(--line); }
+  .hgrid button { border: 0; border-radius: 2px; background: var(--card); padding: 0; }
+  .hgrid button.on { background: var(--accent); }
+  .hgrid button.tenth { background: var(--teal); }
+  .forms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 420px; }
+  .form { padding: 10px 8px; border-radius: 12px; background: var(--teal-soft); text-align: center; }
+  .form .lab { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .form .val { font-family: "Fredoka", sans-serif; font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.05; vertical-align: middle; }
+  .frac span:first-child { border-bottom: 2px solid currentColor; padding: 0 4px; }
+
+  /* fraction bar */
+  .fracbar { display: flex; width: 100%; max-width: 520px; height: 64px; border-radius: 12px; overflow: hidden; border: 3px solid var(--ink); }
+  .fracbar button { flex: 1; border: 0; border-right: 3px solid var(--ink); background: var(--card); font-family: "Fredoka", sans-serif; font-size: 16px; font-weight: 700; color: var(--muted); padding: 0; }
+  .fracbar button:last-child { border-right: 0; }
+  .fracbar button.a { background: var(--accent); color: var(--accent-ink); } .fracbar button.b { background: var(--teal); color: #fff; }
+  .fraction { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 34px; display: inline-flex; flex-direction: column; align-items: center; line-height: 1; vertical-align: middle; margin: 0 6px; }
+  .fraction span:first-child { border-bottom: 3px solid currentColor; padding: 0 6px; }
+
+  /* perimeter and area */
+  .shape { display: grid; gap: 2px; padding: 8px; border-radius: 10px; background: var(--line); }
+  .shape i { width: 26px; height: 26px; background: var(--gold-soft); border: 1px solid var(--gold); border-radius: 2px; display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--muted); }
+  .shape i.edge { box-shadow: inset 0 0 0 2px var(--accent); }
+  @media (max-width: 480px) { .shape i { width: 20px; height: 20px; font-size: 9px; } }
+
+  /* angles */
+  .angle { width: 100%; max-width: 260px; display: block; }
+  .angle .arm { stroke: var(--ink); stroke-width: 6; stroke-linecap: round; }
+  .angle .arm.move { stroke: var(--accent); }
+  .angle .wedge { fill: var(--accent); opacity: 0.25; }
+  .angle .sq { fill: none; stroke: var(--teal); stroke-width: 3; }
+  .angle .deg { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 18px; fill: var(--ink); }
+
+  /* coordinates */
+  .coords { width: 100%; max-width: 320px; display: block; }
+  .coords .gl { stroke: var(--line); stroke-width: 1; }
+  .coords .ax { stroke: var(--ink); stroke-width: 2; }
+  .coords .lab { font-family: "Atkinson Hyperlegible", sans-serif; font-size: 11px; font-weight: 700; fill: var(--muted); text-anchor: middle; }
+  .coords .pt { fill: var(--card); stroke: var(--accent); stroke-width: 3; cursor: pointer; }
+  .coords .pt:hover { fill: var(--accent-soft); }
+  .coords .pt.tgt { fill: var(--accent); }
+  .coords .pt.good { fill: var(--good); stroke: var(--good); } .coords .pt.oops { fill: var(--bad); stroke: var(--bad); }
+  .coords .guide { stroke: var(--teal); stroke-width: 2; stroke-dasharray: 4 3; }
+
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 17px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+
+  /* ---------- Shape, Space and Place: only what the shared lesson CSS lacks ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+  .chip { padding: 8px 13px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font-size: 14px; }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .qstem { font-size: 18px; font-weight: 700; margin: 10px 0 6px; }
+
+  /* 1 — solids and their faces */
+  .solidrow { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin: 10px 0 4px; }
+  .solid { width: 140px; height: 140px; flex: 0 0 auto; }
+  .solid .f1 { fill: var(--teal); }
+  .solid .f2 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 1.5; }
+  .solid .f3 { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+  .faceset { display: flex; flex-wrap: wrap; gap: 8px; }
+  .facechip { display: grid; place-items: center; gap: 2px; min-width: 74px; padding: 8px 6px;
+    border: 1.5px solid var(--line); border-radius: 12px; background: var(--ground); }
+  .facechip svg { width: 34px; height: 34px; }
+  .facechip svg rect, .facechip svg polygon, .facechip svg circle { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+  .facechip svg path { fill: none; stroke: var(--accent); stroke-width: 3; }
+  .facechip b { font-family: "Fredoka", sans-serif; font-size: 18px; font-weight: 600; }
+  .facechip span { font-size: 10.5px; color: var(--muted); font-weight: 700; text-align: center; }
+
+  /* 2 — nets */
+  .net { width: 100%; max-width: 260px; display: block; margin: 6px auto 10px; }
+  .net rect, .net polygon, .net circle { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+
+  /* 3 — symmetry */
+  .symbox { width: 100%; max-width: 210px; display: block; margin: 8px auto; }
+  .symbox .shape { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2.5; }
+  .symbox .mirror { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 8 5; }
+
+  /* 4, 6, 7, 9 — square grids */
+  .grid8 { width: 100%; max-width: 270px; display: block; margin: 8px auto; }
+  .grid8 .cell { fill: var(--card); stroke: var(--line); stroke-width: 1; }
+  .grid8 .orig { fill: var(--teal); opacity: .85; }
+  .grid8 .mine { fill: var(--accent); opacity: .85; }
+  .grid8 .fillA { fill: var(--teal); opacity: .8; }
+  .grid8 .fillB { fill: var(--accent); opacity: .38; }
+  .grid8 .mir { stroke: var(--accent); stroke-width: 3.5; stroke-dasharray: 7 5; }
+  .grid8 .blobline { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+  .grid8 .here { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .grid8 .there { fill: none; stroke: var(--teal); stroke-width: 3.5; }
+  .grid8 .compass { font: 700 13px Inter, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+
+  /* 5 — tiling */
+  .tile { width: 100%; max-width: 260px; display: block; margin: 8px auto; }
+  .tile .t1 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+  .tile .t2 { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+
+  /* 8 — the scale */
+  .scaleimg { width: 100%; max-width: 260px; display: block; margin: 6px auto 0; }
+  .scaleimg .axis8 { stroke: var(--ink); stroke-width: 2.5; }
+  .scaleimg .big8 { stroke: var(--ink); stroke-width: 2.5; }
+  .scaleimg .small8 { stroke: var(--muted); stroke-width: 1.4; }
+  .scaleimg .lab8 { font: 700 11px Inter, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+  .scaleimg .ptr { fill: var(--accent); }
+  .scaleimg .val8 { font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600;
+    fill: var(--accent); text-anchor: middle; }
+
+  /* 9 — compass buttons */
+  .choice.dir { min-width: 54px; font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600; }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 4</p>
+      <h1>Shape, Space <em>and Place</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 faces of a solid -->
+    <section class="slide" data-say="Every flat face of a solid is a two dimensional shape you already know.">
+      <div class="slide-head"><span class="n">1</span><h2>The faces of a solid</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Every flat <b>face</b> of a solid is a 2D shape you already know. Pick a solid and take it apart.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickSolid"></div>
+        <div class="solidrow">
+          <svg class="solid" id="solid1" viewBox="0 0 140 140" role="img" aria-label="The solid"></svg>
+          <div class="faceset" id="faces1" aria-hidden="true"></div>
+        </div>
+        <div class="working" id="work1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="task1"></p>
+        <div class="askwrap" id="ask1"></div>
+      </div>
+    </section>
+
+    <!-- 2 nets -->
+    <section class="slide" data-say="A net is a solid opened out flat. Fold it up in your head and see what it makes.">
+      <div class="slide-head"><span class="n">2</span><h2>Fold it up: nets</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">A <b>net</b> is a solid opened out flat. Fold it up in your head. What does it make?</span></div>
+      <div class="stage">
+        <svg class="net" id="net2" viewBox="0 0 260 200" role="img" aria-label="A net"></svg>
+        <div class="choices" id="netpick"></div>
+        <div class="working" id="work2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="task2"></p>
+      </div>
+    </section>
+
+    <!-- 3 symmetry -->
+    <section class="slide" data-say="Test each line in turn. If folding along it makes the two halves match exactly, it is a line of symmetry.">
+      <div class="slide-head"><span class="n">3</span><h2>Every line of symmetry</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Test each line. If folding along it makes the halves match <b>exactly</b>, it is a line of symmetry. Find <b>all</b> of them.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickSym"></div>
+        <svg class="symbox" id="sym3" viewBox="0 0 200 200" role="img" aria-label="A shape with lines to test"></svg>
+        <div class="choices" id="lines3"></div>
+        <div class="working" id="work3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="task3"></p>
+      </div>
+    </section>
+
+    <!-- 4 reflection -->
+    <section class="slide" data-say="Every square of the shape has a partner the same distance on the other side of the mirror line.">
+      <div class="slide-head"><span class="n">4</span><h2>Reflect it in the mirror</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Each square has a partner the <b>same distance</b> on the other side of the mirror line. Tap the squares to build the reflection.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickRef"></div>
+        <svg class="grid8" id="ref4" viewBox="0 0 260 260" role="img" aria-label="A grid with a shape and a mirror line"></svg>
+        <div class="bigbtns">
+          <button type="button" class="big small ghost" id="clear4">Clear</button>
+          <button type="button" class="big small teal" id="show4">Show me</button>
+        </div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="task4"></p>
+        <div class="askwrap" id="ask4"></div>
+      </div>
+    </section>
+
+    <!-- 5 combining and tessellating -->
+    <section class="slide" data-say="Put shapes together and you make new ones. Some shapes tile a floor with no gaps at all.">
+      <div class="slide-head"><span class="n">5</span><h2>Putting shapes together</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Join shapes and you make new ones. Some shapes <b>tessellate</b> — they tile a floor with no gaps at all.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickTile"></div>
+        <svg class="tile" id="tile5" viewBox="0 0 260 180" role="img" aria-label="Shapes fitted together"></svg>
+        <div class="working" id="work5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="task5"></p>
+        <div class="askwrap" id="ask5"></div>
+      </div>
+    </section>
+
+    <!-- 6 rectangles, formulae and compound shapes -->
+    <section class="slide" data-say="Count the squares once, then find the rule that gives the same answer without counting.">
+      <div class="slide-head"><span class="n">6</span><h2>Area without counting</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Count the squares once. Then find the <b>rule</b> that gives the same answer every time without counting.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickArea"></div>
+        <label class="lab" for="w6">Width <span id="wLab6">5</span> · height <span id="hLab6">3</span></label>
+        <input type="range" id="w6" min="1" max="8" value="5" step="1">
+        <input type="range" id="h6" min="1" max="6" value="3" step="1">
+        <svg class="grid8" id="area6" viewBox="0 0 260 210" role="img" aria-label="A shape drawn on squared paper"></svg>
+        <div class="working" id="work6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="task6"></p>
+        <div class="askwrap" id="ask6"></div>
+      </div>
+    </section>
+
+    <!-- 7 irregular area -->
+    <section class="slide" data-say="An odd shape has no rule. Count the whole squares, then pair up the part squares.">
+      <div class="slide-head"><span class="n">7</span><h2>An odd shape on a grid</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">An odd shape has no formula. Count the <b>whole</b> squares, then treat each <b>part</b> square as about a half.</span></div>
+      <div class="stage">
+        <svg class="grid8" id="blob7" viewBox="0 0 260 260" role="img" aria-label="An irregular shape on squared paper"></svg>
+        <div class="working" id="work7"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new7">A different shape</button></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="task7"></p>
+        <div class="askwrap" id="ask7"></div>
+      </div>
+    </section>
+
+    <!-- 8 scales -->
+    <section class="slide" data-say="When the pointer sits between two marks, the fraction of the way tells you the reading.">
+      <div class="slide-head"><span class="n">8</span><h2>Reading between the marks</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">When the pointer sits <b>between</b> two marks, the fraction of the way across tells you the reading.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickScale"></div>
+        <svg class="scaleimg" id="scale8" viewBox="0 0 260 150" role="img" aria-label="A measuring scale"></svg>
+        <label class="lab" for="pos8">Move the pointer</label>
+        <input type="range" id="pos8" min="0" max="16" value="10" step="1">
+        <div class="working" id="work8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="task8"></p>
+        <div class="askwrap" id="ask8"></div>
+      </div>
+    </section>
+
+    <!-- 9 direction -->
+    <section class="slide" data-say="North, east, south and west, and the four in between. Follow the instructions and see where you land.">
+      <div class="slide-head"><span class="n">9</span><h2>Which way from here?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Four <b>cardinal</b> points, and four <b>ordinal</b> ones in between. Follow the instruction and see where you land.</span></div>
+      <div class="stage">
+        <svg class="grid8" id="map9" viewBox="0 0 260 260" role="img" aria-label="A map grid with a compass"></svg>
+        <p class="qstem" id="order9"></p>
+        <div class="choices" id="dirs9"></div>
+        <div class="working" id="work9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="fb small-fb" id="task9"></p>
+      </div>
+    </section>
+
+    <!-- 10 check -->
+    <section class="slide" data-say="Show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="qstem" id="stem10"></p>
+        <div class="choices" id="choices10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="fb small-fb" id="score10"></p>
+      </div>
+    </section>
+
+    <!-- 11 stickers -->
+    <section class="slide" data-say="Every step you finished earned a sticker.">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+
+<script>
+
+(function () {
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  function sub1000(n) { const h = Math.floor(n / 100), r = n % 100; const small = r < 20 ? ONES[r] : TENS[Math.floor(r / 10)] + (r % 10 ? "-" + ONES[r % 10] : ""); if (!h) return small; return ONES[h] + " hundred" + (r ? " and " + small : ""); }
+  function words(n) { if (n === 10000) return "ten thousand"; const k = Math.floor(n / 1000), r = n % 1000; if (!k) return sub1000(n); return ONES[k] + " thousand" + (r ? (r < 100 ? " and " : " ") + sub1000(r) : ""); }
+  const fmt = (n) => n.toLocaleString("en-GB");
+  const sg = (v) => (v < 0 ? "−" + (-v) : String(v)); // a real minus sign for negative temperatures
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0; $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots(); if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+  function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + (l.hidden ? " hidden" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
+
+  /* ---- "your turn": one question per teaching slide that the child can get wrong ----
+     A slider or a variant chip changes what is displayed; it never disagrees with the
+     learner. Cambridge's verbs for Stage 4 are estimate, recognise, read, record and
+     understand, and a demonstration evidences none of them -- the child has to commit
+     to an answer and be told. make() returns a fresh {stem, opts, ans, why} each time,
+     so "Another one" is real practice rather than the same item again.
+     Draws its own markup, so a slide needs only <div class="askwrap" id="askN"></div>. */
+
+  /* Three distinct options with the right one among them. Generators pass their
+     preferred distractors first; duplicates are dropped rather than shown, because
+     two identical buttons make a question unanswerable rather than merely hard. */
+  function pick3(correct, cands) {
+    const out = [correct];
+    (cands || []).forEach((c) => {
+      if (out.length < 3 && Number.isFinite(c) && out.indexOf(c) < 0) out.push(c);
+    });
+    let bump = 1;
+    while (out.length < 3) { if (out.indexOf(correct + bump) < 0) out.push(correct + bump); bump++; }
+    return shuffle(out);
+  }
+
+  function ask(n, make) {
+    const box = $("ask" + n);
+    if (!box) return;
+    box.innerHTML =
+      '<p class="asklab">Your turn</p><p class="qstem"></p><div class="choices"></div>' +
+      '<p class="fb"></p><button type="button" class="big small ghost askmore">Another one</button>';
+    const stem = box.querySelector(".qstem"), opts = box.querySelector(".choices"),
+          fb = box.querySelector(".fb");
+    let q = null, locked = false;
+    function draw() {
+      stem.innerHTML = q.stem;
+      opts.innerHTML = q.opts.map((o, i) => {
+        const plain = String(o).replace(/<[^>]*>/g, "");
+        return '<button type="button" class="choice' + (plain.length > 4 ? " word" : "") +
+          '" data-i="' + i + '">' + o + "</button>";
+      }).join("");
+    }
+    function fresh() { q = make(); locked = false; fb.textContent = ""; fb.className = "fb"; draw(); }
+    opts.addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-i]"); if (!b || locked) return;
+      locked = true;
+      const i = Number(b.dataset.i), ok = i === q.ans;
+      opts.querySelectorAll(".choice")[q.ans].classList.add("right");
+      if (!ok) b.classList.add("wrong");
+      fb.innerHTML = (ok ? "Yes. " : "Not quite. ") + q.why;
+      fb.className = "fb " + (ok ? "good" : "bad");
+      say(fb.textContent.replace(/\s+/g, " "));
+      if (ok) finish(n - 1, "");
+    });
+    box.querySelector(".askmore").addEventListener("click", fresh);
+    fresh();
+  }
+
+  function nline(el, lo, hi, marks, labelEvery, tick) {
+    const x = (v) => "calc(14px + " + ((v - lo) / (hi - lo)) + " * (100% - 28px))"; let h = '<div class="bar"></div>';
+    for (let v = lo; v <= hi; v += tick) { const big = (v - lo) % labelEvery === 0; h += '<div class="t' + (big ? " mid" : "") + '" style="left:' + x(v) + '"></div>'; if (big) h += '<div class="l big" style="left:' + x(v) + '">' + fmt(v) + "</div>"; }
+    (marks || []).forEach((m) => { h += '<div class="m" style="left:' + x(m) + '"></div>'; }); el.innerHTML = h;
+  }
+
+    /* ---- 1: the 2D faces of a 3D solid (4Gg.05) ---- */
+  const SOLIDS = [
+    { name: "Cube", faces: [[6, "square"]], e: 12, v: 8, curved: 0,
+      draw: '<path class="f1" d="M35,50 L85,50 L85,100 L35,100 Z"></path><path class="f2" d="M35,50 L55,32 L105,32 L85,50 Z"></path><path class="f3" d="M85,50 L105,32 L105,82 L85,100 Z"></path>' },
+    { name: "Cuboid", faces: [[6, "rectangle"]], e: 12, v: 8, curved: 0,
+      draw: '<path class="f1" d="M28,55 L96,55 L96,95 L28,95 Z"></path><path class="f2" d="M28,55 L48,37 L116,37 L96,55 Z"></path><path class="f3" d="M96,55 L116,37 L116,77 L96,95 Z"></path>' },
+    { name: "Square-based pyramid", faces: [[1, "square"], [4, "triangle"]], e: 8, v: 5, curved: 0,
+      /* base parallelogram first, then the two visible slanting faces on top of it */
+      draw: '<path class="f1" d="M25,110 L85,110 L115,88 L55,88 Z"></path><path class="f2" d="M25,110 L85,110 L72,26 Z"></path><path class="f3" d="M85,110 L115,88 L72,26 Z"></path>' },
+    { name: "Triangular prism", faces: [[2, "triangle"], [3, "rectangle"]], e: 9, v: 6, curved: 0,
+      draw: '<path class="f1" d="M30,100 L82,100 L56,52 Z"></path><path class="f2" d="M30,100 L50,82 L102,82 L82,100 Z"></path><path class="f3" d="M82,100 L102,82 L76,34 L56,52 Z"></path>' },
+    { name: "Cylinder", faces: [[2, "circle"]], e: 2, v: 0, curved: 1,
+      draw: '<path class="f3" d="M38,45 L38,100 A32,12 0 0,0 102,100 L102,45 Z"></path><ellipse class="f1" cx="70" cy="45" rx="32" ry="12"></ellipse>' },
+    { name: "Cone", faces: [[1, "circle"]], e: 1, v: 1, curved: 1,
+      draw: '<path class="f3" d="M38,105 A32,12 0 0,0 102,105 L70,32 Z"></path><ellipse class="f1" cx="70" cy="105" rx="32" ry="12"></ellipse>' },
+  ];
+  const FACE2D = {
+    square: '<svg viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28"></rect></svg>',
+    rectangle: '<svg viewBox="0 0 40 40"><rect x="3" y="10" width="34" height="20"></rect></svg>',
+    triangle: '<svg viewBox="0 0 40 40"><polygon points="20,6 36,34 4,34"></polygon></svg>',
+    circle: '<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15"></circle></svg>',
+  };
+  let s1 = 0;
+  const seen1 = new Set([0]);
+  $("pickSolid").innerHTML = SOLIDS.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + s.name + "</button>").join("");
+  function paint1() {
+    const S = SOLIDS[s1];
+    $("solid1").innerHTML = S.draw;
+    $("faces1").innerHTML = S.faces.map((f) =>
+      '<div class="facechip">' + FACE2D[f[1]] + "<b>" + f[0] + "</b><span>" + f[1] + (f[0] > 1 ? "s" : "") + "</span></div>").join("") +
+      (S.curved ? '<div class="facechip curved"><svg viewBox="0 0 40 40"><path d="M8,32 Q20,4 32,32"></path></svg><b>1</b><span>curved surface</span></div>' : "");
+    const flat = S.faces.reduce((a, f) => a + f[0], 0);
+    lines($("work1"), [
+      { k: "Flat faces", v: "<b>" + flat + "</b>" + (S.curved ? ", and 1 curved surface that is not flat" : "") },
+      { k: "Their shapes", v: S.faces.map((f) => f[0] + " " + f[1] + (f[0] > 1 ? "s" : "")).join(" and ") },
+      { k: "Edges", v: "<b>" + S.e + "</b> — where two faces meet" },
+      { k: "Vertices", v: "<b>" + S.v + "</b> — where the edges meet", total: true },
+    ]);
+    $("fb1").innerHTML = "A " + S.name.toLowerCase() + " has <b>" + flat + "</b> flat face" + (flat === 1 ? "" : "s") + ".";
+    seen1.add(s1);
+    $("task1").textContent = "Solids opened up: " + seen1.size + " of " + SOLIDS.length;
+    if (seen1.size >= 4) finish(0, "");
+  }
+  $("pickSolid").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    s1 = Number(b.dataset.i);
+    [...$("pickSolid").children].forEach((c, i) => c.classList.toggle("on", i === s1));
+    paint1(); say(SOLIDS[s1].name);
+  });
+  paint1();
+
+  /* ---- 2: nets (4Gg.06) ---- */
+  const NETS = shuffle([
+    { a: "Cube", why: "Six squares in a cross fold up into a cube.",
+      d: '<rect x="70" y="20" width="40" height="40"></rect><rect x="30" y="60" width="40" height="40"></rect><rect x="70" y="60" width="40" height="40"></rect><rect x="110" y="60" width="40" height="40"></rect><rect x="150" y="60" width="40" height="40"></rect><rect x="70" y="100" width="40" height="40"></rect>' },
+    { a: "Square-based pyramid", why: "A square with a triangle on each side folds up to a point.",
+      d: '<rect x="90" y="70" width="50" height="50"></rect><polygon points="90,70 140,70 115,25"></polygon><polygon points="90,120 140,120 115,165"></polygon><polygon points="90,70 90,120 45,95"></polygon><polygon points="140,70 140,120 185,95"></polygon>' },
+    { a: "Triangular prism", why: "Three rectangles in a row with a triangle at each end folds into a prism.",
+      d: '<rect x="60" y="55" width="45" height="34"></rect><rect x="60" y="89" width="45" height="34"></rect><rect x="60" y="123" width="45" height="34"></rect><polygon points="60,89 105,89 82,52"></polygon><polygon points="60,123 105,123 82,160"></polygon>' },
+    { a: "Cylinder", why: "A rectangle rolls into the tube, and the two circles are the ends.",
+      d: '<rect x="80" y="60" width="100" height="50"></rect><circle cx="130" cy="42" r="17"></circle><circle cx="130" cy="128" r="17"></circle>' },
+  ]);
+  const NETOPTS = ["Cube", "Square-based pyramid", "Triangular prism", "Cylinder", "Cone"];
+  let n2 = 0, right2 = 0, lock2 = false;
+  function paint2() {
+    lock2 = false;
+    $("fb2").textContent = ""; $("fb2").className = "fb";
+    $("work2").innerHTML = "";
+    if (n2 >= NETS.length) {
+      $("net2").innerHTML = "";
+      $("netpick").innerHTML = "";
+      $("task2").textContent = right2 + " of " + NETS.length + " right.";
+      if (right2 >= 3) finish(1, "");
+      return;
+    }
+    $("net2").innerHTML = NETS[n2].d;
+    const opts = shuffle([NETS[n2].a].concat(shuffle(NETOPTS.filter((o) => o !== NETS[n2].a)).slice(0, 2)));
+    $("netpick").innerHTML = opts.map((o) => '<button type="button" class="choice" data-a="' + o + '">' + o + "</button>").join("");
+    $("task2").textContent = "Net " + (n2 + 1) + " of " + NETS.length + " · " + right2 + " right";
+  }
+  $("netpick").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock2) return;
+    lock2 = true;
+    const ok = b.dataset.a === NETS[n2].a;
+    if (ok) right2++;
+    b.classList.add(ok ? "right" : "wrong");
+    $("fb2").textContent = (ok ? cheer() + " " : "It is a " + NETS[n2].a.toLowerCase() + ". ") + NETS[n2].why;
+    $("fb2").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : NETS[n2].why);
+    n2++;
+    setTimeout(paint2, 2600);
+  });
+  paint2();
+
+  /* ---- 3: every line of symmetry (4Gg.07) ---- */
+  /* only shapes whose COMPLETE set of mirror lines is among these four are used, so
+     "find all of them" is an honest instruction */
+  const SYM = [
+    { name: "Square", ok: ["H", "V", "D1", "D2"], d: "M50,50 L150,50 L150,150 L50,150 Z" },
+    { name: "Rectangle", ok: ["H", "V"], d: "M30,65 L170,65 L170,135 L30,135 Z" },
+    { name: "Diamond", ok: ["H", "V"], d: "M100,30 L165,100 L100,170 L35,100 Z" },
+    { name: "Isosceles triangle", ok: ["V"], d: "M100,35 L160,155 L40,155 Z" },
+    { name: "Parallelogram", ok: [], d: "M45,135 L85,65 L175,65 L135,135 Z" },
+    { name: "Plus", ok: ["H", "V", "D1", "D2"], d: "M75,40 L125,40 L125,75 L160,75 L160,125 L125,125 L125,160 L75,160 L75,125 L40,125 L40,75 L75,75 Z" },
+  ];
+  const LINES = { H: ["Horizontal", "M20,100 L180,100"], V: ["Vertical", "M100,20 L100,180"],
+    D1: ["Diagonal ⟋", "M28,172 L172,28"], D2: ["Diagonal ⟍", "M28,28 L172,172"] };
+  let sy3 = 0, found3 = [], tried3 = [];
+  $("pickSym").innerHTML = SYM.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + s.name + "</button>").join("");
+  function paint3() {
+    const S = SYM[sy3];
+    let g = '<path class="shape" d="' + S.d + '"></path>';
+    found3.forEach((k) => { g += '<path class="mirror" d="' + LINES[k][1] + '"></path>'; });
+    $("sym3").innerHTML = g;
+    $("lines3").innerHTML = Object.keys(LINES).map((k) =>
+      '<button type="button" class="choice' + (found3.indexOf(k) >= 0 ? " right" : tried3.indexOf(k) >= 0 ? " wrong" : "") +
+      '" data-k="' + k + '">' + LINES[k][0] + "</button>").join("");
+    lines($("work3"), [
+      { k: "Testing", v: S.name.toLowerCase() },
+      { k: "Lines found", v: "<b>" + found3.length + "</b> of the " + S.ok.length + " it has" },
+      { k: "How to test one", v: "fold along it; if the two halves land exactly on each other it is a line of symmetry" },
+      { k: found3.length === S.ok.length ? "All found" : "Keep going",
+        v: found3.length === S.ok.length
+          ? (S.ok.length === 0 ? "a parallelogram has <b>no</b> lines of symmetry at all" : "<b>" + S.ok.map((k) => LINES[k][0].toLowerCase()).join(", ") + "</b>")
+          : "try the ones you have not tested yet", total: true },
+    ]);
+    $("task3").textContent = S.name + ": " + found3.length + " of " + S.ok.length + " found";
+    if (found3.length === S.ok.length && tried3.length >= 4 - S.ok.length) finish(2, "");
+  }
+  $("pickSym").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    sy3 = Number(b.dataset.i); found3 = []; tried3 = [];
+    [...$("pickSym").children].forEach((c, i) => c.classList.toggle("on", i === sy3));
+    $("fb3").textContent = ""; $("fb3").className = "fb";
+    paint3(); say(SYM[sy3].name);
+  });
+  $("lines3").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-k]"); if (!b) return;
+    const k = b.dataset.k;
+    if (found3.indexOf(k) >= 0 || tried3.indexOf(k) >= 0) return;
+    const ok = SYM[sy3].ok.indexOf(k) >= 0;
+    if (ok) found3.push(k); else tried3.push(k);
+    $("fb3").innerHTML = ok ? cheer() + " The " + LINES[k][0].toLowerCase() + " line works."
+      : "Not that one — folding along the " + LINES[k][0].toLowerCase() + " line does not match the halves up.";
+    $("fb3").className = "fb " + (ok ? "good" : "bad");
+    say($("fb3").textContent);
+    paint3();
+  });
+  paint3();
+
+  /* ---- 4: reflecting in a mirror line (4Gp.03) ---- */
+  const REFS = [
+    { name: "Mirror down the middle", axis: "V", at: 4, cells: [[1, 1], [2, 1], [1, 2], [1, 3], [3, 1]] },
+    { name: "Mirror across", axis: "H", at: 4, cells: [[1, 1], [2, 1], [3, 1], [1, 2], [1, 3]] },
+    { name: "Mirror on the shape's edge", axis: "V", at: 4, cells: [[2, 2], [3, 2], [3, 3], [3, 1], [2, 3]] },
+  ];
+  let r4 = 0, placed4 = [];
+  const G = 8, CELL = 30, PAD = 10;
+  $("pickRef").innerHTML = REFS.map((r, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + r.name + "</button>").join("");
+  const mirrorOf = (c) => {
+    const R = REFS[r4];
+    return R.axis === "V" ? [2 * R.at - c[0], c[1]] : [c[0], 2 * R.at - c[1]];
+  };
+  function want4() { return REFS[r4].cells.map(mirrorOf); }
+  function paint4() {
+    const R = REFS[r4];
+    let g = "";
+    for (let x = 0; x < G; x++) for (let y = 0; y < G; y++)
+      g += '<rect class="cell" data-x="' + x + '" data-y="' + y + '" x="' + (PAD + x * CELL) + '" y="' + (PAD + y * CELL) +
+        '" width="' + CELL + '" height="' + CELL + '"></rect>';
+    R.cells.forEach((c) => { g += '<rect class="orig" x="' + (PAD + c[0] * CELL) + '" y="' + (PAD + c[1] * CELL) +
+      '" width="' + CELL + '" height="' + CELL + '"></rect>'; });
+    placed4.forEach((c) => { g += '<rect class="mine" x="' + (PAD + c[0] * CELL) + '" y="' + (PAD + c[1] * CELL) +
+      '" width="' + CELL + '" height="' + CELL + '"></rect>'; });
+    g += R.axis === "V"
+      ? '<line class="mir" x1="' + (PAD + R.at * CELL) + '" y1="' + PAD + '" x2="' + (PAD + R.at * CELL) + '" y2="' + (PAD + G * CELL) + '"></line>'
+      : '<line class="mir" x1="' + PAD + '" y1="' + (PAD + R.at * CELL) + '" x2="' + (PAD + G * CELL) + '" y2="' + (PAD + R.at * CELL) + '"></line>';
+    $("ref4").innerHTML = g;
+    const w = want4();
+    const done = w.every((c) => placed4.some((p) => p[0] === c[0] && p[1] === c[1])) && placed4.length === w.length;
+    $("fb4").innerHTML = done ? cheer() + " Every square has landed opposite its partner."
+      : placed4.length + " of " + w.length + " squares placed.";
+    $("fb4").className = "fb " + (done ? "good" : "");
+    $("task4").textContent = R.axis === "V" ? "The mirror runs top to bottom, so left and right swap over."
+      : "The mirror runs left to right, so up and down swap over.";
+    if (done) finish(3, "");
+  }
+  $("ref4").addEventListener("click", (e) => {
+    const c = e.target.closest("rect.cell"); if (!c) return;
+    const x = Number(c.dataset.x), y = Number(c.dataset.y);
+    if (REFS[r4].cells.some((o) => o[0] === x && o[1] === y)) return;
+    const i = placed4.findIndex((p) => p[0] === x && p[1] === y);
+    if (i >= 0) placed4.splice(i, 1); else placed4.push([x, y]);
+    paint4();
+  });
+  $("clear4").addEventListener("click", () => { placed4 = []; paint4(); });
+  $("show4").addEventListener("click", () => { placed4 = want4(); paint4(); say("Each square is the same distance the other side of the line."); });
+  $("pickRef").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    r4 = Number(b.dataset.i); placed4 = [];
+    [...$("pickRef").children].forEach((c, i) => c.classList.toggle("on", i === r4));
+    paint4();
+  });
+  paint4();
+
+  /* ---- 5: combining shapes and tessellation (4Gg.01) ---- */
+  const TILES = [
+    { name: "Two triangles", makes: "a square", tess: true,
+      why: "Two right-angled triangles with the same short sides join along the long side to make a square.",
+      d: '<polygon class="t1" points="60,30 60,110 140,110"></polygon><polygon class="t2" points="60,30 140,30 140,110"></polygon>' },
+    { name: "Two squares", makes: "a rectangle", tess: true,
+      why: "Two squares side by side make a rectangle twice as wide as it is tall.",
+      d: '<rect class="t1" x="50" y="45" width="70" height="70"></rect><rect class="t2" x="120" y="45" width="70" height="70"></rect>' },
+    { name: "Six triangles", makes: "a hexagon", tess: true,
+      why: "Six equilateral triangles round a point make a regular hexagon, and hexagons tile a floor with no gaps.",
+      d: "HEX" },
+    { name: "Circles", makes: "gaps", tess: false,
+      why: "Circles cannot tessellate. However you pack them there are always gaps left between them.",
+      d: "CIRC" },
+  ];
+  let t5 = 0;
+  $("pickTile").innerHTML = TILES.map((t, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + t.name + "</button>").join("");
+  function paint5() {
+    const T = TILES[t5];
+    let g = T.d;
+    if (T.d === "HEX") {
+      g = "";
+      for (let i = 0; i < 6; i++) {
+        const a0 = i * 60 * Math.PI / 180, a1 = (i + 1) * 60 * Math.PI / 180;
+        g += '<polygon class="' + (i % 2 ? "t1" : "t2") + '" points="130,90 ' +
+          (130 + 58 * Math.cos(a0)).toFixed(1) + "," + (90 + 58 * Math.sin(a0)).toFixed(1) + " " +
+          (130 + 58 * Math.cos(a1)).toFixed(1) + "," + (90 + 58 * Math.sin(a1)).toFixed(1) + '"></polygon>';
+      }
+    } else if (T.d === "CIRC") {
+      g = "";
+      for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++)
+        g += '<circle class="t1" cx="' + (50 + c * 40) + '" cy="' + (45 + r * 40) + '" r="20"></circle>';
+    }
+    $("tile5").innerHTML = g;
+    lines($("work5"), [
+      { k: "Put together", v: T.name.toLowerCase() },
+      { k: "They make", v: "<b>" + T.makes + "</b>" },
+      { k: "Tessellates?", v: T.tess ? "<b>yes</b> — copies fit together leaving no gaps" : "<b>no</b> — gaps are always left over" },
+      { k: "Why", v: T.why, total: true },
+    ]);
+    $("fb5").innerHTML = T.name + " make " + T.makes + ".";
+    $("task5").textContent = "Shapes that tessellate leave no gaps and no overlaps.";
+    if (t5 === TILES.length - 1) finish(4, "");
+  }
+  $("pickTile").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    t5 = Number(b.dataset.i);
+    [...$("pickTile").children].forEach((c, i) => c.classList.toggle("on", i === t5));
+    paint5(); say(TILES[t5].why);
+  });
+  paint5();
+
+  /* ---- 6: area and perimeter, formula and compound (4Gg.02, 4Gg.03) ---- */
+  let mode6 = 0, w6 = 5, h6 = 3;
+  $("pickArea").innerHTML = ["One rectangle", "An L shape"].map((m, i) =>
+    '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' + m + "</button>").join("");
+  function paint6() {
+    /* the grid is 7 rows deep and the L's foot needs two rows under the body,
+       so in L mode the body cannot be taller than 5 or the foot is drawn short */
+    const hMax = mode6 === 1 ? 5 : 6;
+    $("h6").max = hMax;
+    if (h6 > hMax) h6 = hMax;
+    $("h6").value = h6;
+    $("wLab6").textContent = w6;
+    $("hLab6").textContent = h6;
+    const C = 26, P = 8;
+    let g = "";
+    for (let x = 0; x < 9; x++) for (let y = 0; y < 7; y++)
+      g += '<rect class="cell" x="' + (P + x * C) + '" y="' + (P + y * C) + '" width="' + C + '" height="' + C + '"></rect>';
+    const inA = (x, y) => x < w6 && y < h6;
+    const inB = (x, y) => inA(x, y) || (x < 2 && y >= h6 && y < h6 + 2);
+    const inside = mode6 === 0 ? inA : inB;
+    for (let x = 0; x < 9; x++) for (let y = 0; y < 7; y++)
+      if (inside(x, y)) g += '<rect class="fillA" x="' + (P + x * C) + '" y="' + (P + y * C) + '" width="' + C + '" height="' + C + '"></rect>';
+    $("area6").innerHTML = g;
+    if (mode6 === 0) {
+      lines($("work6"), [
+        { k: "Count them", v: "<b>" + w6 * h6 + "</b> squares inside" },
+        { k: "The short way", v: "width × height = " + w6 + " × " + h6 + " = <b>" + w6 * h6 + "</b>" },
+        { k: "Area formula", v: "<b>area = length × width</b>, and it works for every rectangle" },
+        { k: "Perimeter", v: "all the way round: 2 × (" + w6 + " + " + h6 + ") = <b>" + 2 * (w6 + h6) + "</b>", total: true },
+      ]);
+      $("fb6").innerHTML = "Area <b>" + w6 * h6 + "</b> squares, perimeter <b>" + 2 * (w6 + h6) + "</b>.";
+    } else {
+      const a = w6 * h6, b = 2 * 2, tot = a + b;
+      lines($("work6"), [
+        { k: "Split it up", v: "an L shape is just two rectangles joined" },
+        { k: "The big one", v: w6 + " × " + h6 + " = <b>" + a + "</b>" },
+        { k: "The small one", v: "2 × 2 = <b>" + b + "</b>" },
+        { k: "Add the areas", v: a + " + " + b + " = <b>" + tot + "</b> squares", total: true },
+      ]);
+      $("fb6").innerHTML = "Two areas added: <b>" + tot + "</b> squares in all.";
+    }
+    $("task6").textContent = mode6 === 0 ? "Change the sides and check the rule still gives the count."
+      : "A compound shape has no single formula — cut it into ones that do.";
+    if (mode6 === 1) finish(5, "");
+  }
+  $("pickArea").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    mode6 = Number(b.dataset.i);
+    [...$("pickArea").children].forEach((c, i) => c.classList.toggle("on", i === mode6));
+    paint6(); say($("fb6").textContent);
+  });
+  $("w6").addEventListener("input", (e) => { w6 = Number(e.target.value); paint6(); });
+  $("h6").addEventListener("input", (e) => { h6 = Number(e.target.value); paint6(); });
+  paint6();
+
+  /* ---- 7: estimating the area of an irregular shape (4Gg.04) ---- */
+  let blob = null;
+  function newBlob() {
+    const C = 30, N = 8;
+    const cx = 3.5 + (Math.random() - 0.5), cy = 3.5 + (Math.random() - 0.5);
+    const rx = 2.2 + Math.random() * 0.7, ry = 1.8 + Math.random() * 0.7;
+    const wob = 0.35 + Math.random() * 0.3, ph = Math.random() * 6.28;
+    const pts = [];
+    for (let i = 0; i < 40; i++) {
+      const a = (i / 40) * Math.PI * 2;
+      const r = 1 + wob * Math.sin(3 * a + ph);
+      pts.push([cx + rx * r * Math.cos(a), cy + ry * r * Math.sin(a)]);
+    }
+    const insidePt = (px, py) => {
+      let inside = false;
+      for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+        const xi = pts[i][0], yi = pts[i][1], xj = pts[j][0], yj = pts[j][1];
+        if ((yi > py) !== (yj > py) && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    };
+    let whole = 0, part = 0;
+    const cls = [];
+    for (let x = 0; x < N; x++) for (let y = 0; y < N; y++) {
+      let n = 0;
+      const probe = [[0.15, 0.15], [0.85, 0.15], [0.15, 0.85], [0.85, 0.85], [0.5, 0.5]];
+      probe.forEach((p) => { if (insidePt(x + p[0], y + p[1])) n++; });
+      if (n === probe.length) { whole++; cls.push([x, y, "whole"]); }
+      else if (n > 0) { part++; cls.push([x, y, "part"]); }
+    }
+    return { pts: pts, cells: cls, whole: whole, part: part, C: C };
+  }
+  function paint7() {
+    const B = blob, C = B.C, P = 10;
+    let g = "";
+    for (let x = 0; x < 8; x++) for (let y = 0; y < 8; y++)
+      g += '<rect class="cell" x="' + (P + x * C) + '" y="' + (P + y * C) + '" width="' + C + '" height="' + C + '"></rect>';
+    B.cells.forEach((c) => {
+      g += '<rect class="' + (c[2] === "whole" ? "fillA" : "fillB") + '" x="' + (P + c[0] * C) + '" y="' + (P + c[1] * C) +
+        '" width="' + C + '" height="' + C + '"></rect>';
+    });
+    g += '<path class="blobline" d="M' + B.pts.map((p) => (P + p[0] * C).toFixed(1) + "," + (P + p[1] * C).toFixed(1)).join(" L") + ' Z"></path>';
+    $("blob7").innerHTML = g;
+    const est = B.whole + B.part / 2;
+    lines($("work7"), [
+      { k: "Whole squares", v: "<b>" + B.whole + "</b> completely inside" },
+      { k: "Part squares", v: "<b>" + B.part + "</b> only partly inside" },
+      { k: "Count the parts as halves", v: B.part + " ÷ 2 = <b>" + (B.part / 2) + "</b>" },
+      { k: "So the area is about", v: B.whole + " + " + (B.part / 2) + " = <b>" + est + "</b> squares", total: true },
+    ]);
+    $("fb7").innerHTML = "About <b>" + est + "</b> squares. It is an <b>estimate</b> — some part squares hold more than half and some less.";
+    $("task7").textContent = "Dark squares are wholly inside. Pale ones are cut by the edge.";
+    finish(6, "");
+  }
+  $("new7").addEventListener("click", () => { blob = newBlob(); paint7(); say($("fb7").textContent); });
+  blob = newBlob(); paint7();
+
+  /* ---- 8: reading a scale with fractions (4Gg.09) ---- */
+  const SCALES = [
+    { name: "Measuring jug", unit: "ml", step: 100, marks: 5, sub: 4 },
+    { name: "Kitchen scales", unit: "g", step: 500, marks: 5, sub: 4 },
+    { name: "Thermometer", unit: "°C", step: 10, marks: 5, sub: 2 },
+  ];
+  let sc8 = 0, pos8 = 10;
+  const WORDS8 = { 0: "exactly on", 1: "a quarter past", 2: "halfway past", 3: "three quarters past" };
+  $("pickScale").innerHTML = SCALES.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + s.name + "</button>").join("");
+  function paint8() {
+    const S = SCALES[sc8], sub = S.sub, top = (S.marks - 1) * sub;
+    $("pos8").max = top;
+    if (pos8 > top) pos8 = top;
+    $("pos8").value = pos8;
+    const whole = Math.floor(pos8 / sub), rem = pos8 % sub;
+    const value = whole * S.step + (rem / sub) * S.step;
+    let g = '<line class="axis8" x1="30" y1="105" x2="230" y2="105"></line>';
+    for (let m = 0; m < S.marks; m++) {
+      const x = 30 + (m / (S.marks - 1)) * 200;
+      g += '<line class="big8" x1="' + x + '" y1="88" x2="' + x + '" y2="122"></line>';
+      g += '<text class="lab8" x="' + x + '" y="140">' + m * S.step + "</text>";
+      if (m < S.marks - 1) for (let s = 1; s < sub; s++) {
+        const xs = x + (s / sub) * (200 / (S.marks - 1));
+        g += '<line class="small8" x1="' + xs + '" y1="96" x2="' + xs + '" y2="114"></line>';
+      }
+    }
+    const px = 30 + (pos8 / top) * 200;
+    g += '<polygon class="ptr" points="' + px + ',72 ' + (px - 8) + ',54 ' + (px + 8) + ',54"></polygon>';
+    g += '<text class="val8" x="' + Math.min(214, Math.max(46, px)) + '" y="44">' + value + " " + S.unit + "</text>";
+    $("scale8").innerHTML = g;
+    const fracWord = rem === 0 ? "exactly on the mark" :
+      sub === 4 ? (rem === 1 ? "a quarter of the way" : rem === 2 ? "halfway" : "three quarters of the way")
+        : "halfway";
+    lines($("work8"), [
+      { k: "Big marks", v: "every <b>" + S.step + " " + S.unit + "</b>" },
+      { k: "Small marks", v: "each gap is split into <b>" + sub + "</b>, so one small step is " + (S.step / sub) + " " + S.unit },
+      { k: "The pointer", v: "past <b>" + whole * S.step + "</b> and " + fracWord + " to " + (whole + 1) * S.step },
+      { k: "So it reads", v: "<b>" + value + " " + S.unit + "</b>", total: true },
+    ]);
+    $("fb8").innerHTML = "Reading: <b>" + value + " " + S.unit + "</b>.";
+    $("task8").textContent = "Between the marks, the fraction of the gap is the fraction of " + S.step + " " + S.unit + ".";
+    if (pos8 % sub !== 0) finish(7, "");
+  }
+  $("pickScale").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    sc8 = Number(b.dataset.i);
+    [...$("pickScale").children].forEach((c, i) => c.classList.toggle("on", i === sc8));
+    paint8(); say(SCALES[sc8].name);
+  });
+  $("pos8").addEventListener("input", (e) => { pos8 = Number(e.target.value); paint8(); });
+  paint8();
+
+  /* ---- 9: position and direction (4Gp.01) ---- */
+  const DIRS = { N: [0, -1], NE: [1, -1], E: [1, 0], SE: [1, 1], S: [0, 1], SW: [-1, 1], W: [-1, 0], NW: [-1, -1] };
+  const DIRNAME = { N: "north", NE: "north-east", E: "east", SE: "south-east", S: "south", SW: "south-west", W: "west", NW: "north-west" };
+  let from9 = [3, 4], to9 = null, right9 = 0, asked9 = 0, lock9 = false;
+  function newMove() {
+    const keys = Object.keys(DIRS);
+    for (let t = 0; t < 60; t++) {
+      const k = keys[rnd(0, 7)], n = rnd(1, 3);
+      const d = DIRS[k], nx = from9[0] + d[0] * n, ny = from9[1] + d[1] * n;
+      if (nx >= 0 && nx < 8 && ny >= 0 && ny < 8) return { k: k, n: n, to: [nx, ny] };
+    }
+    return { k: "E", n: 1, to: [from9[0] + 1, from9[1]] };
+  }
+  function paint9() {
+    const C = 30, P = 10;
+    let g = "";
+    for (let x = 0; x < 8; x++) for (let y = 0; y < 8; y++)
+      g += '<rect class="cell" data-x="' + x + '" data-y="' + y + '" x="' + (P + x * C) + '" y="' + (P + y * C) +
+        '" width="' + C + '" height="' + C + '"></rect>';
+    g += '<circle class="here" cx="' + (P + from9[0] * C + C / 2) + '" cy="' + (P + from9[1] * C + C / 2) + '" r="11"></circle>';
+    if (to9 && to9.shown) g += '<circle class="there" cx="' + (P + to9.to[0] * C + C / 2) + '" cy="' + (P + to9.to[1] * C + C / 2) + '" r="11"></circle>';
+    g += '<text class="compass" x="' + (P + 4 * C) + '" y="' + (P - 1) + '">N</text>';
+    $("map9").innerHTML = g;
+    $("order9").innerHTML = "Move <b>" + to9.n + "</b> square" + (to9.n === 1 ? "" : "s") + " from the dot. Which way lands you on the target?";
+    $("dirs9").innerHTML = Object.keys(DIRS).map((k) => '<button type="button" class="choice dir" data-k="' + k + '">' + k + "</button>").join("");
+    $("task9").textContent = "Answered " + asked9 + " · " + right9 + " right";
+  }
+  function nextMove() { to9 = newMove(); to9.shown = true; lock9 = false; paint9(); }
+  $("dirs9").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-k]"); if (!b || lock9) return;
+    lock9 = true; asked9++;
+    const ok = b.dataset.k === to9.k;
+    if (ok) right9++;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("work9"), [
+      { k: "From", v: "column " + from9[0] + ", row " + from9[1] },
+      { k: "To", v: "column " + to9.to[0] + ", row " + to9.to[1] },
+      { k: "That is", v: "<b>" + to9.n + "</b> square" + (to9.n === 1 ? "" : "s") + " <b>" + DIRNAME[to9.k] + "</b>" },
+      { k: "Cardinal or ordinal", v: to9.k.length === 1 ? "north, east, south and west are the <b>cardinal</b> points" : "the in-between ones are the <b>ordinal</b> points", total: true },
+    ]);
+    $("fb9").innerHTML = (ok ? cheer() + " " : "It was " + DIRNAME[to9.k] + ". ") + "North is up the grid.";
+    $("fb9").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : "It was " + DIRNAME[to9.k]);
+    if (right9 >= 3) finish(8, "");
+    setTimeout(() => { from9 = to9.to.slice(); nextMove(); }, 2400);
+  });
+  nextMove();
+
+  /* ---- 10: check ---- */
+  const Q10 = shuffle([
+    { q: "How many flat faces does a square-based pyramid have?", o: ["5", "4", "6"], a: 0, w: "One square base and four triangles round it — five faces in all." },
+    { q: "Which solid has two circular faces and a curved surface?", o: ["A cylinder", "A cone", "A sphere"], a: 0, w: "A cone has only one circular face. A cylinder has one at each end." },
+    { q: "Six squares in a cross fold up into which solid?", o: ["A cube", "A cuboid", "A pyramid"], a: 0, w: "Six identical squares make a cube — every face the same." },
+    { q: "How many lines of symmetry does a rectangle have (not a square)?", o: ["2", "4", "1"], a: 0, w: "One horizontal and one vertical. The diagonals do not work: folding along them does not match the halves." },
+    { q: "A parallelogram has how many lines of symmetry?", o: ["None", "Two", "Four"], a: 0, w: "It looks symmetrical because it has rotational symmetry, but no fold matches the halves up." },
+    { q: "A rectangle is 6 squares wide and 4 tall. What is its area?", o: ["24 squares", "20 squares", "10 squares"], a: 0, w: "Area = length × width, so 6 × 4 = 24." },
+    { q: "The same rectangle, 6 by 4. What is its perimeter?", o: ["20", "24", "10"], a: 0, w: "All the way round: 6 + 4 + 6 + 4, or 2 × (6 + 4) = 20." },
+    { q: "An odd shape covers 9 whole squares and 6 part squares. Roughly what area is that?", o: ["About 12 squares", "About 15 squares", "About 9 squares"], a: 0, w: "Count each part square as about a half: 9 + 3 = about 12." },
+    { q: "A jug is marked every 100 ml with three small marks between. What is one small step?", o: ["25 ml", "50 ml", "33 ml"], a: 0, w: "Three small marks cut the gap into four, so each step is 100 ÷ 4 = 25 ml." },
+    { q: "Which of these is an ordinal point of the compass?", o: ["South-east", "South", "West"], a: 0, w: "North, east, south and west are the cardinal points. The four in between are the ordinal ones." },
+  ]);
+  let c10 = 0, right10 = 0, lock10 = false;
+  function round10() {
+    lock10 = false;
+    $("fb10").textContent = ""; $("fb10").className = "fb";
+    if (c10 >= Q10.length) {
+      $("stem10").textContent = "That is all of them.";
+      $("choices10").innerHTML = "";
+      $("score10").textContent = right10 + " out of " + Q10.length + " right.";
+      if (right10 >= 7) finish(9, "");
+      return;
+    }
+    $("stem10").textContent = Q10[c10].q;
+    const order = shuffle(Q10[c10].o.map((t, i) => ({ t: t, ok: i === Q10[c10].a })));
+    $("choices10").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
+    $("score10").textContent = "Question " + (c10 + 1) + " of " + Q10.length + " · " + right10 + " right";
+  }
+  $("choices10").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock10) return;
+    lock10 = true;
+    const ok = b.dataset.ok === "1";
+    if (ok) right10++;
+    b.classList.add(ok ? "right" : "wrong");
+    $("fb10").textContent = (ok ? cheer() + " " : "") + Q10[c10].w;
+    $("fb10").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : Q10[c10].w);
+    c10++;
+    setTimeout(round10, 2400);
+  });
+  round10();
+
+  /* ---- 11: stickers ---- */
+  const STICKERS = [["🧊", "The faces of a solid"], ["📦", "Fold it up: nets"], ["🦋", "Every line of symmetry"],
+    ["🪞", "Reflect it in the mirror"], ["🔷", "Putting shapes together"], ["📐", "Area without counting"],
+    ["🫐", "An odd shape on a grid"], ["🥛", "Reading between the marks"], ["🧭", "Which way from here?"], ["✅", "Show what I know"]];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
+  }
+  $("again").addEventListener("click", () => { show(0, true); });
+
+  show(0, false);
+
+  /* ---- your turn: the six slides that only demonstrated ---- */
+  const askShuffle3 = (correct, a, b) => { const o = shuffle([correct, a, b]); return { o: o, i: o.indexOf(correct) }; };
+
+  /* 1 (4Gg.05) counts FACES. Edges and vertices are the distractors because confusing
+     the three is the whole difficulty. Curved solids are left out -- "how many faces"
+     is not a fair question for a cylinder at this stage. */
+  ask(1, () => {
+    const flat = SOLIDS.filter((s) => s.curved === 0);
+    const S1 = flat[rnd(0, flat.length - 1)];
+    const n = S1.faces.reduce((t, f) => t + f[0], 0);
+    const opts = pick3(n, [S1.e, S1.v, n + 2]);
+    return { stem: "How many <b>flat faces</b> does a <b>" + S1.name.toLowerCase() + "</b> have?",
+      opts: opts.map(String), ans: opts.indexOf(n),
+      why: "A " + S1.name.toLowerCase() + " has <b>" + n + " faces</b>, " + S1.e +
+        " edges and " + S1.v + " vertices — faces are the flat surfaces." };
+  });
+
+  /* 4 (4Gp.03) reflection across a vertical mirror: the image is as far the other side.
+     The distractor that keeps the distance but not the side is the error to catch. */
+  ask(4, () => {
+    const mir = rnd(4, 7), d = rnd(1, 3), x = mir - d, img = mir + d;
+    const opts = pick3(img, [x, mir, img + 1]);
+    return { stem: "The mirror line is at <b>" + mir + "</b>. A dot sits at <b>" + x +
+        "</b>. Where is its reflection?",
+      opts: opts.map(String), ans: opts.indexOf(img),
+      why: x + " is " + d + " square" + (d === 1 ? "" : "s") + " left of the line, so the " +
+        "reflection is " + d + " to the right: <b>" + img + "</b>." };
+  });
+
+  /* 5 (4Gg.01) tessellation. The shapes that tile the plane alone are exactly these
+     three regulars; pentagon and circle are the honest counter-examples. */
+  ask(5, () => {
+    const yes = ["equilateral triangle", "square", "regular hexagon"][rnd(0, 2)];
+    const no = shuffle(["regular pentagon", "circle", "regular octagon on its own"]).slice(0, 2);
+    const q = askShuffle3(yes, no[0], no[1]);
+    return { stem: "Which of these <b>tessellates</b> — fits together with no gaps at all?",
+      opts: q.o, ans: q.i,
+      why: "A <b>" + yes + "</b> tessellates: copies of it meet with no gap and no overlap. " +
+        "The others always leave a gap." };
+  });
+
+  /* 6 (4Gg.02, 4Gg.03) area or perimeter of a rectangle, alternating -- and each one
+     offers the OTHER as a distractor, which is the confusion worth testing. */
+  ask(6, () => {
+    const w = rnd(3, 12), h = rnd(2, 9), area = w * h, per = 2 * (w + h);
+    if (rnd(0, 1) === 0) {
+      const opts = pick3(area, [per, w + h, area + w]);
+      return { stem: "A rectangle is <b>" + w + " cm</b> by <b>" + h + " cm</b>. What is its <b>area</b>?",
+        opts: opts.map((v) => v + " cm²"), ans: opts.indexOf(area),
+        why: "Area is length × width: " + w + " × " + h + " = <b>" + area + " cm²</b>." };
+    }
+    const opts = pick3(per, [area, w + h, per + 2]);
+    return { stem: "A rectangle is <b>" + w + " cm</b> by <b>" + h + " cm</b>. What is its <b>perimeter</b>?",
+      opts: opts.map((v) => v + " cm"), ans: opts.indexOf(per),
+      why: "Perimeter is all the way round: " + w + " + " + h + " + " + w + " + " + h +
+        " = <b>" + per + " cm</b>." };
+  });
+
+  /* 7 (4Gg.04) ESTIMATES an irregular area -- the verb Cambridge uses. Part squares
+     count as a half each, so the answer is deliberately not a whole-square count. */
+  ask(7, () => {
+    const whole = rnd(8, 20), part = rnd(2, 5) * 2;      /* even, so the halves are exact */
+    const est = whole + part / 2;
+    const opts = pick3(est, [whole, whole + part, part]);
+    return { stem: "A leaf covers <b>" + whole + " whole squares</b> and <b>" + part +
+        " part squares</b>. What is the best estimate of its area?",
+      opts: opts.map((v) => v + " squares"), ans: opts.indexOf(est),
+      why: "Count each part square as a half: " + whole + " + " + (part / 2) + " = <b>" +
+        est + " squares</b>." };
+  });
+
+  /* 8 (4Gg.09) reads between the marks. Halves and quarters only at this stage. */
+  ask(8, () => {
+    const step = [10, 20, 100][rnd(0, 2)], lo = rnd(1, 6) * step;
+    const f = [[1, 2, "halfway"], [1, 4, "a quarter of the way"], [3, 4, "three quarters of the way"]][rnd(0, 2)];
+    const val = lo + step * f[0] / f[1];
+    const opts = pick3(val, [lo + step, lo, lo + step / 2]);
+    return { stem: "The marks are <b>" + fmt(lo) + "</b> and <b>" + fmt(lo + step) +
+        "</b>. The pointer is <b>" + f[2] + "</b> between them. What does it read?",
+      opts: opts.map(fmt), ans: opts.indexOf(val),
+      why: "The gap is " + fmt(step) + ", and " + f[2] + " along is " +
+        fmt(step * f[0] / f[1]) + " past " + fmt(lo) + ": <b>" + fmt(val) + "</b>." };
+  });
+
+})();
+</script>

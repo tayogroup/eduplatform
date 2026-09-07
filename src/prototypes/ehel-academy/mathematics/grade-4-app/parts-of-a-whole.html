@@ -1,0 +1,1729 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parts of a Whole</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --plum-soft: #EADDF2; --gold: #C99700; --gold-soft: #FBF0C8;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 19px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Fredoka", "Trebuchet MS", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 540px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(24px, 5vw, 33px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 19px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 6px 0; }
+  .fb { min-height: 1.6em; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 22px; text-align: center; max-width: 32em; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .small-fb { font-size: 16px; color: var(--muted); font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; }
+
+  .bignum { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(40px, 9vw, 70px); line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .bignum .k { color: var(--gold); } .bignum .h { color: var(--plum); } .bignum .t { color: var(--teal); } .bignum .o { color: var(--accent); }
+  .word { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: clamp(20px, 4.2vw, 28px); color: var(--teal); text-align: center; }
+
+  .bigbtns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 58px; height: 54px; padding: 0 16px; border-radius: 16px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; } .big.plum { background: var(--plum); color: #fff; } .big.gold { background: var(--gold); color: #2b2200; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 46px; font-size: 17px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+
+  /* the "your turn" panel -- a demonstration is not evidence the child can do it, so
+     every teaching slide ends with one question that can come back "not quite". */
+  .askwrap { margin: 18px 0 2px; padding: 13px 14px 15px; border: 3px dashed var(--line);
+    border-radius: 18px; background: var(--ground); text-align: center; }
+  .asklab { font-size: 11px; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 7px; }
+  .askwrap .qstem { font-size: 18px; font-weight: 700; margin: 0 0 12px; line-height: 1.35; }
+  .askwrap .choice { height: 58px; font-size: 23px; min-width: 78px; border-width: 3px; }
+  .askwrap .choice.word { font-size: 17px; }
+  .askwrap .fb { margin: 10px 0 0; }
+  .askwrap .askmore { margin-top: 10px; }
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 92px; height: 68px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 27px; transition: transform 100ms ease; font-variant-numeric: tabular-nums; }
+  .choice.word { font-size: 20px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* place value */
+  .pv { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .pv div { min-width: 80px; padding: 8px 10px; border-radius: 14px; text-align: center; }
+  .pv .thou { background: var(--gold-soft); } .pv .hund { background: var(--plum-soft); } .pv .tens { background: var(--teal-soft); } .pv .ones { background: var(--accent-soft); }
+  .pv .lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .pv .val { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 32px; }
+  .pv .thou .val { color: var(--gold); } .pv .hund .val { color: var(--plum); } .pv .tens .val { color: var(--teal); } .pv .ones .val { color: var(--accent); }
+  .blocks { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; justify-content: center; min-height: 70px; }
+  .cubes { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 240px; }
+  .cube { width: 44px; height: 44px; border-radius: 5px; background: var(--gold); box-shadow: inset -8px -8px 0 rgba(0,0,0,0.18); }
+  .flats { display: flex; gap: 5px; flex-wrap: wrap; max-width: 200px; justify-content: center; }
+  .flat { width: 34px; height: 34px; border-radius: 3px; background: var(--plum); background-image: linear-gradient(to right, rgba(255,255,255,0.45) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.45) 1px, transparent 1px); background-size: 3.4px 3.4px; }
+  .rods { display: flex; gap: 4px; align-items: flex-end; }
+  .rod { width: 10px; height: 60px; border-radius: 3px; background: var(--teal); background-image: repeating-linear-gradient(to bottom, transparent 0 5px, rgba(255,255,255,0.5) 5px 6px); }
+  .units { display: grid; grid-template-columns: repeat(3, 10px); gap: 3px; align-content: end; }
+  .unit { width: 10px; height: 10px; border-radius: 2px; background: var(--accent); }
+
+  /* thermometer */
+  .thermo { display: flex; align-items: center; gap: 18px; }
+  .tube { position: relative; width: 44px; height: 300px; border-radius: 22px; background: var(--cell); border: 3px solid var(--ink); overflow: hidden; }
+  .tube .merc { position: absolute; left: 6px; right: 6px; bottom: 0; background: var(--accent); border-radius: 16px 16px 0 0; transition: height 200ms ease; }
+  .tube .merc.cold { background: var(--teal); }
+  .tube .zero { position: absolute; left: 0; right: 0; height: 3px; background: var(--ink); }
+  .scale { position: relative; height: 300px; width: 48px; }
+  .scale span { position: absolute; left: 0; transform: translateY(-50%); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .scale span.z { color: var(--ink); font-size: 15px; } .scale span.neg { color: var(--teal); }
+  .tempnum { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(44px, 10vw, 72px); font-variant-numeric: tabular-nums; }
+  .tempnum.neg { color: var(--teal); } .tempnum.pos { color: var(--accent); }
+
+  /* number line */
+  .nline { position: relative; width: 100%; max-width: 660px; height: 62px; }
+  .nline .bar { position: absolute; left: 14px; right: 14px; top: 28px; height: 4px; background: var(--ink); border-radius: 2px; }
+  .nline .t { position: absolute; top: 20px; width: 2px; height: 20px; background: var(--ink); transform: translateX(-50%); }
+  .nline .t.mid { height: 26px; top: 17px; width: 3px; }
+  .nline .l { position: absolute; top: 42px; transform: translateX(-50%); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .nline .l.big { font-size: 15px; font-family: "Fredoka", sans-serif; }
+  .nline .m { position: absolute; top: 16px; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); border: 3px solid var(--card); transform: translateX(-50%); }
+
+  /* grid method */
+  .gridm { display: grid; grid-template-columns: 52px 1fr 1fr; gap: 6px; width: 100%; max-width: 420px; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 24px; font-variant-numeric: tabular-nums; }
+  .gridm div { padding: 10px; border-radius: 10px; text-align: center; }
+  .gridm .hd { background: var(--teal-soft); color: var(--teal); } .gridm .side { background: var(--accent-soft); color: var(--accent); }
+  .gridm .cell { background: var(--cell); min-height: 56px; display: grid; place-items: center; color: var(--muted); }
+  .gridm .cell.on { background: var(--gold-soft); color: var(--ink); }
+  .area { display: grid; gap: 2px; padding: 6px; border-radius: 10px; background: var(--line); }
+  .area { --cell: 10px; max-width: 100%; overflow-x: auto; }
+  .area i { width: var(--cell); height: var(--cell); background: var(--card); border-radius: 1px; }
+  .area i.a { background: var(--teal); } .area i.b { background: var(--accent); }
+
+  /* working */
+  .working { display: grid; gap: 8px; width: 100%; max-width: 580px; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 9px 14px; border-radius: 12px; background: var(--teal-soft); font-variant-numeric: tabular-nums; }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Fredoka", sans-serif; font-weight: 600; }
+  .working .line .v b { color: var(--accent); }
+  .working .line.hidden { display: none; }
+
+  /* division groups */
+  .dots-pool { display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; max-width: 380px; padding: 8px; border-radius: 14px; border: 2px dashed var(--line); min-height: 40px; }
+  .dots-pool i { width: 16px; height: 16px; border-radius: 50%; background: var(--gold); border: 2px solid var(--ink); }
+  .dots-pool.rem { border-color: var(--bad); }
+  .groups { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 560px; }
+  .grp { display: grid; grid-template-columns: repeat(3, 16px); gap: 3px; padding: 6px; border-radius: 10px; border: 2px solid var(--teal); background: var(--teal-soft); }
+  .grp i { width: 16px; height: 16px; border-radius: 50%; background: var(--gold); border: 2px solid var(--ink); }
+
+  /* factors */
+  .rects { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: flex-end; }
+  .rect { display: grid; gap: 2px; padding: 6px; border-radius: 8px; background: var(--card); border: 2px solid var(--line); }
+  .rect i { width: 9px; height: 9px; background: var(--plum); border-radius: 1px; }
+  .rect.sel { border-color: var(--accent); background: var(--accent-soft); }
+  .rectlab { text-align: center; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 15px; margin-top: 4px; }
+  .skip { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; width: 100%; max-width: 620px; }
+  .skip span { padding: 6px 0; border-radius: 8px; background: var(--cell); text-align: center; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .skip span.on { background: var(--accent); color: var(--accent-ink); }
+
+  /* hundred square */
+  .hgrid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; width: 100%; max-width: 300px; aspect-ratio: 1; padding: 6px; border-radius: 10px; background: var(--line); }
+  .hgrid button { border: 0; border-radius: 2px; background: var(--card); padding: 0; }
+  .hgrid button.on { background: var(--accent); }
+  .hgrid button.tenth { background: var(--teal); }
+  .forms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 420px; }
+  .form { padding: 10px 8px; border-radius: 12px; background: var(--teal-soft); text-align: center; }
+  .form .lab { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .form .val { font-family: "Fredoka", sans-serif; font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.05; vertical-align: middle; }
+  .frac span:first-child { border-bottom: 2px solid currentColor; padding: 0 4px; }
+
+  /* fraction bar */
+  .fracbar { display: flex; width: 100%; max-width: 520px; height: 64px; border-radius: 12px; overflow: hidden; border: 3px solid var(--ink); }
+  .fracbar button { flex: 1; border: 0; border-right: 3px solid var(--ink); background: var(--card); font-family: "Fredoka", sans-serif; font-size: 16px; font-weight: 700; color: var(--muted); padding: 0; }
+  .fracbar button:last-child { border-right: 0; }
+  .fracbar button.a { background: var(--accent); color: var(--accent-ink); } .fracbar button.b { background: var(--teal); color: #fff; }
+  .fraction { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 34px; display: inline-flex; flex-direction: column; align-items: center; line-height: 1; vertical-align: middle; margin: 0 6px; }
+  .fraction span:first-child { border-bottom: 3px solid currentColor; padding: 0 6px; }
+
+  /* perimeter and area */
+  .shape { display: grid; gap: 2px; padding: 8px; border-radius: 10px; background: var(--line); }
+  .shape i { width: 26px; height: 26px; background: var(--gold-soft); border: 1px solid var(--gold); border-radius: 2px; display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--muted); }
+  .shape i.edge { box-shadow: inset 0 0 0 2px var(--accent); }
+  @media (max-width: 480px) { .shape i { width: 20px; height: 20px; font-size: 9px; } }
+
+  /* angles */
+  .angle { width: 100%; max-width: 260px; display: block; }
+  .angle .arm { stroke: var(--ink); stroke-width: 6; stroke-linecap: round; }
+  .angle .arm.move { stroke: var(--accent); }
+  .angle .wedge { fill: var(--accent); opacity: 0.25; }
+  .angle .sq { fill: none; stroke: var(--teal); stroke-width: 3; }
+  .angle .deg { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 18px; fill: var(--ink); }
+
+  /* coordinates */
+  .coords { width: 100%; max-width: 320px; display: block; }
+  .coords .gl { stroke: var(--line); stroke-width: 1; }
+  .coords .ax { stroke: var(--ink); stroke-width: 2; }
+  .coords .lab { font-family: "Atkinson Hyperlegible", sans-serif; font-size: 11px; font-weight: 700; fill: var(--muted); text-anchor: middle; }
+  .coords .pt { fill: var(--card); stroke: var(--accent); stroke-width: 3; cursor: pointer; }
+  .coords .pt:hover { fill: var(--accent-soft); }
+  .coords .pt.tgt { fill: var(--accent); }
+  .coords .pt.good { fill: var(--good); stroke: var(--good); } .coords .pt.oops { fill: var(--bad); stroke: var(--bad); }
+  .coords .guide { stroke: var(--teal); stroke-width: 2; stroke-dasharray: 4 3; }
+
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 17px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+
+  /* ---------- Parts of a Whole: only what the shared lesson CSS lacks ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font-size: 15px; }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .chip .fr i, .chip .fr b { color: inherit; }
+  .picker-lab2 { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--muted); margin: 16px 0 6px; }
+  .qstem { font-size: 22px; font-weight: 700; margin: 8px 0 4px; }
+
+  /* the stacked fraction glyph, used everywhere */
+  .fr { display: inline-flex; flex-direction: column; align-items: center; vertical-align: -0.55em;
+    line-height: 1; margin: 0 2px; font-family: "Fredoka", sans-serif; font-weight: 600; }
+  .fr i { font-style: normal; font-size: .78em; padding: 0 3px; }
+  .fr b { font-size: .78em; padding: 0 3px; border-top: 2px solid currentColor; }
+
+  /* bars cut into parts */
+  .fbar { display: flex; gap: 3px; margin: 10px 0; }
+  .fbar i { flex: 1; height: 30px; border-radius: 5px; background: var(--cell);
+    border: 1.5px solid var(--line); display: block; }
+  .fbar i.on { background: var(--accent); border-color: var(--accent); }
+  .fbar.big i { height: 46px; }
+  .stack { display: grid; gap: 6px; margin-top: 6px; }
+  .srow2, .eqrow, .cmpside { display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: center; }
+  .slab { text-align: right; font-size: 15px; }
+  .sline { display: block; height: 20px; background: var(--cell); border: 1.5px solid var(--line);
+    border-radius: 5px; overflow: hidden; }
+  .sline i { display: block; height: 100%; background: var(--teal); }
+  .eqbar { display: flex; gap: 2px; }
+  .eqbar i { flex: 1; height: 24px; border-radius: 4px; background: var(--cell);
+    border: 1px solid var(--line); display: block; }
+  .eqbar i.on { background: var(--teal); border-color: var(--teal); }
+  .eqbars { display: grid; gap: 7px; margin-top: 4px; }
+
+  /* cakes */
+  .cakes { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 12px 0 4px; }
+  .cake { width: 104px; height: 104px; }
+  .cake path { fill: var(--cell); stroke: var(--card); stroke-width: 2; }
+  .cake path.mine { fill: var(--accent); }
+
+  /* groups of counters */
+  .groups3 { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+  .g3 { display: flex; flex-wrap: wrap; gap: 4px; max-width: 92px; padding: 7px;
+    border: 2px dashed var(--line); border-radius: 12px; }
+  .g3.mine { border-style: solid; border-color: var(--accent); background: var(--accent-soft); }
+  .g3 i { display: block; width: 13px; height: 13px; border-radius: 50%; background: var(--teal); }
+  .g3.mine i { background: var(--accent); }
+
+  /* the hundred square */
+  .hund100 { display: grid; grid-template-columns: repeat(10, 24px); gap: 2px;
+    width: max-content; margin: 12px auto 4px; }
+  .hund100 i { display: block; width: 24px; height: 24px; border-radius: 3px; background: var(--cell);
+    border: 1px solid var(--line); }
+  .hund100 i.on { background: var(--accent); border-color: var(--accent); }
+  .reads3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+  .read3 { background: var(--cell); border: 1px solid var(--line); border-radius: 12px;
+    padding: 9px 10px; text-align: center; }
+  .read3.hero3 { background: var(--accent-soft); border-color: var(--accent); }
+  .r3lab { display: block; font-size: 10px; font-weight: 700; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+  .read3 b { font-family: "Fredoka", sans-serif; font-size: 21px; font-weight: 600; }
+  .read3.hero3 b { color: var(--accent); }
+
+  /* comparing */
+  .cmp { display: grid; gap: 10px; margin: 10px 0 14px; }
+  .choice.sign { font-family: "Fredoka", sans-serif; font-size: 26px; font-weight: 600;
+    min-width: 66px; padding: 6px 14px; }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 4</p>
+      <h1>Parts of a <em>Whole</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 more parts, smaller parts -->
+    <section class="slide" data-say="The whole stays the same size. Cut it into more pieces and every piece has to get smaller.">
+      <div class="slide-head"><span class="n">1</span><h2>More parts, smaller parts</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">The whole never changes. Cut it into <b>more</b> pieces and each piece must get <b>smaller</b>.</span></div>
+      <div class="stage">
+        <label class="lab" for="parts1">Cut the bar into <span id="partsLab1">4</span> equal parts</label>
+        <input type="range" id="parts1" min="2" max="12" value="4" step="1">
+        <div class="fbar big" id="bar1" aria-hidden="true"></div>
+        <p class="picker-lab2">Every size you have tried, one part of each</p>
+        <div class="stack" id="stack1" aria-hidden="true"></div>
+        <div class="working" id="work1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="task1"></p>
+        <div class="askwrap" id="ask1"></div>
+      </div>
+    </section>
+
+    <!-- 2 a fraction is a division -->
+    <section class="slide" data-say="Share the cakes out fairly. The fraction each child gets is simply the cakes divided by the children.">
+      <div class="slide-head"><span class="n">2</span><h2>A fraction is a division</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Share the cakes <b>fairly</b>. What each child gets is the cakes <b>divided by</b> the children — and that is exactly what the fraction says.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickCakes"></div>
+        <label class="lab" for="kids2">Shared between <span id="kidsLab2">4</span> children</label>
+        <input type="range" id="kids2" min="2" max="8" value="4" step="1">
+        <div class="cakes" id="cakes2" aria-hidden="true"></div>
+        <div class="working" id="work2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="task2"></p>
+        <div class="askwrap" id="ask2"></div>
+      </div>
+    </section>
+
+    <!-- 3 a fraction of an amount -->
+    <section class="slide" data-say="A unit fraction tells you how many equal groups to make. One of those groups is the answer.">
+      <div class="slide-head"><span class="n">3</span><h2>A fraction of an amount</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">A <b>unit fraction</b> is an instruction: make that many <b>equal groups</b>, then take <b>one</b> of them.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickUnit"></div>
+        <label class="lab" for="amt3">of <span id="amtLab3">20</span></label>
+        <input type="range" id="amt3" min="1" max="12" value="5" step="1">
+        <div class="groups3" id="groups3" aria-hidden="true"></div>
+        <div class="working" id="work3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="task3"></p>
+        <div class="askwrap" id="ask3"></div>
+      </div>
+    </section>
+
+    <!-- 4 equivalent fractions -->
+    <section class="slide" data-say="Two fractions can look completely different and still be worth exactly the same.">
+      <div class="slide-head"><span class="n">4</span><h2>Same value, different name</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Two fractions can look different and be worth <b>exactly the same</b>. Line them up and see.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickEq"></div>
+        <div class="eqbars" id="eq4" aria-hidden="true"></div>
+        <div class="working" id="work4"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="task4"></p>
+        <div class="askwrap" id="ask4"></div>
+      </div>
+    </section>
+
+    <!-- 5 percentages -->
+    <section class="slide" data-say="A percentage is simply how many parts in every hundred. The sign per cent means out of a hundred.">
+      <div class="slide-head"><span class="n">5</span><h2>Out of a hundred</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">A <b>percentage</b> is how many parts in every <b>hundred</b>. The sign <b>%</b> is just shorthand for &ldquo;out of a hundred&rdquo;.</span></div>
+      <div class="stage">
+        <label class="lab" for="pct5">Shade <span id="pctLab5">25</span> of the 100 squares</label>
+        <input type="range" id="pct5" min="0" max="100" value="25" step="1">
+        <div class="hund100" id="hund5" aria-hidden="true"></div>
+        <div class="reads3" id="reads5"></div>
+        <div class="working" id="work5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="task5"></p>
+        <div class="askwrap" id="ask5"></div>
+      </div>
+    </section>
+
+    <!-- 6 comparing -->
+    <section class="slide" data-say="To compare two fractions, give them the same bottom number first. Then you are only comparing the top ones.">
+      <div class="slide-head"><span class="n">6</span><h2>Which is bigger?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Give them the <b>same bottom number</b> first. Then you are only comparing the top ones. Choose <b>&gt;</b>, <b>&lt;</b> or <b>=</b>.</span></div>
+      <div class="stage">
+        <div class="cmp" id="cmp6" aria-hidden="true"></div>
+        <div class="choices" id="signs6"></div>
+        <div class="working" id="work6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="task6"></p>
+      </div>
+    </section>
+
+    <!-- 7 adding and subtracting -->
+    <section class="slide" data-say="When the bottom numbers match, you are counting the same kind of piece. Guess first, then work it out.">
+      <div class="slide-head"><span class="n">7</span><h2>Adding and taking away</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Same bottom number means the pieces are the <b>same size</b>, so you just count them. <b>Estimate first</b>, then work it out.</span></div>
+      <div class="stage">
+        <p class="qstem" id="sum7"></p>
+        <p class="picker-lab2">First, estimate: will the answer be…</p>
+        <div class="choices" id="est7"></div>
+        <div class="fbar big" id="bar7" aria-hidden="true"></div>
+        <div class="working" id="work7"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new7">Another one</button></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="task7"></p>
+      </div>
+    </section>
+
+    <!-- 8 check -->
+    <section class="slide" data-say="Show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="qstem" id="stem8"></p>
+        <div class="choices" id="choices8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="score8"></p>
+      </div>
+    </section>
+
+    <!-- 9 stickers -->
+    <section class="slide" data-say="Every step you finished earned a sticker.">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+
+<script>
+
+(function () {
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  function sub1000(n) { const h = Math.floor(n / 100), r = n % 100; const small = r < 20 ? ONES[r] : TENS[Math.floor(r / 10)] + (r % 10 ? "-" + ONES[r % 10] : ""); if (!h) return small; return ONES[h] + " hundred" + (r ? " and " + small : ""); }
+  function words(n) { if (n === 10000) return "ten thousand"; const k = Math.floor(n / 1000), r = n % 1000; if (!k) return sub1000(n); return ONES[k] + " thousand" + (r ? (r < 100 ? " and " : " ") + sub1000(r) : ""); }
+  const fmt = (n) => n.toLocaleString("en-GB");
+  const sg = (v) => (v < 0 ? "−" + (-v) : String(v)); // a real minus sign for negative temperatures
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0; $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots(); if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+  function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + (l.hidden ? " hidden" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
+
+  /* ---- "your turn": one question per teaching slide that the child can get wrong ----
+     A slider or a variant chip changes what is displayed; it never disagrees with the
+     learner. Cambridge's verbs for Stage 4 are estimate, recognise, read, record and
+     understand, and a demonstration evidences none of them -- the child has to commit
+     to an answer and be told. make() returns a fresh {stem, opts, ans, why} each time,
+     so "Another one" is real practice rather than the same item again.
+     Draws its own markup, so a slide needs only <div class="askwrap" id="askN"></div>. */
+
+  /* Three distinct options with the right one among them. Generators pass their
+     preferred distractors first; duplicates are dropped rather than shown, because
+     two identical buttons make a question unanswerable rather than merely hard. */
+  function pick3(correct, cands) {
+    const out = [correct];
+    (cands || []).forEach((c) => {
+      if (out.length < 3 && Number.isFinite(c) && out.indexOf(c) < 0) out.push(c);
+    });
+    let bump = 1;
+    while (out.length < 3) { if (out.indexOf(correct + bump) < 0) out.push(correct + bump); bump++; }
+    return shuffle(out);
+  }
+
+  function ask(n, make) {
+    const box = $("ask" + n);
+    if (!box) return;
+    box.innerHTML =
+      '<p class="asklab">Your turn</p><p class="qstem"></p><div class="choices"></div>' +
+      '<p class="fb"></p><button type="button" class="big small ghost askmore">Another one</button>';
+    const stem = box.querySelector(".qstem"), opts = box.querySelector(".choices"),
+          fb = box.querySelector(".fb");
+    let q = null, locked = false;
+    function draw() {
+      stem.innerHTML = q.stem;
+      opts.innerHTML = q.opts.map((o, i) => {
+        const plain = String(o).replace(/<[^>]*>/g, "");
+        return '<button type="button" class="choice' + (plain.length > 4 ? " word" : "") +
+          '" data-i="' + i + '">' + o + "</button>";
+      }).join("");
+    }
+    function fresh() { q = make(); locked = false; fb.textContent = ""; fb.className = "fb"; draw(); }
+    opts.addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-i]"); if (!b || locked) return;
+      locked = true;
+      const i = Number(b.dataset.i), ok = i === q.ans;
+      opts.querySelectorAll(".choice")[q.ans].classList.add("right");
+      if (!ok) b.classList.add("wrong");
+      fb.innerHTML = (ok ? "Yes. " : "Not quite. ") + q.why;
+      fb.className = "fb " + (ok ? "good" : "bad");
+      say(fb.textContent.replace(/\s+/g, " "));
+      if (ok) finish(n - 1, "");
+    });
+    box.querySelector(".askmore").addEventListener("click", fresh);
+    fresh();
+  }
+
+  function nline(el, lo, hi, marks, labelEvery, tick) {
+    const x = (v) => "calc(14px + " + ((v - lo) / (hi - lo)) + " * (100% - 28px))"; let h = '<div class="bar"></div>';
+    for (let v = lo; v <= hi; v += tick) { const big = (v - lo) % labelEvery === 0; h += '<div class="t' + (big ? " mid" : "") + '" style="left:' + x(v) + '"></div>'; if (big) h += '<div class="l big" style="left:' + x(v) + '">' + fmt(v) + "</div>"; }
+    (marks || []).forEach((m) => { h += '<div class="m" style="left:' + x(m) + '"></div>'; }); el.innerHTML = h;
+  }
+
+    /* ---- shared helpers ---- */
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  const frac = (n, d) => '<span class="fr"><i>' + n + "</i><b>" + d + "</b></span>";
+  const barHtml = (parts, shaded, cls) => {
+    let h = "";
+    for (let i = 0; i < parts; i++) h += '<i class="' + (i < shaded ? "on " : "") + (cls || "") + '"></i>';
+    return h;
+  };
+
+  /* ---- 1: more parts, smaller parts (4Nf.01) ---- */
+  let p1 = 4;
+  const tried1 = new Set([4]);
+  function paint1() {
+    $("partsLab1").textContent = p1;
+    $("bar1").innerHTML = barHtml(p1, 1);
+    tried1.add(p1);
+    const sizes = [...tried1].sort((a, b) => a - b);
+    $("stack1").innerHTML = sizes.map((n) =>
+      '<div class="srow2"><span class="slab">' + frac(1, n) + '</span><span class="sline"><i style="width:' +
+      (100 / n).toFixed(2) + '%"></i></span></div>').join("");
+    lines($("work1"), [
+      { k: "The whole", v: "always the same bar, whatever you do to it" },
+      { k: "Cut into " + p1, v: "each part is " + frac(1, p1) + " of it" },
+      { k: "One part is", v: "<b>" + (100 % p1 === 0 ? String(100 / p1) : (100 / p1).toFixed(1)) + "%</b> of the bar" },
+      { k: "So", v: "more parts means <b>smaller</b> parts, every time", total: true },
+    ]);
+    $("fb1").innerHTML = p1 === 2 ? "Two parts, and each one is half the bar — the biggest a part can be here."
+      : frac(1, p1) + " is smaller than " + frac(1, p1 - 1) + ", because the same bar was cut into one more piece.";
+    $("task1").textContent = "Sizes tried: " + sizes.length + " of 11";
+    if (sizes.length >= 5) finish(0, "");
+  }
+  $("parts1").addEventListener("input", (e) => { p1 = Number(e.target.value); paint1(); });
+  paint1();
+
+  /* ---- 2: a fraction is a division (4Nf.02) ---- */
+  let cakes2 = 1, kids2 = 4;
+  $("pickCakes").innerHTML = [1, 3].map((c, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-c="' + c + '">' + c + (c === 1 ? " cake" : " cakes") + "</button>").join("");
+  function paint2() {
+    if (cakes2 === 3 && kids2 < 4) kids2 = 4;                 /* keeps the share a proper fraction */
+    $("kids2").min = cakes2 === 3 ? 4 : 2;
+    $("kids2").value = kids2;
+    $("kidsLab2").textContent = kids2;
+    let h = "";
+    for (let c = 0; c < cakes2; c++) {
+      let s = '<svg viewBox="0 0 100 100" class="cake">';
+      for (let i = 0; i < kids2; i++) {
+        const a0 = (i * 360 / kids2 - 90) * Math.PI / 180, a1 = ((i + 1) * 360 / kids2 - 90) * Math.PI / 180;
+        const big = 360 / kids2 > 180 ? 1 : 0;
+        s += '<path class="' + (i === 0 ? "mine" : "") + '" d="M50,50 L' + (50 + 44 * Math.cos(a0)).toFixed(1) + "," +
+          (50 + 44 * Math.sin(a0)).toFixed(1) + " A44,44 0 " + big + ",1 " + (50 + 44 * Math.cos(a1)).toFixed(1) + "," +
+          (50 + 44 * Math.sin(a1)).toFixed(1) + ' Z"></path>';
+      }
+      h += s + "</svg>";
+    }
+    $("cakes2").innerHTML = h;
+    const g = gcd(cakes2, kids2), simp = g > 1 ? frac(cakes2 / g, kids2 / g) : null;
+    lines($("work2"), [
+      { k: "To share", v: cakes2 + (cakes2 === 1 ? " cake" : " cakes") + " between " + kids2 + " children" },
+      { k: "Cut each cake", v: "into " + kids2 + " equal slices, and give everyone one slice from each" },
+      { k: "Each child gets", v: cakes2 + " slice" + (cakes2 === 1 ? "" : "s") + ", and each slice is " + frac(1, kids2) },
+      { k: "Which is", v: cakes2 + " ÷ " + kids2 + " = <b>" + frac(cakes2, kids2) + "</b>" + (simp ? ", the same as " + simp : ""), total: true },
+    ]);
+    $("fb2").innerHTML = "The shaded slices are one child's share: " + frac(cakes2, kids2) + " of a cake.";
+    $("task2").textContent = "The top number is what you shared. The bottom number is how many ways.";
+    if (cakes2 === 3) finish(1, "");
+  }
+  $("pickCakes").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-c]"); if (!b) return;
+    cakes2 = Number(b.dataset.c);
+    [...$("pickCakes").children].forEach((c) => c.classList.toggle("on", Number(c.dataset.c) === cakes2));
+    paint2(); say(cakes2 + " divided by " + kids2);
+  });
+  $("kids2").addEventListener("input", (e) => { kids2 = Number(e.target.value); paint2(); });
+  paint2();
+
+  /* ---- 3: a unit fraction as an operator (4Nf.03) ---- */
+  const UNITS3 = [2, 3, 4, 5, 10];
+  let u3 = 4, m3 = 5;
+  $("pickUnit").innerHTML = UNITS3.map((k) => '<button type="button" class="chip' + (k === 4 ? " on" : "") +
+    '" data-k="' + k + '">' + frac(1, k) + "</button>").join("");
+  function paint3() {
+    const amount = u3 * m3;
+    $("amtLab3").textContent = amount;
+    $("amt3").value = m3;
+    let h = "";
+    for (let g = 0; g < u3; g++) {
+      h += '<div class="g3' + (g === 0 ? " mine" : "") + '">';
+      for (let i = 0; i < m3; i++) h += "<i></i>";
+      h += "</div>";
+    }
+    $("groups3").innerHTML = h;
+    lines($("work3"), [
+      { k: "The instruction", v: frac(1, u3) + " of " + amount },
+      { k: "Make the groups", v: "share " + amount + " into <b>" + u3 + "</b> equal groups" },
+      { k: "Each group has", v: amount + " ÷ " + u3 + " = <b>" + m3 + "</b>" },
+      { k: "Take one group", v: "so " + frac(1, u3) + " of " + amount + " = <b>" + m3 + "</b>", total: true },
+    ]);
+    $("fb3").innerHTML = "The shaded group is " + frac(1, u3) + " of " + amount + ", which is <b>" + m3 + "</b>.";
+    $("task3").textContent = "The bottom number tells you how many groups to make.";
+    if (m3 !== 5 || u3 !== 4) finish(2, "");
+  }
+  $("pickUnit").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-k]"); if (!b) return;
+    u3 = Number(b.dataset.k);
+    [...$("pickUnit").children].forEach((c) => c.classList.toggle("on", Number(c.dataset.k) === u3));
+    paint3(); say("One " + (u3 === 2 ? "half" : u3 === 3 ? "third" : u3 === 4 ? "quarter" : u3 === 5 ? "fifth" : "tenth") + " of " + u3 * m3);
+  });
+  $("amt3").addEventListener("input", (e) => { m3 = Number(e.target.value); paint3(); });
+  paint3();
+
+  /* ---- 4: equivalent fractions (4Nf.04) ---- */
+  const EQ = [[1, 2], [1, 3], [2, 3], [1, 4], [3, 4]];
+  let eq4 = 0;
+  $("pickEq").innerHTML = EQ.map((f, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + frac(f[0], f[1]) + "</button>").join("");
+  function family(n, d) {
+    const out = [];
+    for (let k = 1; k * d <= 12; k++) out.push([n * k, d * k]);
+    return out;
+  }
+  function paint4() {
+    const f = EQ[eq4], fam = family(f[0], f[1]);
+    $("eq4").innerHTML = fam.map((g) =>
+      '<div class="eqrow"><span class="slab">' + frac(g[0], g[1]) + '</span><span class="eqbar">' +
+      barHtml(g[1], g[0]) + "</span></div>").join("");
+    lines($("work4"), [
+      { k: "Start with", v: frac(f[0], f[1]) },
+      { k: "Cut each part in two", v: "twice as many parts, and twice as many shaded — " + frac(f[0] * 2, f[1] * 2) },
+      { k: "Nothing moved", v: "the shaded length is identical in every bar above" },
+      { k: "So", v: fam.map((g) => frac(g[0], g[1])).join(" = "), total: true },
+    ]);
+    $("fb4").innerHTML = "All " + fam.length + " of these are <b>equivalent</b> — different names for the same amount.";
+    $("task4").textContent = "Multiply top and bottom by the same number and the value cannot change.";
+    if (eq4 > 0) finish(3, "");
+  }
+  $("pickEq").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    eq4 = Number(b.dataset.i);
+    [...$("pickEq").children].forEach((c, i) => c.classList.toggle("on", i === eq4));
+    paint4(); say($("fb4").textContent);
+  });
+  paint4();
+
+  /* ---- 5: percentages (4Nf.06) ---- */
+  let n5 = 25;
+  function paint5() {
+    $("pctLab5").textContent = n5;
+    let h = "";
+    for (let i = 0; i < 100; i++) h += '<i class="' + (i < n5 ? "on" : "") + '"></i>';
+    $("hund5").innerHTML = h;
+    const g = gcd(n5, 100) || 1, sn = n5 / g, sd = 100 / g;
+    $("reads5").innerHTML =
+      '<div class="read3"><span class="r3lab">Fraction</span><b>' + frac(n5, 100) + "</b></div>" +
+      '<div class="read3"><span class="r3lab">Decimal</span><b>' + (n5 / 100).toFixed(2) + "</b></div>" +
+      '<div class="read3 hero3"><span class="r3lab">Percentage</span><b>' + n5 + "%</b></div>";
+    lines($("work5"), [
+      { k: "Squares shaded", v: "<b>" + n5 + "</b> out of 100" },
+      { k: "As a fraction", v: frac(n5, 100) + (n5 > 0 && g > 1 ? ", which is the same as " + frac(sn, sd) : "") },
+      { k: "The sign", v: "<b>%</b> means <b>out of a hundred</b>, so " + n5 + " out of 100 is written <b>" + n5 + "%</b>" },
+      { k: "Say it", v: "&ldquo;" + n5 + " per cent&rdquo;", total: true },
+    ]);
+    $("fb5").innerHTML = n5 === 0 ? "Nothing shaded at all — that is <b>0%</b>."
+      : n5 === 100 ? "Every square shaded — the whole thing, <b>100%</b>."
+      : "<b>" + n5 + "%</b> of the square is shaded, and " + (100 - n5) + "% is not.";
+    $("task5").textContent = "Try 50, then 25, then 10 — the ones worth knowing by heart.";
+    if (n5 !== 25) finish(4, "");
+  }
+  $("pct5").addEventListener("input", (e) => { n5 = Number(e.target.value); paint5(); });
+  paint5();
+
+  /* ---- 6: comparing with equivalence (4Nf.07) ---- */
+  const PAIRS = shuffle([
+    [[1, 2], [2, 4]], [[1, 3], [1, 4]], [[2, 5], [3, 10]], [[3, 4], [5, 8]],
+    [[2, 6], [1, 3]], [[3, 5], [7, 10]], [[1, 2], [5, 8]], [[2, 3], [3, 4]],
+  ]);
+  let c6 = 0, right6 = 0, lock6 = false;
+  const SIGNS = [">", "<", "="];
+  function paint6() {
+    lock6 = false;
+    $("fb6").textContent = ""; $("fb6").className = "fb";
+    if (c6 >= PAIRS.length) {
+      $("cmp6").innerHTML = "";
+      $("signs6").innerHTML = "";
+      $("work6").innerHTML = "";
+      $("task6").textContent = right6 + " of " + PAIRS.length + " right.";
+      if (right6 >= 6) finish(5, "");
+      return;
+    }
+    const [A, B] = PAIRS[c6];
+    $("cmp6").innerHTML =
+      '<div class="cmpside"><span class="slab">' + frac(A[0], A[1]) + '</span><span class="eqbar">' + barHtml(A[1], A[0]) + "</span></div>" +
+      '<div class="cmpside"><span class="slab">' + frac(B[0], B[1]) + '</span><span class="eqbar">' + barHtml(B[1], B[0]) + "</span></div>";
+    $("signs6").innerHTML = SIGNS.map((s) => '<button type="button" class="choice sign" data-s="' + s + '">' + s + "</button>").join("");
+    $("work6").innerHTML = "";
+    $("task6").textContent = "Pair " + (c6 + 1) + " of " + PAIRS.length + " · " + right6 + " right";
+  }
+  $("signs6").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock6) return;
+    lock6 = true;
+    const [A, B] = PAIRS[c6];
+    const lcm = (A[1] * B[1]) / gcd(A[1], B[1]);
+    const a2 = A[0] * (lcm / A[1]), b2 = B[0] * (lcm / B[1]);
+    const truth = a2 > b2 ? ">" : a2 < b2 ? "<" : "=";
+    const ok = b.dataset.s === truth;
+    if (ok) right6++;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("work6"), [
+      { k: "Same bottom number", v: "both can be written in " + lcm + "ths" },
+      { k: "Rewrite them", v: frac(A[0], A[1]) + " = " + frac(a2, lcm) + " and " + frac(B[0], B[1]) + " = " + frac(b2, lcm) },
+      { k: "Now compare the tops", v: a2 + " " + truth + " " + b2 },
+      { k: "So", v: frac(A[0], A[1]) + " <b>" + truth + "</b> " + frac(B[0], B[1]), total: true },
+    ]);
+    $("fb6").innerHTML = (ok ? cheer() + " " : "Not quite. ") + "In " + lcm + "ths they are " + a2 + " and " + b2 + ".";
+    $("fb6").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : "In " + lcm + "ths they are " + a2 + " and " + b2);
+    c6++;
+    setTimeout(paint6, 3000);
+  });
+  paint6();
+
+  /* ---- 7: adding and subtracting, estimate first (4Nf.05) ---- */
+  const BANDS = [["less", "less than a half"], ["about", "about a half"], ["more", "more than a half"]];
+  let s7 = null, done7 = 0, lock7 = false;
+  function newSum() {
+    for (let tries = 0; tries < 200; tries++) {
+      const d = [4, 5, 6, 8, 10][rnd(0, 4)];
+      const plus = rnd(0, 1) === 1;
+      let a, b, r;
+      if (plus) { a = rnd(1, d - 2); b = rnd(1, d - 1 - a); r = a + b; }
+      else { a = rnd(2, d - 1); b = rnd(1, a - 1); r = a - b; }
+      if (r <= 0 || r >= d) continue;
+      const v = r / d;
+      const band = v < 0.5 ? "less" : v === 0.5 ? "about" : "more";
+      if (v > 0.4 && v < 0.5) continue;          /* keep every answer clearly in one band */
+      if (v > 0.5 && v < 0.6) continue;
+      return { d: d, a: a, b: b, plus: plus, r: r, band: band };
+    }
+    return { d: 4, a: 1, b: 2, plus: true, r: 3, band: "more" };
+  }
+  function paint7() {
+    lock7 = false;
+    $("sum7").innerHTML = frac(s7.a, s7.d) + (s7.plus ? " + " : " − ") + frac(s7.b, s7.d) + " = ?";
+    $("est7").innerHTML = BANDS.map((b) => '<button type="button" class="choice" data-b="' + b[0] + '">' + b[1] + "</button>").join("");
+    $("bar7").innerHTML = "";
+    $("work7").innerHTML = "";
+    $("fb7").textContent = ""; $("fb7").className = "fb";
+    $("task7").textContent = "Estimated " + done7 + " so far";
+  }
+  $("est7").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock7) return;
+    lock7 = true;
+    const ok = b.dataset.b === s7.band;
+    b.classList.add(ok ? "right" : "wrong");
+    done7++;
+    $("bar7").innerHTML = barHtml(s7.d, s7.r);
+    const g = gcd(s7.r, s7.d), simp = g > 1 ? frac(s7.r / g, s7.d / g) : null;
+    lines($("work7"), [
+      { k: "Same bottom number", v: "so every piece is the same size — " + frac(1, s7.d) },
+      { k: "Count the pieces", v: s7.a + (s7.plus ? " + " : " − ") + s7.b + " = <b>" + s7.r + "</b> of them" },
+      { k: "The answer", v: "<b>" + frac(s7.r, s7.d) + "</b>" + (simp ? ", the same as " + simp : "") },
+      { k: "Against a half", v: frac(s7.r, s7.d) + " is " + BANDS.filter((x) => x[0] === s7.band)[0][1], total: true },
+    ]);
+    $("fb7").innerHTML = (ok ? cheer() + " " : "Close. ") + "The answer is " + frac(s7.r, s7.d) + ", which is " +
+      BANDS.filter((x) => x[0] === s7.band)[0][1] + ".";
+    $("fb7").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : $("fb7").textContent);
+    if (done7 >= 3) finish(6, "");
+  });
+  $("new7").addEventListener("click", () => { s7 = newSum(); paint7(); });
+  s7 = newSum(); paint7();
+
+  /* ---- 8: check ---- */
+  const Q8 = shuffle([
+    { q: "Which is the bigger piece, a fifth or an eighth of the same cake?", o: ["A fifth", "An eighth", "They are the same"], a: 0, w: "Cutting into 5 makes bigger pieces than cutting into 8, because the cake is shared fewer ways." },
+    { q: "Two cakes shared fairly between 8 children. How much does each child get?", o: ["A quarter", "An eighth", "A half"], a: 0, w: "2 ÷ 8 = two eighths, and two eighths is the same as one quarter." },
+    { q: "What is a quarter of 24?", o: ["6", "4", "8"], a: 0, w: "Make 4 equal groups: 24 ÷ 4 = 6 in each, and one group is the quarter." },
+    { q: "Which fraction is equivalent to three quarters?", o: ["Six eighths", "Four fifths", "Three eighths"], a: 0, w: "Multiply top and bottom by 2: 3 × 2 = 6 and 4 × 2 = 8, so three quarters is six eighths." },
+    { q: "37 squares of a hundred square are shaded. What percentage is that?", o: ["37%", "3.7%", "63%"], a: 0, w: "Per cent means out of a hundred, so 37 out of 100 is simply 37%." },
+    { q: "Which sign belongs between two thirds and three quarters?", o: ["<", ">", "="], a: 0, w: "In twelfths they are eight twelfths and nine twelfths, so two thirds is the smaller." },
+    { q: "What is three fifths add one fifth?", o: ["Four fifths", "Four tenths", "Three fifths"], a: 0, w: "The pieces are the same size, so just count them: 3 fifths and 1 more fifth is 4 fifths." },
+    { q: "Half of a hundred square is shaded. Which of these is NOT another name for it?", o: ["5%", "50%", "Fifty hundredths"], a: 0, w: "A half is 50 out of 100, so 50%. 5% would be only five squares." },
+  ]);
+  let c8 = 0, right8 = 0, lock8 = false;
+  function round8() {
+    lock8 = false;
+    $("fb8").textContent = ""; $("fb8").className = "fb";
+    if (c8 >= Q8.length) {
+      $("stem8").textContent = "That is all of them.";
+      $("choices8").innerHTML = "";
+      $("score8").textContent = right8 + " out of " + Q8.length + " right.";
+      if (right8 >= 6) finish(7, "");
+      return;
+    }
+    $("stem8").textContent = Q8[c8].q;
+    const order = shuffle(Q8[c8].o.map((t, i) => ({ t: t, ok: i === Q8[c8].a })));
+    $("choices8").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
+    $("score8").textContent = "Question " + (c8 + 1) + " of " + Q8.length + " · " + right8 + " right";
+  }
+  $("choices8").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock8) return;
+    lock8 = true;
+    const ok = b.dataset.ok === "1";
+    if (ok) right8++;
+    b.classList.add(ok ? "right" : "wrong");
+    $("fb8").textContent = (ok ? cheer() + " " : "") + Q8[c8].w;
+    $("fb8").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : Q8[c8].w);
+    c8++;
+    setTimeout(round8, 2400);
+  });
+  round8();
+
+  /* ---- 9: stickers ---- */
+  const STICKERS = [["🍰", "More parts, smaller parts"], ["➗", "A fraction is a division"], ["🧺", "A fraction of an amount"],
+    ["🟰", "Same value, different name"], ["💯", "Out of a hundred"], ["⚖️", "Which is bigger?"],
+    ["➕", "Adding and taking away"], ["✅", "Show what I know"]];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
+  }
+  $("again").addEventListener("click", () => { show(0, true); });
+
+  show(0, false);
+
+  /* ---- your turn: the five slides that only demonstrated ---- */
+
+  /* 1 (4Nf.01) the whole point of the slide: more parts means smaller parts, so the
+     BIGGEST unit fraction is the one with the smallest denominator. */
+  ask(1, () => {
+    const ds = shuffle([2, 3, 4, 5, 6, 8, 10, 12]).slice(0, 3);
+    const best = Math.min.apply(null, ds);
+    return { stem: "Which of these is the <b>biggest</b> piece?",
+      opts: ds.map((d) => frac(1, d)), ans: ds.indexOf(best),
+      why: "Cutting the same whole into fewer parts makes each part bigger, so <b>1 over " +
+        best + "</b> is the largest." };
+  });
+
+  /* 2 (4Nf.02) a fraction IS a division. The reversed fraction is the distractor
+     because it is the error the slide exists to prevent. */
+  ask(2, () => {
+    const b = rnd(3, 8), a = rnd(2, b - 1);
+    const q = shuffle([frac(a, b), frac(b, a), frac(1, b)]);
+    return { stem: "<b>" + a + " cakes</b> are shared equally between <b>" + b +
+        " children</b>. How much does each child get?",
+      opts: q, ans: q.indexOf(frac(a, b)),
+      why: a + " ÷ " + b + " is written <b>" + a + " over " + b + "</b> — the number being " +
+        "shared goes on top." };
+  });
+
+  /* 3 (4Nf.03) a unit fraction as an operator. Totals are chosen to divide exactly. */
+  ask(3, () => {
+    const d = [2, 3, 4, 5, 6][rnd(0, 4)], tot = d * rnd(3, 9), n = tot / d;
+    const opts = pick3(n, [tot - d, d, tot - n]);
+    return { stem: "What is " + frac(1, d) + " of <b>" + tot + "</b>?",
+      opts: opts.map(String), ans: opts.indexOf(n),
+      why: "One part out of " + d + " equal parts: " + tot + " ÷ " + d + " = <b>" + n + "</b>." };
+  });
+
+  /* 4 (4Nf.04) equivalence. The distractors add to both parts instead of multiplying,
+     and scale only the bottom -- the two things children actually do. */
+  ask(4, () => {
+    const b = rnd(2, 6), a = rnd(1, b - 1), k = rnd(2, 4);
+    const q = shuffle([frac(a * k, b * k), frac(a + k, b + k), frac(a, b * k)]);
+    return { stem: "Which fraction is equal to " + frac(a, b) + "?",
+      opts: q, ans: q.indexOf(frac(a * k, b * k)),
+      why: "Multiply <b>both</b> numbers by " + k + ": " + a + " × " + k + " = " + a * k +
+        " and " + b + " × " + k + " = " + b * k + ". Adding to both would change the value." };
+  });
+
+  /* 5 (4Nf.06) per cent means out of a hundred, so the shaded count IS the percentage.
+     The distractor is the unshaded remainder. */
+  ask(5, () => {
+    const n = rnd(5, 95);
+    const opts = pick3(n, [100 - n, Math.round(n / 10), n + 10]);
+    return { stem: "<b>" + n + "</b> of the 100 squares are shaded. What percentage is shaded?",
+      opts: opts.map((v) => v + "%"), ans: opts.indexOf(n),
+      why: "Per cent means <b>out of a hundred</b>, so " + n + " out of 100 is <b>" + n + "%</b>." };
+  });
+
+})();
+</script>

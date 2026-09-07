@@ -44,7 +44,7 @@ const EHEL = path.join(ROOT, "src", "prototypes", "ehel-academy");
 // the count precisely on the floor and pass. A floor set at what you had before
 // the last thing you added cannot see that thing disappear.
 const TOPIC_FLOORS = {
-  mathematics: 4183,
+  mathematics: 4191,
   science: 1254,
   computing: 1895,
   "global-perspectives": 1273,

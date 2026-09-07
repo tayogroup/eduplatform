@@ -56,7 +56,8 @@
     "Find common factors of two or more numbers, and name the highest common factor (HCF).",
     "Use arrays to picture multiplication, factors and factor pairs.",
     "Apply efficient mental multiplication strategies such as partitioning, doubling and halving, and the distributive property.",
-    "Solve multi-step and real-world problems involving multiplication, factors and multiples."
+    "Solve multi-step and real-world problems involving multiplication, factors and multiples.",
+    "Understand the associative property of multiplication, and use it to regroup factors and simplify a calculation."
   ],
   "concepts": [
     {
@@ -94,6 +95,12 @@
       "title": "The Link Between Factors, Multiples and Division",
       "explanation": "Factors and multiples are two sides of the same coin, and they are tied tightly to division. Hold on to these two golden sentences:\n\nIf a × b = c, then a and b are factors of c, and c is a multiple of both a and b.\n\nIf a is a factor of b, then b is a multiple of a.\n\nFor example, because 3 × 4 = 12, we know 3 and 4 are factors of 12, and 12 is a multiple of both 3 and 4. Because 5 is a factor of 20, we know 20 is a multiple of 5. The same fact, read in two directions, tells us about factors and multiples at once.",
       "example": "This link makes division easy when you know your tables. To work out 72 ÷ 8, you ask, what times 8 makes 72? Since 8 × 9 = 72, the answer is 9. To work out 56 ÷ 7, you ask, what times 7 makes 56? Since 7 × 8 = 56, the answer is 8. Every division fact is a multiplication fact in disguise. That is why learning your tables so well pays off twice over."
+    },
+    {
+      "id": "concept-7-grouping-factors-the-associative-property",
+      "title": "Grouping Factors: The Associative Property",
+      "explanation": "You already know that you can swap the order of two numbers in a multiplication: 7 × 9 gives the same answer as 9 × 7. That is the commutative property, and it is about ORDER. There is a second idea that helps just as much, and it is about GROUPING rather than order.\n\nWhen you multiply three numbers you get to choose which pair to multiply first, and brackets show the choice. (2 × 5) × 7 means multiply 2 by 5 first, then multiply by 7: that is 10 × 7 = 70. And 2 × (5 × 7) means multiply 5 by 7 first: that is 2 × 35 = 70. Same three numbers, different grouping, same answer every time. That is the associative property.\n\nHere is why it is worth knowing. One grouping is almost always easier than the other. In (2 × 5) × 7 the first pair makes 10, and multiplying by 10 is something you can do instantly. Left as 2 × 35 you would be working much harder for exactly the same answer. So when you meet three factors, hunt for a pair that makes a friendly number — 10, 20, 50 or 100 — and group those two together first.",
+      "example": "4 × 25 × 3: group the 4 and the 25, because 4 × 25 = 100. Then 100 × 3 = 300."
     }
   ],
   "explorations": [
@@ -295,6 +302,20 @@
         "Factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36.",
         "The highest common factor is 12."
       ]
+    },
+    {
+      "id": "method-7",
+      "outcomeId": "lo09",
+      "difficulty": "Core",
+      "title": "How to regroup three factors to make a multiplication easier",
+      "example": "Work out 8 × 5 × 6.",
+      "steps": [
+        "Look at the three factors and hunt for a pair that makes a friendly number — 10, 20, 50 or 100.",
+        "Put brackets round that pair. Here 8 × 5 = 40, so write (8 × 5) × 6.",
+        "Work out the bracket first: 40.",
+        "Multiply by the factor that is left over: 40 × 6 = 240.",
+        "Check by grouping the other way: 8 × (5 × 6) = 8 × 30 = 240. The same, as it always will be."
+      ]
     }
   ],
   "workedExamples": [
@@ -393,6 +414,22 @@
       "title": "Find the HCF of 24 and 36. Show the factor lists you…",
       "prompt": "Find the HCF of 24 and 36. Show the factor lists you used.",
       "solution": "Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24; factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36; HCF = 12."
+    },
+    {
+      "id": "we13",
+      "outcomeId": "lo09",
+      "difficulty": "Intermediate",
+      "title": "Choosing the easier grouping",
+      "prompt": "Work out 2 × 17 × 5 by grouping the factors cleverly.",
+      "solution": "The 2 and the 5 make 10, so regroup as 17 × (2 × 5) = 17 × 10 = 170. Grouping it the other way gives (2 × 17) × 5 = 34 × 5, which is the same 170 but much harder to do in your head. Both are correct; one is kinder."
+    },
+    {
+      "id": "we14",
+      "outcomeId": "lo09",
+      "difficulty": "Intermediate",
+      "title": "Three factors with a hundred hiding in them",
+      "prompt": "Work out 25 × 7 × 4.",
+      "solution": "25 × 4 = 100, so regroup as (25 × 4) × 7 = 100 × 7 = 700. Multiplying by 100 moves every digit two places to the left, so there is no written working at all. Spotting the pair that makes 100 is the whole trick."
     }
   ],
   "practice": [
@@ -479,6 +516,20 @@
       "prompt": "Find the HCF of 24 and 36. Show the factor lists you used.",
       "answer": "Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24; factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36; HCF = 12.",
       "hint": "Decide which idea the question is really about (Factor, Multiple, Product), then work one step at a time and check the answer is sensible."
+    },
+    {
+      "id": "p13",
+      "level": "Core",
+      "prompt": "Regroup each one to make it easier, then work it out: a) 5 × 9 × 2  b) 4 × 6 × 25  c) 2 × 13 × 50.",
+      "answer": "a) (5 × 2) × 9 = 10 × 9 = 90, b) (4 × 25) × 6 = 100 × 6 = 600, c) (2 × 50) × 13 = 100 × 13 = 1,300.",
+      "hint": "Hunt for the pair that makes 10 or 100, and multiply those two first."
+    },
+    {
+      "id": "p14",
+      "level": "Challenge",
+      "prompt": "Is (3 × 4) × 5 the same as 3 × (4 × 5)? Work out both, then explain what your answer shows.",
+      "answer": "(3 × 4) × 5 = 12 × 5 = 60, and 3 × (4 × 5) = 3 × 20 = 60. They match. Regrouping the factors never changes the product — that is the associative property, and it is why you are free to choose whichever grouping is easiest.",
+      "hint": "Work out the bracket first each time, then compare the two answers."
     }
   ],
   "activities": [
@@ -570,6 +621,10 @@
       {
         "title": "The Link Between Factors, Multiples and Division",
         "text": "Factors and multiples are two sides of the same coin, and they are tied tightly to division."
+      },
+      {
+        "title": "Grouping Factors: The Associative Property",
+        "text": "When you multiply three numbers you get to choose which pair to multiply first, and the answer is the same either way."
       }
     ],
     "terms": [
@@ -608,6 +663,10 @@
       [
         "HCF",
         "The highest common factor"
+      ],
+      [
+        "Associative property",
+        "Changing which pair you multiply first does not change the product"
       ]
     ],
     "commonMistakes": [
@@ -626,6 +685,10 @@
       [
         "Doubling and halving the same number",
         "Double one number, halve the other"
+      ],
+      [
+        "Mixing up associative and commutative",
+        "Commutative changes the ORDER (7 × 9 = 9 × 7); associative changes the GROUPING ((2 × 5) × 7 = 2 × (5 × 7))"
       ]
     ]
   },
@@ -737,6 +800,15 @@
       "answer": "Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24; factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36; HCF = 12.",
       "hint": "Decide which idea the question is really about (Factor, Multiple, Product), then work one step at a time and check the answer is sensible.",
       "errorFeedback": "Factors of 24: 1, 2, 3, 4, 6, 8, 12, 24; factors of 36: 1, 2, 3, 4, 6, 9, 12, 18, 36; HCF = 12."
+    },
+    {
+      "id": "fl13",
+      "outcomeId": "lo09",
+      "difficulty": "Round 1",
+      "prompt": "Group the friendly pair first: a) 2 × 7 × 5  b) 25 × 3 × 4  c) 50 × 9 × 2.",
+      "answer": "a) 70, b) 300, c) 900.",
+      "hint": "Find the pair that makes 10 or 100 and multiply those two together first.",
+      "errorFeedback": "Find the pair that makes 10 or 100 and multiply those two together first."
     }
   ],
   "realProblems": [
@@ -1787,6 +1859,7 @@
     "I can find common factors of two or more numbers, and name the highest common factor (HCF).",
     "I can use arrays to picture multiplication, factors and factor pairs.",
     "I can apply efficient mental multiplication strategies such as partitioning, doubling and halving, and the distributive property.",
-    "I can solve multi-step and real-world problems involving multiplication, factors and multiples."
+    "I can solve multi-step and real-world problems involving multiplication, factors and multiples.",
+    "I can regroup the factors in a multiplication to make it easier, and explain why the answer does not change."
   ]
 }

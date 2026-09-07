@@ -289,6 +289,251 @@
     }
   }
 
+  /* ==================================================================
+     THE GRADE 1 NIGHT SKIN, ported from ../grade-1-app/g1v2 on 2026-09-08.
+
+     Grade 4 and Grade 1 looked different while the palette tokens above were
+     the same in both, which is why a token diff wrongly said they matched.
+     Grade 1 carries this block AFTER the prefers-color-scheme rules and its
+     selector list opens with a bare :root, so it applies in every colour
+     scheme. Grade 4 had no equivalent and simply followed the viewer's
+     setting -- light in Edge, dark in Chrome, which is the pair of
+     screenshots that prompted this.
+
+     It reaches Grade 4's own components for free because they are
+     token-driven: outside the token blocks this stylesheet holds four
+     hardcoded colours and the five per-lesson sheets hold none.
+
+     WHAT IS DELIBERATELY NOT HERE. The first extraction ran to the end of the style block and
+     swallowed two blocks that belong to the tools rather than to the design:
+     the header-bar rules owned by the header-bar tool, and
+     the dock/drawer/toast rules owned by the platform-controls tool. Carrying
+     the header copy is worse than redundant -- that tool's idempotence marker
+     is the header bar's own class name (not written here), so a copy in this shared stylesheet
+     makes it skip every page while printing "all 6 have the bars", and the
+     markup is never built. Rules that resume the design after those blocks
+     (slide-head, the say button, big.teal, the 520px column) ARE kept.
+     ================================================================== */
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to
+     the viewer's setting. The selector list carries the same specificity
+     as the prefers-color-scheme block above it and comes later, so it
+     wins in both light and dark.
+
+     The palette is Ehel Academy's own. Gold #f4c95d is the action
+     colour, exactly as on the Wehel page. Teal #0f766e and coral
+     #c2482c are lifted to the same hues at a lightness that is legible
+     on a dark ground; nothing else is invented.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;      /* Ehel ink #17324d, darkened to a page ground */
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;      /* Ehel coral, lifted — the counters and shapes */
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;        /* Ehel teal, lifted */
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;        /* Ehel gold — every action */
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* two rules used --ink as a SURFACE, which inverts on a dark ground */
+  .tenframe { background: #07131D; }
+  .machine .box { background: #07131D; color: var(--ink); border: 1px solid var(--line); }
+
+  /* white on the lifted teal is only about 2.3:1; these badges take dark ink */
+  .card .pos, .ocard .pos { color: #06231F; }
+
+  /* cards, chips and tiles that were white surfaces */
+  .group, .chip, .pick, .acard, .kid, .ocard, .card, .numbox, .keys button,
+  .tray, .purse, .field, .queue .runner, .seqbox span { background: var(--card); }
+  .group.right, .pick.good, .acard.good, .ocard.good, .kid.asked { background: var(--good-soft); }
+  .group.wrong, .pick.oops, .acard.oops, .ocard.oops { background: var(--bad-soft); }
+
+  /* ==================================================================
+     The ground and the activity cards.
+
+     The page sits on one fixed gradient rather than a gradient stretched
+     down 17,000 pixels of document, so 135 degrees means 135 degrees on
+     every screen instead of flattening to almost vertical on a long lesson.
+     It is painted by a fixed pseudo-element rather than background-attachment,
+     which iOS Safari does not honour.
+
+     The card colour is translucent, so the three surfaces below it had to
+     move with it: at 88% over this ground a card lands on #152A42, which
+     the old #112A3D panel colour sat four points away from - inner cards
+     would have disappeared into the card holding them.
+     ================================================================== */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+
+  .step, .deck { background: rgba(20, 43, 62, 0.88); }
+  .steps-nav { background: rgba(24, 59, 86, 0.88); }
+
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+  /* ==================================================================
+     The way back to the grade page - drawn ONLY when the learner arrived
+     from it (?from=g1). A lesson opened on its own, or published as an
+     artifact, has nowhere to go back to, and a link that leads nowhere is
+     worse than no link at all.
+     ================================================================== */
+  .g1-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 17px 9px 13px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+  }
+  .g1-back:hover, .g1-back:focus-visible { border-color: var(--teal); }
+
+  .slide-head .n { color: var(--teal-ink); }
+  .say button { color: var(--teal-ink); }
+  .big.teal { color: var(--teal-ink); }
+  .card .pos, .picbox .pos { color: var(--teal-ink); }
+  .bondbar button.b { color: var(--teal-ink); }
+  .numgrid button.even { color: var(--teal-ink); }
+  .coin { color: var(--gold-ink); }
+  .field .star b { color: var(--gold-ink); }
+
+  /* This layer widens the eyebrow's tracking and the base sets it nowrap, so a
+     longer eyebrow would push the step dots off a phone. These do not overflow
+     at 375px today; the guard is here so a longer one cannot. */
+  @media (max-width: 520px) {
+    .hero { flex-wrap: wrap; }
+    .eyebrow { white-space: normal; }
+    .dots { max-width: 100%; justify-content: flex-start; }
+  }
 
   /* ---------- Telling the Time: only what the shared lesson CSS does not already carry ---------- */
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }

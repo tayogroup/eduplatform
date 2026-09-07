@@ -1,6 +1,7 @@
 import { chromium } from "playwright";
 import { pathToFileURL } from "url";
 import path from "path";
+import { residualErrors, notImported } from "../checks/_platform-modules.mjs";
 
 import fs from "fs";
 import { fileURLToPath } from "url";
@@ -166,7 +167,10 @@ for (const [file, want] of LESSONS) {
   if (earned.stickers !== earned.slides - 1) bad.push(`${name}: ${earned.stickers} stickers for ${earned.slides} slides (want ${earned.slides - 1})`);
   if (earned.got < 1) bad.push(`${name}: no sticker earned`);
 
-  if (errors.length) bad.push(`${name}: ${errors.join("; ")}`);
+  const missing = /grade-3-app/.test(file) ? notImported(file) : [];
+  if (missing.length) bad.push(`${name}: page does not import: ${missing.join(", ")}`);
+  const real = residualErrors(errors, file);
+  if (real.length) bad.push(`${name}: ${real.join("; ")}`);
   await ctx.close();
 }
 

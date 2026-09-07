@@ -1,17 +1,19 @@
 import { chromium } from "playwright";
 import { pathToFileURL } from "url";
+import { residualErrors, notImported } from "./_platform-modules.mjs";
 import path from "path";
 import { fileURLToPath } from "url";
 /* the lessons sit one level up from checks/ - resolve against THIS file so the
    checker works from anywhere, not only when the shell happens to be cd'd into
    the lesson directory */
 const L = (f) => path.join(path.dirname(fileURLToPath(import.meta.url)), "..", f);
+const LESSON = "equal-parts.html";
 const b = await chromium.launch();
 const p = await b.newPage({ viewport: { width: 1100, height: 950 } });
 const errors = [];
 p.on("pageerror", (e) => errors.push("PAGEERROR " + e.message));
 p.on("console", (m) => { if (m.type() === "error") errors.push("CONSOLE " + m.text()); });
-await p.goto(pathToFileURL(L("equal-parts.html")).href);
+await p.goto(pathToFileURL(L(LESSON)).href);
 const bad = [];
 async function go(i) { await p.click(`#dots button[data-i="${i}"]`); }
 async function waitLive(id) {
@@ -216,5 +218,7 @@ const over = await p.evaluate(() => document.documentElement.scrollWidth - docum
 console.log("overflow375:", over);
 if (over > 0) bad.push("overflows 375px by " + over);
 console.log("bad =", bad);
-console.log("errors =", errors);
+const missing = notImported(L(LESSON));
+if (missing.length) bad.push("page does not import: " + missing.join(", "));
+console.log("errors =", residualErrors(errors, L(LESSON)));
 await b.close();

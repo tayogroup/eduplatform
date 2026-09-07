@@ -1,11 +1,13 @@
 import { chromium } from "playwright";
 import { pathToFileURL } from "url";
+import { residualErrors, notImported } from "./_platform-modules.mjs";
 import path from "path";
 import { fileURLToPath } from "url";
 /* the lessons sit one level up from checks/ - resolve against THIS file so the
    checker works from anywhere, not only when the shell happens to be cd'd into
    the lesson directory */
 const L = (f) => path.join(path.dirname(fileURLToPath(import.meta.url)), "..", f);
+const LESSON = "up-to-a-thousand.html";
 
 const ONESW = ["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
 const TENSW = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
@@ -17,7 +19,7 @@ const p = await b.newPage({ viewport: { width: 1100, height: 900 } });
 const errors = [];
 p.on("pageerror", (e) => errors.push("PAGEERROR " + e.message));
 p.on("console", (m) => { if (m.type() === "error") errors.push("CONSOLE " + m.text()); });
-await p.goto(pathToFileURL(L("up-to-a-thousand.html")).href);
+await p.goto(pathToFileURL(L(LESSON)).href);
 // silence speech so rounds are not gated on audio
 await p.evaluate(() => { try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {} });
 
@@ -249,5 +251,7 @@ console.log("overflow375:", over.page, over.slides);
 if (over.page > 0) bad.push("page overflows at 375px by " + over.page);
 
 console.log("bad =", bad);
-console.log("errors =", errors);
+const missing = notImported(L(LESSON));
+if (missing.length) bad.push("page does not import: " + missing.join(", "));
+console.log("errors =", residualErrors(errors, L(LESSON)));
 await b.close();

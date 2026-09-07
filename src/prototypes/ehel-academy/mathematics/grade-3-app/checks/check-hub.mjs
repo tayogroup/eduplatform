@@ -1,5 +1,6 @@
 import { chromium } from "playwright";
 import { pathToFileURL } from "url";
+import { residualErrors } from "./_platform-modules.mjs";
 import path from "path";
 import { fileURLToPath } from "url";
 /* the lessons sit one level up from checks/ - resolve against THIS file so the
@@ -84,5 +85,5 @@ if (over > 0) bad.push("hub overflows 375px by " + over);
 await p.setViewportSize({ width: 1200, height: 1400 });
 await p.screenshot({ path: "shot-hub.png", fullPage: true });
 console.log("bad =", bad);
-console.log("errors =", errors);
+console.log("errors =", residualErrors(errors));
 await b.close();

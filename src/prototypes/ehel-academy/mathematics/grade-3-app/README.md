@@ -10,7 +10,8 @@ generated from it and are also committed, because they are what deploys and a
 deploy must not depend on a shell that can run bash.
 
 ```bash
-src/build-all.sh                       # rebuild all five from the fragments
+src/build-all.sh                       # rebuild all five AND re-wire them
+python ../lesson-app-tools/check-lessons.py   # the shared gate
 node checks/check-l1.mjs               # ... l2 l3 l4 l5, one per lesson
 node checks/check-hub.mjs
 node checks/check-a11y.mjs             # all six pages, both themes
@@ -22,21 +23,40 @@ node checks/check-audit.mjs            # needs fw.txt — see below
 which is the only thing that makes `src/` genuine source rather than a copy that
 has drifted. Re-check that after any change to a fragment.
 
-## Status: built, gated, NOT wired to the platform, NOT deployed, NOT routed
+**The platform wiring is part of that build**, and that is deliberate. Every
+tool in `../lesson-app-tools` patches a BUILT lesson in place, and these lessons
+are generated — so wiring applied by hand after a build is silently discarded by
+the next one. That is the trap CLAUDE.md records for Mathematics, where ~20
+repair tools edit built units in place and a rebuild overwrote 125 of them. So
+`build-all.sh` runs the four wiring tools itself: a rebuild re-applies the
+wiring instead of losing it, the tools stay the one shared definition of what
+wiring is (the same four that wire Grade 2), and build+wire is still byte-for-byte
+reproducible. All four are idempotent — verified, a second run of the set changes
+no byte.
+
+## Status: built, wired, gated, NOT deployed, NOT routed
 
 | | grade-1-v2 | grade-2-app | here |
 | --- | --- | --- | --- |
 | deck, `finish()`, stickers | ✓ | ✓ | ✓ |
 | voice engine (platform TTS + fallback) | ✓ | ✓ | ✓ |
 | launch params read and carried across links | ✓ | ✓ | ✓ |
+| design template + ink tokens | ✓ | ✓ | ✓ |
+| `course-shell.js` | ✓ | ✓ | ✓ |
+| Class chat / Hand up / Join class | ✓ | ✓ | ✓ |
 | Wehel | ✓ | ✓ | ✓ |
-| design template + ink tokens | ✓ | ✓ | **partly — see below** |
-| `course-shell.js` | ✓ | ✓ | **no** |
-| the two header bars | ✓ | ✓ | **no** |
-| Class chat / Hand up / Join class | ✓ | ✓ | **no** |
-| deploy path | own `deploy.mjs` | shared | **none** |
+| progress reported to the group board | ✓ | ✓ | ✓ |
+| `check-lessons.py` (the shared gate) | ✓ | ✓ | ✓ |
+| the two header bars | ✓ | hero | hero |
+| deploy path | own `deploy.mjs` | shared | shared |
 | **on the CDN** | staged | no | **no** |
 | **a learner can reach it** | — | no | **no** |
+
+The header is the one deliberate difference, and it is the wiring tool's own
+decision rather than a gap: Grade 1 has a two-bar header from its own build,
+this build and Grade 2 have a hero, and `wire-platform-controls.py` says porting
+that header "would be a design change nobody asked for — a container is all the
+contract requires". The controls sit in a `.hero-right` wrapper the tool adds.
 
 Verified against storage on 2026-09-07: `app/mathematics/` holds
 `grade-1-preview`, `grade-1-v2`, `grade-2-lessons` and the eight shell grade
@@ -88,7 +108,7 @@ are recorded as they are rather than rounded up:
   again be a picker — the same substitution with less of the characteristic
   surviving it.
 
-## The design template, and what is actually missing
+## The design template: only half of it applied here
 
 `../grade-1-app/align-g1v2-to-template.py` brought Grade 1 onto the Grade 2
 template: re-solved `--accent`, the `--teal-ink` / `--plum-ink` / `--gold-ink`
@@ -107,15 +127,13 @@ of all five lessons in both themes (`checks/probe-chips.mjs`):
   7.29:1.
 
 So Grade 3 needs none of the chip rules. What it takes from the template is the
-palette block alone.
+palette block alone, and that is what landed.
 
-The real gap is further up the table: **`course-shell.js` and the two header
-bars are absent**, so there is no Class chat, no Hand up and no Join class.
-`../lesson-app-tools/wire-platform-controls.py` is what does that, and it has
-not been run here. Note the ordering that file exists to enforce — launch params
-BEFORE the controls, because `mountHandRaise` and `mountClassChat` mount nothing
-without `launchToken` and `launchEndpoint`, so wiring the controls first makes
-them look broken when they are only unreachable.
+The wiring that used to be missing here is now done, by the shared tools, from
+inside `build-all.sh`. The ordering those tools enforce is worth knowing before
+touching it: launch params BEFORE the controls, because `mountHandRaise` and
+`mountClassChat` mount nothing without `launchToken` and `launchEndpoint`, so
+wiring the controls first makes them look broken when they are only unreachable.
 
 ## The Convincing step is in `convince/`, and half of it has not landed
 
@@ -129,6 +147,42 @@ them. That is another lane's call.
 `convince/check-convince.mjs` therefore checks Grade 3's five always, looks for
 the step on Grade 1's five, and prints **NOT CHECKED** when it is absent — an
 unlanded half is never counted as a pass.
+
+## What the wiring is NOT known to do
+
+`check-lessons.py` proves the lessons are WIRED — the modules are imported and
+preloaded, `.top-actions` exists, the mount calls are there with the right unit
+number, and the launch parameters survive every in-app link. It does not prove
+the controls RENDER, and nothing here can.
+
+Hand up and Class chat mount only when the server answers `watched` — this
+learner is in an active class group with a teacher on it — and Wehel needs a
+launch token. From a `file://` page with no token there is nothing to see, by
+design: the same rule that stops a tutoring learner working alone at night being
+offered a button that reaches nobody. So the accessibility sweep's 0 findings
+covers the pages as a child working alone sees them, not the controls in their
+mounted state.
+
+Proving those takes a real launch against the platform, which needs the build on
+the CDN and the route pointed at it — i.e. it cannot be done before deploy, only
+after.
+
+The local checkers cannot even load those modules. An ES module import is
+impossible from a `file://` page whatever is on disk — Chrome allows module
+fetches only over chrome, chrome-untrusted, data, http and https — so all four
+fail to load in every run here. Rather than leave four expected errors as noise
+in which a real one could hide, `checks/_platform-modules.mjs` filters them and
+then asserts that **all four were blocked for exactly that reason**: if one stops
+appearing, its import has been dropped from the page and nothing else would say
+so. Mutation-tested by removing the `wehel.js` import from a lesson.
+
+One gap in the shared gate, noted rather than fixed because it is another
+build's tool too: `check-lessons.py` lists three modules in `MODULES`
+(`learner-controls.js`, `wehel.js`, `course-shell.js`) when the wiring imports
+**four**. `progress-client.js` is imported by `wire-progress.py`'s block and IS
+carried by `deploy.mjs`, so nothing is broken — but the gate's "a page importing
+a module the deploy does not carry" check does not cover it, and that failure
+mode is a 404 on a module specifier which takes the whole script with it.
 
 ## Measured, not assumed
 

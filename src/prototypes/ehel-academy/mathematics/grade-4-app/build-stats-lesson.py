@@ -17,7 +17,7 @@ doc = (
     '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
     "<title>Asking, Sorting and Chance</title>\n"
     '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
-    'family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">\n'
+    'family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">\n'
     "<style>\n" + head + extra + "</style>\n"
     + body
     + "\n<script>\n" + shell + slides + "\n})();\n</script>\n"

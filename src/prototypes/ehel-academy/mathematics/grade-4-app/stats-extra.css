@@ -10,7 +10,7 @@
 
   /* 1 — the question card */
   .qcard { background: var(--cell); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
-  .qq { font-family: "Fredoka", sans-serif; font-size: 20px; font-weight: 600; margin: 0 0 8px; }
+  .qq { font-family: "Inter", "Segoe UI", sans-serif; font-size: 20px; font-weight: 600; margin: 0 0 8px; }
   .qc { margin: 0; color: var(--muted); font-size: 15px; }
 
   /* 2 — tally and frequency */
@@ -21,7 +21,7 @@
   .trow.thead { background: var(--cell); font-size: 11px; font-weight: 700; letter-spacing: .07em;
     text-transform: uppercase; color: var(--muted); }
   .trow.tfoot { background: var(--teal-soft); font-weight: 700; color: var(--teal); }
-  .trow .num { text-align: right; font-family: "Fredoka", sans-serif; font-size: 20px; font-weight: 600;
+  .trow .num { text-align: right; font-family: "Inter", "Segoe UI", sans-serif; font-size: 20px; font-weight: 600;
     font-variant-numeric: tabular-nums; }
   .trow.thead .num, .trow.tfoot .num { font-size: inherit; }
   .tal { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 24px; }
@@ -38,7 +38,7 @@
   .prow, .drow, .srow { display: grid; grid-template-columns: 54px 1fr 78px; gap: 8px;
     align-items: center; padding: 6px 0; }
   .plab { font-weight: 700; font-size: 14px; }
-  .pnum { text-align: right; font-family: "Fredoka", sans-serif; font-weight: 600;
+  .pnum { text-align: right; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600;
     font-variant-numeric: tabular-nums; font-size: 15px; }
   .pics { display: flex; gap: 2px; align-items: center; }
   .pic { font-size: 20px; line-height: 1; }
@@ -50,7 +50,7 @@
   .bwrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
   .bbar { width: 100%; background: var(--teal); border-radius: 8px 8px 0 0; min-height: 4px;
     display: flex; justify-content: center; align-items: flex-start; }
-  .bbar span { color: #fff; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 14px; padding-top: 3px; }
+  .bbar span { color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 14px; padding-top: 3px; }
   .blab { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 6px; }
   .twoup { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
   .mini .mlab { font-size: 12px; font-weight: 700; color: var(--muted); margin: 0 0 4px; }
@@ -65,14 +65,14 @@
   .vennsvg .hl { font: 700 12px Inter, system-ui, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
   .vennsvg .hl.a { fill: var(--teal); text-anchor: middle; }
   .vennsvg .hl.b { fill: var(--plum); text-anchor: middle; }
-  .vennsvg .vn { font-family: "Fredoka", sans-serif; font-size: 16px; font-weight: 600;
+  .vennsvg .vn { font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; font-weight: 600;
     fill: var(--ink); text-anchor: middle; }
   .vennsvg .out { font: 400 13px Inter, system-ui, sans-serif; fill: var(--muted); }
   .carroll { width: 100%; border-collapse: collapse; }
   .carroll th, .carroll td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; }
   .carroll th { background: var(--cell); font-size: 11px; font-weight: 700; letter-spacing: .06em;
     text-transform: uppercase; color: var(--muted); }
-  .carroll td { font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600; letter-spacing: 1px; }
+  .carroll td { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; font-weight: 600; letter-spacing: 1px; }
 
   /* 6 — the chance line */
   .chanceline { position: relative; height: 74px; margin: 18px 0 6px; }

@@ -20,7 +20,7 @@ doc = (
     '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
     "<title>Four Digits Strong</title>\n"
     '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
-    'family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">\n'
+    'family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">\n'
     "<style>\n" + head + "</style>\n"
     + body
     + "\n<script>\n" + script + "\n</script>\n"

@@ -18,7 +18,7 @@
   })();
 </script>
 <title>Telling the Time</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
 
   :root {
@@ -49,7 +49,7 @@
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 19px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
-  h1, h2 { font-family: "Fredoka", "Trebuchet MS", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
   p { margin: 0; }
   button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
   button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
@@ -68,21 +68,21 @@
   .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
   .slide.active { display: flex; }
   .slide-head { display: flex; align-items: center; gap: 12px; }
-  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
   .slide h2 { font-size: clamp(24px, 5vw, 33px); }
   .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 19px; }
   .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
   .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 6px 0; }
-  .fb { min-height: 1.6em; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 22px; text-align: center; max-width: 32em; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 22px; text-align: center; max-width: 32em; }
   .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
   .small-fb { font-size: 16px; color: var(--muted); font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; }
 
-  .bignum { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(40px, 9vw, 70px); line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .bignum { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(40px, 9vw, 70px); line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
   .bignum .k { color: var(--gold); } .bignum .h { color: var(--plum); } .bignum .t { color: var(--teal); } .bignum .o { color: var(--accent); }
-  .word { font-family: "Fredoka", sans-serif; font-weight: 600; font-size: clamp(20px, 4.2vw, 28px); color: var(--teal); text-align: center; }
+  .word { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: clamp(20px, 4.2vw, 28px); color: var(--teal); text-align: center; }
 
   .bigbtns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-  .big { min-width: 58px; height: 54px; padding: 0 16px; border-radius: 16px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big { min-width: 58px; height: 54px; padding: 0 16px; border-radius: 16px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
   .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
   .big.teal { background: var(--teal); color: #fff; } .big.plum { background: var(--plum); color: #fff; } .big.gold { background: var(--gold); color: #2b2200; }
   .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
@@ -102,7 +102,7 @@
   .askwrap .fb { margin: 10px 0 0; }
   .askwrap .askmore { margin-top: 10px; }
   .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-  .choice { min-width: 92px; height: 68px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 27px; transition: transform 100ms ease; font-variant-numeric: tabular-nums; }
+  .choice { min-width: 92px; height: 68px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 27px; transition: transform 100ms ease; font-variant-numeric: tabular-nums; }
   .choice.word { font-size: 20px; }
   .choice:active { transform: scale(0.96); }
   .choice.right { background: var(--good-soft); border-color: var(--good); }
@@ -114,7 +114,7 @@
   .pv div { min-width: 80px; padding: 8px 10px; border-radius: 14px; text-align: center; }
   .pv .thou { background: var(--gold-soft); } .pv .hund { background: var(--plum-soft); } .pv .tens { background: var(--teal-soft); } .pv .ones { background: var(--accent-soft); }
   .pv .lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-  .pv .val { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 32px; }
+  .pv .val { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 32px; }
   .pv .thou .val { color: var(--gold); } .pv .hund .val { color: var(--plum); } .pv .tens .val { color: var(--teal); } .pv .ones .val { color: var(--accent); }
   .blocks { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; justify-content: center; min-height: 70px; }
   .cubes { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 240px; }
@@ -135,7 +135,7 @@
   .scale { position: relative; height: 300px; width: 48px; }
   .scale span { position: absolute; left: 0; transform: translateY(-50%); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
   .scale span.z { color: var(--ink); font-size: 15px; } .scale span.neg { color: var(--teal); }
-  .tempnum { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: clamp(44px, 10vw, 72px); font-variant-numeric: tabular-nums; }
+  .tempnum { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(44px, 10vw, 72px); font-variant-numeric: tabular-nums; }
   .tempnum.neg { color: var(--teal); } .tempnum.pos { color: var(--accent); }
 
   /* number line */
@@ -144,11 +144,11 @@
   .nline .t { position: absolute; top: 20px; width: 2px; height: 20px; background: var(--ink); transform: translateX(-50%); }
   .nline .t.mid { height: 26px; top: 17px; width: 3px; }
   .nline .l { position: absolute; top: 42px; transform: translateX(-50%); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .nline .l.big { font-size: 15px; font-family: "Fredoka", sans-serif; }
+  .nline .l.big { font-size: 15px; font-family: "Inter", "Segoe UI", sans-serif; }
   .nline .m { position: absolute; top: 16px; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); border: 3px solid var(--card); transform: translateX(-50%); }
 
   /* grid method */
-  .gridm { display: grid; grid-template-columns: 52px 1fr 1fr; gap: 6px; width: 100%; max-width: 420px; font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 24px; font-variant-numeric: tabular-nums; }
+  .gridm { display: grid; grid-template-columns: 52px 1fr 1fr; gap: 6px; width: 100%; max-width: 420px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 24px; font-variant-numeric: tabular-nums; }
   .gridm div { padding: 10px; border-radius: 10px; text-align: center; }
   .gridm .hd { background: var(--teal-soft); color: var(--teal); } .gridm .side { background: var(--accent-soft); color: var(--accent); }
   .gridm .cell { background: var(--cell); min-height: 56px; display: grid; place-items: center; color: var(--muted); }
@@ -162,7 +162,7 @@
   .working { display: grid; gap: 8px; width: 100%; max-width: 580px; }
   .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 9px 14px; border-radius: 12px; background: var(--teal-soft); font-variant-numeric: tabular-nums; }
   .working .line.total { background: var(--accent-soft); }
-  .working .line .k { font-family: "Fredoka", sans-serif; font-weight: 600; }
+  .working .line .k { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
   .working .line .v b { color: var(--accent); }
   .working .line.hidden { display: none; }
 
@@ -179,9 +179,9 @@
   .rect { display: grid; gap: 2px; padding: 6px; border-radius: 8px; background: var(--card); border: 2px solid var(--line); }
   .rect i { width: 9px; height: 9px; background: var(--plum); border-radius: 1px; }
   .rect.sel { border-color: var(--accent); background: var(--accent-soft); }
-  .rectlab { text-align: center; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 15px; margin-top: 4px; }
+  .rectlab { text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 15px; margin-top: 4px; }
   .skip { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; width: 100%; max-width: 620px; }
-  .skip span { padding: 6px 0; border-radius: 8px; background: var(--cell); text-align: center; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .skip span { padding: 6px 0; border-radius: 8px; background: var(--cell); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
   .skip span.on { background: var(--accent); color: var(--accent-ink); }
 
   /* hundred square */
@@ -192,16 +192,16 @@
   .forms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 420px; }
   .form { padding: 10px 8px; border-radius: 12px; background: var(--teal-soft); text-align: center; }
   .form .lab { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
-  .form .val { font-family: "Fredoka", sans-serif; font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .form .val { font-family: "Inter", "Segoe UI", sans-serif; font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
   .frac { display: inline-flex; flex-direction: column; align-items: center; line-height: 1.05; vertical-align: middle; }
   .frac span:first-child { border-bottom: 2px solid currentColor; padding: 0 4px; }
 
   /* fraction bar */
   .fracbar { display: flex; width: 100%; max-width: 520px; height: 64px; border-radius: 12px; overflow: hidden; border: 3px solid var(--ink); }
-  .fracbar button { flex: 1; border: 0; border-right: 3px solid var(--ink); background: var(--card); font-family: "Fredoka", sans-serif; font-size: 16px; font-weight: 700; color: var(--muted); padding: 0; }
+  .fracbar button { flex: 1; border: 0; border-right: 3px solid var(--ink); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; font-weight: 700; color: var(--muted); padding: 0; }
   .fracbar button:last-child { border-right: 0; }
   .fracbar button.a { background: var(--accent); color: var(--accent-ink); } .fracbar button.b { background: var(--teal); color: #fff; }
-  .fraction { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 34px; display: inline-flex; flex-direction: column; align-items: center; line-height: 1; vertical-align: middle; margin: 0 6px; }
+  .fraction { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; display: inline-flex; flex-direction: column; align-items: center; line-height: 1; vertical-align: middle; margin: 0 6px; }
   .fraction span:first-child { border-bottom: 3px solid currentColor; padding: 0 6px; }
 
   /* perimeter and area */
@@ -216,7 +216,7 @@
   .angle .arm.move { stroke: var(--accent); }
   .angle .wedge { fill: var(--accent); opacity: 0.25; }
   .angle .sq { fill: none; stroke: var(--teal); stroke-width: 3; }
-  .angle .deg { font-family: "Fredoka", sans-serif; font-weight: 700; font-size: 18px; fill: var(--ink); }
+  .angle .deg { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 18px; fill: var(--ink); }
 
   /* coordinates */
   .coords { width: 100%; max-width: 320px; display: block; }
@@ -230,7 +230,7 @@
   .coords .guide { stroke: var(--teal); stroke-width: 2; stroke-dasharray: 4 3; }
 
   .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
-  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Fredoka", sans-serif; font-weight: 600; font-size: 17px; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 17px; }
   .sticker.got { background: var(--good-soft); border-color: var(--good); }
   .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
   .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
@@ -308,7 +308,7 @@
     text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
   .gdots { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; justify-items: center; }
   .gdots i { display: block; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
-  .gnum { font-family: "Fredoka", sans-serif; font-size: 26px; font-weight: 600; color: var(--teal); line-height: 1.1; }
+  .gnum { font-family: "Inter", "Segoe UI", sans-serif; font-size: 26px; font-weight: 600; color: var(--teal); line-height: 1.1; }
   .tlines { margin-top: 14px; }
 
   /* slide 2 — the clock face and its two readouts */
@@ -317,7 +317,7 @@
   .clock .face { fill: var(--card); stroke: var(--line); stroke-width: 3; }
   .clock .tick { stroke: var(--line); stroke-width: 1.5; }
   .clock .tick.big { stroke: var(--muted); stroke-width: 3; }
-  .clock .cnum { font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600;
+  .clock .cnum { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; font-weight: 600;
     fill: var(--muted); text-anchor: middle; }
   .clock .hand { stroke-linecap: round; }
   .clock .hand.hour { stroke: var(--ink); stroke-width: 7; }
@@ -327,7 +327,7 @@
   .read { background: var(--cell); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
   .rlab { display: block; font-size: 11px; font-weight: 700; letter-spacing: .08em;
     text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
-  .read b { font-family: "Fredoka", sans-serif; font-size: 26px; font-weight: 600;
+  .read b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 26px; font-weight: 600;
     color: var(--ink); font-variant-numeric: tabular-nums; }
 
   /* slide 3 — the timetable */

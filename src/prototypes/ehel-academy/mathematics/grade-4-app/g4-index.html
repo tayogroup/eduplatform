@@ -1,0 +1,258 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 4 Mathematics</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /*        Grade 4 Mathematics - the way in. Built on the Grade 2 index, which was built
+       on Grade 1's, so moving up a year reads as continuity rather than a jump: same
+       ground, same card, same gold Start.
+
+       SIX lessons rather than Grade 2's nine, and that is not a smaller course. Stage
+       4 carries 46 objectives against Stage 2's 48; what changed is the grain. Five of
+       these were written strand by strand to close the gaps a Cambridge audit found,
+       and the sixth - Four Digits Strong - is the lesson they were derived from and
+       still carries eleven steps across the whole stage.
+
+       The MARK COLOUR is doing the same work it does at Grade 2: cards sharing a
+       colour share a strand, so a learner scanning for "the fractions one" has a
+       second cue besides the words.
+  
+  */
+  :root {
+    --ground-a: #183B56;
+    --ground-b: #24556B;
+    --card: rgba(20, 43, 62, 0.88);
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #A4B7C8;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--ground-a); }
+  body {
+    margin: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* a fixed ground, so 135 degrees stays 135 degrees however long the page */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, var(--ground-a) 0%, var(--ground-b) 100%);
+  }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; margin: 0; line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 64px; }
+
+  header { padding: 8px 4px 26px; }
+  .eyebrow {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #56D3C6;
+  }
+  h1 { font-size: clamp(32px, 6vw, 52px); font-weight: 800; margin-top: 6px; }
+  h1 em { font-style: normal; color: #56D3C6; }
+  .lede { color: #C8D7E2; max-width: 36em; margin-top: 12px; font-size: 19px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+
+  a.lesson {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    gap: 10px;
+    padding: 22px 22px 18px;
+    border-radius: 26px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    color: inherit;
+    text-decoration: none;
+    transition: transform 140ms ease, border-color 140ms ease;
+  }
+  a.lesson:hover, a.lesson:focus-visible { transform: translateY(-3px); border-color: var(--mark); outline: none; }
+  a.lesson:focus-visible { box-shadow: var(--shadow), 0 0 0 3px var(--mark); }
+  a.lesson:active { transform: translateY(0); }
+
+  .mark {
+    width: 62px; height: 62px;
+    border-radius: 20px;
+    display: grid; place-items: center;
+    background: var(--mark);
+    color: #06231F;
+  }
+  .mark svg { width: 34px; height: 34px; display: block; }
+
+  .strand {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--mark);
+  }
+  /* Two lines reserved for every title, so a one-line name and a two-line name
+     start their blurb on the same baseline and the row reads as one object. */
+  a.lesson h2 { font-size: 27px; font-weight: 800; min-height: 2.16em; }
+  .covers { color: #C8D7E2; font-size: 17px; }
+  .foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-top: 6px; padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .steps {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .go {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 16px; font-weight: 800;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #2A1F05;
+    box-shadow: 0 4px 0 var(--gold-press);
+  }
+  a.lesson:active .go { transform: translateY(2px); box-shadow: 0 2px 0 var(--gold-press); }
+
+  /* one colour per strand, SHARED by the lessons that belong together */
+  .c-number  { --mark: #35BFB2; }   /* number and money      */
+  .c-frac    { --mark: #4FD1A0; }   /* fractions             */
+  .c-pattern { --mark: #F4C95D; }   /* patterns              */
+  .c-shape   { --mark: #E9744F; }   /* shape and position    */
+  .c-measure { --mark: #7FC4E8; }   /* measurement and time  */
+  .c-data    { --mark: #B78BD1; }   /* statistics and chance */
+
+  .note {
+    margin-top: 28px;
+    padding: 16px 18px;
+    border-radius: 16px;
+    background: rgba(244, 201, 93, 0.10);
+    border-left: 4px solid var(--gold);
+    color: #C8D7E2;
+    font-size: 16px;
+    max-width: 46em;
+  }
+  .note b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; color: var(--ink); }
+  .note + .note { margin-top: 12px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    a.lesson { transition: none; }
+    a.lesson:hover, a.lesson:focus-visible { transform: none; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
+    <h1>Grade 4 <em>Mathematics</em></h1>
+    <p class="lede">Six lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind.</p>
+  </header>
+
+  <div class="grid">
+
+        <a class="lesson c-number" href="four-digits-strong.html?from=g4">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2.5" y="6" width="19" height="12" rx="2"></rect><path d="M7 6v12M12 6v12M17 6v12"></path>
+        </svg>
+      </span>
+      <span class="strand">Number</span>
+      <h2>Four Digits Strong</h2>
+      <p class="covers">The whole of Stage 4 in one lesson: numbers to 10,000 and below zero, rounding, multiplying with the grid, dividing by grouping, factor pairs, tenths and hundredths, adding fractions, perimeter and area, angles, and coordinates.</p>
+      <p class="go">11 steps <span aria-hidden="true">&rarr;</span></p>
+    </a>
+    <a class="lesson c-number" href="numbers-and-behaviour.html?from=g4">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2.5" y="6" width="19" height="12" rx="2"></rect><path d="M7 6v12M12 6v12M17 6v12"></path>
+        </svg>
+      </span>
+      <span class="strand">Number</span>
+      <h2>Numbers and How They Behave</h2>
+      <p class="covers">How numbers behave. Read and write them in words, odd and even and what adding them does, a shape standing for an unknown, sequences and square numbers, estimating, the tables and the associative property, divisibility, ten times and a hundred times, and ordering below zero.</p>
+      <p class="go">10 steps <span aria-hidden="true">&rarr;</span></p>
+    </a>
+    <a class="lesson c-frac" href="parts-of-a-whole.html?from=g4">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle><path d="M12 3v18M3 12h18"></path>
+        </svg>
+      </span>
+      <span class="strand">Fractions</span>
+      <h2>Parts of a Whole</h2>
+      <p class="covers">More parts means smaller parts. A fraction as a division, a fraction of an amount, equivalence, per cent, comparing, and adding and taking away with the same bottom number.</p>
+      <p class="go">7 steps <span aria-hidden="true">&rarr;</span></p>
+    </a>
+    <a class="lesson c-measure" href="telling-the-time.html?from=g4">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>
+        </svg>
+      </span>
+      <span class="strand">Time</span>
+      <h2>Telling the Time</h2>
+      <p class="covers">Units of time and how to convert them, one moment written three ways, reading a timetable, and working out how long something takes.</p>
+      <p class="go">4 steps <span aria-hidden="true">&rarr;</span></p>
+    </a>
+    <a class="lesson c-shape" href="shape-space-place.html?from=g4">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l9 16H3z"></path>
+        </svg>
+      </span>
+      <span class="strand">Shape and space</span>
+      <h2>Shape, Space and Place</h2>
+      <p class="covers">The faces of a solid and the nets that fold into one, every line of symmetry, reflecting in a mirror line, tessellation, area without counting, estimating an odd shape on a grid, reading between the marks, and which way from here.</p>
+      <p class="go">9 steps <span aria-hidden="true">&rarr;</span></p>
+    </a>
+    <a class="lesson c-data" href="asking-sorting-chance.html?from=g4">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 20V10M10 20V4M16 20v-7M22 20h-20"></path>
+        </svg>
+      </span>
+      <span class="strand">Statistics and probability</span>
+      <h2>Asking, Sorting and Chance</h2>
+      <p class="covers">Plan a question worth asking, tally it, show the same data three ways, sort it two ways at once, compare two classes, then put events on a line from impossible to certain and spin a spinner a thousand times.</p>
+      <p class="go">7 steps <span aria-hidden="true">&rarr;</span></p>
+    </a>
+
+
+    <p class="note"><b>For the grown-up.</b> These six lessons cover all 46 objectives of Cambridge Primary Mathematics Stage 4 &mdash; number, fractions and percentages, time, geometry and measure, position, and statistics and probability. Cards that share a colour share a strand.</p>
+
+  <p class="note"><b>Every step ends with a question.</b> A slider that only moves cannot tell a learner they have understood, so each teaching step finishes with one question that can come back <i>not quite</i>, and a fresh one on request.</p>
+</div>
+
+  </div>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>

@@ -17,7 +17,7 @@
     } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
   })();
 </script>
-<title>Shape, Space and Place</title>
+<title>Four Digits Strong</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
 
@@ -290,68 +290,6 @@
   }
 
 
-  /* ---------- Shape, Space and Place: only what the shared lesson CSS lacks ---------- */
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
-  .chip { padding: 8px 13px; border-radius: 999px; border: 1.5px solid var(--line);
-    background: var(--card); color: var(--ink); font-weight: 700; font-size: 14px; }
-  .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
-  .qstem { font-size: 18px; font-weight: 700; margin: 10px 0 6px; }
-
-  /* 1 — solids and their faces */
-  .solidrow { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin: 10px 0 4px; }
-  .solid { width: 140px; height: 140px; flex: 0 0 auto; }
-  .solid .f1 { fill: var(--teal); }
-  .solid .f2 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 1.5; }
-  .solid .f3 { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
-  .faceset { display: flex; flex-wrap: wrap; gap: 8px; }
-  .facechip { display: grid; place-items: center; gap: 2px; min-width: 74px; padding: 8px 6px;
-    border: 1.5px solid var(--line); border-radius: 12px; background: var(--ground); }
-  .facechip svg { width: 34px; height: 34px; }
-  .facechip svg rect, .facechip svg polygon, .facechip svg circle { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
-  .facechip svg path { fill: none; stroke: var(--accent); stroke-width: 3; }
-  .facechip b { font-family: "Fredoka", sans-serif; font-size: 18px; font-weight: 600; }
-  .facechip span { font-size: 10.5px; color: var(--muted); font-weight: 700; text-align: center; }
-
-  /* 2 — nets */
-  .net { width: 100%; max-width: 260px; display: block; margin: 6px auto 10px; }
-  .net rect, .net polygon, .net circle { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
-
-  /* 3 — symmetry */
-  .symbox { width: 100%; max-width: 210px; display: block; margin: 8px auto; }
-  .symbox .shape { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2.5; }
-  .symbox .mirror { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 8 5; }
-
-  /* 4, 6, 7, 9 — square grids */
-  .grid8 { width: 100%; max-width: 270px; display: block; margin: 8px auto; }
-  .grid8 .cell { fill: var(--card); stroke: var(--line); stroke-width: 1; }
-  .grid8 .orig { fill: var(--teal); opacity: .85; }
-  .grid8 .mine { fill: var(--accent); opacity: .85; }
-  .grid8 .fillA { fill: var(--teal); opacity: .8; }
-  .grid8 .fillB { fill: var(--accent); opacity: .38; }
-  .grid8 .mir { stroke: var(--accent); stroke-width: 3.5; stroke-dasharray: 7 5; }
-  .grid8 .blobline { fill: none; stroke: var(--ink); stroke-width: 2.5; }
-  .grid8 .here { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
-  .grid8 .there { fill: none; stroke: var(--teal); stroke-width: 3.5; }
-  .grid8 .compass { font: 700 13px Inter, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
-
-  /* 5 — tiling */
-  .tile { width: 100%; max-width: 260px; display: block; margin: 8px auto; }
-  .tile .t1 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
-  .tile .t2 { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
-
-  /* 8 — the scale */
-  .scaleimg { width: 100%; max-width: 260px; display: block; margin: 6px auto 0; }
-  .scaleimg .axis8 { stroke: var(--ink); stroke-width: 2.5; }
-  .scaleimg .big8 { stroke: var(--ink); stroke-width: 2.5; }
-  .scaleimg .small8 { stroke: var(--muted); stroke-width: 1.4; }
-  .scaleimg .lab8 { font: 700 11px Inter, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
-  .scaleimg .ptr { fill: var(--accent); }
-  .scaleimg .val8 { font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600;
-    fill: var(--accent); text-anchor: middle; }
-
-  /* 9 — compass buttons */
-  .choice.dir { min-width: 54px; font-family: "Fredoka", sans-serif; font-size: 17px; font-weight: 600; }
-
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -450,6 +388,7 @@
 </style>
 
 
+
 <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
@@ -458,14 +397,14 @@
     <span class="eh-track"><i id="ehFill"></i></span>
   </div>
   <div class="eh-b1right">
-    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="four-digits-strong.html">Four Digits Strong</option><option value="numbers-and-behaviour.html">Numbers and How They Behave</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-space-place.html" selected>Shape, Space and Place</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="four-digits-strong.html" selected>Four Digits Strong</option><option value="numbers-and-behaviour.html">Numbers and How They Behave</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-space-place.html">Shape, Space and Place</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
     <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
   </div>
 </header>
 <nav class="eh-bar2" aria-label="Lesson">
   <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
   <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
-  <span class="eh-section">Shape, Space and Place</span>
+  <span class="eh-section">Four Digits Strong</span>
   <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
 </nav>
 <div class="eh-steps" id="ehSteps" hidden></div>
@@ -473,171 +412,182 @@
   <header class="hero">
     <div>
       <p class="eyebrow">Mathematics · Grade 4</p>
-      <h1>Shape, Space <em>and Place</em></h1>
+      <h1>Four Digits <em>Strong</em></h1>
     </div>
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
   <div class="deck" id="deck">
-
-    <!-- 1 faces of a solid -->
-    <section class="slide" data-say="Every flat face of a solid is a two dimensional shape you already know.">
-      <div class="slide-head"><span class="n">1</span><h2>The faces of a solid</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Every flat <b>face</b> of a solid is a 2D shape you already know. Pick a solid and take it apart.</span></div>
+    <!-- 1 thousands -->
+    <section class="slide" data-say="Ten hundreds make a thousand. Build a number with thousands, hundreds, tens and ones.">
+      <div class="slide-head"><span class="n">1</span><h2>Numbers to 10,000</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Ten hundreds make a <b>thousand</b>, a big cube. Build the number you are asked for.</span></div>
       <div class="stage">
-        <div class="chips" id="pickSolid"></div>
-        <div class="solidrow">
-          <svg class="solid" id="solid1" viewBox="0 0 140 140" role="img" aria-label="The solid"></svg>
-          <div class="faceset" id="faces1" aria-hidden="true"></div>
-        </div>
-        <div class="working" id="work1"></div>
+        <div class="blocks" id="blocks1"></div>
+        <div class="bignum" id="num1"></div>
+        <div class="word" id="word1"></div>
+        <div class="pv"><div class="thou"><div class="lab">thousands</div><div class="val" id="k1"></div></div><div class="hund"><div class="lab">hundreds</div><div class="val" id="h1"></div></div><div class="tens"><div class="lab">tens</div><div class="val" id="t1"></div></div><div class="ones"><div class="lab">ones</div><div class="val" id="o1"></div></div></div>
+        <div class="bigbtns"><button type="button" class="big gold small" data-d="1000">+1000</button><button type="button" class="big gold small ghost" data-d="-1000">−1000</button><button type="button" class="big plum small" data-d="100">+100</button><button type="button" class="big small ghost" data-d="-100">−100</button><button type="button" class="big teal small" data-d="10">+10</button><button type="button" class="big small ghost" data-d="-10">−10</button><button type="button" class="big small" data-d="1">+1</button><button type="button" class="big small ghost" data-d="-1">−1</button></div>
         <p class="fb" id="fb1"></p>
-        <p class="fb small-fb" id="task1"></p>
-        <div class="askwrap" id="ask1"></div>
+        <p class="fb small-fb" id="find1"></p>
       </div>
     </section>
 
-    <!-- 2 nets -->
-    <section class="slide" data-say="A net is a solid opened out flat. Fold it up in your head and see what it makes.">
-      <div class="slide-head"><span class="n">2</span><h2>Fold it up: nets</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">A <b>net</b> is a solid opened out flat. Fold it up in your head. What does it make?</span></div>
+    <!-- 2 negative numbers -->
+    <section class="slide" data-say="The thermometer goes below zero. Count down through zero into the negative numbers.">
+      <div class="slide-head"><span class="n">2</span><h2>Below zero</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Temperatures can go <b>below zero</b>. Count down through 0 into the <b>negative</b> numbers.</span></div>
       <div class="stage">
-        <svg class="net" id="net2" viewBox="0 0 260 200" role="img" aria-label="A net"></svg>
-        <div class="choices" id="netpick"></div>
-        <div class="working" id="work2"></div>
+        <div class="thermo"><div class="scale" id="scale2"></div><div class="tube" id="tube2"><div class="zero" id="zero2"></div><div class="merc" id="merc2"></div></div><div><div class="tempnum" id="temp2"></div><div class="bigbtns" style="flex-direction:column"><button type="button" class="big small" id="warm2">warmer +1</button><button type="button" class="big small teal" id="cold2">colder −1</button></div></div></div>
         <p class="fb" id="fb2"></p>
         <p class="fb small-fb" id="task2"></p>
       </div>
     </section>
 
-    <!-- 3 symmetry -->
-    <section class="slide" data-say="Test each line in turn. If folding along it makes the two halves match exactly, it is a line of symmetry.">
-      <div class="slide-head"><span class="n">3</span><h2>Every line of symmetry</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Test each line. If folding along it makes the halves match <b>exactly</b>, it is a line of symmetry. Find <b>all</b> of them.</span></div>
+    <!-- 3 rounding -->
+    <section class="slide" data-say="Round to the nearest ten, hundred or thousand. Which is nearer? Tap it.">
+      <div class="slide-head"><span class="n">3</span><h2>Round to 10, 100 and 1000</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Which is nearer? Tap it.</span></div>
       <div class="stage">
-        <div class="chips" id="pickSym"></div>
-        <svg class="symbox" id="sym3" viewBox="0 0 200 200" role="img" aria-label="A shape with lines to test"></svg>
-        <div class="choices" id="lines3"></div>
-        <div class="working" id="work3"></div>
+        <div class="bignum" id="num3"></div>
+        <div class="nline" id="nl3"></div>
+        <div class="choices" id="ch3"></div>
         <p class="fb" id="fb3"></p>
-        <p class="fb small-fb" id="task3"></p>
+        <p class="fb small-fb" id="score3"></p>
       </div>
     </section>
 
-    <!-- 4 reflection -->
-    <section class="slide" data-say="Every square of the shape has a partner the same distance on the other side of the mirror line.">
-      <div class="slide-head"><span class="n">4</span><h2>Reflect it in the mirror</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Each square has a partner the <b>same distance</b> on the other side of the mirror line. Tap the squares to build the reflection.</span></div>
+    <!-- 4 grid method -->
+    <section class="slide" data-say="Multiply a two-digit number with the grid method. Split it into tens and ones, multiply each part, then add.">
+      <div class="slide-head"><span class="n">4</span><h2>Multiply with the grid</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Split the big number into <b>tens</b> and <b>ones</b>. Multiply each part, then <b>add</b> the two answers.</span></div>
       <div class="stage">
-        <div class="chips" id="pickRef"></div>
-        <svg class="grid8" id="ref4" viewBox="0 0 260 260" role="img" aria-label="A grid with a shape and a mirror line"></svg>
-        <div class="bigbtns">
-          <button type="button" class="big small ghost" id="clear4">Clear</button>
-          <button type="button" class="big small teal" id="show4">Show me</button>
-        </div>
+        <div class="bignum" id="mul4" style="font-size:clamp(32px,7vw,52px)"></div>
+        <div class="area" id="area4"></div>
+        <div class="gridm" id="grid4"></div>
+        <div class="working" id="work4"></div>
+        <div class="bigbtns"><button type="button" class="big teal small" id="step4">Show the next part</button></div>
+        <div class="choices" id="ch4"></div>
         <p class="fb" id="fb4"></p>
-        <p class="fb small-fb" id="task4"></p>
-        <div class="askwrap" id="ask4"></div>
+        <p class="fb small-fb" id="score4"></p>
       </div>
     </section>
 
-    <!-- 5 combining and tessellating -->
-    <section class="slide" data-say="Put shapes together and you make new ones. Some shapes tile a floor with no gaps at all.">
-      <div class="slide-head"><span class="n">5</span><h2>Putting shapes together</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Join shapes and you make new ones. Some shapes <b>tessellate</b> — they tile a floor with no gaps at all.</span></div>
+    <!-- 5 division with remainder -->
+    <section class="slide" data-say="Divide by taking out groups. Keep taking groups until there are not enough left for another one.">
+      <div class="slide-head"><span class="n">5</span><h2>Divide by taking groups</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Take out <b>groups</b> until there are not enough left for another. What is left is the <b>remainder</b>.</span></div>
       <div class="stage">
-        <div class="chips" id="pickTile"></div>
-        <svg class="tile" id="tile5" viewBox="0 0 260 180" role="img" aria-label="Shapes fitted together"></svg>
-        <div class="working" id="work5"></div>
+        <div class="bignum" id="div5" style="font-size:clamp(32px,7vw,52px)"></div>
+        <div class="dots-pool" id="pool5"></div>
+        <div class="groups" id="groups5"></div>
+        <div class="bigbtns"><button type="button" class="big" id="take5">Take a group</button><button type="button" class="big small teal" id="next5" hidden>Next one</button></div>
         <p class="fb" id="fb5"></p>
-        <p class="fb small-fb" id="task5"></p>
-        <div class="askwrap" id="ask5"></div>
+        <p class="fb small-fb" id="score5"></p>
       </div>
     </section>
 
-    <!-- 6 rectangles, formulae and compound shapes -->
-    <section class="slide" data-say="Count the squares once, then find the rule that gives the same answer without counting.">
-      <div class="slide-head"><span class="n">6</span><h2>Area without counting</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Count the squares once. Then find the <b>rule</b> that gives the same answer every time without counting.</span></div>
+    <!-- 6 tables 6 7 9 + factors -->
+    <section class="slide" data-say="The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.">
+      <div class="slide-head"><span class="n">6</span><h2>6s, 7s, 9s and factor pairs</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Every rectangle you can make from a number shows a <b>factor pair</b>. Pick a number to see all of them.</span></div>
       <div class="stage">
-        <div class="chips" id="pickArea"></div>
-        <label class="lab" for="w6">Width <span id="wLab6">5</span> · height <span id="hLab6">3</span></label>
-        <input type="range" id="w6" min="1" max="8" value="5" step="1">
-        <input type="range" id="h6" min="1" max="6" value="3" step="1">
-        <svg class="grid8" id="area6" viewBox="0 0 260 210" role="img" aria-label="A shape drawn on squared paper"></svg>
+        <div class="bigbtns" id="nums6"></div>
+        <div class="rects" id="rects6"></div>
         <div class="working" id="work6"></div>
+        <div class="choices" id="ch6"></div>
         <p class="fb" id="fb6"></p>
-        <p class="fb small-fb" id="task6"></p>
-        <div class="askwrap" id="ask6"></div>
+        <p class="fb small-fb" id="score6"></p>
       </div>
     </section>
 
-    <!-- 7 irregular area -->
-    <section class="slide" data-say="An odd shape has no rule. Count the whole squares, then pair up the part squares.">
-      <div class="slide-head"><span class="n">7</span><h2>An odd shape on a grid</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">An odd shape has no formula. Count the <b>whole</b> squares, then treat each <b>part</b> square as about a half.</span></div>
+    <!-- 7 tenths and hundredths -->
+    <section class="slide" data-say="The square is cut into one hundred parts. Each part is one hundredth. Ten of them make one tenth.">
+      <div class="slide-head"><span class="n">7</span><h2>Tenths and hundredths</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">100 little squares. Each is one <b>hundredth</b>, 0.01. A whole row is one <b>tenth</b>, 0.1. Tap to shade.</span></div>
       <div class="stage">
-        <svg class="grid8" id="blob7" viewBox="0 0 260 260" role="img" aria-label="An irregular shape on squared paper"></svg>
-        <div class="working" id="work7"></div>
-        <div class="bigbtns"><button type="button" class="big small ghost" id="new7">A different shape</button></div>
+        <div class="hgrid" id="hgrid7"></div>
+        <div class="forms"><div class="form"><div class="lab">Shaded</div><div class="val" id="cnt7"></div></div><div class="form"><div class="lab">Fraction</div><div class="val" id="fr7"></div></div><div class="form"><div class="lab">Decimal</div><div class="val" id="dc7"></div></div></div>
         <p class="fb" id="fb7"></p>
-        <p class="fb small-fb" id="task7"></p>
-        <div class="askwrap" id="ask7"></div>
+        <div class="choices" id="ch7"></div>
+        <p class="fb small-fb" id="score7"></p>
       </div>
     </section>
 
-    <!-- 8 scales -->
-    <section class="slide" data-say="When the pointer sits between two marks, the fraction of the way tells you the reading.">
-      <div class="slide-head"><span class="n">8</span><h2>Reading between the marks</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">When the pointer sits <b>between</b> two marks, the fraction of the way across tells you the reading.</span></div>
+    <!-- 8 add fractions -->
+    <section class="slide" data-say="Add fractions with the same bottom number. Shade the first, then the second, and count the parts.">
+      <div class="slide-head"><span class="n">8</span><h2>Adding fractions</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Same bottom number, so just <b>count the parts</b>. Tap to shade the second fraction.</span></div>
       <div class="stage">
-        <div class="chips" id="pickScale"></div>
-        <svg class="scaleimg" id="scale8" viewBox="0 0 260 150" role="img" aria-label="A measuring scale"></svg>
-        <label class="lab" for="pos8">Move the pointer</label>
-        <input type="range" id="pos8" min="0" max="16" value="10" step="1">
-        <div class="working" id="work8"></div>
+        <div class="bignum" id="sum8" style="font-size:clamp(26px,6vw,44px)"></div>
+        <div class="fracbar" id="bar8"></div>
         <p class="fb" id="fb8"></p>
-        <p class="fb small-fb" id="task8"></p>
-        <div class="askwrap" id="ask8"></div>
+        <div class="choices" id="ch8"></div>
+        <p class="fb small-fb" id="score8"></p>
       </div>
     </section>
 
-    <!-- 9 direction -->
-    <section class="slide" data-say="North, east, south and west, and the four in between. Follow the instructions and see where you land.">
-      <div class="slide-head"><span class="n">9</span><h2>Which way from here?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Four <b>cardinal</b> points, and four <b>ordinal</b> ones in between. Follow the instruction and see where you land.</span></div>
+    <!-- 9 perimeter and area -->
+    <section class="slide" data-say="Area is the squares inside. Perimeter is the distance all the way round the edge.">
+      <div class="slide-head"><span class="n">9</span><h2>Perimeter and area</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9"><b>Area</b> is the squares inside. <b>Perimeter</b> is the distance all the way round the edge.</span></div>
       <div class="stage">
-        <svg class="grid8" id="map9" viewBox="0 0 260 260" role="img" aria-label="A map grid with a compass"></svg>
-        <p class="qstem" id="order9"></p>
-        <div class="choices" id="dirs9"></div>
+        <div class="shape" id="shape9"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="wMinus">− wide</button><button type="button" class="big small teal" id="wPlus">+ wide</button><button type="button" class="big small ghost" id="hMinus">− tall</button><button type="button" class="big small" id="hPlus">+ tall</button></div>
         <div class="working" id="work9"></div>
+        <div class="choices" id="ch9"></div>
         <p class="fb" id="fb9"></p>
-        <p class="fb small-fb" id="task9"></p>
+        <p class="fb small-fb" id="score9"></p>
       </div>
     </section>
 
-    <!-- 10 check -->
-    <section class="slide" data-say="Show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
+    <!-- 10 angles -->
+    <section class="slide" data-say="Turn the arm. A square corner is a right angle. Smaller is acute. Bigger is obtuse.">
+      <div class="slide-head"><span class="n">10</span><h2>Acute, right or obtuse?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">A square corner is a <b>right angle</b>, 90°. Smaller is <b>acute</b>. Bigger is <b>obtuse</b>. Turn the arm.</span></div>
       <div class="stage">
-        <p class="qstem" id="stem10"></p>
-        <div class="choices" id="choices10"></div>
+        <svg class="angle" id="angle10" viewBox="0 0 260 200" aria-hidden="true"></svg>
+        <input type="range" id="deg10" min="10" max="170" step="5" value="45" style="width:100%;max-width:320px;accent-color:var(--accent)">
+        <p class="fb" id="name10"></p>
+        <div class="choices" id="ch10"></div>
         <p class="fb" id="fb10"></p>
         <p class="fb small-fb" id="score10"></p>
       </div>
     </section>
 
-    <!-- 11 stickers -->
-    <section class="slide" data-say="Every step you finished earned a sticker.">
-      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Every step you finished earned a sticker.</span></div>
+    <!-- 11 coordinates -->
+    <section class="slide" data-say="Coordinates. Go along the bottom first, then up. Tap the point I ask for.">
+      <div class="slide-head"><span class="n">11</span><h2>Coordinates</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Go <b>along</b> first, then <b>up</b>. Tap the point.</span></div>
       <div class="stage">
-        <div class="stickers" id="stickers"></div>
-        <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
+        <svg class="coords" id="coords11" viewBox="0 0 260 260" role="img" aria-label="Coordinate grid"></svg>
+        <p class="fb" id="fb11"></p>
+        <p class="fb small-fb" id="score11"></p>
       </div>
     </section>
 
+    <!-- 12 check -->
+    <section class="slide" data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="fb" id="q12" style="font-size:24px"></p>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12"></p>
+        <p class="fb small-fb" id="score12"></p>
+      </div>
+    </section>
+
+    <!-- 13 stickers -->
+    <section class="slide" data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fb13"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
+      </div>
+    </section>
   </div>
 
   <div class="foot">
@@ -646,6 +596,7 @@
     <button type="button" class="big small" id="next">Next ▶</button>
   </div>
 </div>
+
 
 <script>
 
@@ -1441,679 +1392,350 @@
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + (l.hidden ? " hidden" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
-
-  /* ---- "your turn": one question per teaching slide that the child can get wrong ----
-     A slider or a variant chip changes what is displayed; it never disagrees with the
-     learner. Cambridge's verbs for Stage 4 are estimate, recognise, read, record and
-     understand, and a demonstration evidences none of them -- the child has to commit
-     to an answer and be told. make() returns a fresh {stem, opts, ans, why} each time,
-     so "Another one" is real practice rather than the same item again.
-     Draws its own markup, so a slide needs only <div class="askwrap" id="askN"></div>. */
-
-  /* Three distinct options with the right one among them. Generators pass their
-     preferred distractors first; duplicates are dropped rather than shown, because
-     two identical buttons make a question unanswerable rather than merely hard. */
-  function pick3(correct, cands) {
-    const out = [correct];
-    (cands || []).forEach((c) => {
-      if (out.length < 3 && Number.isFinite(c) && out.indexOf(c) < 0) out.push(c);
-    });
-    let bump = 1;
-    while (out.length < 3) { if (out.indexOf(correct + bump) < 0) out.push(correct + bump); bump++; }
-    return shuffle(out);
-  }
-
-  function ask(n, make) {
-    const box = $("ask" + n);
-    if (!box) return;
-    box.innerHTML =
-      '<p class="asklab">Your turn</p><p class="qstem"></p><div class="choices"></div>' +
-      '<p class="fb"></p><button type="button" class="big small ghost askmore">Another one</button>';
-    const stem = box.querySelector(".qstem"), opts = box.querySelector(".choices"),
-          fb = box.querySelector(".fb");
-    let q = null, locked = false;
-    function draw() {
-      stem.innerHTML = q.stem;
-      opts.innerHTML = q.opts.map((o, i) => {
-        const plain = String(o).replace(/<[^>]*>/g, "");
-        return '<button type="button" class="choice' + (plain.length > 4 ? " word" : "") +
-          '" data-i="' + i + '">' + o + "</button>";
-      }).join("");
-    }
-    function fresh() { q = make(); locked = false; fb.textContent = ""; fb.className = "fb"; draw(); }
-    opts.addEventListener("click", (e) => {
-      const b = e.target.closest("button[data-i]"); if (!b || locked) return;
-      locked = true;
-      const i = Number(b.dataset.i), ok = i === q.ans;
-      opts.querySelectorAll(".choice")[q.ans].classList.add("right");
-      if (!ok) b.classList.add("wrong");
-      fb.innerHTML = (ok ? "Yes. " : "Not quite. ") + q.why;
-      fb.className = "fb " + (ok ? "good" : "bad");
-      say(fb.textContent.replace(/\s+/g, " "));
-      if (ok) finish(n - 1, "");
-    });
-    box.querySelector(".askmore").addEventListener("click", fresh);
-    fresh();
-  }
-
   function nline(el, lo, hi, marks, labelEvery, tick) {
     const x = (v) => "calc(14px + " + ((v - lo) / (hi - lo)) + " * (100% - 28px))"; let h = '<div class="bar"></div>';
     for (let v = lo; v <= hi; v += tick) { const big = (v - lo) % labelEvery === 0; h += '<div class="t' + (big ? " mid" : "") + '" style="left:' + x(v) + '"></div>'; if (big) h += '<div class="l big" style="left:' + x(v) + '">' + fmt(v) + "</div>"; }
     (marks || []).forEach((m) => { h += '<div class="m" style="left:' + x(m) + '"></div>'; }); el.innerHTML = h;
   }
 
-    /* ---- 1: the 2D faces of a 3D solid (4Gg.05) ---- */
-  const SOLIDS = [
-    { name: "Cube", faces: [[6, "square"]], e: 12, v: 8, curved: 0,
-      draw: '<path class="f1" d="M35,50 L85,50 L85,100 L35,100 Z"></path><path class="f2" d="M35,50 L55,32 L105,32 L85,50 Z"></path><path class="f3" d="M85,50 L105,32 L105,82 L85,100 Z"></path>' },
-    { name: "Cuboid", faces: [[6, "rectangle"]], e: 12, v: 8, curved: 0,
-      draw: '<path class="f1" d="M28,55 L96,55 L96,95 L28,95 Z"></path><path class="f2" d="M28,55 L48,37 L116,37 L96,55 Z"></path><path class="f3" d="M96,55 L116,37 L116,77 L96,95 Z"></path>' },
-    { name: "Square-based pyramid", faces: [[1, "square"], [4, "triangle"]], e: 8, v: 5, curved: 0,
-      /* base parallelogram first, then the two visible slanting faces on top of it */
-      draw: '<path class="f1" d="M25,110 L85,110 L115,88 L55,88 Z"></path><path class="f2" d="M25,110 L85,110 L72,26 Z"></path><path class="f3" d="M85,110 L115,88 L72,26 Z"></path>' },
-    { name: "Triangular prism", faces: [[2, "triangle"], [3, "rectangle"]], e: 9, v: 6, curved: 0,
-      draw: '<path class="f1" d="M30,100 L82,100 L56,52 Z"></path><path class="f2" d="M30,100 L50,82 L102,82 L82,100 Z"></path><path class="f3" d="M82,100 L102,82 L76,34 L56,52 Z"></path>' },
-    { name: "Cylinder", faces: [[2, "circle"]], e: 2, v: 0, curved: 1,
-      draw: '<path class="f3" d="M38,45 L38,100 A32,12 0 0,0 102,100 L102,45 Z"></path><ellipse class="f1" cx="70" cy="45" rx="32" ry="12"></ellipse>' },
-    { name: "Cone", faces: [[1, "circle"]], e: 1, v: 1, curved: 1,
-      draw: '<path class="f3" d="M38,105 A32,12 0 0,0 102,105 L70,32 Z"></path><ellipse class="f1" cx="70" cy="105" rx="32" ry="12"></ellipse>' },
-  ];
-  const FACE2D = {
-    square: '<svg viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28"></rect></svg>',
-    rectangle: '<svg viewBox="0 0 40 40"><rect x="3" y="10" width="34" height="20"></rect></svg>',
-    triangle: '<svg viewBox="0 0 40 40"><polygon points="20,6 36,34 4,34"></polygon></svg>',
-    circle: '<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15"></circle></svg>',
-  };
-  let s1 = 0;
-  const seen1 = new Set([0]);
-  $("pickSolid").innerHTML = SOLIDS.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
-    '" data-i="' + i + '">' + s.name + "</button>").join("");
+  /* ---- 1: thousands ---- */
+  let n1 = 2345, finds1 = shuffle([4072, 6805, 1350, 9218, 3007]).slice(0, 3), found1 = 0;
   function paint1() {
-    const S = SOLIDS[s1];
-    $("solid1").innerHTML = S.draw;
-    $("faces1").innerHTML = S.faces.map((f) =>
-      '<div class="facechip">' + FACE2D[f[1]] + "<b>" + f[0] + "</b><span>" + f[1] + (f[0] > 1 ? "s" : "") + "</span></div>").join("") +
-      (S.curved ? '<div class="facechip curved"><svg viewBox="0 0 40 40"><path d="M8,32 Q20,4 32,32"></path></svg><b>1</b><span>curved surface</span></div>' : "");
-    const flat = S.faces.reduce((a, f) => a + f[0], 0);
-    lines($("work1"), [
-      { k: "Flat faces", v: "<b>" + flat + "</b>" + (S.curved ? ", and 1 curved surface that is not flat" : "") },
-      { k: "Their shapes", v: S.faces.map((f) => f[0] + " " + f[1] + (f[0] > 1 ? "s" : "")).join(" and ") },
-      { k: "Edges", v: "<b>" + S.e + "</b> — where two faces meet" },
-      { k: "Vertices", v: "<b>" + S.v + "</b> — where the edges meet", total: true },
-    ]);
-    $("fb1").innerHTML = "A " + S.name.toLowerCase() + " has <b>" + flat + "</b> flat face" + (flat === 1 ? "" : "s") + ".";
-    seen1.add(s1);
-    $("task1").textContent = "Solids opened up: " + seen1.size + " of " + SOLIDS.length;
-    if (seen1.size >= 4) finish(0, "");
+    const k = Math.floor(n1 / 1000), h = Math.floor((n1 % 1000) / 100), t = Math.floor((n1 % 100) / 10), o = n1 % 10;
+    $("blocks1").innerHTML = '<div class="cubes">' + '<div class="cube"></div>'.repeat(k) + '</div><div class="flats">' + '<div class="flat"></div>'.repeat(h) + '</div><div class="rods">' + '<div class="rod"></div>'.repeat(t) + '</div><div class="units">' + '<div class="unit"></div>'.repeat(o) + "</div>";
+    $("num1").innerHTML = '<span class="k">' + k + '</span>,<span class="h">' + h + '</span><span class="t">' + t + '</span><span class="o">' + o + "</span>";
+    $("word1").textContent = words(n1); $("k1").textContent = k; $("h1").textContent = h; $("t1").textContent = t; $("o1").textContent = o;
+    document.querySelectorAll('#deck [data-d]').forEach((b) => { const d = Number(b.dataset.d); b.disabled = n1 + d < 1000 || n1 + d > 9999; });
+    if (found1 < 3 && n1 === finds1[found1]) { found1++; $("fb1").className = "fb good"; $("fb1").textContent = cheer() + " " + fmt(n1) + " = " + [k * 1000, h * 100, t * 10, o].filter(Boolean).map(fmt).join(" + ") + "."; say(cheer() + " " + words(n1)); if (found1 === 3) finish(0, "You built all three numbers!"); }
+    else { $("fb1").className = "fb"; $("fb1").textContent = ""; }
+    $("find1").textContent = found1 < 3 ? "Build " + fmt(finds1[found1]) + "." : "You built all three!";
   }
-  $("pickSolid").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    s1 = Number(b.dataset.i);
-    [...$("pickSolid").children].forEach((c, i) => c.classList.toggle("on", i === s1));
-    paint1(); say(SOLIDS[s1].name);
-  });
+  document.querySelectorAll('#deck [data-d]').forEach((b) => b.addEventListener("click", () => { n1 += Number(b.dataset.d); paint1(); say(words(n1)); }));
   paint1();
 
-  /* ---- 2: nets (4Gg.06) ---- */
-  const NETS = shuffle([
-    { a: "Cube", why: "Six squares in a cross fold up into a cube.",
-      d: '<rect x="70" y="20" width="40" height="40"></rect><rect x="30" y="60" width="40" height="40"></rect><rect x="70" y="60" width="40" height="40"></rect><rect x="110" y="60" width="40" height="40"></rect><rect x="150" y="60" width="40" height="40"></rect><rect x="70" y="100" width="40" height="40"></rect>' },
-    { a: "Square-based pyramid", why: "A square with a triangle on each side folds up to a point.",
-      d: '<rect x="90" y="70" width="50" height="50"></rect><polygon points="90,70 140,70 115,25"></polygon><polygon points="90,120 140,120 115,165"></polygon><polygon points="90,70 90,120 45,95"></polygon><polygon points="140,70 140,120 185,95"></polygon>' },
-    { a: "Triangular prism", why: "Three rectangles in a row with a triangle at each end folds into a prism.",
-      d: '<rect x="60" y="55" width="45" height="34"></rect><rect x="60" y="89" width="45" height="34"></rect><rect x="60" y="123" width="45" height="34"></rect><polygon points="60,89 105,89 82,52"></polygon><polygon points="60,123 105,123 82,160"></polygon>' },
-    { a: "Cylinder", why: "A rectangle rolls into the tube, and the two circles are the ends.",
-      d: '<rect x="80" y="60" width="100" height="50"></rect><circle cx="130" cy="42" r="17"></circle><circle cx="130" cy="128" r="17"></circle>' },
-  ]);
-  const NETOPTS = ["Cube", "Square-based pyramid", "Triangular prism", "Cylinder", "Cone"];
-  let n2 = 0, right2 = 0, lock2 = false;
+  /* ---- 2: negative numbers ---- */
+  let temp2 = 3, tasks2 = [{ from: 3, to: -2 }, { from: -4, to: 1 }, { from: 2, to: -5 }], ti2 = 0;
+  const T_MIN = -10, T_MAX = 10;
+  $("scale2").innerHTML = Array.from({ length: 11 }, (_, i) => { const v = T_MAX - i * 2; return '<span class="' + (v === 0 ? "z" : v < 0 ? "neg" : "") + '" style="top:' + ((T_MAX - v) / (T_MAX - T_MIN) * 100) + '%">' + (v > 0 ? "" : "") + v + "°</span>"; }).join("");
+  $("zero2").style.top = ((T_MAX - 0) / (T_MAX - T_MIN) * 100) + "%";
   function paint2() {
-    lock2 = false;
-    $("fb2").textContent = ""; $("fb2").className = "fb";
-    $("work2").innerHTML = "";
-    if (n2 >= NETS.length) {
-      $("net2").innerHTML = "";
-      $("netpick").innerHTML = "";
-      $("task2").textContent = right2 + " of " + NETS.length + " right.";
-      if (right2 >= 3) finish(1, "");
-      return;
-    }
-    $("net2").innerHTML = NETS[n2].d;
-    const opts = shuffle([NETS[n2].a].concat(shuffle(NETOPTS.filter((o) => o !== NETS[n2].a)).slice(0, 2)));
-    $("netpick").innerHTML = opts.map((o) => '<button type="button" class="choice" data-a="' + o + '">' + o + "</button>").join("");
-    $("task2").textContent = "Net " + (n2 + 1) + " of " + NETS.length + " · " + right2 + " right";
+    const pct = (temp2 - T_MIN) / (T_MAX - T_MIN) * 100;
+    $("merc2").style.height = pct + "%"; $("merc2").className = "merc" + (temp2 < 0 ? " cold" : "");
+    $("temp2").textContent = (temp2 < 0 ? "−" + (-temp2) : String(temp2)) + "°C"; $("temp2").className = "tempnum " + (temp2 < 0 ? "neg" : "pos");
+    $("warm2").disabled = temp2 >= T_MAX; $("cold2").disabled = temp2 <= T_MIN;
+    const T = tasks2[ti2];
+    if (T) {
+      $("task2").textContent = "It is " + sg(T.from) + "°C. It gets " + (T.to < T.from ? (T.from - T.to) + " degrees colder" : (T.to - T.from) + " degrees warmer") + ". Press until you get there.";
+      if (temp2 === T.to) { $("fb2").className = "fb good"; $("fb2").textContent = cheer() + " " + sg(T.from) + "°C " + (T.to < T.from ? "− " + (T.from - T.to) : "+ " + (T.to - T.from)) + " = " + sg(T.to) + "°C" + (T.to < 0 && T.from > 0 ? ". You went down through zero." : T.to > 0 && T.from < 0 ? ". You came up through zero." : "."); say(cheer() + " " + T.to + " degrees"); ti2++; if (ti2 >= tasks2.length) finish(1, "You can count below zero!"); else setTimeout(() => { temp2 = tasks2[ti2].from; $("fb2").textContent = ""; paint2(); say(tasks2[ti2].from + " degrees. " + $("task2").textContent); }, 2200); }
+      else { $("fb2").className = "fb"; $("fb2").textContent = temp2 < 0 ? "Below zero: minus " + (-temp2) : temp2 === 0 ? "Zero, the line between" : ""; }
+    } else { $("task2").textContent = "All three done."; }
   }
-  $("netpick").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock2) return;
-    lock2 = true;
-    const ok = b.dataset.a === NETS[n2].a;
-    if (ok) right2++;
-    b.classList.add(ok ? "right" : "wrong");
-    $("fb2").textContent = (ok ? cheer() + " " : "It is a " + NETS[n2].a.toLowerCase() + ". ") + NETS[n2].why;
-    $("fb2").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : NETS[n2].why);
-    n2++;
-    setTimeout(paint2, 2600);
-  });
+  $("warm2").addEventListener("click", () => { if (temp2 < T_MAX) { temp2++; paint2(); say(temp2 < 0 ? "minus " + (-temp2) : String(temp2)); } });
+  $("cold2").addEventListener("click", () => { if (temp2 > T_MIN) { temp2--; paint2(); say(temp2 < 0 ? "minus " + (-temp2) : String(temp2)); } });
   paint2();
 
-  /* ---- 3: every line of symmetry (4Gg.07) ---- */
-  /* only shapes whose COMPLETE set of mirror lines is among these four are used, so
-     "find all of them" is an honest instruction */
-  const SYM = [
-    { name: "Square", ok: ["H", "V", "D1", "D2"], d: "M50,50 L150,50 L150,150 L50,150 Z" },
-    { name: "Rectangle", ok: ["H", "V"], d: "M30,65 L170,65 L170,135 L30,135 Z" },
-    { name: "Diamond", ok: ["H", "V"], d: "M100,30 L165,100 L100,170 L35,100 Z" },
-    { name: "Isosceles triangle", ok: ["V"], d: "M100,35 L160,155 L40,155 Z" },
-    { name: "Parallelogram", ok: [], d: "M45,135 L85,65 L175,65 L135,135 Z" },
-    { name: "Plus", ok: ["H", "V", "D1", "D2"], d: "M75,40 L125,40 L125,75 L160,75 L160,125 L125,125 L125,160 L75,160 L75,125 L40,125 L40,75 L75,75 Z" },
-  ];
-  const LINES = { H: ["Horizontal", "M20,100 L180,100"], V: ["Vertical", "M100,20 L100,180"],
-    D1: ["Diagonal ⟋", "M28,172 L172,28"], D2: ["Diagonal ⟍", "M28,28 L172,172"] };
-  let sy3 = 0, found3 = [], tried3 = [];
-  $("pickSym").innerHTML = SYM.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
-    '" data-i="' + i + '">' + s.name + "</button>").join("");
-  function paint3() {
-    const S = SYM[sy3];
-    let g = '<path class="shape" d="' + S.d + '"></path>';
-    found3.forEach((k) => { g += '<path class="mirror" d="' + LINES[k][1] + '"></path>'; });
-    $("sym3").innerHTML = g;
-    $("lines3").innerHTML = Object.keys(LINES).map((k) =>
-      '<button type="button" class="choice' + (found3.indexOf(k) >= 0 ? " right" : tried3.indexOf(k) >= 0 ? " wrong" : "") +
-      '" data-k="' + k + '">' + LINES[k][0] + "</button>").join("");
-    lines($("work3"), [
-      { k: "Testing", v: S.name.toLowerCase() },
-      { k: "Lines found", v: "<b>" + found3.length + "</b> of the " + S.ok.length + " it has" },
-      { k: "How to test one", v: "fold along it; if the two halves land exactly on each other it is a line of symmetry" },
-      { k: found3.length === S.ok.length ? "All found" : "Keep going",
-        v: found3.length === S.ok.length
-          ? (S.ok.length === 0 ? "a parallelogram has <b>no</b> lines of symmetry at all" : "<b>" + S.ok.map((k) => LINES[k][0].toLowerCase()).join(", ") + "</b>")
-          : "try the ones you have not tested yet", total: true },
-    ]);
-    $("task3").textContent = S.name + ": " + found3.length + " of " + S.ok.length + " found";
-    if (found3.length === S.ok.length && tried3.length >= 4 - S.ok.length) finish(2, "");
+  /* ---- 3: rounding ---- */
+  let r3 = 0, right3 = 0, lock3 = false, n3 = 0, to3 = 10; const ROUNDS3 = 6;
+  function round3() {
+    lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
+    if (r3 >= ROUNDS3) { $("num3").textContent = ""; $("nl3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You rounded " + right3 + " of " + ROUNDS3 + "!"; finish(2, "You can round to ten, a hundred and a thousand."); return; }
+    to3 = [10, 10, 100, 100, 1000, 1000][r3];
+    do { n3 = rnd(1001, 9899); } while (n3 % to3 === 0 || (n3 % to3) === to3 / 2);
+    const lo = Math.floor(n3 / to3) * to3, hi = lo + to3;
+    $("score3").textContent = "Number " + (r3 + 1) + " of " + ROUNDS3;
+    $("say3").innerHTML = "Round <b>" + fmt(n3) + "</b> to the nearest <b>" + fmt(to3) + "</b>. Which is nearer? Tap it.";
+    $("num3").textContent = fmt(n3); nline($("nl3"), lo, hi, [n3], to3 / 2, to3 / 10);
+    $("ch3").innerHTML = [lo, hi].map((v) => '<button type="button" class="choice" data-v="' + v + '">' + fmt(v) + "</button>").join("");
+    say("Round " + words(n3) + " to the nearest " + words(to3));
   }
-  $("pickSym").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    sy3 = Number(b.dataset.i); found3 = []; tried3 = [];
-    [...$("pickSym").children].forEach((c, i) => c.classList.toggle("on", i === sy3));
-    $("fb3").textContent = ""; $("fb3").className = "fb";
-    paint3(); say(SYM[sy3].name);
+  $("ch3").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock3) return; lock3 = true;
+    const lo = Math.floor(n3 / to3) * to3, hi = lo + to3, rem = n3 - lo, ans = rem >= to3 / 2 ? hi : lo, ok = Number(b.dataset.v) === ans;
+    $("ch3").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right3++;
+    const why = fmt(n3) + " is " + fmt(Math.min(rem, to3 - rem)) + " away from " + fmt(ans) + " but " + fmt(Math.max(rem, to3 - rem)) + " away from " + fmt(ans === hi ? lo : hi) + ". It rounds to " + fmt(ans) + ".";
+    $("fb3").className = "fb " + (ok ? "good" : "bad"); $("fb3").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
+    r3++; setTimeout(round3, 2300);
   });
-  $("lines3").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-k]"); if (!b) return;
-    const k = b.dataset.k;
-    if (found3.indexOf(k) >= 0 || tried3.indexOf(k) >= 0) return;
-    const ok = SYM[sy3].ok.indexOf(k) >= 0;
-    if (ok) found3.push(k); else tried3.push(k);
-    $("fb3").innerHTML = ok ? cheer() + " The " + LINES[k][0].toLowerCase() + " line works."
-      : "Not that one — folding along the " + LINES[k][0].toLowerCase() + " line does not match the halves up.";
-    $("fb3").className = "fb " + (ok ? "good" : "bad");
-    say($("fb3").textContent);
-    paint3();
-  });
-  paint3();
+  round3();
 
-  /* ---- 4: reflecting in a mirror line (4Gp.03) ---- */
-  const REFS = [
-    { name: "Mirror down the middle", axis: "V", at: 4, cells: [[1, 1], [2, 1], [1, 2], [1, 3], [3, 1]] },
-    { name: "Mirror across", axis: "H", at: 4, cells: [[1, 1], [2, 1], [3, 1], [1, 2], [1, 3]] },
-    { name: "Mirror on the shape's edge", axis: "V", at: 4, cells: [[2, 2], [3, 2], [3, 3], [3, 1], [2, 3]] },
-  ];
-  let r4 = 0, placed4 = [];
-  const G = 8, CELL = 30, PAD = 10;
-  $("pickRef").innerHTML = REFS.map((r, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
-    '" data-i="' + i + '">' + r.name + "</button>").join("");
-  const mirrorOf = (c) => {
-    const R = REFS[r4];
-    return R.axis === "V" ? [2 * R.at - c[0], c[1]] : [c[0], 2 * R.at - c[1]];
-  };
-  function want4() { return REFS[r4].cells.map(mirrorOf); }
+  /* ---- 4: grid method ---- */
+  let r4 = 0, right4 = 0, a4 = 0, b4 = 0, stage4 = 0; const ROUNDS4 = 4;
+  function round4() {
+    $("fb4").textContent = ""; $("fb4").className = "fb"; $("ch4").innerHTML = ""; stage4 = 0; $("step4").disabled = false; $("step4").hidden = false;
+    if (r4 >= ROUNDS4) { $("mul4").textContent = ""; $("area4").innerHTML = ""; $("grid4").innerHTML = ""; $("work4").innerHTML = ""; $("step4").hidden = true; $("fb4").className = "fb good"; $("fb4").textContent = "You multiplied " + right4 + " of " + ROUNDS4 + "!"; finish(3, "You can multiply with the grid method."); return; }
+    a4 = rnd(13, 49); b4 = [3, 4, 6, 7, 8, 9][rnd(0, 5)];
+    $("score4").textContent = "Question " + (r4 + 1) + " of " + ROUNDS4; paint4(); say(words(a4) + " times " + words(b4) + ". Press the button to work through the grid.");
+  }
   function paint4() {
-    const R = REFS[r4];
-    let g = "";
-    for (let x = 0; x < G; x++) for (let y = 0; y < G; y++)
-      g += '<rect class="cell" data-x="' + x + '" data-y="' + y + '" x="' + (PAD + x * CELL) + '" y="' + (PAD + y * CELL) +
-        '" width="' + CELL + '" height="' + CELL + '"></rect>';
-    R.cells.forEach((c) => { g += '<rect class="orig" x="' + (PAD + c[0] * CELL) + '" y="' + (PAD + c[1] * CELL) +
-      '" width="' + CELL + '" height="' + CELL + '"></rect>'; });
-    placed4.forEach((c) => { g += '<rect class="mine" x="' + (PAD + c[0] * CELL) + '" y="' + (PAD + c[1] * CELL) +
-      '" width="' + CELL + '" height="' + CELL + '"></rect>'; });
-    g += R.axis === "V"
-      ? '<line class="mir" x1="' + (PAD + R.at * CELL) + '" y1="' + PAD + '" x2="' + (PAD + R.at * CELL) + '" y2="' + (PAD + G * CELL) + '"></line>'
-      : '<line class="mir" x1="' + PAD + '" y1="' + (PAD + R.at * CELL) + '" x2="' + (PAD + G * CELL) + '" y2="' + (PAD + R.at * CELL) + '"></line>';
-    $("ref4").innerHTML = g;
-    const w = want4();
-    const done = w.every((c) => placed4.some((p) => p[0] === c[0] && p[1] === c[1])) && placed4.length === w.length;
-    $("fb4").innerHTML = done ? cheer() + " Every square has landed opposite its partner."
-      : placed4.length + " of " + w.length + " squares placed.";
-    $("fb4").className = "fb " + (done ? "good" : "");
-    $("task4").textContent = R.axis === "V" ? "The mirror runs top to bottom, so left and right swap over."
-      : "The mirror runs left to right, so up and down swap over.";
-    if (done) finish(3, "");
+    const T = Math.floor(a4 / 10) * 10, O = a4 % 10, p1 = T * b4, p2 = O * b4, ans = a4 * b4;
+    $("mul4").innerHTML = a4 + ' <span class="t">×</span> ' + b4 + ' <span style="color:var(--muted)">= ?</span>';
+    // shrink the squares so a wide number still fits a phone screen
+    const cell = Math.max(3, Math.min(10, Math.floor(280 / a4) - 2)); // 2px gap per column counts too
+    $("area4").style.setProperty("--cell", cell + "px");
+    $("area4").style.gridTemplateColumns = "repeat(" + a4 + ", " + cell + "px)";
+    $("area4").innerHTML = Array.from({ length: a4 * b4 }, (_, i) => '<i class="' + ((i % a4) < T ? "a" : "b") + '"></i>').join("");
+    $("grid4").innerHTML = '<div></div><div class="hd">' + T + '</div><div class="hd">' + O + '</div><div class="side">× ' + b4 + '</div><div class="cell' + (stage4 >= 1 ? " on" : "") + '">' + (stage4 >= 1 ? p1 : "?") + '</div><div class="cell' + (stage4 >= 2 ? " on" : "") + '">' + (stage4 >= 2 ? p2 : "?") + "</div>";
+    lines($("work4"), [
+      { k: "Split " + a4, v: T + " and " + O },
+      { k: "Tens part", v: T + " × " + b4 + " = <b>" + p1 + "</b>", hidden: stage4 < 1 },
+      { k: "Ones part", v: O + " × " + b4 + " = <b>" + p2 + "</b>", hidden: stage4 < 2 },
+      { k: "Add them", v: p1 + " + " + p2 + " = <b>" + ans + "</b>", total: true, hidden: stage4 < 3 },
+    ]);
+    if (stage4 >= 2 && !$("ch4").children.length) { $("ch4").innerHTML = shuffle([ans, ans + b4, ans - 10]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join(""); $("step4").disabled = true; }
   }
-  $("ref4").addEventListener("click", (e) => {
-    const c = e.target.closest("rect.cell"); if (!c) return;
-    const x = Number(c.dataset.x), y = Number(c.dataset.y);
-    if (REFS[r4].cells.some((o) => o[0] === x && o[1] === y)) return;
-    const i = placed4.findIndex((p) => p[0] === x && p[1] === y);
-    if (i >= 0) placed4.splice(i, 1); else placed4.push([x, y]);
-    paint4();
+  $("step4").addEventListener("click", () => { stage4 = Math.min(2, stage4 + 1); paint4(); const l = [...$("work4").querySelectorAll(".line:not(.hidden)")].pop(); if (l) say(l.textContent); });
+  $("ch4").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ans = a4 * b4, ok = Number(b.dataset.v) === ans;
+    $("ch4").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right4++;
+    stage4 = 3; paint4(); $("mul4").innerHTML = a4 + ' <span class="t">×</span> ' + b4 + " = " + ans;
+    $("fb4").className = "fb " + (ok ? "good" : "bad"); $("fb4").textContent = (ok ? cheer() + " " : "") + a4 + " × " + b4 + " = " + ans + "."; say((ok ? cheer() + " " : "") + a4 + " times " + b4 + " is " + ans);
+    r4++; setTimeout(round4, 2300);
   });
-  $("clear4").addEventListener("click", () => { placed4 = []; paint4(); });
-  $("show4").addEventListener("click", () => { placed4 = want4(); paint4(); say("Each square is the same distance the other side of the line."); });
-  $("pickRef").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    r4 = Number(b.dataset.i); placed4 = [];
-    [...$("pickRef").children].forEach((c, i) => c.classList.toggle("on", i === r4));
-    paint4();
-  });
-  paint4();
+  round4();
 
-  /* ---- 5: combining shapes and tessellation (4Gg.01) ---- */
-  const TILES = [
-    { name: "Two triangles", makes: "a square", tess: true,
-      why: "Two right-angled triangles with the same short sides join along the long side to make a square.",
-      d: '<polygon class="t1" points="60,30 60,110 140,110"></polygon><polygon class="t2" points="60,30 140,30 140,110"></polygon>' },
-    { name: "Two squares", makes: "a rectangle", tess: true,
-      why: "Two squares side by side make a rectangle twice as wide as it is tall.",
-      d: '<rect class="t1" x="50" y="45" width="70" height="70"></rect><rect class="t2" x="120" y="45" width="70" height="70"></rect>' },
-    { name: "Six triangles", makes: "a hexagon", tess: true,
-      why: "Six equilateral triangles round a point make a regular hexagon, and hexagons tile a floor with no gaps.",
-      d: "HEX" },
-    { name: "Circles", makes: "gaps", tess: false,
-      why: "Circles cannot tessellate. However you pack them there are always gaps left between them.",
-      d: "CIRC" },
-  ];
-  let t5 = 0;
-  $("pickTile").innerHTML = TILES.map((t, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
-    '" data-i="' + i + '">' + t.name + "</button>").join("");
+  /* ---- 5: division by grouping ---- */
+  let r5 = 0, n5 = 0, k5 = 0, pool5 = 0, groups5 = 0; const ROUNDS5 = 3;
+  function round5() {
+    $("fb5").textContent = ""; $("fb5").className = "fb"; $("next5").hidden = true; $("take5").hidden = false;
+    if (r5 >= ROUNDS5) { $("div5").textContent = ""; $("pool5").innerHTML = ""; $("groups5").innerHTML = ""; $("take5").hidden = true; $("fb5").className = "fb good"; $("fb5").textContent = "Three divisions done!"; finish(4, "You can divide by taking groups."); return; }
+    k5 = [3, 4, 5, 6, 7, 8, 9][rnd(0, 6)]; n5 = rnd(20, 60); if (n5 % k5 === 0) n5++;
+    pool5 = n5; groups5 = 0; $("score5").textContent = "Question " + (r5 + 1) + " of " + ROUNDS5; $("pool5").className = "dots-pool";
+    $("say5").innerHTML = "<b>" + n5 + " ÷ " + k5 + "</b>. Take out groups of <b>" + k5 + "</b> until fewer than " + k5 + " are left."; paint5(); say(n5 + " divided by " + k5 + ". Take out groups of " + k5 + ".");
+  }
   function paint5() {
-    const T = TILES[t5];
-    let g = T.d;
-    if (T.d === "HEX") {
-      g = "";
-      for (let i = 0; i < 6; i++) {
-        const a0 = i * 60 * Math.PI / 180, a1 = (i + 1) * 60 * Math.PI / 180;
-        g += '<polygon class="' + (i % 2 ? "t1" : "t2") + '" points="130,90 ' +
-          (130 + 58 * Math.cos(a0)).toFixed(1) + "," + (90 + 58 * Math.sin(a0)).toFixed(1) + " " +
-          (130 + 58 * Math.cos(a1)).toFixed(1) + "," + (90 + 58 * Math.sin(a1)).toFixed(1) + '"></polygon>';
-      }
-    } else if (T.d === "CIRC") {
-      g = "";
-      for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++)
-        g += '<circle class="t1" cx="' + (50 + c * 40) + '" cy="' + (45 + r * 40) + '" r="20"></circle>';
-    }
-    $("tile5").innerHTML = g;
-    lines($("work5"), [
-      { k: "Put together", v: T.name.toLowerCase() },
-      { k: "They make", v: "<b>" + T.makes + "</b>" },
-      { k: "Tessellates?", v: T.tess ? "<b>yes</b> — copies fit together leaving no gaps" : "<b>no</b> — gaps are always left over" },
-      { k: "Why", v: T.why, total: true },
-    ]);
-    $("fb5").innerHTML = T.name + " make " + T.makes + ".";
-    $("task5").textContent = "Shapes that tessellate leave no gaps and no overlaps.";
-    if (t5 === TILES.length - 1) finish(4, "");
+    $("pool5").innerHTML = "<i></i>".repeat(pool5);
+    $("groups5").innerHTML = Array.from({ length: groups5 }, () => '<div class="grp">' + "<i></i>".repeat(k5) + "</div>").join("");
+    const doneNow = pool5 < k5, q = Math.floor(n5 / k5), rem = n5 % k5;
+    $("div5").innerHTML = n5 + " ÷ " + k5 + (doneNow ? ' = <span class="t">' + q + '</span> r <span class="o">' + rem + "</span>" : ' <span style="color:var(--muted)">= ?</span>');
+    $("take5").disabled = doneNow;
+    if (doneNow) { $("pool5").className = "dots-pool rem"; $("fb5").className = "fb good"; $("fb5").textContent = cheer() + " " + groups5 + " groups of " + k5 + " is " + groups5 * k5 + ", and " + rem + " left over. " + n5 + " ÷ " + k5 + " = " + q + " r " + rem + "."; say(cheer() + " " + n5 + " divided by " + k5 + " is " + q + " remainder " + rem); $("next5").hidden = false; $("take5").hidden = true; r5++; }
+    else { $("fb5").className = "fb"; $("fb5").textContent = groups5 ? groups5 + " groups so far, " + pool5 + " left" : ""; }
   }
-  $("pickTile").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    t5 = Number(b.dataset.i);
-    [...$("pickTile").children].forEach((c, i) => c.classList.toggle("on", i === t5));
-    paint5(); say(TILES[t5].why);
-  });
-  paint5();
+  $("take5").addEventListener("click", () => { if (pool5 < k5) return; pool5 -= k5; groups5++; paint5(); if (pool5 >= k5) say(groups5 + " groups, " + pool5 + " left"); });
+  $("next5").addEventListener("click", round5);
+  round5();
 
-  /* ---- 6: area and perimeter, formula and compound (4Gg.02, 4Gg.03) ---- */
-  let mode6 = 0, w6 = 5, h6 = 3;
-  $("pickArea").innerHTML = ["One rectangle", "An L shape"].map((m, i) =>
-    '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' + m + "</button>").join("");
+  /* ---- 6: factor pairs and the 6, 7, 9 tables ---- */
+  const NUMS6 = [12, 18, 24, 36, 42, 63];
+  let num6 = 24, quiz6 = null, right6 = 0;
+  function factorPairs(n) { const p = []; for (let a = 1; a * a <= n; a++) if (n % a === 0) p.push([a, n / a]); return p; }
   function paint6() {
-    /* the grid is 7 rows deep and the L's foot needs two rows under the body,
-       so in L mode the body cannot be taller than 5 or the foot is drawn short */
-    const hMax = mode6 === 1 ? 5 : 6;
-    $("h6").max = hMax;
-    if (h6 > hMax) h6 = hMax;
-    $("h6").value = h6;
-    $("wLab6").textContent = w6;
-    $("hLab6").textContent = h6;
-    const C = 26, P = 8;
-    let g = "";
-    for (let x = 0; x < 9; x++) for (let y = 0; y < 7; y++)
-      g += '<rect class="cell" x="' + (P + x * C) + '" y="' + (P + y * C) + '" width="' + C + '" height="' + C + '"></rect>';
-    const inA = (x, y) => x < w6 && y < h6;
-    const inB = (x, y) => inA(x, y) || (x < 2 && y >= h6 && y < h6 + 2);
-    const inside = mode6 === 0 ? inA : inB;
-    for (let x = 0; x < 9; x++) for (let y = 0; y < 7; y++)
-      if (inside(x, y)) g += '<rect class="fillA" x="' + (P + x * C) + '" y="' + (P + y * C) + '" width="' + C + '" height="' + C + '"></rect>';
-    $("area6").innerHTML = g;
-    if (mode6 === 0) {
-      lines($("work6"), [
-        { k: "Count them", v: "<b>" + w6 * h6 + "</b> squares inside" },
-        { k: "The short way", v: "width × height = " + w6 + " × " + h6 + " = <b>" + w6 * h6 + "</b>" },
-        { k: "Area formula", v: "<b>area = length × width</b>, and it works for every rectangle" },
-        { k: "Perimeter", v: "all the way round: 2 × (" + w6 + " + " + h6 + ") = <b>" + 2 * (w6 + h6) + "</b>", total: true },
-      ]);
-      $("fb6").innerHTML = "Area <b>" + w6 * h6 + "</b> squares, perimeter <b>" + 2 * (w6 + h6) + "</b>.";
-    } else {
-      const a = w6 * h6, b = 2 * 2, tot = a + b;
-      lines($("work6"), [
-        { k: "Split it up", v: "an L shape is just two rectangles joined" },
-        { k: "The big one", v: w6 + " × " + h6 + " = <b>" + a + "</b>" },
-        { k: "The small one", v: "2 × 2 = <b>" + b + "</b>" },
-        { k: "Add the areas", v: a + " + " + b + " = <b>" + tot + "</b> squares", total: true },
-      ]);
-      $("fb6").innerHTML = "Two areas added: <b>" + tot + "</b> squares in all.";
-    }
-    $("task6").textContent = mode6 === 0 ? "Change the sides and check the rule still gives the count."
-      : "A compound shape has no single formula — cut it into ones that do.";
-    if (mode6 === 1) finish(5, "");
+    $("nums6").innerHTML = NUMS6.map((n) => '<button type="button" class="big small ' + (n === num6 ? "teal" : "ghost") + '" data-n="' + n + '">' + n + "</button>").join("");
+    const pairs = factorPairs(num6);
+    $("rects6").innerHTML = pairs.map((p) => '<div><div class="rect" style="grid-template-columns:repeat(' + p[1] + ', 9px)">' + "<i></i>".repeat(num6) + '</div><div class="rectlab">' + p[0] + " × " + p[1] + "</div></div>").join("");
+    lines($("work6"), [
+      { k: "Factor pairs of " + num6, v: pairs.map((p) => p[0] + " × " + p[1]).join(", ") },
+      { k: "Factors", v: [...new Set(pairs.flat())].sort((a, b) => a - b).join(", "), total: true },
+    ]);
   }
-  $("pickArea").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    mode6 = Number(b.dataset.i);
-    [...$("pickArea").children].forEach((c, i) => c.classList.toggle("on", i === mode6));
-    paint6(); say($("fb6").textContent);
+  $("nums6").addEventListener("click", (e) => { const b = e.target.closest("[data-n]"); if (!b) return; num6 = Number(b.dataset.n); paint6(); say(num6 + " has " + factorPairs(num6).length + " factor pairs"); });
+  function ask6() {
+    const t = [6, 7, 9][rnd(0, 2)], r = rnd(2, 10), kind = right6 % 3;
+    if (kind === 0) quiz6 = { q: r + " × " + t + " = ?", a: r * t, wrong: [r * t + t, r * t - t], say: r + " times " + t };
+    else if (kind === 1) quiz6 = { q: (r * t) + " ÷ " + t + " = ?", a: r, wrong: [r + 1, r - 1 > 0 ? r - 1 : r + 2], say: (r * t) + " divided by " + t };
+    else { const n = NUMS6[rnd(0, 5)], f = [...new Set(factorPairs(n).flat())], nf = [2, 3, 4, 5, 6, 7, 8, 9].filter((x) => n % x !== 0); quiz6 = { q: "Which is a factor of " + n + "?", a: f[rnd(1, f.length - 2)], wrong: shuffle(nf).slice(0, 2), say: "Which is a factor of " + n + "?" }; }
+    $("say6").innerHTML = "<b>" + quiz6.q + "</b> Tap the answer.";
+    $("ch6").innerHTML = shuffle([quiz6.a, ...quiz6.wrong]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("fb6").textContent = ""; $("fb6").className = "fb"; $("score6").textContent = right6 + " of 4 right so far"; say(quiz6.say);
+  }
+  $("ch6").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === quiz6.a;
+    $("ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === quiz6.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right6++;
+    const n6 = quiz6.q.includes("factor") ? Number(quiz6.q.match(/factor of (\d+)/)[1]) : null;
+    $("fb6").className = "fb " + (ok ? "good" : "bad"); $("fb6").textContent = (ok ? cheer() + " " : "") + (n6 ? quiz6.a + " is a factor of " + n6 + " because " + n6 + " ÷ " + quiz6.a + " = " + (n6 / quiz6.a) + "." : quiz6.q.replace("?", "") + quiz6.a + "."); say((ok ? cheer() + " " : "") + "It is " + quiz6.a);
+    if (right6 >= 4) finish(5, "Tables and factors: well done!"); setTimeout(ask6, 2000);
   });
-  $("w6").addEventListener("input", (e) => { w6 = Number(e.target.value); paint6(); });
-  $("h6").addEventListener("input", (e) => { h6 = Number(e.target.value); paint6(); });
-  paint6();
+  paint6(); ask6();
 
-  /* ---- 7: estimating the area of an irregular shape (4Gg.04) ---- */
-  let blob = null;
-  function newBlob() {
-    const C = 30, N = 8;
-    const cx = 3.5 + (Math.random() - 0.5), cy = 3.5 + (Math.random() - 0.5);
-    const rx = 2.2 + Math.random() * 0.7, ry = 1.8 + Math.random() * 0.7;
-    const wob = 0.35 + Math.random() * 0.3, ph = Math.random() * 6.28;
-    const pts = [];
-    for (let i = 0; i < 40; i++) {
-      const a = (i / 40) * Math.PI * 2;
-      const r = 1 + wob * Math.sin(3 * a + ph);
-      pts.push([cx + rx * r * Math.cos(a), cy + ry * r * Math.sin(a)]);
-    }
-    const insidePt = (px, py) => {
-      let inside = false;
-      for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
-        const xi = pts[i][0], yi = pts[i][1], xj = pts[j][0], yj = pts[j][1];
-        if ((yi > py) !== (yj > py) && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) inside = !inside;
-      }
-      return inside;
-    };
-    let whole = 0, part = 0;
-    const cls = [];
-    for (let x = 0; x < N; x++) for (let y = 0; y < N; y++) {
-      let n = 0;
-      const probe = [[0.15, 0.15], [0.85, 0.15], [0.15, 0.85], [0.85, 0.85], [0.5, 0.5]];
-      probe.forEach((p) => { if (insidePt(x + p[0], y + p[1])) n++; });
-      if (n === probe.length) { whole++; cls.push([x, y, "whole"]); }
-      else if (n > 0) { part++; cls.push([x, y, "part"]); }
-    }
-    return { pts: pts, cells: cls, whole: whole, part: part, C: C };
-  }
+  /* ---- 7: tenths and hundredths ---- */
+  let shaded7 = 35, quiz7 = null, right7 = 0;
+  $("hgrid7").innerHTML = Array.from({ length: 100 }, (_, i) => '<button type="button" data-i="' + i + '" aria-label="square ' + (i + 1) + '"></button>').join("");
   function paint7() {
-    const B = blob, C = B.C, P = 10;
-    let g = "";
-    for (let x = 0; x < 8; x++) for (let y = 0; y < 8; y++)
-      g += '<rect class="cell" x="' + (P + x * C) + '" y="' + (P + y * C) + '" width="' + C + '" height="' + C + '"></rect>';
-    B.cells.forEach((c) => {
-      g += '<rect class="' + (c[2] === "whole" ? "fillA" : "fillB") + '" x="' + (P + c[0] * C) + '" y="' + (P + c[1] * C) +
-        '" width="' + C + '" height="' + C + '"></rect>';
-    });
-    g += '<path class="blobline" d="M' + B.pts.map((p) => (P + p[0] * C).toFixed(1) + "," + (P + p[1] * C).toFixed(1)).join(" L") + ' Z"></path>';
-    $("blob7").innerHTML = g;
-    const est = B.whole + B.part / 2;
-    lines($("work7"), [
-      { k: "Whole squares", v: "<b>" + B.whole + "</b> completely inside" },
-      { k: "Part squares", v: "<b>" + B.part + "</b> only partly inside" },
-      { k: "Count the parts as halves", v: B.part + " ÷ 2 = <b>" + (B.part / 2) + "</b>" },
-      { k: "So the area is about", v: B.whole + " + " + (B.part / 2) + " = <b>" + est + "</b> squares", total: true },
-    ]);
-    $("fb7").innerHTML = "About <b>" + est + "</b> squares. It is an <b>estimate</b> — some part squares hold more than half and some less.";
-    $("task7").textContent = "Dark squares are wholly inside. Pale ones are cut by the edge.";
-    finish(6, "");
+    const tenths = Math.floor(shaded7 / 10), hund = shaded7 % 10;
+    $("hgrid7").querySelectorAll("button").forEach((b, i) => { b.className = i < shaded7 ? (i < tenths * 10 ? "on tenth" : "on") : ""; });
+    $("cnt7").textContent = shaded7 + " of 100";
+    $("fr7").innerHTML = '<span class="frac"><span>' + shaded7 + "</span><span>100</span></span>";
+    $("dc7").textContent = shaded7 === 100 ? "1" : "0." + String(shaded7).padStart(2, "0");
+    $("fb7").className = "fb"; $("fb7").textContent = shaded7 === 100 ? "The whole square: 100 hundredths = 1." : tenths + (tenths === 1 ? " tenth" : " tenths") + " (the full rows) and " + hund + (hund === 1 ? " hundredth" : " hundredths") + " = 0." + String(shaded7).padStart(2, "0") + ".";
   }
-  $("new7").addEventListener("click", () => { blob = newBlob(); paint7(); say($("fb7").textContent); });
-  blob = newBlob(); paint7();
+  $("hgrid7").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; shaded7 = Number(b.dataset.i) + 1; paint7(); say("0 point " + String(shaded7).padStart(2, "0").split("").join(" ")); });
+  function ask7() {
+    const kinds = ["dec", "frac", "tenths"]; const k = kinds[right7 % 3]; const n = rnd(1, 99);
+    if (k === "dec") { const swap = "0." + String(n % 10) + String(Math.floor(n / 10)), other = "0." + String((n + 11) % 100 || 22).padStart(2, "0"); quiz7 = { q: "Which decimal is " + n + "/100?", a: "0." + String(n).padStart(2, "0"), wrong: [swap === "0." + String(n).padStart(2, "0") ? "0." + String((n + 33) % 100).padStart(2, "0") : swap, other] }; }
+    else if (k === "frac") quiz7 = { q: "0." + String(n).padStart(2, "0") + " is how many hundredths?", a: String(n), wrong: [String(n + 10 > 99 ? n - 10 : n + 10), String(Math.floor(n / 10))] };
+    else { const tn = rnd(1, 9); quiz7 = { q: tn + "/10 as a decimal is…", a: "0." + tn, wrong: ["0.0" + tn, tn + ".0"] }; }
+    $("say7").innerHTML = "<b>" + quiz7.q + "</b> Tap the answer.";
+    $("ch7").innerHTML = shuffle([quiz7.a, ...quiz7.wrong.filter((w) => w !== quiz7.a)]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("score7").textContent = right7 + " of 3 right so far"; say(quiz7.q);
+  }
+  $("ch7").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = b.dataset.v === quiz7.a;
+    $("ch7").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === quiz7.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right7++;
+    const m = quiz7.a.match(/^0\.(\d)(\d)?$/); if (m) { shaded7 = Number(m[1]) * 10 + Number(m[2] || 0); } else if (/^\d+$/.test(quiz7.a)) shaded7 = Number(quiz7.a); paint7();
+    $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "") + "It is " + quiz7.a + ". Look at the square."; say((ok ? cheer() + " " : "") + "It is " + quiz7.a);
+    if (right7 >= 3) finish(6, "Tenths and hundredths: well done!"); setTimeout(ask7, 2000);
+  });
+  paint7(); ask7();
 
-  /* ---- 8: reading a scale with fractions (4Gg.09) ---- */
-  const SCALES = [
-    { name: "Measuring jug", unit: "ml", step: 100, marks: 5, sub: 4 },
-    { name: "Kitchen scales", unit: "g", step: 500, marks: 5, sub: 4 },
-    { name: "Thermometer", unit: "°C", step: 10, marks: 5, sub: 2 },
-  ];
-  let sc8 = 0, pos8 = 10;
-  const WORDS8 = { 0: "exactly on", 1: "a quarter past", 2: "halfway past", 3: "three quarters past" };
-  $("pickScale").innerHTML = SCALES.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
-    '" data-i="' + i + '">' + s.name + "</button>").join("");
+  /* ---- 8: adding fractions with the same denominator ---- */
+  let d8 = 8, a8 = 3, b8 = 2, shadedB = 0, right8 = 0, lock8 = false;
+  function newSum8() {
+    d8 = [5, 6, 8, 10][rnd(0, 3)]; a8 = rnd(1, d8 - 2); b8 = rnd(1, d8 - a8 - 1); shadedB = 0; lock8 = false;
+    $("ch8").innerHTML = ""; $("fb8").textContent = ""; $("fb8").className = "fb";
+    $("say8").innerHTML = "<b>" + a8 + "/" + d8 + " + " + b8 + "/" + d8 + "</b>. The first is shaded. Tap <b>" + b8 + "</b> more parts, then tap the answer.";
+    paint8(); say(a8 + " " + ordDen(d8) + " add " + b8 + " " + ordDen(d8) + ". Tap " + b8 + " more parts.");
+  }
+  function ordDen(d) { return { 5: "fifths", 6: "sixths", 8: "eighths", 10: "tenths" }[d]; }
   function paint8() {
-    const S = SCALES[sc8], sub = S.sub, top = (S.marks - 1) * sub;
-    $("pos8").max = top;
-    if (pos8 > top) pos8 = top;
-    $("pos8").value = pos8;
-    const whole = Math.floor(pos8 / sub), rem = pos8 % sub;
-    const value = whole * S.step + (rem / sub) * S.step;
-    let g = '<line class="axis8" x1="30" y1="105" x2="230" y2="105"></line>';
-    for (let m = 0; m < S.marks; m++) {
-      const x = 30 + (m / (S.marks - 1)) * 200;
-      g += '<line class="big8" x1="' + x + '" y1="88" x2="' + x + '" y2="122"></line>';
-      g += '<text class="lab8" x="' + x + '" y="140">' + m * S.step + "</text>";
-      if (m < S.marks - 1) for (let s = 1; s < sub; s++) {
-        const xs = x + (s / sub) * (200 / (S.marks - 1));
-        g += '<line class="small8" x1="' + xs + '" y1="96" x2="' + xs + '" y2="114"></line>';
-      }
-    }
-    const px = 30 + (pos8 / top) * 200;
-    g += '<polygon class="ptr" points="' + px + ',72 ' + (px - 8) + ',54 ' + (px + 8) + ',54"></polygon>';
-    g += '<text class="val8" x="' + Math.min(214, Math.max(46, px)) + '" y="44">' + value + " " + S.unit + "</text>";
-    $("scale8").innerHTML = g;
-    const fracWord = rem === 0 ? "exactly on the mark" :
-      sub === 4 ? (rem === 1 ? "a quarter of the way" : rem === 2 ? "halfway" : "three quarters of the way")
-        : "halfway";
-    lines($("work8"), [
-      { k: "Big marks", v: "every <b>" + S.step + " " + S.unit + "</b>" },
-      { k: "Small marks", v: "each gap is split into <b>" + sub + "</b>, so one small step is " + (S.step / sub) + " " + S.unit },
-      { k: "The pointer", v: "past <b>" + whole * S.step + "</b> and " + fracWord + " to " + (whole + 1) * S.step },
-      { k: "So it reads", v: "<b>" + value + " " + S.unit + "</b>", total: true },
-    ]);
-    $("fb8").innerHTML = "Reading: <b>" + value + " " + S.unit + "</b>.";
-    $("task8").textContent = "Between the marks, the fraction of the gap is the fraction of " + S.step + " " + S.unit + ".";
-    if (pos8 % sub !== 0) finish(7, "");
+    $("sum8").innerHTML = '<span class="fraction" style="color:var(--accent)"><span>' + a8 + "</span><span>" + d8 + '</span></span> + <span class="fraction" style="color:var(--teal)"><span>' + b8 + "</span><span>" + d8 + "</span></span> = ?";
+    $("bar8").innerHTML = Array.from({ length: d8 }, (_, i) => '<button type="button" class="' + (i < a8 ? "a" : i < a8 + shadedB ? "b" : "") + '" data-i="' + i + '">1/' + d8 + "</button>").join("");
+    if (shadedB === b8 && !$("ch8").children.length) {
+      $("fb8").textContent = "Now count all the shaded parts."; const s = a8 + b8;
+      $("ch8").innerHTML = shuffle([s + "/" + d8, s + "/" + (d8 * 2), (s + 1) + "/" + d8]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    } else if (shadedB < b8) $("fb8").textContent = "Tap " + (b8 - shadedB) + " more part" + (b8 - shadedB === 1 ? "" : "s") + ".";
   }
-  $("pickScale").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    sc8 = Number(b.dataset.i);
-    [...$("pickScale").children].forEach((c, i) => c.classList.toggle("on", i === sc8));
-    paint8(); say(SCALES[sc8].name);
+  $("bar8").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || lock8) return; const i = Number(b.dataset.i); if (i < a8) return; if (i === a8 + shadedB && shadedB < b8) shadedB++; else if (i === a8 + shadedB - 1 && shadedB > 0 && !$("ch8").children.length) shadedB--; paint8(); });
+  $("ch8").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock8) return; lock8 = true; const s = a8 + b8, ans = s + "/" + d8, ok = b.dataset.v === ans;
+    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right8++;
+    $("sum8").innerHTML = $("sum8").innerHTML.replace("= ?", '= <span class="fraction"><span>' + s + "</span><span>" + d8 + "</span></span>");
+    $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "") + a8 + " parts + " + b8 + " parts = " + s + " parts. " + a8 + "/" + d8 + " + " + b8 + "/" + d8 + " = " + ans + ". The bottom number stays " + d8 + "."; say((ok ? cheer() + " " : "") + a8 + " " + ordDen(d8) + " add " + b8 + " " + ordDen(d8) + " is " + s + " " + ordDen(d8));
+    $("score8").textContent = right8 + " of 3 right so far"; if (right8 >= 3) finish(7, "Adding fractions: well done!"); setTimeout(newSum8, 2400);
   });
-  $("pos8").addEventListener("input", (e) => { pos8 = Number(e.target.value); paint8(); });
-  paint8();
+  newSum8();
 
-  /* ---- 9: position and direction (4Gp.01) ---- */
-  const DIRS = { N: [0, -1], NE: [1, -1], E: [1, 0], SE: [1, 1], S: [0, 1], SW: [-1, 1], W: [-1, 0], NW: [-1, -1] };
-  const DIRNAME = { N: "north", NE: "north-east", E: "east", SE: "south-east", S: "south", SW: "south-west", W: "west", NW: "north-west" };
-  let from9 = [3, 4], to9 = null, right9 = 0, asked9 = 0, lock9 = false;
-  function newMove() {
-    const keys = Object.keys(DIRS);
-    for (let t = 0; t < 60; t++) {
-      const k = keys[rnd(0, 7)], n = rnd(1, 3);
-      const d = DIRS[k], nx = from9[0] + d[0] * n, ny = from9[1] + d[1] * n;
-      if (nx >= 0 && nx < 8 && ny >= 0 && ny < 8) return { k: k, n: n, to: [nx, ny] };
-    }
-    return { k: "E", n: 1, to: [from9[0] + 1, from9[1]] };
-  }
+  /* ---- 9: perimeter and area ---- */
+  let w9 = 5, h9 = 3, quiz9 = null, right9 = 0;
   function paint9() {
-    const C = 30, P = 10;
-    let g = "";
-    for (let x = 0; x < 8; x++) for (let y = 0; y < 8; y++)
-      g += '<rect class="cell" data-x="' + x + '" data-y="' + y + '" x="' + (P + x * C) + '" y="' + (P + y * C) +
-        '" width="' + C + '" height="' + C + '"></rect>';
-    g += '<circle class="here" cx="' + (P + from9[0] * C + C / 2) + '" cy="' + (P + from9[1] * C + C / 2) + '" r="11"></circle>';
-    if (to9 && to9.shown) g += '<circle class="there" cx="' + (P + to9.to[0] * C + C / 2) + '" cy="' + (P + to9.to[1] * C + C / 2) + '" r="11"></circle>';
-    g += '<text class="compass" x="' + (P + 4 * C) + '" y="' + (P - 1) + '">N</text>';
-    $("map9").innerHTML = g;
-    $("order9").innerHTML = "Move <b>" + to9.n + "</b> square" + (to9.n === 1 ? "" : "s") + " from the dot. Which way lands you on the target?";
-    $("dirs9").innerHTML = Object.keys(DIRS).map((k) => '<button type="button" class="choice dir" data-k="' + k + '">' + k + "</button>").join("");
-    $("task9").textContent = "Answered " + asked9 + " · " + right9 + " right";
-  }
-  function nextMove() { to9 = newMove(); to9.shown = true; lock9 = false; paint9(); }
-  $("dirs9").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-k]"); if (!b || lock9) return;
-    lock9 = true; asked9++;
-    const ok = b.dataset.k === to9.k;
-    if (ok) right9++;
-    b.classList.add(ok ? "right" : "wrong");
+    $("shape9").style.gridTemplateColumns = "repeat(" + w9 + ", auto)";
+    $("shape9").innerHTML = Array.from({ length: w9 * h9 }, (_, i) => { const r = Math.floor(i / w9), c = i % w9, edge = r === 0 || r === h9 - 1 || c === 0 || c === w9 - 1; return '<i class="' + (edge ? "edge" : "") + '">' + (i + 1) + "</i>"; }).join("");
+    $("wMinus").disabled = w9 <= 1; $("wPlus").disabled = w9 >= 10; $("hMinus").disabled = h9 <= 1; $("hPlus").disabled = h9 >= 6;
     lines($("work9"), [
-      { k: "From", v: "column " + from9[0] + ", row " + from9[1] },
-      { k: "To", v: "column " + to9.to[0] + ", row " + to9.to[1] },
-      { k: "That is", v: "<b>" + to9.n + "</b> square" + (to9.n === 1 ? "" : "s") + " <b>" + DIRNAME[to9.k] + "</b>" },
-      { k: "Cardinal or ordinal", v: to9.k.length === 1 ? "north, east, south and west are the <b>cardinal</b> points" : "the in-between ones are the <b>ordinal</b> points", total: true },
+      { k: "Area", v: w9 + " wide × " + h9 + " tall = <b>" + w9 * h9 + "</b> squares" },
+      { k: "Perimeter", v: w9 + " + " + h9 + " + " + w9 + " + " + h9 + " = <b>" + 2 * (w9 + h9) + "</b> around the edge", total: true },
     ]);
-    $("fb9").innerHTML = (ok ? cheer() + " " : "It was " + DIRNAME[to9.k] + ". ") + "North is up the grid.";
-    $("fb9").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : "It was " + DIRNAME[to9.k]);
-    if (right9 >= 3) finish(8, "");
-    setTimeout(() => { from9 = to9.to.slice(); nextMove(); }, 2400);
-  });
-  nextMove();
-
-  /* ---- 10: check ---- */
-  const Q10 = shuffle([
-    { q: "How many flat faces does a square-based pyramid have?", o: ["5", "4", "6"], a: 0, w: "One square base and four triangles round it — five faces in all." },
-    { q: "Which solid has two circular faces and a curved surface?", o: ["A cylinder", "A cone", "A sphere"], a: 0, w: "A cone has only one circular face. A cylinder has one at each end." },
-    { q: "Six squares in a cross fold up into which solid?", o: ["A cube", "A cuboid", "A pyramid"], a: 0, w: "Six identical squares make a cube — every face the same." },
-    { q: "How many lines of symmetry does a rectangle have (not a square)?", o: ["2", "4", "1"], a: 0, w: "One horizontal and one vertical. The diagonals do not work: folding along them does not match the halves." },
-    { q: "A parallelogram has how many lines of symmetry?", o: ["None", "Two", "Four"], a: 0, w: "It looks symmetrical because it has rotational symmetry, but no fold matches the halves up." },
-    { q: "A rectangle is 6 squares wide and 4 tall. What is its area?", o: ["24 squares", "20 squares", "10 squares"], a: 0, w: "Area = length × width, so 6 × 4 = 24." },
-    { q: "The same rectangle, 6 by 4. What is its perimeter?", o: ["20", "24", "10"], a: 0, w: "All the way round: 6 + 4 + 6 + 4, or 2 × (6 + 4) = 20." },
-    { q: "An odd shape covers 9 whole squares and 6 part squares. Roughly what area is that?", o: ["About 12 squares", "About 15 squares", "About 9 squares"], a: 0, w: "Count each part square as about a half: 9 + 3 = about 12." },
-    { q: "A jug is marked every 100 ml with three small marks between. What is one small step?", o: ["25 ml", "50 ml", "33 ml"], a: 0, w: "Three small marks cut the gap into four, so each step is 100 ÷ 4 = 25 ml." },
-    { q: "Which of these is an ordinal point of the compass?", o: ["South-east", "South", "West"], a: 0, w: "North, east, south and west are the cardinal points. The four in between are the ordinal ones." },
-  ]);
-  let c10 = 0, right10 = 0, lock10 = false;
-  function round10() {
-    lock10 = false;
-    $("fb10").textContent = ""; $("fb10").className = "fb";
-    if (c10 >= Q10.length) {
-      $("stem10").textContent = "That is all of them.";
-      $("choices10").innerHTML = "";
-      $("score10").textContent = right10 + " out of " + Q10.length + " right.";
-      if (right10 >= 7) finish(9, "");
-      return;
-    }
-    $("stem10").textContent = Q10[c10].q;
-    const order = shuffle(Q10[c10].o.map((t, i) => ({ t: t, ok: i === Q10[c10].a })));
-    $("choices10").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
-    $("score10").textContent = "Question " + (c10 + 1) + " of " + Q10.length + " · " + right10 + " right";
   }
-  $("choices10").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock10) return;
-    lock10 = true;
-    const ok = b.dataset.ok === "1";
-    if (ok) right10++;
-    b.classList.add(ok ? "right" : "wrong");
-    $("fb10").textContent = (ok ? cheer() + " " : "") + Q10[c10].w;
-    $("fb10").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : Q10[c10].w);
-    c10++;
-    setTimeout(round10, 2400);
+  ["wMinus", "wPlus", "hMinus", "hPlus"].forEach((id) => $(id).addEventListener("click", () => { if (id === "wMinus") w9--; if (id === "wPlus") w9++; if (id === "hMinus") h9--; if (id === "hPlus") h9++; paint9(); say("area " + w9 * h9 + ", perimeter " + 2 * (w9 + h9)); }));
+  function ask9() {
+    const w = rnd(2, 9), h = rnd(2, 6), area = right9 % 2 === 0;
+    quiz9 = { w, h, a: area ? w * h : 2 * (w + h), q: (area ? "What is the AREA" : "What is the PERIMETER") + " of a " + w + " by " + h + " rectangle?", area };
+    $("say9").innerHTML = "<b>" + quiz9.q + "</b> Build it if you like, then tap.";
+    $("ch9").innerHTML = shuffle([quiz9.a, area ? 2 * (w + h) : w * h, quiz9.a + 2]).filter((v, i, arr) => arr.indexOf(v) === i).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("fb9").textContent = ""; $("fb9").className = "fb"; $("score9").textContent = right9 + " of 4 right so far"; say(quiz9.q);
+  }
+  $("ch9").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === quiz9.a;
+    $("ch9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === quiz9.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right9++;
+    w9 = quiz9.w; h9 = quiz9.h; paint9();
+    $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + (quiz9.area ? "Area: " + quiz9.w + " × " + quiz9.h + " = " + quiz9.a + " squares." : "Perimeter: " + quiz9.w + " + " + quiz9.h + " + " + quiz9.w + " + " + quiz9.h + " = " + quiz9.a + "."); say((ok ? cheer() + " " : "") + "It is " + quiz9.a);
+    if (right9 >= 4) finish(8, "Perimeter and area: well done!"); setTimeout(ask9, 2200);
   });
-  round10();
+  paint9(); ask9();
 
-  /* ---- 11: stickers ---- */
-  const STICKERS = [["🧊", "The faces of a solid"], ["📦", "Fold it up: nets"], ["🦋", "Every line of symmetry"],
-    ["🪞", "Reflect it in the mirror"], ["🔷", "Putting shapes together"], ["📐", "Area without counting"],
-    ["🫐", "An odd shape on a grid"], ["🥛", "Reading between the marks"], ["🧭", "Which way from here?"], ["✅", "Show what I know"]];
+  /* ---- 10: angles ---- */
+  let deg10 = 45, quiz10 = null, right10 = 0;
+  const angleName = (d) => d < 90 ? "acute" : d === 90 ? "right" : "obtuse";
+  function drawAngle() {
+    const cx = 40, cy = 160, L = 190, a = (-deg10 * Math.PI) / 180, x = cx + L * Math.cos(a), y = cy + L * Math.sin(a);
+    const r = 60, xs = cx + r, ys = cy, xe = cx + r * Math.cos(a), ye = cy + r * Math.sin(a);
+    let svg = '<path class="wedge" d="M' + cx + "," + cy + " L" + xs + "," + ys + " A" + r + "," + r + " 0 " + (deg10 > 180 ? 1 : 0) + ",0 " + xe.toFixed(1) + "," + ye.toFixed(1) + ' Z"></path>';
+    if (deg10 === 90) svg += '<path class="sq" d="M' + (cx + 22) + "," + cy + " L" + (cx + 22) + "," + (cy - 22) + " L" + cx + "," + (cy - 22) + '"></path>';
+    svg += '<line class="arm" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + L) + '" y2="' + cy + '"></line><line class="arm move" x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '"></line>';
+    svg += '<text class="deg" x="' + (cx + 75) + '" y="' + (cy - 20) + '">' + deg10 + "°</text>";
+    $("angle10").innerHTML = svg;
+    $("name10").className = "fb"; $("name10").textContent = deg10 + "° is " + (deg10 === 90 ? "a right angle, a square corner." : deg10 < 90 ? "acute: smaller than a right angle." : "obtuse: bigger than a right angle.");
+  }
+  $("deg10").addEventListener("input", (e) => { deg10 = Number(e.target.value); drawAngle(); });
+  function ask10() {
+    deg10 = [20, 35, 50, 65, 90, 110, 125, 145, 160][rnd(0, 8)]; $("deg10").value = deg10; drawAngle(); $("name10").textContent = "";
+    quiz10 = angleName(deg10);
+    $("say10").innerHTML = "Look at the angle. Is it <b>acute</b>, <b>right</b> or <b>obtuse</b>? Tap the answer.";
+    $("ch10").innerHTML = ["acute", "right", "obtuse"].map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
+    $("fb10").textContent = ""; $("fb10").className = "fb"; $("score10").textContent = right10 + " of 4 right so far"; say("Acute, right or obtuse?");
+  }
+  $("ch10").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = b.dataset.v === quiz10;
+    $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === quiz10) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right10++;
+    drawAngle(); $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "") + deg10 + "° is " + quiz10 + "."; say((ok ? cheer() + " " : "") + deg10 + " degrees is " + quiz10);
+    if (right10 >= 4) finish(9, "You know your angles!"); setTimeout(ask10, 2000);
+  });
+  drawAngle(); ask10();
+
+  /* ---- 11: coordinates ---- */
+  let target11 = null, right11 = 0, lock11 = false; const N = 8;
+  function drawGrid(marks) {
+    const L = 30, S = 220, step = S / N, X = (x) => L + x * step, Y = (y) => L + S - y * step;
+    let svg = "";
+    for (let i = 0; i <= N; i++) { svg += '<line class="gl" x1="' + X(i) + '" y1="' + Y(0) + '" x2="' + X(i) + '" y2="' + Y(N) + '"></line><line class="gl" x1="' + X(0) + '" y1="' + Y(i) + '" x2="' + X(N) + '" y2="' + Y(i) + '"></line>'; svg += '<text class="lab" x="' + X(i) + '" y="' + (Y(0) + 14) + '">' + i + '</text><text class="lab" x="' + (X(0) - 12) + '" y="' + (Y(i) + 4) + '">' + i + "</text>"; }
+    svg += '<line class="ax" x1="' + X(0) + '" y1="' + Y(0) + '" x2="' + X(N) + '" y2="' + Y(0) + '"></line><line class="ax" x1="' + X(0) + '" y1="' + Y(0) + '" x2="' + X(0) + '" y2="' + Y(N) + '"></line>';
+    (marks || []).forEach((m) => { svg += '<line class="guide" x1="' + X(m.x) + '" y1="' + Y(0) + '" x2="' + X(m.x) + '" y2="' + Y(m.y) + '"></line><line class="guide" x1="' + X(0) + '" y1="' + Y(m.y) + '" x2="' + X(m.x) + '" y2="' + Y(m.y) + '"></line>'; });
+    for (let x = 0; x <= N; x++) for (let y = 0; y <= N; y++) { const m = (marks || []).find((k) => k.x === x && k.y === y); svg += '<circle class="pt' + (m ? " " + m.cls : "") + '" cx="' + X(x) + '" cy="' + Y(y) + '" r="' + (m ? 8 : 5) + '" data-x="' + x + '" data-y="' + y + '" role="button" tabindex="0" aria-label="(' + x + ", " + y + ')"></circle>'; }
+    $("coords11").innerHTML = svg;
+  }
+  function ask11() {
+    lock11 = false; target11 = { x: rnd(1, N), y: rnd(1, N) }; drawGrid([]);
+    $("say11").innerHTML = "Tap the point <b>(" + target11.x + ", " + target11.y + ")</b>. Along " + target11.x + ", then up " + target11.y + ".";
+    $("fb11").textContent = ""; $("fb11").className = "fb"; $("score11").textContent = right11 + " of 4 right so far"; say("Tap the point " + target11.x + ", " + target11.y);
+  }
+  function pick11(el) {
+    if (lock11 || !el) return; lock11 = true; const x = Number(el.dataset.x), y = Number(el.dataset.y), ok = x === target11.x && y === target11.y;
+    drawGrid([{ x: target11.x, y: target11.y, cls: "good" }].concat(ok ? [] : [{ x, y, cls: "oops" }]));
+    if (ok) right11++;
+    $("fb11").className = "fb " + (ok ? "good" : "bad"); $("fb11").textContent = (ok ? cheer() + " " : "You tapped (" + x + ", " + y + "). ") + "(" + target11.x + ", " + target11.y + ") is " + target11.x + " along and " + target11.y + " up."; say((ok ? cheer() : "Not quite.") + " " + target11.x + " along, " + target11.y + " up");
+    if (right11 >= 4) finish(10, "Coordinates: well done!"); setTimeout(ask11, 2200);
+  }
+  $("coords11").addEventListener("click", (e) => pick11(e.target.closest(".pt")));
+  $("coords11").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick11(e.target.closest(".pt")); } });
+  ask11();
+
+  /* ---- 12: check ---- */
+  const CHECK = [
+    { q: "How many hundreds in 4,072?", opts: [0, 4, 7], a: 0 },
+    { q: "It is 3°C. It gets 5 degrees colder. What is the temperature?", opts: ["−2°C", "2°C", "−8°C"], a: "−2°C" },
+    { q: "Round 6,482 to the nearest 1000.", opts: [6000, 7000, 6500], a: 6000 },
+    { q: "23 × 4 = ?", opts: [92, 82, 27], a: 92 },
+    { q: "29 ÷ 6 = ?", opts: ["4 r 5", "4 r 3", "5 r 1"], a: "4 r 5" },
+    { q: "Which is a factor pair of 36?", opts: ["4 × 9", "5 × 7", "3 × 13"], a: "4 × 9" },
+    { q: "0.07 is how many hundredths?", opts: [7, 70, 17], a: 7 },
+    { q: "3/8 + 2/8 = ?", opts: ["5/8", "5/16", "6/8"], a: "5/8" },
+    { q: "Perimeter of a 6 by 2 rectangle?", opts: [16, 12, 8], a: 16 },
+    { q: "An angle of 120° is…", opts: ["obtuse", "acute", "right"], a: "obtuse" },
+    { q: "The point (3, 5) is 3 along and…", opts: ["5 up", "3 up", "5 along"], a: "5 up" },
+  ];
+  let c12 = 0, right12 = 0, lock12 = false;
+  function round12() {
+    lock12 = false; $("fb12").textContent = ""; $("fb12").className = "fb";
+    if (c12 >= CHECK.length) { $("q12").textContent = ""; $("ch12").innerHTML = ""; $("fb12").className = "fb good"; $("fb12").innerHTML = "You got <b>" + right12 + "</b> out of " + CHECK.length + "!"; $("score12").textContent = right12 === CHECK.length ? "Every single one!" : right12 >= 8 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(11, "You got " + right12 + " out of " + CHECK.length + "."); return; }
+    const q = CHECK[c12]; $("score12").textContent = "Question " + (c12 + 1) + " of " + CHECK.length; $("q12").textContent = q.q; $("say12").textContent = q.q;
+    $("ch12").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" && /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
+    say(q.q.replace(/×/g, "times").replace(/÷/g, "divided by").replace(/°/g, " degrees").replace(/\?/g, ""));
+  }
+  $("ch12").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock12) return; lock12 = true; const q = CHECK[c12], ok = String(b.dataset.v) === String(q.a);
+    $("ch12").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right12++;
+    $("fb12").className = "fb " + (ok ? "good" : "bad"); $("fb12").textContent = ok ? cheer() : "It is " + q.a + "."; say(ok ? cheer() : "It is " + q.a);
+    c12++; setTimeout(round12, 1300);
+  });
+  round12();
+
+  /* ---- 13: stickers ---- */
+  const STICKERS = [["🧊", "Numbers to 10,000"], ["🌡️", "Below zero"], ["🎯", "Rounding"], ["▦", "Grid multiplying"], ["🍬", "Dividing with remainders"], ["✖️", "Tables and factors"], ["🟧", "Tenths and hundredths"], ["🍫", "Adding fractions"], ["📐", "Perimeter and area"], ["📏", "Angles"], ["📍", "Coordinates"], ["✅", "Show what I know"]];
   function paintStickers() {
-    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fb13").className = "fb " + (got === STICKERS.length ? "good" : ""); $("fb13").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You are a number star." : got + " of " + STICKERS.length + " stickers so far.";
   }
-  $("again").addEventListener("click", () => { show(0, true); });
+  $("restart").addEventListener("click", () => location.reload());
 
   show(0, false);
-
-  /* ---- your turn: the six slides that only demonstrated ---- */
-  const askShuffle3 = (correct, a, b) => { const o = shuffle([correct, a, b]); return { o: o, i: o.indexOf(correct) }; };
-
-  /* 1 (4Gg.05) counts FACES. Edges and vertices are the distractors because confusing
-     the three is the whole difficulty. Curved solids are left out -- "how many faces"
-     is not a fair question for a cylinder at this stage. */
-  ask(1, () => {
-    const flat = SOLIDS.filter((s) => s.curved === 0);
-    const S1 = flat[rnd(0, flat.length - 1)];
-    const n = S1.faces.reduce((t, f) => t + f[0], 0);
-    const opts = pick3(n, [S1.e, S1.v, n + 2]);
-    return { stem: "How many <b>flat faces</b> does a <b>" + S1.name.toLowerCase() + "</b> have?",
-      opts: opts.map(String), ans: opts.indexOf(n),
-      why: "A " + S1.name.toLowerCase() + " has <b>" + n + " faces</b>, " + S1.e +
-        " edges and " + S1.v + " vertices — faces are the flat surfaces." };
-  });
-
-  /* 4 (4Gp.03) reflection across a vertical mirror: the image is as far the other side.
-     The distractor that keeps the distance but not the side is the error to catch. */
-  ask(4, () => {
-    const mir = rnd(4, 7), d = rnd(1, 3), x = mir - d, img = mir + d;
-    const opts = pick3(img, [x, mir, img + 1]);
-    return { stem: "The mirror line is at <b>" + mir + "</b>. A dot sits at <b>" + x +
-        "</b>. Where is its reflection?",
-      opts: opts.map(String), ans: opts.indexOf(img),
-      why: x + " is " + d + " square" + (d === 1 ? "" : "s") + " left of the line, so the " +
-        "reflection is " + d + " to the right: <b>" + img + "</b>." };
-  });
-
-  /* 5 (4Gg.01) tessellation. The shapes that tile the plane alone are exactly these
-     three regulars; pentagon and circle are the honest counter-examples. */
-  ask(5, () => {
-    const yes = ["equilateral triangle", "square", "regular hexagon"][rnd(0, 2)];
-    const no = shuffle(["regular pentagon", "circle", "regular octagon on its own"]).slice(0, 2);
-    const q = askShuffle3(yes, no[0], no[1]);
-    return { stem: "Which of these <b>tessellates</b> — fits together with no gaps at all?",
-      opts: q.o, ans: q.i,
-      why: "A <b>" + yes + "</b> tessellates: copies of it meet with no gap and no overlap. " +
-        "The others always leave a gap." };
-  });
-
-  /* 6 (4Gg.02, 4Gg.03) area or perimeter of a rectangle, alternating -- and each one
-     offers the OTHER as a distractor, which is the confusion worth testing. */
-  ask(6, () => {
-    const w = rnd(3, 12), h = rnd(2, 9), area = w * h, per = 2 * (w + h);
-    if (rnd(0, 1) === 0) {
-      const opts = pick3(area, [per, w + h, area + w]);
-      return { stem: "A rectangle is <b>" + w + " cm</b> by <b>" + h + " cm</b>. What is its <b>area</b>?",
-        opts: opts.map((v) => v + " cm²"), ans: opts.indexOf(area),
-        why: "Area is length × width: " + w + " × " + h + " = <b>" + area + " cm²</b>." };
-    }
-    const opts = pick3(per, [area, w + h, per + 2]);
-    return { stem: "A rectangle is <b>" + w + " cm</b> by <b>" + h + " cm</b>. What is its <b>perimeter</b>?",
-      opts: opts.map((v) => v + " cm"), ans: opts.indexOf(per),
-      why: "Perimeter is all the way round: " + w + " + " + h + " + " + w + " + " + h +
-        " = <b>" + per + " cm</b>." };
-  });
-
-  /* 7 (4Gg.04) ESTIMATES an irregular area -- the verb Cambridge uses. Part squares
-     count as a half each, so the answer is deliberately not a whole-square count. */
-  ask(7, () => {
-    const whole = rnd(8, 20), part = rnd(2, 5) * 2;      /* even, so the halves are exact */
-    const est = whole + part / 2;
-    const opts = pick3(est, [whole, whole + part, part]);
-    return { stem: "A leaf covers <b>" + whole + " whole squares</b> and <b>" + part +
-        " part squares</b>. What is the best estimate of its area?",
-      opts: opts.map((v) => v + " squares"), ans: opts.indexOf(est),
-      why: "Count each part square as a half: " + whole + " + " + (part / 2) + " = <b>" +
-        est + " squares</b>." };
-  });
-
-  /* 8 (4Gg.09) reads between the marks. Halves and quarters only at this stage. */
-  ask(8, () => {
-    const step = [10, 20, 100][rnd(0, 2)], lo = rnd(1, 6) * step;
-    const f = [[1, 2, "halfway"], [1, 4, "a quarter of the way"], [3, 4, "three quarters of the way"]][rnd(0, 2)];
-    const val = lo + step * f[0] / f[1];
-    const opts = pick3(val, [lo + step, lo, lo + step / 2]);
-    return { stem: "The marks are <b>" + fmt(lo) + "</b> and <b>" + fmt(lo + step) +
-        "</b>. The pointer is <b>" + f[2] + "</b> between them. What does it read?",
-      opts: opts.map(fmt), ans: opts.indexOf(val),
-      why: "The gap is " + fmt(step) + ", and " + f[2] + " along is " +
-        fmt(step * f[0] / f[1]) + " past " + fmt(lo) + ": <b>" + fmt(val) + "</b>." };
-  });
-
 
   /* ================= the two header bars =================
      Everything here is answered by this page. The class controls are not
@@ -2181,6 +1803,7 @@
   })();
 
   })();
+
 </script>
 
 <script>
@@ -2247,7 +1870,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l05",
+      progressUnit: "l01",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -2269,13 +1892,13 @@
           container: drawer.querySelector(".w-drawer-body"),
           meta: {
             subject: "mathematics", subjectLabel: "Mathematics", grade: 4,
-            unitNo: 5, unitTitle: "Shape, Space and Place",
+            unitNo: 1, unitTitle: "Four Digits Strong",
             learnerCategory: q.get("category") || "",
           },
           store: {},
           ui: { escapeHtml, toast },
           tutorLabel: "Wehel Tutor",
-          placeholder: "Ask about Shape, Space and Place\u2026",
+          placeholder: "Ask about Four Digits Strong\u2026",
           quickPrompts: [
             { label: "Explain it simply", message: "Explain this step in a simpler way." },
             { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
@@ -2306,7 +1929,7 @@
   const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
 
   const COURSE = "ehel-math-g04";
-  const UNIT = "l05";
+  const UNIT = "l01";
   const STUDENT = q.get("studentid") || "local";
 
   /* Without a launch endpoint the backend is "local": everything still

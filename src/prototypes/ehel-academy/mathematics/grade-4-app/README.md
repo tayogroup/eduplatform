@@ -13,7 +13,10 @@ records ("the CDN was the only copy"), one step worse.
 
 | | |
 | --- | --- |
-| `telling-the-time.html`, `asking-sorting-chance.html`, `parts-of-a-whole.html`, `shape-space-place.html`, `numbers-and-behaviour.html` | the five built lessons, 37 teaching slides between them |
+| `app.config.json` | the one description of this build — every tool in `../lesson-app-tools` reads it. **Order in `lessons` IS the unit number** |
+| `g4-index.html` | the lesson picker, built by `build-hub.py` on Grade 2's design. Deployed as `index.html` |
+| `four-digits-strong.html` | the donor lesson, reassembled by `build-donor-lesson.py`. Without it the build teaches 35 of the 46 objectives; with it, 46 |
+| `telling-the-time.html`, `asking-sorting-chance.html`, `parts-of-a-whole.html`, `shape-space-place.html`, `numbers-and-behaviour.html` | the five written lessons, 37 teaching slides between them |
 | `{time,stats,frac,shape,num}-{body.html,slides.js,extra.css}` | their sources — the body markup, the slide JS, and the per-lesson CSS |
 | `shell.js` | the shared framework: deck navigation, narration client, `finish`, `lines`, `nline`, `ask`, `pick3` |
 | `g4-lesson.css` | the shared stylesheet every lesson embeds |
@@ -108,30 +111,82 @@ Both were authored into the units in place, for the reason
 work that `build:math` would discard. **The content tier has not been
 re-uploaded, so neither fix has reached a learner yet.**
 
+## The platform layer, and the order it must be built in
+
+This build is wired by the shared toolchain in `../lesson-app-tools`, which reads
+`app.config.json` and hardcodes nothing. Run it **in this order** — each step is
+idempotent and each refuses rather than half-working, but the order is not
+cosmetic (the toolchain README explains why):
+
+```bash
+python build-donor-lesson.py                          # and build-{time,stats,frac,shape,num}-lesson.py
+python build-hub.py                                   # g4-index.html, 6 cards
+python ../lesson-app-tools/wire-navigation.py         # hub links, a way back, launch params
+python ../lesson-app-tools/wire-platform-controls.py  # Class chat, Hand up, Join class, Wehel
+python ../lesson-app-tools/preload-platform.py        # modulepreload + preconnect
+python ../lesson-app-tools/wire-progress.py           # report to the school
+python ../lesson-app-tools/add-header-bars.py         # the two bars, controls into bar 2
+python ../lesson-app-tools/check-lessons.py           # the gate
+node   ../lesson-app-tools/deploy.mjs --app .         # plan; --upload writes
+```
+
+> **A REBUILD DISCARDS THE WIRING.** The wiring tools edit the built HTML in
+> place, so re-running any `build-*-lesson.py` throws all of it away —
+> measured: `progress-client` 1 → 0 and `learner-controls` 3 → 0 in one rebuild.
+> This is the same hazard `build:math` carries and it has no `--force` guard, so
+> the rule is the order above: **build first, wire after, always the whole
+> chain.** `check-lessons.py` does catch it (it reports "does not carry the
+> launch parameters", "no way back", "no class controls", "no Wehel"), which is
+> the only thing standing between a rebuild and a silently unwired release.
+
+The four modules the pages import — `learner-controls.js`, `wehel.js`,
+`course-shell.js`, `progress-client.js` — are **not** in this directory and must
+not be added to it. `deploy.mjs` copies them from `shell/` and `shared/` with
+imports flattened to `./x.js`, exactly as `grade-2-app` does. To exercise the
+pages locally, stage them with `deploy.mjs`'s own flatten and delete them after;
+a hand-written flatten is easy to get wrong (mine produced `from "./"`, and the
+module then resolved to the directory listing).
+
+Measured against the Grade 1 lessons that are live (`../grade-1-app/g1v2`), this
+build now matches: `learner-controls` 3, `mountWehelChat` 2,
+`mountLearnerControls` 2, `modulepreload` 3, `progress-client` 1.
+
+## Progress reporting
+
+Every lesson reports to the school through `shared/progress-client.js`, the same
+write path all six shell subjects use. Verified end to end in a browser:
+completing steps writes `ehel-progress:ehel-math-g04:<student>` with
+`sectionsDone`, `resume` and `xp`, and `resumeLabel` rides beside the id so a
+teacher's board shows the words on the child's own screen rather than `step-03`.
+
+Units are `l01`..`l06` in `app.config.json` order, **not** `u01`..`u18`. Read THE
+UNIT PROBLEM in `wire-progress.py` before changing that: these six are organised
+by strand and the shell course is eighteen term-ordered units, so emitting `uNN`
+would claim curriculum coverage nobody measured.
+
+Without a launch endpoint the backend is `local` — everything still reduces into
+`localStorage` so resume works, and nothing is sent. Opening a lesson as a file
+costs nothing and reports nothing.
+
+**A note on how this section came to exist.** It was planned as the big piece of
+work, on the strength of `../grade-1-app/README.md` saying the standalone path
+"records no progress … the open question for both builds". That was stale: Grade 1
+had already been wired, and `lesson-app-tools/` had already generalised the whole
+thing. The actual work was running an existing toolchain against a config that
+did not exist yet. Read the code before sizing the job.
+
 ## What is missing before this can ship
 
-Measured against the Grade 1 lessons that are live (`../grade-1-app/g1v2`):
+**The routing question, and it is a decision rather than a task.** Grade 1 is
+sent to its standalone build by `pqpg_ehel_app_base()` reading
+`local_prequran/ehel_app_url_overrides`. Nothing here routes anybody: uploading
+makes this reachable by URL and by nobody's course.
 
-| | live Grade 1 | here |
-| --- | --- | --- |
-| `learner-controls` | 3 | **0** |
-| `mountWehelChat` | 2 | **0** |
-| `mountLearnerControls` | 2 | **0** |
-| `top-actions` | 2 | **0** |
-| `modulepreload` | 3 | **0** |
-
-So a learner opening one of these pages today gets **no Wehel tutor, no Class
-chat, no Hand up and no Join class**. Grade 1 adds them with
-`add-platform-controls.py`, `keep-launch-params.py` and `preload-platform.py`;
-those need adapting, not rewriting. There is also no hub index — Grade 1 has
-`build-hub.py` and `g1-index.html`.
-
-**And the routing question is not settled.** Grade 1 is sent to its standalone
-build by `pqpg_ehel_app_base()` reading `local_prequran/ehel_app_url_overrides`.
-Doing the same for Grade 4 would trade an 18-unit course scoring 44/46 that
-**records progress** for five lessons scoring 46/46 that **record none** — the
-standalone path has no gradebook, no group-board position, no study plan. That
-is a decision, not an oversight.
+Doing for Grade 4 what was done for Grade 1 would put these six lessons in front
+of learners instead of the 18-unit shell course. Both now cover all 46 Stage 4
+objectives, so the trade is no longer about curriculum — it is that the shell
+course carries the gradebook, the study plan and the placement exam, and this
+path carries none of those even though it does now report progress.
 
 ## Things that will bite
 

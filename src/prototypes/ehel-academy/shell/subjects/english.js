@@ -331,6 +331,15 @@ const IS_TUTORING = LAUNCH_CLAIMS?.category === "tutoring" || routeParams.get("c
 // reads this array by name and fails if it disagrees with the builder's.
 const STORY_LIBRARY_GRADES = [5, 6, 7, 8];
 const hasStoryLibrary = () => STORY_LIBRARY_GRADES.includes(gradeNumber);
+// Whether THIS unit carries fluency review data. Declared up here for the
+// exact reason the comment above gives: both callers (countableSectionIds
+// and visibleSections) run while this module is still evaluating, and a
+// `const` read from further down is a temporal dead zone ReferenceError that
+// blanks the page. Grade 1 is the only grade authored so far; every other
+// grade has no `fluency` array, so the row and the chain step simply do not
+// exist there - which is what keeps this from locking Grades 2-8 out of
+// their own courses at a step they can never complete.
+const hasFluency = () => Boolean(course?.fluency?.length);
 
 const sections = [
   ["overview", "layout-dashboard", "Overview"],
@@ -365,6 +374,16 @@ const sections = [
   ["speaking", "messages-square", "Speaking"],
   ["writing", "pencil-line", "Writing"],
   ["activities", "shapes", "Activities"],
+  // Consolidation practice on what this unit ALREADY taught - no new words,
+  // no new patterns. Added 2026-09-07 after a volume comparison against
+  // Grade 1 Mathematics: Math carries ~540 items whose whole job is repeated
+  // practice of taught material (workedExamples, practice, fluency) and
+  // English had no equivalent category, only sections that test new
+  // application. Drops out of the nav wherever a unit has no `fluency` data
+  // (visibleSections below), which is every grade except 1 today - the same
+  // way Games and Books already drop out, and for the same reason: an
+  // uncompletable step in the chain shuts the learner out for good.
+  ["fluency", "repeat", "Fluency Practice"],
   ["games", "gamepad-2", "Games"],
   ["quiz", "badge-check", "Quiz"],
   ["ebooks", "library-big", "Books"],
@@ -477,6 +496,7 @@ const SECTION_HINTS = {
   speaking: "Say the sentences out loud. Record yourself if you can, then press the button to finish.",
   writing: "Write your sentences, or draw your picture, then press Submit.",
   activities: "Do each activity, tick off its steps, then press the button to finish.",
+  fluency: "Practise the words and patterns you already learned. Get more than half right to pass. You can try again.",
   games: "Play every game once.",
   quiz: "Answer all the questions. Get more than half right to pass. You can try again.",
   ebooks: "Read or watch one book to the end.",
@@ -726,6 +746,18 @@ const SECTION_GUIDES = {
     ],
     finish: "Press “Finish activities” at the bottom when you have done them all.",
   }),
+  fluency: () => {
+    const total = course.fluency.length;
+    return {
+      steps: [
+        `There are ${total} questions. Nothing here is new — every one reviews a word or a pattern this unit already taught you.`,
+        "Read each one and choose one answer.",
+        "You see your score at the end.",
+        "If your score is not high enough, press “Try again” and do it once more.",
+      ],
+      finish: `Fluency Practice is passed with ${Math.ceil(total * 0.6)} right out of ${total} — more than half.`,
+    };
+  },
   // Two versions, because at Grades 1-4 this describes the Game Park and above
   // it describes the game zone — the same three things to do, in each page's
   // own furniture. A guide that names a control the child cannot see is the
@@ -1109,7 +1141,7 @@ const unitProgressKey = (unit) => `ehel-english-g${gradeNumber}-u${unit}-progres
 // the next unit shut.
 const countableSectionIds = () => sections
   .filter(([id]) => !["overview", "live", "teacherguide", "unit-plan", "story-library", "glossary"].includes(id))
-  .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "book-comprehension" || bookComprehensionQuestions().length))
+  .filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || unitEbooks().length) && (id !== "book-comprehension" || bookComprehensionQuestions().length) && (id !== "fluency" || hasFluency()))
   .map(([id]) => id);
 // The server's view of every unit, handed over by the shell before load() and
 // null on a per-device launch. localStorage alone made this gate a per-device
@@ -1203,7 +1235,7 @@ function unitIsLocked() {
 // it on sight was the alternative and is worthless: Overview is the route the
 // app lands on, so the lecture would unlock before the page had been read.
 // It stays nonCountable, so completing it adds nothing to the unit's 100%.
-const SECTION_CHAIN = ["overview", "lecture", "dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "games", "quiz", "ebooks", "reflect", "final-quiz"];
+const SECTION_CHAIN = ["overview", "lecture", "dictionary", "reading", "comprehension", "grammar", "speaking", "writing", "activities", "fluency", "games", "quiz", "ebooks", "reflect", "final-quiz"];
 // The Grades 1-4 rearrangement (beside the sections table above) lands here
 // too — same ids, same guard — because this chain IS the unlock order and the
 // nav must mirror it, or a moved entry padlocks in the middle of an open
@@ -9626,6 +9658,12 @@ let activeSentence = 0;
 let quizIndex = 0;
 let quizScore = 0;
 let quizLocked = false;
+// Fluency Practice keeps its own three, rather than sharing the quiz's: both
+// are reachable in one visit to a unit, and a shared index would carry one
+// section's position into the other.
+let fluencyIndex = 0;
+let fluencyScore = 0;
+let fluencyLocked = false;
 let finalQuizIndex = 0;
 let placementIndex = 0;
 let activeGameId = null;
@@ -9876,7 +9914,7 @@ function visibleSections() {
   // unit's 100%, which is why those grades' progress bars stopped at 92% and
   // could never read complete. It is also what made the gate unsafe beyond
   // Grade 1: an uncompletable step in the chain shuts the learner out for good.
-  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || shelfEbooks().length) && (id !== "book-comprehension" || bookComprehensionQuestions().length) && (id !== "glossary" || (IS_TUTORING && Object.keys(sentenceGlossary).length)) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "story-library" || hasStoryLibrary()));
+  const available = sections.filter(([id]) => (id !== "games" || gamePack) && (id !== "ebooks" || shelfEbooks().length) && (id !== "book-comprehension" || bookComprehensionQuestions().length) && (id !== "glossary" || (IS_TUTORING && Object.keys(sentenceGlossary).length)) && (id !== "teacherguide" || hasGrownUpGuide()) && (id !== "story-library" || hasStoryLibrary()) && (id !== "fluency" || hasFluency()));
   return unitNumber === 10 ? [...available, ["final-quiz", "trophy", "Final course quiz"]] : available;
 }
 
@@ -14549,6 +14587,67 @@ function drawQuizQuestion(shouldFocus = false) {
   if (shouldFocus) focusDynamicContent(".quiz-question", `Question ${quizIndex + 1} of ${course.quizzes.length}. ${question.question}`);
 }
 
+// FLUENCY PRACTICE — consolidation of what this unit already taught.
+//
+// Modelled on the quiz above, deliberately and almost line for line: same
+// option shape ("a | b | c"), same 60% pass mark, same one-write-to-
+// progress.completed finish. Two differences, both on purpose:
+//
+//   - It never navigates anywhere on Continue. The quiz sends the learner to
+//     My progress because it is the unit's last taught step; this one sits
+//     mid-chain, so it leaves them where they are and lets the nav's own next
+//     step take them on.
+//   - Its questions carry no `audio` field and it draws no Listen button.
+//     Every item is re-drilling a word or pattern the unit already narrated in
+//     Core words and Grammar, so there is nothing here that has not already
+//     been read aloud - and adding one would mean a paid clip run for 150
+//     questions that repeat content already voiced.
+function renderFluency() {
+  fluencyIndex = 0; fluencyScore = 0; fluencyLocked = false;
+  // The status badge is NOT pageHeader's "Approved content" default here, and
+  // must not become it. Every other section on this course carries that badge
+  // because a curriculum reviewer signed the content off; these questions were
+  // generated by tools/author-ehel-english-g1-fluency.py and carry
+  // reviewStatus "Needs curriculum review" in the data. A page claiming
+  // approval its own items disclaim would misrepresent exactly the thing this
+  // school's review process exists to establish. Change it when — and only
+  // when — a reviewer has actually read them and restamped the JSON.
+  $("#app").innerHTML = `${pageHeader("Practise what you know", "Fluency Practice", `Answer ${course.fluency.length} questions about the words and patterns from this unit. Nothing here is new.`, "Practice — pending curriculum review")}<section class="panel quiz-shell" id="fluency-shell"></section>`;
+  drawFluencyQuestion();
+}
+
+function drawFluencyQuestion(shouldFocus = false) {
+  const shell = $("#fluency-shell");
+  const total = course.fluency.length;
+  if (fluencyIndex >= total) {
+    const percent = Math.round((fluencyScore / total) * 100);
+    emitProgress({ type: "checkpoint.result", unit: PROGRESS_UNIT, section: "fluency", score: percent, passed: percent >= 60, attempt: 1 });
+    shell.innerHTML = `<div class="quiz-result"><div class="score-ring">${fluencyScore}/${total}</div><span class="eyebrow">Practice complete</span><h2>${percent >= 80 ? "You know these well!" : "Good practice. Try again to get more."}</h2><p>You scored ${percent}% and earned ${fluencyScore * 10} XP.</p><div class="audio-actions" style="justify-content:center"><button class="button secondary" id="retry-fluency" type="button">${icon("rotate-ccw")} Try again</button></div></div>`;
+    $("#retry-fluency").addEventListener("click", renderFluency);
+    if (percent >= 60) complete("fluency", "Fluency Practice passed. Well done!");
+    icons();
+    if (shouldFocus) focusDynamicContent("#fluency-shell h2", `Fluency practice complete. You scored ${percent} percent.`);
+    return;
+  }
+  const question = course.fluency[fluencyIndex];
+  const options = question.options.split(" | ");
+  shell.innerHTML = `<div class="quiz-top"><span>Question ${fluencyIndex + 1} of ${total}</span><strong>${fluencyScore} correct</strong></div><div class="progress-track"><span style="width:${(fluencyIndex / total) * 100}%"></span></div><h2 class="quiz-question">${escapeHtml(question.question)}</h2><div class="quiz-options">${options.map((option) => `<button class="quiz-option" data-fluency-option="${escapeHtml(option)}" type="button">${escapeHtml(option)}</button>`).join("")}</div><div id="fluency-feedback" role="status" aria-live="polite" aria-atomic="true"></div><button class="button primary" id="next-fluency" type="button" hidden>Next question ${icon("arrow-right")}</button>`;
+  fluencyLocked = false;
+  $$('[data-fluency-option]').forEach((button) => button.addEventListener("click", () => {
+    if (fluencyLocked) return;
+    fluencyLocked = true;
+    const correct = button.dataset.fluencyOption === String(question.correctAnswer);
+    if (correct) fluencyScore += 1;
+    button.classList.add(correct ? "correct" : "wrong");
+    if (!correct) $$('[data-fluency-option]').find((option) => option.dataset.fluencyOption === String(question.correctAnswer))?.classList.add("correct");
+    $("#fluency-feedback").innerHTML = `<p class="feedback ${correct ? "good" : "try"}"><span class="status-note">${correct ? "Correct!" : "Not quite."}</span> ${escapeHtml(question.explanation)}</p>`;
+    $("#next-fluency").hidden = false;
+    $("#next-fluency").addEventListener("click", () => { fluencyIndex += 1; drawFluencyQuestion(true); });
+  }));
+  icons();
+  if (shouldFocus) focusDynamicContent(".quiz-question", `Question ${fluencyIndex + 1} of ${total}. ${question.question}`);
+}
+
 function calculateFinalQuizResults(answers = finalQuizProgress.answers) {
   const answered = finalAssessment.questions.filter((question) => answers[question.questionId]);
   const correct = answered.filter((question) => answers[question.questionId].selected === question.correctAnswer);
@@ -18453,6 +18552,7 @@ const config = {
     speaking: () => renderSpeaking(),
     writing: () => renderWriting(),
     activities: () => renderActivities(),
+    fluency: () => renderFluency(),
     games: () => renderGames(),
     quiz: () => renderQuiz(),
     ebooks: () => renderEbooks(),

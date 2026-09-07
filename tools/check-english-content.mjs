@@ -349,6 +349,19 @@ for (const gradeDir of grades) {
     for (const section of ["readings", "comprehension", "grammar", "speaking", "writing", "activities", "quizzes", "selfAssessment", "dictionaryLinks"]) {
       if (!(unit[section]?.length > 0)) fail(label, `${section} is empty — its section can never be completed, so the gate would gate the whole grade shut`);
     }
+    // `fluency` is OPTIONAL, unlike everything above it: english.js's
+    // hasFluency() is `Boolean(course?.fluency?.length)`, so a unit with no
+    // fluency array AND a unit with an empty one both correctly drop the row,
+    // the chain step and the countable entry. Neither can gate a grade shut.
+    //
+    // So this is not a gate-safety check, and saying it was would be a false
+    // claim about why it exists. It is a CONTENT check: an empty array means
+    // the authoring tool ran and produced nothing for this unit, which is a
+    // silent authoring failure — the section simply vanishes from a unit that
+    // was meant to have it, and nothing else would report that.
+    if ("fluency" in unit && !(unit.fluency?.length > 0)) {
+      fail(label, "fluency is present but empty — the section silently disappears from a unit meant to carry it; re-run tools/author-ehel-english-g1-fluency.py");
+    }
     const gamePack = path.join(dataDir, "games", `unit-${entry.number}.json`);
     if (!fs.existsSync(gamePack)) fail(label, "no games/unit-N.json — Games is countable when a pack exists and this unit would offer none");
 

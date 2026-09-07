@@ -691,7 +691,39 @@ def build_slides(unit, cw_unit, pics, dic, games, shelf):
                 ())
         data["quiz_slide"] = i
 
-    # ---- 11  Meaning Match ---------------------------------------------
+    # ---- 11  Fluency Practice ------------------------------------------
+    #         Consolidation of what this unit already taught - no new words,
+    #         no new patterns. Authored by
+    #         tools/author-ehel-english-g1-fluency.py into the unit JSON, so
+    #         it arrives here the same way every other section does: read
+    #         from the course's own content at build time. Its items carry
+    #         reviewStatus "Needs curriculum review", which is why the step
+    #         says so on its own face rather than passing for reviewed
+    #         content the way the rest of this build legitimately does.
+    fluency = []
+    for f in unit.get("fluency") or []:
+        opts = [o.strip() for o in str(f.get("options") or "").split("|") if o.strip()]
+        ok = (f.get("correctAnswer") or "").strip()
+        if not opts or ok not in opts:
+            continue
+        fluency.append({"ask": f["question"],
+                        "opts": [{"t": o, "ok": 1 if o == ok else 0} for o in opts],
+                        "why": f.get("explanation") or ""})
+    if fluency:
+        data["fluency"] = fluency
+        i = add("fluency", "Fluency Practice", "\U0001F501", "I practised what I know",
+                "Tap the answer. Nothing here is new.",
+                explain(
+                    ["Nothing here is new.",
+                     "Every question is a word or a pattern this unit already taught you."],
+                    ["Read the question.", "Think back to the lesson.", "Then tap your answer."],
+                    ["If you get one wrong, read the reason underneath.",
+                     "That is the part that makes it stick."],
+                    ["Take your time, then tap."]),
+                ())
+        data["fluency_slide"] = i
+
+    # ---- 12  Meaning Match ---------------------------------------------
     #         Two of the unit's own twelve games, picked by id rather than
     #         by scanning types - both ids are present in all 10 units'
     #         packs (checked directly, not assumed). The other ten
@@ -903,6 +935,9 @@ def bootstrap(slides, data):
         elif k == "check":
             out.append('  sequence({ el: %s, items: LESSON.quiz, finish: %d,\n'
                        '    label: "Question", done: "That is the whole unit finished." });' % (el, i))
+        elif k == "fluency":
+            out.append('  sequence({ el: %s, items: LESSON.fluency, finish: %d,\n'
+                       '    label: "Question", done: "That is this unit\'s words and patterns practised." });' % (el, i))
         elif k == "meaningmatch":
             out.append('  sequence({ el: %s, items: LESSON.meaningmatch, finish: %d,\n'
                        '    label: "Round", done: "That is Meaning Match finished." });' % (el, i))

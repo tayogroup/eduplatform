@@ -1,0 +1,1106 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Whole Numbers Are Built</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    /* Ehel navy, lifted coral/teal/gold — copied from mathematics/grade-1-app/g1v2 so the two
+       lessons are the same design rather than two designs that resemble each other. It is
+       unconditionally dark there and here: the navy IS the design, not a dark mode. */
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --sel-ink: #06231F;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { background: #183B56; }
+  body::before { content: ""; position: fixed; inset: 0; z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%); }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { letter-spacing: -0.02em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; line-height: 1.15; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  [hidden] { display: none !important; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  /* header */
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding: 12px 0 28px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .hero h1 { font-size: clamp(38px, 6vw, 60px); font-weight: 700; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .lede { max-width: 32em; margin-top: 12px; color: var(--muted); font-size: 18px; }
+  .hero-mini { display: grid; grid-template-columns: repeat(5, 12px); gap: 4px; padding: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+  .hero-mini i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+  .hero-mini i.l { background: var(--teal); }
+  @media (max-width: 680px) { .hero { grid-template-columns: 1fr; } .hero-mini { justify-self: start; } }
+
+  .steps-nav { position: sticky; top: 0; z-index: 5; display: flex; gap: 6px; padding: 10px 0; margin: 0 0 28px; background: rgba(24, 59, 86, 0.94); border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .steps-nav a { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); text-decoration: none; font-size: 15px; white-space: nowrap; }
+  .steps-nav a b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--teal); color: var(--sel-ink); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; }
+  .steps-nav a.check b { background: var(--accent); color: var(--accent-ink); }
+  .steps-nav .navgroup { flex: 0 0 auto; display: inline-flex; align-items: center; padding: 0 12px 0 10px;
+    font: 700 11px "Atkinson Hyperlegible", system-ui, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted); white-space: nowrap; border-left: 2px solid var(--line); }
+  .steps-nav .navgroup:first-child { border-left: 0; padding-left: 0; }
+  .route { margin: 14px 0 0; padding: 12px 16px; border-left: 4px solid var(--teal); border-radius: 0 10px 10px 0;
+    background: var(--teal-soft); color: var(--ink); font-size: 15px; line-height: 1.55; }
+  .route b { color: var(--teal); }
+
+
+  /* step cards */
+  .step { background: rgba(20, 43, 62, 0.88); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 28px; scroll-margin-top: 70px; min-width: 0; overflow-x: clip; }
+  .step-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-bottom: 8px; }
+  .step-num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.06em; color: var(--teal); text-transform: uppercase; white-space: nowrap; }
+  .step h2 { font-size: clamp(26px, 3.6vw, 34px); }
+  .step .intro { max-width: 36em; color: var(--muted); margin: 6px 0 22px; }
+  .two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: minmax(0, 1fr); } }
+
+  .picker-lab { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 14px 0 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--card); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .chip:hover { border-color: var(--teal); }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: var(--sel-ink); }
+  .chip.accent.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .chip.good:not(.on) { background: var(--good-soft); border-color: var(--good); }
+  .chip.oops:not(.on) { background: var(--bad-soft); border-color: var(--bad); }
+  input[type="range"] { width: 100%; accent-color: var(--accent); margin: 10px 0; }
+  .chip.on { box-shadow: 0 4px 0 rgba(0, 0, 0, 0.28); }
+  .chip.on:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.28); }
+  .btn { padding: 10px 18px; border-radius: 999px; border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+  .btn.ghost { background: transparent; border: 1.5px solid var(--line); color: var(--ink); }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+  .working { display: grid; gap: 8px; margin-top: 14px; font-variant-numeric: tabular-nums; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 10px 14px; border-radius: 10px; background: var(--teal-soft); }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; max-width: 12em; }
+  .working .line .v { font-size: 18px; }
+  .working .line .v b { color: var(--accent); }
+  @media (max-width: 480px) { .working .line { grid-template-columns: minmax(0, 1fr); gap: 2px; } .working .line .k { max-width: none; } }
+  .note { margin-top: 18px; padding: 14px 16px; border-radius: 12px; background: var(--accent-soft); border-left: 4px solid var(--accent); max-width: 40em; }
+  .note b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+  .said { font-size: 19px; }
+  .said b { color: var(--accent); }
+  .big-num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(52px, 9vw, 84px); line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .big-num small { font-size: 0.45em; color: var(--ink); font-weight: 600; margin-left: 6px; }
+  .answer { display: grid; gap: 4px; margin-top: 10px; padding: 12px 16px; border-radius: 12px; background: var(--teal-soft); }
+  .answer .lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .answer .val { font-family: "Inter", "Segoe UI", sans-serif; font-size: 22px; font-weight: 700; color: var(--teal); font-variant-numeric: tabular-nums; }
+  .verdict { margin-top: 8px; min-height: 1.5em; font-weight: 700; }
+  .verdict.good { color: var(--good); }
+  .verdict.bad { color: var(--bad); }
+  .table-wrap { overflow-x: auto; }
+  table.plain { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  table.plain th, table.plain td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  table.plain th { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  table.plain td.num, table.plain th.num { text-align: right; }
+  table.plain td.how { color: var(--muted); font-size: 15px; }
+  table.plain tr.now td { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 18px; background: var(--teal-soft); }
+
+  /* dots */
+  .dots { display: grid; gap: 4px; width: 100%; max-width: 360px; padding: 10px; border-radius: 14px; background: var(--cell); aspect-ratio: 1; }
+  .dots i { display: block; width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--accent); transition: background 120ms ease; }
+  .dots i.l { background: var(--teal); }
+  .dots i.extra { background: var(--bad); }
+  .dots i.ghost { background: transparent; border: 2px dashed var(--line); }
+  .dots i.ok { background: var(--good); }
+  .dots.loose { aspect-ratio: auto; }
+  .sq-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .sq-list button { padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--card); font-variant-numeric: tabular-nums; font-size: 15px; }
+  .sq-list button b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+  .sq-list button.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .sq-list button.on b { color: inherit; }
+
+  /* cubes */
+  .cube { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .cube polygon { stroke: var(--card); stroke-width: 1; }
+  .cube .top { fill: var(--accent); }
+  .cube .left { fill: color-mix(in srgb, var(--accent) 74%, black); }
+  .cube .right { fill: color-mix(in srgb, var(--accent) 87%, black); }
+  .cube .top.hi { fill: var(--teal); }
+  .cube .left.hi { fill: color-mix(in srgb, var(--teal) 74%, black); }
+  .cube .right.hi { fill: color-mix(in srgb, var(--teal) 87%, black); }
+  .cube.done .top { fill: var(--good); }
+  .cube.done .left { fill: color-mix(in srgb, var(--good) 74%, black); }
+  .cube.done .right { fill: color-mix(in srgb, var(--good) 87%, black); }
+  .dots.blocks i { border-radius: 3px; }
+  .cmp { display: grid; gap: 10px; margin-top: 14px; }
+  .cmp-row { display: grid; grid-template-columns: 86px 1fr auto; gap: 10px; align-items: center; }
+  .cmp-lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .cmp-bar { position: relative; height: 26px; border-radius: 8px; background: var(--cell); overflow: hidden; }
+  .cmp-bar .fill { position: absolute; inset: 0 auto 0 0; background: var(--teal); transition: width 200ms ease; }
+  .cmp-bar .fill.mine { background: var(--accent); }
+  .cmp-bar .fill.match { background: var(--good); }
+  .cmp-val { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-variant-numeric: tabular-nums; min-width: 3.5em; text-align: right; }
+
+  /* triangles */
+  .tri { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .tri circle.t { fill: var(--accent); }
+  .tri circle.t2 { fill: var(--teal); }
+
+  /* sequence strip */
+  .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; margin-top: 10px; }
+  .seq .term { display: grid; place-items: center; min-width: 54px; padding: 10px 12px; border-radius: 12px; background: var(--teal-soft); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .seq .term.start { background: var(--accent); color: var(--accent-ink); }
+  .seq .term.next { background: var(--good-soft); outline: 2px dashed var(--good); }
+  .seq .term.hidden-term { background: var(--cell); color: var(--muted); }
+  .seq .term small { display: block; font-family: "Atkinson Hyperlegible", sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .seq .term.start small { color: var(--accent-ink); opacity: 0.85; }
+  .seq .jump { display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--teal); min-width: 40px; }
+  .seq .jump span { display: block; line-height: 1; }
+  .seq .jump .arrow { font-size: 18px; color: var(--muted); }
+  .seq .jump.hide span:first-child { visibility: hidden; }
+  .seq .dots3 { color: var(--muted); font-weight: 700; padding: 0 4px; }
+
+  /* the odd numbers: a strip of counting numbers, and the running total as one bar */
+  .numstrip { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+  .numstrip span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: var(--cell); color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .numstrip span.odd, .numstrip span.even { background: var(--card); border: 1.5px solid var(--line); color: var(--ink); }
+  .numstrip span.odd.on, .numstrip span.even.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .evens { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .evens circle.a { fill: var(--accent); }
+  .evens circle.b { fill: var(--teal); }
+  .hundred { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; margin-top: 8px; }
+  .hundred span { display: grid; place-items: center; aspect-ratio: 1; border-radius: 6px; font-weight: 700;
+    font-size: clamp(9px, 2.4vw, 13px); font-variant-numeric: tabular-nums;
+    background: var(--accent); border: 1.5px solid var(--accent); color: var(--accent-ink); }
+  .hundred span.out { background: transparent; border-color: transparent; color: var(--muted); opacity: 0.45; text-decoration: line-through; }
+  .hundred span.one { background: transparent; border: 1.5px dashed var(--line); color: var(--muted); text-decoration: none; opacity: 1; }
+  .hundred span.seed { background: var(--teal); border-color: var(--teal); color: var(--sel-ink); }
+  .facs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .facs span { padding: 4px 11px; border-radius: 999px; border: 1.5px solid var(--line); font-weight: 700; font-size: 14px; color: var(--muted); }
+  .facs span.mid { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .rainbow { width: 100%; max-width: 400px; display: block; margin-top: 8px; }
+  .rainbow path { fill: none; stroke: var(--teal); stroke-width: 2.5; stroke-linecap: round; }
+  .rainbow path.self { stroke: var(--accent); stroke-width: 3; }
+  .rainbow circle { fill: var(--teal); }
+  .rainbow circle.self { fill: var(--accent); }
+  .rainbow text { font: 700 13px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .rainbow text.self { fill: var(--accent); }
+  .mults { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .mults span { padding: 6px 12px; border-radius: 8px; background: var(--teal-soft); color: var(--teal);
+    font-weight: 700; font-variant-numeric: tabular-nums; }
+  .mults span.first, .mults span.both { background: var(--accent); color: var(--accent-ink); }
+  .venn { width: 100%; max-width: 400px; display: block; margin-top: 8px; }
+  .venn circle { fill: var(--teal); fill-opacity: 0.2; stroke: var(--teal); stroke-width: 2; }
+  .venn text { font: 700 15px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .venn text.mid { fill: var(--accent); }
+  .venn text.head { font-size: 16px; fill: var(--teal); }
+  .venn text.cap { font-size: 11px; font-weight: 400; fill: var(--muted); letter-spacing: 0.06em; }
+  .venn text.none { font-weight: 400; fill: var(--muted); }
+  .digits { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .digits span { display: grid; place-items: center; min-width: 46px; padding: 12px 8px; border-radius: 12px;
+    background: var(--cell); color: var(--muted); font: 600 28px "Inter", "Segoe UI", sans-serif;
+    font-variant-numeric: tabular-nums; transition: background 120ms ease, color 120ms ease; }
+  .digits span.lit { background: var(--accent); color: var(--accent-ink); }
+  .digits span.place { background: var(--teal); color: var(--sel-ink); }
+  .roundline { width: 100%; max-width: 420px; display: block; margin-top: 8px; }
+  .roundline .near { fill: var(--accent-soft); }
+  .roundline .axis { stroke: var(--ink); stroke-width: 2; }
+  .roundline .tick { stroke: var(--ink); stroke-width: 2; }
+  .roundline .tick.half { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .roundline .drop { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 4 3; }
+  .roundline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .roundline text { font: 700 13px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .roundline text.half { font-weight: 400; fill: var(--muted); font-size: 12px; }
+  .roundline text.here { fill: var(--accent); font-size: 15px; }
+  .roundline text.win { fill: var(--accent); }
+  .negline { width: 100%; max-width: 460px; display: block; margin-top: 8px; }
+  .negline .span { fill: var(--accent-soft); }
+  .negline .axis { stroke: var(--ink); stroke-width: 2; }
+  .negline .tick { stroke: var(--muted); stroke-width: 1.2; }
+  .negline .tick.big { stroke: var(--ink); stroke-width: 1.8; }
+  .negline .zero { stroke: var(--teal); stroke-width: 2.5; }
+  .negline .dotA { fill: var(--teal); stroke: var(--card); stroke-width: 2.5; }
+  .negline .dotB { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .negline text { font: 700 12px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+  .negline text.num { fill: var(--ink); font-size: 11px; }
+  .negline text.nought { fill: var(--teal); font-size: 13px; }
+  .negline text.labA { fill: var(--teal); font-size: 14px; }
+  .negline text.labB { fill: var(--accent); font-size: 14px; }
+  .negline text.gap { fill: var(--accent); font-size: 12px; }
+  .negline text.ends { font-weight: 400; font-size: 11px; }
+  .digits span.col { display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; padding: 9px 7px 7px; min-width: 58px; }
+  .digits span.col small { font: 700 9px "Atkinson Hyperlegible", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.85; }
+  .digits span.pt { min-width: 0; padding: 9px 1px; background: transparent; color: var(--accent); font-size: 34px; align-self: center; }
+  .zoomline { width: 100%; max-width: 460px; display: block; margin-top: 8px; }
+  .zoomline .axis { stroke: var(--ink); stroke-width: 2; }
+  .zoomline .tick { stroke: var(--muted); stroke-width: 1.2; }
+  .zoomline .tick.big { stroke: var(--ink); stroke-width: 1.8; }
+  .zoomline .fan { fill: var(--accent-soft); stroke: none; }
+  .zoomline .fanline { stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+  .zoomline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .zoomline text { font: 700 12px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .zoomline text.here { fill: var(--accent); font-size: 15px; }
+  .zoomline text.cap { font-weight: 400; font-size: 11px; fill: var(--muted); }
+  .fbar { display: flex; gap: 8px; margin-top: 10px; }
+  .fbar .whole { display: flex; gap: 2px; flex: 1; padding: 3px; border: 2px solid var(--line); border-radius: 10px; }
+  .fbar .whole.fine { gap: 0; padding: 2px; }
+  .fbar i { display: block; flex: 1; height: 54px; border-radius: 4px; background: var(--cell); }
+  .fbar .whole.fine i { border-radius: 0; }
+  .fbar i.on { background: var(--accent); }
+  .eqrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; }
+  .eqrow span { padding: 6px 12px; border-radius: 8px; background: var(--teal-soft); color: var(--teal);
+    font-weight: 700; font-variant-numeric: tabular-nums; }
+  .eqrow span.same { background: var(--accent); color: var(--accent-ink); }
+  .eqrow b { color: var(--muted); font-weight: 700; }
+  .pcgrid { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .pcgrid .hun { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; flex: 1;
+    min-width: 140px; max-width: 210px; padding: 4px; border: 2px solid var(--line); border-radius: 10px; }
+  .pcgrid i { display: block; aspect-ratio: 1; border-radius: 2px; background: var(--cell); }
+  .pcgrid i.on { background: var(--accent); }
+  .ubar { display: grid; gap: 10px; margin-top: 12px; }
+  .ubar .row { display: flex; align-items: center; gap: 10px; }
+  .ubar .sym { width: 28px; text-align: center; font-size: 22px; line-height: 1; }
+  .ubar .sym.a { color: var(--teal); }
+  .ubar .sym.b { color: var(--accent); }
+  .ubar .track { flex: 1; display: flex; gap: 4px; align-items: center; }
+  .ubar .fill { height: 34px; border-radius: 8px; background: var(--teal); }
+  .ubar .fill.b { background: var(--accent); }
+  .ubar .gap { height: 34px; border-radius: 8px; border: 2px dashed var(--muted); box-sizing: border-box; }
+  .ubar .val { width: 34px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .counters { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .counters i { display: block; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); }
+  .counters i.two { background: var(--teal); }
+  .expr { display: grid; gap: 8px; margin-top: 12px; }
+  .expr .line { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .expr span { padding: 6px 11px; border-radius: 8px; background: var(--cell); color: var(--muted);
+    font: 600 21px "Inter", "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; }
+  .expr span.on { background: var(--accent); color: var(--accent-ink); }
+  .expr span.done { background: var(--teal); color: var(--sel-ink); }
+  .expr b { color: var(--muted); font-size: 13px; font-weight: 700; padding: 0 4px; }
+  .stage { margin-left: auto; font: 700 11px "Atkinson Hyperlegible", system-ui, sans-serif;
+    letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 11px; border-radius: 999px;
+    background: var(--teal-soft); color: var(--teal); white-space: nowrap; align-self: center; }
+  .stage.up { background: var(--accent-soft); color: var(--accent); }
+  .stage.beyond { background: var(--cell); color: var(--muted); }
+  .say { display: flex; align-items: center; gap: 12px; margin: 14px 0 0; padding: 10px 12px;
+    background: var(--teal-soft); border: 1px solid var(--line); border-radius: 14px; }
+  .say .ico { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; background: var(--teal);
+    color: var(--sel-ink); display: grid; place-items: center; font-size: 19px; }
+  .say .lab { flex: 1; min-width: 0; font-size: 15px; color: var(--muted); }
+  .say button { flex: 0 0 auto; border: 0; cursor: pointer; padding: 9px 18px; border-radius: 999px;
+    background: var(--gold); color: var(--accent-ink); font: 700 15px "Atkinson Hyperlegible", system-ui, sans-serif;
+    box-shadow: 0 4px 0 var(--gold-press); }
+  .say button:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--gold-press); }
+  .say button.on { background: var(--accent); color: var(--accent-ink); box-shadow: 0 4px 0 #A8461F; }
+  .digits span.sep { min-width: 0; padding: 12px 0; background: transparent; color: var(--muted); }
+  .mults span.ever { background: transparent; color: var(--muted); }
+  .oddbar { display: flex; height: 42px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); margin-top: 10px; }
+  .oddbar div { display: grid; place-items: center; min-width: 0; background: var(--teal); color: var(--sel-ink); border-right: 2px solid var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; }
+  .oddbar div:last-child { border-right: 0; }
+  .oddbar div.last { background: var(--accent); color: var(--accent-ink); }
+
+  /* second gaps */
+  .gaps2 { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+  .gaps2 span { padding: 6px 12px; border-radius: 10px; background: var(--cell); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .gaps2 span.flat { background: var(--good-soft); color: var(--good); }
+  .gaps2 b { font-family: "Atkinson Hyperlegible", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+
+  /* number line */
+  .numline { width: 100%; max-width: 720px; display: block; margin-top: 8px; }
+  .numline .axis { stroke: var(--ink); stroke-width: 2; }
+  .numline .tick { stroke: var(--ink); stroke-width: 1.5; }
+  .numline .tick.minor { stroke: var(--muted); stroke-width: 1; }
+  .numline .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 12px; fill: var(--ink); text-anchor: middle; }
+  .numline .lab.zero { fill: var(--accent); }
+  .numline .hop { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+  .numline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2; }
+  .numline .dot.start { fill: var(--teal); }
+  .numline .hoplab { font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; font-size: 11px; fill: var(--teal); text-anchor: middle; }
+
+  /* patterns */
+  .pattern { width: 100%; max-width: 720px; display: block; margin-top: 8px; }
+  .pattern .stick { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
+  .pattern .stick.new { stroke: var(--teal); }
+  .pattern .dot { fill: var(--accent); }
+  .pattern .dot.new { fill: var(--teal); }
+  .pattern .table { fill: var(--cell); stroke: var(--ink); stroke-width: 2; }
+  .pattern .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; fill: var(--muted); text-anchor: middle; }
+
+  /* word problems and quiz */
+  .wp-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 12px; }
+  .wp-dots { display: flex; flex-wrap: wrap; gap: 6px; }
+  .wp-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--cell); border: 1.5px solid var(--line); }
+  .wp-dots i.now { background: var(--teal); border-color: var(--teal); }
+  .wp-dots i.good { background: var(--good); border-color: var(--good); }
+  .wp-dots i.oops { background: var(--bad); border-color: var(--bad); }
+  .wp-count { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .wp-card { padding: 22px; border-radius: 14px; background: var(--ground); border: 1px solid var(--line); }
+  .wp-scene { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .wp-text { font-size: 20px; line-height: 1.5; max-width: 34em; margin-top: 6px; }
+  .wp-card .picker-lab { color: var(--teal); }
+  .q-why { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+  .q-why.good { color: var(--good); }
+  .q-why.bad { color: var(--bad); }
+  .wp-card .working .line { background: var(--card); }
+  .wp-card .working .line.total { background: var(--accent-soft); }
+  .q { padding: 18px 0; border-top: 1px solid var(--line); }
+  .q:first-of-type { border-top: 0; padding-top: 4px; }
+  .q .stem { font-weight: 700; margin-bottom: 10px; }
+  .q .stem span { color: var(--teal); margin-right: 8px; font-family: "Inter", "Segoe UI", sans-serif; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt { padding: 10px 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); font-variant-numeric: tabular-nums; }
+  .opt:hover { border-color: var(--teal); }
+  .opt.right { background: var(--good-soft); border-color: var(--good); }
+  .opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .q .why { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+  .q .why.good { color: var(--good); }
+  .q .why.bad { color: var(--bad); }
+  .result { margin-top: 18px; padding: 18px 20px; border-radius: 14px; background: var(--teal-soft); display: none; align-items: center; gap: 18px; }
+  .result.show { display: flex; }
+  .result .big-num { font-size: 56px; color: var(--teal); }
+  .result p { max-width: 30em; }
+  .recap { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+  .recap div { padding: 14px 16px; border-radius: 12px; background: var(--ground); border: 1px solid var(--line); }
+  .recap b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 4px; color: var(--teal); }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+
+  /* ==================================================================
+     On paper. A browser prints no background colour unless the person
+     printing ticks a box, and this design is light text on navy — so
+     without this block the headings and every note print as nothing.
+     ================================================================== */
+  @media print {
+    :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+      --ground: #FFFFFF; --card: #FFFFFF; --cell: #E4EEE9; --line: #C7D8D3;
+      --ink: #1B2A2F; --muted: #55686C;
+      --accent: #C2482C; --accent-ink: #FFFFFF; --accent-soft: #FBE3D8;
+      --teal: #146B65; --teal-soft: #DCEFEC; --sel-ink: #FFFFFF;
+      --gold: #C99700; --gold-press: #A87F00; --plum: #6E3F88;
+      --good: #23694A; --good-soft: #DFF1E6; --bad: #A3382E; --bad-soft: #F7DEDA;
+      --shadow: none;
+      color-scheme: light;
+    }
+    html { background: #FFFFFF; }
+    body::before { display: none; }
+    body { background: #FFFFFF; color: var(--ink); font-size: 12pt; }
+
+    /* things that cannot work on paper */
+    .steps-nav, .say, .hero-mini, .btn, .tools { display: none !important; }
+
+    /* one step per sheet, so a teacher can hand out a single step */
+    .step { background: #FFFFFF; box-shadow: none; border-radius: 0;
+      break-before: page; margin: 0 0 10px; }
+    .wrap > .step:first-of-type { break-before: auto; }
+    .note, .working .line, .wp-card, .recap > div, table.plain tr { break-inside: avoid; }
+    h1, h2 { break-after: avoid; }
+
+    /* where a fill IS the meaning, it has to reach the paper */
+    .dots i, .hundred span, .fbar i, .pcgrid i, .counters i, .mults span, .digits span,
+    .expr span, .eqrow span, .facs span, .chip, .stage, .route, .note, .working .line,
+    .numstrip span, .oddbar div, .tenframe i, table.plain tr.now, .big-num span {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+
+    /* and where it is not, say it with weight instead of colour */
+    .chip { border: 1px solid var(--line); }
+    .chip.on { border: 2px solid var(--accent); font-weight: 700; }
+    a[href^="#"] { color: inherit; text-decoration: none; }
+  }
+  .steps-nav { flex-wrap: wrap; overflow-x: visible; }
+  .backlink { margin: 0 0 12px; }
+  .backlink a { color: var(--teal); text-decoration: none; font-weight: 700; font-size: 15px; }
+  .backlink a:hover { text-decoration: underline; }
+</style>
+
+<div class="wrap">
+  <p class="backlink"><a href="index.html">&larr; Grade 5 Mathematics</a></p>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 5 · Part 3 of 5</p>
+      <h1>How Whole Numbers Are Built</h1>
+      <p class="lede">Add up the odd numbers and then the even ones, learn which operation comes first, pair up the factors of a number, find what two numbers share, spot a factor at a glance, and sieve out the primes.</p>
+    </div>
+    <div class="hero-mini" aria-hidden="true" id="heroMini"></div>
+  </header>
+  <nav class="steps-nav" aria-label="Steps in this lesson">
+    <a href="#s14"><b>14</b> Odd numbers</a>
+    <a href="#s15"><b>15</b> Even numbers</a>
+    <a href="#s16"><b>16</b> The order of the operations</a>
+    <a href="#s17"><b>17</b> Factors and multiples</a>
+    <a href="#s18"><b>18</b> What two numbers share</a>
+    <a href="#s19"><b>19</b> Divisibility rules</a>
+    <a href="#s20"><b>20</b> Prime numbers</a>
+  </nav>
+  <!-- STEP 14 -->
+  <section class="step" id="s14">
+    <div class="step-head"><span class="step-num">Step 14</span><h2>The odd numbers, and what they add up to</h2></div>
+    <p class="intro">The odd numbers are the simplest sequence of all: start at 1 and add 2 for ever. They are the numbers you cannot share into two equal piles, and on the strip below they are every other one. Two things are worth knowing about them, and neither needs counting. One is where any odd number sits in the list. The other is what happens when you add the first few of them up.</p>
+    <label for="count10o" class="picker-lab">How many odd numbers: <span id="cntLab10o">4</span></label>
+    <input type="range" id="count10o" min="1" max="10" value="4" step="1">
+    <div class="numstrip" id="strip10o" aria-hidden="true"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <p class="picker-lab">Added end to end</p>
+        <div class="oddbar" id="bar10o" aria-hidden="true"></div>
+        <div class="big-num"><span id="big10o">16</span><small id="bigLab10o">= 4²</small></div>
+        <p class="said" id="said10o" aria-live="polite"></p>
+      </div>
+      <div>
+        <p class="picker-lab">Working</p>
+        <div class="working" id="work10o" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="picker-lab" style="margin-top:18px">Where does an odd number sit? Halve the next number up.</p>
+    <div class="chips" id="finds10o"></div>
+    <p class="said" id="found10o" aria-live="polite" style="margin-top:10px"></p>
+    <p class="picker-lab" style="margin-top:18px">Every position, its odd number, and the running total</p>
+    <div class="table-wrap">
+      <table class="plain" id="table10o"></table>
+    </div>
+    <div class="note"><b>Step 2 showed this from the other side.</b> There, each L you added to a square was the next odd number, which is why the squares grew 1, 4, 9, 16. Here is the same fact read as a list: add up the first few odd numbers and you always land exactly on a square. The other half of this step is the position. Counting along to the 50th odd number is slow, but 2 × 50 − 1 = 99 is quick. Going back the other way, (99 + 1) ÷ 2 = 50 tells you where 99 sits without counting a single one.</div>
+  </section>
+
+  <!-- STEP 15 -->
+  <section class="step" id="s15">
+    <div class="step-head"><span class="step-num">Step 15</span><h2>The even numbers, and the rectangle they make</h2></div>
+    <p class="intro">The even numbers are the other half of the strip: start at 2 and add 2 for ever. They are the numbers you CAN share into two equal piles, and that is the whole trick to them. Every row below is split down the middle into two equal halves, because every even number is a double. Step 14 added the odd numbers up and landed on a square. Do the same with the evens and you land somewhere just as tidy, but not the same shape.</p>
+    <label for="count11e" class="picker-lab">How many even numbers: <span id="cntLab11e">4</span></label>
+    <input type="range" id="count11e" min="1" max="10" value="4" step="1">
+    <div class="numstrip" id="strip11e" aria-hidden="true"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <p class="picker-lab">Each row split into two equal halves</p>
+        <svg class="evens" id="draw11e" viewBox="0 0 360 260" role="img" aria-label="Rows of 2, 4, 6 dots, each split into two equal halves"></svg>
+      </div>
+      <div>
+        <div class="big-num"><span id="big11e">20</span><small id="bigLab11e">= 4 × 5</small></div>
+        <p class="said" id="said11e" aria-live="polite"></p>
+        <div class="working" id="work11e" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="picker-lab" style="margin-top:18px">Where does an even number sit? Halve it.</p>
+    <div class="chips" id="finds11e"></div>
+    <p class="said" id="found11e" aria-live="polite" style="margin-top:10px"></p>
+    <p class="picker-lab" style="margin-top:18px">The evens against the odds</p>
+    <div class="table-wrap">
+      <table class="plain" id="table11e"></table>
+    </div>
+    <div class="note"><b>Odd numbers make a square, even numbers make a rectangle.</b> The first four odd numbers add to 16, a 4 by 4 square. The first four even numbers add to 20, a 4 by 5 rectangle: one row taller. The gap between the two totals is never a surprise. Every even number is exactly one more than the odd number just before it. There are n of them, so the evens total is always n more. And because every even number is a double, adding them up is really adding the counting numbers twice over. 2 + 4 + 6 + 8 is two lots of 1 + 2 + 3 + 4. That is twice the triangle from Step 7.</div>
+  </section>
+
+  <!-- STEP 16 -->
+  <section class="step" id="s16">
+    <div class="step-head"><span class="step-num">Step 16</span><h2>The order of the operations</h2></div>
+    <p class="intro">3 + 4 &times; 5 has two possible answers. Work along the line and you get 35; do the multiplication first and you get 23. Only one of those is what the expression means. The way it is settled will be familiar from Step 21: it is a <b>convention</b>. Everybody agreed on it so that everybody reads the same line the same way, and nobody discovered it. The agreement is that <b>&times; and &divide; are done before + and &minus;</b>.</p>
+    <p class="picker-lab">An expression</p>
+    <div class="chips" id="ex24o"></div>
+    <div class="expr" id="steps24o" aria-hidden="true"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div class="big-num"><span id="big24o">23</span><small>is the answer</small></div>
+        <p class="said" id="said24o" aria-live="polite"></p>
+      </div>
+      <div>
+        <div class="working" id="work24o" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="picker-lab" style="margin-top:18px">What the agreement is worth</p>
+    <div class="table-wrap">
+      <table class="plain" id="table24o"></table>
+    </div>
+    <div class="note"><b>Operations of the same rank are done left to right, and that matters more than it looks.</b> 10 &minus; 2 &minus; 3 is 5 because you take 2 away and then 3. Working from the right instead would give 10 &minus; (2 &minus; 3), which is 11. 12 &divide; 4 &times; 3 is 9 for the same reason, where right-to-left would give 1. So the rule is really two rules: multiplication and division first, and then equal ranks in reading order. <b>Nothing here is a discovery.</b> Every one of these expressions could have been given the other meaning if people had agreed differently. The convention exists because an expression that means two things is useless. Halfway rounding both ways would be useless in exactly the same way. <b>And when the convention gives the wrong shape, brackets override it.</b> If you really do want the 3 + 4 done first, you write (3 + 4) &times; 5, and the brackets say so out loud. That is the next thing after this one in the Cambridge sequence. It is the only way to change the order rather than merely complain about it.</div>
+  </section>
+
+  <!-- STEP 17 -->
+  <section class="step" id="s17">
+    <div class="step-head"><span class="step-num">Step 17</span><h2>Factors and multiples</h2></div>
+    <p class="intro">A <b>factor</b> of a number divides into it exactly, with nothing left over. A <b>multiple</b> of a number is what you get by counting it up: the times table. They point in opposite directions, and the difference between them is the thing to hold on to. The factors of a number are a short list that stops. Its multiples go on for ever. Factors also come in <b>pairs</b>, and where the two halves of a pair meet turns out to be the square root from Step 4.</p>
+    <p class="picker-lab">Pick a number</p>
+    <div class="chips" id="nums12f"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <p class="picker-lab">Its factors, joined up in pairs</p>
+        <svg class="rainbow" id="rain12f" viewBox="0 0 360 200" role="img" aria-label="The factors in a row, with an arc joining each pair"></svg>
+      </div>
+      <div>
+        <div class="big-num"><span id="big12f">8</span><small id="bigLab12f">factors</small></div>
+        <p class="said" id="said12f" aria-live="polite"></p>
+        <div class="working" id="work12f" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="picker-lab" style="margin-top:18px">And the other direction: its multiples</p>
+    <div class="mults" id="mults12f" aria-live="polite"></div>
+    <p class="said" id="mulSaid12f" aria-live="polite" style="margin-top:10px"></p>
+    <p class="picker-lab" style="margin-top:18px">All eight, side by side</p>
+    <div class="table-wrap">
+      <table class="plain" id="table12f"></table>
+    </div>
+    <div class="note"><b>Factors stop. Multiples do not.</b> Every number has a first factor (1) and a last one (itself), so the list is finite and you can write all of it down. Nothing is the last multiple, so you write the first few and then three dots. <b>The pairs are why you never have to test very far.</b> Sorting the factors of 24 into pairs gives 1 &times; 24, 2 &times; 12, 3 × 8, 4 × 6. After 4 the pairs would just repeat backwards, because 4 &times; 6 and 6 &times; 4 are the same pair. The turning point is the square root, which is exactly the stopping rule Step 4 gave you. <b>And a square number is the only kind with an odd number of factors</b>. One of its pairs is a number paired with itself. 36 gives 1 &times; 36, 2 &times; 18, 3 &times; 12, 4 &times; 9 and then 6 &times; 6, which is nine factors, not ten. The next step is about the numbers at the other extreme &mdash; the ones with exactly two.</div>
+  </section>
+
+  <!-- STEP 18 -->
+  <section class="step" id="s18">
+    <div class="step-head"><span class="step-num">Step 18</span><h2>What two numbers share</h2></div>
+    <p class="intro">Put two numbers side by side and ask what they have in common. A <b>common factor</b> divides into both of them; a <b>common multiple</b> is in both times tables. Watch the names carefully, because they are not the same shape. We talk about the <b>highest</b> common factor but the <b>lowest</b> common multiple. Step 17 already explained why. Factor lists stop, so there is a highest one to find. Multiple lists never stop, so there is no highest &mdash; only a first.</p>
+    <p class="picker-lab">Two numbers</p>
+    <div class="chips" id="pairs13c"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <p class="picker-lab">Their factors, and the overlap</p>
+        <svg class="venn" id="venn13c" viewBox="0 0 360 215" role="img" aria-label="Two overlapping rings holding the factors of each number, with the common factors in the middle"></svg>
+      </div>
+      <div>
+        <div class="big-num"><span id="bigH13c">6</span><small>highest common factor</small></div>
+        <p class="said" id="saidH13c" aria-live="polite"></p>
+        <div class="working" id="workH13c" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="picker-lab" style="margin-top:18px">Multiples of <span id="labA13c"></span></p>
+    <div class="mults" id="multsA13c" aria-live="polite"></div>
+    <p class="picker-lab">Multiples of <span id="labB13c"></span></p>
+    <div class="mults" id="multsB13c" aria-live="polite"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div class="big-num"><span id="bigL13c">36</span><small>lowest common multiple</small></div>
+        <p class="said" id="saidL13c" aria-live="polite"></p>
+      </div>
+      <div>
+        <div class="working" id="workL13c" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="picker-lab" style="margin-top:18px">All six pairs</p>
+    <div class="table-wrap">
+      <table class="plain" id="table13c"></table>
+    </div>
+    <div class="note"><b>Highest for factors, lowest for multiples &mdash; and the asymmetry is not a quirk of the words.</b> Both factor lists stop, so the numbers in both stop too, and asking for the highest is a fair question with an answer. Neither multiple list stops, so their common ones go on for ever: 36, 72, 108, 144 and so on without end. There is nothing to call a highest common multiple, so the one worth naming is the first. <b>Two shapes come up again and again.</b> When one number divides the other, they have done the work for you. 8 and 16 share a highest factor of 8 and a lowest multiple of 16, the two numbers themselves. When they share nothing but 1, as 7 and 11 do, the lowest common multiple is simply the two multiplied together. <b>And one thing is worth checking on every row of the table.</b> The highest common factor times the lowest common multiple always comes to the two numbers multiplied. 6 &times; 36 = 216, and 12 &times; 18 = 216 as well.</div>
+  </section>
+
+  <!-- STEP 19 -->
+  <section class="step" id="s19">
+    <div class="step-head"><span class="step-num">Step 19</span><h2>Divisibility rules</h2></div>
+    <p class="intro">Step 17 asked what divides into a number, and answered it by trying every number in turn. For the small divisors you do not have to. Each one has a rule that reads only part of the number, sometimes a single digit. It tells you the answer without dividing at all. Pick a number and a divisor below, and the digits the rule actually looks at will light up. There is a rule for 2, 3, 4, 5, 6, 8, 9 and 10. There is no useful one for 7, and that gap is worth knowing about.</p>
+    <p class="picker-lab">A number</p>
+    <div class="chips" id="nums14d"></div>
+    <p class="picker-lab" style="margin-top:14px">Divide it by</p>
+    <div class="chips" id="rules14d"></div>
+    <div class="digits" id="digits14d" aria-hidden="true"></div>
+    <p class="verdict" id="verdict14d" aria-live="polite"></p>
+    <div class="two-col" style="margin-top:6px">
+      <div>
+        <div class="big-num"><span id="big14d">00</span><small id="bigLab14d">the last two digits</small></div>
+        <p class="said" id="said14d" aria-live="polite"></p>
+      </div>
+      <div>
+        <div class="working" id="work14d" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="picker-lab" style="margin-top:18px">Every rule at once, for <span id="allLab14d"></span></p>
+    <div class="table-wrap">
+      <table class="plain" id="table14d"></table>
+    </div>
+    <div class="note"><b>Three of the rules are really other rules wearing a hat.</b> 6 is just 2 and 3 together, because a number divisible by both is divisible by their product. 9's rule is the same digit-sum test as 3's, asking for a multiple of 9 instead of 3. So anything that passes 9 passes 3 as well, and never the other way round. And 8's rule is the last three digits for the same reason 4's is the last two. 1,000 is a multiple of 8 and 100 is a multiple of 4. Everything above those columns divides cleanly and can be ignored. <b>The digit-sum rules are the surprising ones, and there is a reason for them.</b> 10 leaves 1 when you divide by 9, and so do 100 and 1,000 and every power after them. So the only thing a number leaves over when divided by 9 is what its digits add up to. That is why adding them works. It is also why the same trick is no use at all for 4 or 8. <b>And then there is 7.</b> No rule for it is quicker than dividing. That is why the next step settles 2, 3 and 5 at a glance, and then has to work out 47 ÷ 7 by hand. 7,315 is the case to look at: nothing visible about it suggests 7 goes into it, and 7 &times; 1,045 = 7,315.</div>
+  </section>
+
+  <!-- STEP 20 -->
+  <section class="step" id="s20">
+    <div class="step-head"><span class="step-num">Step 20</span><h2>The prime numbers, the sequence with no rule</h2></div>
+    <p class="intro">A prime number has exactly two factors: 1 and itself. Nothing else divides into it without a remainder. A number with <b>more</b> than two factors is called <b>composite</b>, which means put together. It can be built by multiplying smaller numbers, the way 21 is built from 3 and 7. There is no formula for them. You cannot write down the nth prime the way you can write 2n &minus; 1 for the nth odd number. So instead of building the primes you find them, by crossing out everything that is not one. Start with the multiples of 2, which is the whole of Step 15 gone in one move.</p>
+    <p class="picker-lab">Cross out the multiples of</p>
+    <div class="chips" id="seeds12p"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div class="hundred" id="grid12p" aria-hidden="true"></div>
+        <p class="said" id="key12p" style="font-size:14px"></p>
+      </div>
+      <div>
+        <div class="big-num"><span id="big12p">51</span><small id="bigLab12p">still standing, besides 1</small></div>
+        <p class="said" id="said12p" aria-live="polite"></p>
+        <div class="working" id="work12p" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="picker-lab" style="margin-top:18px">Is it prime? Count what divides into it.</p>
+    <div class="chips" id="tests12p"></div>
+    <p class="picker-lab">Everything that divides into it</p>
+    <div class="facs" id="facs12p" aria-live="polite"></div>
+    <p class="verdict" id="verdict12p" aria-live="polite"></p>
+    <p class="said" id="why12p" aria-live="polite"></p>
+    <p class="picker-lab" style="margin-top:18px">The first twelve primes, and the gaps between them</p>
+    <div class="table-wrap">
+      <table class="plain" id="table12p"></table>
+    </div>
+    <div class="note"><b>Every whole number above 1 is one or the other.</b> Exactly two factors and it is <b>prime</b>. More than two and it is <b>composite</b>, meaning it can be put together by multiplying smaller numbers. 21 is 3 × 7, 49 is 7 &times; 7, and every number this sieve crosses out is one. <b>1 is the single exception</b>. That is why it sits dashed on the square rather than crossed out or shaded: with one factor it is neither. <b>Every other sequence in this lesson has a rule. This one has none.</b> The gaps go 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4. No pattern anybody has ever found, and that is not for want of looking. Three things are worth carrying away. <b>2 is the only even prime</b>. Every other even number can be shared into two equal piles, which is exactly what Step 15 was about. <b>A square number is never prime</b> once you are past 1. n × n always has n as a factor: 49 has 7, 100 has 10. And <b>the first number left standing after each crossing-out is the square of the next one to try</b>: 9, then 25, then 49. That is why 7 is where you can stop on a hundred square. The next try would be 11, and 11 &times; 11 = 121 is already past 100.</div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => n.toLocaleString("en-GB");
+  // a tidy number: at most 2 decimals, a proper minus sign, thousands separators
+  const nice = (v) => { const r = Math.round(v * 100) / 100; return (r < 0 ? "−" : "") + Math.abs(r).toLocaleString("en-GB", { maximumFractionDigits: 2 }); };
+  function pick(containerId, cb) {
+    $(containerId).addEventListener("click", (e) => {
+      const c = e.target.closest(".chip"); if (!c) return;
+      document.querySelectorAll("#" + containerId + " .chip").forEach((x) => x.classList.toggle("on", x === c));
+      cb(Number(c.dataset.n));
+    });
+  }
+  // 5Nf.08: the sign opens towards the bigger value. One definition, three comparison tables.
+  const rel = (x, y, sx, sy) => sx + (x > y ? " &gt; " : x < y ? " &lt; " : " = ") + sy;
+  const linesHtml = (lines) => lines.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join("");
+  function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  /* ---- hero: a 5 by 5 square with its last L picked out ---- */
+  (function () {
+    const m = $("heroMini");
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++) { const d = document.createElement("i"); if (r === 4 || c === 4) d.className = "l"; m.appendChild(d); }
+  })();
+
+  const factorsOf = (n) => { const f = []; for (let d = 1; d <= n; d++) if (n % d === 0) f.push(d); return f; };
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  /* ---- Step 14: the odd numbers ---- */
+  const ODD_FINDS = [11, 17, 25, 39, 99];
+  let cnt10o = 4, find10o = 99;
+  $("finds10o").innerHTML = ODD_FINDS.map((v) => '<button type="button" class="chip accent' + (v === find10o ? " on" : "") + '" data-n="' + v + '">' + v + "</button>").join("");
+  function drawOdd10() {
+    const n = cnt10o, nth = 2 * n - 1, total = n * n;
+    const odds = Array.from({ length: n }, (_, i) => 2 * i + 1);
+    $("cntLab10o").textContent = n;
+    let strip = "";
+    for (let v = 1; v <= 20; v++) {
+      const odd = v % 2 === 1;
+      strip += '<span class="' + (odd ? (v <= nth ? "odd on" : "odd") : "") + '">' + v + "</span>";
+    }
+    $("strip10o").innerHTML = strip;
+    // one bar per odd number, each wider than the last; a sliver is too narrow to letter
+    $("bar10o").innerHTML = odds.map((o, i) => '<div class="' + (i === n - 1 ? "last" : "") + '" style="flex:' + o + '">' + (o / total >= 0.07 || i === n - 1 ? o : "") + "</div>").join("");
+    $("big10o").textContent = total; $("bigLab10o").textContent = "= " + n + "²";
+    $("said10o").innerHTML = n === 1
+      ? "The first odd number on its own is <b>1</b>, which is already 1²."
+      : "The first <b>" + n + "</b> odd numbers, laid end to end, come to <b>" + total + "</b> — and that is <b>" + n + " × " + n + "</b>.";
+    $("work10o").innerHTML = linesHtml([
+      { k: "The rule", v: "start at 1, <b>add 2</b> every time" },
+      { k: "The " + n + (n === 1 ? "st" : n === 2 ? "nd" : n === 3 ? "rd" : "th") + " odd number", v: "2 × " + n + " − 1 = <b>" + nth + "</b>, without counting along" },
+      { k: "Add them up", v: odds.join(" + ") + " = <b>" + total + "</b>" },
+      { k: "Which is", v: "<b>" + n + "²</b>: the first " + (n === 1 ? "odd number is already a square" : n + " odd numbers always land exactly on a square"), total: true },
+      { k: "Going back", v: "to place " + nth + " in the list: (" + nth + " + 1) ÷ 2 = <b>" + n + "</b>" },
+    ]);
+    let rows = "";
+    for (let p = 1; p <= 10; p++) rows += "<tr" + (p === n ? ' class="now"' : "") + "><td>" + p + '</td><td class="num">' + (2 * p - 1) + '</td><td class="how">2 × ' + p + " − 1</td><td class=\"num\">" + p * p + '</td><td class="how">' + p + "²</td></tr>";
+    $("table10o").innerHTML = '<thead><tr><th>Position</th><th class="num">The odd number</th><th>How to get it</th><th class="num">Running total</th><th>Which is</th></tr></thead><tbody>' + rows + "</tbody>";
+  }
+  function drawFind10() {
+    const v = find10o, p = (v + 1) / 2;
+    $("found10o").innerHTML = "<b>" + v + "</b> is the <b>" + p + "th</b> odd number, because (" + v + " + 1) ÷ 2 = " + p + ". So the first " + p + " odd numbers add up to " + p + " × " + p + " = <b>" + p * p + "</b>.";
+  }
+  $("count10o").addEventListener("input", (e) => { cnt10o = Number(e.target.value); drawOdd10(); });
+  pick("finds10o", (n) => { find10o = n; drawFind10(); });
+  drawOdd10(); drawFind10();
+
+  /* ---- Step 15: the even numbers ---- */
+  const EVEN_FINDS = [12, 18, 26, 40, 98];
+  let cnt11e = 4, find11e = 98;
+  $("finds11e").innerHTML = EVEN_FINDS.map((v) => '<button type="button" class="chip accent' + (v === find11e ? " on" : "") + '" data-n="' + v + '">' + v + "</button>").join("");
+  function drawEven11() {
+    const n = cnt11e, nth = 2 * n, total = n * (n + 1), tri = n * (n + 1) / 2;
+    const evens = Array.from({ length: n }, (_, i) => 2 * i + 2);
+    $("cntLab11e").textContent = n;
+    let strip = "";
+    for (let v = 1; v <= 20; v++) {
+      const even = v % 2 === 0;
+      strip += '<span class="' + (even ? (v <= nth ? "even on" : "even") : "") + '">' + v + "</span>";
+    }
+    $("strip11e").innerHTML = strip;
+    // row i holds 2i dots: i on the left of the middle, i on the right, so the halves are plain to see
+    const sp = Math.min(24, 340 / (2 * n + 0.6)), rad = sp * 0.36, gap = sp * 0.6;
+    const oy = (260 - (n - 1) * 0.9 * sp) / 2, ox = 180;
+    let svg = "";
+    for (let i = 1; i <= n; i++) {
+      const y = (oy + (i - 1) * 0.9 * sp).toFixed(1);
+      for (let k = 0; k < i; k++) {
+        svg += '<circle class="a" cx="' + (ox - gap / 2 - (k + 0.5) * sp).toFixed(1) + '" cy="' + y + '" r="' + rad.toFixed(1) + '"></circle>';
+        svg += '<circle class="b" cx="' + (ox + gap / 2 + (k + 0.5) * sp).toFixed(1) + '" cy="' + y + '" r="' + rad.toFixed(1) + '"></circle>';
+      }
+    }
+    $("draw11e").innerHTML = svg;
+    $("big11e").textContent = total; $("bigLab11e").textContent = "= " + n + " × " + (n + 1);
+    $("said11e").innerHTML = "The first <b>" + n + "</b> even " + (n === 1 ? "number is" : "numbers are") + " " + evens.join(", ") + ", and " + (n === 1 ? "it comes" : "they come") + " to <b>" + total + "</b> — a rectangle <b>" + n + " by " + (n + 1) + "</b>.";
+    $("work11e").innerHTML = linesHtml([
+      { k: "The rule", v: "start at 2, <b>add 2</b> every time" },
+      { k: "The " + n + (n === 1 ? "st" : n === 2 ? "nd" : n === 3 ? "rd" : "th") + " even number", v: "2 × " + n + " = <b>" + nth + "</b>, with no − 1 to remember" },
+      { k: "Every one is a double", v: evens.map((e, i) => "2 × " + (i + 1)).join(", ") + ": that is why each row splits into two equal halves" },
+      { k: "Add them up", v: n === 1 ? "2 = 2 × 1 = <b>2</b>" : evens.join(" + ") + " = 2 × (" + Array.from({ length: n }, (_, i) => i + 1).join(" + ") + ") = 2 × " + tri + " = <b>" + total + "</b>" },
+      { k: "Which is", v: "<b>" + n + " × " + (n + 1) + "</b>, a rectangle. The odd numbers made a square, " + n + "² = " + n * n + ", which is " + n + " less", total: true },
+      { k: "Going back", v: "to place " + nth + " in the list, just halve it: " + nth + " ÷ 2 = <b>" + n + "</b>" },
+    ]);
+    let rows = "";
+    for (let p = 1; p <= 10; p++) rows += "<tr" + (p === n ? ' class="now"' : "") + "><td>" + p + '</td><td class="num">' + 2 * p + '</td><td class="num">' + p * (p + 1) + '</td><td class="how">' + p + " × " + (p + 1) + '</td><td class="num">' + p * p + '</td><td class="how">' + p + "², " + p + " less</td></tr>";
+    $("table11e").innerHTML = '<thead><tr><th>Position</th><th class="num">The even number</th><th class="num">Evens add to</th><th>Which is</th><th class="num">Odds add to</th><th>Which is</th></tr></thead><tbody>' + rows + "</tbody>";
+  }
+  function drawFind11() {
+    const v = find11e, p = v / 2;
+    $("found11e").innerHTML = "<b>" + v + "</b> is the <b>" + p + "th</b> even number, because " + v + " ÷ 2 = " + p + ". So the first " + p + " even numbers add up to " + p + " × " + (p + 1) + " = <b>" + p * (p + 1) + "</b>.";
+  }
+  $("count11e").addEventListener("input", (e) => { cnt11e = Number(e.target.value); drawEven11(); });
+  pick("finds11e", (n) => { find11e = n; drawFind11(); });
+  drawEven11(); drawFind11();
+
+  /* ---- Step 16: the order of operations ---- */
+  const EXPRS = [
+    { s: "3 + 4 × 5", ans: 23, ltr: 35, rtl: null, first: "4 × 5",
+      st: [{ t: ["3", "+", "4", "×", "5"], hi: [2, 3, 4] }, { t: ["3", "+", "20"], hi: [0, 1, 2] }, { t: ["23"], hi: [] }] },
+    { s: "20 − 6 ÷ 2", ans: 17, ltr: 7, rtl: null, first: "6 ÷ 2",
+      st: [{ t: ["20", "−", "6", "÷", "2"], hi: [2, 3, 4] }, { t: ["20", "−", "3"], hi: [0, 1, 2] }, { t: ["17"], hi: [] }] },
+    { s: "2 × 3 + 4 × 5", ans: 26, ltr: 50, rtl: null, first: "both multiplications",
+      st: [{ t: ["2", "×", "3", "+", "4", "×", "5"], hi: [0, 1, 2, 4, 5, 6] }, { t: ["6", "+", "20"], hi: [0, 1, 2] }, { t: ["26"], hi: [] }] },
+    { s: "8 + 12 ÷ 4", ans: 11, ltr: 5, rtl: null, first: "12 ÷ 4",
+      st: [{ t: ["8", "+", "12", "÷", "4"], hi: [2, 3, 4] }, { t: ["8", "+", "3"], hi: [0, 1, 2] }, { t: ["11"], hi: [] }] },
+    { s: "10 − 2 − 3", ans: 5, ltr: 5, rtl: 11, first: "10 − 2",
+      st: [{ t: ["10", "−", "2", "−", "3"], hi: [0, 1, 2] }, { t: ["8", "−", "3"], hi: [0, 1, 2] }, { t: ["5"], hi: [] }] },
+    { s: "12 ÷ 4 × 3", ans: 9, ltr: 9, rtl: 1, first: "12 ÷ 4",
+      st: [{ t: ["12", "÷", "4", "×", "3"], hi: [0, 1, 2] }, { t: ["3", "×", "3"], hi: [0, 1, 2] }, { t: ["9"], hi: [] }] },
+  ];
+  let ex24 = 0;
+  $("ex24o").innerHTML = EXPRS.map((e, i) => '<button type="button" class="chip accent' + (i === ex24 ? " on" : "") + '" data-n="' + i + '">' + e.s + "</button>").join("");
+  function drawOrder24() {
+    const e = EXPRS[ex24];
+    $("steps24o").innerHTML = e.st.map((st, k) => '<div class="line">'
+      + st.t.map((tok, i) => '<span class="' + (k === e.st.length - 1 ? "done" : st.hi.indexOf(i) >= 0 ? "on" : "") + '">' + tok + "</span>").join("")
+      + (k === e.st.length - 1 ? "" : "<b>then</b>") + "</div>").join("");
+    $("big24o").textContent = e.ans;
+    $("said24o").innerHTML = "Do <b>" + e.first + "</b> first, because " + (e.rtl === null ? "× and ÷ are settled before + and −" : "equal ranks are worked left to right") + ". The answer is <b>" + e.ans + "</b>.";
+    const lines = [
+      { k: "The expression", v: "<b>" + e.s + "</b>" },
+      { k: "First move", v: "<b>" + e.first + "</b>, highlighted above" },
+      { k: "The answer", v: "<b>" + e.ans + "</b>", total: true },
+    ];
+    if (e.ltr !== e.ans) lines.push({ k: "Straight along the line", v: "reading left to right regardless would give <b>" + e.ltr + "</b>, which is not what the expression says" });
+    if (e.rtl !== null) lines.push({ k: "And from the right", v: "starting at the other end would give <b>" + e.rtl + "</b> — which is why equal ranks need a reading direction of their own" });
+    $("work24o").innerHTML = linesHtml(lines);
+  }
+  $("table24o").innerHTML = '<thead><tr><th>Expression</th><th>Done first</th><th class="num">The answer</th><th class="num">Straight along the line</th><th>Agree?</th></tr></thead><tbody>'
+    + EXPRS.map((e, i) => "<tr" + (i === ex24 ? ' class="now"' : "") + "><td>" + e.s + '</td><td class="how">' + e.first + '</td><td class="num">' + e.ans + '</td><td class="num">' + e.ltr + "</td><td>" + (e.ltr === e.ans ? "yes, this one is safe either way" : "no") + "</td></tr>").join("")
+    + "</tbody>";
+  pick("ex24o", (i) => {
+    ex24 = i;
+    drawOrder24();
+    [...$("table24o").querySelectorAll("tbody tr")].forEach((r, k) => r.classList.toggle("now", k === i));
+  });  drawOrder24();
+
+  /* ---- Step 17: factors and multiples ---- */
+  const FACT_NUMS = [12, 16, 24, 30, 36, 48, 49, 60];
+  let num12f = 24;
+  $("nums12f").innerHTML = FACT_NUMS.map((v) => '<button type="button" class="chip accent' + (v === num12f ? " on" : "") + '" data-n="' + v + '">' + v + "</button>").join("");
+  function drawFactors12() {
+    const v = num12f, f = factorsOf(v), n = f.length, root = Math.sqrt(v), sq = Number.isInteger(root);
+    // the factors in a row, each joined by an arc to its partner; a square's middle factor loops to itself
+    const sp = Math.min(40, 340 / n), left = 180 - (n * sp) / 2, x = (i) => left + (i + 0.5) * sp, baseY = 168;
+    let svg = "";
+    for (let i = 0; i < n / 2; i++) {
+      const j = n - 1 - i;
+      if (i === j) svg += '<path class="self" d="M ' + (x(i) - 9).toFixed(1) + " " + baseY + " A 9 14 0 1 1 " + (x(i) + 9).toFixed(1) + " " + baseY + '"></path>';
+      else {
+        const x1 = x(i), x2 = x(j), h = Math.min(150, 22 + (x2 - x1) * 0.5);
+        svg += '<path d="M ' + x1.toFixed(1) + " " + baseY + " Q " + ((x1 + x2) / 2).toFixed(1) + " " + (baseY - 2 * h).toFixed(1) + " " + x2.toFixed(1) + " " + baseY + '"></path>';
+      }
+    }
+    for (let i = 0; i < n; i++) {
+      const mid = n % 2 === 1 && i === (n - 1) / 2;
+      svg += '<circle class="' + (mid ? "self" : "") + '" cx="' + x(i).toFixed(1) + '" cy="' + baseY + '" r="3.5"></circle>';
+      svg += '<text class="' + (mid ? "self" : "") + '" x="' + x(i).toFixed(1) + '" y="188">' + f[i] + "</text>";
+    }
+    $("rain12f").innerHTML = svg;
+    $("big12f").textContent = n;
+    $("bigLab12f").textContent = n === 1 ? "factor" : sq ? "factors — an odd number" : "factors";
+    const pairs = [];
+    for (let i = 0; i < n / 2; i++) pairs.push(f[i] + " × " + f[n - 1 - i]);
+    $("said12f").innerHTML = "<b>" + v + "</b> has <b>" + n + "</b> factors: " + f.join(", ") + ". They make " + pairs.length + " pair" + (pairs.length === 1 ? "" : "s") + (sq ? ", and the last one is <b>" + root + " × " + root + "</b> — a number paired with itself." : ".");
+    $("work12f").innerHTML = linesHtml([
+      { k: "A factor", v: "divides into <b>" + v + "</b> exactly, leaving nothing over" },
+      { k: "The pairs", v: pairs.join(", ") },
+      { k: "Where they meet", v: sq ? "at <b>" + root + "</b>, the square root of " + v + ", which pairs with itself" : "the square root of " + v + " is between <b>" + Math.floor(root) + "</b> and <b>" + (Math.floor(root) + 1) + "</b>, so past " + Math.floor(root) + " the pairs only repeat backwards" },
+      { k: "How many", v: sq ? "<b>" + n + "</b> — an <b>odd</b> number, because " + root + " × " + root + " uses one number twice. Only a square does that" : "<b>" + n + "</b> — an <b>even</b> number, because every pair is two different numbers", total: true },
+    ]);
+    const ms = Array.from({ length: 12 }, (_, i) => (i + 1) * v);
+    $("mults12f").innerHTML = ms.map((m, i) => '<span class="' + (i === 0 ? "first" : "") + '">' + fmt(m) + "</span>").join("") + '<span class="ever">… for ever</span>';
+    $("mulSaid12f").innerHTML = "The multiples of <b>" + v + "</b> are its times table. The list above stops at <b>" + fmt(ms[11]) + "</b> only because the page runs out of room — there is no last one. And <b>" + v + "</b> is a multiple of every one of its own factors, which is the same fact read backwards.";
+  }
+  $("table12f").innerHTML = '<thead><tr><th>Number</th><th>Its factors</th><th class="num">How many</th><th>Square?</th></tr></thead><tbody>'
+    + FACT_NUMS.map((v) => { const f = factorsOf(v), r = Math.sqrt(v);
+        return "<tr" + (v === num12f ? ' class="now"' : "") + "><td>" + v + '</td><td class="how">' + f.join(", ") + '</td><td class="num">' + f.length + '</td><td class="how">' + (Number.isInteger(r) ? r + " × " + r + ", so odd" : "no, so even") + "</td></tr>"; }).join("")
+    + "</tbody>";
+  pick("nums12f", (n) => {
+    num12f = n;
+    drawFactors12();
+    [...$("table12f").querySelectorAll("tbody tr")].forEach((r) => r.classList.toggle("now", Number(r.children[0].textContent) === n));
+  });
+  drawFactors12();
+
+  /* ---- Step 18: common factors and common multiples ---- */
+  const PAIRS = [[4, 6], [6, 9], [8, 12], [12, 18], [8, 16], [7, 11]];
+  let pair13c = 3;
+  $("pairs13c").innerHTML = PAIRS.map((p, i) => '<button type="button" class="chip accent' + (i === pair13c ? " on" : "") + '" data-n="' + i + '">' + p[0] + " and " + p[1] + "</button>").join("");
+  function drawCommon13() {
+    const [a, b] = PAIRS[pair13c];
+    const fa = factorsOf(a), fb = factorsOf(b);
+    const both = fa.filter((x) => fb.indexOf(x) >= 0), onlyA = fa.filter((x) => fb.indexOf(x) < 0), onlyB = fb.filter((x) => fa.indexOf(x) < 0);
+    const hcf = gcd(a, b), lcm = (a * b) / hcf;
+    const cy = 108, r = 76, cx1 = 124, cx2 = 236;
+    const stack = (items, x, cls) => items.length
+      ? items.map((v, i) => '<text class="' + cls + '" x="' + x + '" y="' + (cy - ((items.length - 1) * 22) / 2 + i * 22 + 5) + '">' + v + "</text>").join("")
+      : '<text class="none" x="' + x + '" y="' + (cy + 5) + '">—</text>';
+    $("venn13c").innerHTML =
+      '<circle cx="' + cx1 + '" cy="' + cy + '" r="' + r + '"></circle><circle cx="' + cx2 + '" cy="' + cy + '" r="' + r + '"></circle>'
+      + '<text class="head" x="' + cx1 + '" y="22">' + a + '</text><text class="head" x="' + cx2 + '" y="22">' + b + "</text>"
+      + stack(onlyA, 98, "") + stack(both, 180, "mid") + stack(onlyB, 262, "")
+      + '<text class="cap" x="98" y="205">only ' + a + '</text><text class="cap" x="180" y="205">both</text><text class="cap" x="262" y="205">only ' + b + "</text>";
+    $("bigH13c").textContent = hcf;
+    $("saidH13c").innerHTML = both.length === 1
+      ? "<b>" + a + "</b> and <b>" + b + "</b> share nothing but <b>1</b>. That is as little as two numbers can share, because 1 divides into everything."
+      : "<b>" + a + "</b> and <b>" + b + "</b> share " + both.length + " factors: " + both.join(", ") + ". The highest is <b>" + hcf + "</b>." + (onlyA.length ? "" : " Notice that <b>" + a + "</b>'s ring is empty on its own side: every factor of " + a + " is a factor of " + b + " too.");
+    $("workH13c").innerHTML = linesHtml([
+      { k: "Factors of " + a, v: fa.join(", ") },
+      { k: "Factors of " + b, v: fb.join(", ") },
+      { k: "In both lists", v: "<b>" + both.join(", ") + "</b> — the middle of the rings" },
+      { k: "Highest common factor", v: "<b>" + hcf + "</b>" + (hcf === Math.min(a, b) ? ", which is " + Math.min(a, b) + " itself, because " + Math.min(a, b) + " divides into " + Math.max(a, b) : hcf === 1 ? ", the only thing they share" : ". There IS a highest, because both lists stop"), total: true },
+    ]);
+    const row = (x, id) => {
+      const k = Math.min(12, Math.ceil(lcm / x) + 3);
+      const ms = Array.from({ length: k }, (_, i) => (i + 1) * x);
+      $(id).innerHTML = ms.map((m) => '<span class="' + (m % lcm === 0 ? "both" : "") + '">' + fmt(m) + "</span>").join("") + '<span class="ever">… for ever</span>';
+    };
+    $("labA13c").textContent = a; $("labB13c").textContent = b;
+    row(a, "multsA13c"); row(b, "multsB13c");
+    $("bigL13c").textContent = fmt(lcm);
+    $("saidL13c").innerHTML = "The first number in both times tables is <b>" + fmt(lcm) + "</b>. After it come " + fmt(2 * lcm) + ", " + fmt(3 * lcm) + " and so on — every common multiple is a multiple of this one.";
+    $("workL13c").innerHTML = linesHtml([
+      { k: "Counting in " + a + "s", v: Array.from({ length: 4 }, (_, i) => fmt((i + 1) * a)).join(", ") + ", …" },
+      { k: "Counting in " + b + "s", v: Array.from({ length: 4 }, (_, i) => fmt((i + 1) * b)).join(", ") + ", …" },
+      { k: "No highest", v: "neither list ever stops, so their common numbers never stop either. That is why we name the <b>lowest</b>" },
+      { k: "Lowest common multiple", v: "<b>" + fmt(lcm) + "</b>" + (hcf === 1 ? ", which is just " + a + " × " + b + ", because they share nothing but 1" : lcm === Math.max(a, b) ? ", which is " + Math.max(a, b) + " itself, because " + Math.min(a, b) + " divides into it" : ""), total: true },
+      { k: "Worth checking", v: "<b>" + hcf + " × " + fmt(lcm) + " = " + fmt(a * b) + "</b>, and " + a + " × " + b + " = " + fmt(a * b) + " too", total: true },
+    ]);
+  }
+  $("table13c").innerHTML = '<thead><tr><th>The pair</th><th>Common factors</th><th class="num">Highest</th><th class="num">Lowest common multiple</th><th class="how">HCF × LCM</th></tr></thead><tbody>'
+    + PAIRS.map(([a, b], i) => { const both = factorsOf(a).filter((x) => b % x === 0), h = gcd(a, b), l = (a * b) / h;
+        return "<tr" + (i === pair13c ? ' class="now"' : "") + "><td>" + a + " and " + b + '</td><td class="how">' + both.join(", ") + '</td><td class="num">' + h + '</td><td class="num">' + l + '</td><td class="how">' + h + " × " + l + " = " + a * b + "</td></tr>"; }).join("")
+    + "</tbody>";
+  pick("pairs13c", (i) => {
+    pair13c = i;
+    drawCommon13();
+    [...$("table13c").querySelectorAll("tbody tr")].forEach((r, k) => r.classList.toggle("now", k === i));
+  });
+  drawCommon13();
+
+  /* ---- Step 19: divisibility rules ---- */
+  const DIV_NUMS = [3600, 2024, 1278, 945, 512, 7315], DIVISORS = [2, 3, 4, 5, 6, 8, 9, 10, 7];
+  let num14d = 3600, rule14d = 4;
+  const digitSum = (n) => String(n).split("").reduce((a, c) => a + Number(c), 0);
+  const lastN = (n, k) => Number(String(n).slice(-k));
+  const lastS = (n, k) => String(n).slice(-k);
+  // how many digits from the right each rule reads; 0 means all of them, -1 means none
+  const READS = { 2: 1, 5: 1, 10: 1, 4: 2, 8: 3, 3: 0, 9: 0, 6: 0, 7: -1 };
+  const RULE_TEXT = {
+    2: "the last digit is even",
+    3: "the digits add up to a multiple of 3",
+    4: "the last two digits make a multiple of 4",
+    5: "the last digit is 0 or 5",
+    6: "it passes the rule for 2 <b>and</b> the rule for 3",
+    8: "the last three digits make a multiple of 8",
+    9: "the digits add up to a multiple of 9",
+    10: "the last digit is 0",
+    7: "there is no rule worth learning — you have to divide",
+  };
+  $("nums14d").innerHTML = DIV_NUMS.map((v) => '<button type="button" class="chip accent' + (v === num14d ? " on" : "") + '" data-n="' + v + '">' + fmt(v) + "</button>").join("");
+  $("rules14d").innerHTML = DIVISORS.map((d) => '<button type="button" class="chip' + (d === rule14d ? " on" : "") + '" data-n="' + d + '">' + d + "</button>").join("");
+  function drawDiv14() {
+    const n = num14d, d = rule14d, ds = String(n).split(""), reads = READS[d];
+    const ok = n % d === 0, sum = digitSum(n);
+    $("digits14d").innerHTML = ds.map((c, i) => '<span class="' + (reads === 0 || (reads > 0 && i >= ds.length - reads) ? "lit" : "") + '">' + c + "</span>").join("");
+    $("verdict14d").className = "verdict " + (ok ? "good" : "bad");
+    $("verdict14d").textContent = ok ? fmt(n) + " divides by " + d + " exactly." : fmt(n) + " does not divide by " + d + ".";
+    // what the rule actually reads, shown as the one figure the decision turns on
+    let big, lab, evidence;
+    if (reads === 1) { big = ds[ds.length - 1]; lab = "the last digit"; evidence = "the last digit is <b>" + big + "</b>"; }
+    else if (reads === 2 || reads === 3) { big = lastS(n, reads); const val = lastN(n, reads);
+      lab = "the last " + (reads === 2 ? "two" : "three") + " digits";
+      evidence = "the last " + (reads === 2 ? "two" : "three") + " digits are <b>" + big + "</b>, and " + val + " ÷ " + d + " " + (val % d === 0 ? "= " + val / d + " exactly" : "leaves " + (val % d) + " over"); }
+    else if (d === 7) { big = "none"; lab = "no rule to use"; evidence = "nothing on the outside of <b>" + fmt(n) + "</b> tells you either way"; }
+    else if (d === 6) { big = sum; lab = "the digits added up"; evidence = "the last digit is <b>" + ds[ds.length - 1] + "</b> and the digits add to <b>" + sum + "</b>"; }
+    else { big = sum; lab = "the digits added up"; evidence = ds.join(" + ") + " = <b>" + sum + "</b>, and " + sum + " ÷ " + d + " " + (sum % d === 0 ? "= " + sum / d + " exactly" : "leaves " + (sum % d) + " over"); }
+    $("big14d").textContent = big;
+    $("bigLab14d").textContent = lab;
+    $("said14d").innerHTML = d === 7
+      ? "There is no quick test for <b>7</b>. The only way to know is to divide: " + fmt(n) + " ÷ 7 = <b>" + fmt(Math.floor(n / 7)) + "</b>" + (ok ? " exactly." : " remainder " + (n % 7) + ".")
+      : "The rule for <b>" + d + "</b> reads " + (reads === 0 ? "every digit" : reads === 1 ? "one digit" : reads === 2 ? "two digits" : "three digits") + " and ignores the rest, so it answers in a moment however long the number is.";
+    const lines = [
+      { k: "The rule for " + d, v: RULE_TEXT[d] },
+      { k: "What it reads", v: evidence },
+    ];
+    if (d === 6) lines.push({ k: "Both halves", v: (n % 2 === 0 ? "<b>2</b>: yes, it is even" : "<b>2</b>: no, it is odd") + " · " + (sum % 3 === 0 ? "<b>3</b>: yes, " + sum + " is a multiple of 3" : "<b>3</b>: no, " + sum + " is not a multiple of 3") });
+    lines.push({ k: "So", v: ok ? "<b>" + fmt(n) + "</b> divides by <b>" + d + "</b>" : "<b>" + fmt(n) + "</b> does <b>not</b> divide by " + d, total: true });
+    lines.push({ k: "Checking by dividing", v: fmt(n) + " ÷ " + d + " = <b>" + fmt(Math.floor(n / d)) + "</b>" + (ok ? " exactly, so the rule was right" : " remainder " + (n % d) + ", so the rule was right") });
+    $("work14d").innerHTML = linesHtml(lines);
+    $("allLab14d").textContent = fmt(n);
+    $("table14d").innerHTML = '<thead><tr><th class="num">Divide by</th><th>The rule</th><th>What it reads</th><th>Yes or no</th></tr></thead><tbody>'
+      + DIVISORS.map((k) => {
+          const yes = n % k === 0, r = READS[k];
+          const seen = r === -1 ? "nothing — divide it" : r === 0 ? "all the digits: " + ds.join(" + ") + " = " + sum : r === 1 ? "the last digit: " + ds[ds.length - 1] : "the last " + (r === 2 ? "two" : "three") + " digits: " + lastS(n, r);
+          return "<tr" + (k === d ? ' class="now"' : "") + '><td class="num">' + k + '</td><td class="how">' + RULE_TEXT[k].replace(/<\/?b>/g, "") + '</td><td class="how">' + seen + "</td><td>" + (yes ? "yes" : "no") + "</td></tr>";
+        }).join("")
+      + "</tbody>";
+  }
+  pick("nums14d", (n) => { num14d = n; drawDiv14(); });
+  pick("rules14d", (d) => { rule14d = d; drawDiv14(); });
+  drawDiv14();
+
+  /* ---- Step 20: the prime numbers ---- */
+  const SEEDS = [2, 3, 5, 7], PRIME_TESTS = [17, 21, 29, 49, 51, 91, 97];
+  const on12p = new Set([2]);
+  let test12p = 17;
+  $("seeds12p").innerHTML = SEEDS.map((v) => '<button type="button" class="chip' + (on12p.has(v) ? " on" : "") + '" data-n="' + v + '">' + v + "</button>").join("");
+  $("tests12p").innerHTML = PRIME_TESTS.map((v) => '<button type="button" class="chip accent' + (v === test12p ? " on" : "") + '" data-n="' + v + '">' + v + "</button>").join("");
+  const crossed12 = (v) => [...on12p].some((sd) => v % sd === 0 && v !== sd);
+  function drawPrimes12() {
+    const active = SEEDS.filter((sd) => on12p.has(sd));
+    let cells = "";
+    const standing = [];
+    for (let v = 1; v <= 100; v++) {
+      let cls = "";
+      if (v === 1) cls = "one";
+      else if (crossed12(v)) cls = "out";
+      else if (on12p.has(v)) cls = "seed";
+      if (cls !== "out") standing.push(v);
+      cells += '<span class="' + cls + '">' + v + "</span>";
+    }
+    $("grid12p").innerHTML = cells;
+    $("key12p").innerHTML = "Orange and teal are still standing; teal is a number doing the crossing out, and it stays. 1 is dashed, because it is neither.";
+    const found = standing.length - 1, done = active.length === SEEDS.length;
+    $("big12p").textContent = found;
+    $("bigLab12p").textContent = done ? "primes up to 100" : "still standing, besides 1";
+    // the smallest survivor that is not prime is exactly what the sieve has still to do
+    const left = standing.find((v) => v > 1 && factorsOf(v).length > 2);
+    if (!active.length) $("said12p").innerHTML = "Nothing crossed out yet. All <b>100</b> numbers are standing, and only <b>25</b> of them are prime.";
+    else if (active.length === 1 && active[0] === 2) $("said12p").innerHTML = "Crossing out the multiples of <b>2</b> removes every even number except 2 itself — the whole of Step 15 gone in one move. <b>" + found + "</b> numbers are left besides 1.";
+    else if (done) $("said12p").innerHTML = "That is the lot. Besides 1, <b>25</b> numbers are still standing, and those 25 are every prime up to 100.";
+    else $("said12p").innerHTML = "With the multiples of " + active.join(", ") + " gone, <b>" + found + "</b> numbers are left besides 1 — but not all of them are prime yet.";
+    const lines = [
+      { k: "What makes a prime", v: "exactly <b>two</b> factors: 1 and the number itself" },
+      { k: "Crossing out", v: active.length ? "every multiple of " + active.join(", ") + " goes, but " + (active.length === 1 ? "the number itself stays" : "the numbers themselves stay") : "nothing yet — turn a number on above" },
+      { k: "1 is neither", v: "it has only <b>one</b> factor, itself — not two and not more than two, so it is neither prime <b>nor</b> composite. It is the only number that is neither" },
+    ];
+    if (done) lines.push({ k: "Why stop at 7", v: "the next to try is 11, and 11 × 11 = <b>121</b>, already past 100. Anything still standing has no factor left to find, so it is <b>prime</b>", total: true });
+    else if (left) lines.push({ k: "Not finished", v: "<b>" + left + "</b> is still standing and it is <b>composite</b>: " + factorsOf(left)[1] + " × " + left / factorsOf(left)[1] + ". Cross out the multiples of " + factorsOf(left)[1] + " next", total: true });
+    $("work12p").innerHTML = linesHtml(lines);
+  }
+  function drawTest12() {
+    const v = test12p, f = factorsOf(v), prime = f.length === 2, r = Math.floor(Math.sqrt(v));
+    $("facs12p").innerHTML = f.map((d, i) => '<span class="' + (i > 0 && i < f.length - 1 ? "mid" : "") + '">' + d + "</span>").join("");
+    $("verdict12p").className = "verdict " + (prime ? "good" : "bad");
+    $("verdict12p").textContent = prime ? v + " is prime." : v + " is composite.";
+    $("why12p").innerHTML = prime
+      ? "Only <b>1</b> and <b>" + v + "</b> divide into it — exactly two factors. Nothing up to " + r + " goes into it, and " + (r + 1) + " × " + (r + 1) + " = " + (r + 1) * (r + 1) + " is already past it, so there is nothing left to try."
+      : "It has <b>" + f.length + "</b> factors rather than two, so it is <b>composite</b>: " + f.join(", ") + ". The middle ones are the giveaway — <b>" + f[1] + " × " + v / f[1] + " = " + v + "</b>." + (v === 49 ? " It is also a square number, and no square past 1 is ever prime." : [51, 91].indexOf(v) >= 0 ? " It looks prime, and that is exactly why it is worth testing rather than guessing." : "");
+  }
+  $("seeds12p").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    const n = Number(b.dataset.n);
+    if (on12p.has(n)) on12p.delete(n); else on12p.add(n);
+    b.classList.toggle("on", on12p.has(n));
+    drawPrimes12();
+  });
+  pick("tests12p", (n) => { test12p = n; drawTest12(); });
+  $("table12p").innerHTML = '<thead><tr><th>Position</th><th class="num">The prime</th><th class="num">Gap to the next</th><th>Odd or even</th></tr></thead><tbody>'
+    + [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37].map((p, i, a) => "<tr><td>" + (i + 1) + '</td><td class="num">' + p + '</td><td class="num">' + (i < a.length - 1 ? a[i + 1] - p : 4) + '</td><td class="how">' + (p === 2 ? "even, the only one" : "odd") + "</td></tr>").join("")
+    + "</tbody>";
+  drawPrimes12(); drawTest12();
+
+  /* ---- Stage labels ---- */
+  const STAGES = [
+    ["Odd numbers", "Stage 5", "5Nc.03, 5Nc.04"],
+    ["Even numbers", "Stage 5", "5Nc.03, 5Nc.04"],
+    ["The order of the operations", "Stage 5", "5Ni.03"],
+    ["Factors and multiples", "Stage 4", "4Ni.07"],
+    ["What two numbers share", "Stage 6", "6Ni.06"],
+    ["Divisibility rules", "Stages 4–6", "4Ni.08, 5Ni.07, 6Ni.07"],
+    ["Prime numbers", "Stage 5", "5Ni.06"],
+  ];
+  {
+    const heads = [...document.querySelectorAll('section.step[id] .step-head')];
+    const navs = [...document.querySelectorAll(".steps-nav a")].map((a) => a.textContent.replace(/^\d+\s*/, "").trim());
+    const kind = (st) => (st.indexOf("Beyond") === 0 ? "beyond" : st.indexOf("6") >= 0 ? "up" : "");
+    STAGES.forEach(([title, st], i) => {
+      const h = heads[i];
+      if (!h || navs[i] !== title) return;
+      h.insertAdjacentHTML("beforeend", '<span class="stage ' + kind(st) + '">' + st + "</span>");
+    });
+    const tbl = document.getElementById("cambridge");
+    if (tbl) tbl.innerHTML = '<thead><tr><th class="num">Step</th><th>What it teaches</th><th>Stage</th><th>Objectives</th></tr></thead><tbody>'
+      + STAGES.map(([title, st, codes], i) => "<tr><td class=\"num\">" + (i + 1) + "</td><td>" + title + '</td><td class="how">' + st + '</td><td class="how">' + codes + "</td></tr>").join("")
+      + "</tbody>";
+  }
+
+  /* ---- The voice bar: read this step aloud ---- */
+  // Modelled on the Grade 1 app's speaker. It reads what is ON THE PAGE rather than a script kept
+  // beside it, so the words spoken and the words shown cannot drift apart.
+  {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      let speaking = null;                       // the one button currently talking
+      const stopAll = () => {
+        synth.cancel();
+        if (speaking) { speaking.textContent = "Listen"; speaking.classList.remove("on"); }
+        speaking = null;
+      };
+      // what a step is worth reading: its opening paragraph, then the note that closes it
+      const readable = (sec) => [...sec.querySelectorAll(":scope > .intro, :scope > .note")]
+        .map((e) => e.textContent.trim()).filter(Boolean).join(" ");
+      for (const sec of document.querySelectorAll("section.step[id]")) {
+        const words = readable(sec);
+        if (!words) continue;                    // no prose, no button
+        const bar = document.createElement("p");
+        bar.className = "say";
+        bar.innerHTML = '<span class="ico" aria-hidden="true">&#9835;</span>'
+          + '<span class="lab">Have this step read to you.</span>'
+          + '<button type="button">Listen</button>';
+        const btn = bar.querySelector("button");
+        btn.addEventListener("click", () => {
+          const wasMe = speaking === btn;
+          stopAll();
+          if (wasMe) return;                     // a second press is a stop
+          const u = new SpeechSynthesisUtterance(readable(sec));
+          u.rate = 0.95;                         // a shade under default, for ten-year-olds
+          u.onend = stopAll;
+          u.onerror = stopAll;
+          speaking = btn;
+          btn.textContent = "Stop";
+          btn.classList.add("on");
+          synth.speak(u);
+        });
+        const head = sec.querySelector(".step-head");
+        head.insertAdjacentElement("afterend", bar);
+      }
+      window.addEventListener("beforeunload", stopAll);
+    }
+  }
+
+})();
+</script>
+</body>
+</html>

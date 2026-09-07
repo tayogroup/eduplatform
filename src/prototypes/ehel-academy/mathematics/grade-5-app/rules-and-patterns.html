@@ -1,0 +1,995 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rules and Patterns</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    /* Ehel navy, lifted coral/teal/gold — copied from mathematics/grade-1-app/g1v2 so the two
+       lessons are the same design rather than two designs that resemble each other. It is
+       unconditionally dark there and here: the navy IS the design, not a dark mode. */
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --sel-ink: #06231F;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { background: #183B56; }
+  body::before { content: ""; position: fixed; inset: 0; z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%); }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { letter-spacing: -0.02em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; line-height: 1.15; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  [hidden] { display: none !important; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  /* header */
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding: 12px 0 28px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .hero h1 { font-size: clamp(38px, 6vw, 60px); font-weight: 700; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .lede { max-width: 32em; margin-top: 12px; color: var(--muted); font-size: 18px; }
+  .hero-mini { display: grid; grid-template-columns: repeat(5, 12px); gap: 4px; padding: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+  .hero-mini i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+  .hero-mini i.l { background: var(--teal); }
+  @media (max-width: 680px) { .hero { grid-template-columns: 1fr; } .hero-mini { justify-self: start; } }
+
+  .steps-nav { position: sticky; top: 0; z-index: 5; display: flex; gap: 6px; padding: 10px 0; margin: 0 0 28px; background: rgba(24, 59, 86, 0.94); border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .steps-nav a { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); text-decoration: none; font-size: 15px; white-space: nowrap; }
+  .steps-nav a b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--teal); color: var(--sel-ink); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; }
+  .steps-nav a.check b { background: var(--accent); color: var(--accent-ink); }
+  .steps-nav .navgroup { flex: 0 0 auto; display: inline-flex; align-items: center; padding: 0 12px 0 10px;
+    font: 700 11px "Atkinson Hyperlegible", system-ui, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted); white-space: nowrap; border-left: 2px solid var(--line); }
+  .steps-nav .navgroup:first-child { border-left: 0; padding-left: 0; }
+  .route { margin: 14px 0 0; padding: 12px 16px; border-left: 4px solid var(--teal); border-radius: 0 10px 10px 0;
+    background: var(--teal-soft); color: var(--ink); font-size: 15px; line-height: 1.55; }
+  .route b { color: var(--teal); }
+
+
+  /* step cards */
+  .step { background: rgba(20, 43, 62, 0.88); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 28px; scroll-margin-top: 70px; min-width: 0; overflow-x: clip; }
+  .step-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-bottom: 8px; }
+  .step-num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.06em; color: var(--teal); text-transform: uppercase; white-space: nowrap; }
+  .step h2 { font-size: clamp(26px, 3.6vw, 34px); }
+  .step .intro { max-width: 36em; color: var(--muted); margin: 6px 0 22px; }
+  .two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: minmax(0, 1fr); } }
+
+  .picker-lab { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 14px 0 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--card); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .chip:hover { border-color: var(--teal); }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: var(--sel-ink); }
+  .chip.accent.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .chip.good:not(.on) { background: var(--good-soft); border-color: var(--good); }
+  .chip.oops:not(.on) { background: var(--bad-soft); border-color: var(--bad); }
+  input[type="range"] { width: 100%; accent-color: var(--accent); margin: 10px 0; }
+  .chip.on { box-shadow: 0 4px 0 rgba(0, 0, 0, 0.28); }
+  .chip.on:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.28); }
+  .btn { padding: 10px 18px; border-radius: 999px; border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+  .btn.ghost { background: transparent; border: 1.5px solid var(--line); color: var(--ink); }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+  .working { display: grid; gap: 8px; margin-top: 14px; font-variant-numeric: tabular-nums; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 10px 14px; border-radius: 10px; background: var(--teal-soft); }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; max-width: 12em; }
+  .working .line .v { font-size: 18px; }
+  .working .line .v b { color: var(--accent); }
+  @media (max-width: 480px) { .working .line { grid-template-columns: minmax(0, 1fr); gap: 2px; } .working .line .k { max-width: none; } }
+  .note { margin-top: 18px; padding: 14px 16px; border-radius: 12px; background: var(--accent-soft); border-left: 4px solid var(--accent); max-width: 40em; }
+  .note b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+  .said { font-size: 19px; }
+  .said b { color: var(--accent); }
+  .big-num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(52px, 9vw, 84px); line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .big-num small { font-size: 0.45em; color: var(--ink); font-weight: 600; margin-left: 6px; }
+  .answer { display: grid; gap: 4px; margin-top: 10px; padding: 12px 16px; border-radius: 12px; background: var(--teal-soft); }
+  .answer .lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .answer .val { font-family: "Inter", "Segoe UI", sans-serif; font-size: 22px; font-weight: 700; color: var(--teal); font-variant-numeric: tabular-nums; }
+  .verdict { margin-top: 8px; min-height: 1.5em; font-weight: 700; }
+  .verdict.good { color: var(--good); }
+  .verdict.bad { color: var(--bad); }
+  .table-wrap { overflow-x: auto; }
+  table.plain { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  table.plain th, table.plain td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  table.plain th { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  table.plain td.num, table.plain th.num { text-align: right; }
+  table.plain td.how { color: var(--muted); font-size: 15px; }
+  table.plain tr.now td { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 18px; background: var(--teal-soft); }
+
+  /* dots */
+  .dots { display: grid; gap: 4px; width: 100%; max-width: 360px; padding: 10px; border-radius: 14px; background: var(--cell); aspect-ratio: 1; }
+  .dots i { display: block; width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--accent); transition: background 120ms ease; }
+  .dots i.l { background: var(--teal); }
+  .dots i.extra { background: var(--bad); }
+  .dots i.ghost { background: transparent; border: 2px dashed var(--line); }
+  .dots i.ok { background: var(--good); }
+  .dots.loose { aspect-ratio: auto; }
+  .sq-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .sq-list button { padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--card); font-variant-numeric: tabular-nums; font-size: 15px; }
+  .sq-list button b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+  .sq-list button.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .sq-list button.on b { color: inherit; }
+
+  /* cubes */
+  .cube { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .cube polygon { stroke: var(--card); stroke-width: 1; }
+  .cube .top { fill: var(--accent); }
+  .cube .left { fill: color-mix(in srgb, var(--accent) 74%, black); }
+  .cube .right { fill: color-mix(in srgb, var(--accent) 87%, black); }
+  .cube .top.hi { fill: var(--teal); }
+  .cube .left.hi { fill: color-mix(in srgb, var(--teal) 74%, black); }
+  .cube .right.hi { fill: color-mix(in srgb, var(--teal) 87%, black); }
+  .cube.done .top { fill: var(--good); }
+  .cube.done .left { fill: color-mix(in srgb, var(--good) 74%, black); }
+  .cube.done .right { fill: color-mix(in srgb, var(--good) 87%, black); }
+  .dots.blocks i { border-radius: 3px; }
+  .cmp { display: grid; gap: 10px; margin-top: 14px; }
+  .cmp-row { display: grid; grid-template-columns: 86px 1fr auto; gap: 10px; align-items: center; }
+  .cmp-lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .cmp-bar { position: relative; height: 26px; border-radius: 8px; background: var(--cell); overflow: hidden; }
+  .cmp-bar .fill { position: absolute; inset: 0 auto 0 0; background: var(--teal); transition: width 200ms ease; }
+  .cmp-bar .fill.mine { background: var(--accent); }
+  .cmp-bar .fill.match { background: var(--good); }
+  .cmp-val { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-variant-numeric: tabular-nums; min-width: 3.5em; text-align: right; }
+
+  /* triangles */
+  .tri { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .tri circle.t { fill: var(--accent); }
+  .tri circle.t2 { fill: var(--teal); }
+
+  /* sequence strip */
+  .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; margin-top: 10px; }
+  .seq .term { display: grid; place-items: center; min-width: 54px; padding: 10px 12px; border-radius: 12px; background: var(--teal-soft); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .seq .term.start { background: var(--accent); color: var(--accent-ink); }
+  .seq .term.next { background: var(--good-soft); outline: 2px dashed var(--good); }
+  .seq .term.hidden-term { background: var(--cell); color: var(--muted); }
+  .seq .term small { display: block; font-family: "Atkinson Hyperlegible", sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .seq .term.start small { color: var(--accent-ink); opacity: 0.85; }
+  .seq .jump { display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--teal); min-width: 40px; }
+  .seq .jump span { display: block; line-height: 1; }
+  .seq .jump .arrow { font-size: 18px; color: var(--muted); }
+  .seq .jump.hide span:first-child { visibility: hidden; }
+  .seq .dots3 { color: var(--muted); font-weight: 700; padding: 0 4px; }
+
+  /* the odd numbers: a strip of counting numbers, and the running total as one bar */
+  .numstrip { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+  .numstrip span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: var(--cell); color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .numstrip span.odd, .numstrip span.even { background: var(--card); border: 1.5px solid var(--line); color: var(--ink); }
+  .numstrip span.odd.on, .numstrip span.even.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .evens { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .evens circle.a { fill: var(--accent); }
+  .evens circle.b { fill: var(--teal); }
+  .hundred { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; margin-top: 8px; }
+  .hundred span { display: grid; place-items: center; aspect-ratio: 1; border-radius: 6px; font-weight: 700;
+    font-size: clamp(9px, 2.4vw, 13px); font-variant-numeric: tabular-nums;
+    background: var(--accent); border: 1.5px solid var(--accent); color: var(--accent-ink); }
+  .hundred span.out { background: transparent; border-color: transparent; color: var(--muted); opacity: 0.45; text-decoration: line-through; }
+  .hundred span.one { background: transparent; border: 1.5px dashed var(--line); color: var(--muted); text-decoration: none; opacity: 1; }
+  .hundred span.seed { background: var(--teal); border-color: var(--teal); color: var(--sel-ink); }
+  .facs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .facs span { padding: 4px 11px; border-radius: 999px; border: 1.5px solid var(--line); font-weight: 700; font-size: 14px; color: var(--muted); }
+  .facs span.mid { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .rainbow { width: 100%; max-width: 400px; display: block; margin-top: 8px; }
+  .rainbow path { fill: none; stroke: var(--teal); stroke-width: 2.5; stroke-linecap: round; }
+  .rainbow path.self { stroke: var(--accent); stroke-width: 3; }
+  .rainbow circle { fill: var(--teal); }
+  .rainbow circle.self { fill: var(--accent); }
+  .rainbow text { font: 700 13px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .rainbow text.self { fill: var(--accent); }
+  .mults { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .mults span { padding: 6px 12px; border-radius: 8px; background: var(--teal-soft); color: var(--teal);
+    font-weight: 700; font-variant-numeric: tabular-nums; }
+  .mults span.first, .mults span.both { background: var(--accent); color: var(--accent-ink); }
+  .venn { width: 100%; max-width: 400px; display: block; margin-top: 8px; }
+  .venn circle { fill: var(--teal); fill-opacity: 0.2; stroke: var(--teal); stroke-width: 2; }
+  .venn text { font: 700 15px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .venn text.mid { fill: var(--accent); }
+  .venn text.head { font-size: 16px; fill: var(--teal); }
+  .venn text.cap { font-size: 11px; font-weight: 400; fill: var(--muted); letter-spacing: 0.06em; }
+  .venn text.none { font-weight: 400; fill: var(--muted); }
+  .digits { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .digits span { display: grid; place-items: center; min-width: 46px; padding: 12px 8px; border-radius: 12px;
+    background: var(--cell); color: var(--muted); font: 600 28px "Inter", "Segoe UI", sans-serif;
+    font-variant-numeric: tabular-nums; transition: background 120ms ease, color 120ms ease; }
+  .digits span.lit { background: var(--accent); color: var(--accent-ink); }
+  .digits span.place { background: var(--teal); color: var(--sel-ink); }
+  .roundline { width: 100%; max-width: 420px; display: block; margin-top: 8px; }
+  .roundline .near { fill: var(--accent-soft); }
+  .roundline .axis { stroke: var(--ink); stroke-width: 2; }
+  .roundline .tick { stroke: var(--ink); stroke-width: 2; }
+  .roundline .tick.half { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .roundline .drop { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 4 3; }
+  .roundline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .roundline text { font: 700 13px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .roundline text.half { font-weight: 400; fill: var(--muted); font-size: 12px; }
+  .roundline text.here { fill: var(--accent); font-size: 15px; }
+  .roundline text.win { fill: var(--accent); }
+  .negline { width: 100%; max-width: 460px; display: block; margin-top: 8px; }
+  .negline .span { fill: var(--accent-soft); }
+  .negline .axis { stroke: var(--ink); stroke-width: 2; }
+  .negline .tick { stroke: var(--muted); stroke-width: 1.2; }
+  .negline .tick.big { stroke: var(--ink); stroke-width: 1.8; }
+  .negline .zero { stroke: var(--teal); stroke-width: 2.5; }
+  .negline .dotA { fill: var(--teal); stroke: var(--card); stroke-width: 2.5; }
+  .negline .dotB { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .negline text { font: 700 12px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+  .negline text.num { fill: var(--ink); font-size: 11px; }
+  .negline text.nought { fill: var(--teal); font-size: 13px; }
+  .negline text.labA { fill: var(--teal); font-size: 14px; }
+  .negline text.labB { fill: var(--accent); font-size: 14px; }
+  .negline text.gap { fill: var(--accent); font-size: 12px; }
+  .negline text.ends { font-weight: 400; font-size: 11px; }
+  .digits span.col { display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; padding: 9px 7px 7px; min-width: 58px; }
+  .digits span.col small { font: 700 9px "Atkinson Hyperlegible", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.85; }
+  .digits span.pt { min-width: 0; padding: 9px 1px; background: transparent; color: var(--accent); font-size: 34px; align-self: center; }
+  .zoomline { width: 100%; max-width: 460px; display: block; margin-top: 8px; }
+  .zoomline .axis { stroke: var(--ink); stroke-width: 2; }
+  .zoomline .tick { stroke: var(--muted); stroke-width: 1.2; }
+  .zoomline .tick.big { stroke: var(--ink); stroke-width: 1.8; }
+  .zoomline .fan { fill: var(--accent-soft); stroke: none; }
+  .zoomline .fanline { stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+  .zoomline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .zoomline text { font: 700 12px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .zoomline text.here { fill: var(--accent); font-size: 15px; }
+  .zoomline text.cap { font-weight: 400; font-size: 11px; fill: var(--muted); }
+  .fbar { display: flex; gap: 8px; margin-top: 10px; }
+  .fbar .whole { display: flex; gap: 2px; flex: 1; padding: 3px; border: 2px solid var(--line); border-radius: 10px; }
+  .fbar .whole.fine { gap: 0; padding: 2px; }
+  .fbar i { display: block; flex: 1; height: 54px; border-radius: 4px; background: var(--cell); }
+  .fbar .whole.fine i { border-radius: 0; }
+  .fbar i.on { background: var(--accent); }
+  .eqrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; }
+  .eqrow span { padding: 6px 12px; border-radius: 8px; background: var(--teal-soft); color: var(--teal);
+    font-weight: 700; font-variant-numeric: tabular-nums; }
+  .eqrow span.same { background: var(--accent); color: var(--accent-ink); }
+  .eqrow b { color: var(--muted); font-weight: 700; }
+  .pcgrid { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .pcgrid .hun { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; flex: 1;
+    min-width: 140px; max-width: 210px; padding: 4px; border: 2px solid var(--line); border-radius: 10px; }
+  .pcgrid i { display: block; aspect-ratio: 1; border-radius: 2px; background: var(--cell); }
+  .pcgrid i.on { background: var(--accent); }
+  .ubar { display: grid; gap: 10px; margin-top: 12px; }
+  .ubar .row { display: flex; align-items: center; gap: 10px; }
+  .ubar .sym { width: 28px; text-align: center; font-size: 22px; line-height: 1; }
+  .ubar .sym.a { color: var(--teal); }
+  .ubar .sym.b { color: var(--accent); }
+  .ubar .track { flex: 1; display: flex; gap: 4px; align-items: center; }
+  .ubar .fill { height: 34px; border-radius: 8px; background: var(--teal); }
+  .ubar .fill.b { background: var(--accent); }
+  .ubar .gap { height: 34px; border-radius: 8px; border: 2px dashed var(--muted); box-sizing: border-box; }
+  .ubar .val { width: 34px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .counters { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .counters i { display: block; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); }
+  .counters i.two { background: var(--teal); }
+  .expr { display: grid; gap: 8px; margin-top: 12px; }
+  .expr .line { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .expr span { padding: 6px 11px; border-radius: 8px; background: var(--cell); color: var(--muted);
+    font: 600 21px "Inter", "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; }
+  .expr span.on { background: var(--accent); color: var(--accent-ink); }
+  .expr span.done { background: var(--teal); color: var(--sel-ink); }
+  .expr b { color: var(--muted); font-size: 13px; font-weight: 700; padding: 0 4px; }
+  .stage { margin-left: auto; font: 700 11px "Atkinson Hyperlegible", system-ui, sans-serif;
+    letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 11px; border-radius: 999px;
+    background: var(--teal-soft); color: var(--teal); white-space: nowrap; align-self: center; }
+  .stage.up { background: var(--accent-soft); color: var(--accent); }
+  .stage.beyond { background: var(--cell); color: var(--muted); }
+  .say { display: flex; align-items: center; gap: 12px; margin: 14px 0 0; padding: 10px 12px;
+    background: var(--teal-soft); border: 1px solid var(--line); border-radius: 14px; }
+  .say .ico { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; background: var(--teal);
+    color: var(--sel-ink); display: grid; place-items: center; font-size: 19px; }
+  .say .lab { flex: 1; min-width: 0; font-size: 15px; color: var(--muted); }
+  .say button { flex: 0 0 auto; border: 0; cursor: pointer; padding: 9px 18px; border-radius: 999px;
+    background: var(--gold); color: var(--accent-ink); font: 700 15px "Atkinson Hyperlegible", system-ui, sans-serif;
+    box-shadow: 0 4px 0 var(--gold-press); }
+  .say button:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--gold-press); }
+  .say button.on { background: var(--accent); color: var(--accent-ink); box-shadow: 0 4px 0 #A8461F; }
+  .digits span.sep { min-width: 0; padding: 12px 0; background: transparent; color: var(--muted); }
+  .mults span.ever { background: transparent; color: var(--muted); }
+  .oddbar { display: flex; height: 42px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); margin-top: 10px; }
+  .oddbar div { display: grid; place-items: center; min-width: 0; background: var(--teal); color: var(--sel-ink); border-right: 2px solid var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; }
+  .oddbar div:last-child { border-right: 0; }
+  .oddbar div.last { background: var(--accent); color: var(--accent-ink); }
+
+  /* second gaps */
+  .gaps2 { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+  .gaps2 span { padding: 6px 12px; border-radius: 10px; background: var(--cell); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .gaps2 span.flat { background: var(--good-soft); color: var(--good); }
+  .gaps2 b { font-family: "Atkinson Hyperlegible", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+
+  /* number line */
+  .numline { width: 100%; max-width: 720px; display: block; margin-top: 8px; }
+  .numline .axis { stroke: var(--ink); stroke-width: 2; }
+  .numline .tick { stroke: var(--ink); stroke-width: 1.5; }
+  .numline .tick.minor { stroke: var(--muted); stroke-width: 1; }
+  .numline .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 12px; fill: var(--ink); text-anchor: middle; }
+  .numline .lab.zero { fill: var(--accent); }
+  .numline .hop { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+  .numline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2; }
+  .numline .dot.start { fill: var(--teal); }
+  .numline .hoplab { font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; font-size: 11px; fill: var(--teal); text-anchor: middle; }
+
+  /* patterns */
+  .pattern { width: 100%; max-width: 720px; display: block; margin-top: 8px; }
+  .pattern .stick { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
+  .pattern .stick.new { stroke: var(--teal); }
+  .pattern .dot { fill: var(--accent); }
+  .pattern .dot.new { fill: var(--teal); }
+  .pattern .table { fill: var(--cell); stroke: var(--ink); stroke-width: 2; }
+  .pattern .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; fill: var(--muted); text-anchor: middle; }
+
+  /* word problems and quiz */
+  .wp-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 12px; }
+  .wp-dots { display: flex; flex-wrap: wrap; gap: 6px; }
+  .wp-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--cell); border: 1.5px solid var(--line); }
+  .wp-dots i.now { background: var(--teal); border-color: var(--teal); }
+  .wp-dots i.good { background: var(--good); border-color: var(--good); }
+  .wp-dots i.oops { background: var(--bad); border-color: var(--bad); }
+  .wp-count { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .wp-card { padding: 22px; border-radius: 14px; background: var(--ground); border: 1px solid var(--line); }
+  .wp-scene { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .wp-text { font-size: 20px; line-height: 1.5; max-width: 34em; margin-top: 6px; }
+  .wp-card .picker-lab { color: var(--teal); }
+  .q-why { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+  .q-why.good { color: var(--good); }
+  .q-why.bad { color: var(--bad); }
+  .wp-card .working .line { background: var(--card); }
+  .wp-card .working .line.total { background: var(--accent-soft); }
+  .q { padding: 18px 0; border-top: 1px solid var(--line); }
+  .q:first-of-type { border-top: 0; padding-top: 4px; }
+  .q .stem { font-weight: 700; margin-bottom: 10px; }
+  .q .stem span { color: var(--teal); margin-right: 8px; font-family: "Inter", "Segoe UI", sans-serif; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt { padding: 10px 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); font-variant-numeric: tabular-nums; }
+  .opt:hover { border-color: var(--teal); }
+  .opt.right { background: var(--good-soft); border-color: var(--good); }
+  .opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .q .why { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+  .q .why.good { color: var(--good); }
+  .q .why.bad { color: var(--bad); }
+  .result { margin-top: 18px; padding: 18px 20px; border-radius: 14px; background: var(--teal-soft); display: none; align-items: center; gap: 18px; }
+  .result.show { display: flex; }
+  .result .big-num { font-size: 56px; color: var(--teal); }
+  .result p { max-width: 30em; }
+  .recap { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+  .recap div { padding: 14px 16px; border-radius: 12px; background: var(--ground); border: 1px solid var(--line); }
+  .recap b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 4px; color: var(--teal); }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+
+  /* ==================================================================
+     On paper. A browser prints no background colour unless the person
+     printing ticks a box, and this design is light text on navy — so
+     without this block the headings and every note print as nothing.
+     ================================================================== */
+  @media print {
+    :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+      --ground: #FFFFFF; --card: #FFFFFF; --cell: #E4EEE9; --line: #C7D8D3;
+      --ink: #1B2A2F; --muted: #55686C;
+      --accent: #C2482C; --accent-ink: #FFFFFF; --accent-soft: #FBE3D8;
+      --teal: #146B65; --teal-soft: #DCEFEC; --sel-ink: #FFFFFF;
+      --gold: #C99700; --gold-press: #A87F00; --plum: #6E3F88;
+      --good: #23694A; --good-soft: #DFF1E6; --bad: #A3382E; --bad-soft: #F7DEDA;
+      --shadow: none;
+      color-scheme: light;
+    }
+    html { background: #FFFFFF; }
+    body::before { display: none; }
+    body { background: #FFFFFF; color: var(--ink); font-size: 12pt; }
+
+    /* things that cannot work on paper */
+    .steps-nav, .say, .hero-mini, .btn, .tools { display: none !important; }
+
+    /* one step per sheet, so a teacher can hand out a single step */
+    .step { background: #FFFFFF; box-shadow: none; border-radius: 0;
+      break-before: page; margin: 0 0 10px; }
+    .wrap > .step:first-of-type { break-before: auto; }
+    .note, .working .line, .wp-card, .recap > div, table.plain tr { break-inside: avoid; }
+    h1, h2 { break-after: avoid; }
+
+    /* where a fill IS the meaning, it has to reach the paper */
+    .dots i, .hundred span, .fbar i, .pcgrid i, .counters i, .mults span, .digits span,
+    .expr span, .eqrow span, .facs span, .chip, .stage, .route, .note, .working .line,
+    .numstrip span, .oddbar div, .tenframe i, table.plain tr.now, .big-num span {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+
+    /* and where it is not, say it with weight instead of colour */
+    .chip { border: 1px solid var(--line); }
+    .chip.on { border: 2px solid var(--accent); font-weight: 700; }
+    a[href^="#"] { color: inherit; text-decoration: none; }
+  }
+  .steps-nav { flex-wrap: wrap; overflow-x: visible; }
+  .backlink { margin: 0 0 12px; }
+  .backlink a { color: var(--teal); text-decoration: none; font-weight: 700; font-size: 15px; }
+  .backlink a:hover { text-decoration: underline; }
+</style>
+
+<div class="wrap">
+  <p class="backlink"><a href="index.html">&larr; Grade 5 Mathematics</a></p>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 5 · Part 2 of 5</p>
+      <h1>Rules and Patterns</h1>
+      <p class="lede">Run a rule forwards to make a sequence, work a rule out backwards from its terms, find two unknown numbers from two facts, catch the squares and cubes hiding in a sequence, count matchstick patterns, and jump along a number line.</p>
+    </div>
+    <div class="hero-mini" aria-hidden="true" id="heroMini"></div>
+  </header>
+  <nav class="steps-nav" aria-label="Steps in this lesson">
+    <a href="#s8"><b>8</b> Run the rule</a>
+    <a href="#s9"><b>9</b> Find the rule</a>
+    <a href="#s10"><b>10</b> Two shapes, two facts</a>
+    <a href="#s11"><b>11</b> Hidden squares and cubes</a>
+    <a href="#s12"><b>12</b> Shape patterns</a>
+    <a href="#s13"><b>13</b> Number line steps</a>
+  </nav>
+  <!-- STEP 8 -->
+  <section class="step" id="s8">
+    <div class="step-head"><span class="step-num">Step 8</span><h2>Sequences with a rule: start, then keep doing it</h2></div>
+    <p class="intro">A sequence is a list of numbers in order, and a term is one number in the list. A rule like "start at 5 and add 4" makes the whole sequence: each term comes from the one before it. Pick a start number and a rule, then read the terms off the strip. The arrows show the rule being used again and again.</p>
+    <p class="picker-lab">Start at</p>
+    <div class="chips" id="starts4">
+      <button type="button" class="chip" data-n="3">3</button>
+      <button type="button" class="chip on" data-n="5">5</button>
+      <button type="button" class="chip" data-n="10">10</button>
+      <button type="button" class="chip" data-n="50">50</button>
+      <button type="button" class="chip" data-n="100">100</button>
+      <button type="button" class="chip" data-n="1">1</button>
+    </div>
+    <p class="picker-lab">The rule</p>
+    <div class="chips" id="rules4">
+      <button type="button" class="chip accent" data-n="0">add 3</button>
+      <button type="button" class="chip accent on" data-n="1">add 4</button>
+      <button type="button" class="chip accent" data-n="2">add 7</button>
+      <button type="button" class="chip accent" data-n="3">add 25</button>
+      <button type="button" class="chip accent" data-n="4">subtract 3</button>
+      <button type="button" class="chip accent" data-n="5">subtract 6</button>
+      <button type="button" class="chip accent" data-n="6">double</button>
+      <button type="button" class="chip accent" data-n="7">add 0.5</button>
+    </div>
+    <label for="terms4" class="picker-lab">How many terms: <span id="termsLab4">6</span></label>
+    <input type="range" id="terms4" min="3" max="10" value="6" step="1">
+    <div class="seq" id="seq4" aria-live="polite"></div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <p class="picker-lab">Working</p>
+        <div class="working" id="work4" aria-live="polite"></div>
+      </div>
+      <div>
+        <div class="answer" id="answer4" aria-live="polite"></div>
+        <div class="note"><b>Two things make a sequence: where it starts and the rule.</b> "Add 4" starting at 5 gives 5, 9, 13, 17. The same rule starting at 3 gives 3, 7, 11, 15: different sequence, same rule. And the rule is used one time FEWER than the number of terms: to reach the 6th term you use it 5 times.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 9 -->
+  <section class="step" id="s9">
+    <div class="step-head"><span class="step-num">Step 9</span><h2>Find the rule from the terms</h2></div>
+    <p class="intro">Now the sequence is given and the rule is hidden. Look at the GAP between one term and the next. If the gap is the same every time, the rule is "add that" or "subtract that". If the gaps change, look closer: maybe each term is double the last, or maybe the gaps are the odd numbers from Step 2. Pick a sequence and reveal it one move at a time.</p>
+    <p class="picker-lab">Pick a sequence</p>
+    <div class="chips" id="seqs5"></div>
+    <div class="seq" id="seq5" aria-live="polite"></div>
+    <div class="tools">
+      <button type="button" class="btn ghost" id="gaps5">1 · Show the gaps</button>
+      <button type="button" class="btn ghost" id="rule5">2 · Say the rule</button>
+      <button type="button" class="btn" id="next5">3 · Next two terms</button>
+    </div>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <p class="picker-lab">Working</p>
+        <div class="working" id="work5" aria-live="polite"></div>
+      </div>
+      <div>
+        <div class="answer" id="answer5" aria-live="polite"></div>
+        <div class="note"><b>Check the rule on EVERY gap, not just the first.</b> 2, 4, 6 looks like "add 2" and 2, 4, 8 looks like "add 2" for one gap. But the next gap is 4, so the rule there is "double". One gap can fool you; two or three gaps cannot.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 10 -->
+  <section class="step" id="s10">
+    <div class="step-head"><span class="step-num">Step 10</span><h2>Two shapes, two facts</h2></div>
+    <p class="intro">In the last two steps you knew the rule and worked out the terms. Now you know two <b>facts</b> and have to work out two numbers. A shape standing in for a number nobody has told you yet is where algebra begins. Two facts about two shapes are always exactly enough. One would leave you guessing and three could contradict each other.</p>
+    <p class="picker-lab">They add to … and differ by …</p>
+    <div class="chips" id="puz10u"></div>
+    <div class="two-col" style="margin-top:12px">
+      <div>
+        <div class="ubar" id="bar10u" aria-hidden="true"></div>
+        <p class="said" id="key10u" style="font-size:14px"></p>
+      </div>
+      <div>
+        <div class="big-num"><span id="big10u">7</span><small id="bigLab10u">is the triangle</small></div>
+        <p class="said" id="said10u" aria-live="polite"></p>
+        <div class="working" id="work10u" aria-live="polite"></div>
+      </div>
+    </div>
+    <p class="picker-lab" style="margin-top:18px">All six, side by side</p>
+    <div class="table-wrap">
+      <table class="plain" id="table10u"></table>
+    </div>
+    <div class="note"><b>Adding the two facts is the trick, and it works because one shape cancels itself out.</b> Put &#9650; + &#9679; = 10 underneath &#9650; &minus; &#9679; = 4 and add them. The ● is added once and taken away once, so it disappears entirely. That leaves ▲ + ▲ = 14. That is one shape on its own, and halving it finishes the job. Subtracting the facts instead makes the &#9650; disappear the same way. <b>Two facts, two unknowns.</b> One fact on its own leaves a whole list of answers. "They add to 10" is true of 9 and 1, 8 and 2, 7 and 3 and more. The second fact is what cuts the list down to one. <b>And the shapes are only placeholders.</b> A letter would do exactly the same job, which is what secondary school does. Write x and y instead of &#9650; and &#9679; and nothing else about the method changes.</div>
+  </section>
+
+  <!-- STEP 11 -->
+  <section class="step" id="s11">
+    <div class="step-head"><span class="step-num">Step 11</span><h2>Squares and cubes hiding in a sequence</h2></div>
+    <p class="intro">Step 8 said to look at the gaps, and that if they are all the same the rule is "add that". So what do you do when the gaps are NOT the same? Look at the gaps of the gaps. Squares and cubes turn up as sequences all the time, and this is how you catch them. Pick a sequence and say what is hiding in it.</p>
+    <p class="picker-lab">Pick a sequence</p>
+    <div class="chips" id="seqs9h"></div>
+    <div class="seq" id="strip9h" aria-live="polite"></div>
+    <p class="picker-lab">What is hiding in it?</p>
+    <div class="chips" id="kinds9h">
+      <button type="button" class="chip accent" data-k="same">The same gap every time</button>
+      <button type="button" class="chip accent" data-k="square">Square numbers</button>
+      <button type="button" class="chip accent" data-k="cube">Cube numbers</button>
+    </div>
+    <p class="verdict" id="verdict9h" aria-live="polite"></p>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <p class="picker-lab">The gaps, and the gaps of those</p>
+        <div class="gaps2" id="gaps9h" aria-live="polite"></div>
+      </div>
+      <div>
+        <p class="picker-lab">Working</p>
+        <div class="working" id="work9h" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="note"><b>The gaps of the gaps are the giveaway.</b> Every square-number sequence settles on the same one: 2, every single time. That holds whether the squares climb from 1², starting further along at 3², sitting one above a square, or counting back down from 10². Cube numbers never settle that quickly, because a cube climbs faster than a square: their gaps of gaps are 12, 18, 24 and still growing. And a plain "add 4" sequence has gaps of gaps of 0, because its gaps never change at all.</div>
+  </section>
+
+  <!-- STEP 12 -->
+  <section class="step" id="s12">
+    <div class="step-head"><span class="step-num">Step 12</span><h2>Shape patterns: count, then find the rule</h2></div>
+    <p class="intro">Patterns made of matchsticks or dots grow by a rule too. Count how many pieces pattern 1, pattern 2 and pattern 3 use, write the counts as a sequence, and the gap tells you the rule. Then you can say how many pieces pattern 10 needs without building it. Pick a pattern and slide through it.</p>
+    <p class="picker-lab">Pick a pattern</p>
+    <div class="chips" id="pats6"></div>
+    <label for="pos6" class="picker-lab">Pattern number: <span id="posLab6">3</span></label>
+    <input type="range" id="pos6" min="1" max="6" value="3" step="1">
+    <svg class="pattern" id="draw6" viewBox="0 0 720 150" role="img" aria-label="The pattern drawn with matchsticks or dots"></svg>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <div class="table-wrap"><table class="plain" id="table6"></table></div>
+      </div>
+      <div>
+        <p class="picker-lab">Working</p>
+        <div class="working" id="work6" aria-live="polite"></div>
+        <div class="note"><b>The gap is what one more piece of the pattern costs.</b> One more square on the end of a row of matchstick squares needs 3 sticks, not 4, because it shares a side. That is why the counts go up in 3s. Look at the picture to see WHY the rule is what it is, and the sequence to see WHAT it is.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 13 -->
+  <section class="step" id="s13">
+    <div class="step-head"><span class="step-num">Step 13</span><h2>Steps on a number line: decimals, and below zero</h2></div>
+    <p class="intro">A rule does not have to be a whole number, and a sequence does not have to stop at zero. "Start at 2, subtract 0.5" gives 2, 1.5, 1, 0.5, 0, −0.5. Watch the hops on the line: every hop is the same size, and the line simply carries on past zero into the negative numbers. Pick a start and a step.</p>
+    <label for="start7" class="picker-lab">Start at: <span id="startLab7">2</span></label>
+    <input type="range" id="start7" min="-10" max="10" value="2" step="1">
+    <p class="picker-lab">The step</p>
+    <div class="chips" id="steps7">
+      <button type="button" class="chip accent" data-n="0.5">add 0.5</button>
+      <button type="button" class="chip accent" data-n="1.5">add 1.5</button>
+      <button type="button" class="chip accent" data-n="2">add 2</button>
+      <button type="button" class="chip accent" data-n="3">add 3</button>
+      <button type="button" class="chip accent on" data-n="-0.5">subtract 0.5</button>
+      <button type="button" class="chip accent" data-n="-2">subtract 2</button>
+      <button type="button" class="chip accent" data-n="-3">subtract 3</button>
+    </div>
+    <svg class="numline" id="line7" viewBox="0 0 720 120" role="img" aria-label="A number line from minus 12 to 12 with the hops of the sequence drawn on it"></svg>
+    <div class="two-col" style="margin-top:14px">
+      <div>
+        <p class="picker-lab">Working</p>
+        <div class="working" id="work7" aria-live="polite"></div>
+      </div>
+      <div>
+        <div class="seq" id="seq7" aria-live="polite"></div>
+        <div class="note"><b>Going down past zero.</b> 1, then 1 − 3 is −2, not 2. On the line, subtracting means hopping LEFT, and the numbers left of zero are negative: −1, −2, −3. The hops stay the same size, so the pattern does not change just because the sign did.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => n.toLocaleString("en-GB");
+  // a tidy number: at most 2 decimals, a proper minus sign, thousands separators
+  const nice = (v) => { const r = Math.round(v * 100) / 100; return (r < 0 ? "−" : "") + Math.abs(r).toLocaleString("en-GB", { maximumFractionDigits: 2 }); };
+  function pick(containerId, cb) {
+    $(containerId).addEventListener("click", (e) => {
+      const c = e.target.closest(".chip"); if (!c) return;
+      document.querySelectorAll("#" + containerId + " .chip").forEach((x) => x.classList.toggle("on", x === c));
+      cb(Number(c.dataset.n));
+    });
+  }
+  // 5Nf.08: the sign opens towards the bigger value. One definition, three comparison tables.
+  const rel = (x, y, sx, sy) => sx + (x > y ? " &gt; " : x < y ? " &lt; " : " = ") + sy;
+  const linesHtml = (lines) => lines.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join("");
+  function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  /* ---- hero: a 5 by 5 square with its last L picked out ---- */
+  (function () {
+    const m = $("heroMini");
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++) { const d = document.createElement("i"); if (r === 4 || c === 4) d.className = "l"; m.appendChild(d); }
+  })();
+
+  const factorsOf = (n) => { const f = []; for (let d = 1; d <= n; d++) if (n % d === 0) f.push(d); return f; };
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  /* ---- Step 8: run a rule ---- */
+  const RULES = [
+    { say: "add 3", apply: (x) => x + 3, show: (x) => nice(x) + " + 3" },
+    { say: "add 4", apply: (x) => x + 4, show: (x) => nice(x) + " + 4" },
+    { say: "add 7", apply: (x) => x + 7, show: (x) => nice(x) + " + 7" },
+    { say: "add 25", apply: (x) => x + 25, show: (x) => nice(x) + " + 25" },
+    { say: "subtract 3", apply: (x) => x - 3, show: (x) => nice(x) + " − 3" },
+    { say: "subtract 6", apply: (x) => x - 6, show: (x) => nice(x) + " − 6" },
+    { say: "double", apply: (x) => x * 2, show: (x) => nice(x) + " × 2" },
+    { say: "add 0.5", apply: (x) => x + 0.5, show: (x) => nice(x) + " + 0.5" },
+  ];
+  const ORD = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th"];
+  let start4 = 5, rule4 = 1, count4 = 6;
+  function strip(terms, ruleSay, opts) {
+    const o = opts || {};
+    let h = "";
+    terms.forEach((t, i) => {
+      h += '<div class="term' + (i === 0 ? " start" : "") + (o.next && i >= terms.length - o.next ? " next" : "") + '"><small>' + (ORD[i] || (i + 1) + "th") + "</small>" + nice(t) + "</div>";
+      if (i < terms.length - 1) h += '<div class="jump' + (o.hideJumps ? " hide" : "") + '"><span>' + (o.jumpLabel ? o.jumpLabel(terms[i], terms[i + 1]) : ruleSay) + '</span><span class="arrow">→</span></div>';
+    });
+    return h;
+  }
+  function drawRun4() {
+    const R = RULES[rule4], terms = [start4];
+    for (let i = 1; i < count4; i++) terms.push(R.apply(terms[i - 1]));
+    $("termsLab4").textContent = count4;
+    $("seq4").innerHTML = strip(terms, R.say);
+    const lines = [{ k: "1st term", v: "start at <b>" + nice(start4) + "</b>" }];
+    for (let i = 1; i < Math.min(count4, 4); i++) lines.push({ k: ORD[i] + " term", v: R.show(terms[i - 1]) + " = <b>" + nice(terms[i]) + "</b>" });
+    if (count4 > 4) lines.push({ k: "And so on", v: "the rule \"" + R.say + "\" used again each time" });
+    lines.push({ k: ORD[count4 - 1] + " term", v: "<b>" + nice(terms[count4 - 1]) + "</b>, after using the rule " + (count4 - 1) + " times", total: true });
+    $("work4").innerHTML = linesHtml(lines);
+    const isAdd = rule4 <= 5 || rule4 === 7;
+    const stepSize = isAdd ? Math.abs(R.apply(0)) : null;
+    $("answer4").innerHTML = '<span class="lab">The sequence</span><span class="val">' + terms.map(nice).join(", ") + ", …</span>" +
+      (isAdd ? '<span class="lab" style="margin-top:6px">Shortcut to the ' + ORD[count4 - 1] + ' term</span><span class="val">' + nice(start4) + (R.apply(0) < 0 ? " − " : " + ") + (count4 - 1) + " × " + nice(stepSize) + " = " + nice(terms[count4 - 1]) + "</span>"
+        : '<span class="lab" style="margin-top:6px">Doubling grows fast</span><span class="val">' + nice(start4) + " × 2 × 2 × 2… " + (count4 - 1) + " times</span>");
+  }
+  pick("starts4", (n) => { start4 = n; drawRun4(); });
+  pick("rules4", (n) => { rule4 = n; drawRun4(); });
+  $("terms4").addEventListener("input", (e) => { count4 = Number(e.target.value); drawRun4(); });
+  drawRun4();
+
+  /* ---- Step 9: find the rule ---- */
+  const SEQS = [
+    { chip: "5, 9, 13, 17", terms: [5, 9, 13, 17], kind: "add", step: 4 },
+    { chip: "40, 35, 30, 25", terms: [40, 35, 30, 25], kind: "add", step: -5 },
+    { chip: "2, 4, 8, 16", terms: [2, 4, 8, 16], kind: "double" },
+    { chip: "1, 4, 9, 16", terms: [1, 4, 9, 16], kind: "square" },
+    { chip: "0.5, 1, 1.5, 2", terms: [0.5, 1, 1.5, 2], kind: "add", step: 0.5 },
+    { chip: "7, 4, 1, −2", terms: [7, 4, 1, -2], kind: "add", step: -3 },
+    { chip: "100, 88, 76, 64", terms: [100, 88, 76, 64], kind: "add", step: -12 },
+    { chip: "3, 6, 12, 24", terms: [3, 6, 12, 24], kind: "double" },
+  ];
+  let seqIdx = 0, stage5 = 0;
+  $("seqs5").innerHTML = SEQS.map((q, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-n="' + i + '">' + q.chip + "</button>").join("");
+  function ruleOf(q) {
+    if (q.kind === "add") return q.step > 0 ? "add " + nice(q.step) : "subtract " + nice(-q.step);
+    if (q.kind === "double") return "double";
+    return "add the next odd number";
+  }
+  function nextOf(q, t, i) {
+    if (q.kind === "add") return t[i - 1] + q.step;
+    if (q.kind === "double") return t[i - 1] * 2;
+    return (i + 1) * (i + 1);
+  }
+  function drawFind5() {
+    const q = SEQS[seqIdx], t = q.terms.slice();
+    const more = [nextOf(q, t, 4)]; more.push(nextOf(q, t.concat(more), 5));
+    const shown = stage5 >= 3 ? t.concat(more) : t;
+    const gapLabel = (a, b) => { const d = b - a; return (d >= 0 ? "+ " : "− ") + nice(Math.abs(d)); };
+    $("seq5").innerHTML = strip(shown, "", { hideJumps: stage5 < 1, jumpLabel: gapLabel, next: stage5 >= 3 ? 2 : 0 }) + (stage5 >= 3 ? "" : '<span class="dots3">?, ?</span>');
+    const gaps = t.slice(1).map((v, i) => v - t[i]);
+    const lines = [];
+    if (stage5 >= 1) lines.push({ k: "The gaps", v: gaps.map((d) => (d >= 0 ? "+" : "−") + nice(Math.abs(d))).join(", ") + (q.kind === "add" ? ", the <b>same every time</b>" : q.kind === "double" ? ", <b>getting bigger</b>: each gap is as big as the term before it" : ", <b>getting bigger by 2</b>: the odd numbers") });
+    if (stage5 >= 2) lines.push({ k: "The rule", v: "<b>" + ruleOf(q) + "</b>" + (q.kind === "double" ? ": 2 → 4 → 8, each term is twice the one before" : q.kind === "square" ? ": these are the square numbers, 1², 2², 3², 4²" : ""), total: true });
+    if (stage5 >= 3) lines.push({ k: "Next two terms", v: nice(t[3]) + " → <b>" + nice(more[0]) + "</b> → <b>" + nice(more[1]) + "</b>" });
+    if (stage5 === 0) lines.push({ k: "Move 1", v: "press <b>Show the gaps</b> to see what changes from one term to the next" });
+    $("work5").innerHTML = linesHtml(lines);
+    $("answer5").innerHTML = stage5 >= 3 ? '<span class="lab">The sequence, continued</span><span class="val">' + t.concat(more).map(nice).join(", ") + ", …</span>" : '<span class="lab">So far</span><span class="val">' + t.map(nice).join(", ") + ", ?, ?</span>";
+    $("gaps5").disabled = stage5 >= 1; $("rule5").disabled = stage5 !== 1; $("next5").disabled = stage5 !== 2;
+  }
+  pick("seqs5", (n) => { seqIdx = n; stage5 = 0; drawFind5(); });
+  $("gaps5").addEventListener("click", () => { stage5 = 1; drawFind5(); });
+  $("rule5").addEventListener("click", () => { stage5 = 2; drawFind5(); });
+  $("next5").addEventListener("click", () => { stage5 = 3; drawFind5(); });
+  drawFind5();
+
+  /* ---- Step 10: two unknowns from two facts ---- */
+  const PUZZLES = [[10, 4], [12, 2], [20, 6], [15, 3], [9, 1], [24, 8]];
+  let puz10u = 0;
+  $("puz10u").innerHTML = PUZZLES.map(([sum, dif], i) => '<button type="button" class="chip accent' + (i === puz10u ? " on" : "") + '" data-n="' + i + '">' + sum + " and " + dif + "</button>").join("");
+  function drawUnknown10() {
+    const [sum, dif] = PUZZLES[puz10u], a = (sum + dif) / 2, b = (sum - dif) / 2;
+    const pct = (v) => ((v / a) * 100).toFixed(1) + "%";
+    $("bar10u").innerHTML =
+      '<div class="row"><span class="sym a">▲</span><span class="track"><span class="fill" style="width:' + pct(a) + '"></span></span><span class="val">' + a + "</span></div>"
+      + '<div class="row"><span class="sym b">●</span><span class="track"><span class="fill b" style="width:' + pct(b) + '"></span><span class="gap" style="width:' + pct(dif) + '"></span></span><span class="val">' + b + "</span></div>";
+    $("key10u").innerHTML = "The dashed piece is the <b>difference</b>: it is what the circle is short of the triangle.";
+    $("big10u").textContent = a;
+    $("bigLab10u").textContent = "is the triangle";
+    $("said10u").innerHTML = "▲ is <b>" + a + "</b> and ● is <b>" + b + "</b>. Check them both ways: " + a + " + " + b + " = <b>" + sum + "</b> and " + a + " − " + b + " = <b>" + dif + "</b>.";
+    $("work10u").innerHTML = linesHtml([
+      { k: "The two facts", v: "▲ + ● = <b>" + sum + "</b> and ▲ − ● = <b>" + dif + "</b>" },
+      { k: "Add the facts", v: "the ● is added once and taken away once, so it goes: ▲ + ▲ = " + sum + " + " + dif + " = <b>" + (sum + dif) + "</b>" },
+      { k: "So the triangle", v: "half of " + (sum + dif) + " is <b>" + a + "</b>", total: true },
+      { k: "Take the facts away instead", v: "this time the ▲ goes: ● + ● = " + sum + " − " + dif + " = " + (sum - dif) + ", so ● is <b>" + b + "</b>" },
+    ]);
+  }
+  $("table10u").innerHTML = '<thead><tr><th class="num">They add to</th><th class="num">They differ by</th><th class="num">▲</th><th class="num">●</th><th>How</th></tr></thead><tbody>'
+    + PUZZLES.map(([sum, dif], i) => "<tr" + (i === puz10u ? ' class="now"' : "") + '><td class="num">' + sum + '</td><td class="num">' + dif + '</td><td class="num">' + (sum + dif) / 2 + '</td><td class="num">' + (sum - dif) / 2 + '</td><td class="how">(' + sum + " + " + dif + ") ÷ 2 and (" + sum + " − " + dif + ") ÷ 2</td></tr>").join("")
+    + "</tbody>";
+  pick("puz10u", (i) => {
+    puz10u = i;
+    drawUnknown10();
+    [...$("table10u").querySelectorAll("tbody tr")].forEach((r, k) => r.classList.toggle("now", k === i));
+  });
+  drawUnknown10();
+
+  /* ---- Step 11: squares and cubes hiding in a sequence ---- */
+  // each sequence is stored as the rule that makes it, so the terms and their labels cannot disagree
+  const HIDDEN = [
+    { chip: "1, 4, 9, 16", kind: "square", f: (i) => (i + 1) * (i + 1), lab: (i) => i + 1 + "²",
+      say: "the square numbers themselves: 1 × 1, 2 × 2, 3 × 3, 4 × 4" },
+    { chip: "1, 8, 27, 64", kind: "cube", f: (i) => (i + 1) * (i + 1) * (i + 1), lab: (i) => i + 1 + "³",
+      say: "the cube numbers: 1 × 1 × 1, 2 × 2 × 2, 3 × 3 × 3, 4 × 4 × 4" },
+    { chip: "3, 7, 11, 15", kind: "same", f: (i) => 3 + 4 * i, lab: () => "",
+      say: "an ordinary sequence: the gap is 4 every time, so the rule is just \"add 4\"" },
+    { chip: "9, 16, 25, 36", kind: "square", f: (i) => (i + 3) * (i + 3), lab: (i) => i + 3 + "²",
+      say: "the square numbers again, but starting at 3² instead of 1²" },
+    { chip: "2, 5, 10, 17", kind: "square", f: (i) => (i + 1) * (i + 1) + 1, lab: (i) => i + 1 + "² + 1",
+      say: "one more than a square number every time: 1 + 1, 4 + 1, 9 + 1, 16 + 1" },
+    { chip: "100, 81, 64, 49", kind: "square", f: (i) => (10 - i) * (10 - i), lab: (i) => 10 - i + "²",
+      say: "the square numbers counting back down, from 10² towards 1²" },
+  ];
+  const KIND_NAMES = { same: "the same gap every time", square: "square numbers", cube: "cube numbers" };
+  let hidIdx = 0, hidAns = null;
+  $("seqs9h").innerHTML = HIDDEN.map((q, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-n="' + i + '">' + q.chip + "</button>").join("");
+  function drawHidden9() {
+    const q = HIDDEN[hidIdx], done = hidAns !== null;
+    const all = [0, 1, 2, 3, 4, 5].map(q.f), shown = done ? all : all.slice(0, 4);
+    const gapText = (d) => (d >= 0 ? "+ " : "− ") + nice(Math.abs(d));
+    let h = "";
+    shown.forEach((t, i) => {
+      const lab = done ? q.lab(i) : "";
+      h += '<div class="term' + (i === 0 ? " start" : "") + (done && i >= 4 ? " next" : "") + '">' + (lab ? "<small>" + lab + "</small>" : "") + nice(t) + "</div>";
+      if (i < shown.length - 1) h += '<div class="jump' + (done ? "" : " hide") + '"><span>' + gapText(shown[i + 1] - shown[i]) + '</span><span class="arrow">→</span></div>';
+    });
+    $("strip9h").innerHTML = h + (done ? "" : '<span class="dots3">?, ?</span>');
+    const gaps = all.slice(1).map((v, i) => v - all[i]);
+    const gaps2 = gaps.slice(1).map((v, i) => v - gaps[i]);
+    const flat = gaps2.every((g) => g === gaps2[0]);
+    $("gaps9h").innerHTML = done
+      ? '<span><b>Gaps</b>' + gaps.map(gapText).join(", ") + "</span>" +
+        '<span class="' + (flat ? "flat" : "") + '"><b>Gaps of those</b>' + gaps2.map(gapText).join(", ") + (flat ? ", all the same" : ", still growing") + "</span>"
+      : '<span>Answer the question above to see them.</span>';
+    const v = $("verdict9h");
+    const lines = [];
+    if (!done) {
+      v.className = "verdict"; v.textContent = "";
+      lines.push({ k: "Look at the gaps first", v: "if they are all the same, the rule is \"add that\". If they are not, there is something else going on" });
+    } else {
+      const right = hidAns === q.kind;
+      v.className = "verdict " + (right ? "good" : "bad");
+      v.textContent = (right ? "Yes. It is " : "Not quite. It is ") + KIND_NAMES[q.kind] + ": " + q.say + ".";
+      lines.push({ k: "The gaps", v: gaps.slice(0, 3).map(gapText).join(", ") + (q.kind === "same" ? ": <b>the same every time</b>, so the rule is add " + nice(gaps[0]) : ": <b>not the same</b>, so it is not an add-something rule") });
+      lines.push({ k: "The gaps of those", v: gaps2.slice(0, 3).map(gapText).join(", ") + (q.kind === "square" ? ": <b>all 2</b>, the mark of a square-number sequence" : q.kind === "cube" ? ": <b>still growing</b>, because cubes climb faster than squares" : ": <b>all 0</b>, because the gaps never change") });
+      lines.push({ k: "What it is", v: "<b>" + q.say + "</b>", total: true });
+      lines.push({ k: "So the next two", v: nice(all[3]) + " → <b>" + nice(all[4]) + "</b> → <b>" + nice(all[5]) + "</b>" + (q.lab(4) ? ", which are " + q.lab(4) + " and " + q.lab(5) : "") });
+    }
+    $("work9h").innerHTML = linesHtml(lines);
+    document.querySelectorAll("#kinds9h .chip").forEach((c) => {
+      c.className = "chip accent" + (done && c.dataset.k === q.kind ? " good" : done && c.dataset.k === hidAns ? " oops" : "");
+      c.disabled = done;
+    });
+  }
+  pick("seqs9h", (n) => { hidIdx = n; hidAns = null; drawHidden9(); });
+  $("kinds9h").addEventListener("click", (e) => {
+    const c = e.target.closest(".chip"); if (!c || hidAns !== null) return;
+    hidAns = c.dataset.k; drawHidden9();
+  });
+  drawHidden9();
+
+  /* ---- Step 12: shape patterns ---- */
+  const PATS = [
+    { chip: "Matchstick squares", piece: "sticks", count: (n) => 3 * n + 1, start: 4, step: 3, why: "one more square shares a side, so it needs only 3 new sticks", kind: "squares" },
+    { chip: "Matchstick triangles", piece: "sticks", count: (n) => 2 * n + 1, start: 3, step: 2, why: "one more triangle shares a side, so it needs only 2 new sticks", kind: "triangles" },
+    { chip: "Chairs round tables", piece: "chairs", count: (n) => 2 * n + 2, start: 4, step: 2, why: "one more table in the row adds 2 chairs, one above and one below", kind: "tables" },
+    { chip: "Dot staircase", piece: "dots", count: (n) => n * (n + 1) / 2, start: 1, step: null, why: "each new step is one dot longer than the last, so the gap grows by 1 each time", kind: "stairs" },
+  ];
+  let patIdx = 0, pos6 = 3;
+  $("pats6").innerHTML = PATS.map((p, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-n="' + i + '">' + p.chip + "</button>").join("");
+  function drawPattern6() {
+    const p = PATS[patIdx], n = pos6, c = p.count(n);
+    $("posLab6").textContent = n;
+    let svg = "";
+    const stick = (x1, y1, x2, y2, isNew) => '<line class="stick' + (isNew ? " new" : "") + '" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '"></line>';
+    if (p.kind === "squares") {
+      const s = Math.min(70, 600 / n), x0 = (720 - s * n) / 2, y = 30;
+      for (let i = 0; i < n; i++) {
+        const x = x0 + i * s, isNew = i === n - 1 && n > 1;
+        if (i === 0) svg += stick(x, y, x, y + s, false);
+        svg += stick(x, y, x + s, y, isNew) + stick(x, y + s, x + s, y + s, isNew) + stick(x + s, y, x + s, y + s, isNew);
+      }
+    } else if (p.kind === "triangles") {
+      const s = Math.min(80, 640 / (n / 2 + 0.5)), h = s * 0.866, x0 = (720 - s * (n / 2 + 0.5)) / 2, yb = 110, yt = yb - h;
+      for (let i = 0; i < n; i++) {
+        const isNew = i === n - 1 && n > 1, x = x0 + i * s / 2;
+        if (i % 2 === 0) { if (i === 0) svg += stick(x, yb, x + s / 2, yt, false); svg += stick(x, yb, x + s, yb, isNew) + stick(x + s, yb, x + s / 2, yt, isNew); }
+        else svg += stick(x, yt, x + s, yt, isNew) + stick(x + s, yt, x + s / 2, yb, isNew);
+      }
+    } else if (p.kind === "tables") {
+      const w = Math.min(90, 600 / n), x0 = (720 - w * n) / 2, y = 45, hgt = 50;
+      for (let i = 0; i < n; i++) {
+        const x = x0 + i * w, isNew = i === n - 1 && n > 1;
+        svg += '<rect class="table" x="' + (x + 4) + '" y="' + y + '" width="' + (w - 8) + '" height="' + hgt + '" rx="6"></rect>';
+        svg += '<circle class="dot' + (isNew ? " new" : "") + '" cx="' + (x + w / 2) + '" cy="' + (y - 16) + '" r="9"></circle><circle class="dot' + (isNew ? " new" : "") + '" cx="' + (x + w / 2) + '" cy="' + (y + hgt + 16) + '" r="9"></circle>';
+        if (i === 0) svg += '<circle class="dot" cx="' + (x - 12) + '" cy="' + (y + hgt / 2) + '" r="9"></circle>';
+        if (i === n - 1) svg += '<circle class="dot" cx="' + (x + w + 12) + '" cy="' + (y + hgt / 2) + '" r="9"></circle>';
+      }
+    } else {
+      // the tallest column has n dots, so the spacing has to fit n - 1 gaps above the bottom row
+      const s = Math.min(24, 600 / n, n > 1 ? 105 / (n - 1) : 24), x0 = (720 - s * n) / 2, yb = 120;
+      for (let col = 0; col < n; col++) for (let r = 0; r <= col; r++) svg += '<circle class="dot' + (col === n - 1 && n > 1 ? " new" : "") + '" cx="' + (x0 + col * s + s / 2) + '" cy="' + (yb - r * s) + '" r="' + (s * 0.36) + '"></circle>';
+    }
+    svg += '<text class="lab" x="360" y="145">Pattern ' + n + ": " + c + " " + p.piece + "</text>";
+    $("draw6").innerHTML = svg;
+    let rows = "";
+    for (let k = 1; k <= 6; k++) rows += "<tr" + (k === n ? ' class="now"' : "") + "><td>Pattern " + k + '</td><td class="num">' + p.count(k) + '</td><td class="how">' + (k === 1 ? "start" : "+ " + (p.count(k) - p.count(k - 1))) + "</td></tr>";
+    rows += '<tr><td>Pattern 10</td><td class="num">' + p.count(10) + '</td><td class="how">' + (p.step ? p.start + " + 9 × " + p.step : "keep adding: the gaps go 2, 3, 4, …") + "</td></tr>";
+    $("table6").innerHTML = '<thead><tr><th>Pattern</th><th class="num">' + p.piece + '</th><th>Gap</th></tr></thead><tbody>' + rows + "</tbody>";
+    const seqText = [1, 2, 3, 4].map((k) => p.count(k)).join(", ");
+    $("work6").innerHTML = linesHtml([
+      { k: "Count the first patterns", v: seqText + ", …" },
+      { k: "The gaps", v: p.step ? "<b>+ " + p.step + "</b> every time, because " + p.why : "<b>+2, +3, +4</b>: not the same, because " + p.why },
+      { k: "The rule", v: p.step ? "start at " + p.start + ", <b>add " + p.step + "</b>" : "start at 1, <b>add one more each time</b>", total: true },
+      { k: "Pattern " + n, v: "<b>" + c + " " + p.piece + "</b>" + (p.step ? " = " + p.start + " + " + (n - 1) + " × " + p.step : "") },
+      { k: "Pattern 10, without building it", v: p.step ? p.start + " + 9 × " + p.step + " = <b>" + p.count(10) + "</b>" : "1 + 2 + 3 + … + 10 = <b>" + p.count(10) + "</b>" },
+    ]);
+  }
+  pick("pats6", (n) => { patIdx = n; drawPattern6(); });
+  $("pos6").addEventListener("input", (e) => { pos6 = Number(e.target.value); drawPattern6(); });
+  drawPattern6();
+
+  /* ---- Step 13: number line steps ---- */
+  let start7 = 2, step7 = -0.5;
+  function drawLine7() {
+    $("startLab7").textContent = nice(start7);
+    const terms = [start7];
+    for (let i = 1; i < 6; i++) terms.push(terms[i - 1] + step7);
+    // the line is drawn to fit the whole walk, with a unit of room at each end
+    const lo = Math.floor(Math.min(...terms)) - 1, hi = Math.ceil(Math.max(...terms)) + 1;
+    const L = 30, R = 690, y = 70, x = (v) => L + (R - L) * (v - lo) / (hi - lo);
+    const every = hi - lo > 16 ? 4 : 2;   // label every 2nd tick, or every 4th when the walk is long
+    let svg = '<line class="axis" x1="' + L + '" y1="' + y + '" x2="' + R + '" y2="' + y + '"></line>';
+    for (let v = lo; v <= hi; v++) {
+      const big = v % every === 0;
+      svg += '<line class="tick' + (big ? "" : " minor") + '" x1="' + x(v).toFixed(1) + '" y1="' + (y - (big ? 7 : 4)) + '" x2="' + x(v).toFixed(1) + '" y2="' + (y + (big ? 7 : 4)) + '"></line>';
+      if (big) svg += '<text class="lab' + (v === 0 ? " zero" : "") + '" x="' + x(v).toFixed(1) + '" y="' + (y + 24) + '">' + nice(v) + "</text>";
+    }
+    // a label on every hop would collide when the hops are small, so then only the first is named
+    const hopPx = Math.abs(x(terms[1]) - x(terms[0])), labelAll = hopPx >= 46;
+    for (let i = 0; i < terms.length - 1; i++) {
+      const a = x(terms[i]), b = x(terms[i + 1]), mid = (a + b) / 2, lift = Math.min(40, 14 + hopPx * 0.4);
+      svg += '<path class="hop" d="M' + a.toFixed(1) + "," + y + " Q" + mid.toFixed(1) + "," + (y - lift * 2) + " " + b.toFixed(1) + "," + y + '"></path>';
+      if (labelAll || i === 0) svg += '<text class="hoplab" x="' + mid.toFixed(1) + '" y="' + (y - lift - 6).toFixed(1) + '">' + (step7 > 0 ? "+" : "−") + nice(Math.abs(step7)) + "</text>";
+    }
+    terms.forEach((t, i) => { svg += '<circle class="dot' + (i === 0 ? " start" : "") + '" cx="' + x(t).toFixed(1) + '" cy="' + y + '" r="6"></circle>'; });
+    $("line7").innerHTML = svg;
+    const say = step7 > 0 ? "add " + nice(step7) : "subtract " + nice(-step7);
+    $("seq7").innerHTML = strip(terms, say);
+    const crosses = terms.some((t) => t < 0) && terms.some((t) => t >= 0);
+    const lines = [
+      { k: "The rule", v: "start at " + nice(start7) + ", <b>" + say + "</b>" },
+      { k: "The terms", v: terms.map(nice).join(", ") + ", …" },
+      { k: "Every hop", v: "the same size, <b>" + nice(Math.abs(step7)) + "</b>, going " + (step7 > 0 ? "right" : "left"), total: true },
+    ];
+    if (crosses) lines.push({ k: "Crossing zero", v: "the sequence passes 0 and carries on into the " + (step7 > 0 ? "positive" : "negative") + " numbers: the hop does not change" });
+    if (Math.abs(step7) % 1 !== 0) lines.push({ k: "Decimal steps", v: "0.5 is half a unit, so two hops of 0.5 make one whole unit on the line" });
+    $("work7").innerHTML = linesHtml(lines);
+  }
+  $("start7").addEventListener("input", (e) => { start7 = Number(e.target.value); drawLine7(); });
+  pick("steps7", (n) => { step7 = n; drawLine7(); });
+  drawLine7();
+
+  /* ---- Stage labels ---- */
+  const STAGES = [
+    ["Run the rule", "Stage 5", "5Nc.03"],
+    ["Find the rule", "Stage 5", "5Nc.03"],
+    ["Two shapes, two facts", "Stage 5", "5Nc.02"],
+    ["Hidden squares and cubes", "Stages 5–6", "5Nc.04, 6Ni.08"],
+    ["Shape patterns", "Stage 5", "5Nc.04"],
+    ["Number line steps", "Stage 5", "5Nc.01"],
+  ];
+  {
+    const heads = [...document.querySelectorAll('section.step[id] .step-head')];
+    const navs = [...document.querySelectorAll(".steps-nav a")].map((a) => a.textContent.replace(/^\d+\s*/, "").trim());
+    const kind = (st) => (st.indexOf("Beyond") === 0 ? "beyond" : st.indexOf("6") >= 0 ? "up" : "");
+    STAGES.forEach(([title, st], i) => {
+      const h = heads[i];
+      if (!h || navs[i] !== title) return;
+      h.insertAdjacentHTML("beforeend", '<span class="stage ' + kind(st) + '">' + st + "</span>");
+    });
+    const tbl = document.getElementById("cambridge");
+    if (tbl) tbl.innerHTML = '<thead><tr><th class="num">Step</th><th>What it teaches</th><th>Stage</th><th>Objectives</th></tr></thead><tbody>'
+      + STAGES.map(([title, st, codes], i) => "<tr><td class=\"num\">" + (i + 1) + "</td><td>" + title + '</td><td class="how">' + st + '</td><td class="how">' + codes + "</td></tr>").join("")
+      + "</tbody>";
+  }
+
+  /* ---- The voice bar: read this step aloud ---- */
+  // Modelled on the Grade 1 app's speaker. It reads what is ON THE PAGE rather than a script kept
+  // beside it, so the words spoken and the words shown cannot drift apart.
+  {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      let speaking = null;                       // the one button currently talking
+      const stopAll = () => {
+        synth.cancel();
+        if (speaking) { speaking.textContent = "Listen"; speaking.classList.remove("on"); }
+        speaking = null;
+      };
+      // what a step is worth reading: its opening paragraph, then the note that closes it
+      const readable = (sec) => [...sec.querySelectorAll(":scope > .intro, :scope > .note")]
+        .map((e) => e.textContent.trim()).filter(Boolean).join(" ");
+      for (const sec of document.querySelectorAll("section.step[id]")) {
+        const words = readable(sec);
+        if (!words) continue;                    // no prose, no button
+        const bar = document.createElement("p");
+        bar.className = "say";
+        bar.innerHTML = '<span class="ico" aria-hidden="true">&#9835;</span>'
+          + '<span class="lab">Have this step read to you.</span>'
+          + '<button type="button">Listen</button>';
+        const btn = bar.querySelector("button");
+        btn.addEventListener("click", () => {
+          const wasMe = speaking === btn;
+          stopAll();
+          if (wasMe) return;                     // a second press is a stop
+          const u = new SpeechSynthesisUtterance(readable(sec));
+          u.rate = 0.95;                         // a shade under default, for ten-year-olds
+          u.onend = stopAll;
+          u.onerror = stopAll;
+          speaking = btn;
+          btn.textContent = "Stop";
+          btn.classList.add("on");
+          synth.speak(u);
+        });
+        const head = sec.querySelector(".step-head");
+        head.insertAdjacentElement("afterend", bar);
+      }
+      window.addEventListener("beforeunload", stopAll);
+    }
+  }
+
+})();
+</script>
+</body>
+</html>

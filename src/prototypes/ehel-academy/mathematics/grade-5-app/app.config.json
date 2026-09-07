@@ -1,5 +1,5 @@
 {
-  "_comment": "Describes this standalone build for ../lesson-app-tools/. UNLIKE grades 1 to 4, this one is NOT wired to the platform shell: the unit is a single self-contained page with no module imports, no progress reporting, no Wehel and no hand-raise. deploy.mjs uploads the four shared modules unconditionally, so they will land in the remote directory and nothing will load them. The hub IS the unit, so it ships twice: as index.html for a stable route and under its own name.",
+  "_comment": "Describes this standalone build for ../lesson-app-tools/. UNLIKE grades 1 to 4, this one is NOT wired to the platform shell: the pages are self-contained, with no module imports, no progress reporting, no Wehel and no hand-raise. deploy.mjs uploads the four shared modules unconditionally, so they land in the remote directory and nothing loads them. index.html is a real hub of six cards, generated with the lesson pages by split-into-lessons.py; squares-and-steps.html is that generator's INPUT and is deliberately not listed here, so it is not shipped.",
   "grade": 5,
   "gradeLabel": "Grade 5",
   "subject": "mathematics",
@@ -8,9 +8,14 @@
   "progressUnitPrefix": "l",
   "fromParam": "g5",
   "backLabel": "Grade 5 Maths",
-  "hub": "squares-and-steps.html",
+  "hub": "index.html",
   "remote": "Ehel Primary/app/mathematics/grade-5-v2",
   "lessons": [
-    { "file": "squares-and-steps.html", "title": "Squares and Steps" }
+    { "file": "squares-cubes-and-roots.html", "title": "Squares, Cubes and Roots" },
+    { "file": "rules-and-patterns.html", "title": "Rules and Patterns" },
+    { "file": "how-whole-numbers-are-built.html", "title": "How Whole Numbers Are Built" },
+    { "file": "past-the-whole-numbers.html", "title": "Past the Whole Numbers" },
+    { "file": "real-life.html", "title": "Real Life" },
+    { "file": "check-what-you-know.html", "title": "Check What You Know" }
   ]
 }

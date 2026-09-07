@@ -1,0 +1,688 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check What You Know</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    /* Ehel navy, lifted coral/teal/gold — copied from mathematics/grade-1-app/g1v2 so the two
+       lessons are the same design rather than two designs that resemble each other. It is
+       unconditionally dark there and here: the navy IS the design, not a dark mode. */
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --sel-ink: #06231F;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { background: #183B56; }
+  body::before { content: ""; position: fixed; inset: 0; z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%); }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { letter-spacing: -0.02em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; line-height: 1.15; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  [hidden] { display: none !important; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  /* header */
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding: 12px 0 28px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .hero h1 { font-size: clamp(38px, 6vw, 60px); font-weight: 700; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .lede { max-width: 32em; margin-top: 12px; color: var(--muted); font-size: 18px; }
+  .hero-mini { display: grid; grid-template-columns: repeat(5, 12px); gap: 4px; padding: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+  .hero-mini i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+  .hero-mini i.l { background: var(--teal); }
+  @media (max-width: 680px) { .hero { grid-template-columns: 1fr; } .hero-mini { justify-self: start; } }
+
+  .steps-nav { position: sticky; top: 0; z-index: 5; display: flex; gap: 6px; padding: 10px 0; margin: 0 0 28px; background: rgba(24, 59, 86, 0.94); border-bottom: 1px solid var(--line); overflow-x: auto; }
+  .steps-nav a { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); text-decoration: none; font-size: 15px; white-space: nowrap; }
+  .steps-nav a b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--teal); color: var(--sel-ink); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; }
+  .steps-nav a.check b { background: var(--accent); color: var(--accent-ink); }
+  .steps-nav .navgroup { flex: 0 0 auto; display: inline-flex; align-items: center; padding: 0 12px 0 10px;
+    font: 700 11px "Atkinson Hyperlegible", system-ui, sans-serif; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--muted); white-space: nowrap; border-left: 2px solid var(--line); }
+  .steps-nav .navgroup:first-child { border-left: 0; padding-left: 0; }
+  .route { margin: 14px 0 0; padding: 12px 16px; border-left: 4px solid var(--teal); border-radius: 0 10px 10px 0;
+    background: var(--teal-soft); color: var(--ink); font-size: 15px; line-height: 1.55; }
+  .route b { color: var(--teal); }
+
+
+  /* step cards */
+  .step { background: rgba(20, 43, 62, 0.88); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 28px; margin-bottom: 28px; scroll-margin-top: 70px; min-width: 0; overflow-x: clip; }
+  .step-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 14px; margin-bottom: 8px; }
+  .step-num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.06em; color: var(--teal); text-transform: uppercase; white-space: nowrap; }
+  .step h2 { font-size: clamp(26px, 3.6vw, 34px); }
+  .step .intro { max-width: 36em; color: var(--muted); margin: 6px 0 22px; }
+  .two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: minmax(0, 1fr); } }
+
+  .picker-lab { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 14px 0 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .chip { padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--card); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .chip:hover { border-color: var(--teal); }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: var(--sel-ink); }
+  .chip.accent.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .chip.good:not(.on) { background: var(--good-soft); border-color: var(--good); }
+  .chip.oops:not(.on) { background: var(--bad-soft); border-color: var(--bad); }
+  input[type="range"] { width: 100%; accent-color: var(--accent); margin: 10px 0; }
+  .chip.on { box-shadow: 0 4px 0 rgba(0, 0, 0, 0.28); }
+  .chip.on:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.28); }
+  .btn { padding: 10px 18px; border-radius: 999px; border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+  .btn.ghost { background: transparent; border: 1.5px solid var(--line); color: var(--ink); }
+  .btn:disabled { opacity: 0.45; cursor: default; }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+  .working { display: grid; gap: 8px; margin-top: 14px; font-variant-numeric: tabular-nums; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 10px 14px; border-radius: 10px; background: var(--teal-soft); }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; max-width: 12em; }
+  .working .line .v { font-size: 18px; }
+  .working .line .v b { color: var(--accent); }
+  @media (max-width: 480px) { .working .line { grid-template-columns: minmax(0, 1fr); gap: 2px; } .working .line .k { max-width: none; } }
+  .note { margin-top: 18px; padding: 14px 16px; border-radius: 12px; background: var(--accent-soft); border-left: 4px solid var(--accent); max-width: 40em; }
+  .note b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+  .said { font-size: 19px; }
+  .said b { color: var(--accent); }
+  .big-num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(52px, 9vw, 84px); line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .big-num small { font-size: 0.45em; color: var(--ink); font-weight: 600; margin-left: 6px; }
+  .answer { display: grid; gap: 4px; margin-top: 10px; padding: 12px 16px; border-radius: 12px; background: var(--teal-soft); }
+  .answer .lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .answer .val { font-family: "Inter", "Segoe UI", sans-serif; font-size: 22px; font-weight: 700; color: var(--teal); font-variant-numeric: tabular-nums; }
+  .verdict { margin-top: 8px; min-height: 1.5em; font-weight: 700; }
+  .verdict.good { color: var(--good); }
+  .verdict.bad { color: var(--bad); }
+  .table-wrap { overflow-x: auto; }
+  table.plain { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  table.plain th, table.plain td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  table.plain th { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  table.plain td.num, table.plain th.num { text-align: right; }
+  table.plain td.how { color: var(--muted); font-size: 15px; }
+  table.plain tr.now td { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 18px; background: var(--teal-soft); }
+
+  /* dots */
+  .dots { display: grid; gap: 4px; width: 100%; max-width: 360px; padding: 10px; border-radius: 14px; background: var(--cell); aspect-ratio: 1; }
+  .dots i { display: block; width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--accent); transition: background 120ms ease; }
+  .dots i.l { background: var(--teal); }
+  .dots i.extra { background: var(--bad); }
+  .dots i.ghost { background: transparent; border: 2px dashed var(--line); }
+  .dots i.ok { background: var(--good); }
+  .dots.loose { aspect-ratio: auto; }
+  .sq-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .sq-list button { padding: 6px 10px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--card); font-variant-numeric: tabular-nums; font-size: 15px; }
+  .sq-list button b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+  .sq-list button.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .sq-list button.on b { color: inherit; }
+
+  /* cubes */
+  .cube { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .cube polygon { stroke: var(--card); stroke-width: 1; }
+  .cube .top { fill: var(--accent); }
+  .cube .left { fill: color-mix(in srgb, var(--accent) 74%, black); }
+  .cube .right { fill: color-mix(in srgb, var(--accent) 87%, black); }
+  .cube .top.hi { fill: var(--teal); }
+  .cube .left.hi { fill: color-mix(in srgb, var(--teal) 74%, black); }
+  .cube .right.hi { fill: color-mix(in srgb, var(--teal) 87%, black); }
+  .cube.done .top { fill: var(--good); }
+  .cube.done .left { fill: color-mix(in srgb, var(--good) 74%, black); }
+  .cube.done .right { fill: color-mix(in srgb, var(--good) 87%, black); }
+  .dots.blocks i { border-radius: 3px; }
+  .cmp { display: grid; gap: 10px; margin-top: 14px; }
+  .cmp-row { display: grid; grid-template-columns: 86px 1fr auto; gap: 10px; align-items: center; }
+  .cmp-lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .cmp-bar { position: relative; height: 26px; border-radius: 8px; background: var(--cell); overflow: hidden; }
+  .cmp-bar .fill { position: absolute; inset: 0 auto 0 0; background: var(--teal); transition: width 200ms ease; }
+  .cmp-bar .fill.mine { background: var(--accent); }
+  .cmp-bar .fill.match { background: var(--good); }
+  .cmp-val { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-variant-numeric: tabular-nums; min-width: 3.5em; text-align: right; }
+
+  /* triangles */
+  .tri { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .tri circle.t { fill: var(--accent); }
+  .tri circle.t2 { fill: var(--teal); }
+
+  /* sequence strip */
+  .seq { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; margin-top: 10px; }
+  .seq .term { display: grid; place-items: center; min-width: 54px; padding: 10px 12px; border-radius: 12px; background: var(--teal-soft); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .seq .term.start { background: var(--accent); color: var(--accent-ink); }
+  .seq .term.next { background: var(--good-soft); outline: 2px dashed var(--good); }
+  .seq .term.hidden-term { background: var(--cell); color: var(--muted); }
+  .seq .term small { display: block; font-family: "Atkinson Hyperlegible", sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .seq .term.start small { color: var(--accent-ink); opacity: 0.85; }
+  .seq .jump { display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--teal); min-width: 40px; }
+  .seq .jump span { display: block; line-height: 1; }
+  .seq .jump .arrow { font-size: 18px; color: var(--muted); }
+  .seq .jump.hide span:first-child { visibility: hidden; }
+  .seq .dots3 { color: var(--muted); font-weight: 700; padding: 0 4px; }
+
+  /* the odd numbers: a strip of counting numbers, and the running total as one bar */
+  .numstrip { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+  .numstrip span { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: var(--cell); color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .numstrip span.odd, .numstrip span.even { background: var(--card); border: 1.5px solid var(--line); color: var(--ink); }
+  .numstrip span.odd.on, .numstrip span.even.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .evens { width: 100%; max-width: 380px; display: block; margin-top: 8px; }
+  .evens circle.a { fill: var(--accent); }
+  .evens circle.b { fill: var(--teal); }
+  .hundred { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; margin-top: 8px; }
+  .hundred span { display: grid; place-items: center; aspect-ratio: 1; border-radius: 6px; font-weight: 700;
+    font-size: clamp(9px, 2.4vw, 13px); font-variant-numeric: tabular-nums;
+    background: var(--accent); border: 1.5px solid var(--accent); color: var(--accent-ink); }
+  .hundred span.out { background: transparent; border-color: transparent; color: var(--muted); opacity: 0.45; text-decoration: line-through; }
+  .hundred span.one { background: transparent; border: 1.5px dashed var(--line); color: var(--muted); text-decoration: none; opacity: 1; }
+  .hundred span.seed { background: var(--teal); border-color: var(--teal); color: var(--sel-ink); }
+  .facs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .facs span { padding: 4px 11px; border-radius: 999px; border: 1.5px solid var(--line); font-weight: 700; font-size: 14px; color: var(--muted); }
+  .facs span.mid { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .rainbow { width: 100%; max-width: 400px; display: block; margin-top: 8px; }
+  .rainbow path { fill: none; stroke: var(--teal); stroke-width: 2.5; stroke-linecap: round; }
+  .rainbow path.self { stroke: var(--accent); stroke-width: 3; }
+  .rainbow circle { fill: var(--teal); }
+  .rainbow circle.self { fill: var(--accent); }
+  .rainbow text { font: 700 13px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .rainbow text.self { fill: var(--accent); }
+  .mults { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .mults span { padding: 6px 12px; border-radius: 8px; background: var(--teal-soft); color: var(--teal);
+    font-weight: 700; font-variant-numeric: tabular-nums; }
+  .mults span.first, .mults span.both { background: var(--accent); color: var(--accent-ink); }
+  .venn { width: 100%; max-width: 400px; display: block; margin-top: 8px; }
+  .venn circle { fill: var(--teal); fill-opacity: 0.2; stroke: var(--teal); stroke-width: 2; }
+  .venn text { font: 700 15px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .venn text.mid { fill: var(--accent); }
+  .venn text.head { font-size: 16px; fill: var(--teal); }
+  .venn text.cap { font-size: 11px; font-weight: 400; fill: var(--muted); letter-spacing: 0.06em; }
+  .venn text.none { font-weight: 400; fill: var(--muted); }
+  .digits { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .digits span { display: grid; place-items: center; min-width: 46px; padding: 12px 8px; border-radius: 12px;
+    background: var(--cell); color: var(--muted); font: 600 28px "Inter", "Segoe UI", sans-serif;
+    font-variant-numeric: tabular-nums; transition: background 120ms ease, color 120ms ease; }
+  .digits span.lit { background: var(--accent); color: var(--accent-ink); }
+  .digits span.place { background: var(--teal); color: var(--sel-ink); }
+  .roundline { width: 100%; max-width: 420px; display: block; margin-top: 8px; }
+  .roundline .near { fill: var(--accent-soft); }
+  .roundline .axis { stroke: var(--ink); stroke-width: 2; }
+  .roundline .tick { stroke: var(--ink); stroke-width: 2; }
+  .roundline .tick.half { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .roundline .drop { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 4 3; }
+  .roundline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .roundline text { font: 700 13px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .roundline text.half { font-weight: 400; fill: var(--muted); font-size: 12px; }
+  .roundline text.here { fill: var(--accent); font-size: 15px; }
+  .roundline text.win { fill: var(--accent); }
+  .negline { width: 100%; max-width: 460px; display: block; margin-top: 8px; }
+  .negline .span { fill: var(--accent-soft); }
+  .negline .axis { stroke: var(--ink); stroke-width: 2; }
+  .negline .tick { stroke: var(--muted); stroke-width: 1.2; }
+  .negline .tick.big { stroke: var(--ink); stroke-width: 1.8; }
+  .negline .zero { stroke: var(--teal); stroke-width: 2.5; }
+  .negline .dotA { fill: var(--teal); stroke: var(--card); stroke-width: 2.5; }
+  .negline .dotB { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .negline text { font: 700 12px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+  .negline text.num { fill: var(--ink); font-size: 11px; }
+  .negline text.nought { fill: var(--teal); font-size: 13px; }
+  .negline text.labA { fill: var(--teal); font-size: 14px; }
+  .negline text.labB { fill: var(--accent); font-size: 14px; }
+  .negline text.gap { fill: var(--accent); font-size: 12px; }
+  .negline text.ends { font-weight: 400; font-size: 11px; }
+  .digits span.col { display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 3px; padding: 9px 7px 7px; min-width: 58px; }
+  .digits span.col small { font: 700 9px "Atkinson Hyperlegible", system-ui, sans-serif;
+    text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.85; }
+  .digits span.pt { min-width: 0; padding: 9px 1px; background: transparent; color: var(--accent); font-size: 34px; align-self: center; }
+  .zoomline { width: 100%; max-width: 460px; display: block; margin-top: 8px; }
+  .zoomline .axis { stroke: var(--ink); stroke-width: 2; }
+  .zoomline .tick { stroke: var(--muted); stroke-width: 1.2; }
+  .zoomline .tick.big { stroke: var(--ink); stroke-width: 1.8; }
+  .zoomline .fan { fill: var(--accent-soft); stroke: none; }
+  .zoomline .fanline { stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 4 3; fill: none; }
+  .zoomline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .zoomline text { font: 700 12px "Atkinson Hyperlegible", system-ui, sans-serif; fill: var(--ink); text-anchor: middle; }
+  .zoomline text.here { fill: var(--accent); font-size: 15px; }
+  .zoomline text.cap { font-weight: 400; font-size: 11px; fill: var(--muted); }
+  .fbar { display: flex; gap: 8px; margin-top: 10px; }
+  .fbar .whole { display: flex; gap: 2px; flex: 1; padding: 3px; border: 2px solid var(--line); border-radius: 10px; }
+  .fbar .whole.fine { gap: 0; padding: 2px; }
+  .fbar i { display: block; flex: 1; height: 54px; border-radius: 4px; background: var(--cell); }
+  .fbar .whole.fine i { border-radius: 0; }
+  .fbar i.on { background: var(--accent); }
+  .eqrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; align-items: center; }
+  .eqrow span { padding: 6px 12px; border-radius: 8px; background: var(--teal-soft); color: var(--teal);
+    font-weight: 700; font-variant-numeric: tabular-nums; }
+  .eqrow span.same { background: var(--accent); color: var(--accent-ink); }
+  .eqrow b { color: var(--muted); font-weight: 700; }
+  .pcgrid { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .pcgrid .hun { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; flex: 1;
+    min-width: 140px; max-width: 210px; padding: 4px; border: 2px solid var(--line); border-radius: 10px; }
+  .pcgrid i { display: block; aspect-ratio: 1; border-radius: 2px; background: var(--cell); }
+  .pcgrid i.on { background: var(--accent); }
+  .ubar { display: grid; gap: 10px; margin-top: 12px; }
+  .ubar .row { display: flex; align-items: center; gap: 10px; }
+  .ubar .sym { width: 28px; text-align: center; font-size: 22px; line-height: 1; }
+  .ubar .sym.a { color: var(--teal); }
+  .ubar .sym.b { color: var(--accent); }
+  .ubar .track { flex: 1; display: flex; gap: 4px; align-items: center; }
+  .ubar .fill { height: 34px; border-radius: 8px; background: var(--teal); }
+  .ubar .fill.b { background: var(--accent); }
+  .ubar .gap { height: 34px; border-radius: 8px; border: 2px dashed var(--muted); box-sizing: border-box; }
+  .ubar .val { width: 34px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .counters { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .counters i { display: block; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); }
+  .counters i.two { background: var(--teal); }
+  .expr { display: grid; gap: 8px; margin-top: 12px; }
+  .expr .line { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+  .expr span { padding: 6px 11px; border-radius: 8px; background: var(--cell); color: var(--muted);
+    font: 600 21px "Inter", "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; }
+  .expr span.on { background: var(--accent); color: var(--accent-ink); }
+  .expr span.done { background: var(--teal); color: var(--sel-ink); }
+  .expr b { color: var(--muted); font-size: 13px; font-weight: 700; padding: 0 4px; }
+  .stage { margin-left: auto; font: 700 11px "Atkinson Hyperlegible", system-ui, sans-serif;
+    letter-spacing: 0.05em; text-transform: uppercase; padding: 4px 11px; border-radius: 999px;
+    background: var(--teal-soft); color: var(--teal); white-space: nowrap; align-self: center; }
+  .stage.up { background: var(--accent-soft); color: var(--accent); }
+  .stage.beyond { background: var(--cell); color: var(--muted); }
+  .say { display: flex; align-items: center; gap: 12px; margin: 14px 0 0; padding: 10px 12px;
+    background: var(--teal-soft); border: 1px solid var(--line); border-radius: 14px; }
+  .say .ico { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; background: var(--teal);
+    color: var(--sel-ink); display: grid; place-items: center; font-size: 19px; }
+  .say .lab { flex: 1; min-width: 0; font-size: 15px; color: var(--muted); }
+  .say button { flex: 0 0 auto; border: 0; cursor: pointer; padding: 9px 18px; border-radius: 999px;
+    background: var(--gold); color: var(--accent-ink); font: 700 15px "Atkinson Hyperlegible", system-ui, sans-serif;
+    box-shadow: 0 4px 0 var(--gold-press); }
+  .say button:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--gold-press); }
+  .say button.on { background: var(--accent); color: var(--accent-ink); box-shadow: 0 4px 0 #A8461F; }
+  .digits span.sep { min-width: 0; padding: 12px 0; background: transparent; color: var(--muted); }
+  .mults span.ever { background: transparent; color: var(--muted); }
+  .oddbar { display: flex; height: 42px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); margin-top: 10px; }
+  .oddbar div { display: grid; place-items: center; min-width: 0; background: var(--teal); color: var(--sel-ink); border-right: 2px solid var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; }
+  .oddbar div:last-child { border-right: 0; }
+  .oddbar div.last { background: var(--accent); color: var(--accent-ink); }
+
+  /* second gaps */
+  .gaps2 { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 10px; }
+  .gaps2 span { padding: 6px 12px; border-radius: 10px; background: var(--cell); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .gaps2 span.flat { background: var(--good-soft); color: var(--good); }
+  .gaps2 b { font-family: "Atkinson Hyperlegible", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+
+  /* number line */
+  .numline { width: 100%; max-width: 720px; display: block; margin-top: 8px; }
+  .numline .axis { stroke: var(--ink); stroke-width: 2; }
+  .numline .tick { stroke: var(--ink); stroke-width: 1.5; }
+  .numline .tick.minor { stroke: var(--muted); stroke-width: 1; }
+  .numline .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 12px; fill: var(--ink); text-anchor: middle; }
+  .numline .lab.zero { fill: var(--accent); }
+  .numline .hop { fill: none; stroke: var(--accent); stroke-width: 2.5; }
+  .numline .dot { fill: var(--accent); stroke: var(--card); stroke-width: 2; }
+  .numline .dot.start { fill: var(--teal); }
+  .numline .hoplab { font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; font-size: 11px; fill: var(--teal); text-anchor: middle; }
+
+  /* patterns */
+  .pattern { width: 100%; max-width: 720px; display: block; margin-top: 8px; }
+  .pattern .stick { stroke: var(--accent); stroke-width: 6; stroke-linecap: round; }
+  .pattern .stick.new { stroke: var(--teal); }
+  .pattern .dot { fill: var(--accent); }
+  .pattern .dot.new { fill: var(--teal); }
+  .pattern .table { fill: var(--cell); stroke: var(--ink); stroke-width: 2; }
+  .pattern .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 13px; fill: var(--muted); text-anchor: middle; }
+
+  /* word problems and quiz */
+  .wp-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 12px; }
+  .wp-dots { display: flex; flex-wrap: wrap; gap: 6px; }
+  .wp-dots i { width: 12px; height: 12px; border-radius: 50%; background: var(--cell); border: 1.5px solid var(--line); }
+  .wp-dots i.now { background: var(--teal); border-color: var(--teal); }
+  .wp-dots i.good { background: var(--good); border-color: var(--good); }
+  .wp-dots i.oops { background: var(--bad); border-color: var(--bad); }
+  .wp-count { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .wp-card { padding: 22px; border-radius: 14px; background: var(--ground); border: 1px solid var(--line); }
+  .wp-scene { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .wp-text { font-size: 20px; line-height: 1.5; max-width: 34em; margin-top: 6px; }
+  .wp-card .picker-lab { color: var(--teal); }
+  .q-why { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+  .q-why.good { color: var(--good); }
+  .q-why.bad { color: var(--bad); }
+  .wp-card .working .line { background: var(--card); }
+  .wp-card .working .line.total { background: var(--accent-soft); }
+  .q { padding: 18px 0; border-top: 1px solid var(--line); }
+  .q:first-of-type { border-top: 0; padding-top: 4px; }
+  .q .stem { font-weight: 700; margin-bottom: 10px; }
+  .q .stem span { color: var(--teal); margin-right: 8px; font-family: "Inter", "Segoe UI", sans-serif; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt { padding: 10px 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); font-variant-numeric: tabular-nums; }
+  .opt:hover { border-color: var(--teal); }
+  .opt.right { background: var(--good-soft); border-color: var(--good); }
+  .opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .q .why { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+  .q .why.good { color: var(--good); }
+  .q .why.bad { color: var(--bad); }
+  .result { margin-top: 18px; padding: 18px 20px; border-radius: 14px; background: var(--teal-soft); display: none; align-items: center; gap: 18px; }
+  .result.show { display: flex; }
+  .result .big-num { font-size: 56px; color: var(--teal); }
+  .result p { max-width: 30em; }
+  .recap { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+  .recap div { padding: 14px 16px; border-radius: 12px; background: var(--ground); border: 1px solid var(--line); }
+  .recap b { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 4px; color: var(--teal); }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+
+  /* ==================================================================
+     On paper. A browser prints no background colour unless the person
+     printing ticks a box, and this design is light text on navy — so
+     without this block the headings and every note print as nothing.
+     ================================================================== */
+  @media print {
+    :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+      --ground: #FFFFFF; --card: #FFFFFF; --cell: #E4EEE9; --line: #C7D8D3;
+      --ink: #1B2A2F; --muted: #55686C;
+      --accent: #C2482C; --accent-ink: #FFFFFF; --accent-soft: #FBE3D8;
+      --teal: #146B65; --teal-soft: #DCEFEC; --sel-ink: #FFFFFF;
+      --gold: #C99700; --gold-press: #A87F00; --plum: #6E3F88;
+      --good: #23694A; --good-soft: #DFF1E6; --bad: #A3382E; --bad-soft: #F7DEDA;
+      --shadow: none;
+      color-scheme: light;
+    }
+    html { background: #FFFFFF; }
+    body::before { display: none; }
+    body { background: #FFFFFF; color: var(--ink); font-size: 12pt; }
+
+    /* things that cannot work on paper */
+    .steps-nav, .say, .hero-mini, .btn, .tools { display: none !important; }
+
+    /* one step per sheet, so a teacher can hand out a single step */
+    .step { background: #FFFFFF; box-shadow: none; border-radius: 0;
+      break-before: page; margin: 0 0 10px; }
+    .wrap > .step:first-of-type { break-before: auto; }
+    .note, .working .line, .wp-card, .recap > div, table.plain tr { break-inside: avoid; }
+    h1, h2 { break-after: avoid; }
+
+    /* where a fill IS the meaning, it has to reach the paper */
+    .dots i, .hundred span, .fbar i, .pcgrid i, .counters i, .mults span, .digits span,
+    .expr span, .eqrow span, .facs span, .chip, .stage, .route, .note, .working .line,
+    .numstrip span, .oddbar div, .tenframe i, table.plain tr.now, .big-num span {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+
+    /* and where it is not, say it with weight instead of colour */
+    .chip { border: 1px solid var(--line); }
+    .chip.on { border: 2px solid var(--accent); font-weight: 700; }
+    a[href^="#"] { color: inherit; text-decoration: none; }
+  }
+  .steps-nav { flex-wrap: wrap; overflow-x: visible; }
+  .backlink { margin: 0 0 12px; }
+  .backlink a { color: var(--teal); text-decoration: none; font-weight: 700; font-size: 15px; }
+  .backlink a:hover { text-decoration: underline; }
+</style>
+
+<div class="wrap">
+  <p class="backlink"><a href="index.html">&larr; Grade 5 Mathematics</a></p>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 5 · The whole unit</p>
+      <h1>Check What You Know</h1>
+      <p class="lede">Thirty-six quick questions across the whole unit, twenty-nine things to take away, and the Cambridge mapping that says which stage every step belongs to.</p>
+    </div>
+    <div class="hero-mini" aria-hidden="true" id="heroMini"></div>
+  </header>
+  <!-- CHECK -->
+  <section class="step" id="s29">
+    <div class="step-head"><span class="step-num">Check</span><h2>Thirty-six quick questions</h2></div>
+    <p class="intro">Pick an answer. You will see straight away whether it was right, and why.</p>
+    <div id="quiz"></div>
+    <div class="result" id="result">
+      <div class="big-num"><span id="resPc">0</span><small>%</small></div>
+      <div>
+        <p id="resText"></p>
+        <p style="margin-top:8px"><button class="btn ghost" id="retry">Try again</button></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="step">
+    <div class="step-head"><span class="step-num">Remember</span><h2>Twenty-nine things to take away</h2></div>
+    <div class="recap" style="margin-top:14px">
+      <div><b>A square number is a square of dots</b>4 × 4 = 16, written 4² and said "four squared". Learn them to 12² = 144.</div>
+      <div><b>Squares grow by odd numbers</b>1, 4, 9, 16, 25: the gaps are 3, 5, 7, 9. Each L you add is the next odd number.</div>
+      <div><b>Gaps not the same? Look at their gaps</b>1, 4, 9, 16 has gaps 3, 5, 7, and the gaps of those are all 2: a square sequence. Cubes keep growing.</div>
+      <div><b>Odd numbers: start at 1, add 2</b>The nth one is 2n − 1, so the 12th is 23, and 31 sits 16th because (31 + 1) ÷ 2 = 16. The first n of them add up to n².</div>
+      <div><b>Even numbers: start at 2, add 2</b>The nth one is just 2n, and 98 sits 49th because 98 ÷ 2 = 49. The first n of them add up to n × (n + 1): a rectangle, always n more than the odds' square.</div>
+      <div><b>Factors stop, multiples do not</b>A factor divides into the number exactly, and the factors come in pairs that meet at the square root — which is why 36 has nine of them and not ten. A multiple is the times table, and it never ends.</div>
+      <div><b>Highest common factor, lowest common multiple</b>The common factors are the overlap of two factor lists, and there is a highest because both lists stop. The common multiples never stop, so the one worth naming is the lowest. Check either with HCF × LCM = the two numbers multiplied.</div>
+      <div><b>Divisibility rules read only part of the number</b>The last digit settles 2, 5 and 10; the last two settle 4 and the last three settle 8; the digits added up settle 3 and 9; and 6 is 2 and 3 together. There is no useful rule for 7 — divide.</div>
+      <div><b>Percentages: a fraction with its bottom number agreed in advance</b>Per cent means for each hundred, so 65% = 65/100 = 0.65 — one number, three costumes. Find 10% by dividing by 10 and 1% by dividing by 100, then build any percentage out of those two. 100% is the whole and you can go past it.</div>
+      <div><b>Fractions: the bottom number counts cuts</b>More cuts means smaller pieces, so 1/4 is less than 1/3. Multiplying top and bottom by the same number changes the name and not the amount (3/4 = 6/8 = 75/100), and putting two fractions over the same bottom number is how you compare them.</div>
+      <div><b>Decimals: longer is not bigger</b>Each column after the point is a tenth of the one before. Compare from the LEFT and stop at the first column that differs — 0.7 beats 0.65 in the tenths. A zero at the end changes nothing (0.2 = 0.20), a zero in the middle changes everything (3.04 is not 3.4).</div>
+      <div><b>Below zero: the minus says which side, not how big</b>The line runs as far left of zero as right, and further left always means lower — so −7 is colder than −3, and any negative is below any positive. Zero is neither. Crossing zero is counted in two parts: 5 down to −3 is 5 + 3 = 8.</div>
+      <div><b>Rounding: read the next digit along</b>It works the same on a decimal — 3.5 to the nearest whole is 4, read off the tenths digit. To round to the nearest hundred, look at the tens digit and nothing else: 5 or more goes up, less than 5 goes down. Round in one move from the original number — 149 is 100 to the nearest hundred, not 200. Exactly halfway goes up by agreement, not by arithmetic.</div>
+      <div><b>Comparing: =, &gt; and &lt;</b>The sign opens towards the bigger number, so &minus;7 &lt; &minus;3, 0.7 &gt; 0.65, 1/3 &gt; 1/4 and 68% &gt; 66%. Every comparison in this lesson can be written down that way.</div>
+      <div><b>Two shapes, two facts</b>Add the two facts and one shape cancels out, leaving the other doubled: from ▲ + ● = 10 and ▲ − ● = 4 you get ▲ + ▲ = 14, so ▲ = 7. Two facts about two unknowns are exactly enough.</div>
+      <div><b>× 10 moves the digits, not the point</b>Every digit shifts one column left for each 10, and right when you divide. "Add a zero" only ever described whole numbers: 3.5 × 10 is 35, not 3.50.</div>
+      <div><b>Ratio is part to part; proportion is part to whole</b>3 : 2 means five counters shared three and two, so the proportion orange is 3/5 = 60%. A ratio is never a fraction, and only a proportion becomes a percentage.</div>
+      <div><b>× and ÷ before + and −</b>3 + 4 × 5 is 23, not 35. Equal ranks go left to right, so 10 − 2 − 3 is 5. It is an agreement rather than a discovery, and brackets are how you overrule it.</div>
+      <div><b>Prime numbers: exactly two factors</b>1 and itself, nothing else — and more than two factors makes a number composite, while 1 has one factor and is neither. There is no rule for them, so you sieve: cross out the multiples of 2, 3, 5 and 7, and the 25 primes up to 100 are what is left standing. 1 is not prime, 2 is the only even prime, and no square past 1 is ever prime.</div>
+      <div><b>Is it square? Try the nearest square</b>50 is not: 7² = 49 leaves one dot over, and 8² = 64 is too many.</div>
+      <div><b>A square root undoes a square</b>√49 = 7 because 7 × 7 = 49. √50 is not whole: it lies between 7 and 8.</div>
+      <div><b>A cube number is a square, stacked</b>3³ = 3 × 3 × 3 = 27: three layers of 3² = 9. Cubes grow much faster than squares.</div>
+      <div><b>A cube root undoes a cube</b>∛64 = 4 because 4 × 4 × 4 = 64, while √64 = 8. Try a few edges: there are only six cubes up to 216.</div>
+      <div><b>Triangular numbers count rows</b>1, 3, 6, 10: rows of 1, 2, 3, 4 dots. Two triangles make a rectangle, so it is rows × (rows + 1) ÷ 2. Two in a row make a square: 6 + 10 = 16.</div>
+      <div><b>A sequence needs a start and a rule</b>"Start at 5, add 4" gives 5, 9, 13, 17. Each term comes from the one before.</div>
+      <div><b>Find the rule from the gaps</b>30, 26, 22: the gap is 4 every time, so the rule is "subtract 4". Check EVERY gap.</div>
+      <div><b>Shape patterns are sequences</b>Count pattern 1, 2, 3, write the counts as a sequence, and the gap is the rule.</div>
+      <div><b>Hops stay the same past zero</b>4, 1, −2, −5: subtracting 3 keeps going left. Steps can be decimals too: 2, 1.5, 1, 0.5.</div>
+      <div><b>Count hops, not terms</b>The 8th term is the start plus 7 hops: the rule is used one time fewer than the number of terms.</div>
+    </div>
+    <p class="picker-lab" style="margin-top:24px">Where each step sits in Cambridge Primary Mathematics 0096</p>
+    <div class="table-wrap">
+      <table class="plain" id="cambridge"></table>
+    </div>
+    <div class="note"><b>This lesson deliberately runs past Stage 5 in places, and the badge on each step says where it is.</b> Twenty of the twenty-eight are Stage 5 or below. Four are ahead of it. Cube numbers and common factors are Stage 6 objectives. <b>square roots and cube roots appear nowhere in the primary framework at all</b>, which is why their rows carry no code. Three more are on-stage steps that reach into Stage 6 near the end. They are the divisibility tests for 3, 6 and 9, the thousandths column, and taking a percentage of a quantity rather than of a shape. <b>None of that is a mistake to be trimmed.</b> Squares without square roots, and factors without common factors, would each be half a story, and a class that is ready can go on. It is only worth knowing which is which before you plan a lesson around it.</div>
+  </section>
+</div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => n.toLocaleString("en-GB");
+  // a tidy number: at most 2 decimals, a proper minus sign, thousands separators
+  const nice = (v) => { const r = Math.round(v * 100) / 100; return (r < 0 ? "−" : "") + Math.abs(r).toLocaleString("en-GB", { maximumFractionDigits: 2 }); };
+  function pick(containerId, cb) {
+    $(containerId).addEventListener("click", (e) => {
+      const c = e.target.closest(".chip"); if (!c) return;
+      document.querySelectorAll("#" + containerId + " .chip").forEach((x) => x.classList.toggle("on", x === c));
+      cb(Number(c.dataset.n));
+    });
+  }
+  // 5Nf.08: the sign opens towards the bigger value. One definition, three comparison tables.
+  const rel = (x, y, sx, sy) => sx + (x > y ? " &gt; " : x < y ? " &lt; " : " = ") + sy;
+  const linesHtml = (lines) => lines.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join("");
+  function shuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  /* ---- hero: a 5 by 5 square with its last L picked out ---- */
+  (function () {
+    const m = $("heroMini");
+    for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++) { const d = document.createElement("i"); if (r === 4 || c === 4) d.className = "l"; m.appendChild(d); }
+  })();
+
+  const factorsOf = (n) => { const f = []; for (let d = 1; d <= n; d++) if (n % d === 0) f.push(d); return f; };
+  const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+  /* ---- Check ---- */
+  const QUESTIONS = [
+    { stem: "What is 6²?", opts: ["36", "12", "8"], a: 0, why: "6² means 6 × 6 = 36. It does not mean 6 × 2." },
+    { stem: "Which of these is a square number?", opts: ["49", "45", "50"], a: 0, why: "49 = 7 × 7. 45 and 50 both sit between 36 (6²) and 49 (7²) or 49 and 64 (8²)." },
+    { stem: "1, 4, 9, 16, … What comes next?", opts: ["25", "20", "32"], a: 0, why: "These are the square numbers: 5² = 25. The gaps are 3, 5, 7, 9, so 16 + 9 = 25." },
+    { stem: "In the sequence 1, 4, 9, 16, 25, … what is the eighth term?", opts: ["64", "49", "36"], a: 0, why: "These are the square numbers, so the eighth is 8 × 8 = 64. (49 is the seventh and 36 the sixth.)" },
+    { stem: "1, 3, 6, 10, … What comes next?", opts: ["15", "14", "13"], a: 0, why: "These are the triangular numbers, built from rows of 1, 2, 3, 4 dots. The gaps grow by one each time: 2, 3, 4, then 5, so 10 + 5 = 15." },
+    { stem: "Start at 5 and add 6. What is the 4th term?", opts: ["23", "29", "24"], a: 0, why: "5, 11, 17, 23. The 4th term is 3 hops from the start: 5 + 3 × 6 = 23. (29 would be the 5th term.)" },
+    { stem: "30, 26, 22, 18, … What is the rule?", opts: ["Subtract 4", "Add 4", "Subtract 3"], a: 0, why: "Every gap is 4 and the terms are going DOWN, so the rule is subtract 4." },
+    { stem: "7, 4, 1, … What comes next?", opts: ["−2", "2", "0"], a: 0, why: "The rule is subtract 3, and 1 − 3 = −2. The line carries on past zero." },
+    { stem: "0.5, 1, 1.5, 2, … What comes next?", opts: ["2.5", "3", "2.05"], a: 0, why: "The step is 0.5 each time: 2 + 0.5 = 2.5." },
+    { stem: "Which square number is between 60 and 70?", opts: ["64", "66", "60"], a: 0, why: "8 × 8 = 64. The squares either side are 49 and 81." },
+    { stem: "What is √81?", opts: ["9", "40.5", "8"], a: 0, why: "√81 asks what number times itself makes 81, and 9 × 9 = 81. (40.5 is half of 81; 8 gives 64.)" },
+    { stem: "What is 3³?", opts: ["27", "9", "6"], a: 0, why: "3³ means 3 × 3 × 3 = 27: three layers of the square 3 × 3 = 9. (9 is 3², and 6 is 3 × 2.)" },
+    { stem: "√64 = 8. What is ∛64?", opts: ["4", "8", "32"], a: 0, why: "A square root splits the number into two equal numbers multiplied, 8 × 8. A cube root splits it into three: 4 × 4 × 4 = 64. The same number has different square and cube roots." },
+    { stem: "√50 lies between which two whole numbers?", opts: ["7 and 8", "6 and 7", "24 and 25"], a: 0, why: "7² = 49 and 8² = 64, and 50 sits between them. It is much nearer 7, because 50 is only one more than 49." },
+    { stem: "A pattern uses 4, 7, 10, 13 sticks. How many sticks does pattern 10 use?", opts: ["31", "34", "40"], a: 0, why: "The gap is 3, and pattern 10 is 9 hops from pattern 1: 4 + 9 × 3 = 31. (34 uses 10 hops; 40 is 4 sticks a square with no sharing.)" },
+    { stem: "1 + 3 + 5 + 7 + 9 = ?", opts: ["25", "24", "30"], a: 0, why: "The first five odd numbers add up to 5² = 25. Adding the next L each time builds the next square." },
+    { stem: "Which position does 31 hold in the list of odd numbers 1, 3, 5, 7, …?", opts: ["16th", "15th", "31st"], a: 0, why: "Halve the next number up: (31 + 1) ÷ 2 = 16. Checking it the other way, the 16th odd number is 2 × 16 − 1 = 31." },
+    { stem: "2 + 4 + 6 + 8 + 10 = ?", opts: ["30", "25", "20"], a: 0, why: "Five even numbers starting at 2 add up to 5 × 6 = 30, a rectangle. (25 is what the first five ODD numbers make, a square, and 20 is only the first four evens.)" },
+    { stem: "How many factors does 16 have?", opts: ["5", "4", "8"], a: 0, why: "1, 2, 4, 8, 16. The pairs are 1 × 16, 2 × 8 and 4 × 4, and because 4 pairs with itself the count comes out odd. A square number is the only kind with an odd number of factors." },
+    { stem: "What is the highest common factor of 8 and 12?", opts: ["4", "2", "24"], a: 0, why: "The factors of 8 are 1, 2, 4, 8 and the factors of 12 are 1, 2, 3, 4, 6, 12. Both lists hold 1, 2 and 4, so the highest is 4. (24 is their lowest common MULTIPLE, which is the other question.)" },
+    { stem: "Which one of these divides exactly by 9?", opts: ["4,518", "4,517", "4,519"], a: 0, why: "Add the digits. 4 + 5 + 1 + 8 = 18, and 18 is a multiple of 9, so 4,518 is one too. The other two give 17 and 19, and neither is." },
+    { stem: "What is 25% of 80?", opts: ["20", "25", "40"], a: 0, why: "25% is a quarter, so divide by 4: 80 ÷ 4 = 20. (25 is the percentage itself rather than the answer, and 40 would be 50%.)" },
+    { stem: "Which is the bigger fraction, 1/3 or 1/4?", opts: ["1/3", "1/4", "they are the same"], a: 0, why: "4 is bigger than 3, but that number counts how many pieces the whole was cut into — and more pieces means each one is smaller. A quarter of a cake is less than a third of it." },
+    { stem: "Which is the bigger number, 0.7 or 0.65?", opts: ["0.7", "0.65", "they are the same"], a: 0, why: "0.65 is longer to write, but that is not what decides it. Line the points up and read from the left: 7 tenths against 6 tenths, and 7 wins there and then. The hundredths never get a say." },
+    { stem: "Which is the lower temperature, −7 °C or −3 °C?", opts: ["−7 °C", "−3 °C", "they are the same"], a: 0, why: "7 is bigger than 3, but below zero that means further DOWN — the minus sign says which side of zero, not how big. On a number line −7 sits further left, and it is four degrees colder than −3." },
+    { stem: "What is 3,449 rounded to the nearest hundred?", opts: ["3,400", "3,500", "3,000"], a: 0, why: "The deciding digit is the tens digit, 4, which is less than 5, so it rounds down to 3,400. Rounding to the nearest ten first gives 3,450, and that to the nearest hundred gives 3,500 — which is why you always round in one move from the number you started with." },
+    { stem: "▲ + ● = 12 and ▲ − ● = 2. What is ▲?", opts: ["7", "5", "6"], a: 0, why: "Add the two facts and the ● cancels out: ▲ + ▲ = 14, so ▲ = 7. That makes ● = 5, and 7 + 5 = 12 with a difference of 2." },
+    { stem: "What is 3.5 × 10?", opts: ["35", "3.50", "350"], a: 0, why: "Every digit moves one column to the left, so 3.5 becomes 35. Adding a zero would give 3.50, which is the same number as 3.5 — the zero trick only ever worked on whole numbers." },
+    { stem: "A mix has 3 orange counters and 2 teal. What proportion are orange?", opts: ["3/5", "3/2", "2/5"], a: 0, why: "The ratio is 3 : 2, and both of those are parts. The whole is 3 + 2 = 5, so the proportion orange is 3 out of 5. 3/2 is the ratio misread as a fraction." },
+    { stem: "What is 3 + 4 × 5?", opts: ["23", "35", "27"], a: 0, why: "Multiplication is settled before addition, so it is 4 × 5 = 20 first, then 3 + 20 = 23. Reading straight along the line gives 35, which is what the convention exists to rule out." },
+    { stem: "Which one of these is a composite number?", opts: ["21", "23", "1"], a: 0, why: "21 is 3 × 7, so it has four factors — more than two, which makes it composite. 23 has only 1 and 23, so it is prime. And 1 has just the one factor, so it is neither prime nor composite." },
+    { stem: "What is 3.5 rounded to the nearest whole number?", opts: ["4", "3", "3.5"], a: 0, why: "The deciding digit is the tenths digit, 5, which is exactly halfway — and halfway goes up, by the same agreement used for whole numbers. So 3.5 rounds to 4." },
+    { stem: "Which sign belongs between 0.7 and 0.65?", opts: ["&gt;", "&lt;", "="], a: 0, why: "0.7 is the bigger number, and the sign opens towards the bigger one — so 0.7 &gt; 0.65. It is decided in the tenths column: 7 tenths against 6." },
+    { stem: "Which one of these is prime?", opts: ["97", "51", "91"], a: 0, why: "51 = 3 × 17 and 91 = 7 × 13, so both have factors besides 1 and themselves — they only look prime. 97 has none: it is odd, its digits add to 16 so it is not a multiple of 3, it does not end in 0 or 5, 7 does not go into it, and 11 × 11 = 121 is already past it." },
+    { stem: "3, 6, 12, … The rule is double. What is the 4th term?", opts: ["24", "15", "18"], a: 0, why: "12 × 2 = 24. Add 3 would give 15, but the terms are doubling, not going up in 3s." },
+    { stem: "What is 10² − 9²?", opts: ["19", "1", "2"], a: 0, why: "100 − 81 = 19: the L that turns a 9-square into a 10-square has 9 + 9 + 1 = 19 dots, the next odd number." },
+  ];
+  const quiz = $("quiz");
+  let answered = [];
+  function buildQuiz() {
+    answered = QUESTIONS.map(() => null);
+    $("result").classList.remove("show");
+    quiz.innerHTML = "";
+    QUESTIONS.forEach((q, qi) => {
+      const box = document.createElement("div"); box.className = "q";
+      box.innerHTML = '<p class="stem"><span>' + (qi + 1) + "</span>" + q.stem + '</p><div class="opts">' +
+        shuffle(q.opts.map((_, i) => i)).map((oi) => '<button type="button" class="opt" data-q="' + qi + '" data-o="' + oi + '">' + q.opts[oi] + "</button>").join("") +
+        '</div><p class="why" aria-live="polite"></p>';
+      quiz.appendChild(box);
+    });
+  }
+  quiz.addEventListener("click", (e) => {
+    const b = e.target.closest(".opt"); if (!b) return;
+    const qi = Number(b.dataset.q), oi = Number(b.dataset.o);
+    if (answered[qi] !== null) return;
+    const q = QUESTIONS[qi], right = oi === q.a;
+    answered[qi] = right;
+    const box = b.closest(".q");
+    box.querySelectorAll(".opt").forEach((o) => { o.disabled = true; if (Number(o.dataset.o) === q.a) o.classList.add("right"); });
+    if (!right) b.classList.add("wrong");
+    const why = box.querySelector(".why");
+    why.className = "why " + (right ? "good" : "bad");
+    why.textContent = (right ? "Correct. " : "Not quite. ") + q.why;
+    if (answered.every((x) => x !== null)) {
+      const n = answered.filter(Boolean).length, pc = Math.round(n * 100 / QUESTIONS.length);
+      $("resPc").textContent = pc;
+      $("resText").innerHTML = "You got <b>" + n + " out of " + QUESTIONS.length + "</b>, which is " + pc + "%. " + (n === QUESTIONS.length ? "Every square filled." : n >= 8 ? "Nearly there. Look back at the ones marked red." : "Go back to Step 1 and build the squares again, then try once more.");
+      $("result").classList.add("show");
+      $("result").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  });
+  $("retry").addEventListener("click", () => { buildQuiz(); $("s29").scrollIntoView({ behavior: "smooth" }); });
+  buildQuiz();
+  /* ---- Stage labels ---- */
+  const STAGES = [
+    ["Square numbers", "Stage 5", "5Ni.08, 5Nc.04"],
+    ["Growing squares", "Stage 5", "5Nc.04"],
+    ["Is it square?", "Stage 5", "5Ni.08"],
+    ["Square roots", "Beyond primary", "—"],
+    ["Cube numbers", "Stage 6", "6Ni.08"],
+    ["Cube roots", "Beyond primary", "—"],
+    ["Triangular numbers", "Stage 5", "5Nc.04"],
+    ["Run the rule", "Stage 5", "5Nc.03"],
+    ["Find the rule", "Stage 5", "5Nc.03"],
+    ["Two shapes, two facts", "Stage 5", "5Nc.02"],
+    ["Hidden squares and cubes", "Stages 5–6", "5Nc.04, 6Ni.08"],
+    ["Shape patterns", "Stage 5", "5Nc.04"],
+    ["Number line steps", "Stage 5", "5Nc.01"],
+    ["Odd numbers", "Stage 5", "5Nc.03, 5Nc.04"],
+    ["Even numbers", "Stage 5", "5Nc.03, 5Nc.04"],
+    ["The order of the operations", "Stage 5", "5Ni.03"],
+    ["Factors and multiples", "Stage 4", "4Ni.07"],
+    ["What two numbers share", "Stage 6", "6Ni.06"],
+    ["Divisibility rules", "Stages 4–6", "4Ni.08, 5Ni.07, 6Ni.07"],
+    ["Prime numbers", "Stage 5", "5Ni.06"],
+    ["Rounding", "Stages 4–5", "4Np.05, 5Np.05"],
+    ["Below zero", "Stages 4–5", "5Nc.01, 5Ni.01, 4Np.04, 5Nf.08"],
+    ["Decimals", "Stages 5–6", "5Np.01, 5Np.04, 5Nf.08, 6Np.01"],
+    ["Moving the digits", "Stage 5", "5Np.02, 5Np.03"],
+    ["Fractions", "Stage 5", "5Nf.01, 5Nf.02, 5Nf.03, 5Nf.08"],
+    ["Percentages", "Stages 5–6", "5Nf.04, 5Nf.07, 6Nf.07"],
+    ["Part to part, part to whole", "Stage 5", "5Nf.11"],
+    ["Real life", "Stages 4–6", "mixed — one problem per tool"],
+  ];
+  {
+    const heads = [...document.querySelectorAll('section.step[id] .step-head')];
+    const navs = [...document.querySelectorAll(".steps-nav a")].map((a) => a.textContent.replace(/^\d+\s*/, "").trim());
+    const kind = (st) => (st.indexOf("Beyond") === 0 ? "beyond" : st.indexOf("6") >= 0 ? "up" : "");
+    STAGES.forEach(([title, st], i) => {
+      const h = heads[i];
+      if (!h || navs[i] !== title) return;
+      h.insertAdjacentHTML("beforeend", '<span class="stage ' + kind(st) + '">' + st + "</span>");
+    });
+    const tbl = document.getElementById("cambridge");
+    if (tbl) tbl.innerHTML = '<thead><tr><th class="num">Step</th><th>What it teaches</th><th>Stage</th><th>Objectives</th></tr></thead><tbody>'
+      + STAGES.map(([title, st, codes], i) => "<tr><td class=\"num\">" + (i + 1) + "</td><td>" + title + '</td><td class="how">' + st + '</td><td class="how">' + codes + "</td></tr>").join("")
+      + "</tbody>";
+  }
+
+  /* ---- The voice bar: read this step aloud ---- */
+  // Modelled on the Grade 1 app's speaker. It reads what is ON THE PAGE rather than a script kept
+  // beside it, so the words spoken and the words shown cannot drift apart.
+  {
+    const synth = window.speechSynthesis;
+    if (synth) {
+      let speaking = null;                       // the one button currently talking
+      const stopAll = () => {
+        synth.cancel();
+        if (speaking) { speaking.textContent = "Listen"; speaking.classList.remove("on"); }
+        speaking = null;
+      };
+      // what a step is worth reading: its opening paragraph, then the note that closes it
+      const readable = (sec) => [...sec.querySelectorAll(":scope > .intro, :scope > .note")]
+        .map((e) => e.textContent.trim()).filter(Boolean).join(" ");
+      for (const sec of document.querySelectorAll("section.step[id]")) {
+        const words = readable(sec);
+        if (!words) continue;                    // no prose, no button
+        const bar = document.createElement("p");
+        bar.className = "say";
+        bar.innerHTML = '<span class="ico" aria-hidden="true">&#9835;</span>'
+          + '<span class="lab">Have this step read to you.</span>'
+          + '<button type="button">Listen</button>';
+        const btn = bar.querySelector("button");
+        btn.addEventListener("click", () => {
+          const wasMe = speaking === btn;
+          stopAll();
+          if (wasMe) return;                     // a second press is a stop
+          const u = new SpeechSynthesisUtterance(readable(sec));
+          u.rate = 0.95;                         // a shade under default, for ten-year-olds
+          u.onend = stopAll;
+          u.onerror = stopAll;
+          speaking = btn;
+          btn.textContent = "Stop";
+          btn.classList.add("on");
+          synth.speak(u);
+        });
+        const head = sec.querySelector(".step-head");
+        head.insertAdjacentElement("afterend", bar);
+      }
+      window.addEventListener("beforeunload", stopAll);
+    }
+  }
+
+})();
+</script>
+</body>
+</html>

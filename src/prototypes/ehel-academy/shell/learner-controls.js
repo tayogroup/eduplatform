@@ -63,6 +63,9 @@ function ensureControlStyle() {
 
 const HAND_ENDPOINT = platformUrl("/local/hubredirect/course_hand_raise.php");
 const CHAT_ENDPOINT = platformUrl("/local/hubredirect/course_group_chat.php");
+// The Grade 1 English pronunciation check (Azure Speech, via the platform -
+// the Azure key never reaches a browser). See pronunciation_check.php.
+const PRONUNCIATION_ENDPOINT = platformUrl("/local/hubredirect/pronunciation_check.php");
 
 /* Mounts both controls and returns placeLearnerControls, which the caller must
  * re-run on every deck mount: mountDeck() rebuilds its host with innerHTML, so a
@@ -763,4 +766,43 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
     }
     mountClassChat();
   return { placeLearnerControls, mountHandRaise, mountClassChat };
+}
+
+/* ------------------------------------------------------------------
+   THE PRONUNCIATION CHECK
+
+   Exported as a function rather than as a URL so that the endpoint, the
+   credential and the reply shape have one home. The lesson pages run their
+   renderers in a classic IIFE that cannot import, so a small module bridge on
+   the page hands this to them (build-lessons.py :: PAGE).
+
+   AUDIO IS WAV PCM 16 kHz MONO, converted in the browser before it gets here -
+   Azure rejects the audio/webm MediaRecorder produces in Chrome. The converter
+   is grade-1-app/lib/speech.js :: wavFromBlob, and it lives there rather than
+   here because it is the lesson build that records.
+
+   Never throws for a learner-visible reason. Every failure comes back as an
+   object the page can render, because the one thing a five-year-old must not
+   meet is an uncaught error where their feedback should be.
+   ------------------------------------------------------------------ */
+export async function checkPronunciation({ audioBase64, referenceText, token = "", launchToken = "" }) {
+  try {
+    const response = await fetch(PRONUNCIATION_ENDPOINT, {
+      method: "POST",
+      credentials: "include",
+      headers: platformHeaders({ Accept: "application/json", "Content-Type": "application/json" }),
+      body: JSON.stringify({ audioBase64, referenceText, wstoken: token || launchToken || undefined }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      // The endpoint's own codes, so the page can tell "not switched on yet"
+      // from "something broke" - the reason Wehel's spent allowance answers
+      // with a code rather than a bare 429.
+      return { ok: false, code: result.code || (response.status === 503 ? "not-configured" : "error"),
+               message: result.message || "" };
+    }
+    return result;
+  } catch (error) {
+    return { ok: false, code: "offline", message: "" };
+  }
 }

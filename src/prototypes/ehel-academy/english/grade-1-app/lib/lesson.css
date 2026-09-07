@@ -375,3 +375,28 @@
     .bookq-pictures { grid-template-columns: repeat(3, 1fr); gap: 6px; }
     .bookq-picture { border-width: 3px; }
   }
+
+  /* ---- speaking: record, check, and the feedback ---- */
+  .speech { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+  .speech-target { width: 100%; max-width: 30em; text-align: center; padding: 14px 16px;
+    border-radius: 18px; border: 3px solid var(--teal); background: var(--card); }
+  .speech-target span { display: block; color: var(--muted); font-size: 13.5px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .speech-target p { margin: 6px 0 0; font-size: 24px; font-weight: 700; }
+  .big.recording { background: var(--bad); color: #fff; }
+  .speech-fb { width: 100%; max-width: 30em; text-align: center; min-height: 1.4em; }
+  .speech-note { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+  .speech-score { color: var(--muted); font-size: 13.5px; margin: 6px 0 0; }
+  .speech-words { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 8px; }
+  .speech-word { padding: 5px 12px; border-radius: 999px; font-weight: 700; font-size: 17px;
+    border: 2px solid var(--line); background: var(--card); }
+  .speech-word.good { border-color: var(--good); background: var(--good-soft); }
+  .speech-word.soft { border-color: var(--warn, #e0a83a); }
+  .speech-word.miss { border-color: var(--line); color: var(--muted); text-decoration: line-through; }
+  .speech-sound { margin: 8px 0 0; font-size: 17px; }
+  .speech-sound .phoneme { display: inline-block; padding: 3px 10px; border-radius: 10px;
+    background: var(--teal); color: #fff; font-weight: 800; font-size: 20px; }
+
+  /* the say-it-out-loud list, now that a line can open a recorder */
+  .sayline .sayrow { display: flex; align-items: center; gap: 10px; }
+  .sayspeech { margin: 12px 0 4px; }

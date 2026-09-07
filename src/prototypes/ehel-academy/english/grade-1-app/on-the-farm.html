@@ -398,6 +398,31 @@
     .bookq-picture { border-width: 3px; }
   }
 
+  /* ---- speaking: record, check, and the feedback ---- */
+  .speech { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+  .speech-target { width: 100%; max-width: 30em; text-align: center; padding: 14px 16px;
+    border-radius: 18px; border: 3px solid var(--teal); background: var(--card); }
+  .speech-target span { display: block; color: var(--muted); font-size: 13.5px;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .speech-target p { margin: 6px 0 0; font-size: 24px; font-weight: 700; }
+  .big.recording { background: var(--bad); color: #fff; }
+  .speech-fb { width: 100%; max-width: 30em; text-align: center; min-height: 1.4em; }
+  .speech-note { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+  .speech-score { color: var(--muted); font-size: 13.5px; margin: 6px 0 0; }
+  .speech-words { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: 8px; }
+  .speech-word { padding: 5px 12px; border-radius: 999px; font-weight: 700; font-size: 17px;
+    border: 2px solid var(--line); background: var(--card); }
+  .speech-word.good { border-color: var(--good); background: var(--good-soft); }
+  .speech-word.soft { border-color: var(--warn, #e0a83a); }
+  .speech-word.miss { border-color: var(--line); color: var(--muted); text-decoration: line-through; }
+  .speech-sound { margin: 8px 0 0; font-size: 17px; }
+  .speech-sound .phoneme { display: inline-block; padding: 3px 10px; border-radius: 10px;
+    background: var(--teal); color: #fff; font-weight: 800; font-size: 20px; }
+
+  /* the say-it-out-loud list, now that a line can open a recorder */
+  .sayline .sayrow { display: flex; align-items: center; gap: 10px; }
+  .sayspeech { margin: 12px 0 4px; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -646,9 +671,9 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now a whole story, read to you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press Listen and let it play.</s><s>Follow the words with your finger as you hear them.</s><s>That is how the sound and the letters join up in your head.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not stop to work out every word.</s><s>Keep following.</s><s>You can hear it again afterwards.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen, and off we go.</s></mstts:express-as>' data-say="Press Listen, then follow the words with your finger.">
-      <div class="slide-head"><span class="n">13</span><h2>The unit story</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Press Listen, then follow the words with your finger.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every answer here is in the story you just read.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, that is fine.</s><s>Go back a step and read it again.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">13</span><h2>What happened in the story?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Tap the answer.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
@@ -656,35 +681,25 @@
         <p class="score" id="score13"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every answer here is in the story you just read.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, that is fine.</s><s>Go back a step and read it again.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">14</span><h2>Story questions</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Tap the answer.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
+      <div class="slide-head"><span class="n">14</span><h2>Fluency Practice</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Tap the answer. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage14"></div>
         <div class="choices" id="ch14"></div>
         <p class="fb" id="fb14"></p>
         <p class="score" id="score14"></p>
+        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
-      <div class="slide-head"><span class="n">15</span><h2>Fluency Practice</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Tap the answer. Nothing here is new.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">15</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Tap the answer.</span></div>
       <div class="stage">
         <div id="stage15"></div>
         <div class="choices" id="ch15"></div>
         <p class="fb" id="fb15"></p>
         <p class="score" id="score15"></p>
-        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
-      </div>
-    </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">16</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Tap the answer.</span></div>
-      <div class="stage">
-        <div id="stage16"></div>
-        <div class="choices" id="ch16"></div>
-        <p class="fb" id="fb16"></p>
-        <p class="score" id="score16"></p>
       </div>
     </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1260,15 +1275,6 @@
         ]
       }
     ],
-    "story": {
-      "title": "Amal and the Little Hen",
-      "pages": [
-        [
-          "Amal lived near a small farm. Her grandma kept animals there. Amal loved to visit every morning before the sun grew hot. “Come, Amal,” said Grandma. “There is much work to do on the farm today.” First they went to see the cow. “Good morning, cow!” said Amal. The big brown cow said, “Moo!” Next they saw the sheep and the goat. The sheep said, “Baa!” The goat wanted to eat Amal's hat! Amal laughed and laughed. “Now we must feed the hens,” said Grandma. She gave Amal a small bowl of seed. Amal walked to the barn. The little hen looked hungry. “The hen is hungry,” said Amal. “I will feed her.” She threw the seed on the ground. “Cluck, cluck!” said the happy hen. Then Amal saw something warm in the straw. It was a little white egg! “Grandma, look!” called Amal. “The hen gave us an egg!” “Well done, Amal,” said Grandma. “When you are kind to the animals, they are kind to you.” In the afternoon, they worked in the field. Amal helped to plant a tiny seed in the ground. “Will it grow?” she asked. “Yes,” said Grandma. “With water and sun, the seed will grow into a big bean plant. Everything on a farm grows — the chick grows from an egg, and the bean grows from a seed.” Her big brother Adam drove past on the tractor. “Hard work, little sister!” he called. Amal waved. She was tired, but she was happy. That night, Amal ate warm bread and drank fresh milk from the cow. “I love the farm, Grandma,” she said softly. Grandma smiled. “And the farm loves you, Amal. Good animals need good, kind children like you.”"
-        ]
-      ],
-      "audio": "./media/audio/grade-1/readings/eng-g01-t02-u05-read01.mp3"
-    },
     "questions": [
       {
         "ask": "Which animal did Amal and Grandma go to see first?",
@@ -1381,28 +1387,34 @@
     ],
     "sayit": [
       {
-        "text": "Point to farm animals as an adult names them if one is nearby, or as the audio names them, then name them on your own. Say: 'This is a cow.' 'This is a hen.' 'This is a sheep.'",
-        "audio": "./media/audio/grade-1/speaking/eng-g01-t02-u05-speak01.mp3"
+        "text": "s body. Say:",
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t02-u05-speak04.mp3",
+        "check": true
       },
       {
-        "text": "Copy the adult's animal sound if one is nearby, or copy the audio's animal sound, then try one by yourself. Say: 'The cow says moo.' 'The hen says cluck.' 'The sheep says baa.'",
-        "audio": "./media/audio/grade-1/speaking/eng-g01-t02-u05-speak02.mp3"
+        "text": "It has soft wool.",
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t02-u05-speak04.mp3",
+        "check": true
       },
       {
-        "text": "Ask and answer about what the farm animals are doing. Say: 'What is the duck doing?' 'The duck is swimming.' 'The goat is eating.'",
-        "audio": "./media/audio/grade-1/speaking/eng-g01-t02-u05-speak03.mp3"
+        "text": "It has two wings.",
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t02-u05-speak04.mp3",
+        "check": true
       },
       {
-        "text": "Which talk line makes an animal sound?",
-        "audio": ""
+        "text": "s morning with a partner. Say:",
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t02-u05-speak05.mp3",
+        "check": true
       },
       {
-        "text": "Say 'First ___, then ___' about feeding the hen.",
-        "audio": ""
+        "text": "First we milk the cow, then we rest.",
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t02-u05-speak05.mp3",
+        "check": true
       },
       {
-        "text": "Which talk line tells what an animal is doing now?",
-        "audio": ""
+        "text": "I can see a goat.",
+        "audio": "./media/audio/grade-1/speaking/eng-g01-t02-u05-speak06.mp3",
+        "check": true
       }
     ],
     "rules": [
@@ -2586,6 +2598,45 @@
           ]
         },
         {
+          "id": "speaking-quest",
+          "type": "speaking",
+          "title": "Speaking Quest",
+          "skill": "Pronunciation",
+          "description": "Listen, record, review and submit useful unit language.",
+          "rounds": [
+            {
+              "prompt": "Speaking 1 - Listen and point",
+              "target": "Point to farm animals as an adult names them if one is nearby, or as the audio names them, then name them on your own.",
+              "reference": ""
+            },
+            {
+              "prompt": "Speaking 2 - Repeat the model",
+              "target": "Copy the adult's animal sound if one is nearby, or copy the audio's animal sound, then try one by yourself.",
+              "reference": ""
+            },
+            {
+              "prompt": "Speaking 3 - Ask and answer",
+              "target": "Ask and answer about what the farm animals are doing.",
+              "reference": ""
+            },
+            {
+              "prompt": "Speaking 4 - Picture talk",
+              "target": "Everything on the farm grows in spring.",
+              "reference": ""
+            },
+            {
+              "prompt": "Speaking 5 - Role-play",
+              "target": "The little chick made a soft peep.",
+              "reference": "The little chick made a soft peep."
+            },
+            {
+              "prompt": "Speaking 6 - My confident turn",
+              "target": "The pig says oink in the mud.",
+              "reference": "The pig says oink in the mud."
+            }
+          ]
+        },
+        {
           "id": "spelling-builder",
           "type": "spelling",
           "title": "Spelling Builder",
@@ -2844,7 +2895,7 @@
           ]
         }
       ],
-      "skipped": 1,
+      "skipped": 0,
       "mastery": 4
     },
     "books": [
@@ -3673,7 +3724,8 @@
             "ok": 0
           }
         ],
-        "why": "Name one farm animal. Say 'a' before most words, but 'an' before a vowel sound: a cow, an ox."
+        "why": "Name one farm animal. Say 'a' before most words, but 'an' before a vowel sound: a cow, an ox.",
+        "reference": "This is a cow."
       },
       {
         "ask": "Your friend wants you to match the animal to its sound. What do you say?",
@@ -3691,7 +3743,8 @@
             "ok": 0
           }
         ],
-        "why": "Name the animal first, then copy the sound it makes. Make the sound nice and big!"
+        "why": "Name the animal first, then copy the sound it makes. Make the sound nice and big!",
+        "reference": "The cow says moo."
       },
       {
         "ask": "Your friend wants you to say what a farm animal is doing. What do you say?",
@@ -3709,7 +3762,8 @@
             "ok": 1
           }
         ],
-        "why": "Watch one animal and describe what it is doing now. Add -ing to the action word."
+        "why": "Watch one animal and describe what it is doing now. Add -ing to the action word.",
+        "reference": "The hen is pecking."
       },
       {
         "ask": "Your friend wants you to describe what an animal has. What do you say?",
@@ -3727,7 +3781,8 @@
             "ok": 0
           }
         ],
-        "why": "Tell us the parts an animal has, like horns, wings or wool. Say 'It has' and add the part."
+        "why": "Tell us the parts an animal has, like horns, wings or wool. Say 'It has' and add the part.",
+        "reference": "It has horns."
       },
       {
         "ask": "Your friend wants you to put two farm jobs in order. What do you say?",
@@ -3745,7 +3800,8 @@
             "ok": 0
           }
         ],
-        "why": "Say which farm job happens first, then say what happens next. Order words keep the story clear."
+        "why": "Say which farm job happens first, then say what happens next. Order words keep the story clear.",
+        "reference": "First we feed the hens, then we collect the eggs."
       },
       {
         "ask": "Your friend wants you to spot and name what you see on the farm. What do you say?",
@@ -3763,7 +3819,8 @@
             "ok": 1
           }
         ],
-        "why": "Name one thing you spot on the farm. Say 'a' before most words, but 'an' before a vowel sound: a barn, an ox."
+        "why": "Name one thing you spot on the farm. Say 'a' before most words, but 'an' before a vowel sound: a barn, an ox.",
+        "reference": "I can see a barn."
       }
     ],
     "audioRelease": "20260903c",
@@ -4986,29 +5043,55 @@
   function sayOutLoud(o) {
     const el = o.el;
     const said = new Array(o.items.length).fill(false);
-    $(el.ask).innerHTML = o.ask || "Listen, then say it out loud.";
-    $(el.stage).innerHTML = '<div class="saylines">' + o.items.map((it, k) =>
-      '<div class="sayline" data-k="' + k + '">' +
-      '<button type="button" class="hear" aria-label="Hear this line">&#128266;</button>' +
-      "<span>" + esc(it.text) + "</span>" +
-      '<button type="button" class="tick">I said it</button></div>').join("") + "</div>";
-    $(el.score).textContent = "0 of " + o.items.length + " said";
-    $(el.stage).addEventListener("click", (e) => {
-      const row = e.target.closest(".sayline"); if (!row) return;
-      const k = Number(row.dataset.k);
-      if (e.target.closest(".hear")) { playClip(o.items[k].audio, o.items[k].text); return; }
-      if (!e.target.closest(".tick")) return;
+    let open = -1;                       // which line has the recorder under it
+    function paint() {
+      $(el.ask).innerHTML = o.ask || "Listen, then say it out loud.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="saylines">' + o.items.map((it, k) =>
+        '<div class="sayline' + (said[k] ? " said" : "") + '" data-k="' + k + '">' +
+        '<div class="sayrow">' +
+        '<button type="button" class="hear" aria-label="Hear this line">&#128266;</button>' +
+        "<span>" + esc(it.text) + "</span>" +
+        (it.check
+          ? '<button type="button" class="tick">' + (open === k ? "Hide" : "Say it &amp; check") + "</button>"
+          : '<button type="button" class="tick">' + (said[k] ? "\u2713 said" : "I said it") + "</button>") +
+        "</div>" +
+        (open === k ? '<div class="sayspeech" id="' + el.stage + 'sp"></div>' : "") +
+        "</div>").join("") + "</div>";
+      $(el.score).textContent = said.filter(Boolean).length + " of " + o.items.length + " said";
+      if (open > -1) {
+        const it = o.items[open];
+        speakingPanel($(el.stage + "sp"), {
+          reference: it.text,
+          audio: it.audio,
+          onDone: () => { mark(open); open = -1; paint(); },
+        });
+      }
+    }
+    function mark(k) {
       said[k] = true;
-      row.classList.add("said");
-      row.querySelector(".tick").textContent = "✓ said";
-      const n = said.filter(Boolean).length;
-      $(el.score).textContent = n + " of " + o.items.length + " said";
-      if (n === o.items.length) {
+      if (said.every(Boolean)) {
         $(el.fb).className = "fb good";
         $(el.fb).textContent = o.done;
         finish(o.finish, o.done);
       }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const row = e.target.closest(".sayline");
+      if (!row || e.target.closest(".sayspeech")) return;   // the panel owns its own clicks
+      const k = Number(row.dataset.k);
+      if (e.target.closest(".hear")) { playClip(o.items[k].audio, o.items[k].text); return; }
+      if (!e.target.closest(".tick")) return;
+      /* A line the curriculum marked recordingRequired opens the recorder.
+         One the curriculum did NOT is still the honour system, deliberately:
+         33 of this grade's 60 speaking items ask for a recording and the
+         rest are "point at things with a grown-up", which no microphone can
+         check and which it would be dishonest to score. */
+      if (o.items[k].check) { open = open === k ? -1 : k; paint(); return; }
+      mark(k);
+      paint();
     });
+    paint();
   }
 
   /* ---- build the sentence by tapping words ------------------------
@@ -5111,6 +5194,78 @@
       try { video.pause(); } catch (_) { /* nothing to pause */ }
       finish(o.finish, o.done);
     });
+  }
+
+  /* ---- Let us talk: choose it, then SAY it -------------------------
+     Two halves on purpose. Tapping answers "do you know what to say" -
+     intent, which is what this step was always for. Speaking answers "can
+     you say it", which is what the owner asked for on 2026-09-08 and what
+     Azure can actually measure.
+
+     THE SPEAKING HALF NEVER BLOCKS THE ROUND. The child moves on when they
+     have said it, whatever came back: Azure scores against adult native
+     speakers, these are five- and six-year-olds in their second language,
+     and a round that will not let them past until a machine is satisfied is
+     a round that ends in tears. The score coaches; the child decides.
+     ------------------------------------------------------------------ */
+  function letUsTalk(o) {
+    let i = 0, right = 0, phase = "choose", lock = false;
+    const el = o.el;
+
+    function draw() {
+      const it = o.items[i];
+      $(el.score).textContent = (o.label || "Round") + " " + (i + 1) + " of " + o.items.length;
+      if (phase === "choose") {
+        lock = false;
+        $(el.ask).innerHTML = it.ask;
+        $(el.stage).className = "";
+        $(el.stage).innerHTML = "";
+        $(el.ch).innerHTML = shuffle(it.opts).map((c) =>
+          '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+        $(el.fb).textContent = ""; $(el.fb).className = "fb";
+        say(plain(it.ask));
+        return;
+      }
+      // phase === "say"
+      $(el.ask).innerHTML = "Now say it out loud.";
+      $(el.ch).innerHTML = "";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div id="' + el.stage + 'sp"></div>';
+      speakingPanel($(el.stage + "sp"), {
+        reference: it.reference || "",
+        audio: "",
+        onDone: () => {
+          i++;
+          if (i >= o.items.length) {
+            $(el.stage).innerHTML = ""; $(el.score).textContent = "";
+            $(el.fb).className = "fb good";
+            $(el.fb).textContent = "You got " + right + " of " + o.items.length
+              + " first time, and you said them all. " + o.done;
+            finish(o.finish, o.done);
+            return;
+          }
+          phase = "choose";
+          draw();
+        },
+      });
+    }
+
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || lock || phase !== "choose") return;
+      lock = true;
+      const ok = b.dataset.ok === "1", it = o.items[i];
+      $(el.ch).querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad");
+      $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
+      say((ok ? cheer() + " " : "") + it.why);
+      setTimeout(() => { phase = "say"; draw(); }, 2200);
+    });
+
+    draw();
   }
 
   /* ---- the stickers, one per step that can be earned --------------- */
@@ -5582,6 +5737,7 @@
         if (game.type === "choice") return drawChoice(round);
         if (game.type === "spelling") return drawSpelling(round);
         if (game.type === "pairs") return drawPairs(round);
+        if (game.type === "speaking") return drawSpeaking(round);
         return drawTokens(round);   // sentence and sequence share a shape
       }
 
@@ -5745,6 +5901,40 @@
         });
       }
 
+      /* Speaking Quest. The pack's rounds carry a `target` - what the child
+         is asked to say - and no options, so the round IS the speaking panel.
+         It counts as done when they have had a go, for the reason letUsTalk
+         records: a game that will not let a five-year-old past until a
+         scorer is happy is not a game. */
+      function drawSpeaking(round) {
+        /* Only a round whose target is a SENTENCE gets the recorder - the
+           builder decides that (speakable_target) and 45 of this grade's 60
+           rounds are adult-led activities instead: "Point to school things as
+           an adult names them". Offering to score a child's pronunciation of
+           an instruction would fail every child who did the activity right. */
+        if (!round.reference) {
+          frame(
+            '<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+            '<div class="speech-target"><span>Do this</span><p>' + esc(round.target || "") + "</p></div>" +
+            '<p class="speech-note">This one is for doing out loud, with a grown-up if one is there. '
+            + "There is nothing to check - press Done when you have had a go.</p>",
+            '<button type="button" class="big small" id="gameSpokeDone">Done &#10003;</button>');
+          say(plain(round.target || round.prompt));
+          overlay.querySelector("#gameSpokeDone").addEventListener("click", () => { right++; nextRound(); });
+          return;
+        }
+        frame(
+          '<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+          '<div id="gameSpeak"></div>');
+        say(plain(round.prompt));
+        speakingPanel(overlay.querySelector("#gameSpeak"), {
+          reference: round.reference,
+          audio: "",
+          onResult: (r) => { if (r && r.heard && r.accuracy >= 60) right++; },
+          onDone: () => nextRound(),
+        });
+      }
+
       drawRound();
     }
 
@@ -5752,7 +5942,283 @@
   }
 
 
-  const STICKERS = [["🎬", "I watched the lesson"], ["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["📚", "I read the story"], ["🤔", "I answered the story questions"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"]];
+  /* ==================================================================
+     SPEAKING: record, convert, check, and say something useful back.
+
+     Three steps use this - Let us talk, Say it out loud, and the Speaking
+     Quest game - so the recorder, the converter and the feedback wording
+     live here once.
+
+     WHY A CONVERTER AT ALL. Azure's short-audio API accepts WAV PCM 16 kHz
+     mono or OGG/Opus and nothing else. Chrome's MediaRecorder produces
+     audio/webm;codecs=opus, which Azure rejects outright with a bare 400.
+     Converting on the server would need ffmpeg on a shared cPanel host, so
+     it happens here: decodeAudioData reads the webm fine, an
+     OfflineAudioContext at 16 kHz does the downmix and the resample in one
+     pass, and the WAV header is 44 bytes written by hand. No library.
+
+     NOTHING HERE GATES A STEP. Azure scores against ADULT NATIVE speakers
+     and these learners are five and six, in their second language. A score
+     is coaching, never a pass mark: every one of the three steps completes
+     on having a go, and a child who says it perfectly and gets a poor
+     transcript loses nothing. The one thing that must never happen is a
+     child being told they are wrong by a machine that is itself unsure.
+     ================================================================== */
+
+  /* The bridge to the platform module. The renderers run in a classic IIFE
+     that cannot import, so the page's own module script hands the function
+     over on window (build-lessons.py :: PAGE). In local dev those modules
+     404 - they are deployed beside the pages, not beside the source - so the
+     dev twin is used instead, which is the same DEV_API split wehel.js makes
+     one directory up. */
+  const SPEECH_DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
+  async function postForCheck(audioBase64, referenceText) {
+    if (SPEECH_DEV) {
+      try {
+        const r = await fetch("/api/azure-pronunciation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ audioBase64, referenceText }),
+        });
+        const j = await r.json().catch(() => ({}));
+        return r.ok ? j : { ok: false, code: "not-configured", message: j.message || "" };
+      } catch (_) {
+        return { ok: false, code: "offline" };
+      }
+    }
+    const check = window.__ehelCheckPronunciation;
+    if (typeof check !== "function") return { ok: false, code: "not-configured" };
+    const q = new URLSearchParams(location.search);
+    return check({
+      audioBase64, referenceText,
+      token: q.get("pwsToken") || "", launchToken: q.get("pwsToken") || "",
+    });
+  }
+
+  const MIC_OK = Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia
+    && typeof MediaRecorder === "function");
+
+  /* ---- webm/opus in, 16 kHz mono WAV out --------------------------- */
+  function wavBytes(samples) {
+    // 44-byte canonical header, then 16-bit little-endian PCM.
+    const buffer = new ArrayBuffer(44 + samples.length * 2);
+    const view = new DataView(buffer);
+    const ascii = (offset, text) => { for (let i = 0; i < text.length; i++) view.setUint8(offset + i, text.charCodeAt(i)); };
+    ascii(0, "RIFF");
+    view.setUint32(4, 36 + samples.length * 2, true);
+    ascii(8, "WAVEfmt ");
+    view.setUint32(16, 16, true);          // fmt chunk size
+    view.setUint16(20, 1, true);           // PCM
+    view.setUint16(22, 1, true);           // mono
+    view.setUint32(24, 16000, true);       // sample rate
+    view.setUint32(28, 16000 * 2, true);   // byte rate
+    view.setUint16(32, 2, true);           // block align
+    view.setUint16(34, 16, true);          // bits per sample
+    ascii(36, "data");
+    view.setUint32(40, samples.length * 2, true);
+    let at = 44;
+    for (let i = 0; i < samples.length; i++, at += 2) {
+      // clamp before scaling: a sample above 1 wraps to a loud click otherwise
+      const s = Math.max(-1, Math.min(1, samples[i]));
+      view.setInt16(at, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+    }
+    return new Uint8Array(buffer);
+  }
+
+  async function wavFromBlob(blob) {
+    const raw = await blob.arrayBuffer();
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const decoder = new Ctx();
+    let decoded;
+    try {
+      decoded = await decoder.decodeAudioData(raw);
+    } finally {
+      try { decoder.close(); } catch (_) { /* Safari has closed it already */ }
+    }
+    // One offline pass does the downmix to mono AND the resample to 16 kHz;
+    // doing either by hand is where the aliasing bugs live.
+    const frames = Math.ceil(decoded.duration * 16000);
+    const offline = new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(1, frames, 16000);
+    const source = offline.createBufferSource();
+    source.buffer = decoded;
+    source.connect(offline.destination);
+    source.start();
+    const rendered = await offline.startRendering();
+    return wavBytes(rendered.getChannelData(0));
+  }
+
+  function base64Of(bytes) {
+    // Chunked: String.fromCharCode.apply on a 300 KB array overflows the
+    // argument limit in every browser that matters.
+    let binary = "";
+    for (let i = 0; i < bytes.length; i += 8192) {
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + 8192));
+    }
+    return btoa(binary);
+  }
+
+  /* ---- what the child is told -------------------------------------
+     Led by WHICH WORDS to practise, not by the percentage. A number is the
+     part a six-year-old can neither act on nor argue with, and Azure's is
+     calibrated against adults; the words are the part they can do something
+     about. The score is shown small, underneath, and never as a verdict.
+
+     Azure's own Display is NOT printed. It is constrained by the reference
+     text - audio saying "cat" scored against "cap" comes back "Cap." -
+     so printing it as "we heard you say" would tell a child they said a
+     word they did not.
+     ------------------------------------------------------------------ */
+  const PRACTISE_BELOW = 90;
+
+  function feedbackHtml(result) {
+    if (!result || result.ok === false) {
+      const code = (result && result.code) || "error";
+      if (code === "not-configured") {
+        return '<p class="speech-note">The pronunciation check is not switched on yet. '
+          + "Your recording still counts - press Done when you have said it.</p>";
+      }
+      if (code === "offline") {
+        return '<p class="speech-note">I could not reach the checker just now. '
+          + "That is nothing you did - press Done and carry on.</p>";
+      }
+      if (code === "rate-limit") {
+        return '<p class="speech-note">That is a lot of checks at once. Wait a moment, then try again.</p>';
+      }
+      return '<p class="speech-note">The check did not work this time. Press Done and carry on.</p>';
+    }
+    if (!result.heard) {
+      return '<p class="speech-note">I could not hear any words. '
+        + "Hold the microphone close, and say it once more.</p>";
+    }
+    const words = result.words || [];
+    const practise = words.filter((w) => w.error === "Omission" ? false : w.score < PRACTISE_BELOW);
+    const missed = words.filter((w) => w.error === "Omission");
+    const chips = words.map((w) => {
+      const cls = w.error === "Omission" ? "miss" : w.score >= PRACTISE_BELOW ? "good" : "soft";
+      return '<span class="speech-word ' + cls + '">' + esc(w.word) + "</span>";
+    }).join("");
+
+    let line;
+    if (!practise.length && !missed.length) {
+      line = "<strong>" + cheer() + "</strong> Every word came out clearly.";
+    } else if (missed.length && !practise.length) {
+      line = "Say the whole sentence this time - I did not hear <strong>"
+        + missed.map((w) => esc(w.word)).join("</strong>, <strong>") + "</strong>.";
+    } else {
+      line = "Good try. Say <strong>" + practise.slice(0, 2).map((w) => esc(w.word)).join("</strong> and <strong>")
+        + "</strong> once more, slowly.";
+    }
+
+    // The sound itself, where Azure named one. This is the whole reason the
+    // check is on Azure rather than on a transcript, so it is worth showing -
+    // but only the worst sound of the worst word, because a five-year-old
+    // cannot act on a list.
+    let sound = "";
+    const withPhonemes = practise.find((w) => (w.phonemes || []).length);
+    if (withPhonemes) {
+      const worst = withPhonemes.phonemes.reduce((a, b) => (b.score < a.score ? b : a));
+      if (worst.score < PRACTISE_BELOW && worst.p) {
+        sound = '<p class="speech-sound">The sound to practise in <strong>' + esc(withPhonemes.word)
+          + '</strong> is <span class="phoneme">/' + esc(worst.p) + "/</span></p>";
+      }
+    }
+
+    return '<div class="speech-words">' + chips + "</div>"
+      + "<p>" + line + "</p>" + sound
+      + '<p class="speech-score">Clarity ' + Math.round(result.accuracy) + "%"
+      + " &middot; you said " + Math.round(result.completeness) + "% of the words</p>";
+  }
+
+  /* ---- the panel every speaking step draws -------------------------
+     Hear it, say it, listen back, check. The child's recording never leaves
+     the device until they press Check - said on the panel, because it is
+     true and because a parent may be reading over their shoulder.
+     ------------------------------------------------------------------ */
+  function speakingPanel(host, o) {
+    let blob = null;
+    let recorder = null;
+    let stream = null;
+    let checking = false;
+
+    function paint(feedback) {
+      host.innerHTML =
+        '<div class="speech">' +
+        '<div class="speech-target"><span>Say this</span><p>' + esc(o.reference) + "</p></div>" +
+        '<div class="bigbtns">' +
+        (o.audio || o.reference ? '<button type="button" class="big small teal" data-speech="hear">&#128266; Hear it</button>' : "") +
+        (MIC_OK
+          ? '<button type="button" class="big small" data-speech="rec">&#127908; Say it</button>'
+          : '<span class="speech-note">This device has no microphone, so just say it out loud.</span>') +
+        (blob ? '<button type="button" class="big small ghost" data-speech="play">&#9654; Listen back</button>' : "") +
+        (blob ? '<button type="button" class="big small" data-speech="check"' + (checking ? " disabled" : "") + ">"
+          + (checking ? "Checking&hellip;" : "Check it") + "</button>" : "") +
+        "</div>" +
+        '<div class="speech-fb">' + (feedback || "") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small ghost" data-speech="done">I have said it &#10003;</button></div>' +
+        '<p class="speech-note">Your recording stays on this device until you press Check it.</p>' +
+        "</div>";
+    }
+
+    async function startRecording(button) {
+      if (recorder && recorder.state === "recording") { recorder.stop(); return; }
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (_) {
+        paint('<p class="speech-note">I cannot use the microphone. '
+          + "You can still say it out loud and press Done.</p>");
+        return;
+      }
+      const chunks = [];
+      recorder = new MediaRecorder(stream);
+      recorder.addEventListener("dataavailable", (e) => { if (e.data.size) chunks.push(e.data); });
+      recorder.addEventListener("stop", () => {
+        stream.getTracks().forEach((t) => t.stop());
+        blob = new Blob(chunks, { type: recorder.mimeType || "audio/webm" });
+        recorder = null;
+        paint(blob.size ? '<p class="speech-note">Listen back, then press Check it.</p>' : "");
+      });
+      recorder.start();
+      button.textContent = "⏹ Stop";
+      button.classList.add("recording");
+      // A hard ceiling well under Azure's 30 seconds: a five-year-old who
+      // forgets to press stop must not lose the round to a rejected upload.
+      setTimeout(() => { if (recorder && recorder.state === "recording") recorder.stop(); }, 15000);
+    }
+
+    async function check() {
+      if (!blob || checking) return;
+      checking = true;
+      paint('<p class="speech-note">Listening to what you said&hellip;</p>');
+      let result;
+      try {
+        const wav = await wavFromBlob(blob);
+        result = await postForCheck(base64Of(wav), o.reference);
+      } catch (_) {
+        // A converter failure is ours, not the child's, and it must not read
+        // as "you said it wrong".
+        result = { ok: false, code: "error" };
+      }
+      checking = false;
+      paint(feedbackHtml(result));
+      if (o.onResult) o.onResult(result);
+    }
+
+    host.addEventListener("click", (e) => {
+      const button = e.target.closest("[data-speech]");
+      if (!button) return;
+      const what = button.dataset.speech;
+      if (what === "hear") { playClip(o.audio, o.reference); return; }
+      if (what === "rec") { startRecording(button); return; }
+      if (what === "play" && blob) { new Audio(URL.createObjectURL(blob)).play().catch(() => {}); return; }
+      if (what === "check") { check(); return; }
+      if (what === "done" && o.onDone) o.onDone();
+    });
+
+    paint("");
+  }
+
+
+  const STICKERS = [["🎬", "I watched the lesson"], ["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["🤔", "I answered the story questions"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"]];
 
   lectureStep({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", video: "video1", next: "next1" }, lecture: LESSON.lecture, finish: 0,
     done: "You watched the whole lesson." });
@@ -5781,18 +6247,15 @@
   buildSentence({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10", line: "line10", tiles: "tiles10", check: "check10", clear: "clear10" }, ask: LESSON.write.ask, tiles: LESSON.write.tiles,
     answer: LESSON.write.answer, finish: 9,
     done: "That is a real sentence, written by you." });
-  sequence({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, items: LESSON.talk, finish: 10,
+  letUsTalk({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, items: LESSON.talk, finish: 10,
     label: "Round", done: "That is talking practised." });
   gameZone({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12", gamelist: "gamelist12" }, pack: LESSON.games, finish: 11,
     done: "That is the Game Zone played." });
-  storyRead({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", replay: "replay13", next: "next13" }, title: LESSON.story.title, pages: LESSON.story.pages,
-    audio: LESSON.story.audio, finish: 12,
-    done: "You read the whole story." });
-  sequence({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, items: LESSON.questions, finish: 13,
+  sequence({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, items: LESSON.questions, finish: 12,
     label: "Question", done: "You remembered the story well." });
-  sequence({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, items: LESSON.fluency, finish: 14,
+  sequence({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, items: LESSON.fluency, finish: 13,
     label: "Question", done: "That is this unit's words and patterns practised." });
-  sequence({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, items: LESSON.quiz, finish: 15,
+  sequence({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, items: LESSON.quiz, finish: 14,
     label: "Question", done: "That is the whole unit finished." });
 
   show(0, false);
@@ -5864,6 +6327,17 @@
   })();
 
   })();
+</script>
+
+<script type="module">
+  /* THE PRONUNCIATION BRIDGE. The renderers above run in a classic IIFE and
+     cannot import; the endpoint is declared once in shell/learner-controls.js
+     so that check-platform-cors.mjs discovers and probes it. This hands the
+     one function across. In local dev these modules 404 - they are deployed
+     beside the pages, not beside the source - and speech.js falls back to the
+     dev twin on 127.0.0.1, so a missing bridge here is expected there. */
+  import { checkPronunciation } from "./learner-controls.js";
+  window.__ehelCheckPronunciation = checkPronunciation;
 </script>
 
 <script>

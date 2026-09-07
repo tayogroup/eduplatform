@@ -142,9 +142,21 @@ STEP_ORDER = [
     "sayit",
     "rules",
     "write",
-    "talk",           # "Let us talk" — situational dialogue choice
+    "talk",           # "Let us talk" — say it out loud, and Azure checks it
     "games",          # the whole game pack, one step
-    "story",          # "The unit story" — moved down from second
+    # "story" IS DELIBERATELY ABSENT. Owner, 2026-09-08. The unit's own story
+    # is ALREADY on the shelf at step 6 as an illustrated, narrated,
+    # twelve-page picture book, under the same title, in all ten units —
+    # Amal's First Day, Breakfast at Grandma's House, Amal's English Year.
+    # The step that used to sit here showed the identical story as four
+    # blocks of plain text. It was the same content twice and the worse of
+    # the two for a six-year-old, so it is gone rather than moved again.
+    #
+    # Its comprehension questions STAY, renamed: they are reviewed
+    # curriculum tied to the unit's outcomes, they are not what step 7 asks
+    # (those are authored for the picture books), and every one of them is
+    # still answerable — checked question by question — from the book on
+    # the shelf.
     "questions",
     "fluency",
     "check",
@@ -314,6 +326,10 @@ def talk_items(unit):
             "ask": "Your friend wants you to %s. What do you say?" % first,
             "opts": [{"t": o, "ok": 1 if o == answer else 0} for o in opts],
             "why": g.get("explanation") or ("You would say: %s" % answer),
+            # What the child then says out loud, and what Azure scores against.
+            # It is the round's own correct answer, so choosing and saying are
+            # the same sentence rather than two exercises side by side.
+            "reference": answer,
         })
     return rounds
 
@@ -334,6 +350,38 @@ def practice_examples(grammar_item):
             continue
         out.append(p if p.endswith((".", "!", "?")) else p + ".")
     return out
+
+
+# A speaking game round is only offered to the pronunciation check if it is a
+# SENTENCE A CHILD SAYS. 59 of the 60 rounds in this grade's Speaking Quest
+# carry no quoted model line, and most of their `target` fields are addressed
+# to the grown-up ("Point to school things as an adult names them") or are
+# imperatives ("Play teacher and pupil with a partner", "Ask a friend about the
+# food they eat"). Scoring a child's pronunciation against an instruction they
+# were never meant to read aloud fails everyone who did the activity correctly.
+#
+# THE TEST IS A WHITELIST OF SENTENCE OPENERS, and it is a whitelist on purpose.
+# Two looser rules were measured first and both mislabelled: "quoted lines only"
+# found 1 of 60, and "short and mentions no adult" passed 43 - including "Ask
+# and answer about the girls in your family" and "Drop things into a bowl of
+# water and report what happens", which are instructions wearing a short
+# sentence's clothes. Requiring a declarative opener finds 15, and the 15 are
+# all genuinely sayable. Anything unrecognised falls back to an adult-led
+# activity with no check, which is the honest default for this content and the
+# direction a wrong guess should fail in.
+SPEAKABLE_OPENER = re.compile(
+    r"^(I|You|We|They|He|She|It|The|A|An|My|Your|Our|Their|His|Her|This|That|These|"
+    r"Those|There|Here|Today|Yesterday|Amal|Kiki|Musa|Duku|Lulu|Zuri|Omar|Nora|Adam|"
+    r"Sami|Maya|Yasmin|Grandma|Grandpa|Mum|Dad)\b")
+ADULT_LED = re.compile(r"\badults?\b|\bgrown-?up\b|\baudio\b", re.I)
+
+
+def speakable_target(target):
+    """The sentence a child says, or "" when the round is an activity."""
+    t = (target or "").strip()
+    if not t or len(t) > 70 or ADULT_LED.search(t) or not SPEAKABLE_OPENER.match(t):
+        return ""
+    return t
 
 
 def load_games(unit_no):
@@ -661,23 +709,11 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                         ["Listen, and tap the one you heard."]),
                     ["replay"])
 
-    # ---- 5  the story ------------------------------------------------
-    story = next((r for r in unit["readings"] if r.get("type") == "Story"), None) or unit["readings"][0]
-    data["story"] = {
-        "title": story.get("title") or "The story",
-        "pages": sentence_pages(story.get("passageScript") or ""),
-        "audio": source_of(story),
-    }
-    i = add("story", "The unit story", "\U0001F4DA", "I read the story",
-            "Press Listen, then follow the words with your finger.",
-            explain(
-                ["Now a whole story, read to you."],
-                ["Press Listen and let it play.", "Follow the words with your finger as you hear them.",
-                 "That is how the sound and the letters join up in your head."],
-                ["Do not stop to work out every word.",
-                 "Keep following.", "You can hear it again afterwards."],
-                ["Press Listen, and off we go."]),
-            ["replay", "next"])
+    # The unit story is no longer a step of its own - see STEP_ORDER above.
+    # `story` is still READ here, because renderReading's own text is what the
+    # comprehension questions below are about and the picture book on the
+    # shelf is the same story; nothing downstream needs the pages, so they are
+    # not emitted into the page's LESSON at all.
 
     # ---- 6  the story questions --------------------------------------
     #        Only the factual ones. A question whose accepted answer is a
@@ -726,7 +762,7 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 "why": c.get("explanation") or "",
             })
         data["questions"] = items
-        i = add("questions", "Story questions", "\U0001F914", "I answered the story questions",
+        i = add("questions", "What happened in the story?", "\U0001F914", "I answered the story questions",
                 "Tap the answer.",
                 explain(
                     ["Every answer here is in the story you just read."],
@@ -738,14 +774,45 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 ())
 
     # ---- 7  say it out loud ------------------------------------------
+    # THE MODEL SENTENCES, NOT THE INSTRUCTION PARAGRAPH. A speaking item's
+    # instructionsAndModelLines reads "Point to school things as an adult
+    # names them ... Say: 'This is a pencil.' 'This is a book.'" - the first
+    # half is addressed to the grown-up and the quoted half is what the child
+    # actually says. This step used to show the whole paragraph and ask the
+    # child to tick "I said it", which is unaskable as a pronunciation
+    # reference and was pure honour system besides.
+    #
+    # 33 of the 60 speaking items across this grade carry
+    # recordingRequired: true and NOTHING in this build recorded them. Each
+    # quoted model line is now its own short, checkable sentence.
+    # THE RECORDING ITEMS COME FIRST, and that ordering is the whole feature.
+    # Measured across all ten units: items 4, 5 and 6 carry
+    # recordingRequired: true and items 1-3 do not (unit 10 marks all six).
+    # Every item quotes three model lines, so taking them in authored order
+    # and stopping at six picked ONLY from items 1-2 - that is, only the
+    # lines that cannot be checked. The step rendered six sentences and not
+    # one of them offered the microphone. Caught by opening the page, not by
+    # any gate: nothing here knows what the step is for.
     lines = []
-    for s in unit["speaking"][:3]:
-        t = (s.get("instructionsAndModelLines") or "").strip()
-        if t:
-            lines.append({"text": t, "audio": source_of(s)})
-    for c in unit["comprehension"]:
-        if not is_factual(c) and len(lines) < 6:
-            lines.append({"text": c["question"], "audio": ""})
+    for item in sorted(unit["speaking"], key=lambda x: 0 if x.get("recordingRequired") else 1):
+        quoted = [q.strip() for q in re.findall(r"[\u201c\"']([^\u201d\"']{3,})[\u201d\"']",
+                                                item.get("instructionsAndModelLines") or "")]
+        for sentence in quoted:
+            if len(lines) >= 6:
+                break
+            lines.append({
+                "text": sentence,
+                # The clip narrates the whole item rather than this one line,
+                # so it is the model for the ACTIVITY. speech.js falls back to
+                # the runtime voice for the sentence itself.
+                "audio": source_of(item),
+                "check": bool(item.get("recordingRequired")),
+            })
+    if not lines:
+        for item in unit["speaking"][:3]:
+            t = (item.get("instructionsAndModelLines") or "").strip()
+            if t:
+                lines.append({"text": t, "audio": source_of(item), "check": False})
     if lines:
         data["sayit"] = lines
         i = add("sayit", "Say it out loud", "\U0001F5E3️", "I said it out loud",
@@ -957,9 +1024,11 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
         rounds = g.get("rounds") or []
         if not rounds:
             continue
+        # `speaking` used to be dropped here for want of a recorder. It has
+        # one now (lib/speech.js), so the twelfth game is playable and the
+        # pack is whole.
         if g.get("type") == "speaking":
-            skipped += 1
-            continue
+            rounds = [dict(r, reference=speakable_target(r.get("target"))) for r in rounds]
         playable.append({
             "id": g["id"], "type": g["type"], "title": g.get("title") or g["id"],
             "skill": g.get("skill") or "", "description": g.get("description") or "",
@@ -1131,12 +1200,25 @@ PAGE = """<meta charset="utf-8">
 
 %(games)s
 
+%(speech)s
+
   const STICKERS = %(stickers)s;
 
 %(bootstrap)s
   show(0, false);
 
 })();
+</script>
+
+<script type="module">
+  /* THE PRONUNCIATION BRIDGE. The renderers above run in a classic IIFE and
+     cannot import; the endpoint is declared once in shell/learner-controls.js
+     so that check-platform-cors.mjs discovers and probes it. This hands the
+     one function across. In local dev these modules 404 - they are deployed
+     beside the pages, not beside the source - and speech.js falls back to the
+     dev twin on 127.0.0.1, so a missing bridge here is expected there. */
+  import { checkPronunciation } from "./learner-controls.js";
+  window.__ehelCheckPronunciation = checkPronunciation;
 </script>
 """
 
@@ -1211,7 +1293,7 @@ def bootstrap(slides, data):
             out.append('  bookQuestions({ el: %s, items: LESSON.bookquestions, books: LESSON.books,\n'
                        '    finish: %d, done: "You answered the book questions." });' % (el, i))
         elif k == "talk":
-            out.append('  sequence({ el: %s, items: LESSON.talk, finish: %d,\n'
+            out.append('  letUsTalk({ el: %s, items: LESSON.talk, finish: %d,\n'
                        '    label: "Round", done: "That is talking practised." });' % (el, i))
         elif k == "books":
             out.append('  bookShelf({ el: %s, items: LESSON.books, finish: %d,\n'
@@ -1221,7 +1303,7 @@ def bootstrap(slides, data):
 
 
 def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games_js,
-          ebooks, book_sets, lectures, release):
+          speech_js, ebooks, book_sets, lectures, release):
     entry = next(u for u in manifest["units"] if u["number"] == unit_no)
     unit = load_json(os.path.join(DATA, "units", "unit-%d.json" % unit_no))
     cw_unit = next(u for u in cw["units"] if u["unitNo"] == unit_no)
@@ -1291,7 +1373,7 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
         "slides": body,
         "data": json.dumps(data, ensure_ascii=False, indent=2).replace("\n", "\n  "),
         "voice": voice, "deck": deck, "english": english, "books": books_js,
-        "games": games_js,
+        "games": games_js, "speech": speech_js,
         "stickers": json.dumps(stickers, ensure_ascii=False),
         "bootstrap": bootstrap(slides, data),
     }
@@ -1315,13 +1397,14 @@ def main():
     english = io.open(os.path.join(LIB, "english.js"), encoding="utf-8").read()
     books_js = io.open(os.path.join(LIB, "books.js"), encoding="utf-8").read()
     games_js = io.open(os.path.join(LIB, "games.js"), encoding="utf-8").read()
+    speech_js = io.open(os.path.join(LIB, "speech.js"), encoding="utf-8").read()
     ebooks = ebook_catalog()
     book_sets = book_comprehension_sets()
     lectures = lecture_media()
 
     units = wanted or [u["number"] for u in manifest["units"]]
     print("\n  Building Grade 1 English lessons  (audio stamp %s)\n" % release)
-    built = [build(n, manifest, cw, dic, css, voice, deck, english, books_js, games_js, ebooks,
+    built = [build(n, manifest, cw, dic, css, voice, deck, english, books_js, games_js, speech_js, ebooks,
                    book_sets, lectures, release) for n in units]
     print("\n  %d page(s). Now run the shared pipeline - see the docstring.\n" % len(built))
 

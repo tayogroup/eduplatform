@@ -372,29 +372,55 @@
   function sayOutLoud(o) {
     const el = o.el;
     const said = new Array(o.items.length).fill(false);
-    $(el.ask).innerHTML = o.ask || "Listen, then say it out loud.";
-    $(el.stage).innerHTML = '<div class="saylines">' + o.items.map((it, k) =>
-      '<div class="sayline" data-k="' + k + '">' +
-      '<button type="button" class="hear" aria-label="Hear this line">&#128266;</button>' +
-      "<span>" + esc(it.text) + "</span>" +
-      '<button type="button" class="tick">I said it</button></div>').join("") + "</div>";
-    $(el.score).textContent = "0 of " + o.items.length + " said";
-    $(el.stage).addEventListener("click", (e) => {
-      const row = e.target.closest(".sayline"); if (!row) return;
-      const k = Number(row.dataset.k);
-      if (e.target.closest(".hear")) { playClip(o.items[k].audio, o.items[k].text); return; }
-      if (!e.target.closest(".tick")) return;
+    let open = -1;                       // which line has the recorder under it
+    function paint() {
+      $(el.ask).innerHTML = o.ask || "Listen, then say it out loud.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="saylines">' + o.items.map((it, k) =>
+        '<div class="sayline' + (said[k] ? " said" : "") + '" data-k="' + k + '">' +
+        '<div class="sayrow">' +
+        '<button type="button" class="hear" aria-label="Hear this line">&#128266;</button>' +
+        "<span>" + esc(it.text) + "</span>" +
+        (it.check
+          ? '<button type="button" class="tick">' + (open === k ? "Hide" : "Say it &amp; check") + "</button>"
+          : '<button type="button" class="tick">' + (said[k] ? "\u2713 said" : "I said it") + "</button>") +
+        "</div>" +
+        (open === k ? '<div class="sayspeech" id="' + el.stage + 'sp"></div>' : "") +
+        "</div>").join("") + "</div>";
+      $(el.score).textContent = said.filter(Boolean).length + " of " + o.items.length + " said";
+      if (open > -1) {
+        const it = o.items[open];
+        speakingPanel($(el.stage + "sp"), {
+          reference: it.text,
+          audio: it.audio,
+          onDone: () => { mark(open); open = -1; paint(); },
+        });
+      }
+    }
+    function mark(k) {
       said[k] = true;
-      row.classList.add("said");
-      row.querySelector(".tick").textContent = "✓ said";
-      const n = said.filter(Boolean).length;
-      $(el.score).textContent = n + " of " + o.items.length + " said";
-      if (n === o.items.length) {
+      if (said.every(Boolean)) {
         $(el.fb).className = "fb good";
         $(el.fb).textContent = o.done;
         finish(o.finish, o.done);
       }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const row = e.target.closest(".sayline");
+      if (!row || e.target.closest(".sayspeech")) return;   // the panel owns its own clicks
+      const k = Number(row.dataset.k);
+      if (e.target.closest(".hear")) { playClip(o.items[k].audio, o.items[k].text); return; }
+      if (!e.target.closest(".tick")) return;
+      /* A line the curriculum marked recordingRequired opens the recorder.
+         One the curriculum did NOT is still the honour system, deliberately:
+         33 of this grade's 60 speaking items ask for a recording and the
+         rest are "point at things with a grown-up", which no microphone can
+         check and which it would be dishonest to score. */
+      if (o.items[k].check) { open = open === k ? -1 : k; paint(); return; }
+      mark(k);
+      paint();
     });
+    paint();
   }
 
   /* ---- build the sentence by tapping words ------------------------
@@ -497,6 +523,78 @@
       try { video.pause(); } catch (_) { /* nothing to pause */ }
       finish(o.finish, o.done);
     });
+  }
+
+  /* ---- Let us talk: choose it, then SAY it -------------------------
+     Two halves on purpose. Tapping answers "do you know what to say" -
+     intent, which is what this step was always for. Speaking answers "can
+     you say it", which is what the owner asked for on 2026-09-08 and what
+     Azure can actually measure.
+
+     THE SPEAKING HALF NEVER BLOCKS THE ROUND. The child moves on when they
+     have said it, whatever came back: Azure scores against adult native
+     speakers, these are five- and six-year-olds in their second language,
+     and a round that will not let them past until a machine is satisfied is
+     a round that ends in tears. The score coaches; the child decides.
+     ------------------------------------------------------------------ */
+  function letUsTalk(o) {
+    let i = 0, right = 0, phase = "choose", lock = false;
+    const el = o.el;
+
+    function draw() {
+      const it = o.items[i];
+      $(el.score).textContent = (o.label || "Round") + " " + (i + 1) + " of " + o.items.length;
+      if (phase === "choose") {
+        lock = false;
+        $(el.ask).innerHTML = it.ask;
+        $(el.stage).className = "";
+        $(el.stage).innerHTML = "";
+        $(el.ch).innerHTML = shuffle(it.opts).map((c) =>
+          '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+        $(el.fb).textContent = ""; $(el.fb).className = "fb";
+        say(plain(it.ask));
+        return;
+      }
+      // phase === "say"
+      $(el.ask).innerHTML = "Now say it out loud.";
+      $(el.ch).innerHTML = "";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div id="' + el.stage + 'sp"></div>';
+      speakingPanel($(el.stage + "sp"), {
+        reference: it.reference || "",
+        audio: "",
+        onDone: () => {
+          i++;
+          if (i >= o.items.length) {
+            $(el.stage).innerHTML = ""; $(el.score).textContent = "";
+            $(el.fb).className = "fb good";
+            $(el.fb).textContent = "You got " + right + " of " + o.items.length
+              + " first time, and you said them all. " + o.done;
+            finish(o.finish, o.done);
+            return;
+          }
+          phase = "choose";
+          draw();
+        },
+      });
+    }
+
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || lock || phase !== "choose") return;
+      lock = true;
+      const ok = b.dataset.ok === "1", it = o.items[i];
+      $(el.ch).querySelectorAll(".choice").forEach((c) => {
+        c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad");
+      $(el.fb).textContent = (ok ? cheer() + " " : "") + it.why;
+      say((ok ? cheer() + " " : "") + it.why);
+      setTimeout(() => { phase = "say"; draw(); }, 2200);
+    });
+
+    draw();
   }
 
   /* ---- the stickers, one per step that can be earned --------------- */

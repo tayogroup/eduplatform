@@ -128,6 +128,7 @@
         if (game.type === "choice") return drawChoice(round);
         if (game.type === "spelling") return drawSpelling(round);
         if (game.type === "pairs") return drawPairs(round);
+        if (game.type === "speaking") return drawSpeaking(round);
         return drawTokens(round);   // sentence and sequence share a shape
       }
 
@@ -288,6 +289,40 @@
               picked = []; lock = false;
             }, 900);
           }
+        });
+      }
+
+      /* Speaking Quest. The pack's rounds carry a `target` - what the child
+         is asked to say - and no options, so the round IS the speaking panel.
+         It counts as done when they have had a go, for the reason letUsTalk
+         records: a game that will not let a five-year-old past until a
+         scorer is happy is not a game. */
+      function drawSpeaking(round) {
+        /* Only a round whose target is a SENTENCE gets the recorder - the
+           builder decides that (speakable_target) and 45 of this grade's 60
+           rounds are adult-led activities instead: "Point to school things as
+           an adult names them". Offering to score a child's pronunciation of
+           an instruction would fail every child who did the activity right. */
+        if (!round.reference) {
+          frame(
+            '<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+            '<div class="speech-target"><span>Do this</span><p>' + esc(round.target || "") + "</p></div>" +
+            '<p class="speech-note">This one is for doing out loud, with a grown-up if one is there. '
+            + "There is nothing to check - press Done when you have had a go.</p>",
+            '<button type="button" class="big small" id="gameSpokeDone">Done &#10003;</button>');
+          say(plain(round.target || round.prompt));
+          overlay.querySelector("#gameSpokeDone").addEventListener("click", () => { right++; nextRound(); });
+          return;
+        }
+        frame(
+          '<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+          '<div id="gameSpeak"></div>');
+        say(plain(round.prompt));
+        speakingPanel(overlay.querySelector("#gameSpeak"), {
+          reference: round.reference,
+          audio: "",
+          onResult: (r) => { if (r && r.heard && r.accuracy >= 60) right++; },
+          onDone: () => nextRound(),
         });
       }
 

@@ -155,5 +155,8 @@ def patch(name):
     print("%-30s +%-5d %s" % (name, len(s) - before, ", ".join(took) or "common only"))
 
 
-for f in FILES:
+# Default to the seven; a filename list runs it over another build - the five
+# grade-1-preview originals take the identical patch, because every rule is
+# chosen by whether its selector is present rather than by which file it is.
+for f in (sys.argv[1:] or FILES):
     patch(f)

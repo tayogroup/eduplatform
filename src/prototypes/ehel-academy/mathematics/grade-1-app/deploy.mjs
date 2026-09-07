@@ -113,6 +113,10 @@ for (const f of plan) {
 }
 
 console.log(bad ? "\n" + bad + " file(s) did not land" : "\nall " + plan.length + " files verified on storage");
-console.log("\nstaging: " + CDN + "/" + enc(REMOTE) + "/index.html");
-console.log("live (unchanged): " + CDN + "/" + enc("Ehel Primary/app/mathematics/grade-1-preview") + "/index.html");
+// These two labels were written while v2 was still staged behind the five.
+// The launch override has pointed Grade 1 at grade-1-v2 since, so what this
+// tool uploads IS live and preview is the rollback build; the old wording told
+// whoever had just deployed that nothing had reached a learner.
+console.log("\nlive (just uploaded): " + CDN + "/" + enc(REMOTE) + "/index.html");
+console.log("rollback build, not touched by this tool: " + CDN + "/" + enc("Ehel Primary/app/mathematics/grade-1-preview") + "/index.html");
 process.exitCode = bad ? 1 : 0;

@@ -12,10 +12,10 @@ learners. The CDN was the only copy.
 
 | | |
 | --- | --- |
-| `*.html` (5 lessons + `g1-index.html`) | the **live** five-lesson course, byte-identical to `app/mathematics/grade-1-preview` |
-| `g1v2/` (7 lessons + `g1-index.html`) | the **staged** seven-lesson restructure, byte-identical to `app/mathematics/grade-1-v2` |
+| `g1v2/` (7 lessons + `g1-index.html`) | the **live** seven-lesson course - what the launch override points Grade 1 at, and byte-identical to `app/mathematics/grade-1-v2` |
+| `*.html` (5 lessons + `g1-index.html`) | the superseded five-lesson course, kept as the rollback build. **No longer byte-identical to `app/mathematics/grade-1-preview`** - see below |
 
-The five live lessons sit in the root rather than a subfolder because they are
+The five sit in the root rather than a subfolder because they are
 also `compose-lessons.py`'s **inputs** — the seven are derived from them, so the
 tools expect them beside the scripts. Moving them breaks the build.
 
@@ -30,8 +30,18 @@ place one grade can be sent elsewhere is `pqpg_ehel_app_base()` in
 
 Grade 1 points at **grade-1-v2** (the seven). `repoint-grade-1.php` moves it
 between the two builds; it reports by default and needs `--apply` to write.
-Rolling back is the same setting, and `grade-1-preview` is kept intact and
-current precisely so that rollback is complete rather than partial.
+Rolling back is the same setting, and `grade-1-preview` is kept as a complete
+build rather than a partial one.
+
+**The five are one commit ahead of the CDN, deliberately, and cannot be
+shipped by anything in this folder.** They carry the contrast fix the seven
+carry; `app/mathematics/grade-1-preview` does not. `deploy.mjs` hardcodes
+`REMOTE` to `grade-1-v2`, so there is no preview upload path at all - which is
+also why the old "kept byte-identical" promise was never enforceable by any
+tool here. The alternative was leaving the five defective, and they are
+`compose-lessons.py`'s INPUTS: a re-derive would then quietly hand the seven
+their failures back. Shipping preview means a `--preview` flag on `deploy.mjs`,
+or one line changed by hand; a rollback before then serves the old contrast.
 
 ## The tools
 

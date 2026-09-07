@@ -1,0 +1,383 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Comes Next</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible, [role="button"]:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .hero > div { min-width: 0; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { font-size: 18px; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+
+  .bignum { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(36px, 8vw, 60px); line-height: 1.1; color: var(--accent); font-variant-numeric: tabular-nums; text-align: center; }
+  .bignum .t { color: var(--teal); } .bignum .q { color: var(--muted); } .bignum .g { color: var(--good); }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; display: grid; place-items: center; }
+  .choice.word { font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* beads: colour + shape */
+  .beads { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; min-height: 56px; }
+  .bead { width: 48px; height: 48px; flex: 0 0 auto; display: inline-block; border: 0; padding: 0; position: relative; }
+  .bead.orange { background: var(--accent); } .bead.teal { background: var(--teal); } .bead.purple { background: var(--plum); } .bead.gold { background: var(--gold); }
+  .bead.circle { border-radius: 50%; } .bead.square { border-radius: 8px; } .bead.triangle { clip-path: polygon(50% 4%, 96% 96%, 4% 96%); }
+  .bead.gap { background: var(--card); border: 4px dashed var(--accent); border-radius: 50%; clip-path: none; }
+  .bead.gap::after { content: "?"; position: absolute; inset: 0; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; color: var(--accent); }
+  .bead.unit { outline: 4px solid var(--ink); outline-offset: 3px; }
+  .bead.gap.now { background: var(--accent-soft); transform: scale(1.12); }
+  .bead.gap.filled { border: 0; }
+  .beads .bar { width: 4px; height: 56px; background: var(--ink); border-radius: 2px; }
+  .choice .bead { width: 40px; height: 40px; }
+  .palette .bead { cursor: pointer; transition: transform 100ms ease; } .palette .bead:active { transform: scale(0.92); }
+  .unitbox { display: flex; gap: 10px; align-items: center; min-height: 64px; padding: 8px 14px; border-radius: 16px; border: 3px dashed var(--line); }
+  .unitbox .lab { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* growing shape patterns */
+  .growrow { display: flex; gap: 14px; align-items: flex-end; justify-content: center; flex-wrap: wrap; }
+  .growbox { display: grid; gap: 4px; justify-items: center; }
+  .growbox .rows { display: grid; gap: 3px; }
+  .growbox .row { display: flex; gap: 3px; }
+  .growbox .sq { width: 20px; height: 20px; border-radius: 4px; background: var(--accent); }
+  .growbox .row.new .sq { background: var(--teal); }
+  .growbox .cap { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 15px; color: var(--muted); }
+  .growbox .cnt { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; }
+  .growbox.q .rows { min-height: 26px; display: grid; place-items: center; }
+  .growbox.q .qmark { width: 56px; height: 56px; border-radius: 12px; border: 3px dashed var(--accent); color: var(--accent); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; display: grid; place-items: center; }
+  @media (max-width: 480px) { .growbox .sq { width: 15px; height: 15px; } .growrow { gap: 10px; } }
+
+  /* my own number pattern */
+  .builder { display: grid; gap: 6px; justify-items: center; width: 100%; }
+  .chiprow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .chiprow button { min-width: 52px; height: 52px; padding: 0 12px; border-radius: 14px; border: 3px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; }
+  .chiprow button.on { background: var(--teal); border-color: var(--teal); color: var(--teal-ink); }  /* dark ink on teal: white was 2.27:1 */
+  .choice.word.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+  /* number track */
+  .track { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; width: 100%; max-width: 560px; }
+  .track button { height: 48px; min-width: 0; border-radius: 10px; border: 3px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; padding: 0; color: var(--ink); }
+  .track button.gap { border-style: dashed; border-color: var(--accent); color: var(--accent); }
+  .track button.gap.now { background: var(--accent-soft); }
+  .track button.filled { background: var(--good-soft); border-color: var(--good); border-style: solid; color: var(--ink); }
+  .track button.fixed { cursor: default; }
+  @media (max-width: 480px) { .track { gap: 4px; } .track button { height: 40px; font-size: 16px; border-width: 2px; } }
+  @media (max-width: 340px) { .track { gap: 3px; } .track button { height: 34px; font-size: 13px; } }
+  /* narrower than this, ten columns leaves 16px a cell: too small to read and too small to tap,
+     so the track goes to four rows of five and stays in order left to right */
+  @media (max-width: 300px) { .track { grid-template-columns: repeat(5, 1fr); } .track button { height: 38px; font-size: 15px; } }
+  .seqbox { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .seqbox span { min-width: 56px; height: 56px; border-radius: 12px; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; background: var(--teal-soft); padding: 0 10px; }
+  .seqbox span.gap { background: var(--card); border: 3px dashed var(--accent); color: var(--accent); }
+  .seqbox span.gap.now { background: var(--accent-soft); }
+  .seqbox span.gap.filled { border-style: solid; background: var(--good-soft); border-color: var(--good); color: var(--ink); }
+
+  /* ten frame */
+  .frames { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+  .tenframe { display: grid; grid-template-columns: repeat(5, 46px); grid-template-rows: repeat(2, 46px); gap: 4px; padding: 6px; background: var(--ink); border-radius: 10px; }
+  .tenframe i { display: grid; place-items: center; background: var(--card); border-radius: 6px; }
+  .tenframe i::after { content: ""; width: 34px; height: 34px; border-radius: 50%; background: transparent; transition: transform 120ms ease, background 120ms ease; transform: scale(0.4); }
+  .tenframe i.on::after { background: var(--accent); transform: scale(1); }
+  .tenframe i.on.b::after { background: var(--teal); }
+  .tenframe i.on.x::after { background: var(--cell); box-shadow: inset 0 0 0 3px var(--bad); }
+  .tenframe.tap i { cursor: pointer; }
+  @media (max-width: 480px) { .tenframe { grid-template-columns: repeat(5, 38px); grid-template-rows: repeat(2, 38px); } .tenframe i::after { width: 28px; height: 28px; } }
+
+  /* balance */
+  .balance { width: 100%; max-width: 520px; height: 230px; display: block; }
+  .balance .post { fill: var(--muted); } .balance .beam { stroke: var(--ink); stroke-width: 8; stroke-linecap: round; transition: transform 400ms ease; transform-origin: 260px 60px; }
+  .balance .pan { fill: var(--card); stroke: var(--ink); stroke-width: 3; }
+  .balance .dot { fill: var(--accent); } .balance .dot.b { fill: var(--teal); }
+  .balance .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; fill: var(--ink); text-anchor: middle; }
+  .balance .lab.q { fill: var(--accent); }
+  .balance .pangroup { transition: transform 400ms ease; }
+
+  /* machine */
+  .machine { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .machine .box { width: 120px; height: 90px; border-radius: 18px; background: var(--ink); color: #fff; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 30px; position: relative; }
+  .machine .box.mystery { background: var(--plum); }
+  .machine .io { min-width: 64px; height: 64px; border-radius: 14px; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 30px; background: var(--teal-soft); padding: 0 12px; }
+  .machine .io.out { background: var(--accent-soft); }
+  .machine .io.q { border: 3px dashed var(--accent); background: var(--card); color: var(--accent); }
+  .machine .arrow { font-size: 30px; color: var(--muted); }
+  .mtable { display: grid; grid-template-columns: auto auto auto; gap: 6px 14px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 22px; font-variant-numeric: tabular-nums; }
+  .mtable span { text-align: center; }
+  .mtable .h { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 19px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to
+     the viewer's setting. The selector list carries the same specificity
+     as the prefers-color-scheme block above it and comes later, so it
+     wins in both light and dark.
+
+     The palette is Ehel Academy's own. Gold #f4c95d is the action
+     colour, exactly as on the Wehel page. Teal #0f766e and coral
+     #c2482c are lifted to the same hues at a lightness that is legible
+     on a dark ground; nothing else is invented.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;      /* Ehel ink #17324d, darkened to a page ground */
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #A9C0D2;    /* 5.2:1 on --cell; #93AABE was 4.04:1 and failed AA for small text */
+    --accent: #E9744F;      /* Ehel coral, lifted — the counters and shapes */
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --accent-lift: #FFA183;  /* 4.9:1 on --cell, for accent text below 18px */
+    --teal: #35BFB2;        /* Ehel teal, lifted */
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;        /* Ehel gold — every action */
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: var(--teal-ink); font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: var(--teal-ink); }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: var(--teal-ink); box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* two rules used --ink as a SURFACE, which inverts on a dark ground */
+  .tenframe { background: #07131D; }
+  .machine .box { background: #07131D; color: var(--ink); border: 1px solid var(--line); }
+
+  /* white on the lifted teal is only about 2.3:1; these badges take dark ink */
+  .card .pos, .ocard .pos { color: var(--teal-ink); }
+
+  /* cards, chips and tiles that were white surfaces */
+  .group, .chip, .pick, .acard, .kid, .ocard, .card, .numbox, .keys button,
+  .tray, .purse, .field, .queue .runner, .seqbox span { background: var(--card); }
+  .group.right, .pick.good, .acard.good, .ocard.good, .kid.asked { background: var(--good-soft); }
+  .group.wrong, .pick.oops, .acard.oops, .ocard.oops { background: var(--bad-soft); }
+
+  /* ==================================================================
+     The ground and the activity cards.
+
+     The page sits on one fixed gradient rather than a gradient stretched
+     down 17,000 pixels of document, so 135 degrees means 135 degrees on
+     every screen instead of flattening to almost vertical on a long lesson.
+     It is painted by a fixed pseudo-element rather than background-attachment,
+     which iOS Safari does not honour.
+
+     The card colour is translucent, so the three surfaces below it had to
+     move with it: at 88% over this ground a card lands on #152A42, which
+     the old #112A3D panel colour sat four points away from - inner cards
+     would have disappeared into the card holding them.
+     ================================================================== */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+
+  .step, .deck { background: rgba(20, 43, 62, 0.88); }
+  .steps-nav { background: rgba(24, 59, 86, 0.88); }
+
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+  /* ==================================================================
+     The way back to the grade page - drawn ONLY when the learner arrived
+     from it (?from=g1). A lesson opened on its own, or published as an
+     artifact, has nowhere to go back to, and a link that leads nowhere is
+     worse than no link at all.
+     ================================================================== */
+  .g1-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 17px 9px 13px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+  }
+  .g1-back:hover, .g1-back:focus-visible { border-color: var(--teal); }
+
+</style>
+

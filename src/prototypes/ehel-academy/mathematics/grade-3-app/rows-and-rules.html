@@ -1,0 +1,2150 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rows and Rules</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible, [role="button"]:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .hero > div { min-width: 0; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { font-size: 18px; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+
+  .bignum { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(36px, 8vw, 60px); line-height: 1.1; color: var(--accent); font-variant-numeric: tabular-nums; text-align: center; }
+  .bignum .t { color: var(--teal); } .bignum .q { color: var(--muted); } .bignum .g { color: var(--good); }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; display: grid; place-items: center; }
+  .choice.word { font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* beads: colour + shape */
+  .beads { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; min-height: 56px; }
+  .bead { width: 48px; height: 48px; flex: 0 0 auto; display: inline-block; border: 0; padding: 0; position: relative; }
+  .bead.orange { background: var(--accent); } .bead.teal { background: var(--teal); } .bead.purple { background: var(--plum); } .bead.gold { background: var(--gold); }
+  .bead.circle { border-radius: 50%; } .bead.square { border-radius: 8px; } .bead.triangle { clip-path: polygon(50% 4%, 96% 96%, 4% 96%); }
+  .bead.gap { background: var(--card); border: 4px dashed var(--accent); border-radius: 50%; clip-path: none; }
+  .bead.gap::after { content: "?"; position: absolute; inset: 0; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; color: var(--accent); }
+  .bead.unit { outline: 4px solid var(--ink); outline-offset: 3px; }
+  .bead.gap.now { background: var(--accent-soft); transform: scale(1.12); }
+  .bead.gap.filled { border: 0; }
+  .beads .bar { width: 4px; height: 56px; background: var(--ink); border-radius: 2px; }
+  .choice .bead { width: 40px; height: 40px; }
+  .palette .bead { cursor: pointer; transition: transform 100ms ease; } .palette .bead:active { transform: scale(0.92); }
+  .unitbox { display: flex; gap: 10px; align-items: center; min-height: 64px; padding: 8px 14px; border-radius: 16px; border: 3px dashed var(--line); }
+  .unitbox .lab { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* growing shape patterns */
+  .growrow { display: flex; gap: 14px; align-items: flex-end; justify-content: center; flex-wrap: wrap; }
+  .growbox { display: grid; gap: 4px; justify-items: center; }
+  .growbox .rows { display: grid; gap: 3px; }
+  .growbox .row { display: flex; gap: 3px; }
+  .growbox .sq { width: 20px; height: 20px; border-radius: 4px; background: var(--accent); }
+  .growbox .row.new .sq { background: var(--teal); }
+  .growbox .cap { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 15px; color: var(--muted); }
+  .growbox .cnt { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; }
+  .growbox.q .rows { min-height: 26px; display: grid; place-items: center; }
+  .growbox.q .qmark { width: 56px; height: 56px; border-radius: 12px; border: 3px dashed var(--accent); color: var(--accent); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; display: grid; place-items: center; }
+  @media (max-width: 480px) { .growbox .sq { width: 15px; height: 15px; } .growrow { gap: 10px; } }
+
+  /* my own number pattern */
+  .builder { display: grid; gap: 6px; justify-items: center; width: 100%; }
+  .chiprow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .chiprow button { min-width: 52px; height: 52px; padding: 0 12px; border-radius: 14px; border: 3px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; }
+  .chiprow button.on { background: var(--teal); border-color: var(--teal); color: var(--teal-ink); }  /* dark ink on teal: white was 2.27:1 */
+  .choice.word.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+  /* number track */
+  .track { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; width: 100%; max-width: 560px; }
+  .track button { height: 48px; min-width: 0; border-radius: 10px; border: 3px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; padding: 0; color: var(--ink); }
+  .track button.gap { border-style: dashed; border-color: var(--accent); color: var(--accent); }
+  .track button.gap.now { background: var(--accent-soft); }
+  .track button.filled { background: var(--good-soft); border-color: var(--good); border-style: solid; color: var(--ink); }
+  .track button.fixed { cursor: default; }
+  @media (max-width: 480px) { .track { gap: 4px; } .track button { height: 40px; font-size: 16px; border-width: 2px; } }
+  @media (max-width: 340px) { .track { gap: 3px; } .track button { height: 34px; font-size: 13px; } }
+  /* narrower than this, ten columns leaves 16px a cell: too small to read and too small to tap,
+     so the track goes to four rows of five and stays in order left to right */
+  @media (max-width: 300px) { .track { grid-template-columns: repeat(5, 1fr); } .track button { height: 38px; font-size: 15px; } }
+  .seqbox { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .seqbox span { min-width: 56px; height: 56px; border-radius: 12px; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; background: var(--teal-soft); padding: 0 10px; }
+  .seqbox span.gap { background: var(--card); border: 3px dashed var(--accent); color: var(--accent); }
+  .seqbox span.gap.now { background: var(--accent-soft); }
+  .seqbox span.gap.filled { border-style: solid; background: var(--good-soft); border-color: var(--good); color: var(--ink); }
+
+  /* ten frame */
+  .frames { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+  .tenframe { display: grid; grid-template-columns: repeat(5, 46px); grid-template-rows: repeat(2, 46px); gap: 4px; padding: 6px; background: var(--ink); border-radius: 10px; }
+  .tenframe i { display: grid; place-items: center; background: var(--card); border-radius: 6px; }
+  .tenframe i::after { content: ""; width: 34px; height: 34px; border-radius: 50%; background: transparent; transition: transform 120ms ease, background 120ms ease; transform: scale(0.4); }
+  .tenframe i.on::after { background: var(--accent); transform: scale(1); }
+  .tenframe i.on.b::after { background: var(--teal); }
+  .tenframe i.on.x::after { background: var(--cell); box-shadow: inset 0 0 0 3px var(--bad); }
+  .tenframe.tap i { cursor: pointer; }
+  @media (max-width: 480px) { .tenframe { grid-template-columns: repeat(5, 38px); grid-template-rows: repeat(2, 38px); } .tenframe i::after { width: 28px; height: 28px; } }
+
+  /* balance */
+  .balance { width: 100%; max-width: 520px; height: 230px; display: block; }
+  .balance .post { fill: var(--muted); } .balance .beam { stroke: var(--ink); stroke-width: 8; stroke-linecap: round; transition: transform 400ms ease; transform-origin: 260px 60px; }
+  .balance .pan { fill: var(--card); stroke: var(--ink); stroke-width: 3; }
+  .balance .dot { fill: var(--accent); } .balance .dot.b { fill: var(--teal); }
+  .balance .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; fill: var(--ink); text-anchor: middle; }
+  .balance .lab.q { fill: var(--accent); }
+  .balance .pangroup { transition: transform 400ms ease; }
+
+  /* machine */
+  .machine { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .machine .box { width: 120px; height: 90px; border-radius: 18px; background: var(--ink); color: #fff; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 30px; position: relative; }
+  .machine .box.mystery { background: var(--plum); }
+  .machine .io { min-width: 64px; height: 64px; border-radius: 14px; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 30px; background: var(--teal-soft); padding: 0 12px; }
+  .machine .io.out { background: var(--accent-soft); }
+  .machine .io.q { border: 3px dashed var(--accent); background: var(--card); color: var(--accent); }
+  .machine .arrow { font-size: 30px; color: var(--muted); }
+  .mtable { display: grid; grid-template-columns: auto auto auto; gap: 6px 14px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 22px; font-variant-numeric: tabular-nums; }
+  .mtable span { text-align: center; }
+  .mtable .h { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 19px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to
+     the viewer's setting. The selector list carries the same specificity
+     as the prefers-color-scheme block above it and comes later, so it
+     wins in both light and dark.
+
+     The palette is Ehel Academy's own. Gold #f4c95d is the action
+     colour, exactly as on the Wehel page. Teal #0f766e and coral
+     #c2482c are lifted to the same hues at a lightness that is legible
+     on a dark ground; nothing else is invented.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;      /* Ehel ink #17324d, darkened to a page ground */
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #A9C0D2;    /* 5.2:1 on --cell; #93AABE was 4.04:1 and failed AA for small text */
+    --accent: #E9744F;      /* Ehel coral, lifted — the counters and shapes */
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --accent-lift: #FFA183;  /* 4.9:1 on --cell, for accent text below 18px */
+    --teal: #35BFB2;        /* Ehel teal, lifted */
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;        /* Ehel gold — every action */
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: var(--teal-ink); font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: var(--teal-ink); }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: var(--teal-ink); box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* two rules used --ink as a SURFACE, which inverts on a dark ground */
+  .tenframe { background: #07131D; }
+  .machine .box { background: #07131D; color: var(--ink); border: 1px solid var(--line); }
+
+  /* white on the lifted teal is only about 2.3:1; these badges take dark ink */
+  .card .pos, .ocard .pos { color: var(--teal-ink); }
+
+  /* cards, chips and tiles that were white surfaces */
+  .group, .chip, .pick, .acard, .kid, .ocard, .card, .numbox, .keys button,
+  .tray, .purse, .field, .queue .runner, .seqbox span { background: var(--card); }
+  .group.right, .pick.good, .acard.good, .ocard.good, .kid.asked { background: var(--good-soft); }
+  .group.wrong, .pick.oops, .acard.oops, .ocard.oops { background: var(--bad-soft); }
+
+  /* ==================================================================
+     The ground and the activity cards.
+
+     The page sits on one fixed gradient rather than a gradient stretched
+     down 17,000 pixels of document, so 135 degrees means 135 degrees on
+     every screen instead of flattening to almost vertical on a long lesson.
+     It is painted by a fixed pseudo-element rather than background-attachment,
+     which iOS Safari does not honour.
+
+     The card colour is translucent, so the three surfaces below it had to
+     move with it: at 88% over this ground a card lands on #152A42, which
+     the old #112A3D panel colour sat four points away from - inner cards
+     would have disappeared into the card holding them.
+     ================================================================== */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+
+  .step, .deck { background: rgba(20, 43, 62, 0.88); }
+  .steps-nav { background: rgba(24, 59, 86, 0.88); }
+
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+  /* ==================================================================
+     The way back to the grade page - drawn ONLY when the learner arrived
+     from it (?from=g1). A lesson opened on its own, or published as an
+     artifact, has nowhere to go back to, and a link that leads nowhere is
+     worse than no link at all.
+     ================================================================== */
+  .g1-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 17px 9px 13px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+  }
+  .g1-back:hover, .g1-back:focus-visible { border-color: var(--teal); }
+
+  /* ---- Grade 3 additions: place value, comparison, lines, money ---- */
+  .pvcols { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; width: 100%; }
+  .pvc { flex: 1 1 108px; max-width: 160px; background: var(--cell); border: 1px solid var(--line); border-radius: 18px; padding: 12px 8px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .pvc.lit { background: var(--accent-soft); border-color: var(--accent); }
+  .pvl { font: 700 12px/1 "Inter", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .pvd { font: 800 40px/1 "Inter", sans-serif; color: var(--ink); font-variant-numeric: tabular-nums; }
+  /* 14px on --cell was 3.28:1; lifted and enlarged so it clears AA */
+  .pvw { font: 800 15px/1.25 "Inter", sans-serif; color: var(--accent-lift, var(--accent)); text-align: center; min-height: 1.25em; }
+  .pvw.none { color: var(--muted); font-weight: 600; }
+  .pvb { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; align-items: flex-end; min-height: 40px; }
+  .blk { display: block; background: var(--teal-soft); border: 1.5px solid var(--teal); border-radius: 3px; }
+  .blk.h { width: 26px; height: 26px; }
+  .blk.t { width: 7px; height: 26px; background: var(--good-soft); border-color: var(--good); }
+  .blk.o { width: 9px; height: 9px; background: var(--accent-soft); border-color: var(--accent); }
+  .pvbtn { display: flex; gap: 6px; }
+  .pvbtn button { font: 800 20px/1 "Inter", sans-serif; width: 40px; height: 40px; border-radius: 12px; border: none; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  .pvbtn button:first-child { background: var(--cell); color: var(--ink); border: 1.5px solid var(--line); }
+  .pvbtn button:active { transform: translateY(2px); }
+
+  .regroup { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; font: 800 30px/1 "Inter", sans-serif; }
+  .regroup .rp { background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 12px 16px; min-width: 92px; text-align: center; }
+  .regroup .rp.moved { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .regroup .op { color: var(--muted); font-size: 24px; }
+
+  .cmprow { display: flex; gap: 14px; align-items: center; justify-content: center; font: 800 44px/1 "Inter", sans-serif; font-variant-numeric: tabular-nums; }
+  .cmprow .slot { min-width: 64px; text-align: center; color: var(--accent); }
+
+  .rline { width: 100%; max-width: 520px; display: block; }
+  .rline .axis { stroke: var(--line); stroke-width: 3; }
+  .rline .tick { stroke: var(--line); stroke-width: 2; }
+  .rline .half { stroke: var(--plum); stroke-width: 2.5; stroke-dasharray: 5 4; }
+  .rline .pin { fill: var(--cell); stroke: var(--muted); stroke-width: 1.5; }
+  .rline .dotv { fill: var(--accent); }
+  .rline .lab { font: 700 17px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .rline .lab.mid { fill: var(--plum); font-size: 15px; }
+  .rline .mark { font: 800 19px/1 "Inter", sans-serif; fill: var(--accent); text-anchor: middle; }
+
+  .dotbox { width: 100%; max-width: 460px; height: 210px; position: relative; background: var(--cell); border: 2px solid var(--line); border-radius: 18px; overflow: hidden; }
+  .dotbox i { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
+
+  .barwrap { width: 100%; max-width: 460px; }
+  .barwrap .cap { display: flex; justify-content: space-between; font: 700 15px/1 "Inter", sans-serif; color: var(--muted); margin-bottom: 6px; }
+  .barwrap .bar { height: 46px; border-radius: 12px; background: var(--cell); border: 2px solid var(--line); overflow: hidden; display: flex; }
+  .barwrap .fill { background: var(--teal-soft); border-right: 2px solid var(--teal); display: grid; place-items: center; font: 800 18px/1 "Inter", sans-serif; color: var(--teal); }
+  .barwrap .rest { flex: 1; display: grid; place-items: center; font: 800 20px/1 "Inter", sans-serif; color: var(--accent); }
+  .barwrap .sum { text-align: center; font: 800 22px/1 "Inter", sans-serif; margin-top: 10px; }
+
+  .colsum { width: 100%; max-width: 460px; display: block; }
+  .colsum .hd { font: 700 13px/1 "Inter", sans-serif; fill: var(--muted); text-anchor: middle; letter-spacing: .06em; }
+  .colsum .dg { font: 800 34px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .colsum .dg.ans { fill: var(--good); }
+  .colsum .dg.spent { fill: var(--muted); }
+  .colsum .carry { font: 800 19px/1 "Inter", sans-serif; fill: var(--accent); text-anchor: middle; }
+  .colsum .sign { font: 800 28px/1 "Inter", sans-serif; fill: var(--muted); text-anchor: middle; }
+  .colsum .rule { stroke: var(--ink); stroke-width: 2.5; }
+  .colsum .strike { stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+  .colsum .lit { fill: var(--accent); fill-opacity: .14; stroke: var(--accent); stroke-width: 2; }
+
+  .shop { display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .shop .tag { background: var(--cell); border: 2px solid var(--line); border-radius: 16px; padding: 12px 18px; text-align: center; }
+  .shop .tag b { display: block; font: 800 30px/1.1 "Inter", sans-serif; color: var(--ink); }
+  .shop .tag span { font: 700 13px/1 "Inter", sans-serif; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .shop .tag.paid { background: var(--teal-soft); border-color: var(--teal); }
+  .shop .tag.paid b { color: var(--teal); }
+  /* ---- times, sharing and patterns ---- */
+  .arr { display: inline-grid; gap: 5px; padding: 10px; background: var(--cell); border: 2px solid var(--line); border-radius: 14px; }
+  .arr i { width: 22px; height: 22px; border-radius: 50%; background: var(--teal); display: block; }
+  .arr.alt i { background: var(--gold); }
+  .arrwrap { display: flex; gap: 18px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .arrlab { font: 800 20px/1.3 "Inter", sans-serif; color: var(--ink); text-align: center; }
+  .arrlab small { display: block; font: 600 14px/1.4 "Inter", sans-serif; color: var(--muted); }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 420px; }
+  .facts div { background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 12px; text-align: center; font: 800 22px/1 "Inter", sans-serif; }
+  .facts div.on { background: var(--good-soft); border-color: var(--good); color: var(--good); }
+  .split { display: flex; gap: 10px; align-items: stretch; justify-content: center; flex-wrap: wrap; }
+  .split .box { border-radius: 14px; display: grid; place-items: center; padding: 16px 12px; font: 800 22px/1.3 "Inter", sans-serif; text-align: center; min-width: 110px; }
+  .split .box.t { background: var(--good-soft); border: 2px solid var(--good); color: var(--good); }
+  .split .box.o { background: var(--gold-soft, var(--accent-soft)); border: 2px solid var(--gold); color: var(--gold); }
+  .split .box small { display: block; font: 600 13px/1.4 "Inter", sans-serif; color: var(--muted); }
+  .shareboard { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .shareboard .grp { background: var(--cell); border: 2px dashed var(--line); border-radius: 14px; padding: 10px; min-width: 74px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; align-content: flex-start; }
+  .shareboard .grp i { width: 16px; height: 16px; border-radius: 50%; background: var(--teal); }
+  .leftover { margin-top: 12px; display: flex; gap: 6px; justify-content: center; align-items: center; font: 700 16px/1 "Inter", sans-serif; color: var(--accent); }
+  .leftover i { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  .grid100 { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; width: 100%; max-width: 420px; }
+  .grid100 button { aspect-ratio: 1; border: none; border-radius: 5px; background: var(--cell); color: var(--ink); font: 700 11px/1 "Inter", sans-serif; cursor: pointer; padding: 0; }
+  .grid100 button.on { background: var(--teal); color: var(--teal-ink); }
+  .grid100 button.miss { background: var(--bad-soft); color: var(--bad); }
+  .shapes { display: flex; gap: 14px; align-items: flex-end; justify-content: center; flex-wrap: wrap; }
+  .shapes .fig { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .shapes .sq { display: grid; gap: 3px; }
+  .shapes .sq i { width: 15px; height: 15px; background: var(--gold); border-radius: 3px; display: block; }
+  .shapes .cap { font: 700 14px/1 "Inter", sans-serif; color: var(--muted); }
+  .shapes .fig.q .sq { opacity: .25; }
+  .mystery { display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap; font: 800 32px/1 "Inter", sans-serif; }
+  .mystery .bx { width: 66px; height: 66px; border-radius: 16px; background: var(--plum); color: #fff; display: grid; place-items: center; font-size: 30px; }
+  .mystery .bx.found { background: var(--good); }
+  /* ---- fractions ---- */
+  .fshapes { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .fsvg { width: 140px; height: 140px; display: block; }
+  .fsvg .part { stroke: var(--ink); stroke-width: 2.5; fill: var(--cell); }
+  .fsvg .part.on { fill: var(--teal); }
+  .fsvg .part.pick { cursor: pointer; }
+  .fsvg .whole { fill: none; stroke: var(--ink); stroke-width: 3; }
+  .fcard { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .fcard .cap { font: 700 15px/1 "Inter", sans-serif; color: var(--muted); }
+  .fcard.sel .fsvg .part.on { fill: var(--good); }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; line-height: 1; font: 800 22px/1 "Inter", sans-serif; vertical-align: middle; }
+  .frac .num { padding: 0 4px 2px; }
+  .frac .den { padding: 2px 4px 0; border-top: 2.5px solid currentColor; }
+  .fbar { width: 100%; max-width: 460px; display: flex; height: 54px; border: 2.5px solid var(--ink); border-radius: 10px; overflow: hidden; }
+  .fbar i { flex: 1; border-right: 2px solid var(--ink); background: var(--cell); display: block; }
+  .fbar i:last-child { border-right: none; }
+  .fbar i.on { background: var(--teal); }
+  .fbar i.on.b { background: var(--gold); }
+  .setbox { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 420px; }
+  .setbox i { width: 26px; height: 26px; border-radius: 50%; background: var(--cell); border: 2px solid var(--line); display: block; }
+  .setbox i.on { background: var(--teal); border-color: var(--teal); }
+  /* ---- shape, measure and time ---- */
+  .gsvg { width: 100%; max-width: 420px; display: block; }
+  .gsvg .sh { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 3; }
+  .gsvg .sh.plain { fill: var(--cell); stroke: var(--ink); }
+  .gsvg .mir { stroke: var(--plum); stroke-width: 3; stroke-dasharray: 7 5; }
+  .gsvg .cell { fill: var(--cell); stroke: var(--line); stroke-width: 1.5; }
+  .gsvg .cell.on { fill: var(--teal); }
+  .gsvg .cell.pick { cursor: pointer; }
+  .gsvg .edge { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; }
+  .gsvg .lab { font: 700 15px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .gsvg .lab.m { fill: var(--muted); font-size: 13px; }
+  .gsvg .arm { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; }
+  .gsvg .arm.b { stroke: var(--accent); }
+  .gsvg .rt { fill: none; stroke: var(--gold); stroke-width: 3; }
+  .shapegrid { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .shapegrid .pick { background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 8px; cursor: pointer; }
+  .shapegrid .pick.on { border-color: var(--good); background: var(--good-soft); }
+  .shapegrid .pick.off { opacity: .3; }
+  .shapegrid svg { width: 84px; height: 84px; display: block; }
+  .clockwrap { display: flex; gap: 18px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .digi { font: 800 40px/1 "Inter", sans-serif; background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 14px 20px; letter-spacing: .04em; }
+  .ttable { width: 100%; max-width: 460px; border-collapse: collapse; font: 600 16px/1.4 "Inter", sans-serif; }
+  .ttable th, .ttable td { border: 1.5px solid var(--line); padding: 8px 10px; text-align: left; }
+  .ttable th { background: var(--cell); font-weight: 800; }
+  .ttable td.hi { background: var(--accent-soft); color: var(--accent); font-weight: 800; }
+  .scaleline { width: 100%; max-width: 460px; display: block; }
+  .scaleline .ax { stroke: var(--ink); stroke-width: 3; }
+  .scaleline .tk { stroke: var(--muted); stroke-width: 2; }
+  .scaleline .ptr { fill: var(--accent); }
+  .scaleline .n { font: 700 14px/1 "Inter", sans-serif; fill: var(--muted); text-anchor: middle; }
+  .compass { display: grid; grid-template-columns: repeat(3, 62px); grid-template-rows: repeat(3, 62px); gap: 6px; }
+  .compass button { border: 2px solid var(--line); border-radius: 12px; background: var(--cell); color: var(--ink); font: 800 16px/1 "Inter", sans-serif; cursor: pointer; }
+  .compass button:disabled { opacity: .25; cursor: default; }
+  .compass .mid { background: var(--teal); color: var(--teal-ink); display: grid; place-items: center; border-radius: 12px; font-size: 22px; }
+  /* ---- statistics and probability ---- */
+  .tally { width: 100%; max-width: 420px; border-collapse: collapse; font: 600 17px/1.4 "Inter", sans-serif; }
+  .tally th, .tally td { border: 1.5px solid var(--line); padding: 8px 10px; text-align: left; }
+  .tally th { background: var(--cell); font-weight: 800; }
+  .tally .marks { font: 700 22px/1 "Atkinson Hyperlegible", monospace; letter-spacing: 2px; color: var(--teal); }
+  .tally td.n { font-weight: 800; text-align: center; width: 72px; }
+  .pictorow { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
+  .pictorow .who { width: 88px; font: 700 15px/1 "Inter", sans-serif; color: var(--muted); }
+  .pictorow .ics { font-size: 22px; letter-spacing: 3px; }
+  .bars { display: flex; align-items: flex-end; gap: 14px; height: 190px; padding: 0 6px; border-left: 3px solid var(--line); border-bottom: 3px solid var(--line); }
+  .bars .col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .bars .bar { width: 42px; background: var(--teal); border-radius: 6px 6px 0 0; }
+  .bars .bar.hi { background: var(--accent); }
+  .bars .cap { font: 700 13px/1 "Inter", sans-serif; color: var(--muted); margin-top: 6px; }
+  .bars .val { font: 800 14px/1 "Inter", sans-serif; color: var(--ink); margin-bottom: 4px; }
+  .venn { width: 100%; max-width: 400px; display: block; }
+  .venn circle { fill: var(--teal); fill-opacity: .18; stroke: var(--teal); stroke-width: 3; }
+  .venn circle.b { fill: var(--gold); stroke: var(--gold); }
+  .venn .zone { fill: transparent; cursor: pointer; }
+  .venn .zone.on { fill: var(--accent); fill-opacity: .35; }
+  .venn text { font: 700 14px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .venn text.t { font-size: 15px; fill: var(--muted); }
+  .carroll { width: 100%; max-width: 440px; border-collapse: collapse; font: 700 15px/1.3 "Inter", sans-serif; }
+  .carroll th, .carroll td { border: 2px solid var(--line); padding: 12px 8px; text-align: center; }
+  .carroll th { background: var(--cell); }
+  .carroll td { cursor: pointer; height: 64px; font-size: 26px; }
+  .carroll td.on { background: var(--good-soft); border-color: var(--good); }
+  .carroll td.no { background: var(--bad-soft); }
+  .likely { display: flex; width: 100%; max-width: 460px; border-radius: 12px; overflow: hidden; border: 2px solid var(--line); }
+  .likely button { flex: 1; border: none; padding: 14px 6px; font: 700 14px/1.3 "Inter", sans-serif; cursor: pointer; background: var(--cell); color: var(--ink); border-right: 2px solid var(--line); }
+  .likely button:last-child { border-right: none; }
+  .likely button.on { background: var(--teal); color: var(--teal-ink); }
+  .spinner { width: 190px; height: 190px; display: block; }
+  .spinner .sec { stroke: var(--ink); stroke-width: 2.5; }
+  .spinner .ndl { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; transition: transform .8s cubic-bezier(.2,.8,.25,1); transform-origin: 95px 95px; }
+  .runbox { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; font: 700 15px/1 "Inter", sans-serif; }
+  .runbox span { background: var(--cell); border: 2px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+
+  /* ==== template alignment: the Grade 2 palette ==== */
+  /* Brings Grade 3 onto the same tokens the Grade 2 template declares and
+     ../grade-1-app/align-g1v2-to-template.py applied to Grade 1: the re-solved
+     accent, and the ink tokens for text sitting ON a coloured chip.
+
+     Appended here because build.sh injects this file immediately before the
+     closing style tag, so it is the last thing in the only style block and wins
+     over the two palette declarations further up _head.html without either
+     being edited. NOTE: never write that tag out in full anywhere in this file,
+     comment or not - an HTML parser ends a style element at the first such
+     string inside it, so a comment mentioning it silently truncates the
+     stylesheet and everything below becomes page text. That is exactly what
+     the first version of this block did, and it turned every rule below into
+     white-on-teal at 2.27:1.
+
+     THE CHIP HALF OF THAT SCRIPT IS DELIBERATELY NOT COPIED. Its own header
+     warns that colouring text for a background it does not sit on is how its
+     first pass broke two things it had not measured, and Grade 3 draws
+     different components. Measured across all 79 slides of all five lessons in
+     both themes (checks/probe-chips.mjs): of Grade 1's eight chip selectors
+     Grade 3 has three, two of them draw no visible text anywhere, and the one
+     that does was already painting this exact ink. So there is nothing for a
+     chip rule to fix - the literals below are pointed at the token instead.
+
+     Both changed values were computed against Grade 3's own grounds before
+     being applied, because --muted goes DARKER and darker can only lower
+     contrast on a dark ground:
+       --muted   #A9C0D2 -> #A4B7C8   6.84 -> 6.25 on --cell, 8.12 -> 7.41 on --card
+       --accent  #E9744F -> #ED8E70   5.15 -> 6.33 on --card
+     Both stay well clear of 4.5, and the accent improves. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --teal-ink: #06231F;
+    --plum-ink: #241733;
+    --gold-ink: #2A1F05;
+  }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 3 · Times, sharing and patterns</p>
+      <h1>Rows and <em>Rules</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 arrays -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Multiplying is counting equal groups, and an array is those groups laid out in neat rows.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Four rows with six in each row.</s><s>You could count all twenty four one at a time, but you do not need to.</s><s>Four sixes is twenty four.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The groups have to be equal.</s><s>If one row is short it is not a times fact any more, and counting in that table will give you the wrong answer.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Build an array with the buttons and read it out loud.</s></mstts:express-as>' data-say="Build rows and columns. Read it as rows times columns.">
+      <div class="slide-head"><span class="n">1</span><h2>Rows and columns</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Change the rows and the columns. Read it as <b>rows × columns</b>.</span></div>
+      <div class="stage">
+        <div class="arrwrap"><div class="arr" id="arr1"></div><div class="arrlab" id="lab1"></div></div>
+        <div class="bigbtns" id="ctl1"><button type="button" class="big small ghost" data-a="r-1">− row</button><button type="button" class="big small" data-a="r1">+ row</button><button type="button" class="big small ghost" data-a="c-1">− column</button><button type="button" class="big small" data-a="c1">+ column</button></div>
+        <p class="fb" id="fb1"></p>
+      </div>
+    </section>
+
+    <!-- 2 commutative -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Turning an array on its side does not change how many are in it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Four rows of six is twenty four.</s><s>Turn it and it is six rows of four, still twenty four.</s><s>The same dots, looked at another way.</s><s>So every times fact you learn is really two.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>This is worth real money to you.</s><s>Eight nines is hard.</s><s>Nine eights is the same answer, and if you happen to know that one, you already knew the hard one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press turn, and watch the total stay put.</s></mstts:express-as>' data-say="Turn the array round. The total does not change.">
+      <div class="slide-head"><span class="n">2</span><h2>Turn it round</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Press <b>Turn</b> and watch the total stay the same.</span></div>
+      <div class="stage">
+        <div class="arrwrap"><div class="arr alt" id="arr2"></div><div class="arrlab" id="lab2"></div></div>
+        <div class="bigbtns"><button type="button" class="big teal" id="turn2">Turn it round</button><button type="button" class="big small ghost" id="new2">Another one</button></div>
+        <p class="fb" id="fb2"></p>
+      </div>
+    </section>
+
+    <!-- 3 times tables -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the tables you are expected to know by heart this year.</s><s>One, two, three, four, five, six, eight, nine and ten.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Knowing them by heart means the answer arrives without working it out.</s><s>You get there by meeting each fact many times, not by staring at the list.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If one will not come, do not just guess.</s><s>Go to one you do know and step to it.</s><s>Six sevens.</s><s>Five sevens is thirty five, and one more seven is forty two.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Answer as many as you can.</s></mstts:express-as>' data-say="Tap the answer. Ten in a row and you have earned it.">
+      <div class="slide-head"><span class="n">3</span><h2>The tables you need</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Tap the answer.</span></div>
+      <div class="stage">
+        <div class="bignum" id="q3">—</div>
+        <div class="choices" id="ch3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="score" id="sc3"></p>
+      </div>
+    </section>
+
+    <!-- 4 fact family -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Multiplying and dividing are the same fact, read in different directions.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Four sixes are twenty four.</s><s>So six fours are twenty four.</s><s>So twenty four shared between four is six, and twenty four shared between six is four.</s><s>One array, four sentences.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>This is what to do when a division will not come.</s><s>Do not hunt for a dividing fact.</s><s>Ask yourself what you multiply by to get there.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Find all four sentences hiding in one array.</s></mstts:express-as>' data-say="One array makes four number sentences. Tap the ones that are true.">
+      <div class="slide-head"><span class="n">4</span><h2>One array, four facts</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Tap all <b>four</b> sentences that are true for this array.</span></div>
+      <div class="stage">
+        <div class="arrwrap"><div class="arr" id="arr4"></div></div>
+        <div class="facts" id="fam4"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="score" id="sc4"></p>
+      </div>
+    </section>
+
+    <!-- 5 distributive -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A number too big to multiply in one go can be split, multiplied in parts, and added back together.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Twenty four times three.</s><s>Split the twenty four into twenty and four.</s><s>Twenty threes are sixty.</s><s>Four threes are twelve.</s><s>Sixty and twelve is seventy two.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Both parts must be multiplied.</s><s>Multiplying the tens and then forgetting the ones is the mistake that lands you exactly the ones part short.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Split it, do both parts, then add.</s></mstts:express-as>' data-say="Split the number into tens and ones, multiply both, then add.">
+      <div class="slide-head"><span class="n">5</span><h2>Split it to multiply</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Tap the total.</span></div>
+      <div class="stage">
+        <div class="bignum" id="q5">—</div>
+        <div class="split" id="sp5"></div>
+        <div class="choices" id="ch5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="score" id="sc5"></p>
+      </div>
+    </section>
+
+    <!-- 6 estimate then multiply -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Estimating first tells you what sort of answer to expect, so a silly one cannot slip past.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Thirty eight times four.</s><s>Thirty eight is nearly forty.</s><s>Forty fours are one hundred and sixty.</s><s>So the real answer will be a bit under that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>An estimate is not the answer and it is not meant to be.</s><s>It is the fence you check the answer against.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Estimate first, then pick the real answer.</s></mstts:express-as>' data-say="Round it first to see roughly what to expect. Then tap the real answer.">
+      <div class="slide-head"><span class="n">6</span><h2>Estimate, then multiply</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">About how much? Then tap the exact answer.</span></div>
+      <div class="stage">
+        <div class="bignum" id="q6">—</div>
+        <p class="fb" id="est6"></p>
+        <div class="choices" id="ch6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="score" id="sc6"></p>
+      </div>
+    </section>
+
+    <!-- 7 sharing with a remainder -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Dividing is sharing into equal groups, and sometimes it does not come out exactly.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Deal them out one to each group, round and round, until you cannot give one to everybody.</s><s>What is left over is the remainder.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Here is the check that costs nothing.</s><s>The remainder must be smaller than the number of groups.</s><s>If it is not, you stopped a round too early and everybody can still have one more.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Share them out, then say how many are left over.</s></mstts:express-as>' data-say="Share them out equally. How many does each group get, and what is left over?">
+      <div class="slide-head"><span class="n">7</span><h2>Sharing, and what is left</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">How many does each group get?</span></div>
+      <div class="stage">
+        <div class="bignum" id="q7">—</div>
+        <div class="shareboard" id="sb7"></div>
+        <p class="leftover" id="lo7"></p>
+        <div class="choices" id="ch7"></div>
+        <p class="fb" id="fb7"></p>
+        <p class="score" id="sc7"></p>
+      </div>
+    </section>
+
+    <!-- 8 multiples -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A multiple is a number you land on when you count in steps from zero.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You do not have to count all the way there.</s><s>Multiples of ten end in nought.</s><s>Multiples of five end in nought or five.</s><s>Multiples of two end in nought, two, four, six or eight.</s><s>The last digit tells you.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Every multiple of ten is also a multiple of five and of two.</s><s>So a number can belong to more than one of these, and often does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every multiple you can find.</s></mstts:express-as>' data-say="Tap every multiple. Look at the last digit.">
+      <div class="slide-head"><span class="n">8</span><h2>Multiples of 2, 5 and 10</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap every multiple.</span></div>
+      <div class="stage">
+        <div class="chiprow" id="which8"></div>
+        <div class="grid100" id="g8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="score" id="sc8"></p>
+      </div>
+    </section>
+
+    <!-- 9 sequence rule -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A linear sequence goes up or down by the same amount every time, and that amount is its rule.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find the rule before you find the next number.</s><s>Take any term away from the one after it.</s><s>Do it twice to be sure the gap really is the same.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Checking one gap is not enough.</s><s>Two, four, eight looks like adding two until you reach the eight, and then it is not.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Say the rule, then say what comes next.</s></mstts:express-as>' data-say="Find the rule first, then the next number.">
+      <div class="slide-head"><span class="n">9</span><h2>What is the rule?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">What is the rule of this sequence?</span></div>
+      <div class="stage">
+        <div class="seqbox" id="seq9"></div>
+        <div class="choices" id="ch9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="score" id="sc9"></p>
+      </div>
+    </section>
+
+    <!-- 10 growing shapes -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A pattern can be made of shapes instead of numbers, and it still has a rule.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Count the squares in each picture.</s><s>Write those counts in a row.</s><s>Now it is a number sequence like any other, and you can find its rule.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Look at what is added each time, not at how the shape looks.</s><s>Two patterns can look completely different and grow by exactly the same amount.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count them, find the rule, then say how many come next.</s></mstts:express-as>' data-say="Count the squares in each picture. How many in the next one?">
+      <div class="slide-head"><span class="n">10</span><h2>Patterns that grow</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">How many squares in the <b>next</b> picture?</span></div>
+      <div class="stage">
+        <div class="shapes" id="sh10"></div>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="score" id="sc10"></p>
+      </div>
+    </section>
+
+    <!-- 11 mystery box -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>When a number is not known yet, we put something in its place to hold the spot.</s><s>A box, a shape, later a letter.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Box add seven is twenty three.</s><s>The box is not a mystery for ever.</s><s>Take the seven back off the twenty three and the box has to be sixteen.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Look at where the box is standing.</s><s>Twenty three take away box is seven asks something different from box take away seven is twenty three, and the two have different answers.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Work out what is hiding in the box.</s></mstts:express-as>' data-say="What number is hiding in the box?">
+      <div class="slide-head"><span class="n">11</span><h2>The mystery box</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">What number is hiding in the box?</span></div>
+      <div class="stage">
+        <div class="mystery" id="my11"></div>
+        <div class="choices" id="ch11"></div>
+        <p class="fb" id="fb11"></p>
+        <p class="score" id="sc11"></p>
+      </div>
+    </section>
+
+    <!-- 12 check -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something from this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it is a times fact, think of the array.</s><s>If it is a division, ask what you multiply by.</s><s>If it is a sequence, find the rule first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="fb" id="q12" style="font-size:24px"></p>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12"></p>
+        <p class="score" id="sc12"></p>
+      </div>
+    </section>
+
+    <!-- 13 stickers -->
+    <!-- how do you know -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+      <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
+      <div class="stage">
+        <p class="fb" id="clW" style="font-size:21px"></p>
+        <div class="choices" id="chW"></div>
+        <p class="fb" id="fbW"></p>
+        <p class="score" id="scW"></p>
+      </div>
+    </section>
+
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fb13"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  (function () {
+    if (new URLSearchParams(location.search).get("from") !== "g3") return;
+    const wrap = document.querySelector(".wrap");
+    if (!wrap) return;
+    const back = document.createElement("a");
+    back.className = "g1-back";
+    back.href = "index.html";
+    back.innerHTML = '<span aria-hidden="true">←</span> Grade 3 Maths';
+    wrap.insertBefore(back, wrap.firstChild);
+  })();
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+
+
+  /* ---- deck ---- */
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0; $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots(); if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+
+  /* ==================================================================
+     ACCESSIBILITY
+
+     Two things every step needs and none of them should have to repeat.
+
+     A step's feedback is written into a .fb or .score paragraph, which a
+     screen reader has no reason to revisit - so each one is marked as a
+     polite live region once, here, rather than in every slide's markup.
+
+     And several steps are operated by tapping something that is not a
+     button: a card, a table cell, a square on a grid, a region of a Venn
+     diagram. Those carry role="button" and tabindex="0" so they are in
+     the tab order; this turns Enter and Space into a click on them, which
+     is the half a native button would have given for free.
+     ================================================================== */
+  document.querySelectorAll(".fb, .score").forEach((el) => {
+    if (!el.hasAttribute("aria-live")) el.setAttribute("aria-live", "polite");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " " && e.key !== "Spacebar") return;
+    const t = e.target;
+    if (!t || typeof t.getAttribute !== "function" || t.getAttribute("role") !== "button") return;
+    if (t.getAttribute("aria-disabled") === "true") return;
+    e.preventDefault();
+    t.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+  });
+
+
+  /* ==================================================================
+     ROWS AND RULES - Grade 3 multiplication, division and sequences.
+     Cambridge Primary Mathematics 0096, Stage 3.
+     ================================================================== */
+
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  function offer(host, opts, right, onPick) {
+    $(host).innerHTML = shuffle(opts).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $(host).dataset.right = String(right);
+    $(host).dataset.live = "1";
+    $(host).onclick = onPick;
+  }
+  function mark(host, btn, ok) {
+    if ($(host).dataset.live !== "1") return false;
+    $(host).dataset.live = "0";
+    [...$(host).querySelectorAll(".choice")].forEach((b) => { b.disabled = true; });
+    btn.classList.add(ok ? "right" : "wrong");
+    if (!ok) { const r = $(host).dataset.right; [...$(host).querySelectorAll(".choice")].forEach((b) => { if (b.dataset.v === r) b.classList.add("right"); }); }
+    return true;
+  }
+  function scoreLine(id, got, asked, target) { $(id).textContent = got + " right out of " + asked + (got >= target ? " - sticker earned!" : ""); }
+  function dots(n) { let h = ""; for (let i = 0; i < n; i++) h += "<i></i>"; return h; }
+  /* the answer is always first in the list, so no later filter can drop it */
+  function withDistractors(answer, cands, want) {
+    const list = [answer];
+    for (const c of cands) { if (list.length >= want) break; if (c !== answer && c > 0 && !list.includes(c)) list.push(c); }
+    let guard = 0;
+    while (list.length < want && guard++ < 60) { const c = answer + rnd(1, 6) * (rnd(0, 1) ? 1 : -1); if (c > 0 && !list.includes(c)) list.push(c); }
+    return list;
+  }
+
+  /* ---- 1: arrays ---- 3Ni.07 know the times tables / an array is the picture of one */
+  let r1 = 4, c1 = 6;
+  function paint1() {
+    $("arr1").style.gridTemplateColumns = "repeat(" + c1 + ", 22px)";
+    $("arr1").innerHTML = dots(r1 * c1);
+    $("lab1").innerHTML = r1 + " × " + c1 + " = <b>" + r1 * c1 + "</b><small>" + r1 + " rows of " + c1 + "</small>";
+    if (!done[0] && (r1 !== 4 || c1 !== 6)) finish(0, "");
+    $("fb1").className = "fb"; $("fb1").textContent = r1 + " rows with " + c1 + " in each row is " + r1 * c1 + " altogether.";
+  }
+  $("ctl1").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    const a = b.dataset.a;
+    if (a === "r1") r1 = Math.min(9, r1 + 1); else if (a === "r-1") r1 = Math.max(1, r1 - 1);
+    else if (a === "c1") c1 = Math.min(10, c1 + 1); else if (a === "c-1") c1 = Math.max(1, c1 - 1);
+    paint1(); say(r1 + " times " + c1 + " is " + r1 * c1);
+  });
+  paint1();
+
+  /* ---- 2: commutative ---- 3Ni.06 understand and explain the commutative property of multiplication */
+  let a2 = 4, b2 = 6, turned2 = false;
+  function paint2() {
+    const rows = turned2 ? b2 : a2, cols = turned2 ? a2 : b2;
+    $("arr2").style.gridTemplateColumns = "repeat(" + cols + ", 22px)";
+    $("arr2").innerHTML = dots(rows * cols);
+    $("lab2").innerHTML = rows + " × " + cols + " = <b>" + rows * cols + "</b><small>" + rows + " rows of " + cols + "</small>";
+  }
+  function new2() {
+    a2 = rnd(2, 6); b2 = rnd(3, 9); if (a2 === b2) b2 = a2 + 1;
+    turned2 = false; paint2();
+    $("say2").innerHTML = "This is <b>" + a2 + " × " + b2 + "</b>. Press <b>Turn</b>.";
+    $("fb2").className = "fb"; $("fb2").textContent = "";
+  }
+  $("turn2").addEventListener("click", () => {
+    turned2 = !turned2; paint2();
+    $("fb2").className = "fb good";
+    $("fb2").textContent = a2 + " × " + b2 + " = " + b2 + " × " + a2 + " = " + a2 * b2 + ". The same dots, turned round - so learning one fact gives you two.";
+    say(a2 + " times " + b2 + " and " + b2 + " times " + a2 + " are both " + a2 * b2);
+    finish(1, "");
+  });
+  $("new2").addEventListener("click", new2);
+  new2();
+
+  /* ---- 3: times tables ---- 3Ni.07 know 1, 2, 3, 4, 5, 6, 8, 9 and 10 times tables */
+  const TABLES = [1, 2, 3, 4, 5, 6, 8, 9, 10];
+  let got3 = 0, asked3 = 0;
+  function round3() {
+    const a = TABLES[rnd(0, TABLES.length - 1)], b = rnd(2, 10);
+    const answer = a * b;
+    $("q3").textContent = a + " × " + b;
+    $("say3").innerHTML = "What is <b>" + a + " × " + b + "</b>?";
+    /* distractors are the neighbouring facts in the same table - the real confusions */
+    const list = withDistractors(answer, [a * (b + 1), a * (b - 1), answer + a, answer - a, answer + 1], 4);
+    offer("ch3", list, answer, (e) => {
+      const btn = e.target.closest(".choice"); if (!btn) return;
+      const ok = Number(btn.dataset.v) === answer;
+      if (!mark("ch3", btn, ok)) return;
+      asked3++; if (ok) got3++;
+      $("fb3").className = "fb " + (ok ? "good" : "");
+      $("fb3").textContent = (ok ? cheer() + " " : "") + a + " × " + b + " = " + answer + ".";
+      say(ok ? cheer() : a + " times " + b + " is " + answer);
+      scoreLine("sc3", got3, asked3, 8);
+      if (got3 >= 8) finish(2, "");
+      setTimeout(round3, 1500);
+    });
+  }
+  round3();
+
+  /* ---- 4: fact family ---- 3Ni.05 understand and explain the relationship between multiplication and division */
+  let a4 = 4, b4 = 6, chosen4 = [], got4 = 0, asked4 = 0;
+  function round4() {
+    a4 = rnd(2, 6); b4 = rnd(3, 9); if (a4 === b4) b4 = a4 + 1;
+    const p = a4 * b4;
+    chosen4 = [];
+    $("arr4").style.gridTemplateColumns = "repeat(" + b4 + ", 22px)";
+    $("arr4").innerHTML = dots(p);
+    $("say4").innerHTML = "This array is <b>" + a4 + " × " + b4 + "</b>. Tap all <b>four</b> true sentences.";
+    const truth = [a4 + " × " + b4 + " = " + p, b4 + " × " + a4 + " = " + p, p + " ÷ " + a4 + " = " + b4, p + " ÷ " + b4 + " = " + a4];
+    const lies = [a4 + " × " + b4 + " = " + (p + a4), p + " ÷ " + a4 + " = " + (b4 + 1), (p + 1) + " ÷ " + b4 + " = " + a4, a4 + " + " + b4 + " = " + p];
+    const all = shuffle([...truth, ...shuffle(lies).slice(0, 2)]);
+    $("fam4").innerHTML = all.map((t) => '<div role="button" tabindex="0" data-t="' + t + '">' + t + "</div>").join("");
+    $("fam4").onclick = (e) => {
+      const d = e.target.closest("div"); if (!d || d.classList.contains("on") || d.dataset.spent) return;
+      const t = d.dataset.t;
+      if (!truth.includes(t)) {
+        d.dataset.spent = "1"; d.style.opacity = ".45";
+        $("fb4").className = "fb"; $("fb4").textContent = "Not that one - check it against the picture.";
+        say("Not that one");
+        return;
+      }
+      d.classList.add("on"); chosen4.push(t); say(t.replace("×", "times").replace("÷", "shared between"));
+      if (chosen4.length === 4) {
+        asked4++; got4++;
+        $("fb4").className = "fb good";
+        $("fb4").textContent = cheer() + " One array, two times facts and two sharing facts - they are all the same fact.";
+        scoreLine("sc4", got4, asked4, 2);
+        if (got4 >= 2) finish(3, "");
+        setTimeout(round4, 2400);
+      }
+    };
+  }
+  round4();
+
+  /* ---- 5: distributive ---- 3Ni.06 distributive property / 3Ni.08 multiply whole numbers up to 100 by 2, 3, 4, 5 */
+  let got5 = 0, asked5 = 0;
+  function round5() {
+    const n = rnd(12, 49), m = rnd(2, 5);
+    const t = Math.floor(n / 10) * 10, o = n % 10;
+    const answer = n * m;
+    $("q5").textContent = n + " × " + m;
+    $("sp5").innerHTML =
+      '<div class="box t">' + t + " × " + m + " = " + t * m + "<small>the tens part</small></div>" +
+      '<div class="box o">' + o + " × " + m + " = " + o * m + "<small>the ones part</small></div>";
+    $("say5").innerHTML = "Split <b>" + n + "</b> into " + t + " and " + o + ". What is <b>" + n + " × " + m + "</b>?";
+    const list = withDistractors(answer, [t * m, t * m + o, answer + m, answer - m, o * m + t], 4);
+    offer("ch5", list, answer, (e) => {
+      const btn = e.target.closest(".choice"); if (!btn) return;
+      const ok = Number(btn.dataset.v) === answer;
+      if (!mark("ch5", btn, ok)) return;
+      asked5++; if (ok) got5++;
+      $("fb5").className = "fb " + (ok ? "good" : "");
+      $("fb5").textContent = (ok ? cheer() + " " : "") + t * m + " + " + o * m + " = " + answer + ". Both parts had to be multiplied.";
+      say(ok ? cheer() : t * m + " plus " + o * m + " is " + answer);
+      scoreLine("sc5", got5, asked5, 4);
+      if (got5 >= 4) finish(4, "");
+      setTimeout(round5, 2100);
+    });
+  }
+  round5();
+
+  /* ---- 6: estimate then multiply ---- 3Ni.08 ESTIMATE and multiply */
+  let got6 = 0, asked6 = 0;
+  function round6() {
+    const n = rnd(21, 49), m = rnd(2, 5);
+    const answer = n * m, near = Math.round(n / 10) * 10;
+    $("q6").textContent = n + " × " + m;
+    $("est6").className = "fb";
+    $("est6").textContent = n + " is about " + near + ", and " + near + " × " + m + " = " + near * m + ". So expect something near " + near * m + ".";
+    $("say6").innerHTML = "About " + near * m + ". Now tap the <b>exact</b> answer to " + n + " × " + m + ".";
+    const list = withDistractors(answer, [near * m, answer + 10, answer - 10, answer + m], 4);
+    offer("ch6", list, answer, (e) => {
+      const btn = e.target.closest(".choice"); if (!btn) return;
+      const ok = Number(btn.dataset.v) === answer;
+      if (!mark("ch6", btn, ok)) return;
+      asked6++; if (ok) got6++;
+      $("fb6").className = "fb " + (ok ? "good" : "");
+      $("fb6").textContent = (ok ? cheer() + " " : "") + n + " × " + m + " = " + answer + ", and the estimate said about " + near * m + ". Close, as it should be.";
+      say(ok ? cheer() : n + " times " + m + " is " + answer);
+      scoreLine("sc6", got6, asked6, 4);
+      if (got6 >= 4) finish(5, "");
+      setTimeout(round6, 2200);
+    });
+  }
+  round6();
+
+  /* ---- 7: sharing with a remainder ---- 3Ni.09 estimate and divide whole numbers up to 100 by 2, 3, 4 and 5 */
+  let got7 = 0, asked7 = 0;
+  function round7() {
+    const g = rnd(2, 5), each = rnd(3, 12), rem = rnd(0, g - 1);
+    const total = g * each + rem;
+    $("q7").textContent = total + " ÷ " + g;
+    /* 3Ni.09 asks the learner to ESTIMATE as well as divide, so the estimate is
+       made first, out loud, against a friendly multiple of the divisor */
+    const near = Math.floor(total / g) * g;
+    $("say7").innerHTML = "Share <b>" + total + "</b> between <b>" + g + "</b>. " + near + " ÷ " + g + " = " + (near / g) + ", so expect about <b>" + (near / g) + "</b> each. Now work it out exactly.";
+    let h = "";
+    for (let k = 0; k < g; k++) h += '<div class="grp">' + dots(each) + "</div>";
+    $("sb7").innerHTML = h;
+    $("lo7").innerHTML = rem ? dots(rem) + " " + rem + " left over" : "nothing left over";
+    const list = withDistractors(each, [each + 1, each - 1, each + rem, Math.ceil(total / g)], 4);
+    offer("ch7", list, each, (e) => {
+      const btn = e.target.closest(".choice"); if (!btn) return;
+      const ok = Number(btn.dataset.v) === each;
+      if (!mark("ch7", btn, ok)) return;
+      asked7++; if (ok) got7++;
+      $("fb7").className = "fb " + (ok ? "good" : "");
+      $("fb7").textContent = (ok ? cheer() + " " : "") + total + " ÷ " + g + " = " + each + (rem ? " remainder " + rem + ". And " + rem + " is smaller than " + g + ", so the sharing really is finished." : " exactly.");
+      say(ok ? cheer() : total + " shared between " + g + " is " + each + (rem ? " remainder " + rem : ""));
+      scoreLine("sc7", got7, asked7, 4);
+      if (got7 >= 4) finish(6, "");
+      setTimeout(round7, 2400);
+    });
+  }
+  round7();
+
+  /* ---- 8: multiples ---- 3Ni.10 recognise multiples of 2, 5 and 10 */
+  const WHICH8 = [2, 5, 10];
+  let w8 = 5, base8 = 0, picked8 = 0, wrong8 = 0, rounds8 = 0;
+  function round8() {
+    base8 = rnd(1, 8) * 100;
+    picked8 = 0; wrong8 = 0;
+    $("which8").innerHTML = WHICH8.map((v) => '<button type="button" class="' + (v === w8 ? "on" : "") + '" data-v="' + v + '">multiples of ' + v + "</button>").join("");
+    $("say8").innerHTML = "Tap every <b>multiple of " + w8 + "</b> between " + base8 + " and " + (base8 + 29) + ".";
+    let h = "";
+    for (let k = 0; k < 30; k++) { const v = base8 + k; h += '<button type="button" data-v="' + v + '">' + v + "</button>"; }
+    $("g8").innerHTML = h;
+    const want = [];
+    for (let k = 0; k < 30; k++) if ((base8 + k) % w8 === 0) want.push(base8 + k);
+    $("fb8").className = "fb"; $("fb8").textContent = "There are " + want.length + " to find.";
+    $("g8").onclick = (e) => {
+      const b = e.target.closest("button"); if (!b || b.disabled) return;
+      const v = Number(b.dataset.v);
+      b.disabled = true;
+      if (v % w8 === 0) { b.classList.add("on"); picked8++; say(String(v)); }
+      else { b.classList.add("miss"); wrong8++; $("fb8").textContent = v + " does not end the right way - it is not a multiple of " + w8 + "."; say("no"); }
+      if (picked8 === want.length) {
+        rounds8++;
+        $("fb8").className = "fb good";
+        $("fb8").textContent = cheer() + " All " + want.length + " found" + (wrong8 ? ", with " + wrong8 + " to spare" : " with none wrong") + ". Multiples of " + w8 + " always end in " + (w8 === 10 ? "0" : w8 === 5 ? "0 or 5" : "0, 2, 4, 6 or 8") + ".";
+        scoreLine("sc8", rounds8, rounds8, 2);
+        if (rounds8 >= 2) finish(7, "");
+        setTimeout(round8, 2600);
+      }
+    };
+  }
+  $("which8").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; w8 = Number(b.dataset.v); round8(); });
+  round8();
+
+  /* ---- 9: the rule ---- 3Nc.05 recognise and extend linear sequences, and describe the term-to-term rule */
+  let got9 = 0, asked9 = 0;
+  function round9() {
+    const up = rnd(0, 1) === 1;
+    const step = [2, 3, 4, 5, 10, 25, 50][rnd(0, 6)] * (up ? 1 : -1);
+    const start = up ? rnd(1, 20) * 5 : rnd(40, 100) * Math.max(1, Math.abs(step) / 5);
+    const seq = [0, 1, 2, 3].map((k) => start + k * step).filter((v) => v >= 0);
+    if (seq.length < 4) return round9();
+    $("seq9").innerHTML = seq.map((v) => "<span>" + v + "</span>").join("") + '<span class="gap now">?</span>';
+    const label = (s) => (s > 0 ? "add " : "take away ") + Math.abs(s);
+    const right = label(step);
+    const opts = new Set([right]);
+    opts.add(label(-step)); opts.add(label(step > 0 ? step + 1 : step - 1)); opts.add(label(step * 2));
+    offer("ch9", [...opts].slice(0, 4), right, (e) => {
+      const btn = e.target.closest(".choice"); if (!btn) return;
+      const ok = btn.dataset.v === right;
+      if (!mark("ch9", btn, ok)) return;
+      asked9++; if (ok) got9++;
+      const next = seq[3] + step;
+      $("seq9").innerHTML = seq.map((v) => "<span>" + v + "</span>").join("") + '<span class="gap filled">' + next + "</span>";
+      $("fb9").className = "fb " + (ok ? "good" : "");
+      $("fb9").textContent = (ok ? cheer() + " " : "") + "The rule is " + right + ", so the next number is " + next + ".";
+      say(ok ? cheer() : "The rule is " + right);
+      scoreLine("sc9", got9, asked9, 4);
+      if (got9 >= 4) finish(8, "");
+      setTimeout(round9, 2000);
+    });
+  }
+  round9();
+
+  /* ---- 10: growing shapes ---- 3Nc.06 extend spatial patterns formed from adding a constant */
+  let got10 = 0, asked10 = 0;
+  function figure(count, cols, q) {
+    return '<div class="fig' + (q ? " q" : "") + '"><div class="sq" style="grid-template-columns:repeat(' + cols + ',15px)">' + dots(count) + '</div><div class="cap">' + (q ? "?" : count) + "</div></div>";
+  }
+  function round10() {
+    /* 3Nc.06 names adding AND subtracting a constant, so half the patterns shrink.
+       A shrinking run starts high enough that the fourth picture is still positive. */
+    const step = rnd(2, 4), cols = step;
+    const grow = rnd(0, 1) === 1;
+    const first = grow ? rnd(2, 4) : rnd(2, 4) + 3 * step;
+    const d = grow ? step : -step;
+    const counts = [0, 1, 2].map((k) => first + k * d);
+    const answer = first + 3 * d;
+    $("sh10").innerHTML = counts.map((c) => figure(c, cols, false)).join("") + figure(answer, cols, true);
+    $("say10").innerHTML = "The pictures have " + counts.join(", ") + " squares. How many in the <b>next</b> one?";
+    const list = withDistractors(answer, [answer + step, Math.max(1, answer - step), answer + 1, counts[2] + 1], 4);
+    offer("ch10", list, answer, (e) => {
+      const btn = e.target.closest(".choice"); if (!btn) return;
+      const ok = Number(btn.dataset.v) === answer;
+      if (!mark("ch10", btn, ok)) return;
+      asked10++; if (ok) got10++;
+      $("sh10").innerHTML = counts.map((c) => figure(c, cols, false)).join("") + figure(answer, cols, false);
+      $("fb10").className = "fb " + (ok ? "good" : "");
+      $("fb10").textContent = (ok ? cheer() + " " : "") + "Each picture " + (grow ? "adds " : "takes away ") + step + ", so " + counts[2] + (grow ? " + " : " − ") + step + " = " + answer + ".";
+      say(ok ? cheer() : "Each one " + (grow ? "adds " : "takes away ") + step + ", so the next is " + answer);
+      scoreLine("sc10", got10, asked10, 4);
+      if (got10 >= 4) finish(9, "");
+      setTimeout(round10, 2200);
+    });
+  }
+  round10();
+
+  /* ---- 11: the mystery box ---- 3Nc.04 recognise the use of an object to represent an unknown quantity */
+  let got11 = 0, asked11 = 0;
+  function round11() {
+    const form = rnd(0, 2);
+    let answer, html, why;
+    if (form === 0) { const x = rnd(5, 40), b = rnd(3, 30); answer = x; html = '<span class="bx">?</span><span>+ ' + b + " = " + (x + b) + "</span>"; why = "Take the " + b + " back off " + (x + b) + " and the box must be " + x + "."; }
+    else if (form === 1) { const x = rnd(5, 40), b = rnd(3, 20); answer = x; html = "<span>" + (x + b) + '</span><span>− <span class="bx">?</span> = ' + b + "</span>"; why = (x + b) + " take away " + x + " leaves " + b + ", so the box is " + x + "."; }
+    /* the subtrahend is built from the answer, so the result can never go below zero -
+       counting back past zero is Stage 5, not Stage 3 */
+    else { const b = rnd(3, 20), x = b + rnd(2, 30); answer = x; html = '<span class="bx">?</span><span>− ' + b + " = " + (x - b) + "</span>"; why = "Add the " + b + " back on: " + (x - b) + " + " + b + " = " + x + "."; }
+    if (answer <= 0) return round11();
+    $("my11").innerHTML = html;
+    $("say11").textContent = "What number is hiding in the box?";
+    const list = withDistractors(answer, [answer + rnd(1, 5), Math.max(1, answer - rnd(1, 5)), answer + 10], 4);
+    offer("ch11", list, answer, (e) => {
+      const btn = e.target.closest(".choice"); if (!btn) return;
+      const ok = Number(btn.dataset.v) === answer;
+      if (!mark("ch11", btn, ok)) return;
+      asked11++; if (ok) got11++;
+      $("my11").innerHTML = html.replace('class="bx"', 'class="bx found"').replace(">?<", ">" + answer + "<");
+      $("fb11").className = "fb " + (ok ? "good" : "");
+      $("fb11").textContent = (ok ? cheer() + " " : "") + why;
+      say(ok ? cheer() : why);
+      scoreLine("sc11", got11, asked11, 4);
+      if (got11 >= 4) finish(10, "");
+      setTimeout(round11, 2200);
+    });
+  }
+  round11();
+
+  /* ---- 12: check ---- */
+  const QS = [
+    () => { const a = rnd(2, 9), b = rnd(2, 10); return { q: "What is " + a + " × " + b + "?", opts: [a * b, a * b + a, a * b - a], a: a * b, why: a + " × " + b + " = " + a * b + "." }; },
+    () => { const a = rnd(3, 9), b = rnd(3, 9); return { q: a + " × " + b + " = " + a * b + ". So what is " + b + " × " + a + "?", opts: [a * b, a * b + 1, a + b], a: a * b, why: "Turning it round never changes the total." }; },
+    () => { const a = rnd(2, 5); let b = rnd(3, 9); while (b === a || b + 1 === a) b = rnd(3, 9); return { q: "What is " + a * b + " ÷ " + a + "?", opts: [b, a, b + 1], a: b, why: "Ask what you multiply " + a + " by to reach " + a * b + "." }; },
+    () => { let n = rnd(12, 40); while (n % 10 === 0) n = rnd(12, 40); const m = rnd(2, 5); const t = Math.floor(n / 10) * 10, o = n % 10; return { q: "What is " + n + " × " + m + "?", opts: [n * m, t * m, n * m + m], a: n * m, why: t * m + " + " + o * m + " = " + n * m + "." }; },
+    () => { const g = rnd(2, 5), r = rnd(1, g - 1); let e2 = rnd(3, 9); while (e2 === g || e2 === r) e2 = rnd(3, 9); const tot = g * e2 + r; return { q: tot + " shared between " + g + ". What is left over?", opts: [r, g, e2], a: r, why: tot + " ÷ " + g + " = " + e2 + " remainder " + r + "." }; },
+    () => { const n = [2, 5, 10][rnd(0, 2)]; const v = rnd(10, 99) * n; return { q: "Is " + v + " a multiple of " + n + "?", opts: ["yes", "no"], a: "yes", why: v + " lands on " + n + " when you count in " + n + "s from zero." }; },
+    () => { const s = [2, 3, 5, 10][rnd(0, 3)]; const st = rnd(1, 9) * 5; return { q: "A sequence goes " + st + ", " + (st + s) + ", " + (st + 2 * s) + ". What is the rule?", opts: ["add " + s, "add " + (s + 1), "take away " + s], a: "add " + s, why: "Each term is " + s + " more than the one before." }; },
+    () => { const b = rnd(2, 20); let x = rnd(6, 30); while (x === b) x = rnd(6, 30); return { q: "? + " + b + " = " + (x + b) + ". What is in the box?", opts: [x, x + b, b], a: x, why: (x + b) + " − " + b + " = " + x + "." }; },
+    () => { const f = rnd(2, 4), st = rnd(2, 4); return { q: "Pictures grow " + f + ", " + (f + st) + ", " + (f + 2 * st) + " squares. How many next?", opts: [f + 3 * st, f + 2 * st + 1, f + 4 * st], a: f + 3 * st, why: "Each picture adds " + st + "." }; },
+    () => { const n = rnd(21, 49), m = rnd(2, 5); const near = Math.round(n / 10) * 10; return { q: "Roughly, what is " + n + " × " + m + "?", opts: ["about " + near * m, "about " + near * m * 2, "about " + n], a: "about " + near * m, why: n + " is about " + near + ", and " + near + " × " + m + " = " + near * m + "." }; }
+  ];
+  let qi = 0, got12 = 0, order12 = [];
+  /* a question that offers the same answer twice has no single right answer;
+     regenerate rather than ship an ambiguous one */
+  function nextQ(gen) { let item, guard = 0; do { item = gen(); } while (new Set(item.opts.map(String)).size !== item.opts.length && guard++ < 60); return item; }
+  function round12() {
+    if (qi >= order12.length) {
+      $("q12").textContent = ""; $("ch12").innerHTML = "";
+      $("fb12").className = "fb good"; $("fb12").textContent = "Finished! " + got12 + " out of " + order12.length + ".";
+      $("sc12").textContent = "";
+      if (got12 >= 7) finish(11, "You have finished the check.");
+      return;
+    }
+    const item = nextQ(order12[qi]);
+    $("q12").textContent = item.q; $("say12").textContent = item.q;
+    offer("ch12", item.opts, item.a, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === String(item.a);
+      if (!mark("ch12", b, ok)) return;
+      if (ok) got12++;
+      qi++;
+      $("fb12").className = "fb " + (ok ? "good" : "");
+      $("fb12").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
+      say(ok ? cheer() : item.why);
+      $("sc12").textContent = got12 + " right out of " + qi;
+      setTimeout(round12, 2000);
+    });
+  }
+  order12 = shuffle(QS);
+  round12();
+
+  /* ---- 13: stickers ---- */
+  const STICKERS = [
+    ["🔲", "Rows and columns"], ["🔄", "Turn it round"], ["✖️", "The tables you need"], ["👨‍👩‍👧", "One array, four facts"],
+    ["🪓", "Split it to multiply"], ["🎯", "Estimate, then multiply"], ["🍪", "Sharing and leftovers"], ["🔟", "Multiples"],
+    ["📈", "The rule"], ["🔺", "Patterns that grow"], ["📦", "The mystery box"], ["✅", "Show what I know"],
+    ["\ud83e\udd14", "How do you know"]
+  ];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fb13").className = "fb " + (got === STICKERS.length ? "good" : "");
+    $("fb13").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You know your tables and your rules." : got + " of " + STICKERS.length + " stickers so far.";
+  }
+  $("restart").addEventListener("click", () => location.reload());
+
+
+
+  /* ==================================================================
+     CONVINCING - "presenting evidence to justify or challenge a
+     mathematical idea or solution" (Cambridge TWM.04).
+
+     A tap-to-answer deck cannot ask a child to WRITE a justification, so
+     this asks them to recognise one: a claim that is true, and three
+     reasons for it of which only one does any work. It is an
+     approximation of the characteristic and is recorded as one.
+
+     Every wrong reason is either the misconception the lesson already
+     teaches against, or something perfectly TRUE that explains nothing -
+     and the second kind is the whole point of the step.
+
+     It works out its own slide index from the DOM, so inserting it moved
+     no other step and nothing had to be renumbered.
+     ================================================================== */
+  (function () {
+    const BANK = [
+      [
+            "If you know 8 × 5 = 40, you already know 5 × 8.",
+            "Turning an array on its side does not change how many dots are in it.",
+            [
+                  "8 and 5 are both in the answer 40.",
+                  "5 and 8 are both smaller than 40."
+            ],
+            "One array, read two ways. That is why every times fact you learn is really two."
+      ],
+      [
+            "24 × 3 = 72.",
+            "20 threes are 60 and 4 threes are 12, and 60 + 12 = 72.",
+            [
+                  "20 threes are 60, so the answer is 60.",
+                  "24 and 3 both go into 72."
+            ],
+            "Both parts have to be multiplied. Stopping at the tens leaves you exactly the ones part short."
+      ],
+      [
+            "17 shared between 5 leaves 2 over.",
+            "5 threes are 15, and 17 − 15 = 2, and 2 is smaller than 5.",
+            [
+                  "17 and 5 are both odd numbers.",
+                  "2 is left because 17 ends in a 7."
+            ],
+            "The check that costs nothing: the remainder must be smaller than the number of groups, or everybody could have had one more."
+      ],
+      [
+            "245 is a multiple of 5.",
+            "It ends in 5, and every multiple of 5 ends in 0 or 5.",
+            [
+                  "It has a 5 in it.",
+                  "2 + 4 + 5 = 11, and 11 is odd."
+            ],
+            "Having a 5 somewhere is not the test. The last digit is."
+      ],
+      [
+            "The sequence 4, 7, 10, 13 goes up in 3s.",
+            "Every number is 3 more than the one before, and that happens every time.",
+            [
+                  "7 − 4 = 3.",
+                  "It starts at 4 and ends at 13."
+            ],
+            "One gap is not enough. 2, 4, 8 looks like adding 2 until you reach the 8."
+      ],
+      [
+            "If ? + 9 = 21 then the box is 12.",
+            "Taking the 9 back off 21 leaves 12, and 12 + 9 = 21 puts it back.",
+            [
+                  "21 and 9 both have a 1 in them.",
+                  "9 + 21 = 30, so the box is 30."
+            ],
+            "Undo what was done, then put your answer back in to check it."
+      ]
+];
+    const host = document.getElementById("clW");
+    if (!host) return;
+    /* announce the result. Grade 3's shell marks every .fb and .score as a live
+       region; Grade 1's does not, so the step does it for itself rather than
+       depending on which shell it has been dropped into. */
+    ["fbW", "scW", "clW"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && !el.hasAttribute("aria-live")) el.setAttribute("aria-live", "polite");
+    });
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    let got = 0, asked = 0, order = shuffle(BANK), qi = 0, live = false;
+    function paint() {
+      if (qi >= order.length) { order = shuffle(BANK); qi = 0; }
+      const it = order[qi];
+      document.getElementById("clW").textContent = it[0];
+      document.getElementById("sayW").textContent = it[0] + " Which reason really explains it?";
+      document.getElementById("chW").innerHTML = shuffle([it[1]].concat(it[2]))
+        .map((o) => '<button type="button" class="choice word" data-v="' + esc(o) + '">' + esc(o) + "</button>").join("");
+      document.getElementById("fbW").className = "fb";
+      document.getElementById("fbW").textContent = "";
+      live = true;
+    }
+    document.getElementById("chW").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = order[qi];
+      const ok = b.dataset.v === it[1];
+      [...document.getElementById("chW").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.v === it[1]) x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      asked++; if (ok) got++;
+      const fb = document.getElementById("fbW");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not that one. ") + it[3];
+      say(ok ? cheer() : it[3]);
+      document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
+      if (got >= 4) finish(SLOT, "");
+      qi++;
+      setTimeout(paint, 3400);
+    });
+    paint();
+  })();
+
+  show(0, false);
+})();
+</script>

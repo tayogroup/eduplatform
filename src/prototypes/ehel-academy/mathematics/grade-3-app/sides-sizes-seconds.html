@@ -1,0 +1,2587 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sides, Sizes and Seconds</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible, [role="button"]:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .hero > div { min-width: 0; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { font-size: 18px; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+
+  .bignum { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(36px, 8vw, 60px); line-height: 1.1; color: var(--accent); font-variant-numeric: tabular-nums; text-align: center; }
+  .bignum .t { color: var(--teal); } .bignum .q { color: var(--muted); } .bignum .g { color: var(--good); }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; display: grid; place-items: center; }
+  .choice.word { font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* beads: colour + shape */
+  .beads { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; align-items: center; min-height: 56px; }
+  .bead { width: 48px; height: 48px; flex: 0 0 auto; display: inline-block; border: 0; padding: 0; position: relative; }
+  .bead.orange { background: var(--accent); } .bead.teal { background: var(--teal); } .bead.purple { background: var(--plum); } .bead.gold { background: var(--gold); }
+  .bead.circle { border-radius: 50%; } .bead.square { border-radius: 8px; } .bead.triangle { clip-path: polygon(50% 4%, 96% 96%, 4% 96%); }
+  .bead.gap { background: var(--card); border: 4px dashed var(--accent); border-radius: 50%; clip-path: none; }
+  .bead.gap::after { content: "?"; position: absolute; inset: 0; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; color: var(--accent); }
+  .bead.unit { outline: 4px solid var(--ink); outline-offset: 3px; }
+  .bead.gap.now { background: var(--accent-soft); transform: scale(1.12); }
+  .bead.gap.filled { border: 0; }
+  .beads .bar { width: 4px; height: 56px; background: var(--ink); border-radius: 2px; }
+  .choice .bead { width: 40px; height: 40px; }
+  .palette .bead { cursor: pointer; transition: transform 100ms ease; } .palette .bead:active { transform: scale(0.92); }
+  .unitbox { display: flex; gap: 10px; align-items: center; min-height: 64px; padding: 8px 14px; border-radius: 16px; border: 3px dashed var(--line); }
+  .unitbox .lab { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* growing shape patterns */
+  .growrow { display: flex; gap: 14px; align-items: flex-end; justify-content: center; flex-wrap: wrap; }
+  .growbox { display: grid; gap: 4px; justify-items: center; }
+  .growbox .rows { display: grid; gap: 3px; }
+  .growbox .row { display: flex; gap: 3px; }
+  .growbox .sq { width: 20px; height: 20px; border-radius: 4px; background: var(--accent); }
+  .growbox .row.new .sq { background: var(--teal); }
+  .growbox .cap { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 15px; color: var(--muted); }
+  .growbox .cnt { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; }
+  .growbox.q .rows { min-height: 26px; display: grid; place-items: center; }
+  .growbox.q .qmark { width: 56px; height: 56px; border-radius: 12px; border: 3px dashed var(--accent); color: var(--accent); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; display: grid; place-items: center; }
+  @media (max-width: 480px) { .growbox .sq { width: 15px; height: 15px; } .growrow { gap: 10px; } }
+
+  /* my own number pattern */
+  .builder { display: grid; gap: 6px; justify-items: center; width: 100%; }
+  .chiprow { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .chiprow button { min-width: 52px; height: 52px; padding: 0 12px; border-radius: 14px; border: 3px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; }
+  .chiprow button.on { background: var(--teal); border-color: var(--teal); color: var(--teal-ink); }  /* dark ink on teal: white was 2.27:1 */
+  .choice.word.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+  /* number track */
+  .track { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px; width: 100%; max-width: 560px; }
+  .track button { height: 48px; min-width: 0; border-radius: 10px; border: 3px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; padding: 0; color: var(--ink); }
+  .track button.gap { border-style: dashed; border-color: var(--accent); color: var(--accent); }
+  .track button.gap.now { background: var(--accent-soft); }
+  .track button.filled { background: var(--good-soft); border-color: var(--good); border-style: solid; color: var(--ink); }
+  .track button.fixed { cursor: default; }
+  @media (max-width: 480px) { .track { gap: 4px; } .track button { height: 40px; font-size: 16px; border-width: 2px; } }
+  @media (max-width: 340px) { .track { gap: 3px; } .track button { height: 34px; font-size: 13px; } }
+  /* narrower than this, ten columns leaves 16px a cell: too small to read and too small to tap,
+     so the track goes to four rows of five and stays in order left to right */
+  @media (max-width: 300px) { .track { grid-template-columns: repeat(5, 1fr); } .track button { height: 38px; font-size: 15px; } }
+  .seqbox { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .seqbox span { min-width: 56px; height: 56px; border-radius: 12px; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; background: var(--teal-soft); padding: 0 10px; }
+  .seqbox span.gap { background: var(--card); border: 3px dashed var(--accent); color: var(--accent); }
+  .seqbox span.gap.now { background: var(--accent-soft); }
+  .seqbox span.gap.filled { border-style: solid; background: var(--good-soft); border-color: var(--good); color: var(--ink); }
+
+  /* ten frame */
+  .frames { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+  .tenframe { display: grid; grid-template-columns: repeat(5, 46px); grid-template-rows: repeat(2, 46px); gap: 4px; padding: 6px; background: var(--ink); border-radius: 10px; }
+  .tenframe i { display: grid; place-items: center; background: var(--card); border-radius: 6px; }
+  .tenframe i::after { content: ""; width: 34px; height: 34px; border-radius: 50%; background: transparent; transition: transform 120ms ease, background 120ms ease; transform: scale(0.4); }
+  .tenframe i.on::after { background: var(--accent); transform: scale(1); }
+  .tenframe i.on.b::after { background: var(--teal); }
+  .tenframe i.on.x::after { background: var(--cell); box-shadow: inset 0 0 0 3px var(--bad); }
+  .tenframe.tap i { cursor: pointer; }
+  @media (max-width: 480px) { .tenframe { grid-template-columns: repeat(5, 38px); grid-template-rows: repeat(2, 38px); } .tenframe i::after { width: 28px; height: 28px; } }
+
+  /* balance */
+  .balance { width: 100%; max-width: 520px; height: 230px; display: block; }
+  .balance .post { fill: var(--muted); } .balance .beam { stroke: var(--ink); stroke-width: 8; stroke-linecap: round; transition: transform 400ms ease; transform-origin: 260px 60px; }
+  .balance .pan { fill: var(--card); stroke: var(--ink); stroke-width: 3; }
+  .balance .dot { fill: var(--accent); } .balance .dot.b { fill: var(--teal); }
+  .balance .lab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; fill: var(--ink); text-anchor: middle; }
+  .balance .lab.q { fill: var(--accent); }
+  .balance .pangroup { transition: transform 400ms ease; }
+
+  /* machine */
+  .machine { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .machine .box { width: 120px; height: 90px; border-radius: 18px; background: var(--ink); color: #fff; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 30px; position: relative; }
+  .machine .box.mystery { background: var(--plum); }
+  .machine .io { min-width: 64px; height: 64px; border-radius: 14px; display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 30px; background: var(--teal-soft); padding: 0 12px; }
+  .machine .io.out { background: var(--accent-soft); }
+  .machine .io.q { border: 3px dashed var(--accent); background: var(--card); color: var(--accent); }
+  .machine .arrow { font-size: 30px; color: var(--muted); }
+  .mtable { display: grid; grid-template-columns: auto auto auto; gap: 6px 14px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 22px; font-variant-numeric: tabular-nums; }
+  .mtable span { text-align: center; }
+  .mtable .h { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 19px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to
+     the viewer's setting. The selector list carries the same specificity
+     as the prefers-color-scheme block above it and comes later, so it
+     wins in both light and dark.
+
+     The palette is Ehel Academy's own. Gold #f4c95d is the action
+     colour, exactly as on the Wehel page. Teal #0f766e and coral
+     #c2482c are lifted to the same hues at a lightness that is legible
+     on a dark ground; nothing else is invented.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;      /* Ehel ink #17324d, darkened to a page ground */
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #A9C0D2;    /* 5.2:1 on --cell; #93AABE was 4.04:1 and failed AA for small text */
+    --accent: #E9744F;      /* Ehel coral, lifted — the counters and shapes */
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --accent-lift: #FFA183;  /* 4.9:1 on --cell, for accent text below 18px */
+    --teal: #35BFB2;        /* Ehel teal, lifted */
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;        /* Ehel gold — every action */
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: var(--teal-ink); font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: var(--teal-ink); }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: var(--teal-ink); box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* two rules used --ink as a SURFACE, which inverts on a dark ground */
+  .tenframe { background: #07131D; }
+  .machine .box { background: #07131D; color: var(--ink); border: 1px solid var(--line); }
+
+  /* white on the lifted teal is only about 2.3:1; these badges take dark ink */
+  .card .pos, .ocard .pos { color: var(--teal-ink); }
+
+  /* cards, chips and tiles that were white surfaces */
+  .group, .chip, .pick, .acard, .kid, .ocard, .card, .numbox, .keys button,
+  .tray, .purse, .field, .queue .runner, .seqbox span { background: var(--card); }
+  .group.right, .pick.good, .acard.good, .ocard.good, .kid.asked { background: var(--good-soft); }
+  .group.wrong, .pick.oops, .acard.oops, .ocard.oops { background: var(--bad-soft); }
+
+  /* ==================================================================
+     The ground and the activity cards.
+
+     The page sits on one fixed gradient rather than a gradient stretched
+     down 17,000 pixels of document, so 135 degrees means 135 degrees on
+     every screen instead of flattening to almost vertical on a long lesson.
+     It is painted by a fixed pseudo-element rather than background-attachment,
+     which iOS Safari does not honour.
+
+     The card colour is translucent, so the three surfaces below it had to
+     move with it: at 88% over this ground a card lands on #152A42, which
+     the old #112A3D panel colour sat four points away from - inner cards
+     would have disappeared into the card holding them.
+     ================================================================== */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+
+  .step, .deck { background: rgba(20, 43, 62, 0.88); }
+  .steps-nav { background: rgba(24, 59, 86, 0.88); }
+
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+  /* ==================================================================
+     The way back to the grade page - drawn ONLY when the learner arrived
+     from it (?from=g1). A lesson opened on its own, or published as an
+     artifact, has nowhere to go back to, and a link that leads nowhere is
+     worse than no link at all.
+     ================================================================== */
+  .g1-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 17px 9px 13px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+  }
+  .g1-back:hover, .g1-back:focus-visible { border-color: var(--teal); }
+
+  /* ---- Grade 3 additions: place value, comparison, lines, money ---- */
+  .pvcols { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; width: 100%; }
+  .pvc { flex: 1 1 108px; max-width: 160px; background: var(--cell); border: 1px solid var(--line); border-radius: 18px; padding: 12px 8px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .pvc.lit { background: var(--accent-soft); border-color: var(--accent); }
+  .pvl { font: 700 12px/1 "Inter", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .pvd { font: 800 40px/1 "Inter", sans-serif; color: var(--ink); font-variant-numeric: tabular-nums; }
+  /* 14px on --cell was 3.28:1; lifted and enlarged so it clears AA */
+  .pvw { font: 800 15px/1.25 "Inter", sans-serif; color: var(--accent-lift, var(--accent)); text-align: center; min-height: 1.25em; }
+  .pvw.none { color: var(--muted); font-weight: 600; }
+  .pvb { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; align-items: flex-end; min-height: 40px; }
+  .blk { display: block; background: var(--teal-soft); border: 1.5px solid var(--teal); border-radius: 3px; }
+  .blk.h { width: 26px; height: 26px; }
+  .blk.t { width: 7px; height: 26px; background: var(--good-soft); border-color: var(--good); }
+  .blk.o { width: 9px; height: 9px; background: var(--accent-soft); border-color: var(--accent); }
+  .pvbtn { display: flex; gap: 6px; }
+  .pvbtn button { font: 800 20px/1 "Inter", sans-serif; width: 40px; height: 40px; border-radius: 12px; border: none; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  .pvbtn button:first-child { background: var(--cell); color: var(--ink); border: 1.5px solid var(--line); }
+  .pvbtn button:active { transform: translateY(2px); }
+
+  .regroup { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; font: 800 30px/1 "Inter", sans-serif; }
+  .regroup .rp { background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 12px 16px; min-width: 92px; text-align: center; }
+  .regroup .rp.moved { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .regroup .op { color: var(--muted); font-size: 24px; }
+
+  .cmprow { display: flex; gap: 14px; align-items: center; justify-content: center; font: 800 44px/1 "Inter", sans-serif; font-variant-numeric: tabular-nums; }
+  .cmprow .slot { min-width: 64px; text-align: center; color: var(--accent); }
+
+  .rline { width: 100%; max-width: 520px; display: block; }
+  .rline .axis { stroke: var(--line); stroke-width: 3; }
+  .rline .tick { stroke: var(--line); stroke-width: 2; }
+  .rline .half { stroke: var(--plum); stroke-width: 2.5; stroke-dasharray: 5 4; }
+  .rline .pin { fill: var(--cell); stroke: var(--muted); stroke-width: 1.5; }
+  .rline .dotv { fill: var(--accent); }
+  .rline .lab { font: 700 17px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .rline .lab.mid { fill: var(--plum); font-size: 15px; }
+  .rline .mark { font: 800 19px/1 "Inter", sans-serif; fill: var(--accent); text-anchor: middle; }
+
+  .dotbox { width: 100%; max-width: 460px; height: 210px; position: relative; background: var(--cell); border: 2px solid var(--line); border-radius: 18px; overflow: hidden; }
+  .dotbox i { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
+
+  .barwrap { width: 100%; max-width: 460px; }
+  .barwrap .cap { display: flex; justify-content: space-between; font: 700 15px/1 "Inter", sans-serif; color: var(--muted); margin-bottom: 6px; }
+  .barwrap .bar { height: 46px; border-radius: 12px; background: var(--cell); border: 2px solid var(--line); overflow: hidden; display: flex; }
+  .barwrap .fill { background: var(--teal-soft); border-right: 2px solid var(--teal); display: grid; place-items: center; font: 800 18px/1 "Inter", sans-serif; color: var(--teal); }
+  .barwrap .rest { flex: 1; display: grid; place-items: center; font: 800 20px/1 "Inter", sans-serif; color: var(--accent); }
+  .barwrap .sum { text-align: center; font: 800 22px/1 "Inter", sans-serif; margin-top: 10px; }
+
+  .colsum { width: 100%; max-width: 460px; display: block; }
+  .colsum .hd { font: 700 13px/1 "Inter", sans-serif; fill: var(--muted); text-anchor: middle; letter-spacing: .06em; }
+  .colsum .dg { font: 800 34px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .colsum .dg.ans { fill: var(--good); }
+  .colsum .dg.spent { fill: var(--muted); }
+  .colsum .carry { font: 800 19px/1 "Inter", sans-serif; fill: var(--accent); text-anchor: middle; }
+  .colsum .sign { font: 800 28px/1 "Inter", sans-serif; fill: var(--muted); text-anchor: middle; }
+  .colsum .rule { stroke: var(--ink); stroke-width: 2.5; }
+  .colsum .strike { stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+  .colsum .lit { fill: var(--accent); fill-opacity: .14; stroke: var(--accent); stroke-width: 2; }
+
+  .shop { display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .shop .tag { background: var(--cell); border: 2px solid var(--line); border-radius: 16px; padding: 12px 18px; text-align: center; }
+  .shop .tag b { display: block; font: 800 30px/1.1 "Inter", sans-serif; color: var(--ink); }
+  .shop .tag span { font: 700 13px/1 "Inter", sans-serif; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .shop .tag.paid { background: var(--teal-soft); border-color: var(--teal); }
+  .shop .tag.paid b { color: var(--teal); }
+  /* ---- times, sharing and patterns ---- */
+  .arr { display: inline-grid; gap: 5px; padding: 10px; background: var(--cell); border: 2px solid var(--line); border-radius: 14px; }
+  .arr i { width: 22px; height: 22px; border-radius: 50%; background: var(--teal); display: block; }
+  .arr.alt i { background: var(--gold); }
+  .arrwrap { display: flex; gap: 18px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .arrlab { font: 800 20px/1.3 "Inter", sans-serif; color: var(--ink); text-align: center; }
+  .arrlab small { display: block; font: 600 14px/1.4 "Inter", sans-serif; color: var(--muted); }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 420px; }
+  .facts div { background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 12px; text-align: center; font: 800 22px/1 "Inter", sans-serif; }
+  .facts div.on { background: var(--good-soft); border-color: var(--good); color: var(--good); }
+  .split { display: flex; gap: 10px; align-items: stretch; justify-content: center; flex-wrap: wrap; }
+  .split .box { border-radius: 14px; display: grid; place-items: center; padding: 16px 12px; font: 800 22px/1.3 "Inter", sans-serif; text-align: center; min-width: 110px; }
+  .split .box.t { background: var(--good-soft); border: 2px solid var(--good); color: var(--good); }
+  .split .box.o { background: var(--gold-soft, var(--accent-soft)); border: 2px solid var(--gold); color: var(--gold); }
+  .split .box small { display: block; font: 600 13px/1.4 "Inter", sans-serif; color: var(--muted); }
+  .shareboard { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .shareboard .grp { background: var(--cell); border: 2px dashed var(--line); border-radius: 14px; padding: 10px; min-width: 74px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; align-content: flex-start; }
+  .shareboard .grp i { width: 16px; height: 16px; border-radius: 50%; background: var(--teal); }
+  .leftover { margin-top: 12px; display: flex; gap: 6px; justify-content: center; align-items: center; font: 700 16px/1 "Inter", sans-serif; color: var(--accent); }
+  .leftover i { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  .grid100 { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; width: 100%; max-width: 420px; }
+  .grid100 button { aspect-ratio: 1; border: none; border-radius: 5px; background: var(--cell); color: var(--ink); font: 700 11px/1 "Inter", sans-serif; cursor: pointer; padding: 0; }
+  .grid100 button.on { background: var(--teal); color: var(--teal-ink); }
+  .grid100 button.miss { background: var(--bad-soft); color: var(--bad); }
+  .shapes { display: flex; gap: 14px; align-items: flex-end; justify-content: center; flex-wrap: wrap; }
+  .shapes .fig { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .shapes .sq { display: grid; gap: 3px; }
+  .shapes .sq i { width: 15px; height: 15px; background: var(--gold); border-radius: 3px; display: block; }
+  .shapes .cap { font: 700 14px/1 "Inter", sans-serif; color: var(--muted); }
+  .shapes .fig.q .sq { opacity: .25; }
+  .mystery { display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap; font: 800 32px/1 "Inter", sans-serif; }
+  .mystery .bx { width: 66px; height: 66px; border-radius: 16px; background: var(--plum); color: #fff; display: grid; place-items: center; font-size: 30px; }
+  .mystery .bx.found { background: var(--good); }
+  /* ---- fractions ---- */
+  .fshapes { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .fsvg { width: 140px; height: 140px; display: block; }
+  .fsvg .part { stroke: var(--ink); stroke-width: 2.5; fill: var(--cell); }
+  .fsvg .part.on { fill: var(--teal); }
+  .fsvg .part.pick { cursor: pointer; }
+  .fsvg .whole { fill: none; stroke: var(--ink); stroke-width: 3; }
+  .fcard { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .fcard .cap { font: 700 15px/1 "Inter", sans-serif; color: var(--muted); }
+  .fcard.sel .fsvg .part.on { fill: var(--good); }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; line-height: 1; font: 800 22px/1 "Inter", sans-serif; vertical-align: middle; }
+  .frac .num { padding: 0 4px 2px; }
+  .frac .den { padding: 2px 4px 0; border-top: 2.5px solid currentColor; }
+  .fbar { width: 100%; max-width: 460px; display: flex; height: 54px; border: 2.5px solid var(--ink); border-radius: 10px; overflow: hidden; }
+  .fbar i { flex: 1; border-right: 2px solid var(--ink); background: var(--cell); display: block; }
+  .fbar i:last-child { border-right: none; }
+  .fbar i.on { background: var(--teal); }
+  .fbar i.on.b { background: var(--gold); }
+  .setbox { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 420px; }
+  .setbox i { width: 26px; height: 26px; border-radius: 50%; background: var(--cell); border: 2px solid var(--line); display: block; }
+  .setbox i.on { background: var(--teal); border-color: var(--teal); }
+  /* ---- shape, measure and time ---- */
+  .gsvg { width: 100%; max-width: 420px; display: block; }
+  .gsvg .sh { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 3; }
+  .gsvg .sh.plain { fill: var(--cell); stroke: var(--ink); }
+  .gsvg .mir { stroke: var(--plum); stroke-width: 3; stroke-dasharray: 7 5; }
+  .gsvg .cell { fill: var(--cell); stroke: var(--line); stroke-width: 1.5; }
+  .gsvg .cell.on { fill: var(--teal); }
+  .gsvg .cell.pick { cursor: pointer; }
+  .gsvg .edge { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; }
+  .gsvg .lab { font: 700 15px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .gsvg .lab.m { fill: var(--muted); font-size: 13px; }
+  .gsvg .arm { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; }
+  .gsvg .arm.b { stroke: var(--accent); }
+  .gsvg .rt { fill: none; stroke: var(--gold); stroke-width: 3; }
+  .shapegrid { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .shapegrid .pick { background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 8px; cursor: pointer; }
+  .shapegrid .pick.on { border-color: var(--good); background: var(--good-soft); }
+  .shapegrid .pick.off { opacity: .3; }
+  .shapegrid svg { width: 84px; height: 84px; display: block; }
+  .clockwrap { display: flex; gap: 18px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .digi { font: 800 40px/1 "Inter", sans-serif; background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 14px 20px; letter-spacing: .04em; }
+  .ttable { width: 100%; max-width: 460px; border-collapse: collapse; font: 600 16px/1.4 "Inter", sans-serif; }
+  .ttable th, .ttable td { border: 1.5px solid var(--line); padding: 8px 10px; text-align: left; }
+  .ttable th { background: var(--cell); font-weight: 800; }
+  .ttable td.hi { background: var(--accent-soft); color: var(--accent); font-weight: 800; }
+  .scaleline { width: 100%; max-width: 460px; display: block; }
+  .scaleline .ax { stroke: var(--ink); stroke-width: 3; }
+  .scaleline .tk { stroke: var(--muted); stroke-width: 2; }
+  .scaleline .ptr { fill: var(--accent); }
+  .scaleline .n { font: 700 14px/1 "Inter", sans-serif; fill: var(--muted); text-anchor: middle; }
+  .compass { display: grid; grid-template-columns: repeat(3, 62px); grid-template-rows: repeat(3, 62px); gap: 6px; }
+  .compass button { border: 2px solid var(--line); border-radius: 12px; background: var(--cell); color: var(--ink); font: 800 16px/1 "Inter", sans-serif; cursor: pointer; }
+  .compass button:disabled { opacity: .25; cursor: default; }
+  .compass .mid { background: var(--teal); color: var(--teal-ink); display: grid; place-items: center; border-radius: 12px; font-size: 22px; }
+  /* ---- statistics and probability ---- */
+  .tally { width: 100%; max-width: 420px; border-collapse: collapse; font: 600 17px/1.4 "Inter", sans-serif; }
+  .tally th, .tally td { border: 1.5px solid var(--line); padding: 8px 10px; text-align: left; }
+  .tally th { background: var(--cell); font-weight: 800; }
+  .tally .marks { font: 700 22px/1 "Atkinson Hyperlegible", monospace; letter-spacing: 2px; color: var(--teal); }
+  .tally td.n { font-weight: 800; text-align: center; width: 72px; }
+  .pictorow { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
+  .pictorow .who { width: 88px; font: 700 15px/1 "Inter", sans-serif; color: var(--muted); }
+  .pictorow .ics { font-size: 22px; letter-spacing: 3px; }
+  .bars { display: flex; align-items: flex-end; gap: 14px; height: 190px; padding: 0 6px; border-left: 3px solid var(--line); border-bottom: 3px solid var(--line); }
+  .bars .col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .bars .bar { width: 42px; background: var(--teal); border-radius: 6px 6px 0 0; }
+  .bars .bar.hi { background: var(--accent); }
+  .bars .cap { font: 700 13px/1 "Inter", sans-serif; color: var(--muted); margin-top: 6px; }
+  .bars .val { font: 800 14px/1 "Inter", sans-serif; color: var(--ink); margin-bottom: 4px; }
+  .venn { width: 100%; max-width: 400px; display: block; }
+  .venn circle { fill: var(--teal); fill-opacity: .18; stroke: var(--teal); stroke-width: 3; }
+  .venn circle.b { fill: var(--gold); stroke: var(--gold); }
+  .venn .zone { fill: transparent; cursor: pointer; }
+  .venn .zone.on { fill: var(--accent); fill-opacity: .35; }
+  .venn text { font: 700 14px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .venn text.t { font-size: 15px; fill: var(--muted); }
+  .carroll { width: 100%; max-width: 440px; border-collapse: collapse; font: 700 15px/1.3 "Inter", sans-serif; }
+  .carroll th, .carroll td { border: 2px solid var(--line); padding: 12px 8px; text-align: center; }
+  .carroll th { background: var(--cell); }
+  .carroll td { cursor: pointer; height: 64px; font-size: 26px; }
+  .carroll td.on { background: var(--good-soft); border-color: var(--good); }
+  .carroll td.no { background: var(--bad-soft); }
+  .likely { display: flex; width: 100%; max-width: 460px; border-radius: 12px; overflow: hidden; border: 2px solid var(--line); }
+  .likely button { flex: 1; border: none; padding: 14px 6px; font: 700 14px/1.3 "Inter", sans-serif; cursor: pointer; background: var(--cell); color: var(--ink); border-right: 2px solid var(--line); }
+  .likely button:last-child { border-right: none; }
+  .likely button.on { background: var(--teal); color: var(--teal-ink); }
+  .spinner { width: 190px; height: 190px; display: block; }
+  .spinner .sec { stroke: var(--ink); stroke-width: 2.5; }
+  .spinner .ndl { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; transition: transform .8s cubic-bezier(.2,.8,.25,1); transform-origin: 95px 95px; }
+  .runbox { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; font: 700 15px/1 "Inter", sans-serif; }
+  .runbox span { background: var(--cell); border: 2px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+
+  /* ==== template alignment: the Grade 2 palette ==== */
+  /* Brings Grade 3 onto the same tokens the Grade 2 template declares and
+     ../grade-1-app/align-g1v2-to-template.py applied to Grade 1: the re-solved
+     accent, and the ink tokens for text sitting ON a coloured chip.
+
+     Appended here because build.sh injects this file immediately before the
+     closing style tag, so it is the last thing in the only style block and wins
+     over the two palette declarations further up _head.html without either
+     being edited. NOTE: never write that tag out in full anywhere in this file,
+     comment or not - an HTML parser ends a style element at the first such
+     string inside it, so a comment mentioning it silently truncates the
+     stylesheet and everything below becomes page text. That is exactly what
+     the first version of this block did, and it turned every rule below into
+     white-on-teal at 2.27:1.
+
+     THE CHIP HALF OF THAT SCRIPT IS DELIBERATELY NOT COPIED. Its own header
+     warns that colouring text for a background it does not sit on is how its
+     first pass broke two things it had not measured, and Grade 3 draws
+     different components. Measured across all 79 slides of all five lessons in
+     both themes (checks/probe-chips.mjs): of Grade 1's eight chip selectors
+     Grade 3 has three, two of them draw no visible text anywhere, and the one
+     that does was already painting this exact ink. So there is nothing for a
+     chip rule to fix - the literals below are pointed at the token instead.
+
+     Both changed values were computed against Grade 3's own grounds before
+     being applied, because --muted goes DARKER and darker can only lower
+     contrast on a dark ground:
+       --muted   #A9C0D2 -> #A4B7C8   6.84 -> 6.25 on --cell, 8.12 -> 7.41 on --card
+       --accent  #E9744F -> #ED8E70   5.15 -> 6.33 on --card
+     Both stay well clear of 4.5, and the accent improves. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --teal-ink: #06231F;
+    --plum-ink: #241733;
+    --gold-ink: #2A1F05;
+  }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 3 · Shape, measure and time</p>
+      <h1>Sides, Sizes <em>and Seconds</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 2D shapes -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A flat shape is named by what it has, not by what it looks like to you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Count the straight sides.</s><s>Three is a triangle.</s><s>Four is a quadrilateral.</s><s>Five is a pentagon, six a hexagon, eight an octagon.</s><s>The corners always come to the same number as the sides.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Turning a shape does not rename it.</s><s>A square standing on its corner is still a square, even when everybody in the room wants to call it a diamond.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count the sides, then tap the name.</s></mstts:express-as>' data-say="Count the straight sides, then tap the name of the shape.">
+      <div class="slide-head"><span class="n">1</span><h2>Naming flat shapes</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Count the sides. What is this shape called?</span></div>
+      <div class="stage">
+        <svg class="gsvg" id="g1" viewBox="0 0 300 200" role="img" aria-label="a flat shape"></svg>
+        <div class="choices" id="ch1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="score" id="sc1"></p>
+      </div>
+    </section>
+
+    <!-- 2 regular or irregular -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A regular polygon has all its sides the same length and all its corners the same.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Both of these have five sides, so both are pentagons.</s><s>Only one of them is regular.</s><s>The other is stretched, and a stretched pentagon is still a pentagon.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Irregular does not mean it is not a proper shape.</s><s>It only means the sides are not all the same.</s><s>Most shapes in the real world are irregular.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Which one has all its sides the same?</s></mstts:express-as>' data-say="Regular means every side the same length. Which one is regular?">
+      <div class="slide-head"><span class="n">2</span><h2>Regular or irregular</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Which of these is <b>regular</b>?</span></div>
+      <div class="stage">
+        <div class="shapegrid" id="sg2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="score" id="sc2"></p>
+      </div>
+    </section>
+
+    <!-- 3 symmetry -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A line of symmetry is a fold line where the two halves land exactly on top of each other.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Try the fold in your head.</s><s>Down the middle, and across the middle.</s><s>If every part matches, that line is a line of symmetry.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Cutting a shape into two equal pieces is not enough.</s><s>The two pieces must be mirror images, not just the same size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Does the dashed line fold this shape onto itself?</s></mstts:express-as>' data-say="Would the shape fold exactly onto itself along the dashed line?">
+      <div class="slide-head"><span class="n">3</span><h2>Lines of symmetry</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Is the dashed line a line of symmetry?</span></div>
+      <div class="stage">
+        <svg class="gsvg" id="g3" viewBox="0 0 300 200" role="img" aria-label="a shape with a dashed fold line"></svg>
+        <div class="choices" id="ch3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="score" id="sc3"></p>
+      </div>
+    </section>
+
+    <!-- 4 reflection -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A reflection flips a shape over a mirror line.</s><s>Every point ends up the same distance from the line, on the other side.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Work one square at a time.</s><s>If a square is two along from the mirror, its reflection is two along on the other side.</s><s>Not three, not one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A reflection is not a slide.</s><s>Sliding keeps the shape facing the same way.</s><s>Reflecting turns it round, so what was nearest the mirror is still nearest the mirror.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the squares where the reflection goes.</s></mstts:express-as>' data-say="Tap the squares where the reflection belongs, the same distance the other side.">
+      <div class="slide-head"><span class="n">4</span><h2>Mirror it</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Tap the squares where the <b>reflection</b> goes.</span></div>
+      <div class="stage">
+        <svg class="gsvg" id="g4" viewBox="0 0 320 260" role="img" aria-label="a grid with a shape and a mirror line"></svg>
+        <p class="fb" id="fb4"></p>
+        <p class="score" id="sc4"></p>
+      </div>
+    </section>
+
+    <!-- 5 3D shapes -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A solid shape is named by its faces, its edges and its corners.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A face is a flat surface.</s><s>An edge is where two faces meet.</s><s>A corner is where edges meet.</s><s>A cube has six faces, twelve edges and eight corners.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A drawing of a solid is flat, so some faces are hidden round the back.</s><s>Count what must be there, not only what you can see.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the clues and name the solid.</s></mstts:express-as>' data-say="Faces, edges and corners. Which solid shape is it?">
+      <div class="slide-head"><span class="n">5</span><h2>Solid shapes</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Which solid shape is this?</span></div>
+      <div class="stage">
+        <svg class="gsvg" id="g5" viewBox="0 0 300 200" role="img" aria-label="a drawing of a solid shape"></svg>
+        <p class="fb" id="clue5"></p>
+        <div class="choices" id="ch5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="score" id="sc5"></p>
+      </div>
+    </section>
+
+    <!-- 6 perimeter -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The perimeter is the whole distance round the outside of a shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Start at one corner and walk right round, adding each side as you pass it, until you are back where you began.</s><s>A rectangle has four sides, so four lengths get added, not two.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Only two numbers are usually written on a rectangle, because the other two are the same.</s><s>They still have to be added.</s><s>Forgetting them halves the answer.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Add up every side, all the way round.</s></mstts:express-as>' data-say="Add up every side, all the way round the outside.">
+      <div class="slide-head"><span class="n">6</span><h2>All the way round</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">What is the perimeter?</span></div>
+      <div class="stage">
+        <svg class="gsvg" id="g6" viewBox="0 0 320 200" role="img" aria-label="a rectangle with its sides labelled"></svg>
+        <div class="choices" id="ch6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="score" id="sc6"></p>
+      </div>
+    </section>
+
+    <!-- 7 area -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Area is how much flat space a shape covers inside its edge.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>On a grid you can simply count the squares inside the shape.</s><s>Perimeter is the fence.</s><s>Area is the field.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>These two do not grow together.</s><s>Two shapes can cover the same number of squares and have completely different distances round the edge.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count the squares inside.</s></mstts:express-as>' data-say="Count the squares covered inside the shape.">
+      <div class="slide-head"><span class="n">7</span><h2>Counting the space inside</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">How many squares does it cover?</span></div>
+      <div class="stage">
+        <svg class="gsvg" id="g7" viewBox="0 0 320 240" role="img" aria-label="a shape drawn on a square grid"></svg>
+        <div class="choices" id="ch7"></div>
+        <p class="fb" id="fb7"></p>
+        <p class="score" id="sc7"></p>
+      </div>
+    </section>
+
+    <!-- 8 draw it -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Drawing a shape to a given size is how you find out whether you really understand it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap one corner, then tap the opposite corner.</s><s>Count the squares along the top for the width and down the side for the height.</s><s>A square is a rectangle whose width and height happen to match.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Count the squares, not the lines round them.</s><s>A rectangle four squares wide has five lines down it, and it is the squares you want.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Draw it, then read off its perimeter and its area.</s></mstts:express-as>' data-say="Tap one corner, then the opposite corner, to draw the rectangle.">
+      <div class="slide-head"><span class="n">8</span><h2>Draw it yourself</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="say8d">Tap two opposite corners to draw the rectangle.</span></div>
+      <div class="stage">
+        <svg class="gsvg" id="g8d" viewBox="0 0 320 240" role="img" aria-label="a square grid to draw on"></svg>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="clr8d">Start again</button></div>
+        <p class="fb" id="fb8d"></p>
+        <p class="score" id="sc8d"></p>
+      </div>
+    </section>
+
+    <!-- 8 length -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Length is measured in centimetres, metres and kilometres, and they step up in known jumps.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A hundred centimetres make one metre.</s><s>A thousand metres make one kilometre.</s><s>So going up a unit means dividing, and coming down means multiplying.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Pick the unit that gives a sensible number.</s><s>A pencil is about fifteen centimetres.</s><s>Nobody measures a pencil in kilometres, and nobody measures a journey in centimetres.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Choose the right unit, or change one into another.</s></mstts:express-as>' data-say="A hundred centimetres in a metre, a thousand metres in a kilometre.">
+      <div class="slide-head"><span class="n">9</span><h2>Centimetres, metres, kilometres</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Choose the answer.</span></div>
+      <div class="stage">
+        <div class="bignum" id="q8"></div>
+        <div class="choices" id="ch8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="score" id="sc8"></p>
+      </div>
+    </section>
+
+    <!-- 9 mass -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Mass is how heavy something is, measured in grams and kilograms.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A thousand grams make one kilogram.</s><s>An apple is about a hundred grams.</s><s>A bag of rice is a kilogram or two.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Big does not mean heavy.</s><s>A huge bag of feathers can weigh less than a small stone, so guess by what a thing is made of, not by its size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick the sensible mass.</s></mstts:express-as>' data-say="A thousand grams make one kilogram. Pick the sensible answer.">
+      <div class="slide-head"><span class="n">10</span><h2>Grams and kilograms</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Choose the answer.</span></div>
+      <div class="stage">
+        <div class="bignum" id="q9"></div>
+        <div class="choices" id="ch9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="score" id="sc9"></p>
+      </div>
+    </section>
+
+    <!-- 10 capacity -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Capacity is how much a container holds, measured in millilitres and litres.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A thousand millilitres make one litre.</s><s>A teaspoon is about five millilitres.</s><s>A big bottle of water is one or two litres.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Millilitres are very small, so the numbers get big quickly.</s><s>Half a litre is five hundred millilitres, not fifty.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick the sensible amount.</s></mstts:express-as>' data-say="A thousand millilitres make one litre.">
+      <div class="slide-head"><span class="n">11</span><h2>Millilitres and litres</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Choose the answer.</span></div>
+      <div class="stage">
+        <div class="bignum" id="q10"></div>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="score" id="sc10"></p>
+      </div>
+    </section>
+
+    <!-- 11 reading a scale -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Before you read any scale, work out what one small mark is worth.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find two numbers that are printed on it.</s><s>Take one away from the other, then count the gaps between them.</s><s>Share the difference between the gaps and you know what one mark means.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Count the gaps, not the marks.</s><s>Between two printed numbers with five little lines there are six gaps, and it is the gaps that carry the value.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Work out one mark, then read the arrow.</s></mstts:express-as>' data-say="Work out what one mark is worth first, then read the arrow.">
+      <div class="slide-head"><span class="n">12</span><h2>Reading a scale</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">What is the arrow pointing at?</span></div>
+      <div class="stage">
+        <svg class="scaleline" id="g11" viewBox="0 0 460 120" role="img" aria-label="a measuring scale with an arrow"></svg>
+        <div class="choices" id="ch11"></div>
+        <p class="fb" id="fb11"></p>
+        <p class="score" id="sc11"></p>
+      </div>
+    </section>
+
+    <!-- 12 right angles -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A right angle is the square corner, the quarter turn.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Every other angle is measured against it.</s><s>Smaller than a right angle is acute.</s><s>Bigger is obtuse.</s><s>Two right angles together make a straight line, which is a half turn.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>How long the arms are drawn makes no difference at all.</s><s>The angle is the amount of turn between them, not the size of the picture.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Compare it with the square corner and choose.</s></mstts:express-as>' data-say="Compare this angle with a right angle. Smaller, the same, or bigger?">
+      <div class="slide-head"><span class="n">13</span><h2>Bigger or smaller than a right angle</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Compare it with a right angle.</span></div>
+      <div class="stage">
+        <svg class="gsvg" id="g12" viewBox="0 0 300 200" role="img" aria-label="an angle between two arms"></svg>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12"></p>
+        <p class="score" id="sc12"></p>
+      </div>
+    </section>
+
+    <!-- 13 telling the time -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The two hands do different jobs, and the short one matters most.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The short hand gives the hour, and it creeps along, so read the number it has just passed.</s><s>The long hand gives the minutes.</s><s>Each number it points at is five minutes.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>At twenty five to four the short hand is nearly at four, and the time is still three something.</s><s>Read the hour the hand has passed, not the one it is heading for.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the clock, then tap the digital time.</s></mstts:express-as>' data-say="The short hand gives the hour, the long hand gives the minutes.">
+      <div class="slide-head"><span class="n">14</span><h2>Telling the time</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say13">What time is it?</span></div>
+      <div class="stage">
+        <div class="clockwrap"><svg class="gsvg" id="g13" viewBox="0 0 200 200" style="max-width:200px" role="img" aria-label="an analogue clock"></svg></div>
+        <div class="choices" id="ch13"></div>
+        <p class="fb" id="fb13"></p>
+        <p class="score" id="sc13"></p>
+      </div>
+    </section>
+
+    <!-- 14 time intervals -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A time is a point in the day.</s><s>A time interval is how long something lasts.</s><s>They are two different things.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>To find how long, count on from the start to the end.</s><s>Go up to the next whole hour first, then count the whole hours, then the last few minutes.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>You cannot take one time away from the other like ordinary numbers, because an hour is sixty minutes and not a hundred.</s><s>Counting on never goes wrong that way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Count on from the start time to the end time.</s></mstts:express-as>' data-say="Count on from the start time to the end time.">
+      <div class="slide-head"><span class="n">15</span><h2>How long did it take?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say14">How long is that?</span></div>
+      <div class="stage">
+        <p class="fb" id="q14" style="font-size:20px"></p>
+        <div class="clockwrap" id="cw14"><div class="digi" id="t14a">—</div><span style="font:700 20px Inter,sans-serif;color:var(--muted)">to</span><div class="digi" id="t14b">—</div></div>
+        <div class="choices" id="ch14"></div>
+        <p class="fb" id="fb14"></p>
+        <p class="score" id="sc14"></p>
+      </div>
+    </section>
+
+    <!-- 15 timetables -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A timetable is a list of times, read down a column or across a row.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find the row for the place you want, then look along it to the bus you are catching.</s><s>Put a finger on the row so your eye does not slide onto the wrong line.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Every column is one whole journey, and the times in it always go forwards.</s><s>If your answer goes backwards in time, you have read across two different journeys.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the timetable and answer the question.</s></mstts:express-as>' data-say="Find the row, then look along it to the right column.">
+      <div class="slide-head"><span class="n">16</span><h2>Reading a timetable</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say15">Read the timetable.</span></div>
+      <div class="stage">
+        <table class="ttable" id="tt15"></table>
+        <div class="choices" id="ch15"></div>
+        <p class="fb" id="fb15"></p>
+        <p class="score" id="sc15"></p>
+      </div>
+    </section>
+
+    <!-- 16 direction -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>North, south, east and west are the four cardinal points, and they never move.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>North is up the map, south is down, east is to the right and west is to the left.</s><s>Never eat soggy weetabix, going round clockwise from the top.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Left and right depend on which way you are facing.</s><s>North does not.</s><s>That is exactly why directions are given this way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Move the counter the way you are told.</s></mstts:express-as>' data-say="North is up, south is down, east is right, west is left.">
+      <div class="slide-head"><span class="n">17</span><h2>North, south, east, west</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say16">Which way?</span></div>
+      <div class="stage">
+        <div class="clockwrap"><div class="compass" id="cp16"></div></div>
+        <p class="fb" id="fb16"></p>
+        <p class="score" id="sc16"></p>
+      </div>
+    </section>
+
+    <!-- 17 check -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something from this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it is a shape, count the sides.</s><s>If it is a measurement, check the unit first.</s><s>If it is a time, count on.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say17">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="fb" id="q17" style="font-size:23px"></p>
+        <div class="choices" id="ch17"></div>
+        <p class="fb" id="fb17"></p>
+        <p class="score" id="sc17"></p>
+      </div>
+    </section>
+
+    <!-- 18 stickers -->
+    <!-- how do you know -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
+      <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayW">Which reason really explains it?</span></div>
+      <div class="stage">
+        <p class="fb" id="clW" style="font-size:21px"></p>
+        <div class="choices" id="chW"></div>
+        <p class="fb" id="fbW"></p>
+        <p class="score" id="scW"></p>
+      </div>
+    </section>
+
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fb18"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  (function () {
+    if (new URLSearchParams(location.search).get("from") !== "g3") return;
+    const wrap = document.querySelector(".wrap");
+    if (!wrap) return;
+    const back = document.createElement("a");
+    back.className = "g1-back";
+    back.href = "index.html";
+    back.innerHTML = '<span aria-hidden="true">←</span> Grade 3 Maths';
+    wrap.insertBefore(back, wrap.firstChild);
+  })();
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen", "twenty"];
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+
+
+  /* ---- deck ---- */
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0; $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots(); if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+
+  /* ==================================================================
+     ACCESSIBILITY
+
+     Two things every step needs and none of them should have to repeat.
+
+     A step's feedback is written into a .fb or .score paragraph, which a
+     screen reader has no reason to revisit - so each one is marked as a
+     polite live region once, here, rather than in every slide's markup.
+
+     And several steps are operated by tapping something that is not a
+     button: a card, a table cell, a square on a grid, a region of a Venn
+     diagram. Those carry role="button" and tabindex="0" so they are in
+     the tab order; this turns Enter and Space into a click on them, which
+     is the half a native button would have given for free.
+     ================================================================== */
+  document.querySelectorAll(".fb, .score").forEach((el) => {
+    if (!el.hasAttribute("aria-live")) el.setAttribute("aria-live", "polite");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " " && e.key !== "Spacebar") return;
+    const t = e.target;
+    if (!t || typeof t.getAttribute !== "function" || t.getAttribute("role") !== "button") return;
+    if (t.getAttribute("aria-disabled") === "true") return;
+    e.preventDefault();
+    t.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+  });
+
+
+  /* ==================================================================
+     SIDES, SIZES AND SECONDS - Grade 3 geometry, measure and time.
+     Cambridge Primary Mathematics 0096, Stage 3 (3Gg, 3Gt, 3Gp).
+     ================================================================== */
+
+  function offer(host, opts, right, onPick) {
+    $(host).innerHTML = shuffle(opts).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $(host).dataset.right = String(right); $(host).dataset.live = "1"; $(host).onclick = onPick;
+  }
+  function mark(host, btn, ok) {
+    if ($(host).dataset.live !== "1") return false;
+    $(host).dataset.live = "0";
+    [...$(host).querySelectorAll(".choice")].forEach((b) => { b.disabled = true; });
+    btn.classList.add(ok ? "right" : "wrong");
+    if (!ok) { const r = $(host).dataset.right; [...$(host).querySelectorAll(".choice")].forEach((b) => { if (b.dataset.v === r) b.classList.add("right"); }); }
+    return true;
+  }
+  function scoreLine(id, got, asked, target) { $(id).textContent = got + " right out of " + asked + (got >= target ? " - sticker earned!" : ""); }
+  function nextQ(gen) { let item, guard = 0; do { item = gen(); } while (new Set(item.opts.map(String)).size !== item.opts.length && guard++ < 60); return item; }
+  function uniq(list, want) { const out = []; for (const v of list) { if (out.length >= want) break; if (!out.includes(v)) out.push(v); } return out; }
+  /* A regular polygon drawn on a circle. `wob` squashes it vertically to make it
+     IRREGULAR - which must mean unequal SIDES, not merely unequal angles.
+     Alternating the radius instead was the first attempt and was wrong: on an
+     even-sided polygon it produces an equilateral shape, every side the same
+     length, which is precisely what this lesson tells a child regular means. */
+  function poly(cx, cy, r, n, rot, wob) {
+    const sy = wob ? 0.56 : 1;
+    const pts = [];
+    for (let i = 0; i < n; i++) {
+      const a = rot + i * 2 * Math.PI / n;
+      pts.push([(cx + r * Math.cos(a)).toFixed(1), (cy + r * sy * Math.sin(a)).toFixed(1)]);
+    }
+    return pts;
+  }
+  const ptsStr = (pts) => pts.map((p) => p.join(",")).join(" ");
+
+  /* ---- 1: naming flat shapes ---- 3Gg.01 identify, describe, classify, name and sketch 2D shapes */
+  const SHAPES = [[3, "triangle"], [4, "quadrilateral"], [5, "pentagon"], [6, "hexagon"], [8, "octagon"]];
+  let got1 = 0, asked1 = 0;
+  function round1() {
+    const [n, name] = SHAPES[rnd(0, SHAPES.length - 1)];
+    const wob = rnd(0, 1) === 1;
+    const pts = poly(150, 100, 74, n, -Math.PI / 2 + Math.random() * 1.2, wob);
+    $("g1").innerHTML = '<polygon class="sh" points="' + ptsStr(pts) + '"></polygon>';
+    $("say1").innerHTML = "Count the straight sides. What is this shape called?";
+    const opts = uniq([name, ...shuffle(SHAPES.map((s) => s[1])).filter((x) => x !== name)], 4);
+    offer("ch1", opts, name, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === name;
+      if (!mark("ch1", b, ok)) return;
+      asked1++; if (ok) got1++;
+      $("fb1").className = "fb " + (ok ? "good" : "");
+      $("fb1").textContent = (ok ? cheer() + " " : "") + "It has " + n + " straight sides and " + n + " corners, so it is a " + name + (wob ? " - a stretched one, but still a " + name + "." : ".");
+      say(ok ? cheer() : n + " sides, so it is a " + name);
+      scoreLine("sc1", got1, asked1, 4);
+      if (got1 >= 4) finish(0, "");
+      setTimeout(round1, 2100);
+    });
+  }
+  round1();
+
+  /* ---- 2: regular or irregular ---- 3Gg.01 differentiate between regular and irregular polygons */
+  let got2 = 0, asked2 = 0;
+  function round2() {
+    const n = [5, 6, 8][rnd(0, 2)];
+    const rightIdx = rnd(0, 2);
+    let h = "";
+    for (let i = 0; i < 3; i++) {
+      const reg = i === rightIdx;
+      const pts = poly(42, 42, 34, n, -Math.PI / 2, !reg);
+      h += '<div class="pick" role="button" tabindex="0" aria-label="Shape ' + (i + 1) + '" data-r="' + (reg ? 1 : 0) + '"><svg viewBox="0 0 84 84" aria-hidden="true" focusable="false"><polygon fill="' + (reg ? "#1E8C86" : "#6B7F82") + '" stroke="#1B2A2F" stroke-width="2.5" points="' + ptsStr(pts) + '"></polygon></svg></div>';
+    }
+    $("sg2").innerHTML = h;
+    $("say2").innerHTML = "All three have <b>" + n + " sides</b>. Which one is <b>regular</b> - every side the same length?";
+    $("sg2").dataset.live = "1";
+    $("sg2").onclick = (e) => {
+      const c = e.target.closest(".pick"); if (!c || $("sg2").dataset.live !== "1") return;
+      $("sg2").dataset.live = "0";
+      const ok = c.dataset.r === "1";
+      [...$("sg2").children].forEach((x) => { if (x.dataset.r === "1") x.classList.add("on"); else x.classList.add("off"); });
+      asked2++; if (ok) got2++;
+      $("fb2").className = "fb " + (ok ? "good" : "");
+      $("fb2").textContent = (ok ? cheer() + " " : "Look again. ") + "All three are " + (n === 5 ? "pentagons" : n === 6 ? "hexagons" : "octagons") + " because all three have " + n + " sides. Only the regular one has every side and every corner the same.";
+      say(ok ? cheer() : "The regular one has every side the same");
+      scoreLine("sc2", got2, asked2, 3);
+      if (got2 >= 3) finish(1, "");
+      setTimeout(round2, 2400);
+    };
+  }
+  round2();
+
+  /* ---- 3: lines of symmetry ---- 3Gg.09 identify horizontal and vertical lines of symmetry */
+  let got3 = 0, asked3 = 0;
+  const SYM = [
+    { name: "a square", pts: [[100, 40], [200, 40], [200, 140], [100, 140]], v: true, h: true },
+    { name: "a rectangle", pts: [[70, 52], [230, 52], [230, 128], [70, 128]], v: true, h: true },
+    { name: "an isosceles triangle", pts: [[150, 35], [220, 145], [80, 145]], v: true, h: false },
+    { name: "a scalene triangle", pts: [[110, 35], [230, 145], [70, 130]], v: false, h: false },
+    { name: "a parallelogram", pts: [[95, 55], [235, 55], [205, 140], [65, 140]], v: false, h: false },
+    { name: "a kite", pts: [[150, 30], [210, 90], [150, 160], [90, 90]], v: true, h: false },
+  ];
+  function round3() {
+    const s = SYM[rnd(0, SYM.length - 1)];
+    const vertical = rnd(0, 1) === 1;
+    const yes = vertical ? s.v : s.h;
+    const line = vertical ? '<line class="mir" x1="150" y1="18" x2="150" y2="182"></line>' : '<line class="mir" x1="45" y1="90" x2="255" y2="90"></line>';
+    $("g3").innerHTML = '<polygon class="sh plain" points="' + ptsStr(s.pts) + '"></polygon>' + line;
+    $("say3").innerHTML = "Is the dashed <b>" + (vertical ? "vertical" : "horizontal") + "</b> line a line of symmetry for " + s.name + "?";
+    $("ch3").innerHTML = ["yes", "no"].map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
+    $("ch3").dataset.right = yes ? "yes" : "no"; $("ch3").dataset.live = "1";
+    $("ch3").onclick = (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === (yes ? "yes" : "no");
+      if (!mark("ch3", b, ok)) return;
+      asked3++; if (ok) got3++;
+      $("fb3").className = "fb " + (ok ? "good" : "");
+      $("fb3").textContent = (ok ? cheer() + " " : "") + (yes
+        ? "Folded along that line, the two halves land exactly on top of each other."
+        : "Folded along that line the two halves do not match, so it is not a line of symmetry - even though it does cut the shape in two.");
+      say(ok ? cheer() : yes ? "Yes, it folds exactly" : "No, the halves do not match");
+      scoreLine("sc3", got3, asked3, 5);
+      if (got3 >= 5) finish(2, "");
+      setTimeout(round3, 2300);
+    };
+  }
+  round3();
+
+  /* ---- 4: reflection ---- 3Gp.02 sketch the reflection of a 2D shape in a horizontal or vertical mirror line */
+  let got4 = 0, asked4 = 0;
+  const CELL = 34, COLS = 8, ROWS = 6, OX = 12, OY = 20;
+  function round4() {
+    /* 3Gp.02 names a horizontal OR a vertical mirror line, so both are drawn.
+       The shape always sits wholly on one side of it. */
+    const vertical = rnd(0, 1) === 1;
+    const mirrorCol = 4, mirrorRow = 3;
+    const cells = [];
+    let want;
+    if (vertical) {
+      const w = rnd(2, 3), h = rnd(2, 3), c0 = rnd(0, mirrorCol - w), r0 = rnd(0, ROWS - h);
+      for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) if (!(r === h - 1 && c === w - 1 && rnd(0, 1))) cells.push([c0 + c, r0 + r]);
+      want = cells.map((q) => [2 * mirrorCol - 1 - q[0], q[1]]);
+    } else {
+      const w = rnd(2, 4), h = rnd(2, 3), c0 = rnd(0, COLS - w), r0 = rnd(0, mirrorRow - h);
+      for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) if (!(r === h - 1 && c === w - 1 && rnd(0, 1))) cells.push([c0 + c, r0 + r]);
+      want = cells.map((q) => [q[0], 2 * mirrorRow - 1 - q[1]]);
+    }
+    let svg = "";
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+      const on = cells.some((q) => q[0] === c && q[1] === r);
+      const target = want.some((q) => q[0] === c && q[1] === r);
+      const pickable = vertical ? c >= mirrorCol : r >= mirrorRow;
+      svg += '<rect class="cell' + (on ? " on" : "") + (pickable ? " pick" : "") + '"' + (pickable ? ' role="button" tabindex="0" aria-label="column ' + (c + 1) + ", row " + (r + 1) + '"' : "") + ' data-c="' + c + '" data-r="' + r + '" data-t="' + (target ? 1 : 0) + '" x="' + (OX + c * CELL) + '" y="' + (OY + r * CELL) + '" width="' + CELL + '" height="' + CELL + '"></rect>';
+    }
+    svg += vertical
+      ? '<line class="mir" x1="' + (OX + mirrorCol * CELL) + '" y1="' + (OY - 8) + '" x2="' + (OX + mirrorCol * CELL) + '" y2="' + (OY + ROWS * CELL + 8) + '"></line>'
+      : '<line class="mir" x1="' + (OX - 8) + '" y1="' + (OY + mirrorRow * CELL) + '" x2="' + (OX + COLS * CELL + 8) + '" y2="' + (OY + mirrorRow * CELL) + '"></line>';
+    $("g4").innerHTML = svg;
+    $("say4").innerHTML = "The mirror line is <b>" + (vertical ? "vertical" : "horizontal") + "</b>. Tap the <b>" + want.length + "</b> squares where the reflection goes.";
+    let found = 0, slips = 0;
+    $("g4").onclick = (e) => {
+      const t = e.target.closest("rect"); if (!t || !t.classList.contains("pick") || t.dataset.done) return;
+      t.dataset.done = "1";
+      if (t.dataset.t === "1") {
+        t.classList.add("on"); found++; say("yes");
+        if (found === want.length) {
+          asked4++; if (slips === 0) got4++;
+          $("fb4").className = "fb good";
+          $("fb4").textContent = cheer() + " Every square is the same distance from the mirror on both sides" + (slips ? ", though " + slips + " went astray on the way." : ".");
+          scoreLine("sc4", got4, asked4, 2);
+          if (got4 >= 2) finish(3, "");
+          setTimeout(round4, 2600);
+        }
+      } else {
+        slips++; t.style.fill = "var(--bad-soft)";
+        $("fb4").className = "fb";
+        $("fb4").textContent = "Not that one - count how far the square is from the mirror, then count the same on this side.";
+        say("not there");
+      }
+    };
+  }
+  round4();
+
+  /* ---- 5: solid shapes ---- 3Gg.05 identify, describe, sort, name and sketch 3D shapes / 3Gg.08 recognise drawings of 3D shapes */
+  const SOLIDS = [
+    { name: "cube", f: 6, e: 12, v: 8, draw: "cube" },
+    { name: "cuboid", f: 6, e: 12, v: 8, draw: "cuboid" },
+    { name: "cylinder", f: 3, e: 2, v: 0, draw: "cyl" },
+    { name: "cone", f: 2, e: 1, v: 1, draw: "cone" },
+    { name: "sphere", f: 1, e: 0, v: 0, draw: "sph" },
+    { name: "square-based pyramid", f: 5, e: 8, v: 5, draw: "pyr" },
+  ];
+  let got5 = 0, asked5 = 0;
+  function drawSolid(kind) {
+    const S = { cube: [88, 88], cuboid: [130, 74] }[kind];
+    if (kind === "cube" || kind === "cuboid") {
+      const [w, h] = S, x = 150 - w / 2, y = 110 - h / 2, d = 28;
+      return '<rect class="sh plain" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '"></rect>' +
+        '<polygon class="sh plain" points="' + x + "," + y + " " + (x + d) + "," + (y - d) + " " + (x + w + d) + "," + (y - d) + " " + (x + w) + "," + y + '"></polygon>' +
+        '<polygon class="sh plain" points="' + (x + w) + "," + y + " " + (x + w + d) + "," + (y - d) + " " + (x + w + d) + "," + (y + h - d) + " " + (x + w) + "," + (y + h) + '"></polygon>';
+    }
+    if (kind === "cyl") return '<ellipse class="sh plain" cx="150" cy="62" rx="46" ry="15"></ellipse><path class="sh plain" d="M104 62 L104 145 A46 15 0 0 0 196 145 L196 62"></path>';
+    if (kind === "cone") return '<path class="sh plain" d="M150 42 L196 140 A46 14 0 0 1 104 140 Z"></path>';
+    if (kind === "sph") return '<circle class="sh plain" cx="150" cy="102" r="52"></circle><ellipse cx="150" cy="102" rx="52" ry="17" fill="none" stroke="#6B7F82" stroke-width="2" stroke-dasharray="5 4"></ellipse>';
+    return '<polygon class="sh plain" points="150,40 208,140 92,140"></polygon><polygon class="sh plain" points="92,140 208,140 232,120 116,120"></polygon>';
+  }
+  function round5() {
+    const s = SOLIDS[rnd(0, SOLIDS.length - 1)];
+    $("g5").innerHTML = drawSolid(s.draw);
+    $("clue5").className = "fb";
+    $("clue5").textContent = s.f + " face" + (s.f === 1 ? "" : "s") + ", " + s.e + " edge" + (s.e === 1 ? "" : "s") + ", " + s.v + " corner" + (s.v === 1 ? "" : "s") + ".";
+    $("say5").textContent = "Which solid shape is this?";
+    const opts = uniq([s.name, ...shuffle(SOLIDS.map((x) => x.name)).filter((x) => x !== s.name)], 4);
+    offer("ch5", opts, s.name, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === s.name;
+      if (!mark("ch5", b, ok)) return;
+      asked5++; if (ok) got5++;
+      $("fb5").className = "fb " + (ok ? "good" : "");
+      $("fb5").textContent = (ok ? cheer() + " " : "") + "A " + s.name + " has " + s.f + " faces, " + s.e + " edges and " + s.v + " corners. Some of them are hidden round the back of the drawing.";
+      say(ok ? cheer() : "It is a " + s.name);
+      scoreLine("sc5", got5, asked5, 4);
+      if (got5 >= 4) finish(4, "");
+      setTimeout(round5, 2400);
+    });
+  }
+  round5();
+
+  /* ---- 6: perimeter ---- 3Gg.03 / 3Gg.04 estimate, measure and calculate the perimeter */
+  let got6 = 0, asked6 = 0;
+  function round6() {
+    const w = rnd(3, 12), h = rnd(2, 9);
+    const answer = 2 * (w + h);
+    const px = 40, py = 45, pw = 210, ph = 100;
+    $("g6").innerHTML = '<rect class="sh" x="' + px + '" y="' + py + '" width="' + pw + '" height="' + ph + '"></rect>' +
+      '<text class="lab" x="' + (px + pw / 2) + '" y="' + (py - 12) + '">' + w + " cm</text>" +
+      '<text class="lab" x="' + (px + pw / 2) + '" y="' + (py + ph + 24) + '">' + w + " cm</text>" +
+      '<text class="lab" x="' + (px - 18) + '" y="' + (py + ph / 2 + 5) + '">' + h + "</text>" +
+      '<text class="lab" x="' + (px + pw + 20) + '" y="' + (py + ph / 2 + 5) + '">' + h + "</text>";
+    $("say6").innerHTML = "The rectangle is <b>" + w + " cm</b> by <b>" + h + " cm</b>. What is the perimeter?";
+    const opts = uniq([answer, w + h, w * h, answer + 2], 4);
+    offer("ch6", opts, answer, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = Number(b.dataset.v) === answer;
+      if (!mark("ch6", b, ok)) return;
+      asked6++; if (ok) got6++;
+      $("fb6").className = "fb " + (ok ? "good" : "");
+      $("fb6").textContent = (ok ? cheer() + " " : "") + w + " + " + h + " + " + w + " + " + h + " = " + answer + " cm. All four sides, not two.";
+      say(ok ? cheer() : "The perimeter is " + answer + " centimetres");
+      scoreLine("sc6", got6, asked6, 4);
+      if (got6 >= 4) finish(5, "");
+      setTimeout(round6, 2300);
+    });
+  }
+  round6();
+
+  /* ---- 7: area on a grid ---- 3Gg.03 / 3Gg.04 area on a square grid */
+  let got7 = 0, asked7 = 0;
+  function round7() {
+    const C = 30, cols = 9, rows = 6, ox = 18, oy = 18;
+    const w = rnd(2, 5), h = rnd(2, 4), c0 = rnd(0, cols - w), r0 = rnd(0, rows - h);
+    const extra = rnd(0, 1) === 1 ? rnd(1, 3) : 0;
+    const cells = [];
+    for (let r = 0; r < h; r++) for (let c = 0; c < w; c++) cells.push([c0 + c, r0 + r]);
+    for (let k = 0; k < extra; k++) {
+      const c = c0 + w, r = r0 + k;
+      if (c < cols && r < rows && !cells.some((p) => p[0] === c && p[1] === r)) cells.push([c, r]);
+    }
+    const answer = cells.length;
+    let svg = "";
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const on = cells.some((p) => p[0] === c && p[1] === r);
+      svg += '<rect class="cell' + (on ? " on" : "") + '" x="' + (ox + c * C) + '" y="' + (oy + r * C) + '" width="' + C + '" height="' + C + '"></rect>';
+    }
+    $("g7").innerHTML = svg;
+    $("say7").innerHTML = "How many squares does the shape cover?";
+    const opts = uniq([answer, answer + 1, answer - 1, 2 * (w + h)], 4).filter((v) => v > 0);
+    offer("ch7", opts, answer, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = Number(b.dataset.v) === answer;
+      if (!mark("ch7", b, ok)) return;
+      asked7++; if (ok) got7++;
+      $("fb7").className = "fb " + (ok ? "good" : "");
+      $("fb7").textContent = (ok ? cheer() + " " : "") + "It covers " + answer + " squares. That is the area - the space inside, not the distance round the edge.";
+      say(ok ? cheer() : "The area is " + answer + " squares");
+      scoreLine("sc7", got7, asked7, 4);
+      if (got7 >= 4) finish(6, "");
+      setTimeout(round7, 2300);
+    });
+  }
+  round7();
+
+  /* ---- 8: draw it ---- 3Gg.04 draw lines, rectangles and squares; calculate perimeter, and area on a square grid */
+  const DC = 34, DCOLS = 8, DROWS = 6, DOX = 12, DOY = 20;
+  let want8d = null, pickA = null, got8d = 0, asked8d = 0;
+  function paint8d(sel) {
+    let svg = "";
+    for (let r = 0; r < DROWS; r++) for (let c = 0; c < DCOLS; c++) {
+      const on = sel && c >= sel.c0 && c <= sel.c1 && r >= sel.r0 && r <= sel.r1;
+      const corner = pickA && pickA[0] === c && pickA[1] === r;
+      svg += '<rect class="cell' + (on ? " on" : "") + ' pick" role="button" tabindex="0" aria-label="column ' + (c + 1) + ", row " + (r + 1) + '" data-c="' + c + '" data-r="' + r + '" x="' + (DOX + c * DC) + '" y="' + (DOY + r * DC) + '" width="' + DC + '" height="' + DC + '"' + (corner && !sel ? ' fill="var(--accent)"' : "") + "></rect>";
+    }
+    $("g8d").innerHTML = svg;
+  }
+  function round8d() {
+    const square = rnd(0, 2) === 0;
+    const w = square ? rnd(2, 5) : rnd(2, 6);
+    const h = square ? w : (function () { let v = rnd(2, 5); if (v === w) v = v === 5 ? 2 : v + 1; return v; })();
+    want8d = { w: w, h: h, square: square };
+    pickA = null;
+    paint8d(null);
+    $("say8d").innerHTML = square
+      ? "Draw a <b>square</b> with sides of <b>" + w + "</b> squares. Tap two opposite corners."
+      : "Draw a rectangle <b>" + w + "</b> squares wide and <b>" + h + "</b> squares tall. Tap two opposite corners.";
+    $("fb8d").className = "fb"; $("fb8d").textContent = "";
+  }
+  $("g8d").addEventListener("click", (e) => {
+    const t = e.target.closest("rect"); if (!t) return;
+    const c = Number(t.dataset.c), r = Number(t.dataset.r);
+    if (!pickA) { pickA = [c, r]; paint8d(null); say("Now the opposite corner."); return; }
+    const sel = { c0: Math.min(pickA[0], c), c1: Math.max(pickA[0], c), r0: Math.min(pickA[1], r), r1: Math.max(pickA[1], r) };
+    paint8d(sel);
+    const w = sel.c1 - sel.c0 + 1, h = sel.r1 - sel.r0 + 1;
+    const ok = w === want8d.w && h === want8d.h;
+    asked8d++; if (ok) got8d++;
+    const per = 2 * (w + h), area = w * h;
+    $("fb8d").className = "fb " + (ok ? "good" : "");
+    $("fb8d").textContent = (ok ? cheer() + " " : "That one is " + w + " by " + h + ". ")
+      + "You drew " + w + " wide and " + h + " tall" + (w === h ? ", which is a square" : "") + ". Its perimeter is " + w + " + " + h + " + " + w + " + " + h + " = " + per + " squares, and its area is " + w + " \u00d7 " + h + " = " + area + " squares.";
+    say(ok ? cheer() + " perimeter " + per + ", area " + area : "That one is " + w + " by " + h);
+    scoreLine("sc8d", got8d, asked8d, 3);
+    if (got8d >= 3) finish(7, "");
+    pickA = null;
+    setTimeout(round8d, 3000);
+  });
+  $("clr8d").addEventListener("click", () => { pickA = null; paint8d(null); });
+  round8d();
+
+  /* ---- 9, 10, 11: units ---- 3Gg.02 length, 3Gg.06 mass, 3Gg.07 capacity */
+  function unitStep(idx, qid, chid, sayid, fbid, scid, spec, target) {
+    let got = 0, asked = 0;
+    function round() {
+      const kind = rnd(0, 1);
+      let q, answer, opts, why;
+      if (kind === 0) {
+        /* convert between the two units */
+        const big = rnd(1, 9), conv = spec.per;
+        if (rnd(0, 1)) { q = big + " " + spec.big + " = ? " + spec.small; answer = big * conv; opts = uniq([answer, big * (conv / 10), big * conv * 10, big + conv], 4); why = "There are " + conv + " " + spec.small + " in one " + spec.big + ", so " + big + " " + spec.big + " is " + answer + " " + spec.small + "."; }
+        else { const small = big * conv; q = small + " " + spec.small + " = ? " + spec.big; answer = big; opts = uniq([answer, big * 10, Math.max(1, Math.round(big / 10)), big + 1], 4); why = small + " ÷ " + conv + " = " + big + " " + spec.big + "."; }
+      } else {
+        /* choose the sensible measurement for a familiar object */
+        const item = spec.items[rnd(0, spec.items.length - 1)];
+        q = "About how much is " + item.t + "?";
+        answer = item.a;
+        opts = uniq([item.a, ...item.w], 3);
+        why = item.t + " is about " + item.a + ".";
+      }
+      $(qid).textContent = q;
+      $(sayid).textContent = q;
+      offer(chid, opts, answer, (e) => {
+        const b = e.target.closest(".choice"); if (!b) return;
+        const ok = b.dataset.v === String(answer);
+        if (!mark(chid, b, ok)) return;
+        asked++; if (ok) got++;
+        $(fbid).className = "fb " + (ok ? "good" : "");
+        $(fbid).textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine(scid, got, asked, target);
+        if (got >= target) finish(idx, "");
+        setTimeout(round, 2300);
+      });
+    }
+    round();
+  }
+  unitStep(8, "q8", "ch8", "say8", "fb8", "sc8", {
+    big: "m", small: "cm", per: 100,
+    items: [
+      { t: "a pencil", a: "15 cm", w: ["15 m", "15 km"] },
+      { t: "a classroom door", a: "2 m", w: ["2 cm", "2 km"] },
+      { t: "the walk to the next town", a: "5 km", w: ["5 m", "5 cm"] },
+      { t: "a football pitch", a: "100 m", w: ["100 cm", "100 km"] },
+    ],
+  }, 4);
+  unitStep(9, "q9", "ch9", "say9", "fb9", "sc9", {
+    big: "kg", small: "g", per: 1000,
+    items: [
+      { t: "an apple", a: "100 g", w: ["100 kg", "1 kg"] },
+      { t: "a bag of rice", a: "2 kg", w: ["2 g", "200 g"] },
+      { t: "a grown-up", a: "70 kg", w: ["70 g", "7 kg"] },
+      { t: "a paperclip", a: "1 g", w: ["1 kg", "100 g"] },
+    ],
+  }, 4);
+  unitStep(10, "q10", "ch10", "say10", "fb10", "sc10", {
+    big: "l", small: "ml", per: 1000,
+    items: [
+      { t: "a teaspoon", a: "5 ml", w: ["5 l", "500 ml"] },
+      { t: "a big bottle of water", a: "2 l", w: ["2 ml", "20 ml"] },
+      { t: "a mug of tea", a: "300 ml", w: ["3 ml", "3 l"] },
+      { t: "a bucket", a: "10 l", w: ["10 ml", "100 ml"] },
+    ],
+  }, 4);
+
+  /* ---- 11: reading a scale ---- 3Gg.11 use instruments that measure length, mass, capacity and temperature */
+  const SCALES = [
+    { unit: "g", steps: [10, 20, 50], base: 0, what: "the kitchen scales" },
+    { unit: "ml", steps: [10, 20, 50], base: 0, what: "the measuring jug" },
+    { unit: "cm", steps: [1, 2, 5], base: 0, what: "the ruler" },
+    { unit: "°C", steps: [1, 2, 5], base: 0, what: "the thermometer" },
+  ];
+  let got11 = 0, asked11 = 0;
+  function round11() {
+    const s = SCALES[rnd(0, SCALES.length - 1)];
+    const step = s.steps[rnd(0, s.steps.length - 1)];
+    const perLabel = [2, 5][rnd(0, 1)];          /* small marks between printed numbers */
+    const majors = 4;
+    const labelStep = step * perLabel;
+    const total = majors * perLabel;
+    const at = rnd(1, total - 1);
+    const answer = s.base + at * step;
+    const x0 = 30, x1 = 430, y = 74;
+    let svg = '<line class="ax" x1="' + x0 + '" y1="' + y + '" x2="' + x1 + '" y2="' + y + '"></line>';
+    for (let k = 0; k <= total; k++) {
+      const x = x0 + (x1 - x0) * k / total;
+      const major = k % perLabel === 0;
+      svg += '<line class="tk" x1="' + x.toFixed(1) + '" y1="' + (y - (major ? 16 : 8)) + '" x2="' + x.toFixed(1) + '" y2="' + y + '"></line>';
+      if (major) svg += '<text class="n" x="' + x.toFixed(1) + '" y="' + (y + 22) + '">' + (s.base + k * step) + "</text>";
+    }
+    const ax = x0 + (x1 - x0) * at / total;
+    svg += '<polygon class="ptr" points="' + ax.toFixed(1) + "," + (y - 22) + " " + (ax - 9).toFixed(1) + "," + (y - 40) + " " + (ax + 9).toFixed(1) + "," + (y - 40) + '"></polygon>';
+    $("g11").innerHTML = svg;
+    $("say11").innerHTML = "On " + s.what + ", what is the arrow pointing at? The numbers go up in <b>" + labelStep + " " + s.unit + "</b>.";
+    const opts = uniq([answer, answer + step, answer - step, answer + labelStep], 4).filter((v) => v >= s.base);
+    offer("ch11", opts.map((v) => v + " " + s.unit), answer + " " + s.unit, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === answer + " " + s.unit;
+      if (!mark("ch11", b, ok)) return;
+      asked11++; if (ok) got11++;
+      $("fb11").className = "fb " + (ok ? "good" : "");
+      $("fb11").textContent = (ok ? cheer() + " " : "") + "There are " + perLabel + " gaps between the printed numbers and they cover " + labelStep + " " + s.unit + ", so one small mark is " + step + " " + s.unit + ". The arrow is " + at + " marks along: " + answer + " " + s.unit + ".";
+      say(ok ? cheer() : "One mark is " + step + ", so the arrow is at " + answer);
+      scoreLine("sc11", got11, asked11, 4);
+      if (got11 >= 4) finish(11, "");
+      setTimeout(round11, 2800);
+    });
+  }
+  round11();
+
+  /* ---- 12: right angles ---- 3Gg.10 compare angles with a right angle */
+  let got12 = 0, asked12 = 0;
+  function round12() {
+    const kind = rnd(0, 2);   /* 0 acute, 1 right, 2 obtuse */
+    const deg = kind === 1 ? 90 : kind === 0 ? rnd(25, 75) : rnd(105, 165);
+    const cx = 90, cy = 150, len = rnd(60, 120);
+    const a = -deg * Math.PI / 180;
+    const x2 = cx + len * Math.cos(a), y2 = cy + len * Math.sin(a);
+    let svg = '<line class="arm" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + len) + '" y2="' + cy + '"></line>';
+    svg += '<line class="arm b" x1="' + cx + '" y1="' + cy + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '"></line>';
+    svg += '<path class="rt" d="M' + (cx + 34) + " " + cy + " A34 34 0 0 0 " + (cx + 34 * Math.cos(a)).toFixed(1) + " " + (cy + 34 * Math.sin(a)).toFixed(1) + '"></path>';
+    $("g12").innerHTML = svg;
+    const right = kind === 1 ? "exactly a right angle" : kind === 0 ? "smaller than a right angle" : "bigger than a right angle";
+    $("say12").textContent = "Compare this angle with a right angle.";
+    $("ch12").innerHTML = ["smaller than a right angle", "exactly a right angle", "bigger than a right angle"].map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
+    $("ch12").dataset.right = right; $("ch12").dataset.live = "1";
+    $("ch12").onclick = (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === right;
+      if (!mark("ch12", b, ok)) return;
+      asked12++; if (ok) got12++;
+      $("fb12").className = "fb " + (ok ? "good" : "");
+      $("fb12").textContent = (ok ? cheer() + " " : "") + "It is " + right + ". How long the arms are drawn makes no difference - the angle is the amount of turn between them. Two right angles together make a straight line.";
+      say(ok ? cheer() : "It is " + right);
+      scoreLine("sc12", got12, asked12, 4);
+      if (got12 >= 4) finish(12, "");
+      setTimeout(round12, 2500);
+    };
+  }
+  round12();
+
+  /* ---- 13: telling the time ---- 3Gt.02 read and record time in digital (12-hour) notation and on analogue clocks */
+  let got13 = 0, asked13 = 0;
+  function clockFace(hh, mm) {
+    let svg = '<circle cx="100" cy="100" r="88" fill="var(--cell)" stroke="var(--ink)" stroke-width="4"></circle>';
+    for (let k = 1; k <= 12; k++) {
+      const a = (k * 30 - 90) * Math.PI / 180;
+      svg += '<text class="lab" x="' + (100 + 70 * Math.cos(a)).toFixed(1) + '" y="' + (100 + 70 * Math.sin(a) + 6).toFixed(1) + '">' + k + "</text>";
+    }
+    const ma = (mm * 6 - 90) * Math.PI / 180;
+    const ha = ((hh % 12) * 30 + mm * 0.5 - 90) * Math.PI / 180;
+    svg += '<line class="arm" x1="100" y1="100" x2="' + (100 + 44 * Math.cos(ha)).toFixed(3) + '" y2="' + (100 + 44 * Math.sin(ha)).toFixed(3) + '"></line>';
+    svg += '<line class="arm b" x1="100" y1="100" x2="' + (100 + 68 * Math.cos(ma)).toFixed(3) + '" y2="' + (100 + 68 * Math.sin(ma)).toFixed(3) + '" stroke-width="4"></line>';
+    svg += '<circle cx="100" cy="100" r="6" fill="var(--ink)"></circle>';
+    return svg;
+  }
+  const two = (n) => (n < 10 ? "0" : "") + n;
+  function round13() {
+    const hh = rnd(1, 12), mm = rnd(0, 11) * 5;
+    $("g13").innerHTML = clockFace(hh, mm);
+    $("say13").textContent = "What time is it?";
+    const right = hh + ":" + two(mm);
+    const opts = uniq([right, (hh % 12 + 1) + ":" + two(mm), hh + ":" + two((mm + 30) % 60), ((hh + 10) % 12 + 1) + ":" + two(mm)], 4);
+    offer("ch13", opts, right, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === right;
+      if (!mark("ch13", b, ok)) return;
+      asked13++; if (ok) got13++;
+      $("fb13").className = "fb " + (ok ? "good" : "");
+      $("fb13").textContent = (ok ? cheer() + " " : "") + "The short hand has passed " + hh + ", so the hour is " + hh + ". The long hand is at " + (mm / 5 === 0 ? 12 : mm / 5) + ", which is " + mm + " minutes.";
+      say(ok ? cheer() : "It is " + right);
+      scoreLine("sc13", got13, asked13, 4);
+      if (got13 >= 4) finish(13, "");
+      setTimeout(round13, 2500);
+    });
+  }
+  round13();
+
+  /* ---- 14: time intervals ---- 3Gt.04 the difference between a time and a time interval; find time intervals */
+  let got14 = 0, asked14 = 0;
+  const TIME_UNITS = [
+    { t: "brushing your teeth", a: "minutes", w: ["seconds", "hours"] },
+    { t: "blinking", a: "seconds", w: ["minutes", "days"] },
+    { t: "a night's sleep", a: "hours", w: ["minutes", "weeks"] },
+    { t: "the school holidays", a: "weeks", w: ["minutes", "years"] },
+    { t: "growing from a baby to a grown-up", a: "years", w: ["days", "hours"] },
+    { t: "a football match", a: "hours", w: ["seconds", "months"] },
+    { t: "waiting for your next birthday", a: "months", w: ["minutes", "seconds"] },
+    { t: "boiling a kettle", a: "minutes", w: ["days", "years"] },
+  ];
+  const LONG = [
+    { u: "days", per: 7, big: "weeks" },
+    { u: "months", per: 12, big: "years" },
+    { u: "days", per: 1, big: "days" },
+  ];
+  function round14unit() {
+    /* 3Gt.01 choose the appropriate unit of time for familiar activities */
+    const it = TIME_UNITS[rnd(0, TIME_UNITS.length - 1)];
+    $("cw14").style.display = "none";
+    $("q14").className = "fb";
+    $("q14").textContent = "Which unit would you use to measure " + it.t + "?";
+    $("say14").textContent = "Which unit would you use to measure " + it.t + "?";
+    offer("ch14", uniq([it.a].concat(it.w), 3), it.a, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === it.a;
+      if (!mark("ch14", b, ok)) return;
+      asked14++; if (ok) got14++;
+      $("fb14").className = "fb " + (ok ? "good" : "");
+      $("fb14").textContent = (ok ? cheer() + " " : "") + "You would measure " + it.t + " in " + it.a + ". Pick the unit that gives a sensible number - not so small that the number is huge, and not so big that the answer is nearly nothing.";
+      say(ok ? cheer() : it.t + " is measured in " + it.a);
+      scoreLine("sc14", got14, asked14, 5);
+      if (got14 >= 5) finish(14, "");
+      setTimeout(round14, 2700);
+    });
+  }
+  function round14long() {
+    /* 3Gt.04 find time intervals between the same units in days, weeks, months and years */
+    const kind = rnd(0, 2);
+    let q, answer, opts, why;
+    if (kind === 0) {
+      const w = rnd(2, 8); q = "How many days are there in " + w + " weeks?"; answer = w * 7;
+      opts = uniq([answer, w * 5, answer + 7, w], 4); why = w + " \u00d7 7 = " + answer + " days.";
+    } else if (kind === 1) {
+      const y = rnd(2, 6); q = "How many months are there in " + y + " years?"; answer = y * 12;
+      opts = uniq([answer, y * 10, answer + 12, y], 4); why = y + " \u00d7 12 = " + answer + " months.";
+    } else {
+      const m1 = rnd(1, 6), m2 = m1 + rnd(2, 6);
+      const MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      q = "How many months from " + MON[m1 - 1] + " to " + MON[m2 - 1] + " in the same year?"; answer = m2 - m1;
+      opts = uniq([answer, answer + 1, Math.max(1, answer - 1), answer + 2], 4); why = "Count on from " + MON[m1 - 1] + " to " + MON[m2 - 1] + ": " + answer + " months.";
+    }
+    $("cw14").style.display = "none";
+    $("q14").className = "fb"; $("q14").textContent = q;
+    $("say14").textContent = q;
+    offer("ch14", opts, answer, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = Number(b.dataset.v) === answer;
+      if (!mark("ch14", b, ok)) return;
+      asked14++; if (ok) got14++;
+      $("fb14").className = "fb " + (ok ? "good" : "");
+      $("fb14").textContent = (ok ? cheer() + " " : "") + why;
+      say(ok ? cheer() : why);
+      scoreLine("sc14", got14, asked14, 5);
+      if (got14 >= 5) finish(14, "");
+      setTimeout(round14, 2700);
+    });
+  }
+  function round14() {
+    const pickKind = rnd(0, 2);
+    if (pickKind === 1) return round14unit();
+    if (pickKind === 2) return round14long();
+    $("cw14").style.display = "";
+    $("q14").textContent = "";
+    const h1 = rnd(1, 10), m1 = rnd(0, 11) * 5;
+    const mins = rnd(1, 20) * 5;
+    const start = h1 * 60 + m1, end = start + mins;
+    const h2 = Math.floor(end / 60), m2 = end % 60;
+    $("t14a").textContent = h1 + ":" + two(m1);
+    $("t14b").textContent = h2 + ":" + two(m2);
+    $("say14").innerHTML = "How long from <b>" + h1 + ":" + two(m1) + "</b> to <b>" + h2 + ":" + two(m2) + "</b>?";
+    const fmt = (t) => t >= 60 ? (Math.floor(t / 60) + " hour" + (Math.floor(t / 60) === 1 ? "" : "s") + (t % 60 ? " " + (t % 60) + " minutes" : "")) : t + " minutes";
+    const right = fmt(mins);
+    const opts = uniq([right, fmt(mins + 5), fmt(Math.max(5, mins - 5)), fmt(mins + 60)], 4);
+    offer("ch14", opts, right, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === right;
+      if (!mark("ch14", b, ok)) return;
+      asked14++; if (ok) got14++;
+      const toHour = (60 - m1) % 60;
+      $("fb14").className = "fb " + (ok ? "good" : "");
+      $("fb14").textContent = (ok ? cheer() + " " : "") + "Count on: " + (toHour ? toHour + " minutes to " + (h1 + 1) + ":00, then on to " + h2 + ":" + two(m2) + ". " : "") + "That is " + right + ".";
+      say(ok ? cheer() : "It is " + right);
+      scoreLine("sc14", got14, asked14, 4);
+      if (got14 >= 4) finish(14, "");
+      setTimeout(round14, 2700);
+    });
+  }
+  round14();
+
+  /* ---- 15: timetables ---- 3Gt.03 interpret and use the information in timetables (12-hour clock) */
+  const STOPS = ["Market", "School", "Hospital", "Library", "Station"];
+  let got15 = 0, asked15 = 0;
+  function round15() {
+    const start = rnd(7, 10) * 60 + rnd(0, 3) * 15;
+    const gaps = [rnd(2, 4) * 5, rnd(2, 4) * 5, rnd(2, 4) * 5, rnd(2, 4) * 5];
+    const buses = 3, spacing = rnd(3, 6) * 10;
+    const times = [];
+    for (let b2 = 0; b2 < buses; b2++) {
+      const row = []; let t = start + b2 * spacing;
+      for (let s = 0; s < STOPS.length; s++) { row.push(t); t += gaps[s] || 0; }
+      times.push(row);
+    }
+    const fmt = (t) => Math.floor(t / 60) + ":" + two(t % 60);
+    let h = "<tr><th>Stop</th>" + times.map((_, i) => "<th>Bus " + (i + 1) + "</th>").join("") + "</tr>";
+    for (let s = 0; s < STOPS.length; s++) h += "<tr><th>" + STOPS[s] + "</th>" + times.map((row) => "<td>" + fmt(row[s]) + "</td>").join("") + "</tr>";
+    $("tt15").innerHTML = h;
+    const qb = rnd(0, buses - 1), qs = rnd(0, STOPS.length - 1);
+    const askKind = rnd(0, 1);
+    let q, right, opts;
+    if (askKind === 0) {
+      q = "What time does Bus " + (qb + 1) + " reach " + STOPS[qs] + "?";
+      right = fmt(times[qb][qs]);
+      opts = uniq([right, fmt(times[qb][qs] + 5), fmt(times[(qb + 1) % buses][qs]), fmt(times[qb][(qs + 1) % STOPS.length])], 4);
+    } else {
+      const s2 = (qs + 1) % STOPS.length;
+      const from = Math.min(qs, s2), to = Math.max(qs, s2);
+      const mins = times[qb][to] - times[qb][from];
+      q = "How long does Bus " + (qb + 1) + " take from " + STOPS[from] + " to " + STOPS[to] + "?";
+      right = mins + " minutes";
+      opts = uniq([right, (mins + 5) + " minutes", Math.max(5, mins - 5) + " minutes", (mins + 10) + " minutes"], 4);
+    }
+    $("say15").textContent = q;
+    offer("ch15", opts, right, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === right;
+      if (!mark("ch15", b, ok)) return;
+      asked15++; if (ok) got15++;
+      [...$("tt15").querySelectorAll("td")].forEach((td) => td.classList.remove("hi"));
+      const rowEl = $("tt15").rows[qs + 1];
+      if (askKind === 0 && rowEl) rowEl.cells[qb + 1].classList.add("hi");
+      $("fb15").className = "fb " + (ok ? "good" : "");
+      $("fb15").textContent = (ok ? cheer() + " " : "") + "Find the row, then look along it to the right column. The answer is " + right + ".";
+      say(ok ? cheer() : "It is " + right);
+      scoreLine("sc15", got15, asked15, 4);
+      if (got15 >= 4) finish(15, "");
+      setTimeout(round15, 2800);
+    });
+  }
+  round15();
+
+  /* ---- 16: direction ---- 3Gp.01 interpret and create descriptions of position, direction and movement, including cardinal points */
+  const DIRS = { N: [0, -1], S: [0, 1], E: [1, 0], W: [-1, 0] };
+  let pos16 = [1, 1], target16 = [1, 1], got16 = 0, asked16 = 0, moves16 = [];
+  function paint16() {
+    const cells = [];
+    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) cells.push([c, r]);
+    $("cp16").innerHTML = cells.map(([c, r]) => {
+      if (c === 1 && r === 1) return '<div class="mid">🧭</div>';
+      const dir = c === 1 && r === 0 ? "N" : c === 1 && r === 2 ? "S" : c === 2 && r === 1 ? "E" : c === 0 && r === 1 ? "W" : null;
+      return dir ? '<button type="button" data-d="' + dir + '">' + dir + "</button>" : "<span></span>";
+    }).join("");
+  }
+  function round16() {
+    const seq = [];
+    for (let k = 0; k < rnd(2, 3); k++) seq.push(["N", "S", "E", "W"][rnd(0, 3)]);
+    moves16 = seq; let i = 0;
+    const names = { N: "north", S: "south", E: "east", W: "west" };
+    $("say16").innerHTML = "Press the directions in order: <b>" + seq.map((d) => names[d]).join(", then ") + "</b>.";
+    $("fb16").className = "fb"; $("fb16").textContent = "";
+    $("cp16").onclick = (e) => {
+      const b = e.target.closest("button"); if (!b) return;
+      if (b.dataset.d === seq[i]) {
+        i++; say(names[b.dataset.d]);
+        if (i === seq.length) {
+          asked16++; got16++;
+          $("fb16").className = "fb good";
+          $("fb16").textContent = cheer() + " North is up, south is down, east is right and west is left - and they stay put whichever way you are facing.";
+          scoreLine("sc16", got16, asked16, 3);
+          if (got16 >= 3) finish(16, "");
+          setTimeout(round16, 2400);
+        } else {
+          $("fb16").className = "fb"; $("fb16").textContent = i + " of " + seq.length + " done.";
+        }
+      } else {
+        asked16++;
+        $("fb16").className = "fb";
+        $("fb16").textContent = "That is " + names[b.dataset.d] + ". The next one should be " + names[seq[i]] + ".";
+        say("The next one is " + names[seq[i]]);
+        scoreLine("sc16", got16, asked16, 3);
+      }
+    };
+  }
+  paint16(); round16();
+
+  /* ---- 17: check ---- */
+  const QS = [
+    () => { const s = SHAPES[rnd(0, SHAPES.length - 1)]; return { q: "How many sides does a " + s[1] + " have?", opts: [s[0], s[0] + 1, s[0] - 1], a: s[0], why: "A " + s[1] + " has " + s[0] + " straight sides." }; },
+    () => { const w = rnd(3, 9), h = rnd(2, 8); return { q: "A rectangle is " + w + " cm by " + h + " cm. What is its perimeter?", opts: [2 * (w + h), w + h, w * h], a: 2 * (w + h), why: w + " + " + h + " + " + w + " + " + h + " = " + 2 * (w + h) + " cm." }; },
+    () => { const m = rnd(1, 9); return { q: m + " m = ? cm", opts: [m * 100, m * 10, m * 1000], a: m * 100, why: "100 cm in a metre." }; },
+    () => { const k = rnd(1, 9); return { q: k + " kg = ? g", opts: [k * 1000, k * 100, k * 10], a: k * 1000, why: "1000 g in a kilogram." }; },
+    () => { return { q: "How many millilitres in one litre?", opts: [1000, 100, 10], a: 1000, why: "1000 ml make 1 litre." }; },
+    () => { return { q: "How many right angles make a straight line?", opts: [2, 1, 4], a: 2, why: "Two right angles together are a half turn." }; },
+    () => { const s = SOLIDS[rnd(0, 1)]; return { q: "How many faces does a " + s.name + " have?", opts: [s.f, s.f + 2, s.f - 2], a: s.f, why: "A " + s.name + " has " + s.f + " faces, some hidden at the back." }; },
+    () => { const h1 = rnd(1, 9), m1 = rnd(0, 5) * 10, add = rnd(1, 5) * 10; const t = h1 * 60 + m1 + add; return { q: "It is " + h1 + ":" + two(m1) + ". What time is it " + add + " minutes later?", opts: [Math.floor(t / 60) + ":" + two(t % 60), h1 + ":" + two((m1 + add) % 60), (h1 + 1) + ":" + two(m1)], a: Math.floor(t / 60) + ":" + two(t % 60), why: "Count on " + add + " minutes." }; },
+    () => { return { q: "Which direction is the opposite of north?", opts: ["south", "east", "west"], a: "south", why: "North and south are opposites; east and west are the other pair." }; },
+    () => { return { q: "A shape covers 12 squares on a grid. What is that called?", opts: ["its area", "its perimeter", "its symmetry"], a: "its area", why: "Area is the space inside; perimeter is the distance round the edge." }; }
+  ];
+  let qi = 0, got17 = 0, order17 = [];
+  function round17() {
+    if (qi >= order17.length) {
+      $("q17").textContent = ""; $("ch17").innerHTML = "";
+      $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
+      $("sc17").textContent = "";
+      if (got17 >= 7) finish(17, "You have finished the check.");
+      return;
+    }
+    const item = nextQ(order17[qi]);
+    $("q17").textContent = item.q; $("say17").textContent = item.q;
+    offer("ch17", item.opts, item.a, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === String(item.a);
+      if (!mark("ch17", b, ok)) return;
+      if (ok) got17++;
+      qi++;
+      $("fb17").className = "fb " + (ok ? "good" : "");
+      $("fb17").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
+      say(ok ? cheer() : item.why);
+      $("sc17").textContent = got17 + " right out of " + qi;
+      setTimeout(round17, 2100);
+    });
+  }
+  order17 = shuffle(QS);
+  round17();
+
+  /* ---- 18: stickers ---- */
+  const STICKERS = [
+    ["🔺", "Naming flat shapes"], ["⬡", "Regular or irregular"], ["🪞", "Lines of symmetry"], ["↔️", "Mirror it"],
+    ["🧊", "Solid shapes"], ["🚧", "Perimeter"], ["🟩", "Area"], ["✏️", "Draw it yourself"], ["📏", "Length"],
+    ["⚖️", "Mass"], ["🥤", "Capacity"], ["🌡️", "Reading a scale"], ["📐", "Right angles"],
+    ["🕰️", "Telling the time"], ["⏳", "How long it takes"], ["🚌", "Timetables"], ["🧭", "North, south, east, west"],
+    ["✅", "Show what I know"],
+    ["\ud83e\udd14", "How do you know"]
+  ];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fb18").className = "fb " + (got === STICKERS.length ? "good" : "");
+    $("fb18").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You can measure, name and tell the time." : got + " of " + STICKERS.length + " stickers so far.";
+  }
+  $("restart").addEventListener("click", () => location.reload());
+
+
+
+  /* ==================================================================
+     CONVINCING - "presenting evidence to justify or challenge a
+     mathematical idea or solution" (Cambridge TWM.04).
+
+     A tap-to-answer deck cannot ask a child to WRITE a justification, so
+     this asks them to recognise one: a claim that is true, and three
+     reasons for it of which only one does any work. It is an
+     approximation of the characteristic and is recorded as one.
+
+     Every wrong reason is either the misconception the lesson already
+     teaches against, or something perfectly TRUE that explains nothing -
+     and the second kind is the whole point of the step.
+
+     It works out its own slide index from the DOM, so inserting it moved
+     no other step and nothing had to be renumbered.
+     ================================================================== */
+  (function () {
+    const BANK = [
+      [
+            "A squashed six-sided shape is still a hexagon.",
+            "A hexagon is any shape with six straight sides; being squashed makes it irregular, not something else.",
+            [
+                  "Only regular shapes get names.",
+                  "It is a hexagon because it is wide."
+            ],
+            "Regular tells you the sides are equal. The name tells you how many there are."
+      ],
+      [
+            "A rectangle 6 cm by 2 cm has a perimeter of 16 cm.",
+            "6 + 2 + 6 + 2 = 16, because the other two sides are the same as the first two.",
+            [
+                  "6 + 2 = 8.",
+                  "6 × 2 = 12."
+            ],
+            "Only two numbers get written on a rectangle because the other two match. They still have to be added."
+      ],
+      [
+            "Two shapes can cover the same number of squares and have different perimeters.",
+            "Area is the space inside and perimeter is the distance round the edge, and they do not grow together.",
+            [
+                  "That cannot happen - same area always means same perimeter.",
+                  "Only if one of them is a circle."
+            ],
+            "A long thin rectangle and a fat one can cover the same squares and have very different edges."
+      ],
+      [
+            "A parallelogram has no line of symmetry.",
+            "Folding it either way leaves the two halves not matching, even though the fold does make two equal pieces.",
+            [
+                  "It has none because it has four sides.",
+                  "It has one straight down the middle."
+            ],
+            "Cutting into two equal pieces is not enough. The halves have to be mirror images."
+      ],
+      [
+            "At twenty five minutes to four, the hour is still 3.",
+            "The short hand has passed the 3 and has not reached the 4 yet.",
+            [
+                  "The long hand is near the 4, so the hour is 4.",
+                  "It is 4 because twenty five to four has a 4 in it."
+            ],
+            "Read the hour the short hand has passed, never the one it is heading for."
+      ],
+      [
+            "You would measure a pencil in centimetres, not kilometres.",
+            "A pencil is about 15 cm; measured in kilometres the number would be far too small to be any use.",
+            [
+                  "Kilometres are only for measuring roads.",
+                  "A pencil cannot be measured in kilometres at all."
+            ],
+            "Any unit would work. You pick the one that gives a sensible number."
+      ]
+];
+    const host = document.getElementById("clW");
+    if (!host) return;
+    /* announce the result. Grade 3's shell marks every .fb and .score as a live
+       region; Grade 1's does not, so the step does it for itself rather than
+       depending on which shell it has been dropped into. */
+    ["fbW", "scW", "clW"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el && !el.hasAttribute("aria-live")) el.setAttribute("aria-live", "polite");
+    });
+    const SLOT = [...document.querySelectorAll(".slide")].indexOf(host.closest(".slide"));
+    const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+    let got = 0, asked = 0, order = shuffle(BANK), qi = 0, live = false;
+    function paint() {
+      if (qi >= order.length) { order = shuffle(BANK); qi = 0; }
+      const it = order[qi];
+      document.getElementById("clW").textContent = it[0];
+      document.getElementById("sayW").textContent = it[0] + " Which reason really explains it?";
+      document.getElementById("chW").innerHTML = shuffle([it[1]].concat(it[2]))
+        .map((o) => '<button type="button" class="choice word" data-v="' + esc(o) + '">' + esc(o) + "</button>").join("");
+      document.getElementById("fbW").className = "fb";
+      document.getElementById("fbW").textContent = "";
+      live = true;
+    }
+    document.getElementById("chW").addEventListener("click", (e) => {
+      const b = e.target.closest(".choice");
+      if (!b || !live) return;
+      live = false;
+      const it = order[qi];
+      const ok = b.dataset.v === it[1];
+      [...document.getElementById("chW").querySelectorAll(".choice")].forEach((x) => {
+        x.disabled = true;
+        if (x.dataset.v === it[1]) x.classList.add("right");
+      });
+      if (!ok) b.classList.add("wrong");
+      asked++; if (ok) got++;
+      const fb = document.getElementById("fbW");
+      fb.className = "fb " + (ok ? "good" : "");
+      fb.textContent = (ok ? cheer() + " " : "Not that one. ") + it[3];
+      say(ok ? cheer() : it[3]);
+      document.getElementById("scW").textContent = got + " right out of " + asked + (got >= 4 ? " - sticker earned!" : "");
+      if (got >= 4) finish(SLOT, "");
+      qi++;
+      setTimeout(paint, 3400);
+    });
+    paint();
+  })();
+
+  show(0, false);
+})();
+</script>

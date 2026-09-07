@@ -1,0 +1,227 @@
+  /* ---- Grade 3 additions: place value, comparison, lines, money ---- */
+  .pvcols { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; width: 100%; }
+  .pvc { flex: 1 1 108px; max-width: 160px; background: var(--cell); border: 1px solid var(--line); border-radius: 18px; padding: 12px 8px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .pvc.lit { background: var(--accent-soft); border-color: var(--accent); }
+  .pvl { font: 700 12px/1 "Inter", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .pvd { font: 800 40px/1 "Inter", sans-serif; color: var(--ink); font-variant-numeric: tabular-nums; }
+  /* 14px on --cell was 3.28:1; lifted and enlarged so it clears AA */
+  .pvw { font: 800 15px/1.25 "Inter", sans-serif; color: var(--accent-lift, var(--accent)); text-align: center; min-height: 1.25em; }
+  .pvw.none { color: var(--muted); font-weight: 600; }
+  .pvb { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; align-items: flex-end; min-height: 40px; }
+  .blk { display: block; background: var(--teal-soft); border: 1.5px solid var(--teal); border-radius: 3px; }
+  .blk.h { width: 26px; height: 26px; }
+  .blk.t { width: 7px; height: 26px; background: var(--good-soft); border-color: var(--good); }
+  .blk.o { width: 9px; height: 9px; background: var(--accent-soft); border-color: var(--accent); }
+  .pvbtn { display: flex; gap: 6px; }
+  .pvbtn button { font: 800 20px/1 "Inter", sans-serif; width: 40px; height: 40px; border-radius: 12px; border: none; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  .pvbtn button:first-child { background: var(--cell); color: var(--ink); border: 1.5px solid var(--line); }
+  .pvbtn button:active { transform: translateY(2px); }
+
+  .regroup { display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap; font: 800 30px/1 "Inter", sans-serif; }
+  .regroup .rp { background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 12px 16px; min-width: 92px; text-align: center; }
+  .regroup .rp.moved { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .regroup .op { color: var(--muted); font-size: 24px; }
+
+  .cmprow { display: flex; gap: 14px; align-items: center; justify-content: center; font: 800 44px/1 "Inter", sans-serif; font-variant-numeric: tabular-nums; }
+  .cmprow .slot { min-width: 64px; text-align: center; color: var(--accent); }
+
+  .rline { width: 100%; max-width: 520px; display: block; }
+  .rline .axis { stroke: var(--line); stroke-width: 3; }
+  .rline .tick { stroke: var(--line); stroke-width: 2; }
+  .rline .half { stroke: var(--plum); stroke-width: 2.5; stroke-dasharray: 5 4; }
+  .rline .pin { fill: var(--cell); stroke: var(--muted); stroke-width: 1.5; }
+  .rline .dotv { fill: var(--accent); }
+  .rline .lab { font: 700 17px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .rline .lab.mid { fill: var(--plum); font-size: 15px; }
+  .rline .mark { font: 800 19px/1 "Inter", sans-serif; fill: var(--accent); text-anchor: middle; }
+
+  .dotbox { width: 100%; max-width: 460px; height: 210px; position: relative; background: var(--cell); border: 2px solid var(--line); border-radius: 18px; overflow: hidden; }
+  .dotbox i { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
+
+  .barwrap { width: 100%; max-width: 460px; }
+  .barwrap .cap { display: flex; justify-content: space-between; font: 700 15px/1 "Inter", sans-serif; color: var(--muted); margin-bottom: 6px; }
+  .barwrap .bar { height: 46px; border-radius: 12px; background: var(--cell); border: 2px solid var(--line); overflow: hidden; display: flex; }
+  .barwrap .fill { background: var(--teal-soft); border-right: 2px solid var(--teal); display: grid; place-items: center; font: 800 18px/1 "Inter", sans-serif; color: var(--teal); }
+  .barwrap .rest { flex: 1; display: grid; place-items: center; font: 800 20px/1 "Inter", sans-serif; color: var(--accent); }
+  .barwrap .sum { text-align: center; font: 800 22px/1 "Inter", sans-serif; margin-top: 10px; }
+
+  .colsum { width: 100%; max-width: 460px; display: block; }
+  .colsum .hd { font: 700 13px/1 "Inter", sans-serif; fill: var(--muted); text-anchor: middle; letter-spacing: .06em; }
+  .colsum .dg { font: 800 34px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .colsum .dg.ans { fill: var(--good); }
+  .colsum .dg.spent { fill: var(--muted); }
+  .colsum .carry { font: 800 19px/1 "Inter", sans-serif; fill: var(--accent); text-anchor: middle; }
+  .colsum .sign { font: 800 28px/1 "Inter", sans-serif; fill: var(--muted); text-anchor: middle; }
+  .colsum .rule { stroke: var(--ink); stroke-width: 2.5; }
+  .colsum .strike { stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+  .colsum .lit { fill: var(--accent); fill-opacity: .14; stroke: var(--accent); stroke-width: 2; }
+
+  .shop { display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .shop .tag { background: var(--cell); border: 2px solid var(--line); border-radius: 16px; padding: 12px 18px; text-align: center; }
+  .shop .tag b { display: block; font: 800 30px/1.1 "Inter", sans-serif; color: var(--ink); }
+  .shop .tag span { font: 700 13px/1 "Inter", sans-serif; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .shop .tag.paid { background: var(--teal-soft); border-color: var(--teal); }
+  .shop .tag.paid b { color: var(--teal); }
+  /* ---- times, sharing and patterns ---- */
+  .arr { display: inline-grid; gap: 5px; padding: 10px; background: var(--cell); border: 2px solid var(--line); border-radius: 14px; }
+  .arr i { width: 22px; height: 22px; border-radius: 50%; background: var(--teal); display: block; }
+  .arr.alt i { background: var(--gold); }
+  .arrwrap { display: flex; gap: 18px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .arrlab { font: 800 20px/1.3 "Inter", sans-serif; color: var(--ink); text-align: center; }
+  .arrlab small { display: block; font: 600 14px/1.4 "Inter", sans-serif; color: var(--muted); }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 420px; }
+  .facts div { background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 12px; text-align: center; font: 800 22px/1 "Inter", sans-serif; }
+  .facts div.on { background: var(--good-soft); border-color: var(--good); color: var(--good); }
+  .split { display: flex; gap: 10px; align-items: stretch; justify-content: center; flex-wrap: wrap; }
+  .split .box { border-radius: 14px; display: grid; place-items: center; padding: 16px 12px; font: 800 22px/1.3 "Inter", sans-serif; text-align: center; min-width: 110px; }
+  .split .box.t { background: var(--good-soft); border: 2px solid var(--good); color: var(--good); }
+  .split .box.o { background: var(--gold-soft, var(--accent-soft)); border: 2px solid var(--gold); color: var(--gold); }
+  .split .box small { display: block; font: 600 13px/1.4 "Inter", sans-serif; color: var(--muted); }
+  .shareboard { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .shareboard .grp { background: var(--cell); border: 2px dashed var(--line); border-radius: 14px; padding: 10px; min-width: 74px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; align-content: flex-start; }
+  .shareboard .grp i { width: 16px; height: 16px; border-radius: 50%; background: var(--teal); }
+  .leftover { margin-top: 12px; display: flex; gap: 6px; justify-content: center; align-items: center; font: 700 16px/1 "Inter", sans-serif; color: var(--accent); }
+  .leftover i { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  .grid100 { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; width: 100%; max-width: 420px; }
+  .grid100 button { aspect-ratio: 1; border: none; border-radius: 5px; background: var(--cell); color: var(--ink); font: 700 11px/1 "Inter", sans-serif; cursor: pointer; padding: 0; }
+  .grid100 button.on { background: var(--teal); color: var(--teal-ink); }
+  .grid100 button.miss { background: var(--bad-soft); color: var(--bad); }
+  .shapes { display: flex; gap: 14px; align-items: flex-end; justify-content: center; flex-wrap: wrap; }
+  .shapes .fig { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .shapes .sq { display: grid; gap: 3px; }
+  .shapes .sq i { width: 15px; height: 15px; background: var(--gold); border-radius: 3px; display: block; }
+  .shapes .cap { font: 700 14px/1 "Inter", sans-serif; color: var(--muted); }
+  .shapes .fig.q .sq { opacity: .25; }
+  .mystery { display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap; font: 800 32px/1 "Inter", sans-serif; }
+  .mystery .bx { width: 66px; height: 66px; border-radius: 16px; background: var(--plum); color: #fff; display: grid; place-items: center; font-size: 30px; }
+  .mystery .bx.found { background: var(--good); }
+  /* ---- fractions ---- */
+  .fshapes { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .fsvg { width: 140px; height: 140px; display: block; }
+  .fsvg .part { stroke: var(--ink); stroke-width: 2.5; fill: var(--cell); }
+  .fsvg .part.on { fill: var(--teal); }
+  .fsvg .part.pick { cursor: pointer; }
+  .fsvg .whole { fill: none; stroke: var(--ink); stroke-width: 3; }
+  .fcard { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .fcard .cap { font: 700 15px/1 "Inter", sans-serif; color: var(--muted); }
+  .fcard.sel .fsvg .part.on { fill: var(--good); }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; line-height: 1; font: 800 22px/1 "Inter", sans-serif; vertical-align: middle; }
+  .frac .num { padding: 0 4px 2px; }
+  .frac .den { padding: 2px 4px 0; border-top: 2.5px solid currentColor; }
+  .fbar { width: 100%; max-width: 460px; display: flex; height: 54px; border: 2.5px solid var(--ink); border-radius: 10px; overflow: hidden; }
+  .fbar i { flex: 1; border-right: 2px solid var(--ink); background: var(--cell); display: block; }
+  .fbar i:last-child { border-right: none; }
+  .fbar i.on { background: var(--teal); }
+  .fbar i.on.b { background: var(--gold); }
+  .setbox { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 420px; }
+  .setbox i { width: 26px; height: 26px; border-radius: 50%; background: var(--cell); border: 2px solid var(--line); display: block; }
+  .setbox i.on { background: var(--teal); border-color: var(--teal); }
+  /* ---- shape, measure and time ---- */
+  .gsvg { width: 100%; max-width: 420px; display: block; }
+  .gsvg .sh { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 3; }
+  .gsvg .sh.plain { fill: var(--cell); stroke: var(--ink); }
+  .gsvg .mir { stroke: var(--plum); stroke-width: 3; stroke-dasharray: 7 5; }
+  .gsvg .cell { fill: var(--cell); stroke: var(--line); stroke-width: 1.5; }
+  .gsvg .cell.on { fill: var(--teal); }
+  .gsvg .cell.pick { cursor: pointer; }
+  .gsvg .edge { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; }
+  .gsvg .lab { font: 700 15px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .gsvg .lab.m { fill: var(--muted); font-size: 13px; }
+  .gsvg .arm { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; }
+  .gsvg .arm.b { stroke: var(--accent); }
+  .gsvg .rt { fill: none; stroke: var(--gold); stroke-width: 3; }
+  .shapegrid { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .shapegrid .pick { background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 8px; cursor: pointer; }
+  .shapegrid .pick.on { border-color: var(--good); background: var(--good-soft); }
+  .shapegrid .pick.off { opacity: .3; }
+  .shapegrid svg { width: 84px; height: 84px; display: block; }
+  .clockwrap { display: flex; gap: 18px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .digi { font: 800 40px/1 "Inter", sans-serif; background: var(--cell); border: 2px solid var(--line); border-radius: 14px; padding: 14px 20px; letter-spacing: .04em; }
+  .ttable { width: 100%; max-width: 460px; border-collapse: collapse; font: 600 16px/1.4 "Inter", sans-serif; }
+  .ttable th, .ttable td { border: 1.5px solid var(--line); padding: 8px 10px; text-align: left; }
+  .ttable th { background: var(--cell); font-weight: 800; }
+  .ttable td.hi { background: var(--accent-soft); color: var(--accent); font-weight: 800; }
+  .scaleline { width: 100%; max-width: 460px; display: block; }
+  .scaleline .ax { stroke: var(--ink); stroke-width: 3; }
+  .scaleline .tk { stroke: var(--muted); stroke-width: 2; }
+  .scaleline .ptr { fill: var(--accent); }
+  .scaleline .n { font: 700 14px/1 "Inter", sans-serif; fill: var(--muted); text-anchor: middle; }
+  .compass { display: grid; grid-template-columns: repeat(3, 62px); grid-template-rows: repeat(3, 62px); gap: 6px; }
+  .compass button { border: 2px solid var(--line); border-radius: 12px; background: var(--cell); color: var(--ink); font: 800 16px/1 "Inter", sans-serif; cursor: pointer; }
+  .compass button:disabled { opacity: .25; cursor: default; }
+  .compass .mid { background: var(--teal); color: var(--teal-ink); display: grid; place-items: center; border-radius: 12px; font-size: 22px; }
+  /* ---- statistics and probability ---- */
+  .tally { width: 100%; max-width: 420px; border-collapse: collapse; font: 600 17px/1.4 "Inter", sans-serif; }
+  .tally th, .tally td { border: 1.5px solid var(--line); padding: 8px 10px; text-align: left; }
+  .tally th { background: var(--cell); font-weight: 800; }
+  .tally .marks { font: 700 22px/1 "Atkinson Hyperlegible", monospace; letter-spacing: 2px; color: var(--teal); }
+  .tally td.n { font-weight: 800; text-align: center; width: 72px; }
+  .pictorow { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
+  .pictorow .who { width: 88px; font: 700 15px/1 "Inter", sans-serif; color: var(--muted); }
+  .pictorow .ics { font-size: 22px; letter-spacing: 3px; }
+  .bars { display: flex; align-items: flex-end; gap: 14px; height: 190px; padding: 0 6px; border-left: 3px solid var(--line); border-bottom: 3px solid var(--line); }
+  .bars .col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+  .bars .bar { width: 42px; background: var(--teal); border-radius: 6px 6px 0 0; }
+  .bars .bar.hi { background: var(--accent); }
+  .bars .cap { font: 700 13px/1 "Inter", sans-serif; color: var(--muted); margin-top: 6px; }
+  .bars .val { font: 800 14px/1 "Inter", sans-serif; color: var(--ink); margin-bottom: 4px; }
+  .venn { width: 100%; max-width: 400px; display: block; }
+  .venn circle { fill: var(--teal); fill-opacity: .18; stroke: var(--teal); stroke-width: 3; }
+  .venn circle.b { fill: var(--gold); stroke: var(--gold); }
+  .venn .zone { fill: transparent; cursor: pointer; }
+  .venn .zone.on { fill: var(--accent); fill-opacity: .35; }
+  .venn text { font: 700 14px/1 "Inter", sans-serif; fill: var(--ink); text-anchor: middle; }
+  .venn text.t { font-size: 15px; fill: var(--muted); }
+  .carroll { width: 100%; max-width: 440px; border-collapse: collapse; font: 700 15px/1.3 "Inter", sans-serif; }
+  .carroll th, .carroll td { border: 2px solid var(--line); padding: 12px 8px; text-align: center; }
+  .carroll th { background: var(--cell); }
+  .carroll td { cursor: pointer; height: 64px; font-size: 26px; }
+  .carroll td.on { background: var(--good-soft); border-color: var(--good); }
+  .carroll td.no { background: var(--bad-soft); }
+  .likely { display: flex; width: 100%; max-width: 460px; border-radius: 12px; overflow: hidden; border: 2px solid var(--line); }
+  .likely button { flex: 1; border: none; padding: 14px 6px; font: 700 14px/1.3 "Inter", sans-serif; cursor: pointer; background: var(--cell); color: var(--ink); border-right: 2px solid var(--line); }
+  .likely button:last-child { border-right: none; }
+  .likely button.on { background: var(--teal); color: var(--teal-ink); }
+  .spinner { width: 190px; height: 190px; display: block; }
+  .spinner .sec { stroke: var(--ink); stroke-width: 2.5; }
+  .spinner .ndl { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; transition: transform .8s cubic-bezier(.2,.8,.25,1); transform-origin: 95px 95px; }
+  .runbox { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; font: 700 15px/1 "Inter", sans-serif; }
+  .runbox span { background: var(--cell); border: 2px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+
+  /* ==== template alignment: the Grade 2 palette ==== */
+  /* Brings Grade 3 onto the same tokens the Grade 2 template declares and
+     ../grade-1-app/align-g1v2-to-template.py applied to Grade 1: the re-solved
+     accent, and the ink tokens for text sitting ON a coloured chip.
+
+     Appended here because build.sh injects this file immediately before the
+     closing style tag, so it is the last thing in the only style block and wins
+     over the two palette declarations further up _head.html without either
+     being edited. NOTE: never write that tag out in full anywhere in this file,
+     comment or not - an HTML parser ends a style element at the first such
+     string inside it, so a comment mentioning it silently truncates the
+     stylesheet and everything below becomes page text. That is exactly what
+     the first version of this block did, and it turned every rule below into
+     white-on-teal at 2.27:1.
+
+     THE CHIP HALF OF THAT SCRIPT IS DELIBERATELY NOT COPIED. Its own header
+     warns that colouring text for a background it does not sit on is how its
+     first pass broke two things it had not measured, and Grade 3 draws
+     different components. Measured across all 79 slides of all five lessons in
+     both themes (checks/probe-chips.mjs): of Grade 1's eight chip selectors
+     Grade 3 has three, two of them draw no visible text anywhere, and the one
+     that does was already painting this exact ink. So there is nothing for a
+     chip rule to fix - the literals below are pointed at the token instead.
+
+     Both changed values were computed against Grade 3's own grounds before
+     being applied, because --muted goes DARKER and darker can only lower
+     contrast on a dark ground:
+       --muted   #A9C0D2 -> #A4B7C8   6.84 -> 6.25 on --cell, 8.12 -> 7.41 on --card
+       --accent  #E9744F -> #ED8E70   5.15 -> 6.33 on --card
+     Both stay well clear of 4.5, and the accent improves. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --teal-ink: #06231F;
+    --plum-ink: #241733;
+    --gold-ink: #2A1F05;
+  }

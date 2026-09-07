@@ -1,0 +1,345 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stage 3 Coverage Audit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --ground: #eff3f6; --panel: #ffffff; --edge: #d2dde5; --edge-soft: #e6edf2;
+    --ink: #12222e; --ink-2: #45606f; --ink-3: #7a94a3;
+    --deep: #183b56; --teal: #17827f;
+    --ok: #14724f; --ok-bg: #dcf1e7; --ok-edge: #a8d9c4;
+    --fill: #a9700c; --fill-bg: #fbeed3; --fill-edge: #e6c684;
+    --shadow: 0 1px 2px rgba(18, 34, 46, .05), 0 10px 28px rgba(18, 34, 46, .07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0e1a23; --panel: #16262f; --edge: #27414e; --edge-soft: #1e323d;
+      --ink: #e9f1f5; --ink-2: #a6bece; --ink-3: #7891a1;
+      --deep: #8dc2dd; --teal: #4ec3bd;
+      --ok: #63d3a6; --ok-bg: #103126; --ok-edge: #1f5744;
+      --fill: #e3b45f; --fill-bg: #362a10; --fill-edge: #5e4a1c;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .34), 0 10px 28px rgba(0, 0, 0, .3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0e1a23; --panel: #16262f; --edge: #27414e; --edge-soft: #1e323d;
+    --ink: #e9f1f5; --ink-2: #a6bece; --ink-3: #7891a1;
+    --deep: #8dc2dd; --teal: #4ec3bd;
+    --ok: #63d3a6; --ok-bg: #103126; --ok-edge: #1f5744;
+    --fill: #e3b45f; --fill-bg: #362a10; --fill-edge: #5e4a1c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .34), 0 10px 28px rgba(0, 0, 0, .3);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font: 400 16px/1.62 Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 46px 22px 80px; }
+
+  .kicker {
+    font: 600 12px/1 Inter, sans-serif; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--teal); margin: 0 0 14px;
+  }
+  h1 {
+    font: 700 clamp(30px, 4.6vw, 44px)/1.1 "Atkinson Hyperlegible", Inter, sans-serif;
+    margin: 0 0 14px; letter-spacing: -.015em; text-wrap: balance;
+  }
+  .stand { font-size: 18px; color: var(--ink-2); max-width: 64ch; margin: 0; }
+  .stand b { color: var(--ink); font-weight: 600; }
+
+  .counts { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 6px; }
+  .count {
+    flex: 1 1 150px; background: var(--panel); border: 1px solid var(--edge);
+    border-radius: 14px; padding: 15px 17px; box-shadow: var(--shadow);
+  }
+  .count .n { font: 700 30px/1 "Atkinson Hyperlegible", Inter, sans-serif; font-variant-numeric: tabular-nums; }
+  .count .l { font: 500 13px/1.35 Inter, sans-serif; color: var(--ink-3); margin-top: 5px; }
+  .count.ok .n { color: var(--ok); }
+  .count.fill .n { color: var(--fill); }
+
+  h2 {
+    font: 700 24px/1.2 "Atkinson Hyperlegible", Inter, sans-serif;
+    margin: 52px 0 6px; letter-spacing: -.01em;
+  }
+  .sub { color: var(--ink-3); font-size: 15px; margin: 0 0 20px; max-width: 68ch; }
+
+  .find { display: grid; gap: 14px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--edge); border-left: 4px solid var(--fill);
+    border-radius: 12px; padding: 16px 18px; box-shadow: var(--shadow);
+  }
+  .card h3 {
+    font: 600 17px/1.35 Inter, sans-serif; margin: 0 0 8px;
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px;
+  }
+  .code {
+    font: 600 13px/1 Inter, sans-serif; font-variant-numeric: tabular-nums;
+    background: var(--edge-soft); color: var(--deep); border-radius: 5px; padding: 4px 7px;
+  }
+  .card p { margin: 0 0 8px; color: var(--ink-2); font-size: 15px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card .said { color: var(--ink); }
+  .card .said em { font-style: normal; background: var(--fill-bg); padding: 0 3px; border-radius: 3px; }
+  .card p.fixed { color: var(--ok); font-weight: 600; }   /* beats .card p on specificity */
+
+  .tbl-wrap { overflow-x: auto; border: 1px solid var(--edge); border-radius: 12px; background: var(--panel); box-shadow: var(--shadow); }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--edge-soft); vertical-align: top; }
+  thead th {
+    font: 600 12px/1 Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-3); background: var(--edge-soft); border-bottom: 1px solid var(--edge);
+    position: sticky; top: 0;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  td.c { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--deep); white-space: nowrap; }
+  td.o { color: var(--ink-2); min-width: 20ch; }
+  td.w { color: var(--ink-2); min-width: 18ch; }
+  td.w b { color: var(--ink); font-weight: 600; }
+  .pill {
+    display: inline-block; font: 600 12px/1 Inter, sans-serif; letter-spacing: .03em;
+    padding: 5px 9px; border-radius: 999px; white-space: nowrap;
+  }
+  .pill.ok { background: var(--ok-bg); color: var(--ok); border: 1px solid var(--ok-edge); }
+  .pill.fill { background: var(--fill-bg); color: var(--fill); border: 1px solid var(--fill-edge); }
+
+  .note {
+    margin-top: 22px; padding: 15px 17px; border-radius: 12px;
+    background: var(--panel); border: 1px solid var(--edge); border-left: 4px solid var(--teal);
+    color: var(--ink-2); font-size: 15px; box-shadow: var(--shadow);
+  }
+  .note b { color: var(--ink); font-weight: 600; }
+
+  ul.tight { margin: 10px 0 0; padding-left: 20px; color: var(--ink-2); font-size: 15px; }
+  ul.tight li { margin-bottom: 7px; }
+  ul.tight li:last-child { margin-bottom: 0; }
+  ul.tight b { color: var(--ink); font-weight: 600; }
+
+  footer { margin-top: 54px; padding-top: 20px; border-top: 1px solid var(--edge); color: var(--ink-3); font-size: 14px; }
+</style>
+
+<div class="wrap">
+  <p class="kicker">Curriculum validation &middot; 6 September 2026</p>
+  <h1>Stage 3 Coverage Audit</h1>
+  <p class="stand">Every learning objective in <b>Cambridge Primary Mathematics 0096 (2020), Stage 3</b>, checked against the five lessons a Grade 3 learner actually receives. Objectives quoted from the framework; evidence cited to the step that teaches it. <b>Eight gaps were found and all eight are closed.</b></p>
+
+  <div class="counts">
+    <div class="count ok"><div class="n">53</div><div class="l">objectives, all covered</div></div>
+    <div class="count fill"><div class="n">8</div><div class="l">gaps found &mdash; all filled</div></div>
+    <div class="count"><div class="n">64</div><div class="l">teaching steps across 5 lessons</div></div>
+    <div class="count"><div class="n">74</div><div class="l">slides including checks and stickers</div></div>
+  </div>
+
+  <h2>The eight gaps, and what closed them</h2>
+  <p class="sub">One objective had no step at all. The other seven were taught in part: the step existed but stopped short of something the objective names in its own words. The quoted phrase is the framework's.</p>
+
+  <div class="find">
+    <div class="card">
+      <h3><span class="code">3Gt.01</span> Choosing a unit of time was never taught</h3>
+      <p class="said">&ldquo;<em>Choose the appropriate unit of time for familiar activities.</em>&rdquo;</p>
+      <p>The only objective with no step anywhere in the build. Time was taught as clock-reading and as intervals, but a learner was never asked which unit a thing should be measured in.</p>
+      <p class="fixed">Filled &mdash; <b>Sides, Sizes and Seconds, step 15</b> now asks it directly: blinking in seconds, a night&rsquo;s sleep in hours, the school holidays in weeks, growing up in years. Eight familiar activities, each with two plausible wrong units.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="code">3Gg.04</span> Nothing asked the learner to draw</h3>
+      <p class="said">&ldquo;<em>Draw lines, rectangles and squares.</em> Estimate, measure and calculate the perimeter of a shape&hellip; and area on a square grid.&rdquo;</p>
+      <p>Perimeter and area were both taught and both calculated, but every shape was drawn <em>for</em> the learner. The measuring half was covered and the drawing half was not.</p>
+      <p class="fixed">Filled &mdash; a new step, <b>Sides, Sizes and Seconds, step 8</b>. The learner is asked for a rectangle of a given width and height (or a square of a given side), taps two opposite corners on the grid to draw it, and the page reads back its perimeter and its area from what was actually drawn.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="code">3Nc.06</span> Spatial patterns only ever grew</h3>
+      <p class="said">&ldquo;Extend spatial patterns formed from <em>adding and subtracting</em> a constant.&rdquo;</p>
+      <p>The growing-shapes step added a constant every time. A pattern that shrinks is named in the objective and never appeared.</p>
+      <p class="fixed">Filled &mdash; <b>Rows and Rules, step 10</b> now shrinks half the time, starting high enough that the fourth picture is still positive. The check requires both directions to appear before it will pass.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="code">3Gt.04</span> Intervals stopped at hours</h3>
+      <p class="said">&ldquo;Find time intervals between the same units in <em>days, weeks, months and years</em>.&rdquo;</p>
+      <p>The step handled minutes and hours between two clock times, and nothing longer.</p>
+      <p class="fixed">Filled &mdash; <b>Sides, Sizes and Seconds, step 15</b> now also asks days in a number of weeks, months in a number of years, and the months from one named month to another in the same year.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="code">3Gp.02</span> The mirror was always vertical</h3>
+      <p class="said">&ldquo;Sketch the reflection of a 2D shape in a <em>horizontal or vertical</em> mirror line.&rdquo;</p>
+      <p>The reflection grid drew a vertical mirror on every round, so a learner never met the horizontal case &mdash; which is the one that catches people, because the shape flips top-to-bottom rather than left-to-right.</p>
+      <p class="fixed">Filled &mdash; <b>Sides, Sizes and Seconds, step 4</b> now draws either, says which it is, and the check fails unless both appear.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="code">3Nf.08</span> Fractions were compared but never ordered</h3>
+      <p class="said">&ldquo;Use knowledge of equivalence to <em>compare and order</em> unit fractions and fractions with the same denominator.&rdquo;</p>
+      <p>The step put two fractions side by side and asked for a sign. Ordering three is a different act, and it is named.</p>
+      <p class="fixed">Filled &mdash; <b>Equal Parts, step 9</b> now alternates: half the rounds compare a pair, half put three fractions up with their bars and ask for them smallest first. Each set is either same-denominator or all unit fractions, which is exactly the pair of cases the objective names.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="code">3Ss.02</span> Six ways to show data, and no step that chose between them</h3>
+      <p class="said">&ldquo;Record, organise and represent categorical and discrete data. <em>Choose and explain which representation to use in a given situation</em>&hellip;&rdquo;</p>
+      <p>All six named forms &mdash; tally, frequency table, pictogram, bar chart, Venn, Carroll &mdash; had a step each, so the first pass marked this covered. It read only the objective&rsquo;s first sentence. The second sentence asks for a judgement between them, and nothing in the lesson asked for one.</p>
+      <p>This is the gap the <b>TWM pass</b> found rather than the coverage pass: <i>Critiquing</i> is defined as comparing representations to identify advantages and disadvantages, and having nowhere to put it is what exposed the missing sentence.</p>
+      <p class="fixed">Filled &mdash; a new step, <b>Ask, Count and Chart, step 8</b>. Six situations, each with a form that genuinely suits it and a reason that names the trade-off: a tally is the only one you can keep up with while cars go past; a bar chart is for seeing which is biggest at a glance; only a Venn has an overlap; a Carroll gives &ldquo;neither&rdquo; a box of its own.</p>
+    </div>
+
+    <div class="card">
+      <h3><span class="code">3Ni.09</span> Division without the estimate</h3>
+      <p class="said">&ldquo;<em>Estimate</em> and divide whole numbers up to 100 by 2, 3, 4 and 5.&rdquo;</p>
+      <p>The sharing step went straight to the exact answer. Its sibling objective for multiplication (3Ni.08) had an estimating step; this one did not.</p>
+      <p class="fixed">Filled &mdash; <b>Rows and Rules, step 7</b> now states the estimate before the learner answers, against the nearest multiple of the divisor, and the check refuses to pass without it.</p>
+    </div>
+  </div>
+
+  <h2>Objective by objective</h2>
+  <p class="sub">All 53 Stage 3 objectives. <span class="pill ok">covered</span> was taught before this audit; <span class="pill fill">filled</span> is one of the eight above.</p>
+
+  <h2 style="font-size:19px;margin-top:32px">Number &mdash; counting and sequences</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Code</th><th>Objective</th><th>Status</th><th>Where it is taught</th></tr></thead>
+    <tbody>
+      <tr><td class="c">3Nc.01</td><td class="o">Estimate the number of objects or people (up to 1000)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 11</b> &mdash; a scatter of up to 450 dots, answer to the nearest 50</td></tr>
+      <tr><td class="c">3Nc.02</td><td class="o">Count on and back in steps of constant size: 1-digit, tens or hundreds, from any number (0&ndash;1000)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 6</b> &mdash; all six steps &plusmn;1, &plusmn;10, &plusmn;100; starts chosen so the run crosses a ten or a hundred</td></tr>
+      <tr><td class="c">3Nc.03</td><td class="o">Use knowledge of even and odd numbers up to 10 to recognise and sort numbers</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 7</b> &mdash; 3-digit numbers sorted on the last digit alone</td></tr>
+      <tr><td class="c">3Nc.04</td><td class="o">Recognise the use of an object to represent an unknown quantity in addition and subtraction</td><td><span class="pill ok">covered</span></td><td class="w"><b>Rows and Rules 11</b> &mdash; the mystery box in three positions</td></tr>
+      <tr><td class="c">3Nc.05</td><td class="o">Recognise and extend linear sequences, and describe the term-to-term rule</td><td><span class="pill ok">covered</span></td><td class="w"><b>Rows and Rules 9</b> &mdash; the rule is asked for before the next term</td></tr>
+      <tr><td class="c">3Nc.06</td><td class="o">Extend spatial patterns formed from adding <b>and subtracting</b> a constant</td><td><span class="pill fill">filled</span></td><td class="w"><b>Rows and Rules 10</b> &mdash; now shrinks as well as grows</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 style="font-size:19px">Number &mdash; integers and powers</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Code</th><th>Objective</th><th>Status</th><th>Where it is taught</th></tr></thead>
+    <tbody>
+      <tr><td class="c">3Ni.01</td><td class="o">Recite, read and write number names and whole numbers (0&ndash;1000)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 2</b> &mdash; distractors are real misreadings: digits swapped, tens dropped</td></tr>
+      <tr><td class="c">3Ni.02</td><td class="o">Commutative and associative properties of addition, used to simplify calculations</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 13</b> &mdash; find the pair that makes 100 and add it first</td></tr>
+      <tr><td class="c">3Ni.03</td><td class="o">Complements of 100 and of multiples of 10 or 100 (up to 1000)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 12</b> &mdash; a bar filling to 100 and to 1000</td></tr>
+      <tr><td class="c">3Ni.04</td><td class="o">Estimate, add and subtract whole numbers with up to three digits (regrouping of ones or tens)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 14 and 15</b> &mdash; column by column, every calculation forced to carry or exchange; a rough check closes each one</td></tr>
+      <tr><td class="c">3Ni.05</td><td class="o">Understand and explain the relationship between multiplication and division</td><td><span class="pill ok">covered</span></td><td class="w"><b>Rows and Rules 4</b> &mdash; four true sentences from one array</td></tr>
+      <tr><td class="c">3Ni.06</td><td class="o">Commutative and distributive properties of multiplication</td><td><span class="pill ok">covered</span></td><td class="w"><b>Rows and Rules 2</b> (turn the array) and <b>5</b> (split into tens and ones)</td></tr>
+      <tr><td class="c">3Ni.07</td><td class="o">Know 1, 2, 3, 4, 5, 6, 8, 9 and 10 times tables</td><td><span class="pill ok">covered</span></td><td class="w"><b>Rows and Rules 3</b> &mdash; exactly those nine tables; distractors are neighbouring facts</td></tr>
+      <tr><td class="c">3Ni.08</td><td class="o">Estimate and multiply whole numbers up to 100 by 2, 3, 4 and 5</td><td><span class="pill ok">covered</span></td><td class="w"><b>Rows and Rules 5 and 6</b> &mdash; the estimate is stated before the exact answer</td></tr>
+      <tr><td class="c">3Ni.09</td><td class="o"><b>Estimate</b> and divide whole numbers up to 100 by 2, 3, 4 and 5</td><td><span class="pill fill">filled</span></td><td class="w"><b>Rows and Rules 7</b> &mdash; the estimate now comes first</td></tr>
+      <tr><td class="c">3Ni.10</td><td class="o">Recognise multiples of 2, 5 and 10 (up to 1000)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Rows and Rules 8</b> &mdash; a 30-cell run inside a chosen hundred, taught on the last digit</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 style="font-size:19px">Number &mdash; money, place value, ordering and rounding</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Code</th><th>Objective</th><th>Status</th><th>Where it is taught</th></tr></thead>
+    <tbody>
+      <tr><td class="c">3Nm.01</td><td class="o">Interpret money notation for currencies that use a decimal point</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 16</b> &mdash; the trap that 4.5 is fifty cents, not five</td></tr>
+      <tr><td class="c">3Nm.02</td><td class="o">Add and subtract amounts of money to give change</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 17</b> &mdash; counting on from the price to the note</td></tr>
+      <tr><td class="c">3Np.01</td><td class="o">The value of each digit is determined by its position (up to 3 digits)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 1</b> &mdash; build a number; each column reports what its digit is worth</td></tr>
+      <tr><td class="c">3Np.02</td><td class="o">Use knowledge of place value to multiply whole numbers by 10</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 5</b> &mdash; taught as a shift left, explicitly not as adding a zero</td></tr>
+      <tr><td class="c">3Np.03</td><td class="o">Compose, decompose and regroup 3-digit numbers, using hundreds, tens and ones</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 3</b> (decompose) and <b>4</b> (regroup &mdash; move a hundred into the tens, total unchanged)</td></tr>
+      <tr><td class="c">3Np.04</td><td class="o">Relative size, to compare and order 3-digit numbers using =, &gt; and &lt;</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 8</b> (the sign) and <b>9</b> (order four, three sharing a hundreds digit)</td></tr>
+      <tr><td class="c">3Np.05</td><td class="o">Round 3-digit numbers to the nearest 10 or 100</td><td><span class="pill ok">covered</span></td><td class="w"><b>Up to a Thousand 10</b> &mdash; a number line with halfway marked; the halfway rule named as a rule</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 style="font-size:19px">Number &mdash; fractions</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Code</th><th>Objective</th><th>Status</th><th>Where it is taught</th></tr></thead>
+    <tbody>
+      <tr><td class="c">3Nf.01</td><td class="o">Fractions are several equal parts of an object or shape, and all the parts together equal one whole</td><td><span class="pill ok">covered</span></td><td class="w"><b>Equal Parts 1</b> (equal or not) and <b>2</b> (fill the bar to exactly one)</td></tr>
+      <tr><td class="c">3Nf.02</td><td class="o">The relationship between whole and parts depends on relative size, regardless of shape or orientation</td><td><span class="pill ok">covered</span></td><td class="w"><b>Equal Parts 3</b> &mdash; the same fraction in three shapes at three rotations</td></tr>
+      <tr><td class="c">3Nf.03</td><td class="o">Fractions can describe equal parts of a quantity or set of objects</td><td><span class="pill ok">covered</span></td><td class="w"><b>Equal Parts 4</b> &mdash; a fraction of a group of counters</td></tr>
+      <tr><td class="c">3Nf.04</td><td class="o">A fraction can be represented as a division of the numerator by the denominator (half, quarter, three-quarters)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Equal Parts 5</b> &mdash; restricted to exactly those three, as the objective names</td></tr>
+      <tr><td class="c">3Nf.05</td><td class="o">Fractions (half, quarter, three-quarters, third, tenth) can act as operators</td><td><span class="pill ok">covered</span></td><td class="w"><b>Equal Parts 6</b> &mdash; divide by the bottom, multiply by the top; exactly those five</td></tr>
+      <tr><td class="c">3Nf.06</td><td class="o">Two fractions can have an equivalent value (halves, quarters, fifths and tenths)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Equal Parts 7</b> &mdash; twelve equivalent pairs, all inside those four denominators</td></tr>
+      <tr><td class="c">3Nf.07</td><td class="o">Estimate, add and subtract fractions with the same denominator (within one whole)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Equal Parts 8</b> &mdash; never crosses one whole; the add-the-bottoms error is offered as a distractor</td></tr>
+      <tr><td class="c">3Nf.08</td><td class="o">Compare <b>and order</b> unit fractions and fractions with the same denominator, using =, &gt; and &lt;</td><td><span class="pill fill">filled</span></td><td class="w"><b>Equal Parts 9</b> &mdash; alternates comparing a pair with ordering three</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 style="font-size:19px">Geometry and measure &mdash; time</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Code</th><th>Objective</th><th>Status</th><th>Where it is taught</th></tr></thead>
+    <tbody>
+      <tr><td class="c">3Gt.01</td><td class="o">Choose the appropriate unit of time for familiar activities</td><td><span class="pill fill">filled</span></td><td class="w"><b>Sides, Sizes and Seconds 15</b> &mdash; new; eight familiar activities</td></tr>
+      <tr><td class="c">3Gt.02</td><td class="o">Read and record time accurately in digital notation (12-hour) and on analogue clocks</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides, Sizes and Seconds 14</b> &mdash; hands drawn to the minute; distractors include the next hour along</td></tr>
+      <tr><td class="c">3Gt.03</td><td class="o">Interpret and use the information in timetables (12-hour clock)</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides, Sizes and Seconds 16</b> &mdash; five stops, three buses; asks both a time and a journey length</td></tr>
+      <tr><td class="c">3Gt.04</td><td class="o">Difference between a time and a time interval; intervals in <b>days, weeks, months and years</b></td><td><span class="pill fill">filled</span></td><td class="w"><b>Sides, Sizes and Seconds 15</b> &mdash; clock intervals plus weeks, months and years</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 style="font-size:19px">Geometry and measure &mdash; shape, measurement and position</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Code</th><th>Objective</th><th>Status</th><th>Where it is taught</th></tr></thead>
+    <tbody>
+      <tr><td class="c">3Gg.01</td><td class="o">Identify, describe, classify, name and sketch 2D shapes; differentiate regular from irregular polygons</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides 1</b> (name by side count) and <b>2</b> (regular against irregular, same side count)</td></tr>
+      <tr><td class="c">3Gg.02</td><td class="o">Estimate and measure lengths in cm, m and km; understand the relationship between units</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides 9</b> &mdash; conversions both ways, plus choosing a sensible unit</td></tr>
+      <tr><td class="c">3Gg.03</td><td class="o">Perimeter is the distance around a 2D shape; area is the space it occupies</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides 6</b> (perimeter) and <b>7</b> (area) &mdash; taught as fence against field</td></tr>
+      <tr><td class="c">3Gg.04</td><td class="o"><b>Draw lines, rectangles and squares.</b> Estimate, measure and calculate perimeter, and area on a square grid</td><td><span class="pill fill">filled</span></td><td class="w"><b>Sides 8</b> &mdash; new; draw it, then read back its perimeter and area</td></tr>
+      <tr><td class="c">3Gg.05</td><td class="o">Identify, describe, sort, name and sketch 3D shapes by their properties</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides 5</b> &mdash; six solids named from faces, edges and corners</td></tr>
+      <tr><td class="c">3Gg.06</td><td class="o">Estimate and measure the mass of objects in g and kg; understand the relationship</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides, Sizes and Seconds 10</b> &mdash; g to kg both ways, plus the note that big does not mean heavy</td></tr>
+      <tr><td class="c">3Gg.07</td><td class="o">Estimate and measure capacity in ml and l, and understand their relationships</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides, Sizes and Seconds 11</b> &mdash; ml to l both ways; half a litre is 500 ml, not 50</td></tr>
+      <tr><td class="c">3Gg.08</td><td class="o">Recognise pictures, drawings and diagrams of 3D shapes</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides 5</b> &mdash; each solid is a drawing, with hidden faces counted rather than seen</td></tr>
+      <tr><td class="c">3Gg.09</td><td class="o">Identify both horizontal and vertical lines of symmetry on 2D shapes and patterns</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides 3</b> &mdash; six shapes, both fold lines; includes a parallelogram, which has neither</td></tr>
+      <tr><td class="c">3Gg.10</td><td class="o">Compare angles with a right angle; a straight line is two right angles or a half turn</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides 13</b> &mdash; arm length varied deliberately, so size cannot be read as angle</td></tr>
+      <tr><td class="c">3Gg.11</td><td class="o">Use instruments that measure length, mass, capacity and temperature</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides 12</b> &mdash; ruler, scales, jug and thermometer; taught as working out one mark first</td></tr>
+      <tr><td class="c">3Gp.01</td><td class="o">Interpret and create descriptions of position, direction and movement, including cardinal points</td><td><span class="pill ok">covered</span></td><td class="w"><b>Sides 17</b> &mdash; a compass the learner drives in sequence</td></tr>
+      <tr><td class="c">3Gp.02</td><td class="o">Sketch the reflection of a 2D shape in a <b>horizontal or vertical</b> mirror line</td><td><span class="pill fill">filled</span></td><td class="w"><b>Sides 4</b> &mdash; now draws either mirror</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 style="font-size:19px">Statistics and probability</h2>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Code</th><th>Objective</th><th>Status</th><th>Where it is taught</th></tr></thead>
+    <tbody>
+      <tr><td class="c">3Ss.01</td><td class="o">Conduct an investigation to answer non-statistical and statistical questions</td><td><span class="pill ok">covered</span></td><td class="w"><b>Ask, Count and Chart 1</b> &mdash; the test is whether the answers would vary</td></tr>
+      <tr><td class="c">3Ss.02</td><td class="o">Record, organise and represent categorical and discrete data. <b>Choose and explain which representation to use</b> in a given situation: Venn and Carroll diagrams, tally charts and frequency tables, pictograms and bar charts</td><td><span class="pill fill">filled</span></td><td class="w"><b>Ask, Count and Chart 2&ndash;6</b> teach all six named forms, one step each; <b>step 8</b> now asks which one a given job needs, and why</td></tr>
+      <tr><td class="c">3Ss.03</td><td class="o">Interpret data, identifying similarities and variations, and discuss conclusions</td><td><span class="pill ok">covered</span></td><td class="w"><b>Ask, Count and Chart 7</b> &mdash; most, least, difference and total, with the limits of the data stated</td></tr>
+      <tr><td class="c">3Sp.01</td><td class="o">Familiar language of chance: &lsquo;it will happen&rsquo;, &lsquo;it will not happen&rsquo;, &lsquo;it might happen&rsquo;</td><td><span class="pill ok">covered</span></td><td class="w"><b>Ask, Count and Chart 8</b> &mdash; ten statements; unlikely distinguished from impossible</td></tr>
+      <tr><td class="c">3Sp.02</td><td class="o">Conduct chance experiments, and present and describe the results</td><td><span class="pill ok">covered</span></td><td class="w"><b>Ask, Count and Chart 9</b> &mdash; a 3:2:1 spinner with a running tally; a few spins explicitly prove nothing</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Thinking and Working Mathematically</h2>
+  <p class="sub">The framework lists eight TWM characteristics at the head of Stage 3 and says they are <b>not</b> a separate strand: they &ldquo;should not be taught as a separate special activity but instead should be embedded throughout the curriculum&rdquo;. So they are not objectives to tick off, and there are no TWM rows in the table above. This is a quality read on whether the lessons actually give a learner room to do these things.</p>
+
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Characteristic</th><th>Where a learner does it</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr><td class="c">Specialising</td><td class="w">Odd or even on a chosen number; is this one a multiple of 5; does this shape fold along this line; which of these three is regular; where does <b>this</b> number sit in the Venn</td><td><span class="pill ok">strong</span></td></tr>
+      <tr><td class="c">Generalising</td><td class="w">Stating the term-to-term <b>rule</b> before the next number; the rule of a growing or shrinking pattern; &times;&nbsp;10 taught as the move every digit makes, explicitly not as adding a zero; multiples always ending the same way</td><td><span class="pill ok">strong</span></td></tr>
+      <tr><td class="c">Characterising</td><td class="w">Naming a shape by counting its sides; regular meaning every side equal; a solid identified from faces, edges and corners; equal parts as the property that makes a fraction</td><td><span class="pill ok">strong</span></td></tr>
+      <tr><td class="c">Classifying</td><td class="w">Venn and Carroll diagrams; sorting odd from even; finding the multiples in a run; regular against irregular</td><td><span class="pill ok">strong</span></td></tr>
+      <tr><td class="c">Critiquing</td><td class="w">The new step 8 of Ask, Count and Chart &mdash; which representation suits this job, and why the others do not; choosing the easy pair to add first; turning 8&nbsp;&times;&nbsp;9 into 9&nbsp;&times;&nbsp;8 because you know that one; estimating as a check on an answer</td><td><span class="pill ok">now present</span></td></tr>
+      <tr><td class="c">Improving</td><td class="w">Regrouping 348 as 200&nbsp;+&nbsp;140&nbsp;+&nbsp;8 so a subtraction will work; splitting a number to multiply it; the same fraction in easier pieces</td><td><span class="pill ok">present</span></td></tr>
+      <tr><td class="c">Conjecturing</td><td class="w">Step 1 of Ask, Count and Chart is about which questions data can answer &mdash; but the learner <b>picks</b> a question from three rather than forming one</td><td><span class="pill fill">thin</span></td></tr>
+      <tr><td class="c">Convincing</td><td class="w">The new <b>How do you know?</b> step, last in all five lessons: a claim that is true, and three reasons for it of which only one does any work. The wrong reasons are either the misconception the lesson teaches against or something perfectly true that explains nothing &mdash; and the second kind is the point. Recorded as an <b>approximation</b>: the learner recognises a justification rather than producing one</td><td><span class="pill fill">approximated</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note"><b>What was done about the last two, and what is still open.</b> Every answer in this build is a tap &mdash; there is no free-text input anywhere in the five lessons, which was checked rather than assumed. A deck of tap-to-answer steps can ask a child to choose, sort, test and extend; it cannot ask them to say why in their own words, so a faithful Convincing step is not available to it. What <i>is</i> available is recognition, and that is what shipped: <b>How do you know?</b> now closes every lesson in Grade 3 <b>and in Grade 1</b>, 60 distinct claims between them, each with one reason that explains and two that do not. It is deliberately booked as <b>approximated, not covered</b> &mdash; recognising a good reason is a weaker act than giving one, and calling it coverage would report something nobody measured. <b>Conjecturing is still thin and was left alone.</b> Closing it needs the learner to form a question rather than pick one, and every device this deck has would again be a picker &mdash; the same substitution, with less of the characteristic left in it. Cambridge&rsquo;s own framing expects TWM to be &ldquo;stimulated&hellip; through practice, reflection and questioning&rdquo;, which assumes an adult in the room; that is the part a deck cannot supply.</div>
+
+  <h2>Accessibility</h2>
+  <p class="sub">All six pages audited in a real browser: keyboard operation, accessible names, contrast against the ground actually painted behind each text, live regions, heading order and touch-target size. <b>Everything below is fixed; the audit now reports zero findings.</b></p>
+  <ul class="tight">
+    <li><b>Nine steps could not be used without a mouse.</b> The worst of the findings. Steps built from cards, table cells, Venn regions and grid squares had click handlers on plain <code>div</code>, <code>td</code>, <code>rect</code> and <code>circle</code> elements &mdash; so a keyboard-only learner could not do the reflection, the drawing grid, the Venn, the Carroll, the fact family or the shape cards <em>at all</em>. Each now carries <code>role="button"</code>, <code>tabindex="0"</code> and a spoken name, and the shell turns Enter and Space into a click on any of them.</li>
+    <li><b>Feedback was never announced.</b> Twenty-two feedback and score lines changed silently, so a screen-reader learner got no result. Every <code>.fb</code> and <code>.score</code> is now a polite live region, set once in the shell rather than repeated in each slide.</li>
+    <li><b>Two contrast failures inherited from the Grade 1 shell.</b> The muted label colour was 4.04:1 on the panel &mdash; under the 4.5:1 that small text needs &mdash; and a selected chip put white on lifted teal at 2.27:1. The muted tone is now 5.2:1, and the chip uses the dark ink on teal that the hub already uses. A third, an accent label at 14px on 3.28:1, is lifted and enlarged.</li>
+    <li><b>Three unlabelled SVGs</b> in the regular-or-irregular step now sit inside a named button and are marked <code>aria-hidden</code>, so they are not announced twice.</li>
+  </ul>
+
+  <div class="note"><b>Two of the audit&rsquo;s own findings were the audit&rsquo;s fault, and both were checked before anything was changed.</b> It reported ~90 controls per lesson &ldquo;on hidden slides but still in the tab order&rdquo; &mdash; false: inactive slides are <code>display:none</code>, and tabbing for real reaches 25 stops with none on a hidden slide. It also reported several 1.00:1 contrasts &mdash; false: it treated <code>rgba(255,255,255,0.07)</code> as an opaque white ground rather than compositing it over the dark panel. The instrument was fixed first; 58 raw findings became 43 real ones.</div>
+
+  <h2>What the verification caught along the way</h2>
+  <p class="sub">Separate from coverage. Each lesson is exercised in a real browser, with the maths recomputed independently from what is drawn on screen rather than read back from the page&rsquo;s own answer. Five defects were found that way, and every one was a piece of content outside Stage 3 or arithmetically wrong.</p>
+  <ul class="tight">
+    <li><b>Eighths in the fraction equivalence table.</b> 3Nf.06 names halves, quarters, fifths and tenths. Two pairs used eighths &mdash; and because there was no name for an eighth in the wording table, the slide threw and froze mid-lesson. Both the curriculum error and the crash were the same line.</li>
+    <li><b>Counting back past zero.</b> Counting in steps of &minus;100 could run 112, 12, &minus;88. Negative numbers are Stage 5. Starts are now chosen so all four terms stay inside 0 to 1000.</li>
+    <li><b>A subtraction with a negative answer</b> in the mystery box &mdash; &ldquo;8 &minus; 14 = &minus;6&rdquo; shown to a Grade 3 learner. The unknown is now built from the answer so the result cannot go below zero.</li>
+    <li><b>&ldquo;Irregular&rdquo; polygons that were equilateral.</b> The irregular shapes were made by alternating the radius, which on an even-sided polygon gives every side the same length &mdash; precisely what the step tells a child <em>regular</em> means. They are squashed now, so the sides genuinely differ.</li>
+    <li><b>Check questions offering the same answer twice.</b> Four generators could produce a duplicate option, leaving no single right answer. Fixed at the source, and a guard now regenerates any question whose options are not distinct.</li>
+  </ul>
+
+  <div class="note"><b>One thing this audit cannot tell you.</b> It checks that every objective is taught and that the maths on screen is right. It does not tell you whether a Grade 3 child finds these steps clear &mdash; that needs a child, not a checker.</div>
+
+  <footer>Cambridge Primary Mathematics 0096 (2020), Stage 3 &mdash; 53 objectives across Number, Geometry and Measure, and Statistics and Probability. Thinking and Working Mathematically (TWM.01&ndash;08) is embedded across the strands rather than taught separately, and is not listed as a separate row here.</footer>
+</div>

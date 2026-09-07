@@ -61,10 +61,31 @@ serves Grade 2 on v415. This build is an alternative to it, not a patch on it.
   `.gitattributes` documents from the other direction. `git add` settled it;
   there was nothing to commit.
 
-## The open question, which is not engineering
+## Progress: it reports, and what it reports is not the course's units
 
-**This path records no progress** — no gradebook, no live-group-board position,
-no study plan, no placement exam. That is a property of being off the standard
-content path and it is already true of both Grade 1 builds. Shipping Grade 2
-this way doubles the number of courses in that state, so it wants deciding
-rather than inheriting.
+Wired 2026-09-07 by `../lesson-app-tools/wire-progress.py`, at the same time as
+Grade 1. Nothing new: the pages import the SAME `shared/progress-client.js`
+every other course writes through and emit `section.completed`,
+`unit.completed` and `progress.summary`, with position flushed rather than left
+to the 20-second idle timer.
+
+**THE UNIT PROBLEM.** These nine lessons are not the course's fifteen units.
+The shell Grade 2 course is fifteen term-ordered units (`math-g02-u01` "Numbers
+to 100" … `u15` "Symmetry, Position and Movement"); these are organised by
+strand, and "Tens and Ones" alone covers u01, u05, u08 and u10. So progress is
+written under its own namespace, `l01`..`l09`, beneath the SAME course key
+(`ehel-math-g02`) and student id the shell uses. Emitting `u01` would have put
+a learner's work in the slot the gradebook reads as "Numbers to 100" completed
+— a claim about curriculum coverage nobody measured.
+
+The board works; the gradebook does not see fifteen units' worth of completion,
+because these nine lessons are not those fifteen units. Mapping them is a
+curriculum decision and belongs to whoever owns the Cambridge alignment.
+
+**Tested on the live upload and it correctly REFUSED.** With a Grade 1 launch
+token (`course: ehel-math-g01`) the gateway answered 403 to a client writing
+`ehel-math-g02`, the outbox held the events rather than dropping them, and the
+learner-facing notice rendered: "Your session has expired. Your work is saved
+on this device". That is the separation working, and it means a full green
+end-to-end test of this build needs a Grade 2 token — the Grade 1 build was
+verified instead, on the same code path.

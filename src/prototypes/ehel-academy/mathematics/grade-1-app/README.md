@@ -130,14 +130,47 @@ teacher on it - and Join class only while a session is live. Outside a live
 class, hidden is correct, not broken. Wehel appears for every learner, so it is
 the honest test that the wiring works.
 
-## Known limitation
+## Progress: it reports now, and what it reports is not the course's units
 
-**This path records no progress.** No gradebook, no live-group-board position,
-no study plan, no placement exam. Progress shown in the header is computed from
-the lesson's own `done[]` and stays in the tab. That is a property of being off
-the standard content path, not of the restructure, and it is the open question
-for both builds.
+**Closed 2026-09-07.** This path used to record nothing at all -- no gradebook,
+no live-group-board position, no study plan -- so a teacher opening the board
+mid-session saw their Grade 1 maths learners with no app activity, not because
+they were idle but because the build said nothing. The board's whole sort is
+"time since this learner's app last reported", so a silent build renders its
+learners as GONE.
 
-Wehel and the class controls are NOT in that list any more - they are mounted
-and working. Wehel's daily allowance is server-side and per learner per day, so
-it is metered correctly here even though lesson progress is not.
+`../lesson-app-tools/wire-progress.py` wired it, and nothing about it is new
+machinery: the pages import the SAME `shared/progress-client.js` every other
+course writes through, deployed beside them by `deploy.mjs`, and emit
+`section.completed`, `unit.completed` and `progress.summary`. Position is
+flushed rather than left to the 20-second idle timer, for the reason
+course-app.js learned on production -- a learner moved through a unit for 14
+minutes while the server's pointer sat on the section they had last COMPLETED.
+
+Verified end to end on 2026-09-07 against the live build with a real launch
+token: `hydrate()` returned `l01 { sectionsDone: ["step-01"], resume:
+"step-01", resumeLabel: "Count to 10", xp: 1 }`.
+
+**THE UNIT PROBLEM, and it is the thing to read before changing any of this.**
+These seven lessons are not the course's fifteen units. The shell course for
+Grade 1 is fifteen term-ordered units (`math-g01-u01` "Numbers to 10" ...);
+these lessons are organised by strand and each covers several. So progress is
+written under its own unit namespace, `l01`..`l07`, beneath the SAME course key
+(`ehel-math-g01`) and student id the shell uses.
+
+What that buys: the live group board works -- timestamps, position,
+resumeLabel, done-counts, the activity ring -- and resume across devices works.
+What it does not: the gradebook does not see fifteen units' worth of
+completion, because these seven lessons are not those fifteen units. Emitting
+`u01` would have been a claim about curriculum coverage nobody measured.
+
+Mapping lessons onto course units is a curriculum decision, not a wiring one.
+When somebody makes it, it is one function in wire-progress.py and nothing
+else.
+
+The same hydrate showed `u01`, `u02` and `u09` already present for that learner
+from their shell-course work, sitting alongside `l01` without collision --
+which is the namespace decision demonstrating itself.
+
+Wehel and the class controls are mounted and working; Wehel's daily allowance
+is server-side and per learner per day, so it is metered correctly here.

@@ -65,6 +65,10 @@ const MODULES = [
   [path.join(SHELL, "learner-controls.js"), "learner-controls.js"],
   [path.join(SHELL, "wehel.js"), "wehel.js"],
   [path.join(SHARED, "course-shell.js"), "course-shell.js"],
+  // the write path every other course already uses; see
+  // ../lesson-app-tools/wire-progress.py. Kept in step with the shared
+  // deploy.mjs: two tools writing this remote must ship the same set.
+  [path.join(SHARED, "progress-client.js"), "progress-client.js"],
 ];
 const flatten = (s) => s
   .replace(/from\s*(["'])\.\.\/shared\/([A-Za-z0-9_-]+\.js)(\?[^"']*)?\1/g, 'from "./$2"')

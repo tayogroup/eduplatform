@@ -149,6 +149,8 @@ DOTS = re.compile(r'(<nav class="dots"[^>]*></nav>)')
 
 
 def wire(app, unit, name, title):
+    # progressUnit must be the SAME id wire-progress.py writes, or the
+    # teacher sees a hand raised from a unit no progress row mentions
     s = app.read(name)
     if MARK in s:
         print("  skip %-26s already wired" % name)
@@ -170,7 +172,7 @@ def wire(app, unit, name, title):
     s = s[:i] + CSS + s[i:]
 
     js = (JS
-          .replace("__UNITKEY__", "u%02d" % unit)
+          .replace("__UNITKEY__", "%s%02d" % (app.cfg.get("progressUnitPrefix", "u"), unit))
           .replace("__SUBJECT__", app.subject)
           .replace("__SUBJECTLABEL__", app.subject_label)
           .replace("__GRADE__", str(app.grade))

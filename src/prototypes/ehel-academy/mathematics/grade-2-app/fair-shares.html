@@ -359,6 +359,17 @@
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* --- said on the learner's own screen when their work is not reaching the
+         school; see lesson-app-tools/wire-progress.py --- */
+  .progress-notice {
+    margin: 0 0 12px; padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--bad-soft); border: 1px solid var(--bad);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 600;
+  }
 </style>
 
 <div class="wrap">
@@ -1300,12 +1311,13 @@
     paintDots(); if (cur === slides.length - 1) paintStickers();
     if (speak) say(slides[cur].dataset.say);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }
   }
   $("next").addEventListener("click", () => show(cur + 1, true));
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
-  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
 
   /* ---- 1: equal parts ---- */
@@ -1713,7 +1725,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "u03",
+      progressUnit: "l03",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -1760,4 +1772,92 @@
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
     document.body.append(dock, drawer);
   }
+</script>
+
+<script type="module">
+  /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
+     THE UNIT PROBLEM for why this writes lNN and not uNN. */
+  import { createProgressClient } from "./progress-client.js";
+
+  const q = new URLSearchParams(location.search);
+  const endpoint = (q.get("pwsEndpoint") || "").trim();
+  const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+
+  const COURSE = "ehel-math-g02";
+  const UNIT = "l03";
+  const STUDENT = q.get("studentid") || "local";
+
+  /* Without a launch endpoint the backend is "local": everything still
+     reduces into localStorage so resume works, and nothing is sent. That is
+     the same rule the shell follows, and it is why opening a lesson as a file
+     or an artifact costs nothing and reports nothing. */
+  const ws = createProgressClient({
+    course: COURSE, student: STUDENT,
+    backend: endpoint ? "remote" : "local",
+    endpoint: endpoint || undefined,
+    token: token || undefined,
+    /* A blocked or expired write path is INVISIBLE otherwise - the throw is
+       caught, the events queue, and the learner is told nothing while their
+       work stops reaching the school. Said on the learner's own screen
+       because the server cannot tell a blocked learner from a closed tab. */
+    onAuthLost: () => notice("Your session has expired. Your work is saved on this device \u2014 open the lesson again from your class page."),
+    onDeliveryFailing: () => notice(navigator.onLine
+      ? "Your work is saved here, but it is not reaching your school right now."
+      : "You are offline. Your work is saved here and will be sent when you are back."),
+    onDeliveryRecovered: () => clearNotice(),
+  });
+
+  const emit = (e) => { try { ws.emit(e); } catch (_) { /* never break the lesson */ } };
+
+  let noticeEl = null;
+  function notice(text) {
+    if (!noticeEl) {
+      noticeEl = document.createElement("p");
+      noticeEl.className = "progress-notice";
+      noticeEl.setAttribute("role", "status");
+      document.querySelector(".wrap")?.prepend(noticeEl);
+    }
+    noticeEl.textContent = text;
+  }
+  function clearNotice() { if (noticeEl) { noticeEl.remove(); noticeEl = null; } }
+
+  const slides = [...document.querySelectorAll(".slide")];
+  /* The lesson's own arithmetic: show() prints "Step n of slides.length - 1",
+     so the last slide is the sticker shelf and not a step. Read from the
+     lesson rather than counted here, so the two cannot disagree. */
+  const STEPS = Math.max(1, slides.length - 1);
+  const sectionId = (i) => "step-" + String(i + 1).padStart(2, "0");
+  const labelOf = (i) => (slides[i]?.querySelector("h2")?.textContent || "").trim() || sectionId(i);
+
+  const doneIds = new Set();
+  let unitSent = false;
+
+  /* WHERE the learner is, which is not what sectionsDone says: a learner
+     stuck twenty minutes into the next step is exactly the one a supervising
+     teacher needs to see. `resumeLabel` rides beside the id because a board
+     printing "step-04" shows a teacher a word that appears nowhere on the
+     child's screen. */
+  function report(i) {
+    emit({
+      type: "progress.summary", unit: UNIT,
+      sectionsDone: [...doneIds],
+      resume: sectionId(i), resumeLabel: labelOf(i),
+      xp: doneIds.size,
+    });
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  }
+
+  window.__ehelStep = function (i, done) {
+    const id = sectionId(i);
+    if (!doneIds.has(id)) {
+      doneIds.add(id);
+      emit({ type: "section.completed", unit: UNIT, section: id, title: labelOf(i) });
+    }
+    if (!unitSent && doneIds.size >= STEPS) {
+      unitSent = true;
+      emit({ type: "unit.completed", unit: UNIT, sectionsDone: [...doneIds], total: STEPS });
+    }
+    report(i);
+  };
+  window.__ehelAt = function (i) { report(i); };
 </script>

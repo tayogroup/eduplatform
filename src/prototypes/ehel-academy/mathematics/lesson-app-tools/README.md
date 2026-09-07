@@ -2,8 +2,9 @@
 
 One set of tools for every standalone lesson build — pages that carry their own
 CSS, activity JS and voice engine and do **not** go through
-`shell/course-app.js`. Currently that is `../grade-1-app` (live) and
-`../grade-2-app` (not deployed).
+`shell/course-app.js`. Currently that is `../grade-1-app` (live, routed) and
+`../grade-2-app` (uploaded to `app/mathematics/grade-2-lessons`, routed to by
+nobody).
 
 Each build describes itself in `app.config.json` beside its lessons; no tool
 here hardcodes a directory or a lesson list. That is the whole reason these
@@ -17,6 +18,7 @@ cd ../grade-2-app
 python ../lesson-app-tools/wire-navigation.py         # hub links, a way back, launch params
 python ../lesson-app-tools/wire-platform-controls.py  # Class chat, Hand up, Join class, Wehel
 python ../lesson-app-tools/preload-platform.py        # modulepreload + preconnect
+python ../lesson-app-tools/wire-progress.py           # report to the school
 python ../lesson-app-tools/check-lessons.py           # the gate
 node   ../lesson-app-tools/deploy.mjs --app .         # plan; --upload writes
 ```
@@ -49,19 +51,36 @@ lesson's index is not a second fact that can drift from the one in the hub.
 `_app.py` refuses to load a config naming a file that is not there, because
 otherwise a tool reports "all 9 wired" having quietly done eight.
 
-## The gate, and the mutation that found a bug in it
+## The gate, and the three bugs mutation-testing found IN IT
 
 `check-lessons.py` asserts what this pipeline guarantees, and every assertion
 is something that has actually been wrong in one of these builds. It was
-mutation-tested six ways — a dropped carry marker, a hub card pointing at a
-missing file, a removed `.top-actions`, a dropped import, a dropped preload, a
-wrong unit number — and **one of the six survived the first version.**
+mutation-tested ten ways. **Two mutations survived**, and both were bugs in the
+gate rather than in the builds:
 
-Deleting `import { escapeHtml } from "./course-shell.js"` left the gate green,
-because the check tested for the substring `"./course-shell.js"` and the
-`<link rel="modulepreload" href="./course-shell.js">` added by the previous
-step contains it. A true fact about the wrong property. It now tests for
-`from "./x.js"`, and the mutation fails as it should.
+- Deleting `import { escapeHtml } from "./course-shell.js"` left it green,
+  because it tested for the substring `"./course-shell.js"` and the
+  `<link rel="modulepreload" href="./course-shell.js">` added by the previous
+  step contains it. A true fact about the wrong property. It tests
+  `from "./x.js"` now.
+- Deleting the `finish()` hook left every progress assertion satisfied,
+  because the gate checked that the progress client was PRESENT and not that
+  anything called it. A perfect function nothing invokes protects nobody. It
+  asserts both call sites now.
+
+A third bug needed no mutation to find — pointing the gate at the LIVE Grade 1
+build reported 22 findings against a build that has every one of those
+properties. It was matching the marker comments **its own tools write**, so it
+was a gate on authorship, not on behaviour. Grade 1 carries the same
+properties under different marker names, put there by `grade-1-app`'s own
+tools. It now matches the behaviour both toolchains emit — the carrier's
+`q.delete("from")` plus a `setAttribute("href"`, and the back link's
+`href = "index.html"`.
+
+Worth stating plainly, because a gate that only recognises its own output
+passes every build it made and fails every build it did not, which is
+indistinguishable from working right up until you point it at something
+else.
 
 ## What these tools do NOT do
 
@@ -72,14 +91,25 @@ step contains it. A true fact about the wrong property. It now tests for
   (`local_prequran/ehel_app_url_overrides`, read by `pqpg_ehel_app_base()`) is
   a Moodle setting reached through the staged-script + cPanel loop. Uploading
   a build makes it reachable by URL and by nobody's course.
-- **Record progress.** No gradebook, no live-group-board position, no study
-  plan, no placement exam. That is a property of being off the standard content
-  path and it is true of every build here — see `../grade-1-app/README.md`.
+- **Map lessons onto the course's units.** `wire-progress.py` DOES report
+  now — that limitation is closed — but under its own `l01`..`lNN` namespace,
+  because these builds are organised by strand and the shell courses are
+  fifteen term-ordered units. Read THE UNIT PROBLEM in that tool before
+  changing it: emitting `u01` would claim curriculum coverage nobody measured.
 
-## Grade 1 has not been migrated onto these
+## Grade 1 is half-migrated, on purpose
 
-Its five tools still sit in `../grade-1-app` and still work. They are the
-record of how `g1v2` was composed, and two of them (`compose-lessons.py`,
-`build-hub.py`) are genuinely Grade-1-specific rather than merely hardcoded.
-Moving the other three is a safe, unforced change on a **live** build; it is
-worth doing next time that build is touched, not for its own sake.
+`../grade-1-app/g1v2/app.config.json` exists, so `wire-progress.py` and
+`check-lessons.py` run against the live build and it is gated by the same
+tool as Grade 2. Its own five tools still sit in `../grade-1-app` and still
+own what they built — navigation, controls, preload, the composed lessons
+themselves. Two of them (`compose-lessons.py`, `build-hub.py`) are genuinely
+Grade-1-specific rather than merely hardcoded.
+
+Re-running the shared navigation and control tools over `g1v2` would rewrite
+markup that is live and working, to no visible end. The half that was worth
+sharing was the half that added something new.
+
+Note `grade-1-app/deploy.mjs` and this one both write
+`app/mathematics/grade-1-v2`. They must ship the same file set: when
+`progress-client.js` was added here it was added there in the same commit.

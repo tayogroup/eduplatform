@@ -27,6 +27,29 @@ from _app import load  # noqa: E402
 MODULES = ["learner-controls.js", "wehel.js", "course-shell.js"]
 
 
+# TEST THE PROPERTY, NOT THE TOOL THAT PUT IT THERE.
+#
+# The first version of this gate matched the marker comments its own tools
+# write, and reported 22 findings against the LIVE Grade 1 build - which has
+# every one of these properties, put there by grade-1-app's own five tools
+# under different marker names. A gate that only recognises its own output is
+# a gate on authorship.
+#
+# Both toolchains emit the same behaviour, so the behaviour is what is
+# matched: the carrier's two load-bearing lines, and the back link's href.
+def carries_params(s):
+    # Two implementations, one behaviour: read location.search, drop `from`,
+    # write the rest back onto in-app hrefs. grade-2's carrier does every
+    # same-directory link; grade-1's hub does `a.lesson` and hardcodes
+    # ?from=g1. Matching the exact line of one of them failed the LIVE build,
+    # which carries the parameters perfectly well by other means.
+    return 'q.delete("from")' in s and 'setAttribute("href"' in s
+
+
+def has_back(s):
+    return 'back.href = "index.html"' in s
+
+
 def main():
     app = load()
     print("\n  Checking %s %s - %d lessons + %s\n" % (
@@ -45,23 +68,23 @@ def main():
     if "claude.ai/code/artifact" in hub:
         fail(app.hub, "still links to a claude.ai artifact - that is a review "
                       "surface, not a page this build serves")
-    if "wire-navigation.py :: carry" not in hub:
+    if not carries_params(hub):
         fail(app.hub, "does not carry the launch parameters onto the cards")
 
     for unit, f, title in app.lessons:
         s = app.read(f)
         if "claude.ai/code/artifact" in s:
             fail(f, "links to a claude.ai artifact")
-        if "wire-navigation.py :: carry" not in s:
+        if not carries_params(s):
             fail(f, "does not carry the launch parameters - the controls on the "
                     "NEXT page will mount nothing")
-        if "wire-navigation.py :: back" not in s:
+        if not has_back(s):
             fail(f, "no way back to the hub")
         if "mountLearnerControls" not in s:
             fail(f, "no class controls")
         if "mountWehelChat" not in s:
             fail(f, "no Wehel")
-        if 'class="top-actions"' not in s:
+        if not re.search('class="[^"]*top-actions', s):
             fail(f, "no .top-actions - placeLearnerControls has nowhere to put "
                     "the buttons and they will not appear")
         for m in MODULES:
@@ -73,6 +96,23 @@ def main():
                 fail(f, "does not import %s" % m)
             if ('href="./%s"' % m) not in s:
                 fail(f, "does not preload %s" % m)
+        if "createProgressClient" not in s:
+            fail(f, "does not report progress - the group board will show "
+                    "this learner as having done nothing")
+        # A client nothing CALLS reports nothing, and mutation-testing this
+        # gate is what found that: deleting the finish() hook left every
+        # other progress assertion satisfied. Assert the call sites, not the
+        # presence of the machinery - "a perfect function nothing invokes
+        # protects nobody".
+        if "window.__ehelStep(i, done)" not in s:
+            fail(f, "finish() does not report the step - completions are "
+                    "never sent")
+        if "window.__ehelAt(cur)" not in s:
+            fail(f, "show() does not report position - the board's pointer "
+                    "will sit on the last COMPLETED step, not where the "
+                    "learner is")
+        if ('UNIT = "%s%02d"' % (app.cfg.get("progressUnitPrefix", "u"), unit)) not in s:
+            fail(f, "reports progress under the wrong unit id")
         if ("unitNo: %d," % unit) not in s:
             fail(f, "Wehel is told a unit number that is not %d" % unit)
         if "function finish" not in s and "finish(" not in s:

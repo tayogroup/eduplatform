@@ -425,6 +425,32 @@
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* ==== template alignment: ink for coloured chips ==== */
+  /* The Grade 2 template's re-solved accent, plus the ink tokens it declares so
+     text sitting ON a coloured chip stops being hardcoded white. Appended after
+     both earlier palette blocks, which is the only place that is certain to win
+     - see the note at the top of align-g1v2-to-template.py. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --teal-ink: #06231F;
+    --plum-ink: #241733;
+    --gold-ink: #2A1F05;
+  }
+
+  .slide-head .n { color: var(--teal-ink); }
+  .say button { color: var(--teal-ink); }
+  .big.teal { color: var(--teal-ink); }
+
+  /* This layer widens the eyebrow's tracking and the base sets it nowrap, so a
+     longer eyebrow would push the step dots off a phone. These do not overflow
+     at 375px today; the guard is here so a longer one cannot. */
+  @media (max-width: 520px) {
+    .hero { flex-wrap: wrap; }
+    .eyebrow { white-space: normal; }
+    .dots { max-width: 100%; justify-content: flex-start; }
+  }
 </style>
 
 

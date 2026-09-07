@@ -446,6 +446,37 @@
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* ==== template alignment: ink for coloured chips ==== */
+  /* The Grade 2 template's re-solved accent, plus the ink tokens it declares so
+     text sitting ON a coloured chip stops being hardcoded white. Appended after
+     both earlier palette blocks, which is the only place that is certain to win
+     - see the note at the top of align-g1v2-to-template.py. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --teal-ink: #06231F;
+    --plum-ink: #241733;
+    --gold-ink: #2A1F05;
+  }
+
+  .slide-head .n { color: var(--teal-ink); }
+  .say button { color: var(--teal-ink); }
+  .big.teal { color: var(--teal-ink); }
+
+  /* One hoop label is drawn in plum ON the card, where --plum reads 4.30:1
+     against the 4.5 it needs. Lifted for TEXT only: the hoop's own border and
+     every plum surface keep --plum, so nothing else in the set moves. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] { --plum-text: #BC92D4; }
+
+  /* This layer widens the eyebrow's tracking and the base sets it nowrap, so a
+     longer eyebrow would push the step dots off a phone. These do not overflow
+     at 375px today; the guard is here so a longer one cannot. */
+  @media (max-width: 520px) {
+    .hero { flex-wrap: wrap; }
+    .eyebrow { white-space: normal; }
+    .dots { max-width: 100%; justify-content: flex-start; }
+  }
 </style>
 
 
@@ -1727,7 +1758,7 @@
   function paint8() {
     $("hoop8").innerHTML =
       '<div class="hoop" style="left:2%;top:6px;width:60%;height:186px"><span class="hlab">red</span></div>' +
-      '<div class="hoop" style="left:38%;top:6px;width:60%;height:186px;border-color:var(--plum)"><span class="hlab" style="color:var(--plum)">circles</span></div>' +
+      '<div class="hoop" style="left:38%;top:6px;width:60%;height:186px;border-color:var(--plum)"><span class="hlab" style="color:var(--plum-text)">circles</span></div>' +
       '<div class="region" style="left:6%;top:60px;width:28%;height:80px" id="r8red"></div>' +
       '<div class="region" style="left:39%;top:60px;width:22%;height:80px" id="r8both"></div>' +
       '<div class="region" style="left:66%;top:60px;width:28%;height:80px" id="r8circ"></div>';

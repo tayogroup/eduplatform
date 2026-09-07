@@ -149,6 +149,23 @@
     a.lesson { transition: none; }
     a.lesson:hover, a.lesson:focus-visible { transform: none; }
   }
+
+  /* ==== template alignment: ink for coloured chips ==== */
+  /* The Grade 2 template's re-solved accent, plus the ink tokens it declares so
+     text sitting ON a coloured chip stops being hardcoded white. Appended after
+     both earlier palette blocks, which is the only place that is certain to win
+     - see the note at the top of align-g1v2-to-template.py. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --teal-ink: #06231F;
+    --plum-ink: #241733;
+    --gold-ink: #2A1F05;
+  }
+
+  .slide-head .n { color: var(--teal-ink); }
+  .say button { color: var(--teal-ink); }
+  .big.teal { color: var(--teal-ink); }
 </style>
 
 <div class="wrap">

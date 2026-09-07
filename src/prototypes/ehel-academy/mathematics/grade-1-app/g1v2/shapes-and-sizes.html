@@ -425,6 +425,32 @@
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* ==== template alignment: ink for coloured chips ==== */
+  /* The Grade 2 template's re-solved accent, plus the ink tokens it declares so
+     text sitting ON a coloured chip stops being hardcoded white. Appended after
+     both earlier palette blocks, which is the only place that is certain to win
+     - see the note at the top of align-g1v2-to-template.py. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --teal-ink: #06231F;
+    --plum-ink: #241733;
+    --gold-ink: #2A1F05;
+  }
+
+  .slide-head .n { color: var(--teal-ink); }
+  .say button { color: var(--teal-ink); }
+  .big.teal { color: var(--teal-ink); }
+
+  /* This layer widens the eyebrow's tracking and the base sets it nowrap, so a
+     longer eyebrow would push the step dots off a phone. These do not overflow
+     at 375px today; the guard is here so a longer one cannot. */
+  @media (max-width: 520px) {
+    .hero { flex-wrap: wrap; }
+    .eyebrow { white-space: normal; }
+    .dots { max-width: 100%; justify-content: flex-start; }
+  }
 </style>
 
 
@@ -1836,7 +1862,7 @@
     for (let i = 0; i <= 10; i++) {
       const x = 14 + i * 15.2;
       t += '<line x1="' + x + '" y1="14" x2="' + x + '" y2="' + (i % 5 === 0 ? 34 : 26) + '" stroke="var(--ink)" stroke-width="2"></line>';
-      if (i % 5 === 0) t += '<text x="' + x + '" y="48" font-size="11" text-anchor="middle" font-family="Inter" fill="var(--ink)">' + i + "</text>";
+      if (i % 5 === 0) t += '<text x="' + x + '" y="48" font-size="11" text-anchor="middle" font-family="Inter" fill="var(--gold-ink)">' + i + "</text>";
     }
     return '<svg viewBox="0 0 180 60"><rect x="6" y="10" width="168" height="42" rx="6" fill="var(--gold)" stroke="var(--ink)" stroke-width="3"></rect>' + t + "</svg>";
   }
@@ -1855,8 +1881,10 @@
     let t = "";
     for (let i = 1; i <= 4; i++) {
       const y = 108 - i * 20;
+      const onLiquid = i <= 1;
       t += '<line x1="20" y1="' + y + '" x2="40" y2="' + y + '" stroke="var(--ink)" stroke-width="2"></line>' +
-        '<text x="46" y="' + (y + 4) + '" font-size="11" font-family="Inter" fill="var(--ink)">' + (i * 100) + "</text>";
+        '<text x="46" y="' + (y + 4) + '" font-size="11" font-family="Inter" fill="' +
+        (onLiquid ? "var(--teal-ink)" : "var(--ink)") + '">' + (i * 100) + "</text>";
     }
     return '<svg viewBox="0 0 110 130"><rect x="18" y="68" width="66" height="52" fill="var(--teal)" opacity="0.85"></rect>' +
       '<path d="M18,20 L18,120 L84,120 L84,20" fill="none" stroke="var(--ink)" stroke-width="4"></path>' + t + "</svg>";

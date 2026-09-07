@@ -1,0 +1,10 @@
+# checks/check-audit.mjs and checks/check-hub.mjs write these on every run, into
+# whatever directory the run started from. They are review output, not source:
+# regenerable, and they churn on each run. Ignored so a `git add` of this
+# directory cannot sweep them in - which is exactly how they reached the first
+# commit of this tree.
+shot-*.png
+
+# the framework text extraction. See the README: this repo holds structured
+# extractions under src/curriculum, never a reproduction of Cambridge's PDF.
+fw.txt

@@ -154,6 +154,7 @@ const handleWehelHomework = createWehelHomeworkHandler({ enabled: () => process.
 // Wehel's Deepgram voice (Aura-2 Thalia replies, nova-3 mic transcription) —
 // Wehel ONLY; the lesson voice and pronunciation check stay on ElevenLabs.
 const { createWehelSpeakHandler, createWehelListenHandler } = require(path.join(__dirname, 'lib', 'wehel-deepgram.js'));
+const { handleAzurePronunciation } = require(path.join(__dirname, 'lib', 'azure-pronunciation.js'));
 const handleWehelSpeak = createWehelSpeakHandler({ apiKey: () => process.env.DEEPGRAM_API_KEY, model: () => process.env.WEHEL_SPEAK_MODEL });
 const handleWehelListen = createWehelListenHandler({ apiKey: () => process.env.DEEPGRAM_API_KEY, model: () => process.env.WEHEL_LISTEN_MODEL });
 
@@ -192,6 +193,7 @@ const apiRoutes = {
   '/api/wehel-homework': handleWehelHomework,
   '/api/wehel-speak': handleWehelSpeak,
   '/api/wehel-listen': handleWehelListen,
+  '/api/azure-pronunciation': handleAzurePronunciation,
   '/local/hubredirect/course_group_chat.php': handleTutoringChat
 };
 

@@ -378,17 +378,239 @@
   }
   round11();
 
+  /* ---- 12: complements ---- 3Ni.03 recognise complements of 100 and complements of multiples of 10 or 100 (up to 1000) */
+  let got12 = 0, asked12 = 0;
+  function round12() {
+    const toThousand = rnd(0, 1) === 1;
+    const target = toThousand ? 1000 : 100;
+    const have = toThousand ? rnd(1, 9) * 100 + (rnd(0, 1) ? 0 : rnd(1, 9) * 10) : rnd(11, 89);
+    const answer = target - have;
+    const pct = Math.round(100 * have / target);
+    $("bar12").innerHTML =
+      '<div class="cap"><span>have ' + have + "</span><span>make " + target + "</span></div>" +
+      '<div class="bar"><div class="fill" style="width:' + pct + '%">' + have + '</div><div class="rest">?</div></div>' +
+      '<div class="sum">' + have + " + ? = " + target + "</div>";
+    const wrong = new Set([answer]);
+    wrong.add(target - have + 10); wrong.add(Math.max(1, target - have - 10));
+    if (!toThousand) wrong.add(100 - Math.floor(have / 10) * 10);
+    offer("ch12", [...wrong].filter((v) => v > 0).slice(0, 4), answer, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = Number(b.dataset.v) === answer;
+      if (!mark("ch12", b, ok)) return;
+      asked12++; if (ok) got12++;
+      $("bar12").querySelector(".rest").textContent = answer;
+      $("fb12").className = "fb " + (ok ? "good" : "");
+      $("fb12").textContent = (ok ? cheer() + " " : "") + have + " + " + answer + " = " + target + ".";
+      say(ok ? cheer() : have + " and " + answer + " make " + target);
+      scoreLine("sc12", got12, asked12, 4);
+      if (got12 >= 4) finish(11, "");
+      setTimeout(round12, 1800);
+    });
+  }
+  round12();
+
+  /* ---- 13: any order ---- 3Ni.02 understand the commutative and associative properties of addition, and USE THESE TO SIMPLIFY */
+  let trio13 = [], picked13 = [], got13 = 0, asked13 = 0;
+  function round13() {
+    const a = rnd(2, 8) * 10 + rnd(1, 9);
+    const b = 100 - a;                 /* a and b are the pair that makes a round hundred */
+    const c = rnd(2, 9) * 10;
+    trio13 = shuffle([a, b, c]); picked13 = [];
+    $("say13").innerHTML = "Add <b>" + trio13.join(" + ") + "</b>. Tap the <b>two</b> that make a round number first.";
+    $("ch13").innerHTML = trio13.map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
+    $("ch13").onclick = (e) => {
+      const btn = e.target.closest(".choice"); if (!btn || btn.disabled) return;
+      const v = Number(btn.dataset.v);
+      picked13.push(v); btn.classList.add("right"); btn.disabled = true; say(String(v));
+      if (picked13.length < 2) return;
+      const ok = picked13.reduce((s, x) => s + x, 0) === 100;
+      asked13++; if (ok) got13++;
+      const total = a + b + c;
+      $("fb13").className = "fb " + (ok ? "good" : "");
+      $("fb13").textContent = ok
+        ? cheer() + " " + a + " + " + b + " = 100, then 100 + " + c + " = " + total + ". Choosing the order made it easy."
+        : "That pair works, but " + a + " + " + b + " = 100 is the easy one. Then 100 + " + c + " = " + total + ".";
+      say(a + " and " + b + " make one hundred, then add " + c + " to get " + total);
+      scoreLine("sc13", got13, asked13, 3);
+      if (got13 >= 3) finish(12, "");
+      setTimeout(round13, 2200);
+    };
+  }
+  round13();
+
+  /* ---- 14 & 15: written methods ---- 3Ni.04 estimate, add and subtract whole numbers with up to three digits (regrouping of ones or tens) */
+  const CX = [352, 262, 172, 92];
+  function colFrame(a, b, sign) {
+    const A = [0, 1, 2].map((i) => Math.floor(a / Math.pow(10, i)) % 10);
+    const B = [0, 1, 2].map((i) => Math.floor(b / Math.pow(10, i)) % 10);
+    return { A, B };
+  }
+  function addTrace(a, b) {
+    const { A, B } = colFrame(a, b);
+    const out = []; let carry = 0;
+    for (let i = 0; i < 3; i++) { const s = A[i] + B[i] + carry; out.push({ A: A[i], B: B[i], carryIn: carry, sum: s, write: s % 10, carryOut: Math.floor(s / 10) }); carry = Math.floor(s / 10); }
+    return { A, B, cols: out, thou: carry };
+  }
+  function subTrace(a, b) {
+    const { A, B } = colFrame(a, b);
+    const work = A.slice(), res = [], acts = [];
+    for (let i = 0; i < 3; i++) {
+      let act = null;
+      const before = work[i];
+      if (work[i] < B[i]) { let j = i + 1; while (work[j] === 0) { work[j] = 9; j++; } work[j] -= 1; work[i] += 10; act = { from: j }; }
+      res.push(work[i] - B[i]); acts.push({ before, after: work[i], act });
+    }
+    return { A, B, work, res, acts };
+  }
+  function drawCols(id, A, B, sign, work, answer, upto, carries, thou) {
+    let svg = "";
+    svg += '<rect class="lit" x="' + (CX[upto] - 38) + '" y="36" width="76" height="192" rx="12"></rect>';
+    ["ONES", "TENS", "HUNDREDS"].forEach((t, k) => { svg += '<text class="hd" x="' + CX[k] + '" y="24">' + t + "</text>"; });
+    for (let i = 0; i < 3; i++) {
+      const changed = work && work[i] !== A[i];
+      svg += '<text class="dg' + (changed ? " spent" : "") + '" x="' + CX[i] + '" y="108">' + A[i] + "</text>";
+      if (changed) {
+        svg += '<line class="strike" x1="' + (CX[i] - 16) + '" y1="98" x2="' + (CX[i] + 16) + '" y2="90"></line>';
+        svg += '<text class="carry" x="' + CX[i] + '" y="68">' + work[i] + "</text>";
+      }
+      if (carries && carries[i]) svg += '<text class="carry" x="' + CX[i + 1] + '" y="68">' + carries[i] + "</text>";
+      svg += '<text class="dg" x="' + CX[i] + '" y="152">' + B[i] + "</text>";
+      if (answer[i] !== null && answer[i] !== undefined) svg += '<text class="dg ans" x="' + CX[i] + '" y="212">' + answer[i] + "</text>";
+    }
+    if (thou) svg += '<text class="dg ans" x="' + CX[3] + '" y="212">' + thou + "</text>";
+    svg += '<text class="sign" x="42" y="152">' + sign + "</text>";
+    svg += '<line class="rule" x1="56" y1="172" x2="392" y2="172"></line>';
+    $(id).innerHTML = svg;
+  }
+  function makeColumnStep(slideIdx, svgId, choicesId, fbId, scId, sayId, isAdd, target) {
+    let a = 0, b = 0, T = null, col = 0, ansDigits = [null, null, null], got = 0, asked = 0;
+    function fresh() {
+      if (isAdd) {
+        do { a = rnd(115, 799); b = rnd(115, 799); T = addTrace(a, b); } while (!T.cols.some((c) => c.carryOut));
+      } else {
+        do { a = rnd(220, 989); b = rnd(115, a - 60); T = subTrace(a, b); } while (!T.acts.some((x) => x.act));
+      }
+      col = 0; ansDigits = [null, null, null];
+      paint();
+    }
+    function paint() {
+      if (isAdd) {
+        const carries = T.cols.map((c, i) => (i < 2 && c.carryOut && i < col ? c.carryOut : 0));
+        drawCols(svgId, T.A, T.B, "+", null, ansDigits, col, carries, col > 2 ? T.thou : 0);
+      } else {
+        const shown = col === 0 ? T.A.slice() : T.A.map((v, i) => (i <= col || T.work[i] !== v ? T.work[i] : v));
+        drawCols(svgId, T.A, T.B, "−", shown, ansDigits, col, null, 0);
+      }
+      const nm = ["ones", "tens", "hundreds"][Math.min(col, 2)];
+      $(sayId).innerHTML = "Work the <b>" + nm + "</b> column. Tap the digit that goes under the line.";
+    }
+    function ask() {
+      if (col > 2) return;
+      const right = isAdd ? T.cols[col].write : T.res[col];
+      const opts = new Set([right]);
+      while (opts.size < 4) opts.add(rnd(0, 9));
+      offer(choicesId, [...opts], right, (e) => {
+        const btn = e.target.closest(".choice"); if (!btn) return;
+        const ok = Number(btn.dataset.v) === right;
+        if (!mark(choicesId, btn, ok)) return;
+        asked++; if (ok) got++;
+        ansDigits[col] = right;
+        const nm = ["ones", "tens", "hundreds"][col];
+        let why;
+        if (isAdd) {
+          const c = T.cols[col];
+          why = c.A + " + " + c.B + (c.carryIn ? " + " + c.carryIn + " carried" : "") + " = " + c.sum + (c.carryOut ? ", so write " + c.write + " and carry " + c.carryOut : ", so write " + c.write);
+        } else {
+          const x = T.acts[col];
+          why = x.act ? "You cannot take " + T.B[col] + " from " + x.before + ", so fetch a ten: " + x.after + " − " + T.B[col] + " = " + T.res[col] : x.before + " − " + T.B[col] + " = " + T.res[col];
+        }
+        $(fbId).className = "fb " + (ok ? "good" : "");
+        $(fbId).textContent = (ok ? cheer() + " " : "") + cap(nm) + ": " + why + ".";
+        say(ok ? cheer() : why);
+        scoreLine(scId, got, asked, target);
+        if (got >= target) finish(slideIdx, "");
+        col++;
+        setTimeout(() => {
+          if (col > 2) {
+            paint();
+            const total = isAdd ? a + b : a - b;
+            $(fbId).className = "fb good";
+            $(fbId).textContent = a + (isAdd ? " + " : " − ") + b + " = " + total + ". Check it roughly: " + Math.round(a / 100) * 100 + (isAdd ? " + " : " − ") + Math.round(b / 100) * 100 + " = " + (isAdd ? Math.round(a / 100) * 100 + Math.round(b / 100) * 100 : Math.round(a / 100) * 100 - Math.round(b / 100) * 100) + ".";
+            say(a + (isAdd ? " plus " : " minus ") + b + " is " + total);
+            setTimeout(() => { fresh(); ask(); }, 2600);
+          } else { paint(); ask(); }
+        }, 1700);
+      });
+    }
+    fresh(); ask();
+  }
+  makeColumnStep(13, "cs14", "ch14", "fb14", "sc14", "say14", true, 6);
+  makeColumnStep(14, "cs15", "ch15", "fb15", "sc15", "say15", false, 6);
+
+  /* ---- 16: money notation ---- 3Nm.01 interpret money notation for currencies that use a decimal point */
+  let got16 = 0, asked16 = 0;
+  function money(v) { return "sh " + v.toFixed(2); }
+  function round16() {
+    const sh = rnd(1, 9), c = rnd(0, 1) ? rnd(1, 9) * 10 : rnd(10, 99);
+    const v = sh + c / 100;
+    $("num16").textContent = money(v);
+    const right = sh + " shillings and " + c + " cents";
+    const opts = [right, sh + " shillings and " + (c % 10 === 0 ? c / 10 : Math.floor(c / 10)) + " cents", (sh + 1) + " shillings and " + c + " cents"];
+    offer("ch16", [...new Set(opts)], right, (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === right;
+      if (!mark("ch16", b, ok)) return;
+      asked16++; if (ok) got16++;
+      $("fb16").className = "fb " + (ok ? "good" : "");
+      $("fb16").textContent = (ok ? cheer() + " " : "") + money(v) + " is " + right + ". The two figures after the dot are cents, and there are 100 cents in a shilling.";
+      say(ok ? cheer() : money(v) + " is " + right);
+      scoreLine("sc16", got16, asked16, 4);
+      if (got16 >= 4) finish(15, "");
+      setTimeout(round16, 2000);
+    });
+  }
+  round16();
+
+  /* ---- 17: change ---- 3Nm.02 add and subtract amounts of money to give change */
+  let got17 = 0, asked17 = 0;
+  function round17() {
+    const price = rnd(1, 4) + rnd(1, 19) * 5 / 100;
+    const paid = Math.ceil(price) + (rnd(0, 1) ? 0 : 1);
+    const change = Math.round((paid - price) * 100) / 100;
+    $("shop17").innerHTML =
+      '<div class="tag"><span>it costs</span><b>' + money(price) + "</b></div>" +
+      '<div class="tag paid"><span>you pay</span><b>' + money(paid) + "</b></div>";
+    const opts = new Set([change.toFixed(2)]);
+    opts.add((change + 0.1).toFixed(2)); opts.add(Math.max(0.05, change - 0.1).toFixed(2)); opts.add((change + 1).toFixed(2));
+    offer("ch17", [...opts].slice(0, 4), change.toFixed(2), (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === change.toFixed(2);
+      if (!mark("ch17", b, ok)) return;
+      asked17++; if (ok) got17++;
+      const upToWhole = Math.round((Math.ceil(price) - price) * 100);
+      $("fb17").className = "fb " + (ok ? "good" : "");
+      $("fb17").textContent = (ok ? cheer() + " " : "") + "Count on: " + money(price) + " + " + upToWhole + " cents makes " + money(Math.ceil(price)) + ", then on to " + money(paid) + ". Change is sh " + change.toFixed(2) + ".";
+      say(ok ? cheer() : "The change is " + change.toFixed(2));
+      scoreLine("sc17", got17, asked17, 4);
+      if (got17 >= 4) finish(16, "");
+      setTimeout(round17, 2400);
+    });
+  }
+  round17();
+
   /* ---- 18: check ---- every question draws on a step above */
   const QS = [
     () => { const n = rnd(2, 9) * 100 + rnd(1, 9) * 10 + rnd(1, 9); const h = Math.floor(n / 100); return { q: "In " + n + ", what is the " + h + " worth?", opts: [h * 100, h, h * 10], a: h * 100, why: "It stands in the hundreds column, so it is worth " + h * 100 + "." }; },
     () => { const n = rnd(11, 89); return { q: "What is " + n + " × 10?", opts: [n * 10, n + 10, n * 100], a: n * 10, why: "Every digit moves one column left, so " + n + " × 10 = " + n * 10 + "." }; },
     () => { const n = rnd(2, 8) * 100 + rnd(51, 99); const r = Math.round(n / 100) * 100; return { q: "Round " + n + " to the nearest 100.", opts: [r, r - 100, Math.floor(n / 10) * 10], a: r, why: n + " is past halfway, so it rounds up to " + r + "." }; },
+    () => { let a = rnd(11, 89); while (a === 50 || a === 55) a = rnd(11, 89); return { q: a + " + ? = 100", opts: [100 - a, 100 - a + 10, a], a: 100 - a, why: a + " + " + (100 - a) + " = 100." }; },
     () => { const n = rnd(100, 999); const last = n % 10; return { q: "Is " + n + " odd or even?", opts: [last % 2 === 0 ? "even" : "odd", last % 2 === 0 ? "odd" : "even"], a: last % 2 === 0 ? "even" : "odd", why: "It ends in " + last + ", so it is " + (last % 2 === 0 ? "even" : "odd") + "." }; },
     () => { const a = rnd(2, 8) * 100 + rnd(0, 99), b = Math.floor(a / 100) * 100 + rnd(0, 99); const s = a > b ? ">" : a < b ? "<" : "="; return { q: "Which sign goes between " + a + " and " + b + "?", opts: [">", "<", "="], a: s, why: a + " " + s + " " + b + "." }; },
     () => { const n = rnd(2, 8) * 100 + rnd(10, 99); const h = Math.floor(n / 100) * 100, t = Math.floor(n / 10) % 10 * 10, o = n % 10; return { q: "Which of these adds up to " + n + "?", opts: [h + " + " + t + " + " + o, h + " + " + (t + 10) + " + " + o, (h + 100) + " + " + t + " + " + o], a: h + " + " + t + " + " + o, why: n + " is " + h + " + " + t + " + " + o + "." }; },
     () => { const st = [10, 100][rnd(0, 1)]; const s = rnd(2, 7) * 100 + rnd(0, 9) * 10 + rnd(0, 9); return { q: "Count on in " + st + "s from " + s + ". What comes next?", opts: [s + st, s + st * 10, s + 1], a: s + st, why: s + " + " + st + " = " + (s + st) + "." }; },
+    () => { let p, paid, ch; do { p = rnd(1, 4) + rnd(1, 9) * 10 / 100; paid = Math.ceil(p); ch = Math.round((paid - p) * 100) / 100; } while (Math.abs(ch - 0.5) < 0.001); return { q: "It costs sh " + p.toFixed(2) + " and you pay sh " + paid.toFixed(2) + ". What is the change?", opts: [ch.toFixed(2), (ch + 0.1).toFixed(2), (1 - ch).toFixed(2)], a: ch.toFixed(2), why: "Count on from sh " + p.toFixed(2) + " to sh " + paid.toFixed(2) + "." }; },
+    () => { const sh = rnd(1, 9), c = rnd(10, 99); return { q: "How much is sh " + sh + "." + c + "?", opts: [sh + " shillings and " + c + " cents", sh + " shillings and " + Math.floor(c / 10) + " cents", c + " shillings and " + sh + " cents"], a: sh + " shillings and " + c + " cents", why: "The two figures after the dot are cents." }; }
   ];
-;
   let qi = 0, got18 = 0, order18 = [];
   /* a question that offers the same answer twice has no single right answer;
      regenerate rather than ship an ambiguous one */
@@ -400,7 +622,7 @@
       $("fb18").className = "fb good";
       $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
       $("sc18").textContent = "";
-      if (got18 >= 5) finish(11, "You have finished the check. Well done.");
+      if (got18 >= 7) finish(17, "You have finished the check. Well done.");
       return;
     }
     const item = nextQ(order18[qi]);
@@ -424,21 +646,13 @@
 
   /* ---- 19: stickers ---- */
   const STICKERS = [
-    ["🏗️", "Three digits"],
-    ["🔤", "Read it and write it"],
-    ["🧩", "Break it apart"],
-    ["🔄", "Regrouping"],
-    ["✖️", "Ten times bigger"],
-    ["🪜", "Count in steps"],
-    ["⚖️", "Odd or even"],
-    ["📏", "Which is bigger"],
-    ["🔢", "Put them in order"],
-    ["🎯", "Rounding"],
-    ["👀", "Estimating"],
-    ["✅", "Show what I know"],
+    ["🏗️", "Three digits"], ["🔤", "Read it and write it"], ["🧩", "Break it apart"], ["🔄", "Regrouping"],
+    ["✖️", "Ten times bigger"], ["🪜", "Count in steps"], ["⚖️", "Odd or even"], ["📏", "Which is bigger"],
+    ["🔢", "Put them in order"], ["🎯", "Rounding"], ["👀", "Estimating"], ["💯", "Make 100"],
+    ["🔀", "Add in any order"], ["➕", "Adding with regrouping"], ["➖", "Taking away with regrouping"],
+    ["🪙", "Money and the dot"], ["🛒", "Giving change"], ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];
-
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
@@ -446,7 +660,6 @@
     $("fb19").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You know your numbers to a thousand." : got + " of " + STICKERS.length + " stickers so far.";
   }
   $("restart").addEventListener("click", () => location.reload());
-
 
 
 
@@ -514,13 +727,13 @@
             "Find the two tens either side, mark halfway, then see which side the number falls."
       ],
       [
-            "480 is nearer to 500 than to 400.",
-            "480 is 20 away from 500 and 80 away from 400.",
+            "63 + 28 is easier worked out as 63 + 30 − 2.",
+            "30 is a round number to add, and taking the extra 2 back off puts it right.",
             [
-                  "It starts with a 4, so it belongs with 400.",
-                  "480 is a big number."
+                  "28 and 30 are the same.",
+                  "You can add numbers in any order, so it does not matter."
             ],
-            "The first digit tells you which two hundreds a number sits between. It does not tell you which of them it is nearer."
+            "The second one is perfectly true and still does not explain this move. Adding a round number is what makes it easier."
       ]
 ];
     const host = document.getElementById("clW");

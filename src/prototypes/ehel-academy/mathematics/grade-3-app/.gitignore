@@ -8,3 +8,11 @@ shot-*.png
 # the framework text extraction. See the README: this repo holds structured
 # extractions under src/curriculum, never a reproduction of Cambridge's PDF.
 fw.txt
+
+# staged locally so the pages can be tested over http (module imports need a
+# real scheme). deploy.mjs is what puts these beside the lessons for real, and
+# flattens their imports the same way - these copies are NOT source.
+learner-controls.js
+wehel.js
+course-shell.js
+progress-client.js

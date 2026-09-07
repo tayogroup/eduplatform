@@ -8,10 +8,13 @@ import { fileURLToPath } from "url";
 const L = (f) => path.join(path.dirname(fileURLToPath(import.meta.url)), "..", f);
 
 const LESSONS = [
-  ["up-to-a-thousand.html", 20],
+  ["up-to-a-thousand.html", 14],
+  ["adding-and-money.html", 9],
   ["rows-and-rules.html", 14],
   ["equal-parts.html", 12],
-  ["sides-sizes-seconds.html", 20],
+  ["shapes-and-symmetry.html", 11],
+  ["measure-it.html", 8],
+  ["time-and-direction.html", 7],
   ["ask-count-chart.html", 13],
   ["index.html", 0],
 ];

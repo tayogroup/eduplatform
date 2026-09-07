@@ -18,11 +18,14 @@
 set -e
 cd "$(dirname "$0")"
 build() { ./build.sh "$1" "$2" "../$3.html"; }
-build l1 "Up to a Thousand"          up-to-a-thousand
-build l2 "Rows and Rules"            rows-and-rules
-build l3 "Equal Parts"               equal-parts
-build l4 "Sides, Sizes and Seconds"  sides-sizes-seconds
-build l5 "Ask, Count and Chart"      ask-count-chart
+build l1 "Up to a Thousand"              up-to-a-thousand
+build l2 "Adding, Taking Away and Money" adding-and-money
+build l3 "Rows and Rules"                rows-and-rules
+build l4 "Equal Parts"                   equal-parts
+build l5 "Shapes and Symmetry"           shapes-and-symmetry
+build l6 "Measure It"                    measure-it
+build l7 "Time and Direction"            time-and-direction
+build l8 "Ask, Count and Chart"          ask-count-chart
 
 echo
 echo "wiring to the platform:"

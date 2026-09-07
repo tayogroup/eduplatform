@@ -11,5 +11,9 @@ node -e "
 const fs=require('fs');const s=fs.readFileSync('$3','utf8');
 const i=s.indexOf('<script>');fs.writeFileSync('.chk.js', s.slice(i+8, s.lastIndexOf('</script>')));
 "
-node --check .chk.js && rm -f .chk.js
+# NOT `node --check … && rm`: set -e ignores a failure in any but the last
+# command of an AND-OR list, so that form PRINTED the syntax error and let the
+# build carry on producing a broken lesson. Found doing exactly that.
+if ! node --check .chk.js; then rm -f .chk.js; echo "SYNTAX ERROR in $3"; exit 1; fi
+rm -f .chk.js
 echo "$3: $(wc -c < "$3") bytes, $(grep -c 'class="slide"' "$3") slides"

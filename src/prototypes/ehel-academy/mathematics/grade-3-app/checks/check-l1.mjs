@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
    checker works from anywhere, not only when the shell happens to be cd'd into
    the lesson directory */
 const L = (f) => path.join(path.dirname(fileURLToPath(import.meta.url)), "..", f);
+const SLIDES = 14;   // the split changed the deck size; kept explicit so a wrong one is a finding
 const LESSON = "up-to-a-thousand.html";
 
 const ONESW = ["zero","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
@@ -34,14 +35,14 @@ const info = await p.evaluate(() => ({
   explainBtns: document.querySelectorAll(".say button.explain").length,
 }));
 console.log(info);
-if (info.slides !== 20) bad.push("slides " + info.slides);
-if (info.dots !== 20) bad.push("dots " + info.dots);
-if (info.explains !== 20) bad.push("slides with data-explain: " + info.explains);
-if (info.says !== 20) bad.push("slides with data-say: " + info.says);
-if (info.explainBtns !== 20) bad.push("explain buttons injected: " + info.explainBtns);
+if (info.slides !== SLIDES) bad.push("slides " + info.slides);
+if (info.dots !== SLIDES) bad.push("dots " + info.dots);
+if (info.explains !== SLIDES) bad.push("slides with data-explain: " + info.explains);
+if (info.says !== SLIDES) bad.push("slides with data-say: " + info.says);
+if (info.explainBtns !== SLIDES) bad.push("explain buttons injected: " + info.explainBtns);
 
 // every slide's stage must render something
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < SLIDES; i++) {
   await p.click(`#dots button[data-i="${i}"]`);
   const st = await p.evaluate(() => {
     const s = document.querySelector(".slide.active");
@@ -152,68 +153,8 @@ for (let r = 0; r < 14; r++) {
   await waitLive("ch10");
 }
 
-// ---- slide 12: complements ----
-await go(11);
-for (let r = 0; r < 12; r++) {
-  const g = await p.evaluate(() => ({ sum: document.getElementById("bar12").querySelector(".sum").textContent, right: Number(document.getElementById("ch12").dataset.right) }));
-  const m = g.sum.match(/(\d+)\s*\+\s*\?\s*=\s*(\d+)/);
-  if (!m) { bad.push("s12 unreadable: " + g.sum); break; }
-  const want = Number(m[2]) - Number(m[1]);
-  if (g.right !== want) bad.push(`s12 ${g.sum}: right=${g.right} want ${want}`);
-  await p.click(`#ch12 .choice[data-v="${g.right}"]`);
-  await waitLive("ch12");
-}
-
-// ---- slides 14 & 15: written methods ----
-for (const [idx, id, sign] of [[13, "14", "+"], [14, "15", "−"]]) {
-  await go(idx);
-  for (let r = 0; r < 12; r++) {
-    const g = await p.evaluate((sv) => {
-      const svg = document.querySelector("#cs" + sv);
-      const top = [...svg.querySelectorAll("text.dg")].filter((t) => t.getAttribute("y") === "108").map((t) => ({ x: +t.getAttribute("x"), v: t.textContent }));
-      const bot = [...svg.querySelectorAll("text.dg")].filter((t) => t.getAttribute("y") === "152").map((t) => ({ x: +t.getAttribute("x"), v: t.textContent }));
-      const ans = [...svg.querySelectorAll("text.dg.ans")].map((t) => ({ x: +t.getAttribute("x"), v: t.textContent }));
-      return { top, bot, ans, right: Number(document.getElementById("ch" + sv).dataset.right), say: document.getElementById("say" + sv).textContent, sign: svg.querySelector("text.sign").textContent };
-    }, id);
-    // columns: x 352=ones, 262=tens, 172=hundreds
-    const cx = { 352: 0, 262: 1, 172: 2 };
-    const A = [0, 0, 0], B = [0, 0, 0];
-    g.top.forEach((t) => { A[cx[t.x]] = Number(t.v); });
-    g.bot.forEach((t) => { B[cx[t.x]] = Number(t.v); });
-    const a = A[0] + A[1] * 10 + A[2] * 100, bb = B[0] + B[1] * 10 + B[2] * 100;
-    if (g.sign !== sign) bad.push(`s${id} sign ${g.sign}`);
-    const col = /ones/.test(g.say) ? 0 : /tens/.test(g.say) ? 1 : 2;
-    let want;
-    if (sign === "+") {
-      let carry = 0; for (let i = 0; i <= col; i++) { const s = A[i] + B[i] + carry; want = s % 10; carry = Math.floor(s / 10); }
-    } else {
-      if (a <= bb) bad.push(`s${id} subtraction would go negative: ${a} − ${bb}`);
-      const w = A.slice(); const res = [];
-      for (let i = 0; i <= col; i++) { if (w[i] < B[i]) { let j = i + 1; while (w[j] === 0) { w[j] = 9; j++; } w[j] -= 1; w[i] += 10; } res.push(w[i] - B[i]); }
-      want = res[col];
-    }
-    if (g.right !== want) bad.push(`s${id} ${a}${sign}${bb} col${col}: right=${g.right} want ${want}`);
-    await p.click(`#ch${id} .choice[data-v="${g.right}"]`);
-    await waitLive("ch" + id);
-  }
-}
-
-// ---- slide 17: change ----
-await go(16);
-for (let r = 0; r < 10; r++) {
-  const g = await p.evaluate(() => {
-    const tags = [...document.querySelectorAll("#shop17 .tag b")].map((x) => x.textContent.replace("sh ", ""));
-    return { price: Number(tags[0]), paid: Number(tags[1]), right: document.getElementById("ch17").dataset.right };
-  });
-  const want = (Math.round((g.paid - g.price) * 100) / 100).toFixed(2);
-  if (g.right !== want) bad.push(`s17 ${g.price}/${g.paid}: right=${g.right} want ${want}`);
-  if (g.paid < g.price) bad.push(`s17 paid less than price`);
-  await p.click(`#ch17 .choice[data-v="${g.right}"]`);
-  await waitLive("ch17");
-}
-
 // ---- slide 18: the check, answer every question ----
-await go(17);
+await go(11);
 for (let r = 0; r < 12; r++) {
   const live = await p.evaluate(() => document.querySelectorAll("#ch18 .choice").length);
   if (!live) break;
@@ -237,8 +178,8 @@ await go((await p.evaluate(() => document.querySelectorAll(".slide").length)) - 
 {
   const g = await p.evaluate(() => ({ n: document.querySelectorAll("#stickers .sticker").length, got: document.querySelectorAll("#stickers .sticker.got").length, fb: document.getElementById("fb19").textContent }));
   console.log("stickers:", g);
-  if (g.n !== 19) bad.push("stickers " + g.n);
-  if (g.got < 8) bad.push("earned only " + g.got + " stickers after answering correctly throughout");
+  if (g.n !== 13) bad.push("stickers " + g.n);
+  if (g.got < 5) bad.push("earned only " + g.got + " stickers after answering correctly throughout");
 }
 
 // ---- responsive ----

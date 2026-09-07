@@ -17,7 +17,7 @@
     } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
   })();
 </script>
-<title>Up to a Thousand</title>
+<title>Measure It</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
   :root {
@@ -677,147 +677,81 @@
 <div class="wrap">
   <header class="hero">
     <div>
-      <p class="eyebrow">Mathematics · Grade 3 · Number and place value</p>
-      <h1>Up to a <em>Thousand</em></h1>
+      <p class="eyebrow">Mathematics · Grade 3 · Measurement</p>
+      <h1>Measure <em>It</em></h1>
     </div>
     <div class="hero-right"><div class="top-actions"></div><nav class="dots" id="dots" aria-label="Steps"></nav></div>
   </header>
 
   <div class="deck" id="deck">
 
-    <!-- 1 three digits -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A digit on its own does not tell you how much it is worth.</s><s>Where it stands does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the buttons to build a number.</s><s>Watch the blocks.</s><s>A hundred block is a whole square, a ten is a single rod, a one is a little cube.</s><s>The three in three hundred and forty eight is worth three hundred, because it is standing in the hundreds column.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children read the digits as separate small numbers, three, four, eight.</s><s>They are not.</s><s>They are three hundred, and forty, and eight.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So build a number, then read what each digit is worth out loud.</s></mstts:express-as>' data-say="Build a number with the buttons. Look at what each digit is worth.">
-      <div class="slide-head"><span class="n">1</span><h2>Three digits</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Press <b>+</b> and <b>−</b> to build a number. Each digit is worth what its column says.</span></div>
+    <!-- 8 length -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Length is measured in centimetres, metres and kilometres, and they step up in known jumps.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A hundred centimetres make one metre.</s><s>A thousand metres make one kilometre.</s><s>So going up a unit means dividing, and coming down means multiplying.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Pick the unit that gives a sensible number.</s><s>A pencil is about fifteen centimetres.</s><s>Nobody measures a pencil in kilometres, and nobody measures a journey in centimetres.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Choose the right unit, or change one into another.</s></mstts:express-as>' data-say="A hundred centimetres in a metre, a thousand metres in a kilometre.">
+      <div class="slide-head"><span class="n">1</span><h2>Centimetres, metres, kilometres</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Choose the answer.</span></div>
       <div class="stage">
-        <div class="pvcols" id="pv1"></div>
-        <div class="bignum" id="big1">0</div>
-        <p class="fb" id="worth1"></p>
-        <p class="fb" id="fb1"></p>
-      </div>
-    </section>
-    <!-- 2 read and write -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Numbers are said in the order they are written, hundreds first.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Four hundred and seventy two.</s><s>Four hundred, then seventy, then two.</s><s>The word and goes in once, after the hundreds, and nowhere else.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The teens are the trap.</s><s>Fourteen is one ten and four ones, but you say the four first.</s><s>Forty is four tens.</s><s>Listen for the difference.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the number, then tap the words that match.</s></mstts:express-as>' data-say="Read the number. Tap the words that say it.">
-      <div class="slide-head"><span class="n">2</span><h2>Read it and write it</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Read the number, then tap the words that say it.</span></div>
-      <div class="stage">
-        <div class="bignum" id="num2">—</div>
-        <div class="choices" id="ch2"></div>
-        <p class="fb" id="fb2"></p>
-        <p class="score" id="sc2"></p>
-      </div>
-    </section>
-    <!-- 3 break it apart -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Taking a number apart into its hundreds, its tens and its ones is called decomposing it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Three hundred and forty eight comes apart into three hundred, and forty, and eight.</s><s>Add those three back together and you have the number again.</s><s>Nothing is lost and nothing is added.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch the zero.</s><s>Three hundred and seven has no tens, so its parts are three hundred and seven, and the zero is holding the tens column open.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the three parts that make the number.</s></mstts:express-as>' data-say="Tap the three parts that add up to this number.">
-      <div class="slide-head"><span class="n">3</span><h2>Break it apart</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Tap the parts that add up to the number.</span></div>
-      <div class="stage">
-        <div class="bignum" id="num3">—</div>
-        <div class="seqbox" id="parts3"></div>
-        <div class="choices" id="ch3"></div>
-        <p class="fb" id="fb3"></p>
-        <p class="score" id="sc3"></p>
-      </div>
-    </section>
-    <!-- 4 regroup -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>There is more than one way to cut a number up, and every way is still the same number.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Three hundred and forty eight is three hundred, forty and eight.</s><s>It is also two hundred, one hundred and forty, and eight.</s><s>One hundred moved out of the hundreds and joined the tens as ten tens.</s><s>That is called regrouping.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>This looks like a trick until you need it.</s><s>It is exactly what you do when you take away and the top digit is too small.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Move a hundred across and check the total has not changed.</s></mstts:express-as>' data-say="Move one hundred into the tens. The number stays the same.">
-      <div class="slide-head"><span class="n">4</span><h2>Another way to break it</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Move a hundred across into the tens. The total must not change.</span></div>
-      <div class="stage">
-        <div class="regroup" id="rg4"></div>
-        <div class="bigbtns"><button type="button" class="big small ghost" id="rgless">◀ Put one back</button><button type="button" class="big small" id="rgmore">Move one across ▶</button></div>
-        <p class="fb" id="fb4"></p>
-      </div>
-    </section>
-    <!-- 5 times ten -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Multiplying by ten does not add a zero.</s><s>It moves every digit one column to the left.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Thirty five times ten.</s><s>The three was three tens and becomes three hundreds.</s><s>The five was five ones and becomes five tens.</s><s>Nothing is left in the ones, so a zero holds that column open.</s><s>Three hundred and fifty.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Add a zero works here and stops working the moment there is a decimal point.</s><s>Learn the move, not the trick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press times ten and watch the digits slide.</s></mstts:express-as>' data-say="Press times ten and watch every digit move one column left.">
-      <div class="slide-head"><span class="n">5</span><h2>Ten times bigger</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Press <b>× 10</b> and watch the digits move one place to the left.</span></div>
-      <div class="stage">
-        <div class="pvcols" id="pv5"></div>
-        <div class="bigbtns"><button type="button" class="big teal" id="x10">× 10</button><button type="button" class="big small ghost" id="new5">Another number</button></div>
-        <p class="fb" id="fb5"></p>
-      </div>
-    </section>
-    <!-- 6 count in steps -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting in steps means adding the same amount again and again, from wherever you happen to be.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Pick a start and a step.</s><s>Counting on in tens from two hundred and thirty six gives two hundred and forty six, two hundred and fifty six, two hundred and sixty six.</s><s>Only the tens digit is moving.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Then it crosses a hundred and the hundreds digit moves too.</s><s>Two hundred and ninety six, then three hundred and six.</s><s>That is the step everyone gets wrong, so go slowly there.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Choose a start, choose a step, and fill in what comes next.</s></mstts:express-as>' data-say="Pick a start and a step. Then tap the number that comes next.">
-      <div class="slide-head"><span class="n">6</span><h2>Count in ones, tens and hundreds</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Pick a step, then tap the number that comes next.</span></div>
-      <div class="stage">
-        <div class="chiprow" id="step6"></div>
-        <div class="seqbox" id="seq6"></div>
-        <div class="choices" id="ch6"></div>
-        <p class="fb" id="fb6"></p>
-        <p class="score" id="sc6"></p>
-      </div>
-    </section>
-    <!-- 7 odd and even -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A number is even if it can be shared into two equal whole groups, and odd if one is always left over.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>You do not have to test the whole number.</s><s>Only the ones digit decides.</s><s>If it ends in nought, two, four, six or eight it is even, however many hundreds are in front of it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children look at the first digit because that is the biggest one.</s><s>It tells you nothing here.</s><s>Cover the number and leave only the last digit showing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Sort each number into odd or even.</s></mstts:express-as>' data-say="Look at the last digit only. Is it odd or even?">
-      <div class="slide-head"><span class="n">7</span><h2>Odd or even</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Look at the <b>last digit</b> only. Odd or even?</span></div>
-      <div class="stage">
-        <div class="bignum" id="num7">—</div>
-        <div class="choices" id="ch7"></div>
-        <p class="fb" id="fb7"></p>
-        <p class="score" id="sc7"></p>
-      </div>
-    </section>
-    <!-- 8 compare -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To compare two numbers, start at the biggest column, not at the end.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the hundreds first.</s><s>If they are different you already have your answer and nothing else matters.</s><s>If they are the same, move along to the tens, then to the ones.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The greater than sign always opens towards the bigger number, like a mouth.</s><s>The point goes to the smaller one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the sign that belongs between them.</s></mstts:express-as>' data-say="Compare the hundreds first. Tap the sign that goes between them.">
-      <div class="slide-head"><span class="n">8</span><h2>Which is bigger?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the sign that belongs between the two numbers.</span></div>
-      <div class="stage">
-        <div class="cmprow" id="cmp8"></div>
+        <div class="bignum" id="q8"></div>
         <div class="choices" id="ch8"></div>
         <p class="fb" id="fb8"></p>
         <p class="score" id="sc8"></p>
       </div>
     </section>
-    <!-- 9 order -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Putting numbers in order is the same comparing, done again and again.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find the smallest of them all and take it first.</s><s>Then find the smallest of what is left.</s><s>Keep going until there is nothing left to take.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Do not sort by how long a number looks, or by its first digit alone.</s><s>Ninety nine is shorter than one hundred and one, and smaller.</s><s>But eighty is shorter than seventy nine, and bigger.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap them from smallest to biggest.</s></mstts:express-as>' data-say="Tap the numbers in order, smallest first.">
-      <div class="slide-head"><span class="n">9</span><h2>Put them in order</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Tap them from <b>smallest</b> to <b>biggest</b>.</span></div>
+    <!-- 9 mass -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Mass is how heavy something is, measured in grams and kilograms.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A thousand grams make one kilogram.</s><s>An apple is about a hundred grams.</s><s>A bag of rice is a kilogram or two.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Big does not mean heavy.</s><s>A huge bag of feathers can weigh less than a small stone, so guess by what a thing is made of, not by its size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick the sensible mass.</s></mstts:express-as>' data-say="A thousand grams make one kilogram. Pick the sensible answer.">
+      <div class="slide-head"><span class="n">2</span><h2>Grams and kilograms</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Choose the answer.</span></div>
       <div class="stage">
-        <div class="seqbox" id="ord9"></div>
+        <div class="bignum" id="q9"></div>
         <div class="choices" id="ch9"></div>
         <p class="fb" id="fb9"></p>
         <p class="score" id="sc9"></p>
       </div>
     </section>
-    <!-- 10 rounding -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Rounding means picking whichever neighbour is nearer.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find the two tens the number sits between, or the two hundreds.</s><s>Mark the halfway point.</s><s>If the number is past halfway it goes up, and if it has not got there yet it goes down.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Exactly halfway is nobody nearer, so there is no right answer to find.</s><s>There is only a rule everyone agreed to follow, and the rule is up.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Look at the line, then tap the answer.</s></mstts:express-as>' data-say="Which neighbour is nearer? Look at the line, then tap.">
-      <div class="slide-head"><span class="n">10</span><h2>Round it to 10 or 100</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Which neighbour is nearer? Tap the answer.</span></div>
+    <!-- 10 capacity -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Capacity is how much a container holds, measured in millilitres and litres.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A thousand millilitres make one litre.</s><s>A teaspoon is about five millilitres.</s><s>A big bottle of water is one or two litres.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Millilitres are very small, so the numbers get big quickly.</s><s>Half a litre is five hundred millilitres, not fifty.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick the sensible amount.</s></mstts:express-as>' data-say="A thousand millilitres make one litre.">
+      <div class="slide-head"><span class="n">3</span><h2>Millilitres and litres</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Choose the answer.</span></div>
       <div class="stage">
-        <svg class="rline" id="line10" viewBox="0 0 520 116" role="img" aria-label="A number line between two neighbours"></svg>
+        <div class="bignum" id="q10"></div>
         <div class="choices" id="ch10"></div>
         <p class="fb" id="fb10"></p>
         <p class="score" id="sc10"></p>
       </div>
     </section>
-    <!-- 11 estimate -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An estimate is a sensible guess made on purpose, not a wild one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Do not try to count them all.</s><s>Look at one small group, decide roughly how many are in it, then see how many groups like that would fill the box.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>An estimate is not a wrong answer.</s><s>Close is the whole point.</s><s>If you are within about a hundred here, you estimated well.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look, pick the closest, then count a group to check.</s></mstts:express-as>' data-say="Do not count them all. Pick the closest estimate.">
-      <div class="slide-head"><span class="n">11</span><h2>Roughly how many?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Do not count them all. Pick the <b>closest</b>.</span></div>
+    <!-- 11 reading a scale -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Before you read any scale, work out what one small mark is worth.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find two numbers that are printed on it.</s><s>Take one away from the other, then count the gaps between them.</s><s>Share the difference between the gaps and you know what one mark means.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Count the gaps, not the marks.</s><s>Between two printed numbers with five little lines there are six gaps, and it is the gaps that carry the value.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Work out one mark, then read the arrow.</s></mstts:express-as>' data-say="Work out what one mark is worth first, then read the arrow.">
+      <div class="slide-head"><span class="n">4</span><h2>Reading a scale</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">What is the arrow pointing at?</span></div>
       <div class="stage">
-        <div class="dotbox" id="box11"></div>
+        <svg class="scaleline" id="g11" viewBox="0 0 460 120" role="img" aria-label="a measuring scale with an arrow"></svg>
         <div class="choices" id="ch11"></div>
         <p class="fb" id="fb11"></p>
         <p class="score" id="sc11"></p>
       </div>
     </section>
-    <!-- 18 check -->
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks what a digit is worth, look at its column.</s><s>If it asks you to round, find the two neighbours first.</s><s>If it is a sum, work from the right.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say18">Tap the answer.</span></div>
+    <!-- 12 right angles -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A right angle is the square corner, the quarter turn.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Every other angle is measured against it.</s><s>Smaller than a right angle is acute.</s><s>Bigger is obtuse.</s><s>Two right angles together make a straight line, which is a half turn.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>How long the arms are drawn makes no difference at all.</s><s>The angle is the amount of turn between them, not the size of the picture.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Compare it with the square corner and choose.</s></mstts:express-as>' data-say="Compare this angle with a right angle. Smaller, the same, or bigger?">
+      <div class="slide-head"><span class="n">5</span><h2>Bigger or smaller than a right angle</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Compare it with a right angle.</span></div>
       <div class="stage">
-        <p class="fb" id="q18" style="font-size:24px"></p>
-        <div class="choices" id="ch18"></div>
-        <p class="fb" id="fb18"></p>
-        <p class="score" id="sc18"></p>
+        <svg class="gsvg" id="g12" viewBox="0 0 300 200" role="img" aria-label="an angle between two arms"></svg>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12"></p>
+        <p class="score" id="sc12"></p>
       </div>
     </section>
-    <!-- 19 stickers -->
+    <!-- 17 check -->
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question uses something from this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it is a shape, count the sides.</s><s>If it is a measurement, check the unit first.</s><s>If it is a time, count on.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read it, think, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say17">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="fb" id="q17" style="font-size:23px"></p>
+        <div class="choices" id="ch17"></div>
+        <p class="fb" id="fb17"></p>
+        <p class="score" id="sc17"></p>
+      </div>
+    </section>
+    <!-- 18 stickers -->
     <!-- how do you know -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Getting the right answer is only half of it.</s><s>Knowing why it is right is the other half.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is something that is true.</s><s>Underneath are three reasons somebody gave for it.</s><s>Only one of them actually explains it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch for a reason that is true and still explains nothing.</s><s>Both numbers are small can be perfectly true and tell you nothing about why the answer is what it is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read all three, then pick the one that really does the work.</s></mstts:express-as>' data-say="Only one of these three reasons really explains it. Which one?">
       <div class="slide-head"><span class="n">?</span><h2>How do you know?</h2></div>
@@ -830,12 +764,12 @@
       </div>
     </section>
 
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb19"></p>
+        <p class="fb" id="fb18"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1678,30 +1612,13 @@
 
 
   /* ==================================================================
-     UP TO A THOUSAND - Grade 3 Number.
-
-     Cambridge Primary Mathematics 0096, Stage 3. Every step below is
-     written against a named objective and the objective is quoted in the
-     comment above it, so a later reader can check the teaching against
-     the framework without leaving the file.
+     SIDES, SIZES AND SECONDS - Grade 3 geometry, measure and time.
+     Cambridge Primary Mathematics 0096, Stage 3 (3Gg, 3Gt, 3Gp).
      ================================================================== */
 
-  const ONESW = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
-  const TENSW = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
-  function words(n) {
-    if (n < 20) return ONESW[n];
-    if (n < 100) { const t = Math.floor(n / 10), o = n % 10; return TENSW[t] + (o ? "-" + ONESW[o] : ""); }
-    const h = Math.floor(n / 100), r = n % 100;
-    return ONESW[h] + " hundred" + (r ? " and " + words(r) : "");
-  }
-  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
-  function pick(arr, n) { return shuffle(arr).slice(0, n); }
-  /* every choice list is shuffled, so the right answer is never in the same place twice */
   function offer(host, opts, right, onPick) {
     $(host).innerHTML = shuffle(opts).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-    $(host).dataset.right = String(right);
-    $(host).dataset.live = "1";
-    $(host).onclick = onPick;
+    $(host).dataset.right = String(right); $(host).dataset.live = "1"; $(host).onclick = onPick;
   }
   function mark(host, btn, ok) {
     if ($(host).dataset.live !== "1") return false;
@@ -1711,408 +1628,209 @@
     if (!ok) { const r = $(host).dataset.right; [...$(host).querySelectorAll(".choice")].forEach((b) => { if (b.dataset.v === r) b.classList.add("right"); }); }
     return true;
   }
-  function scoreLine(id, got, asked, target) {
-    $(id).textContent = got + " right out of " + asked + (got >= target ? " - sticker earned!" : "");
-  }
-
-  /* ---- 1: three digits ---- 3Np.01 the value of each digit is determined by its position */
-  const D1 = [0, 0, 0];
-  let seen1 = 0;
-  function blocks(n, k) {
-    const cls = ["h", "t", "o"][k];
-    let h = "";
-    for (let i = 0; i < n; i++) h += '<span class="blk ' + cls + '"></span>';
-    return h;
-  }
-  function paint1() {
-    const mult = [100, 10, 1];
-    $("pv1").innerHTML = ["Hundreds", "Tens", "Ones"].map((lab, k) =>
-      '<div class="pvc"><span class="pvl">' + lab + '</span><span class="pvd">' + D1[k] + '</span>' +
-      '<span class="pvw' + (D1[k] === 0 ? " none" : "") + '">' + (D1[k] === 0 ? "none here" : "worth " + D1[k] * mult[k]) + "</span>" +
-      '<div class="pvb">' + blocks(D1[k], k) + "</div>" +
-      '<div class="pvbtn"><button type="button" data-k="' + k + '" data-d="-1" aria-label="one fewer ' + lab + '">−</button><button type="button" data-k="' + k + '" data-d="1" aria-label="one more ' + lab + '">+</button></div></div>').join("");
-    const n = D1[0] * 100 + D1[1] * 10 + D1[2];
-    $("big1").textContent = n;
-    $("worth1").innerHTML = D1[0] * 100 + " + " + D1[1] * 10 + " + " + D1[2] + " = <b>" + n + "</b>";
-    if (seen1 >= 6 && D1[0] > 0 && !done[0]) { finish(0, "You have built numbers all the way up to a thousand. Sticker earned."); $("fb1").className = "fb good"; $("fb1").textContent = "Sticker earned! Keep building if you like."; }
-  }
-  $("pv1").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b) return;
-    const k = Number(b.dataset.k), d = Number(b.dataset.d);
-    D1[k] = Math.max(0, Math.min(9, D1[k] + d));
-    seen1++;
-    paint1();
-    const mult = [100, 10, 1];
-    say(D1[k] === 0 ? "no " + ["hundreds", "tens", "ones"][k] : D1[k] + " " + ["hundreds", "tens", "ones"][k] + ", worth " + D1[k] * mult[k]);
-  });
-  paint1();
-
-  /* ---- 2: read and write ---- 3Ni.01 recite, read and write number names and whole numbers 0 to 1000 */
-  let n2 = 0, got2 = 0, asked2 = 0;
-  function round2() {
-    n2 = rnd(101, 999);
-    $("num2").textContent = n2;
-    const right = cap(words(n2));
-    const wrong = new Set();
-    /* every distractor is a real misreading: digits swapped, a teen for a ten, the tens dropped */
-    const h = Math.floor(n2 / 100), t = Math.floor(n2 / 10) % 10, o = n2 % 10;
-    if (t !== o) wrong.add(cap(words(h * 100 + o * 10 + t)));
-    if (t >= 2 && o > 0) wrong.add(cap(words(h * 100 + o)));
-    wrong.add(cap(words(((h % 9) + 1) * 100 + t * 10 + o)));
-    const opts = [right, ...[...wrong].filter((w) => w !== right).slice(0, 2)];
-    offer("ch2", opts, right, (e) => {
-      const b = e.target.closest(".choice"); if (!b) return;
-      const ok = b.dataset.v === right;
-      if (!mark("ch2", b, ok)) return;
-      asked2++; if (ok) got2++;
-      $("fb2").className = "fb " + (ok ? "good" : "");
-      $("fb2").textContent = ok ? cheer() + " " + n2 + " is " + words(n2) + "." : "Not quite. " + n2 + " is " + words(n2) + ".";
-      say(ok ? cheer() + " " + words(n2) : n2 + " is " + words(n2));
-      scoreLine("sc2", got2, asked2, 4);
-      if (got2 >= 4) finish(1, "");
-      setTimeout(round2, 1600);
-    });
-  }
-  round2();
-
-  /* ---- 3: break it apart ---- 3Np.03 compose, decompose and regroup 3-digit numbers */
-  let n3 = 0, picked3 = [], got3 = 0, asked3 = 0;
-  function paint3() {
-    $("parts3").innerHTML = picked3.length
-      ? picked3.map((v) => "<span>" + v + "</span>").join('<span class="gap">+</span>')
-      : '<span class="gap">tap the parts</span>';
-  }
-  function round3() {
-    n3 = rnd(102, 989);
-    const h = Math.floor(n3 / 100) * 100, t = Math.floor(n3 / 10) % 10 * 10, o = n3 % 10;
-    const want = [h, t, o].filter((v) => v > 0);
-    picked3 = []; paint3();
-    $("num3").textContent = n3;
-    const pool = new Set(want);
-    while (pool.size < want.length + 3) {
-      const c = shuffle([h + 100, h - 100, t + 10, t === 0 ? 10 : t - 10, o + 1, Math.floor(n3 / 10), n3 % 100])[0];
-      if (c > 0 && !want.includes(c)) pool.add(c);
+  function scoreLine(id, got, asked, target) { $(id).textContent = got + " right out of " + asked + (got >= target ? " - sticker earned!" : ""); }
+  function nextQ(gen) { let item, guard = 0; do { item = gen(); } while (new Set(item.opts.map(String)).size !== item.opts.length && guard++ < 60); return item; }
+  function uniq(list, want) { const out = []; for (const v of list) { if (out.length >= want) break; if (!out.includes(v)) out.push(v); } return out; }
+  /* A regular polygon drawn on a circle. `wob` squashes it vertically to make it
+     IRREGULAR - which must mean unequal SIDES, not merely unequal angles.
+     Alternating the radius instead was the first attempt and was wrong: on an
+     even-sided polygon it produces an equilateral shape, every side the same
+     length, which is precisely what this lesson tells a child regular means. */
+  function poly(cx, cy, r, n, rot, wob) {
+    const sy = wob ? 0.56 : 1;
+    const pts = [];
+    for (let i = 0; i < n; i++) {
+      const a = rot + i * 2 * Math.PI / n;
+      pts.push([(cx + r * Math.cos(a)).toFixed(1), (cy + r * sy * Math.sin(a)).toFixed(1)]);
     }
-    $("ch3").innerHTML = shuffle([...pool]).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
-    $("ch3").onclick = (e) => {
-      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
-      const v = Number(b.dataset.v);
-      if (!want.includes(v) || picked3.includes(v)) {
-        b.classList.add("wrong"); b.disabled = true;
-        $("fb3").className = "fb"; $("fb3").textContent = v + " is not one of the parts of " + n3 + ".";
-        say("Not that one.");
-        return;
+    return pts;
+  }
+  const ptsStr = (pts) => pts.map((p) => p.join(",")).join(" ");
+
+  /* ---- 9, 10, 11: units ---- 3Gg.02 length, 3Gg.06 mass, 3Gg.07 capacity */
+  function unitStep(idx, qid, chid, sayid, fbid, scid, spec, target) {
+    let got = 0, asked = 0;
+    function round() {
+      const kind = rnd(0, 1);
+      let q, answer, opts, why;
+      if (kind === 0) {
+        /* convert between the two units */
+        const big = rnd(1, 9), conv = spec.per;
+        if (rnd(0, 1)) { q = big + " " + spec.big + " = ? " + spec.small; answer = big * conv; opts = uniq([answer, big * (conv / 10), big * conv * 10, big + conv], 4); why = "There are " + conv + " " + spec.small + " in one " + spec.big + ", so " + big + " " + spec.big + " is " + answer + " " + spec.small + "."; }
+        else { const small = big * conv; q = small + " " + spec.small + " = ? " + spec.big; answer = big; opts = uniq([answer, big * 10, Math.max(1, Math.round(big / 10)), big + 1], 4); why = small + " ÷ " + conv + " = " + big + " " + spec.big + "."; }
+      } else {
+        /* choose the sensible measurement for a familiar object */
+        const item = spec.items[rnd(0, spec.items.length - 1)];
+        q = "About how much is " + item.t + "?";
+        answer = item.a;
+        opts = uniq([item.a, ...item.w], 3);
+        why = item.t + " is about " + item.a + ".";
       }
-      picked3.push(v); b.classList.add("right"); b.disabled = true; paint3();
-      say(String(v));
-      if (picked3.length === want.length) {
-        asked3++; got3++;
-        $("fb3").className = "fb good";
-        $("fb3").textContent = cheer() + " " + want.join(" + ") + " = " + n3 + ".";
-        say(want.join(" plus ") + " makes " + n3);
-        scoreLine("sc3", got3, asked3, 3);
-        if (got3 >= 3) finish(2, "");
-        setTimeout(round3, 1900);
-      }
-    };
+      $(qid).textContent = q;
+      $(sayid).textContent = q;
+      offer(chid, opts, answer, (e) => {
+        const b = e.target.closest(".choice"); if (!b) return;
+        const ok = b.dataset.v === String(answer);
+        if (!mark(chid, b, ok)) return;
+        asked++; if (ok) got++;
+        $(fbid).className = "fb " + (ok ? "good" : "");
+        $(fbid).textContent = (ok ? cheer() + " " : "") + why;
+        say(ok ? cheer() : why);
+        scoreLine(scid, got, asked, target);
+        if (got >= target) finish(idx, "");
+        setTimeout(round, 2300);
+      });
+    }
+    round();
   }
-  round3();
+  unitStep(0, "q8", "ch8", "say8", "fb8", "sc8", {
+    big: "m", small: "cm", per: 100,
+    items: [
+      { t: "a pencil", a: "15 cm", w: ["15 m", "15 km"] },
+      { t: "a classroom door", a: "2 m", w: ["2 cm", "2 km"] },
+      { t: "the walk to the next town", a: "5 km", w: ["5 m", "5 cm"] },
+      { t: "a football pitch", a: "100 m", w: ["100 cm", "100 km"] },
+    ],
+  }, 4);
+  unitStep(1, "q9", "ch9", "say9", "fb9", "sc9", {
+    big: "kg", small: "g", per: 1000,
+    items: [
+      { t: "an apple", a: "100 g", w: ["100 kg", "1 kg"] },
+      { t: "a bag of rice", a: "2 kg", w: ["2 g", "200 g"] },
+      { t: "a grown-up", a: "70 kg", w: ["70 g", "7 kg"] },
+      { t: "a paperclip", a: "1 g", w: ["1 kg", "100 g"] },
+    ],
+  }, 4);
+  unitStep(2, "q10", "ch10", "say10", "fb10", "sc10", {
+    big: "l", small: "ml", per: 1000,
+    items: [
+      { t: "a teaspoon", a: "5 ml", w: ["5 l", "500 ml"] },
+      { t: "a big bottle of water", a: "2 l", w: ["2 ml", "20 ml"] },
+      { t: "a mug of tea", a: "300 ml", w: ["3 ml", "3 l"] },
+      { t: "a bucket", a: "10 l", w: ["10 ml", "100 ml"] },
+    ],
+  }, 4);
 
-  /* ---- 4: regroup ---- 3Np.03 ...and regroup, using hundreds, tens and ones */
-  let base4 = 348, moved4 = 0;
-  function paint4() {
-    const h = Math.floor(base4 / 100), t = Math.floor(base4 / 10) % 10, o = base4 % 10;
-    const hh = (h - moved4) * 100, tt = t * 10 + moved4 * 100;
-    $("rg4").innerHTML =
-      '<span class="rp' + (moved4 ? " moved" : "") + '">' + hh + "</span>" +
-      '<span class="op">+</span><span class="rp' + (moved4 ? " moved" : "") + '">' + tt + "</span>" +
-      '<span class="op">+</span><span class="rp">' + o + "</span>" +
-      '<span class="op">=</span><span class="rp">' + (hh + tt + o) + "</span>";
-    $("rgmore").disabled = moved4 >= h;
-    $("rgless").disabled = moved4 === 0;
-    $("fb4").className = "fb" + (moved4 ? " good" : "");
-    $("fb4").textContent = moved4 === 0
-      ? base4 + " split the ordinary way: " + hh + " + " + tt + " + " + o + "."
-      : moved4 + " hundred moved across as " + (moved4 * 10) + " tens - and the total is still " + base4 + ".";
-  }
-  $("rgmore").addEventListener("click", () => { moved4++; paint4(); say("One hundred moves across as ten tens. Still " + base4 + "."); if (moved4 >= 1) finish(3, ""); });
-  $("rgless").addEventListener("click", () => { moved4--; paint4(); say("Put back. Still " + base4 + "."); });
-  paint4();
-
-  /* ---- 5: times ten ---- 3Np.02 use knowledge of place value to multiply whole numbers by 10 */
-  let n5 = 35, was5 = 0;
-  function paint5(after) {
-    const d = [Math.floor(n5 / 100) % 10, Math.floor(n5 / 10) % 10, n5 % 10];
-    $("pv5").innerHTML = ["Hundreds", "Tens", "Ones"].map((lab, k) =>
-      '<div class="pvc' + (after && d[k] !== 0 ? " lit" : "") + '"><span class="pvl">' + lab + '</span><span class="pvd">' + d[k] + "</span>" +
-      '<span class="pvw' + (d[k] === 0 ? " none" : "") + '">' + (d[k] === 0 ? "none here" : "worth " + d[k] * [100, 10, 1][k]) + "</span></div>").join("");
-  }
-  function new5() {
-    n5 = rnd(11, 99); was5 = 0; paint5(false);
-    $("x10").disabled = false;
-    $("fb5").className = "fb"; $("fb5").textContent = "Now press × 10.";
-    $("say5").innerHTML = "This number is <b>" + n5 + "</b>. Press <b>× 10</b> and watch the digits move.";
-  }
-  $("x10").addEventListener("click", () => {
-    was5 = n5; n5 = n5 * 10; paint5(true);
-    $("x10").disabled = true;
-    $("fb5").className = "fb good";
-    $("fb5").textContent = was5 + " × 10 = " + n5 + ". Every digit moved one column left, and a 0 holds the ones column open.";
-    say(was5 + " times ten is " + n5 + ". Every digit moved one place to the left, and a zero holds the ones column open.");
-    finish(4, "");
-  });
-  $("new5").addEventListener("click", new5);
-  new5();
-
-  /* ---- 6: count on and back ---- 3Nc.02 count on and back in steps of constant size: 1s, tens or hundreds, from any number */
-  const STEPS6 = [1, 10, 100, -1, -10, -100];
-  let step6 = 10, seq6 = [], got6 = 0, asked6 = 0;
-  function paintChips6() {
-    $("step6").innerHTML = STEPS6.map((v) => '<button type="button" class="' + (v === step6 ? "on" : "") + '" data-v="' + v + '">' + (v > 0 ? "+" : "−") + Math.abs(v) + "</button>").join("");
-  }
-  function round6() {
-    /* The start is chosen so the run crosses a ten or a hundred - the step
-       everyone gets wrong - AND so all four terms stay inside 0 to 1000, which
-       is the range the objective names. Counting back past zero is Stage 5. */
-    const mag = Math.abs(step6);
-    let start;
-    if (mag === 1) start = rnd(1, 8) * 100 + rnd(1, 9) * 10 + (step6 > 0 ? rnd(6, 9) : rnd(0, 3));
-    else if (mag === 10) start = rnd(1, 8) * 100 + (step6 > 0 ? rnd(6, 9) : rnd(0, 3)) * 10 + rnd(0, 9);
-    else start = (step6 > 0 ? rnd(1, 6) : rnd(4, 9)) * 100 + rnd(0, 99);
-    seq6 = [start, start + step6, start + 2 * step6];
-    const answer = start + 3 * step6;
-    $("seq6").innerHTML = seq6.map((v) => "<span>" + v + "</span>").join("") + '<span class="gap now">?</span>';
-    /* the answer is added first and never filtered, so it cannot be dropped */
-    const list = [answer];
-    const cands = [answer + step6, answer - step6 * 2, seq6[2] + (step6 > 0 ? 1 : -1) * mag * 10, answer + (step6 > 0 ? 1 : -1)];
-    for (const c of cands) { if (list.length >= 4) break; if (c !== answer && c >= 0 && c <= 1000 && !list.includes(c)) list.push(c); }
-    while (list.length < 3) { const c = answer + rnd(1, 3) * mag * (rnd(0, 1) ? 1 : -1); if (c >= 0 && c <= 1000 && !list.includes(c)) list.push(c); }
-    offer("ch6", list, answer, (e) => {
-      const b = e.target.closest(".choice"); if (!b) return;
-      const ok = Number(b.dataset.v) === answer;
-      if (!mark("ch6", b, ok)) return;
-      asked6++; if (ok) got6++;
-      $("seq6").innerHTML = seq6.map((v) => "<span>" + v + "</span>").join("") + '<span class="gap filled">' + answer + "</span>";
-      $("fb6").className = "fb " + (ok ? "good" : "");
-      $("fb6").textContent = ok ? cheer() + " " + seq6[2] + " " + (step6 > 0 ? "+" : "−") + " " + Math.abs(step6) + " = " + answer + "." : "The step is " + (step6 > 0 ? "+" : "−") + Math.abs(step6) + ", so " + seq6[2] + " goes to " + answer + ".";
-      say(ok ? cheer() : seq6[2] + (step6 > 0 ? " add " : " take away ") + Math.abs(step6) + " is " + answer);
-      scoreLine("sc6", got6, asked6, 4);
-      if (got6 >= 4) finish(5, "");
-      setTimeout(round6, 1700);
-    });
-  }
-  $("step6").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b) return;
-    step6 = Number(b.dataset.v); paintChips6();
-    say("Counting " + (step6 > 0 ? "on in " : "back in ") + Math.abs(step6) + (Math.abs(step6) === 1 ? "s" : "s"));
-    round6();
-  });
-  paintChips6(); round6();
-
-  /* ---- 7: odd and even ---- 3Nc.03 use knowledge of even and odd numbers up to 10 to recognise and sort numbers */
-  let n7 = 0, got7 = 0, asked7 = 0;
-  function round7() {
-    n7 = rnd(100, 999);
-    $("num7").textContent = n7;
-    const last = n7 % 10, right = last % 2 === 0 ? "even" : "odd";
-    $("ch7").innerHTML = ["odd", "even"].map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
-    $("ch7").dataset.right = right; $("ch7").dataset.live = "1";
-    $("ch7").onclick = (e) => {
-      const b = e.target.closest(".choice"); if (!b) return;
-      const ok = b.dataset.v === right;
-      if (!mark("ch7", b, ok)) return;
-      asked7++; if (ok) got7++;
-      $("fb7").className = "fb " + (ok ? "good" : "");
-      $("fb7").textContent = (ok ? cheer() + " " : "Look again. ") + "It ends in " + last + ", and " + last + " is " + right + " - so " + n7 + " is " + right + ". The hundreds make no difference at all.";
-      say(ok ? cheer() + " it ends in " + last + ", which is " + right : "It ends in " + last + ", so it is " + right);
-      scoreLine("sc7", got7, asked7, 4);
-      if (got7 >= 4) finish(6, "");
-      setTimeout(round7, 1700);
-    };
-  }
-  round7();
-
-  /* ---- 8: compare ---- 3Np.04 compare and order 3-digit numbers using =, > and < */
-  let got8 = 0, asked8 = 0;
-  function round8() {
-    let a = rnd(100, 999), b = rnd(100, 999);
-    /* half the rounds share a hundreds digit, so the ones-first shortcut fails and the child must move along */
-    if (rnd(0, 1)) b = Math.floor(a / 100) * 100 + rnd(0, 99);
-    if (rnd(0, 7) === 0) b = a;
-    const right = a > b ? ">" : a < b ? "<" : "=";
-    $("cmp8").innerHTML = "<span>" + a + '</span><span class="slot">?</span><span>' + b + "</span>";
-    $("ch8").innerHTML = [">", "<", "="].map((o) => '<button type="button" class="choice" data-v="' + o + '" style="font-size:30px">' + o + "</button>").join("");
-    $("ch8").dataset.right = right; $("ch8").dataset.live = "1";
-    $("ch8").onclick = (e) => {
-      const btn = e.target.closest(".choice"); if (!btn) return;
-      const ok = btn.dataset.v === right;
-      if (!mark("ch8", btn, ok)) return;
-      asked8++; if (ok) got8++;
-      $("cmp8").innerHTML = "<span>" + a + '</span><span class="slot">' + right + "</span><span>" + b + "</span>";
-      const ha = Math.floor(a / 100), hb = Math.floor(b / 100);
-      const why = a === b ? "They are the same number." : ha !== hb ? "The hundreds settle it: " + ha + " against " + hb + "." : "Same hundreds, so move along to the tens and ones.";
-      $("fb8").className = "fb " + (ok ? "good" : "");
-      $("fb8").textContent = (ok ? cheer() + " " : "") + a + " " + right + " " + b + ". " + why;
-      say(ok ? cheer() : a + " is " + (right === ">" ? "greater than " : right === "<" ? "less than " : "equal to ") + b);
-      scoreLine("sc8", got8, asked8, 4);
-      if (got8 >= 4) finish(7, "");
-      setTimeout(round8, 1700);
-    };
-  }
-  round8();
-
-  /* ---- 9: order ---- 3Np.04 understand the relative size of quantities to compare and ORDER */
-  let set9 = [], taken9 = [], got9 = 0, asked9 = 0;
-  function paint9() {
-    $("ord9").innerHTML = taken9.length ? taken9.map((v) => "<span>" + v + "</span>").join('<span class="gap">‹</span>') : '<span class="gap">smallest first</span>';
-  }
-  function round9() {
-    const h = rnd(2, 7);
-    /* three of the four share a hundreds digit, so length and first digit are both useless */
-    set9 = shuffle([h * 100 + rnd(0, 30), h * 100 + rnd(40, 69), h * 100 + rnd(70, 99), (h + 1) * 100 + rnd(0, 40)]);
-    taken9 = []; paint9();
-    $("ch9").innerHTML = set9.map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
-    $("ch9").onclick = (e) => {
-      const b = e.target.closest(".choice"); if (!b || b.disabled) return;
-      const v = Number(b.dataset.v);
-      const left = set9.filter((x) => !taken9.includes(x));
-      const smallest = Math.min(...left);
-      if (v !== smallest) {
-        b.classList.add("wrong");
-        $("fb9").className = "fb"; $("fb9").textContent = smallest + " is smaller than " + v + ", so " + smallest + " comes first.";
-        say(smallest + " is smaller");
-        setTimeout(() => b.classList.remove("wrong"), 700);
-        return;
-      }
-      taken9.push(v); b.classList.add("right"); b.disabled = true; paint9(); say(String(v));
-      if (taken9.length === set9.length) {
-        asked9++; got9++;
-        $("fb9").className = "fb good";
-        $("fb9").textContent = cheer() + " " + taken9.join(" < ") + ".";
-        say("In order: " + taken9.join(", "));
-        scoreLine("sc9", got9, asked9, 3);
-        if (got9 >= 3) finish(8, "");
-        setTimeout(round9, 2000);
-      }
-    };
-  }
-  round9();
-
-  /* ---- 10: rounding ---- 3Np.05 round 3-digit numbers to the nearest 10 or 100 */
-  let got10 = 0, asked10 = 0;
-  function round10() {
-    const to = rnd(0, 1) ? 10 : 100;
-    const n = rnd(101, 989);
-    const lo = Math.floor(n / to) * to, hi = lo + to, mid = lo + to / 2;
-    const exact = n % to === 0;
-    const answer = exact ? n : (n >= mid ? hi : lo);
-    const x = (v) => 52 + 416 * (v - lo) / to;
-    let svg = '<line class="axis" x1="20" y1="70" x2="500" y2="70"></line>';
-    for (let k = 0; k <= 10; k++) { const vx = 52 + 41.6 * k; svg += '<line class="tick" x1="' + vx.toFixed(1) + '" y1="64" x2="' + vx.toFixed(1) + '" y2="76"></line>'; }
-    svg += '<line class="half" x1="' + x(mid).toFixed(1) + '" y1="52" x2="' + x(mid).toFixed(1) + '" y2="88"></line>';
-    svg += '<text class="lab mid" x="' + x(mid).toFixed(1) + '" y="106">' + mid + "</text>";
-    svg += '<circle class="pin" cx="' + x(lo).toFixed(1) + '" cy="70" r="6"></circle><text class="lab" x="' + x(lo).toFixed(1) + '" y="106">' + lo + "</text>";
-    svg += '<circle class="pin" cx="' + x(hi).toFixed(1) + '" cy="70" r="6"></circle><text class="lab" x="' + x(hi).toFixed(1) + '" y="106">' + hi + "</text>";
-    svg += '<circle class="dotv" cx="' + x(n).toFixed(1) + '" cy="70" r="8"></circle><text class="mark" x="' + x(n).toFixed(1) + '" y="40">' + n + "</text>";
-    $("line10").innerHTML = svg;
-    $("say10").innerHTML = "Round <b>" + n + "</b> to the nearest <b>" + to + "</b>.";
-    offer("ch10", [lo, hi], answer, (e) => {
-      const b = e.target.closest(".choice"); if (!b) return;
-      const ok = Number(b.dataset.v) === answer;
-      if (!mark("ch10", b, ok)) return;
-      asked10++; if (ok) got10++;
-      const why = exact ? n + " is already a " + to + "." : n === mid ? "Exactly halfway - and the rule everyone agreed on is that halfway goes up." : (n > mid ? n + " is past halfway (" + mid + "), so it goes up." : n + " has not reached halfway (" + mid + "), so it goes down.");
-      $("fb10").className = "fb " + (ok ? "good" : "");
-      $("fb10").textContent = (ok ? cheer() + " " : "") + n + " to the nearest " + to + " is " + answer + ". " + why;
-      say(ok ? cheer() + " " + answer : n + " rounds to " + answer);
-      scoreLine("sc10", got10, asked10, 4);
-      if (got10 >= 4) finish(9, "");
-      setTimeout(round10, 2000);
-    });
-  }
-  round10();
-
-  /* ---- 11: estimate ---- 3Nc.01 estimate the number of objects or people (up to 1000) */
+  /* ---- 11: reading a scale ---- 3Gg.11 use instruments that measure length, mass, capacity and temperature */
+  const SCALES = [
+    { unit: "g", steps: [10, 20, 50], base: 0, what: "the kitchen scales" },
+    { unit: "ml", steps: [10, 20, 50], base: 0, what: "the measuring jug" },
+    { unit: "cm", steps: [1, 2, 5], base: 0, what: "the ruler" },
+    { unit: "°C", steps: [1, 2, 5], base: 0, what: "the thermometer" },
+  ];
   let got11 = 0, asked11 = 0;
   function round11() {
-    const real = rnd(2, 9) * 50 + rnd(-18, 18);
-    let h = "";
-    for (let i = 0; i < real; i++) h += '<i style="left:' + (2 + Math.random() * 95).toFixed(2) + "%;top:" + (3 + Math.random() * 92).toFixed(2) + '%"></i>';
-    $("box11").innerHTML = h;
-    const near = Math.round(real / 50) * 50;
-    const opts = [near, near + 150, Math.max(50, near - 150), near + 300];
-    offer("ch11", [...new Set(opts)].slice(0, 4), near, (e) => {
+    const s = SCALES[rnd(0, SCALES.length - 1)];
+    const step = s.steps[rnd(0, s.steps.length - 1)];
+    const perLabel = [2, 5][rnd(0, 1)];          /* small marks between printed numbers */
+    const majors = 4;
+    const labelStep = step * perLabel;
+    const total = majors * perLabel;
+    const at = rnd(1, total - 1);
+    const answer = s.base + at * step;
+    const x0 = 30, x1 = 430, y = 74;
+    let svg = '<line class="ax" x1="' + x0 + '" y1="' + y + '" x2="' + x1 + '" y2="' + y + '"></line>';
+    for (let k = 0; k <= total; k++) {
+      const x = x0 + (x1 - x0) * k / total;
+      const major = k % perLabel === 0;
+      svg += '<line class="tk" x1="' + x.toFixed(1) + '" y1="' + (y - (major ? 16 : 8)) + '" x2="' + x.toFixed(1) + '" y2="' + y + '"></line>';
+      if (major) svg += '<text class="n" x="' + x.toFixed(1) + '" y="' + (y + 22) + '">' + (s.base + k * step) + "</text>";
+    }
+    const ax = x0 + (x1 - x0) * at / total;
+    svg += '<polygon class="ptr" points="' + ax.toFixed(1) + "," + (y - 22) + " " + (ax - 9).toFixed(1) + "," + (y - 40) + " " + (ax + 9).toFixed(1) + "," + (y - 40) + '"></polygon>';
+    $("g11").innerHTML = svg;
+    $("say11").innerHTML = "On " + s.what + ", what is the arrow pointing at? The numbers go up in <b>" + labelStep + " " + s.unit + "</b>.";
+    const opts = uniq([answer, answer + step, answer - step, answer + labelStep], 4).filter((v) => v >= s.base);
+    offer("ch11", opts.map((v) => v + " " + s.unit), answer + " " + s.unit, (e) => {
       const b = e.target.closest(".choice"); if (!b) return;
-      const ok = Number(b.dataset.v) === near;
+      const ok = b.dataset.v === answer + " " + s.unit;
       if (!mark("ch11", b, ok)) return;
       asked11++; if (ok) got11++;
       $("fb11").className = "fb " + (ok ? "good" : "");
-      $("fb11").textContent = (ok ? cheer() + " " : "") + "There were " + real + ", so about " + near + " was the closest. An estimate is meant to be close, not exact.";
-      say(ok ? cheer() + " there were " + real : "There were " + real + ", so " + near + " was closest");
-      scoreLine("sc11", got11, asked11, 3);
-      if (got11 >= 3) finish(10, "");
-      setTimeout(round11, 2200);
+      $("fb11").textContent = (ok ? cheer() + " " : "") + "There are " + perLabel + " gaps between the printed numbers and they cover " + labelStep + " " + s.unit + ", so one small mark is " + step + " " + s.unit + ". The arrow is " + at + " marks along: " + answer + " " + s.unit + ".";
+      say(ok ? cheer() : "One mark is " + step + ", so the arrow is at " + answer);
+      scoreLine("sc11", got11, asked11, 4);
+      if (got11 >= 4) finish(3, "");
+      setTimeout(round11, 2800);
     });
   }
   round11();
 
-  /* ---- 18: check ---- every question draws on a step above */
+  /* ---- 12: right angles ---- 3Gg.10 compare angles with a right angle */
+  let got12 = 0, asked12 = 0;
+  function round12() {
+    const kind = rnd(0, 2);   /* 0 acute, 1 right, 2 obtuse */
+    const deg = kind === 1 ? 90 : kind === 0 ? rnd(25, 75) : rnd(105, 165);
+    const cx = 90, cy = 150, len = rnd(60, 120);
+    const a = -deg * Math.PI / 180;
+    const x2 = cx + len * Math.cos(a), y2 = cy + len * Math.sin(a);
+    let svg = '<line class="arm" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + len) + '" y2="' + cy + '"></line>';
+    svg += '<line class="arm b" x1="' + cx + '" y1="' + cy + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '"></line>';
+    svg += '<path class="rt" d="M' + (cx + 34) + " " + cy + " A34 34 0 0 0 " + (cx + 34 * Math.cos(a)).toFixed(1) + " " + (cy + 34 * Math.sin(a)).toFixed(1) + '"></path>';
+    $("g12").innerHTML = svg;
+    const right = kind === 1 ? "exactly a right angle" : kind === 0 ? "smaller than a right angle" : "bigger than a right angle";
+    $("say12").textContent = "Compare this angle with a right angle.";
+    $("ch12").innerHTML = ["smaller than a right angle", "exactly a right angle", "bigger than a right angle"].map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
+    $("ch12").dataset.right = right; $("ch12").dataset.live = "1";
+    $("ch12").onclick = (e) => {
+      const b = e.target.closest(".choice"); if (!b) return;
+      const ok = b.dataset.v === right;
+      if (!mark("ch12", b, ok)) return;
+      asked12++; if (ok) got12++;
+      $("fb12").className = "fb " + (ok ? "good" : "");
+      $("fb12").textContent = (ok ? cheer() + " " : "") + "It is " + right + ". How long the arms are drawn makes no difference - the angle is the amount of turn between them. Two right angles together make a straight line.";
+      say(ok ? cheer() : "It is " + right);
+      scoreLine("sc12", got12, asked12, 4);
+      if (got12 >= 4) finish(4, "");
+      setTimeout(round12, 2500);
+    };
+  }
+  round12();
+
+  /* ---- 17: check ---- */
   const QS = [
-    () => { const n = rnd(2, 9) * 100 + rnd(1, 9) * 10 + rnd(1, 9); const h = Math.floor(n / 100); return { q: "In " + n + ", what is the " + h + " worth?", opts: [h * 100, h, h * 10], a: h * 100, why: "It stands in the hundreds column, so it is worth " + h * 100 + "." }; },
-    () => { const n = rnd(11, 89); return { q: "What is " + n + " × 10?", opts: [n * 10, n + 10, n * 100], a: n * 10, why: "Every digit moves one column left, so " + n + " × 10 = " + n * 10 + "." }; },
-    () => { const n = rnd(2, 8) * 100 + rnd(51, 99); const r = Math.round(n / 100) * 100; return { q: "Round " + n + " to the nearest 100.", opts: [r, r - 100, Math.floor(n / 10) * 10], a: r, why: n + " is past halfway, so it rounds up to " + r + "." }; },
-    () => { const n = rnd(100, 999); const last = n % 10; return { q: "Is " + n + " odd or even?", opts: [last % 2 === 0 ? "even" : "odd", last % 2 === 0 ? "odd" : "even"], a: last % 2 === 0 ? "even" : "odd", why: "It ends in " + last + ", so it is " + (last % 2 === 0 ? "even" : "odd") + "." }; },
-    () => { const a = rnd(2, 8) * 100 + rnd(0, 99), b = Math.floor(a / 100) * 100 + rnd(0, 99); const s = a > b ? ">" : a < b ? "<" : "="; return { q: "Which sign goes between " + a + " and " + b + "?", opts: [">", "<", "="], a: s, why: a + " " + s + " " + b + "." }; },
-    () => { const n = rnd(2, 8) * 100 + rnd(10, 99); const h = Math.floor(n / 100) * 100, t = Math.floor(n / 10) % 10 * 10, o = n % 10; return { q: "Which of these adds up to " + n + "?", opts: [h + " + " + t + " + " + o, h + " + " + (t + 10) + " + " + o, (h + 100) + " + " + t + " + " + o], a: h + " + " + t + " + " + o, why: n + " is " + h + " + " + t + " + " + o + "." }; },
-    () => { const st = [10, 100][rnd(0, 1)]; const s = rnd(2, 7) * 100 + rnd(0, 9) * 10 + rnd(0, 9); return { q: "Count on in " + st + "s from " + s + ". What comes next?", opts: [s + st, s + st * 10, s + 1], a: s + st, why: s + " + " + st + " = " + (s + st) + "." }; },
+    () => { const m = rnd(1, 9); return { q: m + " m = ? cm", opts: [m * 100, m * 10, m * 1000], a: m * 100, why: "100 cm in a metre." }; },
+    () => { const k = rnd(1, 9); return { q: k + " kg = ? g", opts: [k * 1000, k * 100, k * 10], a: k * 1000, why: "1000 g in a kilogram." }; },
+    () => { return { q: "How many millilitres in one litre?", opts: [1000, 100, 10], a: 1000, why: "1000 ml make 1 litre." }; },
+    () => { return { q: "How many right angles make a straight line?", opts: [2, 1, 4], a: 2, why: "Two right angles together are a half turn." }; },
+    () => { const st = [10, 100][rnd(0, 1)]; const b = rnd(2, 7) * st; return { q: "A scale is marked every " + st + " g. The pointer is halfway between " + b + " and " + (b + st) + ". What does it read?", opts: [b + st / 2, b + st, b + st / 10], a: b + st / 2, why: "One space is " + st + " g, so halfway is " + (st / 2) + " g past " + b + "." }; },
+    () => { return { q: "Which unit would you use for the length of a classroom?", opts: ["metres", "millimetres", "kilometres"], a: "metres", why: "A classroom is a few metres across." }; },
   ];
 ;
-  let qi = 0, got18 = 0, order18 = [];
-  /* a question that offers the same answer twice has no single right answer;
-     regenerate rather than ship an ambiguous one */
-  function nextQ(gen) { let item, guard = 0; do { item = gen(); } while (new Set(item.opts.map(String)).size !== item.opts.length && guard++ < 60); return item; }
-  function round18() {
-    if (qi >= order18.length) {
-      $("q18").textContent = "";
-      $("ch18").innerHTML = "";
-      $("fb18").className = "fb good";
-      $("fb18").textContent = "Finished! " + got18 + " out of " + order18.length + ".";
-      $("sc18").textContent = "";
-      if (got18 >= 5) finish(11, "You have finished the check. Well done.");
+  let qi = 0, got17 = 0, order17 = [];
+  function round17() {
+    if (qi >= order17.length) {
+      $("q17").textContent = ""; $("ch17").innerHTML = "";
+      $("fb17").className = "fb good"; $("fb17").textContent = "Finished! " + got17 + " out of " + order17.length + ".";
+      $("sc17").textContent = "";
+      if (got17 >= 4) finish(5, "You have finished the check.");
       return;
     }
-    const item = nextQ(order18[qi]);
-    $("q18").textContent = item.q;
-    $("say18").textContent = item.q;
-    offer("ch18", item.opts, item.a, (e) => {
+    const item = nextQ(order17[qi]);
+    $("q17").textContent = item.q; $("say17").textContent = item.q;
+    offer("ch17", item.opts, item.a, (e) => {
       const b = e.target.closest(".choice"); if (!b) return;
       const ok = b.dataset.v === String(item.a);
-      if (!mark("ch18", b, ok)) return;
-      if (ok) got18++;
+      if (!mark("ch17", b, ok)) return;
+      if (ok) got17++;
       qi++;
-      $("fb18").className = "fb " + (ok ? "good" : "");
-      $("fb18").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
+      $("fb17").className = "fb " + (ok ? "good" : "");
+      $("fb17").textContent = (ok ? cheer() + " " : "Not this time. ") + item.why;
       say(ok ? cheer() : item.why);
-      $("sc18").textContent = got18 + " right out of " + qi;
-      setTimeout(round18, 2000);
+      $("sc17").textContent = got17 + " right out of " + qi;
+      setTimeout(round17, 2100);
     });
   }
-  order18 = shuffle(QS);
-  round18();
+  order17 = shuffle(QS);
+  round17();
 
-  /* ---- 19: stickers ---- */
+  /* ---- 18: stickers ---- */
   const STICKERS = [
-    ["🏗️", "Three digits"],
-    ["🔤", "Read it and write it"],
-    ["🧩", "Break it apart"],
-    ["🔄", "Regrouping"],
-    ["✖️", "Ten times bigger"],
-    ["🪜", "Count in steps"],
-    ["⚖️", "Odd or even"],
-    ["📏", "Which is bigger"],
-    ["🔢", "Put them in order"],
-    ["🎯", "Rounding"],
-    ["👀", "Estimating"],
+    ["📏", "Length"],
+    ["⚖️", "Mass"],
+    ["🥤", "Capacity"],
+    ["🌡️", "Reading a scale"],
+    ["📐", "Right angles"],
     ["✅", "Show what I know"],
     ["\ud83e\udd14", "How do you know"]
   ];
@@ -2120,8 +1838,8 @@
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;
-    $("fb19").className = "fb " + (got === STICKERS.length ? "good" : "");
-    $("fb19").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You know your numbers to a thousand." : got + " of " + STICKERS.length + " stickers so far.";
+    $("fb18").className = "fb " + (got === STICKERS.length ? "good" : "");
+    $("fb18").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You can measure length, mass and capacity." : got + " of " + STICKERS.length + " stickers so far.";
   }
   $("restart").addEventListener("click", () => location.reload());
 
@@ -2147,58 +1865,58 @@
   (function () {
     const BANK = [
       [
-            "348 is bigger than 315.",
-            "Both have 3 hundreds, so look at the tens: 4 tens beats 1 ten.",
+            "You would measure a pencil in centimetres, not kilometres.",
+            "A pencil is about 15 cm; measured in kilometres the number would be far too small to be any use.",
             [
-                  "348 has more digits than 315.",
-                  "8 is bigger than 5."
+                  "Kilometres are only for measuring roads.",
+                  "A pencil cannot be measured in kilometres at all."
             ],
-            "Start at the biggest column. The hundreds match, so the tens settle it and the ones never get a say."
+            "Any unit would work. You pick the one that gives a sensible number."
       ],
       [
-            "70 × 10 = 700.",
-            "Every digit moves one column left, so the 7 tens become 7 hundreds.",
+            "1 kilogram is heavier than 750 grams.",
+            "A kilogram is 1000 grams, and 1000 grams is more than 750 grams.",
             [
-                  "You add a zero on the end.",
-                  "70 and 10 both end in zero, so the answer does too."
+                  "Kilograms are always heavier than grams.",
+                  "The word kilogram is longer."
             ],
-            "Adding a zero happens to work for whole numbers and stops working the moment there is a decimal point. The move is the part that is actually true."
+            "Put both into the same unit before comparing. “Always heavier” is not true either: 200 g beats a tenth of a kilogram."
       ],
       [
-            "462 is even.",
-            "It ends in 2, and 2 shares into two equal groups.",
+            "Half a litre is 500 millilitres.",
+            "A litre is 1000 millilitres, and half of 1000 is 500.",
             [
-                  "It has a 4 at the front, and 4 is even.",
-                  "462 is a big number, and big numbers are even."
+                  "Half of a hundred is fifty.",
+                  "Millilitres are very small."
             ],
-            "Only the last digit decides. The hundreds and the tens make no difference at all."
+            "Change the unit first, then halve it. Halving the wrong number is what gives 50."
       ],
       [
-            "In 505 the two 5s are not worth the same.",
-            "The left 5 stands in the hundreds column and the right one in the ones, so they are worth 500 and 5.",
+            "On a scale marked every 100 g, a pointer halfway between 300 and 400 reads 350 g.",
+            "One space on this scale is worth 100 g, so halfway along it is 50 g past 300.",
             [
-                  "One of them is written first.",
-                  "The 0 in the middle makes them different."
+                  "It sits between 3 and 4, so it is three and a half.",
+                  "The pointer is somewhere near the middle."
             ],
-            "Position decides value. The digit only says how many."
+            "Work out what ONE space is worth before reading anything off. The marks are not always ones."
       ],
       [
-            "607 rounds to 610 to the nearest ten.",
-            "607 is past 605, which is halfway between 600 and 610.",
+            "A door is about 2 metres tall, not 2 centimetres.",
+            "A centimetre is about the width of a fingernail, and two of those would not reach your ankle.",
             [
-                  "600 is nearer because 607 starts with a 6.",
-                  "607 has a 7 in it, and 7 is a big digit."
+                  "Metres are the unit used for doors.",
+                  "2 centimetres is a small number."
             ],
-            "Find the two tens either side, mark halfway, then see which side the number falls."
+            "Choosing a unit means picturing the size, not remembering which unit usually goes with which object."
       ],
       [
-            "480 is nearer to 500 than to 400.",
-            "480 is 20 away from 500 and 80 away from 400.",
+            "An angle that opens wider than the corner of a page is bigger than a right angle.",
+            "The corner of a page is a right angle, so anything opening wider than it is more.",
             [
-                  "It starts with a 4, so it belongs with 400.",
-                  "480 is a big number."
+                  "Its two arms are drawn longer.",
+                  "It looks big on the page."
             ],
-            "The first digit tells you which two hundreds a number sits between. It does not tell you which of them it is nearer."
+            "The length of the arms is not the angle. Only the opening between them is, which is why a tiny drawing can hold a big angle."
       ]
 ];
     const host = document.getElementById("clW");
@@ -2316,7 +2034,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l01",
+      progressUnit: "l06",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -2338,13 +2056,13 @@
           container: drawer.querySelector(".w-drawer-body"),
           meta: {
             subject: "mathematics", subjectLabel: "Mathematics", grade: 3,
-            unitNo: 1, unitTitle: "Up to a Thousand",
+            unitNo: 6, unitTitle: "Measure It",
             learnerCategory: q.get("category") || "",
           },
           store: {},
           ui: { escapeHtml, toast },
           tutorLabel: "Wehel Tutor",
-          placeholder: "Ask about Up to a Thousand\u2026",
+          placeholder: "Ask about Measure It\u2026",
           quickPrompts: [
             { label: "Explain it simply", message: "Explain this step in a simpler way." },
             { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
@@ -2375,7 +2093,7 @@
   const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
 
   const COURSE = "ehel-math-g03";
-  const UNIT = "l01";
+  const UNIT = "l06";
   const STUDENT = q.get("studentid") || "local";
 
   /* Without a launch endpoint the backend is "local": everything still

@@ -207,8 +207,10 @@ def patch_fragments(slug, bank):
 if __name__ == "__main__":
     which = sys.argv[1]
     if which == "g3":
-        order = ["up-to-a-thousand", "rows-and-rules", "equal-parts", "sides-sizes-seconds", "ask-count-chart"]
-        frag = dict(zip(order, ["l1", "l2", "l3", "l4", "l5"]))
+        # 2026-09-07: five lessons became eight (src/split-lessons.py)
+        order = ["up-to-a-thousand", "adding-and-money", "rows-and-rules", "equal-parts",
+                 "shapes-and-symmetry", "measure-it", "time-and-direction", "ask-count-chart"]
+        frag = dict(zip(order, ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8"]))
         for name in order:
             patch_fragments(frag[name], G3[name])
     else:

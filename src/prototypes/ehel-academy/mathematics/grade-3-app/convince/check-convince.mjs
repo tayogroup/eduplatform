@@ -20,10 +20,13 @@ const G1 = (f) => path.join(HERE, "..", "..", "grade-1-app", f);
    and never counts a missing step as a pass: an absent Grade 1 half is
    reported as NOT CHECKED, which is neither green nor a finding. */
 const G3_LESSONS = [
-  [L("up-to-a-thousand.html"), 20],
+  [L("up-to-a-thousand.html"), 14],
+  [L("adding-and-money.html"), 9],
   [L("rows-and-rules.html"), 14],
   [L("equal-parts.html"), 12],
-  [L("sides-sizes-seconds.html"), 20],
+  [L("shapes-and-symmetry.html"), 11],
+  [L("measure-it.html"), 8],
+  [L("time-and-direction.html"), 7],
   [L("ask-count-chart.html"), 13],
 ];
 const G1_LESSONS = [

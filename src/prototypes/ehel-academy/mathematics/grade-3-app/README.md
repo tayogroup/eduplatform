@@ -1,6 +1,6 @@
 # Grade 3 Mathematics — the standalone lesson build
 
-Five self-contained lesson pages plus a hub, on the model of `../grade-1-app`:
+Eight self-contained lesson pages plus a hub, on the model of `../grade-1-app`:
 each carries its own CSS, its own activity JS and its own copy of the voice
 engine, and none of it goes through `shell/course-app.js`.
 
@@ -10,13 +10,23 @@ generated from it and are also committed, because they are what deploys and a
 deploy must not depend on a shell that can run bash.
 
 ```bash
-src/build-all.sh                       # rebuild all five AND re-wire them
+src/build-all.sh                              # rebuild all eight AND re-wire them
 python ../lesson-app-tools/check-lessons.py   # the shared gate
-node checks/check-l1.mjs               # ... l2 l3 l4 l5, one per lesson
+node checks/check-runtime.mjs                 # all eight over HTTP — see below
+node checks/check-l1.mjs                      # ... l2 l3 l4 l8, per-step maths
 node checks/check-hub.mjs
-node checks/check-a11y.mjs             # all six pages, both themes
-node convince/check-convince.mjs       # the "How do you know?" step
-node checks/check-audit.mjs            # needs fw.txt — see below
+node checks/check-a11y.mjs                    # all nine pages, both themes
+node convince/check-convince.mjs              # the "How do you know?" step
+node checks/check-audit.mjs                   # needs fw.txt — see below
+```
+
+`check-runtime.mjs` needs the tree served over HTTP and the platform modules
+staged beside the lessons, because an ES module import cannot work from a
+`file://` page whatever is on disk:
+
+```bash
+node checks/stage-local-modules.mjs           # gitignored copies, for testing only
+# then serve src/ (tools/serve-src-preview.js, port 4287)
 ```
 
 `src/build-all.sh` reproduces all five committed lessons **byte-identically**,
@@ -33,6 +43,52 @@ wiring instead of losing it, the tools stay the one shared definition of what
 wiring is (the same four that wire Grade 2), and build+wire is still byte-for-byte
 reproducible. All four are idempotent — verified, a second run of the set changes
 no byte.
+
+## Eight lessons, not five (2026-09-07)
+
+The build shipped as five, and two of them were portmanteaus: *Up to a Thousand*
+carried 17 teaching steps across four Cambridge strands and *Sides, Sizes and
+Seconds* carried 17 across three — 31 of the 53 objectives between them — while
+the other three carried 8 to 11 steps and one strand each. Grade 2 gives younger
+children 9 lessons averaging ~12 steps; Grade 3 was giving older children 5, with
+two at 17.
+
+That is not only untidy. **The lesson is the progress unit**, so a teacher reading
+the live group board saw "in Up to a Thousand" for a child who might be at place
+value or at giving change, 17 steps apart; the unit gate made a child finish all
+17 before reaching money; and a tutoring search for "giving change" landed on a
+lesson named after place value.
+
+| unit | lesson | steps | strand |
+| --- | --- | --- | --- |
+| 1 | Up to a Thousand | 11 | number and place value |
+| 2 | Adding, Taking Away and Money | 6 | calculation, money |
+| 3 | Rows and Rules | 11 | times, sharing, patterns |
+| 4 | Equal Parts | 9 | fractions |
+| 5 | Shapes and Symmetry | 8 | geometry |
+| 6 | Measure It | 5 | measurement |
+| 7 | Time and Direction | 4 | time, position |
+| 8 | Ask, Count and Chart | 10 | statistics, chance |
+
+**Not one teaching step was rewritten.** The split falls on seams that already
+existed — the `/* ---- N: name ---- objective */` markers and the matching slide
+sections — so every step keeps its markup, narration, element ids and activity
+code. What changed is which file a step lives in, the `finish()` index it
+reports, and which check questions and stickers travel with it. `src/split-lessons.py`
+did it and is kept for provenance.
+
+**Element ids are deliberately NOT renumbered.** Unit 2 keeps `fb12`..`fb17`
+rather than becoming `fb1`..`fb6`: they only have to be unique within one page,
+and renumbering would mean rewriting the slides and the content in step, which
+buys a whole class of silent mismatch for cosmetics.
+
+**The Convincing claims moved rather than being rewritten**, and that doubled as
+a check on the seams: a claim with nowhere to go would mean a cut in the wrong
+place, and none was. 17 were newly authored to bring every bank back to six.
+
+**11 check questions were authored, and one gap predates the split**: the old
+lesson 1 had no check question on column addition or column subtraction, its two
+hardest steps.
 
 ## Status: built, wired, gated, NOT deployed, NOT routed
 
@@ -183,6 +239,26 @@ build's tool too: `check-lessons.py` lists three modules in `MODULES`
 carried by `deploy.mjs`, so nothing is broken — but the gate's "a page importing
 a module the deploy does not carry" check does not cover it, and that failure
 mode is a 404 on a module specifier which takes the whole script with it.
+
+## What the split left owed
+
+**Units 5, 6 and 7 have no bespoke maths checker.** The old lesson-4 checker is
+the only thing that recomputed the geometry, unit-conversion and time-interval
+maths independently of what the page claims — the kind of assertion that has
+caught real defects here. It could not be split automatically: it uses a
+different section-comment style from the others and two of its `go()` calls take
+a variable rather than a literal (the whole-deck loop, and the UNITS table), so
+an automatic split would have dropped its measure assertions or retargeted them
+at the wrong slides without saying so.
+
+It is kept, not deleted, under `checks/superseded/` with a README saying plainly
+that it does not run. Until it is ported by hand those three units are covered by
+`checks/check-runtime.mjs`, which walks every slide, exercises the check step and
+catches runtime errors — but answers with the page's own `dataset.right`, so it
+does **not** verify the maths. That gap is real.
+
+Units 1, 2, 3, 4 and 8 keep their per-step maths checkers
+(`checks/check-l1..l4,l8.mjs`), ported by index remap.
 
 ## Measured, not assumed
 

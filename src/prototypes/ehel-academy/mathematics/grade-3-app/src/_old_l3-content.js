@@ -405,7 +405,6 @@
 
 
 
-
   /* ==================================================================
      CONVINCING - "presenting evidence to justify or challenge a
      mathematical idea or solution" (Cambridge TWM.04).

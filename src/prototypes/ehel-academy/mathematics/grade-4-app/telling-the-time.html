@@ -697,7 +697,7 @@
     <span class="eh-track"><i id="ehFill"></i></span>
   </div>
   <div class="eh-b1right">
-    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="four-digits-strong.html">Four Digits Strong</option><option value="numbers-and-behaviour.html">Numbers and How They Behave</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html" selected>Telling the Time</option><option value="shape-space-place.html">Shape, Space and Place</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="big-numbers-below-zero.html">Big Numbers and Below Zero</option><option value="patterns-and-squares.html">Patterns and Square Numbers</option><option value="ways-to-calculate.html">Ways to Calculate</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html" selected>Telling the Time</option><option value="shape-and-measures.html">Shape and Measures</option><option value="where-things-are.html">Where Things Are</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
     <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
   </div>
 </header>
@@ -736,7 +736,8 @@
     </section>
 
     <!-- 2 clocks -->
-    <section class="slide" data-say="One moment can be written three ways. On a clock face, as a twelve hour time, or as a twenty four hour time. The am or pm tells you which half of the day it is.">
+    
+<section class="slide" data-say="One moment can be written three ways. On a clock face, as a twelve hour time, or as a twenty four hour time. The am or pm tells you which half of the day it is.">
       <div class="slide-head"><span class="n">2</span><h2>Three ways to say one time</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">A clock face, a <b>12-hour</b> time with am or pm, and a <b>24-hour</b> time. One moment, three ways of writing it.</span></div>
       <div class="stage">
@@ -758,7 +759,8 @@
     </section>
 
     <!-- 3 timetable -->
-    <section class="slide" data-say="A timetable reads down for one bus and across for one stop. Find the bus that gets you there in time.">
+    
+<section class="slide" data-say="A timetable reads down for one bus and across for one stop. Find the bus that gets you there in time.">
       <div class="slide-head"><span class="n">3</span><h2>Reading a timetable</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Read <b>down</b> a column to follow one bus, and <b>across</b> a row to compare the same stop. Times are in 24-hour.</span></div>
       <div class="stage">
@@ -769,7 +771,8 @@
     </section>
 
     <!-- 4 intervals -->
-    <section class="slide" data-say="To find how long something lasted, count on from the start to the finish.">
+    
+<section class="slide" data-say="To find how long something lasted, count on from the start to the finish.">
       <div class="slide-head"><span class="n">4</span><h2>How long between?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Count on from the start to the end. Do the <b>whole units</b> first, then the rest.</span></div>
       <div class="stage">
@@ -784,7 +787,8 @@
     </section>
 
     <!-- 5 check -->
-    <section class="slide" data-say="Show what you know. Tap the answer.">
+    
+<section class="slide" data-say="Show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Tap the answer.</span></div>
       <div class="stage">
@@ -796,7 +800,8 @@
     </section>
 
     <!-- 6 stickers -->
-    <section class="slide" data-say="Every step you finished earned a sticker.">
+    
+<section class="slide" data-say="Every step you finished earned a sticker.">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Every step you finished earned a sticker.</span></div>
       <div class="stage">
@@ -1878,7 +1883,7 @@
     { q: "A film starts at 16:20 and ends at 18:45. How long is it?", o: ["2 h 25 min", "2 h 35 min", "1 h 25 min"], a: 0, w: "16 to 18 is 2 hours, and 20 to 45 is 25 minutes." },
     { q: "How many months are there in 3 years?", o: ["36", "30", "33"], a: 0, w: "A year is 12 months, and 3 × 12 = 36." },
     { q: "A train leaves at 13:20 and arrives at 14:05. How long does it take?", o: ["45 minutes", "85 minutes", "1 hour 45 min"], a: 0, w: "From 13:20 to 14:00 is 40 minutes, and 5 more makes 45." },
-    { q: "From 5 March to 26 March is how many weeks?", o: ["3 weeks", "21 weeks", "2 weeks"], a: 0, w: "26 − 5 = 21 days, and 21 ÷ 7 = 3 weeks." },
+    { q: "From 5 March to 26 March is how many weeks?", o: ["3 weeks", "21 weeks", "2 weeks"], a: 0, w: "26 − 5 = 21 days, and 21 ÷ 7 = 3 weeks." }
   ]);
   let c5 = 0, right5 = 0, lock5 = false;
   function round5() {
@@ -1912,7 +1917,7 @@
   round5();
 
   /* ---- 6: stickers ---- */
-  const STICKERS = [["📏", "How long is that?"], ["🕰️", "Three ways to say one time"], ["🚌", "Reading a timetable"], ["⏱️", "How long between?"], ["✅", "Show what I know"]];
+  const STICKERS = [ "📏", "How long is that?", "🕰️", "Three ways to say one time" ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -1936,8 +1941,7 @@
   });
 
   /* 2 (4Gt.02) 24-hour to 12-hour. Distractors are the am/pm slip and the next hour;
-     "subtract 12" is deliberately NOT offered because for 13:00-23:59 it is correct. */
-  ask(2, () => {
+     "subtract 12" is deliberately NOT offered because for 13:00-23:59 it is correct. */  ask(2, () => {
     const t = rnd(0, 23) * 60 + rnd(0, 11) * 5;
     const h = Math.floor(t / 60) % 24, m = t % 60;
     const hh = ((h + 11) % 12) + 1, suf = h < 12 ? "am" : "pm";
@@ -1951,8 +1955,7 @@
   });
 
   /* 4 (4Gt.04) an interval. Built the way the slide builds one, so the end minutes are
-     always the larger and the child never has to bridge through 60 here. */
-  ask(4, () => {
+     always the larger and the child never has to bridge through 60 here. */  ask(4, () => {
     const h1 = rnd(7, 10), m1 = rnd(0, 5) * 5;
     const h2 = h1 + rnd(1, 3), m2 = m1 + rnd(1, 5) * 5;
     const dh = h2 - h1, dm = m2 - m1;
@@ -2098,7 +2101,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l04",
+      progressUnit: "l05",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -2120,7 +2123,7 @@
           container: drawer.querySelector(".w-drawer-body"),
           meta: {
             subject: "mathematics", subjectLabel: "Mathematics", grade: 4,
-            unitNo: 4, unitTitle: "Telling the Time",
+            unitNo: 5, unitTitle: "Telling the Time",
             learnerCategory: q.get("category") || "",
           },
           store: {},
@@ -2157,7 +2160,7 @@
   const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
 
   const COURSE = "ehel-math-g04";
-  const UNIT = "l04";
+  const UNIT = "l05";
   const STUDENT = q.get("studentid") || "local";
 
   /* Without a launch endpoint the backend is "local": everything still

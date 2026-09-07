@@ -17,7 +17,7 @@
     } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
   })();
 </script>
-<title>Four Digits Strong</title>
+<title>Ways to Calculate</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
 
@@ -535,6 +535,98 @@
     .dots { max-width: 100%; justify-content: flex-start; }
   }
 
+  /* ---------- Numbers and How They Behave: only what the shared lesson CSS lacks ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
+  .chip { padding: 8px 13px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font-size: 14px;
+    font-variant-numeric: tabular-nums; }
+  .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+  .picker-lab2 { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--muted); margin: 16px 0 6px; }
+  .qstem { font-size: 19px; font-weight: 700; margin: 10px 0 6px; }
+  .big-eq { font-family: "Inter", "Segoe UI", sans-serif; font-size: 30px; font-weight: 600;
+    text-align: center; margin: 10px 0; font-variant-numeric: tabular-nums; }
+  .big-eq .unk { color: var(--accent); font-size: 1.1em; }
+
+  /* 1 — a number and its name */
+  .bignum { font-family: "Inter", "Segoe UI", sans-serif; font-size: 46px; font-weight: 600; text-align: center;
+    color: var(--teal); font-variant-numeric: tabular-nums; margin: 6px 0 2px; }
+  .inwords { text-align: center; font-size: 19px; font-weight: 700; color: var(--accent);
+    margin-bottom: 6px; text-transform: capitalize; }
+
+  /* 2 — pairing counters */
+  .pairbox { margin: 12px 0 4px; }
+  .prow2 { display: grid; grid-template-columns: 34px 1fr 62px; gap: 8px; align-items: center; padding: 5px 0; }
+  .pn { font-family: "Inter", "Segoe UI", sans-serif; font-size: 19px; font-weight: 600; text-align: right; }
+  .pdots { display: flex; flex-wrap: wrap; gap: 5px; }
+  .pdots i { display: block; height: 15px; border-radius: 8px; }
+  .pdots i.pair { width: 32px; }
+  .pdots i.odd1 { width: 15px; outline: 2px dashed var(--accent); outline-offset: 2px; }
+  .pdots i.t1 { background: var(--teal); } .pdots i.t2 { background: var(--plum); }
+  .pdots i.t3 { background: var(--gold); }
+  .ptag { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-align: right; }
+  .ptag.odd { color: var(--accent); } .ptag.even { color: var(--good); }
+  .plus2 { font-family: "Inter", "Segoe UI", sans-serif; font-size: 22px; font-weight: 600;
+    color: var(--muted); text-align: center; margin: 2px 0; }
+
+  /* 3 — bar model for an unknown */
+  .barmodel { display: grid; justify-items: center; gap: 5px; margin: 10px 0; }
+  .barmodel { width: 100%; max-width: 300px; margin-left: auto; margin-right: auto; }
+  .bwhole { display: flex; width: 100%; height: 40px; border-radius: 10px; overflow: hidden;
+    border: 2px solid var(--line); box-sizing: border-box; }
+  .btot { width: 100%; }
+  .bpart { display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600;
+    font-size: 16px; overflow: hidden; }
+  .bpart.known { background: var(--teal-soft); color: var(--teal); }
+  .bpart.unknownp { background: var(--accent-soft); color: var(--accent); font-size: 20px; }
+  .btot { text-align: center; font-size: 12px; font-weight: 700; color: var(--muted);
+    border-top: 2px solid var(--line); padding-top: 3px; }
+
+  /* 4 — sequence strip */
+  .seqrow { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; justify-content: center; margin: 10px 0; }
+  .term4 { display: grid; place-items: center; min-width: 46px; padding: 9px 6px; border-radius: 10px;
+    background: var(--teal-soft); border: 2px solid var(--teal); color: var(--teal);
+    font-family: "Inter", "Segoe UI", sans-serif; font-size: 19px; font-weight: 600; }
+  .term4.ghost4 { background: var(--ground); border-style: dashed; border-color: var(--line); color: var(--muted); }
+  .step { font-size: 12px; font-weight: 700; color: var(--accent); }
+
+  /* 5 — square dots */
+  .sqdots { display: grid; gap: 4px; justify-content: center; margin: 12px 0 4px; }
+  .sqrow { display: flex; gap: 4px; }
+  .sqrow i { display: block; width: 17px; height: 17px; border-radius: 50%; background: var(--teal); }
+  .sqrow i.edge { background: var(--accent); }
+
+  /* 9 — place value table */
+  .pvtable { margin: 12px 0 4px; overflow-x: auto; }
+  .pvrow { display: grid; grid-template-columns: repeat(6, 40px) 78px; gap: 3px; align-items: center; }
+  .pvrow.head span { font-size: 9px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--muted); text-align: center; padding-bottom: 3px; }
+  .pvrow span { text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-size: 19px; font-weight: 600;
+    padding: 7px 0; }
+  .pvrow span.d { background: var(--teal-soft); border: 1.5px solid var(--teal); border-radius: 8px; color: var(--teal); }
+  .pvrow .rl { font-family: Inter, system-ui, sans-serif; font-size: 12px; font-weight: 700;
+    color: var(--muted); text-align: left; padding-left: 6px; }
+
+  /* 10 — number line with negatives */
+  /* width is load-bearing, not cosmetic. .stage is a column flex with
+     align-items: center, so a child sizes to its CONTENT — and every child here
+     is position:absolute, which means content width 0 and the whole line
+     collapses to a smudge. The donor's .nline in g4-lesson.css always had this
+     pair; this class was written without it. */
+  .numline { position: relative; width: 100%; max-width: 660px; height: 62px; margin: 14px 0 6px; }
+  .nlbar { position: absolute; left: 0; right: 0; top: 26px; height: 4px; background: var(--line); border-radius: 2px; }
+  .nltick { position: absolute; top: 21px; width: 2px; height: 14px; background: var(--line); transform: translateX(-50%); }
+  .nllab { position: absolute; top: 40px; font-size: 11px; font-weight: 700; color: var(--muted);
+    transform: translateX(-50%); font-variant-numeric: tabular-nums; }
+  .nlmark { position: absolute; top: 18px; width: 16px; height: 16px; border-radius: 50%;
+    transform: translateX(-50%); border: 2px solid var(--card); }
+  .nlmark.a { background: var(--teal); }
+  .nlmark.b { background: var(--accent); }
+  .nlmark.both { background: linear-gradient(90deg, var(--teal) 0 50%, var(--accent) 50% 100%); }
+  .cmpa { color: var(--teal); } .cmpb { color: var(--accent); }
+  .choice.sign10, .choice.sign { font-family: "Inter", "Segoe UI", sans-serif; font-size: 26px; font-weight: 600;
+    min-width: 64px; padding: 6px 14px; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -633,7 +725,6 @@
 </style>
 
 
-
 <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
@@ -642,14 +733,14 @@
     <span class="eh-track"><i id="ehFill"></i></span>
   </div>
   <div class="eh-b1right">
-    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="four-digits-strong.html" selected>Four Digits Strong</option><option value="numbers-and-behaviour.html">Numbers and How They Behave</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-space-place.html">Shape, Space and Place</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="big-numbers-below-zero.html">Big Numbers and Below Zero</option><option value="patterns-and-squares.html">Patterns and Square Numbers</option><option value="ways-to-calculate.html" selected>Ways to Calculate</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-and-measures.html">Shape and Measures</option><option value="where-things-are.html">Where Things Are</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
     <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
   </div>
 </header>
 <nav class="eh-bar2" aria-label="Lesson">
   <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
   <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
-  <span class="eh-section">Four Digits Strong</span>
+  <span class="eh-section">Ways to Calculate</span>
   <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
 </nav>
 <div class="eh-steps" id="ehSteps" hidden></div>
@@ -657,182 +748,120 @@
   <header class="hero">
     <div>
       <p class="eyebrow">Mathematics · Grade 4</p>
-      <h1>Four Digits <em>Strong</em></h1>
+      <h1>Ways to <em>Calculate</em></h1>
     </div>
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
   <div class="deck" id="deck">
-    <!-- 1 thousands -->
-    <section class="slide" data-say="Ten hundreds make a thousand. Build a number with thousands, hundreds, tens and ones.">
-      <div class="slide-head"><span class="n">1</span><h2>Numbers to 10,000</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Ten hundreds make a <b>thousand</b>, a big cube. Build the number you are asked for.</span></div>
+
+    <!-- 1 numbers in words -->
+    <section class="slide" data-say="Every number has a name. Break it into thousands, hundreds, tens and ones and the name reads itself.">
+      <div class="slide-head"><span class="n">1</span><h2>Saying it in words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Split the number into <b>thousands</b>, <b>hundreds</b>, <b>tens</b> and <b>ones</b>, and the name reads itself.</span></div>
       <div class="stage">
-        <div class="blocks" id="blocks1"></div>
+        <div class="chips" id="pickN1"></div>
         <div class="bignum" id="num1"></div>
-        <div class="word" id="word1"></div>
-        <div class="pv"><div class="thou"><div class="lab">thousands</div><div class="val" id="k1"></div></div><div class="hund"><div class="lab">hundreds</div><div class="val" id="h1"></div></div><div class="tens"><div class="lab">tens</div><div class="val" id="t1"></div></div><div class="ones"><div class="lab">ones</div><div class="val" id="o1"></div></div></div>
-        <div class="bigbtns"><button type="button" class="big gold small" data-d="1000">+1000</button><button type="button" class="big gold small ghost" data-d="-1000">−1000</button><button type="button" class="big plum small" data-d="100">+100</button><button type="button" class="big small ghost" data-d="-100">−100</button><button type="button" class="big teal small" data-d="10">+10</button><button type="button" class="big small ghost" data-d="-10">−10</button><button type="button" class="big small" data-d="1">+1</button><button type="button" class="big small ghost" data-d="-1">−1</button></div>
+        <div class="inwords" id="words1"></div>
+        <div class="working" id="work1"></div>
         <p class="fb" id="fb1"></p>
-        <p class="fb small-fb" id="find1"></p>
+        <p class="fb small-fb" id="task1"></p>
+        <div class="askwrap" id="ask1"></div>
       </div>
     </section>
 
-    <!-- 2 negative numbers -->
-    <section class="slide" data-say="The thermometer goes below zero. Count down through zero into the negative numbers.">
-      <div class="slide-head"><span class="n">2</span><h2>Below zero</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Temperatures can go <b>below zero</b>. Count down through 0 into the <b>negative</b> numbers.</span></div>
+    <!-- 2 odd and even -->
+    
+<section class="slide" data-say="Round the numbers to something easy, work out roughly what the answer should be, and only then do it exactly.">
+      <div class="slide-head"><span class="n">2</span><h2>Estimate before you work</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Round to something <b>easy</b> first. The estimate tells you roughly what to expect, so a silly answer stands out.</span></div>
       <div class="stage">
-        <div class="thermo"><div class="scale" id="scale2"></div><div class="tube" id="tube2"><div class="zero" id="zero2"></div><div class="merc" id="merc2"></div></div><div><div class="tempnum" id="temp2"></div><div class="bigbtns" style="flex-direction:column"><button type="button" class="big small" id="warm2">warmer +1</button><button type="button" class="big small teal" id="cold2">colder −1</button></div></div></div>
-        <p class="fb" id="fb2"></p>
-        <p class="fb small-fb" id="task2"></p>
-      </div>
-    </section>
-
-    <!-- 3 rounding -->
-    <section class="slide" data-say="Round to the nearest ten, hundred or thousand. Which is nearer? Tap it.">
-      <div class="slide-head"><span class="n">3</span><h2>Round to 10, 100 and 1000</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Which is nearer? Tap it.</span></div>
-      <div class="stage">
-        <div class="bignum" id="num3"></div>
-        <div class="nline" id="nl3"></div>
-        <div class="choices" id="ch3"></div>
-        <p class="fb" id="fb3"></p>
-        <p class="fb small-fb" id="score3"></p>
-      </div>
-    </section>
-
-    <!-- 4 grid method -->
-    <section class="slide" data-say="Multiply a two-digit number with the grid method. Split it into tens and ones, multiply each part, then add.">
-      <div class="slide-head"><span class="n">4</span><h2>Multiply with the grid</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Split the big number into <b>tens</b> and <b>ones</b>. Multiply each part, then <b>add</b> the two answers.</span></div>
-      <div class="stage">
-        <div class="bignum" id="mul4" style="font-size:clamp(32px,7vw,52px)"></div>
-        <div class="area" id="area4"></div>
-        <div class="gridm" id="grid4"></div>
-        <div class="working" id="work4"></div>
-        <div class="bigbtns"><button type="button" class="big teal small" id="step4">Show the next part</button></div>
-        <div class="choices" id="ch4"></div>
-        <p class="fb" id="fb4"></p>
-        <p class="fb small-fb" id="score4"></p>
-      </div>
-    </section>
-
-    <!-- 5 division with remainder -->
-    <section class="slide" data-say="Divide by taking out groups. Keep taking groups until there are not enough left for another one.">
-      <div class="slide-head"><span class="n">5</span><h2>Divide by taking groups</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Take out <b>groups</b> until there are not enough left for another. What is left is the <b>remainder</b>.</span></div>
-      <div class="stage">
-        <div class="bignum" id="div5" style="font-size:clamp(32px,7vw,52px)"></div>
-        <div class="dots-pool" id="pool5"></div>
-        <div class="groups" id="groups5"></div>
-        <div class="bigbtns"><button type="button" class="big" id="take5">Take a group</button><button type="button" class="big small teal" id="next5" hidden>Next one</button></div>
-        <p class="fb" id="fb5"></p>
-        <p class="fb small-fb" id="score5"></p>
-      </div>
-    </section>
-
-    <!-- 6 tables 6 7 9 + factors -->
-    <section class="slide" data-say="The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.">
-      <div class="slide-head"><span class="n">6</span><h2>6s, 7s, 9s and factor pairs</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Every rectangle you can make from a number shows a <b>factor pair</b>. Pick a number to see all of them.</span></div>
-      <div class="stage">
-        <div class="bigbtns" id="nums6"></div>
-        <div class="rects" id="rects6"></div>
+        <div class="chips" id="pickEst"></div>
+        <p class="qstem big-eq" id="sum6"></p>
+        <p class="picker-lab2">Roughly, the answer will be about…</p>
+        <div class="choices" id="est6"></div>
         <div class="working" id="work6"></div>
-        <div class="choices" id="ch6"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new6">Another one</button></div>
         <p class="fb" id="fb6"></p>
-        <p class="fb small-fb" id="score6"></p>
+        <p class="fb small-fb" id="task6"></p>
+      </div>
+    </section>
+
+    <!-- 7 tables and the associative shortcut -->
+    
+<section class="slide" data-say="Multiplication can be regrouped. Choose the pair that is easy and do that one first.">
+      <div class="slide-head"><span class="n">3</span><h2>Tables, and a shortcut</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Every table from 1 to 10 — and a trick: in a chain of multiplications you may <b>regroup</b> and do the easy pair first.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickTab"></div>
+        <div id="tabWrap">
+          <p class="qstem big-eq" id="q7"></p>
+          <div class="choices" id="ans7"></div>
+        </div>
+        <div id="assocWrap" hidden>
+          <p class="qstem big-eq" id="chain7"></p>
+          <div class="choices" id="group7"></div>
+        </div>
+        <div class="working" id="work7"></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="task7"></p>
+      </div>
+    </section>
+
+    <!-- 8 divisibility -->
+    
+<section class="slide" data-say="You can tell whether a number divides exactly without doing the division at all. You only have to look at the end of it.">
+      <div class="slide-head"><span class="n">4</span><h2>Does it divide exactly?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">You can tell without dividing. Nearly every test only asks you to <b>look at the end</b> of the number.</span></div>
+      <div class="stage">
+        <div class="bignum" id="num8"></div>
+        <div class="choices" id="tests8"></div>
+        <div class="working" id="work8"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new8">A different number</button></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="task8"></p>
+      </div>
+    </section>
+
+    <!-- 9 x10, x100 and rounding -->
+    
+<section class="slide" data-say="The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.">
+      <div class="slide-head"><span class="n">5</span><h2>6s, 7s, 9s and factor pairs</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d6_say6">Every rectangle you can make from a number shows a <b>factor pair</b>. Pick a number to see all of them.</span></div>
+      <div class="stage">
+        <div class="bigbtns" id="d6_nums6"></div>
+        <div class="rects" id="d6_rects6"></div>
+        <div class="working" id="d6_work6"></div>
+        <div class="choices" id="d6_ch6"></div>
+        <p class="fb" id="d6_fb6"></p>
+        <p class="fb small-fb" id="d6_score6"></p>
       </div>
     </section>
 
     <!-- 7 tenths and hundredths -->
-    <section class="slide" data-say="The square is cut into one hundred parts. Each part is one hundredth. Ten of them make one tenth.">
-      <div class="slide-head"><span class="n">7</span><h2>Tenths and hundredths</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">100 little squares. Each is one <b>hundredth</b>, 0.01. A whole row is one <b>tenth</b>, 0.1. Tap to shade.</span></div>
+    
+<section class="slide" data-say="Show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the answer.</span></div>
       <div class="stage">
-        <div class="hgrid" id="hgrid7"></div>
-        <div class="forms"><div class="form"><div class="lab">Shaded</div><div class="val" id="cnt7"></div></div><div class="form"><div class="lab">Fraction</div><div class="val" id="fr7"></div></div><div class="form"><div class="lab">Decimal</div><div class="val" id="dc7"></div></div></div>
-        <p class="fb" id="fb7"></p>
-        <div class="choices" id="ch7"></div>
-        <p class="fb small-fb" id="score7"></p>
-      </div>
-    </section>
-
-    <!-- 8 add fractions -->
-    <section class="slide" data-say="Add fractions with the same bottom number. Shade the first, then the second, and count the parts.">
-      <div class="slide-head"><span class="n">8</span><h2>Adding fractions</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Same bottom number, so just <b>count the parts</b>. Tap to shade the second fraction.</span></div>
-      <div class="stage">
-        <div class="bignum" id="sum8" style="font-size:clamp(26px,6vw,44px)"></div>
-        <div class="fracbar" id="bar8"></div>
-        <p class="fb" id="fb8"></p>
-        <div class="choices" id="ch8"></div>
-        <p class="fb small-fb" id="score8"></p>
-      </div>
-    </section>
-
-    <!-- 9 perimeter and area -->
-    <section class="slide" data-say="Area is the squares inside. Perimeter is the distance all the way round the edge.">
-      <div class="slide-head"><span class="n">9</span><h2>Perimeter and area</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9"><b>Area</b> is the squares inside. <b>Perimeter</b> is the distance all the way round the edge.</span></div>
-      <div class="stage">
-        <div class="shape" id="shape9"></div>
-        <div class="bigbtns"><button type="button" class="big small ghost" id="wMinus">− wide</button><button type="button" class="big small teal" id="wPlus">+ wide</button><button type="button" class="big small ghost" id="hMinus">− tall</button><button type="button" class="big small" id="hPlus">+ tall</button></div>
-        <div class="working" id="work9"></div>
-        <div class="choices" id="ch9"></div>
-        <p class="fb" id="fb9"></p>
-        <p class="fb small-fb" id="score9"></p>
-      </div>
-    </section>
-
-    <!-- 10 angles -->
-    <section class="slide" data-say="Turn the arm. A square corner is a right angle. Smaller is acute. Bigger is obtuse.">
-      <div class="slide-head"><span class="n">10</span><h2>Acute, right or obtuse?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">A square corner is a <b>right angle</b>, 90°. Smaller is <b>acute</b>. Bigger is <b>obtuse</b>. Turn the arm.</span></div>
-      <div class="stage">
-        <svg class="angle" id="angle10" viewBox="0 0 260 200" aria-hidden="true"></svg>
-        <input type="range" id="deg10" min="10" max="170" step="5" value="45" style="width:100%;max-width:320px;accent-color:var(--accent)">
-        <p class="fb" id="name10"></p>
-        <div class="choices" id="ch10"></div>
-        <p class="fb" id="fb10"></p>
-        <p class="fb small-fb" id="score10"></p>
-      </div>
-    </section>
-
-    <!-- 11 coordinates -->
-    <section class="slide" data-say="Coordinates. Go along the bottom first, then up. Tap the point I ask for.">
-      <div class="slide-head"><span class="n">11</span><h2>Coordinates</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Go <b>along</b> first, then <b>up</b>. Tap the point.</span></div>
-      <div class="stage">
-        <svg class="coords" id="coords11" viewBox="0 0 260 260" role="img" aria-label="Coordinate grid"></svg>
+        <p class="qstem" id="stem11"></p>
+        <div class="choices" id="choices11"></div>
         <p class="fb" id="fb11"></p>
         <p class="fb small-fb" id="score11"></p>
       </div>
     </section>
 
-    <!-- 12 check -->
-    <section class="slide" data-say="Time to show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Tap the answer.</span></div>
+    <!-- 12 stickers -->
+    
+<section class="slide" data-say="Every step you finished earned a sticker.">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Every step you finished earned a sticker.</span></div>
       <div class="stage">
-        <p class="fb" id="q12" style="font-size:24px"></p>
-        <div class="choices" id="ch12"></div>
-        <p class="fb" id="fb12"></p>
-        <p class="fb small-fb" id="score12"></p>
+        <div class="stickers" id="stickers"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
       </div>
     </section>
 
-    <!-- 13 stickers -->
-    <section class="slide" data-say="Look at all the stickers you earned!">
-      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
-      <div class="stage">
-        <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb13"></p>
-        <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
-      </div>
-    </section>
   </div>
 
   <div class="foot">
@@ -841,7 +870,6 @@
     <button type="button" class="big small" id="next">Next ▶</button>
   </div>
 </div>
-
 
 <script>
 
@@ -1637,350 +1665,416 @@
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
   function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + (l.hidden ? " hidden" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
+
+  /* ---- "your turn": one question per teaching slide that the child can get wrong ----
+     A slider or a variant chip changes what is displayed; it never disagrees with the
+     learner. Cambridge's verbs for Stage 4 are estimate, recognise, read, record and
+     understand, and a demonstration evidences none of them -- the child has to commit
+     to an answer and be told. make() returns a fresh {stem, opts, ans, why} each time,
+     so "Another one" is real practice rather than the same item again.
+     Draws its own markup, so a slide needs only <div class="askwrap" id="askN"></div>. */
+
+  /* Three distinct options with the right one among them. Generators pass their
+     preferred distractors first; duplicates are dropped rather than shown, because
+     two identical buttons make a question unanswerable rather than merely hard. */
+  function pick3(correct, cands) {
+    const out = [correct];
+    (cands || []).forEach((c) => {
+      if (out.length < 3 && Number.isFinite(c) && out.indexOf(c) < 0) out.push(c);
+    });
+    let bump = 1;
+    while (out.length < 3) { if (out.indexOf(correct + bump) < 0) out.push(correct + bump); bump++; }
+    return shuffle(out);
+  }
+
+  function ask(n, make) {
+    const box = $("ask" + n);
+    if (!box) return;
+    box.innerHTML =
+      '<p class="asklab">Your turn</p><p class="qstem"></p><div class="choices"></div>' +
+      '<p class="fb"></p><button type="button" class="big small ghost askmore">Another one</button>';
+    const stem = box.querySelector(".qstem"), opts = box.querySelector(".choices"),
+          fb = box.querySelector(".fb");
+    let q = null, locked = false;
+    function draw() {
+      stem.innerHTML = q.stem;
+      opts.innerHTML = q.opts.map((o, i) => {
+        const plain = String(o).replace(/<[^>]*>/g, "");
+        return '<button type="button" class="choice' + (plain.length > 4 ? " word" : "") +
+          '" data-i="' + i + '">' + o + "</button>";
+      }).join("");
+    }
+    function fresh() { q = make(); locked = false; fb.textContent = ""; fb.className = "fb"; draw(); }
+    opts.addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-i]"); if (!b || locked) return;
+      locked = true;
+      const i = Number(b.dataset.i), ok = i === q.ans;
+      opts.querySelectorAll(".choice")[q.ans].classList.add("right");
+      if (!ok) b.classList.add("wrong");
+      fb.innerHTML = (ok ? "Yes. " : "Not quite. ") + q.why;
+      fb.className = "fb " + (ok ? "good" : "bad");
+      say(fb.textContent.replace(/\s+/g, " "));
+      if (ok) finish(n - 1, "");
+    });
+    box.querySelector(".askmore").addEventListener("click", fresh);
+    fresh();
+  }
+
   function nline(el, lo, hi, marks, labelEvery, tick) {
     const x = (v) => "calc(14px + " + ((v - lo) / (hi - lo)) + " * (100% - 28px))"; let h = '<div class="bar"></div>';
     for (let v = lo; v <= hi; v += tick) { const big = (v - lo) % labelEvery === 0; h += '<div class="t' + (big ? " mid" : "") + '" style="left:' + x(v) + '"></div>'; if (big) h += '<div class="l big" style="left:' + x(v) + '">' + fmt(v) + "</div>"; }
     (marks || []).forEach((m) => { h += '<div class="m" style="left:' + x(m) + '"></div>'; }); el.innerHTML = h;
   }
 
-  /* ---- 1: thousands ---- */
-  let n1 = 2345, finds1 = shuffle([4072, 6805, 1350, 9218, 3007]).slice(0, 3), found1 = 0;
-  function paint1() {
-    const k = Math.floor(n1 / 1000), h = Math.floor((n1 % 1000) / 100), t = Math.floor((n1 % 100) / 10), o = n1 % 10;
-    $("blocks1").innerHTML = '<div class="cubes">' + '<div class="cube"></div>'.repeat(k) + '</div><div class="flats">' + '<div class="flat"></div>'.repeat(h) + '</div><div class="rods">' + '<div class="rod"></div>'.repeat(t) + '</div><div class="units">' + '<div class="unit"></div>'.repeat(o) + "</div>";
-    $("num1").innerHTML = '<span class="k">' + k + '</span>,<span class="h">' + h + '</span><span class="t">' + t + '</span><span class="o">' + o + "</span>";
-    $("word1").textContent = words(n1); $("k1").textContent = k; $("h1").textContent = h; $("t1").textContent = t; $("o1").textContent = o;
-    document.querySelectorAll('#deck [data-d]').forEach((b) => { const d = Number(b.dataset.d); b.disabled = n1 + d < 1000 || n1 + d > 9999; });
-    if (found1 < 3 && n1 === finds1[found1]) { found1++; $("fb1").className = "fb good"; $("fb1").textContent = cheer() + " " + fmt(n1) + " = " + [k * 1000, h * 100, t * 10, o].filter(Boolean).map(fmt).join(" + ") + "."; say(cheer() + " " + words(n1)); if (found1 === 3) finish(0, "You built all three numbers!"); }
-    else { $("fb1").className = "fb"; $("fb1").textContent = ""; }
-    $("find1").textContent = found1 < 3 ? "Build " + fmt(finds1[found1]) + "." : "You built all three!";
+    /* the shell's fmt() leaves a plain hyphen, so this lesson supplies the typographic
+     minus it uses for negatives throughout — it is NOT one of the shell's helpers */
+  const minus = (t) => String(t).replace("-", "−");
+  const fmtn = (n) => minus(fmt(n));
+
+  /* ---- number names, written out once and used by several slides ---- */
+  const WORD_ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const WORD_TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  function under100(n) {
+    if (n < 20) return WORD_ONES[n];
+    const t = Math.floor(n / 10), o = n % 10;
+    return WORD_TENS[t] + (o ? "-" + WORD_ONES[o] : "");
   }
-  document.querySelectorAll('#deck [data-d]').forEach((b) => b.addEventListener("click", () => { n1 += Number(b.dataset.d); paint1(); say(words(n1)); }));
+  function under1000(n) {
+    if (n < 100) return under100(n);
+    const h = Math.floor(n / 100), r = n % 100;
+    return WORD_ONES[h] + " hundred" + (r ? " and " + under100(r) : "");
+  }
+  function numWords(n) {
+    if (n < 0) return "negative " + numWords(-n);
+    if (n < 1000) return under1000(n);
+    const th = Math.floor(n / 1000), r = n % 1000;
+    return under1000(th) + " thousand" + (r ? (r < 100 ? " and " : " ") + under1000(r) : "");
+  }
+
+  /* ---- 1: reading and writing number names (4Ni.01) ---- */
+  const N1 = [4207, 15060, 903, -12, -350, 87415];
+  let i1 = 0;
+  const seen1 = new Set([0]);
+  $("pickN1").innerHTML = N1.map((n, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + fmtn(n) + "</button>").join("");
+  function paint1() {
+    const n = N1[i1], neg = n < 0, a = Math.abs(n);
+    $("num1").textContent = fmtn(n);
+    $("words1").textContent = numWords(n);
+    const th = Math.floor(a / 1000), r = a % 1000;
+    lines($("work1"), [
+      { k: "Thousands", v: th ? "<b>" + fmt(th) + "</b> thousand — " + under1000(th) + " thousand" : "none" },
+      { k: "The rest", v: r ? "<b>" + r + "</b> — " + under1000(r) : "nothing left over" },
+      { k: neg ? "Below zero" : "Put together", v: neg ? "the minus sign is read as <b>negative</b>, before the name" : "read the thousands, then the rest" },
+      { k: "So it is", v: "<b>" + numWords(n) + "</b>", total: true },
+    ]);
+    $("fb1").innerHTML = fmtn(n) + " is <b>" + numWords(n) + "</b>.";
+    seen1.add(i1);
+    $("task1").textContent = "Read " + seen1.size + " of " + N1.length;
+    if (seen1.size >= 4) finish(0, "");
+  }
+  $("pickN1").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    i1 = Number(b.dataset.i);
+    [...$("pickN1").children].forEach((c, i) => c.classList.toggle("on", i === i1));
+    paint1(); say(numWords(N1[i1]));
+  });
   paint1();
 
-  /* ---- 2: negative numbers ---- */
-  let temp2 = 3, tasks2 = [{ from: 3, to: -2 }, { from: -4, to: 1 }, { from: 2, to: -5 }], ti2 = 0;
-  const T_MIN = -10, T_MAX = 10;
-  $("scale2").innerHTML = Array.from({ length: 11 }, (_, i) => { const v = T_MAX - i * 2; return '<span class="' + (v === 0 ? "z" : v < 0 ? "neg" : "") + '" style="top:' + ((T_MAX - v) / (T_MAX - T_MIN) * 100) + '%">' + (v > 0 ? "" : "") + v + "°</span>"; }).join("");
-  $("zero2").style.top = ((T_MAX - 0) / (T_MAX - T_MIN) * 100) + "%";
-  function paint2() {
-    const pct = (temp2 - T_MIN) / (T_MAX - T_MIN) * 100;
-    $("merc2").style.height = pct + "%"; $("merc2").className = "merc" + (temp2 < 0 ? " cold" : "");
-    $("temp2").textContent = (temp2 < 0 ? "−" + (-temp2) : String(temp2)) + "°C"; $("temp2").className = "tempnum " + (temp2 < 0 ? "neg" : "pos");
-    $("warm2").disabled = temp2 >= T_MAX; $("cold2").disabled = temp2 <= T_MIN;
-    const T = tasks2[ti2];
-    if (T) {
-      $("task2").textContent = "It is " + sg(T.from) + "°C. It gets " + (T.to < T.from ? (T.from - T.to) + " degrees colder" : (T.to - T.from) + " degrees warmer") + ". Press until you get there.";
-      if (temp2 === T.to) { $("fb2").className = "fb good"; $("fb2").textContent = cheer() + " " + sg(T.from) + "°C " + (T.to < T.from ? "− " + (T.from - T.to) : "+ " + (T.to - T.from)) + " = " + sg(T.to) + "°C" + (T.to < 0 && T.from > 0 ? ". You went down through zero." : T.to > 0 && T.from < 0 ? ". You came up through zero." : "."); say(cheer() + " " + T.to + " degrees"); ti2++; if (ti2 >= tasks2.length) finish(1, "You can count below zero!"); else setTimeout(() => { temp2 = tasks2[ti2].from; $("fb2").textContent = ""; paint2(); say(tasks2[ti2].from + " degrees. " + $("task2").textContent); }, 2200); }
-      else { $("fb2").className = "fb"; $("fb2").textContent = temp2 < 0 ? "Below zero: minus " + (-temp2) : temp2 === 0 ? "Zero, the line between" : ""; }
-    } else { $("task2").textContent = "All three done."; }
+  /* ---- 6: estimating before calculating (4Ni.02, 4Ni.05, 4Ni.06) ---- */
+  const EMODE = ["Add or subtract", "Multiply", "Divide"];
+  let em6 = 0, e6 = null, lock6 = false, done6 = 0;
+  $("pickEst").innerHTML = EMODE.map((m, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + m + "</button>").join("");
+  const round10 = (n) => Math.round(n / 10) * 10;
+  const round100 = (n) => Math.round(n / 100) * 100;
+  /* every generator is constrained so the ESTIMATE is a useful number rather than 0 */
+  function newEst() {
+    if (em6 === 0) {
+      const plus = rnd(0, 1) === 1;
+      if (plus) {
+        const a = rnd(120, 880), b = rnd(110, 480);
+        return { kind: 0, a: a, b: b, plus: true, exact: a + b, est: round100(a) + round100(b) };
+      }
+      const b = rnd(110, 380), a = b + rnd(160, 520);       /* a big enough gap that rounding cannot collapse it */
+      return { kind: 0, a: a, b: b, plus: false, exact: a - b, est: round100(a) - round100(b) };
+    }
+    if (em6 === 1) {
+      const a = rnd(112, 960), b = rnd(3, 9);
+      return { kind: 1, a: a, b: b, exact: a * b, est: round100(a) * b };
+    }
+    const b = rnd(3, 8), q = rnd(4, 12), a = Math.min(99, b * q + rnd(0, b - 1));
+    return { kind: 2, a: a, b: b, exact: Math.floor(a / b), rem: a % b, est: Math.round(round10(a) / b) };
   }
-  $("warm2").addEventListener("click", () => { if (temp2 < T_MAX) { temp2++; paint2(); say(temp2 < 0 ? "minus " + (-temp2) : String(temp2)); } });
-  $("cold2").addEventListener("click", () => { if (temp2 > T_MIN) { temp2--; paint2(); say(temp2 < 0 ? "minus " + (-temp2) : String(temp2)); } });
-  paint2();
-
-  /* ---- 3: rounding ---- */
-  let r3 = 0, right3 = 0, lock3 = false, n3 = 0, to3 = 10; const ROUNDS3 = 6;
-  function round3() {
-    lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
-    if (r3 >= ROUNDS3) { $("num3").textContent = ""; $("nl3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You rounded " + right3 + " of " + ROUNDS3 + "!"; finish(2, "You can round to ten, a hundred and a thousand."); return; }
-    to3 = [10, 10, 100, 100, 1000, 1000][r3];
-    do { n3 = rnd(1001, 9899); } while (n3 % to3 === 0 || (n3 % to3) === to3 / 2);
-    const lo = Math.floor(n3 / to3) * to3, hi = lo + to3;
-    $("score3").textContent = "Number " + (r3 + 1) + " of " + ROUNDS3;
-    $("say3").innerHTML = "Round <b>" + fmt(n3) + "</b> to the nearest <b>" + fmt(to3) + "</b>. Which is nearer? Tap it.";
-    $("num3").textContent = fmt(n3); nline($("nl3"), lo, hi, [n3], to3 / 2, to3 / 10);
-    $("ch3").innerHTML = [lo, hi].map((v) => '<button type="button" class="choice" data-v="' + v + '">' + fmt(v) + "</button>").join("");
-    say("Round " + words(n3) + " to the nearest " + words(to3));
+  function paint6() {
+    lock6 = false;
+    const E = e6;
+    $("sum6").innerHTML = E.kind === 0 ? fmt(E.a) + (E.plus ? " + " : " − ") + fmt(E.b)
+      : E.kind === 1 ? fmt(E.a) + " × " + E.b : fmt(E.a) + " ÷ " + E.b;
+    const spread = E.kind === 2 ? 3 : E.kind === 1 ? Math.max(40, Math.round(E.est * 0.25)) : 100;
+    const opts = shuffle([E.est, E.est + spread, Math.max(1, E.est - spread)]);
+    $("est6").innerHTML = opts.map((o) => '<button type="button" class="choice" data-v="' + o + '">' + fmt(o) + "</button>").join("");
+    $("work6").innerHTML = "";
+    $("fb6").textContent = ""; $("fb6").className = "fb";
+    $("task6").textContent = "Estimated " + done6 + " so far";
   }
-  $("ch3").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock3) return; lock3 = true;
-    const lo = Math.floor(n3 / to3) * to3, hi = lo + to3, rem = n3 - lo, ans = rem >= to3 / 2 ? hi : lo, ok = Number(b.dataset.v) === ans;
-    $("ch3").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ans) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right3++;
-    const why = fmt(n3) + " is " + fmt(Math.min(rem, to3 - rem)) + " away from " + fmt(ans) + " but " + fmt(Math.max(rem, to3 - rem)) + " away from " + fmt(ans === hi ? lo : hi) + ". It rounds to " + fmt(ans) + ".";
-    $("fb3").className = "fb " + (ok ? "good" : "bad"); $("fb3").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
-    r3++; setTimeout(round3, 2300);
+  $("est6").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock6) return;
+    lock6 = true; done6++;
+    const E = e6, ok = Number(b.dataset.v) === E.est;
+    b.classList.add(ok ? "right" : "wrong");
+    const rows = E.kind === 0 ? [
+      { k: "Round them", v: fmt(E.a) + " ≈ " + fmt(round100(E.a)) + " and " + fmt(E.b) + " ≈ " + fmt(round100(E.b)) },
+      { k: "Rough answer", v: fmt(round100(E.a)) + (E.plus ? " + " : " − ") + fmt(round100(E.b)) + " = <b>" + fmt(E.est) + "</b>" },
+      { k: "Now exactly", v: fmt(E.a) + (E.plus ? " + " : " − ") + fmt(E.b) + " = <b>" + fmt(E.exact) + "</b>" },
+      { k: "Close enough?", v: "the estimate was " + fmt(Math.abs(E.exact - E.est)) + " away, which tells you the exact answer is sensible", total: true },
+    ] : E.kind === 1 ? [
+      { k: "Round the big one", v: fmt(E.a) + " ≈ " + fmt(round100(E.a)) },
+      { k: "Rough answer", v: fmt(round100(E.a)) + " × " + E.b + " = <b>" + fmt(E.est) + "</b>" },
+      { k: "Now exactly", v: fmt(E.a) + " × " + E.b + " = <b>" + fmt(E.exact) + "</b>" },
+      { k: "Close enough?", v: "off by " + fmt(Math.abs(E.exact - E.est)) + " — near enough to catch a wild mistake", total: true },
+    ] : [
+      { k: "Round the big one", v: fmt(E.a) + " ≈ " + fmt(round10(E.a)) },
+      { k: "Rough answer", v: fmt(round10(E.a)) + " ÷ " + E.b + " ≈ <b>" + fmt(E.est) + "</b>" },
+      { k: "Now exactly", v: fmt(E.a) + " ÷ " + E.b + " = <b>" + fmt(E.exact) + "</b>" + (E.rem ? " remainder " + E.rem : " exactly") },
+      { k: "Close enough?", v: "the estimate lands within " + fmt(Math.abs(E.exact - E.est)) + " of it", total: true },
+    ];
+    lines($("work6"), rows);
+    $("fb6").innerHTML = (ok ? cheer() + " " : "") + "About <b>" + fmt(E.est) + "</b>, and exactly <b>" + fmt(E.exact) +
+      (E.kind === 2 && E.rem ? " remainder " + E.rem : "") + "</b>.";
+    $("fb6").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : "About " + E.est);
+    if (done6 >= 3) finish(1, "");
   });
-  round3();
+  $("pickEst").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    em6 = Number(b.dataset.i);
+    [...$("pickEst").children].forEach((c, i) => c.classList.toggle("on", i === em6));
+    e6 = newEst(); paint6();
+  });
+  $("new6").addEventListener("click", () => { e6 = newEst(); paint6(); });
+  e6 = newEst(); paint6();
 
-  /* ---- 4: grid method ---- */
-  let r4 = 0, right4 = 0, a4 = 0, b4 = 0, stage4 = 0; const ROUNDS4 = 4;
-  function round4() {
-    $("fb4").textContent = ""; $("fb4").className = "fb"; $("ch4").innerHTML = ""; stage4 = 0; $("step4").disabled = false; $("step4").hidden = false;
-    if (r4 >= ROUNDS4) { $("mul4").textContent = ""; $("area4").innerHTML = ""; $("grid4").innerHTML = ""; $("work4").innerHTML = ""; $("step4").hidden = true; $("fb4").className = "fb good"; $("fb4").textContent = "You multiplied " + right4 + " of " + ROUNDS4 + "!"; finish(3, "You can multiply with the grid method."); return; }
-    a4 = rnd(13, 49); b4 = [3, 4, 6, 7, 8, 9][rnd(0, 5)];
-    $("score4").textContent = "Question " + (r4 + 1) + " of " + ROUNDS4; paint4(); say(words(a4) + " times " + words(b4) + ". Press the button to work through the grid.");
+  /* ---- 7: all ten tables, and the associative property (4Ni.04, 4Ni.03) ---- */
+  let tm7 = 0, q7 = null, lock7 = false, right7 = 0, asked7 = 0;
+  const CHAINS = [
+    { a: 4, b: 25, c: 3, easy: "b·a", why: "4 × 25 is 100, and 100 × 3 is easy." },
+    { a: 2, b: 7, c: 50, easy: "a·c", why: "2 × 50 is 100, and 100 × 7 is easy." },
+    { a: 5, b: 9, c: 20, easy: "a·c", why: "5 × 20 is 100, and 100 × 9 is easy." },
+    { a: 8, b: 3, c: 5, easy: "a·c", why: "8 × 5 is 40, and 40 × 3 is easier than 24 × 5." },
+  ];
+  let ch7 = 0;
+  $("pickTab").innerHTML = ["Times tables", "A shortcut"].map((m, i) =>
+    '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' + m + "</button>").join("");
+  function newQ7() { const a = rnd(1, 10), b = rnd(1, 10); return { a: a, b: b, p: a * b }; }
+  function paint7() {
+    lock7 = false;
+    $("tabWrap").hidden = tm7 !== 0;
+    $("assocWrap").hidden = tm7 !== 1;
+    $("work7").innerHTML = "";
+    $("fb7").textContent = ""; $("fb7").className = "fb";
+    if (tm7 === 0) {
+      $("q7").innerHTML = q7.a + " × " + q7.b + " = ?";
+      const opts = shuffle([q7.p, q7.p + q7.a, Math.max(1, q7.p - q7.b)]);
+      $("ans7").innerHTML = opts.map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+      $("task7").textContent = "Tables: " + right7 + " right of " + asked7;
+    } else {
+      const C = CHAINS[ch7];
+      $("chain7").innerHTML = C.a + " × " + C.b + " × " + C.c + " = ?";
+      $("group7").innerHTML = [
+        { k: "a·b", t: "(" + C.a + " × " + C.b + ") × " + C.c },
+        { k: "b·c", t: C.a + " × (" + C.b + " × " + C.c + ")" },
+        { k: "a·c", t: "(" + C.a + " × " + C.c + ") × " + C.b },
+      ].map((o) => '<button type="button" class="choice" data-k="' + o.k + '">' + o.t + "</button>").join("");
+      $("task7").textContent = "Every grouping gives the same answer — one of them is easiest.";
+    }
   }
-  function paint4() {
-    const T = Math.floor(a4 / 10) * 10, O = a4 % 10, p1 = T * b4, p2 = O * b4, ans = a4 * b4;
-    $("mul4").innerHTML = a4 + ' <span class="t">×</span> ' + b4 + ' <span style="color:var(--muted)">= ?</span>';
-    // shrink the squares so a wide number still fits a phone screen
-    const cell = Math.max(3, Math.min(10, Math.floor(280 / a4) - 2)); // 2px gap per column counts too
-    $("area4").style.setProperty("--cell", cell + "px");
-    $("area4").style.gridTemplateColumns = "repeat(" + a4 + ", " + cell + "px)";
-    $("area4").innerHTML = Array.from({ length: a4 * b4 }, (_, i) => '<i class="' + ((i % a4) < T ? "a" : "b") + '"></i>').join("");
-    $("grid4").innerHTML = '<div></div><div class="hd">' + T + '</div><div class="hd">' + O + '</div><div class="side">× ' + b4 + '</div><div class="cell' + (stage4 >= 1 ? " on" : "") + '">' + (stage4 >= 1 ? p1 : "?") + '</div><div class="cell' + (stage4 >= 2 ? " on" : "") + '">' + (stage4 >= 2 ? p2 : "?") + "</div>";
-    lines($("work4"), [
-      { k: "Split " + a4, v: T + " and " + O },
-      { k: "Tens part", v: T + " × " + b4 + " = <b>" + p1 + "</b>", hidden: stage4 < 1 },
-      { k: "Ones part", v: O + " × " + b4 + " = <b>" + p2 + "</b>", hidden: stage4 < 2 },
-      { k: "Add them", v: p1 + " + " + p2 + " = <b>" + ans + "</b>", total: true, hidden: stage4 < 3 },
+  $("ans7").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock7) return;
+    lock7 = true; asked7++;
+    const ok = Number(b.dataset.v) === q7.p;
+    if (ok) right7++;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("work7"), [
+      { k: "The question", v: q7.a + " × " + q7.b },
+      { k: "The answer", v: "<b>" + q7.p + "</b>" },
+      { k: "It works both ways", v: q7.b + " × " + q7.a + " = <b>" + q7.p + "</b> as well" },
+      { k: "Score", v: right7 + " right out of " + asked7, total: true },
     ]);
-    if (stage4 >= 2 && !$("ch4").children.length) { $("ch4").innerHTML = shuffle([ans, ans + b4, ans - 10]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join(""); $("step4").disabled = true; }
-  }
-  $("step4").addEventListener("click", () => { stage4 = Math.min(2, stage4 + 1); paint4(); const l = [...$("work4").querySelectorAll(".line:not(.hidden)")].pop(); if (l) say(l.textContent); });
-  $("ch4").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ans = a4 * b4, ok = Number(b.dataset.v) === ans;
-    $("ch4").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ans) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right4++;
-    stage4 = 3; paint4(); $("mul4").innerHTML = a4 + ' <span class="t">×</span> ' + b4 + " = " + ans;
-    $("fb4").className = "fb " + (ok ? "good" : "bad"); $("fb4").textContent = (ok ? cheer() + " " : "") + a4 + " × " + b4 + " = " + ans + "."; say((ok ? cheer() + " " : "") + a4 + " times " + b4 + " is " + ans);
-    r4++; setTimeout(round4, 2300);
+    $("fb7").innerHTML = (ok ? cheer() + " " : "") + q7.a + " × " + q7.b + " = <b>" + q7.p + "</b>.";
+    $("fb7").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : q7.a + " times " + q7.b + " is " + q7.p);
+    if (right7 >= 5) finish(2, "");
+    setTimeout(() => { q7 = newQ7(); paint7(); }, 1900);
   });
-  round4();
+  $("group7").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock7) return;
+    lock7 = true;
+    const C = CHAINS[ch7], ok = b.dataset.k === C.easy;
+    const tot = C.a * C.b * C.c;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("work7"), [
+      { k: "All three groupings", v: "(" + C.a + "×" + C.b + ")×" + C.c + " = " + tot + ", " + C.a + "×(" + C.b + "×" + C.c + ") = " + tot + ", (" + C.a + "×" + C.c + ")×" + C.b + " = " + tot },
+      { k: "So regrouping is safe", v: "the answer never changes — that is the <b>associative property</b>" },
+      { k: "The easy one here", v: "<b>" + C.why + "</b>" },
+      { k: "The answer", v: "<b>" + fmt(tot) + "</b>", total: true },
+    ]);
+    $("fb7").innerHTML = (ok ? cheer() + " " : "") + C.why + " The answer is <b>" + fmt(tot) + "</b>.";
+    $("fb7").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : C.why);
+    finish(2, "");
+    ch7 = (ch7 + 1) % CHAINS.length;
+    setTimeout(paint7, 2600);
+  });
+  $("pickTab").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    tm7 = Number(b.dataset.i);
+    [...$("pickTab").children].forEach((c, i) => c.classList.toggle("on", i === tm7));
+    paint7();
+  });
+  q7 = newQ7(); paint7();
 
-  /* ---- 5: division by grouping ---- */
-  let r5 = 0, n5 = 0, k5 = 0, pool5 = 0, groups5 = 0; const ROUNDS5 = 3;
-  function round5() {
-    $("fb5").textContent = ""; $("fb5").className = "fb"; $("next5").hidden = true; $("take5").hidden = false;
-    if (r5 >= ROUNDS5) { $("div5").textContent = ""; $("pool5").innerHTML = ""; $("groups5").innerHTML = ""; $("take5").hidden = true; $("fb5").className = "fb good"; $("fb5").textContent = "Three divisions done!"; finish(4, "You can divide by taking groups."); return; }
-    k5 = [3, 4, 5, 6, 7, 8, 9][rnd(0, 6)]; n5 = rnd(20, 60); if (n5 % k5 === 0) n5++;
-    pool5 = n5; groups5 = 0; $("score5").textContent = "Question " + (r5 + 1) + " of " + ROUNDS5; $("pool5").className = "dots-pool";
-    $("say5").innerHTML = "<b>" + n5 + " ÷ " + k5 + "</b>. Take out groups of <b>" + k5 + "</b> until fewer than " + k5 + " are left."; paint5(); say(n5 + " divided by " + k5 + ". Take out groups of " + k5 + ".");
+  /* ---- 8: tests of divisibility (4Ni.08) ---- */
+  const TESTS = [2, 5, 10, 25, 50, 100];
+  const RULE = { 2: "the last digit is even", 5: "the last digit is 0 or 5", 10: "the last digit is 0",
+    25: "the last two digits are 00, 25, 50 or 75", 50: "the last two digits are 00 or 50", 100: "the last two digits are 00" };
+  let n8 = 0, tried8 = [];
+  function newN8() {
+    const pick = rnd(0, 3);
+    if (pick === 0) return rnd(1, 40) * 25;
+    if (pick === 1) return rnd(1, 20) * 50;
+    if (pick === 2) return rnd(10, 99) * 10;
+    return rnd(101, 999);
   }
-  function paint5() {
-    $("pool5").innerHTML = "<i></i>".repeat(pool5);
-    $("groups5").innerHTML = Array.from({ length: groups5 }, () => '<div class="grp">' + "<i></i>".repeat(k5) + "</div>").join("");
-    const doneNow = pool5 < k5, q = Math.floor(n5 / k5), rem = n5 % k5;
-    $("div5").innerHTML = n5 + " ÷ " + k5 + (doneNow ? ' = <span class="t">' + q + '</span> r <span class="o">' + rem + "</span>" : ' <span style="color:var(--muted)">= ?</span>');
-    $("take5").disabled = doneNow;
-    if (doneNow) { $("pool5").className = "dots-pool rem"; $("fb5").className = "fb good"; $("fb5").textContent = cheer() + " " + groups5 + " groups of " + k5 + " is " + groups5 * k5 + ", and " + rem + " left over. " + n5 + " ÷ " + k5 + " = " + q + " r " + rem + "."; say(cheer() + " " + n5 + " divided by " + k5 + " is " + q + " remainder " + rem); $("next5").hidden = false; $("take5").hidden = true; r5++; }
-    else { $("fb5").className = "fb"; $("fb5").textContent = groups5 ? groups5 + " groups so far, " + pool5 + " left" : ""; }
+  function paint8() {
+    $("num8").textContent = fmt(n8);
+    $("tests8").innerHTML = TESTS.map((t) => {
+      const st = tried8.indexOf(t) >= 0 ? (n8 % t === 0 ? " right" : " wrong") : "";
+      return '<button type="button" class="choice' + st + '" data-t="' + t + '">÷ ' + t + "</button>";
+    }).join("");
+    const last2 = fmt(n8).slice(-2);
+    lines($("work8"), [
+      { k: "The number", v: "<b>" + fmt(n8) + "</b>" },
+      { k: "Its last digit", v: "<b>" + (n8 % 10) + "</b>" },
+      { k: "Its last two digits", v: "<b>" + String(n8 % 100).padStart(2, "0") + "</b>" },
+      { k: "Divides exactly by", v: TESTS.filter((t) => n8 % t === 0).map((t) => "<b>" + t + "</b>").join(", ") || "none of these", total: true },
+    ]);
+    $("task8").textContent = "Tested " + tried8.length + " of " + TESTS.length;
+    if (tried8.length >= TESTS.length) finish(3, "");
   }
-  $("take5").addEventListener("click", () => { if (pool5 < k5) return; pool5 -= k5; groups5++; paint5(); if (pool5 >= k5) say(groups5 + " groups, " + pool5 + " left"); });
-  $("next5").addEventListener("click", round5);
-  round5();
+  $("tests8").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-t]"); if (!b) return;
+    const t = Number(b.dataset.t);
+    if (tried8.indexOf(t) >= 0) return;
+    tried8.push(t);
+    const ok = n8 % t === 0;
+    $("fb8").innerHTML = fmt(n8) + (ok ? " <b>does</b> divide by " + t : " does <b>not</b> divide by " + t) +
+      " — the test is that " + RULE[t] + ".";
+    $("fb8").className = "fb " + (ok ? "good" : "bad");
+    say($("fb8").textContent);
+    paint8();
+  });
+  $("new8").addEventListener("click", () => { n8 = newN8(); tried8 = []; $("fb8").textContent = ""; $("fb8").className = "fb"; paint8(); });
+  n8 = newN8(); paint8();
 
   /* ---- 6: factor pairs and the 6, 7, 9 tables ---- */
-  const NUMS6 = [12, 18, 24, 36, 42, 63];
-  let num6 = 24, quiz6 = null, right6 = 0;
-  function factorPairs(n) { const p = []; for (let a = 1; a * a <= n; a++) if (n % a === 0) p.push([a, n / a]); return p; }
-  function paint6() {
-    $("nums6").innerHTML = NUMS6.map((n) => '<button type="button" class="big small ' + (n === num6 ? "teal" : "ghost") + '" data-n="' + n + '">' + n + "</button>").join("");
-    const pairs = factorPairs(num6);
-    $("rects6").innerHTML = pairs.map((p) => '<div><div class="rect" style="grid-template-columns:repeat(' + p[1] + ', 9px)">' + "<i></i>".repeat(num6) + '</div><div class="rectlab">' + p[0] + " × " + p[1] + "</div></div>").join("");
-    lines($("work6"), [
-      { k: "Factor pairs of " + num6, v: pairs.map((p) => p[0] + " × " + p[1]).join(", ") },
+  const d6_NUMS6 = [12, 18, 24, 36, 42, 63];
+  let d6_num6 = 24, d6_quiz6 = null, d6_right6 = 0;
+  function d6_factorPairs(n) { const p = []; for (let a = 1; a * a <= n; a++) if (n % a === 0) p.push([a, n / a]); return p; }
+  function d6_paint6() {
+    $("d6_nums6").innerHTML = d6_NUMS6.map((n) => '<button type="button" class="big small ' + (n === d6_num6 ? "teal" : "ghost") + '" data-n="' + n + '">' + n + "</button>").join("");
+    const pairs = d6_factorPairs(d6_num6);
+    $("d6_rects6").innerHTML = pairs.map((p) => '<div><div class="rect" style="grid-template-columns:repeat(' + p[1] + ', 9px)">' + "<i></i>".repeat(d6_num6) + '</div><div class="rectlab">' + p[0] + " × " + p[1] + "</div></div>").join("");
+    lines($("d6_work6"), [
+      { k: "Factor pairs of " + d6_num6, v: pairs.map((p) => p[0] + " × " + p[1]).join(", ") },
       { k: "Factors", v: [...new Set(pairs.flat())].sort((a, b) => a - b).join(", "), total: true },
     ]);
   }
-  $("nums6").addEventListener("click", (e) => { const b = e.target.closest("[data-n]"); if (!b) return; num6 = Number(b.dataset.n); paint6(); say(num6 + " has " + factorPairs(num6).length + " factor pairs"); });
-  function ask6() {
-    const t = [6, 7, 9][rnd(0, 2)], r = rnd(2, 10), kind = right6 % 3;
-    if (kind === 0) quiz6 = { q: r + " × " + t + " = ?", a: r * t, wrong: [r * t + t, r * t - t], say: r + " times " + t };
-    else if (kind === 1) quiz6 = { q: (r * t) + " ÷ " + t + " = ?", a: r, wrong: [r + 1, r - 1 > 0 ? r - 1 : r + 2], say: (r * t) + " divided by " + t };
-    else { const n = NUMS6[rnd(0, 5)], f = [...new Set(factorPairs(n).flat())], nf = [2, 3, 4, 5, 6, 7, 8, 9].filter((x) => n % x !== 0); quiz6 = { q: "Which is a factor of " + n + "?", a: f[rnd(1, f.length - 2)], wrong: shuffle(nf).slice(0, 2), say: "Which is a factor of " + n + "?" }; }
-    $("say6").innerHTML = "<b>" + quiz6.q + "</b> Tap the answer.";
-    $("ch6").innerHTML = shuffle([quiz6.a, ...quiz6.wrong]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-    $("fb6").textContent = ""; $("fb6").className = "fb"; $("score6").textContent = right6 + " of 4 right so far"; say(quiz6.say);
+  $("d6_nums6").addEventListener("click", (e) => { const b = e.target.closest("[data-n]"); if (!b) return; d6_num6 = Number(b.dataset.n); d6_paint6(); say(d6_num6 + " has " + d6_factorPairs(d6_num6).length + " factor pairs"); });
+  function d6_ask6() {
+    const t = [6, 7, 9][rnd(0, 2)], r = rnd(2, 10), kind = d6_right6 % 3;
+    if (kind === 0) d6_quiz6 = { q: r + " × " + t + " = ?", a: r * t, wrong: [r * t + t, r * t - t], say: r + " times " + t };
+    else if (kind === 1) d6_quiz6 = { q: (r * t) + " ÷ " + t + " = ?", a: r, wrong: [r + 1, r - 1 > 0 ? r - 1 : r + 2], say: (r * t) + " divided by " + t };
+    else { const n = d6_NUMS6[rnd(0, 5)], f = [...new Set(d6_factorPairs(n).flat())], nf = [2, 3, 4, 5, 6, 7, 8, 9].filter((x) => n % x !== 0); d6_quiz6 = { q: "Which is a factor of " + n + "?", a: f[rnd(1, f.length - 2)], wrong: shuffle(nf).slice(0, 2), say: "Which is a factor of " + n + "?" }; }
+    $("d6_say6").innerHTML = "<b>" + d6_quiz6.q + "</b> Tap the answer.";
+    $("d6_ch6").innerHTML = shuffle([d6_quiz6.a, ...d6_quiz6.wrong]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("d6_fb6").textContent = ""; $("d6_fb6").className = "fb"; $("d6_score6").textContent = d6_right6 + " of 4 right so far"; say(d6_quiz6.say);
   }
-  $("ch6").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === quiz6.a;
-    $("ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === quiz6.a) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right6++;
-    const n6 = quiz6.q.includes("factor") ? Number(quiz6.q.match(/factor of (\d+)/)[1]) : null;
-    $("fb6").className = "fb " + (ok ? "good" : "bad"); $("fb6").textContent = (ok ? cheer() + " " : "") + (n6 ? quiz6.a + " is a factor of " + n6 + " because " + n6 + " ÷ " + quiz6.a + " = " + (n6 / quiz6.a) + "." : quiz6.q.replace("?", "") + quiz6.a + "."); say((ok ? cheer() + " " : "") + "It is " + quiz6.a);
-    if (right6 >= 4) finish(5, "Tables and factors: well done!"); setTimeout(ask6, 2000);
+  $("d6_ch6").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === d6_quiz6.a;
+    $("d6_ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === d6_quiz6.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else d6_right6++;
+    const n6 = d6_quiz6.q.includes("factor") ? Number(d6_quiz6.q.match(/factor of (\d+)/)[1]) : null;
+    $("d6_fb6").className = "fb " + (ok ? "good" : "bad"); $("d6_fb6").textContent = (ok ? cheer() + " " : "") + (n6 ? d6_quiz6.a + " is a factor of " + n6 + " because " + n6 + " ÷ " + d6_quiz6.a + " = " + (n6 / d6_quiz6.a) + "." : d6_quiz6.q.replace("?", "") + d6_quiz6.a + "."); say((ok ? cheer() + " " : "") + "It is " + d6_quiz6.a);
+    if (d6_right6 >= 4) finish(4, "Tables and factors: well done!"); setTimeout(d6_ask6, 2000);
   });
-  paint6(); ask6();
+  d6_paint6(); d6_ask6();
 
-  /* ---- 7: tenths and hundredths ---- */
-  let shaded7 = 35, quiz7 = null, right7 = 0;
-  $("hgrid7").innerHTML = Array.from({ length: 100 }, (_, i) => '<button type="button" data-i="' + i + '" aria-label="square ' + (i + 1) + '"></button>').join("");
-  function paint7() {
-    const tenths = Math.floor(shaded7 / 10), hund = shaded7 % 10;
-    $("hgrid7").querySelectorAll("button").forEach((b, i) => { b.className = i < shaded7 ? (i < tenths * 10 ? "on tenth" : "on") : ""; });
-    $("cnt7").textContent = shaded7 + " of 100";
-    $("fr7").innerHTML = '<span class="frac"><span>' + shaded7 + "</span><span>100</span></span>";
-    $("dc7").textContent = shaded7 === 100 ? "1" : "0." + String(shaded7).padStart(2, "0");
-    $("fb7").className = "fb"; $("fb7").textContent = shaded7 === 100 ? "The whole square: 100 hundredths = 1." : tenths + (tenths === 1 ? " tenth" : " tenths") + " (the full rows) and " + hund + (hund === 1 ? " hundredth" : " hundredths") + " = 0." + String(shaded7).padStart(2, "0") + ".";
+  /* ---- 11: check ---- */
+  const Q11 = shuffle([
+    { q: "How do you write 4,207 in words?", o: ["Four thousand two hundred and seven", "Four hundred and twenty-seven", "Forty thousand and seven"], a: 0, w: "Four thousand, then the rest: two hundred and seven." },
+    { q: "Roughly, what is 412 × 6?", o: ["About 2,400", "About 240", "About 24,000"], a: 0, w: "Round 412 to 400. 400 × 6 = 2,400, and the exact answer is 2,472." },
+    { q: "Does 375 divide exactly by 25?", o: ["Yes", "No", "Only by 5"], a: 0, w: "The last two digits are 75, and 00, 25, 50 and 75 all divide by 25. In fact 375 = 25 × 15." },
+    { q: "4 × 25 × 3 is easiest if you first work out:", o: ["4 × 25", "25 × 3", "4 × 3"], a: 0, w: "4 × 25 is 100, and 100 × 3 is easy. Regrouping never changes the answer." },
+    { q: "Which of these is a factor pair of 24?", o: ["4 and 6", "5 and 5", "3 and 9"], a: 0, w: "4 \u00d7 6 = 24. A factor pair is two numbers that multiply to give the number." }
+  ]);
+  let cq = 0, rq = 0, lockq = false;
+  function round11() {
+    lockq = false;
+    $("fb11").textContent = ""; $("fb11").className = "fb";
+    if (cq >= Q11.length) {
+      $("stem11").textContent = "That is all of them.";
+      $("choices11").innerHTML = "";
+      $("score11").textContent = rq + " out of " + Q11.length + " right.";
+      if (rq >= 7) finish(5, "");
+      return;
+    }
+    $("stem11").textContent = Q11[cq].q;
+    const order = shuffle(Q11[cq].o.map((t, i) => ({ t: t, ok: i === Q11[cq].a })));
+    $("choices11").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
+    $("score11").textContent = "Question " + (cq + 1) + " of " + Q11.length + " · " + rq + " right";
   }
-  $("hgrid7").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; shaded7 = Number(b.dataset.i) + 1; paint7(); say("0 point " + String(shaded7).padStart(2, "0").split("").join(" ")); });
-  function ask7() {
-    const kinds = ["dec", "frac", "tenths"]; const k = kinds[right7 % 3]; const n = rnd(1, 99);
-    if (k === "dec") { const swap = "0." + String(n % 10) + String(Math.floor(n / 10)), other = "0." + String((n + 11) % 100 || 22).padStart(2, "0"); quiz7 = { q: "Which decimal is " + n + "/100?", a: "0." + String(n).padStart(2, "0"), wrong: [swap === "0." + String(n).padStart(2, "0") ? "0." + String((n + 33) % 100).padStart(2, "0") : swap, other] }; }
-    else if (k === "frac") quiz7 = { q: "0." + String(n).padStart(2, "0") + " is how many hundredths?", a: String(n), wrong: [String(n + 10 > 99 ? n - 10 : n + 10), String(Math.floor(n / 10))] };
-    else { const tn = rnd(1, 9); quiz7 = { q: tn + "/10 as a decimal is…", a: "0." + tn, wrong: ["0.0" + tn, tn + ".0"] }; }
-    $("say7").innerHTML = "<b>" + quiz7.q + "</b> Tap the answer.";
-    $("ch7").innerHTML = shuffle([quiz7.a, ...quiz7.wrong.filter((w) => w !== quiz7.a)]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-    $("score7").textContent = right7 + " of 3 right so far"; say(quiz7.q);
-  }
-  $("ch7").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = b.dataset.v === quiz7.a;
-    $("ch7").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === quiz7.a) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right7++;
-    const m = quiz7.a.match(/^0\.(\d)(\d)?$/); if (m) { shaded7 = Number(m[1]) * 10 + Number(m[2] || 0); } else if (/^\d+$/.test(quiz7.a)) shaded7 = Number(quiz7.a); paint7();
-    $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "") + "It is " + quiz7.a + ". Look at the square."; say((ok ? cheer() + " " : "") + "It is " + quiz7.a);
-    if (right7 >= 3) finish(6, "Tenths and hundredths: well done!"); setTimeout(ask7, 2000);
+  $("choices11").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lockq) return;
+    lockq = true;
+    const ok = b.dataset.ok === "1";
+    if (ok) rq++;
+    b.classList.add(ok ? "right" : "wrong");
+    $("fb11").textContent = (ok ? cheer() + " " : "") + Q11[cq].w;
+    $("fb11").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : Q11[cq].w);
+    cq++;
+    setTimeout(round11, 2400);
   });
-  paint7(); ask7();
+  round11();
 
-  /* ---- 8: adding fractions with the same denominator ---- */
-  let d8 = 8, a8 = 3, b8 = 2, shadedB = 0, right8 = 0, lock8 = false;
-  function newSum8() {
-    d8 = [5, 6, 8, 10][rnd(0, 3)]; a8 = rnd(1, d8 - 2); b8 = rnd(1, d8 - a8 - 1); shadedB = 0; lock8 = false;
-    $("ch8").innerHTML = ""; $("fb8").textContent = ""; $("fb8").className = "fb";
-    $("say8").innerHTML = "<b>" + a8 + "/" + d8 + " + " + b8 + "/" + d8 + "</b>. The first is shaded. Tap <b>" + b8 + "</b> more parts, then tap the answer.";
-    paint8(); say(a8 + " " + ordDen(d8) + " add " + b8 + " " + ordDen(d8) + ". Tap " + b8 + " more parts.");
-  }
-  function ordDen(d) { return { 5: "fifths", 6: "sixths", 8: "eighths", 10: "tenths" }[d]; }
-  function paint8() {
-    $("sum8").innerHTML = '<span class="fraction" style="color:var(--accent)"><span>' + a8 + "</span><span>" + d8 + '</span></span> + <span class="fraction" style="color:var(--teal)"><span>' + b8 + "</span><span>" + d8 + "</span></span> = ?";
-    $("bar8").innerHTML = Array.from({ length: d8 }, (_, i) => '<button type="button" class="' + (i < a8 ? "a" : i < a8 + shadedB ? "b" : "") + '" data-i="' + i + '">1/' + d8 + "</button>").join("");
-    if (shadedB === b8 && !$("ch8").children.length) {
-      $("fb8").textContent = "Now count all the shaded parts."; const s = a8 + b8;
-      $("ch8").innerHTML = shuffle([s + "/" + d8, s + "/" + (d8 * 2), (s + 1) + "/" + d8]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-    } else if (shadedB < b8) $("fb8").textContent = "Tap " + (b8 - shadedB) + " more part" + (b8 - shadedB === 1 ? "" : "s") + ".";
-  }
-  $("bar8").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b || lock8) return; const i = Number(b.dataset.i); if (i < a8) return; if (i === a8 + shadedB && shadedB < b8) shadedB++; else if (i === a8 + shadedB - 1 && shadedB > 0 && !$("ch8").children.length) shadedB--; paint8(); });
-  $("ch8").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock8) return; lock8 = true; const s = a8 + b8, ans = s + "/" + d8, ok = b.dataset.v === ans;
-    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === ans) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right8++;
-    $("sum8").innerHTML = $("sum8").innerHTML.replace("= ?", '= <span class="fraction"><span>' + s + "</span><span>" + d8 + "</span></span>");
-    $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "") + a8 + " parts + " + b8 + " parts = " + s + " parts. " + a8 + "/" + d8 + " + " + b8 + "/" + d8 + " = " + ans + ". The bottom number stays " + d8 + "."; say((ok ? cheer() + " " : "") + a8 + " " + ordDen(d8) + " add " + b8 + " " + ordDen(d8) + " is " + s + " " + ordDen(d8));
-    $("score8").textContent = right8 + " of 3 right so far"; if (right8 >= 3) finish(7, "Adding fractions: well done!"); setTimeout(newSum8, 2400);
-  });
-  newSum8();
-
-  /* ---- 9: perimeter and area ---- */
-  let w9 = 5, h9 = 3, quiz9 = null, right9 = 0;
-  function paint9() {
-    $("shape9").style.gridTemplateColumns = "repeat(" + w9 + ", auto)";
-    $("shape9").innerHTML = Array.from({ length: w9 * h9 }, (_, i) => { const r = Math.floor(i / w9), c = i % w9, edge = r === 0 || r === h9 - 1 || c === 0 || c === w9 - 1; return '<i class="' + (edge ? "edge" : "") + '">' + (i + 1) + "</i>"; }).join("");
-    $("wMinus").disabled = w9 <= 1; $("wPlus").disabled = w9 >= 10; $("hMinus").disabled = h9 <= 1; $("hPlus").disabled = h9 >= 6;
-    lines($("work9"), [
-      { k: "Area", v: w9 + " wide × " + h9 + " tall = <b>" + w9 * h9 + "</b> squares" },
-      { k: "Perimeter", v: w9 + " + " + h9 + " + " + w9 + " + " + h9 + " = <b>" + 2 * (w9 + h9) + "</b> around the edge", total: true },
-    ]);
-  }
-  ["wMinus", "wPlus", "hMinus", "hPlus"].forEach((id) => $(id).addEventListener("click", () => { if (id === "wMinus") w9--; if (id === "wPlus") w9++; if (id === "hMinus") h9--; if (id === "hPlus") h9++; paint9(); say("area " + w9 * h9 + ", perimeter " + 2 * (w9 + h9)); }));
-  function ask9() {
-    const w = rnd(2, 9), h = rnd(2, 6), area = right9 % 2 === 0;
-    quiz9 = { w, h, a: area ? w * h : 2 * (w + h), q: (area ? "What is the AREA" : "What is the PERIMETER") + " of a " + w + " by " + h + " rectangle?", area };
-    $("say9").innerHTML = "<b>" + quiz9.q + "</b> Build it if you like, then tap.";
-    $("ch9").innerHTML = shuffle([quiz9.a, area ? 2 * (w + h) : w * h, quiz9.a + 2]).filter((v, i, arr) => arr.indexOf(v) === i).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-    $("fb9").textContent = ""; $("fb9").className = "fb"; $("score9").textContent = right9 + " of 4 right so far"; say(quiz9.q);
-  }
-  $("ch9").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === quiz9.a;
-    $("ch9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === quiz9.a) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right9++;
-    w9 = quiz9.w; h9 = quiz9.h; paint9();
-    $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + (quiz9.area ? "Area: " + quiz9.w + " × " + quiz9.h + " = " + quiz9.a + " squares." : "Perimeter: " + quiz9.w + " + " + quiz9.h + " + " + quiz9.w + " + " + quiz9.h + " = " + quiz9.a + "."); say((ok ? cheer() + " " : "") + "It is " + quiz9.a);
-    if (right9 >= 4) finish(8, "Perimeter and area: well done!"); setTimeout(ask9, 2200);
-  });
-  paint9(); ask9();
-
-  /* ---- 10: angles ---- */
-  let deg10 = 45, quiz10 = null, right10 = 0;
-  const angleName = (d) => d < 90 ? "acute" : d === 90 ? "right" : "obtuse";
-  function drawAngle() {
-    const cx = 40, cy = 160, L = 190, a = (-deg10 * Math.PI) / 180, x = cx + L * Math.cos(a), y = cy + L * Math.sin(a);
-    const r = 60, xs = cx + r, ys = cy, xe = cx + r * Math.cos(a), ye = cy + r * Math.sin(a);
-    let svg = '<path class="wedge" d="M' + cx + "," + cy + " L" + xs + "," + ys + " A" + r + "," + r + " 0 " + (deg10 > 180 ? 1 : 0) + ",0 " + xe.toFixed(1) + "," + ye.toFixed(1) + ' Z"></path>';
-    if (deg10 === 90) svg += '<path class="sq" d="M' + (cx + 22) + "," + cy + " L" + (cx + 22) + "," + (cy - 22) + " L" + cx + "," + (cy - 22) + '"></path>';
-    svg += '<line class="arm" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + L) + '" y2="' + cy + '"></line><line class="arm move" x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '"></line>';
-    svg += '<text class="deg" x="' + (cx + 75) + '" y="' + (cy - 20) + '">' + deg10 + "°</text>";
-    $("angle10").innerHTML = svg;
-    $("name10").className = "fb"; $("name10").textContent = deg10 + "° is " + (deg10 === 90 ? "a right angle, a square corner." : deg10 < 90 ? "acute: smaller than a right angle." : "obtuse: bigger than a right angle.");
-  }
-  $("deg10").addEventListener("input", (e) => { deg10 = Number(e.target.value); drawAngle(); });
-  function ask10() {
-    deg10 = [20, 35, 50, 65, 90, 110, 125, 145, 160][rnd(0, 8)]; $("deg10").value = deg10; drawAngle(); $("name10").textContent = "";
-    quiz10 = angleName(deg10);
-    $("say10").innerHTML = "Look at the angle. Is it <b>acute</b>, <b>right</b> or <b>obtuse</b>? Tap the answer.";
-    $("ch10").innerHTML = ["acute", "right", "obtuse"].map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
-    $("fb10").textContent = ""; $("fb10").className = "fb"; $("score10").textContent = right10 + " of 4 right so far"; say("Acute, right or obtuse?");
-  }
-  $("ch10").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = b.dataset.v === quiz10;
-    $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === quiz10) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right10++;
-    drawAngle(); $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = (ok ? cheer() + " " : "") + deg10 + "° is " + quiz10 + "."; say((ok ? cheer() + " " : "") + deg10 + " degrees is " + quiz10);
-    if (right10 >= 4) finish(9, "You know your angles!"); setTimeout(ask10, 2000);
-  });
-  drawAngle(); ask10();
-
-  /* ---- 11: coordinates ---- */
-  let target11 = null, right11 = 0, lock11 = false; const N = 8;
-  function drawGrid(marks) {
-    const L = 30, S = 220, step = S / N, X = (x) => L + x * step, Y = (y) => L + S - y * step;
-    let svg = "";
-    for (let i = 0; i <= N; i++) { svg += '<line class="gl" x1="' + X(i) + '" y1="' + Y(0) + '" x2="' + X(i) + '" y2="' + Y(N) + '"></line><line class="gl" x1="' + X(0) + '" y1="' + Y(i) + '" x2="' + X(N) + '" y2="' + Y(i) + '"></line>'; svg += '<text class="lab" x="' + X(i) + '" y="' + (Y(0) + 14) + '">' + i + '</text><text class="lab" x="' + (X(0) - 12) + '" y="' + (Y(i) + 4) + '">' + i + "</text>"; }
-    svg += '<line class="ax" x1="' + X(0) + '" y1="' + Y(0) + '" x2="' + X(N) + '" y2="' + Y(0) + '"></line><line class="ax" x1="' + X(0) + '" y1="' + Y(0) + '" x2="' + X(0) + '" y2="' + Y(N) + '"></line>';
-    (marks || []).forEach((m) => { svg += '<line class="guide" x1="' + X(m.x) + '" y1="' + Y(0) + '" x2="' + X(m.x) + '" y2="' + Y(m.y) + '"></line><line class="guide" x1="' + X(0) + '" y1="' + Y(m.y) + '" x2="' + X(m.x) + '" y2="' + Y(m.y) + '"></line>'; });
-    for (let x = 0; x <= N; x++) for (let y = 0; y <= N; y++) { const m = (marks || []).find((k) => k.x === x && k.y === y); svg += '<circle class="pt' + (m ? " " + m.cls : "") + '" cx="' + X(x) + '" cy="' + Y(y) + '" r="' + (m ? 8 : 5) + '" data-x="' + x + '" data-y="' + y + '" role="button" tabindex="0" aria-label="(' + x + ", " + y + ')"></circle>'; }
-    $("coords11").innerHTML = svg;
-  }
-  function ask11() {
-    lock11 = false; target11 = { x: rnd(1, N), y: rnd(1, N) }; drawGrid([]);
-    $("say11").innerHTML = "Tap the point <b>(" + target11.x + ", " + target11.y + ")</b>. Along " + target11.x + ", then up " + target11.y + ".";
-    $("fb11").textContent = ""; $("fb11").className = "fb"; $("score11").textContent = right11 + " of 4 right so far"; say("Tap the point " + target11.x + ", " + target11.y);
-  }
-  function pick11(el) {
-    if (lock11 || !el) return; lock11 = true; const x = Number(el.dataset.x), y = Number(el.dataset.y), ok = x === target11.x && y === target11.y;
-    drawGrid([{ x: target11.x, y: target11.y, cls: "good" }].concat(ok ? [] : [{ x, y, cls: "oops" }]));
-    if (ok) right11++;
-    $("fb11").className = "fb " + (ok ? "good" : "bad"); $("fb11").textContent = (ok ? cheer() + " " : "You tapped (" + x + ", " + y + "). ") + "(" + target11.x + ", " + target11.y + ") is " + target11.x + " along and " + target11.y + " up."; say((ok ? cheer() : "Not quite.") + " " + target11.x + " along, " + target11.y + " up");
-    if (right11 >= 4) finish(10, "Coordinates: well done!"); setTimeout(ask11, 2200);
-  }
-  $("coords11").addEventListener("click", (e) => pick11(e.target.closest(".pt")));
-  $("coords11").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick11(e.target.closest(".pt")); } });
-  ask11();
-
-  /* ---- 12: check ---- */
-  const CHECK = [
-    { q: "How many hundreds in 4,072?", opts: [0, 4, 7], a: 0 },
-    { q: "It is 3°C. It gets 5 degrees colder. What is the temperature?", opts: ["−2°C", "2°C", "−8°C"], a: "−2°C" },
-    { q: "Round 6,482 to the nearest 1000.", opts: [6000, 7000, 6500], a: 6000 },
-    { q: "23 × 4 = ?", opts: [92, 82, 27], a: 92 },
-    { q: "29 ÷ 6 = ?", opts: ["4 r 5", "4 r 3", "5 r 1"], a: "4 r 5" },
-    { q: "Which is a factor pair of 36?", opts: ["4 × 9", "5 × 7", "3 × 13"], a: "4 × 9" },
-    { q: "0.07 is how many hundredths?", opts: [7, 70, 17], a: 7 },
-    { q: "3/8 + 2/8 = ?", opts: ["5/8", "5/16", "6/8"], a: "5/8" },
-    { q: "Perimeter of a 6 by 2 rectangle?", opts: [16, 12, 8], a: 16 },
-    { q: "An angle of 120° is…", opts: ["obtuse", "acute", "right"], a: "obtuse" },
-    { q: "The point (3, 5) is 3 along and…", opts: ["5 up", "3 up", "5 along"], a: "5 up" },
-  ];
-  let c12 = 0, right12 = 0, lock12 = false;
-  function round12() {
-    lock12 = false; $("fb12").textContent = ""; $("fb12").className = "fb";
-    if (c12 >= CHECK.length) { $("q12").textContent = ""; $("ch12").innerHTML = ""; $("fb12").className = "fb good"; $("fb12").innerHTML = "You got <b>" + right12 + "</b> out of " + CHECK.length + "!"; $("score12").textContent = right12 === CHECK.length ? "Every single one!" : right12 >= 8 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(11, "You got " + right12 + " out of " + CHECK.length + "."); return; }
-    const q = CHECK[c12]; $("score12").textContent = "Question " + (c12 + 1) + " of " + CHECK.length; $("q12").textContent = q.q; $("say12").textContent = q.q;
-    $("ch12").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" && /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
-    say(q.q.replace(/×/g, "times").replace(/÷/g, "divided by").replace(/°/g, " degrees").replace(/\?/g, ""));
-  }
-  $("ch12").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || lock12) return; lock12 = true; const q = CHECK[c12], ok = String(b.dataset.v) === String(q.a);
-    $("ch12").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else right12++;
-    $("fb12").className = "fb " + (ok ? "good" : "bad"); $("fb12").textContent = ok ? cheer() : "It is " + q.a + "."; say(ok ? cheer() : "It is " + q.a);
-    c12++; setTimeout(round12, 1300);
-  });
-  round12();
-
-  /* ---- 13: stickers ---- */
-  const STICKERS = [["🧊", "Numbers to 10,000"], ["🌡️", "Below zero"], ["🎯", "Rounding"], ["▦", "Grid multiplying"], ["🍬", "Dividing with remainders"], ["✖️", "Tables and factors"], ["🟧", "Tenths and hundredths"], ["🍫", "Adding fractions"], ["📐", "Perimeter and area"], ["📏", "Angles"], ["📍", "Coordinates"], ["✅", "Show what I know"]];
+  /* ---- 12: stickers ---- */
+  const STICKERS = [ "🔤", "The shape that hides a number", "🪜", "What comes next?", "\u2716\ufe0f" ];
   function paintStickers() {
-    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
-    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
-    $("fb13").className = "fb " + (got === STICKERS.length ? "good" : ""); $("fb13").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You are a number star." : got + " of " + STICKERS.length + " stickers so far.";
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
-  $("restart").addEventListener("click", () => location.reload());
+  $("again").addEventListener("click", () => { show(0, true); });
 
   show(0, false);
+
+  /* ---- your turn: the four slides that only demonstrated ---- */
+
+  /* 1 (4Ni.01) reads a number FROM ITS NAME -- the place-value trap is which
+     column the lone digit sits in, so the distractors are the same digit misplaced. */
+  ask(1, () => {
+    const t = rnd(1, 9), u = rnd(1, 9), shape = rnd(0, 2);
+    const mk = (mult) => t * 1000 + u * mult;
+    const n = mk(shape === 0 ? 1 : shape === 1 ? 10 : 100);
+    const others = [1, 10, 100].filter((m) => mk(m) !== n).map(mk);
+    const opts = shuffle([n, others[0], others[1]]);
+    return { stem: "Which one is <b>" + numWords(n) + "</b>?",
+      opts: opts.map(fmt), ans: opts.indexOf(n),
+      why: numWords(n) + " is <b>" + fmt(n) + "</b> — the zeros hold the empty places." };
+  });
+
+  /* 2 (4Nc.02) asks for the RULE, not the sum: the numbers are big enough that
+     adding them up is the slower route. */
 
   /* ================= the two header bars =================
      Everything here is answered by this page. The class controls are not
@@ -2048,7 +2142,6 @@
   })();
 
   })();
-
 </script>
 
 <script>
@@ -2115,7 +2208,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l01",
+      progressUnit: "l03",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -2137,13 +2230,13 @@
           container: drawer.querySelector(".w-drawer-body"),
           meta: {
             subject: "mathematics", subjectLabel: "Mathematics", grade: 4,
-            unitNo: 1, unitTitle: "Four Digits Strong",
+            unitNo: 3, unitTitle: "Ways to Calculate",
             learnerCategory: q.get("category") || "",
           },
           store: {},
           ui: { escapeHtml, toast },
           tutorLabel: "Wehel Tutor",
-          placeholder: "Ask about Four Digits Strong\u2026",
+          placeholder: "Ask about Ways to Calculate\u2026",
           quickPrompts: [
             { label: "Explain it simply", message: "Explain this step in a simpler way." },
             { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
@@ -2174,7 +2267,7 @@
   const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
 
   const COURSE = "ehel-math-g04";
-  const UNIT = "l01";
+  const UNIT = "l03";
   const STUDENT = q.get("studentid") || "local";
 
   /* Without a launch endpoint the backend is "local": everything still

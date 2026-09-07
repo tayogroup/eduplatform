@@ -17,7 +17,7 @@
     } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
   })();
 </script>
-<title>Asking, Sorting and Chance</title>
+<title>Patterns and Square Numbers</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
 
@@ -535,94 +535,97 @@
     .dots { max-width: 100%; justify-content: flex-start; }
   }
 
-  /* ---------- Asking, Sorting and Chance: only what the shared lesson CSS lacks ---------- */
+  /* ---------- Numbers and How They Behave: only what the shared lesson CSS lacks ---------- */
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
-  .chip { padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line);
-    background: var(--card); color: var(--ink); font-weight: 700; font-size: 15px; }
+  .chip { padding: 8px 13px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font-size: 14px;
+    font-variant-numeric: tabular-nums; }
   .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
   .picker-lab2 { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
     color: var(--muted); margin: 16px 0 6px; }
-  .qstem { font-size: 19px; font-weight: 700; margin: 10px 0; }
+  .qstem { font-size: 19px; font-weight: 700; margin: 10px 0 6px; }
+  .big-eq { font-family: "Inter", "Segoe UI", sans-serif; font-size: 30px; font-weight: 600;
+    text-align: center; margin: 10px 0; font-variant-numeric: tabular-nums; }
+  .big-eq .unk { color: var(--accent); font-size: 1.1em; }
 
-  /* 1 — the question card */
-  .qcard { background: var(--cell); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
-  .qq { font-family: "Inter", "Segoe UI", sans-serif; font-size: 20px; font-weight: 600; margin: 0 0 8px; }
-  .qc { margin: 0; color: var(--muted); font-size: 15px; }
+  /* 1 — a number and its name */
+  .bignum { font-family: "Inter", "Segoe UI", sans-serif; font-size: 46px; font-weight: 600; text-align: center;
+    color: var(--teal); font-variant-numeric: tabular-nums; margin: 6px 0 2px; }
+  .inwords { text-align: center; font-size: 19px; font-weight: 700; color: var(--accent);
+    margin-bottom: 6px; text-transform: capitalize; }
 
-  /* 2 — tally and frequency */
-  .ttable { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-top: 12px; }
-  .trow { display: grid; grid-template-columns: 92px 1fr 74px; gap: 8px; align-items: center;
-    padding: 10px 12px; border-bottom: 1px solid var(--line); }
-  .trow:last-child { border-bottom: 0; }
-  .trow.thead { background: var(--cell); font-size: 11px; font-weight: 700; letter-spacing: .07em;
-    text-transform: uppercase; color: var(--muted); }
-  .trow.tfoot { background: var(--teal-soft); font-weight: 700; color: var(--teal); }
-  .trow .num { text-align: right; font-family: "Inter", "Segoe UI", sans-serif; font-size: 20px; font-weight: 600;
-    font-variant-numeric: tabular-nums; }
-  .trow.thead .num, .trow.tfoot .num { font-size: inherit; }
-  .tal { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 24px; }
-  .tal .gate, .tal .mark { font-family: ui-monospace, Menlo, monospace; font-weight: 700;
-    letter-spacing: 2px; color: var(--ink); }
-  .tal .gate { position: relative; }
-  .tal .gate::after { content: ""; position: absolute; left: -2px; right: -2px; top: 50%;
-    border-top: 2px solid var(--accent); transform: rotate(-18deg); }
-  .tal .none { color: var(--muted); }
+  /* 2 — pairing counters */
+  .pairbox { margin: 12px 0 4px; }
+  .prow2 { display: grid; grid-template-columns: 34px 1fr 62px; gap: 8px; align-items: center; padding: 5px 0; }
+  .pn { font-family: "Inter", "Segoe UI", sans-serif; font-size: 19px; font-weight: 600; text-align: right; }
+  .pdots { display: flex; flex-wrap: wrap; gap: 5px; }
+  .pdots i { display: block; height: 15px; border-radius: 8px; }
+  .pdots i.pair { width: 32px; }
+  .pdots i.odd1 { width: 15px; outline: 2px dashed var(--accent); outline-offset: 2px; }
+  .pdots i.t1 { background: var(--teal); } .pdots i.t2 { background: var(--plum); }
+  .pdots i.t3 { background: var(--gold); }
+  .ptag { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-align: right; }
+  .ptag.odd { color: var(--accent); } .ptag.even { color: var(--good); }
+  .plus2 { font-family: "Inter", "Segoe UI", sans-serif; font-size: 22px; font-weight: 600;
+    color: var(--muted); text-align: center; margin: 2px 0; }
 
-  /* 3 and 5 — pictogram, bars, dots */
-  .repbox { margin-top: 12px; }
-  .key { font-size: 13px; color: var(--muted); margin: 0 0 10px; }
-  .prow, .drow, .srow { display: grid; grid-template-columns: 54px 1fr 78px; gap: 8px;
-    align-items: center; padding: 6px 0; }
-  .plab { font-weight: 700; font-size: 14px; }
-  .pnum { text-align: right; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600;
-    font-variant-numeric: tabular-nums; font-size: 15px; }
-  .pics { display: flex; gap: 2px; align-items: center; }
-  .pic { font-size: 20px; line-height: 1; }
-  .pic.half { display: inline-block; width: .55em; overflow: hidden; }
-  .dots2 { display: flex; flex-wrap: wrap; gap: 4px; }
-  .dots2 i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--teal); }
-  .bars { display: flex; gap: 12px; align-items: flex-end; height: 150px; margin-top: 6px; }
-  .bcol { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
-  .bwrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
-  .bbar { width: 100%; background: var(--teal); border-radius: 8px 8px 0 0; min-height: 4px;
-    display: flex; justify-content: center; align-items: flex-start; }
-  .bbar span { color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 14px; padding-top: 3px; }
-  .blab { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 6px; }
-  .twoup { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
-  .mini .mlab { font-size: 12px; font-weight: 700; color: var(--muted); margin: 0 0 4px; }
-  @media (max-width: 460px) { .twoup { grid-template-columns: 1fr; } }
+  /* 3 — bar model for an unknown */
+  .barmodel { display: grid; justify-items: center; gap: 5px; margin: 10px 0; }
+  .barmodel { width: 100%; max-width: 300px; margin-left: auto; margin-right: auto; }
+  .bwhole { display: flex; width: 100%; height: 40px; border-radius: 10px; overflow: hidden;
+    border: 2px solid var(--line); box-sizing: border-box; }
+  .btot { width: 100%; }
+  .bpart { display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600;
+    font-size: 16px; overflow: hidden; }
+  .bpart.known { background: var(--teal-soft); color: var(--teal); }
+  .bpart.unknownp { background: var(--accent-soft); color: var(--accent); font-size: 20px; }
+  .btot { text-align: center; font-size: 12px; font-weight: 700; color: var(--muted);
+    border-top: 2px solid var(--line); padding-top: 3px; }
 
-  /* 4 — Venn and Carroll */
-  .sortbox { margin-top: 12px; }
-  .vennsvg { width: 100%; max-width: 340px; display: block; margin: 4px auto 0; }
-  .vennsvg .uni { fill: var(--ground); stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 6 4; }
-  .vennsvg .hoopA { fill: var(--teal); fill-opacity: .16; stroke: var(--teal); stroke-width: 2.5; }
-  .vennsvg .hoopB { fill: var(--plum); fill-opacity: .16; stroke: var(--plum); stroke-width: 2.5; }
-  .vennsvg .hl { font: 700 12px Inter, system-ui, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
-  .vennsvg .hl.a { fill: var(--teal); text-anchor: middle; }
-  .vennsvg .hl.b { fill: var(--plum); text-anchor: middle; }
-  .vennsvg .vn { font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; font-weight: 600;
-    fill: var(--ink); text-anchor: middle; }
-  .vennsvg .out { font: 400 13px Inter, system-ui, sans-serif; fill: var(--muted); }
-  .carroll { width: 100%; border-collapse: collapse; }
-  .carroll th, .carroll td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; }
-  .carroll th { background: var(--cell); font-size: 11px; font-weight: 700; letter-spacing: .06em;
-    text-transform: uppercase; color: var(--muted); }
-  .carroll td { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; font-weight: 600; letter-spacing: 1px; }
+  /* 4 — sequence strip */
+  .seqrow { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; justify-content: center; margin: 10px 0; }
+  .term4 { display: grid; place-items: center; min-width: 46px; padding: 9px 6px; border-radius: 10px;
+    background: var(--teal-soft); border: 2px solid var(--teal); color: var(--teal);
+    font-family: "Inter", "Segoe UI", sans-serif; font-size: 19px; font-weight: 600; }
+  .term4.ghost4 { background: var(--ground); border-style: dashed; border-color: var(--line); color: var(--muted); }
+  .step { font-size: 12px; font-weight: 700; color: var(--accent); }
 
-  /* 6 — the chance line */
-  .chanceline { position: relative; height: 74px; margin: 18px 0 6px; }
-  .cbar { position: absolute; left: 4%; right: 4%; top: 16px; height: 8px; border-radius: 99px;
-    background: linear-gradient(90deg, var(--bad-soft), var(--cell), var(--good-soft)); border: 1px solid var(--line); }
-  .cstop { position: absolute; top: 8px; transform: translateX(-50%); text-align: center; width: 74px; }
-  .cstop i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--teal);
-    margin: 4px auto 6px; }
-  .cstop span { font-size: 10.5px; font-weight: 700; color: var(--muted); line-height: 1.15; display: block; }
+  /* 5 — square dots */
+  .sqdots { display: grid; gap: 4px; justify-content: center; margin: 12px 0 4px; }
+  .sqrow { display: flex; gap: 4px; }
+  .sqrow i { display: block; width: 17px; height: 17px; border-radius: 50%; background: var(--teal); }
+  .sqrow i.edge { background: var(--accent); }
 
-  /* 7 — the spinner */
-  .spinner { width: 160px; height: 160px; display: block; margin: 6px auto 12px; }
-  .sbarwrap { display: block; height: 14px; background: var(--cell); border-radius: 99px; overflow: hidden; }
-  .sbar { display: block; height: 100%; border-radius: 99px; }
+  /* 9 — place value table */
+  .pvtable { margin: 12px 0 4px; overflow-x: auto; }
+  .pvrow { display: grid; grid-template-columns: repeat(6, 40px) 78px; gap: 3px; align-items: center; }
+  .pvrow.head span { font-size: 9px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--muted); text-align: center; padding-bottom: 3px; }
+  .pvrow span { text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-size: 19px; font-weight: 600;
+    padding: 7px 0; }
+  .pvrow span.d { background: var(--teal-soft); border: 1.5px solid var(--teal); border-radius: 8px; color: var(--teal); }
+  .pvrow .rl { font-family: Inter, system-ui, sans-serif; font-size: 12px; font-weight: 700;
+    color: var(--muted); text-align: left; padding-left: 6px; }
+
+  /* 10 — number line with negatives */
+  /* width is load-bearing, not cosmetic. .stage is a column flex with
+     align-items: center, so a child sizes to its CONTENT — and every child here
+     is position:absolute, which means content width 0 and the whole line
+     collapses to a smudge. The donor's .nline in g4-lesson.css always had this
+     pair; this class was written without it. */
+  .numline { position: relative; width: 100%; max-width: 660px; height: 62px; margin: 14px 0 6px; }
+  .nlbar { position: absolute; left: 0; right: 0; top: 26px; height: 4px; background: var(--line); border-radius: 2px; }
+  .nltick { position: absolute; top: 21px; width: 2px; height: 14px; background: var(--line); transform: translateX(-50%); }
+  .nllab { position: absolute; top: 40px; font-size: 11px; font-weight: 700; color: var(--muted);
+    transform: translateX(-50%); font-variant-numeric: tabular-nums; }
+  .nlmark { position: absolute; top: 18px; width: 16px; height: 16px; border-radius: 50%;
+    transform: translateX(-50%); border: 2px solid var(--card); }
+  .nlmark.a { background: var(--teal); }
+  .nlmark.b { background: var(--accent); }
+  .nlmark.both { background: linear-gradient(90deg, var(--teal) 0 50%, var(--accent) 50% 100%); }
+  .cmpa { color: var(--teal); } .cmpb { color: var(--accent); }
+  .choice.sign10, .choice.sign { font-family: "Inter", "Segoe UI", sans-serif; font-size: 26px; font-weight: 600;
+    min-width: 64px; padding: 6px 14px; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -730,14 +733,14 @@
     <span class="eh-track"><i id="ehFill"></i></span>
   </div>
   <div class="eh-b1right">
-    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="big-numbers-below-zero.html">Big Numbers and Below Zero</option><option value="patterns-and-squares.html">Patterns and Square Numbers</option><option value="ways-to-calculate.html">Ways to Calculate</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-and-measures.html">Shape and Measures</option><option value="where-things-are.html">Where Things Are</option><option value="asking-sorting-chance.html" selected>Asking, Sorting and Chance</option></select>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="big-numbers-below-zero.html">Big Numbers and Below Zero</option><option value="patterns-and-squares.html" selected>Patterns and Square Numbers</option><option value="ways-to-calculate.html">Ways to Calculate</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-and-measures.html">Shape and Measures</option><option value="where-things-are.html">Where Things Are</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
     <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
   </div>
 </header>
 <nav class="eh-bar2" aria-label="Lesson">
   <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
   <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
-  <span class="eh-section">Asking, Sorting and Chance</span>
+  <span class="eh-section">Patterns and Square Numbers</span>
   <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
 </nav>
 <div class="eh-steps" id="ehSteps" hidden></div>
@@ -745,138 +748,95 @@
   <header class="hero">
     <div>
       <p class="eyebrow">Mathematics · Grade 4</p>
-      <h1>Asking, Sorting <em>and Chance</em></h1>
+      <h1>Patterns and Square <em>Numbers</em></h1>
     </div>
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
   <div class="deck" id="deck">
 
-    <!-- 1 planning -->
-    <section class="slide" data-say="Before you collect anything, decide what would answer your question. Some answers are groups you can name, and some are numbers you can count.">
-      <div class="slide-head"><span class="n">1</span><h2>What would answer it?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Pick a question, then decide what to collect. Some answers are <b>groups you can name</b>. Some are <b>numbers you can count</b>.</span></div>
+    <!-- 1 numbers in words -->
+    <section class="slide" data-say="Pair the counters up. If one is left over the number is odd. Now see what happens when you add two of them together.">
+      <div class="slide-head"><span class="n">1</span><h2>Odd, even, and what happens</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Pair the counters. One left over means <b>odd</b>. Now add two numbers and watch what the leftovers do.</span></div>
       <div class="stage">
-        <div class="chips" id="pickQ"></div>
-        <div class="qcard" id="qcard"></div>
-        <p class="picker-lab2">What kind of data would you collect?</p>
-        <div class="choices" id="kind1"></div>
-        <p class="fb" id="fb1"></p>
-        <p class="fb small-fb" id="task1"></p>
-      </div>
-    </section>
-
-    <!-- 2 tally -->
-    
-<section class="slide" data-say="Twenty two children answer one at a time. Each answer is a tally mark, and every fifth mark is a gate.">
-      <div class="slide-head"><span class="n">2</span><h2>Tally, then count</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Twenty-two children answer one at a time. Mark each one, and cross the gate on every <b>fifth</b>. Then count the gates.</span></div>
-      <div class="stage">
-        <div class="ttable" id="tally2"></div>
-        <div class="bigbtns">
-          <button type="button" class="big small" id="one2">Next child</button>
-          <button type="button" class="big small teal" id="all2">Ask them all</button>
-          <button type="button" class="big small ghost" id="reset2">Start again</button>
-        </div>
+        <label class="lab" for="a2">First number: <span id="aLab2">7</span></label>
+        <input type="range" id="a2" min="1" max="12" value="7" step="1">
+        <label class="lab" for="b2">Second number: <span id="bLab2">5</span></label>
+        <input type="range" id="b2" min="1" max="12" value="5" step="1">
+        <div class="pairbox" id="pair2" aria-hidden="true"></div>
+        <div class="working" id="work2"></div>
         <p class="fb" id="fb2"></p>
         <p class="fb small-fb" id="task2"></p>
-        <div class="askwrap" id="ask2"></div>
+        <div class="askwrap" id="ask1"></div>
       </div>
     </section>
 
-    <!-- 3 representations -->
+    <!-- 3 the missing number -->
     
-<section class="slide" data-say="The same twenty two answers, drawn three ways. Each picture is good at showing something different.">
-      <div class="slide-head"><span class="n">3</span><h2>One set, three pictures</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">The same 22 answers, drawn three ways. Each one is <b>good at something different</b>.</span></div>
+<section class="slide" data-say="The shape stands for a number nobody has told you yet. Work out what it must be.">
+      <div class="slide-head"><span class="n">2</span><h2>The shape that hides a number</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">The <b>shape</b> stands for a number nobody has told you. The rest of the sum tells you what it has to be.</span></div>
       <div class="stage">
-        <div class="chips" id="pickRep"></div>
-        <div class="repbox" id="rep3" aria-hidden="true"></div>
+        <p class="qstem big-eq" id="eq3"></p>
+        <div class="barmodel" id="bar3" aria-hidden="true"></div>
+        <div class="choices" id="opts3"></div>
+        <div class="working" id="work3"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new3">Another one</button></div>
         <p class="fb" id="fb3"></p>
         <p class="fb small-fb" id="task3"></p>
-        <div class="askwrap" id="ask3"></div>
       </div>
     </section>
 
-    <!-- 4 venn and carroll -->
+    <!-- 4 sequences -->
     
-<section class="slide" data-say="Two questions at once. A Venn diagram uses hoops that overlap. A Carroll diagram uses four boxes.">
-      <div class="slide-head"><span class="n">4</span><h2>Sorting two ways at once</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Sort 1 to 20 by <b>two</b> questions at once: is it even, and is it more than 10? A <b>Venn diagram</b> overlaps two hoops. A <b>Carroll diagram</b> uses four boxes.</span></div>
+<section class="slide" data-say="Find the step from one term to the next. Some sequences add the same amount every time and some do not.">
+      <div class="slide-head"><span class="n">3</span><h2>What comes next?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Look at the <b>step</b> from each term to the next. Same step every time is <b>linear</b>. Changing step is <b>non-linear</b>.</span></div>
       <div class="stage">
-        <div class="chips" id="pickSort"></div>
-        <div class="sortbox" id="sort4" aria-hidden="true"></div>
+        <div class="chips" id="pickSeq"></div>
+        <div class="seqrow" id="seq4" aria-hidden="true"></div>
+        <div class="choices" id="next4"></div>
+        <div class="working" id="work4"></div>
         <p class="fb" id="fb4"></p>
         <p class="fb small-fb" id="task4"></p>
+      </div>
+    </section>
+
+    <!-- 5 square numbers -->
+    
+<section class="slide" data-say="A square number is one you can arrange into a perfect square of dots.">
+      <div class="slide-head"><span class="n">4</span><h2>Numbers that make squares</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">A <b>square number</b> is one whose dots make a perfect square. Watch what has to be added each time.</span></div>
+      <div class="stage">
+        <label class="lab" for="sq5">Side of <span id="sqLab5">4</span></label>
+        <input type="range" id="sq5" min="1" max="8" value="4" step="1">
+        <div class="sqdots" id="sq5box" aria-hidden="true"></div>
+        <div class="working" id="work5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="task5"></p>
         <div class="askwrap" id="ask4"></div>
       </div>
     </section>
 
-    <!-- 5 interpret -->
-    
-<section class="slide" data-say="Two classes, the same question, the same number of children. Look for what is the same and what is different.">
-      <div class="slide-head"><span class="n">5</span><h2>Two classes, one question</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Both classes have <b>22</b> children and answered the same question. What is the <b>same</b>, and what is <b>different</b>?</span></div>
-      <div class="stage">
-        <div class="twoup" id="two5" aria-hidden="true"></div>
-        <p class="qstem" id="stem5"></p>
-        <div class="choices" id="choices5"></div>
-        <p class="fb" id="fb5"></p>
-        <p class="fb small-fb" id="task5"></p>
-      </div>
-    </section>
-
-    <!-- 6 chance words -->
-    
-<section class="slide" data-say="Some things cannot happen, some are sure to. Most sit somewhere in between.">
-      <div class="slide-head"><span class="n">6</span><h2>Impossible to certain</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Some things <b>cannot</b> happen and some are <b>sure</b> to. Most sit somewhere in between. Put each one on the line.</span></div>
-      <div class="stage">
-        <div class="chanceline" id="cl6" aria-hidden="true"></div>
-        <p class="qstem" id="ev6"></p>
-        <div class="choices" id="words6"></div>
-        <p class="fb" id="fb6"></p>
-        <p class="fb small-fb" id="task6"></p>
-      </div>
-    </section>
-
-    <!-- 7 experiment -->
-    
-<section class="slide" data-say="Spin it ten times and the counts are lumpy. Spin it a thousand times and they even out.">
-      <div class="slide-head"><span class="n">7</span><h2>Spin it, and spin it again</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Four equal parts, so each <b>should</b> come up a quarter of the time. A few spins are lumpy. <b>Many</b> spins even out.</span></div>
-      <div class="stage">
-        <svg class="spinner" id="sp7" viewBox="0 0 160 160" role="img" aria-label="A spinner with four equal parts"></svg>
-        <div class="bigbtns">
-          <button type="button" class="big small" data-n="10">Spin 10</button>
-          <button type="button" class="big small" data-n="100">Spin 100</button>
-          <button type="button" class="big small teal" data-n="1000">Spin 1000</button>
-        </div>
-        <div class="repbox" id="res7" aria-hidden="true"></div>
-        <p class="fb" id="fb7"></p>
-        <p class="fb small-fb" id="task7"></p>
-        <div class="askwrap" id="ask7"></div>
-      </div>
-    </section>
-
-    <!-- 8 check -->
+    <!-- 6 estimate first -->
     
 <section class="slide" data-say="Show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the answer.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the answer.</span></div>
       <div class="stage">
-        <p class="qstem" id="stem8"></p>
-        <div class="choices" id="choices8"></div>
-        <p class="fb" id="fb8"></p>
-        <p class="fb small-fb" id="score8"></p>
+        <p class="qstem" id="stem11"></p>
+        <div class="choices" id="choices11"></div>
+        <p class="fb" id="fb11"></p>
+        <p class="fb small-fb" id="score11"></p>
       </div>
     </section>
 
-    <!-- 9 stickers -->
+    <!-- 12 stickers -->
     
 <section class="slide" data-say="Every step you finished earned a sticker.">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Every step you finished earned a sticker.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
@@ -1747,363 +1707,226 @@
     (marks || []).forEach((m) => { h += '<div class="m" style="left:' + x(m) + '"></div>'; }); el.innerHTML = h;
   }
 
-    /* ---- shared data: one survey, used by slides 2, 3 and 5 ---- */
-  const CATS = ["Walk", "Bus", "Car", "Bike"];
-  const ICON = { Walk: "🚶", Bus: "🚌", Car: "🚗", Bike: "🚲" };
-  const A4 = { Walk: 9, Bus: 6, Car: 4, Bike: 3 };     /* 22 children */
-  const B4 = { Walk: 5, Bus: 11, Car: 4, Bike: 2 };    /* 22 children */
-  const totalOf = (d) => CATS.reduce((s, c) => s + d[c], 0);
-  const QUEUE = (function () {
-    const q = [];
-    CATS.forEach((c) => { for (let i = 0; i < A4[c]; i++) q.push(c); });
-    return shuffle(q);
-  })();
+    /* the shell's fmt() leaves a plain hyphen, so this lesson supplies the typographic
+     minus it uses for negatives throughout — it is NOT one of the shell's helpers */
+  const minus = (t) => String(t).replace("-", "−");
+  const fmtn = (n) => minus(fmt(n));
 
-  /* ---- 1: planning an investigation (4Ss.01) ---- */
-  const QS1 = [
-    { q: "How do the children in our class travel to school?", collect: "One answer from each child: walk, bus, car or bike.",
-      kind: "categorical", why: "The answers are <b>groups you can name</b> — walk, bus, car, bike. You cannot put them in order or add them up, so they are categorical." },
-    { q: "How many brothers and sisters does each child have?", collect: "A whole number from each child: 0, 1, 2, 3 and so on.",
-      kind: "discrete", why: "The answers are <b>numbers you count</b>, and only whole ones — nobody has two and a half sisters. That is discrete data." },
-    { q: "Which fruit does our class like best?", collect: "One fruit named by each child.",
-      kind: "categorical", why: "Fruit names are <b>groups</b>, not amounts. Categorical again." },
-    { q: "How many books did each child read last month?", collect: "A whole number from each child.",
-      kind: "discrete", why: "You are counting books, and you can only read a whole number of them. Discrete." },
-  ];
-  let q1 = 0, got1 = 0, lock1 = false;
-  const KINDS = ["categorical", "discrete"];
-  $("pickQ").innerHTML = QS1.map((x, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">Question ' + (i + 1) + "</button>").join("");
-  function paint1() {
-    const Q = QS1[q1];
-    $("qcard").innerHTML = '<p class="qq">' + Q.q + '</p><p class="qc"><b>What you would collect:</b> ' + Q.collect + "</p>";
-    $("kind1").innerHTML = KINDS.map((k) => '<button type="button" class="choice" data-k="' + k + '">' +
-      (k === "categorical" ? "Groups you can name" : "Numbers you can count") + "</button>").join("");
-    $("fb1").textContent = ""; $("fb1").className = "fb";
-    $("task1").textContent = "Answered " + got1 + " of " + QS1.length;
-    lock1 = false;
+  /* ---- number names, written out once and used by several slides ---- */
+  const WORD_ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const WORD_TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  function under100(n) {
+    if (n < 20) return WORD_ONES[n];
+    const t = Math.floor(n / 10), o = n % 10;
+    return WORD_TENS[t] + (o ? "-" + WORD_ONES[o] : "");
   }
-  $("pickQ").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    q1 = Number(b.dataset.i);
-    [...$("pickQ").children].forEach((c, i) => c.classList.toggle("on", i === q1));
-    paint1();
-  });
-  $("kind1").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock1) return;
-    lock1 = true;
-    const ok = b.dataset.k === QS1[q1].kind;
-    b.classList.add(ok ? "right" : "wrong");
-    if (ok) got1++;
-    $("fb1").innerHTML = (ok ? cheer() + " " : "") + QS1[q1].why;
-    $("fb1").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : $("fb1").textContent);
-    $("task1").textContent = "Answered " + got1 + " of " + QS1.length;
-    if (got1 >= 3) finish(0, "");
-  });
-  paint1();
+  function under1000(n) {
+    if (n < 100) return under100(n);
+    const h = Math.floor(n / 100), r = n % 100;
+    return WORD_ONES[h] + " hundred" + (r ? " and " + under100(r) : "");
+  }
+  function numWords(n) {
+    if (n < 0) return "negative " + numWords(-n);
+    if (n < 1000) return under1000(n);
+    const th = Math.floor(n / 1000), r = n % 1000;
+    return under1000(th) + " thousand" + (r ? (r < 100 ? " and " : " ") + under1000(r) : "");
+  }
 
-  /* ---- 2: tally chart and frequency table (4Ss.02) ---- */
-  let n2 = 0;
-  const tallyMarks = (n) => {
-    let h = "";
-    for (let g = 0; g < Math.floor(n / 5); g++) h += '<span class="gate">||||</span>';
-    for (let r = 0; r < n % 5; r++) h += '<span class="mark">|</span>';
-    return h || '<span class="none">—</span>';
-  };
-  function counts2() {
-    const c = {}; CATS.forEach((k) => (c[k] = 0));
-    for (let i = 0; i < n2; i++) c[QUEUE[i]]++;
-    return c;
+  /* ---- 2: odd, even and what adding them does (4Nc.02) ---- */
+  let a2 = 7, b2 = 5;
+  const par = (n) => (n % 2 === 0 ? "even" : "odd");
+  function row2(n, cls) {
+    let h = '<div class="prow2"><span class="pn">' + n + '</span><span class="pdots">';
+    for (let i = 0; i < Math.floor(n / 2); i++) h += '<i class="pair ' + cls + '"></i>';
+    if (n % 2) h += '<i class="odd1 ' + cls + '"></i>';
+    return h + '</span><span class="ptag ' + par(n) + '">' + par(n) + "</span></div>";
   }
   function paint2() {
-    const c = counts2();
-    let h = '<div class="trow thead"><span>Answer</span><span>Tally</span><span class="num">Frequency</span></div>';
-    CATS.forEach((k) => {
-      h += '<div class="trow"><span>' + ICON[k] + " " + k + '</span><span class="tal">' + tallyMarks(c[k]) +
-        '</span><span class="num">' + c[k] + "</span></div>";
-    });
-    h += '<div class="trow tfoot"><span>Total</span><span></span><span class="num">' + n2 + "</span></div>";
-    $("tally2").innerHTML = h;
-    $("fb2").textContent = n2 === 0 ? "Nobody has answered yet."
-      : n2 < QUEUE.length ? n2 + " of " + QUEUE.length + " children have answered."
-      : "All " + QUEUE.length + " have answered. The frequencies add to " + n2 + ".";
-    $("task2").textContent = "Every fifth mark is drawn across the gate, so you can count in fives.";
-    if (n2 === QUEUE.length) finish(1, "");
+    $("aLab2").textContent = a2;
+    $("bLab2").textContent = b2;
+    const s = a2 + b2;
+    $("pair2").innerHTML = row2(a2, "t1") + row2(b2, "t2") + '<div class="plus2">+</div>' + row2(s, "t3");
+    const leftovers = (a2 % 2) + (b2 % 2);
+    lines($("work2"), [
+      { k: "First number", v: a2 + " pairs up with " + (a2 % 2 ? "<b>one left over</b>, so it is odd" : "<b>nothing left over</b>, so it is even") },
+      { k: "Second number", v: b2 + " pairs up with " + (b2 % 2 ? "<b>one left over</b>, so it is odd" : "<b>nothing left over</b>, so it is even") },
+      { k: "Put together", v: leftovers === 0 ? "no leftovers at all, so the total pairs up exactly"
+        : leftovers === 1 ? "one leftover with nothing to join, so it is still there"
+        : "<b>two</b> leftovers, and those two make a pair of their own" },
+      { k: "The rule", v: par(a2) + " + " + par(b2) + " = <b>" + par(s) + "</b>, and it works for every pair you try", total: true },
+    ]);
+    $("fb2").innerHTML = a2 + " + " + b2 + " = <b>" + s + "</b>, which is <b>" + par(s) + "</b>.";
+    $("task2").textContent = "Try odd + odd, even + even, and one of each.";
+    if (leftovers === 2) finish(0, "");
   }
-  $("one2").addEventListener("click", () => { if (n2 < QUEUE.length) { n2++; paint2(); say(QUEUE[n2 - 1]); } });
-  $("all2").addEventListener("click", () => { n2 = QUEUE.length; paint2(); say("All twenty two have answered."); });
-  $("reset2").addEventListener("click", () => { n2 = 0; paint2(); });
+  $("a2").addEventListener("input", (e) => { a2 = Number(e.target.value); paint2(); });
+  $("b2").addEventListener("input", (e) => { b2 = Number(e.target.value); paint2(); });
   paint2();
 
-  /* ---- 3: pictogram, bar chart, dot plot (4Ss.02) ---- */
-  const REPS = ["Pictogram", "Bar chart", "Dot plot"];
-  const REPWHY = [
-    "A pictogram uses a <b>key</b>, so one picture can stand for more than one child. Good when the numbers are big.",
-    "A bar chart shows <b>how tall</b> each group is against a scale, so it is easy to compare them at a glance.",
-    "A dot plot puts <b>one dot per child</b>, so you can still count the individuals as well as compare the groups.",
-  ];
-  let rep3 = 0;
-  $("pickRep").innerHTML = REPS.map((r, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' + r + "</button>").join("");
+  /* ---- 3: a shape for an unknown quantity (4Nc.03) ---- */
+  const SHAPES3 = ["▲", "■", "●", "◆"];
+  let p3 = null, lock3 = false, done3 = 0;
+  function newUnknown() {
+    const plus = rnd(0, 1) === 1;
+    const sh = SHAPES3[rnd(0, 3)];
+    if (plus) { const a = rnd(12, 60), x = rnd(8, 40); return { sh: sh, a: a, x: x, tot: a + x, plus: true }; }
+    const tot = rnd(40, 90), x = rnd(8, 30);
+    return { sh: sh, a: tot - x, x: x, tot: tot, plus: false };
+  }
   function paint3() {
-    const d = A4, max = Math.max.apply(null, CATS.map((c) => d[c]));
-    let h = "";
-    if (rep3 === 0) {
-      h += '<p class="key">Key: ' + ICON.Walk + ' = 2 children</p>';
-      CATS.forEach((c) => {
-        const full = Math.floor(d[c] / 2), half = d[c] % 2;
-        let pics = "";
-        for (let i = 0; i < full; i++) pics += '<span class="pic">' + ICON[c] + "</span>";
-        if (half) pics += '<span class="pic half">' + ICON[c] + "</span>";
-        h += '<div class="prow"><span class="plab">' + c + '</span><span class="pics">' + pics + '</span><span class="pnum">' + d[c] + "</span></div>";
-      });
-    } else if (rep3 === 1) {
-      h += '<div class="bars">';
-      CATS.forEach((c) => {
-        h += '<div class="bcol"><div class="bwrap"><div class="bbar" style="height:' + Math.round((d[c] / max) * 100) +
-          '%"><span>' + d[c] + "</span></div></div><span class=\"blab\">" + c + "</span></div>";
-      });
-      h += "</div>";
-    } else {
-      CATS.forEach((c) => {
-        let dots = "";
-        for (let i = 0; i < d[c]; i++) dots += "<i></i>";
-        h += '<div class="drow"><span class="plab">' + c + '</span><span class="dots2">' + dots + '</span><span class="pnum">' + d[c] + "</span></div>";
-      });
-    }
-    $("rep3").innerHTML = h;
-    $("fb3").innerHTML = REPWHY[rep3];
-    $("task3").textContent = "Same 22 children every time — only the drawing changes.";
+    lock3 = false;
+    const P = p3;
+    $("eq3").innerHTML = P.plus
+      ? P.a + " + <span class='unk'>" + P.sh + "</span> = " + P.tot
+      : P.tot + " − <span class='unk'>" + P.sh + "</span> = " + P.a;
+    /* percentages, not pixels: the wrapper has a border, so pixel widths would not add up to it */
+    $("bar3").innerHTML = '<div class="bwhole">' +
+      '<span class="bpart known" style="width:' + ((P.a / P.tot) * 100).toFixed(3) + '%">' + P.a + "</span>" +
+      '<span class="bpart unknownp" style="width:' + ((P.x / P.tot) * 100).toFixed(3) + '%">' + P.sh + "</span></div>" +
+      '<div class="btot">' + P.tot + " altogether</div>";
+    const opts = shuffle([P.x, P.x + rnd(2, 9), Math.max(1, P.x - rnd(2, 9))]);
+    $("opts3").innerHTML = opts.map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("work3").innerHTML = "";
+    $("fb3").textContent = ""; $("fb3").className = "fb";
+    $("task3").textContent = "Solved " + done3 + " so far";
   }
-  $("pickRep").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    rep3 = Number(b.dataset.i);
-    [...$("pickRep").children].forEach((c, i) => c.classList.toggle("on", i === rep3));
-    paint3(); say(REPS[rep3] + ". " + $("fb3").textContent);
-    if (rep3 === REPS.length - 1) finish(2, "");
+  $("opts3").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock3) return;
+    lock3 = true;
+    const P = p3, ok = Number(b.dataset.v) === P.x;
+    if (ok) done3++;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("work3"), [
+      { k: "What is known", v: P.plus ? P.a + " and the total " + P.tot : "the total " + P.tot + " and what is left, " + P.a },
+      { k: "The shape stands for", v: "the part nobody has told you" },
+      { k: "Undo the sum", v: P.plus ? P.tot + " − " + P.a + " = <b>" + P.x + "</b>" : P.tot + " − " + P.a + " = <b>" + P.x + "</b>" },
+      { k: "Check it", v: P.plus ? P.a + " + " + P.x + " = " + P.tot + " ✓" : P.tot + " − " + P.x + " = " + P.a + " ✓", total: true },
+    ]);
+    $("fb3").innerHTML = (ok ? cheer() + " " : "") + "The " + P.sh + " is <b>" + P.x + "</b>.";
+    $("fb3").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : "It is " + P.x);
+    if (done3 >= 3) finish(1, "");
   });
-  paint3();
+  $("new3").addEventListener("click", () => { p3 = newUnknown(); paint3(); });
+  p3 = newUnknown(); paint3();
 
-  /* ---- 4: Venn and Carroll diagrams (4Ss.02) ---- */
-  const NUMS = []; for (let i = 1; i <= 20; i++) NUMS.push(i);
-  const isEven = (n) => n % 2 === 0, isBig = (n) => n > 10;
-  const REGION = (n) => (isEven(n) ? 2 : 0) + (isBig(n) ? 1 : 0);   /* 0 odd/small 1 odd/big 2 even/small 3 even/big */
-  let sort4 = 0;
-  $("pickSort").innerHTML = ["A Venn diagram", "A Carroll diagram"].map((r, i) =>
-    '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' + r + "</button>").join("");
+  /* ---- 4: linear and non-linear sequences (4Nc.04) ---- */
+  const SEQS = [
+    { name: "Add 6", t: [4, 10, 16, 22, 28], next: 34, kind: "linear", rule: "add 6 every time" },
+    { name: "Subtract 9", t: [70, 61, 52, 43, 34], next: 25, kind: "linear", rule: "subtract 9 every time" },
+    { name: "Double", t: [3, 6, 12, 24, 48], next: 96, kind: "non-linear", rule: "double every time" },
+    { name: "Growing steps", t: [1, 3, 6, 10, 15], next: 21, kind: "non-linear", rule: "add 2, then 3, then 4, then 5 — a bigger step each time" },
+  ];
+  let s4 = 0, lock4 = false, got4 = 0;
+  $("pickSeq").innerHTML = SEQS.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + s.name + "</button>").join("");
   function paint4() {
-    const bucket = [[], [], [], []];
-    NUMS.forEach((n) => bucket[REGION(n)].push(n));
+    lock4 = false;
+    const S = SEQS[s4];
     let h = "";
-    if (sort4 === 0) {
-      /* a real Venn: two overlapping hoops inside a box for everything else */
-      const cluster = (nums, cx, cy) => {
-        let t = "";
-        nums.forEach((n, i) => {
-          const col = i % 2, row = Math.floor(i / 2), wide = nums.length - row * 2 === 1;
-          const x = wide ? cx : cx + (col ? 15 : -15), y = cy - 22 + row * 22;
-          t += '<text class="vn" x="' + x + '" y="' + y + '">' + n + "</text>";
-        });
-        return t;
-      };
-      h += '<svg class="vennsvg" viewBox="0 0 340 232" role="img" aria-label="Two overlapping hoops sorting 1 to 20">' +
-        '<rect class="uni" x="4" y="4" width="332" height="224" rx="14"></rect>' +
-        '<circle class="hoopA" cx="132" cy="104" r="80"></circle>' +
-        '<circle class="hoopB" cx="208" cy="104" r="80"></circle>' +
-        '<text class="hl a" x="74" y="30">even</text>' +
-        '<text class="hl b" x="266" y="30">more than 10</text>' +
-        cluster(bucket[2], 86, 104) + cluster(bucket[3], 170, 104) + cluster(bucket[1], 254, 104) +
-        '<text class="out" x="18" y="216">outside both: ' + bucket[0].join("  ") + "</text></svg>";
-      $("fb4").innerHTML = "The middle holds the numbers that are <b>both</b> — even <b>and</b> more than 10. The ones outside both hoops are odd and 10 or less.";
-    } else {
-      h += '<table class="carroll"><tr><th></th><th>more than 10</th><th>not more than 10</th></tr>' +
-        "<tr><th>even</th><td>" + bucket[3].join(" ") + "</td><td>" + bucket[2].join(" ") + "</td></tr>" +
-        "<tr><th>not even</th><td>" + bucket[1].join(" ") + "</td><td>" + bucket[0].join(" ") + "</td></tr></table>";
-      $("fb4").innerHTML = "A Carroll diagram gives every number <b>exactly one box</b>, including the ones that are neither.";
-    }
-    $("sort4").innerHTML = h;
-    $("task4").textContent = "Both diagrams sort the same 20 numbers · " + bucket.map((b) => b.length).join(" + ") + " = " + NUMS.length;
-    if (sort4 === 1) finish(3, "");
+    S.t.forEach((v, i) => {
+      if (i) { const d = S.t[i] - S.t[i - 1]; h += '<span class="step">' + (d > 0 ? "+" : "−") + Math.abs(d) + "</span>"; }
+      h += '<span class="term4">' + v + "</span>";
+    });
+    h += '<span class="step">?</span><span class="term4 ghost4">?</span>';
+    $("seq4").innerHTML = h;
+    const opts = shuffle([S.next, S.next + rnd(2, 8), Math.max(1, S.next - rnd(2, 8))]);
+    $("next4").innerHTML = opts.map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("work4").innerHTML = "";
+    $("fb4").textContent = ""; $("fb4").className = "fb";
+    $("task4").textContent = "Rules found: " + got4 + " of " + SEQS.length;
   }
-  $("pickSort").addEventListener("click", (e) => {
+  $("pickSeq").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-i]"); if (!b) return;
-    sort4 = Number(b.dataset.i);
-    [...$("pickSort").children].forEach((c, i) => c.classList.toggle("on", i === sort4));
-    paint4(); say($("fb4").textContent);
+    s4 = Number(b.dataset.i);
+    [...$("pickSeq").children].forEach((c, i) => c.classList.toggle("on", i === s4));
+    paint4();
+  });
+  $("next4").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock4) return;
+    lock4 = true;
+    const S = SEQS[s4], ok = Number(b.dataset.v) === S.next;
+    if (ok) got4++;
+    b.classList.add(ok ? "right" : "wrong");
+    const steps = S.t.slice(1).map((v, i) => v - S.t[i]);
+    lines($("work4"), [
+      { k: "The steps", v: steps.map((d) => (d > 0 ? "+" : "−") + Math.abs(d)).join(", ") },
+      { k: "Are they the same?", v: S.kind === "linear" ? "<b>yes</b> — the same step every time" : "<b>no</b> — the step keeps changing" },
+      { k: "So it is", v: "<b>" + S.kind + "</b>" },
+      { k: "Term-to-term rule", v: "<b>" + S.rule + "</b>, so the next term is <b>" + S.next + "</b>", total: true },
+    ]);
+    $("fb4").innerHTML = (ok ? cheer() + " " : "") + "The next term is <b>" + S.next + "</b>.";
+    $("fb4").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : "The next term is " + S.next);
+    $("task4").textContent = "Rules found: " + got4 + " of " + SEQS.length;
+    if (got4 >= 3) finish(2, "");
   });
   paint4();
 
-  /* ---- 5: interpreting two data sets (4Ss.03) ---- */
-  const Q5 = [
-    { q: "Which way of travelling is most common in Class 4B?", o: ["Bus", "Walk", "Car"], a: 0,
-      w: "11 of the 22 children in 4B come by bus — exactly half the class, and more than any other way." },
-    { q: "What is the same in both classes?", o: ["The same number of children come by car", "The most common answer", "Nobody cycles"], a: 0,
-      w: "Four children come by car in each class. The most common answer differs — walking in 4A, the bus in 4B." },
-    { q: "4A walks much more than 4B. Which is the best explanation to check first?", o: ["4A may live nearer the school", "4A has more children", "Walking is healthier"], a: 0,
-      w: "Both classes have 22 children, so size cannot explain it. Where the children live is a real source of variation you could go and check." },
-  ];
-  let c5 = 0, right5 = 0, lock5 = false;
-  function bars5(d, title) {
-    const max = 12;
-    let h = '<div class="mini"><p class="mlab">' + title + "</p><div class=\"bars\">";
-    CATS.forEach((c) => {
-      h += '<div class="bcol"><div class="bwrap"><div class="bbar" style="height:' + Math.round((d[c] / max) * 100) +
-        '%"><span>' + d[c] + "</span></div></div><span class=\"blab\">" + c + "</span></div>";
-    });
-    return h + "</div></div>";
-  }
+  /* ---- 5: the spatial pattern of square numbers (4Nc.05) ---- */
+  let sq5 = 4;
   function paint5() {
-    $("two5").innerHTML = bars5(A4, "Class 4A · " + totalOf(A4) + " children") + bars5(B4, "Class 4B · " + totalOf(B4) + " children");
-    lock5 = false;
-    $("fb5").textContent = ""; $("fb5").className = "fb";
-    if (c5 >= Q5.length) {
-      $("stem5").textContent = "That is all three.";
-      $("choices5").innerHTML = "";
-      $("task5").textContent = right5 + " of " + Q5.length + " right.";
-      if (right5 >= 2) finish(4, "");
-      return;
-    }
-    $("stem5").textContent = Q5[c5].q;
-    const order = shuffle(Q5[c5].o.map((t, i) => ({ t: t, ok: i === Q5[c5].a })));
-    $("choices5").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
-    $("task5").textContent = "Question " + (c5 + 1) + " of " + Q5.length + " · " + right5 + " right";
+    $("sqLab5").textContent = sq5;
+    let h = "";
+    for (let y = 0; y < sq5; y++) { h += '<div class="sqrow">';
+      for (let x = 0; x < sq5; x++) h += '<i class="' + (x === sq5 - 1 || y === sq5 - 1 ? "edge" : "") + '"></i>';
+      h += "</div>"; }
+    $("sq5box").innerHTML = h;
+    const sq = sq5 * sq5, prev = (sq5 - 1) * (sq5 - 1), added = sq - prev;
+    lines($("work5"), [
+      { k: "The square", v: sq5 + " rows of " + sq5 },
+      { k: "How many dots", v: sq5 + " × " + sq5 + " = <b>" + sq + "</b>" },
+      { k: "Written as", v: "<b>" + sq5 + "&sup2;</b>, said &ldquo;" + sq5 + " squared&rdquo;" },
+      { k: sq5 === 1 ? "The first one" : "Added since the last", v: sq5 === 1 ? "one dot, and 1 × 1 = 1"
+        : "the shaded L along two sides: <b>" + added + "</b> dots, and " + added + " is always <b>odd</b>", total: true },
+    ]);
+    $("fb5").innerHTML = "The square numbers run 1, 4, 9, 16, 25 — and the gaps between them are 3, 5, 7, 9, the <b>odd numbers</b>.";
+    $("task5").textContent = "Each new square adds a strip down one side, along the bottom and one corner.";
+    if (sq5 >= 5) finish(3, "");
   }
-  $("choices5").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock5) return;
-    lock5 = true;
-    const ok = b.dataset.ok === "1";
-    if (ok) right5++;
-    b.classList.add(ok ? "right" : "wrong");
-    $("fb5").textContent = (ok ? cheer() + " " : "") + Q5[c5].w;
-    $("fb5").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : Q5[c5].w);
-    c5++;
-    setTimeout(paint5, 2600);
-  });
+  $("sq5").addEventListener("input", (e) => { sq5 = Number(e.target.value); paint5(); });
   paint5();
 
-  /* ---- 6: the language of chance (4Sp.01) ---- */
-  const WORDS6 = ["impossible", "unlikely", "even chance", "likely", "certain"];
-  const EV6 = shuffle([
-    { e: "Rolling a number less than 7 on an ordinary dice", a: 4, w: "Every face is 1 to 6, and all of them are less than 7. It must happen, so it is certain." },
-    { e: "Rolling a 7 on an ordinary dice", a: 0, w: "There is no 7 on a dice, so it cannot happen at all. That is impossible." },
-    { e: "Rolling an even number on an ordinary dice", a: 2, w: "Three faces are even and three are odd, so it happens about half the time. An even chance." },
-    { e: "Taking a red counter from a bag of 9 red and 1 blue", a: 3, w: "Nine of the ten counters are red, so it will usually happen — likely, but not certain." },
-    { e: "Taking a blue counter from a bag of 9 red and 1 blue", a: 1, w: "Only one counter in ten is blue, so it will not often happen. Unlikely, but not impossible." },
-    { e: "Tossing a coin and getting heads", a: 2, w: "A coin has two sides and both are as likely as each other. An even chance." },
+  /* ---- 11: check ---- */
+  const Q11 = shuffle([
+    { q: "An odd number added to an odd number always gives:", o: ["An even number", "An odd number", "It depends"], a: 0, w: "Each odd number has one counter left over. The two leftovers pair up with each other, so nothing is left." },
+    { q: "If 38 + ▲ = 62, what is ▲?", o: ["24", "26", "100"], a: 0, w: "Undo the addition: 62 − 38 = 24." },
+    { q: "3, 6, 12, 24 … is this linear or non-linear?", o: ["Non-linear", "Linear", "Neither"], a: 0, w: "The steps are +3, +6, +12 — they change every time, so it is not linear. The rule is to double." },
+    { q: "Which of these is a square number?", o: ["49", "45", "50"], a: 0, w: "49 is 7 × 7, so its dots make a 7 by 7 square." }
   ]);
-  let e6 = 0, right6 = 0, lock6 = false;
-  function paint6() {
-    $("cl6").innerHTML = '<div class="cbar"></div>' + WORDS6.map((w, i) =>
-      '<div class="cstop" style="left:' + (i / (WORDS6.length - 1)) * 100 + '%"><i></i><span>' + w + "</span></div>").join("");
-    lock6 = false;
-    $("fb6").textContent = ""; $("fb6").className = "fb";
-    if (e6 >= EV6.length) {
-      $("ev6").textContent = "That is all of them.";
-      $("words6").innerHTML = "";
-      $("task6").textContent = right6 + " of " + EV6.length + " right.";
-      if (right6 >= 4) finish(5, "");
+  let cq = 0, rq = 0, lockq = false;
+  function round11() {
+    lockq = false;
+    $("fb11").textContent = ""; $("fb11").className = "fb";
+    if (cq >= Q11.length) {
+      $("stem11").textContent = "That is all of them.";
+      $("choices11").innerHTML = "";
+      $("score11").textContent = rq + " out of " + Q11.length + " right.";
+      if (rq >= 7) finish(4, "");
       return;
     }
-    $("ev6").textContent = EV6[e6].e;
-    $("words6").innerHTML = WORDS6.map((w, i) => '<button type="button" class="choice" data-i="' + i + '">' + w + "</button>").join("");
-    $("task6").textContent = "Event " + (e6 + 1) + " of " + EV6.length + " · " + right6 + " right";
+    $("stem11").textContent = Q11[cq].q;
+    const order = shuffle(Q11[cq].o.map((t, i) => ({ t: t, ok: i === Q11[cq].a })));
+    $("choices11").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
+    $("score11").textContent = "Question " + (cq + 1) + " of " + Q11.length + " · " + rq + " right";
   }
-  $("words6").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock6) return;
-    lock6 = true;
-    const ok = Number(b.dataset.i) === EV6[e6].a;
-    if (ok) right6++;
-    b.classList.add(ok ? "right" : "wrong");
-    $("fb6").textContent = (ok ? cheer() + " " : "") + EV6[e6].w;
-    $("fb6").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : EV6[e6].w);
-    e6++;
-    setTimeout(paint6, 2600);
-  });
-  paint6();
-
-  /* ---- 7: a chance experiment, few trials and many (4Sp.02) ---- */
-  const SP = ["red", "blue", "green", "gold"];
-  const SPHEX = { red: "var(--bad)", blue: "var(--teal)", green: "var(--good)", gold: "var(--gold)" };
-  let last7 = null;
-  function drawSpinner() {
-    let s = "";
-    SP.forEach((c, i) => {
-      const a0 = (i * 90 - 90) * Math.PI / 180, a1 = ((i + 1) * 90 - 90) * Math.PI / 180;
-      s += '<path d="M80,80 L' + (80 + 70 * Math.cos(a0)).toFixed(1) + "," + (80 + 70 * Math.sin(a0)).toFixed(1) +
-        " A70,70 0 0,1 " + (80 + 70 * Math.cos(a1)).toFixed(1) + "," + (80 + 70 * Math.sin(a1)).toFixed(1) +
-        ' Z" fill="' + SPHEX[c] + '" stroke="var(--card)" stroke-width="2"></path>';
-    });
-    s += '<circle cx="80" cy="80" r="7" fill="var(--card)" stroke="var(--ink)" stroke-width="2"></circle>';
-    $("sp7").innerHTML = s;
-  }
-  function spin(n) {
-    const c = {}; SP.forEach((k) => (c[k] = 0));
-    for (let i = 0; i < n; i++) c[SP[rnd(0, 3)]]++;
-    last7 = { n: n, c: c };
-    const expect = n / 4;
-    let h = '<p class="key">' + fmt(n) + " spins · each colour should come up about " + fmt(expect) + " times</p>";
-    SP.forEach((k) => {
-      const pc = (c[k] / n) * 100;
-      h += '<div class="srow"><span class="plab">' + k + '</span><span class="sbarwrap"><span class="sbar" style="width:' +
-        pc.toFixed(1) + "%;background:" + SPHEX[k] + '"></span></span><span class="pnum">' + fmt(c[k]) + " · " + pc.toFixed(0) + "%</span></div>";
-    });
-    $("res7").innerHTML = h;
-    const worst = Math.max.apply(null, SP.map((k) => Math.abs(c[k] / n - 0.25))) * 100;
-    $("fb7").innerHTML = "The furthest any colour landed from a quarter was <b>" + worst.toFixed(1) + " percentage points</b>.";
-    $("task7").textContent = n >= 1000
-      ? "With a thousand spins the four bars are nearly level — that is what more trials buys you."
-      : "Now try more spins and watch the bars even out.";
-    if (n >= 1000) finish(6, "");
-    say(fmt(n) + " spins.");
-  }
-  document.querySelectorAll('#deck [data-n]').forEach((b) => b.addEventListener("click", () => spin(Number(b.dataset.n))));
-  drawSpinner();
-  spin(10);
-
-  /* ---- 8: check ---- */
-  const Q8 = shuffle([
-    { q: "In a tally chart, what does a line drawn across four marks mean?", o: ["A group of 5", "A group of 4", "A mistake"], a: 0, w: "Four marks and one across them make a gate of five, so you can count the groups in fives." },
-    { q: "Which data is categorical?", o: ["Favourite colour", "Number of pets", "Height in centimetres"], a: 0, w: "Colours are groups you can name. The other two are numbers you measure or count." },
-    { q: "On a pictogram, one picture stands for 2 children. How many pictures show 9 children?", o: ["Four and a half", "Nine", "Eighteen"], a: 0, w: "9 ÷ 2 = 4 remainder 1, so four whole pictures and one half." },
-    { q: "Where does a number go on a Carroll diagram if it is neither even nor more than 10?", o: ["In the fourth box", "Nowhere", "In the middle"], a: 0, w: "A Carroll diagram has a box for every combination, including 'neither' — that is what makes it different from a Venn diagram's middle." },
-    { q: "Rolling a 7 on an ordinary six-sided dice is:", o: ["impossible", "unlikely", "certain"], a: 0, w: "There is no 7 on the dice, so it cannot happen at all." },
-    { q: "A bag holds 9 red counters and 1 blue. Taking a red one is:", o: ["likely", "certain", "impossible"], a: 0, w: "Nine times out of ten it will be red — likely, but not certain, because the blue one is still in there." },
-    { q: "Why spin a spinner 1000 times instead of 10?", o: ["The results settle nearer what should happen", "It is quicker", "It changes the spinner"], a: 0, w: "A few trials are lumpy by chance. More trials bring the proportions closer to the quarter each colour should get." },
-    { q: "Two classes both have 22 children. 4A walks 9 and 4B walks 5. What can you say?", o: ["More of 4A walk", "4A is bigger", "4B has no walkers"], a: 0, w: "The classes are the same size, so the difference is real — 9 against 5 — and worth looking for a reason." }
-  ]);
-  let c8 = 0, right8 = 0, lock8 = false;
-  function round8() {
-    lock8 = false;
-    $("fb8").textContent = ""; $("fb8").className = "fb";
-    if (c8 >= Q8.length) {
-      $("stem8").textContent = "That is all of them.";
-      $("choices8").innerHTML = "";
-      $("score8").textContent = right8 + " out of " + Q8.length + " right.";
-      if (right8 >= 6) finish(7, "");
-      return;
-    }
-    $("stem8").textContent = Q8[c8].q;
-    const order = shuffle(Q8[c8].o.map((t, i) => ({ t: t, ok: i === Q8[c8].a })));
-    $("choices8").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
-    $("score8").textContent = "Question " + (c8 + 1) + " of " + Q8.length + " · " + right8 + " right";
-  }
-  $("choices8").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock8) return;
-    lock8 = true;
+  $("choices11").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lockq) return;
+    lockq = true;
     const ok = b.dataset.ok === "1";
-    if (ok) right8++;
+    if (ok) rq++;
     b.classList.add(ok ? "right" : "wrong");
-    $("fb8").textContent = (ok ? cheer() + " " : "") + Q8[c8].w;
-    $("fb8").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : Q8[c8].w);
-    c8++;
-    setTimeout(round8, 2300);
+    $("fb11").textContent = (ok ? cheer() + " " : "") + Q11[cq].w;
+    $("fb11").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : Q11[cq].w);
+    cq++;
+    setTimeout(round11, 2400);
   });
-  round8();
+  round11();
 
-  /* ---- 9: stickers ---- */
-  const STICKERS = [ "❓", "What would answer it?", "✏️", "Tally, then count", "📊", "One set, three pictures", "⭕" ];
+  /* ---- 12: stickers ---- */
+  const STICKERS = [ "Saying it in words", "🔗", "Odd, even, and what happens", "🔺" ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -2113,51 +1936,27 @@
 
   /* ---- your turn: the four slides that only demonstrated ---- */
 
-  /* 2 (4Ss.02) reads a tally. The distractors are the two ways a child mis-reads a
-     gate: counting gates instead of fives, and forgetting the loose marks. */
-  ask(2, () => {
-    const n = rnd(7, 29), g = Math.floor(n / 5), r = n % 5;
-    const opts = pick3(n, [g + r, g * 5, n + 5]);
-    return { stem: "A tally has <b>" + g + "</b> gates of five and <b>" + r +
-        "</b> single mark" + (r === 1 ? "" : "s") + ". What is the frequency?",
-      opts: opts.map(String), ans: opts.indexOf(n),
-      why: g + " × 5 = " + g * 5 + ", then add the " + r + " left over: <b>" + n + "</b>." };
+  /* 1 (4Ni.01) reads a number FROM ITS NAME -- the place-value trap is which
+     column the lone digit sits in, so the distractors are the same digit misplaced. */
+    ask(1, () => {
+    const a = rnd(11, 48), b = rnd(11, 48), opts = ["odd", "even"];
+    return { stem: "Without working it out: is <b>" + a + " + " + b + "</b> odd or even?",
+      opts, ans: opts.indexOf(par(a + b)),
+      why: par(a) + " + " + par(b) + " is <b>always " + par(a + b) + "</b>, whatever the numbers." };
   });
 
-  /* 3 (4Ss.02) reads a pictogram key -- the whole point is that one picture is not
-     one child, so "how many pictures" is offered as a distractor. */  ask(3, () => {
-    const k = [2, 5, 10][rnd(0, 2)], p = rnd(3, 7), n = k * p;
-    const opts = pick3(n, [p, k + p, n + k]);
-    return { stem: "On a pictogram one picture stands for <b>" + k + " children</b>. " +
-        "How many children do <b>" + p + " pictures</b> show?",
-      opts: opts.map(String), ans: opts.indexOf(n),
-      why: p + " pictures × " + k + " children each = <b>" + n + "</b>." };
+  /* 5 (4Nc.05) the next square. Distractors are the two near-misses a child gets by
+     adding one side instead of the whole L. */  ask(4, () => {
+    const k = rnd(2, 9), n = k * k, nxt = (k + 1) * (k + 1);
+    const opts = shuffle([nxt, n + k, n + 2 * k]);
+    return { stem: "Square numbers go 1, 4, 9, 16 … Which comes straight after <b>" + n + "</b>?",
+      opts: opts.map(String), ans: opts.indexOf(nxt),
+      why: "<b>" + nxt + "</b> is " + (k + 1) + " × " + (k + 1) + ", and the L added on is " +
+        (2 * k + 1) + " dots — an odd number, as always." };
   });
 
-  /* 4 (4Ss.02) places a number in the Venn the slide draws: even, and more than 10.
-     Options stay in a fixed order -- they are categories, and shuffling them would
-     make the child re-read four labels every time instead of thinking about the number. */  ask(4, () => {
-    const n = rnd(1, 20), even = n % 2 === 0, big = n > 10;
-    const opts = ["Both hoops", "Even only", "More than 10 only", "Outside both"];
-    const ansI = even && big ? 0 : even ? 1 : big ? 2 : 3;
-    return { stem: "Sorting 1 to 20 by <b>even</b> and <b>more than 10</b>. Where does <b>" +
-        n + "</b> go?",
-      opts: opts, ans: ansI,
-      why: n + " is " + (even ? "even" : "odd") + " and " + (big ? "more than 10" : "10 or less") +
-        ", so it belongs <b>" + opts[ansI].toLowerCase() + "</b>." };
-  });
-
-  /* 7 (4Sp.02) the point of the slide is that many trials settle towards the fraction,
-     so the question asks for the expectation, not for what one run happened to give. */  ask(7, () => {
-    const spins = [100, 400, 1000][rnd(0, 2)], colours = 4, n = spins / colours;
-    const opts = pick3(n, [colours, spins / 2, n * 2]);
-    return { stem: "A spinner has <b>4 equal colours</b>. In about <b>" + fmt(spins) +
-        " spins</b>, roughly how many would land on red?",
-      opts: opts.map(fmt), ans: opts.indexOf(n),
-      why: "Red is one colour out of four, so about a quarter: " + fmt(spins) + " ÷ 4 = <b>" +
-        fmt(n) + "</b>. The more spins, the closer it gets." };
-  });
-
+  /* 9 (4Np.02, 4Np.05) alternates the two things the slide shows: moving the digits,
+     and rounding. The halfway case is excluded so "nearer" in the answer is true. */
 
   /* ================= the two header bars =================
      Everything here is answered by this page. The class controls are not
@@ -2291,7 +2090,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l08",
+      progressUnit: "l02",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -2313,13 +2112,13 @@
           container: drawer.querySelector(".w-drawer-body"),
           meta: {
             subject: "mathematics", subjectLabel: "Mathematics", grade: 4,
-            unitNo: 8, unitTitle: "Asking, Sorting and Chance",
+            unitNo: 2, unitTitle: "Patterns and Square Numbers",
             learnerCategory: q.get("category") || "",
           },
           store: {},
           ui: { escapeHtml, toast },
           tutorLabel: "Wehel Tutor",
-          placeholder: "Ask about Asking, Sorting and Chance\u2026",
+          placeholder: "Ask about Patterns and Square Numbers\u2026",
           quickPrompts: [
             { label: "Explain it simply", message: "Explain this step in a simpler way." },
             { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
@@ -2350,7 +2149,7 @@
   const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
 
   const COURSE = "ehel-math-g04";
-  const UNIT = "l08";
+  const UNIT = "l02";
   const STUDENT = q.get("studentid") || "local";
 
   /* Without a launch endpoint the backend is "local": everything still

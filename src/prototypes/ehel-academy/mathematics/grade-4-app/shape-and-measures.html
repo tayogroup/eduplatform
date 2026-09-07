@@ -17,7 +17,7 @@
     } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
   })();
 </script>
-<title>Asking, Sorting and Chance</title>
+<title>Shape and Measures</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
 
@@ -535,94 +535,67 @@
     .dots { max-width: 100%; justify-content: flex-start; }
   }
 
-  /* ---------- Asking, Sorting and Chance: only what the shared lesson CSS lacks ---------- */
+  /* ---------- Shape, Space and Place: only what the shared lesson CSS lacks ---------- */
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 12px; }
-  .chip { padding: 8px 14px; border-radius: 999px; border: 1.5px solid var(--line);
-    background: var(--card); color: var(--ink); font-weight: 700; font-size: 15px; }
+  .chip { padding: 8px 13px; border-radius: 999px; border: 1.5px solid var(--line);
+    background: var(--card); color: var(--ink); font-weight: 700; font-size: 14px; }
   .chip.on { background: var(--teal); border-color: var(--teal); color: #fff; }
-  .picker-lab2 { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
-    color: var(--muted); margin: 16px 0 6px; }
-  .qstem { font-size: 19px; font-weight: 700; margin: 10px 0; }
+  .qstem { font-size: 18px; font-weight: 700; margin: 10px 0 6px; }
 
-  /* 1 — the question card */
-  .qcard { background: var(--cell); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
-  .qq { font-family: "Inter", "Segoe UI", sans-serif; font-size: 20px; font-weight: 600; margin: 0 0 8px; }
-  .qc { margin: 0; color: var(--muted); font-size: 15px; }
+  /* 1 — solids and their faces */
+  .solidrow { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin: 10px 0 4px; }
+  .solid { width: 140px; height: 140px; flex: 0 0 auto; }
+  .solid .f1 { fill: var(--teal); }
+  .solid .f2 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 1.5; }
+  .solid .f3 { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+  .faceset { display: flex; flex-wrap: wrap; gap: 8px; }
+  .facechip { display: grid; place-items: center; gap: 2px; min-width: 74px; padding: 8px 6px;
+    border: 1.5px solid var(--line); border-radius: 12px; background: var(--ground); }
+  .facechip svg { width: 34px; height: 34px; }
+  .facechip svg rect, .facechip svg polygon, .facechip svg circle { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+  .facechip svg path { fill: none; stroke: var(--accent); stroke-width: 3; }
+  .facechip b { font-family: "Inter", "Segoe UI", sans-serif; font-size: 18px; font-weight: 600; }
+  .facechip span { font-size: 10.5px; color: var(--muted); font-weight: 700; text-align: center; }
 
-  /* 2 — tally and frequency */
-  .ttable { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-top: 12px; }
-  .trow { display: grid; grid-template-columns: 92px 1fr 74px; gap: 8px; align-items: center;
-    padding: 10px 12px; border-bottom: 1px solid var(--line); }
-  .trow:last-child { border-bottom: 0; }
-  .trow.thead { background: var(--cell); font-size: 11px; font-weight: 700; letter-spacing: .07em;
-    text-transform: uppercase; color: var(--muted); }
-  .trow.tfoot { background: var(--teal-soft); font-weight: 700; color: var(--teal); }
-  .trow .num { text-align: right; font-family: "Inter", "Segoe UI", sans-serif; font-size: 20px; font-weight: 600;
-    font-variant-numeric: tabular-nums; }
-  .trow.thead .num, .trow.tfoot .num { font-size: inherit; }
-  .tal { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 24px; }
-  .tal .gate, .tal .mark { font-family: ui-monospace, Menlo, monospace; font-weight: 700;
-    letter-spacing: 2px; color: var(--ink); }
-  .tal .gate { position: relative; }
-  .tal .gate::after { content: ""; position: absolute; left: -2px; right: -2px; top: 50%;
-    border-top: 2px solid var(--accent); transform: rotate(-18deg); }
-  .tal .none { color: var(--muted); }
+  /* 2 — nets */
+  .net { width: 100%; max-width: 260px; display: block; margin: 6px auto 10px; }
+  .net rect, .net polygon, .net circle { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
 
-  /* 3 and 5 — pictogram, bars, dots */
-  .repbox { margin-top: 12px; }
-  .key { font-size: 13px; color: var(--muted); margin: 0 0 10px; }
-  .prow, .drow, .srow { display: grid; grid-template-columns: 54px 1fr 78px; gap: 8px;
-    align-items: center; padding: 6px 0; }
-  .plab { font-weight: 700; font-size: 14px; }
-  .pnum { text-align: right; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600;
-    font-variant-numeric: tabular-nums; font-size: 15px; }
-  .pics { display: flex; gap: 2px; align-items: center; }
-  .pic { font-size: 20px; line-height: 1; }
-  .pic.half { display: inline-block; width: .55em; overflow: hidden; }
-  .dots2 { display: flex; flex-wrap: wrap; gap: 4px; }
-  .dots2 i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--teal); }
-  .bars { display: flex; gap: 12px; align-items: flex-end; height: 150px; margin-top: 6px; }
-  .bcol { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; }
-  .bwrap { flex: 1; width: 100%; display: flex; align-items: flex-end; }
-  .bbar { width: 100%; background: var(--teal); border-radius: 8px 8px 0 0; min-height: 4px;
-    display: flex; justify-content: center; align-items: flex-start; }
-  .bbar span { color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 14px; padding-top: 3px; }
-  .blab { font-size: 12px; font-weight: 700; color: var(--muted); margin-top: 6px; }
-  .twoup { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
-  .mini .mlab { font-size: 12px; font-weight: 700; color: var(--muted); margin: 0 0 4px; }
-  @media (max-width: 460px) { .twoup { grid-template-columns: 1fr; } }
+  /* 3 — symmetry */
+  .symbox { width: 100%; max-width: 210px; display: block; margin: 8px auto; }
+  .symbox .shape { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2.5; }
+  .symbox .mirror { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 8 5; }
 
-  /* 4 — Venn and Carroll */
-  .sortbox { margin-top: 12px; }
-  .vennsvg { width: 100%; max-width: 340px; display: block; margin: 4px auto 0; }
-  .vennsvg .uni { fill: var(--ground); stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 6 4; }
-  .vennsvg .hoopA { fill: var(--teal); fill-opacity: .16; stroke: var(--teal); stroke-width: 2.5; }
-  .vennsvg .hoopB { fill: var(--plum); fill-opacity: .16; stroke: var(--plum); stroke-width: 2.5; }
-  .vennsvg .hl { font: 700 12px Inter, system-ui, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
-  .vennsvg .hl.a { fill: var(--teal); text-anchor: middle; }
-  .vennsvg .hl.b { fill: var(--plum); text-anchor: middle; }
-  .vennsvg .vn { font-family: "Inter", "Segoe UI", sans-serif; font-size: 16px; font-weight: 600;
-    fill: var(--ink); text-anchor: middle; }
-  .vennsvg .out { font: 400 13px Inter, system-ui, sans-serif; fill: var(--muted); }
-  .carroll { width: 100%; border-collapse: collapse; }
-  .carroll th, .carroll td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; }
-  .carroll th { background: var(--cell); font-size: 11px; font-weight: 700; letter-spacing: .06em;
-    text-transform: uppercase; color: var(--muted); }
-  .carroll td { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; font-weight: 600; letter-spacing: 1px; }
+  /* 4, 6, 7, 9 — square grids */
+  .grid8 { width: 100%; max-width: 270px; display: block; margin: 8px auto; }
+  .grid8 .cell { fill: var(--card); stroke: var(--line); stroke-width: 1; }
+  .grid8 .orig { fill: var(--teal); opacity: .85; }
+  .grid8 .mine { fill: var(--accent); opacity: .85; }
+  .grid8 .fillA { fill: var(--teal); opacity: .8; }
+  .grid8 .fillB { fill: var(--accent); opacity: .38; }
+  .grid8 .mir { stroke: var(--accent); stroke-width: 3.5; stroke-dasharray: 7 5; }
+  .grid8 .blobline { fill: none; stroke: var(--ink); stroke-width: 2.5; }
+  .grid8 .here { fill: var(--accent); stroke: var(--card); stroke-width: 2.5; }
+  .grid8 .there { fill: none; stroke: var(--teal); stroke-width: 3.5; }
+  .grid8 .compass { font: 700 13px Inter, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
 
-  /* 6 — the chance line */
-  .chanceline { position: relative; height: 74px; margin: 18px 0 6px; }
-  .cbar { position: absolute; left: 4%; right: 4%; top: 16px; height: 8px; border-radius: 99px;
-    background: linear-gradient(90deg, var(--bad-soft), var(--cell), var(--good-soft)); border: 1px solid var(--line); }
-  .cstop { position: absolute; top: 8px; transform: translateX(-50%); text-align: center; width: 74px; }
-  .cstop i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--teal);
-    margin: 4px auto 6px; }
-  .cstop span { font-size: 10.5px; font-weight: 700; color: var(--muted); line-height: 1.15; display: block; }
+  /* 5 — tiling */
+  .tile { width: 100%; max-width: 260px; display: block; margin: 8px auto; }
+  .tile .t1 { fill: var(--teal-soft); stroke: var(--teal); stroke-width: 2; }
+  .tile .t2 { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
 
-  /* 7 — the spinner */
-  .spinner { width: 160px; height: 160px; display: block; margin: 6px auto 12px; }
-  .sbarwrap { display: block; height: 14px; background: var(--cell); border-radius: 99px; overflow: hidden; }
-  .sbar { display: block; height: 100%; border-radius: 99px; }
+  /* 8 — the scale */
+  .scaleimg { width: 100%; max-width: 260px; display: block; margin: 6px auto 0; }
+  .scaleimg .axis8 { stroke: var(--ink); stroke-width: 2.5; }
+  .scaleimg .big8 { stroke: var(--ink); stroke-width: 2.5; }
+  .scaleimg .small8 { stroke: var(--muted); stroke-width: 1.4; }
+  .scaleimg .lab8 { font: 700 11px Inter, system-ui, sans-serif; fill: var(--muted); text-anchor: middle; }
+  .scaleimg .ptr { fill: var(--accent); }
+  .scaleimg .val8 { font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; font-weight: 600;
+    fill: var(--accent); text-anchor: middle; }
+
+  /* 9 — compass buttons */
+  .choice.dir { min-width: 54px; font-family: "Inter", "Segoe UI", sans-serif; font-size: 17px; font-weight: 600; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -730,14 +703,14 @@
     <span class="eh-track"><i id="ehFill"></i></span>
   </div>
   <div class="eh-b1right">
-    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="big-numbers-below-zero.html">Big Numbers and Below Zero</option><option value="patterns-and-squares.html">Patterns and Square Numbers</option><option value="ways-to-calculate.html">Ways to Calculate</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-and-measures.html">Shape and Measures</option><option value="where-things-are.html">Where Things Are</option><option value="asking-sorting-chance.html" selected>Asking, Sorting and Chance</option></select>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="big-numbers-below-zero.html">Big Numbers and Below Zero</option><option value="patterns-and-squares.html">Patterns and Square Numbers</option><option value="ways-to-calculate.html">Ways to Calculate</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-and-measures.html" selected>Shape and Measures</option><option value="where-things-are.html">Where Things Are</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
     <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
   </div>
 </header>
 <nav class="eh-bar2" aria-label="Lesson">
   <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
   <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
-  <span class="eh-section">Asking, Sorting and Chance</span>
+  <span class="eh-section">Shape and Measures</span>
   <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
 </nav>
 <div class="eh-steps" id="ehSteps" hidden></div>
@@ -745,138 +718,157 @@
   <header class="hero">
     <div>
       <p class="eyebrow">Mathematics · Grade 4</p>
-      <h1>Asking, Sorting <em>and Chance</em></h1>
+      <h1>Shape and <em>Measures</em></h1>
     </div>
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
   <div class="deck" id="deck">
 
-    <!-- 1 planning -->
-    <section class="slide" data-say="Before you collect anything, decide what would answer your question. Some answers are groups you can name, and some are numbers you can count.">
-      <div class="slide-head"><span class="n">1</span><h2>What would answer it?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Pick a question, then decide what to collect. Some answers are <b>groups you can name</b>. Some are <b>numbers you can count</b>.</span></div>
+    <!-- 1 faces of a solid -->
+    <section class="slide" data-say="Every flat face of a solid is a two dimensional shape you already know.">
+      <div class="slide-head"><span class="n">1</span><h2>The faces of a solid</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Every flat <b>face</b> of a solid is a 2D shape you already know. Pick a solid and take it apart.</span></div>
       <div class="stage">
-        <div class="chips" id="pickQ"></div>
-        <div class="qcard" id="qcard"></div>
-        <p class="picker-lab2">What kind of data would you collect?</p>
-        <div class="choices" id="kind1"></div>
+        <div class="chips" id="pickSolid"></div>
+        <div class="solidrow">
+          <svg class="solid" id="solid1" viewBox="0 0 140 140" role="img" aria-label="The solid"></svg>
+          <div class="faceset" id="faces1" aria-hidden="true"></div>
+        </div>
+        <div class="working" id="work1"></div>
         <p class="fb" id="fb1"></p>
         <p class="fb small-fb" id="task1"></p>
+        <div class="askwrap" id="ask1"></div>
       </div>
     </section>
 
-    <!-- 2 tally -->
+    <!-- 2 nets -->
     
-<section class="slide" data-say="Twenty two children answer one at a time. Each answer is a tally mark, and every fifth mark is a gate.">
-      <div class="slide-head"><span class="n">2</span><h2>Tally, then count</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Twenty-two children answer one at a time. Mark each one, and cross the gate on every <b>fifth</b>. Then count the gates.</span></div>
+<section class="slide" data-say="A net is a solid opened out flat. Fold it up in your head and see what it makes.">
+      <div class="slide-head"><span class="n">2</span><h2>Fold it up: nets</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">A <b>net</b> is a solid opened out flat. Fold it up in your head. What does it make?</span></div>
       <div class="stage">
-        <div class="ttable" id="tally2"></div>
-        <div class="bigbtns">
-          <button type="button" class="big small" id="one2">Next child</button>
-          <button type="button" class="big small teal" id="all2">Ask them all</button>
-          <button type="button" class="big small ghost" id="reset2">Start again</button>
-        </div>
+        <svg class="net" id="net2" viewBox="0 0 260 200" role="img" aria-label="A net"></svg>
+        <div class="choices" id="netpick"></div>
+        <div class="working" id="work2"></div>
         <p class="fb" id="fb2"></p>
         <p class="fb small-fb" id="task2"></p>
-        <div class="askwrap" id="ask2"></div>
       </div>
     </section>
 
-    <!-- 3 representations -->
+    <!-- 3 symmetry -->
     
-<section class="slide" data-say="The same twenty two answers, drawn three ways. Each picture is good at showing something different.">
-      <div class="slide-head"><span class="n">3</span><h2>One set, three pictures</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">The same 22 answers, drawn three ways. Each one is <b>good at something different</b>.</span></div>
+<section class="slide" data-say="Test each line in turn. If folding along it makes the two halves match exactly, it is a line of symmetry.">
+      <div class="slide-head"><span class="n">3</span><h2>Every line of symmetry</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Test each line. If folding along it makes the halves match <b>exactly</b>, it is a line of symmetry. Find <b>all</b> of them.</span></div>
       <div class="stage">
-        <div class="chips" id="pickRep"></div>
-        <div class="repbox" id="rep3" aria-hidden="true"></div>
+        <div class="chips" id="pickSym"></div>
+        <svg class="symbox" id="sym3" viewBox="0 0 200 200" role="img" aria-label="A shape with lines to test"></svg>
+        <div class="choices" id="lines3"></div>
+        <div class="working" id="work3"></div>
         <p class="fb" id="fb3"></p>
         <p class="fb small-fb" id="task3"></p>
-        <div class="askwrap" id="ask3"></div>
       </div>
     </section>
 
-    <!-- 4 venn and carroll -->
+    <!-- 4 reflection -->
     
-<section class="slide" data-say="Two questions at once. A Venn diagram uses hoops that overlap. A Carroll diagram uses four boxes.">
-      <div class="slide-head"><span class="n">4</span><h2>Sorting two ways at once</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Sort 1 to 20 by <b>two</b> questions at once: is it even, and is it more than 10? A <b>Venn diagram</b> overlaps two hoops. A <b>Carroll diagram</b> uses four boxes.</span></div>
+<section class="slide" data-say="Put shapes together and you make new ones. Some shapes tile a floor with no gaps at all.">
+      <div class="slide-head"><span class="n">4</span><h2>Putting shapes together</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Join shapes and you make new ones. Some shapes <b>tessellate</b> — they tile a floor with no gaps at all.</span></div>
       <div class="stage">
-        <div class="chips" id="pickSort"></div>
-        <div class="sortbox" id="sort4" aria-hidden="true"></div>
-        <p class="fb" id="fb4"></p>
-        <p class="fb small-fb" id="task4"></p>
+        <div class="chips" id="pickTile"></div>
+        <svg class="tile" id="tile5" viewBox="0 0 260 180" role="img" aria-label="Shapes fitted together"></svg>
+        <div class="working" id="work5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="task5"></p>
         <div class="askwrap" id="ask4"></div>
       </div>
     </section>
 
-    <!-- 5 interpret -->
+    <!-- 6 rectangles, formulae and compound shapes -->
     
-<section class="slide" data-say="Two classes, the same question, the same number of children. Look for what is the same and what is different.">
-      <div class="slide-head"><span class="n">5</span><h2>Two classes, one question</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Both classes have <b>22</b> children and answered the same question. What is the <b>same</b>, and what is <b>different</b>?</span></div>
+<section class="slide" data-say="Count the squares once, then find the rule that gives the same answer without counting.">
+      <div class="slide-head"><span class="n">5</span><h2>Area without counting</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Count the squares once. Then find the <b>rule</b> that gives the same answer every time without counting.</span></div>
       <div class="stage">
-        <div class="twoup" id="two5" aria-hidden="true"></div>
-        <p class="qstem" id="stem5"></p>
-        <div class="choices" id="choices5"></div>
-        <p class="fb" id="fb5"></p>
-        <p class="fb small-fb" id="task5"></p>
-      </div>
-    </section>
-
-    <!-- 6 chance words -->
-    
-<section class="slide" data-say="Some things cannot happen, some are sure to. Most sit somewhere in between.">
-      <div class="slide-head"><span class="n">6</span><h2>Impossible to certain</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Some things <b>cannot</b> happen and some are <b>sure</b> to. Most sit somewhere in between. Put each one on the line.</span></div>
-      <div class="stage">
-        <div class="chanceline" id="cl6" aria-hidden="true"></div>
-        <p class="qstem" id="ev6"></p>
-        <div class="choices" id="words6"></div>
+        <div class="chips" id="pickArea"></div>
+        <label class="lab" for="w6">Width <span id="wLab6">5</span> · height <span id="hLab6">3</span></label>
+        <input type="range" id="w6" min="1" max="8" value="5" step="1">
+        <input type="range" id="h6" min="1" max="6" value="3" step="1">
+        <svg class="grid8" id="area6" viewBox="0 0 260 210" role="img" aria-label="A shape drawn on squared paper"></svg>
+        <div class="working" id="work6"></div>
         <p class="fb" id="fb6"></p>
         <p class="fb small-fb" id="task6"></p>
+        <div class="askwrap" id="ask5"></div>
       </div>
     </section>
 
-    <!-- 7 experiment -->
+    <!-- 7 irregular area -->
     
-<section class="slide" data-say="Spin it ten times and the counts are lumpy. Spin it a thousand times and they even out.">
-      <div class="slide-head"><span class="n">7</span><h2>Spin it, and spin it again</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Four equal parts, so each <b>should</b> come up a quarter of the time. A few spins are lumpy. <b>Many</b> spins even out.</span></div>
+<section class="slide" data-say="An odd shape has no rule. Count the whole squares, then pair up the part squares.">
+      <div class="slide-head"><span class="n">6</span><h2>An odd shape on a grid</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">An odd shape has no formula. Count the <b>whole</b> squares, then treat each <b>part</b> square as about a half.</span></div>
       <div class="stage">
-        <svg class="spinner" id="sp7" viewBox="0 0 160 160" role="img" aria-label="A spinner with four equal parts"></svg>
-        <div class="bigbtns">
-          <button type="button" class="big small" data-n="10">Spin 10</button>
-          <button type="button" class="big small" data-n="100">Spin 100</button>
-          <button type="button" class="big small teal" data-n="1000">Spin 1000</button>
-        </div>
-        <div class="repbox" id="res7" aria-hidden="true"></div>
+        <svg class="grid8" id="blob7" viewBox="0 0 260 260" role="img" aria-label="An irregular shape on squared paper"></svg>
+        <div class="working" id="work7"></div>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="new7">A different shape</button></div>
         <p class="fb" id="fb7"></p>
         <p class="fb small-fb" id="task7"></p>
+        <div class="askwrap" id="ask6"></div>
+      </div>
+    </section>
+
+    <!-- 8 scales -->
+    
+<section class="slide" data-say="When the pointer sits between two marks, the fraction of the way tells you the reading.">
+      <div class="slide-head"><span class="n">7</span><h2>Reading between the marks</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">When the pointer sits <b>between</b> two marks, the fraction of the way across tells you the reading.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickScale"></div>
+        <svg class="scaleimg" id="scale8" viewBox="0 0 260 150" role="img" aria-label="A measuring scale"></svg>
+        <label class="lab" for="pos8">Move the pointer</label>
+        <input type="range" id="pos8" min="0" max="16" value="10" step="1">
+        <div class="working" id="work8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="task8"></p>
         <div class="askwrap" id="ask7"></div>
       </div>
     </section>
 
-    <!-- 8 check -->
+    <!-- 9 direction -->
     
-<section class="slide" data-say="Show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the answer.</span></div>
+<section class="slide" data-say="Turn the arm. A square corner is a right angle. Smaller is acute. Bigger is obtuse.">
+      <div class="slide-head"><span class="n">8</span><h2>Acute, right or obtuse?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d10_say10">A square corner is a <b>right angle</b>, 90°. Smaller is <b>acute</b>. Bigger is <b>obtuse</b>. Turn the arm.</span></div>
       <div class="stage">
-        <p class="qstem" id="stem8"></p>
-        <div class="choices" id="choices8"></div>
-        <p class="fb" id="fb8"></p>
-        <p class="fb small-fb" id="score8"></p>
+        <svg class="angle" id="d10_angle10" viewBox="0 0 260 200" aria-hidden="true"></svg>
+        <input type="range" id="d10_deg10" min="10" max="170" step="5" value="45" style="width:100%;max-width:320px;accent-color:var(--accent)">
+        <p class="fb" id="d10_name10"></p>
+        <div class="choices" id="d10_ch10"></div>
+        <p class="fb" id="d10_fb10"></p>
+        <p class="fb small-fb" id="d10_score10"></p>
       </div>
     </section>
 
-    <!-- 9 stickers -->
+    <!-- 11 coordinates -->
+    
+<section class="slide" data-say="Show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="qstem" id="stem10"></p>
+        <div class="choices" id="choices10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="fb small-fb" id="score10"></p>
+      </div>
+    </section>
+
+    <!-- 11 stickers -->
     
 <section class="slide" data-say="Every step you finished earned a sticker.">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Every step you finished earned a sticker.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="again">Play again</button></div>
@@ -1747,363 +1739,451 @@
     (marks || []).forEach((m) => { h += '<div class="m" style="left:' + x(m) + '"></div>'; }); el.innerHTML = h;
   }
 
-    /* ---- shared data: one survey, used by slides 2, 3 and 5 ---- */
-  const CATS = ["Walk", "Bus", "Car", "Bike"];
-  const ICON = { Walk: "🚶", Bus: "🚌", Car: "🚗", Bike: "🚲" };
-  const A4 = { Walk: 9, Bus: 6, Car: 4, Bike: 3 };     /* 22 children */
-  const B4 = { Walk: 5, Bus: 11, Car: 4, Bike: 2 };    /* 22 children */
-  const totalOf = (d) => CATS.reduce((s, c) => s + d[c], 0);
-  const QUEUE = (function () {
-    const q = [];
-    CATS.forEach((c) => { for (let i = 0; i < A4[c]; i++) q.push(c); });
-    return shuffle(q);
-  })();
-
-  /* ---- 1: planning an investigation (4Ss.01) ---- */
-  const QS1 = [
-    { q: "How do the children in our class travel to school?", collect: "One answer from each child: walk, bus, car or bike.",
-      kind: "categorical", why: "The answers are <b>groups you can name</b> — walk, bus, car, bike. You cannot put them in order or add them up, so they are categorical." },
-    { q: "How many brothers and sisters does each child have?", collect: "A whole number from each child: 0, 1, 2, 3 and so on.",
-      kind: "discrete", why: "The answers are <b>numbers you count</b>, and only whole ones — nobody has two and a half sisters. That is discrete data." },
-    { q: "Which fruit does our class like best?", collect: "One fruit named by each child.",
-      kind: "categorical", why: "Fruit names are <b>groups</b>, not amounts. Categorical again." },
-    { q: "How many books did each child read last month?", collect: "A whole number from each child.",
-      kind: "discrete", why: "You are counting books, and you can only read a whole number of them. Discrete." },
+    /* ---- 1: the 2D faces of a 3D solid (4Gg.05) ---- */
+  const SOLIDS = [
+    { name: "Cube", faces: [[6, "square"]], e: 12, v: 8, curved: 0,
+      draw: '<path class="f1" d="M35,50 L85,50 L85,100 L35,100 Z"></path><path class="f2" d="M35,50 L55,32 L105,32 L85,50 Z"></path><path class="f3" d="M85,50 L105,32 L105,82 L85,100 Z"></path>' },
+    { name: "Cuboid", faces: [[6, "rectangle"]], e: 12, v: 8, curved: 0,
+      draw: '<path class="f1" d="M28,55 L96,55 L96,95 L28,95 Z"></path><path class="f2" d="M28,55 L48,37 L116,37 L96,55 Z"></path><path class="f3" d="M96,55 L116,37 L116,77 L96,95 Z"></path>' },
+    { name: "Square-based pyramid", faces: [[1, "square"], [4, "triangle"]], e: 8, v: 5, curved: 0,
+      /* base parallelogram first, then the two visible slanting faces on top of it */
+      draw: '<path class="f1" d="M25,110 L85,110 L115,88 L55,88 Z"></path><path class="f2" d="M25,110 L85,110 L72,26 Z"></path><path class="f3" d="M85,110 L115,88 L72,26 Z"></path>' },
+    { name: "Triangular prism", faces: [[2, "triangle"], [3, "rectangle"]], e: 9, v: 6, curved: 0,
+      draw: '<path class="f1" d="M30,100 L82,100 L56,52 Z"></path><path class="f2" d="M30,100 L50,82 L102,82 L82,100 Z"></path><path class="f3" d="M82,100 L102,82 L76,34 L56,52 Z"></path>' },
+    { name: "Cylinder", faces: [[2, "circle"]], e: 2, v: 0, curved: 1,
+      draw: '<path class="f3" d="M38,45 L38,100 A32,12 0 0,0 102,100 L102,45 Z"></path><ellipse class="f1" cx="70" cy="45" rx="32" ry="12"></ellipse>' },
+    { name: "Cone", faces: [[1, "circle"]], e: 1, v: 1, curved: 1,
+      draw: '<path class="f3" d="M38,105 A32,12 0 0,0 102,105 L70,32 Z"></path><ellipse class="f1" cx="70" cy="105" rx="32" ry="12"></ellipse>' },
   ];
-  let q1 = 0, got1 = 0, lock1 = false;
-  const KINDS = ["categorical", "discrete"];
-  $("pickQ").innerHTML = QS1.map((x, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">Question ' + (i + 1) + "</button>").join("");
+  const FACE2D = {
+    square: '<svg viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28"></rect></svg>',
+    rectangle: '<svg viewBox="0 0 40 40"><rect x="3" y="10" width="34" height="20"></rect></svg>',
+    triangle: '<svg viewBox="0 0 40 40"><polygon points="20,6 36,34 4,34"></polygon></svg>',
+    circle: '<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15"></circle></svg>',
+  };
+  let s1 = 0;
+  const seen1 = new Set([0]);
+  $("pickSolid").innerHTML = SOLIDS.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + s.name + "</button>").join("");
   function paint1() {
-    const Q = QS1[q1];
-    $("qcard").innerHTML = '<p class="qq">' + Q.q + '</p><p class="qc"><b>What you would collect:</b> ' + Q.collect + "</p>";
-    $("kind1").innerHTML = KINDS.map((k) => '<button type="button" class="choice" data-k="' + k + '">' +
-      (k === "categorical" ? "Groups you can name" : "Numbers you can count") + "</button>").join("");
-    $("fb1").textContent = ""; $("fb1").className = "fb";
-    $("task1").textContent = "Answered " + got1 + " of " + QS1.length;
-    lock1 = false;
+    const S = SOLIDS[s1];
+    $("solid1").innerHTML = S.draw;
+    $("faces1").innerHTML = S.faces.map((f) =>
+      '<div class="facechip">' + FACE2D[f[1]] + "<b>" + f[0] + "</b><span>" + f[1] + (f[0] > 1 ? "s" : "") + "</span></div>").join("") +
+      (S.curved ? '<div class="facechip curved"><svg viewBox="0 0 40 40"><path d="M8,32 Q20,4 32,32"></path></svg><b>1</b><span>curved surface</span></div>' : "");
+    const flat = S.faces.reduce((a, f) => a + f[0], 0);
+    lines($("work1"), [
+      { k: "Flat faces", v: "<b>" + flat + "</b>" + (S.curved ? ", and 1 curved surface that is not flat" : "") },
+      { k: "Their shapes", v: S.faces.map((f) => f[0] + " " + f[1] + (f[0] > 1 ? "s" : "")).join(" and ") },
+      { k: "Edges", v: "<b>" + S.e + "</b> — where two faces meet" },
+      { k: "Vertices", v: "<b>" + S.v + "</b> — where the edges meet", total: true },
+    ]);
+    $("fb1").innerHTML = "A " + S.name.toLowerCase() + " has <b>" + flat + "</b> flat face" + (flat === 1 ? "" : "s") + ".";
+    seen1.add(s1);
+    $("task1").textContent = "Solids opened up: " + seen1.size + " of " + SOLIDS.length;
+    if (seen1.size >= 4) finish(0, "");
   }
-  $("pickQ").addEventListener("click", (e) => {
+  $("pickSolid").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-i]"); if (!b) return;
-    q1 = Number(b.dataset.i);
-    [...$("pickQ").children].forEach((c, i) => c.classList.toggle("on", i === q1));
-    paint1();
-  });
-  $("kind1").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock1) return;
-    lock1 = true;
-    const ok = b.dataset.k === QS1[q1].kind;
-    b.classList.add(ok ? "right" : "wrong");
-    if (ok) got1++;
-    $("fb1").innerHTML = (ok ? cheer() + " " : "") + QS1[q1].why;
-    $("fb1").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : $("fb1").textContent);
-    $("task1").textContent = "Answered " + got1 + " of " + QS1.length;
-    if (got1 >= 3) finish(0, "");
+    s1 = Number(b.dataset.i);
+    [...$("pickSolid").children].forEach((c, i) => c.classList.toggle("on", i === s1));
+    paint1(); say(SOLIDS[s1].name);
   });
   paint1();
 
-  /* ---- 2: tally chart and frequency table (4Ss.02) ---- */
-  let n2 = 0;
-  const tallyMarks = (n) => {
-    let h = "";
-    for (let g = 0; g < Math.floor(n / 5); g++) h += '<span class="gate">||||</span>';
-    for (let r = 0; r < n % 5; r++) h += '<span class="mark">|</span>';
-    return h || '<span class="none">—</span>';
-  };
-  function counts2() {
-    const c = {}; CATS.forEach((k) => (c[k] = 0));
-    for (let i = 0; i < n2; i++) c[QUEUE[i]]++;
-    return c;
-  }
+  /* ---- 2: nets (4Gg.06) ---- */
+  const NETS = shuffle([
+    { a: "Cube", why: "Six squares in a cross fold up into a cube.",
+      d: '<rect x="70" y="20" width="40" height="40"></rect><rect x="30" y="60" width="40" height="40"></rect><rect x="70" y="60" width="40" height="40"></rect><rect x="110" y="60" width="40" height="40"></rect><rect x="150" y="60" width="40" height="40"></rect><rect x="70" y="100" width="40" height="40"></rect>' },
+    { a: "Square-based pyramid", why: "A square with a triangle on each side folds up to a point.",
+      d: '<rect x="90" y="70" width="50" height="50"></rect><polygon points="90,70 140,70 115,25"></polygon><polygon points="90,120 140,120 115,165"></polygon><polygon points="90,70 90,120 45,95"></polygon><polygon points="140,70 140,120 185,95"></polygon>' },
+    { a: "Triangular prism", why: "Three rectangles in a row with a triangle at each end folds into a prism.",
+      d: '<rect x="60" y="55" width="45" height="34"></rect><rect x="60" y="89" width="45" height="34"></rect><rect x="60" y="123" width="45" height="34"></rect><polygon points="60,89 105,89 82,52"></polygon><polygon points="60,123 105,123 82,160"></polygon>' },
+    { a: "Cylinder", why: "A rectangle rolls into the tube, and the two circles are the ends.",
+      d: '<rect x="80" y="60" width="100" height="50"></rect><circle cx="130" cy="42" r="17"></circle><circle cx="130" cy="128" r="17"></circle>' },
+  ]);
+  const NETOPTS = ["Cube", "Square-based pyramid", "Triangular prism", "Cylinder", "Cone"];
+  let n2 = 0, right2 = 0, lock2 = false;
   function paint2() {
-    const c = counts2();
-    let h = '<div class="trow thead"><span>Answer</span><span>Tally</span><span class="num">Frequency</span></div>';
-    CATS.forEach((k) => {
-      h += '<div class="trow"><span>' + ICON[k] + " " + k + '</span><span class="tal">' + tallyMarks(c[k]) +
-        '</span><span class="num">' + c[k] + "</span></div>";
-    });
-    h += '<div class="trow tfoot"><span>Total</span><span></span><span class="num">' + n2 + "</span></div>";
-    $("tally2").innerHTML = h;
-    $("fb2").textContent = n2 === 0 ? "Nobody has answered yet."
-      : n2 < QUEUE.length ? n2 + " of " + QUEUE.length + " children have answered."
-      : "All " + QUEUE.length + " have answered. The frequencies add to " + n2 + ".";
-    $("task2").textContent = "Every fifth mark is drawn across the gate, so you can count in fives.";
-    if (n2 === QUEUE.length) finish(1, "");
+    lock2 = false;
+    $("fb2").textContent = ""; $("fb2").className = "fb";
+    $("work2").innerHTML = "";
+    if (n2 >= NETS.length) {
+      $("net2").innerHTML = "";
+      $("netpick").innerHTML = "";
+      $("task2").textContent = right2 + " of " + NETS.length + " right.";
+      if (right2 >= 3) finish(1, "");
+      return;
+    }
+    $("net2").innerHTML = NETS[n2].d;
+    const opts = shuffle([NETS[n2].a].concat(shuffle(NETOPTS.filter((o) => o !== NETS[n2].a)).slice(0, 2)));
+    $("netpick").innerHTML = opts.map((o) => '<button type="button" class="choice" data-a="' + o + '">' + o + "</button>").join("");
+    $("task2").textContent = "Net " + (n2 + 1) + " of " + NETS.length + " · " + right2 + " right";
   }
-  $("one2").addEventListener("click", () => { if (n2 < QUEUE.length) { n2++; paint2(); say(QUEUE[n2 - 1]); } });
-  $("all2").addEventListener("click", () => { n2 = QUEUE.length; paint2(); say("All twenty two have answered."); });
-  $("reset2").addEventListener("click", () => { n2 = 0; paint2(); });
+  $("netpick").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock2) return;
+    lock2 = true;
+    const ok = b.dataset.a === NETS[n2].a;
+    if (ok) right2++;
+    b.classList.add(ok ? "right" : "wrong");
+    $("fb2").textContent = (ok ? cheer() + " " : "It is a " + NETS[n2].a.toLowerCase() + ". ") + NETS[n2].why;
+    $("fb2").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : NETS[n2].why);
+    n2++;
+    setTimeout(paint2, 2600);
+  });
   paint2();
 
-  /* ---- 3: pictogram, bar chart, dot plot (4Ss.02) ---- */
-  const REPS = ["Pictogram", "Bar chart", "Dot plot"];
-  const REPWHY = [
-    "A pictogram uses a <b>key</b>, so one picture can stand for more than one child. Good when the numbers are big.",
-    "A bar chart shows <b>how tall</b> each group is against a scale, so it is easy to compare them at a glance.",
-    "A dot plot puts <b>one dot per child</b>, so you can still count the individuals as well as compare the groups.",
+  /* ---- 3: every line of symmetry (4Gg.07) ---- */
+  /* only shapes whose COMPLETE set of mirror lines is among these four are used, so
+     "find all of them" is an honest instruction */
+  const SYM = [
+    { name: "Square", ok: ["H", "V", "D1", "D2"], d: "M50,50 L150,50 L150,150 L50,150 Z" },
+    { name: "Rectangle", ok: ["H", "V"], d: "M30,65 L170,65 L170,135 L30,135 Z" },
+    { name: "Diamond", ok: ["H", "V"], d: "M100,30 L165,100 L100,170 L35,100 Z" },
+    { name: "Isosceles triangle", ok: ["V"], d: "M100,35 L160,155 L40,155 Z" },
+    { name: "Parallelogram", ok: [], d: "M45,135 L85,65 L175,65 L135,135 Z" },
+    { name: "Plus", ok: ["H", "V", "D1", "D2"], d: "M75,40 L125,40 L125,75 L160,75 L160,125 L125,125 L125,160 L75,160 L75,125 L40,125 L40,75 L75,75 Z" },
   ];
-  let rep3 = 0;
-  $("pickRep").innerHTML = REPS.map((r, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' + r + "</button>").join("");
+  const LINES = { H: ["Horizontal", "M20,100 L180,100"], V: ["Vertical", "M100,20 L100,180"],
+    D1: ["Diagonal ⟋", "M28,172 L172,28"], D2: ["Diagonal ⟍", "M28,28 L172,172"] };
+  let sy3 = 0, found3 = [], tried3 = [];
+  $("pickSym").innerHTML = SYM.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + s.name + "</button>").join("");
   function paint3() {
-    const d = A4, max = Math.max.apply(null, CATS.map((c) => d[c]));
-    let h = "";
-    if (rep3 === 0) {
-      h += '<p class="key">Key: ' + ICON.Walk + ' = 2 children</p>';
-      CATS.forEach((c) => {
-        const full = Math.floor(d[c] / 2), half = d[c] % 2;
-        let pics = "";
-        for (let i = 0; i < full; i++) pics += '<span class="pic">' + ICON[c] + "</span>";
-        if (half) pics += '<span class="pic half">' + ICON[c] + "</span>";
-        h += '<div class="prow"><span class="plab">' + c + '</span><span class="pics">' + pics + '</span><span class="pnum">' + d[c] + "</span></div>";
-      });
-    } else if (rep3 === 1) {
-      h += '<div class="bars">';
-      CATS.forEach((c) => {
-        h += '<div class="bcol"><div class="bwrap"><div class="bbar" style="height:' + Math.round((d[c] / max) * 100) +
-          '%"><span>' + d[c] + "</span></div></div><span class=\"blab\">" + c + "</span></div>";
-      });
-      h += "</div>";
-    } else {
-      CATS.forEach((c) => {
-        let dots = "";
-        for (let i = 0; i < d[c]; i++) dots += "<i></i>";
-        h += '<div class="drow"><span class="plab">' + c + '</span><span class="dots2">' + dots + '</span><span class="pnum">' + d[c] + "</span></div>";
-      });
-    }
-    $("rep3").innerHTML = h;
-    $("fb3").innerHTML = REPWHY[rep3];
-    $("task3").textContent = "Same 22 children every time — only the drawing changes.";
+    const S = SYM[sy3];
+    let g = '<path class="shape" d="' + S.d + '"></path>';
+    found3.forEach((k) => { g += '<path class="mirror" d="' + LINES[k][1] + '"></path>'; });
+    $("sym3").innerHTML = g;
+    $("lines3").innerHTML = Object.keys(LINES).map((k) =>
+      '<button type="button" class="choice' + (found3.indexOf(k) >= 0 ? " right" : tried3.indexOf(k) >= 0 ? " wrong" : "") +
+      '" data-k="' + k + '">' + LINES[k][0] + "</button>").join("");
+    lines($("work3"), [
+      { k: "Testing", v: S.name.toLowerCase() },
+      { k: "Lines found", v: "<b>" + found3.length + "</b> of the " + S.ok.length + " it has" },
+      { k: "How to test one", v: "fold along it; if the two halves land exactly on each other it is a line of symmetry" },
+      { k: found3.length === S.ok.length ? "All found" : "Keep going",
+        v: found3.length === S.ok.length
+          ? (S.ok.length === 0 ? "a parallelogram has <b>no</b> lines of symmetry at all" : "<b>" + S.ok.map((k) => LINES[k][0].toLowerCase()).join(", ") + "</b>")
+          : "try the ones you have not tested yet", total: true },
+    ]);
+    $("task3").textContent = S.name + ": " + found3.length + " of " + S.ok.length + " found";
+    if (found3.length === S.ok.length && tried3.length >= 4 - S.ok.length) finish(2, "");
   }
-  $("pickRep").addEventListener("click", (e) => {
+  $("pickSym").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-i]"); if (!b) return;
-    rep3 = Number(b.dataset.i);
-    [...$("pickRep").children].forEach((c, i) => c.classList.toggle("on", i === rep3));
-    paint3(); say(REPS[rep3] + ". " + $("fb3").textContent);
-    if (rep3 === REPS.length - 1) finish(2, "");
+    sy3 = Number(b.dataset.i); found3 = []; tried3 = [];
+    [...$("pickSym").children].forEach((c, i) => c.classList.toggle("on", i === sy3));
+    $("fb3").textContent = ""; $("fb3").className = "fb";
+    paint3(); say(SYM[sy3].name);
+  });
+  $("lines3").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-k]"); if (!b) return;
+    const k = b.dataset.k;
+    if (found3.indexOf(k) >= 0 || tried3.indexOf(k) >= 0) return;
+    const ok = SYM[sy3].ok.indexOf(k) >= 0;
+    if (ok) found3.push(k); else tried3.push(k);
+    $("fb3").innerHTML = ok ? cheer() + " The " + LINES[k][0].toLowerCase() + " line works."
+      : "Not that one — folding along the " + LINES[k][0].toLowerCase() + " line does not match the halves up.";
+    $("fb3").className = "fb " + (ok ? "good" : "bad");
+    say($("fb3").textContent);
+    paint3();
   });
   paint3();
 
-  /* ---- 4: Venn and Carroll diagrams (4Ss.02) ---- */
-  const NUMS = []; for (let i = 1; i <= 20; i++) NUMS.push(i);
-  const isEven = (n) => n % 2 === 0, isBig = (n) => n > 10;
-  const REGION = (n) => (isEven(n) ? 2 : 0) + (isBig(n) ? 1 : 0);   /* 0 odd/small 1 odd/big 2 even/small 3 even/big */
-  let sort4 = 0;
-  $("pickSort").innerHTML = ["A Venn diagram", "A Carroll diagram"].map((r, i) =>
-    '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' + r + "</button>").join("");
-  function paint4() {
-    const bucket = [[], [], [], []];
-    NUMS.forEach((n) => bucket[REGION(n)].push(n));
-    let h = "";
-    if (sort4 === 0) {
-      /* a real Venn: two overlapping hoops inside a box for everything else */
-      const cluster = (nums, cx, cy) => {
-        let t = "";
-        nums.forEach((n, i) => {
-          const col = i % 2, row = Math.floor(i / 2), wide = nums.length - row * 2 === 1;
-          const x = wide ? cx : cx + (col ? 15 : -15), y = cy - 22 + row * 22;
-          t += '<text class="vn" x="' + x + '" y="' + y + '">' + n + "</text>";
-        });
-        return t;
-      };
-      h += '<svg class="vennsvg" viewBox="0 0 340 232" role="img" aria-label="Two overlapping hoops sorting 1 to 20">' +
-        '<rect class="uni" x="4" y="4" width="332" height="224" rx="14"></rect>' +
-        '<circle class="hoopA" cx="132" cy="104" r="80"></circle>' +
-        '<circle class="hoopB" cx="208" cy="104" r="80"></circle>' +
-        '<text class="hl a" x="74" y="30">even</text>' +
-        '<text class="hl b" x="266" y="30">more than 10</text>' +
-        cluster(bucket[2], 86, 104) + cluster(bucket[3], 170, 104) + cluster(bucket[1], 254, 104) +
-        '<text class="out" x="18" y="216">outside both: ' + bucket[0].join("  ") + "</text></svg>";
-      $("fb4").innerHTML = "The middle holds the numbers that are <b>both</b> — even <b>and</b> more than 10. The ones outside both hoops are odd and 10 or less.";
-    } else {
-      h += '<table class="carroll"><tr><th></th><th>more than 10</th><th>not more than 10</th></tr>' +
-        "<tr><th>even</th><td>" + bucket[3].join(" ") + "</td><td>" + bucket[2].join(" ") + "</td></tr>" +
-        "<tr><th>not even</th><td>" + bucket[1].join(" ") + "</td><td>" + bucket[0].join(" ") + "</td></tr></table>";
-      $("fb4").innerHTML = "A Carroll diagram gives every number <b>exactly one box</b>, including the ones that are neither.";
-    }
-    $("sort4").innerHTML = h;
-    $("task4").textContent = "Both diagrams sort the same 20 numbers · " + bucket.map((b) => b.length).join(" + ") + " = " + NUMS.length;
-    if (sort4 === 1) finish(3, "");
-  }
-  $("pickSort").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    sort4 = Number(b.dataset.i);
-    [...$("pickSort").children].forEach((c, i) => c.classList.toggle("on", i === sort4));
-    paint4(); say($("fb4").textContent);
-  });
-  paint4();
-
-  /* ---- 5: interpreting two data sets (4Ss.03) ---- */
-  const Q5 = [
-    { q: "Which way of travelling is most common in Class 4B?", o: ["Bus", "Walk", "Car"], a: 0,
-      w: "11 of the 22 children in 4B come by bus — exactly half the class, and more than any other way." },
-    { q: "What is the same in both classes?", o: ["The same number of children come by car", "The most common answer", "Nobody cycles"], a: 0,
-      w: "Four children come by car in each class. The most common answer differs — walking in 4A, the bus in 4B." },
-    { q: "4A walks much more than 4B. Which is the best explanation to check first?", o: ["4A may live nearer the school", "4A has more children", "Walking is healthier"], a: 0,
-      w: "Both classes have 22 children, so size cannot explain it. Where the children live is a real source of variation you could go and check." },
+  /* ---- 5: combining shapes and tessellation (4Gg.01) ---- */
+  const TILES = [
+    { name: "Two triangles", makes: "a square", tess: true,
+      why: "Two right-angled triangles with the same short sides join along the long side to make a square.",
+      d: '<polygon class="t1" points="60,30 60,110 140,110"></polygon><polygon class="t2" points="60,30 140,30 140,110"></polygon>' },
+    { name: "Two squares", makes: "a rectangle", tess: true,
+      why: "Two squares side by side make a rectangle twice as wide as it is tall.",
+      d: '<rect class="t1" x="50" y="45" width="70" height="70"></rect><rect class="t2" x="120" y="45" width="70" height="70"></rect>' },
+    { name: "Six triangles", makes: "a hexagon", tess: true,
+      why: "Six equilateral triangles round a point make a regular hexagon, and hexagons tile a floor with no gaps.",
+      d: "HEX" },
+    { name: "Circles", makes: "gaps", tess: false,
+      why: "Circles cannot tessellate. However you pack them there are always gaps left between them.",
+      d: "CIRC" },
   ];
-  let c5 = 0, right5 = 0, lock5 = false;
-  function bars5(d, title) {
-    const max = 12;
-    let h = '<div class="mini"><p class="mlab">' + title + "</p><div class=\"bars\">";
-    CATS.forEach((c) => {
-      h += '<div class="bcol"><div class="bwrap"><div class="bbar" style="height:' + Math.round((d[c] / max) * 100) +
-        '%"><span>' + d[c] + "</span></div></div><span class=\"blab\">" + c + "</span></div>";
-    });
-    return h + "</div></div>";
-  }
+  let t5 = 0;
+  $("pickTile").innerHTML = TILES.map((t, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + t.name + "</button>").join("");
   function paint5() {
-    $("two5").innerHTML = bars5(A4, "Class 4A · " + totalOf(A4) + " children") + bars5(B4, "Class 4B · " + totalOf(B4) + " children");
-    lock5 = false;
-    $("fb5").textContent = ""; $("fb5").className = "fb";
-    if (c5 >= Q5.length) {
-      $("stem5").textContent = "That is all three.";
-      $("choices5").innerHTML = "";
-      $("task5").textContent = right5 + " of " + Q5.length + " right.";
-      if (right5 >= 2) finish(4, "");
-      return;
+    const T = TILES[t5];
+    let g = T.d;
+    if (T.d === "HEX") {
+      g = "";
+      for (let i = 0; i < 6; i++) {
+        const a0 = i * 60 * Math.PI / 180, a1 = (i + 1) * 60 * Math.PI / 180;
+        g += '<polygon class="' + (i % 2 ? "t1" : "t2") + '" points="130,90 ' +
+          (130 + 58 * Math.cos(a0)).toFixed(1) + "," + (90 + 58 * Math.sin(a0)).toFixed(1) + " " +
+          (130 + 58 * Math.cos(a1)).toFixed(1) + "," + (90 + 58 * Math.sin(a1)).toFixed(1) + '"></polygon>';
+      }
+    } else if (T.d === "CIRC") {
+      g = "";
+      for (let r = 0; r < 3; r++) for (let c = 0; c < 5; c++)
+        g += '<circle class="t1" cx="' + (50 + c * 40) + '" cy="' + (45 + r * 40) + '" r="20"></circle>';
     }
-    $("stem5").textContent = Q5[c5].q;
-    const order = shuffle(Q5[c5].o.map((t, i) => ({ t: t, ok: i === Q5[c5].a })));
-    $("choices5").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
-    $("task5").textContent = "Question " + (c5 + 1) + " of " + Q5.length + " · " + right5 + " right";
+    $("tile5").innerHTML = g;
+    lines($("work5"), [
+      { k: "Put together", v: T.name.toLowerCase() },
+      { k: "They make", v: "<b>" + T.makes + "</b>" },
+      { k: "Tessellates?", v: T.tess ? "<b>yes</b> — copies fit together leaving no gaps" : "<b>no</b> — gaps are always left over" },
+      { k: "Why", v: T.why, total: true },
+    ]);
+    $("fb5").innerHTML = T.name + " make " + T.makes + ".";
+    $("task5").textContent = "Shapes that tessellate leave no gaps and no overlaps.";
+    if (t5 === TILES.length - 1) finish(3, "");
   }
-  $("choices5").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock5) return;
-    lock5 = true;
-    const ok = b.dataset.ok === "1";
-    if (ok) right5++;
-    b.classList.add(ok ? "right" : "wrong");
-    $("fb5").textContent = (ok ? cheer() + " " : "") + Q5[c5].w;
-    $("fb5").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : Q5[c5].w);
-    c5++;
-    setTimeout(paint5, 2600);
+  $("pickTile").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    t5 = Number(b.dataset.i);
+    [...$("pickTile").children].forEach((c, i) => c.classList.toggle("on", i === t5));
+    paint5(); say(TILES[t5].why);
   });
   paint5();
 
-  /* ---- 6: the language of chance (4Sp.01) ---- */
-  const WORDS6 = ["impossible", "unlikely", "even chance", "likely", "certain"];
-  const EV6 = shuffle([
-    { e: "Rolling a number less than 7 on an ordinary dice", a: 4, w: "Every face is 1 to 6, and all of them are less than 7. It must happen, so it is certain." },
-    { e: "Rolling a 7 on an ordinary dice", a: 0, w: "There is no 7 on a dice, so it cannot happen at all. That is impossible." },
-    { e: "Rolling an even number on an ordinary dice", a: 2, w: "Three faces are even and three are odd, so it happens about half the time. An even chance." },
-    { e: "Taking a red counter from a bag of 9 red and 1 blue", a: 3, w: "Nine of the ten counters are red, so it will usually happen — likely, but not certain." },
-    { e: "Taking a blue counter from a bag of 9 red and 1 blue", a: 1, w: "Only one counter in ten is blue, so it will not often happen. Unlikely, but not impossible." },
-    { e: "Tossing a coin and getting heads", a: 2, w: "A coin has two sides and both are as likely as each other. An even chance." },
-  ]);
-  let e6 = 0, right6 = 0, lock6 = false;
+  /* ---- 6: area and perimeter, formula and compound (4Gg.02, 4Gg.03) ---- */
+  let mode6 = 0, w6 = 5, h6 = 3;
+  $("pickArea").innerHTML = ["One rectangle", "An L shape"].map((m, i) =>
+    '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' + m + "</button>").join("");
   function paint6() {
-    $("cl6").innerHTML = '<div class="cbar"></div>' + WORDS6.map((w, i) =>
-      '<div class="cstop" style="left:' + (i / (WORDS6.length - 1)) * 100 + '%"><i></i><span>' + w + "</span></div>").join("");
-    lock6 = false;
-    $("fb6").textContent = ""; $("fb6").className = "fb";
-    if (e6 >= EV6.length) {
-      $("ev6").textContent = "That is all of them.";
-      $("words6").innerHTML = "";
-      $("task6").textContent = right6 + " of " + EV6.length + " right.";
-      if (right6 >= 4) finish(5, "");
-      return;
+    /* the grid is 7 rows deep and the L's foot needs two rows under the body,
+       so in L mode the body cannot be taller than 5 or the foot is drawn short */
+    const hMax = mode6 === 1 ? 5 : 6;
+    $("h6").max = hMax;
+    if (h6 > hMax) h6 = hMax;
+    $("h6").value = h6;
+    $("wLab6").textContent = w6;
+    $("hLab6").textContent = h6;
+    const C = 26, P = 8;
+    let g = "";
+    for (let x = 0; x < 9; x++) for (let y = 0; y < 7; y++)
+      g += '<rect class="cell" x="' + (P + x * C) + '" y="' + (P + y * C) + '" width="' + C + '" height="' + C + '"></rect>';
+    const inA = (x, y) => x < w6 && y < h6;
+    const inB = (x, y) => inA(x, y) || (x < 2 && y >= h6 && y < h6 + 2);
+    const inside = mode6 === 0 ? inA : inB;
+    for (let x = 0; x < 9; x++) for (let y = 0; y < 7; y++)
+      if (inside(x, y)) g += '<rect class="fillA" x="' + (P + x * C) + '" y="' + (P + y * C) + '" width="' + C + '" height="' + C + '"></rect>';
+    $("area6").innerHTML = g;
+    if (mode6 === 0) {
+      lines($("work6"), [
+        { k: "Count them", v: "<b>" + w6 * h6 + "</b> squares inside" },
+        { k: "The short way", v: "width × height = " + w6 + " × " + h6 + " = <b>" + w6 * h6 + "</b>" },
+        { k: "Area formula", v: "<b>area = length × width</b>, and it works for every rectangle" },
+        { k: "Perimeter", v: "all the way round: 2 × (" + w6 + " + " + h6 + ") = <b>" + 2 * (w6 + h6) + "</b>", total: true },
+      ]);
+      $("fb6").innerHTML = "Area <b>" + w6 * h6 + "</b> squares, perimeter <b>" + 2 * (w6 + h6) + "</b>.";
+    } else {
+      const a = w6 * h6, b = 2 * 2, tot = a + b;
+      lines($("work6"), [
+        { k: "Split it up", v: "an L shape is just two rectangles joined" },
+        { k: "The big one", v: w6 + " × " + h6 + " = <b>" + a + "</b>" },
+        { k: "The small one", v: "2 × 2 = <b>" + b + "</b>" },
+        { k: "Add the areas", v: a + " + " + b + " = <b>" + tot + "</b> squares", total: true },
+      ]);
+      $("fb6").innerHTML = "Two areas added: <b>" + tot + "</b> squares in all.";
     }
-    $("ev6").textContent = EV6[e6].e;
-    $("words6").innerHTML = WORDS6.map((w, i) => '<button type="button" class="choice" data-i="' + i + '">' + w + "</button>").join("");
-    $("task6").textContent = "Event " + (e6 + 1) + " of " + EV6.length + " · " + right6 + " right";
+    $("task6").textContent = mode6 === 0 ? "Change the sides and check the rule still gives the count."
+      : "A compound shape has no single formula — cut it into ones that do.";
+    if (mode6 === 1) finish(4, "");
   }
-  $("words6").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock6) return;
-    lock6 = true;
-    const ok = Number(b.dataset.i) === EV6[e6].a;
-    if (ok) right6++;
-    b.classList.add(ok ? "right" : "wrong");
-    $("fb6").textContent = (ok ? cheer() + " " : "") + EV6[e6].w;
-    $("fb6").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : EV6[e6].w);
-    e6++;
-    setTimeout(paint6, 2600);
+  $("pickArea").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    mode6 = Number(b.dataset.i);
+    [...$("pickArea").children].forEach((c, i) => c.classList.toggle("on", i === mode6));
+    paint6(); say($("fb6").textContent);
   });
+  $("w6").addEventListener("input", (e) => { w6 = Number(e.target.value); paint6(); });
+  $("h6").addEventListener("input", (e) => { h6 = Number(e.target.value); paint6(); });
   paint6();
 
-  /* ---- 7: a chance experiment, few trials and many (4Sp.02) ---- */
-  const SP = ["red", "blue", "green", "gold"];
-  const SPHEX = { red: "var(--bad)", blue: "var(--teal)", green: "var(--good)", gold: "var(--gold)" };
-  let last7 = null;
-  function drawSpinner() {
-    let s = "";
-    SP.forEach((c, i) => {
-      const a0 = (i * 90 - 90) * Math.PI / 180, a1 = ((i + 1) * 90 - 90) * Math.PI / 180;
-      s += '<path d="M80,80 L' + (80 + 70 * Math.cos(a0)).toFixed(1) + "," + (80 + 70 * Math.sin(a0)).toFixed(1) +
-        " A70,70 0 0,1 " + (80 + 70 * Math.cos(a1)).toFixed(1) + "," + (80 + 70 * Math.sin(a1)).toFixed(1) +
-        ' Z" fill="' + SPHEX[c] + '" stroke="var(--card)" stroke-width="2"></path>';
-    });
-    s += '<circle cx="80" cy="80" r="7" fill="var(--card)" stroke="var(--ink)" stroke-width="2"></circle>';
-    $("sp7").innerHTML = s;
+  /* ---- 7: estimating the area of an irregular shape (4Gg.04) ---- */
+  let blob = null;
+  function newBlob() {
+    const C = 30, N = 8;
+    const cx = 3.5 + (Math.random() - 0.5), cy = 3.5 + (Math.random() - 0.5);
+    const rx = 2.2 + Math.random() * 0.7, ry = 1.8 + Math.random() * 0.7;
+    const wob = 0.35 + Math.random() * 0.3, ph = Math.random() * 6.28;
+    const pts = [];
+    for (let i = 0; i < 40; i++) {
+      const a = (i / 40) * Math.PI * 2;
+      const r = 1 + wob * Math.sin(3 * a + ph);
+      pts.push([cx + rx * r * Math.cos(a), cy + ry * r * Math.sin(a)]);
+    }
+    const insidePt = (px, py) => {
+      let inside = false;
+      for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+        const xi = pts[i][0], yi = pts[i][1], xj = pts[j][0], yj = pts[j][1];
+        if ((yi > py) !== (yj > py) && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      return inside;
+    };
+    let whole = 0, part = 0;
+    const cls = [];
+    for (let x = 0; x < N; x++) for (let y = 0; y < N; y++) {
+      let n = 0;
+      const probe = [[0.15, 0.15], [0.85, 0.15], [0.15, 0.85], [0.85, 0.85], [0.5, 0.5]];
+      probe.forEach((p) => { if (insidePt(x + p[0], y + p[1])) n++; });
+      if (n === probe.length) { whole++; cls.push([x, y, "whole"]); }
+      else if (n > 0) { part++; cls.push([x, y, "part"]); }
+    }
+    return { pts: pts, cells: cls, whole: whole, part: part, C: C };
   }
-  function spin(n) {
-    const c = {}; SP.forEach((k) => (c[k] = 0));
-    for (let i = 0; i < n; i++) c[SP[rnd(0, 3)]]++;
-    last7 = { n: n, c: c };
-    const expect = n / 4;
-    let h = '<p class="key">' + fmt(n) + " spins · each colour should come up about " + fmt(expect) + " times</p>";
-    SP.forEach((k) => {
-      const pc = (c[k] / n) * 100;
-      h += '<div class="srow"><span class="plab">' + k + '</span><span class="sbarwrap"><span class="sbar" style="width:' +
-        pc.toFixed(1) + "%;background:" + SPHEX[k] + '"></span></span><span class="pnum">' + fmt(c[k]) + " · " + pc.toFixed(0) + "%</span></div>";
+  function paint7() {
+    const B = blob, C = B.C, P = 10;
+    let g = "";
+    for (let x = 0; x < 8; x++) for (let y = 0; y < 8; y++)
+      g += '<rect class="cell" x="' + (P + x * C) + '" y="' + (P + y * C) + '" width="' + C + '" height="' + C + '"></rect>';
+    B.cells.forEach((c) => {
+      g += '<rect class="' + (c[2] === "whole" ? "fillA" : "fillB") + '" x="' + (P + c[0] * C) + '" y="' + (P + c[1] * C) +
+        '" width="' + C + '" height="' + C + '"></rect>';
     });
-    $("res7").innerHTML = h;
-    const worst = Math.max.apply(null, SP.map((k) => Math.abs(c[k] / n - 0.25))) * 100;
-    $("fb7").innerHTML = "The furthest any colour landed from a quarter was <b>" + worst.toFixed(1) + " percentage points</b>.";
-    $("task7").textContent = n >= 1000
-      ? "With a thousand spins the four bars are nearly level — that is what more trials buys you."
-      : "Now try more spins and watch the bars even out.";
-    if (n >= 1000) finish(6, "");
-    say(fmt(n) + " spins.");
+    g += '<path class="blobline" d="M' + B.pts.map((p) => (P + p[0] * C).toFixed(1) + "," + (P + p[1] * C).toFixed(1)).join(" L") + ' Z"></path>';
+    $("blob7").innerHTML = g;
+    const est = B.whole + B.part / 2;
+    lines($("work7"), [
+      { k: "Whole squares", v: "<b>" + B.whole + "</b> completely inside" },
+      { k: "Part squares", v: "<b>" + B.part + "</b> only partly inside" },
+      { k: "Count the parts as halves", v: B.part + " ÷ 2 = <b>" + (B.part / 2) + "</b>" },
+      { k: "So the area is about", v: B.whole + " + " + (B.part / 2) + " = <b>" + est + "</b> squares", total: true },
+    ]);
+    $("fb7").innerHTML = "About <b>" + est + "</b> squares. It is an <b>estimate</b> — some part squares hold more than half and some less.";
+    $("task7").textContent = "Dark squares are wholly inside. Pale ones are cut by the edge.";
+    finish(5, "");
   }
-  document.querySelectorAll('#deck [data-n]').forEach((b) => b.addEventListener("click", () => spin(Number(b.dataset.n))));
-  drawSpinner();
-  spin(10);
+  $("new7").addEventListener("click", () => { blob = newBlob(); paint7(); say($("fb7").textContent); });
+  blob = newBlob(); paint7();
 
-  /* ---- 8: check ---- */
-  const Q8 = shuffle([
-    { q: "In a tally chart, what does a line drawn across four marks mean?", o: ["A group of 5", "A group of 4", "A mistake"], a: 0, w: "Four marks and one across them make a gate of five, so you can count the groups in fives." },
-    { q: "Which data is categorical?", o: ["Favourite colour", "Number of pets", "Height in centimetres"], a: 0, w: "Colours are groups you can name. The other two are numbers you measure or count." },
-    { q: "On a pictogram, one picture stands for 2 children. How many pictures show 9 children?", o: ["Four and a half", "Nine", "Eighteen"], a: 0, w: "9 ÷ 2 = 4 remainder 1, so four whole pictures and one half." },
-    { q: "Where does a number go on a Carroll diagram if it is neither even nor more than 10?", o: ["In the fourth box", "Nowhere", "In the middle"], a: 0, w: "A Carroll diagram has a box for every combination, including 'neither' — that is what makes it different from a Venn diagram's middle." },
-    { q: "Rolling a 7 on an ordinary six-sided dice is:", o: ["impossible", "unlikely", "certain"], a: 0, w: "There is no 7 on the dice, so it cannot happen at all." },
-    { q: "A bag holds 9 red counters and 1 blue. Taking a red one is:", o: ["likely", "certain", "impossible"], a: 0, w: "Nine times out of ten it will be red — likely, but not certain, because the blue one is still in there." },
-    { q: "Why spin a spinner 1000 times instead of 10?", o: ["The results settle nearer what should happen", "It is quicker", "It changes the spinner"], a: 0, w: "A few trials are lumpy by chance. More trials bring the proportions closer to the quarter each colour should get." },
-    { q: "Two classes both have 22 children. 4A walks 9 and 4B walks 5. What can you say?", o: ["More of 4A walk", "4A is bigger", "4B has no walkers"], a: 0, w: "The classes are the same size, so the difference is real — 9 against 5 — and worth looking for a reason." }
+  /* ---- 8: reading a scale with fractions (4Gg.09) ---- */
+  const SCALES = [
+    { name: "Measuring jug", unit: "ml", step: 100, marks: 5, sub: 4 },
+    { name: "Kitchen scales", unit: "g", step: 500, marks: 5, sub: 4 },
+    { name: "Thermometer", unit: "°C", step: 10, marks: 5, sub: 2 },
+  ];
+  let sc8 = 0, pos8 = 10;
+  const WORDS8 = { 0: "exactly on", 1: "a quarter past", 2: "halfway past", 3: "three quarters past" };
+  $("pickScale").innerHTML = SCALES.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + s.name + "</button>").join("");
+  function paint8() {
+    const S = SCALES[sc8], sub = S.sub, top = (S.marks - 1) * sub;
+    $("pos8").max = top;
+    if (pos8 > top) pos8 = top;
+    $("pos8").value = pos8;
+    const whole = Math.floor(pos8 / sub), rem = pos8 % sub;
+    const value = whole * S.step + (rem / sub) * S.step;
+    let g = '<line class="axis8" x1="30" y1="105" x2="230" y2="105"></line>';
+    for (let m = 0; m < S.marks; m++) {
+      const x = 30 + (m / (S.marks - 1)) * 200;
+      g += '<line class="big8" x1="' + x + '" y1="88" x2="' + x + '" y2="122"></line>';
+      g += '<text class="lab8" x="' + x + '" y="140">' + m * S.step + "</text>";
+      if (m < S.marks - 1) for (let s = 1; s < sub; s++) {
+        const xs = x + (s / sub) * (200 / (S.marks - 1));
+        g += '<line class="small8" x1="' + xs + '" y1="96" x2="' + xs + '" y2="114"></line>';
+      }
+    }
+    const px = 30 + (pos8 / top) * 200;
+    g += '<polygon class="ptr" points="' + px + ',72 ' + (px - 8) + ',54 ' + (px + 8) + ',54"></polygon>';
+    g += '<text class="val8" x="' + Math.min(214, Math.max(46, px)) + '" y="44">' + value + " " + S.unit + "</text>";
+    $("scale8").innerHTML = g;
+    const fracWord = rem === 0 ? "exactly on the mark" :
+      sub === 4 ? (rem === 1 ? "a quarter of the way" : rem === 2 ? "halfway" : "three quarters of the way")
+        : "halfway";
+    lines($("work8"), [
+      { k: "Big marks", v: "every <b>" + S.step + " " + S.unit + "</b>" },
+      { k: "Small marks", v: "each gap is split into <b>" + sub + "</b>, so one small step is " + (S.step / sub) + " " + S.unit },
+      { k: "The pointer", v: "past <b>" + whole * S.step + "</b> and " + fracWord + " to " + (whole + 1) * S.step },
+      { k: "So it reads", v: "<b>" + value + " " + S.unit + "</b>", total: true },
+    ]);
+    $("fb8").innerHTML = "Reading: <b>" + value + " " + S.unit + "</b>.";
+    $("task8").textContent = "Between the marks, the fraction of the gap is the fraction of " + S.step + " " + S.unit + ".";
+    if (pos8 % sub !== 0) finish(6, "");
+  }
+  $("pickScale").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    sc8 = Number(b.dataset.i);
+    [...$("pickScale").children].forEach((c, i) => c.classList.toggle("on", i === sc8));
+    paint8(); say(SCALES[sc8].name);
+  });
+  $("pos8").addEventListener("input", (e) => { pos8 = Number(e.target.value); paint8(); });
+  paint8();
+
+  /* ---- 10: angles ---- */
+  let d10_deg10 = 45, d10_quiz10 = null, d10_right10 = 0;
+  const d10_angleName = (d) => d < 90 ? "acute" : d === 90 ? "right" : "obtuse";
+  function d10_drawAngle() {
+    const cx = 40, cy = 160, L = 190, a = (-d10_deg10 * Math.PI) / 180, x = cx + L * Math.cos(a), y = cy + L * Math.sin(a);
+    const r = 60, xs = cx + r, ys = cy, xe = cx + r * Math.cos(a), ye = cy + r * Math.sin(a);
+    let svg = '<path class="wedge" d="M' + cx + "," + cy + " L" + xs + "," + ys + " A" + r + "," + r + " 0 " + (d10_deg10 > 180 ? 1 : 0) + ",0 " + xe.toFixed(1) + "," + ye.toFixed(1) + ' Z"></path>';
+    if (d10_deg10 === 90) svg += '<path class="sq" d="M' + (cx + 22) + "," + cy + " L" + (cx + 22) + "," + (cy - 22) + " L" + cx + "," + (cy - 22) + '"></path>';
+    svg += '<line class="arm" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + L) + '" y2="' + cy + '"></line><line class="arm move" x1="' + cx + '" y1="' + cy + '" x2="' + x.toFixed(1) + '" y2="' + y.toFixed(1) + '"></line>';
+    svg += '<text class="deg" x="' + (cx + 75) + '" y="' + (cy - 20) + '">' + d10_deg10 + "°</text>";
+    $("d10_angle10").innerHTML = svg;
+    $("d10_name10").className = "fb"; $("d10_name10").textContent = d10_deg10 + "° is " + (d10_deg10 === 90 ? "a right angle, a square corner." : d10_deg10 < 90 ? "acute: smaller than a right angle." : "obtuse: bigger than a right angle.");
+  }
+  $("d10_deg10").addEventListener("input", (e) => { d10_deg10 = Number(e.target.value); d10_drawAngle(); });
+  function d10_ask10() {
+    d10_deg10 = [20, 35, 50, 65, 90, 110, 125, 145, 160][rnd(0, 8)]; $("d10_deg10").value = d10_deg10; d10_drawAngle(); $("d10_name10").textContent = "";
+    d10_quiz10 = d10_angleName(d10_deg10);
+    $("d10_say10").innerHTML = "Look at the angle. Is it <b>acute</b>, <b>right</b> or <b>obtuse</b>? Tap the answer.";
+    $("d10_ch10").innerHTML = ["acute", "right", "obtuse"].map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
+    $("d10_fb10").textContent = ""; $("d10_fb10").className = "fb"; $("d10_score10").textContent = d10_right10 + " of 4 right so far"; say("Acute, right or obtuse?");
+  }
+  $("d10_ch10").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = b.dataset.v === d10_quiz10;
+    $("d10_ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === d10_quiz10) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else d10_right10++;
+    d10_drawAngle(); $("d10_fb10").className = "fb " + (ok ? "good" : "bad"); $("d10_fb10").textContent = (ok ? cheer() + " " : "") + d10_deg10 + "° is " + d10_quiz10 + "."; say((ok ? cheer() + " " : "") + d10_deg10 + " degrees is " + d10_quiz10);
+    if (d10_right10 >= 4) finish(7, "You know your angles!"); setTimeout(d10_ask10, 2000);
+  });
+  d10_drawAngle(); d10_ask10();
+
+  /* ---- 10: check ---- */
+  const Q10 = shuffle([
+    { q: "How many flat faces does a square-based pyramid have?", o: ["5", "4", "6"], a: 0, w: "One square base and four triangles round it — five faces in all." },
+    { q: "Which solid has two circular faces and a curved surface?", o: ["A cylinder", "A cone", "A sphere"], a: 0, w: "A cone has only one circular face. A cylinder has one at each end." },
+    { q: "Six squares in a cross fold up into which solid?", o: ["A cube", "A cuboid", "A pyramid"], a: 0, w: "Six identical squares make a cube — every face the same." },
+    { q: "How many lines of symmetry does a rectangle have (not a square)?", o: ["2", "4", "1"], a: 0, w: "One horizontal and one vertical. The diagonals do not work: folding along them does not match the halves." },
+    { q: "A parallelogram has how many lines of symmetry?", o: ["None", "Two", "Four"], a: 0, w: "It looks symmetrical because it has rotational symmetry, but no fold matches the halves up." },
+    { q: "A rectangle is 6 squares wide and 4 tall. What is its area?", o: ["24 squares", "20 squares", "10 squares"], a: 0, w: "Area = length × width, so 6 × 4 = 24." },
+    { q: "The same rectangle, 6 by 4. What is its perimeter?", o: ["20", "24", "10"], a: 0, w: "All the way round: 6 + 4 + 6 + 4, or 2 × (6 + 4) = 20." },
+    { q: "An odd shape covers 9 whole squares and 6 part squares. Roughly what area is that?", o: ["About 12 squares", "About 15 squares", "About 9 squares"], a: 0, w: "Count each part square as about a half: 9 + 3 = about 12." },
+    { q: "A jug is marked every 100 ml with three small marks between. What is one small step?", o: ["25 ml", "50 ml", "33 ml"], a: 0, w: "Three small marks cut the gap into four, so each step is 100 ÷ 4 = 25 ml." },
+    { q: "An angle of 120\u00b0 is:", o: ["Obtuse", "Acute", "A right angle"], a: 0, w: "More than 90\u00b0 but less than 180\u00b0 is obtuse. Acute is under 90\u00b0." }
   ]);
-  let c8 = 0, right8 = 0, lock8 = false;
-  function round8() {
-    lock8 = false;
-    $("fb8").textContent = ""; $("fb8").className = "fb";
-    if (c8 >= Q8.length) {
-      $("stem8").textContent = "That is all of them.";
-      $("choices8").innerHTML = "";
-      $("score8").textContent = right8 + " out of " + Q8.length + " right.";
-      if (right8 >= 6) finish(7, "");
+  let c10 = 0, right10 = 0, lock10 = false;
+  function round10() {
+    lock10 = false;
+    $("fb10").textContent = ""; $("fb10").className = "fb";
+    if (c10 >= Q10.length) {
+      $("stem10").textContent = "That is all of them.";
+      $("choices10").innerHTML = "";
+      $("score10").textContent = right10 + " out of " + Q10.length + " right.";
+      if (right10 >= 7) finish(8, "");
       return;
     }
-    $("stem8").textContent = Q8[c8].q;
-    const order = shuffle(Q8[c8].o.map((t, i) => ({ t: t, ok: i === Q8[c8].a })));
-    $("choices8").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
-    $("score8").textContent = "Question " + (c8 + 1) + " of " + Q8.length + " · " + right8 + " right";
+    $("stem10").textContent = Q10[c10].q;
+    const order = shuffle(Q10[c10].o.map((t, i) => ({ t: t, ok: i === Q10[c10].a })));
+    $("choices10").innerHTML = order.map((o) => '<button type="button" class="choice" data-ok="' + (o.ok ? 1 : 0) + '">' + o.t + "</button>").join("");
+    $("score10").textContent = "Question " + (c10 + 1) + " of " + Q10.length + " · " + right10 + " right";
   }
-  $("choices8").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock8) return;
-    lock8 = true;
+  $("choices10").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock10) return;
+    lock10 = true;
     const ok = b.dataset.ok === "1";
-    if (ok) right8++;
+    if (ok) right10++;
     b.classList.add(ok ? "right" : "wrong");
-    $("fb8").textContent = (ok ? cheer() + " " : "") + Q8[c8].w;
-    $("fb8").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : Q8[c8].w);
-    c8++;
-    setTimeout(round8, 2300);
+    $("fb10").textContent = (ok ? cheer() + " " : "") + Q10[c10].w;
+    $("fb10").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : Q10[c10].w);
+    c10++;
+    setTimeout(round10, 2400);
   });
-  round8();
+  round10();
 
-  /* ---- 9: stickers ---- */
-  const STICKERS = [ "❓", "What would answer it?", "✏️", "Tally, then count", "📊", "One set, three pictures", "⭕" ];
+  /* ---- 11: stickers ---- */
+  const STICKERS = [ "🧊", "The faces of a solid", "📦", "🦋", "Every line of symmetry", "🪞", "Reflect it in the mirror", "\U0001f4d0" ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -2111,51 +2191,72 @@
 
   show(0, false);
 
-  /* ---- your turn: the four slides that only demonstrated ---- */
+  /* ---- your turn: the six slides that only demonstrated ---- */
+  const askShuffle3 = (correct, a, b) => { const o = shuffle([correct, a, b]); return { o: o, i: o.indexOf(correct) }; };
 
-  /* 2 (4Ss.02) reads a tally. The distractors are the two ways a child mis-reads a
-     gate: counting gates instead of fives, and forgetting the loose marks. */
-  ask(2, () => {
-    const n = rnd(7, 29), g = Math.floor(n / 5), r = n % 5;
-    const opts = pick3(n, [g + r, g * 5, n + 5]);
-    return { stem: "A tally has <b>" + g + "</b> gates of five and <b>" + r +
-        "</b> single mark" + (r === 1 ? "" : "s") + ". What is the frequency?",
+  /* 1 (4Gg.05) counts FACES. Edges and vertices are the distractors because confusing
+     the three is the whole difficulty. Curved solids are left out -- "how many faces"
+     is not a fair question for a cylinder at this stage. */
+  ask(1, () => {
+    const flat = SOLIDS.filter((s) => s.curved === 0);
+    const S1 = flat[rnd(0, flat.length - 1)];
+    const n = S1.faces.reduce((t, f) => t + f[0], 0);
+    const opts = pick3(n, [S1.e, S1.v, n + 2]);
+    return { stem: "How many <b>flat faces</b> does a <b>" + S1.name.toLowerCase() + "</b> have?",
       opts: opts.map(String), ans: opts.indexOf(n),
-      why: g + " × 5 = " + g * 5 + ", then add the " + r + " left over: <b>" + n + "</b>." };
+      why: "A " + S1.name.toLowerCase() + " has <b>" + n + " faces</b>, " + S1.e +
+        " edges and " + S1.v + " vertices — faces are the flat surfaces." };
   });
 
-  /* 3 (4Ss.02) reads a pictogram key -- the whole point is that one picture is not
-     one child, so "how many pictures" is offered as a distractor. */  ask(3, () => {
-    const k = [2, 5, 10][rnd(0, 2)], p = rnd(3, 7), n = k * p;
-    const opts = pick3(n, [p, k + p, n + k]);
-    return { stem: "On a pictogram one picture stands for <b>" + k + " children</b>. " +
-        "How many children do <b>" + p + " pictures</b> show?",
-      opts: opts.map(String), ans: opts.indexOf(n),
-      why: p + " pictures × " + k + " children each = <b>" + n + "</b>." };
+  /* 4 (4Gp.03) reflection across a vertical mirror: the image is as far the other side.
+     The distractor that keeps the distance but not the side is the error to catch. */  ask(4, () => {
+    const yes = ["equilateral triangle", "square", "regular hexagon"][rnd(0, 2)];
+    const no = shuffle(["regular pentagon", "circle", "regular octagon on its own"]).slice(0, 2);
+    const q = askShuffle3(yes, no[0], no[1]);
+    return { stem: "Which of these <b>tessellates</b> — fits together with no gaps at all?",
+      opts: q.o, ans: q.i,
+      why: "A <b>" + yes + "</b> tessellates: copies of it meet with no gap and no overlap. " +
+        "The others always leave a gap." };
   });
 
-  /* 4 (4Ss.02) places a number in the Venn the slide draws: even, and more than 10.
-     Options stay in a fixed order -- they are categories, and shuffling them would
-     make the child re-read four labels every time instead of thinking about the number. */  ask(4, () => {
-    const n = rnd(1, 20), even = n % 2 === 0, big = n > 10;
-    const opts = ["Both hoops", "Even only", "More than 10 only", "Outside both"];
-    const ansI = even && big ? 0 : even ? 1 : big ? 2 : 3;
-    return { stem: "Sorting 1 to 20 by <b>even</b> and <b>more than 10</b>. Where does <b>" +
-        n + "</b> go?",
-      opts: opts, ans: ansI,
-      why: n + " is " + (even ? "even" : "odd") + " and " + (big ? "more than 10" : "10 or less") +
-        ", so it belongs <b>" + opts[ansI].toLowerCase() + "</b>." };
+  /* 6 (4Gg.02, 4Gg.03) area or perimeter of a rectangle, alternating -- and each one
+     offers the OTHER as a distractor, which is the confusion worth testing. */  ask(5, () => {
+    const w = rnd(3, 12), h = rnd(2, 9), area = w * h, per = 2 * (w + h);
+    if (rnd(0, 1) === 0) {
+      const opts = pick3(area, [per, w + h, area + w]);
+      return { stem: "A rectangle is <b>" + w + " cm</b> by <b>" + h + " cm</b>. What is its <b>area</b>?",
+        opts: opts.map((v) => v + " cm²"), ans: opts.indexOf(area),
+        why: "Area is length × width: " + w + " × " + h + " = <b>" + area + " cm²</b>." };
+    }
+    const opts = pick3(per, [area, w + h, per + 2]);
+    return { stem: "A rectangle is <b>" + w + " cm</b> by <b>" + h + " cm</b>. What is its <b>perimeter</b>?",
+      opts: opts.map((v) => v + " cm"), ans: opts.indexOf(per),
+      why: "Perimeter is all the way round: " + w + " + " + h + " + " + w + " + " + h +
+        " = <b>" + per + " cm</b>." };
   });
 
-  /* 7 (4Sp.02) the point of the slide is that many trials settle towards the fraction,
-     so the question asks for the expectation, not for what one run happened to give. */  ask(7, () => {
-    const spins = [100, 400, 1000][rnd(0, 2)], colours = 4, n = spins / colours;
-    const opts = pick3(n, [colours, spins / 2, n * 2]);
-    return { stem: "A spinner has <b>4 equal colours</b>. In about <b>" + fmt(spins) +
-        " spins</b>, roughly how many would land on red?",
-      opts: opts.map(fmt), ans: opts.indexOf(n),
-      why: "Red is one colour out of four, so about a quarter: " + fmt(spins) + " ÷ 4 = <b>" +
-        fmt(n) + "</b>. The more spins, the closer it gets." };
+  /* 7 (4Gg.04) ESTIMATES an irregular area -- the verb Cambridge uses. Part squares
+     count as a half each, so the answer is deliberately not a whole-square count. */  ask(6, () => {
+    const whole = rnd(8, 20), part = rnd(2, 5) * 2;      /* even, so the halves are exact */
+    const est = whole + part / 2;
+    const opts = pick3(est, [whole, whole + part, part]);
+    return { stem: "A leaf covers <b>" + whole + " whole squares</b> and <b>" + part +
+        " part squares</b>. What is the best estimate of its area?",
+      opts: opts.map((v) => v + " squares"), ans: opts.indexOf(est),
+      why: "Count each part square as a half: " + whole + " + " + (part / 2) + " = <b>" +
+        est + " squares</b>." };
+  });
+
+  /* 8 (4Gg.09) reads between the marks. Halves and quarters only at this stage. */  ask(7, () => {
+    const step = [10, 20, 100][rnd(0, 2)], lo = rnd(1, 6) * step;
+    const f = [[1, 2, "halfway"], [1, 4, "a quarter of the way"], [3, 4, "three quarters of the way"]][rnd(0, 2)];
+    const val = lo + step * f[0] / f[1];
+    const opts = pick3(val, [lo + step, lo, lo + step / 2]);
+    return { stem: "The marks are <b>" + fmt(lo) + "</b> and <b>" + fmt(lo + step) +
+        "</b>. The pointer is <b>" + f[2] + "</b> between them. What does it read?",
+      opts: opts.map(fmt), ans: opts.indexOf(val),
+      why: "The gap is " + fmt(step) + ", and " + f[2] + " along is " +
+        fmt(step * f[0] / f[1]) + " past " + fmt(lo) + ": <b>" + fmt(val) + "</b>." };
   });
 
 
@@ -2291,7 +2392,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l08",
+      progressUnit: "l06",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -2313,13 +2414,13 @@
           container: drawer.querySelector(".w-drawer-body"),
           meta: {
             subject: "mathematics", subjectLabel: "Mathematics", grade: 4,
-            unitNo: 8, unitTitle: "Asking, Sorting and Chance",
+            unitNo: 6, unitTitle: "Shape and Measures",
             learnerCategory: q.get("category") || "",
           },
           store: {},
           ui: { escapeHtml, toast },
           tutorLabel: "Wehel Tutor",
-          placeholder: "Ask about Asking, Sorting and Chance\u2026",
+          placeholder: "Ask about Shape and Measures\u2026",
           quickPrompts: [
             { label: "Explain it simply", message: "Explain this step in a simpler way." },
             { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
@@ -2350,7 +2451,7 @@
   const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
 
   const COURSE = "ehel-math-g04";
-  const UNIT = "l08";
+  const UNIT = "l06";
   const STUDENT = q.get("studentid") || "local";
 
   /* Without a launch endpoint the backend is "local": everything still

@@ -17,7 +17,7 @@
     } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
   })();
 </script>
-<title>Numbers and How They Behave</title>
+<title>Big Numbers and Below Zero</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
 
@@ -733,14 +733,14 @@
     <span class="eh-track"><i id="ehFill"></i></span>
   </div>
   <div class="eh-b1right">
-    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="four-digits-strong.html">Four Digits Strong</option><option value="numbers-and-behaviour.html" selected>Numbers and How They Behave</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-space-place.html">Shape, Space and Place</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="big-numbers-below-zero.html" selected>Big Numbers and Below Zero</option><option value="patterns-and-squares.html">Patterns and Square Numbers</option><option value="ways-to-calculate.html">Ways to Calculate</option><option value="parts-of-a-whole.html">Parts of a Whole</option><option value="telling-the-time.html">Telling the Time</option><option value="shape-and-measures.html">Shape and Measures</option><option value="where-things-are.html">Where Things Are</option><option value="asking-sorting-chance.html">Asking, Sorting and Chance</option></select>
     <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
   </div>
 </header>
 <nav class="eh-bar2" aria-label="Lesson">
   <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
   <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
-  <span class="eh-section">Numbers and How They Behave</span>
+  <span class="eh-section">Big Numbers and Below Zero</span>
   <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
 </nav>
 <div class="eh-steps" id="ehSteps" hidden></div>
@@ -748,7 +748,7 @@
   <header class="hero">
     <div>
       <p class="eyebrow">Mathematics · Grade 4</p>
-      <h1>Numbers and <em>How They Behave</em></h1>
+      <h1>Big Numbers and Below <em>Zero</em></h1>
     </div>
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
@@ -756,134 +756,8 @@
   <div class="deck" id="deck">
 
     <!-- 1 numbers in words -->
-    <section class="slide" data-say="Every number has a name. Break it into thousands, hundreds, tens and ones and the name reads itself.">
-      <div class="slide-head"><span class="n">1</span><h2>Saying it in words</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Split the number into <b>thousands</b>, <b>hundreds</b>, <b>tens</b> and <b>ones</b>, and the name reads itself.</span></div>
-      <div class="stage">
-        <div class="chips" id="pickN1"></div>
-        <div class="bignum" id="num1"></div>
-        <div class="inwords" id="words1"></div>
-        <div class="working" id="work1"></div>
-        <p class="fb" id="fb1"></p>
-        <p class="fb small-fb" id="task1"></p>
-        <div class="askwrap" id="ask1"></div>
-      </div>
-    </section>
-
-    <!-- 2 odd and even -->
-    <section class="slide" data-say="Pair the counters up. If one is left over the number is odd. Now see what happens when you add two of them together.">
-      <div class="slide-head"><span class="n">2</span><h2>Odd, even, and what happens</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Pair the counters. One left over means <b>odd</b>. Now add two numbers and watch what the leftovers do.</span></div>
-      <div class="stage">
-        <label class="lab" for="a2">First number: <span id="aLab2">7</span></label>
-        <input type="range" id="a2" min="1" max="12" value="7" step="1">
-        <label class="lab" for="b2">Second number: <span id="bLab2">5</span></label>
-        <input type="range" id="b2" min="1" max="12" value="5" step="1">
-        <div class="pairbox" id="pair2" aria-hidden="true"></div>
-        <div class="working" id="work2"></div>
-        <p class="fb" id="fb2"></p>
-        <p class="fb small-fb" id="task2"></p>
-        <div class="askwrap" id="ask2"></div>
-      </div>
-    </section>
-
-    <!-- 3 the missing number -->
-    <section class="slide" data-say="The shape stands for a number nobody has told you yet. Work out what it must be.">
-      <div class="slide-head"><span class="n">3</span><h2>The shape that hides a number</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">The <b>shape</b> stands for a number nobody has told you. The rest of the sum tells you what it has to be.</span></div>
-      <div class="stage">
-        <p class="qstem big-eq" id="eq3"></p>
-        <div class="barmodel" id="bar3" aria-hidden="true"></div>
-        <div class="choices" id="opts3"></div>
-        <div class="working" id="work3"></div>
-        <div class="bigbtns"><button type="button" class="big small ghost" id="new3">Another one</button></div>
-        <p class="fb" id="fb3"></p>
-        <p class="fb small-fb" id="task3"></p>
-      </div>
-    </section>
-
-    <!-- 4 sequences -->
-    <section class="slide" data-say="Find the step from one term to the next. Some sequences add the same amount every time and some do not.">
-      <div class="slide-head"><span class="n">4</span><h2>What comes next?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Look at the <b>step</b> from each term to the next. Same step every time is <b>linear</b>. Changing step is <b>non-linear</b>.</span></div>
-      <div class="stage">
-        <div class="chips" id="pickSeq"></div>
-        <div class="seqrow" id="seq4" aria-hidden="true"></div>
-        <div class="choices" id="next4"></div>
-        <div class="working" id="work4"></div>
-        <p class="fb" id="fb4"></p>
-        <p class="fb small-fb" id="task4"></p>
-      </div>
-    </section>
-
-    <!-- 5 square numbers -->
-    <section class="slide" data-say="A square number is one you can arrange into a perfect square of dots.">
-      <div class="slide-head"><span class="n">5</span><h2>Numbers that make squares</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">A <b>square number</b> is one whose dots make a perfect square. Watch what has to be added each time.</span></div>
-      <div class="stage">
-        <label class="lab" for="sq5">Side of <span id="sqLab5">4</span></label>
-        <input type="range" id="sq5" min="1" max="8" value="4" step="1">
-        <div class="sqdots" id="sq5box" aria-hidden="true"></div>
-        <div class="working" id="work5"></div>
-        <p class="fb" id="fb5"></p>
-        <p class="fb small-fb" id="task5"></p>
-        <div class="askwrap" id="ask5"></div>
-      </div>
-    </section>
-
-    <!-- 6 estimate first -->
-    <section class="slide" data-say="Round the numbers to something easy, work out roughly what the answer should be, and only then do it exactly.">
-      <div class="slide-head"><span class="n">6</span><h2>Estimate before you work</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Round to something <b>easy</b> first. The estimate tells you roughly what to expect, so a silly answer stands out.</span></div>
-      <div class="stage">
-        <div class="chips" id="pickEst"></div>
-        <p class="qstem big-eq" id="sum6"></p>
-        <p class="picker-lab2">Roughly, the answer will be about…</p>
-        <div class="choices" id="est6"></div>
-        <div class="working" id="work6"></div>
-        <div class="bigbtns"><button type="button" class="big small ghost" id="new6">Another one</button></div>
-        <p class="fb" id="fb6"></p>
-        <p class="fb small-fb" id="task6"></p>
-      </div>
-    </section>
-
-    <!-- 7 tables and the associative shortcut -->
-    <section class="slide" data-say="Multiplication can be regrouped. Choose the pair that is easy and do that one first.">
-      <div class="slide-head"><span class="n">7</span><h2>Tables, and a shortcut</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Every table from 1 to 10 — and a trick: in a chain of multiplications you may <b>regroup</b> and do the easy pair first.</span></div>
-      <div class="stage">
-        <div class="chips" id="pickTab"></div>
-        <div id="tabWrap">
-          <p class="qstem big-eq" id="q7"></p>
-          <div class="choices" id="ans7"></div>
-        </div>
-        <div id="assocWrap" hidden>
-          <p class="qstem big-eq" id="chain7"></p>
-          <div class="choices" id="group7"></div>
-        </div>
-        <div class="working" id="work7"></div>
-        <p class="fb" id="fb7"></p>
-        <p class="fb small-fb" id="task7"></p>
-      </div>
-    </section>
-
-    <!-- 8 divisibility -->
-    <section class="slide" data-say="You can tell whether a number divides exactly without doing the division at all. You only have to look at the end of it.">
-      <div class="slide-head"><span class="n">8</span><h2>Does it divide exactly?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">You can tell without dividing. Nearly every test only asks you to <b>look at the end</b> of the number.</span></div>
-      <div class="stage">
-        <div class="bignum" id="num8"></div>
-        <div class="choices" id="tests8"></div>
-        <div class="working" id="work8"></div>
-        <div class="bigbtns"><button type="button" class="big small ghost" id="new8">A different number</button></div>
-        <p class="fb" id="fb8"></p>
-        <p class="fb small-fb" id="task8"></p>
-      </div>
-    </section>
-
-    <!-- 9 x10, x100 and rounding -->
     <section class="slide" data-say="Multiplying by ten does not add a zero. Every digit moves one place to the left.">
-      <div class="slide-head"><span class="n">9</span><h2>Ten times, a hundred times</h2></div>
+      <div class="slide-head"><span class="n">1</span><h2>Ten times, a hundred times</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Multiplying by 10 does not &ldquo;add a zero&rdquo;. Every <b>digit moves one place</b> to the left, and the zero only fills the gap.</span></div>
       <div class="stage">
         <div class="chips" id="pickTen"></div>
@@ -891,13 +765,14 @@
         <div class="working" id="work9"></div>
         <p class="fb" id="fb9"></p>
         <p class="fb small-fb" id="task9"></p>
-        <div class="askwrap" id="ask9"></div>
+        <div class="askwrap" id="ask1"></div>
       </div>
     </section>
 
     <!-- 10 negatives in order -->
-    <section class="slide" data-say="On the number line, further right always means bigger, even when the numbers are below zero.">
-      <div class="slide-head"><span class="n">10</span><h2>Below zero, in order</h2></div>
+    
+<section class="slide" data-say="On the number line, further right always means bigger, even when the numbers are below zero.">
+      <div class="slide-head"><span class="n">2</span><h2>Below zero, in order</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Further <b>right</b> on the line always means <b>bigger</b> — and that keeps working below zero, where &minus;2 is bigger than &minus;9.</span></div>
       <div class="stage">
         <div class="numline" id="nl10" aria-hidden="true"></div>
@@ -910,7 +785,36 @@
     </section>
 
     <!-- 11 check -->
-    <section class="slide" data-say="Show what you know. Tap the answer.">
+    
+<section class="slide" data-say="Ten hundreds make a thousand. Build a number with thousands, hundreds, tens and ones.">
+      <div class="slide-head"><span class="n">3</span><h2>Numbers to 10,000</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d1_say1">Ten hundreds make a <b>thousand</b>, a big cube. Build the number you are asked for.</span></div>
+      <div class="stage">
+        <div class="blocks" id="d1_blocks1"></div>
+        <div class="bignum" id="d1_num1"></div>
+        <div class="word" id="d1_word1"></div>
+        <div class="pv"><div class="thou"><div class="lab">thousands</div><div class="val" id="d1_k1"></div></div><div class="hund"><div class="lab">hundreds</div><div class="val" id="d1_h1"></div></div><div class="tens"><div class="lab">tens</div><div class="val" id="d1_t1"></div></div><div class="ones"><div class="lab">ones</div><div class="val" id="d1_o1"></div></div></div>
+        <div class="bigbtns"><button type="button" class="big gold small" data-d="1000">+1000</button><button type="button" class="big gold small ghost" data-d="-1000">−1000</button><button type="button" class="big plum small" data-d="100">+100</button><button type="button" class="big small ghost" data-d="-100">−100</button><button type="button" class="big teal small" data-d="10">+10</button><button type="button" class="big small ghost" data-d="-10">−10</button><button type="button" class="big small" data-d="1">+1</button><button type="button" class="big small ghost" data-d="-1">−1</button></div>
+        <p class="fb" id="d1_fb1"></p>
+        <p class="fb small-fb" id="d1_find1"></p>
+      </div>
+    </section>
+
+    <!-- 2 negative numbers -->
+    
+<section class="slide" data-say="The thermometer goes below zero. Count down through zero into the negative numbers.">
+      <div class="slide-head"><span class="n">4</span><h2>Below zero</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d2_say2">Temperatures can go <b>below zero</b>. Count down through 0 into the <b>negative</b> numbers.</span></div>
+      <div class="stage">
+        <div class="thermo"><div class="scale" id="d2_scale2"></div><div class="tube" id="d2_tube2"><div class="zero" id="d2_zero2"></div><div class="merc" id="d2_merc2"></div></div><div><div class="tempnum" id="d2_temp2"></div><div class="bigbtns" style="flex-direction:column"><button type="button" class="big small" id="d2_warm2">warmer +1</button><button type="button" class="big small teal" id="d2_cold2">colder −1</button></div></div></div>
+        <p class="fb" id="d2_fb2"></p>
+        <p class="fb small-fb" id="d2_task2"></p>
+      </div>
+    </section>
+
+    <!-- 3 rounding -->
+    
+<section class="slide" data-say="Show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the answer.</span></div>
       <div class="stage">
@@ -922,7 +826,8 @@
     </section>
 
     <!-- 12 stickers -->
-    <section class="slide" data-say="Every step you finished earned a sticker.">
+    
+<section class="slide" data-say="Every step you finished earned a sticker.">
       <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">Every step you finished earned a sticker.</span></div>
       <div class="stage">
@@ -1821,387 +1726,6 @@
     return under1000(th) + " thousand" + (r ? (r < 100 ? " and " : " ") + under1000(r) : "");
   }
 
-  /* ---- 1: reading and writing number names (4Ni.01) ---- */
-  const N1 = [4207, 15060, 903, -12, -350, 87415];
-  let i1 = 0;
-  const seen1 = new Set([0]);
-  $("pickN1").innerHTML = N1.map((n, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
-    '" data-i="' + i + '">' + fmtn(n) + "</button>").join("");
-  function paint1() {
-    const n = N1[i1], neg = n < 0, a = Math.abs(n);
-    $("num1").textContent = fmtn(n);
-    $("words1").textContent = numWords(n);
-    const th = Math.floor(a / 1000), r = a % 1000;
-    lines($("work1"), [
-      { k: "Thousands", v: th ? "<b>" + fmt(th) + "</b> thousand — " + under1000(th) + " thousand" : "none" },
-      { k: "The rest", v: r ? "<b>" + r + "</b> — " + under1000(r) : "nothing left over" },
-      { k: neg ? "Below zero" : "Put together", v: neg ? "the minus sign is read as <b>negative</b>, before the name" : "read the thousands, then the rest" },
-      { k: "So it is", v: "<b>" + numWords(n) + "</b>", total: true },
-    ]);
-    $("fb1").innerHTML = fmtn(n) + " is <b>" + numWords(n) + "</b>.";
-    seen1.add(i1);
-    $("task1").textContent = "Read " + seen1.size + " of " + N1.length;
-    if (seen1.size >= 4) finish(0, "");
-  }
-  $("pickN1").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    i1 = Number(b.dataset.i);
-    [...$("pickN1").children].forEach((c, i) => c.classList.toggle("on", i === i1));
-    paint1(); say(numWords(N1[i1]));
-  });
-  paint1();
-
-  /* ---- 2: odd, even and what adding them does (4Nc.02) ---- */
-  let a2 = 7, b2 = 5;
-  const par = (n) => (n % 2 === 0 ? "even" : "odd");
-  function row2(n, cls) {
-    let h = '<div class="prow2"><span class="pn">' + n + '</span><span class="pdots">';
-    for (let i = 0; i < Math.floor(n / 2); i++) h += '<i class="pair ' + cls + '"></i>';
-    if (n % 2) h += '<i class="odd1 ' + cls + '"></i>';
-    return h + '</span><span class="ptag ' + par(n) + '">' + par(n) + "</span></div>";
-  }
-  function paint2() {
-    $("aLab2").textContent = a2;
-    $("bLab2").textContent = b2;
-    const s = a2 + b2;
-    $("pair2").innerHTML = row2(a2, "t1") + row2(b2, "t2") + '<div class="plus2">+</div>' + row2(s, "t3");
-    const leftovers = (a2 % 2) + (b2 % 2);
-    lines($("work2"), [
-      { k: "First number", v: a2 + " pairs up with " + (a2 % 2 ? "<b>one left over</b>, so it is odd" : "<b>nothing left over</b>, so it is even") },
-      { k: "Second number", v: b2 + " pairs up with " + (b2 % 2 ? "<b>one left over</b>, so it is odd" : "<b>nothing left over</b>, so it is even") },
-      { k: "Put together", v: leftovers === 0 ? "no leftovers at all, so the total pairs up exactly"
-        : leftovers === 1 ? "one leftover with nothing to join, so it is still there"
-        : "<b>two</b> leftovers, and those two make a pair of their own" },
-      { k: "The rule", v: par(a2) + " + " + par(b2) + " = <b>" + par(s) + "</b>, and it works for every pair you try", total: true },
-    ]);
-    $("fb2").innerHTML = a2 + " + " + b2 + " = <b>" + s + "</b>, which is <b>" + par(s) + "</b>.";
-    $("task2").textContent = "Try odd + odd, even + even, and one of each.";
-    if (leftovers === 2) finish(1, "");
-  }
-  $("a2").addEventListener("input", (e) => { a2 = Number(e.target.value); paint2(); });
-  $("b2").addEventListener("input", (e) => { b2 = Number(e.target.value); paint2(); });
-  paint2();
-
-  /* ---- 3: a shape for an unknown quantity (4Nc.03) ---- */
-  const SHAPES3 = ["▲", "■", "●", "◆"];
-  let p3 = null, lock3 = false, done3 = 0;
-  function newUnknown() {
-    const plus = rnd(0, 1) === 1;
-    const sh = SHAPES3[rnd(0, 3)];
-    if (plus) { const a = rnd(12, 60), x = rnd(8, 40); return { sh: sh, a: a, x: x, tot: a + x, plus: true }; }
-    const tot = rnd(40, 90), x = rnd(8, 30);
-    return { sh: sh, a: tot - x, x: x, tot: tot, plus: false };
-  }
-  function paint3() {
-    lock3 = false;
-    const P = p3;
-    $("eq3").innerHTML = P.plus
-      ? P.a + " + <span class='unk'>" + P.sh + "</span> = " + P.tot
-      : P.tot + " − <span class='unk'>" + P.sh + "</span> = " + P.a;
-    /* percentages, not pixels: the wrapper has a border, so pixel widths would not add up to it */
-    $("bar3").innerHTML = '<div class="bwhole">' +
-      '<span class="bpart known" style="width:' + ((P.a / P.tot) * 100).toFixed(3) + '%">' + P.a + "</span>" +
-      '<span class="bpart unknownp" style="width:' + ((P.x / P.tot) * 100).toFixed(3) + '%">' + P.sh + "</span></div>" +
-      '<div class="btot">' + P.tot + " altogether</div>";
-    const opts = shuffle([P.x, P.x + rnd(2, 9), Math.max(1, P.x - rnd(2, 9))]);
-    $("opts3").innerHTML = opts.map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-    $("work3").innerHTML = "";
-    $("fb3").textContent = ""; $("fb3").className = "fb";
-    $("task3").textContent = "Solved " + done3 + " so far";
-  }
-  $("opts3").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock3) return;
-    lock3 = true;
-    const P = p3, ok = Number(b.dataset.v) === P.x;
-    if (ok) done3++;
-    b.classList.add(ok ? "right" : "wrong");
-    lines($("work3"), [
-      { k: "What is known", v: P.plus ? P.a + " and the total " + P.tot : "the total " + P.tot + " and what is left, " + P.a },
-      { k: "The shape stands for", v: "the part nobody has told you" },
-      { k: "Undo the sum", v: P.plus ? P.tot + " − " + P.a + " = <b>" + P.x + "</b>" : P.tot + " − " + P.a + " = <b>" + P.x + "</b>" },
-      { k: "Check it", v: P.plus ? P.a + " + " + P.x + " = " + P.tot + " ✓" : P.tot + " − " + P.x + " = " + P.a + " ✓", total: true },
-    ]);
-    $("fb3").innerHTML = (ok ? cheer() + " " : "") + "The " + P.sh + " is <b>" + P.x + "</b>.";
-    $("fb3").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : "It is " + P.x);
-    if (done3 >= 3) finish(2, "");
-  });
-  $("new3").addEventListener("click", () => { p3 = newUnknown(); paint3(); });
-  p3 = newUnknown(); paint3();
-
-  /* ---- 4: linear and non-linear sequences (4Nc.04) ---- */
-  const SEQS = [
-    { name: "Add 6", t: [4, 10, 16, 22, 28], next: 34, kind: "linear", rule: "add 6 every time" },
-    { name: "Subtract 9", t: [70, 61, 52, 43, 34], next: 25, kind: "linear", rule: "subtract 9 every time" },
-    { name: "Double", t: [3, 6, 12, 24, 48], next: 96, kind: "non-linear", rule: "double every time" },
-    { name: "Growing steps", t: [1, 3, 6, 10, 15], next: 21, kind: "non-linear", rule: "add 2, then 3, then 4, then 5 — a bigger step each time" },
-  ];
-  let s4 = 0, lock4 = false, got4 = 0;
-  $("pickSeq").innerHTML = SEQS.map((s, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
-    '" data-i="' + i + '">' + s.name + "</button>").join("");
-  function paint4() {
-    lock4 = false;
-    const S = SEQS[s4];
-    let h = "";
-    S.t.forEach((v, i) => {
-      if (i) { const d = S.t[i] - S.t[i - 1]; h += '<span class="step">' + (d > 0 ? "+" : "−") + Math.abs(d) + "</span>"; }
-      h += '<span class="term4">' + v + "</span>";
-    });
-    h += '<span class="step">?</span><span class="term4 ghost4">?</span>';
-    $("seq4").innerHTML = h;
-    const opts = shuffle([S.next, S.next + rnd(2, 8), Math.max(1, S.next - rnd(2, 8))]);
-    $("next4").innerHTML = opts.map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-    $("work4").innerHTML = "";
-    $("fb4").textContent = ""; $("fb4").className = "fb";
-    $("task4").textContent = "Rules found: " + got4 + " of " + SEQS.length;
-  }
-  $("pickSeq").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    s4 = Number(b.dataset.i);
-    [...$("pickSeq").children].forEach((c, i) => c.classList.toggle("on", i === s4));
-    paint4();
-  });
-  $("next4").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock4) return;
-    lock4 = true;
-    const S = SEQS[s4], ok = Number(b.dataset.v) === S.next;
-    if (ok) got4++;
-    b.classList.add(ok ? "right" : "wrong");
-    const steps = S.t.slice(1).map((v, i) => v - S.t[i]);
-    lines($("work4"), [
-      { k: "The steps", v: steps.map((d) => (d > 0 ? "+" : "−") + Math.abs(d)).join(", ") },
-      { k: "Are they the same?", v: S.kind === "linear" ? "<b>yes</b> — the same step every time" : "<b>no</b> — the step keeps changing" },
-      { k: "So it is", v: "<b>" + S.kind + "</b>" },
-      { k: "Term-to-term rule", v: "<b>" + S.rule + "</b>, so the next term is <b>" + S.next + "</b>", total: true },
-    ]);
-    $("fb4").innerHTML = (ok ? cheer() + " " : "") + "The next term is <b>" + S.next + "</b>.";
-    $("fb4").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : "The next term is " + S.next);
-    $("task4").textContent = "Rules found: " + got4 + " of " + SEQS.length;
-    if (got4 >= 3) finish(3, "");
-  });
-  paint4();
-
-  /* ---- 5: the spatial pattern of square numbers (4Nc.05) ---- */
-  let sq5 = 4;
-  function paint5() {
-    $("sqLab5").textContent = sq5;
-    let h = "";
-    for (let y = 0; y < sq5; y++) { h += '<div class="sqrow">';
-      for (let x = 0; x < sq5; x++) h += '<i class="' + (x === sq5 - 1 || y === sq5 - 1 ? "edge" : "") + '"></i>';
-      h += "</div>"; }
-    $("sq5box").innerHTML = h;
-    const sq = sq5 * sq5, prev = (sq5 - 1) * (sq5 - 1), added = sq - prev;
-    lines($("work5"), [
-      { k: "The square", v: sq5 + " rows of " + sq5 },
-      { k: "How many dots", v: sq5 + " × " + sq5 + " = <b>" + sq + "</b>" },
-      { k: "Written as", v: "<b>" + sq5 + "&sup2;</b>, said &ldquo;" + sq5 + " squared&rdquo;" },
-      { k: sq5 === 1 ? "The first one" : "Added since the last", v: sq5 === 1 ? "one dot, and 1 × 1 = 1"
-        : "the shaded L along two sides: <b>" + added + "</b> dots, and " + added + " is always <b>odd</b>", total: true },
-    ]);
-    $("fb5").innerHTML = "The square numbers run 1, 4, 9, 16, 25 — and the gaps between them are 3, 5, 7, 9, the <b>odd numbers</b>.";
-    $("task5").textContent = "Each new square adds a strip down one side, along the bottom and one corner.";
-    if (sq5 >= 5) finish(4, "");
-  }
-  $("sq5").addEventListener("input", (e) => { sq5 = Number(e.target.value); paint5(); });
-  paint5();
-
-  /* ---- 6: estimating before calculating (4Ni.02, 4Ni.05, 4Ni.06) ---- */
-  const EMODE = ["Add or subtract", "Multiply", "Divide"];
-  let em6 = 0, e6 = null, lock6 = false, done6 = 0;
-  $("pickEst").innerHTML = EMODE.map((m, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
-    '" data-i="' + i + '">' + m + "</button>").join("");
-  const round10 = (n) => Math.round(n / 10) * 10;
-  const round100 = (n) => Math.round(n / 100) * 100;
-  /* every generator is constrained so the ESTIMATE is a useful number rather than 0 */
-  function newEst() {
-    if (em6 === 0) {
-      const plus = rnd(0, 1) === 1;
-      if (plus) {
-        const a = rnd(120, 880), b = rnd(110, 480);
-        return { kind: 0, a: a, b: b, plus: true, exact: a + b, est: round100(a) + round100(b) };
-      }
-      const b = rnd(110, 380), a = b + rnd(160, 520);       /* a big enough gap that rounding cannot collapse it */
-      return { kind: 0, a: a, b: b, plus: false, exact: a - b, est: round100(a) - round100(b) };
-    }
-    if (em6 === 1) {
-      const a = rnd(112, 960), b = rnd(3, 9);
-      return { kind: 1, a: a, b: b, exact: a * b, est: round100(a) * b };
-    }
-    const b = rnd(3, 8), q = rnd(4, 12), a = Math.min(99, b * q + rnd(0, b - 1));
-    return { kind: 2, a: a, b: b, exact: Math.floor(a / b), rem: a % b, est: Math.round(round10(a) / b) };
-  }
-  function paint6() {
-    lock6 = false;
-    const E = e6;
-    $("sum6").innerHTML = E.kind === 0 ? fmt(E.a) + (E.plus ? " + " : " − ") + fmt(E.b)
-      : E.kind === 1 ? fmt(E.a) + " × " + E.b : fmt(E.a) + " ÷ " + E.b;
-    const spread = E.kind === 2 ? 3 : E.kind === 1 ? Math.max(40, Math.round(E.est * 0.25)) : 100;
-    const opts = shuffle([E.est, E.est + spread, Math.max(1, E.est - spread)]);
-    $("est6").innerHTML = opts.map((o) => '<button type="button" class="choice" data-v="' + o + '">' + fmt(o) + "</button>").join("");
-    $("work6").innerHTML = "";
-    $("fb6").textContent = ""; $("fb6").className = "fb";
-    $("task6").textContent = "Estimated " + done6 + " so far";
-  }
-  $("est6").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock6) return;
-    lock6 = true; done6++;
-    const E = e6, ok = Number(b.dataset.v) === E.est;
-    b.classList.add(ok ? "right" : "wrong");
-    const rows = E.kind === 0 ? [
-      { k: "Round them", v: fmt(E.a) + " ≈ " + fmt(round100(E.a)) + " and " + fmt(E.b) + " ≈ " + fmt(round100(E.b)) },
-      { k: "Rough answer", v: fmt(round100(E.a)) + (E.plus ? " + " : " − ") + fmt(round100(E.b)) + " = <b>" + fmt(E.est) + "</b>" },
-      { k: "Now exactly", v: fmt(E.a) + (E.plus ? " + " : " − ") + fmt(E.b) + " = <b>" + fmt(E.exact) + "</b>" },
-      { k: "Close enough?", v: "the estimate was " + fmt(Math.abs(E.exact - E.est)) + " away, which tells you the exact answer is sensible", total: true },
-    ] : E.kind === 1 ? [
-      { k: "Round the big one", v: fmt(E.a) + " ≈ " + fmt(round100(E.a)) },
-      { k: "Rough answer", v: fmt(round100(E.a)) + " × " + E.b + " = <b>" + fmt(E.est) + "</b>" },
-      { k: "Now exactly", v: fmt(E.a) + " × " + E.b + " = <b>" + fmt(E.exact) + "</b>" },
-      { k: "Close enough?", v: "off by " + fmt(Math.abs(E.exact - E.est)) + " — near enough to catch a wild mistake", total: true },
-    ] : [
-      { k: "Round the big one", v: fmt(E.a) + " ≈ " + fmt(round10(E.a)) },
-      { k: "Rough answer", v: fmt(round10(E.a)) + " ÷ " + E.b + " ≈ <b>" + fmt(E.est) + "</b>" },
-      { k: "Now exactly", v: fmt(E.a) + " ÷ " + E.b + " = <b>" + fmt(E.exact) + "</b>" + (E.rem ? " remainder " + E.rem : " exactly") },
-      { k: "Close enough?", v: "the estimate lands within " + fmt(Math.abs(E.exact - E.est)) + " of it", total: true },
-    ];
-    lines($("work6"), rows);
-    $("fb6").innerHTML = (ok ? cheer() + " " : "") + "About <b>" + fmt(E.est) + "</b>, and exactly <b>" + fmt(E.exact) +
-      (E.kind === 2 && E.rem ? " remainder " + E.rem : "") + "</b>.";
-    $("fb6").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : "About " + E.est);
-    if (done6 >= 3) finish(5, "");
-  });
-  $("pickEst").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    em6 = Number(b.dataset.i);
-    [...$("pickEst").children].forEach((c, i) => c.classList.toggle("on", i === em6));
-    e6 = newEst(); paint6();
-  });
-  $("new6").addEventListener("click", () => { e6 = newEst(); paint6(); });
-  e6 = newEst(); paint6();
-
-  /* ---- 7: all ten tables, and the associative property (4Ni.04, 4Ni.03) ---- */
-  let tm7 = 0, q7 = null, lock7 = false, right7 = 0, asked7 = 0;
-  const CHAINS = [
-    { a: 4, b: 25, c: 3, easy: "b·a", why: "4 × 25 is 100, and 100 × 3 is easy." },
-    { a: 2, b: 7, c: 50, easy: "a·c", why: "2 × 50 is 100, and 100 × 7 is easy." },
-    { a: 5, b: 9, c: 20, easy: "a·c", why: "5 × 20 is 100, and 100 × 9 is easy." },
-    { a: 8, b: 3, c: 5, easy: "a·c", why: "8 × 5 is 40, and 40 × 3 is easier than 24 × 5." },
-  ];
-  let ch7 = 0;
-  $("pickTab").innerHTML = ["Times tables", "A shortcut"].map((m, i) =>
-    '<button type="button" class="chip' + (i === 0 ? " on" : "") + '" data-i="' + i + '">' + m + "</button>").join("");
-  function newQ7() { const a = rnd(1, 10), b = rnd(1, 10); return { a: a, b: b, p: a * b }; }
-  function paint7() {
-    lock7 = false;
-    $("tabWrap").hidden = tm7 !== 0;
-    $("assocWrap").hidden = tm7 !== 1;
-    $("work7").innerHTML = "";
-    $("fb7").textContent = ""; $("fb7").className = "fb";
-    if (tm7 === 0) {
-      $("q7").innerHTML = q7.a + " × " + q7.b + " = ?";
-      const opts = shuffle([q7.p, q7.p + q7.a, Math.max(1, q7.p - q7.b)]);
-      $("ans7").innerHTML = opts.map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-      $("task7").textContent = "Tables: " + right7 + " right of " + asked7;
-    } else {
-      const C = CHAINS[ch7];
-      $("chain7").innerHTML = C.a + " × " + C.b + " × " + C.c + " = ?";
-      $("group7").innerHTML = [
-        { k: "a·b", t: "(" + C.a + " × " + C.b + ") × " + C.c },
-        { k: "b·c", t: C.a + " × (" + C.b + " × " + C.c + ")" },
-        { k: "a·c", t: "(" + C.a + " × " + C.c + ") × " + C.b },
-      ].map((o) => '<button type="button" class="choice" data-k="' + o.k + '">' + o.t + "</button>").join("");
-      $("task7").textContent = "Every grouping gives the same answer — one of them is easiest.";
-    }
-  }
-  $("ans7").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock7) return;
-    lock7 = true; asked7++;
-    const ok = Number(b.dataset.v) === q7.p;
-    if (ok) right7++;
-    b.classList.add(ok ? "right" : "wrong");
-    lines($("work7"), [
-      { k: "The question", v: q7.a + " × " + q7.b },
-      { k: "The answer", v: "<b>" + q7.p + "</b>" },
-      { k: "It works both ways", v: q7.b + " × " + q7.a + " = <b>" + q7.p + "</b> as well" },
-      { k: "Score", v: right7 + " right out of " + asked7, total: true },
-    ]);
-    $("fb7").innerHTML = (ok ? cheer() + " " : "") + q7.a + " × " + q7.b + " = <b>" + q7.p + "</b>.";
-    $("fb7").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : q7.a + " times " + q7.b + " is " + q7.p);
-    if (right7 >= 5) finish(6, "");
-    setTimeout(() => { q7 = newQ7(); paint7(); }, 1900);
-  });
-  $("group7").addEventListener("click", (e) => {
-    const b = e.target.closest("button"); if (!b || lock7) return;
-    lock7 = true;
-    const C = CHAINS[ch7], ok = b.dataset.k === C.easy;
-    const tot = C.a * C.b * C.c;
-    b.classList.add(ok ? "right" : "wrong");
-    lines($("work7"), [
-      { k: "All three groupings", v: "(" + C.a + "×" + C.b + ")×" + C.c + " = " + tot + ", " + C.a + "×(" + C.b + "×" + C.c + ") = " + tot + ", (" + C.a + "×" + C.c + ")×" + C.b + " = " + tot },
-      { k: "So regrouping is safe", v: "the answer never changes — that is the <b>associative property</b>" },
-      { k: "The easy one here", v: "<b>" + C.why + "</b>" },
-      { k: "The answer", v: "<b>" + fmt(tot) + "</b>", total: true },
-    ]);
-    $("fb7").innerHTML = (ok ? cheer() + " " : "") + C.why + " The answer is <b>" + fmt(tot) + "</b>.";
-    $("fb7").className = "fb " + (ok ? "good" : "bad");
-    say(ok ? cheer() : C.why);
-    finish(6, "");
-    ch7 = (ch7 + 1) % CHAINS.length;
-    setTimeout(paint7, 2600);
-  });
-  $("pickTab").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    tm7 = Number(b.dataset.i);
-    [...$("pickTab").children].forEach((c, i) => c.classList.toggle("on", i === tm7));
-    paint7();
-  });
-  q7 = newQ7(); paint7();
-
-  /* ---- 8: tests of divisibility (4Ni.08) ---- */
-  const TESTS = [2, 5, 10, 25, 50, 100];
-  const RULE = { 2: "the last digit is even", 5: "the last digit is 0 or 5", 10: "the last digit is 0",
-    25: "the last two digits are 00, 25, 50 or 75", 50: "the last two digits are 00 or 50", 100: "the last two digits are 00" };
-  let n8 = 0, tried8 = [];
-  function newN8() {
-    const pick = rnd(0, 3);
-    if (pick === 0) return rnd(1, 40) * 25;
-    if (pick === 1) return rnd(1, 20) * 50;
-    if (pick === 2) return rnd(10, 99) * 10;
-    return rnd(101, 999);
-  }
-  function paint8() {
-    $("num8").textContent = fmt(n8);
-    $("tests8").innerHTML = TESTS.map((t) => {
-      const st = tried8.indexOf(t) >= 0 ? (n8 % t === 0 ? " right" : " wrong") : "";
-      return '<button type="button" class="choice' + st + '" data-t="' + t + '">÷ ' + t + "</button>";
-    }).join("");
-    const last2 = fmt(n8).slice(-2);
-    lines($("work8"), [
-      { k: "The number", v: "<b>" + fmt(n8) + "</b>" },
-      { k: "Its last digit", v: "<b>" + (n8 % 10) + "</b>" },
-      { k: "Its last two digits", v: "<b>" + String(n8 % 100).padStart(2, "0") + "</b>" },
-      { k: "Divides exactly by", v: TESTS.filter((t) => n8 % t === 0).map((t) => "<b>" + t + "</b>").join(", ") || "none of these", total: true },
-    ]);
-    $("task8").textContent = "Tested " + tried8.length + " of " + TESTS.length;
-    if (tried8.length >= TESTS.length) finish(7, "");
-  }
-  $("tests8").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-t]"); if (!b) return;
-    const t = Number(b.dataset.t);
-    if (tried8.indexOf(t) >= 0) return;
-    tried8.push(t);
-    const ok = n8 % t === 0;
-    $("fb8").innerHTML = fmt(n8) + (ok ? " <b>does</b> divide by " + t : " does <b>not</b> divide by " + t) +
-      " — the test is that " + RULE[t] + ".";
-    $("fb8").className = "fb " + (ok ? "good" : "bad");
-    say($("fb8").textContent);
-    paint8();
-  });
-  $("new8").addEventListener("click", () => { n8 = newN8(); tried8 = []; $("fb8").textContent = ""; $("fb8").className = "fb"; paint8(); });
-  n8 = newN8(); paint8();
-
   /* ---- 9: multiplying and dividing by 10 and 100, and rounding (4Np.02, 4Np.05) ---- */
   const OPS9 = [["× 10", 10, 1], ["× 100", 100, 1], ["÷ 10", 10, -1], ["÷ 100", 100, -1]];
   let o9 = 0, base9 = 3406;
@@ -2234,7 +1758,7 @@
     ]);
     $("fb9").innerHTML = fmt(base9) + " " + O[0] + " = <b>" + (exact ? fmt(result) : result) + "</b>.";
     $("task9").textContent = "The zero is not added — it fills the empty place the digits left behind.";
-    if (o9 > 0) finish(8, "");
+    if (o9 > 0) finish(0, "");
   }
   $("pickTen").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-i]"); if (!b) return;
@@ -2255,7 +1779,7 @@
       $("cmp10").textContent = "That is all of them.";
       $("signs10").innerHTML = "";
       $("task10").textContent = right10 + " of " + PAIRS10.length + " right.";
-      if (right10 >= 6) finish(9, "");
+      if (right10 >= 6) finish(1, "");
       return;
     }
     const [A, B] = PAIRS10[c10];
@@ -2299,18 +1823,48 @@
   });
   paint10();
 
+  /* ---- 1: thousands ---- */
+  let d1_n1 = 2345, d1_finds1 = shuffle([4072, 6805, 1350, 9218, 3007]).slice(0, 3), d1_found1 = 0;
+  function d1_paint1() {
+    const k = Math.floor(d1_n1 / 1000), h = Math.floor((d1_n1 % 1000) / 100), t = Math.floor((d1_n1 % 100) / 10), o = d1_n1 % 10;
+    $("d1_blocks1").innerHTML = '<div class="cubes">' + '<div class="cube"></div>'.repeat(k) + '</div><div class="flats">' + '<div class="flat"></div>'.repeat(h) + '</div><div class="rods">' + '<div class="rod"></div>'.repeat(t) + '</div><div class="units">' + '<div class="unit"></div>'.repeat(o) + "</div>";
+    $("d1_num1").innerHTML = '<span class="k">' + k + '</span>,<span class="h">' + h + '</span><span class="t">' + t + '</span><span class="o">' + o + "</span>";
+    $("d1_word1").textContent = words(d1_n1); $("d1_k1").textContent = k; $("d1_h1").textContent = h; $("d1_t1").textContent = t; $("d1_o1").textContent = o;
+    document.querySelectorAll('#deck [data-d]').forEach((b) => { const d = Number(b.dataset.d); b.disabled = d1_n1 + d < 1000 || d1_n1 + d > 9999; });
+    if (d1_found1 < 3 && d1_n1 === d1_finds1[d1_found1]) { d1_found1++; $("d1_fb1").className = "fb good"; $("d1_fb1").textContent = cheer() + " " + fmt(d1_n1) + " = " + [k * 1000, h * 100, t * 10, o].filter(Boolean).map(fmt).join(" + ") + "."; say(cheer() + " " + words(d1_n1)); if (d1_found1 === 3) finish(2, "You built all three numbers!"); }
+    else { $("d1_fb1").className = "fb"; $("d1_fb1").textContent = ""; }
+    $("d1_find1").textContent = d1_found1 < 3 ? "Build " + fmt(d1_finds1[d1_found1]) + "." : "You built all three!";
+  }
+  document.querySelectorAll('#deck [data-d]').forEach((b) => b.addEventListener("click", () => { d1_n1 += Number(b.dataset.d); d1_paint1(); say(words(d1_n1)); }));
+  d1_paint1();
+
+  /* ---- 2: negative numbers ---- */
+  let d2_temp2 = 3, d2_tasks2 = [{ from: 3, to: -2 }, { from: -4, to: 1 }, { from: 2, to: -5 }], d2_ti2 = 0;
+  const d2_T_MIN = -10, d2_T_MAX = 10;
+  $("d2_scale2").innerHTML = Array.from({ length: 11 }, (_, i) => { const v = d2_T_MAX - i * 2; return '<span class="' + (v === 0 ? "z" : v < 0 ? "neg" : "") + '" style="top:' + ((d2_T_MAX - v) / (d2_T_MAX - d2_T_MIN) * 100) + '%">' + (v > 0 ? "" : "") + v + "°</span>"; }).join("");
+  $("d2_zero2").style.top = ((d2_T_MAX - 0) / (d2_T_MAX - d2_T_MIN) * 100) + "%";
+  function d2_paint2() {
+    const pct = (d2_temp2 - d2_T_MIN) / (d2_T_MAX - d2_T_MIN) * 100;
+    $("d2_merc2").style.height = pct + "%"; $("d2_merc2").className = "merc" + (d2_temp2 < 0 ? " cold" : "");
+    $("d2_temp2").textContent = (d2_temp2 < 0 ? "−" + (-d2_temp2) : String(d2_temp2)) + "°C"; $("d2_temp2").className = "tempnum " + (d2_temp2 < 0 ? "neg" : "pos");
+    $("d2_warm2").disabled = d2_temp2 >= d2_T_MAX; $("d2_cold2").disabled = d2_temp2 <= d2_T_MIN;
+    const T = d2_tasks2[d2_ti2];
+    if (T) {
+      $("d2_task2").textContent = "It is " + sg(T.from) + "°C. It gets " + (T.to < T.from ? (T.from - T.to) + " degrees colder" : (T.to - T.from) + " degrees warmer") + ". Press until you get there.";
+      if (d2_temp2 === T.to) { $("d2_fb2").className = "fb good"; $("d2_fb2").textContent = cheer() + " " + sg(T.from) + "°C " + (T.to < T.from ? "− " + (T.from - T.to) : "+ " + (T.to - T.from)) + " = " + sg(T.to) + "°C" + (T.to < 0 && T.from > 0 ? ". You went down through zero." : T.to > 0 && T.from < 0 ? ". You came up through zero." : "."); say(cheer() + " " + T.to + " degrees"); d2_ti2++; if (d2_ti2 >= d2_tasks2.length) finish(3, "You can count below zero!"); else setTimeout(() => { d2_temp2 = d2_tasks2[d2_ti2].from; $("d2_fb2").textContent = ""; d2_paint2(); say(d2_tasks2[d2_ti2].from + " degrees. " + $("d2_task2").textContent); }, 2200); }
+      else { $("d2_fb2").className = "fb"; $("d2_fb2").textContent = d2_temp2 < 0 ? "Below zero: minus " + (-d2_temp2) : d2_temp2 === 0 ? "Zero, the line between" : ""; }
+    } else { $("d2_task2").textContent = "All three done."; }
+  }
+  $("d2_warm2").addEventListener("click", () => { if (d2_temp2 < d2_T_MAX) { d2_temp2++; d2_paint2(); say(d2_temp2 < 0 ? "minus " + (-d2_temp2) : String(d2_temp2)); } });
+  $("d2_cold2").addEventListener("click", () => { if (d2_temp2 > d2_T_MIN) { d2_temp2--; d2_paint2(); say(d2_temp2 < 0 ? "minus " + (-d2_temp2) : String(d2_temp2)); } });
+  d2_paint2();
+
   /* ---- 11: check ---- */
   const Q11 = shuffle([
-    { q: "How do you write 4,207 in words?", o: ["Four thousand two hundred and seven", "Four hundred and twenty-seven", "Forty thousand and seven"], a: 0, w: "Four thousand, then the rest: two hundred and seven." },
-    { q: "An odd number added to an odd number always gives:", o: ["An even number", "An odd number", "It depends"], a: 0, w: "Each odd number has one counter left over. The two leftovers pair up with each other, so nothing is left." },
-    { q: "If 38 + ▲ = 62, what is ▲?", o: ["24", "26", "100"], a: 0, w: "Undo the addition: 62 − 38 = 24." },
-    { q: "3, 6, 12, 24 … is this linear or non-linear?", o: ["Non-linear", "Linear", "Neither"], a: 0, w: "The steps are +3, +6, +12 — they change every time, so it is not linear. The rule is to double." },
-    { q: "Which of these is a square number?", o: ["49", "45", "50"], a: 0, w: "49 is 7 × 7, so its dots make a 7 by 7 square." },
-    { q: "Roughly, what is 412 × 6?", o: ["About 2,400", "About 240", "About 24,000"], a: 0, w: "Round 412 to 400. 400 × 6 = 2,400, and the exact answer is 2,472." },
-    { q: "Does 375 divide exactly by 25?", o: ["Yes", "No", "Only by 5"], a: 0, w: "The last two digits are 75, and 00, 25, 50 and 75 all divide by 25. In fact 375 = 25 × 15." },
     { q: "What is 3,406 × 100?", o: ["340,600", "34,060", "3,406,00"], a: 0, w: "Every digit moves two places left, and two zeros fill the empty places." },
     { q: "Which is bigger, −9 or −2?", o: ["−2", "−9", "They are equal"], a: 0, w: "−2 is further right on the number line, so it is the bigger of the two — even though 9 is bigger than 2." },
-    { q: "4 × 25 × 3 is easiest if you first work out:", o: ["4 × 25", "25 × 3", "4 × 3"], a: 0, w: "4 × 25 is 100, and 100 × 3 is easy. Regrouping never changes the answer." },
+    { q: "How many hundreds are there in 4,072?", o: ["0", "4", "7"], a: 0, w: "The hundreds place holds a 0. The 4 is thousands and the 7 is tens." },
+    { q: "It is 3\u00b0C and it gets 5 degrees colder. What is the temperature?", o: ["\u22122\u00b0C", "2\u00b0C", "\u22128\u00b0C"], a: 0, w: "Count back from 3 through zero: 2, 1, 0, \u22121, \u22122." }
   ]);
   let cq = 0, rq = 0, lockq = false;
   function round11() {
@@ -2320,7 +1874,7 @@
       $("stem11").textContent = "That is all of them.";
       $("choices11").innerHTML = "";
       $("score11").textContent = rq + " out of " + Q11.length + " right.";
-      if (rq >= 7) finish(10, "");
+      if (rq >= 7) finish(4, "");
       return;
     }
     $("stem11").textContent = Q11[cq].q;
@@ -2343,10 +1897,7 @@
   round11();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [["🔤", "Saying it in words"], ["🔗", "Odd, even, and what happens"], ["🔺", "The shape that hides a number"],
-    ["🪜", "What comes next?"], ["🟦", "Numbers that make squares"], ["🎯", "Estimate before you work"],
-    ["✖️", "Tables, and a shortcut"], ["➗", "Does it divide exactly?"], ["🔟", "Ten times, a hundred times"],
-    ["🌡️", "Below zero, in order"], ["✅", "Show what I know"]];
+  const STICKERS = [ "🟦", "Numbers that make squares", "\U0001f522", "\u2744\ufe0f" ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -2358,40 +1909,7 @@
 
   /* 1 (4Ni.01) reads a number FROM ITS NAME -- the place-value trap is which
      column the lone digit sits in, so the distractors are the same digit misplaced. */
-  ask(1, () => {
-    const t = rnd(1, 9), u = rnd(1, 9), shape = rnd(0, 2);
-    const mk = (mult) => t * 1000 + u * mult;
-    const n = mk(shape === 0 ? 1 : shape === 1 ? 10 : 100);
-    const others = [1, 10, 100].filter((m) => mk(m) !== n).map(mk);
-    const opts = shuffle([n, others[0], others[1]]);
-    return { stem: "Which one is <b>" + numWords(n) + "</b>?",
-      opts: opts.map(fmt), ans: opts.indexOf(n),
-      why: numWords(n) + " is <b>" + fmt(n) + "</b> — the zeros hold the empty places." };
-  });
-
-  /* 2 (4Nc.02) asks for the RULE, not the sum: the numbers are big enough that
-     adding them up is the slower route. */
-  ask(2, () => {
-    const a = rnd(11, 48), b = rnd(11, 48), opts = ["odd", "even"];
-    return { stem: "Without working it out: is <b>" + a + " + " + b + "</b> odd or even?",
-      opts, ans: opts.indexOf(par(a + b)),
-      why: par(a) + " + " + par(b) + " is <b>always " + par(a + b) + "</b>, whatever the numbers." };
-  });
-
-  /* 5 (4Nc.05) the next square. Distractors are the two near-misses a child gets by
-     adding one side instead of the whole L. */
-  ask(5, () => {
-    const k = rnd(2, 9), n = k * k, nxt = (k + 1) * (k + 1);
-    const opts = shuffle([nxt, n + k, n + 2 * k]);
-    return { stem: "Square numbers go 1, 4, 9, 16 … Which comes straight after <b>" + n + "</b>?",
-      opts: opts.map(String), ans: opts.indexOf(nxt),
-      why: "<b>" + nxt + "</b> is " + (k + 1) + " × " + (k + 1) + ", and the L added on is " +
-        (2 * k + 1) + " dots — an odd number, as always." };
-  });
-
-  /* 9 (4Np.02, 4Np.05) alternates the two things the slide shows: moving the digits,
-     and rounding. The halfway case is excluded so "nearer" in the answer is true. */
-  ask(9, () => {
+    ask(1, () => {
     if (rnd(0, 1) === 0) {
       const base = rnd(12, 987), by = rnd(0, 1) === 1 ? 10 : 100, n = base * by;
       const opts = shuffle([n, base * (by === 10 ? 100 : 10), base]);
@@ -2543,7 +2061,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l02",
+      progressUnit: "l01",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -2565,13 +2083,13 @@
           container: drawer.querySelector(".w-drawer-body"),
           meta: {
             subject: "mathematics", subjectLabel: "Mathematics", grade: 4,
-            unitNo: 2, unitTitle: "Numbers and How They Behave",
+            unitNo: 1, unitTitle: "Big Numbers and Below Zero",
             learnerCategory: q.get("category") || "",
           },
           store: {},
           ui: { escapeHtml, toast },
           tutorLabel: "Wehel Tutor",
-          placeholder: "Ask about Numbers and How They Behave\u2026",
+          placeholder: "Ask about Big Numbers and Below Zero\u2026",
           quickPrompts: [
             { label: "Explain it simply", message: "Explain this step in a simpler way." },
             { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
@@ -2602,7 +2120,7 @@
   const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
 
   const COURSE = "ehel-math-g04";
-  const UNIT = "l02";
+  const UNIT = "l01";
   const STUDENT = q.get("studentid") || "local";
 
   /* Without a launch endpoint the backend is "local": everything still

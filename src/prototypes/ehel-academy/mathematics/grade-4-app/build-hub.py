@@ -20,17 +20,21 @@ G2 = os.path.join(HERE, "..", "grade-2-app", "g2-index.html")
 
 # strand class -> the colour family Grade 2 already uses. Reused, not invented.
 CARDS = [
-    ("four-digits-strong.html", "c-number", "Number",
-     "The whole of Stage 4 in one lesson: numbers to 10,000 and below zero, rounding, "
-     "multiplying with the grid, dividing by grouping, factor pairs, tenths and hundredths, "
-     "adding fractions, perimeter and area, angles, and coordinates.",
-     "11 steps"),
-    ("numbers-and-behaviour.html", "c-number", "Number",
-     "How numbers behave. Read and write them in words, odd and even and what adding them "
-     "does, a shape standing for an unknown, sequences and square numbers, estimating, the "
-     "tables and the associative property, divisibility, ten times and a hundred times, and "
-     "ordering below zero.",
-     "10 steps"),
+    ("big-numbers-below-zero.html", "c-number", "Place value",
+     "Numbers up to a hundred thousand and down past zero. What each digit is worth, "
+     "building a number from its parts, ten times and a hundred times, rounding, and "
+     "putting positives and negatives in order.",
+     "4 steps"),
+    ("patterns-and-squares.html", "c-pattern", "Counting and sequences",
+     "What numbers do when you look for the rule. Odd and even and what adding them "
+     "always gives, a shape standing for a number nobody has told you, sequences that "
+     "step evenly and ones that do not, and the dots that make a square.",
+     "4 steps"),
+    ("ways-to-calculate.html", "c-number", "Calculating",
+     "Reading and writing numbers in words, estimating before you work, all ten times "
+     "tables and the trick of regrouping them, multiples and factor pairs, and the tests "
+     "that tell you what divides exactly.",
+     "5 steps"),
     ("parts-of-a-whole.html", "c-frac", "Fractions",
      "More parts means smaller parts. A fraction as a division, a fraction of an amount, "
      "equivalence, per cent, comparing, and adding and taking away with the same bottom "
@@ -40,11 +44,16 @@ CARDS = [
      "Units of time and how to convert them, one moment written three ways, reading a "
      "timetable, and working out how long something takes.",
      "4 steps"),
-    ("shape-space-place.html", "c-shape", "Shape and space",
+    ("shape-and-measures.html", "c-shape", "Shape and measures",
      "The faces of a solid and the nets that fold into one, every line of symmetry, "
-     "reflecting in a mirror line, tessellation, area without counting, estimating an odd "
-     "shape on a grid, reading between the marks, and which way from here.",
-     "9 steps"),
+     "tessellation, area without counting, estimating an odd shape on a grid, reading "
+     "between the marks on a scale, and naming an angle.",
+     "8 steps"),
+    ("where-things-are.html", "c-shape", "Position and direction",
+     "Saying where something is and how to get there: reflecting a shape in a mirror "
+     "line, the eight points of the compass, and reading coordinates by going along "
+     "first and then up.",
+     "3 steps"),
     ("asking-sorting-chance.html", "c-data", "Statistics and probability",
      "Plan a question worth asking, tally it, show the same data three ways, sort it two "
      "ways at once, compare two classes, then put events on a line from impossible to "
@@ -58,6 +67,10 @@ MARKS = {
     "c-measure": '<circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>',
     "c-shape": '<path d="M12 3l9 16H3z"></path>',
     "c-data": '<path d="M4 20V10M10 20V4M16 20v-7M22 20h-20"></path>',
+    # Grade 2's own pattern mark, taken from its Patterns That Grow card
+    "c-pattern": ('<rect x="2.5" y="9.5" width="5" height="5" rx="1"></rect>'
+                  '<circle cx="12" cy="12" r="2.6"></circle>'
+                  '<rect x="16.5" y="9.5" width="5" height="5" rx="1"></rect>'),
 }
 
 
@@ -97,7 +110,7 @@ head = (head
         .replace("<title>Grade 2 Mathematics</title>", "<title>Grade 4 Mathematics</title>")
         .replace("<h1>Grade 2 <em>Mathematics</em></h1>", "<h1>Grade 4 <em>Mathematics</em></h1>")
         .replace("Nine lessons, one for each part of the maths you learn this year.",
-                 "Six lessons, one for each part of the maths you learn this year."))
+                 "Eight lessons, one for each part of the maths you learn this year."))
 
 # The head carries a design comment explaining Grade 2's choices. Relabelling it would
 # leave prose arguing for nine cards above six, so it is replaced rather than patched.
@@ -106,11 +119,10 @@ DESIGN_NOTE = """
        on Grade 1's, so moving up a year reads as continuity rather than a jump: same
        ground, same card, same gold Start.
 
-       SIX lessons rather than Grade 2's nine, and that is not a smaller course. Stage
-       4 carries 46 objectives against Stage 2's 48; what changed is the grain. Five of
-       these were written strand by strand to close the gaps a Cambridge audit found,
-       and the sixth - Four Digits Strong - is the lesson they were derived from and
-       still carries eleven steps across the whole stage.
+       EIGHT lessons, one per Cambridge sub-strand, with Statistics and Probability
+       together exactly as Grade 2 pairs them. The survey lesson this build began with
+       is gone: it spent eleven steps carrying six objectives and re-taught five
+       slides' worth of what the strand lessons cover at more length.
 
        The MARK COLOUR is doing the same work it does at Grade 2: cards sharing a
        colour share a strand, so a learner scanning for "the fractions one" has a
@@ -130,7 +142,7 @@ assert not leftover, "a Grade 2 label survived into the Grade 4 hub: %s" % lefto
 foot = re.sub(r'<p class="note">.*?</p>\s*(?=<p class="note">|\s*</div>|\s*<footer|\Z)', "", foot,
               flags=re.S)
 note = (
-    '  <p class="note"><b>For the grown-up.</b> These six lessons cover all 46 objectives of '
+    '  <p class="note"><b>For the grown-up.</b> These eight lessons cover all 46 objectives of '
     "Cambridge Primary Mathematics Stage 4 &mdash; number, fractions and percentages, time, "
     "geometry and measure, position, and statistics and probability. Cards that share a colour "
     "share a strand.</p>\n\n"

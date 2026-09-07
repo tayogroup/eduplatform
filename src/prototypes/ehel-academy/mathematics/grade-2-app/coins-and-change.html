@@ -1,0 +1,1578 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coins and Change</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --plum-soft: #EADDF2; --gold: #C99700; --gold-soft: #FBF0C8;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 19px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .hero > div { min-width: 0; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .hero h1 { font-size: clamp(26px, 5.4vw, 42px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 540px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(23px, 4.8vw, 32px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 19px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 6px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 22px; text-align: center; max-width: 32em; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .small-fb { font-size: 16px; color: var(--muted); font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; }
+
+  .bigbtns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 58px; height: 54px; padding: 0 16px; border-radius: 16px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 46px; font-size: 17px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 84px; min-height: 64px; padding: 8px 16px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; font-variant-numeric: tabular-nums; display: inline-grid; place-items: center; }
+  .choice.word { font-size: 17px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* money */
+  .coins { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .coin { width: 72px; height: 72px; border-radius: 50%; border: 5px solid var(--gold); background: radial-gradient(circle at 35% 35%, #fff4c2, #e6c15c); color: #5a4300; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; display: grid; place-items: center; box-shadow: 0 3px 0 rgba(0,0,0,0.15); line-height: 1; padding: 0; }
+  .coin.note { border-radius: 10px; width: 104px; height: 58px; background: linear-gradient(135deg, #d5efec, #a9d9d3); border-color: var(--teal); color: #10403c; }
+  .coin.big-note { background: linear-gradient(135deg, #eaddf2, #cdb0de); border-color: var(--plum); color: #3d1f4f; }
+  .coin small { font-size: 12px; font-weight: 700; display: block; }
+  .coin:active { transform: translateY(2px); }
+  .coin.used { opacity: 0.35; }
+  .coin.right { border-color: var(--good); box-shadow: 0 0 0 4px var(--good-soft); }
+  .coin.wrong { border-color: var(--bad); box-shadow: 0 0 0 4px var(--bad-soft); }
+  .coin:disabled { cursor: default; }
+  .purse { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; min-height: 42px; align-items: center; padding: 8px 10px; border-radius: 16px; background: var(--ground); border: 2px dashed var(--line); width: 100%; max-width: 560px; }
+  .purse span { padding: 6px 12px; border-radius: 999px; background: var(--gold); color: #3a2b00; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 17px; }
+  .purse span.n { background: var(--teal-soft); color: var(--ink); }
+  .purse span.empty { background: transparent; color: var(--muted); font-weight: 400; }
+  .total { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(26px, 6vw, 36px); font-variant-numeric: tabular-nums; }
+  .total b { color: var(--accent); }
+
+  .tag { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 16px; background: var(--accent-soft); color: var(--accent); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(20px, 5vw, 28px); }
+  .tag .em { font-size: 1.3em; }
+  .basket { display: grid; gap: 8px; width: 100%; max-width: 420px; }
+  .basket .row { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; padding: 9px 14px; border-radius: 12px; background: var(--gold-soft); font-variant-numeric: tabular-nums; }
+  .basket .row .e { font-size: 26px; }
+  .basket .row .p { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; }
+
+  .offers { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; width: 100%; }
+  .offer { flex: 1 1 150px; min-width: 0; max-width: 220px; padding: 14px; border-radius: 18px; border: 4px solid var(--line); background: var(--card); text-align: center; }
+  .offer .shop { font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .offer .deal { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(19px, 4.6vw, 24px); margin-top: 4px; }
+  .offer .each { font-size: 15px; color: var(--muted); min-height: 1.4em; }
+  .offer.right { border-color: var(--good); background: var(--good-soft); }
+  .offer.wrong { border-color: var(--bad); background: var(--bad-soft); }
+
+  .timeline { position: relative; width: 100%; max-width: 620px; height: 88px; }
+  .timeline .bar { position: absolute; left: 16px; right: 16px; top: 38px; height: 5px; background: var(--ink); border-radius: 3px; }
+  .timeline .t { position: absolute; top: 30px; width: 2px; height: 20px; background: var(--ink); transform: translateX(-50%); }
+  .timeline .l { position: absolute; top: 56px; transform: translateX(-50%); font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .timeline .m { position: absolute; top: 28px; width: 24px; height: 24px; border-radius: 50%; border: 3px solid var(--card); transform: translateX(-50%); }
+  .timeline .m.a { background: var(--accent); } .timeline .m.b { background: var(--teal); }
+  .timeline .hop { position: absolute; top: 14px; height: 22px; border: 3px solid var(--plum); border-bottom: 0; border-radius: 12px 12px 0 0; }
+  .timeline .hoplab { position: absolute; top: -4px; transform: translateX(-50%); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 13px; color: var(--plum); white-space: nowrap; }
+
+  .working { display: grid; gap: 8px; width: 100%; max-width: 580px; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 9px 14px; border-radius: 12px; background: var(--teal-soft); font-variant-numeric: tabular-nums; }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+
+  .swap { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; }
+  .swap .box { padding: 10px 18px; border-radius: 14px; background: var(--plum-soft); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(21px, 5vw, 28px); font-variant-numeric: tabular-nums; }
+  .swap .eq { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 26px; color: var(--muted); }
+  .hundred { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2px; width: 100%; max-width: 220px; }
+  .hundred i { aspect-ratio: 1; background: var(--cell); border-radius: 2px; }
+  .hundred i.on { background: var(--gold); }
+
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 17px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+
+  /* ==== grade-1 design layer ==== */
+  /* The palette is redefined for ALL THREE theme states on purpose: this is a
+     design that commits to one look rather than tracking the viewer's setting,
+     so every colour is stated here and none is inherited from the light base.
+     --gold-soft and --plum-soft are carried too — the Grade 1 lesson dropped
+     both, and the lessons here use them as surfaces. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --plum-soft: rgba(183, 139, 209, 0.18);
+    --gold: #F4C95D;
+    --gold-soft: rgba(244, 201, 93, 0.18);
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  /* One fixed gradient rather than one stretched down the whole document, so
+     135 degrees means 135 degrees however long the lesson runs. A fixed
+     pseudo-element, not background-attachment, which iOS Safari ignores. */
+  html { background: #183B56; }
+  body { background: transparent; color: var(--ink); font-size: 18px; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; letter-spacing: -0.02em; font-weight: 800; }
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+  .slide h2 { font-weight: 800; }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: rgba(20, 43, 62, 0.88); border: 1px solid var(--line); border-radius: 26px; }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { font-family: "Inter", "Segoe UI", sans-serif; background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb { font-family: "Inter", "Segoe UI", sans-serif; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .sticker { font-family: "Inter", "Segoe UI", sans-serif; background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .foot .mid { color: var(--muted); }
+
+  /* This layer widens the eyebrow's tracking, and the base sets it nowrap, so a
+     long eyebrow ("Mathematics · Patterns · Grades 1 to 4") pushes the step dots
+     off a phone. Give it room to wrap and let the hero stack under it. */
+  @media (max-width: 520px) {
+    .hero { flex-wrap: wrap; }
+    .eyebrow { white-space: normal; }
+    .dots { max-width: 100%; justify-content: flex-start; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Money</p>
+      <h1>Coins and <em>Change</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+    <!-- 1 know your money -->
+    <section class="slide" data-say="This is our money. Round gold ones are coins. Flat ones are notes. Tap one to hear what it is worth.">
+      <div class="slide-head"><span class="n">1</span><h2>Know your money</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Round gold ones are <b>coins</b>. Flat ones are <b>notes</b>. Tap one to hear what it is worth.</span></div>
+      <div class="stage">
+        <div class="coins" id="money1"></div>
+        <div class="total" id="words1">&nbsp;</div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="score1"></p>
+      </div>
+    </section>
+
+    <!-- 2 count the purse -->
+    <section class="slide" data-say="To count money, always start with the biggest and count on. Tap the biggest one first.">
+      <div class="slide-head"><span class="n">2</span><h2>Count what is in the purse</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Start with the <b>biggest</b>, then count on. Tap them in order, biggest first.</span></div>
+      <div class="stage">
+        <div class="coins" id="money2"></div>
+        <div class="working" id="work2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="score2"></p>
+      </div>
+    </section>
+
+    <!-- 3 make this amount -->
+    <section class="slide" data-say="Now make an amount. Tap coins and notes until the purse holds exactly the right money.">
+      <div class="slide-head"><span class="n">3</span><h2>Make this exact amount</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Tap money into the purse until it holds <b>exactly</b> the amount.</span></div>
+      <div class="stage">
+        <div class="tag" id="target3"></div>
+        <div class="coins" id="money3"></div>
+        <div class="purse" id="purse3"></div>
+        <div class="total" id="total3"></div>
+        <div class="bigbtns"><button type="button" class="big ghost small" id="undo3">↩ Undo</button><button type="button" class="big small teal" id="next3" hidden>Next one ▶</button></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="score3"></p>
+      </div>
+    </section>
+
+    <!-- 4 fewest coins -->
+    <section class="slide" data-say="Same amount, but now use as few coins and notes as you can. Take the biggest that fits, every time.">
+      <div class="slide-head"><span class="n">4</span><h2>The fewest pieces</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Make it again with as <b>few</b> pieces as you can. Take the <b>biggest that fits</b>, every time.</span></div>
+      <div class="stage">
+        <div class="tag" id="target4"></div>
+        <div class="coins" id="money4"></div>
+        <div class="purse" id="purse4"></div>
+        <div class="total" id="total4"></div>
+        <div class="bigbtns"><button type="button" class="big ghost small" id="undo4">↩ Undo</button><button type="button" class="big small teal" id="next4" hidden>Next one ▶</button></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="score4"></p>
+      </div>
+    </section>
+
+    <!-- 5 shopping -->
+    <section class="slide" data-say="At the shop you add the prices together to find the total.">
+      <div class="slide-head"><span class="n">5</span><h2>What does it all cost?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Add the prices together. What is the <b>total</b>?</span></div>
+      <div class="stage">
+        <div class="basket" id="basket5"></div>
+        <div class="working" id="work5"></div>
+        <div class="choices" id="ch5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="score5"></p>
+      </div>
+    </section>
+
+    <!-- 6 change -->
+    <section class="slide" data-say="Change is what comes back. Count on from the price up to the money you handed over.">
+      <div class="slide-head"><span class="n">6</span><h2>Counting the change</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Count <b>on</b> from the price up to what you paid. The hops are your change.</span></div>
+      <div class="stage">
+        <p class="fb" id="q6" style="font-size:20px"></p>
+        <div class="timeline" id="line6"></div>
+        <div class="total" id="now6"></div>
+        <div class="bigbtns"><button type="button" class="big small" id="a1">+ 1</button><button type="button" class="big small" id="a5">+ 5</button><button type="button" class="big small teal" id="a10">+ 10</button><button type="button" class="big small teal" id="a50">+ 50</button><button type="button" class="big small teal" id="a100">+ 100</button><button type="button" class="big ghost small" id="undo6">↩ Undo</button><button type="button" class="big small" id="next6" hidden>Next one ▶</button></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="score6"></p>
+      </div>
+    </section>
+
+    <!-- 7 shillings and cents -->
+    <section class="slide" data-say="One shilling is one hundred cents. So money can be written two ways.">
+      <div class="slide-head"><span class="n">7</span><h2>Shillings and cents</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7"><b>1 shilling = 100 cents.</b> So the same money can be written two ways.</span></div>
+      <div class="stage">
+        <div class="hundred" id="grid7" aria-hidden="true"></div>
+        <div class="swap"><span class="box" id="from7"></span><span class="eq">=</span><span class="box" id="to7">?</span></div>
+        <div class="choices" id="ch7"></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="score7"></p>
+      </div>
+    </section>
+
+    <!-- 8 best value -->
+    <section class="slide" data-say="Two shops, the same thing. To see which is better, work out what just one costs.">
+      <div class="slide-head"><span class="n">8</span><h2>Which is better value?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Same thing, two shops. Work out what <b>one</b> costs, then choose.</span></div>
+      <div class="stage">
+        <p class="fb" id="q8" style="font-size:20px"></p>
+        <div class="offers" id="offers8"></div>
+        <div class="working" id="work8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="score8"></p>
+      </div>
+    </section>
+
+    <!-- 9 saving and spending -->
+    <section class="slide" data-say="Money you keep is saving. Money you hand over is spending. Both are just adding and taking away.">
+      <div class="slide-head"><span class="n">9</span><h2>Saving and spending</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Saving <b>adds</b> up. Spending <b>takes</b> away. Work it out.</span></div>
+      <div class="stage">
+        <p class="fb" id="q9" style="font-size:20px"></p>
+        <div class="choices" id="ch9"></div>
+        <div class="working" id="work9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="fb small-fb" id="score9"></p>
+      </div>
+    </section>
+
+    <!-- 10 check -->
+    <section class="slide" data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="fb" id="q10" style="font-size:22px"></p>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="fb small-fb" id="score10"></p>
+      </div>
+    </section>
+
+    <!-- 11 stickers -->
+    <section class="slide" data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fb11"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+  const sh = (n) => n + " sh";
+  const pieces = (n) => n + (n === 1 ? " piece" : " pieces");
+  const MONEY = [1, 5, 10, 20, 50, 100, 200, 500, 1000];
+  const kind = (v) => (v >= 500 ? "coin note big-note" : v >= 100 ? "coin note" : "coin");
+  const moneyBtn = (v, extra) => '<button type="button" class="' + kind(v) + (extra || "") + '" data-v="' + v + '">' + v + "<small>sh</small></button>";
+  const nameOf = (v) => v + " shilling " + (v >= 100 ? "note" : "coin");
+
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0; $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots(); if (cur === slides.length - 1) paintStickers(); if (cur === 5) relayout6();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+  function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
+  function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
+  function reveal(el, answer, picked) { el.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(answer)) c.classList.add("right"); }); if (picked && picked.dataset.v !== String(answer)) picked.classList.add("wrong"); }
+
+  /* ---- 1: know your money ---- */
+  $("money1").innerHTML = MONEY.map((v) => moneyBtn(v)).join("");
+  const ASK1 = shuffle(MONEY.filter((v) => v !== 1)).slice(0, 4);
+  let t1 = 0, right1 = 0, lock1 = false;
+  function round1() {
+    lock1 = false;
+    $("money1").querySelectorAll(".coin").forEach((c) => { c.classList.remove("right", "wrong"); c.disabled = false; });
+    if (t1 >= ASK1.length) { $("say1").innerHTML = "You know them all. Tap any one to hear it again."; $("fb1").className = "fb good"; $("fb1").textContent = "You found " + right1 + " of " + ASK1.length + "!"; $("score1").textContent = ""; finish(0, "You know your coins and notes."); return; }
+    $("score1").textContent = "Task " + (t1 + 1) + " of " + ASK1.length;
+    $("say1").innerHTML = "Tap the <b>" + nameOf(ASK1[t1]) + "</b>.";
+    say("Tap the " + nameOf(ASK1[t1]));
+  }
+  $("money1").addEventListener("click", (e) => {
+    const b = e.target.closest(".coin"); if (!b || b.disabled) return;
+    const v = Number(b.dataset.v);
+    $("words1").innerHTML = "This is a <b>" + nameOf(v) + "</b>.";
+    if (t1 >= ASK1.length || lock1) { say("A " + nameOf(v)); return; }
+    lock1 = true;
+    const ok = v === ASK1[t1];
+    b.classList.add(ok ? "right" : "wrong");
+    if (ok) { right1++; $("money1").querySelectorAll(".coin").forEach((c) => { c.disabled = true; }); $("fb1").className = "fb good"; $("fb1").textContent = cheer() + " That is the " + nameOf(v) + "."; say(cheer() + " That is the " + nameOf(v)); }
+    else { $("money1").querySelectorAll(".coin").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ASK1[t1]) c.classList.add("right"); }); $("fb1").className = "fb bad"; $("fb1").textContent = "That one is " + sh(v) + ". The " + nameOf(ASK1[t1]) + " is the one glowing green."; say("That one is " + v + " shillings"); }
+    t1++; setTimeout(round1, 1900);
+  });
+  round1();
+
+  /* ---- 2: count the purse ---- */
+  const PURSES = [[50, 20, 10, 5], [100, 50, 20, 20, 10], [20, 20, 10, 5, 5], [200, 100, 50, 10], [100, 100, 50, 20, 5]];
+  let p2 = 0, right2 = 0, order2 = [], running2 = 0;
+  function round2() {
+    $("fb2").textContent = ""; $("fb2").className = "fb";
+    if (p2 >= 3) { $("money2").innerHTML = ""; $("work2").innerHTML = ""; $("fb2").className = "fb good"; $("fb2").textContent = "You counted all 3 purses!"; $("score2").textContent = ""; finish(1, "You can count a purse."); return; }
+    order2 = []; running2 = 0;
+    $("score2").textContent = "Purse " + (p2 + 1) + " of 3";
+    const set = PURSES[p2];
+    $("money2").innerHTML = shuffle(set).map((v) => moneyBtn(v)).join("");
+    lines($("work2"), [{ k: "So far", v: "nothing counted yet" }]);
+    say("Count this purse. Start with the biggest.");
+  }
+  $("money2").addEventListener("click", (e) => {
+    const b = e.target.closest(".coin"); if (!b || b.classList.contains("used")) return;
+    const left = [...$("money2").querySelectorAll(".coin")].filter((c) => !c.classList.contains("used")).map((c) => Number(c.dataset.v));
+    const v = Number(b.dataset.v), biggest = Math.max(...left);
+    if (v !== biggest) { $("fb2").className = "fb bad"; $("fb2").textContent = "Start with the biggest one left, which is " + sh(biggest) + "."; say("Start with the biggest, " + biggest + " shillings"); return; }
+    b.classList.add("used");
+    const before = running2; running2 += v; order2.push(v);
+    const rows = order2.map((x, i) => (i === 0 ? { k: "Start with the biggest", v: sh(x) } : { k: order2.slice(0, i).reduce((a, c) => a + c, 0) + " + " + x, v: "= " + sh(order2.slice(0, i + 1).reduce((a, c) => a + c, 0)) }));
+    const allDone = order2.length === PURSES[p2].length;
+    if (allDone) rows.push({ k: "The purse holds", v: sh(running2), total: true });
+    lines($("work2"), rows);
+    if (!allDone) { $("fb2").className = "fb"; $("fb2").textContent = before === 0 ? sh(v) + " so far." : before + " add " + v + " is " + sh(running2) + "."; say(running2 + " shillings"); return; }
+    right2++; $("fb2").className = "fb good"; $("fb2").textContent = cheer() + " The purse holds " + sh(running2) + ".";
+    say(cheer() + " The purse holds " + running2 + " shillings"); p2++; setTimeout(round2, 2600);
+  });
+  round2();
+
+  /* ---- 3 and 4: build an amount ---- */
+  const BUILD = { 3: { targets: [75, 130, 240], set: [1, 5, 10, 20, 50, 100], fewest: false }, 4: { targets: [180, 265, 340], set: [5, 10, 20, 50, 100, 200], fewest: true } };
+  const greedy = (t, set) => { let n = 0, left = t; const s = set.slice().sort((a, b) => b - a); for (const c of s) { while (left >= c) { left -= c; n++; } } return n; };
+  const state = { 3: { i: 0, right: 0, purse: [] }, 4: { i: 0, right: 0, purse: [] } };
+  function paintBuild(step) {
+    const cfg = BUILD[step], st = state[step], target = cfg.targets[st.i], total = st.purse.reduce((a, b) => a + b, 0);
+    $("purse" + step).innerHTML = st.purse.length ? st.purse.map((v) => '<span' + (v >= 100 ? ' class="n"' : "") + ">" + v + "</span>").join("") : '<span class="empty">the purse is empty</span>';
+    $("total" + step).innerHTML = "In the purse: <b>" + sh(total) + "</b>";
+    $("undo" + step).disabled = st.purse.length === 0;
+    $("money" + step).querySelectorAll(".coin").forEach((c) => { c.disabled = total + Number(c.dataset.v) > target; });
+    return { target, total };
+  }
+  function roundBuild(step) {
+    const cfg = BUILD[step], st = state[step];
+    $("fb" + step).textContent = ""; $("fb" + step).className = "fb"; $("next" + step).hidden = true;
+    if (st.i >= cfg.targets.length) {
+      $("target" + step).innerHTML = "🎉 all done"; $("money" + step).innerHTML = ""; $("purse" + step).innerHTML = ""; $("total" + step).textContent = ""; $("undo" + step).hidden = true;
+      $("fb" + step).className = "fb good"; $("fb" + step).textContent = cfg.fewest ? "You made all 3 with the fewest pieces!" : "You made all 3 amounts exactly!";
+      $("score" + step).textContent = ""; finish(step - 1, cfg.fewest ? "You found the fewest pieces." : "You can make any amount.");
+      return;
+    }
+    st.purse = [];
+    $("score" + step).textContent = "Amount " + (st.i + 1) + " of " + cfg.targets.length;
+    $("target" + step).innerHTML = '<span class="em">🎯</span> Make ' + sh(cfg.targets[st.i]);
+    $("money" + step).innerHTML = cfg.set.map((v) => moneyBtn(v)).join("");
+    paintBuild(step);
+    say((cfg.fewest ? "Make " : "Make exactly ") + cfg.targets[st.i] + " shillings");
+  }
+  function wireBuild(step) {
+    const cfg = BUILD[step], st = state[step];
+    $("money" + step).addEventListener("click", (e) => {
+      const b = e.target.closest(".coin"); if (!b || b.disabled) return;
+      st.purse.push(Number(b.dataset.v));
+      const { target, total } = paintBuild(step);
+      if (total < target) { $("fb" + step).className = "fb"; $("fb" + step).textContent = sh(target - total) + " to go."; say(total + " shillings"); return; }
+      const used = st.purse.length, best = greedy(target, cfg.set);
+      $("money" + step).querySelectorAll(".coin").forEach((c) => { c.disabled = true; });
+      if (!cfg.fewest || used === best) {
+        st.right++; $("fb" + step).className = "fb good";
+        $("fb" + step).textContent = cheer() + " Exactly " + sh(target) + ", with " + pieces(used) + "."
+          + (!cfg.fewest && used > best + 2 ? " That is a lot to carry — the next step is about using fewer." : "");
+        say(cheer() + " Exactly " + target + " shillings"); st.i++; $("next" + step).hidden = false;
+      } else {
+        $("fb" + step).className = "fb bad";
+        $("fb" + step).textContent = "That is " + sh(target) + ", but with " + pieces(used) + ". It can be done in " + best + ". Undo and take the biggest that fits each time.";
+        say("That works, but it can be done in " + best + " pieces");
+      }
+    });
+    $("undo" + step).addEventListener("click", () => {
+      if (!st.purse.length) return;
+      st.purse.pop(); $("fb" + step).textContent = ""; $("fb" + step).className = "fb"; $("next" + step).hidden = true;
+      $("money" + step).querySelectorAll(".coin").forEach((c) => { c.disabled = false; });
+      paintBuild(step);
+    });
+    $("next" + step).addEventListener("click", () => roundBuild(step));
+    roundBuild(step);
+  }
+  wireBuild(3); wireBuild(4);
+
+  /* ---- 5: shopping ---- */
+  const ITEMS = [["🥭", "a mango", 35], ["✏️", "a pencil", 20], ["🍞", "a loaf", 85], ["🧃", "a juice", 45], ["📒", "a notebook", 150], ["🍌", "a banana", 15], ["🥚", "an egg", 25], ["🧼", "a bar of soap", 60], ["🪥", "a toothbrush", 70], ["🍅", "a tomato", 30]];
+  let b5 = 0, right5 = 0, lock5 = false, basket5 = [], total5 = 0;
+  function round5() {
+    lock5 = false; $("fb5").textContent = ""; $("fb5").className = "fb"; $("work5").innerHTML = "";
+    if (b5 >= 4) { $("basket5").innerHTML = ""; $("ch5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You added up " + right5 + " of 4 baskets!"; $("score5").textContent = ""; finish(4, "You can total a basket."); return; }
+    basket5 = shuffle(ITEMS).slice(0, b5 < 2 ? 2 : 3);
+    total5 = basket5.reduce((a, it) => a + it[2], 0);
+    $("score5").textContent = "Basket " + (b5 + 1) + " of 4";
+    $("basket5").innerHTML = basket5.map((it) => '<div class="row"><span class="e">' + it[0] + '</span><span>' + it[1] + '</span><span class="p">' + sh(it[2]) + "</span></div>").join("");
+    const smallest = Math.min(...basket5.map((it) => it[2]));
+    choices($("ch5"), [total5, total5 - smallest, total5 + 10, total5 - 10].filter((v, i, a) => v > 0 && a.indexOf(v) === i).slice(0, 4).map(sh));
+    const q = "How much for " + basket5.map((it) => it[1]).join(" and ") + "?";
+    $("q5") && ($("q5").textContent = q); $("say5").textContent = q; say(q);
+  }
+  $("ch5").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock5) return; lock5 = true;
+    const ok = b.dataset.v === sh(total5);
+    reveal($("ch5"), sh(total5), b);
+    let run = 0;
+    lines($("work5"), basket5.map((it) => { const before = run; run += it[2]; return { k: (before === 0 ? "Start with " + it[1] : before + " + " + it[2] + " (" + it[1] + ")"), v: "= " + sh(run) }; }).concat([{ k: "Total", v: sh(total5), total: true }]));
+    if (ok) right5++;
+    $("fb5").className = "fb " + (ok ? "good" : "bad");
+    $("fb5").textContent = ok ? cheer() + " " + sh(total5) + " altogether." : "It comes to " + sh(total5) + ". Add them one at a time.";
+    say(ok ? cheer() + " " + total5 + " shillings" : "It comes to " + total5 + " shillings");
+    b5++; setTimeout(round5, 3400);
+  });
+  round5();
+
+  /* ---- 6: change ---- */
+  const HOPS = [["a1", 1], ["a5", 5], ["a10", 10], ["a50", 50], ["a100", 100]];
+  const CHANGE = [[65, 100], [130, 200], [45, 100], [340, 500]];
+  let c6 = 0, right6 = 0, at6 = 0, hops6 = [];
+  function relayout6() { if (c6 < CHANGE.length) paintLine6(); }
+  function paintLine6() {
+    const [price, paid] = CHANGE[Math.min(c6, CHANGE.length - 1)];
+    const span = paid - price, pos = (v) => 16 + ((v - price) / span) * (Math.max(1, $("line6").clientWidth) - 32);
+    let html = '<div class="bar"></div>';
+    html += '<div class="t" style="left:' + pos(price) + 'px"></div><div class="l" style="left:' + pos(price) + 'px">' + sh(price) + "</div>";
+    html += '<div class="t" style="left:' + pos(paid) + 'px"></div><div class="l" style="left:' + pos(paid) + 'px">' + sh(paid) + "</div>";
+    let run = price;
+    for (const h of hops6) { const a = pos(run), b = pos(run + h); html += '<div class="hop" style="left:' + a + "px;width:" + Math.max(2, b - a) + 'px"></div><div class="hoplab" style="left:' + ((a + b) / 2) + "px\">+" + h + "</div>"; run += h; }
+    html += '<div class="m a" style="left:' + pos(at6) + 'px"></div>';
+    $("line6").innerHTML = html;
+    $("now6").innerHTML = "You are on <b>" + sh(at6) + "</b> · change so far <b>" + sh(at6 - price) + "</b>";
+    HOPS.forEach(([id, v]) => { $(id).disabled = at6 + v > paid; });
+    $("undo6").disabled = hops6.length === 0;
+  }
+  function round6() {
+    $("fb6").textContent = ""; $("fb6").className = "fb"; $("next6").hidden = true;
+    if (c6 >= CHANGE.length) { $("q6").textContent = ""; $("line6").innerHTML = ""; $("now6").textContent = ""; HOPS.map((h) => h[0]).concat(["undo6"]).forEach((id) => { $(id).hidden = true; }); $("fb6").className = "fb good"; $("fb6").textContent = "You counted the change " + right6 + " times!"; $("score6").textContent = ""; finish(5, "You can count change."); return; }
+    const [price, paid] = CHANGE[c6]; at6 = price; hops6 = [];
+    $("score6").textContent = "Shop " + (c6 + 1) + " of " + CHANGE.length;
+    const q = "It costs " + sh(price) + " and you pay with " + sh(paid) + ". Count on to " + sh(paid) + ".";
+    $("q6").textContent = q; $("say6").textContent = q; paintLine6(); say(q);
+  }
+  function hop(v) {
+    const [price, paid] = CHANGE[c6]; if (at6 + v > paid) return;
+    at6 += v; hops6.push(v); paintLine6();
+    if (at6 < paid) { $("fb6").className = "fb"; $("fb6").textContent = sh(paid - at6) + " still to go."; say(at6 + " shillings"); return; }
+    right6++; const change = paid - price;
+    $("fb6").className = "fb good";
+    $("fb6").textContent = cheer() + " " + hops6.join(" + ") + " = " + sh(change) + " change.";
+    say(cheer() + " Your change is " + change + " shillings");
+    HOPS.forEach(([id]) => { $(id).disabled = true; });
+    c6++; $("next6").hidden = false;
+  }
+  HOPS.forEach(([id, v]) => $(id).addEventListener("click", () => hop(v)));
+  $("undo6").addEventListener("click", () => { if (!hops6.length) return; at6 -= hops6.pop(); $("fb6").textContent = ""; $("fb6").className = "fb"; $("next6").hidden = true; paintLine6(); });
+  $("next6").addEventListener("click", round6);
+  round6();
+
+  /* ---- 7: shillings and cents ---- */
+  const CENTS = [250, 175, 100, 320, 405, 150, 275];
+  const asShC = (c) => Math.floor(c / 100) + " sh " + String(c % 100).padStart(2, "0") + " c";
+  const asDec = (c) => (c / 100).toFixed(2) + " sh";
+  let c7 = 0, right7 = 0, lock7 = false, list7 = [], q7 = null;
+  function paintGrid7(rem) { $("grid7").innerHTML = new Array(100).fill(0).map((_, i) => '<i class="' + (i < rem ? "on" : "") + '"></i>').join(""); }
+  function round7() {
+    lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb"; $("to7").textContent = "?";
+    if (c7 === 0) list7 = shuffle(CENTS).slice(0, 5);
+    if (c7 >= list7.length) { $("from7").textContent = ""; $("to7").textContent = ""; $("ch7").innerHTML = ""; $("grid7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You swapped " + right7 + " of " + list7.length + "!"; $("score7").textContent = ""; finish(6, "You can swap cents and shillings."); return; }
+    const cents = list7[c7], dec = c7 % 2 === 1;
+    q7 = { cents, a: dec ? asDec(cents) : asShC(cents) };
+    $("score7").textContent = "Swap " + (c7 + 1) + " of " + list7.length;
+    $("from7").textContent = cents + " c";
+    paintGrid7(cents % 100 === 0 ? 100 : cents % 100);
+    const w = Math.floor(cents / 100), r = cents % 100, pad = String(r).padStart(2, "0");
+    const wrong = dec
+      ? [(cents / 10).toFixed(2) + " sh", w + "." + r + " sh", (w + 1) + "." + pad + " sh"]
+      : [r ? r + " sh " + String(w).padStart(2, "0") + " c" : w + " sh 10 c", (w + 1) + " sh " + pad + " c", w + " sh " + String((r + 10) % 100).padStart(2, "0") + " c"];
+    const opts = [q7.a]; for (const x of wrong) { if (opts.length < 3 && opts.indexOf(x) === -1) opts.push(x); }
+    choices($("ch7"), opts, true);
+    const q = "What is " + cents + " cents in shillings?";
+    $("say7").textContent = q; say(q);
+  }
+  $("ch7").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock7) return; lock7 = true;
+    const ok = b.dataset.v === q7.a; reveal($("ch7"), q7.a, b); $("to7").textContent = q7.a;
+    if (ok) right7++;
+    const whole = Math.floor(q7.cents / 100), rest = q7.cents % 100;
+    $("fb7").className = "fb " + (ok ? "good" : "bad");
+    $("fb7").textContent = (ok ? cheer() + " " : "It is " + q7.a + ". ") + q7.cents + " cents is " + whole + " whole " + (whole === 1 ? "shilling" : "shillings") + (rest ? " and " + rest + " cents over" : " exactly") + ".";
+    say(ok ? cheer() + " " + q7.a : "It is " + q7.a);
+    c7++; setTimeout(round7, 3200);
+  });
+  round7();
+
+  /* ---- 8: best value ---- */
+  const DEALS = [
+    { thing: "mangoes", a: [3, 60], b: [5, 90] },
+    { thing: "pencils", a: [4, 80], b: [6, 90] },
+    { thing: "eggs", a: [6, 90], b: [10, 160] },
+    { thing: "buns", a: [2, 50], b: [5, 100] },
+    { thing: "bars of soap", a: [2, 40], b: [3, 66] },
+    { thing: "juices", a: [4, 120], b: [6, 150] },
+  ];
+  let d8 = 0, right8 = 0, lock8 = false, list8 = [], deal8 = null;
+  function round8() {
+    lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb"; $("work8").innerHTML = "";
+    if (d8 === 0) list8 = shuffle(DEALS).slice(0, 4);
+    if (d8 >= list8.length) { $("q8").textContent = ""; $("offers8").innerHTML = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You picked the better deal " + right8 + " times out of " + list8.length + "!"; $("score8").textContent = ""; finish(7, "You can spot the better deal."); return; }
+    deal8 = list8[d8];
+    $("score8").textContent = "Shop " + (d8 + 1) + " of " + list8.length;
+    const q = "Where are " + deal8.thing + " better value?";
+    $("q8").textContent = q; $("say8").textContent = q;
+    $("offers8").innerHTML = [["A", deal8.a], ["B", deal8.b]].map(([n, o]) => '<button type="button" class="offer" data-v="' + n + '"><span class="shop">Shop ' + n + '</span><span class="deal">' + o[0] + " for " + sh(o[1]) + '</span><span class="each" data-each>&nbsp;</span></button>').join("");
+    say(q);
+  }
+  $("offers8").addEventListener("click", (e) => {
+    const b = e.target.closest(".offer"); if (!b || lock8) return; lock8 = true;
+    const ea = deal8.a[1] / deal8.a[0], eb = deal8.b[1] / deal8.b[0], ans = ea < eb ? "A" : "B";
+    const els = [...$("offers8").querySelectorAll(".offer")];
+    els.forEach((el, i) => { el.disabled = true; el.querySelector("[data-each]").textContent = (i === 0 ? ea : eb) + " sh each"; if (el.dataset.v === ans) el.classList.add("right"); else if (el === b) el.classList.add("wrong"); });
+    lines($("work8"), [
+      { k: "Shop A: " + sh(deal8.a[1]) + " ÷ " + deal8.a[0], v: "= " + sh(ea) + " each" },
+      { k: "Shop B: " + sh(deal8.b[1]) + " ÷ " + deal8.b[0], v: "= " + sh(eb) + " each" },
+      { k: "Cheaper for one", v: "Shop " + ans, total: true },
+    ]);
+    const ok = b.dataset.v === ans; if (ok) right8++;
+    $("fb8").className = "fb " + (ok ? "good" : "bad");
+    $("fb8").textContent = (ok ? cheer() + " " : "Shop " + ans + " is better. ") + "One costs " + sh(Math.min(ea, eb)) + " there, against " + sh(Math.max(ea, eb)) + ".";
+    say(ok ? cheer() + " Shop " + ans : "Shop " + ans + " is better value");
+    d8++; setTimeout(round8, 3800);
+  });
+  round8();
+
+  /* ---- 9: saving and spending ---- */
+  let s9 = 0, right9 = 0, lock9 = false, q9 = null;
+  function make9(i) {
+    if (i % 2 === 0) {
+      const perWeek = [20, 25, 30, 40][rnd(0, 3)], weeks = rnd(4, 7), goal = perWeek * weeks;
+      return { q: "You save " + sh(perWeek) + " every week. How many weeks until you have " + sh(goal) + "?", a: weeks + " weeks", opts: [weeks + " weeks", (weeks + 1) + " weeks", (weeks - 1) + " weeks"],
+        work: [{ k: "Each week", v: sh(perWeek) }, { k: goal + " ÷ " + perWeek, v: "= " + weeks }, { k: "Weeks to save", v: weeks + " weeks", total: true }],
+        why: "Each week adds " + sh(perWeek) + ", so " + goal + " ÷ " + perWeek + " = " + weeks + " weeks." };
+    }
+    const two = shuffle(ITEMS).slice(0, 2), spent = two[0][2] + two[1][2];
+    const start = Math.ceil((spent + rnd(40, 160)) / 50) * 50, left = start - spent;
+    return { q: "You have " + sh(start) + ". You buy " + two[0][1] + " for " + sh(two[0][2]) + " and " + two[1][1] + " for " + sh(two[1][2]) + ". How much is left?", a: sh(left), opts: [sh(left), sh(left - 10), sh(start - two[0][2])],
+      work: [{ k: "Spent", v: two[0][2] + " + " + two[1][2] + " = " + sh(spent) }, { k: start + " − " + spent, v: "= " + sh(left) }, { k: "Left", v: sh(left), total: true }],
+      why: "You spent " + sh(spent) + " altogether, and " + start + " − " + spent + " = " + sh(left) + "." };
+  }
+  function round9() {
+    lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb"; $("work9").innerHTML = "";
+    if (s9 >= 4) { $("q9").textContent = ""; $("ch9").innerHTML = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You solved " + right9 + " of 4!"; $("score9").textContent = ""; finish(8, "You can save up and spend well."); return; }
+    q9 = make9(s9);
+    $("score9").textContent = "Problem " + (s9 + 1) + " of 4";
+    $("q9").textContent = q9.q; $("say9").textContent = q9.q;
+    choices($("ch9"), q9.opts, true); say(q9.q);
+  }
+  $("ch9").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock9) return; lock9 = true;
+    const ok = b.dataset.v === q9.a; reveal($("ch9"), q9.a, b); lines($("work9"), q9.work);
+    if (ok) right9++;
+    $("fb9").className = "fb " + (ok ? "good" : "bad");
+    $("fb9").textContent = (ok ? cheer() + " " : "It is " + q9.a + ". ") + q9.why;
+    say(ok ? cheer() + " " + q9.a : "It is " + q9.a);
+    s9++; setTimeout(round9, 4000);
+  });
+  round9();
+
+  /* ---- 10: check ---- */
+  const CHECK = [
+    { q: "How many cents make one shilling?", opts: ["100 c", "10 c", "50 c"], a: "100 c" },
+    { q: "A 50 and a 20 and a 10. How much altogether?", opts: ["80 sh", "70 sh", "90 sh"], a: "80 sh" },
+    { q: "Which is the fewest pieces for 70 sh?", opts: ["50 + 20", "20 + 20 + 20 + 10", "10 × 7"], a: "50 + 20" },
+    { q: "A juice is 45 sh and a bun is 30 sh. Total?", opts: ["75 sh", "65 sh", "85 sh"], a: "75 sh" },
+    { q: "It costs 80 sh. You pay 100 sh. Your change is…", opts: ["20 sh", "180 sh", "30 sh"], a: "20 sh" },
+    { q: "250 cents written in shillings is…", opts: ["2 sh 50 c", "25 sh", "2 sh 05 c"], a: "2 sh 50 c" },
+    { q: "3 mangoes for 60 sh. What does one cost?", opts: ["20 sh", "30 sh", "63 sh"], a: "20 sh" },
+    { q: "4 for 80 sh, or 5 for 90 sh. Which is better value?", opts: ["5 for 90", "4 for 80", "the same"], a: "5 for 90" },
+    { q: "You save 25 sh a week. After 4 weeks you have…", opts: ["100 sh", "29 sh", "75 sh"], a: "100 sh" },
+    { q: "You have 200 sh and spend 145 sh. What is left?", opts: ["55 sh", "65 sh", "345 sh"], a: "55 sh" },
+  ];
+  let c10 = 0, right10 = 0, lock10 = false;
+  function round10() {
+    lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(9, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
+    choices($("ch10"), q.opts, true); say(q.q);
+  }
+  $("ch10").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock10) return; lock10 = true; const q = CHECK[c10], ok = b.dataset.v === q.a;
+    reveal($("ch10"), q.a, b); if (ok) right10++;
+    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = ok ? cheer() : "It is " + q.a + ".";
+    say(ok ? cheer() : "It is " + q.a);
+    c10++; setTimeout(round10, 1300);
+  });
+  round10();
+
+  /* ---- 11: stickers ---- */
+  const STICKERS = [["🪙", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🧺", "Shop totals"], ["↩️", "Counting change"], ["💯", "Shillings and cents"], ["⚖️", "Better value"], ["🏦", "Saving and spending"], ["✅", "Show what I know"]];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fb11").className = "fb " + (got === STICKERS.length ? "good" : ""); $("fb11").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You can handle money." : got + " of " + STICKERS.length + " stickers so far.";
+  }
+  $("restart").addEventListener("click", () => location.reload());
+
+  window.addEventListener("resize", relayout6);
+  show(0, false);
+})();
+</script>

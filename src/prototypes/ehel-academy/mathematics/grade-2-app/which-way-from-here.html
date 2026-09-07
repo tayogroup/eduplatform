@@ -1,0 +1,2021 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which Way From Here</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --plum-soft: #EADDF2; --gold: #C99700; --gold-soft: #FBF0C8;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 19px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .hero > div { min-width: 0; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .hero h1 { font-size: clamp(26px, 5.4vw, 42px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 540px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(23px, 4.8vw, 32px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 19px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 6px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 22px; text-align: center; max-width: 32em; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .small-fb { font-size: 16px; color: var(--muted); font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; }
+
+  .bigbtns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 58px; height: 54px; padding: 0 16px; border-radius: 16px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 46px; font-size: 17px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 84px; min-height: 64px; padding: 8px 16px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 22px; font-variant-numeric: tabular-nums; display: inline-grid; place-items: center; }
+  .choice.word { font-size: 16px; max-width: 15em; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* the map grid, shared by most steps */
+  .map { display: grid; gap: 3px; width: 100%; max-width: 330px; margin: 0 auto; }
+  .map .cell { aspect-ratio: 1; border: 2px solid var(--line); border-radius: 8px; background: var(--card); padding: 0; display: grid; place-items: center; font-size: clamp(15px, 4.6vw, 24px); line-height: 1; overflow: hidden; }
+  .map .lab { border: 0; background: transparent; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 13px; aspect-ratio: auto; min-height: 18px; }
+  .map .cell.on { background: var(--gold-soft); border-color: var(--gold); }
+  .map .cell.goal { background: var(--teal-soft); border-color: var(--teal); }
+  .map .cell.trail { background: var(--plum-soft); }
+  .map .cell.right { background: var(--good-soft); border-color: var(--good); }
+  .map .cell.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .map .cell.mirror { background: var(--plum-soft); border-color: var(--plum); border-style: dashed; }
+  .map .cell .bot { display: block; transition: transform 0.18s ease; }
+  @media (prefers-reduced-motion: reduce) { .map .cell .bot { transition: none; } }
+  .maprow { display: contents; }
+
+  .coordsvg { width: 100%; max-width: 300px; display: block; }
+  .coordsvg .grid { stroke: var(--line); stroke-width: 1.5; }
+  .coordsvg .axis { stroke: var(--ink); stroke-width: 3; }
+  .coordsvg .num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 12px; fill: var(--muted); text-anchor: middle; dominant-baseline: middle; }
+  .coordsvg .pt { fill: transparent; }
+  .coordsvg .pt:hover { fill: var(--teal-soft); }
+  .coordsvg .dot { fill: var(--accent); }
+  .coordsvg .dot.g { fill: var(--good); }
+  .coordsvg .dot.b { fill: var(--bad); }
+  .coordsvg .path { stroke: var(--plum); stroke-width: 3; fill: none; stroke-dasharray: 5 4; }
+  .coordsvg .axlab { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 13px; fill: var(--teal); }
+
+  .compass { display: grid; grid-template-columns: repeat(3, 46px); grid-template-rows: repeat(3, 46px); gap: 4px; }
+  .compass span { display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 18px; color: var(--muted); }
+  .compass span.d { background: var(--teal-soft); color: var(--teal); border-radius: 10px; }
+  .compass span.mid { background: var(--ink); color: #9ff0e6; border-radius: 50%; font-size: 22px; }
+
+  .facing { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .facing .bubble { width: 96px; height: 96px; border-radius: 24px; background: var(--gold-soft); border: 3px solid var(--gold); display: grid; place-items: center; font-size: 46px; }
+  .facing .bubble span { display: block; }
+  .runline { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; min-height: 34px; align-items: center; }
+  .runline b { padding: 4px 10px; border-radius: 999px; background: var(--plum-soft); color: var(--plum); font-family: "Inter", "Segoe UI", sans-serif; font-size: 15px; font-weight: 700; }
+  .runline i { font-style: normal; color: var(--muted); font-size: 15px; }
+
+  .working { display: grid; gap: 8px; width: 100%; max-width: 580px; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 9px 14px; border-radius: 12px; background: var(--teal-soft); font-variant-numeric: tabular-nums; }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 17px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+
+  /* ==== grade-1 design layer ==== */
+  /* The palette is redefined for ALL THREE theme states on purpose: this is a
+     design that commits to one look rather than tracking the viewer's setting,
+     so every colour is stated here and none is inherited from the light base.
+     --gold-soft and --plum-soft are carried too — the Grade 1 lesson dropped
+     both, and the lessons here use them as surfaces. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --plum-soft: rgba(183, 139, 209, 0.18);
+    --gold: #F4C95D;
+    --gold-soft: rgba(244, 201, 93, 0.18);
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  /* One fixed gradient rather than one stretched down the whole document, so
+     135 degrees means 135 degrees however long the lesson runs. A fixed
+     pseudo-element, not background-attachment, which iOS Safari ignores. */
+  html { background: #183B56; }
+  body { background: transparent; color: var(--ink); font-size: 18px; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; letter-spacing: -0.02em; font-weight: 800; }
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+  .slide h2 { font-weight: 800; }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: rgba(20, 43, 62, 0.88); border: 1px solid var(--line); border-radius: 26px; }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { font-family: "Inter", "Segoe UI", sans-serif; background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb { font-family: "Inter", "Segoe UI", sans-serif; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .sticker { font-family: "Inter", "Segoe UI", sans-serif; background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .foot .mid { color: var(--muted); }
+
+  /* This layer widens the eyebrow's tracking, and the base sets it nowrap, so a
+     long eyebrow ("Mathematics · Patterns · Grades 1 to 4") pushes the step dots
+     off a phone. Give it room to wrap and let the hero stack under it. */
+  @media (max-width: 520px) {
+    .hero { flex-wrap: wrap; }
+    .eyebrow { white-space: normal; }
+    .dots { max-width: 100%; justify-content: flex-start; }
+  }
+
+  /* same as the digital clock: an --ink surface that has to stay dark */
+  .compass span.mid { background: #07131D; }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Position and direction</p>
+      <h1>Which Way <em>From Here</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+
+    <!-- 1 position words -->
+    <section class="slide" data-say="Before any grid, you can say where something is in words. Above, below, next to, between.">
+      <div class="slide-head"><span class="n">1</span><h2>Saying where</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="say0">Before any grid you can say where something is in <b>words</b>: above, below, next to, between.</span></div>
+      <div class="stage">
+        <div class="map" id="map0"></div>
+        <p class="fb" id="q0" style="font-size:19px"></p>
+        <p class="fb" id="fb0"></p>
+        <p class="fb small-fb" id="score0"></p>
+      </div>
+    </section>
+
+    <!-- 2 grid references -->
+    <section class="slide" data-say="Every square on a map has a name. The letter along the bottom, then the number up the side.">
+      <div class="slide-head"><span class="n">1</span><h2>Naming a square</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Say the <b>letter along</b> the bottom first, then the <b>number up</b> the side.</span></div>
+      <div class="stage">
+        <div class="map" id="map1"></div>
+        <div class="choices" id="ch1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="score1"></p>
+      </div>
+    </section>
+
+    <!-- 3 coordinates -->
+    <section class="slide" data-say="Coordinates mark a point, not a square. Go along the corridor, then up the stairs.">
+      <div class="slide-head"><span class="n">2</span><h2>Along, then up</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Coordinates mark a <b>point</b> where lines cross. Along the corridor, <b>then</b> up the stairs.</span></div>
+      <div class="stage">
+        <svg class="coordsvg" id="grid2" viewBox="0 0 250 250" role="img" aria-label="A coordinate grid"></svg>
+        <div class="choices" id="ch2"></div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="score2"></p>
+      </div>
+    </section>
+
+
+    <!-- 5 four quadrants -->
+    <section class="slide" data-say="Zero is not the edge of the world. Go left of it and down from it and the numbers turn negative.">
+      <div class="slide-head"><span class="n">5</span><h2>Past zero, all four ways</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="say4b">Left of zero and below zero the numbers turn <b>negative</b>. The grid keeps going all four ways.</span></div>
+      <div class="stage">
+        <svg class="coordsvg" id="grid4b" viewBox="0 0 260 260" role="img" aria-label="A grid with four quadrants"></svg>
+        <div class="choices" id="ch4b"></div>
+        <p class="fb" id="fb4b"></p>
+        <p class="fb small-fb" id="score4b"></p>
+      </div>
+    </section>
+
+    <!-- 6 comparing two points -->
+    <section class="slide" data-say="Two points can be compared without measuring. Further right means a bigger first number.">
+      <div class="slide-head"><span class="n">6</span><h2>Which point is further?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="say4c">Further <b>right</b> means a bigger first number. Further <b>up</b> means a bigger second number.</span></div>
+      <div class="stage">
+        <svg class="coordsvg" id="grid4c" viewBox="0 0 260 260" role="img" aria-label="Two points on a grid"></svg>
+        <p class="fb" id="q4c" style="font-size:19px"></p>
+        <div class="choices" id="ch4c"></div>
+        <div class="working" id="work4c"></div>
+        <p class="fb" id="fb4c"></p>
+        <p class="fb small-fb" id="score4c"></p>
+      </div>
+    </section>
+
+    <!-- 7 joining points into a shape -->
+    <section class="slide" data-say="Plot the corners in order and a shape appears. The last corner is the one you work out.">
+      <div class="slide-head"><span class="n">7</span><h2>Join the corners</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="say4d">Three corners are plotted. Tap the <b>fourth</b> so the shape closes up.</span></div>
+      <div class="stage">
+        <svg class="coordsvg" id="grid4d" viewBox="0 0 260 260" role="img" aria-label="Three corners of a shape"></svg>
+        <p class="fb" id="q4d" style="font-size:19px"></p>
+        <p class="fb" id="fb4d"></p>
+        <p class="fb small-fb" id="score4d"></p>
+      </div>
+    </section>
+
+    <!-- 8 turning from where you face -->
+    <section class="slide" data-say="Left and right depend on which way you are facing. Turn with the robot, not with the page.">
+      <div class="slide-head"><span class="n">8</span><h2>Whose left is it?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Left and right depend on the way <b>you are facing</b>. Turn with the robot.</span></div>
+      <div class="stage">
+        <div class="facing">
+          <div class="bubble"><span id="bot3">⬆️</span></div>
+          <div class="compass" id="comp3"></div>
+        </div>
+        <div class="bigbtns"><button type="button" class="big ghost small" id="try3l">↰ turn left</button><button type="button" class="big ghost small" id="try3r">turn right ↱</button></div>
+        <div class="choices" id="ch3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="score3"></p>
+      </div>
+    </section>
+
+    <!-- 9 compass moves -->
+    <section class="slide" data-say="North is up, south is down, east is right, west is left. Never Eat Slimy Worms goes round clockwise.">
+      <div class="slide-head"><span class="n">9</span><h2>North, south, east, west</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4"><b>N</b> is up, <b>S</b> is down, <b>E</b> is right, <b>W</b> is left. Tap where the counter lands.</span></div>
+      <div class="stage">
+        <div class="compass" id="comp4"></div>
+        <div class="map" id="map4"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="score4"></p>
+      </div>
+    </section>
+
+    <!-- 10 follow a route -->
+    <section class="slide" data-say="Now drive the robot. Forward goes the way it is facing, so turn first and then go.">
+      <div class="slide-head"><span class="n">10</span><h2>Drive it to the flag</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5"><b>Forward</b> goes the way the robot faces. Turn first, then go.</span></div>
+      <div class="stage">
+        <div class="map" id="map5"></div>
+        <div class="runline" id="run5"></div>
+        <div class="bigbtns"><button type="button" class="big ghost small" id="l5">↰ left</button><button type="button" class="big small" id="f5">▲ forward</button><button type="button" class="big ghost small" id="r5">right ↱</button><button type="button" class="big ghost small" id="reset5">↺ start again</button><button type="button" class="big small teal" id="next5" hidden>Next map ▶</button></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="score5"></p>
+      </div>
+    </section>
+
+    <!-- 11 describe a route -->
+    <section class="slide" data-say="Now read a route somebody else walked, and say it in words.">
+      <div class="slide-head"><span class="n">11</span><h2>Say the route</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Follow the purple trail from the star to the flag. Which set of directions is it?</span></div>
+      <div class="stage">
+        <div class="map" id="map6"></div>
+        <div class="choices" id="ch6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="score6"></p>
+      </div>
+    </section>
+
+    <!-- 12 reflection -->
+    <section class="slide" data-say="A mirror line flips a shape over. The reflection is the same distance from the line, on the other side.">
+      <div class="slide-head"><span class="n">12</span><h2>Over the mirror line</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">A reflection is the <b>same distance</b> from the line, on the <b>other side</b>. Tap where it lands.</span></div>
+      <div class="stage">
+        <div class="map" id="map7"></div>
+        <div class="working" id="work7"></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="score7"></p>
+      </div>
+    </section>
+
+    <!-- 13 translation -->
+    <section class="slide" data-say="A slide moves every corner of a shape the same way. Nothing turns, and nothing changes size.">
+      <div class="slide-head"><span class="n">13</span><h2>Sliding a shape</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">A <b>slide</b> moves every corner the same way. Across first, then up or down.</span></div>
+      <div class="stage">
+        <div class="map" id="map8"></div>
+        <div class="choices" id="ch8"></div>
+        <div class="working" id="work8"></div>
+        <p class="fb" id="fb8"></p>
+        <p class="fb small-fb" id="score8"></p>
+      </div>
+    </section>
+
+    <!-- 14 rotation -->
+    <section class="slide" data-say="A shape can turn about one of its own corners. That corner stays exactly where it is.">
+      <div class="slide-head"><span class="n">14</span><h2>Turning about a corner</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">A shape can turn about one of its <b>own corners</b>. That corner stays still.</span></div>
+      <div class="stage">
+        <div class="map" id="map9"></div>
+        <div class="working" id="work9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="fb small-fb" id="score9"></p>
+      </div>
+    </section>
+
+    <!-- 15 check -->
+    <section class="slide" data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="fb" id="q10" style="font-size:22px"></p>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="fb small-fb" id="score10"></p>
+      </div>
+    </section>
+
+    <!-- 16 stickers -->
+    <section class="slide" data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fb11"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+  const LETTERS = "ABCDEF";
+  const sq = (n) => n + (n === 1 ? " square" : " squares");
+  // compass, clockwise from the top
+  const DIRS = ["north", "east", "south", "west"];
+  const ARROW = ["⬆️", "➡️", "⬇️", "⬅️"];
+  const STEP = [[0, 1], [1, 0], [0, -1], [-1, 0]]; // [dc, dr], rows count upward
+  const WORD = { north: "up", east: "right", south: "down", west: "left" };
+  // the eight points, clockwise from the top (0096 4Gp.01)
+  const DIRS8 = ["north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west"];
+  const STEP8 = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]];
+  const WORD8 = Object.assign({}, WORD, {
+    "north-east": "up and to the right", "south-east": "down and to the right",
+    "south-west": "down and to the left", "north-west": "up and to the left",
+  });
+
+  // one grid renderer for steps 1, 4, 5, 6, 7, 8 and 9
+  // cells is a function (c, r) returning { html, cls, label }
+  function drawMap(el, cols, rows, cell, opts) {
+    const o = opts || {};
+    let h = "";
+    if (o.letters) { h += '<span class="cell lab"></span>'; for (let c = 0; c < cols; c++) h += '<span class="cell lab">' + LETTERS[c] + "</span>"; }
+    for (let r = rows; r >= 1; r--) {
+      if (o.letters) h += '<span class="cell lab">' + r + "</span>";
+      for (let c = 0; c < cols; c++) {
+        const info = cell(c, r) || {};
+        h += '<button type="button" class="cell ' + (info.cls || "") + '" data-c="' + c + '" data-r="' + r + '" aria-label="' + (info.label || (o.letters ? LETTERS[c] + r : "column " + (c + 1) + " row " + r)) + '">' + (info.html || "") + "</button>";
+      }
+    }
+    el.style.gridTemplateColumns = (o.letters ? "18px " : "") + "repeat(" + cols + ", 1fr)";
+    el.innerHTML = h;
+  }
+  const compassHtml = (mid, eight) => (eight ? ["NW", "N", "NE", "W", mid || "•", "E", "SW", "S", "SE"] : ["", "N", "", "W", mid || "•", "E", "", "S", ""]).map((t) => '<span class="' + (t === "" ? "" : t === (mid || "•") ? "mid" : "d") + '">' + t + "</span>").join("");
+
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0; $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots(); if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+  function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
+  function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
+  function reveal(el, answer, picked) { el.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(answer)) c.classList.add("right"); }); if (picked && picked.dataset.v !== String(answer)) picked.classList.add("wrong"); }
+
+  /* ---- 1: naming a square ---- */
+  const THINGS = ["⭐", "🌳", "🏠", "🐟", "⛵", "🦋", "🥁", "🌵"];
+  let r1 = 0, right1 = 0, lock1 = false, q1 = null; const ROUNDS1 = 5;
+  function round1() {
+    lock1 = false; $("fb1").textContent = ""; $("fb1").className = "fb";
+    if (r1 >= ROUNDS1) { $("map1").innerHTML = ""; $("ch1").innerHTML = ""; $("fb1").className = "fb good"; $("fb1").textContent = "You named " + right1 + " of " + ROUNDS1 + " squares!"; $("score1").textContent = ""; finish(1, "You can name any square."); return; }
+    const cols = 4, rows = 4, c = rnd(0, cols - 1), r = rnd(1, rows), thing = THINGS[rnd(0, THINGS.length - 1)];
+    q1 = { a: LETTERS[c] + r, c, r, thing };
+    $("score1").textContent = "Square " + (r1 + 1) + " of " + ROUNDS1;
+    drawMap($("map1"), cols, rows, (cc, rr) => (cc === c && rr === r ? { html: thing, cls: "on" } : {}), { letters: true });
+    const wrong = [LETTERS[c] + (r === rows ? r - 1 : r + 1), LETTERS[c === 0 ? c + 1 : c - 1] + r, LETTERS[c] + (rows + 1 - r)];
+    const opts = [q1.a]; for (const w of wrong) if (opts.length < 3 && opts.indexOf(w) === -1) opts.push(w);
+    choices($("ch1"), opts);
+    const ask = "Which square is the " + thing + " in?";
+    $("say1").innerHTML = "Which square is the " + thing + " in? Letter <b>along</b>, then number <b>up</b>.";
+    say(ask);
+  }
+  $("ch1").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock1) return; lock1 = true;
+    const ok = b.dataset.v === q1.a; reveal($("ch1"), q1.a, b); if (ok) right1++;
+    $("fb1").className = "fb " + (ok ? "good" : "bad");
+    $("fb1").textContent = (ok ? cheer() + " " : "It is " + q1.a + ". ") + "Along to " + LETTERS[q1.c] + ", then up to " + q1.r + ".";
+    say(ok ? cheer() + " " + q1.a : "It is " + q1.a);
+    r1++; setTimeout(round1, 2600);
+  });
+  round1();
+
+  /* ---- 2: coordinates ---- */
+  const MAXC = 6, PAD = 34, SPAN = 200;
+  const px = (v) => PAD + (v / MAXC) * SPAN, py = (v) => PAD + SPAN - (v / MAXC) * SPAN;
+  let r2 = 0, right2 = 0, lock2 = false, q2 = null; const ROUNDS2 = 5;
+  function drawCoords(dot, mark) {
+    let h = "";
+    for (let i = 0; i <= MAXC; i++) {
+      h += '<line class="grid" x1="' + px(i) + '" y1="' + py(0) + '" x2="' + px(i) + '" y2="' + py(MAXC) + '"></line>';
+      h += '<line class="grid" x1="' + px(0) + '" y1="' + py(i) + '" x2="' + px(MAXC) + '" y2="' + py(i) + '"></line>';
+    }
+    h += '<line class="axis" x1="' + px(0) + '" y1="' + py(0) + '" x2="' + px(MAXC) + '" y2="' + py(0) + '"></line>';
+    h += '<line class="axis" x1="' + px(0) + '" y1="' + py(0) + '" x2="' + px(0) + '" y2="' + py(MAXC) + '"></line>';
+    for (let i = 0; i <= MAXC; i++) {
+      h += '<text class="num" x="' + px(i) + '" y="' + (py(0) + 14) + '">' + i + "</text>";
+      h += '<text class="num" x="' + (px(0) - 13) + '" y="' + py(i) + '">' + i + "</text>";
+    }
+    h += '<text class="axlab" x="' + px(MAXC) + '" y="' + (py(0) + 28) + '" text-anchor="end">along</text>';
+    h += '<text class="axlab" x="' + (px(0) - 22) + '" y="' + py(MAXC) + '">up</text>';
+    if (dot) {
+      h += '<path class="path" d="M' + px(0) + " " + py(0) + "L" + px(dot[0]) + " " + py(0) + "L" + px(dot[0]) + " " + py(dot[1]) + '"></path>';
+      h += '<circle class="dot ' + (mark || "") + '" cx="' + px(dot[0]) + '" cy="' + py(dot[1]) + '" r="8"></circle>';
+    }
+    for (let x = 0; x <= MAXC; x++) for (let y = 0; y <= MAXC; y++) h += '<circle class="pt" cx="' + px(x) + '" cy="' + py(y) + '" r="11" data-x="' + x + '" data-y="' + y + '"><title>' + x + ", " + y + "</title></circle>";
+    $("grid2").innerHTML = h;
+  }
+  function round2() {
+    lock2 = false; $("fb2").textContent = ""; $("fb2").className = "fb";
+    if (r2 >= ROUNDS2) { $("grid2").innerHTML = ""; $("ch2").innerHTML = ""; $("fb2").className = "fb good"; $("fb2").textContent = "You placed " + right2 + " of " + ROUNDS2 + "!"; $("score2").textContent = ""; finish(2, "You can read coordinates."); return; }
+    const x = rnd(1, MAXC - 1), y = rnd(1, MAXC - 1), read = r2 % 2 === 0;
+    q2 = { x, y, read, a: "(" + x + ", " + y + ")" };
+    $("score2").textContent = "Point " + (r2 + 1) + " of " + ROUNDS2;
+    if (read) {
+      drawCoords([x, y]);
+      $("ch2").hidden = false;
+      const wrong = ["(" + y + ", " + x + ")", "(" + x + ", " + (y + 1) + ")", "(" + (x + 1) + ", " + y + ")"];
+      const opts = [q2.a]; for (const w of wrong) if (opts.length < 3 && opts.indexOf(w) === -1) opts.push(w);
+      choices($("ch2"), opts);
+      $("say2").innerHTML = "What are the coordinates of the orange dot? <b>Along</b> first, then <b>up</b>.";
+      say("What are the coordinates of the orange dot?");
+    } else {
+      drawCoords(null); $("ch2").hidden = true; $("ch2").innerHTML = "";
+      $("say2").innerHTML = "Tap the point at <b>(" + x + ", " + y + ")</b>. Along " + x + ", then up " + y + ".";
+      say("Tap the point at " + x + " comma " + y);
+    }
+  }
+  $("grid2").addEventListener("click", (e) => {
+    const t = e.target.closest(".pt"); if (!t || lock2 || q2.read) return; lock2 = true;
+    const x = Number(t.dataset.x), y = Number(t.dataset.y), ok = x === q2.x && y === q2.y;
+    drawCoords([q2.x, q2.y], ok ? "g" : ""); if (ok) right2++;
+    $("fb2").className = "fb " + (ok ? "good" : "bad");
+    $("fb2").textContent = ok ? cheer() + " That is (" + q2.x + ", " + q2.y + ")." : "You tapped (" + x + ", " + y + "). " + q2.a + " is along " + q2.x + ", then up " + q2.y + ".";
+    say(ok ? cheer() : "That was " + x + " comma " + y);
+    r2++; setTimeout(round2, 3000);
+  });
+  $("ch2").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock2) return; lock2 = true;
+    const ok = b.dataset.v === q2.a; reveal($("ch2"), q2.a, b); if (ok) right2++;
+    $("fb2").className = "fb " + (ok ? "good" : "bad");
+    $("fb2").textContent = (ok ? cheer() + " " : "It is " + q2.a + ". ") + "Along " + q2.x + ", then up " + q2.y + ".";
+    say(ok ? cheer() + " " + q2.a : "It is " + q2.a);
+    r2++; setTimeout(round2, 3000);
+  });
+  round2();
+
+
+  /* ---- 1: saying where, in words (0096 1Gp.01) ---- */
+  const SCENE = ["⭐", "🌳", "🏠", "🐟", "⛵", "🦋", "🥇", "🌵", "🐝"];
+  let r0 = 0, right0 = 0, lock0 = false, q0 = null, grid0 = []; const ROUNDS0 = 6;
+  function round0() {
+    lock0 = false; $("fb0").textContent = ""; $("fb0").className = "fb";
+    if (r0 >= ROUNDS0) { $("map0").innerHTML = ""; $("q0").textContent = ""; $("fb0").className = "fb good"; $("fb0").textContent = "You found " + right0 + " of " + ROUNDS0 + "!"; $("score0").textContent = ""; finish(0, "You can say where something is."); return; }
+    grid0 = shuffle(SCENE).slice(0, 9);
+    // a 3 by 3 scene, drawn with rows counting DOWN so "above" is the row above
+    let h = "";
+    for (let row = 0; row < 3; row++) for (let col = 0; col < 3; col++) {
+      const i = row * 3 + col;
+      h += '<button type="button" class="cell" data-i="' + i + '" aria-label="' + grid0[i] + '">' + grid0[i] + "</button>";
+    }
+    $("map0").style.gridTemplateColumns = "repeat(3, 1fr)";
+    $("map0").innerHTML = h;
+    const kinds = ["above", "below", "left", "right", "between", "corner"];
+    const kind = kinds[r0 % kinds.length];
+    let idx, ans, text;
+    if (kind === "above") { idx = rnd(3, 8); ans = idx - 3; text = "Which is <b>above</b> the " + grid0[idx] + "?"; }
+    else if (kind === "below") { idx = rnd(0, 5); ans = idx + 3; text = "Which is <b>below</b> the " + grid0[idx] + "?"; }
+    else if (kind === "left") { idx = [1, 2, 4, 5, 7, 8][rnd(0, 5)]; ans = idx - 1; text = "Which is to the <b>left</b> of the " + grid0[idx] + "?"; }
+    else if (kind === "right") { idx = [0, 1, 3, 4, 6, 7][rnd(0, 5)]; ans = idx + 1; text = "Which is to the <b>right</b> of the " + grid0[idx] + "?"; }
+    else if (kind === "between") { const row = rnd(0, 2); ans = row * 3 + 1; text = "Which is <b>between</b> the " + grid0[row * 3] + " and the " + grid0[row * 3 + 2] + "?"; }
+    else { ans = [0, 2, 6, 8][rnd(0, 3)]; const names = { 0: "top left", 2: "top right", 6: "bottom left", 8: "bottom right" }; text = "Which is in the <b>" + names[ans] + "</b> corner?"; }
+    q0 = { ans };
+    $("score0").textContent = "Question " + (r0 + 1) + " of " + ROUNDS0;
+    $("q0").innerHTML = text + " Tap it.";
+    $("say0").innerHTML = text;
+    say(text.replace(/<[^>]+>/g, ""));
+  }
+  $("map0").addEventListener("click", (e) => {
+    const b = e.target.closest(".cell"); if (!b || lock0) return; lock0 = true;
+    const i = Number(b.dataset.i), ok = i === q0.ans;
+    $("map0").querySelectorAll(".cell").forEach((x) => { if (Number(x.dataset.i) === q0.ans) x.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right0++;
+    $("fb0").className = "fb " + (ok ? "good" : "bad");
+    $("fb0").textContent = (ok ? cheer() + " " : "Not quite. ") + "It is the " + grid0[q0.ans] + ".";
+    say(ok ? cheer() : "It is the other one");
+    r0++; setTimeout(round0, 2400);
+  });
+  round0();
+
+  /* ---- 5, 6, 7: a grid that runs both ways (0096 6Gp.01, 5Gp.01, 5Gp.02, 6Gp.02) ---- */
+  const QN = 4, QPAD = 26, QSPAN = 208;             // -4 .. 4 on both axes
+  const qx = (v) => QPAD + ((v + QN) / (QN * 2)) * QSPAN;
+  const qy = (v) => QPAD + QSPAN - ((v + QN) / (QN * 2)) * QSPAN;
+  function drawQuad(el, opts) {
+    const o = opts || {};
+    let h = "";
+    for (let i = -QN; i <= QN; i++) {
+      h += '<line class="grid" x1="' + qx(i) + '" y1="' + qy(-QN) + '" x2="' + qx(i) + '" y2="' + qy(QN) + '"></line>';
+      h += '<line class="grid" x1="' + qx(-QN) + '" y1="' + qy(i) + '" x2="' + qx(QN) + '" y2="' + qy(i) + '"></line>';
+    }
+    h += '<line class="axis" x1="' + qx(-QN) + '" y1="' + qy(0) + '" x2="' + qx(QN) + '" y2="' + qy(0) + '"></line>';
+    h += '<line class="axis" x1="' + qx(0) + '" y1="' + qy(-QN) + '" x2="' + qx(0) + '" y2="' + qy(QN) + '"></line>';
+    for (let i = -QN; i <= QN; i++) {
+      if (i === 0) continue;
+      h += '<text class="num" x="' + qx(i) + '" y="' + (qy(0) + 12) + '">' + i + "</text>";
+      h += '<text class="num" x="' + (qx(0) - 13) + '" y="' + qy(i) + '">' + i + "</text>";
+    }
+    for (const seg of o.lines || []) h += '<line class="path" style="stroke-dasharray:none" x1="' + qx(seg[0]) + '" y1="' + qy(seg[1]) + '" x2="' + qx(seg[2]) + '" y2="' + qy(seg[3]) + '"></line>';
+    for (const d of o.dots || []) {
+      h += '<circle class="dot ' + (d[2] || "") + '" cx="' + qx(d[0]) + '" cy="' + qy(d[1]) + '" r="7"></circle>';
+      if (d[3]) h += '<text class="axlab" x="' + (qx(d[0]) + 10) + '" y="' + (qy(d[1]) - 8) + '">' + d[3] + "</text>";
+    }
+    if (o.taps) for (let x = -QN; x <= QN; x++) for (let y = -QN; y <= QN; y++) h += '<circle class="pt" cx="' + qx(x) + '" cy="' + qy(y) + '" r="10" data-x="' + x + '" data-y="' + y + '"><title>' + x + ", " + y + "</title></circle>";
+    el.innerHTML = h;
+  }
+  const pt = (x, y) => "(" + x + ", " + y + ")";
+
+  /* 5: read and plot in all four quadrants */
+  let r4b = 0, right4b = 0, lock4b = false, q4b = null; const ROUNDS4B = 5;
+  function round4b() {
+    lock4b = false; $("fb4b").textContent = ""; $("fb4b").className = "fb";
+    if (r4b >= ROUNDS4B) { $("grid4b").innerHTML = ""; $("ch4b").innerHTML = ""; $("fb4b").className = "fb good"; $("fb4b").textContent = "You placed " + right4b + " of " + ROUNDS4B + "!"; $("score4b").textContent = ""; finish(3, "You can use all four quadrants."); return; }
+    let x = 0, y = 0;
+    while (x === 0 && y === 0) { x = rnd(-3, 3); y = rnd(-3, 3); }
+    const read = r4b % 2 === 0;
+    q4b = { x, y, read, a: pt(x, y) };
+    $("score4b").textContent = "Point " + (r4b + 1) + " of " + ROUNDS4B;
+    if (read) {
+      drawQuad($("grid4b"), { dots: [[x, y, ""]] });
+      $("ch4b").hidden = false;
+      choices($("ch4b"), [pt(x, y), pt(y, x), pt(-x, y), pt(x, -y)].filter((v, i, arr) => arr.indexOf(v) === i).slice(0, 3));
+      $("say4b").innerHTML = "What are the coordinates of the orange dot? Along <b>first</b>, then up.";
+      say("What are the coordinates of the orange dot?");
+    } else {
+      drawQuad($("grid4b"), { taps: true });
+      $("ch4b").hidden = true; $("ch4b").innerHTML = "";
+      $("say4b").innerHTML = "Tap the point at <b>" + pt(x, y) + "</b>.";
+      say("Tap the point at " + x + " comma " + y);
+    }
+  }
+  $("grid4b").addEventListener("click", (e) => {
+    const t = e.target.closest(".pt"); if (!t || lock4b || q4b.read) return; lock4b = true;
+    const x = Number(t.dataset.x), y = Number(t.dataset.y), ok = x === q4b.x && y === q4b.y;
+    drawQuad($("grid4b"), { dots: [[q4b.x, q4b.y, ok ? "g" : ""]] }); if (ok) right4b++;
+    $("fb4b").className = "fb " + (ok ? "good" : "bad");
+    $("fb4b").textContent = ok ? cheer() + " That is " + q4b.a + "." : "You tapped " + pt(x, y) + ". " + q4b.a + " is "
+      + Math.abs(q4b.x) + (q4b.x < 0 ? " to the LEFT" : " to the right") + ", then " + Math.abs(q4b.y) + (q4b.y < 0 ? " DOWN" : " up") + ".";
+    say(ok ? cheer() : "That was " + x + " comma " + y);
+    r4b++; setTimeout(round4b, 3400);
+  });
+  $("ch4b").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock4b) return; lock4b = true;
+    const ok = b.dataset.v === q4b.a; reveal($("ch4b"), q4b.a, b); if (ok) right4b++;
+    $("fb4b").className = "fb " + (ok ? "good" : "bad");
+    $("fb4b").textContent = (ok ? cheer() + " " : "It is " + q4b.a + ". ") + "A minus means left of zero, or below it.";
+    say(ok ? cheer() : "It is " + q4b.a);
+    r4b++; setTimeout(round4b, 3400);
+  });
+  round4b();
+
+  /* 6: compare two points */
+  let r4c = 0, right4c = 0, lock4c = false, q4c = null; const ROUNDS4C = 5;
+  function round4c() {
+    lock4c = false; $("fb4c").textContent = ""; $("fb4c").className = "fb"; $("work4c").innerHTML = "";
+    if (r4c >= ROUNDS4C) { $("grid4c").innerHTML = ""; $("q4c").textContent = ""; $("ch4c").innerHTML = ""; $("fb4c").className = "fb good"; $("fb4c").textContent = "You compared " + right4c + " of " + ROUNDS4C + "!"; $("score4c").textContent = ""; finish(4, "You can compare two points."); return; }
+    let ax, ay, bx, by;
+    do { ax = rnd(-3, 3); ay = rnd(-3, 3); bx = rnd(-3, 3); by = rnd(-3, 3); } while (ax === bx || ay === by);
+    const kind = r4c % 3;
+    let q, a, work;
+    if (kind === 0) {
+      q = "Which point is further to the RIGHT?"; a = ax > bx ? "A" : "B";
+      work = [{ k: "A is along to", v: String(ax) }, { k: "B is along to", v: String(bx) }, { k: "Further right", v: a, total: true }];
+    } else if (kind === 1) {
+      q = "Which point is HIGHER?"; a = ay > by ? "A" : "B";
+      work = [{ k: "A is up to", v: String(ay) }, { k: "B is up to", v: String(by) }, { k: "Higher", v: a, total: true }];
+    } else {
+      const steps = Math.abs(bx - ax);
+      q = "How many steps ACROSS is B from A?"; a = String(steps);
+      work = [{ k: "A is along to", v: String(ax) }, { k: "B is along to", v: String(bx) }, { k: "The gap", v: steps + " steps", total: true }];
+    }
+    q4c = { a, work };
+    $("score4c").textContent = "Pair " + (r4c + 1) + " of " + ROUNDS4C;
+    drawQuad($("grid4c"), { dots: [[ax, ay, "", "A"], [bx, by, "g", "B"]] });
+    $("q4c").textContent = q; $("say4c").textContent = q;
+    choices($("ch4c"), kind === 2 ? [String(Math.abs(bx - ax)), String(Math.abs(bx - ax) + 1), String(Math.abs(by - ay))].filter((v, i, arr) => arr.indexOf(v) === i) : ["A", "B"]);
+    say(q);
+  }
+  $("ch4c").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock4c) return; lock4c = true;
+    const ok = b.dataset.v === q4c.a; reveal($("ch4c"), q4c.a, b); if (ok) right4c++;
+    lines($("work4c"), q4c.work);
+    $("fb4c").className = "fb " + (ok ? "good" : "bad");
+    $("fb4c").textContent = (ok ? cheer() + " " : "It is " + q4c.a + ". ") + "Compare the numbers, not the picture.";
+    say(ok ? cheer() : "It is " + q4c.a);
+    r4c++; setTimeout(round4c, 3600);
+  });
+  round4c();
+
+  /* 7: plot the fourth corner */
+  let r4d = 0, right4d = 0, lock4d = false, q4d = null, last4d = ""; const ROUNDS4D = 4;
+  function round4d() {
+    lock4d = false; $("fb4d").textContent = ""; $("fb4d").className = "fb";
+    if (r4d >= ROUNDS4D) { $("grid4d").innerHTML = ""; $("q4d").textContent = ""; $("fb4d").className = "fb good"; $("fb4d").textContent = "You closed " + right4d + " of " + ROUNDS4D + " shapes!"; $("score4d").textContent = ""; finish(5, "You can plot a shape from its corners."); return; }
+    // never the same rectangle twice running
+    let x1, y1, w, h, key;
+    do { x1 = rnd(-3, 0); y1 = rnd(-3, 0); w = rnd(2, 4); h = rnd(2, 4); key = [x1, y1, w, h].join(); } while (key === last4d);
+    last4d = key;
+    const x2 = x1 + w, y2 = y1 + h;
+    // three corners drawn, the fourth is the one to find
+    const corners = [[x1, y1], [x2, y1], [x2, y2]], want = [x1, y2];
+    q4d = { want };
+    $("score4d").textContent = "Shape " + (r4d + 1) + " of " + ROUNDS4D;
+    drawQuad($("grid4d"), {
+      taps: true,
+      dots: corners.map((c, i) => [c[0], c[1], "", "ABC"[i]]),
+      lines: [[x1, y1, x2, y1], [x2, y1, x2, y2]],
+    });
+    const q = "Three corners of a rectangle are marked. Tap the fourth.";
+    $("q4d").textContent = q; $("say4d").textContent = q; say(q);
+  }
+  $("grid4d").addEventListener("click", (e) => {
+    const t = e.target.closest(".pt"); if (!t || lock4d) return; lock4d = true;
+    const x = Number(t.dataset.x), y = Number(t.dataset.y);
+    const ok = x === q4d.want[0] && y === q4d.want[1]; if (ok) right4d++;
+    const [wx, wy] = q4d.want;
+    drawQuad($("grid4d"), { dots: [[wx, wy, ok ? "g" : "b"]], lines: [] });
+    $("fb4d").className = "fb " + (ok ? "good" : "bad");
+    $("fb4d").textContent = (ok ? cheer() + " " : "It is " + pt(wx, wy) + ". ")
+      + "The fourth corner lines up ACROSS with one corner and UP with another.";
+    say(ok ? cheer() : "It is " + wx + " comma " + wy);
+    r4d++; setTimeout(round4d, 3800);
+  });
+  round4d();
+
+  /* ---- 8: whose left is it ---- */
+  let face3 = 0, r3 = 0, right3 = 0, lock3 = false, q3 = null, last3 = -1; const ROUNDS3 = 5;
+  function paintBot3() { $("bot3").textContent = ARROW[face3]; $("comp3").innerHTML = compassHtml(ARROW[face3]); }
+  function round3() {
+    lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
+    if (r3 >= ROUNDS3) { $("ch3").innerHTML = ""; ["try3l", "try3r"].forEach((i) => { $(i).hidden = true; }); $("fb3").className = "fb good"; $("fb3").textContent = "You turned it right " + right3 + " times out of " + ROUNDS3 + "!"; $("score3").textContent = ""; finish(6, "You know whose left is whose."); return; }
+    const left = r3 % 2 === 0;
+    let want; do { want = rnd(0, 3); } while (want === last3);
+    last3 = want; face3 = (want + (left ? 1 : 3)) % 4;
+    paintBot3();
+    q3 = { from: face3, left, a: DIRS[want] };
+    $("score3").textContent = "Turn " + (r3 + 1) + " of " + ROUNDS3;
+    choices($("ch3"), DIRS, true);
+    const ask = "The robot faces " + DIRS[face3] + ". It turns " + (left ? "left" : "right") + ". Which way is it facing now?";
+    $("say3").innerHTML = "The robot faces <b>" + DIRS[face3] + "</b>. It turns <b>" + (left ? "left" : "right") + "</b>. Which way now?";
+    say(ask);
+  }
+  $("try3l").addEventListener("click", () => { face3 = (face3 + 3) % 4; paintBot3(); say("Now it faces " + DIRS[face3]); });
+  $("try3r").addEventListener("click", () => { face3 = (face3 + 1) % 4; paintBot3(); say("Now it faces " + DIRS[face3]); });
+  $("ch3").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock3) return; lock3 = true;
+    const ok = b.dataset.v === q3.a; reveal($("ch3"), q3.a, b); if (ok) right3++;
+    face3 = DIRS.indexOf(q3.a); paintBot3();
+    $("fb3").className = "fb " + (ok ? "good" : "bad");
+    $("fb3").textContent = (ok ? cheer() + " " : "It faces " + q3.a + ". ") + "Facing " + DIRS[q3.from] + " and turning " + (q3.left ? "left" : "right") + " lands on " + q3.a + ".";
+    say(ok ? cheer() + " " + q3.a : "It faces " + q3.a);
+    r3++; setTimeout(round3, 3000);
+  });
+  round3();
+
+  /* ---- 4: compass moves ---- */
+  $("comp4").innerHTML = compassHtml("🧭", true);
+  const GC = 5, GR = 5;
+  let r4 = 0, right4 = 0, lock4 = false, q4 = null; const ROUNDS4 = 6;
+  function round4() {
+    lock4 = false; $("fb4").textContent = ""; $("fb4").className = "fb";
+    if (r4 >= ROUNDS4) { $("map4").innerHTML = ""; $("fb4").className = "fb good"; $("fb4").textContent = "You landed on the right square " + right4 + " times out of " + ROUNDS4 + "!"; $("score4").textContent = ""; finish(7, "You can move by the compass."); return; }
+    const eight = r4 >= 3;
+    const d = eight ? [1, 3, 5, 7][rnd(0, 3)] : [0, 2, 4, 6][rnd(0, 3)];
+    const n = eight ? 1 : rnd(1, 2);
+    const dirName = DIRS8[d], [dc, dr] = STEP8[d];
+    const c = rnd(Math.max(0, -dc * n), GC - 1 - Math.max(0, dc * n));
+    const r = rnd(1 + Math.max(0, -dr * n), GR - Math.max(0, dr * n));
+    const tc = c + dc * n, tr = r + dr * n;
+    q4 = { c, r, tc, tr, d, n, dirName };
+    $("score4").textContent = "Move " + (r4 + 1) + " of " + ROUNDS4;
+    drawMap($("map4"), GC, GR, (cc, rr) => (cc === c && rr === r ? { html: "🔵", cls: "on" } : {}));
+    const ask = "The counter moves " + sq(n) + " " + dirName + ". Tap where it lands.";
+    $("say4").innerHTML = "Move <b>" + sq(n) + " " + dirName + "</b> — that is " + WORD8[dirName] + ". Tap where it lands.";
+    say(ask);
+  }
+  $("map4").addEventListener("click", (e) => {
+    const b = e.target.closest(".cell"); if (!b || lock4 || b.classList.contains("lab")) return; lock4 = true;
+    const c = Number(b.dataset.c), r = Number(b.dataset.r), ok = c === q4.tc && r === q4.tr;
+    $("map4").querySelectorAll(".cell").forEach((x) => { if (Number(x.dataset.c) === q4.tc && Number(x.dataset.r) === q4.tr) { x.classList.add("right"); x.textContent = "🔵"; } });
+    if (!ok) b.classList.add("wrong"); else right4++;
+    $("fb4").className = "fb " + (ok ? "good" : "bad");
+    $("fb4").textContent = (ok ? cheer() + " " : "Not quite — it lands on the green square. ") + q4.dirName + " is " + WORD8[q4.dirName] + ".";
+    say(ok ? cheer() : q4.dirName + " is " + WORD8[q4.dirName]);
+    r4++; setTimeout(round4, 3000);
+  });
+  round4();
+
+  /* ---- 5: drive the robot ---- */
+  const MAPS5 = [
+    { c: 0, r: 1, f: 0, gc: 2, gr: 3 },
+    { c: 3, r: 4, f: 2, gc: 1, gr: 1 },
+    { c: 0, r: 4, f: 1, gc: 4, gr: 2 },
+  ];
+  let m5 = 0, right5 = 0, bot5 = null, trail5 = [], moves5 = [];
+  function paintMap5() {
+    drawMap($("map5"), GC, GR, (c, r) => {
+      const g = MAPS5[Math.min(m5, MAPS5.length - 1)];
+      if (c === bot5.c && r === bot5.r) return { html: '<span class="bot">' + ARROW[bot5.f] + "</span>", cls: "on", label: "the robot, facing " + DIRS[bot5.f] };
+      if (c === g.gc && r === g.gr) return { html: "🚩", cls: "goal", label: "the flag" };
+      if (trail5.some((t) => t.c === c && t.r === r)) return { html: "·", cls: "trail" };
+      return {};
+    });
+    $("run5").innerHTML = moves5.length ? moves5.map((m) => "<b>" + m + "</b>").join("") : "<i>no moves yet</i>";
+  }
+  function round5() {
+    $("fb5").textContent = ""; $("fb5").className = "fb"; $("next5").hidden = true;
+    if (m5 >= MAPS5.length) { $("map5").innerHTML = ""; $("run5").innerHTML = ""; ["l5", "f5", "r5", "reset5"].forEach((i) => { $(i).hidden = true; }); $("fb5").className = "fb good"; $("fb5").textContent = "You drove it to all " + MAPS5.length + " flags!"; $("score5").textContent = ""; finish(8, "You can follow a route."); return; }
+    const g = MAPS5[m5]; bot5 = { c: g.c, r: g.r, f: g.f }; trail5 = []; moves5 = [];
+    $("score5").textContent = "Map " + (m5 + 1) + " of " + MAPS5.length;
+    ["l5", "f5", "r5"].forEach((i) => { $(i).disabled = false; });
+    paintMap5(); say("Drive the robot to the flag. It is facing " + DIRS[bot5.f]);
+  }
+  function move5(kind) {
+    const g = MAPS5[m5];
+    if (kind === "l") { bot5.f = (bot5.f + 3) % 4; moves5.push("turn left"); }
+    else if (kind === "r") { bot5.f = (bot5.f + 1) % 4; moves5.push("turn right"); }
+    else {
+      const [dc, dr] = STEP[bot5.f], nc = bot5.c + dc, nr = bot5.r + dr;
+      if (nc < 0 || nc > GC - 1 || nr < 1 || nr > GR) { $("fb5").className = "fb bad"; $("fb5").textContent = "That is the edge of the map. Turn first."; say("That is the edge of the map"); return; }
+      trail5.push({ c: bot5.c, r: bot5.r }); bot5.c = nc; bot5.r = nr; moves5.push("forward");
+    }
+    paintMap5();
+    if (bot5.c === g.gc && bot5.r === g.gr) {
+      right5++; ["l5", "f5", "r5"].forEach((i) => { $(i).disabled = true; });
+      $("fb5").className = "fb good"; $("fb5").textContent = cheer() + " You reached the flag in " + moves5.length + " moves.";
+      say(cheer() + " You reached the flag"); m5++; $("next5").hidden = false;
+    } else { $("fb5").className = "fb"; $("fb5").textContent = "Facing " + DIRS[bot5.f] + "."; }
+  }
+  $("l5").addEventListener("click", () => move5("l"));
+  $("r5").addEventListener("click", () => move5("r"));
+  $("f5").addEventListener("click", () => move5("f"));
+  $("reset5").addEventListener("click", () => { const g = MAPS5[Math.min(m5, MAPS5.length - 1)]; bot5 = { c: g.c, r: g.r, f: g.f }; trail5 = []; moves5 = []; $("fb5").textContent = ""; $("fb5").className = "fb"; if (m5 < MAPS5.length) ["l5", "f5", "r5"].forEach((i) => { $(i).disabled = false; }); paintMap5(); });
+  $("next5").addEventListener("click", round5);
+  round5();
+
+  /* ---- 6: say the route ---- */
+  let r6 = 0, right6 = 0, lock6 = false, q6 = null; const ROUNDS6 = 4;
+  const legWords = (leg) => sq(leg.n) + " " + DIRS[leg.d];
+  function round6() {
+    lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
+    if (r6 >= ROUNDS6) { $("map6").innerHTML = ""; $("ch6").innerHTML = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + " routes!"; $("score6").textContent = ""; finish(9, "You can describe a route."); return; }
+    let c = rnd(0, 1), r = rnd(1, 2), legs = [], path = [{ c, r }];
+    const first = rnd(0, 1) === 0 ? 1 : 0; // start east or north
+    for (let k = 0; k < 2; k++) {
+      const d = k === 0 ? first : first === 1 ? 0 : 1, n = rnd(1, 2), [dc, dr] = STEP[d];
+      for (let i = 0; i < n; i++) { c += dc; r += dr; path.push({ c, r }); }
+      legs.push({ d, n });
+    }
+    q6 = { legs, a: legs.map(legWords).join(", then ") };
+    $("score6").textContent = "Route " + (r6 + 1) + " of " + ROUNDS6;
+    const start = path[0], end = path[path.length - 1];
+    drawMap($("map6"), GC, GR, (cc, rr) => {
+      if (cc === start.c && rr === start.r) return { html: "⭐", cls: "on", label: "the start" };
+      if (cc === end.c && rr === end.r) return { html: "🚩", cls: "goal", label: "the flag" };
+      if (path.some((p) => p.c === cc && p.r === rr)) return { html: "·", cls: "trail" };
+      return {};
+    });
+    const swapped = legs.slice().reverse().map(legWords).join(", then ");
+    const flipped = legs.map((l) => sq(l.n) + " " + DIRS[(l.d + 2) % 4]).join(", then ");
+    const opts = [q6.a]; for (const w of [swapped, flipped]) if (opts.indexOf(w) === -1) opts.push(w);
+    while (opts.length < 3) { const extra = legs.map((l) => sq(l.n + 1) + " " + DIRS[l.d]).join(", then "); if (opts.indexOf(extra) === -1) opts.push(extra); else break; }
+    choices($("ch6"), opts, true);
+    say("Follow the trail from the star to the flag. Which set of directions is it?");
+  }
+  $("ch6").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock6) return; lock6 = true;
+    const ok = b.dataset.v === q6.a; reveal($("ch6"), q6.a, b); if (ok) right6++;
+    $("fb6").className = "fb " + (ok ? "good" : "bad");
+    $("fb6").textContent = (ok ? cheer() + " " : "It is " + q6.a + ". ") + "The trail goes " + q6.legs.map(legWords).join(", then ") + ".";
+    say(ok ? cheer() : "It is " + q6.a);
+    r6++; setTimeout(round6, 3600);
+  });
+  round6();
+
+  /* ---- 7: reflecting a SHAPE (0096 2Gp.02, 3Gp.02, 4Gp.03, 5Gp.04, 6Gp.04) ---- */
+  // a square grid, so a diagonal mirror means something.
+  // internally the maths uses (cx, cy) with cy counting DOWN from the top;
+  // the drawing wants a row number counting UP, so r = RN - cy.
+  const RN = 5;
+  const MIRRORS = [
+    { key: "vertical", axis: "the column down the middle", hit: (cx, cy) => cx === 2, map: (cx, cy) => [4 - cx, cy] },
+    { key: "horizontal", axis: "the row across the middle", hit: (cx, cy) => cy === 2, map: (cx, cy) => [cx, 4 - cy] },
+    { key: "edge", axis: "the column down the middle, touching the shape", hit: (cx, cy) => cx === 2, map: (cx, cy) => [4 - cx, cy] },
+    { key: "diagonal", axis: "the diagonal line", hit: (cx, cy) => cx === cy, map: (cx, cy) => [cy, cx] },
+  ];
+  let r7 = 0, right7 = 0, lock7 = false, q7 = null; const ROUNDS7 = 4;
+  const keyOf = (c) => c[0] + "," + c[1];
+  function shapeFor(kind) {
+    // an L of three cells, wholly on one side of the mirror
+    const cells = [];
+    if (kind === "vertical" || kind === "edge") {
+      const ax = kind === "edge" ? 0 : 0, ay = rnd(0, 3);
+      cells.push([ax, ay], [ax + 1, ay], [ax, ay + 1]);
+    } else if (kind === "horizontal") {
+      const ax = rnd(0, 3), ay = 0;
+      cells.push([ax, ay], [ax + 1, ay], [ax, ay + 1]);
+    } else {
+      // ax must clear the diagonal by 2 AND leave room for ax+1, so ay stops at 1
+      const ay = rnd(0, 1), ax = rnd(ay + 2, 3);
+      cells.push([ax, ay], [ax + 1, ay], [ax, ay + 1]);
+    }
+    return cells;
+  }
+  function paintMap7(showAns, tapped, found) {
+    const M = q7.M;
+    drawMap($("map7"), RN, RN, (c, r) => {
+      const cx = c, cy = RN - r;
+      const onLine = M.hit(cx, cy);
+      const cls = onLine ? "mirror" : "";
+      if (q7.shape.some((s2) => s2[0] === cx && s2[1] === cy)) return { html: "▲", cls: cls + " on", label: "part of the shape" };
+      if (found && found.has(cx + "," + cy)) return { html: "▲", cls: cls + " right", label: "part of the reflection" };
+      if (showAns && q7.image.some((s2) => s2[0] === cx && s2[1] === cy)) return { html: "▲", cls: cls + " right", label: "part of the reflection" };
+      if (tapped && tapped[0] === cx && tapped[1] === cy) return { html: "✖", cls: cls + " wrong" };
+      return { cls };
+    });
+  }
+  function round7() {
+    lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb"; $("work7").innerHTML = "";
+    if (r7 >= ROUNDS7) { $("map7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You reflected " + right7 + " of " + ROUNDS7 + " shapes!"; $("score7").textContent = ""; finish(10, "You can reflect a shape."); return; }
+    const M = MIRRORS[r7 % MIRRORS.length];
+    const shape = shapeFor(M.key);
+    const image = shape.map((c) => M.map(c[0], c[1]));
+    q7 = { M, shape, image, found: new Set() };
+    $("score7").textContent = "Reflection " + (r7 + 1) + " of " + ROUNDS7 + " · " + M.key + " mirror";
+    paintMap7(false, null, q7.found);
+    $("say7").innerHTML = "The mirror is <b>" + M.axis + "</b>. Tap all <b>three</b> squares the shape lands on.";
+    say("The mirror is " + M.axis + ". Tap the three squares the shape lands on.");
+  }
+  $("map7").addEventListener("click", (e) => {
+    const b = e.target.closest(".cell"); if (!b || lock7 || b.classList.contains("lab")) return;
+    const c = Number(b.dataset.c), r = Number(b.dataset.r), cx = c, cy = RN - r;
+    if (q7.shape.some((s2) => s2[0] === cx && s2[1] === cy)) {
+      $("fb7").className = "fb"; $("fb7").textContent = "That is the shape itself. Tap where it LANDS.";
+      say("That is the shape itself"); return;
+    }
+    const isImage = q7.image.some((s2) => s2[0] === cx && s2[1] === cy);
+    if (isImage) {
+      q7.found.add(cx + "," + cy);
+      paintMap7(false, null, q7.found);
+      if (q7.found.size < 3) { $("fb7").className = "fb"; $("fb7").textContent = (3 - q7.found.size) + " more to find."; say(String(3 - q7.found.size) + " more"); return; }
+      lock7 = true; right7++;
+      paintMap7(true, null, q7.found);
+      lines($("work7"), [
+        { k: "The mirror", v: q7.M.axis },
+        { k: "Every square goes", v: "the same distance the other side" },
+        { k: "The shape keeps its", v: "size and its shape, flipped over", total: true },
+      ]);
+      $("fb7").className = "fb good";
+      $("fb7").textContent = cheer() + " All three, on the other side of the " + q7.M.key + " mirror.";
+      say(cheer() + " All three");
+      r7++; setTimeout(round7, 3800); return;
+    }
+    lock7 = true;
+    paintMap7(true, [cx, cy], q7.found);
+    lines($("work7"), [
+      { k: "The mirror", v: q7.M.axis },
+      { k: "Count from the line", v: "and count the same the other side" },
+    ]);
+    $("fb7").className = "fb bad";
+    $("fb7").textContent = "Not quite. The three green squares are where it lands.";
+    say("Not quite. The green squares are where it lands.");
+    r7++; setTimeout(round7, 3800);
+  });
+  round7();
+
+  /* ---- 8: sliding a SHAPE, and its corresponding points (0096 5Gp.03, 6Gp.03) ---- */
+  // Three cells, each LETTERED, on a grid whose squares have coordinate names.
+  // Naming them is the point: 5Gp.03 asks for the corresponding points between
+  // the original and the image, not just for the image.
+  const TAG = ["A", "B", "C"];
+  let r8 = 0, right8 = 0, lock8 = false, q8 = null; const ROUNDS8 = 4;
+  const slideWords = (dx, dy) => sq(Math.abs(dx)) + " " + (dx > 0 ? "right" : "left")
+    + " and " + sq(Math.abs(dy)) + " " + (dy > 0 ? "up" : "down");
+  const nameOf = (c, r) => LETTERS[c] + r;
+  function paintMap8(showAns) {
+    drawMap($("map8"), GC, GR, (c, r) => {
+      const si = q8.shape.findIndex((x) => x[0] === c && x[1] === r);
+      if (si >= 0) return { html: TAG[si], cls: "on", label: "corner " + TAG[si] + " at " + nameOf(c, r) };
+      const fi = q8.image.findIndex((x) => x[0] === c && x[1] === r);
+      if (fi >= 0 && (showAns || q8.found.has(c + "," + r))) {
+        return { html: TAG[fi], cls: "right", label: "corner " + TAG[fi] + " lands at " + nameOf(c, r) };
+      }
+      if (q8.miss && q8.miss[0] === c && q8.miss[1] === r) return { html: "✖", cls: "wrong" };
+      return {};
+    }, { letters: true });
+  }
+  function round8() {
+    lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb"; $("ch8").innerHTML = ""; $("ch8").hidden = true;
+    if (r8 >= ROUNDS8) {
+      $("map8").innerHTML = ""; $("fb8").className = "fb good";
+      $("fb8").textContent = "You slid " + right8 + " of " + ROUNDS8 + " shapes!";
+      $("score8").textContent = ""; finish(11, "You can slide a shape and name where each corner goes."); return;
+    }
+    const dx = [-2, -1, 1, 2][rnd(0, 3)], dy = [-2, -1, 1, 2][rnd(0, 3)];
+    const ac = rnd(Math.max(0, -dx), Math.min(3, 3 - dx));
+    const ar = rnd(Math.max(1, 1 - dy), Math.min(4, 4 - dy));
+    const shape = [[ac, ar], [ac + 1, ar], [ac, ar + 1]];
+    const image = shape.map(([c, r]) => [c + dx, r + dy]);
+    q8 = { dx, dy, shape, image, found: new Set(), miss: null, a: slideWords(dx, dy) };
+    $("score8").textContent = "Slide " + (r8 + 1) + " of " + ROUNDS8;
+    paintMap8(false);
+    $("say8").innerHTML = "Slide the whole shape <b>" + q8.a + "</b>. Tap the <b>three</b> squares it lands on.";
+    say("Slide the whole shape " + q8.a + ". Tap the three squares it lands on.");
+  }
+  function done8(ok) {
+    lock8 = true;
+    paintMap8(true);
+    lines($("work8"), q8.shape.map((sc, i) => ({
+      k: "Corner " + TAG[i] + " was at " + nameOf(sc[0], sc[1]),
+      v: "now at " + nameOf(q8.image[i][0], q8.image[i][1]),
+    })).concat([{ k: "Every corner moved", v: "the same " + q8.a, total: true }]));
+    $("fb8").className = "fb " + (ok ? "good" : "bad");
+    $("fb8").textContent = ok
+      ? cheer() + " All three, and the shape did not turn."
+      : "Not quite. The three green squares are where it lands.";
+    say(ok ? cheer() + " All three" : "Not quite. The green squares are where it lands.");
+    if (ok) right8++;
+    r8++; setTimeout(round8, 4200);
+  }
+  $("map8").addEventListener("click", (e) => {
+    const b = e.target.closest(".cell"); if (!b || lock8 || b.classList.contains("lab")) return;
+    const c = Number(b.dataset.c), r = Number(b.dataset.r);
+    if (q8.shape.some((x) => x[0] === c && x[1] === r)) {
+      $("fb8").className = "fb"; $("fb8").textContent = "That is the shape itself. Tap where it LANDS.";
+      say("That is the shape itself"); return;
+    }
+    if (q8.image.some((x) => x[0] === c && x[1] === r)) {
+      q8.found.add(c + "," + r);
+      paintMap8(false);
+      if (q8.found.size < 3) {
+        $("fb8").className = "fb"; $("fb8").textContent = (3 - q8.found.size) + " more to find.";
+        say(String(3 - q8.found.size) + " more"); return;
+      }
+      done8(true); return;
+    }
+    q8.miss = [c, r]; done8(false);
+  });
+  round8();
+
+  /* ---- 9: turning a shape about one of its OWN corners (0096 6Gp.05) ---- */
+  // The pivot is a vertex of the shape, so it does not move; the other two do.
+  // In (c, r) with r counting UP, a clockwise turn sends (dc, dr) to (dr, -dc).
+  let r9 = 0, right9 = 0, lock9 = false, q9 = null; const ROUNDS9 = 4;
+  const spinAbout = (p, cell, cw) => {
+    const dc = cell[0] - p[0], dr = cell[1] - p[1];
+    return cw ? [p[0] + dr, p[1] - dc] : [p[0] - dr, p[1] + dc];
+  };
+  function paintMap9(showAns) {
+    drawMap($("map9"), GC, GR, (c, r) => {
+      const isPivot = c === q9.p[0] && r === q9.p[1];
+      if (isPivot) return { html: "⚫", cls: "goal", label: "the corner it turns about, at " + nameOf(c, r) };
+      if (q9.arm.some((x) => x[0] === c && x[1] === r)) return { html: "▲", cls: "on", label: "part of the shape" };
+      const hit = q9.image.some((x) => x[0] === c && x[1] === r);
+      if (hit && (showAns || q9.found.has(c + "," + r))) return { html: "▲", cls: "right", label: "where it lands" };
+      if (q9.miss && q9.miss[0] === c && q9.miss[1] === r) return { html: "✖", cls: "wrong" };
+      return {};
+    }, { letters: true });
+  }
+  function round9() {
+    lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb"; $("work9").innerHTML = "";
+    if (r9 >= ROUNDS9) {
+      $("map9").innerHTML = ""; $("fb9").className = "fb good";
+      $("fb9").textContent = "You turned " + right9 + " of " + ROUNDS9 + " shapes!";
+      $("score9").textContent = ""; finish(12, "You can turn a shape about one of its own corners."); return;
+    }
+    const cw = r9 % 2 === 0;
+    // every pivot whose shape AND image both sit on the grid
+    const fits = [];
+    for (let pc = 0; pc < GC; pc++) for (let pr = 1; pr <= GR; pr++) {
+      const p = [pc, pr], arm = [[pc + 1, pr], [pc, pr + 1]];
+      const image = arm.map((a) => spinAbout(p, a, cw));
+      const on = ([c, r]) => c >= 0 && c < GC && r >= 1 && r <= GR;
+      if (arm.every(on) && image.every(on)) fits.push({ p, arm, image });
+    }
+    const F = fits[rnd(0, fits.length - 1)];
+    q9 = { p: F.p, arm: F.arm, image: F.image, cw, found: new Set(), miss: null };
+    $("score9").textContent = "Turn " + (r9 + 1) + " of " + ROUNDS9 + " · " + (cw ? "clockwise" : "anticlockwise");
+    paintMap9(false);
+    $("say9").innerHTML = "Turn the shape a <b>quarter turn " + (cw ? "clockwise" : "anticlockwise")
+      + "</b> about the black corner at <b>" + nameOf(q9.p[0], q9.p[1]) + "</b>. That corner stays still — tap the <b>two</b> squares the others land on.";
+    say("Turn the shape a quarter turn " + (cw ? "clockwise" : "anticlockwise")
+      + " about the black corner. It stays still. Tap the two squares the others land on.");
+  }
+  function done9(ok) {
+    lock9 = true;
+    paintMap9(true);
+    lines($("work9"), q9.arm.map((a, i) => ({
+      k: nameOf(a[0], a[1]) + " turns to",
+      v: nameOf(q9.image[i][0], q9.image[i][1]),
+    })).concat([
+      { k: "The corner at " + nameOf(q9.p[0], q9.p[1]), v: "does not move at all", total: true },
+    ]));
+    $("fb9").className = "fb " + (ok ? "good" : "bad");
+    $("fb9").textContent = ok
+      ? cheer() + " A quarter turn " + (q9.cw ? "clockwise" : "anticlockwise") + ", and the corner held still."
+      : "Not quite. The green squares are where they land.";
+    say(ok ? cheer() : "Not quite. The green squares are where they land.");
+    if (ok) right9++;
+    r9++; setTimeout(round9, 4200);
+  }
+  $("map9").addEventListener("click", (e) => {
+    const b = e.target.closest(".cell"); if (!b || lock9 || b.classList.contains("lab")) return;
+    const c = Number(b.dataset.c), r = Number(b.dataset.r);
+    if (c === q9.p[0] && r === q9.p[1]) {
+      $("fb9").className = "fb"; $("fb9").textContent = "That corner stays where it is. Tap where the OTHER two land.";
+      say("That corner stays where it is"); return;
+    }
+    if (q9.image.some((x) => x[0] === c && x[1] === r)) {
+      q9.found.add(c + "," + r);
+      paintMap9(false);
+      if (q9.found.size < 2) {
+        $("fb9").className = "fb"; $("fb9").textContent = "One more to find.";
+        say("One more"); return;
+      }
+      done9(true); return;
+    }
+    q9.miss = [c, r]; done9(false);
+  });
+  round9();
+
+  /* ---- 10: check ---- */
+  const CHECK = [
+    { q: "In a grid reference like C4, which comes first?", opts: ["the letter along", "the number up", "either way"], a: "the letter along" },
+    { q: "Which square is two along and three up?", opts: ["B3", "C2", "A3"], a: "B3" },
+    { q: "In the coordinates (5, 2), the 5 tells you…", opts: ["how far along", "how far up", "how many squares"], a: "how far along" },
+    { q: "You face north and turn right. You now face…", opts: ["east", "west", "south"], a: "east" },
+    { q: "You face south and turn left. You now face…", opts: ["east", "west", "north"], a: "east" },
+    { q: "Moving west means moving…", opts: ["left", "right", "up"], a: "left" },
+    { q: "A reflection in a mirror line is…", opts: ["the same distance the other side", "always further away", "turned upside down"], a: "the same distance the other side" },
+    { q: "A slide moves a shape…", opts: ["without turning it", "and turns it", "and flips it"], a: "without turning it" },
+    { q: "A shape turns about one of its own corners. That corner…", opts: ["stays where it is", "moves the furthest", "disappears"], a: "stays where it is" },
+    { q: "Two quarter turns the same way make…", opts: ["a half turn", "a full turn", "no turn"], a: "a half turn" },
+  ];
+  let c10 = 0, right10 = 0, lock10 = false;
+  function round10() {
+    lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(13, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
+    choices($("ch10"), q.opts, true); say(q.q);
+  }
+  $("ch10").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock10) return; lock10 = true; const q = CHECK[c10], ok = b.dataset.v === q.a;
+    reveal($("ch10"), q.a, b); if (ok) right10++;
+    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = ok ? cheer() : "It is " + q.a + ".";
+    say(ok ? cheer() : "It is " + q.a);
+    c10++; setTimeout(round10, 1400);
+  });
+  round10();
+
+  /* ---- 11: stickers ---- */
+  const STICKERS = [["👀", "Saying where"], ["🗺️", "Naming a square"], ["📍", "Coordinates"], ["➕➖", "Four quadrants"], ["⚖️", "Comparing points"], ["📐", "Joining corners"], ["🤖", "Whose left"], ["🧭", "The compass"], ["🚩", "Following a route"], ["🗣️", "Saying a route"], ["🪞", "Reflection"], ["➡️", "Sliding across"], ["🔄", "Turning about a corner"], ["✅", "Show what I know"]];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fb11").className = "fb " + (got === STICKERS.length ? "good" : ""); $("fb11").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You can find your way anywhere." : got + " of " + STICKERS.length + " stickers so far.";
+  }
+  $("restart").addEventListener("click", () => location.reload());
+
+  show(0, false);
+})();
+</script>

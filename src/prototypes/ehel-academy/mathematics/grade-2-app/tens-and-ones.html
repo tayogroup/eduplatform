@@ -1,0 +1,2015 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tens and Ones</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #566669; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #E5540E; --accent-ink: #301302; --accent-soft: #FDE4D6;
+    --teal: #19746F; --teal-ink: #FFFFFF; --plum-ink: #FFFFFF; --gold-ink: #3A2B00; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2C8553; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-ink: #0E2C2A; --plum-ink: #241733; --gold-ink: #3A2B00; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-ink: #0E2C2A; --plum-ink: #241733; --gold-ink: #3A2B00; --teal-soft: #1E3C3A; --plum: #B78BD1; --gold: #E3BE45;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 19px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 540px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: var(--teal-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(25px, 5vw, 34px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 20px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: var(--teal-ink); font-size: 24px; display: grid; place-items: center; }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 6px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 23px; text-align: center; max-width: 30em; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .small-fb { font-size: 17px; color: var(--muted); font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; }
+
+  .bignum { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: clamp(48px, 11vw, 84px); line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .bignum .t { color: var(--teal); }
+  .word { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: clamp(22px, 4.5vw, 30px); color: var(--teal); }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 60px; padding: 0 20px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 24px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: var(--teal-ink); }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 50px; font-size: 20px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 92px; height: 72px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 30px; transition: transform 100ms ease; font-variant-numeric: tabular-nums; }
+  .choice.word { font-size: 22px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* hundred chart */
+  .hchart { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; width: 100%; max-width: 480px; }
+  .hchart button { aspect-ratio: 1; border-radius: 6px; border: 1px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: clamp(11px, 2.6vw, 16px); padding: 0; font-variant-numeric: tabular-nums; }
+  .hchart button.sel { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .hchart button.row { background: var(--accent-soft); }
+  .hchart button.even { background: var(--teal-soft); }
+  .hchart button.even.sel { background: var(--teal); color: var(--teal-ink); border-color: var(--teal); }
+  .hchart button.found { background: var(--good-soft); border-color: var(--good); }
+
+  /* base ten blocks */
+  .blocks { display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; justify-content: center; min-height: 96px; }
+  .rods { display: flex; gap: 5px; align-items: flex-end; }
+  .rod { width: 14px; height: 90px; border-radius: 3px; background: var(--teal); background-image: repeating-linear-gradient(to bottom, transparent 0 8px, rgba(255,255,255,0.5) 8px 9px); }
+  .units { display: grid; grid-template-columns: repeat(3, 14px); gap: 4px; align-content: end; }
+  .unit { width: 14px; height: 14px; border-radius: 3px; background: var(--accent); }
+  .blocks.b .rod { background-color: var(--plum); } .blocks.b .unit { background: var(--gold); }
+  .blocks .plus { font-family: "Inter", "Segoe UI", sans-serif; font-size: 32px; font-weight: 700; align-self: center; color: var(--muted); }
+  .pv { display: flex; gap: 12px; }
+  .pv div { min-width: 96px; padding: 8px 12px; border-radius: 14px; text-align: center; }
+  .pv .tens { background: var(--teal-soft); } .pv .ones { background: var(--accent-soft); }
+  .pv .lab { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .pv .val { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 36px; }
+  .pv .tens .val { color: var(--teal); } .pv .ones .val { color: var(--accent); }
+
+  /* number line to 100 (decade zoom) */
+  .nline { position: relative; width: 100%; max-width: 640px; height: 62px; }
+  .nline .bar { position: absolute; left: 14px; right: 14px; top: 28px; height: 4px; background: var(--ink); border-radius: 2px; }
+  .nline .t { position: absolute; top: 20px; width: 2px; height: 20px; background: var(--ink); transform: translateX(-50%); }
+  .nline .t.mid { height: 26px; top: 17px; width: 3px; }
+  .nline .l { position: absolute; top: 42px; transform: translateX(-50%); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .nline .l.big { font-size: 17px; font-family: "Inter", "Segoe UI", sans-serif; }
+  .nline .m { position: absolute; top: 16px; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); border: 3px solid var(--card); transform: translateX(-50%); transition: left 200ms ease; }
+  .nline .m.b { background: var(--teal); }
+  .nline .hop { position: absolute; top: 4px; height: 22px; border: 3px solid var(--teal); border-bottom: 0; border-radius: 12px 12px 0 0; }
+  .nline .hop.one { border-color: var(--accent); height: 14px; top: 12px; }
+
+  /* working lines (Grade 5 style, bigger) */
+  .working { display: grid; gap: 8px; width: 100%; max-width: 560px; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 10px 14px; border-radius: 12px; background: var(--teal-soft); font-variant-numeric: tabular-nums; }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+  .working .line .v b { color: var(--accent); }
+  .working .line.hidden { display: none; }
+
+  /* arrays */
+  .array { display: grid; gap: 8px; padding: 12px; border-radius: 16px; background: var(--ground); border: 2px solid var(--line); }
+  .array i { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); }
+  .array i.r1 { background: var(--teal); }
+  @media (max-width: 480px) { .array i { width: 20px; height: 20px; } }
+
+  /* sharing */
+  .pool { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; max-width: 320px; min-height: 32px; }
+  .pool i { width: 24px; height: 24px; border-radius: 50%; background: var(--gold); border: 2px solid var(--ink); }
+  .plates { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .plate { width: 118px; min-height: 118px; border-radius: 50%; border: 4px dashed var(--line); background: var(--card); display: grid; grid-template-columns: repeat(3, 24px); gap: 5px; place-content: center; padding: 10px; position: relative; }
+  .plate i { width: 24px; height: 24px; border-radius: 50%; background: var(--gold); border: 2px solid var(--ink); }
+  .plate .who { position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 700; background: var(--card); padding: 0 6px; border-radius: 6px; color: var(--muted); white-space: nowrap; }
+  .plate.full { border-style: solid; border-color: var(--good); }
+
+  /* fraction bar */
+  .fracbar { display: flex; width: 100%; max-width: 480px; height: 70px; border-radius: 14px; overflow: hidden; border: 3px solid var(--ink); }
+  .fracbar button { flex: 1; border: 0; border-right: 3px solid var(--ink); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-size: 22px; font-weight: 700; color: var(--muted); }
+  .fracbar button:last-child { border-right: 0; }
+  .fracbar button.on { background: var(--accent); color: var(--accent-ink); }
+  .fraction { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 44px; display: inline-flex; flex-direction: column; align-items: center; line-height: 1; vertical-align: middle; }
+  .fraction span:first-child { border-bottom: 4px solid currentColor; padding: 0 8px; }
+
+  /* odd / even pairs */
+  .pairs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 520px; }
+  .pairbox { display: flex; gap: 4px; padding: 6px; border-radius: 12px; border: 3px solid var(--good); }
+  .pairbox.lonely { border-color: var(--bad); border-style: dashed; }
+  .pairbox i { width: 26px; height: 26px; border-radius: 50%; background: var(--accent); }
+
+  /* money */
+  .coins { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .coin { width: 78px; height: 78px; border-radius: 50%; border: 5px solid var(--gold); background: radial-gradient(circle at 35% 35%, #fff4c2, #e6c15c); color: #5a4300; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; display: grid; place-items: center; box-shadow: 0 3px 0 rgba(0,0,0,0.15); line-height: 1; }
+  .coin.note { border-radius: 10px; width: 110px; height: 60px; background: linear-gradient(135deg, #d5efec, #a9d9d3); border-color: var(--teal); color: #10403c; }
+  .coin small { font-size: 12px; font-weight: 700; }
+  .coin:active { transform: translateY(2px); }
+  .paid { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; min-height: 40px; }
+  .paid span { padding: 6px 12px; border-radius: 999px; background: var(--gold); color: #3a2b00; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; }
+  .paid span.n { background: var(--teal-soft); color: var(--ink); }
+  .price { display: flex; align-items: center; gap: 14px; padding: 12px 18px; border-radius: 16px; background: var(--ground); border: 2px dashed var(--line); }
+  .price .item { font-size: 40px; }
+  .price .tag { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 30px; color: var(--accent); }
+
+  /* stickers */
+  .dotbox { width: 100%; max-width: 320px; min-height: 210px; border-radius: 16px; background: var(--cell); border: 2px solid var(--line); position: relative; }
+  .dotbox i { position: absolute; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); }
+  .dotbox.hide i { visibility: hidden; }
+  .g2num { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: clamp(46px, 14vw, 84px); font-variant-numeric: tabular-nums; }
+  .g2queue { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; align-items: flex-end; }
+  .g2queue span { display: grid; place-items: center; width: 46px; height: 54px; border-radius: 12px; background: var(--card); border: 2px solid var(--line); font-size: 26px; }
+  .g2queue span.mark { border-color: var(--accent); background: var(--accent-soft); }
+  .compbar { width: 100%; max-width: 340px; height: 40px; border-radius: 10px; background: var(--cell); border: 2px solid var(--line); position: relative; overflow: hidden; display: flex; }
+  .compbar i { display: block; height: 100%; }
+  .compbar i.have { background: var(--teal); }
+  .compbar i.gap { background: repeating-linear-gradient(45deg, var(--line), var(--line) 6px, transparent 6px, transparent 12px); }
+  .expr2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: clamp(24px, 6.4vw, 36px); font-variant-numeric: tabular-nums; text-align: center; }
+  .expr2 em { font-style: normal; color: var(--accent); }
+
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 18px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+
+  /* ==== grade-1 design layer ==== */
+  /* The palette is redefined for ALL THREE theme states on purpose: this is a
+     design that commits to one look rather than tracking the viewer's setting,
+     so every colour is stated here and none is inherited from the light base.
+     --gold-soft and --plum-soft are carried too — the Grade 1 lesson dropped
+     both, and the lessons here use them as surfaces. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --plum-soft: rgba(183, 139, 209, 0.18);
+    --gold: #F4C95D;
+    --gold-soft: rgba(244, 201, 93, 0.18);
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    /* Ink for text sitting ON a coloured chip. Declared here so the whole
+       template speaks one language: every teal chip in every lesson takes
+       --teal-ink, and nothing has to know which theme it landed in. */
+    --teal-ink: #06231F;
+    --plum-ink: #241733;
+    --gold-ink: #2A1F05;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  /* One fixed gradient rather than one stretched down the whole document, so
+     135 degrees means 135 degrees however long the lesson runs. A fixed
+     pseudo-element, not background-attachment, which iOS Safari ignores. */
+  html { background: #183B56; }
+  body { background: transparent; color: var(--ink); font-size: 18px; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; letter-spacing: -0.02em; font-weight: 800; }
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+  .slide h2 { font-weight: 800; }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: rgba(20, 43, 62, 0.88); border: 1px solid var(--line); border-radius: 26px; }
+  .slide-head .n { background: var(--teal); color: var(--teal-ink); font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: var(--teal-ink); }
+
+  .big {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: var(--teal-ink); box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  /* plum was missing, so a purple button carried the gold press shadow */
+  .big.plum { background: var(--plum); color: var(--plum-ink); box-shadow: 0 5px 0 #7A4A94; }
+  .big.plum:active { box-shadow: 0 2px 0 #7A4A94; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { font-family: "Inter", "Segoe UI", sans-serif; background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb { font-family: "Inter", "Segoe UI", sans-serif; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .sticker { font-family: "Inter", "Segoe UI", sans-serif; background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .foot .mid { color: var(--muted); }
+
+  /* This layer widens the eyebrow's tracking, and the base sets it nowrap, so a
+     long eyebrow ("Mathematics · Patterns · Grades 1 to 4") pushes the step dots
+     off a phone. Give it room to wrap and let the hero stack under it. */
+  @media (max-width: 520px) {
+    .hero { flex-wrap: wrap; }
+    .eyebrow { white-space: normal; }
+    .dots { max-width: 100%; justify-content: flex-start; }
+  }
+
+  .paid span.n { background: var(--teal-soft); color: var(--ink); }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Grade 2</p>
+      <h1>Tens and <em>Ones</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+    <!-- 1 hundred chart -->
+    <section class="slide" data-say="Here are all the numbers to one hundred. Tap any number to see its tens and ones.">
+      <div class="slide-head"><span class="n">1</span><h2>Numbers to 100</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">All the numbers to <b>100</b>. Tap any number to see its <b>tens</b> and <b>ones</b>.</span></div>
+      <div class="stage">
+        <div class="hchart" id="chart1"></div>
+        <div class="bignum" id="num1"></div>
+        <div class="pv"><div class="tens"><div class="lab">tens</div><div class="val" id="t1">4</div></div><div class="ones"><div class="lab">ones</div><div class="val" id="o1">7</div></div></div>
+        <div class="blocks" id="blocks1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="find1"></p>
+      </div>
+    </section>
+
+    <!-- 2 a quick look -->
+    <section class="slide" data-say="Some amounts you can see in one glance. Bigger ones you guess first, then count to check.">
+      <div class="slide-head"><span class="n">2</span><h2>A quick look</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayA">Small amounts you can <b>see</b> without counting. Big ones you <b>guess</b>, then count to check.</span></div>
+      <div class="stage">
+        <div class="dotbox" id="dotsA"></div>
+        <p class="fb" id="qA" style="font-size:19px"></p>
+        <div class="choices" id="chA"></div>
+        <div class="bigbtns"><button type="button" class="big small teal" id="peekA" hidden>Look again</button><button type="button" class="big small" id="countA" hidden>Count them</button></div>
+        <p class="fb" id="fbA"></p>
+        <p class="fb small-fb" id="scoreA"></p>
+      </div>
+    </section>
+
+    <!-- 3 numbers in words -->
+    <section class="slide" data-say="Every number has a name as well as a numeral. Forty-two and 42 are the same number.">
+      <div class="slide-head"><span class="n">3</span><h2>Numbers in words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayB">A number has a <b>name</b> as well as a numeral. <b>42</b> is <b>forty-two</b>.</span></div>
+      <div class="stage">
+        <div class="g2num" id="showB"></div>
+        <div class="choices" id="chB"></div>
+        <p class="fb" id="fbB"></p>
+        <p class="fb small-fb" id="scoreB"></p>
+      </div>
+    </section>
+
+    <!-- 4 build a number -->
+    <section class="slide" data-say="Build a number. Add tens and ones and watch the number grow.">
+      <div class="slide-head"><span class="n">4</span><h2>Build it with tens and ones</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Add <b>tens</b> and <b>ones</b>. A ten is a stick of ten ones.</span></div>
+      <div class="stage">
+        <div class="blocks" id="blocks2"></div>
+        <div class="bignum" id="num2"></div>
+        <div class="word" id="word2"></div>
+        <p class="fb" id="exp2" style="color:var(--muted)"></p>
+        <div class="bigbtns"><button type="button" class="big teal small" id="tenMinus">− ten</button><button type="button" class="big teal" id="tenPlus">+ ten</button><button type="button" class="big small" id="oneMinus">− one</button><button type="button" class="big" id="onePlus">+ one</button></div>
+        <p class="fb" id="fb2"></p>
+        <p class="fb small-fb" id="find2"></p>
+      </div>
+    </section>
+
+    <!-- 5 comparing and ordering -->
+    <section class="slide" data-say="To compare two-digit numbers, look at the tens first. Only if the tens match do the ones decide.">
+      <div class="slide-head"><span class="n">5</span><h2>Which is more?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayC">Look at the <b>tens</b> first. Only when the tens are the same do the <b>ones</b> decide.</span></div>
+      <div class="stage">
+        <p class="fb" id="qC" style="font-size:19px"></p>
+        <div class="choices" id="chC"></div>
+        <div class="working" id="workC"></div>
+        <p class="fb" id="fbC"></p>
+        <p class="fb small-fb" id="scoreC"></p>
+      </div>
+    </section>
+
+    <!-- 6 ordinal numbers -->
+    <section class="slide" data-say="Counting numbers say how many. Ordinal numbers say which place in a line.">
+      <div class="slide-head"><span class="n">6</span><h2>First, second, third</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayD">One, two, three say <b>how many</b>. First, second, third say <b>which place</b>.</span></div>
+      <div class="stage">
+        <div class="g2queue" id="queueD"></div>
+        <p class="fb" id="qD" style="font-size:19px"></p>
+        <div class="choices" id="chD"></div>
+        <p class="fb" id="fbD"></p>
+        <p class="fb small-fb" id="scoreD"></p>
+      </div>
+    </section>
+
+    <!-- 7 rounding -->
+    <section class="slide" data-say="Which ten is nearer? Tap it.">
+      <div class="slide-head"><span class="n">7</span><h2>Round to the nearest 10</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Which <b>ten</b> is nearer? Tap it.</span></div>
+      <div class="stage">
+        <div class="bignum" id="num3"></div>
+        <div class="nline" id="nl3"></div>
+        <div class="choices" id="ch3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="score3"></p>
+      </div>
+    </section>
+
+    <!-- 8 odd and even -->
+    <section class="slide" data-say="Put the counters in pairs. If one is left on its own, the number is odd.">
+      <div class="slide-head"><span class="n">8</span><h2>Odd or even?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Put the counters in <b>pairs</b>. If one is left on its own, the number is <b>odd</b>.</span></div>
+      <div class="stage">
+        <div class="bignum" id="num9"></div>
+        <div class="pairs" id="pairs9"></div>
+        <div class="bigbtns"><button type="button" class="big ghost" id="minus9">−</button><button type="button" class="big" id="plus9">+</button></div>
+        <p class="fb" id="fb9"></p>
+        <div class="choices" id="ch9"></div>
+        <p class="fb small-fb" id="score9"></p>
+      </div>
+    </section>
+
+    <!-- 9 complements -->
+    <section class="slide" data-say="Two numbers that finish each other off. Six and fourteen make twenty. Thirty and seventy make a hundred.">
+      <div class="slide-head"><span class="n">9</span><h2>Make 20, make 100</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayE">Which number <b>finishes it off</b>? The bar shows how much is still missing.</span></div>
+      <div class="stage">
+        <div class="compbar" id="barE"></div>
+        <p class="fb" id="qE" style="font-size:20px"></p>
+        <div class="choices" id="chE"></div>
+        <p class="fb" id="fbE"></p>
+        <p class="fb small-fb" id="scoreE"></p>
+      </div>
+    </section>
+
+    <!-- 10 addition -->
+    <section class="slide" data-say="Add the tens, then add the ones. If the ones make ten or more, swap ten ones for a ten.">
+      <div class="slide-head"><span class="n">10</span><h2>Adding two-digit numbers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Add the <b>tens</b>, then add the <b>ones</b>. If the ones make 10 or more, swap ten ones for one ten.</span></div>
+      <div class="stage">
+        <div class="bignum" id="sum4" style="font-size:clamp(36px,8vw,58px)"></div>
+        <div class="blocks" id="blocks4"></div>
+        <div class="working" id="work4"></div>
+        <div class="bigbtns"><button type="button" class="big teal small" id="step4">Show the next step</button></div>
+        <p class="fb" id="est4" style="font-size:18px;color:var(--muted)"></p>
+        <div class="choices" id="ch4"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="score4"></p>
+      </div>
+    </section>
+
+    <!-- 11 subtraction -->
+    <section class="slide" data-say="Take away by jumping back. Jump back tens first, then ones.">
+      <div class="slide-head"><span class="n">11</span><h2>Taking away by jumping back</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Jump back the <b>tens</b> first, then the <b>ones</b>.</span></div>
+      <div class="stage">
+        <div class="bignum" id="sub5" style="font-size:clamp(36px,8vw,58px)"></div>
+        <div class="nline" id="nl5"></div>
+        <p class="fb" id="left5" style="color:var(--teal)"></p>
+        <div class="bigbtns"><button type="button" class="big teal" id="back10">◀ back 10</button><button type="button" class="big" id="back5">◀ back 5</button><button type="button" class="big" id="back1">◀ back 1</button><button type="button" class="big ghost small" id="fwd1">forward 1 ▶</button></div>
+        <p class="fb" id="fb5"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="next5" hidden>Next one</button></div>
+        <p class="fb small-fb" id="score5"></p>
+      </div>
+    </section>
+
+    <!-- 12 inverse -->
+    <section class="slide" data-say="Adding and taking away undo each other. That is how you check an answer without doing it all again.">
+      <div class="slide-head"><span class="n">12</span><h2>One undoes the other</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayF">Adding and taking away <b>undo</b> each other. That is how you <b>check</b> an answer.</span></div>
+      <div class="stage">
+        <div class="expr2" id="expF"></div>
+        <p class="fb" id="qF" style="font-size:19px"></p>
+        <div class="choices" id="chF"></div>
+        <div class="working" id="workF"></div>
+        <p class="fb" id="fbF"></p>
+        <p class="fb small-fb" id="scoreF"></p>
+      </div>
+    </section>
+
+    <!-- 13 arrays -->
+    <section class="slide" data-say="Rows of dots make an array. Count the rows and how many in each row.">
+      <div class="slide-head"><span class="n">13</span><h2>Arrays: 2s, 5s and 10s</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Rows of dots make an <b>array</b>. Change the rows and what is in each row.</span></div>
+      <div class="stage">
+        <div class="array" id="array6"></div>
+        <div class="bigbtns"><button type="button" class="big ghost small" id="rowMinus">− row</button><button type="button" class="big teal small" id="rowPlus">+ row</button><button type="button" class="big small" id="colCycle">in each row: 5</button></div>
+        <div class="working" id="work6"></div>
+        <div class="choices" id="ch6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="score6"></p>
+      </div>
+    </section>
+
+    <!-- 14 sharing and grouping -->
+    <section class="slide" data-say="Sharing gives one each until they are gone. Grouping makes groups of the same size.">
+      <div class="slide-head"><span class="n">14</span><h2>Sharing and grouping</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7"><b>Share</b> 12 sweets between 3 friends: one each, round and round.</span></div>
+      <div class="stage">
+        <div class="bigbtns"><button type="button" class="big small teal" id="mode7share">Share between 3</button><button type="button" class="big small ghost" id="mode7group">Make groups of 4</button></div>
+        <div class="pool" id="pool7"></div>
+        <div class="plates" id="plates7"></div>
+        <div class="bigbtns"><button type="button" class="big" id="go7">Share one each</button></div>
+        <p class="fb" id="fb7"></p>
+      </div>
+    </section>
+
+    <!-- 15 fractions -->
+    <section class="slide" data-say="Cut the bar into equal parts. Tap the parts to shade them.">
+      <div class="slide-head"><span class="n">15</span><h2>Halves, quarters, thirds</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Cut the bar into <b>equal</b> parts, then tap parts to shade them.</span></div>
+      <div class="stage">
+        <div class="bigbtns"><button type="button" class="big small teal" data-parts="2">halves</button><button type="button" class="big small ghost" data-parts="3">thirds</button><button type="button" class="big small ghost" data-parts="4">quarters</button></div>
+        <div class="fracbar" id="bar8"></div>
+        <div class="bignum" id="frac8" style="font-size:clamp(30px,7vw,48px)"></div>
+        <div class="working" id="work8"></div>
+        <p class="fb" id="fb8"></p>
+      </div>
+    </section>
+
+    <!-- 16 money -->
+    <section class="slide" data-say="Pay for it with coins. Tap coins until you have exactly the right amount.">
+      <div class="slide-head"><span class="n">16</span><h2>Money</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Pay for it. Tap coins until you have <b>exactly</b> the right amount.</span></div>
+      <div class="stage">
+        <div class="price" id="price10"></div>
+        <div class="coins" id="coins10"></div>
+        <div class="paid" id="paid10"></div>
+        <div class="bignum" id="total10" style="font-size:clamp(30px,7vw,48px)"></div>
+        <p class="fb" id="fb10"></p>
+        <div class="bigbtns"><button type="button" class="big small ghost" id="undo10">Take one back</button><button type="button" class="big small teal" id="next10" hidden>Next thing to buy</button></div>
+        <p class="fb small-fb" id="score10"></p>
+      </div>
+    </section>
+
+    <!-- 17 check -->
+    <section class="slide" data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="fb" id="q11" style="font-size:26px"></p>
+        <div class="choices" id="ch11"></div>
+        <p class="fb" id="fb11"></p>
+        <p class="fb small-fb" id="score11"></p>
+      </div>
+    </section>
+
+    <!-- 18 stickers -->
+    <section class="slide" data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fb12"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const ONES = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const TENS = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  const words = (n) => n === 100 ? "one hundred" : n < 20 ? ONES[n] : TENS[Math.floor(n / 10)] + (n % 10 ? "-" + ONES[n % 10] : "");
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+
+  /* ---- deck ---- */
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0; $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots(); if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+
+  /* ---- shared drawing ---- */
+  function blocksHtml(n, cls) {
+    const t = Math.floor(n / 10), o = n % 10;
+    return '<div class="blocks ' + (cls || "") + '"><div class="rods">' + '<div class="rod"></div>'.repeat(t) + '</div><div class="units">' + '<div class="unit"></div>'.repeat(o) + "</div></div>";
+  }
+  function setBlocks(el, n, cls) { el.innerHTML = blocksHtml(n, cls); el.className = "blocks"; }
+  function decadeLine(el, lo, marks, opts) {
+    // a zoomed number line from lo to lo+10, every unit ticked, both tens labelled big
+    const hi = lo + 10, x = (v) => "calc(14px + " + ((v - lo) / 10) + " * (100% - 28px))";
+    let h = '<div class="bar"></div>';
+    for (let v = lo; v <= hi; v++) {
+      const isTen = v % 10 === 0, isMid = v - lo === 5;
+      h += '<div class="t' + (isMid ? " mid" : "") + '" style="left:' + x(v) + '"></div>';
+      if (isTen || isMid || (opts && opts.allLabels)) h += '<div class="l' + (isTen ? " big" : "") + '" style="left:' + x(v) + '">' + v + "</div>";
+    }
+    (marks || []).forEach((m, k) => { h += '<div class="m ' + (k ? "b" : "") + '" style="left:' + x(m) + '"></div>'; });
+    el.innerHTML = h;
+  }
+  function wideLine(el, lo, hi, marks, hops) {
+    const x = (v) => "calc(14px + " + ((v - lo) / (hi - lo)) + " * (100% - 28px))";
+    let h = '<div class="bar"></div>';
+    for (let v = lo; v <= hi; v++) { const ten = v % 10 === 0; h += '<div class="t' + (ten ? " mid" : "") + '" style="left:' + x(v) + '"></div>'; if (ten) h += '<div class="l big" style="left:' + x(v) + '">' + v + "</div>"; }
+    (hops || []).forEach((hp) => { h += '<div class="hop' + (hp[1] - hp[0] === -1 || hp[1] - hp[0] === 1 ? " one" : "") + '" style="left:' + x(Math.min(hp[0], hp[1])) + ";width:calc(" + (Math.abs(hp[1] - hp[0]) / (hi - lo)) + ' * (100% - 28px))"></div>'; });
+    (marks || []).forEach((m, k) => { h += '<div class="m ' + (k ? "b" : "") + '" style="left:' + x(m) + '"></div>'; });
+    el.innerHTML = h;
+  }
+  function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + (l.hidden ? " hidden" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
+
+  /* ---- 1: hundred chart ---- */
+  let sel1 = 47, finds1 = shuffle([23, 68, 90, 15, 76]).slice(0, 3), found1 = 0;
+  $("chart1").innerHTML = Array.from({ length: 100 }, (_, i) => '<button type="button" data-n="' + (i + 1) + '">' + (i + 1) + "</button>").join("");
+  function paint1() {
+    $("chart1").querySelectorAll("button").forEach((b) => { const n = Number(b.dataset.n); b.className = (n === sel1 ? "sel" : Math.floor((n - 1) / 10) === Math.floor((sel1 - 1) / 10) ? "row" : ""); });
+    const t = Math.floor(sel1 / 10), o = sel1 % 10;
+    $("num1").innerHTML = '<span class="t">' + (sel1 === 100 ? "10" : t) + "</span>" + (sel1 === 100 ? "0" : o);
+    $("t1").textContent = sel1 === 100 ? 10 : t; $("o1").textContent = sel1 === 100 ? 0 : o;
+    setBlocks($("blocks1"), sel1);
+    $("fb1").className = "fb"; $("fb1").textContent = sel1 === 100 ? "100 is ten tens!" : sel1 + " is " + t + (t === 1 ? " ten" : " tens") + " and " + o + (o === 1 ? " one" : " ones") + ". " + words(sel1) + ".";
+    $("find1").textContent = found1 < 3 ? "Now find " + finds1[found1] + " on the chart." : "You found all three!";
+  }
+  $("chart1").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return; sel1 = Number(b.dataset.n); paint1();
+    say(words(sel1) + ". " + Math.floor(sel1 / 10) + " tens and " + (sel1 % 10) + " ones");
+    if (found1 < 3 && sel1 === finds1[found1]) { found1++; b.classList.add("found"); $("fb1").className = "fb good"; $("fb1").textContent = cheer() + " " + sel1 + " is " + Math.floor(sel1 / 10) + " tens and " + (sel1 % 10) + " ones."; $("find1").textContent = found1 < 3 ? "Now find " + finds1[found1] + "." : "You found all three!"; if (found1 === 3) finish(0, "You found all three numbers!"); }
+  });
+  paint1();
+
+  /* ---- 2: build with tens and ones ---- */
+  let t2 = 3, o2 = 4, finds2 = shuffle([56, 82, 19, 70, 43]).slice(0, 3), found2 = 0;
+  function paint2() {
+    const n = t2 * 10 + o2;
+    setBlocks($("blocks2"), n);
+    $("num2").innerHTML = '<span class="t">' + t2 + "</span>" + o2; $("word2").textContent = words(n);
+    $("exp2").textContent = t2 && o2 ? t2 * 10 + " + " + o2 + " = " + n : t2 ? t2 * 10 + " and no ones" : o2 + " ones, no tens";
+    $("tenPlus").disabled = t2 >= 9; $("tenMinus").disabled = t2 <= 0; $("onePlus").disabled = o2 >= 9; $("oneMinus").disabled = o2 <= 0;
+    if (found2 < 3 && n === finds2[found2]) { found2++; $("fb2").className = "fb good"; $("fb2").textContent = cheer() + " You built " + n + ": " + t2 + (t2 === 1 ? " ten" : " tens") + " and " + o2 + (o2 === 1 ? " one" : " ones") + "."; say(cheer() + " " + words(n)); if (found2 === 3) finish(3, "You built all three numbers!"); }
+    else { $("fb2").className = "fb"; $("fb2").textContent = ""; }
+    $("find2").textContent = found2 < 3 ? "Build " + finds2[found2] + "." : "You built all three!";
+  }
+  $("tenPlus").addEventListener("click", () => { if (t2 < 9) { t2++; paint2(); say(words(t2 * 10 + o2)); } });
+  $("tenMinus").addEventListener("click", () => { if (t2 > 0) { t2--; paint2(); say(words(t2 * 10 + o2)); } });
+  $("onePlus").addEventListener("click", () => { if (o2 < 9) { o2++; paint2(); say(words(t2 * 10 + o2)); } });
+  $("oneMinus").addEventListener("click", () => { if (o2 > 0) { o2--; paint2(); say(words(t2 * 10 + o2)); } });
+  paint2();
+
+  /* ---- 3: rounding ---- */
+  let r3 = 0, right3 = 0, lock3 = false, n3 = 0; const ROUNDS3 = 5;
+  function round3() {
+    lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
+    if (r3 >= ROUNDS3) { $("num3").textContent = ""; $("nl3").innerHTML = ""; $("ch3").innerHTML = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You rounded " + right3 + " of " + ROUNDS3 + "!"; finish(6, "You can round to the nearest ten."); return; }
+    do { n3 = rnd(11, 99); } while (n3 % 10 === 0);
+    const lo = Math.floor(n3 / 10) * 10, hi = lo + 10;
+    $("score3").textContent = "Number " + (r3 + 1) + " of " + ROUNDS3;
+    $("num3").textContent = n3; decadeLine($("nl3"), lo, [n3]);
+    $("ch3").innerHTML = [lo, hi].map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
+    say("Which ten is nearer to " + words(n3) + ": " + words(lo) + " or " + words(hi) + "?");
+  }
+  $("ch3").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock3) return; lock3 = true;
+    const lo = Math.floor(n3 / 10) * 10, hi = lo + 10, ones = n3 % 10, ans = ones >= 5 ? hi : lo, ok = Number(b.dataset.v) === ans;
+    $("ch3").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right3++;
+    const why = ones === 5 ? n3 + " is exactly in the middle, and 5 always rounds UP to " + hi + "." : n3 + " is " + (ans === hi ? (10 - ones) + " away from " + hi + " but " + ones + " away from " + lo : ones + " away from " + lo + " but " + (10 - ones) + " away from " + hi) + ". It rounds to " + ans + ".";
+    $("fb3").className = "fb " + (ok ? "good" : "bad"); $("fb3").textContent = (ok ? cheer() + " " : "") + why; say((ok ? cheer() + " " : "") + why);
+    r3++; setTimeout(round3, 2200);
+  });
+  round3();
+
+  /* ---- 4: two-digit addition ---- */
+  let r4 = 0, right4 = 0, a4 = 0, b4 = 0, stage4 = 0; const ROUNDS4 = 4;
+  function round4() {
+    $("fb4").textContent = ""; $("fb4").className = "fb"; $("ch4").innerHTML = ""; stage4 = 0; $("step4").disabled = false;
+    if (r4 >= ROUNDS4) { $("sum4").textContent = ""; $("est4").textContent = ""; $("blocks4").innerHTML = ""; $("work4").innerHTML = ""; $("step4").hidden = true; $("fb4").className = "fb good"; $("fb4").textContent = "You added " + right4 + " of " + ROUNDS4 + "!"; finish(9, "You can add two-digit numbers."); return; }
+    a4 = rnd(12, 58); b4 = rnd(11, 99 - a4); if (r4 % 2 === 1 && (a4 % 10) + (b4 % 10) < 10) b4 = Math.min(99 - a4, b4 + (10 - (a4 % 10) - (b4 % 10)) + 1);
+    $("score4").textContent = "Sum " + (r4 + 1) + " of " + ROUNDS4;
+    $("sum4").innerHTML = a4 + ' <span class="t">+</span> ' + b4 + ' <span style="color:var(--muted)">= ?</span>';
+    // 2Ni.04 asks for an ESTIMATE before the calculation, so the page makes one
+    const ra4 = Math.round(a4 / 10) * 10, rb4 = Math.round(b4 / 10) * 10;
+    $("est4").textContent = "Roughly: " + a4 + " is about " + ra4 + " and " + b4 + " is about " + rb4
+      + ", so the answer should be near " + (ra4 + rb4) + ".";
+    $("blocks4").innerHTML = blocksHtml(a4).replace('class="blocks "', 'class="blocks"') + '<span class="plus">+</span>' + blocksHtml(b4, "b");
+    $("blocks4").className = "blocks";
+    paintWork4();
+    say(words(a4) + " add " + words(b4) + ". Press the button to see the next step.");
+  }
+  function paintWork4() {
+    const ta = Math.floor(a4 / 10) * 10, tb = Math.floor(b4 / 10) * 10, oa = a4 % 10, ob = b4 % 10, ones = oa + ob, regroup = ones >= 10, s = a4 + b4;
+    const L = [
+      { k: "Tens", v: ta + " + " + tb + " = <b>" + (ta + tb) + "</b>", hidden: stage4 < 1 },
+      { k: "Ones", v: oa + " + " + ob + " = <b>" + ones + "</b>" + (regroup ? ", that is <b>1 ten and " + (ones - 10) + "</b>" : ""), hidden: stage4 < 2 },
+      regroup ? { k: "Swap", v: "ten ones become one ten: " + (ta + tb) + " + 10 = <b>" + (ta + tb + 10) + "</b>, and " + (ones - 10) + " ones", hidden: stage4 < 3 } : null,
+      { k: "Altogether", v: (regroup ? (ta + tb + 10) + " + " + (ones - 10) : (ta + tb) + " + " + ones) + " = <b>" + s + "</b>", total: true, hidden: stage4 < (regroup ? 4 : 3) },
+    ].filter(Boolean);
+    lines($("work4"), L);
+    const last = regroup ? 4 : 3;
+    if (stage4 >= last - 1 && !$("ch4").children.length) {
+      $("ch4").innerHTML = shuffle([s, s + 10, s - 1 > 0 ? s - 1 : s + 1]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+      $("step4").disabled = true;
+    }
+  }
+  $("step4").addEventListener("click", () => { stage4++; paintWork4(); const l = [...$("work4").querySelectorAll(".line:not(.hidden)")].pop(); if (l) say(l.textContent); });
+  $("ch4").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+    const s = a4 + b4, ok = Number(b.dataset.v) === s;
+    $("ch4").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === s) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right4++;
+    stage4 = 9; paintWork4(); $("sum4").innerHTML = a4 + ' <span class="t">+</span> ' + b4 + " = " + s;
+    $("fb4").className = "fb " + (ok ? "good" : "bad"); $("fb4").textContent = (ok ? cheer() + " " : "") + a4 + " + " + b4 + " = " + s + ".";
+    say((ok ? cheer() + " " : "") + words(a4) + " add " + words(b4) + " is " + words(s));
+    r4++; setTimeout(round4, 2200);
+  });
+  round4();
+
+  /* ---- 5: subtraction by jumping back ---- */
+  let r5 = 0, a5 = 0, k5 = 0, pos5 = 0, hops5 = []; const ROUNDS5 = 4;
+  function round5() {
+    $("fb5").textContent = ""; $("fb5").className = "fb"; $("next5").hidden = true; hops5 = [];
+    if (r5 >= ROUNDS5) { $("sub5").textContent = ""; $("nl5").innerHTML = ""; $("left5").textContent = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You took away " + ROUNDS5 + " times!"; finish(10, "You can take away by jumping back."); return; }
+    a5 = rnd(35, 99); k5 = rnd(11, Math.min(39, a5 - 5)); pos5 = a5;
+    $("score5").textContent = "Take away " + (r5 + 1) + " of " + ROUNDS5;
+    paint5(); say(words(a5) + " take away " + words(k5) + ". Jump back " + Math.floor(k5 / 10) + " tens, then " + (k5 % 10) + " ones.");
+  }
+  function paint5() {
+    const target = a5 - k5, lo = Math.max(0, Math.floor((target - 5) / 10) * 10), hi = Math.min(100, lo + 60 >= a5 + 2 ? lo + 60 : Math.ceil((a5 + 2) / 10) * 10);
+    wideLine($("nl5"), lo, hi, [pos5], hops5);
+    const stillToGo = pos5 - target;
+    $("sub5").innerHTML = a5 + ' <span class="t">−</span> ' + k5 + ' <span style="color:var(--muted)">= ?</span>';
+    $("left5").textContent = stillToGo > 0 ? "You are at " + pos5 + ". Still " + stillToGo + " to take away." : stillToGo === 0 ? "You are at " + pos5 + "." : "You are at " + pos5 + ". You went " + (-stillToGo) + " too far.";
+    $("back10").disabled = stillToGo < 10; $("back5").disabled = stillToGo < 5; $("back1").disabled = stillToGo <= 0; $("fwd1").disabled = stillToGo >= 0;
+    if (stillToGo === 0) { $("sub5").innerHTML = a5 + ' <span class="t">−</span> ' + k5 + " = " + target; $("fb5").className = "fb good"; $("fb5").textContent = cheer() + " " + a5 + " − " + k5 + " = " + target + "."; say(cheer() + " " + words(a5) + " take away " + words(k5) + " is " + words(target)); $("next5").hidden = false; $("back10").disabled = $("back1").disabled = $("fwd1").disabled = true; r5++; }
+  }
+  $("back10").addEventListener("click", () => { hops5.push([pos5, pos5 - 10]); pos5 -= 10; paint5(); if (pos5 !== a5 - k5) say(words(pos5)); });
+  $("back5").addEventListener("click", () => { hops5.push([pos5, pos5 - 5]); pos5 -= 5; paint5(); if (pos5 !== a5 - k5) say(words(pos5)); });
+  $("back1").addEventListener("click", () => { hops5.push([pos5, pos5 - 1]); pos5 -= 1; paint5(); if (pos5 !== a5 - k5) say(words(pos5)); });
+  $("fwd1").addEventListener("click", () => { hops5.pop(); pos5 += 1; paint5(); say(words(pos5)); });
+  $("next5").addEventListener("click", round5);
+  round5();
+
+  /* ---- 6: arrays ---- */
+  let rows6 = 3, colI = 1, quiz6 = null, right6 = 0; const COLS = [1, 2, 5, 10];   // 1 as well: 0096 2Ni.07 names it
+  function paint6() {
+    const cols = COLS[colI], total = rows6 * cols;
+    $("array6").style.gridTemplateColumns = "repeat(" + cols + ", auto)";
+    $("array6").innerHTML = Array.from({ length: total }, (_, i) => '<i class="' + (Math.floor(i / cols) % 2 ? "r1" : "") + '"></i>').join("");
+    $("colCycle").textContent = "in each row: " + cols;
+    $("rowMinus").disabled = rows6 <= 1; $("rowPlus").disabled = rows6 >= 6;
+    lines($("work6"), [
+      { k: "Rows", v: "<b>" + rows6 + "</b> rows of <b>" + cols + "</b>" },
+      { k: "Adding", v: Array(rows6).fill(cols).join(" + ") + " = <b>" + total + "</b>" },
+      { k: "Times", v: rows6 + " × " + cols + " = <b>" + total + "</b>", total: true },
+    ]);
+  }
+  $("rowPlus").addEventListener("click", () => { if (rows6 < 6) { rows6++; paint6(); say(rows6 + " rows of " + COLS[colI] + " is " + rows6 * COLS[colI]); } });
+  $("rowMinus").addEventListener("click", () => { if (rows6 > 1) { rows6--; paint6(); say(rows6 + " rows of " + COLS[colI] + " is " + rows6 * COLS[colI]); } });
+  $("colCycle").addEventListener("click", () => { colI = (colI + 1) % COLS.length; paint6(); say(rows6 + " rows of " + COLS[colI] + " is " + rows6 * COLS[colI]); });
+  function ask6() {
+    quiz6 = { r: rnd(2, 6), c: COLS[rnd(0, COLS.length - 1)] };
+    $("say6").innerHTML = "What is <b>" + quiz6.r + " × " + quiz6.c + "</b>? Build it if you like, then tap the answer.";
+    const ans = quiz6.r * quiz6.c;
+    $("ch6").innerHTML = shuffle([ans, ans + quiz6.c, ans - quiz6.c > 0 ? ans - quiz6.c : ans + 2 * quiz6.c]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("fb6").textContent = ""; $("fb6").className = "fb"; $("score6").textContent = right6 + " of 3 right so far";
+  }
+  $("ch6").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+    const ans = quiz6.r * quiz6.c, ok = Number(b.dataset.v) === ans;
+    $("ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right6++;
+    rows6 = quiz6.r; colI = COLS.indexOf(quiz6.c); paint6();
+    $("fb6").className = "fb " + (ok ? "good" : "bad"); $("fb6").textContent = (ok ? cheer() + " " : "") + quiz6.r + " rows of " + quiz6.c + ": " + quiz6.r + " × " + quiz6.c + " = " + ans + ".";
+    say((ok ? cheer() + " " : "") + quiz6.r + " times " + quiz6.c + " is " + ans);
+    if (right6 >= 3) finish(12, "You know your 2s, 5s and 10s!"); setTimeout(ask6, 1800);
+  });
+  paint6(); ask6();
+
+  /* ---- 7: sharing and grouping ---- */
+  let mode7 = "share", pool7 = 12, plates7 = [];
+  const FRIENDS = ["Amina", "Musa", "Hodan", "Kiki"];
+  function reset7() {
+    pool7 = 12; plates7 = mode7 === "share" ? [0, 0, 0] : [];
+    $("mode7share").className = "big small " + (mode7 === "share" ? "teal" : "ghost"); $("mode7group").className = "big small " + (mode7 === "group" ? "teal" : "ghost");
+    $("say7").innerHTML = mode7 === "share" ? "<b>Share</b> 12 sweets between 3 friends: one each, round and round." : "<b>Group</b> 12 sweets into bags of 4. How many bags?";
+    $("go7").textContent = mode7 === "share" ? "Share one each" : "Fill a bag of 4";
+    $("fb7").textContent = ""; $("fb7").className = "fb"; paint7();
+  }
+  function paint7() {
+    $("pool7").innerHTML = "<i></i>".repeat(pool7);
+    $("plates7").innerHTML = plates7.map((n, i) => '<div class="plate' + ((mode7 === "group" && n === 4) ? " full" : "") + '">' + "<i></i>".repeat(n) + '<span class="who">' + (mode7 === "share" ? FRIENDS[i] : "bag " + (i + 1)) + "</span></div>").join("");
+    $("go7").disabled = pool7 <= 0;
+    if (pool7 === 0) {
+      const text = mode7 === "share" ? "12 shared between 3 is 4 each. 12 ÷ 3 = 4." : "12 in groups of 4 makes 3 bags. 12 ÷ 4 = 3.";
+      $("fb7").className = "fb good"; $("fb7").textContent = cheer() + " " + text; say(cheer() + " " + text);
+      if (mode7 === "share") done7.share = true; else done7.group = true;
+      if (done7.share && done7.group) finish(13, "Sharing and grouping: you can do both!");
+    }
+  }
+  const done7 = { share: false, group: false };
+  $("go7").addEventListener("click", () => {
+    if (pool7 <= 0) return;
+    if (mode7 === "share") { for (let i = 0; i < 3 && pool7 > 0; i++) { plates7[i]++; pool7--; } say(plates7[0] + " each so far"); }
+    else { plates7.push(4); pool7 -= 4; say(plates7.length + (plates7.length === 1 ? " bag" : " bags")); }
+    paint7();
+  });
+  $("mode7share").addEventListener("click", () => { mode7 = "share"; reset7(); say("Share 12 between 3."); });
+  $("mode7group").addEventListener("click", () => { mode7 = "group"; reset7(); say("Group 12 into bags of 4."); });
+  reset7();
+
+  /* ---- 8: halves, quarters, thirds ---- */
+  let parts8 = 2, shaded8 = [true, false], seen8 = new Set();
+  const NAMES8 = { 2: ["half", "halves"], 3: ["third", "thirds"], 4: ["quarter", "quarters"] };
+  function paint8() {
+    $("bar8").innerHTML = Array.from({ length: parts8 }, (_, i) => '<button type="button" class="' + (shaded8[i] ? "on" : "") + '" data-i="' + i + '">' + (i + 1) + "</button>").join("");
+    document.querySelectorAll("#s8btns [data-parts], .slide [data-parts]").forEach((b) => { b.className = "big small " + (Number(b.dataset.parts) === parts8 ? "teal" : "ghost"); });
+    const n = shaded8.filter(Boolean).length, nm = NAMES8[parts8];
+    $("frac8").innerHTML = '<span class="fraction"><span>' + n + "</span><span>" + parts8 + "</span></span>";
+    lines($("work8"), [
+      { k: "Equal parts", v: "the bar is cut into <b>" + parts8 + "</b> " + nm[1] },
+      { k: "Shaded", v: "<b>" + n + "</b> " + (n === 1 ? nm[0] : nm[1]) + (n === parts8 ? ": the whole bar" : n === 0 ? ": nothing yet" : "") },
+      { k: "Of 12 sweets", v: "one " + nm[0] + " of 12 is <b>" + 12 / parts8 + "</b>, so " + n + " " + (n === 1 ? nm[0] : nm[1]) + " is <b>" + n * (12 / parts8) + "</b>", total: true },
+    ]);
+    if (n > 0 && n < parts8) seen8.add(parts8);
+    $("fb8").className = "fb " + (seen8.size === 3 ? "good" : ""); $("fb8").textContent = seen8.size === 3 ? "Halves, thirds and quarters: you have shaded them all!" : "Shade a part of each kind of bar: halves, thirds and quarters.";
+    if (seen8.size === 3) finish(14, "Halves, thirds and quarters. Well done!");
+  }
+  document.querySelectorAll(".slide [data-parts]").forEach((b) => b.addEventListener("click", () => { parts8 = Number(b.dataset.parts); shaded8 = new Array(parts8).fill(false); shaded8[0] = true; paint8(); say("The bar is cut into " + parts8 + " " + NAMES8[parts8][1] + ". One " + NAMES8[parts8][0] + " is shaded."); }));
+  $("bar8").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; shaded8[Number(b.dataset.i)] = !shaded8[Number(b.dataset.i)]; paint8(); const n = shaded8.filter(Boolean).length; say(n + " " + (n === 1 ? NAMES8[parts8][0] : NAMES8[parts8][1]) + " shaded"); });
+  paint8();
+
+  /* ---- 9: odd and even ---- */
+  let n9 = 7, quiz9 = null, right9 = 0;
+  function paint9() {
+    const pairs = Math.floor(n9 / 2), lonely = n9 % 2;
+    $("num9").innerHTML = n9 + ' <span class="t" style="font-size:0.5em">' + (lonely ? "odd" : "even") + "</span>";
+    $("pairs9").innerHTML = '<div class="pairbox"><i></i><i></i></div>'.repeat(pairs) + (lonely ? '<div class="pairbox lonely"><i></i></div>' : "");
+    $("minus9").disabled = n9 <= 1; $("plus9").disabled = n9 >= 20;
+    $("fb9").className = "fb"; $("fb9").textContent = lonely ? n9 + " makes " + pairs + " pairs with one left over, so " + n9 + " is odd." : n9 + " makes " + pairs + " pairs exactly, so " + n9 + " is even.";
+  }
+  $("plus9").addEventListener("click", () => { if (n9 < 20) { n9++; paint9(); say(n9 + " is " + (n9 % 2 ? "odd" : "even")); } });
+  $("minus9").addEventListener("click", () => { if (n9 > 1) { n9--; paint9(); say(n9 + " is " + (n9 % 2 ? "odd" : "even")); } });
+  function ask9() {
+    quiz9 = rnd(21, 99);
+    $("say9").innerHTML = "Is <b>" + quiz9 + "</b> odd or even? Look at the ones digit.";
+    $("ch9").innerHTML = ["odd", "even"].map((o) => '<button type="button" class="choice word" data-v="' + o + '">' + o + "</button>").join("");
+    $("score9").textContent = right9 + " of 3 right so far";
+  }
+  $("ch9").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return;
+    const ans = quiz9 % 2 ? "odd" : "even", ok = b.dataset.v === ans;
+    $("ch9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === ans) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right9++;
+    $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + quiz9 + " ends in " + (quiz9 % 10) + ", and " + (quiz9 % 10) + " is " + ans + ", so " + quiz9 + " is " + ans + ".";
+    say((ok ? cheer() + " " : "") + quiz9 + " is " + ans);
+    if (right9 >= 3) finish(7, "Odd and even: you know them!"); setTimeout(ask9, 1800);
+  });
+  paint9(); ask9();
+
+  /* ---- 10: money ---- */
+  const ITEMS = [["🥭", "a mango", 35], ["✏️", "a pencil", 60], ["🍞", "a loaf", 85], ["🧃", "a juice", 120], ["📒", "a notebook", 150]];
+  const COINS = [5, 10, 20, 50, 100];
+  let it10 = 0, paid10 = [], right10 = 0; const ROUNDS10 = 4;
+  function round10() {
+    paid10 = []; $("fb10").textContent = ""; $("fb10").className = "fb"; $("next10").hidden = true;
+    if (it10 >= ROUNDS10) { $("price10").innerHTML = ""; $("coins10").innerHTML = ""; $("paid10").innerHTML = ""; $("total10").textContent = ""; $("undo10").hidden = true; $("fb10").className = "fb good"; $("fb10").textContent = "You paid for " + right10 + " things exactly!"; finish(15, "You can pay with coins!"); return; }
+    const item = ITEMS[it10];
+    $("score10").textContent = "Buy " + (it10 + 1) + " of " + ROUNDS10;
+    $("price10").innerHTML = '<span class="item">' + item[0] + '</span><div><div>' + item[1] + '</div><div class="tag">' + item[2] + " sh</div></div>";
+    $("coins10").innerHTML = COINS.map((c) => '<button type="button" class="coin' + (c === 100 ? " note" : "") + '" data-v="' + c + '">' + c + "<small>sh</small></button>").join("");
+    paint10(); say("Pay for " + item[1] + ". It costs " + item[2] + " shillings.");
+  }
+  function paint10() {
+    const total = paid10.reduce((a, b) => a + b, 0), price = ITEMS[it10][2];
+    $("paid10").innerHTML = paid10.map((c) => "<span" + (c === 100 ? ' class="n"' : "") + ">" + c + "</span>").join("") || '<span style="background:transparent;color:var(--muted)">no coins yet</span>';
+    $("total10").innerHTML = (paid10.length ? paid10.join(" + ") + " = " : "") + "<b>" + total + " sh</b>";
+    $("undo10").disabled = !paid10.length;
+    if (total === price) { $("fb10").className = "fb good"; $("fb10").textContent = cheer() + " Exactly " + price + " sh, with " + paid10.length + (paid10.length === 1 ? " coin." : " coins."); say(cheer() + " Exactly " + price + " shillings"); $("next10").hidden = false; right10++; it10++; $("coins10").querySelectorAll(".coin").forEach((c) => { c.disabled = true; }); }
+    else if (total > price) { $("fb10").className = "fb bad"; $("fb10").textContent = "Too much! You have " + total + " sh but it costs " + price + ". Take one back."; }
+    else { $("fb10").className = "fb"; $("fb10").textContent = total ? (price - total) + " sh more to go." : ""; }
+  }
+  $("coins10").addEventListener("click", (e) => { const c = e.target.closest(".coin"); if (!c || c.disabled) return; paid10.push(Number(c.dataset.v)); paint10(); const t = paid10.reduce((a, b) => a + b, 0); if (t !== ITEMS[Math.min(it10, ITEMS.length - 1)][2]) say(t + " shillings"); });
+  $("undo10").addEventListener("click", () => { paid10.pop(); paint10(); });
+  $("next10").addEventListener("click", round10);
+  round10();
+
+
+  /* the two helpers the new steps need */
+  function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
+  function reveal(el, answer, picked) { el.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(answer)) c.classList.add("right"); }); if (picked && picked.dataset.v !== String(answer)) picked.classList.add("wrong"); }
+
+  /* ---- 11: a quick look (0096 2Nc.02 subitise, 2Nc.03 estimate, 2Nc.01 count to 100) ---- */
+  let rA = 0, rightA = 0, lockA = false, qA = null; const ROUNDSA = 6;
+  function scatter(n, tidy) {
+    // tidy = the familiar dice-like arrangement; otherwise scattered, which is
+    // what 2Nc.02 actually asks for
+    const box = $("dotsA"); let h = "";
+    for (let i = 0; i < n; i++) {
+      const x = tidy ? 20 + (i % 5) * 56 : 8 + Math.random() * 88;
+      const y = tidy ? 30 + Math.floor(i / 5) * 56 : 4 + Math.random() * 88;
+      h += '<i style="left:' + (tidy ? x + "px" : x + "%") + ";top:" + (tidy ? y + "px" : y + "%") + '"></i>';
+    }
+    box.innerHTML = h;
+  }
+  function roundA() {
+    lockA = false; $("fbA").textContent = ""; $("fbA").className = "fb";
+    $("peekA").hidden = true; $("countA").hidden = true;
+    if (rA >= ROUNDSA) {
+      $("dotsA").innerHTML = ""; $("qA").textContent = ""; $("chA").innerHTML = "";
+      $("fbA").className = "fb good"; $("fbA").textContent = "You judged " + rightA + " of " + ROUNDSA + "!";
+      $("scoreA").textContent = ""; finish(1, "You can see small amounts and estimate big ones."); return;
+    }
+    const small = rA < 3;
+    const n = small ? rnd(4, 9) : rnd(24, 80);
+    qA = { n, small };
+    $("scoreA").textContent = "Look " + (rA + 1) + " of " + ROUNDSA;
+    scatter(n, false);
+    if (small) {
+      // shown for a moment only: counting one by one is exactly what this tests against
+      $("dotsA").classList.remove("hide");
+      setTimeout(() => { if (qA === null || qA.n !== n) return; $("dotsA").classList.add("hide"); }, 1200);
+      $("peekA").hidden = false;
+      $("qA").textContent = "How many dots? No counting — just look.";
+      const opts = [n, n + 1, Math.max(1, n - 1)];
+      choices($("chA"), opts);
+      $("sayA").innerHTML = "How many dots? Look, do not count.";
+      say("How many dots? Look, do not count.");
+    } else {
+      $("dotsA").classList.remove("hide");
+      $("qA").textContent = "About how many dots? Estimate first.";
+      const near = Math.round(n / 10) * 10;
+      const opts = [near, Math.max(10, near - 30), near + 30];
+      choices($("chA"), opts);
+      $("sayA").innerHTML = "About how many dots? <b>Estimate</b> to the nearest ten.";
+      say("About how many dots? Estimate to the nearest ten.");
+    }
+  }
+  $("peekA").addEventListener("click", () => {
+    $("dotsA").classList.remove("hide");
+    setTimeout(() => { $("dotsA").classList.add("hide"); }, 900);
+  });
+  $("chA").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lockA) return; lockA = true;
+    $("dotsA").classList.remove("hide"); $("peekA").hidden = true;
+    const want = qA.small ? qA.n : Math.round(qA.n / 10) * 10;
+    const ok = Number(b.dataset.v) === want;
+    reveal($("chA"), want, b); if (ok) rightA++;
+    $("fbA").className = "fb " + (ok ? "good" : "bad");
+    $("fbA").textContent = qA.small
+      ? (ok ? cheer() + " " + qA.n + ", seen in one look." : "There were " + qA.n + ".")
+      : (ok ? cheer() + " " : "The nearest ten is " + want + ". ") + "Counted properly there are " + qA.n + ".";
+    say(ok ? cheer() : "There were " + qA.n);
+    rA++; setTimeout(roundA, 3200);
+  });
+  roundA();
+
+  /* ---- 12: numbers in words (0096 2Ni.01) ---- */
+  const ONESW = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+    "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const TENSW = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+  function inWords(n) {
+    if (n < 20) return ONESW[n];
+    if (n === 100) return "one hundred";
+    const t = Math.floor(n / 10), o = n % 10;
+    return TENSW[t] + (o ? "-" + ONESW[o] : "");
+  }
+  let rB = 0, rightB = 0, lockB = false, qB = null; const ROUNDSB = 6;
+  function roundB() {
+    lockB = false; $("fbB").textContent = ""; $("fbB").className = "fb";
+    if (rB >= ROUNDSB) {
+      $("showB").textContent = ""; $("chB").innerHTML = "";
+      $("fbB").className = "fb good"; $("fbB").textContent = "You named " + rightB + " of " + ROUNDSB + "!";
+      $("scoreB").textContent = ""; finish(2, "You can read a number and write its name."); return;
+    }
+    const n = rnd(21, 99), toWords = rB % 2 === 0;
+    qB = { n, toWords, a: toWords ? inWords(n) : String(n) };
+    $("scoreB").textContent = "Number " + (rB + 1) + " of " + ROUNDSB;
+    $("showB").textContent = toWords ? String(n) : inWords(n);
+    const near = [n + 10, n - 10, n % 10 * 10 + Math.floor(n / 10)].filter((x) => x > 20 && x < 100 && x !== n);
+    const wrong = near.slice(0, 2).map((x) => (toWords ? inWords(x) : String(x)));
+    choices($("chB"), [qB.a].concat(wrong), toWords);
+    const q = toWords ? "What is " + n + " in words?" : "Which numeral is " + inWords(n) + "?";
+    $("sayB").textContent = q; say(q);
+  }
+  $("chB").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lockB) return; lockB = true;
+    const ok = b.dataset.v === qB.a; reveal($("chB"), qB.a, b); if (ok) rightB++;
+    $("fbB").className = "fb " + (ok ? "good" : "bad");
+    $("fbB").textContent = (ok ? cheer() + " " : "It is " + qB.a + ". ")
+      + qB.n + " is " + Math.floor(qB.n / 10) + " tens and " + (qB.n % 10) + " ones, so it is " + inWords(qB.n) + ".";
+    say(ok ? cheer() : "It is " + qB.a);
+    rB++; setTimeout(roundB, 3400);
+  });
+  roundB();
+
+  /* ---- 13: comparing and ordering (0096 2Np.03) ---- */
+  let rC = 0, rightC = 0, lockC = false, qC = null; const ROUNDSC = 6;
+  function roundC() {
+    lockC = false; $("fbC").textContent = ""; $("fbC").className = "fb"; $("workC").innerHTML = "";
+    if (rC >= ROUNDSC) {
+      $("qC").textContent = ""; $("chC").innerHTML = "";
+      $("fbC").className = "fb good"; $("fbC").textContent = "You compared " + rightC + " of " + ROUNDSC + "!";
+      $("scoreC").textContent = ""; finish(4, "You can compare and order two-digit numbers."); return;
+    }
+    const order = rC % 3 === 2;
+    $("scoreC").textContent = "Question " + (rC + 1) + " of " + ROUNDSC;
+    if (order) {
+      const set = [];
+      while (set.length < 3) { const x = rnd(11, 99); if (!set.includes(x)) set.push(x); }
+      const sorted = set.slice().sort((a, b) => a - b);
+      qC = { a: sorted.join(", "), set, sorted, order: true };
+      const q = "Put these in order, smallest first: " + set.join(", ");
+      $("qC").textContent = q; $("sayC").textContent = q;
+      choices($("chC"), [sorted.join(", "), sorted.slice().reverse().join(", "), set.join(", ")], true);
+      say(q);
+    } else {
+      // half the pairs share a ten, so the ones have to decide it
+      const sameTen = rC % 3 === 1;
+      const t = rnd(1, 9);
+      let x, y;
+      if (sameTen) { const o = shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).slice(0, 2); x = t * 10 + o[0]; y = t * 10 + o[1]; }
+      else { const t2 = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9].filter((z) => z !== t))[0]; x = t * 10 + rnd(0, 9); y = t2 * 10 + rnd(0, 9); }
+      qC = { x, y, sameTen, order: false, a: String(Math.max(x, y)) };
+      const q = "Which is more: " + x + " or " + y + "?";
+      $("qC").textContent = q; $("sayC").textContent = q;
+      choices($("chC"), [String(x), String(y)]);
+      say(q);
+    }
+  }
+  $("chC").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lockC) return; lockC = true;
+    const ok = b.dataset.v === qC.a; reveal($("chC"), qC.a, b); if (ok) rightC++;
+    if (qC.order) {
+      lines($("workC"), [{ k: "Smallest first", v: qC.sorted.join(" then ") }]);
+      $("fbC").textContent = (ok ? cheer() + " " : "It is " + qC.a + ". ") + "Compare the tens digit first.";
+    } else {
+      const tx = Math.floor(qC.x / 10), ty = Math.floor(qC.y / 10);
+      lines($("workC"), [
+        { k: qC.x + " is", v: tx + " tens and " + (qC.x % 10) + " ones" },
+        { k: qC.y + " is", v: ty + " tens and " + (qC.y % 10) + " ones" },
+        { k: qC.sameTen ? "Same tens, so the ones decide" : "Different tens, so the tens decide", v: qC.a + " is more", total: true },
+      ]);
+      $("fbC").textContent = (ok ? cheer() + " " : "It is " + qC.a + ". ")
+        + (qC.sameTen ? "The tens match, so look at the ones." : "The tens are different, so the tens settle it.");
+    }
+    $("fbC").className = "fb " + (ok ? "good" : "bad");
+    say(ok ? cheer() : "It is " + qC.a);
+    rC++; setTimeout(roundC, 3800);
+  });
+  roundC();
+
+  /* ---- 14: ordinal numbers (0096 2Np.04) ---- */
+  const ORD = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"];
+  const RUNNERS = ["\u{1F436}", "\u{1F431}", "\u{1F438}", "\u{1F430}", "\u{1F42D}", "\u{1F438}", "\u{1F98A}", "\u{1F43C}", "\u{1F428}", "\u{1F42F}"];
+  let rD = 0, rightD = 0, lockD = false, qD = null; const ROUNDSD = 6;
+  function roundD() {
+    lockD = false; $("fbD").textContent = ""; $("fbD").className = "fb";
+    if (rD >= ROUNDSD) {
+      $("queueD").innerHTML = ""; $("qD").textContent = ""; $("chD").innerHTML = "";
+      $("fbD").className = "fb good"; $("fbD").textContent = "You placed " + rightD + " of " + ROUNDSD + "!";
+      $("scoreD").textContent = ""; finish(5, "You can use first, second and third."); return;
+    }
+    const n = rnd(6, 9), line = shuffle(RUNNERS).slice(0, n);
+    const at = rnd(0, n - 1), askWhich = rD % 2 === 0;
+    qD = { line, at, askWhich, a: askWhich ? ORD[at] : line[at] };
+    $("scoreD").textContent = "Race " + (rD + 1) + " of " + ROUNDSD;
+    $("queueD").innerHTML = line.map((x, i) =>
+      '<span class="' + (!askWhich && i === at ? "" : (askWhich && i === at ? "mark" : "")) + '">' + x + "</span>").join("");
+    let q;
+    if (askWhich) { q = "The highlighted one is in which place? They finished left to right."; choices($("chD"), shuffle(ORD.slice(0, n)).slice(0, 3).concat([ORD[at]]), true); }
+    else { q = "Which one came " + ORD[at] + "? They finished left to right."; choices($("chD"), shuffle(line).slice(0, 3).concat([line[at]])); }
+    $("qD").textContent = q; $("sayD").textContent = q; say(q);
+  }
+  $("chD").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lockD) return; lockD = true;
+    const ok = b.dataset.v === qD.a; reveal($("chD"), qD.a, b); if (ok) rightD++;
+    $("queueD").innerHTML = qD.line.map((x, i) => '<span class="' + (i === qD.at ? "mark" : "") + '">' + x + "</span>").join("");
+    $("fbD").className = "fb " + (ok ? "good" : "bad");
+    $("fbD").textContent = (ok ? cheer() + " " : "It is " + qD.a + ". ")
+      + "Count the places from the left: it is number " + (qD.at + 1) + ", so it came " + ORD[qD.at] + ".";
+    say(ok ? cheer() : "It is " + qD.a);
+    rD++; setTimeout(roundD, 3400);
+  });
+  roundD();
+
+  /* ---- 15: complements of 20 and of multiples of 10 (0096 2Ni.03) ---- */
+  let rE = 0, rightE = 0, lockE = false, qE = null; const ROUNDSE = 6;
+  function roundE() {
+    lockE = false; $("fbE").textContent = ""; $("fbE").className = "fb";
+    if (rE >= ROUNDSE) {
+      $("barE").innerHTML = ""; $("qE").textContent = ""; $("chE").innerHTML = "";
+      $("fbE").className = "fb good"; $("fbE").textContent = "You finished " + rightE + " of " + ROUNDSE + "!";
+      $("scoreE").textContent = ""; finish(8, "You know what makes 20 and what makes 100."); return;
+    }
+    const toTwenty = rE < 3;
+    const total = toTwenty ? 20 : rnd(3, 10) * 10;
+    const have = toTwenty ? rnd(1, 19) : rnd(1, total / 10 - 1) * 10;
+    const need = total - have;
+    qE = { total, have, need };
+    $("scoreE").textContent = "Pair " + (rE + 1) + " of " + ROUNDSE;
+    $("barE").innerHTML = '<i class="have" style="width:' + Math.round((have / total) * 100) + '%"></i>'
+      + '<i class="gap" style="width:' + Math.round((need / total) * 100) + '%"></i>';
+    const q = have + " and what makes " + total + "?";
+    $("qE").textContent = q; $("sayE").textContent = q;
+    const wrong = [need + (toTwenty ? 1 : 10), Math.max(1, need - (toTwenty ? 2 : 10))].filter((x) => x !== need);
+    choices($("chE"), [need].concat(wrong));
+    say(q);
+  }
+  $("chE").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lockE) return; lockE = true;
+    const ok = Number(b.dataset.v) === qE.need; reveal($("chE"), qE.need, b); if (ok) rightE++;
+    $("fbE").className = "fb " + (ok ? "good" : "bad");
+    $("fbE").textContent = (ok ? cheer() + " " : "It is " + qE.need + ". ")
+      + qE.have + " + " + qE.need + " = " + qE.total + ", so " + qE.total + " − " + qE.have + " = " + qE.need + ".";
+    say(ok ? cheer() : "It is " + qE.need);
+    rE++; setTimeout(roundE, 3400);
+  });
+  roundE();
+
+  /* ---- 16: addition and subtraction undo each other (0096 2Ni.02) ---- */
+  let rF = 0, rightF = 0, lockF = false, qF = null; const ROUNDSF = 6;
+  function roundF() {
+    lockF = false; $("fbF").textContent = ""; $("fbF").className = "fb"; $("workF").innerHTML = "";
+    if (rF >= ROUNDSF) {
+      $("expF").innerHTML = ""; $("qF").textContent = ""; $("chF").innerHTML = "";
+      $("fbF").className = "fb good"; $("fbF").textContent = "You checked " + rightF + " of " + ROUNDSF + "!";
+      $("scoreF").textContent = ""; finish(11, "You can undo an answer to check it."); return;
+    }
+    const a = rnd(11, 60), b = rnd(11, 30), sum = a + b;
+    const fromAdd = rF % 2 === 0;
+    if (fromAdd) {
+      qF = { a: String(a), shown: a + " + " + b + " = " + sum, ask: "So what is " + sum + " − " + b + "?",
+             why: "Taking " + b + " back off undoes adding it, so you land on " + a + " again.",
+             work: [{ k: "Start at", v: String(a) }, { k: "Add " + b, v: String(sum) }, { k: "Take " + b + " off again", v: String(a), total: true }] };
+      choices($("chF"), [a, a + b, Math.max(1, a - b)]);
+    } else {
+      qF = { a: String(sum), shown: sum + " − " + b + " = " + a, ask: "So what is " + a + " + " + b + "?",
+             why: "Adding " + b + " back on undoes taking it off, so you land on " + sum + " again.",
+             work: [{ k: "Start at", v: String(sum) }, { k: "Take off " + b, v: String(a) }, { k: "Add " + b + " back", v: String(sum), total: true }] };
+      choices($("chF"), [sum, a, sum + b]);
+    }
+    $("scoreF").textContent = "Check " + (rF + 1) + " of " + ROUNDSF;
+    $("expF").innerHTML = qF.shown;
+    $("qF").textContent = qF.ask; $("sayF").textContent = qF.ask; say(qF.ask);
+  }
+  $("chF").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lockF) return; lockF = true;
+    const ok = b.dataset.v === qF.a; reveal($("chF"), qF.a, b); if (ok) rightF++;
+    lines($("workF"), qF.work);
+    $("fbF").className = "fb " + (ok ? "good" : "bad");
+    $("fbF").textContent = (ok ? cheer() + " " : "It is " + qF.a + ". ") + qF.why;
+    say(ok ? cheer() : "It is " + qF.a);
+    rF++; setTimeout(roundF, 4000);
+  });
+  roundF();
+
+  /* ---- 17: check ---- */
+  const CHECK = [
+    { q: "How many tens in 47?", opts: [4, 7, 47], a: 4 },
+    { q: "Round 63 to the nearest 10.", opts: [60, 70, 65], a: 60 },
+    { q: "34 + 25 = ?", opts: [59, 49, 69], a: 59 },
+    { q: "56 − 20 = ?", opts: [36, 46, 54], a: 36 },
+    { q: "4 × 5 = ?", opts: [20, 25, 9], a: 20 },
+    { q: "12 shared between 3 is ? each", opts: [4, 3, 6], a: 4 },
+    { q: "A quarter of 12 is ?", opts: [3, 4, 6], a: 3 },
+    { q: "Is 17 odd or even?", opts: ["odd", "even"], a: "odd" },
+    { q: "20 sh + 20 sh + 5 sh = ?", opts: ["45 sh", "40 sh", "25 sh"], a: "45 sh" },
+    { q: "One more than 59 is ?", opts: [60, 58, 69], a: 60 },
+  ];
+  let c11 = 0, right11 = 0, lock11 = false;
+  function round11() {
+    lock11 = false; $("fb11").textContent = ""; $("fb11").className = "fb";
+    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(16, "You got " + right11 + " out of " + CHECK.length + "."); return; }
+    const q = CHECK[c11];
+    $("score11").textContent = "Question " + (c11 + 1) + " of " + CHECK.length; $("q11").textContent = q.q; $("say11").textContent = q.q;
+    $("ch11").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" && !/\d/.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
+    say(q.q.replace("×", "times").replace("−", "take away").replace("+", "add").replace("?", ""));
+  }
+  $("ch11").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock11) return; lock11 = true;
+    const q = CHECK[c11], ok = String(b.dataset.v) === String(q.a);
+    $("ch11").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right11++;
+    $("fb11").className = "fb " + (ok ? "good" : "bad"); $("fb11").textContent = ok ? cheer() : "It is " + q.a + ".";
+    say(ok ? cheer() : "It is " + q.a);
+    c11++; setTimeout(round11, 1300);
+  });
+  round11();
+
+  /* ---- 18: stickers ---- */
+  const STICKERS = [["💯", "Numbers to 100"], ["👀", "A quick look"], ["🔤", "Numbers in words"], ["🧱", "Tens and ones"], ["⚖️", "Which is more"], ["🥇", "First, second, third"], ["🎯", "Rounding to 10"], ["👯", "Odd and even"], ["🧩", "Make 20 and 100"], ["➕", "Adding"], ["➖", "Taking away"], ["↩️", "One undoes the other"], ["🔢", "Arrays and tables"], ["🍬", "Sharing and grouping"], ["🍫", "Halves, thirds, quarters"], ["🪙", "Money"], ["✅", "Show what I know"]];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fb12").className = "fb " + (got === STICKERS.length ? "good" : ""); $("fb12").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You are a number star." : got + " of " + STICKERS.length + " stickers so far.";
+  }
+  $("restart").addEventListener("click", () => location.reload());
+
+  show(0, false);
+})();
+</script>

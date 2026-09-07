@@ -1,0 +1,283 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 2 Mathematics</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /* ==================================================================
+     Grade 2 Mathematics - the way in.
+
+     Built on the Grade 1 index so that moving up a year is a continuation
+     rather than a jump: same ground, same card, same gold Start.
+
+     Nine lessons rather than Grade 1's seven, because Stage 2 carries 48
+     objectives against Stage 1's 36. The MARK COLOUR is doing work here -
+     cards that share a colour share a strand, so Sides and Corners sits
+     beside Which Way From Here in orange, and How Much, How Long beside
+     Half Past, Quarter To in blue. A parent can see the shape of the year
+     without reading the labels.
+     ================================================================== */
+  :root {
+    --ground-a: #183B56;
+    --ground-b: #24556B;
+    --card: rgba(20, 43, 62, 0.88);
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #A4B7C8;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--ground-a); }
+  body {
+    margin: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* a fixed ground, so 135 degrees stays 135 degrees however long the page */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, var(--ground-a) 0%, var(--ground-b) 100%);
+  }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; margin: 0; line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 20px 64px; }
+
+  header { padding: 8px 4px 26px; }
+  .eyebrow {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #56D3C6;
+  }
+  h1 { font-size: clamp(32px, 6vw, 52px); font-weight: 800; margin-top: 6px; }
+  h1 em { font-style: normal; color: #56D3C6; }
+  .lede { color: #C8D7E2; max-width: 36em; margin-top: 12px; font-size: 19px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+
+  a.lesson {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    gap: 10px;
+    padding: 22px 22px 18px;
+    border-radius: 26px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    color: inherit;
+    text-decoration: none;
+    transition: transform 140ms ease, border-color 140ms ease;
+  }
+  a.lesson:hover, a.lesson:focus-visible { transform: translateY(-3px); border-color: var(--mark); outline: none; }
+  a.lesson:focus-visible { box-shadow: var(--shadow), 0 0 0 3px var(--mark); }
+  a.lesson:active { transform: translateY(0); }
+
+  .mark {
+    width: 62px; height: 62px;
+    border-radius: 20px;
+    display: grid; place-items: center;
+    background: var(--mark);
+    color: #06231F;
+  }
+  .mark svg { width: 34px; height: 34px; display: block; }
+
+  .strand {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--mark);
+  }
+  /* Two lines reserved for every title, so a one-line name and a two-line name
+     start their blurb on the same baseline and the row reads as one object. */
+  a.lesson h2 { font-size: 27px; font-weight: 800; min-height: 2.16em; }
+  .covers { color: #C8D7E2; font-size: 17px; }
+  .foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    margin-top: 6px; padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .steps {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .go {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 16px; font-weight: 800;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #2A1F05;
+    box-shadow: 0 4px 0 var(--gold-press);
+  }
+  a.lesson:active .go { transform: translateY(2px); box-shadow: 0 2px 0 var(--gold-press); }
+
+  /* one colour per strand, SHARED by the lessons that belong together */
+  .c-number  { --mark: #35BFB2; }   /* number and money      */
+  .c-frac    { --mark: #4FD1A0; }   /* fractions             */
+  .c-pattern { --mark: #F4C95D; }   /* patterns              */
+  .c-shape   { --mark: #E9744F; }   /* shape and position    */
+  .c-measure { --mark: #7FC4E8; }   /* measurement and time  */
+  .c-data    { --mark: #B78BD1; }   /* statistics and chance */
+
+  .note {
+    margin-top: 28px;
+    padding: 16px 18px;
+    border-radius: 16px;
+    background: rgba(244, 201, 93, 0.10);
+    border-left: 4px solid var(--gold);
+    color: #C8D7E2;
+    font-size: 16px;
+    max-width: 46em;
+  }
+  .note b { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; color: var(--ink); }
+  .note + .note { margin-top: 12px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    a.lesson { transition: none; }
+    a.lesson:hover, a.lesson:focus-visible { transform: none; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
+    <h1>Grade 2 <em>Mathematics</em></h1>
+    <p class="lede">Nine lessons, one for each part of the maths you learn this year. Pick the one you want &mdash; you can come back and change your mind.</p>
+  </header>
+
+  <div class="grid">
+
+    <a class="lesson c-number" href="https://claude.ai/code/artifact/4c3c6660-cc49-4b66-a9cf-3ccf0fbd0b5f">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2.5" y="6" width="19" height="12" rx="2"></rect>
+          <path d="M7 6v12M12 6v12M17 6v12"></path>
+        </svg>
+      </span>
+      <span class="strand">Number</span>
+      <h2>Tens and Ones</h2>
+      <p class="covers">Every number to 100 and what its digits mean. See a small amount at a glance and estimate a big one, read numbers as words, compare and order them, say which place in a line, round to the nearest ten, then add, take away, share and make rows.</p>
+      <span class="foot"><span class="steps">16 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-number" href="https://claude.ai/code/artifact/ea2205b2-b573-40e7-8483-beec500e3981">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="9" r="6"></circle>
+          <path d="M15.5 4.6A6 6 0 0 1 15 20.9"></path>
+        </svg>
+      </span>
+      <span class="strand">Money</span>
+      <h2>Coins and Change</h2>
+      <p class="covers">Know the coins and notes, count what is in the purse, make an exact amount and then make it with the fewest pieces, work out what a basket costs, count the change, and decide which of two prices is better value.</p>
+      <span class="foot"><span class="steps">9 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-frac" href="https://claude.ai/code/artifact/74a699bd-4516-4bd7-b8c5-4af08414bad9">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 3v9l6.4 6.4"></path>
+        </svg>
+      </span>
+      <span class="strand">Fractions</span>
+      <h2>Fair Shares</h2>
+      <p class="covers">Equal parts before anything else. What the top and bottom numbers mean, a fraction of a group, two names for the same amount, which fraction is bigger, where they sit on a number line, adding them, and going past one whole.</p>
+      <span class="foot"><span class="steps">9 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-pattern" href="https://claude.ai/code/artifact/a9e00a3b-5a21-476c-ba07-6726ff258047">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2.5" y="9.5" width="5" height="5" rx="1"></rect>
+          <circle cx="12" cy="12" r="2.6"></circle>
+          <rect x="16.5" y="9.5" width="5" height="5" rx="1"></rect>
+        </svg>
+      </span>
+      <span class="strand">Patterns</span>
+      <h2>Patterns That Grow</h2>
+      <p class="covers">Find the part that repeats and mend a pattern with a hole in it. Then patterns that grow rather than repeat: find the rule, fill the missing number, predict far ahead without drawing it, and make one that shrinks.</p>
+      <span class="foot"><span class="steps">9 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-shape" href="https://claude.ai/code/artifact/199339bd-d0d2-4016-99fc-6431f61bc3c6">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3.2 21 19H3z"></path>
+        </svg>
+      </span>
+      <span class="strand">Shape and space</span>
+      <h2>Sides and Corners</h2>
+      <p class="covers">Count sides and corners and name the shape, solve shape riddles, fold for a line of symmetry, meet the solid shapes, find the middle of a circle, spot shapes hiding in real things, turn a shape all the way round, test a right angle, and see which shapes tile.</p>
+      <span class="foot"><span class="steps">13 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-shape" href="https://claude.ai/code/artifact/d3896735-cf71-422a-aca9-1d51342c09fb">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M15.5 8.5 10.8 10.8 8.5 15.5l4.7-2.3z"></path>
+        </svg>
+      </span>
+      <span class="strand">Position and direction</span>
+      <h2>Which Way From Here</h2>
+      <p class="covers">Say where something is and name a square on a grid. Give a route and follow one, use north, south, east and west, work out whose left is whose, then flip a shape over a mirror line, slide it and turn it about a corner.</p>
+      <span class="foot"><span class="steps">13 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-measure" href="https://claude.ai/code/artifact/6807ce13-1e08-40a5-b373-86fae68f814f">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2.5" y="7.5" width="19" height="9" rx="1.6"></rect>
+          <path d="M7 7.5v3.5M12 7.5v5M17 7.5v3.5"></path>
+        </svg>
+      </span>
+      <span class="strand">Measurement</span>
+      <h2>How Much, How Long</h2>
+      <p class="covers">Compare lengths, measure with cubes and then with a ruler, and draw a line to the length you are asked for. Choose the right unit, balance the scales, read grams and kilograms, millilitres and litres, and read a value that falls between two marks.</p>
+      <span class="foot"><span class="steps">11 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-measure" href="https://claude.ai/code/artifact/6d780789-1f72-4822-91e9-085e7b4d66fa">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 6.6V12l3.6 2.2"></path>
+        </svg>
+      </span>
+      <span class="strand">Time</span>
+      <h2>Half Past, Quarter To</h2>
+      <p class="covers">What the two hands do, quarter past and quarter to, counting round the clock in fives, and reading it to the very minute on a clock face and a digital one. Then the units from seconds to years, and reading a real calendar month.</p>
+      <span class="foot"><span class="steps">14 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+    <a class="lesson c-data" href="https://claude.ai/code/artifact/4a0895fe-296b-49e1-ab30-2e945fb230b8">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3.5 20.5h17"></path>
+          <path d="M7 20.5v-7M12 20.5V6.5M17 20.5v-10"></path>
+        </svg>
+      </span>
+      <span class="strand">Statistics and probability</span>
+      <h2>Count It, Chart It</h2>
+      <p class="covers">Sort things into groups, keep a tally, read a pictogram where one picture stands for two, build a block graph and read a bar chart with a scale. Then how likely something is, what is in the bag, whether a game is fair, and telling a real pattern from a random one.</p>
+      <span class="foot"><span class="steps">10 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+    </a>
+
+  </div>
+
+  <p class="note"><b>For the grown-up.</b> These nine lessons cover all 48 objectives of Cambridge Primary Mathematics Stage 2 &mdash; number, money, fractions, geometry and measure, and statistics and probability. Cards that share a colour share a strand: shape sits with position, and measurement with time.</p>
+
+  <p class="note"><b>Two of them keep going past Stage 2.</b> <i>Half Past, Quarter To</i> and <i>Which Way From Here</i> were written as whole-topic lessons, so after the Stage 2 work they carry on into the 24-hour clock, timetables and coordinates that cross zero. A Grade 2 child can stop at the check and has still met everything the stage asks for; the later steps are there for when they are ready.</p>
+</div>

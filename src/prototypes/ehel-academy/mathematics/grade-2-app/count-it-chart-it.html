@@ -1,0 +1,1704 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Count It, Chart It</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #566669; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #E5540E; --accent-ink: #301302; --accent-soft: #FDE4D6;
+    --teal: #19746F; --teal-ink: #FFFFFF; --plum-ink: #FFFFFF; --gold-ink: #3A2B00; --teal-soft: #D5EFEC; --plum: #8E5AA8; --plum-soft: #EADDF2; --gold: #C99700; --gold-soft: #FBF0C8;
+    --good: #2C8553; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+      --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+      --teal: #4FC3BB; --teal-ink: #0E2C2A; --plum-ink: #241733; --gold-ink: #3A2B00; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+      --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #111D1B; --card: #1A2825; --ink: #E8F0EE; --muted: #97ABA8; --line: #2E403C; --cell: #243532;
+    --accent: #FF7F45; --accent-ink: #1B1410; --accent-soft: #4A2B1C;
+    --teal: #4FC3BB; --teal-ink: #0E2C2A; --plum-ink: #241733; --gold-ink: #3A2B00; --teal-soft: #1E3C3A; --plum: #B78BD1; --plum-soft: #3A2A45; --gold: #E3BE45; --gold-soft: #4A3F14;
+    --good: #5FCB8A; --good-soft: #1E3A2B; --bad: #F08078; --bad-soft: #452625;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.3);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 19px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); }
+  .hero > div { min-width: 0; }
+  .hero h1 { font-size: clamp(28px, 5.6vw, 42px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .dots { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); background: var(--card); padding: 0; }
+  .dots button.now { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 540px; display: flex; flex-direction: column; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: var(--teal-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(24px, 5vw, 33px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 19px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: var(--teal-ink); font-size: 24px; display: grid; place-items: center; }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 6px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 22px; text-align: center; max-width: 32em; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .small-fb { font-size: 16px; color: var(--muted); font-family: "Atkinson Hyperlegible", sans-serif; font-weight: 700; }
+
+  .bigbtns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 58px; height: 54px; padding: 0 16px; border-radius: 16px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: var(--teal-ink); }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 46px; font-size: 17px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 84px; min-height: 66px; padding: 8px 16px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 24px; font-variant-numeric: tabular-nums; display: inline-grid; place-items: center; }
+  .choice.word { font-size: 18px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* sorting */
+  .pool { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; min-height: 56px; padding: 8px; border-radius: 14px; border: 2px dashed var(--line); max-width: 480px; }
+  .pool button, .hoop button { width: 46px; height: 46px; border-radius: 10px; border: 3px solid transparent; background: var(--cell); font-size: 26px; padding: 0; }
+  .pool button.sel { border-color: var(--accent); transform: scale(1.1); }
+  .hoops { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .hoop { min-width: 160px; min-height: 130px; border-radius: 22px; border: 4px solid var(--teal); background: var(--teal-soft); padding: 8px; display: flex; flex-wrap: wrap; gap: 6px; align-content: flex-start; justify-content: center; cursor: pointer; }
+  .hoop.b { border-color: var(--plum); background: var(--plum-soft); }
+  .hoop .lab { width: 100%; text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .hoop.flash { outline: 4px solid var(--bad); }
+
+  /* tally */
+  .tallyrow { display: grid; grid-template-columns: 44px 1fr 46px; gap: 10px; align-items: center; width: 100%; max-width: 460px; padding: 6px 0; }
+  .tallyrow .ic { font-size: 28px; text-align: center; }
+  .tallyrow .marks { min-height: 34px; }
+  .tallyrow .n { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 24px; text-align: right; font-variant-numeric: tabular-nums; }
+  .tallysvg { height: 34px; }
+  .tallysvg line { stroke: var(--ink); stroke-width: 3; stroke-linecap: round; }
+  .tallysvg line.five { stroke: var(--accent); }
+  .scatter { position: relative; width: 100%; max-width: 460px; height: 150px; border-radius: 14px; background: var(--ground); border: 2px solid var(--line); }
+  .scatter button { position: absolute; width: 34px; height: 34px; border: 0; background: none; font-size: 24px; padding: 0; transform: translate(-50%, -50%); }
+  .scatter button.done { opacity: 0.25; }
+
+  /* pictogram */
+  .picto { display: grid; gap: 6px; width: 100%; max-width: 520px; }
+  .pictorow { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: center; }
+  .pictorow .name { font-weight: 700; font-size: 16px; }
+  .pictorow .icons { display: flex; gap: 4px; flex-wrap: wrap; font-size: 24px; line-height: 1; }
+  .pictorow .icons span.half { clip-path: inset(0 50% 0 0); }
+  .key { padding: 8px 14px; border-radius: 12px; background: var(--gold-soft); border: 2px solid var(--gold); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 17px; }
+
+  /* bar chart */
+  .chart { width: 100%; max-width: 420px; display: block; }
+  .chart .grid line { stroke: var(--line); stroke-width: 1; }
+  .chart .axis text { font-family: "Atkinson Hyperlegible", sans-serif; font-size: 11px; font-weight: 700; fill: var(--muted); }
+  .chart .cat { font-family: "Atkinson Hyperlegible", sans-serif; font-size: 12px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
+  .chart .f0 { fill: var(--accent); } .chart .f1 { fill: var(--teal); } .chart .f2 { fill: var(--plum); } .chart .f3 { fill: var(--gold); }
+  .chart .blk { stroke: var(--card); stroke-width: 2; }
+
+  /* likelihood line */
+  .likeline { position: relative; width: 100%; max-width: 620px; height: 108px; }
+  .likeline .bar { position: absolute; left: 10px; right: 10px; top: 40px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--bad-soft), var(--cell) 50%, var(--good-soft)); }
+  .likeline button { position: absolute; top: 24px; transform: translateX(-50%); width: 78px; border: 3px solid var(--line); background: var(--card); border-radius: 12px; padding: 6px 2px; font-size: 12px; font-weight: 700; font-family: "Atkinson Hyperlegible", sans-serif; line-height: 1.15; }
+  .likeline button.right { background: var(--good-soft); border-color: var(--good); }
+  .likeline button.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  @media (max-width: 560px) { .likeline button { width: 60px; font-size: 10px; } }
+  .eventcard { padding: 12px 18px; border-radius: 16px; background: var(--accent-soft); border: 2px solid var(--accent); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 21px; max-width: 26em; text-align: center; }
+
+  /* bag and spinner */
+  .bag { width: 100%; max-width: 240px; display: block; }
+  .bag .sack { fill: var(--gold-soft); stroke: var(--ink); stroke-width: 4; }
+  .bag .c0 { fill: var(--accent); } .bag .c1 { fill: var(--teal); } .bag .c2 { fill: var(--plum); }
+  .bag circle.ball { stroke: var(--ink); stroke-width: 2; }
+  .spinner { width: 100%; max-width: 180px; display: block; }
+  .spinner path { stroke: var(--card); stroke-width: 3; }
+  .spinner .s0 { fill: var(--accent); } .spinner .s1 { fill: var(--teal); }
+  .spinner .pin { fill: var(--ink); }
+  .spinner .needle { stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+  .spinpair { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; align-items: flex-start; }
+  .spinpair .who { text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 16px; margin-top: 4px; }
+
+  .working { display: grid; gap: 8px; width: 100%; max-width: 580px; }
+  .working .line { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding: 9px 14px; border-radius: 12px; background: var(--teal-soft); font-variant-numeric: tabular-nums; }
+  .working .line.total { background: var(--accent-soft); }
+  .working .line .k { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; }
+
+  .pstrip { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; max-width: 460px; }
+  .pstrip i { width: 32px; height: 32px; border-radius: 7px; border: 3px solid var(--ink); }
+  .pstrip i.p0 { background: var(--accent); } .pstrip i.p1 { background: var(--teal); }
+  .pstrip i.p2 { background: var(--plum); } .pstrip i.p3 { background: var(--gold); }
+  .pstrip i.next { border-style: dashed; background: var(--card); display: grid; place-items: center;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 18px; color: var(--muted); font-style: normal; }
+
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { padding: 14px; border-radius: 18px; background: var(--ground); border: 2px solid var(--line); text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 17px; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker .ic { font-size: 34px; display: block; margin-bottom: 4px; }
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+  .foot .mid { font-size: 15px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+  /* ==================================================================
+     The voice bar: the speaker reads the step, Explain walks through the
+     idea behind it.
+
+     One block for every lesson, light-themed or dark. It takes its colour
+     from whatever palette the lesson already declares - --teal where there
+     is one, the accent where there is not (Show Your Working and Up to a
+     Thousand have no teal) - so nothing here has to know which lesson it
+     landed in, and a lesson that restyles itself carries the voice bar
+     with it.
+     ================================================================== */
+  .say button.explain {
+    flex: 0 0 auto;
+    /* the decks size every .say button at 52px square; this one is a pill */
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+
+  /* while she is speaking, the speaker she is speaking from says so */
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+
+  @media (max-width: 420px) {
+    /* the label goes, so the button becomes a disc rather than an oval with
+       one emoji rattling around in it - smaller than the speaker beside it,
+       because reading the step is the main action and explaining is not */
+    .say button.explain .explain-t { display: none; }
+    .say button.explain {
+      width: 44px; height: 44px;
+      padding: 0;
+      justify-content: center;
+      font-size: 18px;
+    }
+  }
+
+
+  /* ==== grade-1 design layer ==== */
+  /* The palette is redefined for ALL THREE theme states on purpose: this is a
+     design that commits to one look rather than tracking the viewer's setting,
+     so every colour is stated here and none is inherited from the light base.
+     --gold-soft and --plum-soft are carried too — the Grade 1 lesson dropped
+     both, and the lessons here use them as surfaces. */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+    --ink: #FFFFFF;
+    --muted: #A4B7C8;
+    --accent: #ED8E70;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --plum-soft: rgba(183, 139, 209, 0.18);
+    --gold: #F4C95D;
+    --gold-soft: rgba(244, 201, 93, 0.18);
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    /* Ink for text sitting ON a coloured chip. Declared here so the whole
+       template speaks one language: every teal chip in every lesson takes
+       --teal-ink, and nothing has to know which theme it landed in. */
+    --teal-ink: #06231F;
+    --plum-ink: #241733;
+    --gold-ink: #2A1F05;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  /* One fixed gradient rather than one stretched down the whole document, so
+     135 degrees means 135 degrees however long the lesson runs. A fixed
+     pseudo-element, not background-attachment, which iOS Safari ignores. */
+  html { background: #183B56; }
+  body { background: transparent; color: var(--ink); font-size: 18px; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; letter-spacing: -0.02em; font-weight: 800; }
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+  .slide h2 { font-weight: 800; }
+
+  .dots button { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now { background: var(--teal); border-color: var(--teal); }
+  .dots button.done { background: var(--good); border-color: var(--good); }
+
+  .deck { background: rgba(20, 43, 62, 0.88); border: 1px solid var(--line); border-radius: 26px; }
+  .slide-head .n { background: var(--teal); color: var(--teal-ink); font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: var(--teal-ink); }
+
+  .big {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: var(--teal-ink); box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  /* plum was missing, so a purple button carried the gold press shadow */
+  .big.plum { background: var(--plum); color: var(--plum-ink); box-shadow: 0 5px 0 #7A4A94; }
+  .big.plum:active { box-shadow: 0 2px 0 #7A4A94; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { font-family: "Inter", "Segoe UI", sans-serif; background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb { font-family: "Inter", "Segoe UI", sans-serif; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .sticker { font-family: "Inter", "Segoe UI", sans-serif; background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .foot .mid { color: var(--muted); }
+
+  /* This layer widens the eyebrow's tracking, and the base sets it nowrap, so a
+     long eyebrow ("Mathematics · Patterns · Grades 1 to 4") pushes the step dots
+     off a phone. Give it room to wrap and let the hero stack under it. */
+  @media (max-width: 520px) {
+    .hero { flex-wrap: wrap; }
+    .eyebrow { white-space: normal; }
+    .dots { max-width: 100%; justify-content: flex-start; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Mathematics · Statistics and probability</p>
+      <h1>Count It, <em>Chart It</em></h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <div class="deck" id="deck">
+    <!-- 1 sorting -->
+    <section class="slide" data-say="Sorting puts things into groups. Tap a thing, then tap the hoop it belongs in.">
+      <div class="slide-head"><span class="n">1</span><h2>Sort them into groups</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Tap a thing, then tap the <b>hoop</b> it belongs in.</span></div>
+      <div class="stage">
+        <div class="pool" id="pool1"></div>
+        <div class="hoops" id="hoops1"></div>
+        <p class="fb" id="fb1"></p>
+        <p class="fb small-fb" id="score1"></p>
+      </div>
+    </section>
+
+    <!-- 2 tally -->
+    <section class="slide" data-say="A tally chart counts as you go. Every fifth mark goes across the other four, so you can count in fives.">
+      <div class="slide-head"><span class="n">2</span><h2>Tally charts</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Tap each thing to <b>tally</b> it. Every <b>fifth</b> mark goes across the other four.</span></div>
+      <div class="stage">
+        <div class="scatter" id="scatter2"></div>
+        <div id="tally2" style="width:100%;max-width:460px"></div>
+        <p class="fb" id="fb2"></p>
+        <div class="choices" id="ch2"></div>
+        <p class="fb small-fb" id="score2"></p>
+      </div>
+    </section>
+
+    <!-- 3 pictogram 1:1 -->
+    <section class="slide" data-say="A pictogram uses pictures. Here one picture stands for one thing, so you count the pictures.">
+      <div class="slide-head"><span class="n">3</span><h2>Pictograms</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">One picture stands for <b>one</b> thing, so just <b>count the pictures</b>.</span></div>
+      <div class="stage">
+        <div class="key" id="key3"></div>
+        <div class="picto" id="picto3"></div>
+        <p class="fb" id="q3" style="font-size:21px"></p>
+        <div class="choices" id="ch3"></div>
+        <p class="fb" id="fb3"></p>
+        <p class="fb small-fb" id="score3"></p>
+      </div>
+    </section>
+
+    <!-- 4 pictogram with a key -->
+    <section class="slide" data-say="Careful. Now one picture stands for two things. Read the key first.">
+      <div class="slide-head"><span class="n">4</span><h2>When one picture means two</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Read the <b>key</b> first. One picture is worth <b>2</b>, so count in twos.</span></div>
+      <div class="stage">
+        <div class="key" id="key4"></div>
+        <div class="picto" id="picto4"></div>
+        <p class="fb" id="q4" style="font-size:21px"></p>
+        <div class="choices" id="ch4"></div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="score4"></p>
+      </div>
+    </section>
+
+    <!-- 5 block graph -->
+    <section class="slide" data-say="A block graph stacks one block for each thing. Build the graph from the tally.">
+      <div class="slide-head"><span class="n">5</span><h2>Build a block graph</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Add one <b>block</b> for each thing, until the graph matches the numbers.</span></div>
+      <div class="stage">
+        <svg class="chart" id="chart5" viewBox="0 0 340 240" role="img" aria-label="A block graph"></svg>
+        <div class="bigbtns" id="add5"></div>
+        <p class="fb" id="fb5"></p>
+        <p class="fb small-fb" id="score5"></p>
+      </div>
+    </section>
+
+    <!-- 6 read a bar chart -->
+    <section class="slide" data-say="This bar chart counts in twos. Read the scale carefully, then answer.">
+      <div class="slide-head"><span class="n">6</span><h2>Reading a bar chart</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Each step up the side is <b>2</b>. Read the scale carefully.</span></div>
+      <div class="stage">
+        <svg class="chart" id="chart6" viewBox="0 0 340 240" role="img" aria-label="A bar chart"></svg>
+        <p class="fb" id="q6" style="font-size:21px"></p>
+        <div class="choices" id="ch6"></div>
+        <p class="fb" id="fb6"></p>
+        <p class="fb small-fb" id="score6"></p>
+      </div>
+    </section>
+
+    <!-- 7 likelihood -->
+    <section class="slide" data-say="How likely is it? Impossible, unlikely, an even chance, likely, or certain.">
+      <div class="slide-head"><span class="n">7</span><h2>Impossible to certain</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">How <b>likely</b> is it? Tap a word on the line.</span></div>
+      <div class="stage">
+        <p class="eventcard" id="event7"></p>
+        <div class="likeline" id="line7"></div>
+        <p class="fb" id="fb7"></p>
+        <p class="fb small-fb" id="score7"></p>
+      </div>
+    </section>
+
+    <!-- 8 the bag -->
+    <section class="slide" data-say="A bag of counters. Which colour are you most likely to pull out without looking?">
+      <div class="slide-head"><span class="n">8</span><h2>What is in the bag?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Without looking, which colour are you <b>most likely</b> to pull out?</span></div>
+      <div class="stage">
+        <svg class="bag" id="bag8" viewBox="0 0 240 210" role="img" aria-label="A bag of counters"></svg>
+        <div class="choices" id="ch8"></div>
+        <p class="fb" id="fb8"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="try8">Pull out 20 times</button></div>
+        <p class="fb small-fb" id="try8out"></p>
+        <p class="fb small-fb" id="score8"></p>
+      </div>
+    </section>
+
+    <!-- 9 fair -->
+    <section class="slide" data-say="Is the game fair? A fair game gives both players the same chance.">
+      <div class="slide-head"><span class="n">9</span><h2>Is it fair?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">A <b>fair</b> game gives both players the <b>same chance</b>. Is this one fair?</span></div>
+      <div class="stage">
+        <div class="spinpair" id="spin9"></div>
+        <p class="fb" id="rule9"></p>
+        <div class="choices" id="ch9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="fb small-fb" id="score9"></p>
+      </div>
+    </section>
+
+
+    <!-- 10 regular or random -->
+    <section class="slide" data-say="Some rows repeat over and over. Those are regular patterns. Others have no repeat at all. Those are random.">
+      <div class="slide-head"><span class="n">10</span><h2>Regular or random?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="sayP">A <b>regular pattern</b> repeats over and over. A <b>random</b> one has no repeat. Which is this?</span></div>
+      <div class="stage">
+        <div class="pstrip" id="stripP"></div>
+        <div class="choices" id="chP"></div>
+        <p class="fb" id="fbP"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="showP" hidden>What comes next?</button></div>
+        <p class="fb small-fb" id="scoreP"></p>
+      </div>
+    </section>
+
+    <!-- 11 check -->
+    <section class="slide" data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
+      <div class="stage">
+        <p class="fb" id="q10" style="font-size:22px"></p>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="fb small-fb" id="score10"></p>
+      </div>
+    </section>
+
+    <!-- 12 stickers -->
+    <section class="slide" data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">★</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fb11"></p>
+        <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">◀ Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next ▶</button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  /* ==================================================================
+     THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by
+     whatever voice the device actually has.
+
+     Every line in this lesson is written as Azure SSML: <mstts:express-as>
+     for the feeling, <prosody> for pace and pitch, <break> for the beat
+     before an answer, <emphasis> for the word that carries the maths. That
+     markup is the script we would post to en-GB-SoniaNeural, and it is kept
+     here rather than flattened to plain text so the lesson can be moved onto
+     a real TTS endpoint without rewriting a word.
+
+     A published page cannot call Azure itself: it may not hold a
+     subscription key, and its content policy blocks the request outright.
+     So the page renders the same SSML through the browser's own speech
+     engine - it asks for Sonia by name first (Edge and Windows publish her
+     as "Microsoft Sonia Online (Natural) - English (United Kingdom)", which
+     IS en-GB-SoniaNeural), then any other British voice, then any English
+     one. Web Speech does not accept SSML, so the markup is walked into a
+     queue of utterances carrying the rate, the pitch and the real silences
+     the tags asked for.
+     ================================================================== */
+
+  /* ==================================================================
+     THE PLATFORM VOICE
+
+     Ehel already serves narration from its own endpoint, and this is the
+     app's own contract, not a new one:
+
+       POST <origin>/local/hubredirect/quiz_tts.php
+       Authorization: Bearer <launch token>          (english.js :: platformHeaders)
+       { text, purpose: "ehel_course_page", voiceId } -> audio/mpeg
+
+     Both halves of "where" and "who" come from the launch URL exactly as
+     shell/wehel.js takes them - the origin from ?pwsEndpoint, the HS256
+     token from ?pwsToken - so there is nothing to hardcode and no
+     credential in this file. A cookie is not enough on its own and never
+     was: MoodleSessionep1 carries no SameSite attribute, browsers treat
+     that as Lax, and Lax cookies are not sent on a cross-site POST.
+
+     With neither parameter present the endpoint resolves to "" and this
+     whole module reports itself unavailable, which is the honest state of
+     a lesson opened as a standalone page: it falls through to the
+     browser's own voice and nothing is requested.
+
+     Two things this does NOT do, both worth knowing before reading the
+     endpoint name as a promise:
+
+       - It is not Azure. quiz_tts.php proxies ElevenLabs (wehel_speak.php
+         is Deepgram), so this path speaks the Ehel course voice, not
+         en-GB-SoniaNeural. The SSML stays because it is still the script.
+       - It takes TEXT. There is no SSML field, so the markup is flattened
+         to the words plus the punctuation a long pause implies. Pace,
+         pitch and style are the voice's own on this path; they only come
+         from the tags on the browser path.
+     ================================================================== */
+  const PLATFORM_VOICE = (function () {
+    const params = new URLSearchParams(location.search);
+    const TOKEN = (params.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+    const ORIGIN = (function () {
+      const raw = params.get("pwsEndpoint") || "";
+      if (!raw) return "";
+      try {
+        const u = new URL(raw, location.href);
+        if (!/^https?:$/.test(u.protocol)) return "";
+        /* A relative or malformed value resolves against the page's own URL, so
+           without this the endpoint quietly becomes whatever host is serving the
+           lesson - the CDN, not the platform. wehel.js :: platformOrigin refuses
+           the page's own origin for the same reason; the dev twin is same-origin
+           on purpose and is chosen on its own branch below, never through here. */
+        return u.origin === location.origin ? "" : u.origin;
+      } catch (e) {
+        return ""; /* an unparseable launch param is not an origin */
+      }
+    })();
+    /* the dev twin is served by the page's own origin, so it is never rebased */
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname) && location.port === "4287";
+    const ENDPOINT = DEV ? "/api/elevenlabs-tts" : (ORIGIN ? ORIGIN + "/local/hubredirect/quiz_tts.php" : "");
+    const VOICE_ID = (params.get("voiceId") || "XfNU2rGpBa01ckF309OY").replace(/[^A-Za-z0-9_-]/g, "");
+    const el = typeof Audio === "function" ? new Audio() : null;
+
+    /* One clip per line asked for, kept by its exact text: a lesson repeats
+       its instruction every time a child taps the speaker, and the endpoint
+       bills per character. Same cap and same eviction as the app's. */
+    const cache = new Map();
+    const pending = new Map();
+    let chain = Promise.resolve();
+    let playing = false;
+
+    function ready() { return !!(ENDPOINT && el); }
+
+    function clipUrl(text) {
+      const clean = String(text || "").slice(0, 5000);
+      if (!clean) return Promise.reject(new Error("There is nothing to read."));
+      if (cache.has(clean)) return Promise.resolve(cache.get(clean));
+      if (pending.has(clean)) return pending.get(clean);
+      const headers = { Accept: "audio/mpeg", "Content-Type": "application/json" };
+      if (TOKEN) headers.Authorization = "Bearer " + TOKEN;
+      const request = fetch(ENDPOINT, {
+        method: "POST",
+        credentials: "include",
+        headers: headers,
+        body: JSON.stringify({ text: clean, purpose: "ehel_course_page", voiceId: VOICE_ID })
+      }).then(function (response) {
+        if (!response.ok) throw new Error("The voice endpoint answered " + response.status + ".");
+        return response.blob();
+      }).then(function (blob) {
+        /* an unauthenticated cross-origin POST answers 303 to the login page
+           with an HTML body, where the caller is waiting for audio */
+        if (!blob.size || !/^audio\//i.test(blob.type || "audio/mpeg")) throw new Error("That was not audio.");
+        const src = URL.createObjectURL(blob);
+        cache.set(clean, src);
+        if (cache.size > 24) {
+          const oldest = cache.keys().next().value;
+          URL.revokeObjectURL(cache.get(oldest));
+          cache.delete(oldest);
+        }
+        return src;
+      });
+      pending.set(clean, request);
+      request.catch(function () {}).then(function () { pending.delete(clean); });
+      return request;
+    }
+
+    function stop() {
+      try { el.pause(); el.removeAttribute("src"); } catch (e) {}
+      chain = Promise.resolve();
+      playing = false;
+    }
+
+    function play(text, replace) {
+      if (!ready()) return Promise.reject(new Error("No platform endpoint on this page."));
+      if (replace) stop();
+      const step = function () {
+        return clipUrl(text).then(function (src) {
+          return new Promise(function (done, fail) {
+            playing = true;
+            el.onended = function () { playing = false; done(); };
+            el.onerror = function () { playing = false; fail(new Error("The clip would not play.")); };
+            el.src = src;
+            const started = el.play();
+            if (started && started.catch) started.catch(function (e) { playing = false; fail(e); });
+          });
+        });
+      };
+      /* a failed clip must not wedge everything queued behind it */
+      const run = chain.then(step, step);
+      chain = run.catch(function () {});
+      return run;
+    }
+
+    return {
+      ready: ready,
+      play: play,
+      stop: stop,
+      busy: function () { return playing; },
+      endpoint: function () { return ENDPOINT; }
+    };
+  })();
+
+  const VOICE = (function () {
+    const BASE_RATE = 0.94;   /* a shade under natural: five-year-olds are listening */
+    const BASE_PITCH = 1.06;  /* bright, not squeaky */
+    const SUPPORTED = typeof window !== "undefined" && "speechSynthesis" in window;
+    /* emoji, dingbats, arrows and the joiners that glue them together */
+    const PICTOGRAPH = /[\u{1F000}-\u{1FAFF}\u{2190}-\u{21FF}\u{2300}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+    /* ---- who speaks ---- */
+    const WANTED = [
+      /\bsonia\b/i,                 /* en-GB-SoniaNeural itself: Edge and Windows publish her */
+      /google uk english female/i,  /* the en-GB voice Chrome ships nearly everywhere */
+      /\blibby\b/i, /\bmaisie\b/i, /\bhazel\b/i, /\bsusan\b/i
+    ];
+    let voice = null;
+    function pickVoice() {
+      if (!SUPPORTED) return;
+      const all = window.speechSynthesis.getVoices() || [];
+      if (!all.length) return;
+      const gb = all.filter((v) => /en[-_]GB/i.test(v.lang));
+      for (const re of WANTED) {
+        const hit = gb.find((v) => re.test(v.name)) || all.find((v) => re.test(v.name));
+        if (hit) { voice = hit; return; }
+      }
+      voice = gb[0] || all.find((v) => /^en/i.test(v.lang)) || all[0] || null;
+    }
+    if (SUPPORTED) {
+      pickVoice();
+      window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+    }
+
+    /* ---- SSML -> a queue the browser can actually say ---- */
+    const RATE_WORD = { "x-slow": 0.6, slow: 0.82, medium: 1, fast: 1.18, "x-fast": 1.35 };
+    const PITCH_WORD = { "x-low": 0.72, low: 0.86, medium: 1, high: 1.16, "x-high": 1.3 };
+    /* Azure reads volume as a move away from a default it is free to raise; Web
+       Speech takes 0..1 and ALREADY sits at 1, so the authored "+20%" resolves to
+       1.2 and then clamps straight back to 1. On this path the boost is a no-op:
+       the browser can only be asked to speak quieter, never louder. The SSML still
+       carries it verbatim, because Azure is the path where it lands. (An absolute
+       Azure volume, 0..100, is likewise not converted and simply clamps.) Do not
+       read a working browser preview as evidence that the boost is being applied. */
+    const VOLUME_WORD = { silent: 0, "x-soft": 0.4, soft: 0.7, medium: 1, loud: 1.2, "x-loud": 1.4 };
+    /* Azure's speaking styles, approximated in the two dials that carry a feeling -
+       rate and pitch. Volume is a level rather than a mood, so no style moves it. */
+    const STYLE = {
+      cheerful: [1.04, 1.12], excited: [1.09, 1.16], friendly: [1.0, 1.05],
+      hopeful: [0.98, 1.07], empathetic: [0.93, 0.98], calm: [0.9, 0.97],
+      gentle: [0.94, 1.01], sad: [0.88, 0.94], shouting: [1.06, 1.14],
+      whispering: [0.88, 0.95], newscast: [1.0, 1.0], chat: [1.0, 1.03]
+    };
+    function relative(value, words, base) {
+      if (!value) return base;
+      const v = String(value).trim();
+      if (words[v] != null) return base * words[v];
+      let m = /^([+-])(\d+(?:\.\d+)?)%$/.exec(v);
+      if (m) return base * (1 + (m[1] === "-" ? -1 : 1) * (parseFloat(m[2]) / 100));
+      m = /^([+-]?\d+(?:\.\d+)?)st$/.exec(v);
+      if (m) return base * Math.pow(2, parseFloat(m[1]) / 12);
+      m = /^([+-]?\d+(?:\.\d+)?)$/.exec(v);
+      if (m) return parseFloat(m[1]);
+      return base;
+    }
+    function pauseOf(time, strength) {
+      if (time) {
+        const ms = /^(\d+(?:\.\d+)?)\s*ms$/.exec(time.trim());
+        if (ms) return Math.min(3000, parseFloat(ms[1]));
+        const s = /^(\d+(?:\.\d+)?)\s*s$/.exec(time.trim());
+        if (s) return Math.min(3000, parseFloat(s[1]) * 1000);
+      }
+      return { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength] != null
+        ? { none: 0, "x-weak": 100, weak: 200, medium: 400, strong: 700, "x-strong": 1000 }[strength]
+        : 350;
+    }
+
+    function walk(node, ctx, out) {
+      for (const n of node.childNodes) {
+        if (n.nodeType === 3) {
+          const t = n.nodeValue.replace(/\s+/g, " ");
+          if (t.trim()) out.push({ text: t, rate: ctx.rate, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        if (n.nodeType !== 1) continue;
+        const tag = (n.localName || n.nodeName).toLowerCase();
+        if (tag === "break") { out.push({ pause: pauseOf(n.getAttribute("time"), n.getAttribute("strength")) }); continue; }
+        if (tag === "say-as" && /characters|spell-out/i.test(n.getAttribute("interpret-as") || "")) {
+          out.push({ text: n.textContent.trim().split("").join(", "), rate: ctx.rate * 0.78, pitch: ctx.pitch, volume: ctx.volume });
+          continue;
+        }
+        let c = ctx;
+        if (tag === "prosody") {
+          c = { rate: relative(n.getAttribute("rate"), RATE_WORD, ctx.rate), pitch: relative(n.getAttribute("pitch"), PITCH_WORD, ctx.pitch), volume: relative(n.getAttribute("volume"), VOLUME_WORD, ctx.volume) };
+        } else if (tag === "emphasis") {
+          const k = { strong: 1, moderate: 0.55, reduced: -0.5, none: 0 }[n.getAttribute("level") || "moderate"] || 0.55;
+          c = { rate: ctx.rate * (1 - 0.08 * k), pitch: ctx.pitch * (1 + 0.11 * k), volume: ctx.volume };
+        } else if (tag === "express-as") {
+          const s = STYLE[(n.getAttribute("style") || "").toLowerCase()] || [1, 1];
+          const deg = Math.max(0.01, Math.min(2, parseFloat(n.getAttribute("styledegree") || "1") || 1));
+          c = { rate: ctx.rate * (1 + (s[0] - 1) * deg), pitch: ctx.pitch * (1 + (s[1] - 1) * deg), volume: ctx.volume };
+        }
+        walk(n, c, out);
+        if (tag === "p") out.push({ pause: 450 });
+        else if (tag === "s") out.push({ pause: 240 });
+      }
+    }
+
+    function escapeText(s) {
+      return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+    const OPEN = '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xml:lang="en-GB"><voice name="en-GB-SoniaNeural">';
+    const SHUT = "</voice></speak>";
+    /* Plain text is still SSML here - it just gets the house style put round it. */
+    function wrap(x) {
+      const s = String(x == null ? "" : x).trim();
+      if (!s) return "";
+      if (/^<speak[\s>]/i.test(s)) return s;
+      const body = /<(mstts:)?express-as|<prosody|<emphasis|<break|<say-as|<[sp]>/i.test(s) ? s : escapeText(s);
+      /* A line that already names its own feeling keeps it: Azure forbids one
+         express-as inside another, so the house style stands aside. */
+      if (/<(mstts:)?express-as[\s>]/i.test(body)) return OPEN + body + SHUT;
+      return OPEN + '<mstts:express-as style="cheerful" styledegree="1.25">' + '<prosody volume="+20%" rate="+3%" pitch="+2%">' + body + "</prosody></mstts:express-as>" + SHUT;
+    }
+
+    function flatten(ssml) {
+      const doc = new DOMParser().parseFromString(ssml, "application/xml");
+      const out = [];
+      if (doc.getElementsByTagName("parsererror").length) {
+        out.push({ text: ssml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(), rate: 1, pitch: 1, volume: 1 });
+      } else {
+        walk(doc.documentElement, { rate: 1, pitch: 1, volume: 1 }, out);
+      }
+      /* Chrome truncates a long utterance, so break on sentence ends. */
+      const cut = [];
+      for (const seg of out) {
+        if (seg.pause != null) { cut.push(seg); continue; }
+        let t = seg.text.trim();
+        while (t.length > 170) {
+          let at = t.lastIndexOf(". ", 170);
+          if (at < 60) at = t.lastIndexOf(", ", 170);
+          if (at < 60) at = t.lastIndexOf(" ", 170);
+          if (at < 40) at = 170;
+          cut.push({ text: t.slice(0, at + 1).trim(), rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+          t = t.slice(at + 1).trim();
+        }
+        if (t) cut.push({ text: t, rate: seg.rate, pitch: seg.pitch, volume: seg.volume });
+      }
+      return cut;
+    }
+
+    /* ---- playing it ---- */
+    let queue = [], at = 0, timer = null, keepAlive = null, speaking = false;
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+    function mark(on) {
+      speaking = on;
+      document.body.classList.toggle("voice-on", on);
+      if (on) {
+        /* Chrome stops a long run dead at about fifteen seconds unless poked. */
+        clearInterval(keepAlive);
+        keepAlive = setInterval(() => { try { window.speechSynthesis.resume(); } catch (e) {} }, 6000);
+      } else { clearInterval(keepAlive); keepAlive = null; }
+    }
+    /* The words a parsed queue would say, as one line. An endpoint that takes
+       text and not SSML cannot be handed <break time="320ms"/>, so a real pause
+       becomes the full stop it was standing in for, and the pictographs go the
+       same way they go on the browser path. */
+    function spoken(segs) {
+      let out = "";
+      for (const seg of segs) {
+        if (seg.pause != null) {
+          if (seg.pause >= 300 && out && !/[.!?\u2026][\"'\u201d\u2019)]*\s*$/.test(out)) out += ".";
+          out += " ";
+          continue;
+        }
+        out += (out && !/\s$/.test(out) ? " " : "") + seg.text;
+      }
+      return out.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+    }
+
+    /* The endpoint first, the browser's own voice if it refuses. A lesson that
+       goes quiet because a server was down is worse than one read by whatever
+       voice the device has. */
+    function viaPlatform(segs, replace) {
+      const line = spoken(segs);
+      if (!line) { mark(false); return; }
+      PLATFORM_VOICE.play(line, replace).then(function () {
+        if (!PLATFORM_VOICE.busy()) mark(false);
+      }, function () {
+        if (!SUPPORTED) { mark(false); return; }
+        queue = segs; at = 0; next();
+      });
+    }
+
+    function stop() {
+      clearTimeout(timer); timer = null; queue = []; at = 0;
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+      PLATFORM_VOICE.stop();
+      mark(false);
+    }
+    function next() {
+      if (at >= queue.length) { mark(false); return; }
+      const seg = queue[at++];
+      if (seg.pause != null) { timer = setTimeout(next, seg.pause); return; }
+      const words = seg.text.replace(PICTOGRAPH, " ").replace(/[ ]+/g, " ").trim();
+      if (!words) { next(); return; }
+      let u;
+      try { u = new SpeechSynthesisUtterance(words); } catch (e) { mark(false); return; }
+      if (voice) u.voice = voice;
+      u.lang = (voice && voice.lang) || "en-GB";
+      u.rate = clamp(BASE_RATE * seg.rate, 0.5, 2);
+      u.pitch = clamp(BASE_PITCH * seg.pitch, 0.1, 2);
+      /* 0..1 and already at 1, so an authored boost clamps away here - see VOLUME_WORD */
+      u.volume = clamp(seg.volume == null ? 1 : seg.volume, 0, 1);
+      u.onend = next;
+      u.onerror = next;
+      try { window.speechSynthesis.speak(u); } catch (e) { next(); }
+    }
+    function speak(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      stop();
+      queue = flatten(ssml);
+      remember(queue);
+      at = 0;
+      if (!queue.length) return;
+      mark(true);
+      if (PLATFORM_VOICE.ready()) { viaPlatform(queue, true); return; }
+      next();
+    }
+    /* queue rather than interrupt: a reaction should not cut off a sentence
+       the child is still listening to, unless that sentence is the old one */
+    function follow(x) {
+      if (!SUPPORTED && !PLATFORM_VOICE.ready()) return;
+      const ssml = wrap(x);
+      if (!ssml) return;
+      if (PLATFORM_VOICE.ready()) {
+        /* the endpoint plays whole clips, so a follow-up is the next clip in
+           the chain rather than more segments spliced into this one */
+        const segs = flatten(ssml);
+        remember(segs);
+        if (!speaking) mark(true);
+        viaPlatform(segs, false);
+        return;
+      }
+      if (!speaking) return speak(ssml);
+      queue = queue.slice(at).concat([{ pause: 250 }], flatten(ssml));
+      remember(queue);
+      at = 0;
+    }
+
+
+    /* What she has just said, so praise does not repeat the sentence the lesson
+       spoke a beat earlier. "Ten! The frame is full." once, then "That is right." */
+    const recent = [];
+    function remember(segs) {
+      for (const s of segs) if (s.text) recent.push(s.text.replace(/[ ]+/g, ' ').trim().toLowerCase());
+      while (recent.length > 16) recent.shift();
+    }
+    function saidRecently(t) {
+      const n = String(t == null ? '' : t).replace(/[ ]+/g, ' ').trim().toLowerCase();
+      if (n.length < 8) return false;
+      return recent.join(' | ').indexOf(n) >= 0;
+    }
+    return {
+      speak: speak, follow: follow, stop: stop,
+      supported: SUPPORTED,
+      voiceName: () => (voice ? voice.name : null),
+      isSonia: () => !!(voice && /\bsonia\b/i.test(voice.name)),
+      OPEN: OPEN, SHUT: SHUT, esc: escapeText,
+      speaking: () => speaking,
+      saidRecently: saidRecently,
+      /* which voice this page is actually using, for anyone checking */
+      platformEndpoint: () => PLATFORM_VOICE.endpoint()
+    };
+  })();
+
+  /* Every call site in this lesson already says say(...). It now goes to Sonia. */
+  function say(text) { VOICE.speak(text); }
+
+  /* ==================================================================
+     WHAT SHE SAYS BACK
+
+     A lesson that only reads its own instructions is a page with a
+     loudspeaker. These are the lines she says about what the child has just
+     DONE - and after a wrong answer she reads the page's own hint aloud,
+     so the help arrives in the ear as well as on the screen.
+
+     Each bank is rotated rather than shuffled, so the same praise never
+     lands twice running.
+     ================================================================== */
+  const REACTION = (function () {
+    const S = VOICE.OPEN, E = VOICE.SHUT;
+    const cheer = (deg, body) => S + '<mstts:express-as style="cheerful" styledegree="' + deg + '">' + body + "</mstts:express-as>" + E;
+    const kind = (body) => S + '<mstts:express-as style="empathetic" styledegree="1.3">' + body + "</mstts:express-as>" + E;
+    const excite = (body) => S + '<mstts:express-as style="excited" styledegree="1.7">' + body + "</mstts:express-as>" + E;
+
+    const BANKS = {
+      right: [
+        cheer("1.6", 'Yes! <break time="120ms"/> That is <emphasis level="strong">exactly</emphasis> it.'),
+        cheer("1.5", 'That is right. <break time="140ms"/> <prosody pitch="+8%">Well done.</prosody>'),
+        cheer("1.7", '<prosody rate="fast" pitch="+12%">Spot on!</prosody>'),
+        cheer("1.4", 'Lovely. <break time="120ms"/> You worked that out beautifully.'),
+        cheer("1.6", '<prosody pitch="+10%">Brilliant.</prosody> <break time="120ms"/> Straight there.')
+      ],
+      wrong: [
+        kind('Not quite. <break time="220ms"/> Have another look.'),
+        kind('<prosody rate="slow">Hmm.</prosody> <break time="250ms"/> Not that one. Let us think it through again.'),
+        kind('Close. <break time="200ms"/> Try one more time - you are nearly there.'),
+        kind('Not this time. <break time="220ms"/> Read it once more, slowly.')
+      ],
+      stepDone: [
+        excite('Step finished! <break time="150ms"/> That is a sticker for you.'),
+        excite('<prosody pitch="+10%">You have done it!</prosody> <break time="150ms"/> Another sticker.'),
+        excite('All done here. <break time="150ms"/> <emphasis level="strong">Great</emphasis> work.')
+      ],
+      streak: [
+        excite('<prosody rate="fast" pitch="+14%">Three in a row!</prosody> <break time="150ms"/> You are flying.'),
+        excite('<prosody pitch="+12%">That is three!</prosody> <break time="140ms"/> Keep going.')
+      ],
+      lessonDone: [
+        S + '<mstts:express-as style="excited" styledegree="1.7"><prosody pitch="+8%">You have finished the whole lesson.</prosody></mstts:express-as>' +
+            '<break time="300ms"/>' +
+            '<mstts:express-as style="hopeful" styledegree="1.4">I am so proud of you.</mstts:express-as>' + E
+      ]
+    };
+    const turn = {};
+    function line(kindName) {
+      const bank = BANKS[kindName];
+      if (!bank || !bank.length) return "";
+      const i = (turn[kindName] = ((turn[kindName] || 0) + 1) % bank.length);
+      return bank[i];
+    }
+
+    let streak = 0, saidDone = false;
+    function fire(kindName, alsoRead) {
+      let ssml = line(kindName);
+      if (!ssml) return;
+      const extra = String(alsoRead || "").replace(/\s+/g, " ").trim();
+      if (extra && !VOICE.saidRecently(extra)) {
+        ssml = ssml.replace(VOICE.SHUT, '<break time="320ms"/><mstts:express-as style="friendly" styledegree="1.2">' +
+          VOICE.esc(extra) + "</mstts:express-as>" + VOICE.SHUT);
+      }
+      /* queue rather than interrupt: when a step completes the lesson says its
+         own line first, and praise that cuts the teaching off is worse than
+         praise that waits its turn */
+      VOICE.follow(ssml);
+    }
+    return {
+      right: function (alsoRead) {
+        streak += 1;
+        if (streak > 0 && streak % 3 === 0) fire("streak", alsoRead);
+        else fire("right", alsoRead);
+      },
+      wrong: function (alsoRead) { streak = 0; fire("wrong", alsoRead); },
+      stepDone: function (alsoRead) { fire("stepDone", alsoRead); },
+      lessonDone: function () { if (saidDone) return; saidDone = true; fire("lessonDone"); },
+      fire: fire
+    };
+  })();
+
+  /* ==================================================================
+     WATCHING, RATHER THAN BEING TOLD
+
+     The lesson code already decides right from wrong: it puts .good or .bad
+     on a feedback line, or .right / .wrong on an answer button. Reading
+     those changes instead of editing every check keeps one description of
+     "the child got it" rather than two that can drift apart - and it means
+     a new question is reacted to the day it is written.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const RIGHT = /(^|\s)(good|right|correct)(\s|$)/;
+    const WRONG = /(^|\s)(bad|wrong)(\s|$)/;
+    const watched = ".fb, .opt, .card, .ocard, [data-answer]";
+    const last = new WeakMap();
+
+    /* One verdict per action, not one per element. Marking a wrong answer also
+       lights the CORRECT option green, so reading each class change on its own
+       would praise a child who had just got it wrong. The changes from one tap
+       are collected and judged together, and a wrong anywhere in the batch wins. */
+    let batch = [], scheduled = false;
+    function judge() {
+      scheduled = false;
+      const items = batch; batch = [];
+      let verdict = "", hint = "", praiseText = "";
+      for (const el of items) {
+        const cls = " " + el.className + " ";
+        const now = WRONG.test(cls) ? "wrong" : RIGHT.test(cls) ? "right" : "";
+        if (!now) { last.delete(el); continue; }
+        if (last.get(el) === now) continue;
+        last.set(el, now);
+        if (now === "wrong") { verdict = "wrong"; hint = hint || hintFor(el); }
+        else if (verdict !== "wrong") { verdict = "right"; praiseText = praiseText || (el.matches(".fb") ? el.textContent : ""); }
+      }
+      if (verdict === "wrong") REACTION.wrong(hint);
+      else if (verdict === "right") REACTION.right(praiseText);
+    }
+    function queueJudge(el) {
+      batch.push(el);
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(judge, 0);
+    }
+
+    function hintFor(el) {
+      /* the page's own explanation, if it has just put one up */
+      const q = el.closest(".q, .slide, .step, .stage, section");
+      if (!q) return el.textContent;
+      const why = q.querySelector(".why, .fb.bad");
+      const text = (why && why.textContent) || el.textContent || "";
+      return text.length > 260 ? text.slice(0, 260) : text;
+    }
+
+    const obs = new MutationObserver((records) => {
+      for (const r of records) {
+        if (r.type === "attributes" && r.target.matches && r.target.matches(watched)) queueJudge(r.target);
+        if (r.type === "childList") {
+          for (const n of r.addedNodes) {
+            if (n.nodeType === 1 && n.matches && n.matches(watched)) queueJudge(n);
+          }
+        }
+      }
+    });
+    obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+  })();
+
+  /* ==================================================================
+     THE EXPLAINER
+
+     The speaker reads the instruction. Explain is the thing a teacher says
+     when a child says "I do not get it" - a short spoken mini-lesson in four
+     moves, about thirty to sixty seconds:
+
+         NAME     the idea, in the plainest words there are
+         SHOW     one worked example, using THIS step's own content
+         WARN     the mistake children actually make here, named out loud
+         HAND     back, with one small thing to try right now
+
+     Each move is its own <mstts:express-as> - calm, friendly, empathetic,
+     cheerful - as SIBLINGS, never nested, because Azure forbids one inside
+     another and the walker below would flatten a nested pair anyway.
+
+     AUTHORED BEATS DERIVED. A step carries its own mini-lesson in a
+     data-explain attribute on the .slide (or .step): the BODY of the SSML
+     only, since the <speak> wrapper names the voice and lives in VOICE.OPEN,
+     so re-voicing the course stays one edit. Where a step has none, the
+     derived explainer below still speaks - thinner, never silent.
+
+     The old version built one line out of the heading, the instruction and
+     the note, so a child who did not understand the instruction heard the
+     instruction again. It re-read the page instead of teaching it.
+     ================================================================== */
+  (function () {
+    if (!VOICE.supported) return;
+    const S = VOICE.OPEN, E = VOICE.SHUT, esc = VOICE.esc;
+    const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
+    /* say a number as a number, and lean on it - it is the thing being taught */
+    function markNumbers(t) {
+      return esc(t).replace(/(\d[\d,.]*\s?%?)/g, '<emphasis level="moderate">$1</emphasis>');
+    }
+    function sentences(parts) {
+      return parts.filter(Boolean).map((p) => "<s>" + markNumbers(clean(p)) + "</s>").join('<break time="180ms"/>');
+    }
+    /* ".note" is a teaching aside in most of these lessons and a BANKNOTE in
+       Coins and Change, where it is a button reading "100 sh" - which the
+       explainer duly read out. Take it only where it is prose: not a control,
+       and long enough to be a sentence rather than a label. */
+    function proseNote(host) {
+      for (const n of host.querySelectorAll(".note")) {
+        if (n.closest("button, a, input, label")) continue;
+        const t = clean(n.textContent);
+        if (t.length > 24 && t.indexOf(" ") > 0) return t;
+      }
+      return "";
+    }
+    /* Azure refuses one express-as inside another, and this walker would give
+       a nested pair the inner style with the outer one silently discarded -
+       so a nested authored body is not a style bug, it is a different lesson
+       than the one that was written. Rejected rather than spoken. */
+    function nestsExpressAs(doc) {
+      const all = doc.getElementsByTagNameNS("*", "express-as");
+      for (let i = 0; i < all.length; i++) {
+        for (let p = all[i].parentNode; p && p.nodeType === 1; p = p.parentNode) {
+          if (String(p.localName || "").toLowerCase() === "express-as") return true;
+        }
+      }
+      return false;
+    }
+    /* The step's own mini-lesson, if it was written one. A typo in the
+       attribute must not become a flat tagless mumble - flatten() recovers
+       from a parse error by stripping every tag, which still speaks but
+       throws away every pause and every stress - so it is parsed HERE and
+       the derived explainer takes over if it does not hold up. */
+    function authoredFor(host) {
+      const body = clean(host && host.getAttribute && host.getAttribute("data-explain"));
+      if (!body) return "";
+      const ssml = S + body + E;
+      let doc;
+      try { doc = new DOMParser().parseFromString(ssml, "application/xml"); } catch (e) { return ""; }
+      if (!doc || doc.getElementsByTagName("parsererror").length) return "";
+      if (nestsExpressAs(doc)) return "";
+      return ssml;
+    }
+    /* No authored copy: say more than the page says, and say it in the same
+       four moves, so the two never sound like different features. The slide's
+       data-say is the teacher's framing of the idea and the explainer never
+       used to read it; the .say line is the instruction. Naming what a child
+       can do when still stuck is the closest a derived explainer gets to the
+       WARN move, which needs a human who knows the maths. */
+    function derivedFor(host) {
+      const head = host.querySelector(".slide-head h2, .step-head h2, h2, h3");
+      const lead = host.querySelector(".intro, .say > span, [data-say-text]");
+      const title = clean(head && head.textContent);
+      const idea = clean(host.getAttribute && host.getAttribute("data-say"));
+      const task = clean(lead && lead.textContent);
+      const note = proseNote(host);
+      if (!title && !idea && !task) return "";
+      /* data-say and the on-screen instruction usually say the same thing in
+         almost the same words, and reading both made the derived explainer
+         repeat itself sentence for sentence. Keep the first, drop a later
+         source that adds nothing. */
+      const said = [];
+      /* Containment is not enough: "Press the plus to put a counter in the
+         frame" and "Press + to put a counter in the frame" are the same
+         sentence and neither contains the other. Compare word overlap against
+         the shorter of the two instead. */
+      const words = (t) => String(t || "").toLowerCase().replace(/[^a-z0-9 ]/gi, " ").split(/\s+/).filter(Boolean);
+      const fresh = (t) => {
+        const w = words(t);
+        if (!w.length) return "";
+        for (const p of said) {
+          const small = Math.min(p.length, w.length);
+          if (!small) continue;
+          const shared = w.filter((x) => p.indexOf(x) >= 0).length;
+          if (shared / small >= 0.8) return "";
+        }
+        said.push(w);
+        return t;
+      };
+      const ideaOnce = fresh(idea);
+      const taskOnce = fresh(task);
+      const noteOnce = fresh(note);
+      const name = sentences([title && "This step is called " + title + ".", ideaOnce]);
+      const show = sentences([taskOnce, noteOnce]);
+      return S +
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%">' +
+        "<s>Let me talk you through this one.</s>" + '<break time="280ms"/>' + name +
+        "</prosody></mstts:express-as>" +
+        (show ? '<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25">' +
+          "<s>Here is what to do.</s>" + '<break time="220ms"/>' + show + "</mstts:express-as>" : "") +
+        '<break time="330ms"/>' +
+        '<mstts:express-as style="cheerful" styledegree="1.45">' +
+        "<s>Have a go at the first one.</s>" + '<break time="200ms"/>' +
+        "<s>If you are not sure, press the speaker and I will read it to you again.</s>" +
+        "</mstts:express-as>" + E;
+    }
+    function explainerFor(host) {
+      return authoredFor(host) || derivedFor(host);
+    }
+
+    function button(host, label) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "explain";
+      b.innerHTML = '<span aria-hidden="true">💬</span><span class="explain-t">' + label + "</span>";
+      b.setAttribute("aria-label", "Explain this step to me");
+      b.addEventListener("click", () => {
+        const ssml = explainerFor(host);
+        if (ssml) VOICE.speak(ssml);
+      });
+      return b;
+    }
+
+    /* the decks already carry a voice bar on every slide */
+    document.querySelectorAll(".slide .say, .stage .say").forEach((bar) => {
+      const host = bar.closest(".slide") || bar.parentElement;
+      bar.appendChild(button(host, "Explain"));
+    });
+    /* the scrolling lessons carry none, so give each step one */
+    document.querySelectorAll(".step").forEach((step) => {
+      if (step.querySelector(".say")) return;
+      const intro = step.querySelector(".intro");
+      if (!intro) return;
+      const bar = document.createElement("div");
+      bar.className = "say";
+      const read = document.createElement("button");
+      read.type = "button";
+      read.className = "speak";
+      read.setAttribute("aria-label", "Read this step to me");
+      read.textContent = "🔊";
+      read.addEventListener("click", () => {
+        VOICE.speak(S + '<mstts:express-as style="friendly" styledegree="1.25">' +
+          markNumbers(clean(intro.textContent)) + "</mstts:express-as>" + E);
+      });
+      const span = document.createElement("span");
+      span.textContent = "Listen to this step, or ask me to explain it.";
+      bar.appendChild(read);
+      bar.appendChild(span);
+      bar.appendChild(button(step, "Explain"));
+      intro.parentNode.insertBefore(bar, intro.nextSibling);
+    });
+  })();
+  const $ = (id) => document.getElementById(id);
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
+
+  const slides = [...document.querySelectorAll(".slide")];
+  const done = new Array(slides.length).fill(false);
+  let cur = 0;
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function show(i, speak) {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, k) => s.classList.toggle("active", k === cur));
+    $("back").disabled = cur === 0; $("next").disabled = cur === slides.length - 1;
+    $("where").textContent = cur === slides.length - 1 ? "The end" : "Step " + (cur + 1) + " of " + (slides.length - 1);
+    paintDots(); if (cur === slides.length - 1) paintStickers();
+    if (speak) say(slides[cur].dataset.say);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("next").addEventListener("click", () => show(cur + 1, true));
+  $("back").addEventListener("click", () => show(cur - 1, true));
+  $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
+  document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+  function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
+
+  /* ---- 1: sorting ---- */
+  const SORTS = [
+    { a: "Flies", b: "Does not fly", items: [["🦋", 0], ["🐝", 0], ["🐦", 0], ["🐟", 1], ["🐘", 1], ["🐌", 1], ["🦅", 0], ["🐢", 1]] },
+    { a: "Fruit", b: "Vegetable", items: [["🍎", 0], ["🍌", 0], ["🥕", 1], ["🥦", 1], ["🍇", 0], ["🥔", 1], ["🍊", 0], ["🌽", 1]] },
+    { a: "Has 4 legs", b: "Does not", items: [["🐕", 0], ["🐈", 0], ["🐓", 1], ["🐄", 0], ["🐍", 1], ["🐐", 0], ["🐟", 1], ["🦆", 1]] },
+  ];
+  let sort1 = null, sel1 = null, placed1 = 0, rounds1 = 0;
+  function newSort() {
+    sort1 = SORTS[rounds1 % SORTS.length]; sel1 = null; placed1 = 0;
+    $("say1").innerHTML = "Sort them: <b>" + sort1.a + "</b> or <b>" + sort1.b + "</b>. Tap a thing, then tap its hoop.";
+    $("hoops1").innerHTML = '<div class="hoop" data-g="0"><span class="lab">' + sort1.a + '</span></div><div class="hoop b" data-g="1"><span class="lab">' + sort1.b + "</span></div>";
+    paint1(); say("Sort them. " + sort1.a + ", or " + sort1.b + ".");
+  }
+  function paint1() {
+    const left = sort1.items.filter((it) => it.placed === undefined);
+    $("pool1").innerHTML = sort1.items.map((it, i) => (it.placed === undefined ? '<button type="button" class="' + (sel1 === i ? "sel" : "") + '" data-i="' + i + '" aria-label="item ' + (i + 1) + '">' + it[0] + "</button>" : "")).join("") || '<span class="small-fb">All sorted!</span>';
+    [0, 1].forEach((g) => { const h = $("hoops1").querySelector('[data-g="' + g + '"]'); h.innerHTML = '<span class="lab">' + (g ? sort1.b : sort1.a) + "</span>" + sort1.items.filter((it) => it.placed === g).map((it) => "<button disabled>" + it[0] + "</button>").join(""); });
+    $("score1").textContent = placed1 + " of " + sort1.items.length + " sorted · " + rounds1 + " set" + (rounds1 === 1 ? "" : "s") + " finished";
+    if (placed1 === sort1.items.length) {
+      rounds1++; $("fb1").className = "fb good";
+      $("fb1").textContent = cheer() + " All sorted: " + sort1.items.filter((it) => it[1] === 0).length + " " + sort1.a.toLowerCase() + ", " + sort1.items.filter((it) => it[1] === 1).length + " " + sort1.b.toLowerCase() + ".";
+      say(cheer() + " All sorted."); if (rounds1 >= 2) finish(0, "You can sort things into groups!");
+      setTimeout(() => { sort1.items.forEach((it) => delete it.placed); newSort(); $("fb1").textContent = ""; }, 2600);
+    }
+  }
+  $("pool1").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; sel1 = Number(b.dataset.i); paint1(); say(sort1.items[sel1][0] ? "Now tap a hoop." : ""); });
+  $("hoops1").addEventListener("click", (e) => {
+    const h = e.target.closest(".hoop"); if (!h) return;
+    if (sel1 === null) { $("fb1").className = "fb"; $("fb1").textContent = "Tap a thing first, then tap a hoop."; return; }
+    const g = Number(h.dataset.g), it = sort1.items[sel1];
+    if (it[1] === g) { it.placed = g; placed1++; sel1 = null; $("fb1").className = "fb"; $("fb1").textContent = ""; paint1(); }
+    else { h.classList.add("flash"); $("fb1").className = "fb bad"; $("fb1").textContent = "Not that hoop. " + it[0] + " goes in " + (it[1] ? sort1.b : sort1.a) + "."; say("Not that hoop."); setTimeout(() => h.classList.remove("flash"), 700); }
+  });
+  newSort();
+
+  /* ---- 2: tally ---- */
+  const TSETS = [[["🍎", "apples"], ["🍌", "bananas"], ["🍇", "grapes"]], [["🐶", "dogs"], ["🐱", "cats"], ["🐰", "rabbits"]], [["🚗", "cars"], ["🚲", "bikes"], ["🚌", "buses"]]];
+  let kinds2 = [], items2 = [], counts2 = [0, 0, 0], want2 = [], quiz2 = null, right2 = 0;
+  function tallySvg(n) {
+    let svg = "", x = 4;
+    for (let i = 0; i < n; i++) {
+      if ((i + 1) % 5 === 0) { svg += '<line class="five" x1="' + (x - 22) + '" y1="28" x2="' + (x + 3) + '" y2="4"></line>'; x += 12; }
+      else { svg += '<line x1="' + x + '" y1="4" x2="' + x + '" y2="28"></line>'; x += 6; }
+    }
+    return '<svg class="tallysvg" width="' + Math.max(20, x + 6) + '" height="34">' + svg + "</svg>";
+  }
+  function paint2() {
+    $("tally2").innerHTML = kinds2.map((k, i) => '<div class="tallyrow"><span class="ic">' + k[0] + '</span><span class="marks">' + tallySvg(counts2[i]) + '</span><span class="n">' + counts2[i] + "</span></div>").join("");
+    const total = counts2.reduce((a, b) => a + b, 0);
+    if (total === items2.length && !$("ch2").children.length) {
+      const i = rnd(0, 2); quiz2 = { i, a: counts2[i] };
+      $("fb2").className = "fb good"; $("fb2").textContent = cheer() + " Everything is tallied.";
+      $("ch2").innerHTML = shuffle([counts2[i], counts2[i] + 1, Math.max(0, counts2[i] - 1)]).filter((v, j, a) => a.indexOf(v) === j).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
+      $("say2").innerHTML = "How many <b>" + kinds2[i][1] + "</b> were there? Read your tally.";
+      say("How many " + kinds2[i][1] + " were there?");
+    } else if (total < items2.length) { $("fb2").className = "fb"; $("fb2").textContent = total ? total + " tallied, " + (items2.length - total) + " to go." : ""; }
+  }
+  function newTally() {
+    kinds2 = TSETS[rnd(0, TSETS.length - 1)]; counts2 = [0, 0, 0]; $("ch2").innerHTML = "";
+    const n = rnd(12, 18); items2 = Array.from({ length: n }, () => rnd(0, 2));
+    const pts = [];
+    $("scatter2").innerHTML = items2.map((k, i) => { let x, y, t = 0; do { x = rnd(8, 92); y = rnd(12, 88); t++; } while (t < 30 && pts.some((p) => Math.abs(p[0] - x) < 9 && Math.abs(p[1] - y) < 16)); pts.push([x, y]); return '<button type="button" style="left:' + x + "%;top:" + y + '%" data-i="' + i + '" aria-label="' + kinds2[k][1] + '">' + kinds2[k][0] + "</button>"; }).join("");
+    $("say2").innerHTML = "Tap each thing to <b>tally</b> it. Every <b>fifth</b> mark goes across the other four.";
+    paint2();
+  }
+  $("scatter2").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || b.classList.contains("done")) return;
+    const k = items2[Number(b.dataset.i)]; counts2[k]++; b.classList.add("done"); b.disabled = true; paint2(); say(String(counts2[k]));
+  });
+  $("ch2").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === quiz2.a;
+    $("ch2").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === quiz2.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right2++;
+    $("fb2").className = "fb " + (ok ? "good" : "bad"); $("fb2").textContent = (ok ? cheer() + " " : "") + "There were " + quiz2.a + " " + kinds2[quiz2.i][1] + ". Count the tally in fives: " + Math.floor(quiz2.a / 5) + " group" + (Math.floor(quiz2.a / 5) === 1 ? "" : "s") + " of 5 and " + (quiz2.a % 5) + " more.";
+    say((ok ? cheer() + " " : "") + "There were " + quiz2.a);
+    $("score2").textContent = Math.min(right2, 2) + " of 2 right so far";
+    if (right2 >= 2) finish(1, "You can make and read a tally chart!");
+    setTimeout(newTally, 2800);
+  });
+  newTally();
+
+  /* ---- pictogram helper ---- */
+  function pictoHtml(rows, per, icon) {
+    return rows.map((r) => { const full = Math.floor(r[1] / per), half = r[1] % per !== 0; return '<div class="pictorow"><span class="name">' + r[0] + '</span><span class="icons">' + Array.from({ length: full }, () => "<span>" + icon + "</span>").join("") + (half ? '<span class="half">' + icon + "</span>" : "") + "</span></div>"; }).join("");
+  }
+
+  /* ---- 3: pictogram 1:1 ---- */
+  const P3 = [{ icon: "⭐", title: "Stars won this week", names: ["Amina", "Musa", "Hodan", "Kiki"] }, { icon: "📕", title: "Books read", names: ["Class 1", "Class 2", "Class 3", "Class 4"] }];
+  let data3 = null, r3 = 0, right3 = 0, lock3 = false; const ROUNDS3 = 4;
+  function newData3() { const P = P3[rnd(0, 1)]; data3 = { icon: P.icon, rows: P.names.map((n) => [n, rnd(2, 8)]) }; $("key3").textContent = "Key: one " + P.icon + " = 1"; $("picto3").innerHTML = pictoHtml(data3.rows, 1, P.icon); }
+  function round3() {
+    lock3 = false; $("fb3").textContent = ""; $("fb3").className = "fb";
+    if (r3 >= ROUNDS3) { $("picto3").innerHTML = ""; $("ch3").innerHTML = ""; $("q3").textContent = ""; $("key3").textContent = ""; $("fb3").className = "fb good"; $("fb3").textContent = "You read " + right3 + " of " + ROUNDS3 + "!"; finish(2, "You can read a pictogram."); return; }
+    if (r3 % 2 === 0) newData3();
+    const rows = data3.rows, kind = r3 % 4;
+    let q, a;
+    if (kind === 0) { const i = rnd(0, 3); q = "How many did " + rows[i][0] + " get?"; a = rows[i][1]; }
+    else if (kind === 1) { const most = rows.reduce((x, y) => (y[1] > x[1] ? y : x)); q = "Who has the most?"; a = most[0]; }
+    else if (kind === 2) { const s = rows.reduce((t, x) => t + x[1], 0); q = "How many altogether?"; a = s; }
+    else { const s = [...rows].sort((x, y) => y[1] - x[1]); q = "How many more did " + s[0][0] + " get than " + s[3][0] + "?"; a = s[0][1] - s[3][1]; }
+    $("score3").textContent = "Question " + (r3 + 1) + " of " + ROUNDS3; $("q3").textContent = q; $("say3").textContent = q;
+    const wrongs = typeof a === "number" ? [a + 1, a + 2] : rows.filter((x) => x[0] !== a).slice(0, 2).map((x) => x[0]);
+    $("ch3").innerHTML = shuffle([a, ...wrongs]).map((v) => '<button type="button" class="choice' + (typeof v === "string" ? " word" : "") + '" data-v="' + v + '">' + v + "</button>").join("");
+    $("ch3").dataset.answer = String(a); say(q);
+  }
+  $("ch3").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock3) return; lock3 = true; const a = $("ch3").dataset.answer, ok = b.dataset.v === a;
+    $("ch3").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right3++;
+    $("fb3").className = "fb " + (ok ? "good" : "bad"); $("fb3").textContent = (ok ? cheer() + " " : "") + "The answer is " + a + ". Each picture is 1, so you count the pictures.";
+    say((ok ? cheer() + " " : "") + "The answer is " + a);
+    r3++; setTimeout(round3, 2400);
+  });
+  round3();
+
+  /* ---- 4: pictogram with a key of 2 ---- */
+  let data4 = null, r4 = 0, right4 = 0, lock4 = false; const ROUNDS4 = 4;
+  function newData4() { const names = ["Monday", "Tuesday", "Wednesday", "Thursday"]; data4 = { icon: "🍪", rows: names.map((n) => [n, rnd(1, 6) * 2]) }; $("key4").textContent = "Key: one 🍪 = 2 biscuits"; $("picto4").innerHTML = pictoHtml(data4.rows, 2, "🍪"); }
+  function round4() {
+    lock4 = false; $("fb4").textContent = ""; $("fb4").className = "fb";
+    if (r4 >= ROUNDS4) { $("picto4").innerHTML = ""; $("ch4").innerHTML = ""; $("q4").textContent = ""; $("key4").textContent = ""; $("fb4").className = "fb good"; $("fb4").textContent = "You read " + right4 + " of " + ROUNDS4 + "!"; finish(3, "You can read a pictogram with a key."); return; }
+    if (r4 % 2 === 0) newData4();
+    const rows = data4.rows, kind = r4 % 4;
+    let q, a, why;
+    if (kind === 0) { const i = rnd(0, 3); const pics = rows[i][1] / 2; q = "How many biscuits on " + rows[i][0] + "?"; a = rows[i][1]; why = pics + " pictures × 2 = " + a + "."; }
+    else if (kind === 1) { const i = rnd(0, 3); q = "How many pictures would show " + rows[i][1] + " biscuits?"; a = rows[i][1] / 2; why = a + " pictures, because each one is worth 2."; }
+    else if (kind === 2) { const s = rows.reduce((t, x) => t + x[1], 0); q = "How many biscuits altogether?"; a = s; why = "Count all the pictures and double: " + s / 2 + " × 2 = " + s + "."; }
+    else { const s = [...rows].sort((x, y) => y[1] - x[1]); q = "How many more on " + s[0][0] + " than " + s[3][0] + "?"; a = s[0][1] - s[3][1]; why = s[0][1] + " − " + s[3][1] + " = " + a + "."; }
+    $("score4").textContent = "Question " + (r4 + 1) + " of " + ROUNDS4; $("q4").textContent = q; $("say4").textContent = q;
+    $("ch4").innerHTML = shuffle([a, a / 2 === Math.floor(a / 2) && a / 2 !== a ? a / 2 : a + 1, a + 2]).filter((v, i, arr) => arr.indexOf(v) === i).map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
+    $("ch4").dataset.answer = String(a); $("ch4").dataset.why = why; say(q);
+  }
+  $("ch4").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock4) return; lock4 = true; const a = $("ch4").dataset.answer, ok = b.dataset.v === a;
+    $("ch4").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right4++;
+    $("fb4").className = "fb " + (ok ? "good" : "bad"); $("fb4").textContent = (ok ? cheer() + " " : "") + $("ch4").dataset.why;
+    say((ok ? cheer() + " " : "") + "It is " + a);
+    r4++; setTimeout(round4, 2600);
+  });
+  round4();
+
+  /* ---- 5: build a block graph ---- */
+  const B5 = [["🍎", "apple"], ["🍌", "banana"], ["🍇", "grapes"], ["🍊", "orange"]];
+  let target5 = [], built5 = [0, 0, 0, 0], sets5 = 0;
+  function drawChart(el, values, names, scale, built) {
+    const W = 340, left = 40, bottom = 190, top = 16, plotH = bottom - top, max = 10;
+    let svg = '<g class="grid axis">';
+    for (let v = 0; v <= max; v += (scale === 2 ? 2 : 2)) { const y = bottom - (v / max) * plotH; svg += '<line x1="' + left + '" x2="' + (W - 8) + '" y1="' + y.toFixed(1) + '" y2="' + y.toFixed(1) + '"></line><text x="' + (left - 6) + '" y="' + (y + 3.5).toFixed(1) + '" text-anchor="end">' + v * scale + "</text>"; }
+    svg += "</g>";
+    const slot = (W - left - 8) / values.length, bw = slot * 0.6;
+    values.forEach((v, i) => {
+      const x = left + slot * i + (slot - bw) / 2, units = built ? built[i] : v / scale;
+      if (built) { for (let k = 0; k < units; k++) { const y = bottom - ((k + 1) / max) * plotH; svg += '<rect class="blk f' + i + '" x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + (plotH / max).toFixed(1) + '"></rect>'; } }
+      else { const h = (v / scale / max) * plotH; svg += '<rect class="f' + i + '" x="' + x.toFixed(1) + '" y="' + (bottom - h).toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="3"></rect>'; }
+      svg += '<text class="cat" x="' + (x + bw / 2).toFixed(1) + '" y="' + (bottom + 16) + '">' + names[i] + "</text>";
+    });
+    el.innerHTML = svg;
+  }
+  function paint5() {
+    drawChart($("chart5"), target5, B5.map((b) => b[0]), 1, built5);
+    $("add5").innerHTML = B5.map((b, i) => '<button type="button" class="big small ' + (built5[i] === target5[i] ? "ghost" : "teal") + '" data-i="' + i + '">+ ' + b[0] + "</button>").join("");
+    const okAll = built5.every((v, i) => v === target5[i]);
+    if (okAll) {
+      sets5++; $("fb5").className = "fb good"; $("fb5").textContent = cheer() + " The graph matches: " + target5.map((v, i) => v + " " + B5[i][1]).join(", ") + ".";
+      say(cheer() + " The graph matches."); if (sets5 >= 2) finish(4, "You can build a block graph!");
+      setTimeout(newBlocks, 2800);
+    } else { $("fb5").className = "fb"; $("fb5").textContent = built5.map((v, i) => B5[i][0] + " " + v + "/" + target5[i]).join("   "); }
+  }
+  function newBlocks() {
+    target5 = B5.map(() => rnd(2, 8)); built5 = [0, 0, 0, 0];
+    $("say5").innerHTML = "Build the graph: " + target5.map((v, i) => "<b>" + v + "</b> " + B5[i][0]).join(", ") + ". Add one block at a time.";
+    $("score5").textContent = sets5 + " graph" + (sets5 === 1 ? "" : "s") + " built";
+    paint5(); say("Build the graph.");
+  }
+  $("add5").addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (!b) return; const i = Number(b.dataset.i); if (built5[i] < 10) { built5[i]++; paint5(); say(String(built5[i])); } });
+  newBlocks();
+
+  /* ---- 6: read a bar chart (scale 2) ---- */
+  const C6 = [{ title: "Ways to school", names: ["walk", "bus", "bike", "car"] }, { title: "Favourite sport", names: ["football", "running", "swimming", "netball"] }];
+  let data6 = null, r6 = 0, right6 = 0, lock6 = false; const ROUNDS6 = 5;
+  function newData6() { const C = C6[rnd(0, 1)]; data6 = { names: C.names, values: C.names.map(() => rnd(1, 9) * 2) }; drawChart($("chart6"), data6.values, data6.names, 2); }
+  function round6() {
+    lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
+    if (r6 >= ROUNDS6) { $("chart6").innerHTML = ""; $("ch6").innerHTML = ""; $("q6").textContent = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You read " + right6 + " of " + ROUNDS6 + "!"; finish(5, "You can read a bar chart with a scale."); return; }
+    if (r6 % 2 === 0) newData6();
+    const V = data6.values, N = data6.names, kind = r6 % 5;
+    let q, a, why;
+    if (kind === 0) { const i = rnd(0, 3); q = "How many chose " + N[i] + "?"; a = V[i]; why = "Its bar reaches " + V[i] + ": " + V[i] / 2 + " steps of 2."; }
+    else if (kind === 1) { const i = V.indexOf(Math.max(...V)); q = "Which was chosen most?"; a = N[i]; why = N[i] + " has the tallest bar, at " + V[i] + "."; }
+    else if (kind === 2) { const i = V.indexOf(Math.min(...V)); q = "Which was chosen least?"; a = N[i]; why = N[i] + " has the shortest bar, at " + V[i] + "."; }
+    else if (kind === 3) { const hi = Math.max(...V), lo = Math.min(...V); q = "How many more chose " + N[V.indexOf(hi)] + " than " + N[V.indexOf(lo)] + "?"; a = hi - lo; why = hi + " − " + lo + " = " + a + "."; }
+    else { a = V.reduce((x, y) => x + y, 0); q = "How many people were asked altogether?"; why = V.join(" + ") + " = " + a + "."; }
+    $("score6").textContent = "Question " + (r6 + 1) + " of " + ROUNDS6; $("q6").textContent = q; $("say6").textContent = q;
+    const wrongs = typeof a === "number" ? [a + 2, Math.max(1, a - 2)] : N.filter((n) => n !== a).slice(0, 2);
+    $("ch6").innerHTML = shuffle([a, ...wrongs]).filter((v, i, arr) => arr.indexOf(v) === i).map((v) => '<button type="button" class="choice' + (typeof v === "string" ? " word" : "") + '" data-v="' + v + '">' + v + "</button>").join("");
+    $("ch6").dataset.answer = String(a); $("ch6").dataset.why = why; say(q);
+  }
+  $("ch6").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock6) return; lock6 = true; const a = $("ch6").dataset.answer, ok = b.dataset.v === a;
+    $("ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right6++;
+    $("fb6").className = "fb " + (ok ? "good" : "bad"); $("fb6").textContent = (ok ? cheer() + " " : "") + $("ch6").dataset.why;
+    say((ok ? cheer() + " " : "") + $("ch6").dataset.why);
+    r6++; setTimeout(round6, 2600);
+  });
+  round6();
+
+  /* ---- 7: likelihood ---- */
+  const WORDS7 = [["impossible", 0], ["unlikely", 25], ["an even chance", 50], ["likely", 75], ["certain", 100]];
+  const EVENTS = [
+    { t: "A cat will read you a bedtime story tonight.", a: 0 },
+    { t: "The sun will come up tomorrow morning.", a: 4 },
+    { t: "You flip a coin. It lands on heads.", a: 2 },
+    { t: "It will snow in the desert today.", a: 1 },
+    { t: "You roll a normal dice and get a number less than 7.", a: 4 },
+    { t: "You roll a normal dice and get a 6.", a: 1 },
+    { t: "A baby will be born somewhere in the world today.", a: 4 },
+    { t: "You will grow taller than a house.", a: 0 },
+    { t: "You pick one shoe from a pair without looking. It is the left one.", a: 2 },
+    { t: "Your teacher will say something tomorrow.", a: 4 },
+  ];
+  let events7 = shuffle(EVENTS).slice(0, 5), r7 = 0, right7 = 0, lock7 = false; const ROUNDS7 = 5;
+  function round7() {
+    lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb";
+    if (r7 >= ROUNDS7) { $("event7").textContent = ""; $("line7").innerHTML = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You judged " + right7 + " of " + ROUNDS7 + "!"; finish(6, "You can say how likely something is."); return; }
+    const E = events7[r7]; $("score7").textContent = "Event " + (r7 + 1) + " of " + ROUNDS7;
+    $("event7").textContent = E.t; $("say7").textContent = "How likely is this? " + E.t;
+    $("line7").innerHTML = '<div class="bar"></div>' + WORDS7.map((w, i) => '<button type="button" style="left:' + (w[1] === 0 ? 6 : w[1] === 100 ? 94 : w[1]) + '%" data-i="' + i + '">' + w[0] + "</button>").join("");
+    say("How likely is this? " + E.t);
+  }
+  $("line7").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b || lock7) return; lock7 = true; const E = events7[r7], i = Number(b.dataset.i), ok = i === E.a;
+    $("line7").querySelectorAll("button").forEach((x) => { x.disabled = true; if (Number(x.dataset.i) === E.a) x.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right7++;
+    $("fb7").className = "fb " + (ok ? "good" : "bad"); $("fb7").textContent = (ok ? cheer() + " " : "") + "That is " + WORDS7[E.a][0] + ".";
+    say((ok ? cheer() + " " : "") + "That is " + WORDS7[E.a][0]);
+    r7++; setTimeout(round7, 2400);
+  });
+  round7();
+
+  /* ---- 8: the bag ---- */
+  const COLNAMES = ["orange", "teal", "purple"];
+  let bag8 = [], r8 = 0, right8 = 0, lock8 = false, q8 = null; const ROUNDS8 = 4;
+  function drawBag() {
+    let svg = '<path class="sack" d="M60,60 Q40,120 55,175 Q120,200 185,175 Q200,120 180,60 Z"></path><path class="sack" d="M60,60 Q120,40 180,60" fill="none"></path>';
+    const pts = [[95, 95], [135, 95], [115, 120], [80, 130], [150, 130], [98, 155], [140, 158], [118, 78], [70, 105], [165, 105], [110, 178], [155, 80]];
+    bag8.forEach((c, i) => { const p = pts[i % pts.length]; svg += '<circle class="ball c' + c + '" cx="' + p[0] + '" cy="' + p[1] + '" r="14"></circle>'; });
+    $("bag8").innerHTML = svg;
+  }
+  function round8() {
+    lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb"; $("try8out").textContent = "";
+    if (r8 >= ROUNDS8) { $("bag8").innerHTML = ""; $("ch8").innerHTML = ""; $("try8").hidden = true; $("fb8").className = "fb good"; $("fb8").textContent = "You judged " + right8 + " of " + ROUNDS8 + "!"; finish(7, "You can say which is most likely."); return; }
+    const kind = r8 % 3;
+    let counts;
+    if (kind === 2) counts = [4, 4, 0]; else { counts = [rnd(2, 7), rnd(1, 5), 0]; while (counts[0] === counts[1]) counts[1] = rnd(1, 5); }
+    if (r8 === 3) counts = [6, 4, 2]; // three colours, all different, so "least" has one answer
+    bag8 = []; counts.forEach((n, c) => { for (let i = 0; i < n; i++) bag8.push(c); });
+    bag8 = shuffle(bag8); drawBag();
+    const present = counts.map((n, i) => i).filter((i) => counts[i] > 0);
+    const maxN = Math.max(...counts), minN = Math.min(...present.map((i) => counts[i]));
+    const allEqual = present.every((i) => counts[i] === counts[present[0]]);
+    if (kind === 2 || allEqual) { q8 = { a: "equal", counts, why: "There are the same number of each, so both are equally likely." }; $("say8").innerHTML = "Which colour are you <b>most likely</b> to pull out?"; $("ch8").innerHTML = present.map((i) => '<button type="button" class="choice word" data-v="' + COLNAMES[i] + '">' + COLNAMES[i] + "</button>").join("") + '<button type="button" class="choice word" data-v="equal">both the same</button>'; }
+    else if (r8 % 2 === 1) { const i = counts.indexOf(minN); q8 = { a: COLNAMES[i], counts, why: "There are fewest " + COLNAMES[i] + " (" + minN + " of " + bag8.length + "), so it is the least likely." }; $("say8").innerHTML = "Which colour are you <b>least likely</b> to pull out?"; $("ch8").innerHTML = present.map((i2) => '<button type="button" class="choice word" data-v="' + COLNAMES[i2] + '">' + COLNAMES[i2] + "</button>").join(""); }
+    else { const i = counts.indexOf(maxN); q8 = { a: COLNAMES[i], counts, why: "There are most " + COLNAMES[i] + " (" + maxN + " of " + bag8.length + "), so it is the most likely." }; $("say8").innerHTML = "Which colour are you <b>most likely</b> to pull out?"; $("ch8").innerHTML = present.map((i2) => '<button type="button" class="choice word" data-v="' + COLNAMES[i2] + '">' + COLNAMES[i2] + "</button>").join(""); }
+    $("score8").textContent = "Bag " + (r8 + 1) + " of " + ROUNDS8;
+    say($("say8").textContent);
+  }
+  $("try8").addEventListener("click", () => {
+    const tally = [0, 0, 0]; for (let i = 0; i < 20; i++) tally[bag8[rnd(0, bag8.length - 1)]]++;
+    $("try8out").textContent = "20 pulls: " + tally.map((n, i) => (q8.counts[i] ? n + " " + COLNAMES[i] : "")).filter(Boolean).join(", ") + ".";
+    say("Twenty pulls. " + $("try8out").textContent);
+  });
+  $("ch8").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock8) return; lock8 = true; const ok = b.dataset.v === q8.a;
+    $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === q8.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right8++;
+    $("fb8").className = "fb " + (ok ? "good" : "bad"); $("fb8").textContent = (ok ? cheer() + " " : "") + q8.why; say((ok ? cheer() + " " : "") + q8.why);
+    r8++; setTimeout(round8, 2800);
+  });
+  round8();
+
+  /* ---- 9: is it fair? ---- */
+  let r9 = 0, right9 = 0, lock9 = false, g9 = null; const ROUNDS9 = 4;
+  function spinnerSvg(parts) {
+    const cx = 80, cy = 80, R = 68; let a0 = -90, svg = "";
+    parts.forEach((p, i) => {
+      const a1 = a0 + p * 360, r0 = (a0 * Math.PI) / 180, r1 = (a1 * Math.PI) / 180;
+      svg += '<path class="s' + i + '" d="M' + cx + "," + cy + " L" + (cx + R * Math.cos(r0)).toFixed(1) + "," + (cy + R * Math.sin(r0)).toFixed(1) + " A" + R + "," + R + " 0 " + (p > 0.5 ? 1 : 0) + ",1 " + (cx + R * Math.cos(r1)).toFixed(1) + "," + (cy + R * Math.sin(r1)).toFixed(1) + ' Z"></path>';
+      a0 = a1;
+    });
+    svg += '<line class="needle" x1="80" y1="80" x2="80" y2="26"></line><circle class="pin" cx="80" cy="80" r="7"></circle>';
+    return '<svg class="spinner" viewBox="0 0 160 160" role="img" aria-label="A spinner">' + svg + "</svg>";
+  }
+  const GAMES = [
+    { p: 0.5, rule: "Amina wins on orange. Musa wins on teal.", fair: true, why: "Half the spinner is orange and half is teal, so both have the same chance. It is fair." },
+    { p: 0.75, rule: "Amina wins on orange. Musa wins on teal.", fair: false, why: "Orange covers three quarters of the spinner, so Amina wins far more often. Not fair." },
+    { p: 0.25, rule: "Amina wins on orange. Musa wins on teal.", fair: false, why: "Orange is only a quarter, so Musa wins much more often. Not fair." },
+    { p: 0.5, rule: "Amina wins on orange. Musa wins on teal. Amina goes first.", fair: true, why: "Going first does not change the spinner: both halves are the same size, so it is still fair." },
+  ];
+  function round9() {
+    lock9 = false; $("fb9").textContent = ""; $("fb9").className = "fb";
+    if (r9 >= ROUNDS9) { $("spin9").innerHTML = ""; $("ch9").innerHTML = ""; $("rule9").textContent = ""; $("fb9").className = "fb good"; $("fb9").textContent = "You judged " + right9 + " of " + ROUNDS9 + "!"; finish(8, "You can tell whether a game is fair."); return; }
+    g9 = GAMES[r9]; $("score9").textContent = "Game " + (r9 + 1) + " of " + ROUNDS9;
+    $("spin9").innerHTML = '<div>' + spinnerSvg([g9.p, 1 - g9.p]) + '<div class="who">the spinner</div></div>';
+    $("rule9").className = "fb"; $("rule9").textContent = g9.rule;
+    $("say9").innerHTML = "<b>" + g9.rule + "</b> Is this game <b>fair</b>?";
+    $("ch9").innerHTML = [["yes", "yes, it is fair"], ["no", "no, not fair"]].map((o) => '<button type="button" class="choice word" data-v="' + o[0] + '">' + o[1] + "</button>").join("");
+    say(g9.rule + " Is this game fair?");
+  }
+  $("ch9").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock9) return; lock9 = true; const want = g9.fair ? "yes" : "no", ok = b.dataset.v === want;
+    $("ch9").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === want) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right9++;
+    $("fb9").className = "fb " + (ok ? "good" : "bad"); $("fb9").textContent = (ok ? cheer() + " " : "") + g9.why; say((ok ? cheer() + " " : "") + g9.why);
+    r9++; setTimeout(round9, 3000);
+  });
+  round9();
+
+
+  function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
+  function reveal(el, answer, picked) { el.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(answer)) c.classList.add("right"); }); if (picked && picked.dataset.v !== String(answer)) picked.classList.add("wrong"); }
+
+  /* ---- 10: regular pattern or random (0096 2Sp.01) ---- */
+  const PCOLS = ["orange", "green", "purple", "yellow"];
+  let rP = 0, rightP = 0, lockP = false, qP = null; const ROUNDSP = 6;
+  // a strip only counts as random if NO repeating unit of 1 to 4 explains it --
+  // three oranges in a row is chance, but orange-green-orange-green is a pattern
+  function hasRepeat(a) {
+    for (let u = 1; u <= 4; u++) {
+      if (a.length < u * 3) continue;
+      let all = true;
+      for (let i = u; i < a.length; i++) if (a[i] !== a[i - u]) { all = false; break; }
+      if (all) return u;
+    }
+    return 0;
+  }
+  function paintP(extra) {
+    $("stripP").innerHTML = qP.tiles.map((c) => '<i class="p' + c + '"></i>').join("") + (extra || "");
+  }
+  function roundP() {
+    lockP = false; $("fbP").textContent = ""; $("fbP").className = "fb"; $("showP").hidden = true;
+    if (rP >= ROUNDSP) {
+      $("stripP").innerHTML = ""; $("chP").innerHTML = "";
+      $("fbP").className = "fb good"; $("fbP").textContent = "You sorted " + rightP + " of " + ROUNDSP + "!";
+      $("scoreP").textContent = ""; finish(9, "You know a regular pattern from a random one."); return;
+    }
+    const wantRegular = [true, false, true, false, true, false][rP];
+    const N = 12; let tiles = [];
+    if (wantRegular) {
+      const unit = shuffle([0, 1, 2, 3]).slice(0, rnd(2, 3));
+      for (let i = 0; i < N; i++) tiles.push(unit[i % unit.length]);
+      qP = { tiles, regular: true, unit, next: unit[N % unit.length] };
+    } else {
+      let guard = 0;
+      do { tiles = Array.from({ length: N }, () => rnd(0, 3)); guard++; } while (hasRepeat(tiles) && guard < 200);
+      qP = { tiles, regular: false, unit: null, next: null };
+    }
+    $("scoreP").textContent = "Row " + (rP + 1) + " of " + ROUNDSP;
+    paintP();
+    choices($("chP"), ["regular pattern", "random pattern"], true);
+    say("Is this a regular pattern, or a random one?");
+  }
+  $("chP").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lockP) return; lockP = true;
+    const want = qP.regular ? "regular pattern" : "random pattern", ok = b.dataset.v === want;
+    reveal($("chP"), want, b); if (ok) rightP++;
+    $("fbP").className = "fb " + (ok ? "good" : "bad");
+    $("fbP").textContent = (ok ? cheer() + " " : "It is a " + want + ". ") + (qP.regular
+      ? "It repeats " + qP.unit.map((c) => PCOLS[c]).join(", then ") + ", over and over."
+      : "There is no repeat anywhere in it.");
+    say(ok ? cheer() : "It is a " + want);
+    $("showP").hidden = false;
+  });
+  // asking this of BOTH kinds is the point: only the regular one has an answer
+  $("showP").addEventListener("click", () => {
+    $("showP").disabled = true;
+    if (qP.regular) {
+      paintP('<i class="p' + qP.next + '"></i>');
+      $("fbP").className = "fb good";
+      $("fbP").textContent = "Next is " + PCOLS[qP.next] + ". A regular pattern lets you say what comes next.";
+      say("Next is " + PCOLS[qP.next] + ".");
+    } else {
+      paintP('<i class="next">?</i>');
+      $("fbP").className = "fb";
+      $("fbP").textContent = "Nobody can say. That is what random means: there is no rule to follow.";
+      say("Nobody can say. That is what random means.");
+    }
+    rP++; setTimeout(() => { $("showP").disabled = false; roundP(); }, 3800);
+  });
+  roundP();
+
+  /* ---- 11: check ---- */
+  const CHECK = [
+    { q: "In a tally, how many does |||| crossed through stand for?", opts: [5, 4, 6], a: 5 },
+    { q: "On a pictogram, one 🍪 = 2. How many biscuits do 4 pictures show?", opts: [8, 4, 6], a: 8 },
+    { q: "On a bar chart each step is 2. A bar reaching the 3rd step means…", opts: [6, 3, 5], a: 6 },
+    { q: "Which word means it will definitely happen?", opts: ["certain", "likely", "impossible"], a: "certain" },
+    { q: "A bag has 8 red and 1 blue. Which are you most likely to pull out?", opts: ["red", "blue", "the same"], a: "red" },
+    { q: "Flipping a fair coin, heads is…", opts: ["an even chance", "certain", "impossible"], a: "an even chance" },
+    { q: "A cat reading you a story is…", opts: ["impossible", "unlikely", "likely"], a: "impossible" },
+    { q: "A spinner is half red, half blue. A game on red or blue is…", opts: ["fair", "not fair"], a: "fair" },
+    { q: "What is a tally chart good for?", opts: ["counting as you go", "measuring length", "telling the time"], a: "counting as you go" },
+    { q: "A bar chart shows 6, 4, 8 and 2. How many altogether?", opts: [20, 18, 22], a: 20 },
+  ];
+  let c10 = 0, right10 = 0, lock10 = false;
+  function round10() {
+    lock10 = false; $("fb10").textContent = ""; $("fb10").className = "fb";
+    if (c10 >= CHECK.length) { $("q10").textContent = ""; $("ch10").innerHTML = ""; $("fb10").className = "fb good"; $("fb10").innerHTML = "You got <b>" + right10 + "</b> out of " + CHECK.length + "!"; $("score10").textContent = right10 === CHECK.length ? "Every single one!" : right10 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(10, "You got " + right10 + " out of " + CHECK.length + "."); return; }
+    const q = CHECK[c10]; $("score10").textContent = "Question " + (c10 + 1) + " of " + CHECK.length; $("q10").textContent = q.q; $("say10").textContent = q.q;
+    $("ch10").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
+    say(q.q);
+  }
+  $("ch10").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || lock10) return; lock10 = true; const q = CHECK[c10], ok = String(b.dataset.v) === String(q.a);
+    $("ch10").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (String(c.dataset.v) === String(q.a)) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else right10++;
+    $("fb10").className = "fb " + (ok ? "good" : "bad"); $("fb10").textContent = ok ? cheer() : "It is " + q.a + "."; say(ok ? cheer() : "It is " + q.a);
+    c10++; setTimeout(round10, 1300);
+  });
+  round10();
+
+  /* ---- 12: stickers ---- */
+  const STICKERS = [["🗂️", "Sorting into groups"], ["✋", "Tally charts"], ["🖼️", "Pictograms"], ["🔑", "Reading a key"], ["🧱", "Block graphs"], ["📊", "Bar charts"], ["🎲", "Impossible to certain"], ["🎒", "What is in the bag"], ["⚖️", "Fair or not fair"], ["🔁", "Regular or random"], ["✅", "Show what I know"]];
+  function paintStickers() {
+    $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
+    const got = done.slice(0, STICKERS.length).filter(Boolean).length;
+    $("fb11").className = "fb " + (got === STICKERS.length ? "good" : ""); $("fb11").textContent = got === STICKERS.length ? "All " + STICKERS.length + " stickers! You are a data detective." : got + " of " + STICKERS.length + " stickers so far.";
+  }
+  $("restart").addEventListener("click", () => location.reload());
+
+  show(0, false);
+})();
+</script>

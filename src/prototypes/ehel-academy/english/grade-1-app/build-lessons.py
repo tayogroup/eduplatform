@@ -356,11 +356,40 @@ def build_slides(unit, cw_unit, pics, dic):
     data["story_slide"] = i
 
     # ---- 6  the story questions --------------------------------------
-    #        Only the factual ones. "Point, act or say" items have no single
-    #        answer to be right about, so they go to the speaking step
-    #        instead of being turned into a multiple choice they are not.
-    factual = [c for c in unit["comprehension"]
-               if c.get("questionType") == "Oral response" and len(c.get("correctAnswer") or "") <= 40]
+    #        Only the factual ones. A question whose accepted answer is a
+    #        FAMILY of answers ("(any true colour)", "Any two of: ...", a
+    #        blank in the question itself) has no single right button to
+    #        tap, so it goes to the speaking step instead of being turned
+    #        into a multiple choice it is not.
+    #
+    #        Classified by the ANSWER'S SHAPE, not by questionType. Units
+    #        1-9 spell the open kind "Point, act or say" and the factual
+    #        kind "Oral response" - two labels, cleanly split - but unit 10
+    #        files everything under a third label, "Oral, point or choose",
+    #        that names both at once. Matching the string "Oral response"
+    #        therefore dropped all twelve of unit 10's comprehension
+    #        questions, ten of which are perfectly good facts ("What is the
+    #        name of Amal's new book?" => "My First English World"). Tested
+    #        against every unit: this classifier agrees with the type-string
+    #        test everywhere units 1-9 use it, and recovers unit 10.
+    def is_factual(c):
+        ans = str(c.get("correctAnswer") or "").strip()
+        q = str(c.get("question") or "")
+        if not ans or not q or "___" in q or "___" in ans:
+            # "___" in the ANSWER is a talk-line TEMPLATE, not a fact -
+            # "Which talk line tells us your name?" => "My name is ___."
+            # is a pattern to complete with your own name, and 14 of these
+            # across units 1-9 have no "(any ...)" annotation to catch them
+            # any other way. Found by diffing this unit's own output before
+            # and after adding this line - the classifier moved "My name is
+            # ___." into the quiz step, where a child would have had to tap
+            # the literal blank.
+            return False
+        if re.search(r"\(\s*(any|or)\b", ans, re.I) or re.match(r"^\s*any\b", ans, re.I):
+            return False
+        return len(ans) <= 70
+
+    factual = [c for c in unit["comprehension"] if is_factual(c)]
     if len(factual) >= 3:
         items = []
         for c in factual[:6]:
@@ -392,7 +421,7 @@ def build_slides(unit, cw_unit, pics, dic):
         if t:
             lines.append({"text": t, "audio": source_of(s)})
     for c in unit["comprehension"]:
-        if c.get("questionType") != "Oral response" and len(lines) < 6:
+        if not is_factual(c) and len(lines) < 6:
             lines.append({"text": c["question"], "audio": ""})
     if lines:
         data["sayit"] = lines
@@ -440,38 +469,79 @@ def build_slides(unit, cw_unit, pics, dic):
     #        learning rather than nonsense put there to trip them.
     write = next((w for w in unit["writing"] if (w.get("modelText") or "").strip()), None)
     if write:
-        model = re.sub(r"_+", "", write["modelText"]).strip()
-        model = re.sub(r"\s+([.!?])", r"\1", re.sub(r"\s+", " ", model)).strip()
-        # The word that fills the blank has to be one a child can SEE, because
-        # the step ends with "read your line out loud and check it means
-        # something". The first taught word is not that: unit 1's is "home",
-        # and "This is a home." is grammatical and says nothing about the
-        # classroom the writing prompt is asking about. Prefer a noun with a
-        # picture, which is the same test the picture round makes.
-        # First choice is a taught word the PROMPT itself names - unit 1 asks
-        # for "your desk, your book or your chair", so "book" makes the built
-        # sentence about the thing the child was just asked to draw. Then a
-        # pictured noun, then anything the dictionary knows.
-        said = " ".join([write.get("promptAndInstructions") or ""] +
-                        list((write.get("completedExample") or {}).get("items") or []) +
-                        list((write.get("completedExample") or {}).get("otherAnswers") or [])).lower()
-        pool = (topic["words"] if topic else []) + all_words
+        raw_model = write["modelText"]
+        has_blank = "_" in raw_model
 
-        def named(w):
-            return re.search(r"\b%s\b" % re.escape(w.lower()), said) is not None
+        def tidy(s):
+            s = re.sub(r"\s+([.!?])", r"\1", re.sub(r"\s+", " ", str(s))).strip()
+            if s and not s.endswith((".", "!", "?")):
+                s += "."
+            return s
 
-        def pictured_noun(w):
-            e = dic.get(w.lower())
-            return bool(e) and e.get("partOfSpeech") == "noun" and bool(pics.get(w))
+        # The curriculum already writes the exact model answer for nine of
+        # ten units - a "Sentence: This is a chair." line inside
+        # completedExample. Use it, rather than guessing a word to fill the
+        # blank with: a guess can be grammatical and still wrong, and one
+        # WAS - unit 10's blank is "My name is ___.", and every taught word
+        # is a number, a feeling or a greeting, none of them a name. The
+        # picked word ("happy") produced "My name is happy.", which reads
+        # fine and answers a question nobody asked. This build no longer
+        # invents an answer where the content already states one.
+        answer = None
+        items = list((write.get("completedExample") or {}).get("items") or [])
+        if not has_blank:
+            # a complete sentence already - inserting a word into it was the
+            # OTHER bug this replaces: unit 6's model has no blank at all
+            # and a forced word turned "I can see with my eyes." into
+            # "I can see with my eyes face."
+            answer = tidy(raw_model)
+        else:
+            sentence_line = next(
+                (re.match(r"^\s*sentence\s*:\s*(.+)$", it, re.I) for it in items
+                 if re.match(r"^\s*sentence\s*:\s*(.+)$", it, re.I)), None)
+            if sentence_line:
+                answer = tidy(sentence_line.group(1))
+            else:
+                # No "Sentence:" line (unit 7 alone) - completedExample
+                # instead carries a short LABEL ("Vehicle label: school
+                # bus") beside an unrelated full sentence ("Safety
+                # sentence: I use the pavement."), and only the label
+                # completes THIS model's blank. Told apart by shape: a
+                # label does not already end in sentence punctuation, a
+                # full sentence does.
+                starter = (write.get("sentenceStarter") or "").strip()
+                label_val = None
+                for it in items:
+                    lm = re.match(r"^\s*(?!drawing\b)[\w ]+:\s*(.+)$", it, re.I)
+                    if lm and not lm.group(1).strip().endswith((".", "!", "?")):
+                        label_val = lm.group(1).strip()
+                        break
+                if label_val:
+                    answer = tidy((starter.rstrip() + " " + label_val) if starter
+                                 else re.sub(r"_+", label_val, raw_model))
+        if not answer:
+            # Last resort, reached by no unit in Grades 1: the old
+            # word-from-vocabulary guess, kept rather than leaving the step
+            # unbuilt if a future unit's content has neither shape above.
+            model = tidy(re.sub(r"_+", "", raw_model))
+            said = " ".join([write.get("promptAndInstructions") or ""] + items +
+                            list((write.get("completedExample") or {}).get("otherAnswers") or [])).lower()
+            pool = (topic["words"] if topic else []) + all_words
 
-        noun = (next((w for w in pool if named(w) and dic.get(w.lower())), None)
-                or next((w for w in pool if pictured_noun(w)), None)
-                or next((w for w in pool if dic.get(w.lower())), None))
-        answer = model
-        if answer.endswith(".") and noun:
-            answer = answer[:-1].strip() + " " + noun + "."
-        elif noun and not answer.endswith("."):
-            answer = answer + " " + noun + "."
+            def named(w):
+                return re.search(r"\b%s\b" % re.escape(w.lower()), said) is not None
+
+            def pictured_noun(w):
+                e = dic.get(w.lower())
+                return bool(e) and e.get("partOfSpeech") == "noun" and bool(pics.get(w))
+
+            noun = (next((w for w in pool if named(w) and dic.get(w.lower())), None)
+                    or next((w for w in pool if pictured_noun(w)), None)
+                    or next((w for w in pool if dic.get(w.lower())), None))
+            answer = model
+            if noun:
+                answer = (answer[:-1].strip() + " " + noun + ".") if answer.endswith(".") \
+                    else answer + " " + noun + "."
         tiles = [t for t in re.findall(r"[A-Za-z']+|[.!?]", answer)]
         spare = [w for w in all_words if w not in [t.lower() for t in tiles]][:3]
         data["write"] = {

@@ -59,26 +59,39 @@ PAT = {
 "4Sp.02": r"trial",
 }
 
-OBJ = {o["code"]: o["text"] for o in json.load(io.open(os.path.join(HERE, "stage4.json"), encoding="utf-8"))}
+def load_stage4():
+    """The 46 Stage 4 objectives, read from the framework the repo carries.
+
+    src/curriculum/cambridge-mathematics-0096.json is extracted from Cambridge's PDF by
+    tools/extract-cambridge-mathematics-framework.py and validated by validate:frameworks.
+    A hand copy beside this file went stale the moment the extractor produced a cleaner
+    text (its 4Gt.04 had swallowed the next section heading), so there is no hand copy."""
+    fw = os.path.join(HERE, "..", "..", "..", "..", "curriculum",
+                      "cambridge-mathematics-0096.json")
+    with io.open(fw, encoding="utf-8") as fh:
+        return json.load(fh)["objectivesByStage"]["4"]
+
+OBJ = {o["code"]: o["text"] for o in load_stage4()}
 assert set(PAT) == set(OBJ), set(PAT) ^ set(OBJ)
 
-C = build()
-rows, uncovered = [], []
-for code in sorted(OBJ):
-    hits = []
-    snip = ""
-    for u in sorted(C):
-        m = re.search(PAT[code], C[u], re.I)
-        if m:
-            hits.append(u)
-            if not snip:
-                s = max(0, m.start() - 55)
-                snip = C[u][s:m.end() + 75].strip()
-    rows.append((code, hits, snip))
-    if not hits: uncovered.append(code)
+if __name__ == "__main__":
+    C = build()
+    rows, uncovered = [], []
+    for code in sorted(OBJ):
+        hits = []
+        snip = ""
+        for u in sorted(C):
+            m = re.search(PAT[code], C[u], re.I)
+            if m:
+                hits.append(u)
+                if not snip:
+                    s = max(0, m.start() - 55)
+                    snip = C[u][s:m.end() + 75].strip()
+        rows.append((code, hits, snip))
+        if not hits: uncovered.append(code)
 
-print("objectives: %d | with evidence: %d | with none: %d\n" % (len(rows), len(rows) - len(uncovered), len(uncovered)))
-for code, hits, snip in rows:
-    tag = ("U" + ",".join(str(h) for h in hits)) if hits else "NONE"
-    print("%-8s %-26s %s" % (code, tag[:26], (snip[:96] + "…") if snip else "-- no match --"))
-json.dump({c: h for c, h, _ in rows}, io.open(os.path.join(HERE, "math-hits.json"), "w", encoding="utf-8"))
+    print("objectives: %d | with evidence: %d | with none: %d\n" % (len(rows), len(rows) - len(uncovered), len(uncovered)))
+    for code, hits, snip in rows:
+        tag = ("U" + ",".join(str(h) for h in hits)) if hits else "NONE"
+        print("%-8s %-26s %s" % (code, tag[:26], (snip[:96] + "…") if snip else "-- no match --"))
+    json.dump({c: h for c, h, _ in rows}, io.open(os.path.join(HERE, "math-hits.json"), "w", encoding="utf-8"))

@@ -12,25 +12,45 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 exec(open(os.path.join(HERE, "math-corpus.py"), encoding="utf-8").read().split("if __name__")[0])
 
-src = open(os.path.join(HERE, "audit-deployed-course.py"), encoding="utf-8").read()
-PAT = eval(src[src.index("PAT = {") + 6: src.index("}\n\nOBJ")] + "}")
+# Import the pattern table rather than slicing it out of the file by text anchor.
+# Deriving code by regex from another script is how v331 shipped a python heredoc
+# inside course-app.js; an edit that moves the anchor breaks it silently.
+_ns = {"__name__": "imported", "__file__": os.path.join(HERE, "audit-deployed-course.py")}
+exec(compile(open(_ns["__file__"], encoding="utf-8").read(), "audit", "exec"), _ns)
+PAT = _ns["PAT"]
 
 UNITDIR = os.path.join(HERE, "..", "grade-4", "data", "units", "unit-%d.json")
-OBJ = json.load(io.open(os.path.join(HERE, "stage4.json"), encoding="utf-8"))
+def load_stage4():
+    """The 46 Stage 4 objectives, read from the framework the repo carries.
+
+    src/curriculum/cambridge-mathematics-0096.json is extracted from Cambridge's PDF by
+    tools/extract-cambridge-mathematics-framework.py and validated by validate:frameworks.
+    A hand copy beside this file went stale the moment the extractor produced a cleaner
+    text (its 4Gt.04 had swallowed the next section heading), so there is no hand copy."""
+    fw = os.path.join(HERE, "..", "..", "..", "..", "curriculum",
+                      "cambridge-mathematics-0096.json")
+    with io.open(fw, encoding="utf-8") as fh:
+        return json.load(fh)["objectivesByStage"]["4"]
+
+OBJ = load_stage4()
 TITLES = {}
 for i in range(1, 19):
     TITLES[i] = json.load(io.open(UNITDIR % i, encoding="utf-8"))["unit"]["unitTitle"]
 
 C = build()
 
-STATUS = {"4Ni.03": "no", "4Ni.01": "pt"}
+# Both gaps this audit found were closed in 5f415deb8 by
+# tools/repair-ehel-math-stage4-objectives.mjs, so nothing is outstanding.
+STATUS = {}
 NOTE = {
- "4Ni.03": ("The course teaches <b>commutativity</b> (7 &times; 9 = 9 &times; 7, U5) but never the "
-            "<b>associative</b> property &mdash; regrouping three factors so that (2 &times; 5) &times; 7 "
-            "becomes 10 &times; 7. Different property; searched under every wording, 0 hits."),
- "4Ni.01": ("Numbers above 1000 (six-digit place value, U1) and below zero (U1, U15) are taught "
-            "thoroughly. Missing is the <b>number names</b> half &mdash; writing 4,006 as &ldquo;four "
-            "thousand and six&rdquo;. The only number words in the course are fractions (U7)."),
+ "4Ni.03": ("<b>U5 Multiplication, Multiples and Factors</b> &mdash; &ldquo;when you multiply three "
+            "numbers you get to choose which pair to multiply first, and brackets show the choice&rdquo;, "
+            "with a method for hunting the pair that makes 10 or 100, two worked examples and two "
+            "practice items. Added 2026-09-07; the course previously taught only commutativity."),
+ "4Ni.01": ("<b>U1 Numbers and the Number System</b> &mdash; &ldquo;four thousand and six is 4,006, "
+            "four thousand and sixty is 4,060&rdquo;, with a method for writing a number in words and "
+            "back again, and the rule that a number below zero takes the word minus. Added 2026-09-07; "
+            "the course previously wrote only fractions in words."),
 }
 STRANDS = [("Nc", "Counting and sequences"), ("Ni", "Integers and powers"),
            ("Np", "Place value, ordering and rounding"),
@@ -123,21 +143,28 @@ BODY = """<div class="wrap">
 
 <h2>What this found</h2>
 
-<div class="finding"><h3>4Ni.03 &mdash; the associative property is absent</h3>
+<div class="finding closed"><h3>4Ni.03 &mdash; the associative property was absent, and is now taught</h3>
 <p class="q">&ldquo;Understand the associative property of multiplication, and use this to simplify calculations&rdquo;</p>
 <p>The course teaches <b>commutativity</b> well &mdash; &ldquo;because multiplication is commutative, 7 &times; 9
 gives exactly the same answer as 9 &times; 7, so half of the sevens table is already known to you&rdquo; (U5).
 That is a different property. The associative one &mdash; regrouping three factors so that
 (2 &times; 5) &times; 7 becomes 10 &times; 7 &mdash; is what lets a child <i>simplify</i> a calculation, and it
-appears nowhere. Searched as the word, as the bracket form, as &ldquo;any order&rdquo; and as
-&ldquo;grouping&rdquo;: 0 hits in 1.05M characters.</p></div>
+appeared nowhere. Searched as the word, as the bracket form, as &ldquo;any order&rdquo; and as
+&ldquo;grouping&rdquo;: 0 hits in 1.05M characters.</p>
+<p><b>Closed 2026-09-07.</b> U5 now carries a concept, a method for hunting the pair that makes 10 or
+100, two worked examples, two practice items, a fluency item and a glossary entry that names the
+difference: commutative changes the ORDER, associative changes the GROUPING.</p></div>
 
-<div class="finding"><h3>4Ni.01 &mdash; the numbers are taught, the number <i>names</i> are not</h3>
+<div class="finding closed"><h3>4Ni.01 &mdash; the numbers were taught, the number <i>names</i> were not</h3>
 <p class="q">&ldquo;Read and write number names and whole numbers greater than 1000 and less than 0&rdquo;</p>
 <p>Both ranges are covered properly: six-digit place value in U1, U3, U9, U13 and U17, and negative numbers
 in U1 and U15. But nothing asks a learner to write a whole number <b>in words</b>. The only place number
-words appear is fractions &mdash; &ldquo;3/4 and &lsquo;three-quarters&rsquo;&rdquo; (U7). Marked partial
-rather than missing, because half the objective is genuinely there.</p></div>
+words appeared was fractions &mdash; &ldquo;3/4 and &lsquo;three-quarters&rsquo;&rdquo; (U7). It was
+marked partial rather than missing, because half the objective was genuinely there.</p>
+<p><b>Closed 2026-09-07.</b> U1 now teaches reading and writing number names, built around the zeros
+nobody says aloud &mdash; four thousand and six is 4,006, four thousand and sixty is 4,060 &mdash;
+which is exactly where the mistakes happen, and covers negatives too (&minus;250 is minus two hundred
+and fifty).</p></div>
 
 <div class="finding note"><h3>Three of the first pass&rsquo;s findings were wrong</h3>
 <p>Recorded because it is why every row quotes its content. The first sweep reported 4Nf.01 (&ldquo;more

@@ -1,6 +1,6 @@
 """Generate the Stage 4 Coverage Audit, in the Grade 1 audit's design.
 
-The objective text is read from stage4.json, which was extracted from the Cambridge PDF and
+The objective text is read from src/curriculum/cambridge-mathematics-0096.json, and
 checked for numbering gaps rather than eyeballed. The status and evidence below are mine, taken
 from a search of the deployed lesson's prose AND its script string literals — quiz stems and
 spoken lines live in those, so prose alone under-reports.
@@ -10,7 +10,10 @@ had no chip for "not covered" and no third segment on the bar.
 """
 import io, json, re, html
 
-OBJ = {o["code"]: o["text"] for o in json.load(io.open("stage4.json", encoding="utf-8"))}
+import os
+HERE = os.path.dirname(os.path.abspath(__file__))
+_FW = os.path.join(HERE, "..", "..", "..", "..", "curriculum", "cambridge-mathematics-0096.json")
+OBJ = {o["code"]: o["text"] for o in json.load(io.open(_FW, encoding="utf-8"))["objectivesByStage"]["4"]}
 CSS = io.open("audit-design.css", encoding="utf-8").read()
 
 # trailing strand headings that the PDF's two-column layout glued onto the last objective

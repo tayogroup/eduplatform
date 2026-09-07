@@ -1,5 +1,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="modulepreload" href="./learner-controls.js">
+<link rel="modulepreload" href="./wehel.js">
+<link rel="modulepreload" href="./course-shell.js">
+<script>
+  /* preconnect to whichever platform the launch names: DNS and TLS happen
+     while the page parses, instead of in front of the first POST */
+  (function () {
+    try {
+      var ep = new URLSearchParams(location.search).get("pwsEndpoint");
+      if (!ep) return;
+      var origin = new URL(ep, location.href).origin;
+      var l = document.createElement("link");
+      l.rel = "preconnect"; l.href = origin; l.crossOrigin = "anonymous";
+      document.head.appendChild(l);
+    } catch (e) { /* a malformed pwsEndpoint must not stop the lesson loading */ }
+  })();
+</script>
 <title>Tens and Ones</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
@@ -342,6 +359,44 @@
   }
 
   .paid span.n { background: var(--teal-soft); color: var(--ink); }
+
+  /* --- the way back to the hub, drawn only when the learner arrived from it;
+         see lesson-app-tools/wire-navigation.py --- */
+  .lesson-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 0 0 14px;
+    padding: 9px 17px 9px 13px;
+    border-radius: 999px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 700;
+    text-decoration: none;
+  }
+  .lesson-back:hover, .lesson-back:focus-visible { border-color: var(--teal); }
+
+  /* --- a home for the class controls, and the tutor dock;
+         see lesson-app-tools/wire-platform-controls.py --- */
+  .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
+  .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
+    align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
+    background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
+    padding: 12px 18px; box-shadow: var(--shadow); }
+  .w-dock[hidden] { display: none; }
+  .w-drawer { position: fixed; right: 14px; bottom: 14px; z-index: 71; width: min(420px, calc(100vw - 28px));
+    height: min(620px, calc(100vh - 28px)); background: var(--card); border: 1px solid var(--line);
+    border-radius: 18px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+  .w-drawer[hidden] { display: none; }
+  .w-drawer-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+    border-bottom: 1px solid var(--line); font-weight: 800; }
+  .w-drawer-head button { margin-left: auto; border: 1px solid var(--line); background: var(--cell);
+    color: var(--ink); border-radius: 999px; width: 34px; height: 34px; font-size: 17px; cursor: pointer; }
+  .w-drawer-body { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
+    background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
+    font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
 </style>
 
 <div class="wrap">
@@ -350,7 +405,7 @@
       <p class="eyebrow">Mathematics · Grade 2</p>
       <h1>Tens and <em>Ones</em></h1>
     </div>
-    <nav class="dots" id="dots" aria-label="Steps"></nav>
+    <div class="hero-right"><div class="top-actions"></div><nav class="dots" id="dots" aria-label="Steps"></nav></div>
   </header>
 
   <div class="deck" id="deck">
@@ -2012,4 +2067,117 @@
 
   show(0, false);
 })();
+</script>
+
+<script>
+  /* wire-navigation.py :: back
+     Only when ?from=g2: a lesson opened on its own has nowhere to go back to. */
+  (function () {
+    if (new URLSearchParams(location.search).get("from") !== "g2") return;
+    var wrap = document.querySelector(".wrap");
+    if (!wrap) return;
+    var back = document.createElement("a");
+    back.className = "lesson-back";
+    back.href = "index.html";
+    back.innerHTML = '<span aria-hidden="true">\u2190</span> Grade 2 Maths';
+    wrap.insertBefore(back, wrap.firstChild);
+  })();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>
+
+<script type="module">
+  /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
+     learner-controls.js holds the SAME singletons the shell mounts. */
+  import { mountLearnerControls } from "./learner-controls.js";
+  import { mountWehelChat } from "./wehel.js";
+  import { escapeHtml } from "./course-shell.js";
+
+  const q = new URLSearchParams(location.search);
+  const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+  const launchEndpoint = (q.get("pwsEndpoint") || "").trim();
+
+  let toastEl = null;
+  function toast(message) {
+    if (toastEl) toastEl.remove();
+    toastEl = document.createElement("div");
+    toastEl.className = "w-toast";
+    toastEl.textContent = message;
+    document.body.appendChild(toastEl);
+    setTimeout(() => { if (toastEl) { toastEl.remove(); toastEl = null; } }, 3200);
+  }
+
+  /* 1. Class chat, Hand up and the Join class pill. They place themselves into
+        .top-actions and mount ONLY when the server says a teacher is watching,
+        so nothing appears to a child working alone. */
+  try {
+    mountLearnerControls({
+      token: q.get("pwsToken") || "", launchToken, launchEndpoint,
+      progressUnit: "u01",
+    });
+  } catch (e) { console.error("learner controls:", e); }
+
+  /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
+        the day's allowance, and a lesson nobody opens the tutor on should not
+        spend a request. */
+  if (launchToken) {
+    const dock = document.createElement("button");
+    dock.type = "button"; dock.className = "w-dock"; dock.textContent = "\u{1F4AC} Ask Wehel";
+    const drawer = document.createElement("div");
+    drawer.className = "w-drawer"; drawer.hidden = true;
+    drawer.innerHTML = '<div class="w-drawer-head">Wehel Tutor<button type="button" aria-label="Close">\u00d7</button></div><div class="w-drawer-body"></div>';
+    let panel = null;
+    function open() {
+      drawer.hidden = false; dock.hidden = true;
+      if (panel) return;
+      try {
+        panel = mountWehelChat({
+          container: drawer.querySelector(".w-drawer-body"),
+          meta: {
+            subject: "mathematics", subjectLabel: "Mathematics", grade: 2,
+            unitNo: 1, unitTitle: "Tens and Ones",
+            learnerCategory: q.get("category") || "",
+          },
+          store: {},
+          ui: { escapeHtml, toast },
+          tutorLabel: "Wehel Tutor",
+          placeholder: "Ask about Tens and Ones\u2026",
+          quickPrompts: [
+            { label: "Explain it simply", message: "Explain this step in a simpler way." },
+            { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
+            { label: "An easier one", message: "Give me an easier question to build up with." },
+          ],
+        });
+      } catch (e) {
+        console.error("wehel:", e);
+        drawer.hidden = true; dock.hidden = false;
+        toast("Wehel is not available on this page.");
+      }
+    }
+    function close() { drawer.hidden = true; dock.hidden = false; }
+    dock.addEventListener("click", open);
+    drawer.querySelector("button").addEventListener("click", close);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !drawer.hidden) close(); });
+    document.body.append(dock, drawer);
+  }
 </script>

@@ -4,46 +4,62 @@ Nine self-contained lesson pages plus a hub, on the same model as
 `../grade-1-app`: each carries its own CSS, its own activity JS and its own
 copy of the voice engine, and none of it goes through `shell/course-app.js`.
 
-**Committed on 2026-09-07 before it was finished, deliberately.** Until that
-commit the only copies were ten claude.ai artifacts and a directory under
-`AppData\Local\Temp`. Artifacts are a review surface, not source control, and
-temp is temp — the same "the CDN was the only copy" that got Grade 1 committed.
+Built by the shared tools in `../lesson-app-tools`, which read
+`app.config.json` beside these files. **Order in that config IS the unit
+number.**
 
-## Status: NOT deployable, and the gap is the platform layer
+```bash
+python ../lesson-app-tools/check-lessons.py       # the gate
+node   ../lesson-app-tools/deploy.mjs --app .     # plan; --upload writes
+```
 
-Measured against `grade-1-app/g1v2`, which is live:
+## Status: wired, gated, NOT deployed and NOT routed
 
-| | grade-1-v2 | here |
+| | grade-1-v2 (live) | here |
 | --- | --- | --- |
 | deck, `finish()`, stickers | ✓ | ✓ |
 | design template + ink tokens | ✓ | ✓ |
-| header bars, `.eh-b2right` | ✓ | **none** |
-| Class chat / Hand up / Join class | ✓ | **none** |
-| Wehel | ✓ | **none** |
-| launch params carried across links | ✓ | **none** |
-| hub links | sibling `*.html` | **claude.ai artifact URLs** |
-| deploy path | `deploy.mjs` | **none** |
+| a `.top-actions` for the controls | ✓ | ✓ |
+| Class chat / Hand up / Join class | ✓ | ✓ |
+| Wehel | ✓ | ✓ |
+| launch params carried across links | ✓ | ✓ |
+| hub links | siblings | ✓ siblings |
+| deploy path | own `deploy.mjs` | ✓ shared |
+| **on the CDN** | ✓ | **no** |
+| **a learner can reach it** | ✓ | **no** |
 
-The lessons DO read `?pwsToken` / `?pwsEndpoint` already, but only for the
-voice endpoint (`PLATFORM_VOICE`) — that is not the same thing as carrying
-them onto the next page, and reading a count of `location.search` as evidence
-of link plumbing is how this list was under-estimated once already.
+Nothing has been uploaded. `remote` names
+`app/mathematics/grade-2-lessons`, which does not exist on the zone yet, and
+even once it does no learner reaches it until the launch override
+(`local_prequran/ehel_app_url_overrides`, read by `pqpg_ehel_app_base()`) names
+it — a Moodle setting through the staged-script + cPanel loop, like
+`../grade-1-app/repoint-grade-1.php`.
 
-## Order of work, and why it is that order
+Note the shell course at `app/mathematics/grade-2/` is untouched and still
+serves Grade 2 on v415. This build is an alternative to it, not a patch on it.
 
-1. **The hub's links first.** `g2-index.html` points at ten artifact URLs, so
-   nothing here is a course until they point at siblings.
-2. **Launch params next, before the controls.** `mountHandRaise` /
-   `mountClassChat` open with a guard on `launchToken` and `launchEndpoint`, so
-   without both they mount NOTHING rather than erroring. Wire the controls
-   first and they look broken when they are merely unreachable — the exact
-   failure `grade-1-app/keep-launch-params.py` documents.
-3. **Header bars, then the controls into them.** `placeLearnerControls()`
-   prepends into `.top-actions`; there is no such element here yet.
-4. **A deploy path.** Generalise the Grade 1 tools rather than cloning them:
-   `add-platform-controls.py`, `keep-launch-params.py`, `preload-platform.py`,
-   `check-lessons.py` and `deploy.mjs` all hardcode `g1v2` and a literal lesson
-   list, and every one of them is otherwise grade-agnostic.
+## Measured, not assumed
+
+- **Contrast**: 0 failures across all nine lessons and the hub, dark, poked
+  through every answered / wrong / revealed state — re-run after the wiring,
+  because the controls add a tutor dock and a toast with colours of their own.
+- **No 375px overflow.**
+- **`check-lessons.py` passes**, and was mutation-tested six ways. One mutation
+  survived its first version and is written up in the tools README; the short
+  form is that a substring test for `"./course-shell.js"` was satisfied by the
+  `<link rel="modulepreload">` while the import itself was gone.
+
+## Two things that were wrong before they were checked
+
+- Nine lessons matching `location.search` read as partial launch plumbing. It
+  is `PLATFORM_VOICE` resolving the TTS endpoint and has nothing to do with
+  carrying the token onto the next page. A count of a string is not evidence of
+  the feature that string usually belongs to.
+- These files arrived CRLF and were normalised to LF. `git status` then
+  reported all ten as modified while `git diff` was empty and the bytes were
+  identical to their blobs — a stale index stat, the same mechanism
+  `.gitattributes` documents from the other direction. `git add` settled it;
+  there was nothing to commit.
 
 ## The open question, which is not engineering
 

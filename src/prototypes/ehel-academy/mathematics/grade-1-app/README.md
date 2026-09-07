@@ -55,9 +55,11 @@ python keep-launch-params.py     # carry pwsToken/pwsEndpoint across every in-ap
 python preload-platform.py       # modulepreload + preconnect, so the controls are not late
 
 # check
-python check-lessons.py          # structure: badges, finish(), stickers, dangling ids
-python check-stage1-coverage.py  # all 36 Cambridge 0096 Stage 1 objectives
-node   run-lessons.mjs           # execute each lesson against its original as control
+python check-lessons.py              # structure: badges, finish(), stickers, dangling ids
+python check-stage1-coverage.py      # slide titles vs the 36 Stage 1 objectives (cheap)
+python validate-against-framework.py # the real one: clause by clause, live pages, PDF at run time
+python check-answer-keys.py          # every check answer that can be computed
+node   run-lessons.mjs               # execute each lesson against its original as control
 
 # ship
 node   deploy.mjs                # plan; --upload sends the 8 pages + 3 shell modules
@@ -68,6 +70,30 @@ Every patcher after `compose-lessons.py` edits the files in place and assumes
 the previous step ran, so a re-derive means running the whole build list in
 order from a clean `g1v2/`. Each one is guarded - it skips a file it has already
 touched - so a second run is safe but does nothing.
+
+## What the checks do and do not establish
+
+`validate-against-framework.py` reports **36/36** against the live pages, and
+`check-answer-keys.py` computes **23** of the 75 check answers and finds them
+right. Both are mutation-tested; a gate nobody has watched fail is not known to
+work.
+
+Neither says the teaching is good. Coverage means every objective has a home,
+not that the explanation is correct, well pitched, or free of error.
+
+**52 of the 75 check questions cannot be verified by any tool.** "Which shape
+has no corners?" has no computable answer, so those are reported as unchecked
+rather than counted as passes — coverage that cannot be falsified is not
+evidence. A wrong key among them reaches a child in silence. That needs a human
+reading, and this build has never had one: English has a reviewed-scripts
+workbook process for exactly this and Grade 1 Maths has nothing equivalent.
+
+Three failure modes were found in the validators themselves and every one
+under-reported — taught content read as missing, because the extractor took
+string literals only, because a lesson's CHECK array belonged to no slide, and
+because unplaceable JS blocks were silently dropped. Under-reporting is the
+failure that looks responsible. The number is worth exactly what the mutation
+test behind it is worth.
 
 ## Things that will bite
 

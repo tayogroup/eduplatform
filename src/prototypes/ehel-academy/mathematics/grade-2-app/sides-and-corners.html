@@ -383,15 +383,82 @@
     font-family: "Inter", "Segoe UI", sans-serif;
     font-size: 14px; font-weight: 600;
   }
+
+  /* ---- the two header bars, modelled on the English shell ---- */
+  .eh-bar1, .eh-bar2 { position: sticky; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); }
+  .eh-bar1 { top: 0; padding: 8px 16px; }
+  .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
+  .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
+    color: var(--ink); font-size: 17px; cursor: pointer; }
+  .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
+    cursor: pointer; text-decoration: none; }
+  .eh-round.back { padding: 9px 13px; }
+  .eh-section { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis; }
+  .eh-b2right { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
+  .eh-pill { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 15px; cursor: pointer; }
+  .eh-steps { position: sticky; top: 104px; z-index: 39; background: var(--card); border-bottom: 1px solid var(--line);
+    max-height: 55vh; overflow-y: auto; padding: 8px; }
+  .eh-steps button { display: block; width: 100%; text-align: left; font: inherit; font-size: 16px;
+    background: none; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; color: var(--ink); }
+  .eh-steps button:hover { background: var(--cell); }
+  .eh-steps button.now { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 700; }
+  .eh-steps button.done::after { content: " \2713"; color: var(--good); font-weight: 700; }
+  .eh-steps button.now.done::after { color: var(--teal-ink, #06231F); }
+  .hero .eyebrow { display: none; }   /* the brand bar says Primary Mathematics now */
+  @media (max-width: 720px) {
+    .eh-progtext, .eh-brandtext { display: none; }
+    .eh-bar2 { top: 52px; } .eh-steps { top: 100px; }
+    .eh-picker { max-width: 130px; }
+  }
 </style>
 
+
+<header class="eh-bar1">
+  <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
+  <div class="eh-prog" title="How much of this lesson you have finished">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="tens-and-ones.html">Tens and Ones</option><option value="coins-and-change.html">Coins and Change</option><option value="fair-shares.html">Fair Shares</option><option value="patterns-that-grow.html">Patterns That Grow</option><option value="sides-and-corners.html" selected>Sides and Corners</option><option value="which-way-from-here.html">Which Way From Here</option><option value="how-much-how-long.html">How Much, How Long</option><option value="half-past-quarter-to.html">Half Past, Quarter To</option><option value="count-it-chart-it.html">Count It, Chart It</option></select>
+    <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
+  </div>
+</header>
+<nav class="eh-bar2" aria-label="Lesson">
+  <a class="eh-round back" href="index.html" aria-label="Back to the lesson list">←</a>
+  <button type="button" class="eh-round" id="ehMenu" aria-expanded="false" aria-controls="ehSteps">☰ Menu</button>
+  <span class="eh-section">Sides and Corners</span>
+  <span class="eh-b2right top-actions"><button type="button" class="eh-pill" id="ehFull">⛶ Full screen</button></span>
+</nav>
+<div class="eh-steps" id="ehSteps" hidden></div>
 <div class="wrap">
   <header class="hero">
     <div>
       <p class="eyebrow">Mathematics · Shapes and space</p>
       <h1>Sides and <em>Corners</em></h1>
     </div>
-    <div class="hero-right"><div class="top-actions"></div><nav class="dots" id="dots" aria-label="Steps"></nav></div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
   <div class="deck" id="deck">
@@ -1923,7 +1990,73 @@
   $("restart").addEventListener("click", () => location.reload());
 
   show(0, false);
-})();
+
+  /* ================= the two header bars =================
+     Everything here is answered by this page. The class controls are not
+     painted here - they mount themselves into .top-actions on bar 2, and only
+     when the server confirms a teacher is watching. */
+  (function () {
+    const earnable = slides.length - 1;            // teaching slides + the check
+    const pctEl = $("ehPct"), fillEl = $("ehFill");
+    function ehPaint() {
+      const n = done.slice(0, earnable).filter(Boolean).length;
+      const p = earnable ? Math.round((n / earnable) * 100) : 0;
+      pctEl.textContent = p + "%";
+      fillEl.style.width = p + "%";
+      const box = $("ehSteps");
+      if (box && !box.hidden) ehSteps();
+    }
+    function ehSteps() {
+      $("ehSteps").innerHTML = slides.map(function (s, i) {
+        const h = s.querySelector("h2");
+        return '<button type="button" data-i="' + i + '" class="' +
+          (i === cur ? "now " : "") + (done[i] ? "done" : "") + '">' +
+          (i + 1) + ". " + (h ? h.textContent : "Step " + (i + 1)) + "</button>";
+      }).join("");
+    }
+    $("ehSteps").addEventListener("click", function (e) {
+      const b = e.target.closest("button[data-i]");
+      if (!b) return;
+      show(+b.dataset.i, true);
+      $("ehSteps").hidden = true;
+      $("ehMenu").setAttribute("aria-expanded", "false");
+    });
+    $("ehMenu").addEventListener("click", function () {
+      const box = $("ehSteps"), open = box.hidden;
+      if (open) ehSteps();
+      box.hidden = !open;
+      $("ehMenu").setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    $("ehPicker").addEventListener("change", function (e) {
+      if (e.target.value) location.href = e.target.value + location.search;
+    });
+    $("ehFull").addEventListener("click", function () {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    });
+    document.addEventListener("fullscreenchange", function () {
+      $("ehFull").innerHTML = document.fullscreenElement ? "\u26f6 Leave full screen" : "\u26f6 Full screen";
+    });
+    /* the voice toggle mutes what SHE says; it does not touch the Listen
+       buttons, which a child presses on purpose */
+    let muted = false;
+    const realSay = say;
+    say = function (t) { if (!muted) realSay(t); };
+    $("ehAudio").addEventListener("click", function () {
+      muted = !muted;
+      if (muted && window.VOICE && VOICE.stop) VOICE.stop();
+      $("ehAudio").setAttribute("aria-pressed", muted ? "true" : "false");
+      $("ehAudio").title = muted ? "Turn the voice on" : "Turn the voice off";
+    });
+    /* every completion repaints the rail, so that is where the pill hangs */
+    const realPaintDots = paintDots;
+    paintDots = function () { realPaintDots(); ehPaint(); };
+    const realShow = show;
+    show = function (i, speak) { realShow(i, speak); ehPaint(); };
+    ehPaint();
+  })();
+
+  })();
 </script>
 
 <script>

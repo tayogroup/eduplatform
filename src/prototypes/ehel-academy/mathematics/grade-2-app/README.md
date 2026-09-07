@@ -19,7 +19,8 @@ node   ../lesson-app-tools/deploy.mjs --app .     # plan; --upload writes
 | --- | --- | --- |
 | deck, `finish()`, stickers | ✓ | ✓ |
 | design template + ink tokens | ✓ | ✓ |
-| a `.top-actions` for the controls | ✓ | ✓ |
+| the two header bars | ✓ | ✓ |
+| controls in bar 2, beside Full screen | ✓ | ✓ |
 | Class chat / Hand up / Join class | ✓ | ✓ |
 | Wehel | ✓ | ✓ |
 | launch params carried across links | ✓ | ✓ |

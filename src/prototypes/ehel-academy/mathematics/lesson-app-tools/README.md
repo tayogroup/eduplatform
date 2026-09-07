@@ -19,6 +19,7 @@ python ../lesson-app-tools/wire-navigation.py         # hub links, a way back, l
 python ../lesson-app-tools/wire-platform-controls.py  # Class chat, Hand up, Join class, Wehel
 python ../lesson-app-tools/preload-platform.py        # modulepreload + preconnect
 python ../lesson-app-tools/wire-progress.py           # report to the school
+python ../lesson-app-tools/add-header-bars.py         # the two bars, and the controls into bar 2
 python ../lesson-app-tools/check-lessons.py           # the gate
 node   ../lesson-app-tools/deploy.mjs --app .         # plan; --upload writes
 ```
@@ -84,9 +85,12 @@ else.
 
 ## What these tools do NOT do
 
-- **Design.** `wire-platform-controls.py` gives the hero a `.top-actions`
-  container because `placeLearnerControls()` prepends into one. It does not
-  port Grade 1's two-bar header; that is a design change, not a contract.
+- **Invent a design.** `add-header-bars.py` ports the header Grade 1 already
+  ships — brand, lesson progress, lesson picker, voice toggle, back, Menu,
+  lesson name, Full screen — so the two builds look like one product. It was
+  added on 2026-09-07 after a side-by-side screenshot showed Grade 2 with no
+  bars at all and its class controls floating in the hero. What none of these
+  tools do is decide what a NEW header should contain.
 - **Route a learner anywhere.** The launch override
   (`local_prequran/ehel_app_url_overrides`, read by `pqpg_ehel_app_base()`) is
   a Moodle setting reached through the staged-script + cPanel loop. Uploading
@@ -113,3 +117,23 @@ sharing was the half that added something new.
 Note `grade-1-app/deploy.mjs` and this one both write
 `app/mathematics/grade-1-v2`. They must ship the same file set: when
 `progress-client.js` was added here it was added there in the same commit.
+
+## The two anchors that had to be tightened, and why they are worth reading
+
+Both were caught by a tool REFUSING rather than by anything going wrong, which
+is the behaviour to preserve when adding a step here.
+
+- `add-header-bars.py` inserts its JS inside the lesson's own IIFE. The Grade 1
+  original took the FIRST `<script>`, which was the lesson there because the
+  header went on before anything else. Here `preload-platform.py` has already
+  put a script in the head, so "the first script" is the preconnect snippet and
+  the JS would have landed outside the closure with `slides`, `done`, `show`
+  and `paintDots` all out of scope. Anchored on content instead.
+- The first content anchor was the `slides` declaration — and
+  `wire-progress.py`'s module reads the slides too, so it matched two scripts
+  and the tool refused with "found 2 scripts declaring slides, want 1". The
+  anchor is `const done = new Array(...)`, which only the lesson has.
+
+The general shape: a build pipeline whose later steps add `<script>` tags makes
+every earlier step's "find the script" assumption weaker, and the failure mode
+is silent scope loss rather than an error.

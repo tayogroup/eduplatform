@@ -163,13 +163,17 @@ STEP_ORDER = [
     # still answerable — checked question by question — from the book on
     # the shelf.
     #
-    # "story" IS BACK, and it is not the step that was removed. That one
-    # printed the story as four blocks of plain text; this one IS the picture
-    # book — the same twelve illustrated, narrated pages the shelf holds,
-    # opened in the same reader. One copy of the content, a second route to
-    # it, and a name in the MENU, which is what the owner was pointing at
-    # both times: the navigation listed Games then "What happened in the
-    # story?" with no story anywhere between them.
+    # "story" is THE UNIT'S OWN READINGS, and it is deliberately NOT the
+    # picture books. Those are a separate shelf with a separate purpose
+    # (step 6); this is the curriculum text the comprehension questions below
+    # are written against.
+    #
+    # The two are not the same text, which is the mistake this step exists to
+    # correct: matched by title they look identical, and measured they are
+    # not — Unit 1's reading is 219 words over four pages, the book of the
+    # same name is a 150-word retelling over twelve. At least one
+    # comprehension answer ("Happy") lives in the reading and in no page of
+    # the book.
     "story",
     "questions",
     # Immediately before Fluency, which is where the shell course puts it
@@ -630,15 +634,50 @@ def source_of(item, *keys):
     return a.get("source") or a.get("normal") or ""
 
 
-def sentence_pages(script, per_page=4):
-    """The story, cut into pages at its own paragraph breaks.
+def sentence_pages(script, per_page=4, words_per_page=65):
+    """The reading, cut into pages at its own paragraph breaks.
 
-    Never mid-paragraph: the recording reads the whole text straight through,
-    so a page boundary inside a paragraph would put a break where the voice
-    does not take one.
+    Never mid-paragraph where there ARE paragraphs: the recording reads the
+    whole text straight through, so a break inside a paragraph would put a
+    page turn where the voice does not take one.
+
+    HALF THIS GRADE'S STORIES HAVE NO PARAGRAPH BREAKS AT ALL, which the
+    original `or [[script]]` fallback turned into one enormous page without
+    saying so. Measured: units 1, 2, 3, 7 and 8 carry 13-odd blank-line breaks
+    and page properly; units 4, 5, 6, 9 and 10 carry ZERO, so Unit 9's
+    315-word story arrived as a single wall of text for a five-year-old while
+    Unit 1's 219 words came as four pages. Same course, same step, opposite
+    experience, and nothing anywhere reported it.
+
+    So where the paragraph split finds nothing, sentences are the unit
+    instead, grouped to about `words_per_page`. That lands units 4 and 9 on
+    five pages, which is what the paragraphed units already give. The voice is
+    unaffected either way - Listen plays the whole recording, as it always did.
     """
     paras = [p.strip() for p in re.split(r"\n{2,}", script) if p.strip()]
-    return [paras[i:i + per_page] for i in range(0, len(paras), per_page)] or [[script]]
+    if len(paras) > 1:
+        return [paras[i:i + per_page] for i in range(0, len(paras), per_page)]
+
+    whole = (paras[0] if paras else script).strip()
+    if not whole:
+        return []
+    # Split after end punctuation, keeping any closing quote with the sentence
+    # it ends - the stories are full of "…she said." and a naive split on
+    # [.!?] leaves an orphan quote mark opening the next page.
+    parts = [x.strip() for x in re.split(r'(?<=[.!?][\"\u201d])\s+|(?<=[.!?])\s+', whole) if x.strip()]
+    pages, page, count = [], [], 0
+    for part in parts:
+        page.append(part)
+        count += len(part.split())
+        if count >= words_per_page:
+            pages.append([" ".join(page)])
+            page, count = [], 0
+    if page:
+        if pages and count < words_per_page // 3:
+            pages[-1][0] += " " + " ".join(page)   # never strand a one-line page
+        else:
+            pages.append([" ".join(page)])
+    return pages or [[whole]]
 
 
 def distractors(pool, right, n, key=lambda x: x):
@@ -935,11 +974,11 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                     ["These questions are about this unit's own story."],
                     ["Read the question.", "Think back to the story.",
                      "Then tap the answer you remember."],
-                    ["If you cannot remember, press Read the story again.",
-                     "It opens the book right here.",
+                    ["If you cannot remember, go back one step.",
+                     "The story is right above this one.",
                      "That is not cheating, that is reading."],
                     ["Take your time, then tap."]),
-                ["again"])
+                ())
 
     # ---- 7  say it out loud ------------------------------------------
     # THE MODEL SENTENCES, NOT THE INSTRUCTION PARAGRAPH. A speaking item's
@@ -1297,35 +1336,46 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     #         (tap the right book PAGE out of three) and `order` (put events
     #         in sequence). The picture kind is why this step needs the book
     #         pages the shelf above already fetches.
-    # WHICH book is this unit's story. Matched by title against the shelf the
-    # step above draws - it is book 2 in all ten units, and the match is made
-    # rather than the position assumed, because a shelf reorder would silently
-    # hand the child the wrong book and nothing would fail.
-    story_reading = next((r for r in unit["readings"] if r.get("type") == "Story"), None) or unit["readings"][0]
-    story_title = (story_reading.get("title") or "").strip().lower()
-    story_book = next((b for b in (data.get("books") or [])
-                       if (b.get("title") or "").strip().lower() == story_title), None)
-    if story_book:
-        data["storyBook"] = story_book["id"]
+    # NO storyBook LINK. The unit's reading and the shelf's book of the same
+    # name are different texts (see the readings step above), so associating
+    # them was the mistake this change undoes - not a feature to keep wired up
+    # for later.
 
-    # ---- The unit's own story --------------------------------------------
-    #         The picture book of it, by name, immediately above the questions
-    #         that ask about it. `storyBook` is matched by TITLE against the
-    #         shelf above (see below) rather than taken by position - it is
-    #         book 2 in all ten units and indexing it would hand the child the
-    #         wrong book, silently, the first time a shelf is reordered.
-    if data.get("storyBook"):
+    # ---- The unit's own readings -----------------------------------------
+    #         Story, Shared reading and Rhyme - all three, on the owner's
+    #         instruction (2026-09-08). Every one is already narrated and none
+    #         of them was reachable anywhere in this build: 30 readings and
+    #         4,334 words across the grade, surfaced nowhere.
+    #
+    #         NOT THE PICTURE BOOKS. The shelf at step 6 is a different thing
+    #         with a different purpose, and its books are ADAPTATIONS - the
+    #         Unit 1 book is a 150-word retelling of a 219-word reading. The
+    #         comprehension step below is written against THIS text, so
+    #         pointing it at the book left at least one answer unfindable.
+    reads = []
+    for r in unit["readings"]:
+        pages = sentence_pages(r.get("passageScript") or "")
+        if not pages:
+            continue
+        reads.append({
+            "title": r.get("title") or r.get("type") or "Reading",
+            "kind": r.get("type") or "",
+            "pages": pages,
+            "audio": source_of(r),
+        })
+    if reads:
+        data["reads"] = reads
         i = add("story", "The unit story", "\U0001F4D6", "I read the unit story",
-                "This unit's own story, from beginning to end.",
+                "This unit's own story, and the other things it gives you to read.",
                 explain(
-                    ["This is the story this unit is built around."],
-                    ["Press Read the story.",
-                     "Turn the pages with Next.",
-                     "Press Listen on a page you want read to you."],
-                    ["The next step asks about this story.",
-                     "You can come back here whenever you like."],
-                    ["Press Read the story."]),
-                ["open"])
+                    ["This is the reading this unit is built around."],
+                    ["Press Listen and follow the words with your finger.",
+                     "Press Next page when you are ready.",
+                     "There is more than one thing to read - pick one from the top."],
+                    ["The next step asks about the story.",
+                     "You can come back and read it again any time."],
+                    ["Pick one and press Listen."]),
+                ["pick", "replay", "next"])
 
     if book_questions:
         data["bookquestions"] = book_questions
@@ -1510,12 +1560,11 @@ def bootstrap(slides, data):
                        '    ask: "Which word is this?", label: "Picture",\n'
                        '    done: "You can read those words on their own now." });' % (el, i))
         elif k == "story":
-            out.append('  storyBook({ el: %s, books: LESSON.books, id: LESSON.storyBook,\n'
-                       '    finish: %d, done: "You read the whole story." });' % (el, i))
+            out.append('  unitReadings({ el: %s, items: LESSON.reads, finish: %d,\n'
+                       '    done: "You read the whole story." });' % (el, i))
         elif k == "questions":
             out.append('  sequence({ el: %s, items: LESSON.questions, finish: %d,\n'
-                       '    label: "Question", done: "You remembered the story well.",\n'
-                       '    readAgain: { books: LESSON.books, id: LESSON.storyBook } });' % (el, i))
+                       '    label: "Question", done: "You remembered the story well." });' % (el, i))
         elif k == "sayit":
             out.append('  sayOutLoud({ el: %s, items: LESSON.sayit, finish: %d,\n'
                        '    ask: "Listen, then say it out loud.",\n'

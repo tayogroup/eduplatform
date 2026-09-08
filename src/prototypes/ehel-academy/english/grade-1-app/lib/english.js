@@ -711,32 +711,61 @@
     finish(o.finish, o.done);
   }
 
-  /* ---- the unit's own story, as its book ---------------------------
-     A NAME IN THE MENU for the story the unit is built around, and a
-     second route to the book the shelf already holds - not a second copy
-     of it. The step removed earlier today printed the same story as four
-     blocks of plain text; this opens the twelve illustrated, narrated
-     pages in the reader the shelf uses.
+  /* ---- the unit's own readings -------------------------------------
+     Story, Shared reading and Rhyme - the curriculum text, narrated, with
+     its own read-along. DELIBERATELY NOT THE PICTURE BOOKS: those are a
+     separate shelf (step 6) and their books are adaptations, shorter than
+     the reading they retell. The comprehension step is written against
+     THIS text.
 
-     It sits directly above the questions that ask about it, which is
-     where a child looking for "the story" expects to find it.
+     The step is done once the Story - the first reading - has been read to
+     the end. The other two are there to be read, not to be required: a
+     rhyme is not a gate.
      ------------------------------------------------------------------ */
-  function storyBook(o) {
+  function unitReadings(o) {
     const el = o.el;
-    const book = (o.books || []).find((b) => b.id === o.id);
-    if (!book) return;
-    $(el.stage).className = "stagewide";
-    $(el.stage).innerHTML =
-      '<div class="storycard">' +
-      '<span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
-      '<span class="booktitle">' + esc(book.title) + "</span>" +
-      (book.author ? '<span class="bookmeta">by ' + esc(book.author) + "</span>" : "") +
-      '<span class="bookmeta">' + book.pages.length + " pages</span>" +
-      '<button type="button" class="big small teal" id="' + el.open + '">Read the story \u25B6</button>' +
-      "</div>";
-    $(el.open).addEventListener("click", () => {
-      openBookReader(book, () => finish(o.finish, o.done));
-    });
+    let at = 0, page = 0;
+    function draw() {
+      const it = o.items[at];
+      const last = page === it.pages.length - 1;
+      $(el.ask).innerHTML = page === 0
+        ? "Press Listen, then follow the words with your finger."
+        : "Keep reading. Press Next page when you are ready.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        (o.items.length > 1
+          ? '<div class="readpick" id="' + el.pick + '">' + o.items.map((r, k) =>
+              '<button type="button" class="readtab' + (k === at ? " on" : "") + '" data-r="' + k + '">' +
+              esc(r.kind || r.title) + "</button>").join("") + "</div>"
+          : "") +
+        (page === 0 ? '<div class="storytitle">' + esc(it.title) + "</div>" : "") +
+        '<div class="story">' + it.pages[page].map((t) => "<p>" + esc(t) + "</p>").join("") + "</div>" +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Listen</button>' +
+        '<button type="button" class="big small" id="' + el.next + '">' +
+        (last ? "I have read it &#10003;" : "Next page &#9654;") + "</button></div>";
+      $(el.score).textContent = esc(it.title) + " \u00b7 page " + (page + 1) + " of " + it.pages.length;
+      if (o.items.length > 1) {
+        $(el.pick).addEventListener("click", (ev) => {
+          const b = ev.target.closest("[data-r]");
+          if (!b) return;
+          at = Number(b.dataset.r); page = 0; draw();
+        });
+      }
+      $(el.replay).addEventListener("click", () => playClip(it.audio, ""));
+      $(el.next).addEventListener("click", () => {
+        if (!last) { page++; draw(); return; }
+        // Finished this reading. The STORY is what the step turns on; the
+        // others are read because a child wants to, not to earn anything.
+        if (at === 0) {
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = o.done;
+          finish(o.finish, o.done);
+        }
+        if (at + 1 < o.items.length) { at++; page = 0; draw(); }
+      });
+    }
+    draw();
   }
 
   /* ---- the stickers, one per step that can be earned --------------- */

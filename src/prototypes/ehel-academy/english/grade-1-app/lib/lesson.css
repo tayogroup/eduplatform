@@ -440,10 +440,8 @@
     .plan-when { grid-template-columns: 1fr; }
   }
 
-  /* ---- the unit story card ---- */
-  .storycard { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
-    padding: 22px 20px; border-radius: 20px; border: 3px solid var(--teal); background: var(--card);
-    width: 100%; max-width: 26em; margin: 0 auto; }
-  .storycard .bookicon { font-size: 46px; line-height: 1; }
-  .storycard .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 23px; }
-  .storycard .big { margin-top: 8px; }
+  /* ---- picking between the unit's readings ---- */
+  .readpick { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 12px; }
+  .readtab { padding: 7px 15px; border-radius: 999px; border: 2px solid var(--line); background: var(--card);
+    color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
+  .readtab.on { border-color: var(--teal); background: var(--teal); color: var(--accent-ink, #06222f); }

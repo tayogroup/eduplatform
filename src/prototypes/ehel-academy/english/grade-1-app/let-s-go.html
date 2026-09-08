@@ -462,13 +462,11 @@
     .plan-when { grid-template-columns: 1fr; }
   }
 
-  /* ---- the unit story card ---- */
-  .storycard { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
-    padding: 22px 20px; border-radius: 20px; border: 3px solid var(--teal); background: var(--card);
-    width: 100%; max-width: 26em; margin: 0 auto; }
-  .storycard .bookicon { font-size: 46px; line-height: 1; }
-  .storycard .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 23px; }
-  .storycard .big { margin-top: 8px; }
+  /* ---- picking between the unit's readings ---- */
+  .readpick { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 12px; }
+  .readtab { padding: 7px 15px; border-radius: 999px; border: 2px solid var(--line); background: var(--card);
+    color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
+  .readtab.on { border-color: var(--teal); background: var(--teal); color: var(--accent-ink, #06222f); }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -728,9 +726,9 @@
         <p class="score" id="score13"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the story this unit is built around.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press Read the story.</s><s>Turn the pages with Next.</s><s>Press Listen on a page you want read to you.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The next step asks about this story.</s><s>You can come back here whenever you like.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Read the story.</s></mstts:express-as>' data-say="This unit&#39;s own story, from beginning to end.">
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the reading this unit is built around.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press Listen and follow the words with your finger.</s><s>Press Next page when you are ready.</s><s>There is more than one thing to read - pick one from the top.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The next step asks about the story.</s><s>You can come back and read it again any time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and press Listen.</s></mstts:express-as>' data-say="This unit&#39;s own story, and the other things it gives you to read.">
       <div class="slide-head"><span class="n">14</span><h2>The unit story</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">This unit's own story, from beginning to end.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">This unit's own story, and the other things it gives you to read.</span></div>
       <div class="stage">
         <div id="stage14"></div>
         <div class="choices" id="ch14"></div>
@@ -738,7 +736,7 @@
         <p class="score" id="score14"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These questions are about this unit&#39;s own story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, press Read the story again.</s><s>It opens the book right here.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These questions are about this unit&#39;s own story.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the story.</s><s>Then tap the answer you remember.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you cannot remember, go back one step.</s><s>The story is right above this one.</s><s>That is not cheating, that is reading.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer.">
       <div class="slide-head"><span class="n">15</span><h2>What happened in the story?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Tap the answer.</span></div>
       <div class="stage">
@@ -3711,7 +3709,66 @@
         ]
       }
     ],
-    "storyBook": "amals-big-bus-ride",
+    "reads": [
+      {
+        "title": "Amal's Big Bus Ride",
+        "kind": "Story",
+        "pages": [
+          [
+            "Today, Amal was going to see her grandma. Grandma lived by the sea in a town far away.",
+            "“How will we get there?” asked Amal.",
+            "“First we walk. Then we go by bus,” said Mum. “Let's go!”",
+            "Amal and Mum walked down the road. They walked past the market. They walked to the bus stop."
+          ],
+          [
+            "Soon a big bus came. It was yellow and red. “Beep, beep!” went the bus.",
+            "“Find a seat. Then sit down,” said Mum. Amal found a seat by the window.",
+            "The wheels on the bus went round and round. The bus began to drive through the town.",
+            "“Look, Mum! A boy on a bicycle!” said Amal. The boy waved. His name was Adam."
+          ],
+          [
+            "“And look — a red car!” said Amal. The car went fast. But the bus went slow and bumpy.",
+            "Amal saw a girl named Samira, who was going to school. Samira waved too. Amal waved back.",
+            "The bus drove past the shops. It drove past the library. It drove all the way to the sea.",
+            "“We are here!” said Mum. At the sea, Amal saw a little blue boat. The boat could float on the water."
+          ],
+          [
+            "And there, by the boat, was Grandma! “Amal!” she called. “You came to see me!”",
+            "“Yes!” said Amal. She ran and gave Grandma a big hug.",
+            "“How did you travel here?” asked Grandma.",
+            "“We walked, and then we came by bus!” said Amal. “The wheels went round and round!”"
+          ],
+          [
+            "Grandma smiled. “What a good journey. Now, shall we go on the boat?”",
+            "“Yes, yes!” said Amal. She held Grandma's hand. “Let's go!”"
+          ]
+        ],
+        "audio": "./media/audio/grade-1/readings/eng-g01-t03-u07-read01.mp3"
+      },
+      {
+        "title": "Talk about Let's Go!",
+        "kind": "Shared reading",
+        "pages": [
+          [
+            "Look, point and talk. I go by ___. It goes on the ___. I can see a ___. The ___ is fast. We are ___ing. First we ___, then we ___. A grown-up can read each line while you point, repeat and act — or listen to the audio read each line and do the same on your own."
+          ]
+        ],
+        "audio": "./media/audio/grade-1/readings/eng-g01-t03-u07-read02.mp3"
+      },
+      {
+        "title": "Let's Go! rhyme",
+        "kind": "Rhyme",
+        "pages": [
+          [
+            "“The Wheels on the Bus” — sing it together\nThe wheels on the bus go round and round, / round and round, round and round. / The wheels on the bus go round and round, / all day long! Roll your hands round and round for the wheels. Then do more verses with actions: the wipers go “swish, swish, swish”, the bell goes “ding, ding, ding”."
+          ],
+          [
+            "Sing it a little louder each time! “Bus Driver, Bus Driver” — a little rhyme\nBus driver, bus driver, / may I have a ride? / Yes, of course. / Please come inside. / Find a seat. / Then sit down. / Buckle up. / We'll drive through the town. Take turns: you ask “May I have a ride?” and a grown-up answers. Pretend to find a seat, sit down and buckle up together."
+          ]
+        ],
+        "audio": "./media/audio/grade-1/readings/eng-g01-t03-u07-read03.mp3"
+      }
+    ],
     "bookquestions": [
       {
         "kind": "choice",
@@ -5659,32 +5716,61 @@
     finish(o.finish, o.done);
   }
 
-  /* ---- the unit's own story, as its book ---------------------------
-     A NAME IN THE MENU for the story the unit is built around, and a
-     second route to the book the shelf already holds - not a second copy
-     of it. The step removed earlier today printed the same story as four
-     blocks of plain text; this opens the twelve illustrated, narrated
-     pages in the reader the shelf uses.
+  /* ---- the unit's own readings -------------------------------------
+     Story, Shared reading and Rhyme - the curriculum text, narrated, with
+     its own read-along. DELIBERATELY NOT THE PICTURE BOOKS: those are a
+     separate shelf (step 6) and their books are adaptations, shorter than
+     the reading they retell. The comprehension step is written against
+     THIS text.
 
-     It sits directly above the questions that ask about it, which is
-     where a child looking for "the story" expects to find it.
+     The step is done once the Story - the first reading - has been read to
+     the end. The other two are there to be read, not to be required: a
+     rhyme is not a gate.
      ------------------------------------------------------------------ */
-  function storyBook(o) {
+  function unitReadings(o) {
     const el = o.el;
-    const book = (o.books || []).find((b) => b.id === o.id);
-    if (!book) return;
-    $(el.stage).className = "stagewide";
-    $(el.stage).innerHTML =
-      '<div class="storycard">' +
-      '<span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
-      '<span class="booktitle">' + esc(book.title) + "</span>" +
-      (book.author ? '<span class="bookmeta">by ' + esc(book.author) + "</span>" : "") +
-      '<span class="bookmeta">' + book.pages.length + " pages</span>" +
-      '<button type="button" class="big small teal" id="' + el.open + '">Read the story \u25B6</button>' +
-      "</div>";
-    $(el.open).addEventListener("click", () => {
-      openBookReader(book, () => finish(o.finish, o.done));
-    });
+    let at = 0, page = 0;
+    function draw() {
+      const it = o.items[at];
+      const last = page === it.pages.length - 1;
+      $(el.ask).innerHTML = page === 0
+        ? "Press Listen, then follow the words with your finger."
+        : "Keep reading. Press Next page when you are ready.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        (o.items.length > 1
+          ? '<div class="readpick" id="' + el.pick + '">' + o.items.map((r, k) =>
+              '<button type="button" class="readtab' + (k === at ? " on" : "") + '" data-r="' + k + '">' +
+              esc(r.kind || r.title) + "</button>").join("") + "</div>"
+          : "") +
+        (page === 0 ? '<div class="storytitle">' + esc(it.title) + "</div>" : "") +
+        '<div class="story">' + it.pages[page].map((t) => "<p>" + esc(t) + "</p>").join("") + "</div>" +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Listen</button>' +
+        '<button type="button" class="big small" id="' + el.next + '">' +
+        (last ? "I have read it &#10003;" : "Next page &#9654;") + "</button></div>";
+      $(el.score).textContent = esc(it.title) + " \u00b7 page " + (page + 1) + " of " + it.pages.length;
+      if (o.items.length > 1) {
+        $(el.pick).addEventListener("click", (ev) => {
+          const b = ev.target.closest("[data-r]");
+          if (!b) return;
+          at = Number(b.dataset.r); page = 0; draw();
+        });
+      }
+      $(el.replay).addEventListener("click", () => playClip(it.audio, ""));
+      $(el.next).addEventListener("click", () => {
+        if (!last) { page++; draw(); return; }
+        // Finished this reading. The STORY is what the step turns on; the
+        // others are read because a child wants to, not to earn anything.
+        if (at === 0) {
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = o.done;
+          finish(o.finish, o.done);
+        }
+        if (at + 1 < o.items.length) { at++; page = 0; draw(); }
+      });
+    }
+    draw();
   }
 
   /* ---- the stickers, one per step that can be earned --------------- */
@@ -6697,11 +6783,10 @@
     label: "Round", done: "That is talking practised." });
   gameZone({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", gamelist: "gamelist13" }, pack: LESSON.games, finish: 12,
     done: "That is the Game Zone played." });
-  storyBook({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14", open: "open14" }, books: LESSON.books, id: LESSON.storyBook,
-    finish: 13, done: "You read the whole story." });
-  sequence({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15", again: "again15" }, items: LESSON.questions, finish: 14,
-    label: "Question", done: "You remembered the story well.",
-    readAgain: { books: LESSON.books, id: LESSON.storyBook } });
+  unitReadings({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14", pick: "pick14", replay: "replay14", next: "next14" }, items: LESSON.reads, finish: 13,
+    done: "You read the whole story." });
+  sequence({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, items: LESSON.questions, finish: 14,
+    label: "Question", done: "You remembered the story well." });
   activityList({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16", acts: "acts16" }, items: LESSON.activities, finish: 15,
     done: "That is this unit's jobs done." });
   sequence({ el: { ask: "ask17", say: "ask17", stage: "stage17", ch: "ch17", fb: "fb17", score: "score17" }, items: LESSON.fluency, finish: 16,

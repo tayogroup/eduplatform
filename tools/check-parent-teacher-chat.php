@@ -318,6 +318,17 @@ check('  and the viewer chrome that hides the Moodle furniture',
     strpos($pboardlive, "pqh_viewer_chrome_css('.pqpb-shell')") !== false);
 check('  and gives its content wrapper a rule',
     strpos($pboardlive, '.pqpb-wrap{') !== false);
+// pqlgb_course_label() FALLS BACK to the raw course key when the subject map
+// is absent, so a page that does not load the gateway library labels a tile
+// `ehel-eng-g01` and reports no error at all. The teacher's board requires it
+// from the page; the library requires it here so the page and the poll
+// endpoint cannot disagree.
+check('the subject map is loaded, so a tile says English and not ehel-eng-g01',
+    strpos($pliblive, "require_once(__DIR__ . '/../local_prequran/progress_gatewaylib.php')") !== false);
+// The layout answers to the CONTAINER: a media query measures the viewport,
+// and this page's column is narrow inside a wide one.
+check('the two columns wrap on the container, not a viewport query',
+    strpos($pboardlive, '.pqpb-cols{display:flex;flex-wrap:wrap') !== false);
 
 echo "\nthe message itself\n";
 

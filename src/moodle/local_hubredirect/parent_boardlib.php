@@ -28,6 +28,14 @@ defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ . '/accesslib.php');
 require_once(__DIR__ . '/live_group_boardlib.php');
 require_once(__DIR__ . '/progress_rolluplib.php');
+// pqlgb_course_label() turns `ehel-eng-g01` into "English" and "Grade 1" by
+// asking pqpg_ehel_subject_map(), and it is written to FALL BACK to the raw
+// key when that function is absent rather than fail. So a page that does not
+// load the gateway library gets a tile labelled `ehel-eng-g01` and no error -
+// which is what this board shipped with. The teacher's board requires it from
+// the PAGE; requiring it here means the page and the poll endpoint cannot
+// disagree, and a third caller cannot arrive without it.
+require_once(__DIR__ . '/../local_prequran/progress_gatewaylib.php');
 
 /** How far back "working now" looks, in seconds. The board's own warn line. */
 const PQPB_ACTIVE_SECONDS = 360;

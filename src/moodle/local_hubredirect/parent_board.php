@@ -123,16 +123,23 @@ echo $OUTPUT->header();
    reads as a circle. */
 .pqpb-pl{padding:2px 9px;border-radius:999px;border:1px solid var(--op-line);font-size:12px;font-weight:700;
   white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
-.pqpb-pl--course{background:#edf3fc;border-color:#d5e3f8;color:#17498f}
-.pqpb-pl--pos{background:#cff4fc;border-color:#9eeaf9;color:#055160}
-.pqpb-pl--done{background:#f7d6e6;border-color:#efadce;color:#801f4f}
-.pqpb-pl--words{background:#d2f4ea;border-color:#a6e9d5;color:#114e3d}
+/* !important on a page rule is usually a smell; here it is the only way to
+   win. The platform's stylesheets are emitted through pqh_css_force_and_specify(),
+   whose entire job is to add !important and double specificity, so an ordinary
+   page rule cannot beat them by order or by specificity. Left unforced, these
+   pills took the sheet's dark surface behind my dark ink and read as pale text
+   on a pale ground - legible in neither. The colours themselves are the
+   teacher board's, so the two boards look like one product. */
+.pqpb-pl--course{background:#edf3fc!important;border-color:#d5e3f8!important;color:#17498f!important}
+.pqpb-pl--pos{background:#cff4fc!important;border-color:#9eeaf9!important;color:#055160!important}
+.pqpb-pl--done{background:#f7d6e6!important;border-color:#efadce!important;color:#801f4f!important}
+.pqpb-pl--words{background:#d2f4ea!important;border-color:#a6e9d5!important;color:#114e3d!important}
 .pqpb-flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
 .pqpb-flag{padding:2px 9px;border-radius:999px;border:1px solid var(--op-line);font-size:12px;font-weight:700}
-.pqpb-flag--ok{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
-.pqpb-flag--quiet{border-color:#ced4da;background:#e9ecef;color:#41464b}
-.pqpb-flag--time{border-color:#a6e9d5;background:#d2f4ea;color:#114e3d}
-.pqpb-flag--bad{border-color:#f1aeb5;background:#f8d7da;color:#58151c}
+.pqpb-flag--ok{border-color:#a3cfbb!important;background:#d1e7dd!important;color:#0a3622!important}
+.pqpb-flag--quiet{border-color:#ced4da!important;background:#e9ecef!important;color:#41464b!important}
+.pqpb-flag--time{border-color:#a6e9d5!important;background:#d2f4ea!important;color:#114e3d!important}
+.pqpb-flag--bad{border-color:#f1aeb5!important;background:#f8d7da!important;color:#58151c!important}
 .pqpb-note{margin-top:8px;padding:7px 10px;border-left:3px solid #f1aeb5;background:var(--op-surface-tint);
   font-size:12.5px;font-style:italic;line-height:1.45}
 /* It may shrink and it may wrap to its own line rather than shoving the name
@@ -201,7 +208,11 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
   <section class="pqpb-top">
     <div>
       <h1>Parent board</h1>
-      <p>Where your children are, what they finished this week, and a line to their teacher — on one page.</p>
+      <?php // `pqpb-sub` is the SKIN'S own class, not decoration: it emits
+            // `.{prefix}-top .{prefix}-sub{color:var(--op-header-ink-soft)}`.
+            // Without it this paragraph kept my body-ink grey (#707070) on the
+            // header's dark ground and was very nearly invisible. ?>
+      <p class="pqpb-sub">Where your children are, what they finished this week, and a line to their teacher — on one page.</p>
     </div>
   </section>
   <noscript>

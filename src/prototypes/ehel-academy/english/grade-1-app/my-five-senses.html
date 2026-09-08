@@ -462,45 +462,79 @@
     .plan-when { grid-template-columns: 1fr; }
   }
 
-  /* ---- reading a unit text: a PAGE, not a panel ----
-     A book is read on paper. The dark card the first version used is the app's
-     furniture, not a reading surface, and the owner's note was that it did not
-     look like something a child would want to read. Warm paper, dark ink, big
-     type and a lot of leading - the same font, because Atkinson Hyperlegible is
-     here for exactly these readers. */
-  .read-reader .book-stage-wrap { padding: 10px 12px 0; }
-  .read-stage { width: 100%; max-width: 680px; max-height: 100%; overflow-y: auto;
-    padding: 34px 34px 28px; border-radius: 20px;
-    background: #fbf6e9; color: #23303a;
-    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38); }
-  .read-title { margin: 0 0 18px; font-size: 27px; color: #12303f; text-align: center;
-    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; }
-  .read-title::after { content: ""; display: block; width: 62px; height: 4px; border-radius: 3px;
-    background: var(--teal); margin: 12px auto 0; }
+  /* ---- reading a unit text: a STORYBOOK PAGE ----
+     The first pass made this legible and stopped there, so it still read as a
+     document. A book a five-year-old wants to open has a drop cap, paper that
+     looks like paper, and a page you can see the end of. */
+  .read-reader .book-stage-wrap { padding: 12px 12px 0; }
+  .read-stage { position: relative; width: 100%; max-width: 700px; max-height: 100%; overflow-y: auto;
+    padding: 38px 40px 32px; border-radius: 26px;
+    background:
+      radial-gradient(120% 90% at 50% 0%, #fffdf6 0%, #fbf4e4 62%, #f4ead4 100%);
+    color: #24313c;
+    box-shadow: 0 26px 60px rgba(0,0,0,.45), 0 2px 0 rgba(255,255,255,.7) inset;
+    border: 1px solid rgba(120, 96, 54, .18); }
+  /* the soft crease down the inside edge, so it reads as a leaf of a book */
+  .read-stage::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 16px;
+    border-radius: 26px 0 0 26px; pointer-events: none;
+    background: linear-gradient(90deg, rgba(120,96,54,.16), rgba(120,96,54,0)); }
+
+  .read-title { margin: 0 0 22px; font-size: 30px; color: #123243; text-align: center;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; letter-spacing: -.01em; }
+  .read-title::after { content: "\2766"; display: block; margin: 10px auto 0;
+    font-size: 21px; color: var(--teal); }
+
   .read-page p { font-size: 25px; line-height: 1.85; margin: 0 0 20px; }
   .read-page p:last-child { margin-bottom: 0; }
-  /* the read-along highlight: gold behind the sentence being narrated */
-  .rd-line { border-radius: 7px; padding: 1px 3px; margin: 0 -3px;
-    transition: background-color 140ms ease, color 140ms ease; }
-  .rd-line.on { background: var(--gold, #f2c14e); color: #1b2530; box-shadow: 0 0 0 3px var(--gold, #f2c14e); }
+  /* A story starts here - the oldest signal in children's publishing. */
+  .read-page.first > p:first-of-type::first-letter {
+    float: left; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 68px; line-height: .82; padding: 6px 12px 0 0; color: var(--teal); }
+
+  /* ---- the read-along highlight, on both surfaces ----
+     A warm wash UNDER the words, not a block around them: the old version
+     boxed the line in gold with a shadow ring, which cut it out of the page
+     and made the highlight louder than the reading. */
+  .rd-line, .cap-line { border-radius: 10px; padding: 2px 6px; margin: 0 -2px;
+    transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease; }
+  .rd-line.on, .cap-line.on {
+    background: linear-gradient(180deg, rgba(255,214,110,.55), rgba(250,190,60,.85));
+    box-shadow: 0 2px 0 rgba(196,140,20,.35); color: #1e2a33; }
+
+  /* ---- how far through the book you are ----
+     Dots, because a five-year-old counts them faster than they read "3 of 12",
+     and they show what is left rather than only where you are. */
+  .page-pips { display: inline-flex; align-items: center; gap: 6px; min-width: 5em; justify-content: center; }
+  .page-pips .pip { width: 9px; height: 9px; border-radius: 999px; background: rgba(255,255,255,.26); }
+  .page-pips .pip.done { background: rgba(255,255,255,.5); }
+  .page-pips .pip.on { width: 22px; background: var(--gold, #f2c14e); }
+
   @media (max-width: 560px) {
-    .read-stage { padding: 22px 20px 18px; }
+    .read-stage { padding: 26px 22px 20px; border-radius: 20px; }
     .read-page p { font-size: 21px; line-height: 1.8; }
+    .read-page.first > p:first-of-type::first-letter { font-size: 54px; }
+    .read-title { font-size: 24px; }
+    .page-pips .pip { width: 7px; height: 7px; }
+    .page-pips .pip.on { width: 17px; }
   }
 
-  /* ---- the picture book's caption, and its read-along ----
-     The books have always carried their text and never shown it, so a child
-     could follow the words with a finger on the unit readings and not on the
-     books - the ones with the pictures. Paper under the illustration, the
-     same gold highlight the readings use, so the two feel like one idea. */
-  .book-caption { flex: 0 0 auto; width: 100%; max-width: 720px; margin: 10px auto 0;
-    padding: 16px 22px; border-radius: 16px; background: #fbf6e9; color: #23303a;
-    font-size: 22px; line-height: 1.7; text-align: center; }
-  .cap-line { border-radius: 7px; padding: 1px 3px; margin: 0 -3px;
-    transition: background-color 140ms ease, color 140ms ease; }
-  .cap-line.on { background: var(--gold, #f2c14e); color: #1b2530; box-shadow: 0 0 0 3px var(--gold, #f2c14e); }
+  /* ---- the picture book's caption ----
+     It belongs to the picture above it, so it points at it: a notch at the
+     top, the same paper as a reading page, and the same highlight. Without
+     that it reads as a strip parked underneath rather than as the words for
+     what the child is looking at. */
+  .book-caption { position: relative; flex: 0 0 auto; width: 100%; max-width: 640px;
+    margin: 18px auto 0; padding: 18px 26px; border-radius: 20px;
+    background: radial-gradient(120% 120% at 50% 0%, #fffdf6 0%, #fbf4e4 70%, #f5ebd6 100%);
+    color: #24313c; font-size: 23px; line-height: 1.65; text-align: center;
+    box-shadow: 0 14px 34px rgba(0,0,0,.35), 0 2px 0 rgba(255,255,255,.75) inset;
+    border: 1px solid rgba(120,96,54,.18); }
+  .book-caption::before { content: ""; position: absolute; top: -9px; left: 50%; width: 18px; height: 18px;
+    transform: translateX(-50%) rotate(45deg); background: #fffdf6;
+    border-left: 1px solid rgba(120,96,54,.18); border-top: 1px solid rgba(120,96,54,.18);
+    border-radius: 4px 0 0 0; }
   @media (max-width: 560px) {
-    .book-caption { font-size: 18px; padding: 12px 16px; line-height: 1.6; }
+    .book-caption { font-size: 18.5px; padding: 14px 16px; line-height: 1.6; margin-top: 14px; }
   }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
@@ -5932,14 +5966,17 @@
         overlay.innerHTML =
           '<div class="book-reader-top"><span class="booktitle">' + esc(it.title) + "</span>" +
           '<button type="button" class="book-close" aria-label="Close">&#10005;</button></div>' +
-          '<div class="book-stage-wrap"><div class="read-stage"><div class="read-page">' +
+          '<div class="book-stage-wrap"><div class="read-stage"><div class="read-page' +
+          (page === 0 ? " first" : "") + '">' +
           (page === 0 ? '<h3 class="read-title">' + esc(it.title) + "</h3>" : "") +
           body + "</div></div></div>" +
           '<div class="book-reader-bottom">' +
           '<button type="button" class="big small ghost" id="readBack"' + (page === 0 ? " disabled" : "") + ">&#9664; Back</button>" +
           '<button type="button" class="big small teal" id="readListen">' +
           (player ? "\u23F8 Pause" : "\u{1F50A} Listen") + "</button>" +
-          '<span class="book-page-count">Page ' + (page + 1) + " of " + it.pages.length + "</span>" +
+          '<span class="page-pips" aria-label="Page ' + (page + 1) + " of " + it.pages.length + '">' +
+          it.pages.map((_, i) => '<i class="pip' + (i === page ? " on" : (i < page ? " done" : "")) + '"></i>').join("") +
+          "</span>" +
           (last
             ? '<button type="button" class="big small" id="readDone">I have read it &#10003;</button>'
             : '<button type="button" class="big small" id="readNext">Next page &#9654;</button>') +

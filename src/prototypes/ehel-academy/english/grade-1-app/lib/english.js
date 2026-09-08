@@ -849,14 +849,17 @@
         overlay.innerHTML =
           '<div class="book-reader-top"><span class="booktitle">' + esc(it.title) + "</span>" +
           '<button type="button" class="book-close" aria-label="Close">&#10005;</button></div>' +
-          '<div class="book-stage-wrap"><div class="read-stage"><div class="read-page">' +
+          '<div class="book-stage-wrap"><div class="read-stage"><div class="read-page' +
+          (page === 0 ? " first" : "") + '">' +
           (page === 0 ? '<h3 class="read-title">' + esc(it.title) + "</h3>" : "") +
           body + "</div></div></div>" +
           '<div class="book-reader-bottom">' +
           '<button type="button" class="big small ghost" id="readBack"' + (page === 0 ? " disabled" : "") + ">&#9664; Back</button>" +
           '<button type="button" class="big small teal" id="readListen">' +
           (player ? "\u23F8 Pause" : "\u{1F50A} Listen") + "</button>" +
-          '<span class="book-page-count">Page ' + (page + 1) + " of " + it.pages.length + "</span>" +
+          '<span class="page-pips" aria-label="Page ' + (page + 1) + " of " + it.pages.length + '">' +
+          it.pages.map((_, i) => '<i class="pip' + (i === page ? " on" : (i < page ? " done" : "")) + '"></i>').join("") +
+          "</span>" +
           (last
             ? '<button type="button" class="big small" id="readDone">I have read it &#10003;</button>'
             : '<button type="button" class="big small" id="readNext">Next page &#9654;</button>') +

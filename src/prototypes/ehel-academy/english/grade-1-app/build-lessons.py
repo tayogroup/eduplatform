@@ -117,6 +117,19 @@ def dictionary_index():
 # ~536. THE FIRST N, never a sample: sentenceAudio pairs with
 # practiceSentences BY INDEX, so slicing from the front keeps clip i under
 # sentence i. Taking any other subset would play the wrong recording.
+# How many questions "Show what you know" asks. Owner, 2026-09-08, raised from
+# the 10 the unit authors to 30.
+#
+# MEASURED BEFORE CHOOSING WHERE THE OTHER 20 COME FROM. Each unit authors 10
+# reviewed quiz questions and 42 game choice rounds - but 14 of those rounds
+# are word for word one of the 10, and the seven choice games repeat each other
+# besides. 28 distinct extras survive per unit, in all ten units, so 30 is
+# reachable from content that already exists and nothing has to be invented.
+#
+# Raising this past 38 would start returning short units: there is no deeper
+# pool, and the next 20 questions would have to be written by somebody.
+QUIZ_TARGET = 30
+
 SENTENCES_SHOWN = 3
 
 # The order a learner walks a unit. Owner, 2026-09-08, matching the shell
@@ -1185,15 +1198,44 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 ["line", "tiles", "check", "clear"])
 
     # ---- 10  the check -----------------------------------------------
+    #         THIRTY QUESTIONS, from the unit's own authored content and
+    #         nothing invented here. The reviewed ten first, then twenty drawn
+    #         from the unit's game pack - see QUIZ_TARGET below for what was
+    #         measured before choosing that.
     quiz = []
+    seen_q = set()
     for q in unit["quizzes"]:
         opts = [o.strip() for o in str(q.get("options") or "").split("|") if o.strip()]
         ok = (q.get("correctAnswer") or "").strip()
         if not opts or ok not in opts:
             continue
+        seen_q.add(str(q["question"]).strip().lower())
         quiz.append({"ask": q["question"],
                      "opts": [{"t": o, "ok": 1 if o == ok else 0} for o in opts],
                      "why": q.get("explanation") or ""})
+
+    # The extras, in a fixed order so two builds of the same content agree.
+    # Skipped: anything already asked above (14 per unit are word-for-word one
+    # of the reviewed ten) and anything the choice games repeat between
+    # themselves. 28 survive in every unit, which is why 30 is reachable.
+    for g in sorted((games or {}).values(), key=lambda x: x["id"]):
+        if len(quiz) >= QUIZ_TARGET:
+            break
+        if g.get("type") != "choice":
+            continue
+        for r in g.get("rounds") or []:
+            if len(quiz) >= QUIZ_TARGET:
+                break
+            ask = str(r.get("prompt") or "").strip()
+            ok = str(r.get("answer") or "").strip()
+            opts = [str(c).strip() for c in (r.get("choices") or []) if str(c).strip()]
+            key = ask.lower()
+            if not ask or not ok or ok not in opts or key in seen_q:
+                continue
+            seen_q.add(key)
+            quiz.append({"ask": ask,
+                         "opts": [{"t": o, "ok": 1 if o == ok else 0} for o in opts],
+                         "why": r.get("explanation") or ""})
     if quiz:
         data["quiz"] = quiz
         i = add("check", "Show what you know", "✅", "I showed what I know",

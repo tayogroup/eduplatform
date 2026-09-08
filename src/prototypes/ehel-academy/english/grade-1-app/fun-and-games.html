@@ -6003,7 +6003,14 @@
   const PRACTISE_BELOW = 90;
 
   function feedbackHtml(result) {
-    if (!result || result.ok === false) {
+    // `ok !== true`, not `ok === false`. An unauthenticated call currently
+    // throws in the browser (the cross-origin redirect to Moodle's login page
+    // carries no CORS headers) and lands on "offline", which is the right
+    // message - but that is the FETCH failing, not this test. If that redirect
+    // ever became readable the reply would be an object with no `ok` at all,
+    // which `=== false` waves through to the "I could not hear any words"
+    // branch: a microphone problem reported for an auth problem.
+    if (!result || result.ok !== true) {
       const code = (result && result.code) || "error";
       if (code === "not-configured") {
         return '<p class="speech-note">The pronunciation check is not switched on yet. '

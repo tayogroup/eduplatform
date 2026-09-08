@@ -101,6 +101,34 @@ def word_pictures(words):
     return json.loads(r.stdout.decode("utf-8"))
 
 
+_GLOSSARY_PICS = None
+
+
+def glossary_pictures():
+    """word -> emoji for the words the Word finder lists.
+
+    The glossary itself is fetched at runtime because it is several hundred KB;
+    this map is 6.1 KB for all 995 words, so it rides in the page - and it has
+    to, because wordPicture() lives in the shell and there is no shell here at
+    runtime.
+
+    Through node, like word_pictures() above and for the same reason: a regex
+    over word-pictures.js mis-read an entry once and cannot see the per-grade
+    overrides at all. Memoised because it is the same 995 words for all ten
+    pages and each call is a node process.
+
+    453 of the 995 have a picture. The rest are abstract words English's map
+    deliberately leaves blank, and the row shows nothing there rather than a
+    placeholder.
+    """
+    global _GLOSSARY_PICS
+    if _GLOSSARY_PICS is None:
+        path = os.path.join(DATA, "sentence-glossary.json")
+        _GLOSSARY_PICS = (word_pictures(list(load_json(path).get("entries", {}).keys()))
+                          if os.path.exists(path) else {})
+    return _GLOSSARY_PICS
+
+
 def dictionary_index():
     d = load_json(os.path.join(DATA, "master-dictionary.grade1.json"))
     by_word = {}
@@ -1603,6 +1631,10 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
             # build_slides has the unit JSON rather than the number.
             "unit": unit["unit"]["unitNo"],
             "grade": 1,
+            # The Word finder's pictures. The glossary is fetched at runtime
+            # (hundreds of KB); this is 6.1 KB and cannot be fetched, because
+            # wordPicture() is a shell function and there is no shell here.
+            "pictures": glossary_pictures(),
             # Reference, not activities - a timetable and a letter to an adult.
             # Unit 10 authors no guide, so that card simply is not offered
             # there, the way the shell drops it from a unit that lacks one.

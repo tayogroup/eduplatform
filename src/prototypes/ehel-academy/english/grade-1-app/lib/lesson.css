@@ -595,3 +595,18 @@
   /* A shelf card the learner has been through - the picture-book shelf and
      the unit's own readings both use it. */
   .bookcard.played { border-color: var(--good); background: var(--good-soft); }
+
+  /* ---- Word finder: the whole entry ---- */
+  .gloxrow { display: flex; gap: 12px; align-items: flex-start; padding: 11px 4px;
+    border-bottom: 1px solid var(--line); }
+  .gloxrow:last-child { border-bottom: 0; }
+  /* Fixed width whether or not there is a picture, so the words stay in a
+     column - 54% of these entries have none, and a ragged left edge makes a
+     list of 80 unreadable. */
+  .gloxpic { flex: 0 0 2.1em; font-size: 27px; line-height: 1.1; text-align: center; }
+  .gloxbody { flex: 1 1 auto; min-width: 0; }
+  .gloxhead { display: flex; align-items: center; gap: 8px; }
+  .gloxhead strong { font-size: 19px; }
+  .gloxdef { margin: 3px 0 0; font-size: 15.5px; line-height: 1.5; color: var(--muted); }
+  .gloxeg { margin: 4px 0 0; font-size: 15px; line-height: 1.5; font-style: italic; }
+  .gloxdef .hear, .gloxeg .hear { vertical-align: middle; margin-left: 6px; }

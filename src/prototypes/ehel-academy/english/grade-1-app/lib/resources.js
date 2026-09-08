@@ -139,6 +139,10 @@
           } catch (_) { glossary = {}; }
         }
         const keys = Object.keys(glossary).sort();
+        /* Baked into the page rather than fetched with the glossary: 6.1 KB
+           against several hundred, and wordPicture() is a shell function this
+           build has no access to at runtime. */
+        const pictures = res.pictures || {};
         const box = p.overlay.querySelector("#gloxr");
         const count = p.overlay.querySelector("#gloxn");
         if (!keys.length) { box.textContent = "The word list could not be loaded just now."; return; }
@@ -154,10 +158,37 @@
           count.textContent = hits.length + " of " + keys.length + " words";
           box.innerHTML = hits.slice(0, 80).map((k) => {
             const e2 = glossary[k] || {};
-            const src = (e2.wordAudio && (e2.wordAudio.source || e2.wordAudio.normal)) || "";
-            return '<div class="wordrow"><button type="button" class="hear" data-say="' + esc(k) +
-              '" data-audio="' + esc(src) + '" aria-label="Hear ' + esc(k) + '">&#128266;</button>' +
-              "<strong>" + esc(k) + "</strong><span>" + esc(e2.definition || "") + "</span></div>";
+            /* A narration is offered where it EXISTS. `available` and a source
+               are both required: a Listen that plays nothing is worse than no
+               Listen, which is the rule the hand-raise button keeps. Every one
+               of the 995 entries satisfies both today, so this is a rule and
+               not a filter - but it is the right way round. */
+            const clipOf = (a) => (a && a.available && (a.source || a.normal)) || "";
+            const wordSrc = clipOf(e2.wordAudio);
+            const meaningSrc = clipOf(e2.definitionAudio);
+            const pic = pictures[k] || "";
+            const hear = (src, text, what) =>
+              '<button type="button" class="hear" data-say="' + esc(text) +
+              '" data-audio="' + esc(src) + '" aria-label="Hear ' + esc(what) + '">&#128266;</button>';
+            return '<div class="gloxrow">' +
+              /* Empty where the word has no picture - 54% of them are abstract,
+                 and English's map shows nothing rather than something wrong. */
+              '<span class="gloxpic" aria-hidden="true">' + esc(pic) + "</span>" +
+              '<div class="gloxbody">' +
+              '<div class="gloxhead"><strong>' + esc(k) + "</strong>" +
+              (wordSrc ? hear(wordSrc, k, k) : "") + "</div>" +
+              (e2.definition
+                ? '<p class="gloxdef">' + esc(e2.definition) +
+                  (meaningSrc ? hear(meaningSrc, e2.definition, "the meaning of " + k) : "") + "</p>"
+                : "") +
+              /* No recorded clip exists for an example, so this one passes NO
+                 source and playClip falls through to say() - the app's own
+                 voice. The button still reaches something, which is the test. */
+              (e2.example
+                ? '<p class="gloxeg">\u201c' + esc(e2.example) + "\u201d" +
+                  hear("", e2.example, "the example for " + k) + "</p>"
+                : "") +
+              "</div></div>";
           }).join("") + (hits.length > 80 ? '<p class="gloxmore">Showing the first 80. Type a bit more.</p>' : "");
         };
         draw("");

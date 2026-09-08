@@ -789,8 +789,23 @@
 
     <!-- 7 tables and the associative shortcut -->
     
+<section class="slide" data-say="The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.">
+      <div class="slide-head"><span class="n">3</span><h2>6s, 7s, 9s and factor pairs</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d6_say6">Every rectangle you can make from a number shows a <b>factor pair</b>. Pick a number to see all of them.</span></div>
+      <div class="stage">
+        <div class="bigbtns" id="d6_nums6"></div>
+        <div class="rects" id="d6_rects6"></div>
+        <div class="working" id="d6_work6"></div>
+        <div class="choices" id="d6_ch6"></div>
+        <p class="fb" id="d6_fb6"></p>
+        <p class="fb small-fb" id="d6_score6"></p>
+      </div>
+    </section>
+
+    <!-- 7 tenths and hundredths -->
+    
 <section class="slide" data-say="Multiplication can be regrouped. Choose the pair that is easy and do that one first.">
-      <div class="slide-head"><span class="n">3</span><h2>Tables, and a shortcut</h2></div>
+      <div class="slide-head"><span class="n">4</span><h2>Tables, and a shortcut</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Every table from 1 to 10 — and a trick: in a chain of multiplications you may <b>regroup</b> and do the easy pair first.</span></div>
       <div class="stage">
         <div class="chips" id="pickTab"></div>
@@ -811,7 +826,7 @@
     <!-- 8 divisibility -->
     
 <section class="slide" data-say="You can tell whether a number divides exactly without doing the division at all. You only have to look at the end of it.">
-      <div class="slide-head"><span class="n">4</span><h2>Does it divide exactly?</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Does it divide exactly?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">You can tell without dividing. Nearly every test only asks you to <b>look at the end</b> of the number.</span></div>
       <div class="stage">
         <div class="bignum" id="num8"></div>
@@ -824,21 +839,6 @@
     </section>
 
     <!-- 9 x10, x100 and rounding -->
-    
-<section class="slide" data-say="The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.">
-      <div class="slide-head"><span class="n">5</span><h2>6s, 7s, 9s and factor pairs</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d6_say6">Every rectangle you can make from a number shows a <b>factor pair</b>. Pick a number to see all of them.</span></div>
-      <div class="stage">
-        <div class="bigbtns" id="d6_nums6"></div>
-        <div class="rects" id="d6_rects6"></div>
-        <div class="working" id="d6_work6"></div>
-        <div class="choices" id="d6_ch6"></div>
-        <p class="fb" id="d6_fb6"></p>
-        <p class="fb small-fb" id="d6_score6"></p>
-      </div>
-    </section>
-
-    <!-- 7 tenths and hundredths -->
     
 <section class="slide" data-say="Show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
@@ -1856,6 +1856,39 @@
   $("new6").addEventListener("click", () => { e6 = newEst(); paint6(); });
   e6 = newEst(); paint6();
 
+  /* ---- 6: factor pairs and the 6, 7, 9 tables ---- */
+  const d6_NUMS6 = [12, 18, 24, 36, 42, 63];
+  let d6_num6 = 24, d6_quiz6 = null, d6_right6 = 0;
+  function d6_factorPairs(n) { const p = []; for (let a = 1; a * a <= n; a++) if (n % a === 0) p.push([a, n / a]); return p; }
+  function d6_paint6() {
+    $("d6_nums6").innerHTML = d6_NUMS6.map((n) => '<button type="button" class="big small ' + (n === d6_num6 ? "teal" : "ghost") + '" data-n="' + n + '">' + n + "</button>").join("");
+    const pairs = d6_factorPairs(d6_num6);
+    $("d6_rects6").innerHTML = pairs.map((p) => '<div><div class="rect" style="grid-template-columns:repeat(' + p[1] + ', 9px)">' + "<i></i>".repeat(d6_num6) + '</div><div class="rectlab">' + p[0] + " × " + p[1] + "</div></div>").join("");
+    lines($("d6_work6"), [
+      { k: "Factor pairs of " + d6_num6, v: pairs.map((p) => p[0] + " × " + p[1]).join(", ") },
+      { k: "Factors", v: [...new Set(pairs.flat())].sort((a, b) => a - b).join(", "), total: true },
+    ]);
+  }
+  $("d6_nums6").addEventListener("click", (e) => { const b = e.target.closest("[data-n]"); if (!b) return; d6_num6 = Number(b.dataset.n); d6_paint6(); say(d6_num6 + " has " + d6_factorPairs(d6_num6).length + " factor pairs"); });
+  function d6_ask6() {
+    const t = [6, 7, 9][rnd(0, 2)], r = rnd(2, 10), kind = d6_right6 % 3;
+    if (kind === 0) d6_quiz6 = { q: r + " × " + t + " = ?", a: r * t, wrong: [r * t + t, r * t - t], say: r + " times " + t };
+    else if (kind === 1) d6_quiz6 = { q: (r * t) + " ÷ " + t + " = ?", a: r, wrong: [r + 1, r - 1 > 0 ? r - 1 : r + 2], say: (r * t) + " divided by " + t };
+    else { const n = d6_NUMS6[rnd(0, 5)], f = [...new Set(d6_factorPairs(n).flat())], nf = [2, 3, 4, 5, 6, 7, 8, 9].filter((x) => n % x !== 0); d6_quiz6 = { q: "Which is a factor of " + n + "?", a: f[rnd(1, f.length - 2)], wrong: shuffle(nf).slice(0, 2), say: "Which is a factor of " + n + "?" }; }
+    $("d6_say6").innerHTML = "<b>" + d6_quiz6.q + "</b> Tap the answer.";
+    $("d6_ch6").innerHTML = shuffle([d6_quiz6.a, ...d6_quiz6.wrong]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("d6_fb6").textContent = ""; $("d6_fb6").className = "fb"; $("d6_score6").textContent = d6_right6 + " of 4 right so far"; say(d6_quiz6.say);
+  }
+  $("d6_ch6").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === d6_quiz6.a;
+    $("d6_ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === d6_quiz6.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else d6_right6++;
+    const n6 = d6_quiz6.q.includes("factor") ? Number(d6_quiz6.q.match(/factor of (\d+)/)[1]) : null;
+    $("d6_fb6").className = "fb " + (ok ? "good" : "bad"); $("d6_fb6").textContent = (ok ? cheer() + " " : "") + (n6 ? d6_quiz6.a + " is a factor of " + n6 + " because " + n6 + " ÷ " + d6_quiz6.a + " = " + (n6 / d6_quiz6.a) + "." : d6_quiz6.q.replace("?", "") + d6_quiz6.a + "."); say((ok ? cheer() + " " : "") + "It is " + d6_quiz6.a);
+    if (d6_right6 >= 4) finish(2, "Tables and factors: well done!"); setTimeout(d6_ask6, 2000);
+  });
+  d6_paint6(); d6_ask6();
+
   /* ---- 7: all ten tables, and the associative property (4Ni.04, 4Ni.03) ---- */
   let tm7 = 0, q7 = null, lock7 = false, right7 = 0, asked7 = 0;
   const CHAINS = [
@@ -1905,7 +1938,7 @@
     $("fb7").innerHTML = (ok ? cheer() + " " : "") + q7.a + " × " + q7.b + " = <b>" + q7.p + "</b>.";
     $("fb7").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : q7.a + " times " + q7.b + " is " + q7.p);
-    if (right7 >= 5) finish(2, "");
+    if (right7 >= 5) finish(3, "");
     setTimeout(() => { q7 = newQ7(); paint7(); }, 1900);
   });
   $("group7").addEventListener("click", (e) => {
@@ -1923,7 +1956,7 @@
     $("fb7").innerHTML = (ok ? cheer() + " " : "") + C.why + " The answer is <b>" + fmt(tot) + "</b>.";
     $("fb7").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : C.why);
-    finish(2, "");
+    finish(3, "");
     ch7 = (ch7 + 1) % CHAINS.length;
     setTimeout(paint7, 2600);
   });
@@ -1961,7 +1994,7 @@
       { k: "Divides exactly by", v: TESTS.filter((t) => n8 % t === 0).map((t) => "<b>" + t + "</b>").join(", ") || "none of these", total: true },
     ]);
     $("task8").textContent = "Tested " + tried8.length + " of " + TESTS.length;
-    if (tried8.length >= TESTS.length) finish(3, "");
+    if (tried8.length >= TESTS.length) finish(4, "");
   }
   $("tests8").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-t]"); if (!b) return;
@@ -1977,39 +2010,6 @@
   });
   $("new8").addEventListener("click", () => { n8 = newN8(); tried8 = []; $("fb8").textContent = ""; $("fb8").className = "fb"; paint8(); });
   n8 = newN8(); paint8();
-
-  /* ---- 6: factor pairs and the 6, 7, 9 tables ---- */
-  const d6_NUMS6 = [12, 18, 24, 36, 42, 63];
-  let d6_num6 = 24, d6_quiz6 = null, d6_right6 = 0;
-  function d6_factorPairs(n) { const p = []; for (let a = 1; a * a <= n; a++) if (n % a === 0) p.push([a, n / a]); return p; }
-  function d6_paint6() {
-    $("d6_nums6").innerHTML = d6_NUMS6.map((n) => '<button type="button" class="big small ' + (n === d6_num6 ? "teal" : "ghost") + '" data-n="' + n + '">' + n + "</button>").join("");
-    const pairs = d6_factorPairs(d6_num6);
-    $("d6_rects6").innerHTML = pairs.map((p) => '<div><div class="rect" style="grid-template-columns:repeat(' + p[1] + ', 9px)">' + "<i></i>".repeat(d6_num6) + '</div><div class="rectlab">' + p[0] + " × " + p[1] + "</div></div>").join("");
-    lines($("d6_work6"), [
-      { k: "Factor pairs of " + d6_num6, v: pairs.map((p) => p[0] + " × " + p[1]).join(", ") },
-      { k: "Factors", v: [...new Set(pairs.flat())].sort((a, b) => a - b).join(", "), total: true },
-    ]);
-  }
-  $("d6_nums6").addEventListener("click", (e) => { const b = e.target.closest("[data-n]"); if (!b) return; d6_num6 = Number(b.dataset.n); d6_paint6(); say(d6_num6 + " has " + d6_factorPairs(d6_num6).length + " factor pairs"); });
-  function d6_ask6() {
-    const t = [6, 7, 9][rnd(0, 2)], r = rnd(2, 10), kind = d6_right6 % 3;
-    if (kind === 0) d6_quiz6 = { q: r + " × " + t + " = ?", a: r * t, wrong: [r * t + t, r * t - t], say: r + " times " + t };
-    else if (kind === 1) d6_quiz6 = { q: (r * t) + " ÷ " + t + " = ?", a: r, wrong: [r + 1, r - 1 > 0 ? r - 1 : r + 2], say: (r * t) + " divided by " + t };
-    else { const n = d6_NUMS6[rnd(0, 5)], f = [...new Set(d6_factorPairs(n).flat())], nf = [2, 3, 4, 5, 6, 7, 8, 9].filter((x) => n % x !== 0); d6_quiz6 = { q: "Which is a factor of " + n + "?", a: f[rnd(1, f.length - 2)], wrong: shuffle(nf).slice(0, 2), say: "Which is a factor of " + n + "?" }; }
-    $("d6_say6").innerHTML = "<b>" + d6_quiz6.q + "</b> Tap the answer.";
-    $("d6_ch6").innerHTML = shuffle([d6_quiz6.a, ...d6_quiz6.wrong]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-    $("d6_fb6").textContent = ""; $("d6_fb6").className = "fb"; $("d6_score6").textContent = d6_right6 + " of 4 right so far"; say(d6_quiz6.say);
-  }
-  $("d6_ch6").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === d6_quiz6.a;
-    $("d6_ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === d6_quiz6.a) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else d6_right6++;
-    const n6 = d6_quiz6.q.includes("factor") ? Number(d6_quiz6.q.match(/factor of (\d+)/)[1]) : null;
-    $("d6_fb6").className = "fb " + (ok ? "good" : "bad"); $("d6_fb6").textContent = (ok ? cheer() + " " : "") + (n6 ? d6_quiz6.a + " is a factor of " + n6 + " because " + n6 + " ÷ " + d6_quiz6.a + " = " + (n6 / d6_quiz6.a) + "." : d6_quiz6.q.replace("?", "") + d6_quiz6.a + "."); say((ok ? cheer() + " " : "") + "It is " + d6_quiz6.a);
-    if (d6_right6 >= 4) finish(4, "Tables and factors: well done!"); setTimeout(d6_ask6, 2000);
-  });
-  d6_paint6(); d6_ask6();
 
   /* ---- 11: check ---- */
   const Q11 = shuffle([
@@ -2050,7 +2050,7 @@
   round11();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [ "🔤", "The shape that hides a number", "🪜", "What comes next?", "\u2716\ufe0f" ];
+  const STICKERS = [ "🔤", "The shape that hides a number", "\u2716\ufe0f", "🪜", "What comes next?" ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

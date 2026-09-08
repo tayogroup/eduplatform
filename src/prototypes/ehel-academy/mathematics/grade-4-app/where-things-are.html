@@ -726,26 +726,8 @@
   <div class="deck" id="deck">
 
     <!-- 1 faces of a solid -->
-    <section class="slide" data-say="Every square of the shape has a partner the same distance on the other side of the mirror line.">
-      <div class="slide-head"><span class="n">1</span><h2>Reflect it in the mirror</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Each square has a partner the <b>same distance</b> on the other side of the mirror line. Tap the squares to build the reflection.</span></div>
-      <div class="stage">
-        <div class="chips" id="pickRef"></div>
-        <svg class="grid8" id="ref4" viewBox="0 0 260 260" role="img" aria-label="A grid with a shape and a mirror line"></svg>
-        <div class="bigbtns">
-          <button type="button" class="big small ghost" id="clear4">Clear</button>
-          <button type="button" class="big small teal" id="show4">Show me</button>
-        </div>
-        <p class="fb" id="fb4"></p>
-        <p class="fb small-fb" id="task4"></p>
-        <div class="askwrap" id="ask1"></div>
-      </div>
-    </section>
-
-    <!-- 5 combining and tessellating -->
-    
-<section class="slide" data-say="North, east, south and west, and the four in between. Follow the instructions and see where you land.">
-      <div class="slide-head"><span class="n">2</span><h2>Which way from here?</h2></div>
+    <section class="slide" data-say="North, east, south and west, and the four in between. Follow the instructions and see where you land.">
+      <div class="slide-head"><span class="n">1</span><h2>Which way from here?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Four <b>cardinal</b> points, and four <b>ordinal</b> ones in between. Follow the instruction and see where you land.</span></div>
       <div class="stage">
         <svg class="grid8" id="map9" viewBox="0 0 260 260" role="img" aria-label="A map grid with a compass"></svg>
@@ -760,7 +742,7 @@
     <!-- 10 check -->
     
 <section class="slide" data-say="Coordinates. Go along the bottom first, then up. Tap the point I ask for.">
-      <div class="slide-head"><span class="n">3</span><h2>Coordinates</h2></div>
+      <div class="slide-head"><span class="n">2</span><h2>Coordinates</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d11_say11">Go <b>along</b> first, then <b>up</b>. Tap the point.</span></div>
       <div class="stage">
         <svg class="coords" id="d11_coords11" viewBox="0 0 260 260" role="img" aria-label="Coordinate grid"></svg>
@@ -770,6 +752,24 @@
     </section>
 
     <!-- 12 check -->
+    
+<section class="slide" data-say="Every square of the shape has a partner the same distance on the other side of the mirror line.">
+      <div class="slide-head"><span class="n">3</span><h2>Reflect it in the mirror</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Each square has a partner the <b>same distance</b> on the other side of the mirror line. Tap the squares to build the reflection.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickRef"></div>
+        <svg class="grid8" id="ref4" viewBox="0 0 260 260" role="img" aria-label="A grid with a shape and a mirror line"></svg>
+        <div class="bigbtns">
+          <button type="button" class="big small ghost" id="clear4">Clear</button>
+          <button type="button" class="big small teal" id="show4">Show me</button>
+        </div>
+        <p class="fb" id="fb4"></p>
+        <p class="fb small-fb" id="task4"></p>
+        <div class="askwrap" id="ask3"></div>
+      </div>
+    </section>
+
+    <!-- 5 combining and tessellating -->
     
 <section class="slide" data-say="Show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
@@ -1657,63 +1657,7 @@
     (marks || []).forEach((m) => { h += '<div class="m" style="left:' + x(m) + '"></div>'; }); el.innerHTML = h;
   }
 
-    /* ---- 4: reflecting in a mirror line (4Gp.03) ---- */
-  const REFS = [
-    { name: "Mirror down the middle", axis: "V", at: 4, cells: [[1, 1], [2, 1], [1, 2], [1, 3], [3, 1]] },
-    { name: "Mirror across", axis: "H", at: 4, cells: [[1, 1], [2, 1], [3, 1], [1, 2], [1, 3]] },
-    { name: "Mirror on the shape's edge", axis: "V", at: 4, cells: [[2, 2], [3, 2], [3, 3], [3, 1], [2, 3]] },
-  ];
-  let r4 = 0, placed4 = [];
-  const G = 8, CELL = 30, PAD = 10;
-  $("pickRef").innerHTML = REFS.map((r, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
-    '" data-i="' + i + '">' + r.name + "</button>").join("");
-  const mirrorOf = (c) => {
-    const R = REFS[r4];
-    return R.axis === "V" ? [2 * R.at - c[0], c[1]] : [c[0], 2 * R.at - c[1]];
-  };
-  function want4() { return REFS[r4].cells.map(mirrorOf); }
-  function paint4() {
-    const R = REFS[r4];
-    let g = "";
-    for (let x = 0; x < G; x++) for (let y = 0; y < G; y++)
-      g += '<rect class="cell" data-x="' + x + '" data-y="' + y + '" x="' + (PAD + x * CELL) + '" y="' + (PAD + y * CELL) +
-        '" width="' + CELL + '" height="' + CELL + '"></rect>';
-    R.cells.forEach((c) => { g += '<rect class="orig" x="' + (PAD + c[0] * CELL) + '" y="' + (PAD + c[1] * CELL) +
-      '" width="' + CELL + '" height="' + CELL + '"></rect>'; });
-    placed4.forEach((c) => { g += '<rect class="mine" x="' + (PAD + c[0] * CELL) + '" y="' + (PAD + c[1] * CELL) +
-      '" width="' + CELL + '" height="' + CELL + '"></rect>'; });
-    g += R.axis === "V"
-      ? '<line class="mir" x1="' + (PAD + R.at * CELL) + '" y1="' + PAD + '" x2="' + (PAD + R.at * CELL) + '" y2="' + (PAD + G * CELL) + '"></line>'
-      : '<line class="mir" x1="' + PAD + '" y1="' + (PAD + R.at * CELL) + '" x2="' + (PAD + G * CELL) + '" y2="' + (PAD + R.at * CELL) + '"></line>';
-    $("ref4").innerHTML = g;
-    const w = want4();
-    const done = w.every((c) => placed4.some((p) => p[0] === c[0] && p[1] === c[1])) && placed4.length === w.length;
-    $("fb4").innerHTML = done ? cheer() + " Every square has landed opposite its partner."
-      : placed4.length + " of " + w.length + " squares placed.";
-    $("fb4").className = "fb " + (done ? "good" : "");
-    $("task4").textContent = R.axis === "V" ? "The mirror runs top to bottom, so left and right swap over."
-      : "The mirror runs left to right, so up and down swap over.";
-    if (done) finish(0, "");
-  }
-  $("ref4").addEventListener("click", (e) => {
-    const c = e.target.closest("rect.cell"); if (!c) return;
-    const x = Number(c.dataset.x), y = Number(c.dataset.y);
-    if (REFS[r4].cells.some((o) => o[0] === x && o[1] === y)) return;
-    const i = placed4.findIndex((p) => p[0] === x && p[1] === y);
-    if (i >= 0) placed4.splice(i, 1); else placed4.push([x, y]);
-    paint4();
-  });
-  $("clear4").addEventListener("click", () => { placed4 = []; paint4(); });
-  $("show4").addEventListener("click", () => { placed4 = want4(); paint4(); say("Each square is the same distance the other side of the line."); });
-  $("pickRef").addEventListener("click", (e) => {
-    const b = e.target.closest("button[data-i]"); if (!b) return;
-    r4 = Number(b.dataset.i); placed4 = [];
-    [...$("pickRef").children].forEach((c, i) => c.classList.toggle("on", i === r4));
-    paint4();
-  });
-  paint4();
-
-  /* ---- 9: position and direction (4Gp.01) ---- */
+    /* ---- 9: position and direction (4Gp.01) ---- */
   const DIRS = { N: [0, -1], NE: [1, -1], E: [1, 0], SE: [1, 1], S: [0, 1], SW: [-1, 1], W: [-1, 0], NW: [-1, -1] };
   const DIRNAME = { N: "north", NE: "north-east", E: "east", SE: "south-east", S: "south", SW: "south-west", W: "west", NW: "north-west" };
   let from9 = [3, 4], to9 = null, right9 = 0, asked9 = 0, lock9 = false;
@@ -1756,7 +1700,7 @@
     $("fb9").innerHTML = (ok ? cheer() + " " : "It was " + DIRNAME[to9.k] + ". ") + "North is up the grid.";
     $("fb9").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : "It was " + DIRNAME[to9.k]);
-    if (right9 >= 3) finish(1, "");
+    if (right9 >= 3) finish(0, "");
     setTimeout(() => { from9 = to9.to.slice(); nextMove(); }, 2400);
   });
   nextMove();
@@ -1782,11 +1726,67 @@
     d11_drawGrid([{ x: d11_target11.x, y: d11_target11.y, cls: "good" }].concat(ok ? [] : [{ x, y, cls: "oops" }]));
     if (ok) d11_right11++;
     $("d11_fb11").className = "fb " + (ok ? "good" : "bad"); $("d11_fb11").textContent = (ok ? cheer() + " " : "You tapped (" + x + ", " + y + "). ") + "(" + d11_target11.x + ", " + d11_target11.y + ") is " + d11_target11.x + " along and " + d11_target11.y + " up."; say((ok ? cheer() : "Not quite.") + " " + d11_target11.x + " along, " + d11_target11.y + " up");
-    if (d11_right11 >= 4) finish(2, "Coordinates: well done!"); setTimeout(d11_ask11, 2200);
+    if (d11_right11 >= 4) finish(1, "Coordinates: well done!"); setTimeout(d11_ask11, 2200);
   }
   $("d11_coords11").addEventListener("click", (e) => d11_pick11(e.target.closest(".pt")));
   $("d11_coords11").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); d11_pick11(e.target.closest(".pt")); } });
   d11_ask11();
+
+  /* ---- 4: reflecting in a mirror line (4Gp.03) ---- */
+  const REFS = [
+    { name: "Mirror down the middle", axis: "V", at: 4, cells: [[1, 1], [2, 1], [1, 2], [1, 3], [3, 1]] },
+    { name: "Mirror across", axis: "H", at: 4, cells: [[1, 1], [2, 1], [3, 1], [1, 2], [1, 3]] },
+    { name: "Mirror on the shape's edge", axis: "V", at: 4, cells: [[2, 2], [3, 2], [3, 3], [3, 1], [2, 3]] },
+  ];
+  let r4 = 0, placed4 = [];
+  const G = 8, CELL = 30, PAD = 10;
+  $("pickRef").innerHTML = REFS.map((r, i) => '<button type="button" class="chip' + (i === 0 ? " on" : "") +
+    '" data-i="' + i + '">' + r.name + "</button>").join("");
+  const mirrorOf = (c) => {
+    const R = REFS[r4];
+    return R.axis === "V" ? [2 * R.at - c[0], c[1]] : [c[0], 2 * R.at - c[1]];
+  };
+  function want4() { return REFS[r4].cells.map(mirrorOf); }
+  function paint4() {
+    const R = REFS[r4];
+    let g = "";
+    for (let x = 0; x < G; x++) for (let y = 0; y < G; y++)
+      g += '<rect class="cell" data-x="' + x + '" data-y="' + y + '" x="' + (PAD + x * CELL) + '" y="' + (PAD + y * CELL) +
+        '" width="' + CELL + '" height="' + CELL + '"></rect>';
+    R.cells.forEach((c) => { g += '<rect class="orig" x="' + (PAD + c[0] * CELL) + '" y="' + (PAD + c[1] * CELL) +
+      '" width="' + CELL + '" height="' + CELL + '"></rect>'; });
+    placed4.forEach((c) => { g += '<rect class="mine" x="' + (PAD + c[0] * CELL) + '" y="' + (PAD + c[1] * CELL) +
+      '" width="' + CELL + '" height="' + CELL + '"></rect>'; });
+    g += R.axis === "V"
+      ? '<line class="mir" x1="' + (PAD + R.at * CELL) + '" y1="' + PAD + '" x2="' + (PAD + R.at * CELL) + '" y2="' + (PAD + G * CELL) + '"></line>'
+      : '<line class="mir" x1="' + PAD + '" y1="' + (PAD + R.at * CELL) + '" x2="' + (PAD + G * CELL) + '" y2="' + (PAD + R.at * CELL) + '"></line>';
+    $("ref4").innerHTML = g;
+    const w = want4();
+    const done = w.every((c) => placed4.some((p) => p[0] === c[0] && p[1] === c[1])) && placed4.length === w.length;
+    $("fb4").innerHTML = done ? cheer() + " Every square has landed opposite its partner."
+      : placed4.length + " of " + w.length + " squares placed.";
+    $("fb4").className = "fb " + (done ? "good" : "");
+    $("task4").textContent = R.axis === "V" ? "The mirror runs top to bottom, so left and right swap over."
+      : "The mirror runs left to right, so up and down swap over.";
+    if (done) finish(2, "");
+  }
+  $("ref4").addEventListener("click", (e) => {
+    const c = e.target.closest("rect.cell"); if (!c) return;
+    const x = Number(c.dataset.x), y = Number(c.dataset.y);
+    if (REFS[r4].cells.some((o) => o[0] === x && o[1] === y)) return;
+    const i = placed4.findIndex((p) => p[0] === x && p[1] === y);
+    if (i >= 0) placed4.splice(i, 1); else placed4.push([x, y]);
+    paint4();
+  });
+  $("clear4").addEventListener("click", () => { placed4 = []; paint4(); });
+  $("show4").addEventListener("click", () => { placed4 = want4(); paint4(); say("Each square is the same distance the other side of the line."); });
+  $("pickRef").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    r4 = Number(b.dataset.i); placed4 = [];
+    [...$("pickRef").children].forEach((c, i) => c.classList.toggle("on", i === r4));
+    paint4();
+  });
+  paint4();
 
   /* ---- 10: check ---- */
   const Q10 = shuffle([
@@ -1824,7 +1824,7 @@
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [ "Fold it up: nets", "🔷", "\U0001f5fa\ufe0f" ];
+  const STICKERS = [ "🔷", "\U0001f5fa\ufe0f", "Fold it up: nets" ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -1838,7 +1838,7 @@
   /* 1 (4Gg.05) counts FACES. Edges and vertices are the distractors because confusing
      the three is the whole difficulty. Curved solids are left out -- "how many faces"
      is not a fair question for a cylinder at this stage. */
-    ask(1, () => {
+    ask(3, () => {
     const mir = rnd(4, 7), d = rnd(1, 3), x = mir - d, img = mir + d;
     const opts = pick3(img, [x, mir, img + 1]);
     return { stem: "The mirror line is at <b>" + mir + "</b>. A dot sits at <b>" + x +

@@ -35,16 +35,27 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-# out-key, title, source, teaching slides to keep (1-based, in the source), quiz items to keep
+# out-key, title, source, ORDERED slide sequence, quiz items to keep
+#
+# The sequence is the teaching order and mixes both origins: an int is a slide of the
+# source file, ("d", n) is Four Digits Strong's slide n. It has to be explicit because
+# appending the donor slides put "Numbers to 10,000" third in Big Numbers, behind two
+# slides that assume it -- a lesson whose foundation arrives after the things built on
+# it. None means "the whole source, in its own order".
 STRUCTURE = [
-    ("bignum", "Big Numbers and Below Zero", "num",   [9, 10],          [8, 9]),
-    ("patterns", "Patterns and Square Numbers", "num", [2, 3, 4, 5],    [2, 3, 4, 5]),
-    ("calc", "Ways to Calculate", "num",              [1, 6, 7, 8],     [1, 6, 7, 10]),
-    ("frac", "Parts of a Whole", "frac",              None,             None),
-    ("time", "Telling the Time", "time",              None,             None),
-    ("shape", "Shape and Measures", "shape",          [1, 2, 3, 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9]),
-    ("where", "Where Things Are", "shape",            [4, 9],           [10]),
-    ("stats", "Asking, Sorting and Chance", "stats",  None,             None),
+    ("bignum", "Big Numbers and Below Zero", "num",
+     [("d", 1), 9, ("d", 2), 10], [8, 9]),
+    ("patterns", "Patterns and Square Numbers", "num",
+     [2, 3, 4, 5], [2, 3, 4, 5]),
+    ("calc", "Ways to Calculate", "num",
+     [1, 6, ("d", 6), 7, 8], [1, 6, 7, 10]),
+    ("frac", "Parts of a Whole", "frac", None, None),
+    ("time", "Telling the Time", "time", None, None),
+    ("shape", "Shape and Measures", "shape",
+     [1, 2, 3, ("d", 10), 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+    ("where", "Where Things Are", "shape",
+     [9, ("d", 11), 4], [10]),
+    ("stats", "Asking, Sorting and Chance", "stats", None, None),
 ]
 
 SRC = {"num": "num", "shape": "shape", "frac": "frac", "time": "time", "stats": "stats"}
@@ -57,32 +68,24 @@ SRC = {"num": "num", "shape": "shape", "frac": "frac", "time": "time", "stats": 
 # answer as a VALUE, while the five write {q, o, a, w} with the answer as an INDEX and
 # an explanation. So these five items are authored here rather than moved.
 #   (donor slide, sticker, quiz item)
-ADDONS = {
-    "bignum": [
-        (1, "\\U0001f522",
+DONOR_EXTRAS = {
+    1: ("\\U0001f522",
          '{ q: "How many hundreds are there in 4,072?", o: ["0", "4", "7"], a: 0,'
          ' w: "The hundreds place holds a 0. The 4 is thousands and the 7 is tens." }'),
-        (2, "\\u2744\\ufe0f",
+    2: ("\\u2744\\ufe0f",
          '{ q: "It is 3\\u00b0C and it gets 5 degrees colder. What is the temperature?",'
          ' o: ["\\u22122\\u00b0C", "2\\u00b0C", "\\u22128\\u00b0C"], a: 0,'
          ' w: "Count back from 3 through zero: 2, 1, 0, \\u22121, \\u22122." }'),
-    ],
-    "calc": [
-        (6, "\\u2716\\ufe0f",
+    6: ("\\u2716\\ufe0f",
          '{ q: "Which of these is a factor pair of 24?", o: ["4 and 6", "5 and 5", "3 and 9"], a: 0,'
          ' w: "4 \\u00d7 6 = 24. A factor pair is two numbers that multiply to give the number." }'),
-    ],
-    "shape": [
-        (10, "\\U0001f4d0",
+    10: ("\\U0001f4d0",
          '{ q: "An angle of 120\\u00b0 is:", o: ["Obtuse", "Acute", "A right angle"], a: 0,'
          ' w: "More than 90\\u00b0 but less than 180\\u00b0 is obtuse. Acute is under 90\\u00b0." }'),
-    ],
-    "where": [
-        (11, "\\U0001f5fa\\ufe0f",
+    11: ("\\U0001f5fa\\ufe0f",
          '{ q: "In the coordinates (3, 5), what does the 3 tell you?",'
          ' o: ["How far along", "How far up", "Which square to shade"], a: 0,'
          ' w: "Go along first, then up. The first number is always the across one." }'),
-    ],
 }
 DONOR_BODY, DONOR_JS = "g4-lesson-body.html", "g4-lesson.js"
 
@@ -206,20 +209,24 @@ def compose(key, title, srckey, keep, keepq):
         keep = list(range(1, n_teach + 1))
     checkno, stickno = n_teach + 1, n_teach + 2
 
-    adds = ADDONS.get(key, [])
-    total = len(keep) + len(adds)
+    seq = keep
+    total = len(seq)
+    newpos = {}          # source slide number -> its position in this lesson
 
-    # ---- body ----
-    out_secs, add_blks = [], []
-    for new, old in enumerate(keep, start=1):
-        s = secs[old - 1]
-        s = re.sub(r'(<span class="n">)\d+(</span>)', r"\g<1>%d\g<2>" % new, s, count=1)
-        s = s.replace('id="ask%d"' % old, 'id="ask%d"' % new)
-        out_secs.append(s)
-    for i, (dno, _st, _q) in enumerate(adds):
-        sec, blk = donor_slide(dno, len(keep) + i + 1)
+    # ---- body and slide js, walked in the ORDERED sequence ----
+    out_secs, slide_blks = [], []
+    for new, item in enumerate(seq, start=1):
+        if isinstance(item, tuple):                      # ("d", n): a donor slide
+            sec, blk = donor_slide(item[1], new)
+        else:
+            newpos[item] = new
+            sec = secs[item - 1]
+            sec = re.sub(r'(<span class="n">)\d+(</span>)', r"\g<1>%d\g<2>" % new, sec, count=1)
+            sec = sec.replace('id="ask%d"' % item, 'id="ask%d"' % new)
+            blk = by[str(item)][0]
+            blk = re.sub(r"\bfinish\(\s*%d\s*," % (item - 1), "finish(%d," % (new - 1), blk)
         out_secs.append(sec)
-        add_blks.append(blk)
+        slide_blks.append(blk)
     for extra, newno in ((checkno, total + 1), (stickno, total + 2)):
         s = secs[extra - 1]
         s = re.sub(r'(<span class="n">)\d+(</span>)', r"\g<1>%d\g<2>" % newno, s, count=1)
@@ -227,30 +234,28 @@ def compose(key, title, srckey, keep, keepq):
     new_body = head + "\n".join(out_secs) + tail
 
     # ---- slides js ----
-    parts = [pre]
-    for new, old in enumerate(keep, start=1):
-        blk = by[str(old)][0]
-        blk = re.sub(r"\bfinish\(\s*%d\s*," % (old - 1), "finish(%d," % (new - 1), blk)
-        parts.append(blk)
-    parts.extend(add_blks)
-    # check block, with its quiz partitioned and the addons' own items appended
+    parts = [pre] + slide_blks
+    # check block, with its quiz partitioned and each donor slide's own item added
     chk = by[str(checkno)][0]
     m, items = quiz_items(chk)
     if keepq is None:
         keepq = list(range(1, len(items) + 1))
-    picked = [items[i - 1] for i in keepq] + [q for _n, _s, q in adds]
+    picked = [items[i - 1] for i in keepq]
+    picked += [DONOR_EXTRAS[d[1]][1] for d in seq if isinstance(d, tuple)]
     chk = chk[: m.start(2)] + "\n    " + ",\n    ".join(picked) + chk[m.end(2):]
     chk = re.sub(r"\bfinish\(\s*%d\s*," % (checkno - 1), "finish(%d," % total, chk)
     parts.append(chk)
-    # stickers, one per teaching slide
+    # stickers, one per teaching slide, in sequence order so they stay parallel to done[]
     stk = by[str(stickno)][0]
     sm = re.search(r"(const STICKERS = \[)(.*?)(\];)", stk, re.S)
     assert sm, "no STICKERS array"
     allst = [s.strip() for s in re.findall(r'"[^"]*"', sm.group(2))]
-    picked_st = [allst[o - 1] for o in keep if o - 1 < len(allst)]
-    while len(picked_st) < len(keep):
-        picked_st.append('"\\u2b50"')
-    picked_st += ['"%s"' % st for _n, st, _q in adds]
+    picked_st = []
+    for item in seq:
+        if isinstance(item, tuple):
+            picked_st.append('"%s"' % DONOR_EXTRAS[item[1]][0])
+        else:
+            picked_st.append(allst[item - 1] if item - 1 < len(allst) else '"\\u2b50"')
     assert len(picked_st) == total, "STICKERS must be parallel to done[]: %d vs %d" % (len(picked_st), total)
     stk = stk[: sm.start(2)] + " " + ", ".join(picked_st) + " " + stk[sm.end(2):]
     stk = re.sub(r"\bfinish\(\s*%d\s*," % (stickno - 1), "finish(%d," % (total + 1), stk)
@@ -268,9 +273,9 @@ def compose(key, title, srckey, keep, keepq):
             if not mm:
                 continue
             old = int(mm.group(1))
-            if old in keep:
-                new = keep.index(old) + 1
-                keptc.append(re.sub(r"ask\(\s*%d\s*," % old, "ask(%d," % new, c, count=1))
+            if old in newpos:            # its slide survived; move the panel with it
+                keptc.append(re.sub(r"ask\(\s*%d\s*," % old,
+                                    "ask(%d," % newpos[old], c, count=1))
         if len(keptc) > 1:
             parts.append("".join(keptc))
     return new_body, "".join(parts)

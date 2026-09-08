@@ -756,38 +756,8 @@
   <div class="deck" id="deck">
 
     <!-- 1 numbers in words -->
-    <section class="slide" data-say="Multiplying by ten does not add a zero. Every digit moves one place to the left.">
-      <div class="slide-head"><span class="n">1</span><h2>Ten times, a hundred times</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Multiplying by 10 does not &ldquo;add a zero&rdquo;. Every <b>digit moves one place</b> to the left, and the zero only fills the gap.</span></div>
-      <div class="stage">
-        <div class="chips" id="pickTen"></div>
-        <div class="pvtable" id="pv9" aria-hidden="true"></div>
-        <div class="working" id="work9"></div>
-        <p class="fb" id="fb9"></p>
-        <p class="fb small-fb" id="task9"></p>
-        <div class="askwrap" id="ask1"></div>
-      </div>
-    </section>
-
-    <!-- 10 negatives in order -->
-    
-<section class="slide" data-say="On the number line, further right always means bigger, even when the numbers are below zero.">
-      <div class="slide-head"><span class="n">2</span><h2>Below zero, in order</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Further <b>right</b> on the line always means <b>bigger</b> — and that keeps working below zero, where &minus;2 is bigger than &minus;9.</span></div>
-      <div class="stage">
-        <div class="numline" id="nl10" aria-hidden="true"></div>
-        <p class="qstem big-eq" id="cmp10"></p>
-        <div class="choices" id="signs10"></div>
-        <div class="working" id="work10"></div>
-        <p class="fb" id="fb10"></p>
-        <p class="fb small-fb" id="task10"></p>
-      </div>
-    </section>
-
-    <!-- 11 check -->
-    
-<section class="slide" data-say="Ten hundreds make a thousand. Build a number with thousands, hundreds, tens and ones.">
-      <div class="slide-head"><span class="n">3</span><h2>Numbers to 10,000</h2></div>
+    <section class="slide" data-say="Ten hundreds make a thousand. Build a number with thousands, hundreds, tens and ones.">
+      <div class="slide-head"><span class="n">1</span><h2>Numbers to 10,000</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d1_say1">Ten hundreds make a <b>thousand</b>, a big cube. Build the number you are asked for.</span></div>
       <div class="stage">
         <div class="blocks" id="d1_blocks1"></div>
@@ -802,8 +772,23 @@
 
     <!-- 2 negative numbers -->
     
+<section class="slide" data-say="Multiplying by ten does not add a zero. Every digit moves one place to the left.">
+      <div class="slide-head"><span class="n">2</span><h2>Ten times, a hundred times</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Multiplying by 10 does not &ldquo;add a zero&rdquo;. Every <b>digit moves one place</b> to the left, and the zero only fills the gap.</span></div>
+      <div class="stage">
+        <div class="chips" id="pickTen"></div>
+        <div class="pvtable" id="pv9" aria-hidden="true"></div>
+        <div class="working" id="work9"></div>
+        <p class="fb" id="fb9"></p>
+        <p class="fb small-fb" id="task9"></p>
+        <div class="askwrap" id="ask2"></div>
+      </div>
+    </section>
+
+    <!-- 10 negatives in order -->
+    
 <section class="slide" data-say="The thermometer goes below zero. Count down through zero into the negative numbers.">
-      <div class="slide-head"><span class="n">4</span><h2>Below zero</h2></div>
+      <div class="slide-head"><span class="n">3</span><h2>Below zero</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d2_say2">Temperatures can go <b>below zero</b>. Count down through 0 into the <b>negative</b> numbers.</span></div>
       <div class="stage">
         <div class="thermo"><div class="scale" id="d2_scale2"></div><div class="tube" id="d2_tube2"><div class="zero" id="d2_zero2"></div><div class="merc" id="d2_merc2"></div></div><div><div class="tempnum" id="d2_temp2"></div><div class="bigbtns" style="flex-direction:column"><button type="button" class="big small" id="d2_warm2">warmer +1</button><button type="button" class="big small teal" id="d2_cold2">colder −1</button></div></div></div>
@@ -813,6 +798,21 @@
     </section>
 
     <!-- 3 rounding -->
+    
+<section class="slide" data-say="On the number line, further right always means bigger, even when the numbers are below zero.">
+      <div class="slide-head"><span class="n">4</span><h2>Below zero, in order</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Further <b>right</b> on the line always means <b>bigger</b> — and that keeps working below zero, where &minus;2 is bigger than &minus;9.</span></div>
+      <div class="stage">
+        <div class="numline" id="nl10" aria-hidden="true"></div>
+        <p class="qstem big-eq" id="cmp10"></p>
+        <div class="choices" id="signs10"></div>
+        <div class="working" id="work10"></div>
+        <p class="fb" id="fb10"></p>
+        <p class="fb small-fb" id="task10"></p>
+      </div>
+    </section>
+
+    <!-- 11 check -->
     
 <section class="slide" data-say="Show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
@@ -1726,6 +1726,21 @@
     return under1000(th) + " thousand" + (r ? (r < 100 ? " and " : " ") + under1000(r) : "");
   }
 
+  /* ---- 1: thousands ---- */
+  let d1_n1 = 2345, d1_finds1 = shuffle([4072, 6805, 1350, 9218, 3007]).slice(0, 3), d1_found1 = 0;
+  function d1_paint1() {
+    const k = Math.floor(d1_n1 / 1000), h = Math.floor((d1_n1 % 1000) / 100), t = Math.floor((d1_n1 % 100) / 10), o = d1_n1 % 10;
+    $("d1_blocks1").innerHTML = '<div class="cubes">' + '<div class="cube"></div>'.repeat(k) + '</div><div class="flats">' + '<div class="flat"></div>'.repeat(h) + '</div><div class="rods">' + '<div class="rod"></div>'.repeat(t) + '</div><div class="units">' + '<div class="unit"></div>'.repeat(o) + "</div>";
+    $("d1_num1").innerHTML = '<span class="k">' + k + '</span>,<span class="h">' + h + '</span><span class="t">' + t + '</span><span class="o">' + o + "</span>";
+    $("d1_word1").textContent = words(d1_n1); $("d1_k1").textContent = k; $("d1_h1").textContent = h; $("d1_t1").textContent = t; $("d1_o1").textContent = o;
+    document.querySelectorAll('#deck [data-d]').forEach((b) => { const d = Number(b.dataset.d); b.disabled = d1_n1 + d < 1000 || d1_n1 + d > 9999; });
+    if (d1_found1 < 3 && d1_n1 === d1_finds1[d1_found1]) { d1_found1++; $("d1_fb1").className = "fb good"; $("d1_fb1").textContent = cheer() + " " + fmt(d1_n1) + " = " + [k * 1000, h * 100, t * 10, o].filter(Boolean).map(fmt).join(" + ") + "."; say(cheer() + " " + words(d1_n1)); if (d1_found1 === 3) finish(0, "You built all three numbers!"); }
+    else { $("d1_fb1").className = "fb"; $("d1_fb1").textContent = ""; }
+    $("d1_find1").textContent = d1_found1 < 3 ? "Build " + fmt(d1_finds1[d1_found1]) + "." : "You built all three!";
+  }
+  document.querySelectorAll('#deck [data-d]').forEach((b) => b.addEventListener("click", () => { d1_n1 += Number(b.dataset.d); d1_paint1(); say(words(d1_n1)); }));
+  d1_paint1();
+
   /* ---- 9: multiplying and dividing by 10 and 100, and rounding (4Np.02, 4Np.05) ---- */
   const OPS9 = [["× 10", 10, 1], ["× 100", 100, 1], ["÷ 10", 10, -1], ["÷ 100", 100, -1]];
   let o9 = 0, base9 = 3406;
@@ -1758,7 +1773,7 @@
     ]);
     $("fb9").innerHTML = fmt(base9) + " " + O[0] + " = <b>" + (exact ? fmt(result) : result) + "</b>.";
     $("task9").textContent = "The zero is not added — it fills the empty place the digits left behind.";
-    if (o9 > 0) finish(0, "");
+    if (o9 > 0) finish(1, "");
   }
   $("pickTen").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-i]"); if (!b) return;
@@ -1767,6 +1782,27 @@
     paint9(); say($("fb9").textContent);
   });
   paint9();
+
+  /* ---- 2: negative numbers ---- */
+  let d2_temp2 = 3, d2_tasks2 = [{ from: 3, to: -2 }, { from: -4, to: 1 }, { from: 2, to: -5 }], d2_ti2 = 0;
+  const d2_T_MIN = -10, d2_T_MAX = 10;
+  $("d2_scale2").innerHTML = Array.from({ length: 11 }, (_, i) => { const v = d2_T_MAX - i * 2; return '<span class="' + (v === 0 ? "z" : v < 0 ? "neg" : "") + '" style="top:' + ((d2_T_MAX - v) / (d2_T_MAX - d2_T_MIN) * 100) + '%">' + (v > 0 ? "" : "") + v + "°</span>"; }).join("");
+  $("d2_zero2").style.top = ((d2_T_MAX - 0) / (d2_T_MAX - d2_T_MIN) * 100) + "%";
+  function d2_paint2() {
+    const pct = (d2_temp2 - d2_T_MIN) / (d2_T_MAX - d2_T_MIN) * 100;
+    $("d2_merc2").style.height = pct + "%"; $("d2_merc2").className = "merc" + (d2_temp2 < 0 ? " cold" : "");
+    $("d2_temp2").textContent = (d2_temp2 < 0 ? "−" + (-d2_temp2) : String(d2_temp2)) + "°C"; $("d2_temp2").className = "tempnum " + (d2_temp2 < 0 ? "neg" : "pos");
+    $("d2_warm2").disabled = d2_temp2 >= d2_T_MAX; $("d2_cold2").disabled = d2_temp2 <= d2_T_MIN;
+    const T = d2_tasks2[d2_ti2];
+    if (T) {
+      $("d2_task2").textContent = "It is " + sg(T.from) + "°C. It gets " + (T.to < T.from ? (T.from - T.to) + " degrees colder" : (T.to - T.from) + " degrees warmer") + ". Press until you get there.";
+      if (d2_temp2 === T.to) { $("d2_fb2").className = "fb good"; $("d2_fb2").textContent = cheer() + " " + sg(T.from) + "°C " + (T.to < T.from ? "− " + (T.from - T.to) : "+ " + (T.to - T.from)) + " = " + sg(T.to) + "°C" + (T.to < 0 && T.from > 0 ? ". You went down through zero." : T.to > 0 && T.from < 0 ? ". You came up through zero." : "."); say(cheer() + " " + T.to + " degrees"); d2_ti2++; if (d2_ti2 >= d2_tasks2.length) finish(2, "You can count below zero!"); else setTimeout(() => { d2_temp2 = d2_tasks2[d2_ti2].from; $("d2_fb2").textContent = ""; d2_paint2(); say(d2_tasks2[d2_ti2].from + " degrees. " + $("d2_task2").textContent); }, 2200); }
+      else { $("d2_fb2").className = "fb"; $("d2_fb2").textContent = d2_temp2 < 0 ? "Below zero: minus " + (-d2_temp2) : d2_temp2 === 0 ? "Zero, the line between" : ""; }
+    } else { $("d2_task2").textContent = "All three done."; }
+  }
+  $("d2_warm2").addEventListener("click", () => { if (d2_temp2 < d2_T_MAX) { d2_temp2++; d2_paint2(); say(d2_temp2 < 0 ? "minus " + (-d2_temp2) : String(d2_temp2)); } });
+  $("d2_cold2").addEventListener("click", () => { if (d2_temp2 > d2_T_MIN) { d2_temp2--; d2_paint2(); say(d2_temp2 < 0 ? "minus " + (-d2_temp2) : String(d2_temp2)); } });
+  d2_paint2();
 
   /* ---- 10: comparing and ordering, including negatives (4Np.04) ---- */
   const PAIRS10 = shuffle([[-9, -2], [-5, 3], [0, -4], [-7, -7], [6, -6], [-1, -10], [-3, 0], [8, -8]]);
@@ -1779,7 +1815,7 @@
       $("cmp10").textContent = "That is all of them.";
       $("signs10").innerHTML = "";
       $("task10").textContent = right10 + " of " + PAIRS10.length + " right.";
-      if (right10 >= 6) finish(1, "");
+      if (right10 >= 6) finish(3, "");
       return;
     }
     const [A, B] = PAIRS10[c10];
@@ -1823,42 +1859,6 @@
   });
   paint10();
 
-  /* ---- 1: thousands ---- */
-  let d1_n1 = 2345, d1_finds1 = shuffle([4072, 6805, 1350, 9218, 3007]).slice(0, 3), d1_found1 = 0;
-  function d1_paint1() {
-    const k = Math.floor(d1_n1 / 1000), h = Math.floor((d1_n1 % 1000) / 100), t = Math.floor((d1_n1 % 100) / 10), o = d1_n1 % 10;
-    $("d1_blocks1").innerHTML = '<div class="cubes">' + '<div class="cube"></div>'.repeat(k) + '</div><div class="flats">' + '<div class="flat"></div>'.repeat(h) + '</div><div class="rods">' + '<div class="rod"></div>'.repeat(t) + '</div><div class="units">' + '<div class="unit"></div>'.repeat(o) + "</div>";
-    $("d1_num1").innerHTML = '<span class="k">' + k + '</span>,<span class="h">' + h + '</span><span class="t">' + t + '</span><span class="o">' + o + "</span>";
-    $("d1_word1").textContent = words(d1_n1); $("d1_k1").textContent = k; $("d1_h1").textContent = h; $("d1_t1").textContent = t; $("d1_o1").textContent = o;
-    document.querySelectorAll('#deck [data-d]').forEach((b) => { const d = Number(b.dataset.d); b.disabled = d1_n1 + d < 1000 || d1_n1 + d > 9999; });
-    if (d1_found1 < 3 && d1_n1 === d1_finds1[d1_found1]) { d1_found1++; $("d1_fb1").className = "fb good"; $("d1_fb1").textContent = cheer() + " " + fmt(d1_n1) + " = " + [k * 1000, h * 100, t * 10, o].filter(Boolean).map(fmt).join(" + ") + "."; say(cheer() + " " + words(d1_n1)); if (d1_found1 === 3) finish(2, "You built all three numbers!"); }
-    else { $("d1_fb1").className = "fb"; $("d1_fb1").textContent = ""; }
-    $("d1_find1").textContent = d1_found1 < 3 ? "Build " + fmt(d1_finds1[d1_found1]) + "." : "You built all three!";
-  }
-  document.querySelectorAll('#deck [data-d]').forEach((b) => b.addEventListener("click", () => { d1_n1 += Number(b.dataset.d); d1_paint1(); say(words(d1_n1)); }));
-  d1_paint1();
-
-  /* ---- 2: negative numbers ---- */
-  let d2_temp2 = 3, d2_tasks2 = [{ from: 3, to: -2 }, { from: -4, to: 1 }, { from: 2, to: -5 }], d2_ti2 = 0;
-  const d2_T_MIN = -10, d2_T_MAX = 10;
-  $("d2_scale2").innerHTML = Array.from({ length: 11 }, (_, i) => { const v = d2_T_MAX - i * 2; return '<span class="' + (v === 0 ? "z" : v < 0 ? "neg" : "") + '" style="top:' + ((d2_T_MAX - v) / (d2_T_MAX - d2_T_MIN) * 100) + '%">' + (v > 0 ? "" : "") + v + "°</span>"; }).join("");
-  $("d2_zero2").style.top = ((d2_T_MAX - 0) / (d2_T_MAX - d2_T_MIN) * 100) + "%";
-  function d2_paint2() {
-    const pct = (d2_temp2 - d2_T_MIN) / (d2_T_MAX - d2_T_MIN) * 100;
-    $("d2_merc2").style.height = pct + "%"; $("d2_merc2").className = "merc" + (d2_temp2 < 0 ? " cold" : "");
-    $("d2_temp2").textContent = (d2_temp2 < 0 ? "−" + (-d2_temp2) : String(d2_temp2)) + "°C"; $("d2_temp2").className = "tempnum " + (d2_temp2 < 0 ? "neg" : "pos");
-    $("d2_warm2").disabled = d2_temp2 >= d2_T_MAX; $("d2_cold2").disabled = d2_temp2 <= d2_T_MIN;
-    const T = d2_tasks2[d2_ti2];
-    if (T) {
-      $("d2_task2").textContent = "It is " + sg(T.from) + "°C. It gets " + (T.to < T.from ? (T.from - T.to) + " degrees colder" : (T.to - T.from) + " degrees warmer") + ". Press until you get there.";
-      if (d2_temp2 === T.to) { $("d2_fb2").className = "fb good"; $("d2_fb2").textContent = cheer() + " " + sg(T.from) + "°C " + (T.to < T.from ? "− " + (T.from - T.to) : "+ " + (T.to - T.from)) + " = " + sg(T.to) + "°C" + (T.to < 0 && T.from > 0 ? ". You went down through zero." : T.to > 0 && T.from < 0 ? ". You came up through zero." : "."); say(cheer() + " " + T.to + " degrees"); d2_ti2++; if (d2_ti2 >= d2_tasks2.length) finish(3, "You can count below zero!"); else setTimeout(() => { d2_temp2 = d2_tasks2[d2_ti2].from; $("d2_fb2").textContent = ""; d2_paint2(); say(d2_tasks2[d2_ti2].from + " degrees. " + $("d2_task2").textContent); }, 2200); }
-      else { $("d2_fb2").className = "fb"; $("d2_fb2").textContent = d2_temp2 < 0 ? "Below zero: minus " + (-d2_temp2) : d2_temp2 === 0 ? "Zero, the line between" : ""; }
-    } else { $("d2_task2").textContent = "All three done."; }
-  }
-  $("d2_warm2").addEventListener("click", () => { if (d2_temp2 < d2_T_MAX) { d2_temp2++; d2_paint2(); say(d2_temp2 < 0 ? "minus " + (-d2_temp2) : String(d2_temp2)); } });
-  $("d2_cold2").addEventListener("click", () => { if (d2_temp2 > d2_T_MIN) { d2_temp2--; d2_paint2(); say(d2_temp2 < 0 ? "minus " + (-d2_temp2) : String(d2_temp2)); } });
-  d2_paint2();
-
   /* ---- 11: check ---- */
   const Q11 = shuffle([
     { q: "What is 3,406 × 100?", o: ["340,600", "34,060", "3,406,00"], a: 0, w: "Every digit moves two places left, and two zeros fill the empty places." },
@@ -1897,7 +1897,7 @@
   round11();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [ "🟦", "Numbers that make squares", "\U0001f522", "\u2744\ufe0f" ];
+  const STICKERS = [ "\U0001f522", "🟦", "\u2744\ufe0f", "Numbers that make squares" ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -1909,7 +1909,7 @@
 
   /* 1 (4Ni.01) reads a number FROM ITS NAME -- the place-value trap is which
      column the lone digit sits in, so the distractors are the same digit misplaced. */
-    ask(1, () => {
+    ask(2, () => {
     if (rnd(0, 1) === 0) {
       const base = rnd(12, 987), by = rnd(0, 1) === 1 ? 10 : 100, n = base * by;
       const opts = shuffle([n, base * (by === 10 ? 100 : 10), base]);

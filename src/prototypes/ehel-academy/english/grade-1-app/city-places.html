@@ -537,6 +537,49 @@
     .book-caption { font-size: 18.5px; padding: 14px 16px; line-height: 1.6; margin-top: 14px; }
   }
 
+  /* ---- student resources: the drawer ---- */
+  .res-stage { width: 100%; max-width: 760px; max-height: 100%; overflow-y: auto; padding: 4px 2px 10px; }
+  .wordgroup { margin-bottom: 18px; }
+  .wordgroup h4 { margin: 0 0 8px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); }
+  .wordrow { display: grid; grid-template-columns: 42px 7em 1fr; gap: 10px; align-items: baseline;
+    padding: 9px 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); margin-bottom: 6px; }
+  .wordrow strong { font-size: 19px; }
+  .wordrow span { color: var(--muted); font-size: 15.5px; }
+  .wordrow .hear { align-self: center; }
+  .gloxq { width: 100%; padding: 13px 16px; border-radius: 14px; border: 3px solid var(--teal);
+    background: var(--card); color: var(--ink); font-family: inherit; font-size: 19px; margin-bottom: 12px; }
+  .gloxmore { color: var(--muted); font-size: 14px; text-align: center; }
+
+  /* ---- how to write it ---- */
+  .hw { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  /* 40 words is a lot of tabs; give them their own scroll rather than
+     pushing the writing off the screen. */
+  .hwpick { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center;
+    max-height: 22vh; overflow-y: auto; padding: 2px; }
+  .hwtab { padding: 6px 14px; border-radius: 999px; border: 2px solid var(--line); background: var(--card);
+    color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
+  .hwtab.on { border-color: var(--teal); background: var(--teal); color: var(--accent-ink, #06222f); }
+  .hwstage { width: 100%; max-width: 640px; border-radius: 18px; padding: 10px 6px;
+    background: radial-gradient(120% 120% at 50% 0%, #fffdf6, #f7efdc);
+    display: flex; justify-content: center; }
+  /* Height-first, not width-first. The word frame is nearly square, so a
+     width:100% svg in a 640px box is 580px tall and runs off the bottom of
+     the overlay - which is what it did. Bounding the HEIGHT and letting the
+     width follow keeps the whole word on screen at any viewport. */
+  .hwsvg { max-height: 34vh; max-width: 100%; width: auto; height: auto; display: block; }
+  .hwl { stroke: #c8b997; stroke-width: 1.6; }
+  .hwl.base { stroke: #8a99a4; stroke-width: 2.4; }
+  .hws { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 9; }
+  .hws.body { stroke: #17384a; }
+  .hws.join { stroke: #7fb0c4; stroke-width: 6; }
+  .hws.mark { stroke: var(--bad, #d4553f); }
+  .hwsay { min-height: 1.5em; color: var(--muted); font-size: 17px; text-align: center; margin: 0; }
+  @media (max-width: 560px) {
+    .wordrow { grid-template-columns: 38px 1fr; }
+    .wordrow span { grid-column: 2; }
+  }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -836,6 +879,16 @@
         <p class="score" id="score17"></p>
       </div>
     </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is your drawer. Nothing in here is a step to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to look a word up.</s><s>Open the plan to see what comes next.</s><s>Print a sheet if you want to write with a pencil.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come here whenever you like.</s><s>Nothing here can be got wrong.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what is in here.</s></mstts:express-as>' data-say="Your word lists, your plans, and a pencil and paper.">
+      <div class="slide-head"><span class="n">18</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask18">Your word lists, your plans, and a pencil and paper.</span></div>
+      <div class="stage">
+        <div id="stage18"></div>
+        <div class="choices" id="ch18"></div>
+        <p class="fb" id="fb18"></p>
+        <p class="score" id="score18"></p>
+      </div>
+    </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
       <div class="slide-head"><span class="n">&#9733;</span><h2>My stickers</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span>Every step you finished earned a sticker.</span></div>
@@ -884,8 +937,8 @@
         "Write a sentence · Let us talk",
         "Games · The unit story",
         "What happened in the story? · Things to do",
-        "Fluency Practice",
-        "Show what you know",
+        "Fluency Practice · Show what you know",
+        "Student resources",
         "Look back over the whole unit before you move on."
       ]
     },
@@ -3982,6 +4035,94 @@
         "reference": "Please help me."
       }
     ],
+    "resources": {
+      "words": [
+        {
+          "title": "Phonics: blends",
+          "words": [
+            {
+              "w": "flag",
+              "meaning": "A flag is a piece of cloth with a pattern that stands for a country.",
+              "audio": "./media/audio/grade-1/dictionary/flag.mp3",
+              "pic": "🏳️"
+            },
+            {
+              "w": "swim",
+              "meaning": "Swim means to move through water using your arms and legs.",
+              "audio": "./media/audio/grade-1/dictionary/swim.mp3",
+              "pic": "🏊🏾"
+            },
+            {
+              "w": "stop",
+              "meaning": "To finish moving and stay still in one place.",
+              "audio": "./media/audio/grade-1/dictionary/stop.mp3",
+              "pic": "🛑"
+            },
+            {
+              "w": "step",
+              "meaning": "A step is one movement of your foot when you walk.",
+              "audio": "./media/audio/grade-1/dictionary/step.mp3",
+              "pic": "👣"
+            },
+            {
+              "w": "drum",
+              "meaning": "A drum is a musical instrument you hit to make a beat.",
+              "audio": "./media/audio/grade-1/dictionary/drum.mp3",
+              "pic": "🥁"
+            },
+            {
+              "w": "tent",
+              "meaning": "A tent is a shelter made of cloth that you sleep in outside.",
+              "audio": "./media/audio/grade-1/dictionary/tent.mp3",
+              "pic": "⛺"
+            },
+            {
+              "w": "nest",
+              "meaning": "A little home birds make from sticks for their eggs.",
+              "audio": "./media/audio/grade-1/dictionary/nest.mp3",
+              "pic": "🪹"
+            },
+            {
+              "w": "sand",
+              "meaning": "Sand is tiny bits of rock you find on a beach.",
+              "audio": "./media/audio/grade-1/dictionary/sand.mp3",
+              "pic": "🏜️"
+            }
+          ]
+        },
+        {
+          "title": "Words: describing and daily life",
+          "words": [
+            {
+              "w": "drink",
+              "meaning": "To take water or milk into your mouth and swallow.",
+              "audio": "./media/audio/grade-1/dictionary/drink.mp3",
+              "pic": "🥤"
+            },
+            {
+              "w": "eat",
+              "meaning": "To put food in your mouth and swallow it.",
+              "audio": "./media/audio/grade-1/dictionary/eat.mp3",
+              "pic": "🍽️"
+            },
+            {
+              "w": "bad",
+              "meaning": "Bad means not good.",
+              "audio": "./media/audio/grade-1/dictionary/bad.mp3",
+              "pic": ""
+            },
+            {
+              "w": "cold",
+              "meaning": "Something cold feels chilly, like ice or snow.",
+              "audio": "./media/audio/grade-1/dictionary/cold.mp3",
+              "pic": "🥶"
+            }
+          ]
+        }
+      ],
+      "unit": 9,
+      "grade": 1
+    },
     "audioRelease": "20260903c",
     "unitNo": 9,
     "unitTitle": "City Places"
@@ -6802,7 +6943,530 @@
   }
 
 
-  const STICKERS = [["📅", "I read the plan"], ["🎬", "I watched the lesson"], ["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["📖", "I read the unit story"], ["🤔", "I answered the story questions"], ["✋", "I did the activities"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"]];
+  // The cursive stroke alphabet — the pen's PATH through each letter, not the
+  // letter's outline.
+  //
+  // This exists because a font cannot drive a handwriting animation. A glyph in
+  // Edu NSW ACT Cursive (the face the printed worksheet uses) is a filled contour,
+  // so stroking it and animating stroke-dashoffset traces the letter's EDGE: up one
+  // side, back down the other, with the dot of an i as a separate closed ring. It
+  // renders as a hollow double-walled letter and looks nothing like writing. There
+  // is no centreline in a font to recover, so the centrelines are authored here.
+  //
+  // FRAME. One letter is authored in the same proportions the worksheet prints, so
+  // the animation and the paper agree:
+  //
+  //     y=0    ascender line
+  //     y=87   midline (top of the x-height)
+  //     y=187  baseline          <- every letter enters and most exit here
+  //     y=274  descender line
+  //
+  // x-height is 100 units, and 87/187/274 are 1.01em/0.54em/0.47em from
+  // CURSIVE_ASCENDER/X_HEIGHT/DESCENDER in english.js scaled to it. Keep them in
+  // step: those three were measured off the shipped woff2 and are what put the
+  // printed model on its rules.
+  //
+  // JOINS. A letter's path starts at its entry point and ends at its exit point,
+  // and the composer draws a connector between one letter's exit and the next
+  // letter's entry — which is what makes the writing continuous. Most letters exit
+  // on the baseline. The four BRIDGE letters (b, o, v, w) exit at the midline, the
+  // way continuous cursive actually works, so `exitY` is per letter and the
+  // connector is generic rather than four special cases.
+  //
+  // Every path is one continuous pen stroke unless the letter genuinely needs the
+  // pen lifted — i and j (the dot), t and x (the cross). Those are `marks`, drawn
+  // after the body and numbered separately, because "lift the pen here" is the
+  // thing a learner most needs told.
+  
+  const CURSIVE_FRAME = { asc: 0, mid: 87, base: 187, desc: 274, xHeight: 100 };
+  
+  // The slant of the printed face, applied to a whole word rather than baked into
+  // each letter — authoring upright keeps the paths readable and lets the slant be
+  // tuned in one place against the real font.
+  const CURSIVE_SLANT = -6;
+  
+  // w        advance width, entry of the next letter = this letter's entry + w
+  // exitY    where the pen leaves; the connector starts here
+  // d        the body stroke, starting at the entry point (0, 187)
+  // marks    strokes drawn after a pen lift, in order
+  // say      what the learner is told, imperative and in order of the strokes
+  const L = (w, exitY, d, say, marks = []) => ({ w, exitY, d, say, marks });
+  
+  const CURSIVE_LETTERS = {
+    a: L(95, 187,
+      "M0,187 C8,158 26,104 50,90 C28,86 14,112 14,140 C14,168 30,187 50,187 C64,187 72,172 72,145 L72,187 C79,187 88,176 95,162",
+      "Up to the top, round the oval to the left, back to the line, straight down, then flick up."),
+    b: L(92, 87,
+      "M0,187 C6,150 14,60 22,4 C26,40 24,120 24,150 C30,130 44,120 56,124 C70,129 74,150 66,166 C58,182 38,190 24,178 C36,176 60,150 92,110",
+      "Tall stroke up, back down, round the bump to the right, then join high."),
+    c: L(88, 187,
+      "M0,187 C8,158 26,104 52,90 C30,84 14,112 14,140 C14,168 30,187 50,187 C66,187 78,178 88,164",
+      "Up to the top, round to the left, all the way down and stop with a flick."),
+    d: L(95, 187,
+      "M0,187 C8,158 26,104 50,90 C28,86 14,112 14,140 C14,168 30,187 50,187 C64,187 72,172 72,145 C72,110 74,50 78,4 C74,60 72,140 72,187 C79,187 88,176 95,162",
+      "Round the oval first, then a tall stroke up, back down and flick up."),
+    e: L(85, 187,
+      "M0,187 C14,172 30,142 42,110 C26,104 14,122 14,148 C14,170 30,187 50,187 C64,187 76,178 85,164",
+      "A small loop to the right, round to the left, down to the line and flick."),
+    f: L(90, 187,
+      "M0,187 C10,150 20,60 28,10 C32,40 26,120 22,180 C18,225 12,262 0,268 C-8,262 -4,232 22,206 C40,190 60,190 90,164",
+      "Tall stroke up, straight down below the line, loop back to the left and out."),
+    g: L(95, 187,
+      "M0,187 C8,158 26,104 50,90 C28,86 14,112 14,140 C14,168 30,187 50,187 C64,187 72,172 72,145 C72,190 74,240 70,262 C62,278 40,278 30,264 C26,254 32,244 44,244",
+      "Round the oval, straight down past the line, then a loop back to the left."),
+    h: L(92, 187,
+      "M0,187 C6,150 14,60 22,4 C26,40 24,120 24,150 C32,126 46,116 58,122 C70,128 72,148 72,170 L72,187 C79,187 86,178 92,166",
+      "Tall stroke up, back down, over the bridge and down, then flick up."),
+    i: L(70, 187,
+      "M0,187 C10,160 24,110 34,90 C34,120 34,160 34,180 C40,187 52,182 70,164",
+      "Up to the middle, straight down, then flick up.",
+      [{ d: "M34,64 l0.01,0", say: "Lift the pen and dot it." }]),
+    j: L(70, 187,
+      "M0,187 C10,160 24,110 34,90 C34,130 34,200 32,240 C28,266 14,278 2,270 C-4,262 2,250 16,250",
+      "Up to the middle, straight down past the line, then loop to the left.",
+      [{ d: "M34,64 l0.01,0", say: "Lift the pen and dot it." }]),
+    // One continuous stroke. The first draft hid two pen lifts inside this path —
+    // the arm and the leg each started with their own M — so the animation would
+    // have shown the pen jumping without saying so, which is the one thing a
+    // handwriting demo must never do silently. A lift belongs in `marks`, where it
+    // is numbered and narrated; k does not need one.
+    k: L(92, 187,
+      "M0,187 C6,150 14,60 22,4 C26,40 24,110 24,140 C42,128 58,116 70,104 C56,112 44,124 38,138 C48,152 60,170 72,182 C80,187 88,180 92,166",
+      "Tall stroke up and back down, out to the top corner, back in, then down and flick."),
+    l: L(78, 187,
+      "M0,187 C6,150 16,60 26,4 C30,40 28,130 28,170 C30,182 40,187 52,187 C62,187 70,178 78,166",
+      "One tall stroke up, straight back down, then flick up."),
+    m: L(120, 187,
+      "M0,187 C8,164 18,130 26,120 C26,140 26,170 26,187 C26,160 32,128 44,120 C54,126 54,158 54,187 C54,160 60,128 72,120 C84,126 84,160 84,187 C90,187 104,180 120,164",
+      "Up and over, down, over again, down, and over once more, then flick up."),
+    n: L(96, 187,
+      "M0,187 C8,164 18,130 26,120 C26,140 26,170 26,187 C26,160 32,128 44,120 C56,126 58,158 58,187 C66,187 80,180 96,164",
+      "Up and over, straight down, over again, down, then flick up."),
+    o: L(88, 87,
+      "M0,187 C8,158 26,104 52,90 C30,84 14,112 14,140 C14,168 30,187 50,187 C66,187 76,170 76,142 C76,120 70,102 54,92 C64,96 74,100 88,96",
+      "Up to the top, round to the left and all the way back up, then join high."),
+    p: L(92, 187,
+      "M0,187 C8,164 18,130 26,120 C24,160 22,230 20,268 C22,230 24,190 26,160 C34,132 50,116 64,124 C76,131 78,152 68,168 C58,183 38,186 26,176 C40,180 66,176 92,164",
+      "Up and straight down below the line, back up, round the bump, then out."),
+    q: L(95, 187,
+      "M0,187 C8,158 26,104 50,90 C28,86 14,112 14,140 C14,168 30,187 50,187 C64,187 72,172 72,145 C72,190 72,240 72,262 C78,272 88,268 95,258",
+      "Round the oval, straight down past the line, then a small flick to the right."),
+    r: L(84, 187,
+      "M0,187 C8,164 20,132 28,122 C28,140 26,166 26,187 C26,156 34,130 46,122 C56,118 62,124 62,134 C68,128 74,126 84,128",
+      "Up and over, a small shoulder, then across to join."),
+    s: L(80, 187,
+      "M0,187 C10,162 26,110 44,92 C26,96 20,120 30,136 C40,152 52,162 48,176 C44,186 30,190 18,182 C30,184 56,176 80,164",
+      "Up to the top, back down in a curve, then a small tail to the right."),
+    t: L(80, 187,
+      "M0,187 C8,158 18,90 26,40 C28,80 26,150 26,172 C30,184 42,188 54,186 C64,184 72,176 80,164",
+      "A tall stroke up, straight down, then flick up.",
+      [{ d: "M6,74 L48,70", say: "Lift the pen and cross it." }]),
+    u: L(96, 187,
+      "M0,187 C8,160 20,128 28,120 C28,150 26,176 34,183 C44,189 54,172 58,150 C60,132 60,124 62,120 C62,150 62,176 62,187 C70,187 82,180 96,164",
+      "Up, down and round the dip, up again, down, then flick up."),
+    v: L(90, 87,
+      "M0,187 C8,160 20,128 28,120 C30,148 36,172 46,182 C56,172 62,146 66,120 C68,140 68,160 74,168 C80,172 84,168 90,150",
+      "Up, down to the point, up again, then a small hook to join high."),
+    w: L(112, 87,
+      "M0,187 C8,160 20,128 28,120 C30,148 36,172 46,182 C54,172 58,146 60,120 C62,148 68,172 78,182 C86,172 90,146 92,120 C94,142 96,160 102,168 C108,172 110,166 112,150",
+      "Up, down, up, down, up — then a small hook to join high."),
+    x: L(86, 187,
+      "M0,187 C8,164 20,132 28,122 C34,140 44,166 56,182 C64,188 74,182 86,166",
+      "Up and over, then down in a curve to the line.",
+      [{ d: "M78,116 C64,134 46,160 34,180", say: "Lift the pen and cross it the other way." }]),
+    y: L(96, 187,
+      "M0,187 C8,160 20,128 28,120 C28,150 26,176 34,183 C44,189 54,172 58,150 C60,132 60,124 62,120 C62,160 60,220 56,252 C50,274 34,280 22,272 C16,266 20,256 32,254",
+      "Up, down and round the dip, up, then straight down and loop to the left."),
+    z: L(92, 187,
+      "M0,187 C8,164 20,134 28,124 C28,140 26,152 26,158 C40,148 56,138 70,130 C60,150 48,172 40,186 C44,192 56,196 68,240 C64,262 48,272 34,266 C28,262 30,252 42,250",
+      "Up and over, across to the right, back down to the line, then a loop below."),
+  };
+  
+  // The apostrophe is not a letter and does not join. It hangs from the ascender
+  // line and the pen lifts on both sides, so it is its own entry rather than a
+  // `mark` on the letter before it — 13 of the Grade 1-2 glossary words need it
+  // ("didn't", "wasn't") and treating it as a mark would attach it to whatever
+  // letter happened to precede it.
+  const CURSIVE_APOSTROPHE = { w: 30, exitY: 187, d: "", say: "Lift the pen and make a comma up high.", marks: [{ d: "M14,20 C16,32 14,42 8,50", say: "Add the apostrophe." }] };
+  
+  const cursiveGlyph = (ch) => (ch === "'" || ch === "’" ? CURSIVE_APOSTROPHE : CURSIVE_LETTERS[ch] || null);
+  
+  // Asks whether the word can be written AS SPELLED, so it must not lower-case
+  // first. It used to, which made every word writable — "POV" (Grade 5 Unit 9, the
+  // only capitalised word in the whole glossary) came back writable and would have
+  // animated as a joined lowercase "pov", teaching the opposite of how an acronym
+  // is written. Capitals are printed, not joined, and this alphabet has none; a
+  // word carrying one belongs in the caller's skipped list, named.
+  const cursiveCanWrite = (word) => {
+    const chars = [...String(word)];
+    return chars.length > 0 && chars.every((ch) => cursiveGlyph(ch));
+  };
+  
+  // ── composing a word ─────────────────────────────────────────────────────────
+  // Letters are placed left to right and a CONNECTOR is drawn from where the pen
+  // left the last letter to where it starts the next. The connector is a real
+  // stroke, not a cosmetic seam: it is what the pen actually does, it animates in
+  // sequence with everything else, and it is what makes b/o/v/w — which leave the
+  // pen up at the midline — join downward into the next letter instead of teleporting.
+  //
+  // JOIN_GAP gives the connector somewhere to go. Without it the next letter starts
+  // at exactly the x the last one ended at, so the connector is a vertical tick and
+  // the join reads as a stutter rather than a stroke.
+  const JOIN_GAP = 10;
+  
+  // Where a stroke ends, measured from the path rather than declared beside it. An
+  // authored `exitY` drifts the moment a path is retouched — and it did: every
+  // letter declared 187 while its flick actually finished around 162.
+  function pathEnd(d) {
+    const numbers = d.match(/-?\d+(?:\.\d+)?/g);
+    if (!numbers || numbers.length < 2) return null;
+    return { x: Number(numbers[numbers.length - 2]), y: Number(numbers[numbers.length - 1]) };
+  }
+  
+  const connector = (from, to) => {
+    const dx = Math.max(6, to.x - from.x);
+    return `M${from.x.toFixed(1)},${from.y.toFixed(1)} C${(from.x + dx * 0.45).toFixed(1)},${(from.y + (to.y - from.y) * 0.25).toFixed(1)} `
+      + `${(to.x - dx * 0.35).toFixed(1)},${(to.y - 14).toFixed(1)} ${to.x.toFixed(1)},${to.y.toFixed(1)}`;
+  };
+  
+  // A letter that leaves the pen above this line has "exited high" — b, o, v and w.
+  const HIGH_EXIT = 150;
+  
+  // Every letter is authored with a lead-in rising from the baseline, which is right
+  // when the pen is ON the baseline and wrong when it is not. After a bridge letter
+  // the pen is already up at the midline, so drawing the lead-in anyway sent it down
+  // to the baseline and straight back up: "wore" came out with a spurious loop
+  // between the w and the o. Joining from a high exit therefore drops the lead-in and
+  // starts the letter at the top of its first curve, which is what the hand does.
+  //
+  // The lead-in is always the first curve of the path, so this is a split rather
+  // than a second set of 26 authored variants.
+  function trimLeadIn(d) {
+    const match = d.match(/^M\s*-?[\d.]+\s*,\s*-?[\d.]+\s*C\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s+(-?[\d.]+)\s*,\s*(-?[\d.]+)\s+(-?[\d.]+)\s*,\s*(-?[\d.]+)([\s\S]*)$/);
+    if (!match) return null;
+    return { d: `M${match[5]},${match[6]}${match[7]}`, start: { x: Number(match[5]), y: Number(match[6]) } };
+  }
+  
+  // Returns the strokes in the order the pen makes them. `kind` drives how each is
+  // presented: a body stroke is the letter, a join is the travel between letters,
+  // and a mark is what the learner does AFTER lifting the pen.
+  function cursiveWord(word) {
+    const chars = [...String(word).toLowerCase()];
+    if (!chars.length || chars.some((ch) => !cursiveGlyph(ch))) return null;
+    const strokes = [];
+    let x = 0;
+    let pen = null;
+    chars.forEach((ch, index) => {
+      const glyph = cursiveGlyph(ch);
+      let body = glyph.d;
+      let start = { x, y: CURSIVE_FRAME.base };
+      if (pen && glyph.d && pen.y < HIGH_EXIT) {
+        const trimmed = trimLeadIn(glyph.d);
+        if (trimmed) { body = trimmed.d; start = { x: x + trimmed.start.x, y: trimmed.start.y }; }
+      }
+      if (pen && body) strokes.push({ kind: "join", ch, index, dx: 0, d: connector(pen, start) });
+      if (body) {
+        strokes.push({ kind: "body", ch, index, dx: x, d: body, say: glyph.say });
+        const end = pathEnd(body);
+        pen = end ? { x: end.x + x, y: end.y } : start;
+      }
+      for (const mark of glyph.marks) strokes.push({ kind: "mark", ch, index, dx: x, d: mark.d, say: mark.say });
+      x += glyph.w + JOIN_GAP;
+    });
+    return { word: String(word), strokes, width: x - JOIN_GAP, frame: CURSIVE_FRAME };
+  }
+
+
+  /* ==================================================================
+     STUDENT RESOURCES - the drawer, not a step.
+
+     Five things, every one of which the shell course already offers from
+     its own Student resources page (english.js :: studentResourceCards).
+     That page was read before any of this was built, on the owner's
+     instruction, and the wording, the grouping and the "none of this is a
+     step you have to finish" framing come from it.
+
+       Core words        this unit's words, their meanings and a voice
+       Glossary          995 Grade 1 words, searchable, each with a voice
+       Unit study plan   jumps to the plan step, which is step 1
+       Grade study plan  the year, on the hub
+       How to write it   the pen writing each word, stroke by stroke
+       Handwriting sheet the same words on ruled lines, to print
+
+     NOTHING HERE COMPLETES ANYTHING. It is marked done on being opened,
+     because a drawer you have to finish is not a drawer - the same reason
+     the plan step ticks on being read.
+     ================================================================== */
+  function studentResources(o) {
+    const el = o.el;
+    const res = o.res || {};
+    const DEV = ["localhost", "127.0.0.1"].includes(location.hostname);
+
+    /* The glossary is NOT baked into the page: 995 entries with definitions
+       and audio paths would be several hundred KB in each of ten pages. It
+       ships on the content tier already, so it is fetched when the drawer is
+       opened - and the two trees are laid out differently, which is the same
+       dev/production split clip() makes for audio one file up. */
+    const GLOSSARY_URL = DEV
+      ? "../grade-1/data/sentence-glossary.json"
+      : "../../../content/english/g01/sentence-glossary.json";
+    let glossary = null;
+
+    const CARDS = [
+      { id: "words", icon: "\u{1F524}", title: "Core words", blurb: "Every new word in this unit, what it means, and a voice to listen to." },
+      { id: "glossary", icon: "\u{1F50E}", title: "Word finder", blurb: "Look up any word Grade 1 teaches, from any unit." },
+      { id: "plan", icon: "\u{1F4C5}", title: "The plan for this unit", blurb: "Which weeks this unit runs, and what to do each day." },
+      { id: "gradeplan", icon: "\u{1F5FA}", title: "The whole year", blurb: "All ten units and where each one falls in the terms." },
+      { id: "write", icon: "\u{270D}", title: "How to write it", blurb: "Watch the pen write each word, and see where to start." },
+      { id: "sheet", icon: "\u{1F5A8}", title: "Handwriting sheet", blurb: "This unit's words on handwriting lines. Trace each one, then write it yourself." },
+    ];
+
+    function drawShelf() {
+      $(el.ask).innerHTML = o.ask || "Your word lists, your plans, and a pencil and paper.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="shelf" id="' + el.res + '">' + CARDS.map((c) =>
+        '<div class="bookcard"><span class="bookicon" aria-hidden="true">' + c.icon + "</span>" +
+        '<span class="booktitle">' + esc(c.title) + "</span>" +
+        '<span class="bookmeta">' + esc(c.blurb) + "</span>" +
+        '<button type="button" class="big small teal" data-res="' + c.id + '">Open ▶</button></div>').join("") + "</div>";
+      $(el.score).textContent = CARDS.length + " things for you";
+      $(el.res).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-res]");
+        if (b) open(b.dataset.res);
+      });
+    }
+
+    /* One overlay shape for all of them, the same chrome the book reader and
+       the reading reader use, so the drawer does not look like a third thing. */
+    function panel(title, bodyHtml, footHtml) {
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader res-reader";
+      overlay.innerHTML =
+        '<div class="book-reader-top"><span class="booktitle">' + esc(title) + "</span>" +
+        '<button type="button" class="book-close" aria-label="Close">&#10005;</button></div>' +
+        '<div class="book-stage-wrap"><div class="res-stage">' + bodyHtml + "</div></div>" +
+        '<div class="book-reader-bottom">' + (footHtml || "") + "</div>";
+      document.body.appendChild(overlay);
+      const close = () => { try { VOICE.stop(); } catch (_) { /* nothing */ } overlay.remove(); document.removeEventListener("keydown", onKey); };
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+      overlay.querySelector(".book-close").addEventListener("click", close);
+      return { overlay, close };
+    }
+
+    function wordRows(groups) {
+      return groups.map((g) =>
+        '<section class="wordgroup"><h4>' + esc(g.title) + "</h4>" +
+        g.words.map((w) =>
+          '<div class="wordrow"><button type="button" class="hear" data-say="' + esc(w.w) +
+          '" data-audio="' + esc(w.audio || "") + '" aria-label="Hear ' + esc(w.w) + '">&#128266;</button>' +
+          '<strong>' + esc(w.w) + "</strong>" +
+          (w.meaning ? "<span>" + esc(w.meaning) + "</span>" : "") + "</div>").join("") +
+        "</section>").join("");
+    }
+
+    function wireHear(root) {
+      root.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-say]");
+        if (b) playClip(b.dataset.audio, b.dataset.say);
+      });
+    }
+
+    async function open(id) {
+      if (id === "plan") { finish(o.finish, o.done); show(0, true); return; }
+      if (id === "gradeplan") { location.href = "index.html" + location.search; return; }
+
+      if (id === "words") {
+        const total = (res.words || []).reduce((a, g) => a + g.words.length, 0);
+        const p = panel("Core words", '<div class="wordlist">' + wordRows(res.words || []) + "</div>",
+          '<span class="book-page-count">' + total + " words in this unit</span>");
+        wireHear(p.overlay);
+        finish(o.finish, o.done);
+        return;
+      }
+
+      if (id === "glossary") {
+        const p = panel("Word finder",
+          '<div class="glossary"><input type="search" id="gloxq" class="gloxq" placeholder="Type a word…" '
+          + 'autocomplete="off" aria-label="Search the word list"><div id="gloxr" class="gloxr">Loading the word list…</div></div>',
+          '<span class="book-page-count" id="gloxn"></span>');
+        finish(o.finish, o.done);
+        if (!glossary) {
+          try {
+            const r = await fetch(GLOSSARY_URL);
+            glossary = r.ok ? (await r.json()).entries || {} : {};
+          } catch (_) { glossary = {}; }
+        }
+        const keys = Object.keys(glossary).sort();
+        const box = p.overlay.querySelector("#gloxr");
+        const count = p.overlay.querySelector("#gloxn");
+        if (!keys.length) { box.textContent = "The word list could not be loaded just now."; return; }
+        const draw = (q) => {
+          const term = String(q || "").trim().toLowerCase();
+          // Words that START with what was typed first, then words that
+          // merely contain it - a five-year-old typing "ca" wants "cat"
+          // before "because".
+          const hits = term
+            ? keys.filter((k) => k.toLowerCase().startsWith(term)).concat(
+                keys.filter((k) => !k.toLowerCase().startsWith(term) && k.toLowerCase().includes(term)))
+            : keys;
+          count.textContent = hits.length + " of " + keys.length + " words";
+          box.innerHTML = hits.slice(0, 80).map((k) => {
+            const e2 = glossary[k] || {};
+            const src = (e2.wordAudio && (e2.wordAudio.source || e2.wordAudio.normal)) || "";
+            return '<div class="wordrow"><button type="button" class="hear" data-say="' + esc(k) +
+              '" data-audio="' + esc(src) + '" aria-label="Hear ' + esc(k) + '">&#128266;</button>' +
+              "<strong>" + esc(k) + "</strong><span>" + esc(e2.definition || "") + "</span></div>";
+          }).join("") + (hits.length > 80 ? '<p class="gloxmore">Showing the first 80. Type a bit more.</p>' : "");
+        };
+        draw("");
+        wireHear(box);
+        const q = p.overlay.querySelector("#gloxq");
+        q.addEventListener("input", () => draw(q.value));
+        q.focus();
+        return;
+      }
+
+      if (id === "write") { openHandwriting(); return; }
+      if (id === "sheet") { printSheet(); return; }
+    }
+
+    /* ---- How to write it -------------------------------------------
+       The pen path, stroke by stroke, from the SAME alphabet the shell
+       course animates (cursive-strokes.js, inlined by the builder rather
+       than copied). A body stroke is the letter, a join is the travel
+       between letters, and a mark is what the hand does after lifting the
+       pen - so the three are drawn in that order and named that way.
+
+       cursiveCanWrite asks about the word AS SPELLED, so anything this
+       alphabet cannot join is listed as skipped rather than animated into
+       something it is not. */
+    function openHandwriting() {
+      const all = (res.words || []).flatMap((g) => g.words.map((w) => w.w));
+      const writable = all.filter((w) => cursiveCanWrite(String(w).toLowerCase()));
+      const skipped = all.length - writable.length;
+      if (!writable.length) return;
+      let at = 0;
+      const p = panel("How to write it",
+        '<div class="hw"><div class="hwpick" id="hwpick"></div>'
+        + '<div class="hwstage" id="hwstage"></div><p class="hwsay" id="hwsay"></p></div>',
+        '<button type="button" class="big small teal" id="hwplay">✎ Write it</button>'
+        + '<span class="book-page-count">' + writable.length + " word" + (writable.length === 1 ? "" : "s")
+        + (skipped ? " · " + skipped + " not joined" : "") + "</span>");
+      finish(o.finish, o.done);
+      const pick = p.overlay.querySelector("#hwpick");
+      const stage = p.overlay.querySelector("#hwstage");
+      const saying = p.overlay.querySelector("#hwsay");
+      let timers = [];
+
+      function stop() { timers.forEach(clearTimeout); timers = []; }
+
+      function paintPicker() {
+        pick.innerHTML = writable.map((w, k) =>
+          '<button type="button" class="hwtab' + (k === at ? " on" : "") + '" data-w="' + k + '">' + esc(w) + "</button>").join("");
+      }
+
+      function draw(animate) {
+        stop();
+        const model = cursiveWord(String(writable[at]).toLowerCase());
+        if (!model) return;
+        const f = model.frame;
+        const padX = 30, padY = 24;
+        const w = model.width + padX * 2, h = (f.desc - f.asc) + padY * 2;
+        const line = (y, cls) => '<line class="' + cls + '" x1="0" y1="' + (y + padY) + '" x2="' + w + '" y2="' + (y + padY) + '"/>';
+        stage.innerHTML =
+          '<svg viewBox="0 0 ' + w + " " + h + '" class="hwsvg" role="img" aria-label="How to write ' + esc(writable[at]) + '">' +
+          line(f.asc, "hwl faint") + line(f.mid, "hwl faint") + line(f.base, "hwl base") + line(f.desc, "hwl faint") +
+          model.strokes.map((st, i) =>
+            '<path class="hws ' + st.kind + '" data-i="' + i + '" d="' + st.d +
+            '" transform="translate(' + (st.dx + padX) + "," + padY + ')"/>').join("") +
+          "</svg>";
+        const paths = [...stage.querySelectorAll(".hws")];
+        paths.forEach((el2) => {
+          const len = el2.getTotalLength ? el2.getTotalLength() : 0;
+          el2.style.strokeDasharray = len;
+          el2.style.strokeDashoffset = animate ? len : 0;
+        });
+        saying.textContent = animate ? "" : "Press Write it to watch the pen.";
+        if (!animate) return;
+        let t = 0;
+        paths.forEach((el2, i) => {
+          const st = model.strokes[i];
+          const len = el2.getTotalLength ? el2.getTotalLength() : 0;
+          // A join is the pen travelling, so it goes quickly; a body stroke is
+          // the letter and is worth watching.
+          const ms = st.kind === "join" ? 220 : Math.max(420, len * 3.2);
+          timers.push(setTimeout(() => {
+            el2.style.transition = "stroke-dashoffset " + ms + "ms linear";
+            el2.style.strokeDashoffset = 0;
+            if (st.say) { saying.textContent = st.say; say(st.say); }
+          }, t));
+          t += ms + (st.kind === "join" ? 40 : 160);
+        });
+        timers.push(setTimeout(() => { saying.textContent = "That is " + writable[at] + "."; }, t + 120));
+      }
+
+      pick.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-w]");
+        if (!b) return;
+        at = Number(b.dataset.w); paintPicker(); draw(false);
+      });
+      p.overlay.querySelector("#hwplay").addEventListener("click", () => draw(true));
+      paintPicker();
+      draw(false);
+    }
+
+    /* ---- the handwriting sheet -------------------------------------
+       Print, not download: the sheet exists to be written on with a pencil.
+       The cursive face is the one the shell self-hosts - the CSS generic
+       `cursive` is Comic Sans on Windows, which is unjoined print, so
+       shipping the font is what makes this a handwriting sheet at all. */
+    function printSheet() {
+      /* NEVER EMIT A CLOSING STYLE TAG WHOLE, ANYWHERE IN THIS FILE - not in a
+         string, and not in a comment either. lesson-app-tools'
+         wire-navigation.py and add-header-bars.py both splice their CSS at the
+         LAST occurrence of one in the built page, so a whole one down here is
+         the last one, and their stylesheet lands inside this JavaScript.
+         Both mistakes were made in turn: first in the printed markup below,
+         then in the comment explaining the first. Every one of the ten pages
+         failed to parse, and only parsing the BUILT pages caught it. */
+      const words = (res.words || []).flatMap((g) => g.words.map((x) => x.w))
+        .filter((w) => cursiveCanWrite(String(w).toLowerCase()));
+      if (!words.length) return;
+      const font = new URL("../../shared/fonts/EduNSWACTFoundation-normal-400-700.woff2", location.href).href;
+      const rows = words.map((w) =>
+        '<div class="row"><div class="lines"><span class="trace">' + esc(w) + " " + esc(w) + "</span></div>"
+        + '<div class="lines empty"></div></div>').join("");
+      const win = window.open("", "_blank");
+      if (!win) return;
+      win.document.write('<!doctype html><meta charset="utf-8"><title>Handwriting - Unit '
+        + res.unit + "</title><sty" + "le>"
+        + '@font-face{font-family:"Ehel Cursive";src:url("' + font + '") format("woff2");font-weight:400 700;font-display:swap}'
+        + "@page{size:A4 portrait;margin:14mm}"
+        + 'body{font-family:"Inter",system-ui,sans-serif;color:#12232e;margin:0}'
+        + "h1{font-size:19pt;margin:0 0 2mm}p.sub{margin:0 0 7mm;color:#5b6b76;font-size:10.5pt}"
+        + ".row{break-inside:avoid;margin:0 0 7mm}"
+        + ".lines{height:15mm;border-bottom:1.1pt solid #3b4a55;border-top:.6pt dashed #b9c4cc;"
+        + "position:relative;margin-bottom:2.5mm}"
+        + ".lines::before{content:'';position:absolute;left:0;right:0;top:50%;border-top:.6pt dashed #cfd8de}"
+        + '.trace{font-family:"Ehel Cursive","Ehel Cursive",cursive;font-size:34pt;color:#b9c4cc;'
+        + "position:absolute;left:2mm;bottom:0;line-height:1;letter-spacing:.06em}"
+        + ".lines.empty{border-top-style:dashed}"
+        + "</sty" + "le><h1>Handwriting · Unit " + res.unit + "</h1>"
+        + '<p class="sub">Trace the grey words, then write each one yourself on the line underneath.</p>'
+        + rows);
+      win.document.close();
+      finish(o.finish, o.done);
+      // Give the face a moment to load, or the trace row prints in a fallback
+      // that is not joined - which is the one thing this sheet is for.
+      setTimeout(() => { try { win.focus(); win.print(); } catch (_) { /* the user can print it */ } }, 700);
+    }
+
+    drawShelf();
+  }
+
+
+  const STICKERS = [["📅", "I read the plan"], ["🎬", "I watched the lesson"], ["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["📖", "I read the unit story"], ["🤔", "I answered the story questions"], ["✋", "I did the activities"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"], ["🎒", "I used my resources"]];
 
   unitPlan({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", plan: "plan1" }, plan: LESSON.plan, finish: 0,
     done: "You know what this unit looks like now." });
@@ -6844,6 +7508,8 @@
     label: "Question", done: "That is this unit's words and patterns practised." });
   sequence({ el: { ask: "ask17", say: "ask17", stage: "stage17", ch: "ch17", fb: "fb17", score: "score17" }, items: LESSON.quiz, finish: 16,
     label: "Question", done: "That is the whole unit finished." });
+  studentResources({ el: { ask: "ask18", say: "ask18", stage: "stage18", ch: "ch18", fb: "fb18", score: "score18", res: "res18" }, res: LESSON.resources, plan: LESSON.plan,
+    finish: 17, done: "That is your drawer." });
 
   show(0, false);
 

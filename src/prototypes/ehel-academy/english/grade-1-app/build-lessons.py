@@ -183,6 +183,11 @@ STEP_ORDER = [
     "activities",
     "fluency",
     "check",
+    # Last, and deliberately AFTER the quiz: none of it is a step to finish.
+    # It is the drawer a learner opens when they want the word list, the
+    # plan, or a pencil and paper - the same role Student resources plays in
+    # the shell course.
+    "resources",
 ]
 
 
@@ -528,6 +533,21 @@ def activity_steps(text):
         end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
         items.append(text[m.end():end].strip())
     return lead, [x for x in items if x]
+
+
+def cursive_module():
+    """shell/subjects/cursive-strokes.js, inlined with its exports stripped.
+
+    THE REAL FILE, not a copy. It is 232 lines of stroke data and path maths
+    and it touches no DOM at all, so the only thing standing between it and
+    this build's IIFE is the `export` keyword. Stripping that at build time
+    keeps one source: a retouched letter reaches the standalone pages on the
+    next build, and there is no second alphabet to drift.
+    """
+    path = os.path.join(SHELL, "cursive-strokes.js")
+    src = io.open(path, encoding="utf-8").read()
+    src = re.sub(r"^export\s+", "", src, flags=re.M)
+    return "  " + src.replace("\n", "\n  ").rstrip() + "\n"
 
 
 def load_games(unit_no):
@@ -1413,6 +1433,53 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 (),
                 note=REVIEW_NOTE)
 
+    # ---- Student resources -----------------------------------------------
+    #         The drawer, not a step. Five things, all of which the shell
+    #         course already offers from its own Student resources page
+    #         (english.js :: studentResourceCards) - checked before building
+    #         any of it, on the owner's instruction.
+    #
+    #         The core-words list is built here because the page already holds
+    #         the unit's words and their meanings; the glossary is FETCHED at
+    #         open time, because 995 entries with definitions and audio paths
+    #         would be several hundred kilobytes in every one of ten pages.
+    words_list = []
+    for group in cw_unit["groups"]:
+        entries = []
+        for w in group["words"]:
+            # word_obj() above already resolves this correctly, and my own
+            # lookup did not: the dictionary entry carries `canonicalMeaning`
+            # and an audio OBJECT, not `childMeaning` and a string, so every
+            # word came out with a blank meaning and no clip. The unit's own
+            # dictionaryLinks carry the kid-facing wording, which is what
+            # word_obj prefers.
+            o = word_obj(w)
+            entries.append({"w": o["w"], "meaning": o["meaning"], "audio": o["audio"], "pic": o.get("pic", "")})
+        if entries:
+            words_list.append({"title": group.get("title") or "Words", "words": entries})
+
+    if words_list:
+        data["resources"] = {
+            "words": words_list,
+            # Only the words this alphabet can actually join. cursiveCanWrite
+            # asks about the word AS SPELLED, so a capital or a digit drops out
+            # rather than being animated as something it is not.
+            # build_slides has the unit JSON rather than the number.
+            "unit": unit["unit"]["unitNo"],
+            "grade": 1,
+        }
+        i = add("resources", "Student resources", "\U0001F392", "I used my resources",
+                "Your word lists, your plans, and a pencil and paper.",
+                explain(
+                    ["This is your drawer. Nothing in here is a step to finish."],
+                    ["Open the word list to look a word up.",
+                     "Open the plan to see what comes next.",
+                     "Print a sheet if you want to write with a pencil."],
+                    ["Come here whenever you like.",
+                     "Nothing here can be got wrong."],
+                    ["Have a look at what is in here."]),
+                ["res"])
+
     emit_in_order()
     # The day-by-day lines are written LAST, because they list the unit's own
     # steps and those are only settled once emit_in_order has placed them. The
@@ -1502,6 +1569,10 @@ PAGE = """<meta charset="utf-8">
 
 %(speech)s
 
+%(cursive)s
+
+%(resources)s
+
   const STICKERS = %(stickers)s;
 
 %(bootstrap)s
@@ -1576,6 +1647,9 @@ def bootstrap(slides, data):
             out.append('  buildSentence({ el: %s, ask: LESSON.write.ask, tiles: LESSON.write.tiles,\n'
                        '    answer: LESSON.write.answer, finish: %d,\n'
                        '    done: "That is a real sentence, written by you." });' % (el, i))
+        elif k == "resources":
+            out.append('  studentResources({ el: %s, res: LESSON.resources, plan: LESSON.plan,\n'
+                       '    finish: %d, done: "That is your drawer." });' % (el, i))
         elif k == "check":
             out.append('  sequence({ el: %s, items: LESSON.quiz, finish: %d,\n'
                        '    label: "Question", done: "That is the whole unit finished." });' % (el, i))
@@ -1608,7 +1682,7 @@ def bootstrap(slides, data):
 
 
 def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games_js,
-          speech_js, ebooks, book_sets, lectures, schedule, release):
+          speech_js, resources_js, ebooks, book_sets, lectures, schedule, release):
     entry = next(u for u in manifest["units"] if u["number"] == unit_no)
     unit = load_json(os.path.join(DATA, "units", "unit-%d.json" % unit_no))
     cw_unit = next(u for u in cw["units"] if u["unitNo"] == unit_no)
@@ -1683,6 +1757,7 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
         "data": json.dumps(data, ensure_ascii=False, indent=2).replace("\n", "\n  "),
         "voice": voice, "deck": deck, "english": english, "books": books_js,
         "games": games_js, "speech": speech_js,
+        "cursive": cursive_module(), "resources": resources_js,
         "stickers": json.dumps(stickers, ensure_ascii=False),
         "bootstrap": bootstrap(slides, data),
     }
@@ -1707,6 +1782,7 @@ def main():
     books_js = io.open(os.path.join(LIB, "books.js"), encoding="utf-8").read()
     games_js = io.open(os.path.join(LIB, "games.js"), encoding="utf-8").read()
     speech_js = io.open(os.path.join(LIB, "speech.js"), encoding="utf-8").read()
+    resources_js = io.open(os.path.join(LIB, "resources.js"), encoding="utf-8").read()
     ebooks = ebook_catalog()
     book_sets = book_comprehension_sets()
     lectures = lecture_media()
@@ -1714,7 +1790,8 @@ def main():
     units = wanted or [u["number"] for u in manifest["units"]]
     print("\n  Building Grade 1 English lessons  (audio stamp %s)\n" % release)
     schedule = unit_schedule(manifest)
-    built = [build(n, manifest, cw, dic, css, voice, deck, english, books_js, games_js, speech_js, ebooks,
+    built = [build(n, manifest, cw, dic, css, voice, deck, english, books_js, games_js, speech_js,
+                   resources_js, ebooks,
                    book_sets, lectures, schedule, release) for n in units]
     print("\n  %d page(s). Now run the shared pipeline - see the docstring.\n" % len(built))
 

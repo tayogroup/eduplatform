@@ -273,8 +273,28 @@ $pboardlive = live_code($pboard);
 $pliblive = live_code($plib);
 $pdatalive = live_code($pdata);
 check('the parent rail links to it',
-    strpos($dash, '/local/hubredirect/parent_board.php') !== false
-        && strpos($dash, 'Parent board') !== false);
+    preg_match('~pqh-gnav__label">Parent board<~', $dash) === 1
+        && strpos($dash, '/local/hubredirect/parent_board.php') !== false);
+// AND the body, because a rail entry is one route and the owner asked for the
+// card too. Both are asserted separately: with a single "does the path appear"
+// check, deleting either one leaves the other and the gate still passes —
+// presence standing in for position, which is the fault this file's own
+// mutations have found eight times.
+// Both halves of the card, and the BUTTON by its own shape rather than by
+// counting how often the path appears. Counting survived a mutation that broke
+// the href and left the heading: a card headed "Parent board" with nothing to
+// click reads as the board being broken, and the count could not tell.
+check('  and the parent dashboard body carries a card for it',
+    preg_match('~<h3>Parent board</h3>~', $dash) === 1
+// The WHOLE anchor, never its prefix: see the note above the mutation list.
+        && substr_count($dash, '<a class="pqh-btn" href="<?php echo (new moodle_url(\'/local/hubredirect/parent_board.php\', $pqhpageparams))->out(false); ?>">Open parent board</a>') === 1);
+// .pqh-quick{display:none!important} — the TEACHER's body link to the group
+// board lives in that grid and renders invisibly. Copying its shape for the
+// parent would produce a card nobody can click, and nothing but opening the
+// page would say so. The parent's card must be an ordinary pqh-card.
+check('  as a VISIBLE pqh-card, never a pqh-quick-card',
+    preg_match('~pqh-quick-card[^\n]*parent_board\.php~', $dash) !== 1
+        && preg_match('~\.pqh-quick\{display:none!important\}~', $dash) === 1);
 // One builder for both: a page painted by PHP and refreshed by JS drifts, and
 // the drift shows as a tile that changes shape the moment it refreshes.
 check('page and poll endpoint both call pqpb_build',

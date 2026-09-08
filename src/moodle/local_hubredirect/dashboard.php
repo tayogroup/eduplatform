@@ -4210,6 +4210,23 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
             </div>
           </article>
 
+          <?php // The Parent board, in the BODY as well as the rail.
+                // The teacher's equivalent sits in the quick-card grid at the
+                // top of this file - and that grid is `display:none!important`
+                // (see .pqh-quick above), so copying its shape would produce a
+                // link nobody can click. The visible surface on this page is
+                // this pqh-card grid, so the parent's card goes here, first
+                // after the dashboard card, the way Live Group Board leads the
+                // teacher's Operations list: it is the only tool on the page
+                // that answers "how is my child doing RIGHT NOW". ?>
+          <article class="pqh-card">
+            <h3>Parent board</h3>
+            <p>One tile per child, live: what they are working on now, how far into it they are, words known, quiz scores, minutes with the tutor today, and what they finished this week.</p>
+            <div class="pqh-actions pqh-workspace-actions">
+              <a class="pqh-btn" href="<?php echo (new moodle_url('/local/hubredirect/parent_board.php', $pqhpageparams))->out(false); ?>">Open parent board</a>
+            </div>
+          </article>
+
           <article class="pqh-card">
             <h3>Class feedback</h3>
             <p>Review teacher summaries, safety status, and approved class recordings when they are available.</p>

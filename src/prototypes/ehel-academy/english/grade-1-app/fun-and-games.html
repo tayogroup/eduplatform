@@ -5882,6 +5882,10 @@
     function draw() {
       si = 0;
       const it = o.items[i];
+      /* How many words the child has actually met. There is nothing to score
+         on a walk-through, but "stopped at word 4 of 15" is a real fact and
+         the step used to report nothing at all until the last card. */
+      reportAttempt(o.finish, i + 1, o.items.length);
       ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
       playHere(o.finish, it.audio, it.w);
       paint();
@@ -5987,6 +5991,7 @@
     const el = o.el;
     function draw() {
       const it = o.items[i];
+      reportAttempt(o.finish, i + 1, o.items.length);   // rules met, as above
       $(el.ask).innerHTML = esc(it.title);
       $(el.stage).innerHTML =
         '<div class="rule">' +
@@ -6090,6 +6095,11 @@
   function buildSentence(o) {
     const el = o.el;
     let line = [];
+    /* Wrong orders tried before the sentence came out right. Free to the
+       child - the step lets them try until it works, and it should - but
+       whether it took one go or six is exactly the kind of thing the other
+       scored steps report, and it was being thrown away. */
+    let tries = 0;
     function draw() {
       const used = line.slice();
       $(el.ask).innerHTML = esc(o.ask);
@@ -6125,13 +6135,19 @@
         const got = tidy(line.join(" "));
         const want = tidy(o.answer);
         const ok = got === want;
+        tries += 1;
         $(el.line).className = "buildline " + (ok ? "right" : "wrong");
         $(el.fb).className = "fb " + (ok ? "good" : "bad");
         /* the sentence read back to the child, not the tile list: "This is a
            chair ." is what the answer literally is, and it is not a sentence */
         const written = o.answer.replace(/\s+([.!?])/g, "$1").replace(/\s+/g, " ").trim();
         $(el.fb).textContent = ok ? cheer() + " " + written : "Not yet. Try the words in another order.";
-        if (ok) finish(o.finish, o.done);
+        if (ok) {
+          // One sentence, so one mark out of one: built it first time, or not.
+          reportScore(o.finish, tries === 1 ? 1 : 0, 1);
+          reportAttempt(o.finish, 1, tries);   // and how many goes it took
+          finish(o.finish, o.done);
+        }
       });
     }
     draw();
@@ -6171,30 +6187,48 @@
        the child arrives, because those are two-second word clips; a lesson
        video starting itself is a room full of six-year-olds all playing
        different minutes of the same teacher. */
-    /* WATCHED IS NOT THE SAME AS MOVED ON, and until 2026-09-08 both paths
-       below sent the identical event, so the record could not tell a child
-       who sat through the lesson from one who pressed the button on arrival.
-       One of the two says something about the learner.
+    /* HOW MUCH OF IT WAS PLAYED. Until 2026-09-08 both paths below sent the
+       identical event, so the record could not tell a child who sat through
+       the lesson from one who pressed the button on arrival; the first fix
+       made it a yes or no, and this makes it the distance.
 
-       It is deliberately a yes or no rather than a share of the video: the
-       field is `{answered, total}` and a portal prints it as "N of M", so
-       seconds watched would read as questions answered. 1 of 1 means the
-       video reached its end; 0 of 1 means it did not. */
+       Whole SECONDS against the video's own duration. The pair prints as
+       "108 of 123" wherever a surface shows it, which is the right reading,
+       and it still collapses to 0 / duration for a skip and duration /
+       duration for a full watch - so nothing the yes-or-no said is lost. It
+       falls back to that yes-or-no where the browser has not given us a
+       duration yet, which is the only case a number would be a guess.
+
+       FURTHEST REACHED, not current position: a child who watches to the end
+       and drags back to a favourite bit has still watched it. */
+    let furthest = 0;
+    const secs = () => {
+      const dur = Math.floor(video.duration || 0);
+      const got = Math.min(Math.floor(furthest), dur || Infinity);
+      return dur > 0 ? [got, dur] : null;
+    };
+    const reportWatched = (whole) => {
+      const pair = secs();
+      if (pair) reportAttempt(o.finish, whole ? pair[1] : pair[0], pair[1]);
+      else reportAttempt(o.finish, whole ? 1 : 0, 1);   // no duration to divide
+    };
+    video.addEventListener("timeupdate", () => {
+      if (video.currentTime > furthest) furthest = video.currentTime;
+    });
+    // Pausing is where a child who wanders off leaves the record - without it
+    // the only reports are the end and the button, and neither happens.
+    video.addEventListener("pause", () => { if (!video.ended) reportWatched(false); });
     video.addEventListener("ended", () => {
       $(el.fb).className = "fb good";
       $(el.fb).textContent = "You watched the whole lesson.";
-      reportAttempt(o.finish, 1, 1);
+      furthest = Math.max(furthest, video.duration || 0);
+      reportWatched(true);
       finish(o.finish, o.done);
     });
     video.addEventListener("play", () => VOICE.stop && VOICE.stop());
     $(el.next).addEventListener("click", () => {
       try { video.pause(); } catch (_) { /* nothing to pause */ }
-      /* Only if the video has not already reported itself watched - the
-         button stays available afterwards, and pressing it then must not
-         overwrite a 1 with a 0. */
-      if (!(video.ended || video.currentTime >= (video.duration || Infinity) - 1)) {
-        reportAttempt(o.finish, 0, 1);
-      }
+      reportWatched(video.ended);
       finish(o.finish, o.done);
     });
   }
@@ -8111,7 +8145,14 @@
       });
     }
 
+    /* WHICH cards would be eight more section ids and the map is capped at
+       twenty; how many were opened is the fact that fits, and it separates a
+       child who found the word list from one who opened the drawer and left. */
+    const opened = new Set();
+
     async function open(id) {
+      opened.add(id);
+      reportAttempt(o.finish, opened.size, CARDS.length);
       if (id === "plan") { finish(o.finish, o.done); show(0, true); return; }
       if (id === "gradeplan") { location.href = "index.html" + location.search; return; }
 

@@ -106,7 +106,14 @@
       });
     }
 
+    /* WHICH cards would be eight more section ids and the map is capped at
+       twenty; how many were opened is the fact that fits, and it separates a
+       child who found the word list from one who opened the drawer and left. */
+    const opened = new Set();
+
     async function open(id) {
+      opened.add(id);
+      reportAttempt(o.finish, opened.size, CARDS.length);
       if (id === "plan") { finish(o.finish, o.done); show(0, true); return; }
       if (id === "gradeplan") { location.href = "index.html" + location.search; return; }
 

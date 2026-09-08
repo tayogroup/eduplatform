@@ -56,8 +56,13 @@ STRUCTURE = [
     ("patterns", "Patterns and Square Numbers", "num",
      [2, ("n", 1), 3, ("n", 2), ("n", 3), 4, ("n", 4), ("n", 5), 5, ("n", 6)],
      [2, 3, 4, 5]),
+    # Estimate, then the exact answer it was an estimate OF -- which the kept slide
+    # shows in its working and never asks for. Then the tables, the shortcut, and the
+    # two calculations 4Ni.05 and 4Ni.06 name; factors last, since divisibility rests
+    # on them.
     ("calc", "Ways to Calculate", "num",
-     [1, 6, ("d", 6), 7, 8], [1, 6, 7, 10]),
+     [1, 6, ("n", 1), ("n", 2), 7, ("n", 3), ("n", 4), ("n", 5), ("d", 6), ("n", 6), 8],
+     [1, 6, 7, 10]),
     ("frac", "Parts of a Whole", "frac", None, None),
     # Units are converted both ways before a clock is read; the clock is read before
     # it is rewritten in 24-hour; the timetable is read before it is used to choose;
@@ -93,10 +98,10 @@ DONOR_EXTRAS = {
          '{ q: "It is 3\\u00b0C and it gets 5 degrees colder. What is the temperature?",'
          ' o: ["\\u22122\\u00b0C", "2\\u00b0C", "\\u22128\\u00b0C"], a: 0,'
          ' w: "Count back from 3 through zero: 2, 1, 0, \\u22121, \\u22122." }'),
-    6: ("\\u2716\\ufe0f",
+    6: ("\u2b1c",           # a rectangle, because that is how the slide draws a factor pair
          '{ q: "Which of these is a factor pair of 24?", o: ["4 and 6", "5 and 5", "3 and 9"], a: 0,'
          ' w: "4 \\u00d7 6 = 24. A factor pair is two numbers that multiply to give the number." }'),
-    10: ("\\U0001f4d0",
+    10: ("\U0001f53a",       # shape already uses the set square for area
          '{ q: "An angle of 120\\u00b0 is:", o: ["Obtuse", "Acute", "A right angle"], a: 0,'
          ' w: "More than 90\\u00b0 but less than 180\\u00b0 is obtuse. Acute is under 90\\u00b0." }'),
     11: ("\\U0001f5fa\\ufe0f",
@@ -114,6 +119,33 @@ DONOR_BODY, DONOR_JS = "g4-lesson-body.html", "g4-lesson.js"
 # panel, because each one judges the learner directly.
 #   lesson -> {slide number in the new file: (sticker, quiz item)}
 NEW_EXTRAS = {
+    "calc": {
+        1: ("\\u2795",
+            '{ q: "What is 347 + 185?", o: ["532", "522", "432"], a: 0,'
+            ' w: "7 + 5 = 12, so carry a ten; 4 + 8 + 1 = 13, so carry a hundred; 3 + 1 + 1 = 5.'
+            ' The other two answers are what you get by dropping one of those carries." }'),
+        2: ("\\u2796",
+            '{ q: "What is 623 \\u2212 187?", o: ["436", "564", "444"], a: 0,'
+            ' w: "3 is less than 7, so exchange a ten: 13 \\u2212 7 = 6. Taking the smaller digit from'
+            ' the bigger in each column instead gives 564, which is the mistake to avoid." }'),
+        3: ("\\u2696\\ufe0f",
+            '{ q: "16 \\u00d7 25 is the same as:", o: ["8 \\u00d7 50", "32 \\u00d7 50", "8 \\u00d7 25"], a: 0,'
+            ' w: "Halve one and double the other and they cancel out, so the answer cannot change:'
+            ' both come to 400. Doubling both would make it four times too big." }'),
+        4: ("\\U0001f9f1",
+            '{ q: "What is 342 \\u00d7 6?", o: ["2,052", "1,812", "2,040"], a: 0,'
+            ' w: "300 \\u00d7 6 = 1,800, 40 \\u00d7 6 = 240 and 2 \\u00d7 6 = 12. Add all three: 2,052.'
+            ' Forgetting the 40 leaves you 240 short." }'),
+        5: ("\\U0001f9fa",
+            '{ q: "What is 87 \\u00f7 5?", o: ["17 remainder 2", "17", "18 remainder 2"], a: 0,'
+            ' w: "5 \\u00d7 17 = 85, and 2 are left over \\u2014 not enough to make another group of 5.'
+            ' Check it: 85 + 2 = 87." }'),
+        6: ("\\U0001f501",
+            '{ q: "Which sentence is true about 6 and 24?",'
+            ' o: ["6 is a factor of 24", "6 is a multiple of 24", "24 is a factor of 6"], a: 0,'
+            ' w: "6 \\u00d7 4 = 24 says both things at once: the smaller number is the factor and the'
+            ' bigger one is the multiple." }'),
+    },
     "time": {
         1: ("\\U0001f501",
             '{ q: "How many hours is 180 minutes?", o: ["3", "180", "10 800"], a: 0,'
@@ -477,6 +509,17 @@ def compose(key, title, srckey, keep, keepq):
     # the check slide is finishable too, so it has a sticker; the recut had been
     # dropping it, leaving done[total] with nothing on the shelf to show for it
     picked_st.append('["%s", "%s"]' % (js_str(src_st[-1][0]), js_str(heading(out_secs[total]))))
+    # TWO STICKERS THE SAME ARE ONE STICKER TO A CHILD. Within a shelf the emoji is
+    # what tells a step apart at a glance, and three shelves had a repeat before this
+    # was asserted -- Where Things Are drew the compass twice and the mirror twice,
+    # Telling the Time the mantel clock twice and the bus twice, and Ways to Calculate
+    # the multiplication sign twice. Across lessons a repeat is fine; nobody sees two
+    # shelves at once.
+    faces = [re.match(r'\["(.*?)",', p).group(1) for p in picked_st]
+    dupe = sorted(set(f for f in faces if faces.count(f) > 1))
+    assert not dupe, ("%s: two steps share a sticker %s -- give one of them its own in\n"
+                      "DONOR_EXTRAS / NEW_EXTRAS, or in the source lesson's STICKERS"
+                      % (key, dupe))
     assert len(picked_st) == total + 1, (
         "STICKERS must cover done[0..total]: %d vs %d" % (len(picked_st), total + 1))
     stk = stk[: sm.start(2)] + " " + ", ".join(picked_st) + " " + stk[sm.end(2):]

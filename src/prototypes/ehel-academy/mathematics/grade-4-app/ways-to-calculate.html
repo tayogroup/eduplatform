@@ -789,23 +789,36 @@
 
     <!-- 7 tables and the associative shortcut -->
     
-<section class="slide" data-say="The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.">
-      <div class="slide-head"><span class="n">3</span><h2>6s, 7s, 9s and factor pairs</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d6_say6">Every rectangle you can make from a number shows a <b>factor pair</b>. Pick a number to see all of them.</span></div>
+<section class="slide" data-say="Now do it exactly. Add the ones first, and when a column makes ten or more, carry the ten into the next column.">
+      <div class="slide-head"><span class="n">3</span><h2>Adding it exactly</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wksay1">The estimate told you roughly. Now do it <b>exactly</b>: add the <b>ones</b> first, and when a column makes ten or more, the ten is <b>carried</b> into the next column.</span></div>
       <div class="stage">
-        <div class="bigbtns" id="d6_nums6"></div>
-        <div class="rects" id="d6_rects6"></div>
-        <div class="working" id="d6_work6"></div>
-        <div class="choices" id="d6_ch6"></div>
-        <p class="fb" id="d6_fb6"></p>
-        <p class="fb small-fb" id="d6_score6"></p>
+        <div class="pvtable" id="wkcol1" aria-hidden="true"></div>
+        <p class="qstem" id="wkq1"></p>
+        <div class="choices" id="wkpick1"></div>
+        <div class="working" id="wkwork1"></div>
+        <p class="fb" id="wkfb1"></p>
+        <p class="fb small-fb" id="wktask1"></p>
       </div>
     </section>
 
-    <!-- 7 tenths and hundredths -->
+    
+<section class="slide" data-say="Taking away needs the opposite of carrying. When a column has too little, exchange a ten from next door.">
+      <div class="slide-head"><span class="n">4</span><h2>Taking away exactly</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wksay2">When a column has <b>too little</b> to take from, exchange one from next door &mdash; a ten becomes ten ones. What you must <b>never</b> do is turn the column round and take the smaller digit from the bigger.</span></div>
+      <div class="stage">
+        <div class="pvtable" id="wkcol2" aria-hidden="true"></div>
+        <p class="qstem" id="wkq2"></p>
+        <div class="choices" id="wkpick2"></div>
+        <div class="working" id="wkwork2"></div>
+        <p class="fb" id="wkfb2"></p>
+        <p class="fb small-fb" id="wktask2"></p>
+      </div>
+    </section>
+
     
 <section class="slide" data-say="Multiplication can be regrouped. Choose the pair that is easy and do that one first.">
-      <div class="slide-head"><span class="n">4</span><h2>Tables, and a shortcut</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Tables, and a shortcut</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Every table from 1 to 10 — and a trick: in a chain of multiplications you may <b>regroup</b> and do the easy pair first.</span></div>
       <div class="stage">
         <div class="chips" id="pickTab"></div>
@@ -825,8 +838,75 @@
 
     <!-- 8 divisibility -->
     
+<section class="slide" data-say="Doubling one number and halving the other leaves the answer alone, and often makes the sum easy.">
+      <div class="slide-head"><span class="n">6</span><h2>Double one, halve the other</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wksay3">Because you may <b>regroup</b> a multiplication, doubling one number while halving the other cannot change the answer &mdash; and it often turns an awkward sum into an easy one.</span></div>
+      <div class="stage">
+        <p class="qstem big-eq" id="wkq3"></p>
+        <div class="choices" id="wkpick3"></div>
+        <div class="working" id="wkwork3"></div>
+        <p class="fb" id="wkfb3"></p>
+        <p class="fb small-fb" id="wktask3"></p>
+      </div>
+    </section>
+
+    
+<section class="slide" data-say="To multiply a big number, break it into its parts, multiply each one, and add them back together.">
+      <div class="slide-head"><span class="n">7</span><h2>Multiplying a big number</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wksay4">Break the big number into its <b>parts</b> &mdash; hundreds, tens and ones &mdash; multiply each part on its own, then <b>add them back</b>. Every part has to be used, and forgetting the middle one is the usual slip.</span></div>
+      <div class="stage">
+        <p class="qstem big-eq" id="wkq4"></p>
+        <div class="seqrow" id="wkparts4" aria-hidden="true"></div>
+        <div class="choices" id="wkpick4"></div>
+        <div class="working" id="wkwork4"></div>
+        <p class="fb" id="wkfb4"></p>
+        <p class="fb small-fb" id="wktask4"></p>
+      </div>
+    </section>
+
+    
+<section class="slide" data-say="Dividing is taking groups away until you cannot take another whole one. What is left over is the remainder.">
+      <div class="slide-head"><span class="n">8</span><h2>Sharing out, and what is left</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wksay5">Take away <b>whole groups</b> until you cannot take another. The number of groups is the answer, and what will not make one more group is the <b>remainder</b>.</span></div>
+      <div class="stage">
+        <p class="qstem big-eq" id="wkq5"></p>
+        <div class="choices" id="wkpick5"></div>
+        <div class="working" id="wkwork5"></div>
+        <p class="fb" id="wkfb5"></p>
+        <p class="fb small-fb" id="wktask5"></p>
+      </div>
+    </section>
+
+    
+<section class="slide" data-say="The 6, 7 and 9 times tables, and factor pairs. Every rectangle you can make shows a factor pair.">
+      <div class="slide-head"><span class="n">9</span><h2>6s, 7s, 9s and factor pairs</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d6_say6">Every rectangle you can make from a number shows a <b>factor pair</b>. Pick a number to see all of them.</span></div>
+      <div class="stage">
+        <div class="bigbtns" id="d6_nums6"></div>
+        <div class="rects" id="d6_rects6"></div>
+        <div class="working" id="d6_work6"></div>
+        <div class="choices" id="d6_ch6"></div>
+        <p class="fb" id="d6_fb6"></p>
+        <p class="fb small-fb" id="d6_score6"></p>
+      </div>
+    </section>
+
+    <!-- 7 tenths and hundredths -->
+    
+<section class="slide" data-say="Multiple and factor are the same fact said from the two ends. The small number is a factor and the big one is a multiple.">
+      <div class="slide-head"><span class="n">10</span><h2>Multiples and factors, both ways</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wksay6">One fact, two names. In 6 &times; 4 = 24 the <b>small</b> numbers are <b>factors</b> of 24, and 24 is a <b>multiple</b> of each of them. Which word you use depends only on which end you are standing at.</span></div>
+      <div class="stage">
+        <p class="qstem big-eq" id="wkq6"></p>
+        <div class="choices" id="wkpick6"></div>
+        <div class="working" id="wkwork6"></div>
+        <p class="fb" id="wkfb6"></p>
+        <p class="fb small-fb" id="wktask6"></p>
+      </div>
+    </section>
+
 <section class="slide" data-say="You can tell whether a number divides exactly without doing the division at all. You only have to look at the end of it.">
-      <div class="slide-head"><span class="n">5</span><h2>Does it divide exactly?</h2></div>
+      <div class="slide-head"><span class="n">11</span><h2>Does it divide exactly?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">You can tell without dividing. Nearly every test only asks you to <b>look at the end</b> of the number.</span></div>
       <div class="stage">
         <div class="bignum" id="num8"></div>
@@ -1856,38 +1936,133 @@
   $("new6").addEventListener("click", () => { e6 = newEst(); paint6(); });
   e6 = newEst(); paint6();
 
-  /* ---- 6: factor pairs and the 6, 7, 9 tables ---- */
-  const d6_NUMS6 = [12, 18, 24, 36, 42, 63];
-  let d6_num6 = 24, d6_quiz6 = null, d6_right6 = 0;
-  function d6_factorPairs(n) { const p = []; for (let a = 1; a * a <= n; a++) if (n % a === 0) p.push([a, n / a]); return p; }
-  function d6_paint6() {
-    $("d6_nums6").innerHTML = d6_NUMS6.map((n) => '<button type="button" class="big small ' + (n === d6_num6 ? "teal" : "ghost") + '" data-n="' + n + '">' + n + "</button>").join("");
-    const pairs = d6_factorPairs(d6_num6);
-    $("d6_rects6").innerHTML = pairs.map((p) => '<div><div class="rect" style="grid-template-columns:repeat(' + p[1] + ', 9px)">' + "<i></i>".repeat(d6_num6) + '</div><div class="rectlab">' + p[0] + " × " + p[1] + "</div></div>").join("");
-    lines($("d6_work6"), [
-      { k: "Factor pairs of " + d6_num6, v: pairs.map((p) => p[0] + " × " + p[1]).join(", ") },
-      { k: "Factors", v: [...new Set(pairs.flat())].sort((a, b) => a - b).join(", "), total: true },
+    /* ---- shared by the new Ways to Calculate slides ----
+
+     Prefixed wk. num-slides.js declares round10, round100, newEst and paint6 in the
+     estimate slide this lesson keeps, and the donor's factor-pair slide arrives
+     prefixed d6_, so the only rule here is to stay clear of both. */
+  const WK_COLS = 6;
+  function wkColumns(rows) {
+    /* the place-value grid of num-extra.css: six digit cells and a label. Numbers
+       are right-aligned into it by padding, exactly as slide 9 does. */
+    return rows.map((r) => '<div class="pvrow">' +
+      String(r.n).padStart(WK_COLS, " ").split("").map((d) =>
+        '<span class="' + (d === " " ? "" : "d") + '">' + (d === " " ? "" : d) + "</span>").join("") +
+      '<span class="rl">' + r.lab + "</span></div>").join("");
+  }
+  const wkDigits = (n) => String(n).padStart(3, "0").split("").map(Number);
+
+  /* ---- 1: three-digit addition, exactly (4Ni.02) ----
+
+     The kept estimate slide shows the exact answer in its WORKING but only ever asks
+     for the estimate, and 4Ni.02 says "estimate, add and subtract". */
+  let wk1 = null, wk1right = 0, wk1lock = false;
+  function wkNew1() {
+    for (let t = 0; t < 80; t++) {
+      const a = rnd(126, 869), b = rnd(114, 758);
+      const da = wkDigits(a), db = wkDigits(b);
+      const carryOnes = da[2] + db[2] >= 10;
+      const carryTens = da[1] + db[1] + (carryOnes ? 1 : 0) >= 10;
+      if (!carryOnes && !carryTens) continue;        /* a sum with no carry teaches nothing here */
+      if (a + b > 999) continue;
+      return { a: a, b: b, sum: a + b, carryOnes: carryOnes, carryTens: carryTens };
+    }
+    return { a: 347, b: 185, sum: 532, carryOnes: true, carryTens: true };
+  }
+  function wkPaint1() {
+    const P = wk1;
+    $("wkcol1").innerHTML = wkColumns([{ n: P.a, lab: "" }, { n: P.b, lab: "+" }]);
+    $("wkq1").innerHTML = "What is <b>" + P.a + " + " + P.b + "</b>?";
+    /* the two distractors are a DROPPED CARRY, one from each column that has one --
+       which is what a slip in this method actually produces */
+    const cands = [];
+    if (P.carryOnes) cands.push(P.sum - 10);
+    if (P.carryTens) cands.push(P.sum - 100);
+    $("wkpick1").innerHTML = pick3(P.sum, cands.concat([P.sum + 10, P.sum - 1]))
+      .map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
+    $("wktask1").textContent = "Right so far: " + wk1right + " of 4";
+  }
+  $("wkpick1").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]"); if (!b || wk1lock) return;
+    wk1lock = true;
+    const P = wk1, ok = Number(b.dataset.v) === P.sum;
+    if (ok) wk1right++;
+    b.classList.add(ok ? "right" : "wrong");
+    $("wkcol1").innerHTML = wkColumns([{ n: P.a, lab: "" }, { n: P.b, lab: "+" }, { n: P.sum, lab: "=" }]);
+    const da = wkDigits(P.a), db = wkDigits(P.b);
+    lines($("wkwork1"), [
+      { k: "Ones", v: da[2] + " + " + db[2] + " = <b>" + (da[2] + db[2]) + "</b>" +
+        (P.carryOnes ? ", so write " + ((da[2] + db[2]) % 10) + " and <b>carry 1 ten</b>" : "") },
+      { k: "Tens", v: da[1] + " + " + db[1] + (P.carryOnes ? " + the carried 1" : "") + " = <b>" +
+        (da[1] + db[1] + (P.carryOnes ? 1 : 0)) + "</b>" +
+        (P.carryTens ? ", so write " + ((da[1] + db[1] + (P.carryOnes ? 1 : 0)) % 10) + " and <b>carry 1 hundred</b>" : "") },
+      { k: "Hundreds", v: da[0] + " + " + db[0] + (P.carryTens ? " + the carried 1" : "") + " = <b>" +
+        (da[0] + db[0] + (P.carryTens ? 1 : 0)) + "</b>" },
+      { k: "So", v: P.a + " + " + P.b + " = <b>" + P.sum + "</b>", total: true },
     ]);
-  }
-  $("d6_nums6").addEventListener("click", (e) => { const b = e.target.closest("[data-n]"); if (!b) return; d6_num6 = Number(b.dataset.n); d6_paint6(); say(d6_num6 + " has " + d6_factorPairs(d6_num6).length + " factor pairs"); });
-  function d6_ask6() {
-    const t = [6, 7, 9][rnd(0, 2)], r = rnd(2, 10), kind = d6_right6 % 3;
-    if (kind === 0) d6_quiz6 = { q: r + " × " + t + " = ?", a: r * t, wrong: [r * t + t, r * t - t], say: r + " times " + t };
-    else if (kind === 1) d6_quiz6 = { q: (r * t) + " ÷ " + t + " = ?", a: r, wrong: [r + 1, r - 1 > 0 ? r - 1 : r + 2], say: (r * t) + " divided by " + t };
-    else { const n = d6_NUMS6[rnd(0, 5)], f = [...new Set(d6_factorPairs(n).flat())], nf = [2, 3, 4, 5, 6, 7, 8, 9].filter((x) => n % x !== 0); d6_quiz6 = { q: "Which is a factor of " + n + "?", a: f[rnd(1, f.length - 2)], wrong: shuffle(nf).slice(0, 2), say: "Which is a factor of " + n + "?" }; }
-    $("d6_say6").innerHTML = "<b>" + d6_quiz6.q + "</b> Tap the answer.";
-    $("d6_ch6").innerHTML = shuffle([d6_quiz6.a, ...d6_quiz6.wrong]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
-    $("d6_fb6").textContent = ""; $("d6_fb6").className = "fb"; $("d6_score6").textContent = d6_right6 + " of 4 right so far"; say(d6_quiz6.say);
-  }
-  $("d6_ch6").addEventListener("click", (e) => {
-    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === d6_quiz6.a;
-    $("d6_ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === d6_quiz6.a) c.classList.add("right"); });
-    if (!ok) b.classList.add("wrong"); else d6_right6++;
-    const n6 = d6_quiz6.q.includes("factor") ? Number(d6_quiz6.q.match(/factor of (\d+)/)[1]) : null;
-    $("d6_fb6").className = "fb " + (ok ? "good" : "bad"); $("d6_fb6").textContent = (ok ? cheer() + " " : "") + (n6 ? d6_quiz6.a + " is a factor of " + n6 + " because " + n6 + " ÷ " + d6_quiz6.a + " = " + (n6 / d6_quiz6.a) + "." : d6_quiz6.q.replace("?", "") + d6_quiz6.a + "."); say((ok ? cheer() + " " : "") + "It is " + d6_quiz6.a);
-    if (d6_right6 >= 4) finish(2, "Tables and factors: well done!"); setTimeout(d6_ask6, 2000);
+    $("wkfb1").innerHTML = (ok ? cheer() + " " : "It is " + P.sum + ". ") +
+      "A carry is a whole <b>ten</b> or a whole <b>hundred</b> moving next door &mdash; drop one and the answer is out by exactly that much.";
+    $("wkfb1").className = "fb " + (ok ? "good" : "bad");
+    say($("wkfb1").textContent);
+    if (wk1right >= 4) finish(2, "You can add three-digit numbers exactly!");
+    setTimeout(() => { wk1 = wkNew1(); wk1lock = false; wkPaint1(); }, 2600);
   });
-  d6_paint6(); d6_ask6();
+  wk1 = wkNew1(); wkPaint1();
+
+  /* ---- 2: three-digit subtraction, exactly (4Ni.02) ---- */
+  let wk2 = null, wk2right = 0, wk2lock = false;
+  function wkNew2() {
+    for (let t = 0; t < 80; t++) {
+      const a = rnd(320, 940), b = rnd(118, a - 100);
+      const da = wkDigits(a), db = wkDigits(b);
+      if (da[2] >= db[2] && da[1] >= db[1]) continue;     /* no exchange needed, so nothing to teach */
+      return { a: a, b: b, diff: a - b };
+    }
+    return { a: 623, b: 187, diff: 436 };
+  }
+  function wkPaint2() {
+    const P = wk2;
+    $("wkcol2").innerHTML = wkColumns([{ n: P.a, lab: "" }, { n: P.b, lab: "&minus;" }]);
+    $("wkq2").innerHTML = "What is <b>" + P.a + " &minus; " + P.b + "</b>?";
+    /* THE distractor: each column done as bigger-minus-smaller, whichever way round
+       the digits happen to be. It is the commonest wrong answer in the method and
+       every other option here would let a learner reach the right one by elimination. */
+    const da = wkDigits(P.a), db = wkDigits(P.b);
+    const naive = Math.abs(da[0] - db[0]) * 100 + Math.abs(da[1] - db[1]) * 10 + Math.abs(da[2] - db[2]);
+    $("wkpick2").innerHTML = pick3(P.diff, [naive, P.diff + 100, P.diff - 10])
+      .map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
+    $("wktask2").textContent = "Right so far: " + wk2right + " of 4";
+  }
+  $("wkpick2").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]"); if (!b || wk2lock) return;
+    wk2lock = true;
+    const P = wk2, ok = Number(b.dataset.v) === P.diff;
+    if (ok) wk2right++;
+    b.classList.add(ok ? "right" : "wrong");
+    $("wkcol2").innerHTML = wkColumns([{ n: P.a, lab: "" }, { n: P.b, lab: "&minus;" }, { n: P.diff, lab: "=" }]);
+    const da = wkDigits(P.a), db = wkDigits(P.b);
+    const borrowOnes = da[2] < db[2];
+    const tensLeft = da[1] - (borrowOnes ? 1 : 0);
+    const borrowTens = tensLeft < db[1];
+    lines($("wkwork2"), [
+      { k: "Ones", v: borrowOnes
+        ? da[2] + " is less than " + db[2] + ", so <b>exchange a ten</b>: " + (da[2] + 10) + " − " + db[2] + " = <b>" + (da[2] + 10 - db[2]) + "</b>"
+        : da[2] + " − " + db[2] + " = <b>" + (da[2] - db[2]) + "</b>" },
+      { k: "Tens", v: (borrowOnes ? "one ten has gone, leaving " + tensLeft + ". " : "") +
+        (borrowTens ? tensLeft + " is less than " + db[1] + ", so <b>exchange a hundred</b>: " + (tensLeft + 10) + " − " + db[1] + " = <b>" + (tensLeft + 10 - db[1]) + "</b>"
+                    : tensLeft + " − " + db[1] + " = <b>" + (tensLeft - db[1]) + "</b>") },
+      { k: "Hundreds", v: (borrowTens ? (da[0] - 1) + " left, and " + (da[0] - 1) + " − " + db[0] : da[0] + " − " + db[0]) +
+        " = <b>" + (da[0] - (borrowTens ? 1 : 0) - db[0]) + "</b>" },
+      { k: "So", v: P.a + " − " + P.b + " = <b>" + P.diff + "</b>", total: true },
+    ]);
+    $("wkfb2").innerHTML = (ok ? cheer() + " " : "It is " + P.diff + ". ") +
+      "Never turn a column round. If there is too little, <b>exchange</b> from next door.";
+    $("wkfb2").className = "fb " + (ok ? "good" : "bad");
+    say($("wkfb2").textContent);
+    if (wk2right >= 4) finish(3, "You can take away with exchanging!");
+    setTimeout(() => { wk2 = wkNew2(); wk2lock = false; wkPaint2(); }, 2800);
+  });
+  wk2 = wkNew2(); wkPaint2();
 
   /* ---- 7: all ten tables, and the associative property (4Ni.04, 4Ni.03) ---- */
   let tm7 = 0, q7 = null, lock7 = false, right7 = 0, asked7 = 0;
@@ -1938,7 +2113,7 @@
     $("fb7").innerHTML = (ok ? cheer() + " " : "") + q7.a + " × " + q7.b + " = <b>" + q7.p + "</b>.";
     $("fb7").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : q7.a + " times " + q7.b + " is " + q7.p);
-    if (right7 >= 5) finish(3, "");
+    if (right7 >= 5) finish(4, "");
     setTimeout(() => { q7 = newQ7(); paint7(); }, 1900);
   });
   $("group7").addEventListener("click", (e) => {
@@ -1956,7 +2131,7 @@
     $("fb7").innerHTML = (ok ? cheer() + " " : "") + C.why + " The answer is <b>" + fmt(tot) + "</b>.";
     $("fb7").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : C.why);
-    finish(3, "");
+    finish(4, "");
     ch7 = (ch7 + 1) % CHAINS.length;
     setTimeout(paint7, 2600);
   });
@@ -1968,7 +2143,221 @@
   });
   q7 = newQ7(); paint7();
 
-  /* ---- 8: tests of divisibility (4Ni.08) ---- */
+  /* ---- 3: the associative property used to simplify (4Ni.03) ----
+
+     The kept slide regroups a chain of three numbers. Doubling one and halving the
+     other is the same property on a PAIR, and it is the form the objective means by
+     "use this to simplify calculations". */
+  const WK_PAIRS = [[16, 25], [24, 25], [14, 50], [18, 50], [12, 25], [22, 50], [16, 50], [28, 25]];
+  let wk3 = null, wk3right = 0, wk3lock = false;
+  function wkNew3() {
+    const p = WK_PAIRS[rnd(0, WK_PAIRS.length - 1)];
+    return { a: p[0], b: p[1], prod: p[0] * p[1] };
+  }
+  function wkPaint3() {
+    const P = wk3;
+    $("wkq3").innerHTML = P.a + " &times; " + P.b;
+    const right = (P.a / 2) + " × " + (P.b * 2);
+    const opts = [right, (P.a * 2) + " × " + (P.b * 2), (P.a / 2) + " × " + P.b];
+    $("wkpick3").innerHTML = shuffle(opts).map((o) =>
+      '<button type="button" class="choice word" data-t="' + o + '">' + o + "</button>").join("");
+    $("wktask3").textContent = "Which of these is the SAME answer, only easier? · right so far: " + wk3right + " of 4";
+  }
+  $("wkpick3").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-t]"); if (!b || wk3lock) return;
+    wk3lock = true;
+    const P = wk3, right = (P.a / 2) + " × " + (P.b * 2), ok = b.dataset.t === right;
+    if (ok) wk3right++;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("wkwork3"), [
+      { k: "Halve one", v: P.a + " ÷ 2 = <b>" + P.a / 2 + "</b>" },
+      { k: "Double the other", v: P.b + " × 2 = <b>" + P.b * 2 + "</b>" },
+      { k: "Why it is allowed", v: "the halving and the doubling <b>cancel</b>, so the product cannot change" },
+      { k: "Check both", v: P.a + " × " + P.b + " = <b>" + fmt(P.prod) + "</b>, and " + P.a / 2 + " × " +
+        P.b * 2 + " = <b>" + fmt(P.prod) + "</b>", total: true },
+    ]);
+    $("wkfb3").innerHTML = (ok ? cheer() + " " : "It is " + right + ". ") +
+      "Doubling <b>both</b> makes it four times too big, and halving one without doubling the other halves it &mdash; <b>one of each</b> is what leaves it alone.";
+    $("wkfb3").className = "fb " + (ok ? "good" : "bad");
+    say($("wkfb3").textContent);
+    if (wk3right >= 4) finish(5, "You can make a multiplication easier without changing it!");
+    setTimeout(() => { wk3 = wkNew3(); wk3lock = false; wkPaint3(); }, 2800);
+  });
+  wk3 = wkNew3(); wkPaint3();
+
+  /* ---- 4: multiplying up to 1000 by a 1-digit number (4Ni.05) ---- */
+  let wk4 = null, wk4right = 0, wk4lock = false;
+  function wkNew4() {
+    for (let t = 0; t < 60; t++) {
+      const a = rnd(112, 480), b = rnd(3, 8);
+      if (wkDigits(a)[1] === 0) continue;          /* the middle part must exist to be forgotten */
+      if (a * b > 3000) continue;
+      return { a: a, b: b, prod: a * b, d: wkDigits(a) };
+    }
+    return { a: 342, b: 6, prod: 2052, d: [3, 4, 2] };
+  }
+  function wkPaint4() {
+    const P = wk4;
+    $("wkq4").innerHTML = fmt(P.a) + " &times; " + P.b;
+    $("wkparts4").innerHTML = [P.d[0] * 100, P.d[1] * 10, P.d[2]]
+      .map((v) => '<span class="term4">' + v + "</span>").join('<span class="step">+</span>');
+    /* forgetting the tens part is the slip this method invites, so it is an option */
+    const noTens = P.prod - P.d[1] * 10 * P.b;
+    $("wkpick4").innerHTML = pick3(P.prod, [noTens, P.prod - P.d[2] * P.b, P.prod + 100])
+      .map((v) => '<button type="button" class="choice" data-v="' + v + '">' + fmt(v) + "</button>").join("");
+    $("wktask4").textContent = "Right so far: " + wk4right + " of 4";
+  }
+  $("wkpick4").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]"); if (!b || wk4lock) return;
+    wk4lock = true;
+    const P = wk4, ok = Number(b.dataset.v) === P.prod;
+    if (ok) wk4right++;
+    b.classList.add(ok ? "right" : "wrong");
+    const parts = [P.d[0] * 100, P.d[1] * 10, P.d[2]];
+    lines($("wkwork4"), [
+      { k: "Break it up", v: fmt(P.a) + " = <b>" + parts.join(" + ") + "</b>" },
+      { k: "Each part", v: parts.map((v) => v + " × " + P.b + " = <b>" + fmt(v * P.b) + "</b>").join("<br>") },
+      { k: "Add them back", v: parts.map((v) => fmt(v * P.b)).join(" + ") + " = <b>" + fmt(P.prod) + "</b>" },
+      { k: "Does it look right?", v: "the estimate was about " + fmt(Math.round(P.a / 100) * 100 * P.b) +
+        ", so <b>" + fmt(P.prod) + "</b> is the right size", total: true },
+    ]);
+    $("wkfb4").innerHTML = (ok ? cheer() + " " : "It is " + fmt(P.prod) + ". ") +
+      "Every part has to be multiplied &mdash; leave the <b>tens</b> out and the answer is short by " +
+      fmt(P.d[1] * 10 * P.b) + ".";
+    $("wkfb4").className = "fb " + (ok ? "good" : "bad");
+    say($("wkfb4").textContent);
+    if (wk4right >= 4) finish(6, "You can multiply a big number by a small one!");
+    setTimeout(() => { wk4 = wkNew4(); wk4lock = false; wkPaint4(); }, 2800);
+  });
+  wk4 = wkNew4(); wkPaint4();
+
+  /* ---- 5: dividing up to 100 by a 1-digit number, with a remainder (4Ni.06) ---- */
+  let wk5 = null, wk5right = 0, wk5lock = false;
+  function wkNew5() {
+    const b = rnd(3, 8), q = rnd(6, 15), r = rnd(1, b - 1);
+    const a = Math.min(99, b * q + r);
+    const qq = Math.floor(a / b), rr = a % b;
+    return { a: a, b: b, q: qq, r: rr };
+  }
+  const wkAns5 = (q, r) => (r === 0 ? String(q) : q + " remainder " + r);
+  function wkPaint5() {
+    const P = wk5;
+    $("wkq5").innerHTML = P.a + " &divide; " + P.b;
+    const opts = [wkAns5(P.q, P.r), wkAns5(P.q + 1, P.r), wkAns5(P.q, 0)];
+    const uniq = [];
+    opts.forEach((o) => { if (uniq.indexOf(o) < 0) uniq.push(o); });
+    while (uniq.length < 3) uniq.push(wkAns5(P.q - 1, P.r));
+    $("wkpick5").innerHTML = shuffle(uniq.slice(0, 3)).map((o) =>
+      '<button type="button" class="choice word" data-t="' + o + '">' + o + "</button>").join("");
+    $("wktask5").textContent = "Right so far: " + wk5right + " of 4";
+  }
+  $("wkpick5").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-t]"); if (!b || wk5lock) return;
+    wk5lock = true;
+    const P = wk5, right = wkAns5(P.q, P.r), ok = b.dataset.t === right;
+    if (ok) wk5right++;
+    b.classList.add(ok ? "right" : "wrong");
+    const ten = P.q > 10 ? 10 : 5;          /* q is never below 6, so a rest of at least 1 is left */
+    lines($("wkwork5"), [
+      { k: "Take a big chunk", v: P.b + " × " + ten + " = " + P.b * ten + ", and " + P.a + " − " + P.b * ten +
+        " = <b>" + (P.a - P.b * ten) + "</b> left" },
+      { k: "Keep taking groups", v: P.b + " × " + (P.q - ten) + " = " + P.b * (P.q - ten) + ", and " +
+        (P.a - P.b * ten) + " − " + P.b * (P.q - ten) + " = <b>" + P.r + "</b> left" },
+      { k: "Groups taken", v: ten + " + " + (P.q - ten) + " = <b>" + P.q + "</b>" },
+      { k: "What is left", v: P.r === 0 ? "<b>nothing</b> &mdash; it divided exactly"
+        : "<b>" + P.r + "</b>, which will not make another group of " + P.b },
+      { k: "So", v: P.a + " ÷ " + P.b + " = <b>" + right + "</b>", total: true },
+    ]);
+    $("wkfb5").innerHTML = (ok ? cheer() + " " : "It is " + right + ". ") +
+      "Check it the other way round: " + P.b + " × " + P.q + " = " + P.b * P.q +
+      (P.r ? ", and " + P.b * P.q + " + " + P.r + " = " + P.a : " = " + P.a) + ".";
+    $("wkfb5").className = "fb " + (ok ? "good" : "bad");
+    say($("wkfb5").textContent);
+    if (wk5right >= 4) finish(7, "You can divide and say what is left over!");
+    setTimeout(() => { wk5 = wkNew5(); wk5lock = false; wkPaint5(); }, 3000);
+  });
+  wk5 = wkNew5(); wkPaint5();
+
+  /* ---- 6: factor pairs and the 6, 7, 9 tables ---- */
+  const d6_NUMS6 = [12, 18, 24, 36, 42, 63];
+  let d6_num6 = 24, d6_quiz6 = null, d6_right6 = 0;
+  function d6_factorPairs(n) { const p = []; for (let a = 1; a * a <= n; a++) if (n % a === 0) p.push([a, n / a]); return p; }
+  function d6_paint6() {
+    $("d6_nums6").innerHTML = d6_NUMS6.map((n) => '<button type="button" class="big small ' + (n === d6_num6 ? "teal" : "ghost") + '" data-n="' + n + '">' + n + "</button>").join("");
+    const pairs = d6_factorPairs(d6_num6);
+    $("d6_rects6").innerHTML = pairs.map((p) => '<div><div class="rect" style="grid-template-columns:repeat(' + p[1] + ', 9px)">' + "<i></i>".repeat(d6_num6) + '</div><div class="rectlab">' + p[0] + " × " + p[1] + "</div></div>").join("");
+    lines($("d6_work6"), [
+      { k: "Factor pairs of " + d6_num6, v: pairs.map((p) => p[0] + " × " + p[1]).join(", ") },
+      { k: "Factors", v: [...new Set(pairs.flat())].sort((a, b) => a - b).join(", "), total: true },
+    ]);
+  }
+  $("d6_nums6").addEventListener("click", (e) => { const b = e.target.closest("[data-n]"); if (!b) return; d6_num6 = Number(b.dataset.n); d6_paint6(); say(d6_num6 + " has " + d6_factorPairs(d6_num6).length + " factor pairs"); });
+  function d6_ask6() {
+    const t = [6, 7, 9][rnd(0, 2)], r = rnd(2, 10), kind = d6_right6 % 3;
+    if (kind === 0) d6_quiz6 = { q: r + " × " + t + " = ?", a: r * t, wrong: [r * t + t, r * t - t], say: r + " times " + t };
+    else if (kind === 1) d6_quiz6 = { q: (r * t) + " ÷ " + t + " = ?", a: r, wrong: [r + 1, r - 1 > 0 ? r - 1 : r + 2], say: (r * t) + " divided by " + t };
+    else { const n = d6_NUMS6[rnd(0, 5)], f = [...new Set(d6_factorPairs(n).flat())], nf = [2, 3, 4, 5, 6, 7, 8, 9].filter((x) => n % x !== 0); d6_quiz6 = { q: "Which is a factor of " + n + "?", a: f[rnd(1, f.length - 2)], wrong: shuffle(nf).slice(0, 2), say: "Which is a factor of " + n + "?" }; }
+    $("d6_say6").innerHTML = "<b>" + d6_quiz6.q + "</b> Tap the answer.";
+    $("d6_ch6").innerHTML = shuffle([d6_quiz6.a, ...d6_quiz6.wrong]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
+    $("d6_fb6").textContent = ""; $("d6_fb6").className = "fb"; $("d6_score6").textContent = d6_right6 + " of 4 right so far"; say(d6_quiz6.say);
+  }
+  $("d6_ch6").addEventListener("click", (e) => {
+    const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === d6_quiz6.a;
+    $("d6_ch6").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === d6_quiz6.a) c.classList.add("right"); });
+    if (!ok) b.classList.add("wrong"); else d6_right6++;
+    const n6 = d6_quiz6.q.includes("factor") ? Number(d6_quiz6.q.match(/factor of (\d+)/)[1]) : null;
+    $("d6_fb6").className = "fb " + (ok ? "good" : "bad"); $("d6_fb6").textContent = (ok ? cheer() + " " : "") + (n6 ? d6_quiz6.a + " is a factor of " + n6 + " because " + n6 + " ÷ " + d6_quiz6.a + " = " + (n6 / d6_quiz6.a) + "." : d6_quiz6.q.replace("?", "") + d6_quiz6.a + "."); say((ok ? cheer() + " " : "") + "It is " + d6_quiz6.a);
+    if (d6_right6 >= 4) finish(8, "Tables and factors: well done!"); setTimeout(d6_ask6, 2000);
+  });
+  d6_paint6(); d6_ask6();
+
+  /* ---- 6: the relationship between multiples and factors (4Ni.07) ----
+
+     The donor's slide above this one draws factor PAIRS as rectangles. The objective
+     asks for the relationship, which is that the two words describe one fact from
+     opposite ends -- and the way to test that is to make the learner pick the word. */
+  let wk6 = null, wk6right = 0, wk6lock = false;
+  const wk6seen = {};
+  function wkNew6() {
+    const f = rnd(2, 9), o = rnd(3, 11), big = f * o;
+    return { f: f, big: big, o: o, asking: rnd(0, 1) ? "factor" : "multiple" };
+  }
+  function wkPaint6() {
+    const P = wk6;
+    $("wkq6").innerHTML = P.asking === "factor"
+      ? P.f + " <span class='unk'>?</span> " + P.big
+      : P.big + " <span class='unk'>?</span> " + P.f;
+    const words = P.asking === "factor"
+      ? ["is a factor of", "is a multiple of", "is the same as"]
+      : ["is a multiple of", "is a factor of", "is the same as"];
+    $("wkpick6").innerHTML = shuffle(words).map((w) =>
+      '<button type="button" class="choice word" data-t="' + w + '">' + w + "</button>").join("");
+    $("wktask6").textContent = "Fill the gap · right so far: " + wk6right + " of 4, both words needed";
+  }
+  $("wkpick6").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-t]"); if (!b || wk6lock) return;
+    wk6lock = true;
+    const P = wk6, right = P.asking === "factor" ? "is a factor of" : "is a multiple of";
+    const ok = b.dataset.t === right;
+    if (ok) { wk6right++; wk6seen[P.asking] = true; }
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("wkwork6"), [
+      { k: "The one fact", v: "<b>" + P.f + " × " + P.o + " = " + P.big + "</b>" },
+      { k: "From the small end", v: P.f + " divides " + P.big + " exactly, so <b>" + P.f +
+        " is a factor of " + P.big + "</b>" },
+      { k: "From the big end", v: P.big + " is in the " + P.f + " times table, so <b>" + P.big +
+        " is a multiple of " + P.f + "</b>" },
+      { k: "So the word depends on", v: "which end you are standing at &mdash; nothing else", total: true },
+    ]);
+    $("wkfb6").innerHTML = (ok ? cheer() + " " : "It should say &ldquo;" + right + "&rdquo;. ") +
+      "The <b>smaller</b> number is always the factor and the <b>bigger</b> one is always the multiple.";
+    $("wkfb6").className = "fb " + (ok ? "good" : "bad");
+    say($("wkfb6").textContent);
+    if (wk6right >= 4 && Object.keys(wk6seen).length >= 2) finish(9, "You know which word goes which way!");
+    setTimeout(() => { wk6 = wkNew6(); wk6lock = false; wkPaint6(); }, 2800);
+  });
+  wk6 = wkNew6(); wkPaint6();
+/* ---- 8: tests of divisibility (4Ni.08) ---- */
   const TESTS = [2, 5, 10, 25, 50, 100];
   const RULE = { 2: "the last digit is even", 5: "the last digit is 0 or 5", 10: "the last digit is 0",
     25: "the last two digits are 00, 25, 50 or 75", 50: "the last two digits are 00 or 50", 100: "the last two digits are 00" };
@@ -1994,7 +2383,7 @@
       { k: "Divides exactly by", v: TESTS.filter((t) => n8 % t === 0).map((t) => "<b>" + t + "</b>").join(", ") || "none of these", total: true },
     ]);
     $("task8").textContent = "Tested " + tried8.length + " of " + TESTS.length;
-    if (tried8.length >= TESTS.length) finish(4, "");
+    if (tried8.length >= TESTS.length) finish(10, "");
   }
   $("tests8").addEventListener("click", (e) => {
     const b = e.target.closest("button[data-t]"); if (!b) return;
@@ -2017,7 +2406,13 @@
     { q: "Roughly, what is 412 × 6?", o: ["About 2,400", "About 240", "About 24,000"], a: 0, w: "Round 412 to 400. 400 × 6 = 2,400, and the exact answer is 2,472." },
     { q: "Does 375 divide exactly by 25?", o: ["Yes", "No", "Only by 5"], a: 0, w: "The last two digits are 75, and 00, 25, 50 and 75 all divide by 25. In fact 375 = 25 × 15." },
     { q: "4 × 25 × 3 is easiest if you first work out:", o: ["4 × 25", "25 × 3", "4 × 3"], a: 0, w: "4 × 25 is 100, and 100 × 3 is easy. Regrouping never changes the answer." },
-    { q: "Which of these is a factor pair of 24?", o: ["4 and 6", "5 and 5", "3 and 9"], a: 0, w: "4 \u00d7 6 = 24. A factor pair is two numbers that multiply to give the number." }
+    { q: "Which of these is a factor pair of 24?", o: ["4 and 6", "5 and 5", "3 and 9"], a: 0, w: "4 \u00d7 6 = 24. A factor pair is two numbers that multiply to give the number." },
+    { q: "What is 347 + 185?", o: ["532", "522", "432"], a: 0, w: "7 + 5 = 12, so carry a ten; 4 + 8 + 1 = 13, so carry a hundred; 3 + 1 + 1 = 5. The other two answers are what you get by dropping one of those carries." },
+    { q: "What is 623 \u2212 187?", o: ["436", "564", "444"], a: 0, w: "3 is less than 7, so exchange a ten: 13 \u2212 7 = 6. Taking the smaller digit from the bigger in each column instead gives 564, which is the mistake to avoid." },
+    { q: "16 \u00d7 25 is the same as:", o: ["8 \u00d7 50", "32 \u00d7 50", "8 \u00d7 25"], a: 0, w: "Halve one and double the other and they cancel out, so the answer cannot change: both come to 400. Doubling both would make it four times too big." },
+    { q: "What is 342 \u00d7 6?", o: ["2,052", "1,812", "2,040"], a: 0, w: "300 \u00d7 6 = 1,800, 40 \u00d7 6 = 240 and 2 \u00d7 6 = 12. Add all three: 2,052. Forgetting the 40 leaves you 240 short." },
+    { q: "What is 87 \u00f7 5?", o: ["17 remainder 2", "17", "18 remainder 2"], a: 0, w: "5 \u00d7 17 = 85, and 2 are left over \u2014 not enough to make another group of 5. Check it: 85 + 2 = 87." },
+    { q: "Which sentence is true about 6 and 24?", o: ["6 is a factor of 24", "6 is a multiple of 24", "24 is a factor of 6"], a: 0, w: "6 \u00d7 4 = 24 says both things at once: the smaller number is the factor and the bigger one is the multiple." }
   ]);
   let cq = 0, rq = 0, lockq = false;
   function round11() {
@@ -2027,7 +2422,7 @@
       $("stem11").textContent = "That is all of them.";
       $("choices11").innerHTML = "";
       $("score11").textContent = rq + " out of " + Q11.length + " right.";
-      if (rq >= 4) finish(5, "");
+      if (rq >= 8) finish(11, "");
       return;
     }
     $("stem11").textContent = Q11[cq].q;
@@ -2050,7 +2445,7 @@
   round11();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [ ["🔤", "Saying it in words"], ["🎯", "Estimate before you work"], ["✖️", "6s, 7s, 9s and factor pairs"], ["✖️", "Tables, and a shortcut"], ["➗", "Does it divide exactly?"], ["✅", "Show what you know"] ];
+  const STICKERS = [ ["🔤", "Saying it in words"], ["🎯", "Estimate before you work"], ["➕", "Adding it exactly"], ["➖", "Taking away exactly"], ["✖️", "Tables, and a shortcut"], ["⚖️", "Double one, halve the other"], ["🧱", "Multiplying a big number"], ["🧺", "Sharing out, and what is left"], ["⬜", "6s, 7s, 9s and factor pairs"], ["🔁", "Multiples and factors, both ways"], ["➗", "Does it divide exactly?"], ["✅", "Show what you know"] ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

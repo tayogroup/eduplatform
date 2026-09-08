@@ -169,6 +169,33 @@ check('runs after the portal proves the caller is this child\'s guardian',
     strpos($parentdoor, 'That student is not linked to your portal.')
         < strpos($parentdoor, 'parent_teacher_chat_exchange('));
 
+echo "\nboth sides have a panel that reaches its door\n";
+
+// One level up from "a perfect function nothing invokes": two doors nothing
+// calls are two doors nobody can use. The panels are what make this a feature
+// rather than a contract.
+$teacherpage = @file_get_contents($root . '/local_hubredirect/workspace_student.php');
+$familypage = @file_get_contents(__DIR__ . '/../src/portal/student-parent-portal.html');
+if ($teacherpage === false || $familypage === false) {
+    fwrite(STDERR, "cannot read one of the two panels\n");
+    exit(2);
+}
+check('the teacher page posts to the teacher door',
+    strpos($teacherpage, "/local/hubredirect/parent_teacher_chat.php") !== false);
+check('  with a sesskey, which the door requires',
+    strpos($teacherpage, "p.set('sesskey', sesskey)") !== false);
+// Drawn only where the caller may actually use it — a control that reaches
+// nothing is worse than none.
+check('  and only where the caller may teach',
+    strpos($teacherpage, 'if ($canteach && $studentid > 0)') !== false);
+check('the family page posts the portal action',
+    strpos($familypage, '"parent_teacher_chat"') !== false);
+// A portal left open on a kitchen tablet would otherwise poll all day to
+// deliver one message from a teacher who works six hours.
+check('neither side polls while its tab is hidden',
+    substr_count($teacherpage, "visibilityState === 'visible'") >= 1
+        && substr_count($familypage, 'visibilityState === "visible"') >= 1);
+
 echo "\nthe message itself\n";
 
 check('a body too long is refused, not truncated',

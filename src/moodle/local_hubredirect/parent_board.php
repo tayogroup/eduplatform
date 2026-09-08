@@ -121,25 +121,33 @@ echo $OUTPUT->header();
 /* white-space:nowrap so a pill is a pill: without it a squeezed row breaks
    each one onto several lines and a lozenge with three words stacked in it
    reads as a circle. */
-.pqpb-pl{padding:2px 9px;border-radius:999px;border:1px solid var(--op-line);font-size:12px;font-weight:700;
+.pqpb-pl{padding:2px 9px;border-radius:999px;border:1px solid transparent;font-size:12px;font-weight:700;
   white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
-/* !important on a page rule is usually a smell; here it is the only way to
-   win. The platform's stylesheets are emitted through pqh_css_force_and_specify(),
-   whose entire job is to add !important and double specificity, so an ordinary
-   page rule cannot beat them by order or by specificity. Left unforced, these
-   pills took the sheet's dark surface behind my dark ink and read as pale text
-   on a pale ground - legible in neither. The colours themselves are the
-   teacher board's, so the two boards look like one product. */
-.pqpb-pl--course{background:#edf3fc!important;border-color:#d5e3f8!important;color:#17498f!important}
-.pqpb-pl--pos{background:#cff4fc!important;border-color:#9eeaf9!important;color:#055160!important}
-.pqpb-pl--done{background:#f7d6e6!important;border-color:#efadce!important;color:#801f4f!important}
-.pqpb-pl--words{background:#d2f4ea!important;border-color:#a6e9d5!important;color:#114e3d!important}
+/* LIGHT ON DARK, because the tile is dark. The first version borrowed the
+   teacher board's light pastels with dark ink, which work THERE because that
+   page's own forced rules style .pqlgb-pl--* explicitly. Here the surrounding
+   tile is dark and its inherited ink is light, so a dark colour of mine was
+   being lost while the light background stayed - pale text on a pale ground,
+   legible in neither.
+   
+   I checked all four platform stylesheets for the rule doing it and none of
+   them has one, so rather than escalate an !important war against something I
+   cannot see, the pills now belong to the surface they are actually on. This
+   is robust either way: if some rule does force the ink light, light is what
+   these pills want anyway.
+   
+   Translucent grounds rather than solid hex, so a pill sits correctly on
+   whatever --op-surface turns out to be. */
+.pqpb-pl--course{background:rgba(96,165,250,.18);border-color:rgba(96,165,250,.45);color:#d6e7ff}
+.pqpb-pl--pos{background:rgba(45,212,191,.18);border-color:rgba(45,212,191,.5);color:#bdf3ea}
+.pqpb-pl--done{background:rgba(244,114,182,.18);border-color:rgba(244,114,182,.45);color:#fbd3ea}
+.pqpb-pl--words{background:rgba(74,222,128,.18);border-color:rgba(74,222,128,.45);color:#d2f6dd}
 .pqpb-flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-.pqpb-flag{padding:2px 9px;border-radius:999px;border:1px solid var(--op-line);font-size:12px;font-weight:700}
-.pqpb-flag--ok{border-color:#a3cfbb!important;background:#d1e7dd!important;color:#0a3622!important}
-.pqpb-flag--quiet{border-color:#ced4da!important;background:#e9ecef!important;color:#41464b!important}
-.pqpb-flag--time{border-color:#a6e9d5!important;background:#d2f4ea!important;color:#114e3d!important}
-.pqpb-flag--bad{border-color:#f1aeb5!important;background:#f8d7da!important;color:#58151c!important}
+.pqpb-flag{padding:2px 9px;border-radius:999px;border:1px solid transparent;font-size:12px;font-weight:700}
+.pqpb-flag--ok{border-color:rgba(74,222,128,.45);background:rgba(74,222,128,.16);color:#d2f6dd}
+.pqpb-flag--quiet{border-color:rgba(148,163,184,.45);background:rgba(148,163,184,.16);color:#dbe4ee}
+.pqpb-flag--time{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.16);color:#bdf3ea}
+.pqpb-flag--bad{border-color:rgba(248,113,113,.5);background:rgba(248,113,113,.18);color:#ffd7d7}
 .pqpb-note{margin-top:8px;padding:7px 10px;border-left:3px solid #f1aeb5;background:var(--op-surface-tint);
   font-size:12.5px;font-style:italic;line-height:1.45}
 /* It may shrink and it may wrap to its own line rather than shoving the name

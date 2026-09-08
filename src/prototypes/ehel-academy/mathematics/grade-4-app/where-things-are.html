@@ -726,8 +726,36 @@
   <div class="deck" id="deck">
 
     <!-- 1 faces of a solid -->
-    <section class="slide" data-say="North, east, south and west, and the four in between. Follow the instructions and see where you land.">
-      <div class="slide-head"><span class="n">1</span><h2>Which way from here?</h2></div>
+    <section class="slide" data-say="North, east, south and west. A quarter turn takes you to the next one round.">
+      <div class="slide-head"><span class="n">1</span><h2>Facing and turning</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay1">The four <b>cardinal</b> points go round in order: north, east, south, west. A <b>quarter turn</b> clockwise takes you to the next one.</span></div>
+      <div class="stage">
+        <svg class="grid8" id="wrose1" viewBox="0 0 260 200" role="img" aria-label="A compass with an arrow"></svg>
+        <p class="qstem" id="wq1"></p>
+        <div class="choices" id="wpick1"></div>
+        <div class="working" id="wwork1"></div>
+        <p class="fb" id="wfb1"></p>
+        <p class="fb small-fb" id="wtask1"></p>
+      </div>
+    </section>
+
+    
+<section class="slide" data-say="Between every two cardinal points there is one more, and its name is both of theirs joined together.">
+      <div class="slide-head"><span class="n">2</span><h2>The eight points</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay2">Between each pair sits an <b>ordinal</b> point, and its name is simply both names joined: north and east make <b>north-east</b>, written <b>NE</b>.</span></div>
+      <div class="stage">
+        <svg class="grid8" id="wrose2" viewBox="0 0 260 200" role="img" aria-label="A compass with eight points"></svg>
+        <p class="qstem" id="wq2"></p>
+        <div class="choices" id="wpick2"></div>
+        <div class="working" id="wwork2"></div>
+        <p class="fb" id="wfb2"></p>
+        <p class="fb small-fb" id="wtask2"></p>
+      </div>
+    </section>
+
+    
+<section class="slide" data-say="North, east, south and west, and the four in between. Follow the instructions and see where you land.">
+      <div class="slide-head"><span class="n">3</span><h2>Which way from here?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Four <b>cardinal</b> points, and four <b>ordinal</b> ones in between. Follow the instruction and see where you land.</span></div>
       <div class="stage">
         <svg class="grid8" id="map9" viewBox="0 0 260 260" role="img" aria-label="A map grid with a compass"></svg>
@@ -741,8 +769,21 @@
 
     <!-- 10 check -->
     
+<section class="slide" data-say="A route is several moves one after another. Do them in order and see where you land.">
+      <div class="slide-head"><span class="n">4</span><h2>Following a route</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay3">A route is moves <b>one after another</b>. Do the first, then the second, then tap the square you land on.</span></div>
+      <div class="stage">
+        <svg class="grid8" id="wmap3" viewBox="0 0 260 260" role="img" aria-label="A grid with a starting dot"></svg>
+        <p class="qstem" id="wq3"></p>
+        <div class="working" id="wwork3"></div>
+        <p class="fb" id="wfb3"></p>
+        <p class="fb small-fb" id="wtask3"></p>
+      </div>
+    </section>
+
+    
 <section class="slide" data-say="Coordinates. Go along the bottom first, then up. Tap the point I ask for.">
-      <div class="slide-head"><span class="n">2</span><h2>Coordinates</h2></div>
+      <div class="slide-head"><span class="n">5</span><h2>Coordinates</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="d11_say11">Go <b>along</b> first, then <b>up</b>. Tap the point.</span></div>
       <div class="stage">
         <svg class="coords" id="d11_coords11" viewBox="0 0 260 260" role="img" aria-label="Coordinate grid"></svg>
@@ -753,8 +794,35 @@
 
     <!-- 12 check -->
     
+<section class="slide" data-say="Coordinates always go along first and then up. Swapping them gives a different place altogether.">
+      <div class="slide-head"><span class="n">6</span><h2>Along first, then up</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay4">The first number is <b>along</b>, the second is <b>up</b>. Swap them and you are somewhere else entirely. Tap the point the label names.</span></div>
+      <div class="stage">
+        <svg class="coords" id="wxy4" viewBox="0 0 260 260" role="img" aria-label="A coordinate grid with two points"></svg>
+        <p class="qstem" id="wq4"></p>
+        <div class="working" id="wwork4"></div>
+        <p class="fb" id="wfb4"></p>
+        <p class="fb small-fb" id="wtask4"></p>
+      </div>
+    </section>
+
+    
+<section class="slide" data-say="Every corner of a shape has its own pair of coordinates.">
+      <div class="slide-head"><span class="n">7</span><h2>The corners of a shape</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay5">A shape sits on the grid and <b>every corner</b> has its own pair. Read the circled one: along first, then up.</span></div>
+      <div class="stage">
+        <svg class="coords" id="wxy5" viewBox="0 0 260 260" role="img" aria-label="A rectangle drawn on a coordinate grid"></svg>
+        <p class="qstem" id="wq5"></p>
+        <div class="choices" id="wpick5"></div>
+        <div class="working" id="wwork5"></div>
+        <p class="fb" id="wfb5"></p>
+        <p class="fb small-fb" id="wtask5"></p>
+      </div>
+    </section>
+
+    
 <section class="slide" data-say="Every square of the shape has a partner the same distance on the other side of the mirror line.">
-      <div class="slide-head"><span class="n">3</span><h2>Reflect it in the mirror</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>Reflect it in the mirror</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Each square has a partner the <b>same distance</b> on the other side of the mirror line. Tap the squares to build the reflection.</span></div>
       <div class="stage">
         <div class="chips" id="pickRef"></div>
@@ -765,12 +833,24 @@
         </div>
         <p class="fb" id="fb4"></p>
         <p class="fb small-fb" id="task4"></p>
-        <div class="askwrap" id="ask3"></div>
+        <div class="askwrap" id="ask8"></div>
       </div>
     </section>
 
     <!-- 5 combining and tessellating -->
     
+<section class="slide" data-say="When the mirror sits on the edge of the shape, the reflection touches it and the whole thing doubles.">
+      <div class="slide-head"><span class="n">9</span><h2>When the mirror is the edge</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="wsay6">Here the mirror line runs along the <b>edge</b> of the shape. Nothing has any distance to cross, so the reflection <b>touches</b> the original and the whole picture doubles.</span></div>
+      <div class="stage">
+        <svg class="grid8" id="wmir6" viewBox="0 0 260 260" role="img" aria-label="A shape with a mirror line along its edge"></svg>
+        <p class="qstem" id="wq6"></p>
+        <div class="working" id="wwork6"></div>
+        <p class="fb" id="wfb6"></p>
+        <p class="fb small-fb" id="wtask6"></p>
+      </div>
+    </section>
+
 <section class="slide" data-say="Show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the answer.</span></div>
@@ -1657,7 +1737,111 @@
     (marks || []).forEach((m) => { h += '<div class="m" style="left:' + x(m) + '"></div>'; }); el.innerHTML = h;
   }
 
-    /* ---- 9: position and direction (4Gp.01) ---- */
+    
+  /* ---- shared by the new Where Things Are slides ---- */
+  const W_CARD = ["N", "E", "S", "W"];
+  const W_EIGHT = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
+  const W_LONG = { N: "north", NE: "north-east", E: "east", SE: "south-east",
+    S: "south", SW: "south-west", W: "west", NW: "north-west" };
+  const W_STEP = { N: [0, -1], NE: [1, -1], E: [1, 0], SE: [1, 1],
+    S: [0, 1], SW: [-1, 1], W: [-1, 0], NW: [-1, -1] };
+  const W_C = 30, W_P = 10;                       /* cell size and padding, as slide 9 uses */
+  const wCells = (mark) => {
+    let g = "";
+    for (let x = 0; x < 8; x++) for (let y = 0; y < 8; y++)
+      g += '<rect class="cell' + (mark ? mark(x, y) : "") + '" data-x="' + x + '" data-y="' + y +
+        '" x="' + (W_P + x * W_C) + '" y="' + (W_P + y * W_C) + '" width="' + W_C + '" height="' + W_C + '"></rect>';
+    return g;
+  };
+  const wDot = (cls, x, y) => '<circle class="' + cls + '" cx="' + (W_P + x * W_C + W_C / 2) +
+    '" cy="' + (W_P + y * W_C + W_C / 2) + '" r="11"></circle>';
+
+  /* ---- 1: the cardinal points and quarter turns (4Gp.01) ---- */
+  const W_TURNS = [[1, "a quarter turn clockwise"], [2, "a half turn"],
+    [3, "three quarter turns clockwise"], [3, "a quarter turn anticlockwise"]];
+  let w1 = null, w1right = 0, w1asked = 0, w1lock = false;
+  function wNew1() {
+    const from = rnd(0, 3), t = W_TURNS[rnd(0, W_TURNS.length - 1)];
+    return { from: from, steps: t[0], name: t[1], to: (from + t[0]) % 4 };
+  }
+  function wPaint1() {
+    const cx = 130, cy = 100, r = 62;
+    const at = [[0, -1], [1, 0], [0, 1], [-1, 0]][w1.from];
+    let g = '<circle class="cell" cx="' + cx + '" cy="' + cy + '" r="' + r + '"></circle>';
+    W_CARD.forEach((k, i) => {
+      const d = [[0, -1], [1, 0], [0, 1], [-1, 0]][i];
+      g += '<text class="compass" x="' + (cx + d[0] * (r + 14)) + '" y="' + (cy + d[1] * (r + 14) + 5) + '">' + k + "</text>";
+    });
+    g += '<line class="mir" x1="' + cx + '" y1="' + cy + '" x2="' + (cx + at[0] * r) + '" y2="' + (cy + at[1] * r) + '"></line>';
+    g += '<circle class="here" cx="' + (cx + at[0] * r) + '" cy="' + (cy + at[1] * r) + '" r="9"></circle>';
+    $("wrose1").innerHTML = g;
+    $("wq1").innerHTML = "You are facing <b>" + W_LONG[W_CARD[w1.from]] + "</b>. Make <b>" + w1.name + "</b>. Which way are you facing now?";
+    $("wpick1").innerHTML = W_CARD.map((k) => '<button type="button" class="choice word" data-k="' + k + '">' + W_LONG[k] + "</button>").join("");
+    $("wtask1").textContent = "Answered " + w1asked + " · " + w1right + " right";
+  }
+  $("wpick1").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-k]"); if (!b || w1lock) return;
+    w1lock = true; w1asked++;
+    const ok = b.dataset.k === W_CARD[w1.to];
+    if (ok) w1right++;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("wwork1"), [
+      { k: "Facing", v: W_LONG[W_CARD[w1.from]] },
+      { k: "The turn", v: w1.name + ", which is <b>" + w1.steps + "</b> step" + (w1.steps === 1 ? "" : "s") + " round" },
+      { k: "Counting round", v: W_CARD.map((k, i) => (i === w1.to ? "<b>" + k + "</b>" : k)).join(" → ") },
+      { k: "Now facing", v: "<b>" + W_LONG[W_CARD[w1.to]] + "</b>", total: true },
+    ]);
+    $("wfb1").innerHTML = (ok ? cheer() + " " : "It is " + W_LONG[W_CARD[w1.to]] + ". ") +
+      "The four points go round in order, so each quarter turn moves you on one.";
+    $("wfb1").className = "fb " + (ok ? "good" : "bad");
+    say($("wfb1").textContent);
+    if (w1right >= 4) finish(0, "You can turn and say which way you face!");
+    setTimeout(() => { w1 = wNew1(); w1lock = false; wPaint1(); }, 1900);
+  });
+  w1 = wNew1(); wPaint1();
+
+  /* ---- 2: the ordinal points and their notation (4Gp.01) ---- */
+  let w2 = null, w2right = 0, w2lock = false;
+  function wNew2() {
+    const i = rnd(0, 3) * 2;                       /* a cardinal index in the eight */
+    const a = W_EIGHT[i], b = W_EIGHT[(i + 2) % 8], mid = W_EIGHT[(i + 1) % 8];
+    return { a: a, b: b, mid: mid };
+  }
+  function wPaint2() {
+    const cx = 130, cy = 100, r = 62;
+    let g = '<circle class="cell" cx="' + cx + '" cy="' + cy + '" r="' + r + '"></circle>';
+    W_EIGHT.forEach((k) => {
+      const d = W_STEP[k], len = Math.abs(d[0]) + Math.abs(d[1]) > 1 ? 0.72 : 1;
+      const hit = k === w2.a || k === w2.b;
+      g += '<text class="compass' + (hit ? " here" : "") + '" x="' + (cx + d[0] * (r + 14) * len) +
+        '" y="' + (cy + d[1] * (r + 14) * len + 5) + '">' + k + "</text>";
+    });
+    $("wrose2").innerHTML = g;
+    $("wq2").innerHTML = "Which point lies <b>between " + W_LONG[w2.a] + " and " + W_LONG[w2.b] + "</b>?";
+    $("wpick2").innerHTML = ["NE", "SE", "SW", "NW"].map((k) => '<button type="button" class="choice" data-k="' + k + '">' + k + "</button>").join("");
+    $("wtask2").textContent = "Right so far: " + w2right + " of 4";
+  }
+  $("wpick2").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-k]"); if (!b || w2lock) return;
+    w2lock = true;
+    const ok = b.dataset.k === w2.mid;
+    if (ok) w2right++;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("wwork2"), [
+      { k: "The two points", v: W_LONG[w2.a] + " and " + W_LONG[w2.b] },
+      { k: "Join the names", v: W_LONG[w2.a] + " + " + W_LONG[w2.b] + " = <b>" + W_LONG[w2.mid] + "</b>" },
+      { k: "Written short", v: "<b>" + w2.mid + "</b>, and the north or south part always comes first", total: true },
+    ]);
+    $("wfb2").innerHTML = (ok ? cheer() + " " : "It is " + w2.mid + ". ") +
+      "The in-between points are the <b>ordinal</b> ones, and their names are both cardinals joined.";
+    $("wfb2").className = "fb " + (ok ? "good" : "bad");
+    say($("wfb2").textContent);
+    if (w2right >= 4) finish(1, "You know all eight points!");
+    setTimeout(() => { w2 = wNew2(); w2lock = false; wPaint2(); }, 1900);
+  });
+  w2 = wNew2(); wPaint2();
+
+  /* ---- 9: position and direction (4Gp.01) ---- */
   const DIRS = { N: [0, -1], NE: [1, -1], E: [1, 0], SE: [1, 1], S: [0, 1], SW: [-1, 1], W: [-1, 0], NW: [-1, -1] };
   const DIRNAME = { N: "north", NE: "north-east", E: "east", SE: "south-east", S: "south", SW: "south-west", W: "west", NW: "north-west" };
   let from9 = [3, 4], to9 = null, right9 = 0, asked9 = 0, lock9 = false;
@@ -1700,10 +1884,58 @@
     $("fb9").innerHTML = (ok ? cheer() + " " : "It was " + DIRNAME[to9.k] + ". ") + "North is up the grid.";
     $("fb9").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : "It was " + DIRNAME[to9.k]);
-    if (right9 >= 3) finish(0, "");
+    if (right9 >= 3) finish(2, "");
     setTimeout(() => { from9 = to9.to.slice(); nextMove(); }, 2400);
   });
   nextMove();
+
+  /* ---- 3: following a route of two moves (4Gp.01) ---- */
+  let w3 = null, w3right = 0, w3lock = false;
+  function wNew3() {
+    for (let t = 0; t < 80; t++) {
+      const sx = rnd(1, 6), sy = rnd(1, 6);
+      const k1 = ["N", "E", "S", "W"][rnd(0, 3)], n1 = rnd(1, 3);
+      const k2 = ["N", "E", "S", "W"][rnd(0, 3)], n2 = rnd(1, 3);
+      if (k1 === k2) continue;
+      const mx = sx + W_STEP[k1][0] * n1, my = sy + W_STEP[k1][1] * n1;
+      const ex = mx + W_STEP[k2][0] * n2, ey = my + W_STEP[k2][1] * n2;
+      if (mx < 0 || mx > 7 || my < 0 || my > 7 || ex < 0 || ex > 7 || ey < 0 || ey > 7) continue;
+      if (ex === sx && ey === sy) continue;
+      return { s: [sx, sy], m: [mx, my], e: [ex, ey], k1: k1, n1: n1, k2: k2, n2: n2 };
+    }
+    return { s: [1, 1], m: [3, 1], e: [3, 3], k1: "E", n1: 2, k2: "S", n2: 2 };
+  }
+  function wPaint3() {
+    let g = wCells(null);
+    g += wDot("here", w3.s[0], w3.s[1]);
+    g += '<text class="compass" x="' + (W_P + 4 * W_C) + '" y="' + (W_P - 1) + '">N</text>';
+    $("wmap3").innerHTML = g;
+    $("wq3").innerHTML = "Start on the dot. Go <b>" + w3.n1 + " " + W_LONG[w3.k1] + "</b>, then <b>" +
+      w3.n2 + " " + W_LONG[w3.k2] + "</b>. Tap the square you land on.";
+    $("wtask3").textContent = "Routes finished: " + w3right + " of 3";
+  }
+  $("wmap3").addEventListener("click", (e) => {
+    const c = e.target.closest("rect[data-x]"); if (!c || w3lock) return;
+    w3lock = true;
+    const x = Number(c.dataset.x), y = Number(c.dataset.y);
+    const ok = x === w3.e[0] && y === w3.e[1];
+    if (ok) w3right++;
+    $("wmap3").innerHTML += wDot(ok ? "there" : "mine", x, y);
+    if (!ok) $("wmap3").innerHTML += wDot("there", w3.e[0], w3.e[1]);
+    lines($("wwork3"), [
+      { k: "Start", v: "column " + w3.s[0] + ", row " + w3.s[1] },
+      { k: "First move", v: w3.n1 + " " + W_LONG[w3.k1] + " → column " + w3.m[0] + ", row " + w3.m[1] },
+      { k: "Second move", v: w3.n2 + " " + W_LONG[w3.k2] + " → column " + w3.e[0] + ", row " + w3.e[1] },
+      { k: "Do them in order", v: "the second move starts from where the first one ended", total: true },
+    ]);
+    $("wfb3").innerHTML = ok ? cheer() + " That is where the route ends."
+      : "Not there. The route ends at column " + w3.e[0] + ", row " + w3.e[1] + ".";
+    $("wfb3").className = "fb " + (ok ? "good" : "bad");
+    say($("wfb3").textContent);
+    if (w3right >= 3) finish(3, "You can follow a route!");
+    setTimeout(() => { w3 = wNew3(); w3lock = false; wPaint3(); }, 2100);
+  });
+  w3 = wNew3(); wPaint3();
 
   /* ---- 11: coordinates ---- */
   let d11_target11 = null, d11_right11 = 0, d11_lock11 = false; const N = 8;
@@ -1726,11 +1958,117 @@
     d11_drawGrid([{ x: d11_target11.x, y: d11_target11.y, cls: "good" }].concat(ok ? [] : [{ x, y, cls: "oops" }]));
     if (ok) d11_right11++;
     $("d11_fb11").className = "fb " + (ok ? "good" : "bad"); $("d11_fb11").textContent = (ok ? cheer() + " " : "You tapped (" + x + ", " + y + "). ") + "(" + d11_target11.x + ", " + d11_target11.y + ") is " + d11_target11.x + " along and " + d11_target11.y + " up."; say((ok ? cheer() : "Not quite.") + " " + d11_target11.x + " along, " + d11_target11.y + " up");
-    if (d11_right11 >= 4) finish(1, "Coordinates: well done!"); setTimeout(d11_ask11, 2200);
+    if (d11_right11 >= 4) finish(4, "Coordinates: well done!"); setTimeout(d11_ask11, 2200);
   }
   $("d11_coords11").addEventListener("click", (e) => d11_pick11(e.target.closest(".pt")));
   $("d11_coords11").addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); d11_pick11(e.target.closest(".pt")); } });
   d11_ask11();
+
+  /* ---- 4: along first, then up (4Gp.02) ---- */
+  let w4 = null, w4right = 0, w4lock = false;
+  function wNew4() {
+    let a = rnd(1, 7), b = rnd(1, 7);
+    while (a === b) b = rnd(1, 7);
+    return { a: a, b: b, want: rnd(0, 1) === 1 };   /* want true = ask for (a,b) */
+  }
+  function wPaint4() {
+    const C = 28, P = 22, H = 260;
+    const px = (v) => P + v * C, py = (v) => H - P - v * C;
+    let g = "";
+    for (let i = 0; i <= 8; i++) {
+      g += '<line class="gl" x1="' + px(i) + '" y1="' + py(0) + '" x2="' + px(i) + '" y2="' + py(8) + '"></line>';
+      g += '<line class="gl" x1="' + px(0) + '" y1="' + py(i) + '" x2="' + px(8) + '" y2="' + py(i) + '"></line>';
+    }
+    g += '<line class="ax" x1="' + px(0) + '" y1="' + py(0) + '" x2="' + px(8) + '" y2="' + py(0) + '"></line>';
+    g += '<line class="ax" x1="' + px(0) + '" y1="' + py(0) + '" x2="' + px(0) + '" y2="' + py(8) + '"></line>';
+    for (let i = 0; i <= 8; i += 2) {
+      g += '<text class="lab" x="' + px(i) + '" y="' + (py(0) + 14) + '">' + i + "</text>";
+      if (i) g += '<text class="lab" x="' + (px(0) - 10) + '" y="' + (py(i) + 4) + '">' + i + "</text>";
+    }
+    g += '<circle class="pt" data-p="ab" cx="' + px(w4.a) + '" cy="' + py(w4.b) + '" r="8"></circle>';
+    g += '<circle class="pt" data-p="ba" cx="' + px(w4.b) + '" cy="' + py(w4.a) + '" r="8"></circle>';
+    $("wxy4").innerHTML = g;
+    const t = w4.want ? [w4.a, w4.b] : [w4.b, w4.a];
+    $("wq4").innerHTML = "Tap the point at <b>(" + t[0] + ", " + t[1] + ")</b>.";
+    $("wtask4").textContent = "Right so far: " + w4right + " of 4";
+  }
+  $("wxy4").addEventListener("click", (e) => {
+    const p = e.target.closest("circle[data-p]"); if (!p || w4lock) return;
+    w4lock = true;
+    const ok = p.dataset.p === (w4.want ? "ab" : "ba");
+    if (ok) w4right++;
+    p.classList.add(ok ? "good" : "oops");
+    const t = w4.want ? [w4.a, w4.b] : [w4.b, w4.a];
+    lines($("wwork4"), [
+      { k: "The pair", v: "(" + t[0] + ", " + t[1] + ")" },
+      { k: "First number", v: "<b>" + t[0] + "</b> along the bottom" },
+      { k: "Second number", v: "<b>" + t[1] + "</b> up the side" },
+      { k: "Why order matters", v: "(" + t[0] + ", " + t[1] + ") and (" + t[1] + ", " + t[0] + ") are two different places", total: true },
+    ]);
+    $("wfb4").innerHTML = (ok ? cheer() + " " : "Not that one. ") + "Along the bottom first, then up the side.";
+    $("wfb4").className = "fb " + (ok ? "good" : "bad");
+    say($("wfb4").textContent);
+    if (w4right >= 4) finish(5, "You read coordinates the right way round!");
+    setTimeout(() => { w4 = wNew4(); w4lock = false; wPaint4(); }, 2000);
+  });
+  w4 = wNew4(); wPaint4();
+
+  /* ---- 5: the coordinates of a shape's corners (4Gp.02) ---- */
+  let w5 = null, w5right = 0, w5lock = false;
+  function wNew5() {
+    const x1 = rnd(0, 4), y1 = rnd(0, 4);
+    const x2 = x1 + rnd(2, 3), y2 = y1 + rnd(2, 3);
+    const corners = [[x1, y1], [x2, y1], [x2, y2], [x1, y2]];
+    return { x1: x1, y1: y1, x2: x2, y2: y2, corners: corners, pick: rnd(0, 3) };
+  }
+  function wPaint5() {
+    const C = 28, P = 22, H = 260;
+    const px = (v) => P + v * C, py = (v) => H - P - v * C;
+    let g = "";
+    for (let i = 0; i <= 8; i++) {
+      g += '<line class="gl" x1="' + px(i) + '" y1="' + py(0) + '" x2="' + px(i) + '" y2="' + py(8) + '"></line>';
+      g += '<line class="gl" x1="' + px(0) + '" y1="' + py(i) + '" x2="' + px(8) + '" y2="' + py(i) + '"></line>';
+    }
+    g += '<line class="ax" x1="' + px(0) + '" y1="' + py(0) + '" x2="' + px(8) + '" y2="' + py(0) + '"></line>';
+    g += '<line class="ax" x1="' + px(0) + '" y1="' + py(0) + '" x2="' + px(0) + '" y2="' + py(8) + '"></line>';
+    for (let i = 0; i <= 8; i += 2) {
+      g += '<text class="lab" x="' + px(i) + '" y="' + (py(0) + 14) + '">' + i + "</text>";
+      if (i) g += '<text class="lab" x="' + (px(0) - 10) + '" y="' + (py(i) + 4) + '">' + i + "</text>";
+    }
+    g += '<rect class="guide" x="' + px(w5.x1) + '" y="' + py(w5.y2) + '" width="' + ((w5.x2 - w5.x1) * C) +
+      '" height="' + ((w5.y2 - w5.y1) * C) + '"></rect>';
+    w5.corners.forEach((c, i) => {
+      g += '<circle class="pt' + (i === w5.pick ? " tgt" : "") + '" cx="' + px(c[0]) + '" cy="' + py(c[1]) + '" r="' + (i === w5.pick ? 9 : 6) + '"></circle>';
+    });
+    $("wxy5").innerHTML = g;
+    const c = w5.corners[w5.pick];
+    const wrong1 = [c[1], c[0]], wrong2 = [c[0], c[1] + (c[1] < 7 ? 1 : -1)];
+    const opts = shuffle([c, wrong1, wrong2].map((p) => p.join(",")));
+    w5.opts = opts;
+    $("wq5").innerHTML = "What are the coordinates of the <b>circled corner</b>?";
+    $("wpick5").innerHTML = opts.map((o) => '<button type="button" class="choice" data-o="' + o + '">(' + o.replace(",", ", ") + ")</button>").join("");
+    $("wtask5").textContent = "Right so far: " + w5right + " of 4";
+  }
+  $("wpick5").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-o]"); if (!b || w5lock) return;
+    w5lock = true;
+    const c = w5.corners[w5.pick];
+    const ok = b.dataset.o === c.join(",");
+    if (ok) w5right++;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("wwork5"), [
+      { k: "Go along", v: "<b>" + c[0] + "</b> from the corner of the grid" },
+      { k: "Then up", v: "<b>" + c[1] + "</b>" },
+      { k: "So the corner is", v: "<b>(" + c[0] + ", " + c[1] + ")</b>" },
+      { k: "All four corners", v: w5.corners.map((p) => "(" + p[0] + ", " + p[1] + ")").join(", "), total: true },
+    ]);
+    $("wfb5").innerHTML = (ok ? cheer() + " " : "It is (" + c[0] + ", " + c[1] + "). ") + "Along the bottom, then up the side.";
+    $("wfb5").className = "fb " + (ok ? "good" : "bad");
+    say($("wfb5").textContent);
+    if (w5right >= 4) finish(6, "You can read every corner!");
+    setTimeout(() => { w5 = wNew5(); w5lock = false; wPaint5(); }, 2100);
+  });
+  w5 = wNew5(); wPaint5();
 
   /* ---- 4: reflecting in a mirror line (4Gp.03) ---- */
   const REFS = [
@@ -1768,7 +2106,7 @@
     $("fb4").className = "fb " + (done ? "good" : "");
     $("task4").textContent = R.axis === "V" ? "The mirror runs top to bottom, so left and right swap over."
       : "The mirror runs left to right, so up and down swap over.";
-    if (done) finish(2, "");
+    if (done) finish(7, "");
   }
   $("ref4").addEventListener("click", (e) => {
     const c = e.target.closest("rect.cell"); if (!c) return;
@@ -1788,10 +2126,74 @@
   });
   paint4();
 
-  /* ---- 10: check ---- */
+  /* ---- 6: a mirror line on the edge of the shape (4Gp.03) ---- */
+  let w6 = null, w6lock = false;
+  function wNew6() {
+    const w = rnd(2, 3), h = rnd(2, 3);
+    const x1 = rnd(1, 3), y1 = rnd(1, 4);
+    const cells = [];
+    for (let x = x1; x < x1 + w; x++) for (let y = y1; y < y1 + h; y++) cells.push([x, y]);
+    const m = x1 + w;                              /* the boundary just past the right edge */
+    return { cells: cells, m: m, found: [], need: cells.length };
+  }
+  const wReflect = (x, m) => 2 * m - 1 - x;
+  function wPaint6() {
+    const mark = (x, y) => {
+      if (w6.cells.some((c) => c[0] === x && c[1] === y)) return " orig";
+      if (w6.found.some((c) => c[0] === x && c[1] === y)) return " mine";
+      return "";
+    };
+    let g = wCells(mark);
+    const mx = W_P + w6.m * W_C;
+    g += '<line class="mir" x1="' + mx + '" y1="' + W_P + '" x2="' + mx + '" y2="' + (W_P + 8 * W_C) + '"></line>';
+    $("wmir6").innerHTML = g;
+    $("wq6").innerHTML = "The mirror runs along the <b>right edge</b> of the shape. Tap the " +
+      w6.need + " squares of its reflection. <b>" + w6.found.length + "</b> found.";
+    $("wtask6").textContent = "The reflection touches the shape, because the edge has no distance to cross.";
+  }
+  $("wmir6").addEventListener("click", (e) => {
+    const c = e.target.closest("rect[data-x]"); if (!c || w6lock) return;
+    const x = Number(c.dataset.x), y = Number(c.dataset.y);
+    const want = w6.cells.some((p) => wReflect(p[0], w6.m) === x && p[1] === y);
+    if (!want) {
+      $("wfb6").innerHTML = "Not that square. Each one crosses the mirror and lands the same distance the other side.";
+      $("wfb6").className = "fb bad";
+      return;
+    }
+    if (w6.found.some((p) => p[0] === x && p[1] === y)) return;
+    w6.found.push([x, y]);
+    wPaint6();
+    if (w6.found.length >= w6.need) {
+      w6lock = true;
+      const left = Math.min.apply(null, w6.cells.map((p) => p[0]));
+      const right = Math.max.apply(null, w6.found.map((p) => p[0]));
+      lines($("wwork6"), [
+        { k: "The shape", v: "columns " + left + " to " + (w6.m - 1) },
+        { k: "The mirror", v: "on the edge, just past column " + (w6.m - 1) },
+        { k: "The square touching it", v: "column " + (w6.m - 1) + " is <b>right against</b> the mirror, so its partner is column " + w6.m + " — they touch" },
+        { k: "The whole picture", v: "columns " + left + " to " + right + ", <b>twice as wide</b> as the shape", total: true },
+      ]);
+      $("wfb6").innerHTML = cheer() + " With the mirror on the edge, nothing has a gap to cross, so the reflection sits right against the shape.";
+      $("wfb6").className = "fb good";
+      say($("wfb6").textContent);
+      finish(8, "You reflected it against its own edge!");
+      setTimeout(() => { w6 = wNew6(); w6lock = false; $("wfb6").textContent = ""; $("wfb6").className = "fb"; wPaint6(); }, 2600);
+    } else {
+      $("wfb6").textContent = "";
+      $("wfb6").className = "fb";
+    }
+  });
+  w6 = wNew6(); wPaint6();
+/* ---- 10: check ---- */
   const Q10 = shuffle([
     { q: "Which of these is an ordinal point of the compass?", o: ["South-east", "South", "West"], a: 0, w: "North, east, south and west are the cardinal points. The four in between are the ordinal ones." },
-    { q: "In the coordinates (3, 5), what does the 3 tell you?", o: ["How far along", "How far up", "Which square to shade"], a: 0, w: "Go along first, then up. The first number is always the across one." }
+    { q: "In the coordinates (3, 5), what does the 3 tell you?", o: ["How far along", "How far up", "Which square to shade"], a: 0, w: "Go along first, then up. The first number is always the across one." },
+    { q: "You face north and make a quarter turn clockwise. Which way now?", o: ["East", "West", "South"], a: 0, w: "The points run north, east, south, west, so one quarter turn moves you on one." },
+    { q: "Which point lies between south and west?", o: ["SW", "SE", "NW"], a: 0, w: "Join the two names: south-west, written SW. The north or south part comes first." },
+    { q: "From a square you go 3 east then 2 north. How far east are you?", o: ["3", "5", "1"], a: 0, w: "Only the first move went east. Going north changes the row, not the column." },
+    { q: "Is (2, 6) the same place as (6, 2)?", o: ["No", "Yes", "Only on a big grid"], a: 0, w: "The first number is along and the second is up, so swapping them moves the point." },
+    { q: "A rectangle has corners at (1, 1) and (4, 3). What are the other two?", o: ["(4, 1) and (1, 3)", "(1, 4) and (3, 1)", "(4, 4) and (1, 1)"], a: 0, w: "The corners share their numbers: each one takes an along from one and an up from the other." },
+    { q: "The mirror line runs along the edge of a shape. Where does the reflection sit?", o: ["Touching the shape", "One square away", "On top of the shape"], a: 0, w: "A square against the mirror has no distance to cross, so its partner sits right beside it." }
   ]);
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {
@@ -1801,7 +2203,7 @@
       $("stem10").textContent = "That is all of them.";
       $("choices10").innerHTML = "";
       $("score10").textContent = right10 + " out of " + Q10.length + " right.";
-      if (right10 >= 7) finish(3, "");
+      if (right10 >= 7) finish(9, "");
       return;
     }
     $("stem10").textContent = Q10[c10].q;
@@ -1824,7 +2226,7 @@
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [ "🔷", "\U0001f5fa\ufe0f", "Fold it up: nets" ];
+  const STICKERS = [ "\U0001f9ed", "\u2197\ufe0f", "🔷", "\U0001f6b6", "\U0001f5fa\ufe0f", "\u2195\ufe0f", "\u25fb\ufe0f", "Fold it up: nets", "\U0001fa9e" ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -1838,7 +2240,7 @@
   /* 1 (4Gg.05) counts FACES. Edges and vertices are the distractors because confusing
      the three is the whole difficulty. Curved solids are left out -- "how many faces"
      is not a fair question for a cylinder at this stage. */
-    ask(3, () => {
+    ask(8, () => {
     const mir = rnd(4, 7), d = rnd(1, 3), x = mir - d, img = mir + d;
     const opts = pick3(img, [x, mir, img + 1]);
     return { stem: "The mirror line is at <b>" + mir + "</b>. A dot sits at <b>" + x +

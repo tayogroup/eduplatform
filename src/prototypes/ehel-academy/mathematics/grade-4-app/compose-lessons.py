@@ -53,8 +53,11 @@ STRUCTURE = [
     ("time", "Telling the Time", "time", None, None),
     ("shape", "Shape and Measures", "shape",
      [1, 2, 3, ("d", 10), 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9]),
+    # Direction is taught before it is used, coordinates are introduced before the
+    # order of the pair is argued about, and the mirror-on-the-edge case comes after
+    # an ordinary reflection rather than before it.
     ("where", "Where Things Are", "shape",
-     [9, ("d", 11), 4], [10]),
+     [("n", 1), ("n", 2), 9, ("n", 3), ("d", 11), ("n", 4), ("n", 5), 4, ("n", 6)], [10]),
     ("stats", "Asking, Sorting and Chance", "stats", None, None),
 ]
 
@@ -88,6 +91,39 @@ DONOR_EXTRAS = {
          ' w: "Go along first, then up. The first number is always the across one." }'),
 }
 DONOR_BODY, DONOR_JS = "g4-lesson-body.html", "g4-lesson.js"
+
+# Slides written for THIS build rather than cut from an existing lesson, one pair of
+# files per lesson (new-<key>-body.html / new-<key>-slides.js). They exist because the
+# grade was thin: 42 teaching slides against Grade 2's 104 and Grade 3's 72, with
+# several objectives sharing one slide where Grade 2 gives each skill its own. They
+# need no id prefixing -- everything in them is already prefixed w -- and no your-turn
+# panel, because each one judges the learner directly.
+#   lesson -> {slide number in the new file: (sticker, quiz item)}
+NEW_EXTRAS = {
+    "where": {
+        1: ("\\U0001f9ed",
+            '{ q: "You face north and make a quarter turn clockwise. Which way now?",'
+            ' o: ["East", "West", "South"], a: 0,'
+            ' w: "The points run north, east, south, west, so one quarter turn moves you on one." }'),
+        2: ("\\u2197\\ufe0f",
+            '{ q: "Which point lies between south and west?", o: ["SW", "SE", "NW"], a: 0,'
+            ' w: "Join the two names: south-west, written SW. The north or south part comes first." }'),
+        3: ("\\U0001f6b6",
+            '{ q: "From a square you go 3 east then 2 north. How far east are you?", o: ["3", "5", "1"], a: 0,'
+            ' w: "Only the first move went east. Going north changes the row, not the column." }'),
+        4: ("\\u2195\\ufe0f",
+            '{ q: "Is (2, 6) the same place as (6, 2)?", o: ["No", "Yes", "Only on a big grid"], a: 0,'
+            ' w: "The first number is along and the second is up, so swapping them moves the point." }'),
+        5: ("\\u25fb\\ufe0f",
+            '{ q: "A rectangle has corners at (1, 1) and (4, 3). What are the other two?",'
+            ' o: ["(4, 1) and (1, 3)", "(1, 4) and (3, 1)", "(4, 4) and (1, 1)"], a: 0,'
+            ' w: "The corners share their numbers: each one takes an along from one and an up from the other." }'),
+        6: ("\\U0001fa9e",
+            '{ q: "The mirror line runs along the edge of a shape. Where does the reflection sit?",'
+            ' o: ["Touching the shape", "One square away", "On top of the shape"], a: 0,'
+            ' w: "A square against the mirror has no distance to cross, so its partner sits right beside it." }'),
+    },
+}
 
 
 def blocks(js):
@@ -164,6 +200,25 @@ def declared_names(js):
     return out
 
 
+def new_slide(key, no, newpos):
+    """One slide written for this build, from new-<key>-{body.html,slides.js}.
+
+    No id prefixing and no declaration renaming: everything in those files is already
+    prefixed w, which is checked by the duplicate assertion in main() rather than
+    assumed here."""
+    body = io.open(os.path.join(HERE, "new-%s-body.html" % key), encoding="utf-8").read()
+    js = io.open(os.path.join(HERE, "new-%s-slides.js" % key), encoding="utf-8").read()
+    sec = re.split(r'(?=<section class="slide")', body)[1:][no - 1]
+    marks = [(m.start(), int(m.group(1))) for m in re.finditer(r"/\* ---- (\d+):", js)]
+    pos = [p for p, n in marks if n == no][0]
+    nxt = [p for p, n in marks if n == no + 1]
+    blk = js[pos:(nxt[0] if nxt else len(js))]
+    pre = js[: marks[0][0]] if no == min(n for _p, n in marks) else ""
+    sec = re.sub(r'(<span class="n">)\d+(</span>)', r"\g<1>%d\g<2>" % newpos, sec, count=1)
+    blk = re.sub(r"\bfinish\(\s*%d\s*," % (no - 1), "finish(%d," % (newpos - 1), blk)
+    return sec, pre + blk
+
+
 def donor_slide(no, newpos):
     """One Four Digits Strong slide, ids prefixed so it cannot collide, badge and
     finish() set to its new position. Safe because that file builds no id
@@ -216,8 +271,10 @@ def compose(key, title, srckey, keep, keepq):
     # ---- body and slide js, walked in the ORDERED sequence ----
     out_secs, slide_blks = [], []
     for new, item in enumerate(seq, start=1):
-        if isinstance(item, tuple):                      # ("d", n): a donor slide
+        if isinstance(item, tuple) and item[0] == "d":    # a Four Digits Strong slide
             sec, blk = donor_slide(item[1], new)
+        elif isinstance(item, tuple) and item[0] == "n":  # a slide written for this build
+            sec, blk = new_slide(key, item[1], new)
         else:
             newpos[item] = new
             sec = secs[item - 1]
@@ -241,7 +298,8 @@ def compose(key, title, srckey, keep, keepq):
     if keepq is None:
         keepq = list(range(1, len(items) + 1))
     picked = [items[i - 1] for i in keepq]
-    picked += [DONOR_EXTRAS[d[1]][1] for d in seq if isinstance(d, tuple)]
+    picked += [DONOR_EXTRAS[d[1]][1] for d in seq if isinstance(d, tuple) and d[0] == "d"]
+    picked += [NEW_EXTRAS[key][d[1]][1] for d in seq if isinstance(d, tuple) and d[0] == "n"]
     chk = chk[: m.start(2)] + "\n    " + ",\n    ".join(picked) + chk[m.end(2):]
     chk = re.sub(r"\bfinish\(\s*%d\s*," % (checkno - 1), "finish(%d," % total, chk)
     parts.append(chk)
@@ -253,7 +311,8 @@ def compose(key, title, srckey, keep, keepq):
     picked_st = []
     for item in seq:
         if isinstance(item, tuple):
-            picked_st.append('"%s"' % DONOR_EXTRAS[item[1]][0])
+            table = DONOR_EXTRAS if item[0] == "d" else NEW_EXTRAS[key]
+            picked_st.append('"%s"' % table[item[1]][0])
         else:
             picked_st.append(allst[item - 1] if item - 1 < len(allst) else '"\\u2b50"')
     assert len(picked_st) == total, "STICKERS must be parallel to done[]: %d vs %d" % (len(picked_st), total)

@@ -488,6 +488,21 @@
     .read-page p { font-size: 21px; line-height: 1.8; }
   }
 
+  /* ---- the picture book's caption, and its read-along ----
+     The books have always carried their text and never shown it, so a child
+     could follow the words with a finger on the unit readings and not on the
+     books - the ones with the pictures. Paper under the illustration, the
+     same gold highlight the readings use, so the two feel like one idea. */
+  .book-caption { flex: 0 0 auto; width: 100%; max-width: 720px; margin: 10px auto 0;
+    padding: 16px 22px; border-radius: 16px; background: #fbf6e9; color: #23303a;
+    font-size: 22px; line-height: 1.7; text-align: center; }
+  .cap-line { border-radius: 7px; padding: 1px 3px; margin: 0 -3px;
+    transition: background-color 140ms ease, color 140ms ease; }
+  .cap-line.on { background: var(--gold, #f2c14e); color: #1b2530; box-shadow: 0 0 0 3px var(--gold, #f2c14e); }
+  @media (max-width: 560px) {
+    .book-caption { font-size: 18px; padding: 12px 16px; line-height: 1.6; }
+  }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -6021,9 +6036,88 @@
      Same reader, same tap sounds, same Listen - one implementation. */
   function openBookReader(book, onFinish) {
       let page = 0;
+      let reading = null;          // the sentence-by-sentence read-along, if running
       const overlay = document.createElement("div");
       overlay.className = "book-reader";
       document.body.appendChild(overlay);
+
+      /* The page's text, as sentences, so the caption can highlight one at a
+         time. A whole page lit up points at nothing. Split after end
+         punctuation and keep a closing quote with the sentence it ends -
+         these books are mostly dialogue. */
+      const sentencesOf = (text) => String(text || "")
+        .split(/(?<=[.!?][")\u201d]?)\s+/)
+        .map((x) => x.trim())
+        .filter(Boolean);
+
+      let clipPlayer = null;
+
+      function stopReading() {
+        if (reading) { clearInterval(reading); reading = null; }
+        if (clipPlayer) { try { clipPlayer.pause(); } catch (_) { /* gone */ } clipPlayer = null; }
+        try { VOICE.stop(); } catch (_) { /* nothing to stop */ }
+        overlay.querySelectorAll(".cap-line.on").forEach((n) => n.classList.remove("on"));
+        const b = overlay.querySelector("#bookListen");
+        if (b) b.innerHTML = "&#128266; Listen";
+      }
+
+      /* THE PRE-RENDERED CLIP, and the caption follows it.
+         One clip per page (page-NN.mp3 beside page-NN.svg), so the highlight
+         is the character-share estimate the unit readings use: no clip in this
+         course carries word timings, and a line's share of the characters
+         tracks a steady narrator closely enough to follow with a finger. */
+      function playClipFor(lines, url) {
+        let at = 0;
+        const bounds = lines.map((t) => { const r = [at, at + Math.max(1, t.length)]; at += Math.max(1, t.length); return r; });
+        const total = at;
+        const caption = overlay.querySelector("#bookCaption");
+        let active = -1;
+        clipPlayer = new Audio(url);
+        clipPlayer.addEventListener("ended", () => stopReading());
+        clipPlayer.addEventListener("error", () => { clipPlayer = null; readFrom(lines, 0); });
+        clipPlayer.play().then(() => {
+          const b = overlay.querySelector("#bookListen");
+          if (b) b.innerHTML = "\u23F8 Pause";
+          reading = setInterval(() => {
+            if (!clipPlayer || !caption) return;
+            const d = clipPlayer.duration;
+            if (!Number.isFinite(d) || d <= 0) return;
+            const pos = Math.min(Math.max(clipPlayer.currentTime / d, 0), 1) * total;
+            let i = bounds.findIndex(([, e2]) => pos < e2);
+            if (i === -1) i = lines.length - 1;
+            if (i === active) return;
+            active = i;
+            caption.querySelectorAll(".cap-line.on").forEach((n) => n.classList.remove("on"));
+            const node = caption.querySelector('.cap-line[data-i="' + i + '"]');
+            if (node) node.classList.add("on");
+          }, 120);
+        }).catch(() => {
+          // Autoplay refused, or the file is not there. Fall back to the voice
+          // rather than to silence.
+          clipPlayer = null;
+          readFrom(lines, 0);
+        });
+      }
+
+      /* Speak sentence i, light it, and move on when the voice has actually
+         finished it - the afterVoice() idiom from english.js, which polls
+         VOICE.speaking() because the engine reports a queue rather than
+         per-utterance events. The ceiling is the same guard: a voice that
+         never reports finishing must not leave the caption stuck. */
+      function readFrom(lines, i) {
+        const caption = overlay.querySelector("#bookCaption");
+        if (!caption || i >= lines.length) { stopReading(); return; }
+        caption.querySelectorAll(".cap-line.on").forEach((n) => n.classList.remove("on"));
+        const node = caption.querySelector('.cap-line[data-i="' + i + '"]');
+        if (node) node.classList.add("on");
+        VOICE.speak(lines[i]);
+        let waited = 0;
+        reading = setInterval(() => {
+          waited += 150;
+          if (!VOICE.speaking() && waited > 300) { clearInterval(reading); reading = null; readFrom(lines, i + 1); }
+          else if (waited > 20000) { clearInterval(reading); reading = null; stopReading(); }
+        }, 150);
+      }
 
       function renderPage() {
         const p = book.pages[page];
@@ -6032,6 +6126,10 @@
           '<div class="book-reader-top"><span class="booktitle">' + esc(book.title) + "</span>" +
           '<button type="button" class="book-close" aria-label="Close the book">&#10005;</button></div>' +
           '<div class="book-stage-wrap"><div class="book-stage" id="bookStage"></div></div>' +
+          (p.text
+            ? '<div class="book-caption" id="bookCaption">' + sentencesOf(p.text).map((t, i) =>
+                '<span class="cap-line" data-i="' + i + '">' + esc(t) + "</span>").join(" ") + "</div>"
+            : "") +
           '<div class="book-reader-bottom">' +
           '<button type="button" class="big small ghost" id="bookBack"' + (page === 0 ? " disabled" : "") + '>&#9664; Back</button>' +
           '<button type="button" class="big small teal" id="bookListen">&#128266; Listen</button>' +
@@ -6042,15 +6140,23 @@
           "</div>";
         overlay.querySelector(".book-close").addEventListener("click", closeReader);
         const backBtn = overlay.querySelector("#bookBack");
-        if (backBtn) backBtn.addEventListener("click", () => { page--; renderPage(); });
+        if (backBtn) backBtn.addEventListener("click", () => { stopReading(); page--; renderPage(); });
         const nextBtn = overlay.querySelector("#bookNext");
-        if (nextBtn) nextBtn.addEventListener("click", () => { page++; renderPage(); });
+        if (nextBtn) nextBtn.addEventListener("click", () => { stopReading(); page++; renderPage(); });
         const finishBtn = overlay.querySelector("#bookFinish");
         if (finishBtn) finishBtn.addEventListener("click", () => {
+          stopReading();
           closeReader();
           if (onFinish) onFinish();
         });
-        overlay.querySelector("#bookListen").addEventListener("click", () => VOICE.speak(p.text));
+        overlay.querySelector("#bookListen").addEventListener("click", () => {
+          if (reading) { stopReading(); return; }
+          const lines = sentencesOf(p.text);
+          if (!lines.length) return;
+          overlay.querySelector("#bookListen").innerHTML = "\u23F8 Pause";
+          // The rendered clip if there is one; the runtime voice if not.
+          playClipFor(lines, ebookAsset(book.id, "page-" + String(page + 1).padStart(2, "0") + ".mp3"));
+        });
 
         const stage = overlay.querySelector("#bookStage");
         fetch(ebookAsset(book.id, p.image))
@@ -6076,6 +6182,7 @@
         if (p.sound) playStorySound(p.sound);
       }
       function closeReader() {
+        stopReading();
         overlay.remove();
         document.removeEventListener("keydown", onKey);
       }

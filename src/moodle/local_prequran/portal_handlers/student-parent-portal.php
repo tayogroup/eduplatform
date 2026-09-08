@@ -288,6 +288,15 @@ if (pqh_table_exists_safe('local_prequran_live_audit')) {
     }
 }
 
+// Monday of the reader's own week, and what the child has banked TODAY.
+//
+// Minutes are sent WITHOUT the daily target, deliberately. The teacher's board
+// shows the target and what remains because it is supervising a session; a
+// number a family is invited to beat turns a floor - `used` only moves when
+// the learner's app reports - into a debt, and nothing happens at zero anyway.
+$weekstart = pqpr_week_start();
+$learningday = pqpr_learning_day($studentid);
+
 $progressrows = pqpr_progress_rows([$studentid]);
 if ($progressrows) {
     $bycourse = [];
@@ -330,7 +339,13 @@ if ($progressrows) {
                 // trap the group board's tile hit: a section from one unit
                 // beside a unit name from another.
                 'where' => '', 'wheredone' => false, 'whereunit' => '',
-                'words' => 0, 'at' => 0];
+                'words' => 0, 'at' => 0,
+                // What they finished since Monday, out of the activity ring.
+                // `ring` and `covered` travel with the count because a bare 0
+                // from a unit that has no ring, or began recording mid-week,
+                // tells a family their child did nothing on the strength of
+                // data that does not exist.
+                'weekdone' => 0, 'weekquiz' => 0, 'ring' => false, 'weekcovered' => true];
         }
         $bycourse[$key]['seen']++;
         $state = json_decode((string)$row->statejson, true);
@@ -358,6 +373,18 @@ if ($progressrows) {
         // and this row knows only the learner, so a fraction would invent a
         // deficit. It is a number that grows.
         $bycourse[$key]['words'] += count((array)($state['knownWords'] ?? []));
+        // Summed across the course's units, because a child who finishes a unit
+        // mid-week and opens the next one did that work in this week too.
+        $week = pqpr_week_counts_from_state($state, $weekstart);
+        $bycourse[$key]['weekdone'] += (int)$week['sections'];
+        $bycourse[$key]['weekquiz'] += (int)$week['checkpoints'];
+        if (!empty($week['has_ring'])) {
+            $bycourse[$key]['ring'] = true;
+            // The week is only fully covered where EVERY unit was recording
+            // before it opened; one that started mid-week makes the whole
+            // course total a floor.
+            $bycourse[$key]['weekcovered'] = $bycourse[$key]['weekcovered'] && !empty($week['covered']);
+        }
         $bycourse[$key]['checkpoints'] = array_merge(
             $bycourse[$key]['checkpoints'],
             pqpr_checkpoints_from_state($state, (string)$row->unit, (int)$row->timemodified)
@@ -394,6 +421,12 @@ if ($progressrows) {
             'where_unit' => $counts['whereunit'],
             'words_known' => (int)$counts['words'],
             'last_seen' => (int)$counts['at'],
+            'week_done' => (int)$counts['weekdone'],
+            'week_quizzes' => (int)$counts['weekquiz'],
+            // false = the count is a FLOOR, or there is no ring at all and the
+            // page must say "not counted yet" rather than print a zero.
+            'week_counted' => !empty($counts['ring']),
+            'week_covered' => !empty($counts['ring']) && !empty($counts['weekcovered']),
         ], pqpr_summarise($counts['checkpoints']), pqpr_summarise_attempts($counts['attempts']), [
             // Capped so a long course cannot balloon the family's payload.
             'checkpoints' => array_slice(pqpr_sort_checkpoints($counts['checkpoints']), 0, 40),
@@ -532,6 +565,11 @@ echo json_encode([
     'grades' => $grades,
     'courseprogress' => $courseprogress,
     'leavingnotes' => $leavingnotes,
+    'today' => [
+        'minutes' => (int)round(((int)$learningday['used']) / 60),
+        // Nothing banked today and nothing ever reported are different claims.
+        'counted' => !empty($learningday['counted']),
+    ],
     // Newest first, capped like checkpoints: a family's payload stays bounded
     // however much tutoring the child does.
     'tutoring' => (static function (array $sessions): array {

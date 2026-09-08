@@ -60,6 +60,7 @@ eval($m[0]);
 eval(grab($src, 'function pqpr_unit_label(', 'pqpr_unit_label'));
 eval(grab($src, 'function pqpr_section_label(', 'pqpr_section_label'));
 eval(grab($src, 'function pqpr_attempts_from_state(', 'pqpr_attempts_from_state'));
+eval(grab($src, 'function pqpr_week_counts_from_state(', 'pqpr_week_counts_from_state'));
 
 $pass = 0;
 $fail = 0;
@@ -115,6 +116,54 @@ $bad = array_filter(PQPR_NAMED_ATTEMPT_SECTIONS, function ($s) {
     return (bool)preg_match('/^step-\d+$/', (string)$s);
 });
 check('no route id has been added to the named list', $bad, []);
+
+// ---- what a family is told about THIS WEEK ---------------------------
+// Four different claims, and the count ALONE can only make one of them. The
+// group board learned this the expensive way: a zero rendered as "nothing this
+// cycle" is a confident statement about a window nobody measured.
+//
+//   N finished this week          counted, and the week was covered
+//   at least N finished this week the ring began mid-week, so a FLOOR
+//   nothing yet this week         counted, covered, and genuinely none
+//   not counted yet               no ring at all - say nothing about it
+echo "\nthe week says which claim it is making\n";
+function week(array $state): array {
+    return pqpr_week_counts_from_state($state, 1000000);   // any Monday
+}
+
+// The case that matters most: entries exist, but nothing recorded WHEN
+// counting began, so the count is not a measurement of the week.
+check('no ring at all is NOT a zero',
+    week(['_activity' => [[1000500, 's', 'step-04']]]),
+    ['sections' => 0, 'checkpoints' => 0, 'has_ring' => false, 'covered' => false]);
+
+check('a ring that predates the week is covered',
+    week(['_activitySince' => 900000, '_activity' => [
+        [1000500, 's', 'step-04'], [1000600, 'c', 'step-11'], [1000700, 's', 'step-05']]]),
+    ['sections' => 2, 'checkpoints' => 1, 'has_ring' => true, 'covered' => true]);
+
+check('a ring that began mid-week is a FLOOR',
+    week(['_activitySince' => 1000400, '_activity' => [[1000500, 's', 'step-04']]])['covered'],
+    false);
+
+check('entries from before the week are not counted',
+    week(['_activitySince' => 900000, '_activity' => [
+        [999999, 's', 'old'], [1000001, 's', 'new']]])['sections'], 1);
+
+// Measured and genuinely nothing - the one case where a zero may be printed.
+check('an empty week is measured, not unknown',
+    week(['_activitySince' => 900000, '_activity' => []]),
+    ['sections' => 0, 'checkpoints' => 0, 'has_ring' => true, 'covered' => true]);
+
+// Conflating them would let one quiz read as a finished section at a family.
+check('checkpoints are counted apart from sections',
+    week(['_activitySince' => 900000, '_activity' => [
+        [1000500, 'c', 'a'], [1000600, 'c', 'b']]]),
+    ['sections' => 0, 'checkpoints' => 2, 'has_ring' => true, 'covered' => true]);
+
+check('a malformed entry is skipped, not fatal',
+    week(['_activitySince' => 900000,
+        '_activity' => ['nonsense', [1000500], [1000600, 's', 'ok']]])['sections'], 1);
 
 echo "\n$pass passed, $fail failed\n";
 if ($fail) {

@@ -67,7 +67,7 @@
     <div class="panel"><h2>Invoices And Payments</h2><table><tbody id="billing"></tbody></table></div>
     <div class="panel"><h2>Payment Plans</h2><table><tbody id="plans"></tbody></table></div>
     <div class="panel"><h2>Grades</h2><table><tbody id="grades"></tbody></table></div>
-    <div class="panel"><h2>Course progress</h2><table><tbody id="courseprogress"></tbody></table></div>
+    <div class="panel"><h2>Course progress</h2><p class="muted" id="todayline"></p><table><tbody id="courseprogress"></tbody></table></div>
     <div class="panel" id="leaving-panel" hidden><h2>When they stopped early</h2><p class="muted">Your child wrote these when they chose to leave a lesson before finishing. The school sees them too.</p><div id="leavingnotes"></div></div>
     <div class="panel" id="tutoring-panel" hidden><h2>Tutoring support</h2><p class="sub" style="margin-bottom:10px">Help sessions your child ran: what they searched, the lesson used, and how the before/after check went. Numbers are question counts, not marks.</p><table><tbody id="tutoring"></tbody></table></div>
     <div class="panel" id="reportcards-panel" hidden><h2>Report cards</h2><table><tbody id="reportcards"></tbody></table></div>
@@ -237,6 +237,17 @@
     // The panel HIDES itself when there are none, rather than saying "no notes"
     // - an empty list here would read as an absence worth explaining, and there
     // is nothing to explain.
+    // TODAY, once, above the courses - it is a fact about the child rather
+    // than about any one subject. No target beside it on purpose: `used` only
+    // moves when the app reports, so it is a FLOOR, and a number a family is
+    // invited to beat turns that floor into a debt.
+    const today = d.today || {};
+    $("#todayline").textContent = !today.counted
+      ? "Today's learning time is not counted yet."
+      : Number(today.minutes) > 0
+        ? Number(today.minutes) + (Number(today.minutes) === 1 ? " minute" : " minutes") + " of learning today."
+        : "Nothing recorded yet today.";
+
     const notes = d.leavingnotes || [];
     $("#leaving-panel").hidden = notes.length === 0;
     $("#leavingnotes").innerHTML = notes.map((n) =>
@@ -298,6 +309,23 @@
       const words = Number(c.words_known) > 0
         ? `<div class="pqsp-where muted">${esc(c.words_known + " words known so far")}</div>`
         : "";
+      // THIS WEEK, since Monday. Four different claims and the wording has to
+      // match which one we hold, exactly as the teacher's board learned:
+      //
+      //   4 finished this week          counted, and the week was covered
+      //   at least 4 finished this week the ring began mid-week, so a FLOOR
+      //   nothing yet this week         counted, covered, and genuinely none
+      //   not counted yet               no ring at all - say nothing about it
+      //
+      // A bare 0 in the last case tells a family their child did nothing on
+      // the strength of data that does not exist.
+      const wk = (Number(c.week_done) || 0) + (Number(c.week_quizzes) || 0);
+      const weekline = !c.week_counted
+        ? "not counted yet"
+        : wk > 0
+          ? (c.week_covered ? "" : "at least ") + wk + " finished this week"
+          : "nothing yet this week";
+      const week = `<div class="pqsp-where muted">${esc(weekline)}</div>`;
       const taken = Number(c.quizzes_taken) || 0;
       const qtotal = Number(c.questions_total) || 0;
       // "No quizzes yet" is true of Global Perspectives for ever, and reads as
@@ -310,7 +338,7 @@
         : qtotal > 0
           ? esc("Self-assessed · " + (Number(c.questions_answered) || 0) + " of " + qtotal + " questions answered")
           : "No quizzes yet";
-      return `<tr><td><strong>${label}</strong>${where}${words}<div class="pqsp-bar"><div class="pqsp-bar-fill" style="width:${pct}%"></div></div>${quizzes}${written}</td>`
+      return `<tr><td><strong>${label}</strong>${where}${words}${week}<div class="pqsp-bar"><div class="pqsp-bar-fill" style="width:${pct}%"></div></div>${quizzes}${written}</td>`
         + `<td class="muted">${esc((c.units_completed ?? 0) + " / " + (c.units_total ?? 0) + " units · " + pct + "%")}<div class="muted">${quizsummary}</div></td></tr>`;
     }).join("") || emptyRow(2, "No course progress recorded yet.");
 

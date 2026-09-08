@@ -51,6 +51,11 @@ declare(strict_types=1);
 
 defined('MOODLE_INTERNAL') || die();
 
+// The one definition of how a reduced progress state becomes something a human
+// reads, shared with the family portal. Required HERE rather than in the two
+// pages that include this file, so a third caller cannot arrive without it.
+require_once(__DIR__ . '/progress_rolluplib.php');
+
 define('PQLGB_STALE_WARN_SECONDS', 6 * 60);
 define('PQLGB_STALE_ALERT_SECONDS', 12 * 60);
 define('PQLGB_DEFAULT_WINDOW_MINUTES', 40);
@@ -605,13 +610,16 @@ function pqlgb_wehel_state(array $userids): array {
  */
 function pqlgb_learning_time(array $userids): array {
     $out = [];
-    $today = date('Ymd');
     $targetseconds = pqlgb_learn_daily_minutes() * 60;
     foreach ($userids as $userid) {
         $userid = (int)$userid;
-        $ledger = explode('|', (string)get_user_preferences('local_prequran_learn_time', '', $userid));
-        $sameday = ($ledger[0] ?? '') === $today;
-        $used = $sameday ? max(0, (int)($ledger[1] ?? 0)) : 0;
+        // ONE READER OF THE LEDGER, in progress_rolluplib, because the family
+        // portal reads it too and two copies of "YYYYMMDD|used|last" is exactly
+        // the drift that library exists to prevent. The target and the
+        // remaining ceiling stay here: they are the BOARD's framing, and a
+        // family is deliberately not given a target to beat.
+        $day = pqpr_learning_day($userid);
+        $used = (int)$day['used'];
         $out[$userid] = [
             'used' => $used,
             'remaining' => max(0, $targetseconds - $used),
@@ -622,7 +630,7 @@ function pqlgb_learning_time(array $userids): array {
             // left" to both is a confident statement about a day nobody
             // measured -- the same mistake the activity ring's "not counted
             // yet" exists to avoid.
-            'counted' => $sameday && ($ledger[2] ?? '') !== '',
+            'counted' => !empty($day['counted']),
         ];
     }
     return $out;

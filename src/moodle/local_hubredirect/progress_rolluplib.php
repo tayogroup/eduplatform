@@ -108,6 +108,86 @@ function pqpr_checkpoints_from_state(array $state, string $unit, int $unitupdate
  * and never "correct".
  */
 /**
+ * Midnight on Monday of the week containing $now, in the READER'S timezone.
+ *
+ * A family reads "this week" as their own week, and Moodle already knows whose
+ * clock to use - usergetmidnight and usergetdate both resolve against the
+ * viewing user. Monday because that is the school week these courses are
+ * planned on (shell/study-plan.js lays every unit out Monday to Friday), not
+ * because of any date convention.
+ */
+function pqpr_week_start(?int $now = null): int {
+    $now = $now ?? time();
+    $midnight = function_exists('usergetmidnight') ? usergetmidnight($now) : strtotime('today', $now);
+    $wday = function_exists('usergetdate') ? (int)usergetdate($now)['wday'] : (int)date('w', $now);
+    // usergetdate: 0 = Sunday. Monday is 0 days back, Sunday is 6.
+    return (int)$midnight - ((($wday + 6) % 7) * DAYSECS);
+}
+
+/**
+ * What this learner FINISHED in one unit since $since, out of the activity ring.
+ *
+ * `_activity` is the bounded ring externallib_progress keeps in statejson -
+ * [timestamp, kind, section], 's' a section completed and 'c' a checkpoint
+ * scored - appended only where the state actually changed. public_state()
+ * strips it, so only a reader of the row itself can see it, which the portal
+ * handlers are.
+ *
+ * `covered` IS THE HONEST HALF and must survive to the screen. Every row
+ * written before the ring shipped has none, and a unit that began recording
+ * mid-week can only give a FLOOR. A bare 0 in either case tells a parent their
+ * child did nothing, on the strength of data that does not exist - the same
+ * false negative the group board's "not counted yet" exists to prevent.
+ */
+function pqpr_week_counts_from_state(array $state, int $since): array {
+    $out = ['sections' => 0, 'checkpoints' => 0, 'has_ring' => false, 'covered' => false];
+    $startedat = (int)($state['_activitySince'] ?? 0);
+    if ($startedat <= 0) {
+        return $out;
+    }
+    $out['has_ring'] = true;
+    $out['covered'] = $startedat <= $since;
+    foreach ((array)($state['_activity'] ?? []) as $entry) {
+        if (!is_array($entry) || count($entry) < 2 || (int)$entry[0] < $since) {
+            continue;
+        }
+        if ((string)$entry[1] === 'c') {
+            $out['checkpoints']++;
+        } else {
+            $out['sections']++;
+        }
+    }
+    return $out;
+}
+
+/**
+ * Seconds of learning banked TODAY, and whether anything counted them.
+ *
+ * ONE DEFINITION, shared. The live group board reads the same ledger for its
+ * own tile and now calls this rather than keeping a second copy of the format:
+ * `local_prequran_learn_time` is "YYYYMMDD|used|last", charged by
+ * ingest_events() on every report the learner's app makes, and two readers of
+ * one preference is exactly the drift this library exists to prevent.
+ *
+ * `used` IS A FLOOR. A learner reading one long section reports nothing until
+ * they move, so any stretch past the ingest's idle-gap cap is charged at the
+ * cap. Nothing stops at zero and nothing should - this is not an allowance
+ * like Wehel's.
+ *
+ * `counted` separates "has not started today" from "nothing has ever
+ * reported": telling a family 0 minutes for a day nobody measured is a
+ * confident claim about an absence.
+ */
+function pqpr_learning_day(int $userid): array {
+    $ledger = explode('|', (string)get_user_preferences('local_prequran_learn_time', '', $userid));
+    $sameday = ($ledger[0] ?? '') === date('Ymd');
+    return [
+        'used' => $sameday ? max(0, (int)($ledger[1] ?? 0)) : 0,
+        'counted' => $sameday && ($ledger[2] ?? '') !== '',
+    ];
+}
+
+/**
  * Sections whose ID is a NAME, and whose count really is answers.
  *
  * These are Global Perspectives' written-answer sections - the original and,

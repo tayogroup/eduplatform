@@ -440,8 +440,8 @@
     .plan-when { grid-template-columns: 1fr; }
   }
 
-  /* ---- picking between the unit's readings ---- */
-  .readpick { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 12px; }
-  .readtab { padding: 7px 15px; border-radius: 999px; border: 2px solid var(--line); background: var(--card);
-    color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
-  .readtab.on { border-color: var(--teal); background: var(--teal); color: var(--accent-ink, #06222f); }
+  /* ---- reading a unit text full-viewport (same chrome as a book) ---- */
+  .read-stage { width: 100%; max-width: 640px; max-height: 100%; overflow-y: auto;
+    padding: 22px 24px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
+  .read-stage .story p { font-size: 20px; line-height: 1.65; margin: 0 0 14px; }
+  .read-stage .story p:last-child { margin-bottom: 0; }

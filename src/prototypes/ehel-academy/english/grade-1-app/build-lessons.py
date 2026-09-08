@@ -1366,16 +1366,16 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     if reads:
         data["reads"] = reads
         i = add("story", "The unit story", "\U0001F4D6", "I read the unit story",
-                "This unit's own story, and the other things it gives you to read.",
+                "Choose something to read.",
                 explain(
                     ["This is the reading this unit is built around."],
-                    ["Press Listen and follow the words with your finger.",
-                     "Press Next page when you are ready.",
-                     "There is more than one thing to read - pick one from the top."],
+                    ["Pick one and press Read.",
+                     "Press Listen and follow the words with your finger.",
+                     "Press Next page when you are ready."],
                     ["The next step asks about the story.",
                      "You can come back and read it again any time."],
                     ["Pick one and press Listen."]),
-                ["pick", "replay", "next"])
+                ["pick"])
 
     if book_questions:
         data["bookquestions"] = book_questions

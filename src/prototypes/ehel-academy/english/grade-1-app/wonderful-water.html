@@ -462,11 +462,11 @@
     .plan-when { grid-template-columns: 1fr; }
   }
 
-  /* ---- picking between the unit's readings ---- */
-  .readpick { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 12px; }
-  .readtab { padding: 7px 15px; border-radius: 999px; border: 2px solid var(--line); background: var(--card);
-    color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
-  .readtab.on { border-color: var(--teal); background: var(--teal); color: var(--accent-ink, #06222f); }
+  /* ---- reading a unit text full-viewport (same chrome as a book) ---- */
+  .read-stage { width: 100%; max-width: 640px; max-height: 100%; overflow-y: auto;
+    padding: 22px 24px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
+  .read-stage .story p { font-size: 20px; line-height: 1.65; margin: 0 0 14px; }
+  .read-stage .story p:last-child { margin-bottom: 0; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -716,9 +716,9 @@
         <p class="score" id="score12"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the reading this unit is built around.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press Listen and follow the words with your finger.</s><s>Press Next page when you are ready.</s><s>There is more than one thing to read - pick one from the top.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The next step asks about the story.</s><s>You can come back and read it again any time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and press Listen.</s></mstts:express-as>' data-say="This unit&#39;s own story, and the other things it gives you to read.">
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the reading this unit is built around.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Pick one and press Read.</s><s>Press Listen and follow the words with your finger.</s><s>Press Next page when you are ready.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The next step asks about the story.</s><s>You can come back and read it again any time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and press Listen.</s></mstts:express-as>' data-say="Choose something to read.">
       <div class="slide-head"><span class="n">13</span><h2>The unit story</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">This unit's own story, and the other things it gives you to read.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Choose something to read.</span></div>
       <div class="stage">
         <div id="stage13"></div>
         <div class="choices" id="ch13"></div>
@@ -5635,61 +5635,101 @@
     finish(o.finish, o.done);
   }
 
-  /* ---- the unit's own readings -------------------------------------
-     Story, Shared reading and Rhyme - the curriculum text, narrated, with
-     its own read-along. DELIBERATELY NOT THE PICTURE BOOKS: those are a
-     separate shelf (step 6) and their books are adaptations, shorter than
-     the reading they retell. The comprehension step is written against
-     THIS text.
+  /* ---- the unit's own readings, as a shelf -------------------------
+     THE SAME SHAPE AS READING BOOKS (step 6), on the owner's instruction:
+     three texts are a shelf of three cards, not a tab strip. Tap Read and
+     the text opens full-viewport, the way a book does.
 
-     The step is done once the Story - the first reading - has been read to
-     the end. The other two are there to be read, not to be required: a
-     rhyme is not a gate.
+     DELIBERATELY NOT THE PICTURE BOOKS. That shelf is a separate thing with
+     a separate purpose, and its books are ADAPTATIONS - the Unit 1 book is
+     a 150-word retelling of this 219-word reading, and at least one
+     comprehension answer lives here and in no page of it. Same chrome, so
+     the two feel like one product; different content, because they are.
+
+     The reader is a TEXT reader: these readings have no artwork, so there
+     is no SVG to fetch and no tap sounds to play. Listen plays the whole
+     recording, as it always did - the page turns are for the eye, and the
+     voice does not take them.
+
+     THE STEP TURNS ON THE STORY, not on any reading. A child who reads only
+     the rhyme has not met the text the next step asks about. The other two
+     are there to be read; a rhyme is not a gate.
      ------------------------------------------------------------------ */
   function unitReadings(o) {
     const el = o.el;
-    let at = 0, page = 0;
-    function draw() {
-      const it = o.items[at];
-      const last = page === it.pages.length - 1;
-      $(el.ask).innerHTML = page === 0
-        ? "Press Listen, then follow the words with your finger."
-        : "Keep reading. Press Next page when you are ready.";
+    const read = new Array(o.items.length).fill(false);
+
+    function drawShelf() {
+      $(el.ask).innerHTML = o.ask || "Choose something to read.";
       $(el.stage).className = "stagewide";
-      $(el.stage).innerHTML =
-        (o.items.length > 1
-          ? '<div class="readpick" id="' + el.pick + '">' + o.items.map((r, k) =>
-              '<button type="button" class="readtab' + (k === at ? " on" : "") + '" data-r="' + k + '">' +
-              esc(r.kind || r.title) + "</button>").join("") + "</div>"
-          : "") +
-        (page === 0 ? '<div class="storytitle">' + esc(it.title) + "</div>" : "") +
-        '<div class="story">' + it.pages[page].map((t) => "<p>" + esc(t) + "</p>").join("") + "</div>" +
-        '<div class="bigbtns">' +
-        '<button type="button" class="big small teal" id="' + el.replay + '">&#128266; Listen</button>' +
-        '<button type="button" class="big small" id="' + el.next + '">' +
-        (last ? "I have read it &#10003;" : "Next page &#9654;") + "</button></div>";
-      $(el.score).textContent = esc(it.title) + " \u00b7 page " + (page + 1) + " of " + it.pages.length;
-      if (o.items.length > 1) {
-        $(el.pick).addEventListener("click", (ev) => {
-          const b = ev.target.closest("[data-r]");
-          if (!b) return;
-          at = Number(b.dataset.r); page = 0; draw();
-        });
-      }
-      $(el.replay).addEventListener("click", () => playClip(it.audio, ""));
-      $(el.next).addEventListener("click", () => {
-        if (!last) { page++; draw(); return; }
-        // Finished this reading. The STORY is what the step turns on; the
-        // others are read because a child wants to, not to earn anything.
-        if (at === 0) {
-          $(el.fb).className = "fb good";
-          $(el.fb).textContent = o.done;
-          finish(o.finish, o.done);
-        }
-        if (at + 1 < o.items.length) { at++; page = 0; draw(); }
+      $(el.stage).innerHTML = '<div class="shelf" id="' + el.pick + '">' + o.items.map((r, k) =>
+        '<div class="bookcard' + (read[k] ? " played" : "") + '">' +
+        '<span class="bookicon" aria-hidden="true">' + (read[k] ? "\u2705" : "\u{1F4D6}") + "</span>" +
+        '<span class="booktitle">' + esc(r.title) + "</span>" +
+        (r.kind ? '<span class="bookmeta">' + esc(r.kind) + "</span>" : "") +
+        '<span class="bookmeta">' + r.pages.length + (r.pages.length === 1 ? " page" : " pages") + "</span>" +
+        '<button type="button" class="big small teal" data-read="' + k + '">' +
+        (read[k] ? "Read again \u25B6" : "Read \u25B6") + "</button></div>").join("") + "</div>";
+      $(el.score).textContent = o.items.length + " things to read";
+      $(el.pick).addEventListener("click", (ev) => {
+        const b = ev.target.closest("[data-read]");
+        if (b) openReading(Number(b.dataset.read));
       });
     }
-    draw();
+
+    function openReading(k) {
+      const it = o.items[k];
+      let page = 0;
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader";
+      document.body.appendChild(overlay);
+
+      function close() {
+        overlay.remove();
+        document.removeEventListener("keydown", onKey);
+        drawShelf();
+      }
+      function onKey(ev) { if (ev.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+
+      function render() {
+        const last = page === it.pages.length - 1;
+        overlay.innerHTML =
+          '<div class="book-reader-top"><span class="booktitle">' + esc(it.title) + "</span>" +
+          '<button type="button" class="book-close" aria-label="Close">&#10005;</button></div>' +
+          '<div class="book-stage-wrap"><div class="read-stage"><div class="story">' +
+          it.pages[page].map((t) => "<p>" + esc(t) + "</p>").join("") +
+          "</div></div></div>" +
+          '<div class="book-reader-bottom">' +
+          '<button type="button" class="big small ghost" id="readBack"' + (page === 0 ? " disabled" : "") + ">&#9664; Back</button>" +
+          '<button type="button" class="big small teal" id="readListen">&#128266; Listen</button>' +
+          '<span class="book-page-count">Page ' + (page + 1) + " of " + it.pages.length + "</span>" +
+          (last
+            ? '<button type="button" class="big small" id="readDone">I have read it &#10003;</button>'
+            : '<button type="button" class="big small" id="readNext">Next page &#9654;</button>') +
+          "</div>";
+        overlay.querySelector(".book-close").addEventListener("click", close);
+        const back = overlay.querySelector("#readBack");
+        if (back) back.addEventListener("click", () => { page--; render(); });
+        const next = overlay.querySelector("#readNext");
+        if (next) next.addEventListener("click", () => { page++; render(); });
+        overlay.querySelector("#readListen").addEventListener("click", () => playClip(it.audio, ""));
+        const done = overlay.querySelector("#readDone");
+        if (done) done.addEventListener("click", () => {
+          read[k] = true;
+          close();
+          // The STORY is what the step turns on - see the note above.
+          if (k === 0) {
+            $(el.fb).className = "fb good";
+            $(el.fb).textContent = o.done;
+            finish(o.finish, o.done);
+          }
+        });
+      }
+      render();
+    }
+
+    drawShelf();
   }
 
   /* ---- the stickers, one per step that can be earned --------------- */
@@ -6699,7 +6739,7 @@
     label: "Round", done: "That is talking practised." });
   gameZone({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12", gamelist: "gamelist12" }, pack: LESSON.games, finish: 11,
     done: "That is the Game Zone played." });
-  unitReadings({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", pick: "pick13", replay: "replay13", next: "next13" }, items: LESSON.reads, finish: 12,
+  unitReadings({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13", pick: "pick13" }, items: LESSON.reads, finish: 12,
     done: "You read the whole story." });
   sequence({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, items: LESSON.questions, finish: 13,
     label: "Question", done: "You remembered the story well." });

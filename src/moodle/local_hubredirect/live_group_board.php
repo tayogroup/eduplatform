@@ -175,6 +175,7 @@ a.pqlgb-golive{text-decoration:none;display:inline-block}
 .pqlgb-pl--pos{background:#cff4fc;border-color:#9eeaf9;color:#055160}
 .pqlgb-pl--done{background:#f7d6e6;border-color:#efadce;color:#801f4f}
 .pqlgb-pl--wehel{background:#e2d9f3;border-color:#c5b3e6;color:#432874}
+.pqlgb-pl--words{background:#d2f4ea;border-color:#a6e9d5;color:#114e3d}
 .pqlgb-flags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
 .pqlgb-flag{display:inline-flex;align-items:center;padding:2px 7px;border:1px solid var(--op-line-strong);border-radius:var(--op-pill);background:var(--op-surface);font-size:11px;font-weight:800;letter-spacing:.02em}
 .pqlgb-flag--bad{border-color:#f1aeb5;background:#f8d7da;color:#58151c}
@@ -258,6 +259,7 @@ body.pqlgb-page #page,body.pqlgb-page #page-content,body.pqlgb-page #region-main
 .pqlgb-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 </style>
 <style><?php echo pqh_viewer_chrome_css('.pqlgb-shell'); ?></style>
+<style><?php echo pqh_ehel_group_board_css('.pqlgb-shell', 'pqlgb-page'); ?></style>
 <main class="pqlgb-shell">
 <?php
 echo pqh_design_shell_html('pqlgb-shell', 'board', [
@@ -318,6 +320,17 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
       </select>
       <noscript><button class="pqlgb-btn" type="submit">Apply</button></noscript>
     </form>
+    <?php // Fullscreen: totals + tiles only, chrome/header/note/chat hidden --
+          // for a teacher glancing across the room or a wall display beside
+          // it. Needs no JS from the board's own script: it toggles one body
+          // class and, best-effort, the real Fullscreen API; see the small
+          // script block near the end of this file, kept separate from
+          // render()'s so this addition cannot touch a single line of the
+          // sort/state code above it. ?>
+    <button type="button" class="pqlgb-fullscreen-btn" id="pqlgb-fullscreen-btn" aria-pressed="false" title="Show only the student monitoring data">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      <span>Fullscreen</span>
+    </button>
   </div>
 
   <?php if (!$ready): ?>
@@ -328,7 +341,7 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
       <div class="pqlgb-main">
         <div class="pqlgb-groups" id="pqlgb-groups"></div>
         <div class="pqlgb-note">
-      <b>What these numbers are.</b> <b>Quiet for</b> is time since the learner's app last reported anything — it is the board's headline because it catches stuck, gone and disconnected alike, which look identical from the other room. <b>Left page</b> counts focus breaks in the chosen window: it is evidence, not prevention, because a web page can report that a learner left it and cannot stop them. <b>Wehel</b> is AI-tutor minutes <em>used</em> today, not minutes left. <b>This cycle</b> counts sections completed and quizzes scored inside the chosen window, from the timestamps the progress gateway now records (<code>_activity</code>). It reads <b>N+</b> where that unit began recording after the window opened &mdash; the count is a floor then, not a total. <b>Done</b> beside it is the running total for the unit, which is a different question and always was.
+      <b>What these numbers are.</b> <b>Quiet for</b> is time since the learner's app last reported anything — it is the board's headline because it catches stuck, gone and disconnected alike, which look identical from the other room. <b>Left page</b> counts focus breaks in the chosen window: it is evidence, not prevention, because a web page can report that a learner left it and cannot stop them. Where it says <b>N full screen</b>, that many of them were only a drop out of full screen &mdash; much weaker evidence than hiding the tab. <b>3 of 7</b> on the position pill is how far into that activity the learner has got, for the sections that report it. <b>Words known</b> counts the words this learner has picked correctly for a sound or a picture &mdash; evidence, never a mark, and with no denominator because the tile knows the learner and not the content. <b>N checks &middot; avg</b> is every scored check in the unit beside the weakest one, which alone cannot tell one bad quiz from a bad morning. <b>Wehel</b> is AI-tutor minutes <em>used</em> today, not minutes left. <b>This cycle</b> counts sections completed and quizzes scored inside the chosen window, from the timestamps the progress gateway now records (<code>_activity</code>). It reads <b>N+</b> where that unit began recording after the window opened &mdash; the count is a floor then, not a total. <b>Done</b> beside it is the running total for the unit, which is a different question and always was.
         </div>
       </div>
       <aside class="pqlgb-chat" id="pqlgb-chat" hidden>
@@ -467,12 +480,25 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     if (tile.stage) { placeparts.push([esc(tile.stage), "course"]); }
     if (tile.unit) { placeparts.push([esc(unitLabel(tile.unit)), "course"]); }
     if (tile.resume) {
-      placeparts.push([(tile.resumedone ? "finished " : "in ") + esc(tile.resumelabel || tile.resume), "pos"]);
+      // HOW FAR INTO IT, where the app reports participation for this section:
+      // "in Reading books" and "in Reading books - 3 of 7" are different
+      // conversations, and the second is the one that says whether to go over.
+      // It rides on the position pill because it is the same fact made
+      // precise, not a state of its own.
+      placeparts.push([(tile.resumedone ? "finished " : "in ") + esc(tile.resumelabel || tile.resume) +
+        (tile.activity ? " &middot; " + tile.activity.answered + " of " + tile.activity.total : ""), "pos"]);
     } else if (tile.lastsection) {
       placeparts.push(["last: " + esc(tile.lastsection), "pos"]);
     }
     if (placeparts.length) {
       placeparts.push([tile.sectionsdone + " done", "done"]);
+      // Words the learner has PROVED, by picking the right one for a sound or
+      // a picture. Not a mark and not a target -- there is no denominator on
+      // this board, because the unit's word count is a property of the content
+      // and this tile only knows the learner.
+      if (tile.knownwords > 0) {
+        placeparts.push([tile.knownwords + " words known", "words"]);
+      }
       if (tile.wehelminutes > 0 && !tile.wehellive) {
         placeparts.push(["Wehel " + tile.wehelminutes + " min", "wehel"]);
       }
@@ -526,12 +552,27 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
       flags.push('<span class="pqlgb-flag pqlgb-flag--' + (tile.checkpoint.passed ? "ok" : "bad") + '">' +
         esc(tile.checkpoint.section) + " " + tile.checkpoint.score + "%</span>");
     }
+    // The weakest score alone cannot say whether it was one bad quiz or a bad
+    // morning, and those ask for different things. Only where there is more
+    // than one -- with a single check the chip above already IS the spread.
+    if (tile.checkscount > 1) {
+      flags.push('<span class="pqlgb-flag pqlgb-flag--cycle"' +
+        ' title="Every scored check in this unit, and their mean.">' +
+        tile.checkscount + " checks &middot; avg " + tile.checksavg + "%</span>");
+    }
     if (tile.breaks > 0) {
       // Focus tracking, stated as the EVENT rather than a claim about now:
       // "away Xm" is the time since their last reported departure with no
       // return reported after it. Evidence, not prevention -- and only
       // learners launched in focus mode report at all.
       var brk = "left page &times;" + tile.breaks;
+      // Leaving fullscreen is much weaker evidence than hiding the tab: a
+      // child can drop out of it with Escape and carry on reading the page.
+      // Counted inside the total, named separately so the total is not read
+      // as four departures when three of them were a keypress.
+      if (tile.fsexits > 0) {
+        brk += " &middot; " + tile.fsexits + " full screen";
+      }
       if (tile.awaysince > 0) {
         brk += " &middot; away " + humanGap(Math.max(0, serverNow() - tile.awaysince)).filter(Boolean).join(" ").replace("&lt;1 min", "just now");
       }
@@ -1099,6 +1140,71 @@ echo pqh_design_shell_html('pqlgb-shell', 'board', [
     setInterval(drawTabs, 5000);
   })();
   document.addEventListener("visibilitychange", function () { if (!document.hidden) { poll(); } });
+})();
+</script>
+<script>
+// Fullscreen: hides the rail, app bar, header, filter controls, legend and
+// chat, leaving the totals row and the tiles -- the student monitoring data
+// -- alone on the screen. Deliberately separate from the board's own script
+// above: it needs none of render()'s state and touching nothing there is
+// what keeps this addition from being able to disturb the sort/state code.
+(function () {
+  "use strict";
+  var btn = document.getElementById("pqlgb-fullscreen-btn");
+  if (!btn) { return; }
+  var ICON_MAXIMIZE = '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
+  var ICON_MINIMIZE = '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';
+  var icon = btn.querySelector("svg");
+  var label = btn.querySelector("span");
+
+  // The class toggle is the RELIABLE half of this feature and works
+  // everywhere; the real Fullscreen API (hiding the browser's own chrome
+  // too) is a best-effort bonus on top of it, so a refusal here (an iframe
+  // with no allowfullscreen, an older iOS Safari with no element fullscreen)
+  // must not stop the declutter itself.
+  function nativeRequest() {
+    var el = document.documentElement;
+    var fn = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+    if (!fn) { return; }
+    try { var p = fn.call(el); if (p && p.catch) { p.catch(function () {}); } } catch (e) { /* declutter still applies */ }
+  }
+  function nativeExit() {
+    var native = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+    if (!native) { return; }
+    var fn = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+    if (!fn) { return; }
+    try { var p = fn.call(document); if (p && p.catch) { p.catch(function () {}); } } catch (e) {}
+  }
+  function isOn() { return document.body.classList.contains("pqlgb-fullscreen-on"); }
+  function setOn(on) {
+    document.body.classList.toggle("pqlgb-fullscreen-on", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.title = on ? "Show the full board again" : "Show only the student monitoring data";
+    if (icon) { icon.innerHTML = on ? ICON_MINIMIZE : ICON_MAXIMIZE; }
+    if (label) { label.textContent = on ? "Exit fullscreen" : "Fullscreen"; }
+  }
+
+  btn.addEventListener("click", function () {
+    if (isOn()) { setOn(false); nativeExit(); } else { setOn(true); nativeRequest(); }
+  });
+
+  // The browser's own Esc handling (or a viewer leaving fullscreen through
+  // window chrome this page does not control) exits NATIVE fullscreen
+  // without ever touching our class, so the class has to follow the
+  // browser's reported state rather than only our own click handler.
+  ["fullscreenchange", "webkitfullscreenchange", "mozfullscreenchange", "MSFullscreenChange"].forEach(function (evt) {
+    document.addEventListener(evt, function () {
+      var native = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+      if (!native && isOn()) { setOn(false); }
+    });
+  });
+
+  // And Escape has to leave DECLUTTER mode even where native fullscreen
+  // never engaged in the first place -- the fullscreenchange listener above
+  // only fires when there was a native fullscreen element to leave.
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && isOn()) { setOn(false); nativeExit(); }
+  });
 })();
 </script>
 <?php

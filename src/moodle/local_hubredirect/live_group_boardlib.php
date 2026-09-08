@@ -313,6 +313,19 @@ function pqlgb_progress_snapshot(array $userids, string $env, int $since = 0): a
                 'resume' => '',
                 'unitscompleted' => 0,
                 'checkpoint' => null,
+                // Participation in the section the learner is STANDING IN, as
+                // {answered, total}. Only this one, because it is the only
+                // section whose learner-facing caption we hold -- see the note
+                // on pqlgb_current_activity.
+                'activity' => null,
+                // How many words this learner has shown they know, across the
+                // unit. Evidence rather than a mark: it is only ever added to
+                // by picking the right word for a sound or a picture.
+                'knownwords' => 0,
+                // The spread behind the weakest score. One number cannot say
+                // whether it was a single bad quiz or a bad morning.
+                'checkscount' => 0,
+                'checksavg' => 0,
                 // Counted across ALL of the learner's units, not just the one
                 // they are in now: a learner who finishes a unit mid-cycle and
                 // opens the next one did that work in this block too.
@@ -377,6 +390,13 @@ function pqlgb_progress_snapshot(array $userids, string $env, int $since = 0): a
             $snapshot[$userid]['resumedone'] = $snapshot[$userid]['resume'] !== ''
                 && in_array($snapshot[$userid]['resume'], $sections, true);
             $snapshot[$userid]['checkpoint'] = pqlgb_weakest_checkpoint($state);
+            $snapshot[$userid]['activity'] = pqlgb_current_activity($state);
+            $known = isset($state['knownWords']) && is_array($state['knownWords'])
+                ? $state['knownWords'] : [];
+            $snapshot[$userid]['knownwords'] = count($known);
+            [$checkscount, $checksavg] = pqlgb_checkpoint_spread($state);
+            $snapshot[$userid]['checkscount'] = $checkscount;
+            $snapshot[$userid]['checksavg'] = $checksavg;
         }
         if (!empty($state['completed'])) {
             $snapshot[$userid]['unitscompleted']++;
@@ -412,6 +432,61 @@ function pqlgb_weakest_checkpoint(array $state): ?array {
 }
 
 /**
+ * How far into the CURRENT activity the learner is, as {answered, total}.
+ *
+ * The app reports participation per section in `attempted` - "3 of 7 books
+ * read", "8 of 12 ticked" - for every section that asks something without
+ * marking it. A teacher wants that for the section the learner is standing in:
+ * "in Reading books" and "in Reading books, 3 of 7" are different
+ * conversations.
+ *
+ * ONLY THAT SECTION, deliberately. The keys are route ids, and this file
+ * already carries the finding that a tile printing an id names a section the
+ * teacher cannot find. The learner's own caption arrives for one section only
+ * (`resumeLabel`), so it is the only row that can be named honestly here.
+ */
+function pqlgb_current_activity(array $state): ?array {
+    $resume = is_string($state['resume'] ?? null) ? (string)$state['resume'] : '';
+    $attempted = isset($state['attempted']) && is_array($state['attempted'])
+        ? $state['attempted'] : [];
+    if ($resume === '' || !isset($attempted[$resume])) {
+        return null;
+    }
+    $row = (array)$attempted[$resume];
+    $total = (int)($row['total'] ?? 0);
+    if ($total <= 0) {
+        return null;
+    }
+    return [
+        'answered' => max(0, min((int)($row['answered'] ?? 0), $total)),
+        'total' => $total,
+    ];
+}
+
+/**
+ * How many checkpoints carry a score, and their mean.
+ *
+ * The weakest one alone cannot distinguish a single bad quiz from a bad
+ * morning, and those ask for different things from a teacher. Rounded to a
+ * whole percent because a tile has no room for more and nobody acts on a
+ * decimal.
+ */
+function pqlgb_checkpoint_spread(array $state): array {
+    $checkpoints = isset($state['checkpoints']) ? (array)$state['checkpoints'] : [];
+    $scores = [];
+    foreach ($checkpoints as $result) {
+        $result = (array)$result;
+        if (isset($result['score']) && $result['score'] !== null) {
+            $scores[] = (int)$result['score'];
+        }
+    }
+    if (!$scores) {
+        return [0, 0];
+    }
+    return [count($scores), (int)round(array_sum($scores) / count($scores))];
+}
+
+/**
  * Focus breaks and early departures inside the window, plus the most recent
  * audit timestamp of any kind.
  *
@@ -437,7 +512,8 @@ function pqlgb_focus_signals(array $userids, int $since): array {
     foreach ($rows as $row) {
         $userid = (int)$row->actorid;
         if (!isset($signals[$userid])) {
-            $signals[$userid] = ['breaks' => 0, 'leftearly' => 0, 'reason' => '', 'lastsignal' => 0, 'awaysince' => 0];
+            $signals[$userid] = ['breaks' => 0, 'fsexits' => 0, 'leftearly' => 0, 'reason' => '',
+                'lastsignal' => 0, 'awaysince' => 0];
         }
         if ((string)$row->action === 'course_left_early') {
             $signals[$userid]['leftearly']++;
@@ -461,6 +537,15 @@ function pqlgb_focus_signals(array $userids, int $since): array {
                 $signals[$userid]['awaysince'] = 0;
             } else {
                 $signals[$userid]['breaks']++;
+                // A SUBSET of breaks, never instead of them: `breaks` keeps
+                // meaning every departure, so the header total and every other
+                // reader are untouched. Leaving fullscreen is much weaker
+                // evidence than hiding the tab - a child can drop out of it by
+                // pressing Escape while still reading the page - and counting
+                // the two as one thing overstated what the board knew.
+                if ($kind === 'fullscreen_exit') {
+                    $signals[$userid]['fsexits']++;
+                }
                 $signals[$userid]['awaysince'] = (int)$row->timecreated;
             }
         }
@@ -838,7 +923,8 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
         $tiles = [];
         foreach ($roster[$groupid] ?? [] as $userid) {
             $snap = $snapshot[$userid] ?? null;
-            $signal = $signals[$userid] ?? ['breaks' => 0, 'leftearly' => 0, 'reason' => '', 'lastsignal' => 0, 'awaysince' => 0];
+            $signal = $signals[$userid] ?? ['breaks' => 0, 'fsexits' => 0, 'leftearly' => 0,
+                'reason' => '', 'lastsignal' => 0, 'awaysince' => 0];
             $hand = $hands[$userid] ?? ['up' => false, 'since' => 0];
             $lastprogress = $snap ? (int)$snap['lastprogress'] : 0;
             $quiet = $lastprogress > 0 ? max(0, $now - $lastprogress) : 0;
@@ -860,7 +946,15 @@ function pqlgb_build(int $teacherid, int $workspaceid, int $windowminutes, strin
                 'lastsection' => $snap ? (string)$snap['lastsection'] : '',
                 'unitscompleted' => $snap ? (int)$snap['unitscompleted'] : 0,
                 'checkpoint' => $snap ? $snap['checkpoint'] : null,
+                // {answered, total} for the section they are in, or null.
+                'activity' => $snap ? $snap['activity'] : null,
+                'knownwords' => $snap ? (int)$snap['knownwords'] : 0,
+                'checkscount' => $snap ? (int)$snap['checkscount'] : 0,
+                'checksavg' => $snap ? (int)$snap['checksavg'] : 0,
                 'breaks' => (int)$signal['breaks'],
+                // A subset of `breaks`, not a separate tally - see the note in
+                // pqlgb_focus_signals.
+                'fsexits' => (int)($signal['fsexits'] ?? 0),
                 // Live focus state: timestamp of the learner's last reported
                 // departure with no return reported after it, 0 when back on
                 // the page (or nothing reported in the window). Only learners

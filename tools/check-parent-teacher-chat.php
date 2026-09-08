@@ -222,6 +222,24 @@ check('the parent\'s own Workspace has the panel',
         && strpos($parentworkspace, 'Message the teacher') !== false);
 check('  and it polls only while visible',
     strpos($parentworkspace, "visibilityState === 'visible'") !== false);
+
+// The dashboard is the page a parent lands on, so the panel is there too — and
+// the two links to the OLD, POST-and-reload messaging are gone with it. Left
+// beside a live panel they offered the same conversation twice, with only one
+// of them live (owner, 2026-09-08).
+$dash = @file_get_contents($root . '/local_hubredirect/dashboard.php');
+if ($dash === false) {
+    fwrite(STDERR, "cannot read dashboard.php\n");
+    exit(2);
+}
+check('the parent dashboard has the panel',
+    strpos($dash, '/local/hubredirect/parent_teacher_chat.php') !== false);
+check('  and no longer offers the old messaging to a parent',
+    !preg_match("/pqh-btn js-pqh-open-comm\" data-opencomm=\"messages\"/", $dash));
+// Students and teachers keep theirs: their Messages carry helpdesk tickets and
+// student-teacher threads, which this chat does not replace.
+check('  while students and teachers keep their Messages entry',
+    substr_count($dash, '<span class="pqh-gnav__label">Messages</span>') === 2);
 // A portal left open on a kitchen tablet would otherwise poll all day to
 // deliver one message from a teacher who works six hours.
 check('neither side polls while its tab is hidden',

@@ -2972,11 +2972,15 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
       <span class="pqh-gnav__label">Create a ticket</span>
     </a>
-  <?php elseif ($role === 'parent' && $selectedchild): ?>
-    <a class="pqh-gnav__item js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">
-      <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-      <span class="pqh-gnav__label">Messages</span>
-    </a>
+  <?php // A PARENT'S "Messages" rail entry is GONE (owner, 2026-09-08). It
+      // opened communications.php - the POST-and-reload messaging the live
+      // teacher chat below replaces - so beside a live panel it offered the
+      // same conversation twice with only one of them live.
+      //
+      // Students and teachers KEEP theirs, above: their Messages carry
+      // conversations this chat does not (helpdesk tickets, student-teacher
+      // threads), and removing it there would take away the only route to
+  // something with no replacement. ?>
   <?php endif; ?>
   <div class="pqh-gnav__foot">
     <a class="pqh-gnav__item" href="<?php echo $pqhlogouturl->out(false); ?>">
@@ -4225,11 +4229,134 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
             </div>
           </article>
 
+          <article class="pqh-card pqh-card--chat">
+            <h3>Message the teacher</h3>
+            <p>Your child's teacher sees this and replies here. Please allow a school day for an answer.</p>
+            <div id="pqptlog" class="pqpt-log"></div>
+            <form id="pqptform" class="pqpt-form" autocomplete="off">
+              <input id="pqptbody" maxlength="2000" placeholder="Write a message&hellip;" aria-label="Message the teacher">
+              <button class="pqh-btn" type="submit">Send</button>
+            </form>
+          </article>
+          <style>
+          .pqh-card--chat .pqpt-log{max-height:300px;overflow:auto;display:flex;flex-direction:column;
+            gap:8px;padding:4px 0 10px}
+          /* Theirs left, yours right - the arrangement every messaging app has
+             taught every parent to read without a legend. */
+          .pqpt-msg{max-width:84%;padding:8px 12px;border-radius:14px;font-size:14px;line-height:1.5}
+          .pqpt-msg--them{align-self:flex-start;background:rgba(255,255,255,.08);border-bottom-left-radius:5px}
+          .pqpt-msg--me{align-self:flex-end;background:rgba(96,165,250,.22);border-bottom-right-radius:5px}
+          .pqpt-msg b{display:block;font-size:11.5px;opacity:.75;margin-bottom:2px}
+          .pqpt-msg i{display:block;font-size:11px;opacity:.6;margin-top:3px;font-style:normal}
+          .pqpt-form{display:flex;gap:8px}
+          .pqpt-form input{flex:1 1 auto;min-width:0;padding:9px 13px;border-radius:999px;
+            border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);
+            color:inherit;font:inherit;font-size:14px}
+          .pqpt-empty{font-size:13px;opacity:.7}
+          </style>
+          <script>
+          (function () {
+            /* The same panel as workspace_parent.php and the same rules: send
+               and poll are ONE call, so a message comes back in the response
+               that carries the teacher's; polling stops while the tab is
+               hidden, because a dashboard left open all day would otherwise
+               poll ten thousand times to deliver one reply. */
+            var url = <?php echo json_encode((new moodle_url('/local/hubredirect/parent_teacher_chat.php'))->out(false)); ?>;
+            var sesskey = <?php echo json_encode(sesskey()); ?>;
+            var studentid = <?php echo (int)$selectedchild['studentid']; ?>;
+            var workspaceid = <?php echo (int)($hasworkspace ? $currentworkspaceid : 0); ?>;
+            var since = 0, busy = false, timer = null;
+            var log = document.getElementById('pqptlog');
+            var form = document.getElementById('pqptform');
+            var box = document.getElementById('pqptbody');
+            if (!log || !form || !box) { return; }
+            function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) {
+              return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+            function line(m) {
+              var when = new Date((Number(m.at) || 0) * 1000);
+              var clock = when.getFullYear() > 1971
+                ? when.toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+                : '';
+              return '<div class="pqpt-msg ' + (m.mine ? 'pqpt-msg--me' : 'pqpt-msg--them') + '">'
+                + '<b>' + esc(m.who) + '</b>' + esc(m.body)
+                + (clock ? '<i>' + esc(clock) + '</i>' : '') + '</div>';
+            }
+            function exchange(body) {
+              if (busy) { return Promise.resolve(false); }
+              busy = true;
+              var p = new URLSearchParams();
+              p.set('sesskey', sesskey);
+              p.set('studentid', String(studentid));
+              p.set('workspaceid', String(workspaceid));
+              p.set('since', String(since));
+              p.set('body', body || '');
+              return fetch(url, { method: 'POST', credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body: p.toString() })
+                .then(function (r) { return r.json(); })
+                .then(function (res) {
+                  if (!res || !res.ok) { throw new Error((res && res.message) || 'Not available.'); }
+                  /* APPENDED, never redrawn: the server sends what is new since
+                     the last id, so a redraw would lose the reader's scroll
+                     position every eight seconds. */
+                  if (res.messages && res.messages.length) {
+                    var atBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
+                    log.insertAdjacentHTML('beforeend', res.messages.map(line).join(''));
+                    if (atBottom) { log.scrollTop = log.scrollHeight; }
+                  } else if (!log.children.length) {
+                    log.innerHTML = '<div class="pqpt-empty">No messages yet. Write the first one.</div>';
+                  }
+                  since = Math.max(since, Number(res.lastmessageid) || 0);
+                  return true;
+                })
+                .catch(function (e) {
+                  /* A failed POLL is not worth interrupting a parent for - it
+                     is tried again shortly. A failed SEND is, because they are
+                     waiting to see their own words appear. */
+                  if (body) { window.alert('Could not send: ' + e.message); }
+                  return false;
+                })
+                .then(function (ok) { busy = false; return ok; });
+            }
+            function polling(on) {
+              if (timer) { clearInterval(timer); timer = null; }
+              if (on) { timer = setInterval(function () { exchange(''); }, 8000); }
+            }
+            document.addEventListener('visibilitychange', function () {
+              var visible = document.visibilityState === 'visible';
+              polling(visible);
+              if (visible) { exchange(''); }
+            });
+            form.addEventListener('submit', function (ev) {
+              ev.preventDefault();
+              var body = box.value.trim();
+              if (!body) { return; }
+              var btn = form.querySelector('button');
+              btn.disabled = true;
+              box.value = '';
+              exchange(body).then(function (ok) {
+                if (!ok) { box.value = body; }
+                btn.disabled = false;
+                box.focus();
+              });
+            });
+            exchange('');
+            polling(document.visibilityState === 'visible');
+          })();
+          </script>
+
           <article class="pqh-card">
             <h3>Communications</h3>
-            <p>Open messages, announcements, and meeting rooms for family support.</p>
+            <?php // The copy loses "messages" with the button: this card no
+            // longer opens a conversation, and a description that still
+            // promises one sends a parent looking for a control that is not
+            // there. The chat is the card above. ?>
+            <p>Announcements and meeting rooms for family support.</p>
             <div class="pqh-actions pqh-workspace-actions">
-              <a class="pqh-btn js-pqh-open-comm" data-opencomm="messages" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'messages', (int)$selectedchild['studentid'])->out(false); ?>">Open messages</a>
+              <?php // "Open messages" removed with the rail entry above, and for the
+              // same reason. The other three stay: announcements, parent
+              // meetings and teacher-parent rooms are three different things
+              // and none of them is this chat. ?>
               <a class="pqh-btn pqh-btn--secondary js-pqh-open-comm" data-opencomm="announcements" href="<?php echo pqh_communications_link((int)$selectedchild['cohortid'], 'announcements', (int)$selectedchild['studentid'])->out(false); ?>">Announcements</a>
               <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_meeting_rooms_link('parent_meeting')->out(false); ?>">Parent meetings</a>
               <a class="pqh-btn pqh-btn--secondary" href="<?php echo pqh_meeting_rooms_link('teacher_parent_room')->out(false); ?>">Teacher-parent rooms</a>

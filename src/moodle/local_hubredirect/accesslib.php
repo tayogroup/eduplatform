@@ -1904,6 +1904,678 @@ function pqh_viewer_chrome_css(string $scope): string {
 }
 
 /**
+ * Bakes a small stroke-icon SVG into a `background-image:url(...)` data URI,
+ * for the icon-in-a-circle stat tiles across the Ehel skins. Colour is baked
+ * into the SVG rather than read from a CSS variable because each caller's
+ * icon set is a fixed, small, build-time list -- there is nothing a custom
+ * property would be buying, only another indirection to keep in sync.
+ *
+ * Pass a LITERAL '#', never a pre-encoded '%23': rawurlencode() runs on the
+ * whole SVG string once, so it needs a real '#' to turn into '%23'. A
+ * pre-encoded one gets encoded a second time (its own '%' becomes '%25'),
+ * landing an invalid stroke value with nothing on the page to say why --
+ * this shipped once and was only caught by decoding the computed
+ * background-image in a browser, not by reading the code.
+ */
+function pqh_ehel_icon_data_uri(string $hex, string $paths): string {
+    $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="' . $hex . '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $paths . '</svg>';
+    return "url('data:image/svg+xml," . rawurlencode($svg) . "')";
+}
+
+/**
+ * The Ehel Academy foundation: the palette, ground and ink-reset every
+ * Ehel-skinned page shares, factored out of pqh_ehel_academy_css() so the
+ * live group board could be skinned to match without a second copy of it
+ * (2026-09-08). See pqh_ehel_academy_css()'s own docblock for where the
+ * palette comes from and why the ink is reset by ELEMENT rather than by
+ * class -- both reasons apply unchanged here; only the component rules after
+ * this foundation differ per page.
+ *
+ * Returns RAW css text, deliberately not yet run through
+ * pqh_css_force_and_specify() -- each caller concatenates this with its own
+ * component heredoc and forces the whole combined string exactly once, which
+ * is what keeps this split behaviour-preserving: string concatenation does
+ * not care which function assembled which half.
+ *
+ * @param string $scope the page's shell class, with its leading dot
+ * @param string $bodyclass the page's body class, so the ground reaches the
+ *                          overscroll area behind the shell ('' to skip)
+ */
+function pqh_ehel_tokens_css(string $scope, string $bodyclass = ''): string {
+    // Outside the shell and therefore not reachable from the sheet below.
+    // Moodle's canvas shows through above and below the page on an elastic
+    // scroll, and the skin paints it var(--op-canvas) -- a token declared on
+    // :root, which shadowing it on the shell cannot reach.
+    //
+    // It is prepended to the sheet rather than concatenated after the pass,
+    // because the pass DOUBLES the first class of every selector: the skin's
+    // own body rule lands at (0,2,1) and a hand-written body.X{...!important}
+    // at (0,1,1) loses to it. Measured, not reasoned -- the page rendered on
+    // #f2f2f2 until this was moved.
+    $body = trim($bodyclass) !== ''
+        ? "body.{$bodyclass}{background:#183B56;color-scheme:dark}\n"
+        : '';
+
+    return $body . <<<CSS
+{$scope}{--ea-ground-a:#183B56;--ea-ground-b:#24556B;--ea-card:rgba(20,43,62,.88);--ea-cell:#22485F;--ea-cell-2:#1C3D53;--ea-line:#2B5673;--ea-line-soft:rgba(43,86,115,.55);--ea-ink:#FFFFFF;--ea-body:#C3D3DF;--ea-muted:#A4B7C8;--ea-teal:#35BFB2;--ea-teal-deep:#2AA79B;--ea-teal-ink:#06231F;--ea-teal-soft:rgba(53,191,178,.14);--ea-teal-line:rgba(53,191,178,.45);--ea-gold:#F4C95D;--ea-gold-press:#D0A326;--ea-gold-ink:#2A1F05;--ea-gold-soft:rgba(244,201,93,.12);--ea-gold-line:rgba(244,201,93,.42);--ea-coral:#ED8E70;--ea-coral-soft:rgba(237,142,112,.14);--ea-coral-line:rgba(237,142,112,.45);--ea-plum:#B78BD1;--ea-plum-soft:rgba(183,139,209,.16);--ea-plum-line:rgba(183,139,209,.42);--ea-green:#4FD1A0;--ea-green-soft:rgba(79,209,160,.14);--ea-green-line:rgba(79,209,160,.45);--ea-sky:#6FB6E8;--ea-sky-soft:rgba(111,182,232,.14);--ea-sky-line:rgba(111,182,232,.42);--ea-shadow:0 1px 2px rgba(0,0,0,.35),0 22px 50px rgba(0,0,0,.45);--ea-shadow-sm:0 1px 2px rgba(0,0,0,.28),0 10px 24px rgba(0,0,0,.28);--ea-sans:"Atkinson Hyperlegible","Segoe UI",Arial,sans-serif;--ea-display:"Inter","Segoe UI",Arial,sans-serif}
+
+/* ---- the tokens the rest of the page is written in ----------------------
+   Shadowed here rather than edited where they are declared, so every other
+   page those two generators serve is untouched. --op-primary is deliberately
+   NOT gold: the skin pairs it with white text, and white on gold is 1.6:1.
+   Gold is applied by the button rules further down, which set their own ink. */
+{$scope}{--pqh-ink:var(--ea-ink);--pqh-muted:var(--ea-body);--pqh-faint:var(--ea-muted);--pqh-line:var(--ea-line);--pqh-bg:var(--ea-cell);--pqh-surface:var(--ea-card);--pqh-tint:rgba(255,255,255,.06);--pqh-tint-2:var(--ea-line);--pqh-primary:var(--ea-teal);--pqh-primary-ink:var(--ea-teal);--pqh-r:18px;--pqh-shadow:var(--ea-shadow-sm)}
+{$scope}{--op-font:var(--ea-sans);--op-ink:var(--ea-ink);--op-ink-muted:var(--ea-body);--op-ink-soft:var(--ea-muted);--op-ink-faint:var(--ea-muted);--op-line:var(--ea-line);--op-line-strong:var(--ea-line);--op-canvas:transparent;--op-surface:var(--ea-card);--op-surface-tint:var(--ea-cell);--op-surface-soft:var(--ea-cell-2);--op-primary:var(--ea-teal);--op-primary-hover:var(--ea-teal-deep);--op-primary-subtle:var(--ea-teal-soft);--op-primary-border:var(--ea-teal-line);--op-primary-emphasis:var(--ea-teal);--op-ok-bg:var(--ea-green-soft);--op-ok-line:var(--ea-green-line);--op-ok-ink:var(--ea-green);--op-warn-bg:var(--ea-gold-soft);--op-warn-line:var(--ea-gold-line);--op-warn-ink:var(--ea-gold);--op-bad-bg:var(--ea-coral-soft);--op-bad-line:var(--ea-coral-line);--op-bad-ink:var(--ea-coral);--op-radius:14px;--op-radius-lg:22px;--op-focus:0 0 0 3px rgba(53,191,178,.3);--op-shadow-lg:var(--ea-shadow);--op-header-bg:transparent;--op-header-ink:var(--ea-ink);--op-header-ink-soft:var(--ea-body)}
+
+/* ---- the ground ----------------------------------------------------------
+   A fixed pseudo-element rather than background-attachment:fixed, which is
+   what the reference page does and for the same reason it gives: 135 degrees
+   has to stay 135 degrees however long the page grows, and a dashboard grows
+   to several thousand pixels. The pseudo-element also keeps the whole page off
+   the browser's slow-scroll path, which a fixed attachment on a 14,000px
+   element does not. */
+/* line-height:1.55 here is the READING value, lifted from the reference page
+   along with everything else -- and the reference page is a lesson, almost
+   entirely paragraphs of text meant to be read. This page is almost entirely
+   the opposite: single-line labels, numbers, pills and links, each of which
+   inherited that same 1.55 with nothing here to narrow it back down, and it
+   shows up as real, visible space -- half a line's worth above AND below
+   every one of them -- not a layout gap at all, which is why the padding and
+   grid-gap pass earlier did not touch it. Reported directly against a
+   screenshot with the gaps marked one by one; nearly every mark sits under a
+   single line of UI chrome, never under a paragraph. 1.3 is the new base --
+   still readable for the handful of actual sentences on these two pages
+   (the SEB notice, the empty-course line) -- and the compact chrome below is
+   tightened further on top of that, explicitly, because 1.3 is still loose
+   on an 11px pill. */
+{$scope}{background:transparent;color:var(--ea-body);font-family:var(--ea-sans);font-size:15.5px;line-height:1.3;-webkit-font-smoothing:antialiased;color-scheme:dark}
+{$scope}::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,var(--ea-ground-a) 0%,var(--ea-ground-b) 100%)}
+
+/* ---- ink reset -----------------------------------------------------------
+   :where(:not([style*="color"])) on both rules below is not defensive
+   padding -- it was added after this reset broke three elements that already
+   had a correct, token-based inline colour of their own: the SEB launch-mode
+   toggle's group label (a <div style="color:var(--ea-muted,...)">) and its
+   three <a>s (one background:var(--ea-teal) + color:var(--ea-teal-ink) for
+   the active mode, color:var(--ea-body) for the other two).
+   `color:inherit!important` doesn't care that the value is a working token
+   chain -- it stomps it flat to the page's base ink regardless, and for the
+   active mode that made the button's text the same teal as its own
+   background: invisible, verified by computed style (both resolved to
+   rgb(53,191,178)). An element that already declares its own colour has made
+   its choice; the reset's job is only for the ones that have not.
+
+   It has to be :where(), not a bare :not(). A first attempt used
+   `a:not([style*="color"])` directly and broke a SECOND, wider set of
+   elements: :not()'s specificity is that of its own argument -- an attribute
+   selector, one full class-column point -- so appending it to the already-
+   doubled anchor rule pushed it from (0,2,1) to (0,3,1), which now OUTRANKS
+   the button rule's (0,3,0) and made every plain-styled anchor button on both
+   pages (`.pqhsd-cta`, `.pqhsd-btn`, the young-learner "Continue learning"
+   pill) show teal text on gold instead of the button rule's own ink -- caught
+   by the same automated contrast sweep that found the original bug, not by
+   reading the CSS. :where() carries zero specificity by spec whatever its
+   argument, so wrapping the same exclusion in it changes which ELEMENTS the
+   rule reaches without moving where it ranks against anything else. */
+{$scope} :is(p,span,div,li,dd,dt,td,th,strong,b,em,i,u,small,label,figcaption,summary,legend,time,section,article,header,footer,aside,ul,ol,dl,form,fieldset,blockquote,output,option,svg):where(:not([style*="color"])){color:inherit}
+{$scope} :is(h1,h2,h3,h4,h5,h6){color:var(--ea-ink);font-family:var(--ea-display);font-weight:800;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+{$scope} hr{border-color:var(--ea-line)}
+{$scope} a:where(:not([style*="color"])){color:var(--ea-teal)}
+{$scope} a:hover{color:var(--ea-ink)}
+{$scope} ::placeholder{color:var(--ea-muted)}
+{$scope} :focus-visible{outline:3px solid var(--ea-teal);outline-offset:2px}
+CSS;
+}
+
+/**
+ * The Ehel Academy dashboard skin: the three home pages a family and a teacher
+ * land on, dressed in the language of the lessons themselves.
+ *
+ * WHERE IT COMES FROM. Not invented here -- every token below is lifted from
+ * app/mathematics/grade-1-v2/index.html, the Grade 1 Maths way-in, which is the
+ * page the owner named on 2026-09-07. That page is a fixed 135-degree navy-teal
+ * ground, Atkinson Hyperlegible over Inter, big soft-cornered cards floating on
+ * it, one colour per subject carried by a rounded icon tile and an uppercase
+ * strand label, and exactly one gold pill that means GO. The dashboards were a
+ * light blue admin console with a navy rail; the point of this sheet is that a
+ * learner who opens their dashboard and then opens a lesson should not feel
+ * they have changed product.
+ *
+ * WHY A LAYER RATHER THAN AN EDIT. dashboard.php alone carries ~450 lines of
+ * inline CSS written for a light page, under two generated skins
+ * (pqh_openproject_skin_css, pqh_duolingo_chrome_css) that force colour with
+ * !important. Rewriting all of that in place would be a diff nobody can review
+ * and would strand every OTHER page those generators serve. So this is emitted
+ * last and wins the same way the skins do -- see pqh_css_force_and_specify().
+ *
+ * TWO THINGS MAKE A DARK REPAINT SAFE, and neither is a list of fixes.
+ *
+ *   The TOKENS are re-pointed first. Both generated layers, and dashboard.php's
+ *   own last block, are written in terms of --op-* and --pqh-* rather than
+ *   literals, and those are declared on :root and on the shell -- so shadowing
+ *   them here turns the great majority of the page dark by construction, before
+ *   a single component rule is written. A skin that only chased component
+ *   classes would be the allowlist-of-yesterday's-accidents this repo keeps
+ *   recording; re-pointing the source is the version that also covers the rule
+ *   somebody adds next month.
+ *
+ *   The INK is reset by element, not by class. A light page is full of colour
+ *   chosen to sit on white -- #0f2237 headings, #5b6b7c body, and in
+ *   student_dashboard.php a handful of INLINE style="color:#7a6a3f" notices.
+ *   The reset is a typed selector, so it is (0,1,1) and every class rule below
+ *   beats it, and it carries !important, so it also beats those inline styles.
+ *   Everything that means something is then re-stated by class. Nothing is left
+ *   to be discovered by a child who cannot read the page.
+ *
+ * What remains after those two is a short list of literal colours in the two
+ * page files, and it is short enough to state: they are the chips at the end of
+ * this sheet. They were found by measuring, not by reading -- walk the rendered
+ * page, compute the luminance of every element's background, and print anything
+ * light. Re-run that after any change here; it is the only check that answers
+ * "is there something a learner cannot see".
+ *
+ * Contrast was measured against the card, not guessed. On the card colour over
+ * the ground (~#16303F): white 11.6:1, #C3D3DF 8.2:1, #A4B7C8 6.2:1, teal
+ * #35BFB2 5.0:1, gold #F4C95D 7.1:1, green #4FD1A0 6.7:1, sky #6FB6E8 5.7:1,
+ * plum #B78BD1 4.7:1, coral #ED8E70 4.9:1. Text sitting ON a coloured chip uses
+ * the reference page's own inks (--ea-teal-ink, --ea-gold-ink) rather than
+ * white, which is where g1v2's own template-alignment pass ended up too.
+ *
+ * WHO GETS IT is decided at the call site and is deliberately narrow: the
+ * student home, and dashboard.php for the teacher and parent roles. An admin,
+ * principal or SQA tester on that same file keeps the console look, because
+ * what they read there is finance, compliance and governance -- not a learner's
+ * page, and not what was asked for.
+ *
+ * @param string $scope the page's shell class, with its leading dot
+ * @param string $bodyclass the page's body class, so the ground reaches the
+ *                          overscroll area behind the shell ('' to skip)
+ */
+function pqh_ehel_academy_css(string $scope, string $bodyclass = ''): string {
+    // Five small stroke glyphs for the stat cards' icon circles (2026-09-07,
+    // the LearnUp-modelled redesign). Reused paths rather than a new icon set
+    // -- calendar from the schedule links, alert-circle from the risk pill,
+    // the bar-chart from the data strand, the play-rect from the live badge --
+    // so the stat row looks like the rest of this app rather than a fifth
+    // icon style arriving with it. Position is what assigns an icon
+    // (nth-child, the same convention the nav rail's own per-row colours
+    // already use below), never the stat's label -- the row differs by role
+    // and this asks nothing of it.
+    $pqhiconcalendar = pqh_ehel_icon_data_uri('#35BFB2', '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>');
+    $pqhiconalert = pqh_ehel_icon_data_uri('#ED8E70', '<circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>');
+    $pqhicondata = pqh_ehel_icon_data_uri('#6FB6E8', '<path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/>');
+    $pqhiconlive = pqh_ehel_icon_data_uri('#F4C95D', '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="m22 8-6 4 6 4V8z"/>');
+    $pqhiconstar = pqh_ehel_icon_data_uri('#B78BD1', '<path d="M12 2.5 14.6 9l7 .6-5.3 4.6 1.6 6.8L12 17.6l-6 3.4 1.6-6.8L2.3 9.6l7-.6L12 2.5z"/>');
+
+    // The "\n\n" here is doing real work, not decoration: a heredoc drops the
+    // newline immediately before its own closing identifier, so
+    // pqh_ehel_tokens_css()'s returned string already ends right at "...2px}"
+    // with nothing trailing. Concatenating straight onto this heredoc's first
+    // content line would collapse the blank line that used to separate the
+    // ink-reset from the page-header section when both lived in one heredoc --
+    // caught by a byte-for-byte diff against the pre-refactor output, not by
+    // reading either heredoc, both of which look complete on their own.
+    $css = pqh_ehel_tokens_css($scope, $bodyclass) . "\n\n" . <<<CSS
+/* ---- page header, now the identity band -----------------------------------
+   2026-09-07: the owner asked for LearnUp's dashboard
+   (learn-up-moodle-frontend.vercel.app/dashboard) in this page's own fonts
+   and colours. That page's signature is a full-width colour band with a
+   profile card (avatar, name, a couple of quick numbers) overlapping it. This
+   app already has a working nav rail on every one of ~40 shared pages, so a
+   second sidebar squeezed in beside it would be furniture competing with a
+   feature -- the identity card is folded into the hero instead: the hero
+   itself becomes the colour band, and the avatar and quick numbers live on
+   it, which is the same "card sits on its own band" idea with one surface
+   instead of two.
+
+   The band is a diagonal of three of this page's own accents (teal, the
+   ground's own navy, plum) rather than LearnUp's pink-to-purple -- the ask
+   was this page's palette, not that page's.
+
+   A FLAT BLACK SCRIM SITS BETWEEN THE GRADIENT AND EVERY LINE OF TEXT ON IT,
+   and it is load-bearing, not decoration. The automated contrast sweep this
+   file's own history leans on passed this band with zero findings, and it
+   was wrong: it samples one representative colour per gradient background
+   (this file's own shorthand for "a gradient is behind this element"), so it
+   checked white against the MIDPOINT of the gradient and never against either
+   end. Computed directly against the three stops: white on the teal end is
+   2.27:1, on the plum end 2.75:1 -- both fail even the 3:1 floor large bold
+   text gets, right where this band puts its own title and its own numbers.
+   The scrim is sized against the WORST stop on purpose (teal, the brightest
+   of the three) at 45% black, which brings every text tone actually used
+   here -- including the ones already below full white -- to 5.1:1 or better
+   against all three stops, computed the same way. Re-run that computation,
+   never the element-sampling sweep, if another colour is ever added to this
+   gradient; the sweep's blind spot is structural; sampling a different point
+   only relocates it. */
+{$scope}{$scope} .pqh-hero,{$scope}{$scope} .pqh-workspace-top,{$scope}{$scope} .pqhsd-pagehead{position:relative;background:linear-gradient(120deg,var(--ea-teal) 0%,#1E4A63 52%,var(--ea-plum) 100%);border:0;border-radius:24px;box-shadow:var(--ea-shadow-sm);padding:20px 24px;overflow:hidden}
+{$scope}{$scope} .pqh-hero::before,{$scope}{$scope} .pqh-workspace-top::before,{$scope}{$scope} .pqhsd-pagehead::before{content:"";position:absolute;inset:0;background:rgba(4,14,22,.45);pointer-events:none}
+{$scope}{$scope} .pqh-hero>*,{$scope}{$scope} .pqh-workspace-top>*,{$scope}{$scope} .pqhsd-pagehead>*{position:relative}
+/* The kicker/label rule stays teal for the many OTHER places it is used on
+   the dark ground (".pqhsd-label" is "MY COURSES", sat on the card, not the
+   band) -- only the band's OWN kicker/title/subtitle need to survive sitting
+   on a gradient that is teal at one end, and a plain teal eyebrow on the
+   teal end of its own background is close to unreadable. The override below
+   is MORE specific (one more class) than this one on purpose, not accidental
+   -- see the note further down about why that is safe here and was not the
+   last time this file tried it. */
+{$scope}{$scope} .pqh-kicker,{$scope}{$scope} .pqhsd-label,{$scope}{$scope} [class*="-kicker"],{$scope}{$scope} [class*="-eyebrow"]{color:var(--ea-teal);font-family:var(--ea-display);font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:1.2}
+{$scope}{$scope} .pqh-title,{$scope}{$scope} .pqh-workspace-title,{$scope}{$scope} .pqhsd-pagehead h1{color:var(--ea-ink);font-family:var(--ea-display);font-size:clamp(27.5px,3.6vw,37.5px);font-weight:800;letter-spacing:-.02em;text-shadow:none}
+/* The third clause is a fallback for student_dashboard.php's lede, which
+   carries no class at all in the source (a bare `<p>echo`d straight from PHP)
+   -- so the lede is caught by TAG rather than by name. The kicker just above
+   is ALSO a <p> in the same .pqhsd-pagehead, and a class+type selector beats
+   a class+attribute one: measured, `.pqhsd-pagehead p` is (0,4,1) once scoped
+   and doubled, one point ahead of the kicker rule's (0,4,0) -- so without this
+   exclusion the fallback silently recoloured the kicker to the lede's muted
+   tone. Verified via document.styleSheets before and after; the two rules
+   never needed to compete, they were both trying to describe "the OTHER
+   paragraph". */
+{$scope}{$scope} .pqh-subtitle,{$scope}{$scope} .pqh-workspace-sub,{$scope}{$scope} .pqhsd-pagehead p:not([class*="-kicker"]){color:var(--ea-body);font-family:var(--ea-sans);font-size:17.5px;font-weight:400}
+
+/* Band-only overrides. One class more specific than the two rules above by
+   compounding an ancestor onto them ((0,5,0) against their (0,4,0)), which is
+   deliberate rather than the trap the anchor ink-reset hit -- that bug came
+   from a PSEUDO-CLASS argument silently adding specificity to a rule meant to
+   stay level with its sibling; this is an ordinary descendant compound, doing
+   exactly what compounding is for; there is no wider rule downstream for it
+   to accidentally outrank. */
+{$scope}{$scope} .pqh-hero .pqh-kicker,{$scope}{$scope} .pqhsd-pagehead .pqhsd-kicker{color:rgba(255,255,255,.90)}
+{$scope}{$scope} .pqh-hero .pqh-subtitle,{$scope}{$scope} .pqh-hero .pqh-workspace-sub,{$scope}{$scope} .pqhsd-pagehead p.pqhsd-kicker+h1+p{color:rgba(255,255,255,.88)}
+
+/* ---- the identity card -----------------------------------------------------
+   Avatar (Moodle's own user_picture renderer -- the user's uploaded photo
+   where one exists, its generated default otherwise, never invented here)
+   beside the greeting, and the reference's two-up "12 Done Courses / 156
+   Done Lessons": a role-appropriate pair of numbers already computed by the
+   page for other reasons.
+
+   NOT stacked under the greeting as first written here. .pqhsd-pagehead and
+   .pqh-hero are both a flex ROW already (space-between, align-items:flex-end,
+   from the base stylesheet neither page's redesign touched), so .pqhsd-
+   idcard and this stats block are PEERS in that row, beside the greeting, not
+   beneath it -- confirmed on a live screenshot, not assumed from reading the
+   markup. A margin-top/border-top written for "the divider under the
+   greeting" does something else entirely to a flex ROW sibling: it pushes the
+   whole block down against the row's own bottom-alignment and draws a line
+   that borders nothing, which is dead weight in exactly the "too much space"
+   direction this pass exists to close. */
+{$scope}{$scope} .pqhsd-idcard,{$scope}{$scope} .pqh-idcard{display:flex;align-items:center;gap:14px}
+{$scope}{$scope} .pqhsd-avatar,{$scope}{$scope} .pqh-avatar{flex:0 0 auto;display:block;width:64px;height:64px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.55);box-shadow:0 6px 16px rgba(0,0,0,.28)}
+{$scope}{$scope} .pqhsd-avatar img,{$scope}{$scope} .pqh-avatar img{display:block;width:100%;height:100%;object-fit:cover}
+{$scope}{$scope} .pqhsd-quickstats,{$scope}{$scope} .pqh-idcard-stats{display:flex;align-items:flex-end;gap:20px}
+{$scope}{$scope} .pqhsd-quickstats div,{$scope}{$scope} .pqh-idcard-stats div{display:flex;flex-direction:column}
+{$scope}{$scope} .pqhsd-quickstats strong,{$scope}{$scope} .pqh-idcard-stats strong{color:#fff;font-family:var(--ea-display);font-size:21.5px;font-weight:800;font-variant-numeric:tabular-nums}
+{$scope}{$scope} .pqhsd-quickstats span,{$scope}{$scope} .pqh-idcard-stats span{color:rgba(255,255,255,.85);font-family:var(--ea-display);font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+
+/* ---- surfaces ------------------------------------------------------------
+   One card shape for everything that is a block on the ground.
+   :not([class*="__"]) keeps the BEM CHILDREN out -- .pqh-course-card__number
+   and .pqh-course-panel__head both contain "-card"/"-panel" and are a number
+   and a heading row, not surfaces. They are rows, handled below. */
+{$scope} [class*="-panel"]:not([class*="__"]),{$scope} [class*="-card"]:not([class*="__"]),{$scope} [class*="-tile"]:not([class*="__"]),{$scope} [class*="-kpi"]:not([class*="__"]),{$scope} [class*="-metric"]:not([class*="__"]),{$scope} [class*="-stat"]:not([class*="__"]),{$scope} [class*="-box"]:not([class*="__"]),{$scope} .pqh-notif__panel,{$scope} .pqh-customize__panel,{$scope} .pqh-tkpi__card,{$scope} .pqh-live-monitor,{$scope} .pqh-live-child,{$scope} .pqh-live-session,{$scope} .pqh-young,{$scope} .pqh-tools,{$scope} .pqh-config,{$scope} .pqh-filter{background:var(--ea-card);border:1px solid var(--ea-line);border-radius:22px;box-shadow:var(--ea-shadow-sm);color:var(--ea-body)}
+
+/* Containers, not surfaces. A grid that happens to be called "-kpis" or
+   "-cards" is matched by the plural-blind selectors above, and a card-coloured
+   slab behind a row of cards reads as a fifth, empty card. Written with the
+   scope twice so it is one class MORE specific than the rule it is undoing --
+   the forcing pass adds a further class to each, so the two land at (0,4,0)
+   and (0,5,0).
+
+   align-items:start is here for a reason that has nothing to do with being a
+   surface: every one of these rows is CSS Grid with no align-items of its own,
+   so the default is stretch, and one long sibling stretches every card beside
+   it to match. A live class time that wraps to two lines ("Tue" / "16:12")
+   was enough to stretch the other three stat cards into having a blank third
+   of themselves; an in-progress course card did the same to a "Ready when you
+   are!" card beside it. Reported directly from a production screenshot after
+   the first deploy -- the harness has no real data long or varied enough to
+   have shown it. */
+{$scope}{$scope} [class*="-kpis"],{$scope}{$scope} [class*="-metrics"],{$scope}{$scope} [class*="-stats"],{$scope}{$scope} [class*="-cards"],{$scope}{$scope} [class*="-tiles"],{$scope}{$scope} [class*="-panels"],{$scope}{$scope} [class*="-grid"],{$scope}{$scope} [class*="-list"],{$scope}{$scope} [class*="-cols"],{$scope}{$scope} [class*="-layout"],{$scope}{$scope} [class*="-chips"],{$scope}{$scope} .pqh-quick,{$scope}{$scope} .pqh-tkpi,{$scope}{$scope} .pqh-week,{$scope}{$scope} .pqh-tbars,{$scope}{$scope} .pqhsd-courses,{$scope}{$scope} .pqhsd-todo,{$scope}{$scope} .pqhsd-side,{$scope}{$scope} .pqh-dashboard-sidebar{background:transparent;border:0;box-shadow:none;padding:0;align-items:start}
+
+{$scope} [class*="-panel"] h2,{$scope} [class*="-card"] h2,{$scope} [class*="-panel"] h3,{$scope} [class*="-card"] h3{color:var(--ea-ink);font-family:var(--ea-display);font-weight:800}
+{$scope} [class*="-sub"],{$scope} [class*="-meta"],{$scope} [class*="-muted"],{$scope} [class*="-help"],{$scope} [class*="-note"],{$scope} [class*="-caption"],{$scope} [class*="-text"],{$scope} [class*="-body"]{color:var(--ea-body);line-height:1.3}
+{$scope} [class*="-label"]:not(label),{$scope} [class*="-legend"]{color:var(--ea-muted);font-family:var(--ea-display);font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.2}
+
+/* ---- rows inside a card --------------------------------------------------
+   The lesson deck's own idiom: a slightly lighter cell, no border, generous
+   radius. The to-do rows, the notification rows, the student-profile fields
+   and the week chips are all this shape. */
+{$scope} [class*="__item"],{$scope} [class*="__row"],{$scope} [class*="-row"]:not([class*="-rows"]),{$scope} .pqh-student-profile__item,{$scope} .pqh-mini-stat,{$scope} .pqh-teacher-row,{$scope} .pqh-notif__item,{$scope} .pqhsd-feedback,{$scope} .pqh-detail,{$scope} .pqh-week>div,{$scope} .pqh-live-session__stat{background:var(--ea-cell);border:1px solid transparent;border-radius:16px;box-shadow:none;color:var(--ea-body);line-height:1.25}
+{$scope} [class*="__head"],{$scope} [class*="-head"]:not([class*="-header"]),{$scope} [class*="__top"]{background:transparent;border-color:var(--ea-line);color:var(--ea-ink);font-family:var(--ea-display);font-weight:800}
+
+/* ---- numbers -------------------------------------------------------------
+   A dashboard is mostly counts, and the reference sets its one big number in
+   Inter with tabular figures. Nothing here is coloured by value except the
+   states below: a bare number is white. */
+{$scope} [class*="-num"],{$scope} [class*="-value"],{$scope} [class*="-count"],{$scope} [class*="-number"],{$scope} .pqh-metric strong,{$scope} .pqh-teacher-metric strong,{$scope} .pqh-week b{color:var(--ea-ink);font-family:var(--ea-display);font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.1}
+{$scope} .pqh-mini-stat span,{$scope} .pqh-teacher-metric span,{$scope} .pqh-week span,{$scope} .pqh-live-session__stat span{color:var(--ea-muted);font-family:var(--ea-display);font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+
+/* ---- stat cards: an icon in its own soft-tinted circle --------------------
+   LearnUp's "at a glance" tile: a coloured glyph in a circle, then a big
+   tabular number with its label stacked underneath. The DOM here is fixed --
+   <b>label</b><strong>number</strong><a>link</a>, in that order, on both
+   pages -- and the new reading order is icon | number-over-label, with the
+   link as its own row underneath spanning both columns. Grid areas place
+   existing children by NAME, not by source order, so this is a pure reflow:
+   no markup changed on either page.
+
+   The icon itself is a lone ::before, positioned by nth-child on the ROW
+   (.pqhsd-kpis / .pqh-tkpi), the same "position assigns colour" convention
+   the nav rail already uses a few hundred lines down -- these rows differ by
+   role and by page, so nothing here can be keyed to what a card is actually
+   about. */
+{$scope}{$scope} .pqhsd-kpi,{$scope}{$scope} .pqh-tkpi__card{display:grid;grid-template-columns:48px 1fr;grid-template-areas:"icon number" "icon label" "link link";column-gap:12px;row-gap:2px;align-items:center;padding:14px}
+{$scope}{$scope} .pqhsd-kpi::before,{$scope}{$scope} .pqh-tkpi__card::before{content:"";grid-area:icon;align-self:start;width:48px;height:48px;border-radius:14px;background-repeat:no-repeat;background-position:center;background-size:22px 22px}
+{$scope}{$scope} .pqhsd-kpi strong,{$scope}{$scope} .pqh-tkpi__card strong{grid-area:number;font-size:27.5px;line-height:1.1}
+{$scope}{$scope} .pqhsd-kpi b,{$scope}{$scope} .pqh-tkpi__card b{grid-area:label;color:var(--ea-muted);font-family:var(--ea-display);font-weight:600;font-size:12.5px;letter-spacing:0;text-transform:none;line-height:1.2}
+{$scope}{$scope} .pqhsd-kpi a,{$scope}{$scope} .pqh-tkpi__card a{grid-area:link;margin-top:7px;padding-top:7px;border-top:1px solid var(--ea-line);font-size:12px;font-weight:700;line-height:1.2}
+{$scope}{$scope} .pqhsd-kpis>*:nth-child(1)::before,{$scope}{$scope} .pqh-tkpi>*:nth-child(1)::before{background-color:var(--ea-teal-soft);background-image:{$pqhiconcalendar}}
+{$scope}{$scope} .pqhsd-kpis>*:nth-child(2)::before,{$scope}{$scope} .pqh-tkpi>*:nth-child(2)::before{background-color:var(--ea-coral-soft);background-image:{$pqhiconalert}}
+{$scope}{$scope} .pqhsd-kpis>*:nth-child(3)::before,{$scope}{$scope} .pqh-tkpi>*:nth-child(3)::before{background-color:var(--ea-sky-soft);background-image:{$pqhicondata}}
+{$scope}{$scope} .pqhsd-kpis>*:nth-child(4)::before,{$scope}{$scope} .pqh-tkpi>*:nth-child(4)::before{background-color:var(--ea-gold-soft);background-image:{$pqhiconlive}}
+{$scope}{$scope} .pqhsd-kpis>*:nth-child(5)::before,{$scope}{$scope} .pqh-tkpi>*:nth-child(5)::before{background-color:var(--ea-plum-soft);background-image:{$pqhiconstar}}
+/* is-grade / is-risk still fire on <strong> inside these cards (To grade,
+   Students needing attention) -- the "meaning" block below restates them at
+   equal specificity to this rule and sits LATER in the sheet, so they still
+   win the tie. Nothing to do here; noted so the ordering is not disturbed. */
+
+/* ---- the one gold pill ---------------------------------------------------
+   In the reference exactly one control on a card is filled, it is gold, and it
+   presses into its own bottom edge. Kept literally, so "the gold thing" always
+   means GO. Everything secondary is a hairline ghost, which is also what the
+   deck does. */
+{$scope} [class*="-btn"],{$scope} [class*="-cta"],{$scope} .pqh-ybig,{$scope} .pqh-top-action,{$scope} .pqh-back{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:0 20px;border:0;border-radius:999px;background:var(--ea-gold);color:var(--ea-gold-ink);font-family:var(--ea-display);font-size:14.5px;font-weight:800;letter-spacing:.01em;line-height:1.2;text-decoration:none;box-shadow:0 4px 0 var(--ea-gold-press);cursor:pointer;transition:transform .08s ease,box-shadow .08s ease,filter .13s ease}
+{$scope} [class*="-btn"]:hover,{$scope} [class*="-cta"]:hover,{$scope} .pqh-ybig:hover{background:var(--ea-gold);color:var(--ea-gold-ink);filter:brightness(1.06);text-decoration:none}
+{$scope} [class*="-btn"]:active,{$scope} [class*="-cta"]:active,{$scope} .pqh-ybig:active{transform:translateY(2px);box-shadow:0 2px 0 var(--ea-gold-press)}
+{$scope} [class*="-btn"][disabled],{$scope} [class*="-btn"]:disabled{opacity:.45;box-shadow:none;cursor:not-allowed}
+{$scope}{$scope} [class*="-btn--secondary"],{$scope}{$scope} [class*="-btn--light"],{$scope}{$scope} [class*="-btn--ghost"],{$scope}{$scope} .pqhsd-jc-btn2,{$scope}{$scope} .pqh-back,{$scope}{$scope} .pqh-top-action,{$scope}{$scope} .pqh-course-card__lesson{background:rgba(255,255,255,.07);color:var(--ea-ink);border:1px solid rgba(255,255,255,.24);box-shadow:none}
+{$scope}{$scope} [class*="-btn--secondary"]:hover,{$scope}{$scope} [class*="-btn--light"]:hover,{$scope}{$scope} [class*="-btn--ghost"]:hover,{$scope}{$scope} .pqhsd-jc-btn2:hover,{$scope}{$scope} .pqh-back:hover,{$scope}{$scope} .pqh-top-action:hover,{$scope}{$scope} .pqh-course-card__lesson:hover{background:var(--ea-cell);color:var(--ea-ink);border-color:var(--ea-teal);filter:none}
+{$scope}{$scope} [class*="-btn--secondary"]:active,{$scope}{$scope} [class*="-btn--light"]:active,{$scope}{$scope} .pqhsd-jc-btn2:active{transform:none;box-shadow:none}
+{$scope}{$scope} [class*="-btn--danger"]{background:var(--ea-coral);color:#2A1008;border:0;box-shadow:0 4px 0 #B8604A}
+
+/* ---- pills, chips, tags, statuses ---------------------------------------- */
+{$scope} [class*="-pill"],{$scope} [class*="-chip"],{$scope} [class*="-tag"],{$scope} [class*="-status"],{$scope} [class*="-badge"],{$scope} .pqh-special-care,{$scope} .pqhsd-jc-level{border:1px solid var(--ea-teal-line);border-radius:999px;background:var(--ea-teal-soft);color:var(--ea-teal);font-family:var(--ea-display);font-size:12px;font-weight:700;letter-spacing:.02em;line-height:1;text-transform:none}
+
+/* ---- meaning -------------------------------------------------------------
+   Re-stated rather than inherited, because the ink reset above deliberately
+   flattened everything. These are the four things a dashboard says with
+   colour, and they keep saying it. */
+{$scope}{$scope} [class*="--ok"],{$scope}{$scope} [class*="--good"],{$scope}{$scope} [class*="--done"],{$scope}{$scope} [class*="--success"],{$scope}{$scope} .is-ok,{$scope}{$scope} .pqhsd-delta,{$scope}{$scope} [class*="-delta"]{background:var(--ea-green-soft);border-color:var(--ea-green-line);color:var(--ea-green)}
+{$scope}{$scope} [class*="--warn"],{$scope}{$scope} [class*="--pending"],{$scope}{$scope} [class*="--due"],{$scope}{$scope} .is-grade{background:var(--ea-gold-soft);border-color:var(--ea-gold-line);color:var(--ea-gold)}
+{$scope}{$scope} [class*="--risk"],{$scope}{$scope} [class*="--bad"],{$scope}{$scope} [class*="--danger"],{$scope}{$scope} [class*="--error"],{$scope}{$scope} [class*="--overdue"],{$scope}{$scope} [class*="--blocked"],{$scope}{$scope} [class*="--missing"],{$scope}{$scope} .is-risk,{$scope}{$scope} .pqhsd-jc-todo{background:var(--ea-coral-soft);border-color:var(--ea-coral-line);color:var(--ea-coral)}
+{$scope}{$scope} [class*="--info"],{$scope}{$scope} [class*="--readonly"],{$scope}{$scope} [class*="--live"],{$scope}{$scope} .is-live{background:var(--ea-sky-soft);border-color:var(--ea-sky-line);color:var(--ea-sky)}
+/* A one-line note is not a chip: it takes the state's COLOUR and none of its
+   box. student_dashboard.php's four lesson-mode notices are these, and they
+   carried the meaning as an inline style until the ink reset flattened it. */
+{$scope}{$scope} [class*="-note--warn"],{$scope}{$scope} [class*="-note--risk"],{$scope}{$scope} [class*="-note--info"],{$scope}{$scope} [class*="-note--ok"]{background:transparent;border:0;font-weight:600}
+{$scope}{$scope} [class*="-note--warn"]{color:var(--ea-gold)}
+{$scope}{$scope} [class*="-note--risk"]{color:var(--ea-coral)}
+{$scope}{$scope} [class*="-note--info"]{color:var(--ea-sky)}
+{$scope}{$scope} [class*="-note--ok"]{color:var(--ea-green)}
+
+/* ---- notices -------------------------------------------------------------
+   The reference's one aside is "For the grown-up": a soft gold wash behind a
+   gold left rule. That shape is given to the things that are actually asides
+   -- an alert, a notice -- and deliberately NOT to empty states, which are the
+   commonest block on a dashboard with no data in it. A page of gold boxes
+   saying "nothing here yet" would shout where the reference murmurs. */
+{$scope} [class*="-alert"],{$scope} [class*="-notice"]{border:0;border-left:4px solid var(--ea-gold);border-radius:16px;background:var(--ea-gold-soft);color:var(--ea-body)}
+
+/* ---- empty states --------------------------------------------------------
+   Quiet: an outline where a card would be, and muted text. Nothing is missing,
+   there is simply nothing yet. */
+{$scope} [class*="-empty"]{border:1px dashed var(--ea-line);border-radius:18px;background:transparent;box-shadow:none;color:var(--ea-muted);font-family:var(--ea-sans);font-weight:400}
+
+/* ---- fields -------------------------------------------------------------- */
+{$scope} [class*="-input"],{$scope} [class*="-select"],{$scope} [class*="-textarea"],{$scope} input[type="text"],{$scope} input[type="search"],{$scope} input[type="email"],{$scope} input[type="number"],{$scope} input[type="date"],{$scope} select,{$scope} textarea{border:1px solid var(--ea-line);border-radius:14px;background:var(--ea-cell-2);color:var(--ea-ink);font-family:var(--ea-sans);font-size:14.5px;font-weight:400}
+{$scope} [class*="-input"]:focus,{$scope} select:focus,{$scope} textarea:focus{border-color:var(--ea-teal);box-shadow:0 0 0 3px rgba(53,191,178,.28)}
+{$scope} [class*="-field"] label,{$scope} label{color:var(--ea-muted);font-family:var(--ea-display);font-size:12.5px;font-weight:700}
+{$scope} option{background:var(--ea-cell-2);color:var(--ea-ink)}
+{$scope} [type="checkbox"],{$scope} [type="radio"]{accent-color:var(--ea-teal)}
+
+/* ---- tables -------------------------------------------------------------- */
+{$scope} [class*="-table"],{$scope} table{border-color:var(--ea-line);color:var(--ea-body);font-family:var(--ea-sans);font-size:14.5px}
+{$scope} th{background:transparent;border-color:var(--ea-line);color:var(--ea-muted);font-family:var(--ea-display);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+{$scope} td{background:transparent;border-color:var(--ea-line-soft);color:var(--ea-body)}
+{$scope} tbody tr:hover td{background:var(--ea-cell)}
+
+/* ---- progress ------------------------------------------------------------
+   Track dark, fill teal. Nothing here sets width: the pages compute that from
+   real progress and it has to survive. */
+{$scope} [class*="-bar"]:not([class*="-barbox"]),{$scope} [class*="-track"],{$scope} [class*="-meter"],{$scope} [class*="-progress"],{$scope} .pqh-stackbar{background:var(--ea-cell-2);border:0;border-radius:999px;box-shadow:none}
+{$scope} [class*="-bar"]>i,{$scope} [class*="-bar"]>span,{$scope} [class*="-fill"],{$scope} .pqhsd-jc-bar i{background:var(--ea-teal);border-radius:999px;box-shadow:none}
+
+/* ---- the student's course cards, reshaped into LearnUp's tile ------------
+   This catalogue has no course photography, but every subject already
+   carries a colour and an icon everywhere else in this app (the Cambridge
+   subject badges) -- so that identity becomes the full-bleed band LearnUp
+   fills with a photo, the level pill takes the corner LearnUp's duration
+   badge sits in, and the progress line, bar and button below follow its own
+   order: status text and its percentage share a row, the bar sits under
+   that, the action is last. --jc/--jcd/--jct arrive inline per card already;
+   --jct (a pale tint meant for a white card) stays unused here.
+
+   Grid areas do the reordering. DOM order is unchanged -- head, pos,
+   note-OR-todo, bar, pct, go -- grid places children by NAME, so the visual
+   order does not have to match it. pos/pct/bar/go all fall inside the card's
+   OWN padding (16px 15px 15px, set in student_dashboard.php and left alone),
+   so none of them repeats that inset -- only .pqhsd-jc-head escapes it, and
+   only by exactly its negative.
+
+   row-gap is set explicitly, and small, for a reason that has nothing to do
+   with the rows that ARE populated. grid-template-areas declares five ROWS
+   whatever the course, and gap inserts space between every adjacent pair of
+   them regardless of whether either side has content -- a course with no
+   position text and no progress yet (pos and bar both genuinely absent from
+   the DOM, not just empty) still pays for four gaps at whatever gap this
+   card inherited, which was 11px from student_dashboard.php's own
+   `.pqhsd-jc{gap:11px}` never having been overridden here: 44px of pure
+   spacing on a card whose only real content is a greeting line and a button
+   row. Reported directly off a production screenshot of exactly that card.
+   3px keeps the rows that DO have content from touching without reserving
+   anything close to that for the ones that don't. */
+{$scope}{$scope} .pqhsd-jc{display:grid;grid-template-columns:1fr auto;grid-template-areas:"head head" "pos pos" "note pct" "bar bar" "go go";row-gap:3px;column-gap:10px;background:var(--ea-card);border:1px solid var(--ea-line);border-radius:26px;box-shadow:var(--ea-shadow-sm);overflow:hidden}
+{$scope}{$scope} .pqhsd-jc:hover{border-color:var(--jc);box-shadow:var(--ea-shadow)}
+/* 2026-09-08: the full-bleed colour band this had (a stand-in for the photo
+   LearnUp's own card carries) is gone. Reported directly off a screenshot
+   of a course grid with all eight subjects on screen at once: a fully
+   saturated block per card, eight different hues in one glance, read as
+   noise rather than as identity -- and it was never what the STATED
+   reference asked for besides. The math page this whole redesign takes its
+   fonts and colours from spends colour on a small marked TILE per strand
+   (`.mark`, 62px, one colour) on an otherwise unbroken dark ground; it never
+   once fills a card edge to edge with a saturated colour. The band was this
+   sheet's own addition on top of that brief, modelled on LearnUp's card
+   instead. Subject identity moves back to where the actual source of truth
+   already puts it: the icon, in a soft tint of its own colour, matching the
+   tinted-circle language the stat cards above already use -- so the two
+   card families read as one system instead of two different colour
+   mechanisms on the same page. color-mix() keeps this to one rule for every
+   subject; the alternative was a per-subject soft-tint variable to add
+   alongside --jc/--jcd/--jct for every course this catalogue has. */
+{$scope}{$scope} .pqhsd-jc-head{grid-area:head;display:flex;align-items:center;gap:12px}
+{$scope}{$scope} .pqhsd-jc-badge{background:color-mix(in srgb,var(--jc) 20%,var(--ea-cell));color:var(--jc);border-radius:14px}
+{$scope}{$scope} .pqhsd-jc-name{color:var(--ea-ink);font-family:var(--ea-display);font-size:19.5px;font-weight:800;line-height:1.15}
+/* Neutral now, not per-subject -- one more colour this pass was removing.
+   The icon alone carries which subject this is; a second, different-hued
+   signal on the same card was the "too many colours" complaint restated in
+   miniature. */
+{$scope}{$scope} .pqhsd-jc-level{background:var(--ea-teal-soft);border-color:var(--ea-teal-line);color:var(--ea-teal);font-family:var(--ea-display);font-size:10.5px;font-weight:800;letter-spacing:.05em;line-height:1;text-transform:uppercase}
+/* Neutral for the same reason the level pill is: a bold, uppercase,
+   saturated-colour eyebrow line is still a per-subject colour signal, even
+   small, and this pass is about there being only one of those (the icon) per
+   card, not several in decreasing loudness. */
+{$scope}{$scope} .pqhsd-jc-pos{grid-area:pos;background:transparent;border:0;color:var(--ea-muted);font-family:var(--ea-display);font-size:12.5px;font-weight:700;letter-spacing:.06em;line-height:1.2;text-transform:uppercase}
+{$scope}{$scope} .pqhsd-jc-note{grid-area:note;align-self:center;background:transparent;border:0;padding:0;color:var(--ea-body);font-size:14.5px;font-weight:400;line-height:1.25}
+{$scope}{$scope} .pqhsd-jc-note b{color:var(--ea-ink);font-weight:700}
+/* Coloured text, not a chip -- the chip's own box is what the grid reflow
+   removes here, and "N to catch up" keeps its urgency as ink instead. Its
+   inline <svg> uses stroke="currentColor", so it follows for free. */
+{$scope}{$scope} .pqhsd-jc-todo{grid-area:note;align-self:center;background:transparent;border:0;padding:0;color:var(--ea-coral);font-size:14.5px;font-weight:700;line-height:1.25}
+{$scope}{$scope} .pqhsd-jc-pct{grid-area:pct;align-self:center;justify-self:end;color:var(--ea-muted);font-family:var(--ea-display);font-size:13.5px;font-weight:800;line-height:1.2}
+{$scope}{$scope} .pqhsd-jc-bar{grid-area:bar}
+{$scope}{$scope} .pqhsd-jc-bar i{background:var(--jc)}
+{$scope}{$scope} .pqhsd-jc-go{grid-area:go;margin-top:5px;padding-top:0;border-top:0}
+
+/* ---- the teacher/parent course card ---------------------------------------
+   No colour or icon token reaches this card -- it is built from a course
+   record, not a subject -- so it keeps a plain surface rather than a head
+   band with nothing to fill it. Its OWN corner badge (a launch-mode chip,
+   teacher only) still moves to the band-less version of the same spot, and
+   the rest -- title, meta, an optional grade-progress bar, status chips,
+   actions -- becomes rows on one clean tile instead of the flat block it
+   was. */
+{$scope}{$scope} .pqh-course-card{position:relative;display:flex;flex-direction:column;gap:10px;background:var(--ea-card);border:1px solid var(--ea-line);border-radius:22px;box-shadow:var(--ea-shadow-sm);padding:18px}
+{$scope}{$scope} .pqh-tccard__chip{position:absolute;top:14px;right:14px;background:var(--ea-teal-soft);border:1px solid var(--ea-teal-line);color:var(--ea-teal);border-radius:999px;font-family:var(--ea-display);font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px}
+{$scope}{$scope} .pqh-course-card>span>h3{color:var(--ea-ink);font-family:var(--ea-display);font-size:17.5px;font-weight:800;padding-right:64px}
+{$scope}{$scope} .pqh-tccard__meta,{$scope}{$scope} .pqh-course-card__number{color:var(--ea-muted);font-size:12.5px;font-weight:600}
+{$scope}{$scope} .pqh-tccard__bar{display:block;height:8px;margin-top:8px;border-radius:999px;background:var(--ea-cell-2)}
+{$scope}{$scope} .pqh-tccard__bar i{display:block;height:100%;border-radius:999px;background:var(--ea-teal)}
+{$scope}{$scope} .pqh-tccard__chips{display:flex;flex-wrap:wrap;gap:6px}
+{$scope}{$scope} .pqh-course-card__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+
+/* ---- icon tiles ----------------------------------------------------------
+   Everywhere else an icon sits in a small square: the to-do rows, the feedback
+   list, the young-learner cards. The reference's --mark tile, sized down, with
+   the state colour on the glyph rather than behind it. */
+{$scope} [class*="__ico"],{$scope} [class*="-ico"],{$scope} [class*="__icon"]{background:var(--ea-cell-2);border-radius:14px;color:var(--ea-teal)}
+{$scope}{$scope} [class*="__ico--ok"]{background:var(--ea-green-soft);color:var(--ea-green)}
+{$scope}{$scope} [class*="__ico--warn"]{background:var(--ea-gold-soft);color:var(--ea-gold)}
+{$scope}{$scope} [class*="__ico--risk"]{background:var(--ea-coral-soft);color:var(--ea-coral)}
+{$scope}{$scope} [class*="__ico--info"]{background:var(--ea-sky-soft);color:var(--ea-sky)}
+
+/* ---- the young-learner cards ---------------------------------------------
+   Four big tiles for a managed learner. They were four pastels on white; they
+   take the reference's four marks instead, in its own order. */
+{$scope}{$scope} .pqh-ycard{background:var(--ea-card);border:1px solid var(--ea-line);border-radius:26px;box-shadow:var(--ea-shadow-sm);color:var(--ea-ink)}
+{$scope}{$scope} .pqh-ycard--1{border-color:var(--ea-teal)}
+{$scope}{$scope} .pqh-ycard--2{border-color:var(--ea-gold)}
+{$scope}{$scope} .pqh-ycard--3{border-color:var(--ea-coral)}
+{$scope}{$scope} .pqh-ycard--4{border-color:var(--ea-plum)}
+{$scope}{$scope} .pqh-ystars{background:transparent;border:0;color:var(--ea-gold)}
+
+/* ---- the rail and the top bar --------------------------------------------
+   These have to beat pqh_duolingo_chrome_css, which writes the app bar at
+   (0,4,0) -- so the extra class is written by hand here and the forcing pass
+   adds one more. The rail becomes the darker end of the same ground rather
+   than a navy slab beside a navy page, which is the join that sheet was
+   solving for while the page was still light. */
+{$scope}{$scope} .pqh-gnav.pqh-gnav{background:rgba(11,29,44,.66);border-right:1px solid var(--ea-line)}
+{$scope}{$scope} .pqh-gnav__mark.pqh-gnav__mark{background:var(--ea-teal);color:var(--ea-teal-ink);border-radius:16px;box-shadow:0 4px 0 var(--ea-teal-deep);font-family:var(--ea-display);font-weight:800}
+{$scope}{$scope} .pqh-gnav__name.pqh-gnav__name{color:var(--ea-ink);font-family:var(--ea-display);font-size:14.5px;font-weight:800;letter-spacing:-.01em}
+{$scope}{$scope} .pqh-gnav__item.pqh-gnav__item{border:1px solid transparent;border-radius:14px;background:transparent;color:var(--ea-body);font-family:var(--ea-display);font-size:12.5px;font-weight:700;letter-spacing:.02em;line-height:1.2;text-transform:none}
+{$scope}{$scope} .pqh-gnav__item.pqh-gnav__item:hover{background:rgba(255,255,255,.07);color:var(--ea-ink)}
+{$scope}{$scope} .pqh-gnav__item.is-active{background:var(--ea-teal-soft);border-color:var(--ea-teal-line);color:var(--ea-teal)}
+{$scope}{$scope} .pqh-gnav__foot.pqh-gnav__foot{border-top:1px solid var(--ea-line)}
+{$scope}{$scope} .pqh-gnav__foot .pqh-gnav__item{color:var(--ea-muted)}
+{$scope}{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover{color:var(--ea-coral)}
+{$scope}{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover svg{color:var(--ea-coral)}
+
+/* One colour per destination, the way the reference gives one mark per strand.
+   Keyed on position for the reason the sheet this replaces gives: the rail's
+   contents differ by role and by page, so any row landing on any of these is
+   correct, and a rail longer than the cycle repeats it. nth-child counts the
+   brand link as 1, so the first nav row is 2. */
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(2) svg{color:var(--ea-teal)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(3) svg{color:var(--ea-gold)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(4) svg{color:var(--ea-coral)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(5) svg{color:var(--ea-plum)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(6) svg{color:var(--ea-green)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(7) svg{color:var(--ea-sky)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(8) svg{color:var(--ea-teal)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(9) svg{color:var(--ea-gold)}
+{$scope}{$scope} .pqh-gnav__item.is-active svg{color:var(--ea-teal)}
+
+{$scope}{$scope} .pqh-appbar.pqh-appbar{min-height:64px;background:rgba(11,29,44,.78);background-image:none;border-bottom:1px solid var(--ea-line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none}
+{$scope}{$scope} .pqh-appbar__brand.pqh-appbar__brand{color:var(--ea-ink);font-family:var(--ea-display);font-weight:800}
+{$scope}{$scope} .pqh-appbar__nav a,{$scope}{$scope} .pqh-appbar__nav button{box-sizing:border-box;min-height:40px;padding:0 16px;border:1px solid var(--ea-line);border-radius:999px;background:rgba(255,255,255,.05);color:var(--ea-body);font-family:var(--ea-display);font-size:12.5px;font-weight:700;letter-spacing:.02em;line-height:1.2;text-transform:none;box-shadow:none}
+{$scope}{$scope} .pqh-appbar__nav a:hover,{$scope}{$scope} .pqh-appbar__nav button:hover{background:var(--ea-cell);border-color:var(--ea-teal);color:var(--ea-ink)}
+{$scope}{$scope} .pqh-appbar__nav a.pqh-appbar__icon{width:40px;padding:0}
+{$scope}{$scope} .pqh-appbar__nav .pqh-appbar__logout{background:var(--ea-gold);border-color:var(--ea-gold);color:var(--ea-gold-ink);box-shadow:0 4px 0 var(--ea-gold-press)}
+{$scope}{$scope} .pqh-appbar__nav .pqh-appbar__logout:hover{background:var(--ea-gold);border-color:var(--ea-gold);color:var(--ea-gold-ink);filter:brightness(1.06)}
+{$scope}{$scope} .pqh-appbar__nav .pqh-appbar__logout:active{transform:translateY(2px);box-shadow:0 2px 0 var(--ea-gold-press)}
+
+/* ---- narrow viewports ----------------------------------------------------
+   BOTH media queries below carry the scope THREE times by hand, and that is
+   not decoration. pqh_css_force_and_specify() skips any line beginning with
+   '@', so it doubles the unconditional rules above and not these -- an
+   ordinary "{$scope} .x" here is (0,2,0) against a doubled (0,3,0) outside and
+   the whole query is silently dead. The same trap is documented, and paid for,
+   in pqh_openproject_skin_css().
+
+   The pill goes back to a compact size below 900px, and the rows it sits in
+   are allowed to wrap. A reference-sized 42px pill with 20px of side padding
+   is right beside a card and wrong at the end of a to-do row on a phone.
+
+   Measured on dashboard.php at 375px, loaded at that width rather than resized
+   into it: the to-do row overflowed the viewport by 8px BEFORE this sheet
+   existed, because those rows are a flex that does not wrap, and the
+   reference-sized pill took that to 20px. Compacting the pill and letting the
+   row wrap closes both -- the 12px this sheet added and the 8px it found. That
+   is one step past "leave it no worse": the row is the element being restyled
+   here, so it is not somebody else's bug being fixed in passing. */
+@media(max-width:900px){{$scope}{$scope}{$scope} [class*="-btn"],{$scope}{$scope}{$scope} [class*="-cta"],{$scope}{$scope}{$scope} .pqh-ybig,{$scope}{$scope}{$scope} .pqh-top-action,{$scope}{$scope}{$scope} .pqh-back{min-height:36px;padding:0 13px;font-size:13px}{$scope}{$scope}{$scope} [class*="__item"],{$scope}{$scope}{$scope} [class*="-row"]:not([class*="-rows"]){flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){{$scope}{$scope}{$scope} [class*="-btn"],{$scope}{$scope}{$scope} [class*="-cta"],{$scope}{$scope}{$scope} .pqhsd-jc{transition:none}{$scope}{$scope}{$scope} [class*="-btn"]:active,{$scope}{$scope}{$scope} [class*="-cta"]:active{transform:none}}
+CSS;
+
+    // The fonts have to lead the sheet -- a browser drops an @import that does
+    // not. If Google Fonts is blocked the stack falls through to Segoe UI and
+    // only the typeface changes, which is the same bargain the skin makes.
+    // $body no longer needs folding in here -- pqh_ehel_tokens_css() already
+    // returns it prepended to the token/ground/ink-reset text, and $css above
+    // is that return value plus this function's own component heredoc.
+    return "@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap');\n"
+        . pqh_css_force_and_specify($css);
+}
+
+/**
+ * The live group board, in the same visual language as the dashboards --
+ * reused per the owner's 2026-09-07 request ("using the new dashboard
+ * design/colors but make more functional for the teacher... it is not
+ * serving well due to the design of the page and the way information is
+ * organized").
+ *
+ * SAME LAYERING AS pqh_ehel_academy_css(): emitted last (after
+ * pqh_viewer_chrome_css()), wins the same way via pqh_css_force_and_specify(),
+ * and does not touch the board's own ~135-line light-theme <style> block or
+ * ANY of its JS -- the class names below are exactly the ones
+ * live_group_board.php's render()/tileHtml() already emit. That is
+ * deliberate: the sort order, the state computation (liveState()), the
+ * Wehel-vs-learning-time ledger split and the .is-flagged selective
+ * highlighting are the carefully-documented, safety-relevant parts of this
+ * page (CLAUDE.md's "live group board" section), and none of them are a
+ * styling concern -- every improvement asked for here is reachable by
+ * restyling and CSS-reordering the fixed markup those functions already
+ * produce.
+ *
+ * WHAT "MORE FUNCTIONAL" MEANT HERE, since the request named no specific
+ * changes: three information-architecture calls, all reversible by editing
+ * this function alone and none of them touching a single other file.
+ *
+ *   1. The place-line pills (course / position / done-count / Wehel-minutes)
+ *      go from four saturated hues to one neutral treatment. They are
+ *      CONTEXT, not state -- the same "too many colours" lesson just applied
+ *      to the dashboard's course cards, arriving on a page where the stakes
+ *      are higher: four hues of context were competing for attention with
+ *      the one thing that matters here, the coloured left border and the
+ *      flag row that say a learner needs it.
+ *   2. The flag chips (hand / moved / cycle / ok / bad / warn / live / time)
+ *      keep their distinct colours -- this row IS the actionable layer -- but
+ *      are now reordered by severity with CSS `order`, so a tile with three
+ *      flags shows the one to act on first leftmost, regardless of the order
+ *      tileHtml() happened to push them onto the array in.
+ *   3. The totals row becomes icon-led stat tiles, matching the dashboard's
+ *      KPI cards, so the seven headline numbers scan as a dashboard rather
+ *      than a row of bare figures -- purely a `::before`-icon plus CSS-grid
+ *      restructuring of the same `<div class="pqlgb-total">`, no markup
+ *      change.
+ *
+ * @param string $scope the page's shell class, with its leading dot
+ * @param string $bodyclass the page's body class, so the ground reaches the
+ *                          overscroll area behind the shell ('' to skip)
+ */
+/**
  * The board COMPONENTS: totals row, tiles, pills, flags, the chat column and
  * the page chrome. One definition, two boards.
  *
@@ -2055,6 +2727,306 @@ body.{$bodyclass} #page,body.{$bodyclass} #page-content,body.{$bodyclass} #regio
 .{$prefix}-top-actions a:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none}
 @media(max-width:560px){.{$prefix}-top{display:block}.{$prefix}-top-actions{margin-top:10px}}
 CSS;
+}
+
+// $prefix is the CLASS prefix this sheet is written for. It defaults to the
+// teacher board's own, so that call is unchanged and its output is verified
+// byte-identical; the parent board passes 'pqpb'.
+//
+// It needed one because every component rule in here was a hardcoded
+// `.pqlgb-` literal while the function took only a $scope. The parent board
+// called it, got the 34KB, and matched NONE of the tiles, chips, pills or
+// totals - it wore the chrome and had to hand-roll everything inside it. A
+// stylesheet that silently applies to nothing is the same failure shape as a
+// gate that is green because it did no work.
+function pqh_ehel_group_board_css(string $scope, string $bodyclass = '', string $prefix = 'pqlgb', array $totalicons = []): string {
+    // Seven icons for the totals row, one per position -- position is stable
+    // here (render()'s totalsHtml array is a fixed seven-row literal, always
+    // in this order: hands, in-Wehel, done-this-cycle, learners-on-screen,
+    // quiet, left-the-page, not-started), unlike the dashboard's subject
+    // cards where position is arbitrary. Colour is a visual rhythm only, not
+    // a severity signal -- severity stays entirely on the .is-flagged rule
+    // below, which recolours the NUMBER independent of the icon, exactly
+    // preserving the board's own pre-existing mechanism for that.
+    $pqlgbiconhand = pqh_ehel_icon_data_uri('#6FB6E8', '<path d="M8 13V6a1.5 1.5 0 0 1 3 0v5"/><path d="M11 11V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M14 10.5V6a1.5 1.5 0 0 1 3 0v8"/><path d="M17 11.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.5c-2.4 0-4-.8-5.5-2.8l-2.7-4.4c-.6-1 .4-2.1 1.5-1.6L8 14"/>');
+    $pqlgbiconstar = pqh_ehel_icon_data_uri('#B78BD1', '<path d="M12 2.5 14.6 9l7 .6-5.3 4.6 1.6 6.8L12 17.6l-6 3.4 1.6-6.8L2.3 9.6l7-.6L12 2.5z"/>');
+    $pqlgbicondata = pqh_ehel_icon_data_uri('#35BFB2', '<path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/>');
+    $pqlgbiconusers = pqh_ehel_icon_data_uri('#4FD1A0', '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>');
+    $pqlgbiconalert = pqh_ehel_icon_data_uri('#ED8E70', '<circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/>');
+    $pqlgbiconexit = pqh_ehel_icon_data_uri('#6FB6E8', '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>');
+    $pqlgbiconcalendar = pqh_ehel_icon_data_uri('#B78BD1', '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>');
+
+    // The totals row's icons are POSITIONAL, and position only carries meaning
+    // while the board emitting them keeps a fixed row order -- which the
+    // teacher's render() does, in a seven-row literal. A second board with a
+    // different order inherits this one's meanings silently: the parent
+    // board's FIRST total is its children, and it would have been handed the
+    // raised-hand icon. So the order is an argument now, and each board states
+    // its own; the default is the teacher's seven, unchanged.
+    $pqlgbiconclock = pqh_ehel_icon_data_uri('#4FD1A0', '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>');
+    $pqlgbicons = [
+        'hand' => $pqlgbiconhand, 'star' => $pqlgbiconstar, 'data' => $pqlgbicondata,
+        'users' => $pqlgbiconusers, 'alert' => $pqlgbiconalert, 'exit' => $pqlgbiconexit,
+        'calendar' => $pqlgbiconcalendar, 'clock' => $pqlgbiconclock,
+    ];
+    if (!$totalicons) {
+        $totalicons = ['hand', 'star', 'data', 'users', 'alert', 'exit', 'calendar'];
+    }
+    $totaliconlines = [];
+    foreach (array_values($totalicons) as $pqlgbi => $pqlgbkey) {
+        if (!isset($pqlgbicons[$pqlgbkey])) {
+            continue;   // an unknown name draws no icon rather than a broken one
+        }
+        $totaliconlines[] = $scope . ' .' . $prefix . '-total:nth-child(' . ($pqlgbi + 1)
+            . ')::before{background-image:' . $pqlgbicons[$pqlgbkey] . '}';
+    }
+    $totaliconcss = implode("
+", $totaliconlines);   // never PHP_EOL: CRLF here would rewrite every byte of the teacher sheet
+    $css = pqh_ehel_tokens_css($scope, $bodyclass) . "\n\n" . <<<CSS
+/* ---- the app bar and rail, same treatment as the dashboards' -------------
+   Duplicated from pqh_ehel_academy_css() rather than hoisted into
+   pqh_ehel_tokens_css() alongside it: that function's own output is verified
+   byte-identical against its pre-refactor form for both dashboard call
+   sites, and moving a rule that reorders the cascade is not a change a
+   string-equality check can wave through on trust -- repetition is the
+   cheaper thing to be wrong about.
+
+   The rail copy is not optional the way a second dashboard-style component
+   might be: pqh_ehel_tokens_css()'s own ink-reset sets
+   `{$scope}{$scope} a:where(:not([style*="color"])){color:var(--ea-teal)}`,
+   and .pqh-gnav__item is exactly such a plain anchor (pqh_design_shell_html()
+   emits it with no inline style). Left at that, EVERY rail link -- not just
+   the active one -- renders teal, at 3.41:1 against the rail's own
+   background, measured in a sweep of the rendered page. Academy's hand-
+   doubled `.pqh-gnav__item.pqh-gnav__item` (specificity (0,4,0)) is what
+   already beats the reset's (0,2,1) on the dashboards; without the same
+   override here the group board's rail would ship that failure for real,
+   not hypothetically -- the sweep found it on THIS page, not by inspection. */
+{$scope}{$scope} .pqh-appbar.pqh-appbar{min-height:64px;background:rgba(11,29,44,.78);background-image:none;border-bottom:1px solid var(--ea-line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:none}
+{$scope}{$scope} .pqh-appbar__brand.pqh-appbar__brand{color:var(--ea-ink);font-family:var(--ea-display);font-weight:800}
+{$scope}{$scope} .pqh-appbar__nav a,{$scope}{$scope} .pqh-appbar__nav button{box-sizing:border-box;min-height:40px;padding:0 16px;border:1px solid var(--ea-line);border-radius:999px;background:rgba(255,255,255,.05);color:var(--ea-body);font-family:var(--ea-display);font-size:12.5px;font-weight:700;letter-spacing:.02em;line-height:1.2;text-transform:none;box-shadow:none}
+{$scope}{$scope} .pqh-appbar__nav a:hover,{$scope}{$scope} .pqh-appbar__nav button:hover{background:var(--ea-cell);border-color:var(--ea-teal);color:var(--ea-ink)}
+{$scope}{$scope} .pqh-appbar__nav a.pqh-appbar__icon{width:40px;padding:0}
+{$scope}{$scope} .pqh-appbar__nav .pqh-appbar__logout{background:var(--ea-gold);border-color:var(--ea-gold);color:var(--ea-gold-ink);box-shadow:0 4px 0 var(--ea-gold-press)}
+{$scope}{$scope} .pqh-appbar__nav .pqh-appbar__logout:hover{background:var(--ea-gold);border-color:var(--ea-gold);color:var(--ea-gold-ink);filter:brightness(1.06)}
+{$scope}{$scope} .pqh-appbar__nav .pqh-appbar__logout:active{transform:translateY(2px);box-shadow:0 2px 0 var(--ea-gold-press)}
+{$scope}{$scope} .pqh-gnav.pqh-gnav{background:rgba(11,29,44,.66);border-right:1px solid var(--ea-line)}
+{$scope}{$scope} .pqh-gnav__mark.pqh-gnav__mark{background:var(--ea-teal);color:var(--ea-teal-ink);border-radius:16px;box-shadow:0 4px 0 var(--ea-teal-deep);font-family:var(--ea-display);font-weight:800}
+{$scope}{$scope} .pqh-gnav__name.pqh-gnav__name{color:var(--ea-ink);font-family:var(--ea-display);font-size:14.5px;font-weight:800;letter-spacing:-.01em}
+{$scope}{$scope} .pqh-gnav__item.pqh-gnav__item{border:1px solid transparent;border-radius:14px;background:transparent;color:var(--ea-body);font-family:var(--ea-display);font-size:12.5px;font-weight:700;letter-spacing:.02em;line-height:1.2;text-transform:none}
+{$scope}{$scope} .pqh-gnav__item.pqh-gnav__item:hover{background:rgba(255,255,255,.07);color:var(--ea-ink)}
+{$scope}{$scope} .pqh-gnav__item.is-active{background:var(--ea-teal-soft);border-color:var(--ea-teal-line);color:var(--ea-teal)}
+{$scope}{$scope} .pqh-gnav__foot.pqh-gnav__foot{border-top:1px solid var(--ea-line)}
+{$scope}{$scope} .pqh-gnav__foot .pqh-gnav__item{color:var(--ea-muted)}
+{$scope}{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover{color:var(--ea-coral)}
+{$scope}{$scope} .pqh-gnav__foot a.pqh-gnav__item:hover svg{color:var(--ea-coral)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(2) svg{color:var(--ea-teal)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(3) svg{color:var(--ea-gold)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(4) svg{color:var(--ea-coral)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(5) svg{color:var(--ea-plum)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(6) svg{color:var(--ea-green)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(7) svg{color:var(--ea-sky)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(8) svg{color:var(--ea-teal)}
+{$scope}{$scope} .pqh-gnav>.pqh-gnav__item:nth-child(9) svg{color:var(--ea-gold)}
+{$scope}{$scope} .pqh-gnav__item.is-active svg{color:var(--ea-teal)}
+
+/* ---- the header card ------------------------------------------------------
+   .{$prefix}-top keeps its light-theme rule (#fff/#e4e9ef/#0f2237/#5b6b7c) in the
+   page's own <style> block untouched -- these are the literal-colour
+   overrides pqh_ehel_academy_css()'s own docblock calls "the chips at the
+   end of this sheet". h1 needs none of its own: the ink-reset above already
+   colours every {$scope} heading var(--ea-ink) in var(--ea-display), at
+   (0,2,1) after doubling against the page's own (0,1,1) .{$prefix}-top h1 rule. */
+{$scope} .{$prefix}-top{background:var(--ea-card);border:1px solid var(--ea-line);box-shadow:var(--ea-shadow-sm)}
+{$scope} .{$prefix}-top p{color:var(--ea-body)}
+{$scope} .{$prefix}-top-actions a{border-color:var(--ea-line);background:var(--ea-cell);color:var(--ea-ink)}
+{$scope} .{$prefix}-top-actions a:hover{background:var(--ea-cell-2);border-color:var(--ea-teal)}
+
+/* ---- the filter bar ------------------------------------------------------ */
+{$scope} .{$prefix}-bar{background:var(--ea-card);border-color:var(--ea-line)}
+{$scope} .{$prefix}-form label{color:var(--ea-muted)}
+{$scope} .{$prefix}-select{background:var(--ea-cell);border-color:var(--ea-line);color:var(--ea-ink)}
+{$scope} .{$prefix}-select:focus-visible{border-color:var(--ea-teal)}
+{$scope} .{$prefix}-freshness{color:var(--ea-muted)}
+{$scope} .{$prefix}-dot{background:var(--ea-green)}
+{$scope} .{$prefix}-freshness.is-stale .{$prefix}-dot{background:var(--ea-muted)}
+{$scope} .{$prefix}-freshness.is-failing .{$prefix}-dot{background:var(--ea-coral)}
+{$scope} .{$prefix}-noscript{background:var(--ea-gold-soft);border-color:var(--ea-gold-line);color:var(--ea-gold)}
+{$scope} .{$prefix}-fullscreen-btn{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:0 12px;border:1px solid var(--ea-teal-line);border-radius:999px;background:transparent;color:var(--ea-teal);font-family:var(--ea-display);font-size:12.5px;font-weight:700;cursor:pointer}
+{$scope} .{$prefix}-fullscreen-btn:hover{background:var(--ea-teal-soft)}
+{$scope} .{$prefix}-fullscreen-btn[aria-pressed="true"]{background:var(--ea-teal);border-color:var(--ea-teal);color:var(--ea-teal-ink)}
+{$scope} .{$prefix}-fullscreen-btn svg{flex:0 0 auto}
+
+/* ---- fullscreen: the student monitoring data, alone --------------------
+   One body class (pqlgb-fullscreen-on), toggled by a small dedicated
+   <script> in live_group_board.php that the board's own render()/poll()
+   never touches -- see that file for why it is a separate script rather
+   than a branch inside the existing one. Hides the rail, the app bar, the
+   header card and the bar's OWN configuration controls; the totals row, the
+   tiles and the class chat are what is left -- chat included by the owner's
+   own instruction (2026-09-08), against the first version's judgement call
+   that it was a composing surface rather than monitoring data. The freshness
+   dot and this button itself stay too -- both are live context for what is
+   on screen, not configuration of it.
+
+   The legend stays hidden: unlike chat, nothing asked for it back, and its
+   "how to read this board" text describes furniture (the bar's controls)
+   that fullscreen has just removed.
+
+   The shell's reserved 248px of rail padding has to be reclaimed explicitly
+   and with !important: pqh_design_shell_css() sets it with !important of
+   its own, so a plain override loses regardless of specificity -- any
+   !important beats any non-!important declaration outright, before
+   specificity is ever consulted. */
+body.{$prefix}-fullscreen-on {$scope} .pqh-gnav,
+body.{$prefix}-fullscreen-on {$scope} .pqh-appbar,
+body.{$prefix}-fullscreen-on {$scope} .{$prefix}-top,
+body.{$prefix}-fullscreen-on {$scope} .{$prefix}-bar .{$prefix}-form,
+body.{$prefix}-fullscreen-on {$scope} .{$prefix}-note{display:none}
+body.{$prefix}-fullscreen-on {$scope}{padding:14px!important}
+body.{$prefix}-fullscreen-on {$scope} .pqlgb,
+body.{$prefix}-fullscreen-on {$scope} .{$prefix}-wrap{max-width:none}
+/* .{$prefix}-chat's top:72px (in the page's own untouched stylesheet) clears the
+   sticky app bar -- gone in fullscreen, so the offset is reclaimed the same
+   way the shell's own padding is, down to the same 14px the ground now uses. */
+body.{$prefix}-fullscreen-on {$scope} .{$prefix}-chat{top:14px}
+
+/* ---- the totals row: icon-led stat tiles, matching the dashboard's KPIs ---
+   No markup change -- render() still emits a bare <div class="pqlgb-total">
+   with a <b> and a <span> inside. The icon is a ::before pseudo-element
+   placed by CSS Grid, spanning both text rows; :nth-child assigns one of the
+   seven icons above by POSITION, because position is genuinely stable here
+   (see the comment above this function). is-flagged still only recolours
+   the number, exactly as the page's own light-theme rule already does, so
+   the selective-highlighting convention (only SOME totals ever turn red) is
+   unchanged by this pass. */
+{$scope} .{$prefix}-totals{gap:12px}
+{$scope} .{$prefix}-total{display:grid;grid-template-columns:38px 1fr;column-gap:12px;align-items:center;background:var(--ea-card);border-color:var(--ea-line);box-shadow:var(--ea-shadow-sm)}
+{$scope} .{$prefix}-total::before{content:"";grid-row:1/3;grid-column:1;width:38px;height:38px;border-radius:50%;background-color:var(--ea-cell-2);background-repeat:no-repeat;background-position:center;background-size:18px 18px}
+{$scope} .{$prefix}-total b{grid-column:2;grid-row:1;color:var(--ea-ink)}
+{$scope} .{$prefix}-total span{grid-column:2;grid-row:2;color:var(--ea-muted)}
+{$scope} .{$prefix}-total.is-flagged b{color:var(--ea-coral)}
+{$totaliconcss}
+
+/* ---- groups and the Go live control ---------------------------------------
+   Gold only for the due-now/live state, because that button is the one "go"
+   action a teacher takes once per group per session -- the same scarcity
+   rule pqh_ehel_academy_css()'s own docblock states ("exactly one gold pill
+   that means GO"). is-upcoming (a class still due today, just not yet)
+   stays a ghost outline: nothing to press yet. */
+{$scope} .{$prefix}-group{background:var(--ea-card);border-color:var(--ea-line);box-shadow:var(--ea-shadow-sm)}
+{$scope} .{$prefix}-group-head{background:var(--ea-cell-2);border-color:var(--ea-line)}
+{$scope} .{$prefix}-group-head span{color:var(--ea-muted)}
+{$scope} .{$prefix}-golive{border-color:var(--ea-gold);background:var(--ea-gold);color:var(--ea-gold-ink)}
+{$scope} .{$prefix}-golive:hover{filter:brightness(1.06)}
+{$scope} .{$prefix}-golive.is-upcoming{background:transparent;color:var(--ea-teal);border-color:var(--ea-teal-line)}
+{$scope} .{$prefix}-golive.is-upcoming:hover{background:var(--ea-teal-soft)}
+{$scope} .{$prefix}-empty{color:var(--ea-muted)}
+
+/* ---- the tile: the left accent border carries the sort, so it stays the
+   loudest thing on the row. State colours move from the bootstrap-ish
+   literals (#b02a37, #997404, #1a67a3...) onto the same --ea-* palette
+   everything else here uses; --tile--ok is still deliberately UNSTYLED --
+   see CLAUDE.md, "no state = no colour treatment" is the point, not a gap.
+   The two avatar circles use SOLID state colour as their background (sky,
+   coral), which measures well under 4.5:1 against white -- 2.20:1 and
+   2.41:1, computed, not guessed -- so both take the ground's own dark navy
+   as ink instead, at 5.30:1 and 4.84:1. The gold avatar keeps --ea-gold-ink,
+   already the established pairing (10.3:1). */
+{$scope} .{$prefix}-tile{border-bottom-color:var(--ea-line)}
+{$scope} .{$prefix}-tile--alert{border-left-color:var(--ea-coral);background:var(--ea-coral-soft)}
+{$scope} .{$prefix}-tile--warn{border-left-color:var(--ea-gold);background:var(--ea-gold-soft)}
+{$scope} .{$prefix}-tile--nodata{border-left-color:var(--ea-line);background:var(--ea-cell-2)}
+{$scope} .{$prefix}-tile--hand{border-left-color:var(--ea-sky);background:var(--ea-sky-soft)}
+{$scope} .{$prefix}-tile--hand .{$prefix}-avatar{background:var(--ea-sky);color:var(--ea-ground-a)}
+{$scope} .{$prefix}-tile--hand .{$prefix}-quiet b{color:var(--ea-sky)}
+{$scope} .{$prefix}-avatar{background:var(--ea-cell-2);color:var(--ea-body)}
+{$scope} .{$prefix}-tile--alert .{$prefix}-avatar{background:var(--ea-coral);color:var(--ea-ground-a)}
+{$scope} .{$prefix}-tile--warn .{$prefix}-avatar{background:var(--ea-gold);color:var(--ea-gold-ink)}
+{$scope} .{$prefix}-who b{color:var(--ea-ink)}
+{$scope} .{$prefix}-where{color:var(--ea-muted)}
+{$scope} .{$prefix}-quiet span{color:var(--ea-muted)}
+{$scope} .{$prefix}-tile--alert .{$prefix}-quiet b{color:var(--ea-coral)}
+{$scope} .{$prefix}-tile--warn .{$prefix}-quiet b{color:var(--ea-gold)}
+{$scope} .{$prefix}-reason{background:var(--ea-cell-2);border-left-color:var(--ea-coral);color:var(--ea-body)}
+{$scope} .{$prefix}-answer{border-color:var(--ea-gold);background:var(--ea-gold);color:var(--ea-gold-ink)}
+{$scope} .{$prefix}-answer:hover{filter:brightness(1.06)}
+
+/* ---- the place line: context, not state -----------------------------------
+   Four hues collapsed to one neutral treatment -- the "too many colours,
+   simplify" lesson from the dashboard's course cards, applied here because
+   the stakes are the same shape: the pills were competing for attention with
+   the row that is actually meant to draw the eye, the flags below. */
+{$scope} .{$prefix}-pl,{$scope} .{$prefix}-pl--course,{$scope} .{$prefix}-pl--pos,{$scope} .{$prefix}-pl--done,{$scope} .{$prefix}-pl--wehel{background:var(--ea-cell-2);border-color:var(--ea-line);color:var(--ea-muted)}
+
+/* ---- the flag row: kept colourful (this IS the actionable layer) but
+   reordered by severity so the thing to act on first is always leftmost,
+   whatever order tileHtml() happened to push the flags into the array in.
+   A raised hand outranks everything -- the one signal on this board the
+   learner said out loud -- then a failed checkpoint or a focus break, then
+   "already being helped", then good news, then the informational,
+   least-urgent chips last. order only works because .{$prefix}-flags is already
+   display:flex in the page's own untouched stylesheet.
+
+   Background is SOLID --ea-cell-2 on every variant, not each hue's own
+   -soft tint -- measured, not assumed, after the first version read fine
+   against the card and then failed AA in the browser: a flag chip's -soft
+   background composites OVER whatever tinted background its own TILE
+   already has (a hand flag inside a hand tile is sky-soft-on-sky-soft; a bad
+   flag inside a warn tile is coral-soft-on-gold-soft), and that compounding
+   isn't visible reading the CSS -- it only showed up as six real failures
+   (3.65-3.95:1 against the 4.5:1 this 11px text needs) in an automated
+   sweep of the rendered page. Every one of the six text colours clears
+   4.5:1 against solid cell-2 regardless of which tile it sits in (measured:
+   sky 5.18, teal 5.02, coral 4.73, gold 7.25, green 5.95, muted 5.53), which
+   a translucent background can never guarantee because it has no fixed
+   value to measure against. The border keeps each chip's own hue for
+   identity; only the fill changed. */
+{$scope} .{$prefix}-flag--hand{order:1;border-color:var(--ea-sky-line);background:var(--ea-cell-2);color:var(--ea-sky)}
+{$scope} .{$prefix}-flag--bad{order:2;border-color:var(--ea-coral-line);background:var(--ea-cell-2);color:var(--ea-coral)}
+{$scope} .{$prefix}-flag--warn{order:3;border-color:var(--ea-gold-line);background:var(--ea-cell-2);color:var(--ea-gold)}
+{$scope} .{$prefix}-flag--live{order:4;border-color:var(--ea-sky-line);background:var(--ea-cell-2);color:var(--ea-sky)}
+{$scope} .{$prefix}-flag--ok{order:5;border-color:var(--ea-green-line);background:var(--ea-cell-2);color:var(--ea-green)}
+{$scope} .{$prefix}-flag--moved{order:6;border-color:var(--ea-green-line);background:var(--ea-cell-2);color:var(--ea-green)}
+{$scope} .{$prefix}-flag--time{order:7;border-color:var(--ea-teal-line);background:var(--ea-cell-2);color:var(--ea-teal)}
+{$scope} .{$prefix}-flag--cycle{order:8;border-color:var(--ea-line);background:var(--ea-cell-2);color:var(--ea-muted)}
+
+{$scope} .{$prefix}-note{background:var(--ea-card);border-color:var(--ea-line);border-left-color:var(--ea-teal);color:var(--ea-body)}
+{$scope} .{$prefix}-note b{color:var(--ea-ink)}
+
+/* ---- the classroom chat ----------------------------------------------------
+   is-private keeps its OWN distinct tint (gold, not the mine/other teal) --
+   CLAUDE.md is explicit that a learner's message must not read like
+   something the room saw, and that distinction has to survive a reskin, not
+   just the colours it was made of. is-announcement stays the banner it was,
+   restated in the ground's own navy so it reads as "the room", not as one
+   more bubble in the scrollback. */
+{$scope} .{$prefix}-chat{background:var(--ea-card);border-color:var(--ea-line)}
+{$scope} .{$prefix}-chat-head{border-color:var(--ea-line);color:var(--ea-ink)}
+{$scope} .{$prefix}-chat-tab{border-color:var(--ea-line);color:var(--ea-muted)}
+{$scope} .{$prefix}-chat-tab.is-active{background:var(--ea-teal-soft);border-color:var(--ea-teal-line);color:var(--ea-teal)}
+{$scope} .{$prefix}-chat-msg{background:var(--ea-cell-2);color:var(--ea-body)}
+{$scope} .{$prefix}-chat-msg.is-mine{background:var(--ea-teal-soft);color:var(--ea-ink)}
+{$scope} .{$prefix}-chat-msg.is-private{background:var(--ea-gold-soft);border-color:var(--ea-gold-line);color:var(--ea-ink)}
+{$scope} .{$prefix}-chat-msg.is-private small{color:var(--ea-gold)}
+{$scope} .{$prefix}-chat-empty{color:var(--ea-muted)}
+{$scope} .{$prefix}-chat-form{border-color:var(--ea-line)}
+{$scope} .{$prefix}-chat-chip{color:var(--ea-gold);background:var(--ea-gold-soft);border-color:var(--ea-gold-line)}
+{$scope} .{$prefix}-chat-quote{border-left-color:var(--ea-teal-line);color:var(--ea-muted)}
+{$scope} .{$prefix}-chat-msg.is-announcement{background:var(--ea-ground-a);color:var(--ea-ink)}
+{$scope} .{$prefix}-chat-announce{border-color:var(--ea-teal-line);color:var(--ea-teal)}
+{$scope} .{$prefix}-chat-announce:hover{background:var(--ea-teal-soft)}
+{$scope} .{$prefix}-chat-answer{border-color:var(--ea-teal-line);color:var(--ea-teal)}
+{$scope} .{$prefix}-chat-answer:hover{background:var(--ea-teal-soft)}
+{$scope} .{$prefix}-chat-shot{background:var(--ea-cell-2)}
+{$scope} .{$prefix}-chat-form input{background:var(--ea-cell);border-color:var(--ea-line);color:var(--ea-ink)}
+{$scope} .{$prefix}-chat-form input:focus-visible{border-color:var(--ea-teal)}
+{$scope} .{$prefix}-chat-form button{border-color:var(--ea-teal);background:var(--ea-teal);color:var(--ea-teal-ink)}
+{$scope} .{$prefix}-chat-form button:hover{background:var(--ea-teal-deep)}
+CSS;
+
+    return "@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap');\n"
+        . pqh_css_force_and_specify($css);
 }
 
 /**
@@ -3240,6 +4212,69 @@ function pqh_ip_rate_limited(string $bucket, int $max = 30, int $windowsecs = 60
 }
 
 /**
+ * Make a skin sheet win against the pages it is laid over. Two passes, and the
+ * second is the one people forget:
+ *
+ *   1. !important on the properties pages force in their own CSS. 109 of the 137
+ *      skinned pages write things like
+ *      .pql-shell [class*="-panel"]{border-color:...!important}, and !important
+ *      beats any specificity -- so without this a skin silently loses on the
+ *      majority of pages and only appears to work on the handful that happen not
+ *      to force anything. Measured, not guessed: color x252, background x48,
+ *      font-weight x33, border-color x26, border-radius x22, box-shadow x20,
+ *      border x19, font-size x14.
+ *
+ *      Forced on the LISTED properties only. Layout -- padding, display, gap,
+ *      width -- is never forced, so a page keeps its own geometry (this is what
+ *      lets .X-panel--wide and .X-panel--compact still work).
+ *
+ *      The cost: a page's own colour MODIFIER on a base component loses too,
+ *      because equal specificity plus later position wins. Only one exists
+ *      across all 137 pages -- .pqlf-card--overdue in live_followups.php -- and
+ *      it carries its own !important now so it still reads as overdue.
+ *
+ *   2. Doubling the first class token of every selector. !important alone is not
+ *      enough: between two !important declarations the MORE SPECIFIC one still
+ *      wins, and the page rule above is (0,2,0) against a bare .pql-panel at
+ *      (0,1,0). Doubling lifts the sheet to (0,2,0) and later position carries
+ *      the tie. Done here rather than by writing .x.x throughout a template,
+ *      which would treble its length and be silently wrong the moment somebody
+ *      adds a rule and forgets the trick.
+ *
+ * A line opening with '@' or ':root' is left alone -- at-rules have no selector
+ * to double, and the token block is not competing with anything. A rule that
+ * needs to beat something already at (0,4,0) writes its own extra class by hand
+ * and gets one more from this pass.
+ */
+function pqh_css_force_and_specify(string $css): string {
+    $css = preg_replace_callback(
+        '/(^|[;{])(\s*)(background|background-color|color|border|border-color|border-radius|box-shadow|'
+            . 'font-family|font-size|font-weight|letter-spacing|text-transform|text-shadow)(\s*:\s*)([^;{}]+?)(\s*)(?=[;}])/mi',
+        static function (array $m): string {
+            if (stripos($m[5], '!important') !== false) {
+                return $m[0];
+            }
+            return $m[1] . $m[2] . $m[3] . $m[4] . $m[5] . '!important' . $m[6];
+        },
+        $css
+    ) ?? $css;
+
+    return implode("\n", array_map(static function (string $line): string {
+        $brace = strpos($line, '{');
+        if ($brace === false || $line === '' || $line[0] === '@' || strpos($line, ':root') === 0) {
+            return $line;
+        }
+        $selectors = explode(',', substr($line, 0, $brace));
+        foreach ($selectors as &$sel) {
+            // duplicate the first class token; +1 class of specificity, same match
+            $sel = preg_replace('/(\.[A-Za-z_][A-Za-z0-9_-]*)/', '$1$1', $sel, 1);
+        }
+        unset($sel);
+        return implode(',', $selectors) . substr($line, $brace);
+    }, explode("\n", $css)));
+}
+
+/**
  * The OpenProject skin, generated for one page's class prefix.
  *
  * Tokens are measured off openproject.org, not guessed: Lato, #1a67a3 primary
@@ -3494,58 +4529,9 @@ CSS;
 CSS;
     }
 
-    // 109 of the 137 skinned pages force these same properties with !important
-    // in their own CSS -- .pql-shell [class*="-panel"]{border-color:...!important}
-    // and the like. !important beats any specificity, so without this the skin
-    // silently loses on the majority of pages and only appears to work on the
-    // handful that happen not to. Measured, not guessed: color x252,
-    // background x48, font-weight x33, border-color x26, border-radius x22,
-    // box-shadow x20, border x19, font-size x14.
-    //
-    // Forced on the LISTED properties only. Layout -- padding, display, gap,
-    // width -- is never forced, so a page keeps its own geometry (this is what
-    // lets .X-panel--wide and .X-panel--compact still work).
-    //
-    // The cost: a page's own colour MODIFIER on a base component loses too,
-    // because equal specificity plus later position wins. Only one exists
-    // across all 137 pages -- .pqlf-card--overdue in live_followups.php -- and
-    // it carries its own !important now so it still reads as overdue.
-    $css = preg_replace_callback(
-        '/(^|[;{])(\s*)(background|background-color|color|border|border-color|border-radius|box-shadow|'
-            . 'font-family|font-size|font-weight|letter-spacing|text-transform|text-shadow)(\s*:\s*)([^;{}]+?)(\s*)(?=[;}])/mi',
-        static function (array $m): string {
-            if (stripos($m[5], '!important') !== false) {
-                return $m[0];
-            }
-            return $m[1] . $m[2] . $m[3] . $m[4] . $m[5] . '!important' . $m[6];
-        },
-        $css
-    ) ?? $css;
-
-    // !important alone is not enough: between two !important declarations the
-    // MORE SPECIFIC one still wins. The live_* family -- the largest group here
-    // -- writes .pql-shell [class*="-panel"]{border-color:...!important}, which
-    // is (0,2,0) against a bare .pql-panel at (0,1,0), so the skin lost the
-    // border on every one of those pages while appearing to work everywhere
-    // else. Doubling the first class in each selector lifts the skin to (0,2,0)
-    // and later position carries the tie.
-    //
-    // Done here rather than by writing .x.x throughout the template above,
-    // which would treble its length and be silently wrong the moment somebody
-    // adds a rule and forgets the trick.
-    $css = implode("\n", array_map(static function (string $line): string {
-        $brace = strpos($line, '{');
-        if ($brace === false || $line === '' || $line[0] === '@' || strpos($line, ':root') === 0) {
-            return $line;
-        }
-        $selectors = explode(',', substr($line, 0, $brace));
-        foreach ($selectors as &$sel) {
-            // duplicate the first class token; +1 class of specificity, same match
-            $sel = preg_replace('/(\.[A-Za-z_][A-Za-z0-9_-]*)/', '$1$1', $sel, 1);
-        }
-        unset($sel);
-        return implode(',', $selectors) . substr($line, $brace);
-    }, explode("\n", $css)));
+    // Two passes that make this sheet beat the pages it is laid over. The
+    // reasoning, and what each pass costs, is on pqh_css_force_and_specify().
+    $css = pqh_css_force_and_specify($css);
 
     // The shared workspace header ships a gradient, 950-weight type and a deep
     // shadow with !important on every declaration. This is last in the sheet so

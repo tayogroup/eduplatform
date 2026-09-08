@@ -798,7 +798,14 @@ export async function checkPronunciation({ audioBase64, referenceText, token = "
       // The endpoint's own codes, so the page can tell "not switched on yet"
       // from "something broke" - the reason Wehel's spent allowance answers
       // with a code rather than a bare 429.
-      return { ok: false, code: result.code || (response.status === 503 ? "not-configured" : "error"),
+      // 404 counts as not-configured, not as an error. The endpoint answering
+      // 404 means the PHP is not on the Moodle box yet, which is exactly "the
+      // check is not switched on" - and a 404 returns Moodle's HTML error page
+      // rather than JSON, so there is no code field to read. Telling a child
+      // "the check did not work" for something nobody has installed reads as
+      // their recording having failed.
+      const missing = response.status === 503 || response.status === 404;
+      return { ok: false, code: result.code || (missing ? "not-configured" : "error"),
                message: result.message || "" };
     }
     return result;

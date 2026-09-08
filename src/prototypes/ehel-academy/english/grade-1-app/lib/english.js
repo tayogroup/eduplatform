@@ -156,7 +156,7 @@
       $(el.ch).querySelectorAll(".wordbtn").forEach((c) => {
         c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
       });
-      if (!ok) b.classList.add("wrong"); else right++;
+      if (!ok) b.classList.add("wrong"); else { right++; reportKnown(it.w); }
       $(el.fb).className = "fb " + (ok ? "good" : "bad");
       $(el.fb).textContent = ok ? cheer() + " " + it.w : "That word was " + it.w + ".";
       i++;
@@ -196,7 +196,7 @@
       $(el.ch).querySelectorAll(".wordbtn").forEach((c) => {
         c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right");
       });
-      if (!ok) b.classList.add("wrong"); else right++;
+      if (!ok) b.classList.add("wrong"); else { right++; reportKnown(it.w || (it.opts || []).filter((c) => c.ok).map((c) => c.w)); }
       $(el.fb).className = "fb " + (ok ? "good" : "bad");
       $(el.fb).textContent = ok ? cheer() + " " + it.w : "It is " + it.w + ".";
       playClip(it.audio, it.w);
@@ -401,6 +401,9 @@
     }
     function mark(k) {
       said[k] = true;
+      // Participation only. What a child said out loud is not marked here, and
+      // the pronunciation check that does listen is explicitly not a grade.
+      reportAttempt(o.finish, said.filter(Boolean).length, said.length);
       if (said.every(Boolean)) {
         $(el.fb).className = "fb good";
         $(el.fb).textContent = o.done;
@@ -647,6 +650,7 @@
         "We did these &#10003;</button></div>";
 
       const left = did.filter((x) => !x).length;
+      reportAttempt(o.finish, did.filter(Boolean).length, did.length);
       $(el.score).textContent = did.filter(Boolean).length + " of " + o.items.length + " ticked"
         + (left ? "" : " - all of them");
 
@@ -875,6 +879,7 @@
         const done = overlay.querySelector("#readDone");
         if (done) done.addEventListener("click", () => {
           read[k] = true;
+          reportAttempt(o.finish, read.filter(Boolean).length, read.length);
           close();
           if (k === 0) {
             $(el.fb).className = "fb good";
@@ -946,6 +951,10 @@
           '" data-k="' + k + '" data-v="' + esc(sc) + '">' + esc(sc) + "</button>").join("") +
         "</div></div>").join("") + "</div>";
       const answered = o.items.filter((it) => saved[it.id]).length;
+      // How many the child ANSWERED, never what they answered: a self-rating
+      // is a claim, and "By myself" in a gradebook would be a grade for
+      // confidence. The answers themselves stay on the device.
+      reportAttempt(o.finish, answered, o.items.length);
       $(el.score).textContent = answered + " of " + o.items.length + " answered";
       if (answered === o.items.length) {
         $(el.fb).className = "fb good";

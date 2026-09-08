@@ -16,9 +16,14 @@ the lessons, and emits the same four event types the shell emits:
   section.completed   durable, posts immediately
   unit.completed      durable
   progress.summary    state - WHERE the learner is, flushed at once (below)
-  checkpoint.result   a scored step, via window.__ehelScore(i, right, total)
-                      - the only event that becomes a MARK a teacher or
-                        parent reads, and the only one the gradebook takes
+  checkpoint.result   a scored step or ONE ACTIVITY INSIDE ONE, via
+                      window.__ehelScore(i, right, total, sub, subTitle) - the
+                      only event that becomes a MARK a teacher or parent reads,
+                      and the only one the gradebook takes
+  attempted           participation without a score, via
+                      window.__ehelAttempt(i, answered, total); rides on
+                      progress.summary, capped at 20 sections by the server
+  knownWords          via window.__ehelKnown(words); rides on the summary too
 
 POSITION IS FLUSHED, NOT LEFT TO THE IDLE TIMER. `progress.summary` is a
 "state" event and waits up to 20 seconds for a quiet moment, which is right
@@ -139,13 +144,30 @@ JS = """
      teacher needs to see. `resumeLabel` rides beside the id because a board
      printing "step-04" shows a teacher a word that appears nowhere on the
      child's screen. */
+  /* Activity-level participation, {section: {answered, total}}, and the words
+     the learner has shown they know. Both ride on progress.summary because the
+     reducer keeps them there and nowhere else; both are whole-map
+     last-write-wins, so every summary sends everything known so far rather
+     than a delta that could strand a count.
+
+     The server caps `attempted` at 20 sections and requires
+     ^[a-z0-9][a-z0-9_-]{0,39}$ - no dots, no slashes - so ids are kept in that
+     shape here rather than being rejected silently there. */
+  const attempted = {};
+  const known = new Set();
+  let lastAt = 0;
+
   function report(i) {
-    emit({
+    lastAt = i;
+    const ev = {
       type: "progress.summary", unit: UNIT,
       sectionsDone: [...doneIds],
       resume: sectionId(i), resumeLabel: labelOf(i),
       xp: doneIds.size,
-    });
+    };
+    if (Object.keys(attempted).length) ev.attempted = attempted;
+    if (known.size) ev.knownWords = [...known];
+    emit(ev);
     try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
   }
 
@@ -161,7 +183,7 @@ JS = """
     }
     report(i);
   };
-  window.__ehelAt = function (i) { report(i); };
+  window.__ehelAt = function (i) { lastAt = i; report(i); };
 
   /* A SCORE, where a step actually produces one.
      checkpoint.result is the only event the reducer turns into something a
@@ -177,15 +199,51 @@ JS = """
      this, because a score with an invented denominator is a mark nobody
      measured. Play is deliberately excluded for the same reason the rollup
      drops the Quran app's `games` star counts: a game is for practising. */
-  window.__ehelScore = function (i, right, total) {
+  window.__ehelScore = function (i, right, total, sub, subTitle) {
     const n = Number(total) || 0;
     const got = Math.max(0, Math.min(Number(right) || 0, n));
     if (!n) return;
+    /* `sub` gives ONE ACTIVITY INSIDE A STEP its own row - a single game out
+       of the twelve, say. The reducer keys checkpoints by this string and does
+       not validate it, so it is normalised here: lower case, hyphens only, and
+       short enough to read in a portal table. */
+    const key = sub
+      ? sectionId(i) + "-" + String(sub).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 28)
+      : sectionId(i);
     emit({
-      type: "checkpoint.result", unit: UNIT, section: sectionId(i), title: labelOf(i),
+      type: "checkpoint.result", unit: UNIT, section: key,
+      title: subTitle ? labelOf(i) + ": " + subTitle : labelOf(i),
       score: Math.round((got / n) * 100), correct: got, total: n,
     });
     try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  };
+
+  /* PARTICIPATION where there is no score to give. "8 of 12 activities
+     ticked" is a real fact about a learner and is not a mark; sending it as a
+     checkpoint would put a percentage on work nobody assessed, which is the
+     thing the rollup already refuses to do for the Quran app's game stars. */
+  window.__ehelAttempt = function (i, answered, total) {
+    const n = Number(total) || 0;
+    if (!n) return;
+    attempted[sectionId(i)] = { answered: Math.max(0, Math.min(Number(answered) || 0, n)), total: n };
+    report(i);
+  };
+
+  /* Words the learner has shown they know, by tapping the right one when it
+     was said or pictured. A set, so hearing the same word in two steps counts
+     once, and the summary sends the whole list because the reducer replaces
+     rather than merges. */
+  window.__ehelKnown = function (words) {
+    const list = Array.isArray(words) ? words : [words];
+    let added = false;
+    for (const w of list) {
+      const t = String(w || "").trim().toLowerCase();
+      if (t && !known.has(t)) { known.add(t); added = true; }
+    }
+    // `cur` belongs to the deck's IIFE and this block is a separate module,
+    // so it is not in scope here - reading it would throw. The last position
+    // the deck told us about is, and that is the honest answer anyway.
+    if (added) report(lastAt);
   };
 </script>
 """

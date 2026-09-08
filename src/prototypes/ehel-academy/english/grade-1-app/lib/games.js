@@ -107,6 +107,13 @@
 
       function endGame() {
         played.add(game.id);
+        /* ONE ROW PER GAME. The reducer keys checkpoints by an arbitrary
+           string, so a single game out of the twelve can carry its own score
+           instead of the step reporting one number for the lot - which is what
+           "activity level" has to mean for a step that holds twelve
+           activities. */
+        reportScore(o.finish, right, game.rounds.length, game.id, game.title);
+        reportAttempt(o.finish, played.size, (pack.games || []).length);
         /* No cheer over a bad round. "Brilliant! 0 of 6 right" was the
            first version, and a child who can count can read that as the
            page not paying attention. */

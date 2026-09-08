@@ -50,8 +50,17 @@
      reports", and they shipped with no progress block at all. Made once
      earlier in this build and made again here; the tell is the step printing
      "skip ... already reports" on a page it has never touched. */
-  function reportScore(i, right, total) {
-    if (window.__ehelScore) { try { window.__ehelScore(i, right, total); } catch (_) { /* never break the lesson */ } }
+  function reportScore(i, right, total, sub, subTitle) {
+    if (window.__ehelScore) { try { window.__ehelScore(i, right, total, sub, subTitle); } catch (_) { /* never break the lesson */ } }
+  }
+  /* Participation, where the step asked something but marked nothing. */
+  function reportAttempt(i, answered, total) {
+    if (window.__ehelAttempt) { try { window.__ehelAttempt(i, answered, total); } catch (_) { /* same */ } }
+  }
+  /* A word the learner picked correctly for a sound or a picture - the one
+     place this build has direct evidence that a word is known. */
+  function reportKnown(words) {
+    if (window.__ehelKnown) { try { window.__ehelKnown(words); } catch (_) { /* same */ } }
   }
 
   /* ---- one question after another ---- */

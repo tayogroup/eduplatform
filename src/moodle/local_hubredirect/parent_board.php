@@ -86,9 +86,25 @@ echo $OUTPUT->header();
 .pqpb-total{padding:11px 14px;background:var(--op-surface);border:1px solid var(--op-line);border-radius:var(--op-radius)}
 .pqpb-total b{display:block;font-size:24px;font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums}
 .pqpb-total span{display:block;margin-top:2px;font-size:12px;font-weight:700;color:var(--op-ink-soft)}
-.pqpb-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,340px);gap:16px;align-items:start}
-@media(max-width:900px){.pqpb-cols{grid-template-columns:minmax(0,1fr)}}
-.pqpb-tile{display:flex;gap:12px;padding:13px 14px;margin-bottom:10px;background:var(--op-surface);
+/* ONE COLUMN BY DEFAULT, two only where there is genuinely room for both.
+   The first version was the other way round - two columns always, collapsing
+   below 900px - and it forced a 300px minimum on the chat whichever container
+   it landed in. Inside this page's actual content width that left the tile
+   about 190px, so every pill wrapped to one word and read as a stack of
+   circles, and the tile's own contents overflowed under the chat. A minimum
+   that cannot be met does not wrap; it squeezes whatever is beside it. */
+/* FLEX WRAP, NOT A MEDIA QUERY, and that is the whole fix. A media query
+   measures the VIEWPORT; this page's content column is narrow inside a wide
+   viewport, so `@media(max-width:900px)` never fired however cramped the
+   column got, and the chat's 300px minimum squeezed the tile to about 190px -
+   every pill wrapping to one word and reading as a stack of circles.
+   flex-wrap answers to the CONTAINER, so the two columns sit side by side
+   where there is room for both and stack where there is not, at any viewport. */
+.pqpb-cols{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.pqpb-cols>div{flex:1 1 460px;min-width:0}
+.pqpb-cols>.pqpb-chat{flex:1 1 320px;max-width:100%}
+@media(min-width:1100px){.pqpb-cols>.pqpb-chat{flex:0 0 340px}}
+.pqpb-tile{display:flex;flex-wrap:wrap;gap:12px;padding:13px 14px;margin-bottom:10px;background:var(--op-surface);
   border:1px solid var(--op-line);border-left-width:4px;border-radius:var(--op-radius)}
 .pqpb-tile--ok{border-left-color:#2f8f5b}
 .pqpb-tile--warn{border-left-color:#b8860b}
@@ -96,10 +112,17 @@ echo $OUTPUT->header();
 .pqpb-tile--nodata{border-left-color:var(--op-line-strong)}
 .pqpb-avatar{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
   background:var(--op-surface-tint);font-weight:900;font-size:14px}
-.pqpb-who{flex:1 1 auto;min-width:0}
-.pqpb-who b{display:block;font-size:15.5px;font-weight:900}
+/* min-width:0 is what lets a flex child actually shrink - without it the name
+   and the pills set a floor the tile cannot go below, and the quiet time is
+   pushed out past the edge. */
+.pqpb-who{flex:1 1 12em;min-width:0}
+.pqpb-who b{display:block;font-size:15.5px;font-weight:900;overflow-wrap:anywhere}
 .pqpb-place{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.pqpb-pl{padding:2px 9px;border-radius:999px;border:1px solid var(--op-line);font-size:12px;font-weight:700}
+/* white-space:nowrap so a pill is a pill: without it a squeezed row breaks
+   each one onto several lines and a lozenge with three words stacked in it
+   reads as a circle. */
+.pqpb-pl{padding:2px 9px;border-radius:999px;border:1px solid var(--op-line);font-size:12px;font-weight:700;
+  white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .pqpb-pl--course{background:#edf3fc;border-color:#d5e3f8;color:#17498f}
 .pqpb-pl--pos{background:#cff4fc;border-color:#9eeaf9;color:#055160}
 .pqpb-pl--done{background:#f7d6e6;border-color:#efadce;color:#801f4f}
@@ -112,7 +135,9 @@ echo $OUTPUT->header();
 .pqpb-flag--bad{border-color:#f1aeb5;background:#f8d7da;color:#58151c}
 .pqpb-note{margin-top:8px;padding:7px 10px;border-left:3px solid #f1aeb5;background:var(--op-surface-tint);
   font-size:12.5px;font-style:italic;line-height:1.45}
-.pqpb-quiet{flex:none;text-align:right;min-width:74px}
+/* It may shrink and it may wrap to its own line rather than shoving the name
+   off the tile - flex:none was what pinned it and forced the overflow. */
+.pqpb-quiet{flex:0 1 auto;margin-left:auto;text-align:right;min-width:74px}
 .pqpb-quiet b{display:block;font-size:19px;font-weight:900;font-variant-numeric:tabular-nums}
 .pqpb-quiet span{display:block;font-size:11px;font-weight:700;color:var(--op-ink-soft);text-transform:uppercase}
 .pqpb-chat{background:var(--op-surface);border:1px solid var(--op-line);border-radius:var(--op-radius);

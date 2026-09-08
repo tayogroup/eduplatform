@@ -323,8 +323,11 @@ check('  and gives its content wrapper a rule',
 // `ehel-eng-g01` and reports no error at all. The teacher's board requires it
 // from the page; the library requires it here so the page and the poll
 // endpoint cannot disagree.
+// Through dirroot, not a repo-relative hop: the repo nests these plugins one
+// way and every server nests them another, so the relative form resolves here
+// and nowhere else. check-php-syntax.mjs now refuses that shape repo-wide.
 check('the subject map is loaded, so a tile says English and not ehel-eng-g01',
-    strpos($pliblive, "require_once(__DIR__ . '/../local_prequran/progress_gatewaylib.php')") !== false);
+    strpos($pliblive, "\$CFG->dirroot . '/local/prequran/progress_gatewaylib.php'") !== false);
 // The layout answers to the CONTAINER: a media query measures the viewport,
 // and this page's column is narrow inside a wide one.
 check('the two columns wrap on the container, not a viewport query',

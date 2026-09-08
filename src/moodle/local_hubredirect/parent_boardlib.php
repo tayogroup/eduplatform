@@ -35,7 +35,18 @@ require_once(__DIR__ . '/progress_rolluplib.php');
 // which is what this board shipped with. The teacher's board requires it from
 // the PAGE; requiring it here means the page and the poll endpoint cannot
 // disagree, and a third caller cannot arrive without it.
-require_once(__DIR__ . '/../local_prequran/progress_gatewaylib.php');
+// $CFG->dirroot, NOT a __DIR__-relative hop to a sibling directory. The REPO
+// nests these plugins as src/moodle/local_prequran and
+// src/moodle/local_hubredirect; every SERVER nests them as local/prequran and
+// local/hubredirect, without the prefix. A relative hop between them therefore
+// resolves on a developer's machine and on no install anywhere — which is what
+// shipped on 2026-09-08, and the check meant to catch it was a realpath()
+// against the repo: a true fact about the wrong filesystem. It fails at
+// RUNTIME, not at php -l, because a require path is resolved when the line
+// runs. check-php-syntax.mjs now refuses that shape across the repo.
+// Cross-plugin requires go through dirroot, the way the teacher's board does.
+global $CFG;
+require_once($CFG->dirroot . '/local/prequran/progress_gatewaylib.php');
 
 /** How far back "working now" looks, in seconds. The board's own warn line. */
 const PQPB_ACTIVE_SECONDS = 360;

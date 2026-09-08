@@ -18,6 +18,8 @@
 //  1. Opening tag — every file must begin with `<?php` (or a shebang).
 //  2. Corruption markers — p->q damage anywhere in the body.
 //  3. `php -l` — the real parser.
+//  4. Cross-plugin requires — a repo-relative hop that resolves here and on no
+//     server, and fails at RUNTIME rather than at parse time.
 //
 // Check 2 exists because the damage is not always whole-file. a2fd7041d was a
 // PARTIAL corruption: some lines were mangled, others were not. A file can keep
@@ -165,6 +167,24 @@ async function inspect(file) {
       problems.push(`line ${line}: ${JSON.stringify(marker)} — p->q corruption`);
       at = text.indexOf(marker, at + marker.length);
     }
+  }
+
+  // Check 4: a cross-plugin require by a REPO-relative hop.
+  //
+  // This repo holds the plugins as src/moodle/local_prequran and
+  // src/moodle/local_hubredirect; every Moodle install holds them as
+  // local/prequran and local/hubredirect, with no `local_` prefix. So
+  // `__DIR__ . '/../local_prequran/x.php'` resolves on a developer's machine
+  // and on no server anywhere — and it FAILS AT RUNTIME, in the browser, not
+  // at `php -l`, because a require path is only resolved when the line runs.
+  //
+  // It shipped exactly once, on 2026-09-08, and the check meant to catch it was
+  // a realpath() against the repo — a true fact about the wrong filesystem.
+  // Cross-plugin requires go through $CFG->dirroot.
+  for (const m of text.matchAll(/__DIR__\s*\.\s*['"]\/\.\.\/local_/g)) {
+    const line = text.slice(0, m.index).split("\n").length;
+    problems.push(`line ${line}: requires another plugin by a repo-relative path`
+      + " — the server has local/prequran, not local_prequran. Use $CFG->dirroot.");
   }
   return problems;
 }

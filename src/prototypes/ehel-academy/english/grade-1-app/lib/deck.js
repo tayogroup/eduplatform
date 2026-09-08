@@ -54,6 +54,24 @@
       $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
       $(el.score).textContent = (o.label || "Question") + " " + (i + 1) + " of " + o.items.length;
+      /* A WAY BACK TO THE TEXT THE QUESTIONS ARE ABOUT. The unit story used
+         to be the step immediately before this one. It was removed on
+         2026-09-08 as a duplicate of the same story on the book shelf, and
+         that left these questions with nothing to go back to and an
+         instruction - "go back a step" - that then pointed at Games.
+
+         The book opens RIGHT HERE rather than sending a five-year-old eight
+         steps back to pick the right one out of seven. Same reader as the
+         shelf (openBookReader), so the tap sounds and Listen come with it. */
+      if (o.readAgain && o.readAgain.id && el.again) {
+        $(el.stage).innerHTML = '<div class="bigbtns"><button type="button" class="big small ghost" id="'
+          + el.again + '">\u{1F4D6} Read the story again</button></div>';
+        const back = $(el.again);
+        if (back) back.addEventListener("click", () => {
+          const book = (o.readAgain.books || []).find((b) => b.id === o.readAgain.id);
+          if (book) openBookReader(book, null);
+        });
+      }
       say(plain(it.ask));
     }
     $(el.ch).addEventListener("click", (e) => {

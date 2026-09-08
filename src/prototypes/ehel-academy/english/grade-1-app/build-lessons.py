@@ -923,13 +923,14 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
         i = add("questions", "What happened in the story?", "\U0001F914", "I answered the story questions",
                 "Tap the answer.",
                 explain(
-                    ["Every answer here is in the story you just read."],
+                    ["These questions are about this unit's own story."],
                     ["Read the question.", "Think back to the story.",
                      "Then tap the answer you remember."],
-                    ["If you cannot remember, that is fine.",
-                     "Go back a step and read it again.", "That is not cheating, that is reading."],
+                    ["If you cannot remember, press Read the story again.",
+                     "It opens the book right here.",
+                     "That is not cheating, that is reading."],
                     ["Take your time, then tap."]),
-                ())
+                ["again"])
 
     # ---- 7  say it out loud ------------------------------------------
     # THE MODEL SENTENCES, NOT THE INSTRUCTION PARAGRAPH. A speaking item's
@@ -1287,6 +1288,17 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     #         (tap the right book PAGE out of three) and `order` (put events
     #         in sequence). The picture kind is why this step needs the book
     #         pages the shelf above already fetches.
+    # WHICH book is this unit's story. Matched by title against the shelf the
+    # step above draws - it is book 2 in all ten units, and the match is made
+    # rather than the position assumed, because a shelf reorder would silently
+    # hand the child the wrong book and nothing would fail.
+    story_reading = next((r for r in unit["readings"] if r.get("type") == "Story"), None) or unit["readings"][0]
+    story_title = (story_reading.get("title") or "").strip().lower()
+    story_book = next((b for b in (data.get("books") or [])
+                       if (b.get("title") or "").strip().lower() == story_title), None)
+    if story_book:
+        data["storyBook"] = story_book["id"]
+
     if book_questions:
         data["bookquestions"] = book_questions
         i = add("bookquestions", "Story questions for each book", "\U0001F50D",
@@ -1469,13 +1481,10 @@ def bootstrap(slides, data):
             out.append('  pictureMatch({ el: %s, items: LESSON.match, finish: %d,\n'
                        '    ask: "Which word is this?", label: "Picture",\n'
                        '    done: "You can read those words on their own now." });' % (el, i))
-        elif k == "story":
-            out.append('  storyRead({ el: %s, title: LESSON.story.title, pages: LESSON.story.pages,\n'
-                       '    audio: LESSON.story.audio, finish: %d,\n'
-                       '    done: "You read the whole story." });' % (el, i))
         elif k == "questions":
             out.append('  sequence({ el: %s, items: LESSON.questions, finish: %d,\n'
-                       '    label: "Question", done: "You remembered the story well." });' % (el, i))
+                       '    label: "Question", done: "You remembered the story well.",\n'
+                       '    readAgain: { books: LESSON.books, id: LESSON.storyBook } });' % (el, i))
         elif k == "sayit":
             out.append('  sayOutLoud({ el: %s, items: LESSON.sayit, finish: %d,\n'
                        '    ask: "Listen, then say it out loud.",\n'

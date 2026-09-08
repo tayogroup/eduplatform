@@ -67,31 +67,12 @@
     } catch (_) { /* same */ }
   }
 
-  function bookShelf(o) {
-    const el = o.el;
-    const books = o.items;
-    let opened = false;
-
-    function drawShelf() {
-      $(el.ask).innerHTML = o.ask || "Choose a book to read.";
-      $(el.stage).className = "stagewide";
-      $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
-      $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
-      $(el.shelf).innerHTML = books.map((b, k) =>
-        '<div class="bookcard"><span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
-        '<span class="booktitle">' + esc(b.title) + "</span>" +
-        (b.author ? '<span class="bookmeta">by ' + esc(b.author) + "</span>" : "") +
-        '<span class="bookmeta">' + b.pages.length + " pages</span>" +
-        '<button type="button" class="big small teal" data-book="' + k + '">Read ▶</button></div>').join("");
-      $(el.shelf).addEventListener("click", (e) => {
-        const b = e.target.closest("[data-book]");
-        if (!b) return;
-        openReader(books[Number(b.dataset.book)]);
-      });
-    }
-
-    function openReader(book) {
-      opened = true;
+  /* The full-viewport reader, lifted out of bookShelf so a SECOND caller
+     can open one book directly: the story questions step needs to put the
+     unit's own story back in front of a child who has forgotten it, and it
+     is one of the seven books on the shelf rather than a page of its own.
+     Same reader, same tap sounds, same Listen - one implementation. */
+  function openBookReader(book, onFinish) {
       let page = 0;
       const overlay = document.createElement("div");
       overlay.className = "book-reader";
@@ -120,7 +101,7 @@
         const finishBtn = overlay.querySelector("#bookFinish");
         if (finishBtn) finishBtn.addEventListener("click", () => {
           closeReader();
-          finish(o.finish, o.done);
+          if (onFinish) onFinish();
         });
         overlay.querySelector("#bookListen").addEventListener("click", () => VOICE.speak(p.text));
 
@@ -154,6 +135,34 @@
       function onKey(e) { if (e.key === "Escape") closeReader(); }
       document.addEventListener("keydown", onKey);
       renderPage();
+    }
+
+  function bookShelf(o) {
+    const el = o.el;
+    const books = o.items;
+    let opened = false;
+
+    function drawShelf() {
+      $(el.ask).innerHTML = o.ask || "Choose a book to read.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
+      $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
+      $(el.shelf).innerHTML = books.map((b, k) =>
+        '<div class="bookcard"><span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
+        '<span class="booktitle">' + esc(b.title) + "</span>" +
+        (b.author ? '<span class="bookmeta">by ' + esc(b.author) + "</span>" : "") +
+        '<span class="bookmeta">' + b.pages.length + " pages</span>" +
+        '<button type="button" class="big small teal" data-book="' + k + '">Read ▶</button></div>').join("");
+      $(el.shelf).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-book]");
+        if (!b) return;
+        openReader(books[Number(b.dataset.book)]);
+      });
+    }
+
+    function openReader(book) {
+      opened = true;
+      openBookReader(book, () => finish(o.finish, o.done));
     }
 
     drawShelf();

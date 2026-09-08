@@ -360,6 +360,10 @@
       if (allDone) {
         $(el.fb).className = "fb good";
         $(el.fb).textContent = "Every question has a star. " + o.done;
+        // Every question ends solved here - a wrong tap lets the child try
+        // again rather than marking them - so the honest score is the number
+        // ANSWERED out of the number asked, which is what it says on screen.
+        reportScore(o.finish, solved.size, questions.length);
         finish(o.finish, o.done);
       }
     }

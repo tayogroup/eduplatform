@@ -166,6 +166,7 @@
           $(el.stage).innerHTML = "";
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          reportScore(o.finish, right, o.items.length);
           finish(o.finish, o.done);
         } else draw();
       }, 2200);
@@ -205,6 +206,7 @@
           $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.stage).innerHTML = "";
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          reportScore(o.finish, right, o.items.length);
           finish(o.finish, o.done);
         } else draw();
       }, 2200);

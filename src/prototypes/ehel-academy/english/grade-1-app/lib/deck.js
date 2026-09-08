@@ -42,6 +42,18 @@
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
 
+  /* Hand a score to the progress client, if this page has one.
+     NAMING THE PIPELINE TOOL HERE BREAKS THE BUILD, which is why this comment
+     talks around it. Each shared step uses its own filename as its
+     idempotence marker and skips any page already containing it - so a
+     comment mentioning the progress step made all ten pages read as "already
+     reports", and they shipped with no progress block at all. Made once
+     earlier in this build and made again here; the tell is the step printing
+     "skip ... already reports" on a page it has never touched. */
+  function reportScore(i, right, total) {
+    if (window.__ehelScore) { try { window.__ehelScore(i, right, total); } catch (_) { /* never break the lesson */ } }
+  }
+
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
@@ -89,6 +101,7 @@
           $(el.ch).innerHTML = ""; $(el.score).textContent = "";
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          reportScore(o.finish, right, o.items.length);
           finish(o.finish, o.done);
         } else draw();
       }, 2700);

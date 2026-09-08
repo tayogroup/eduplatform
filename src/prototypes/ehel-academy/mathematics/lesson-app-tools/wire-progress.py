@@ -16,7 +16,9 @@ the lessons, and emits the same four event types the shell emits:
   section.completed   durable, posts immediately
   unit.completed      durable
   progress.summary    state - WHERE the learner is, flushed at once (below)
-  (checkpoint.result  not emitted: see THE UNIT PROBLEM)
+  checkpoint.result   a scored step, via window.__ehelScore(i, right, total)
+                      - the only event that becomes a MARK a teacher or
+                        parent reads, and the only one the gradebook takes
 
 POSITION IS FLUSHED, NOT LEFT TO THE IDLE TIMER. `progress.summary` is a
 "state" event and waits up to 20 seconds for a quiet moment, which is right
@@ -160,6 +162,31 @@ JS = """
     report(i);
   };
   window.__ehelAt = function (i) { report(i); };
+
+  /* A SCORE, where a step actually produces one.
+     checkpoint.result is the only event the reducer turns into something a
+     teacher or a parent can read as a mark - the portal's quiz tables and the
+     gradebook are both fed from it - and nothing here emitted it, so every
+     scored step reported that it was DONE and never how it went.
+
+     ADDITIVE ON PURPOSE. A lesson that never calls this behaves exactly as it
+     did, which is what makes it safe in a tool three builds share.
+
+     ONLY WHERE THERE IS A REAL DENOMINATOR. `total` must be the number of
+     questions asked; a step that cannot say how many it asked must not call
+     this, because a score with an invented denominator is a mark nobody
+     measured. Play is deliberately excluded for the same reason the rollup
+     drops the Quran app's `games` star counts: a game is for practising. */
+  window.__ehelScore = function (i, right, total) {
+    const n = Number(total) || 0;
+    const got = Math.max(0, Math.min(Number(right) || 0, n));
+    if (!n) return;
+    emit({
+      type: "checkpoint.result", unit: UNIT, section: sectionId(i), title: labelOf(i),
+      score: Math.round((got / n) * 100), correct: got, total: n,
+    });
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  };
 </script>
 """
 

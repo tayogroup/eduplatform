@@ -5243,6 +5243,18 @@
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
   function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
 
+  /* Hand a score to the progress client, if this page has one.
+     NAMING THE PIPELINE TOOL HERE BREAKS THE BUILD, which is why this comment
+     talks around it. Each shared step uses its own filename as its
+     idempotence marker and skips any page already containing it - so a
+     comment mentioning the progress step made all ten pages read as "already
+     reports", and they shipped with no progress block at all. Made once
+     earlier in this build and made again here; the tell is the step printing
+     "skip ... already reports" on a page it has never touched. */
+  function reportScore(i, right, total) {
+    if (window.__ehelScore) { try { window.__ehelScore(i, right, total); } catch (_) { /* never break the lesson */ } }
+  }
+
   /* ---- one question after another ---- */
   function sequence(o) {
     let i = 0, right = 0, lock = false;
@@ -5290,6 +5302,7 @@
           $(el.ch).innerHTML = ""; $(el.score).textContent = "";
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          reportScore(o.finish, right, o.items.length);
           finish(o.finish, o.done);
         } else draw();
       }, 2700);
@@ -5465,6 +5478,7 @@
           $(el.stage).innerHTML = "";
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          reportScore(o.finish, right, o.items.length);
           finish(o.finish, o.done);
         } else draw();
       }, 2200);
@@ -5504,6 +5518,7 @@
           $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.stage).innerHTML = "";
           $(el.fb).className = "fb good";
           $(el.fb).textContent = "You got " + right + " of " + o.items.length + ". " + o.done;
+          reportScore(o.finish, right, o.items.length);
           finish(o.finish, o.done);
         } else draw();
       }, 2200);
@@ -6562,6 +6577,10 @@
       if (allDone) {
         $(el.fb).className = "fb good";
         $(el.fb).textContent = "Every question has a star. " + o.done;
+        // Every question ends solved here - a wrong tap lets the child try
+        // again rather than marking them - so the honest score is the number
+        // ANSWERED out of the number asked, which is what it says on screen.
+        reportScore(o.finish, solved.size, questions.length);
         finish(o.finish, o.done);
       }
     }
@@ -7970,7 +7989,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l07",
+      progressUnit: "u07",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -8029,7 +8048,7 @@
   const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
 
   const COURSE = "ehel-eng-g01";
-  const UNIT = "l07";
+  const UNIT = "u07";
   const STUDENT = q.get("studentid") || "local";
 
   /* Without a launch endpoint the backend is "local": everything still
@@ -8105,4 +8124,29 @@
     report(i);
   };
   window.__ehelAt = function (i) { report(i); };
+
+  /* A SCORE, where a step actually produces one.
+     checkpoint.result is the only event the reducer turns into something a
+     teacher or a parent can read as a mark - the portal's quiz tables and the
+     gradebook are both fed from it - and nothing here emitted it, so every
+     scored step reported that it was DONE and never how it went.
+
+     ADDITIVE ON PURPOSE. A lesson that never calls this behaves exactly as it
+     did, which is what makes it safe in a tool three builds share.
+
+     ONLY WHERE THERE IS A REAL DENOMINATOR. `total` must be the number of
+     questions asked; a step that cannot say how many it asked must not call
+     this, because a score with an invented denominator is a mark nobody
+     measured. Play is deliberately excluded for the same reason the rollup
+     drops the Quran app's `games` star counts: a game is for practising. */
+  window.__ehelScore = function (i, right, total) {
+    const n = Number(total) || 0;
+    const got = Math.max(0, Math.min(Number(right) || 0, n));
+    if (!n) return;
+    emit({
+      type: "checkpoint.result", unit: UNIT, section: sectionId(i), title: labelOf(i),
+      score: Math.round((got / n) * 100), correct: got, total: n,
+    });
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  };
 </script>

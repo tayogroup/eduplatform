@@ -1904,6 +1904,160 @@ function pqh_viewer_chrome_css(string $scope): string {
 }
 
 /**
+ * The board COMPONENTS: totals row, tiles, pills, flags, the chat column and
+ * the page chrome. One definition, two boards.
+ *
+ * It was inline in live_group_board.php, where it was the only copy and could
+ * not be reached by the parent board -- which therefore loaded 34KB of
+ * pqh_ehel_group_board_css() re-skin over components that did not exist, and
+ * hand-rolled its own approximations underneath. Both sheets take a $prefix
+ * now, so a parent tile IS a teacher tile rather than a second drawing of one.
+ *
+ * The teacher's rendered bytes are unchanged: the extraction is verified
+ * byte-identical against the block it came from, which is the only thing that
+ * makes moving a stylesheet out of a page a safe edit rather than a redesign.
+ */
+function pqh_ehel_board_components_css(string $prefix = 'pqlgb', string $bodyclass = 'pqlgb-page'): string {
+    return <<<CSS
+.{$prefix}{font-family:var(--op-font);color:var(--op-ink);max-width:1240px;margin:0 auto;padding:4px 0 40px}
+.{$prefix}-bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 16px;margin-bottom:16px;background:var(--op-surface);border:1px solid var(--op-line);border-radius:var(--op-radius)}
+.{$prefix}-spacer{flex:1 1 auto}
+.{$prefix}-form{display:flex;align-items:center;gap:8px}
+.{$prefix}-form label{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--op-ink-soft)}
+.{$prefix}-select{min-height:34px;padding:0 8px;border:1px solid var(--op-line-strong);border-radius:var(--op-radius);background:var(--op-surface);color:var(--op-ink);font-family:var(--op-font);font-size:13px;font-weight:700}
+.{$prefix}-freshness{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--op-ink-soft)}
+.{$prefix}-dot{width:8px;height:8px;border-radius:50%;background:#2f8f5b;flex:none}
+.{$prefix}-freshness.is-stale .{$prefix}-dot{background:var(--op-ink-faint)}
+.{$prefix}-freshness.is-failing .{$prefix}-dot{background:#b02a37}
+
+/* Grid, not wrapping flex: with flex:1 1 150px a fourth tile that does not fit
+   wraps alone and then GROWS to the full row, so "Not started" ends up the
+   widest thing on the board. auto-fit keeps them equal and wraps 2x2. */
+.{$prefix}-totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+.{$prefix}-total{padding:11px 14px;background:var(--op-surface);border:1px solid var(--op-line);border-radius:var(--op-radius)}
+.{$prefix}-total b{display:block;font-size:24px;font-weight:900;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.{$prefix}-total span{display:block;margin-top:2px;font-size:12px;font-weight:700;color:var(--op-ink-soft)}
+.{$prefix}-total.is-flagged b{color:#b02a37}
+
+.{$prefix}-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;align-items:start}
+.{$prefix}-group{background:var(--op-surface);border:1px solid var(--op-line);border-radius:var(--op-radius);overflow:hidden}
+.{$prefix}-group-head{display:flex;align-items:baseline;gap:10px;padding:12px 14px;border-bottom:1px solid var(--op-line);background:var(--op-surface-tint)}
+.{$prefix}-group-head h3{margin:0;font-size:15px;font-weight:900}
+.{$prefix}-group-head span{font-size:12px;font-weight:700;color:var(--op-ink-soft)}
+.{$prefix}-golive{margin-left:auto;border:1px solid #052c65;background:#0d6efd;color:#fff;border-radius:999px;padding:3px 12px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.{$prefix}-golive:disabled{opacity:.6;cursor:default}
+a.{$prefix}-golive{text-decoration:none;display:inline-block}
+.{$prefix}-golive.is-upcoming{background:transparent;color:#052c65;border-color:#9ec5fe}
+.{$prefix}-tiles{display:flex;flex-direction:column}
+
+.{$prefix}-tile{display:grid;grid-template-columns:38px 1fr auto;gap:11px;padding:11px 14px;border-bottom:1px solid var(--op-line);border-left:3px solid transparent}
+.{$prefix}-tile:last-child{border-bottom:0}
+.{$prefix}-tile--alert{border-left-color:#b02a37;background:var(--op-bad-bg)}
+.{$prefix}-tile--warn{border-left-color:#997404;background:var(--op-warn-bg)}
+.{$prefix}-tile--nodata{border-left-color:var(--op-line-strong);background:var(--op-surface-soft)}
+/* A raised hand is the only state the LEARNER declared, so it gets the one
+   saturated treatment on the board and outranks every inferred colour. */
+.{$prefix}-tile--hand{border-left-color:#1a67a3;background:var(--op-primary-subtle)}
+.{$prefix}-tile--hand .{$prefix}-avatar{background:#1a67a3;color:#fff}
+.{$prefix}-tile--hand .{$prefix}-quiet b{color:var(--op-primary-emphasis)}
+.{$prefix}-answer{margin-top:6px;min-height:28px;padding:0 10px;border:1px solid #1a67a3;border-radius:var(--op-pill);background:#1a67a3;color:#fff;font-family:var(--op-font);font-size:11.5px;font-weight:800;cursor:pointer}
+.{$prefix}-answer:hover{background:var(--op-primary-hover);border-color:var(--op-primary-hover)}
+.{$prefix}-answer[disabled]{opacity:.55;cursor:default}
+.{$prefix}-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--op-primary-subtle);color:var(--op-primary-emphasis);font-size:13px;font-weight:900;letter-spacing:.02em}
+.{$prefix}-tile--alert .{$prefix}-avatar{background:#f1aeb5;color:#58151c}
+.{$prefix}-tile--warn .{$prefix}-avatar{background:#ffe69c;color:#664d03}
+.{$prefix}-who{min-width:0}
+.{$prefix}-who b{display:block;font-size:14px;font-weight:800;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.{$prefix}-where{margin-top:3px;display:flex;flex-wrap:wrap;gap:4px;font-size:11.5px;color:var(--op-ink-muted);line-height:1.4}
+.{$prefix}-pl{display:inline-flex;align-items:center;padding:1px 8px;border:1px solid;border-radius:999px;font-weight:700;white-space:nowrap}
+.{$prefix}-pl--course{background:#edf3fc;border-color:#d5e3f8;color:#17498f}
+.{$prefix}-pl--pos{background:#cff4fc;border-color:#9eeaf9;color:#055160}
+.{$prefix}-pl--done{background:#f7d6e6;border-color:#efadce;color:#801f4f}
+.{$prefix}-pl--wehel{background:#e2d9f3;border-color:#c5b3e6;color:#432874}
+.{$prefix}-pl--words{background:#d2f4ea;border-color:#a6e9d5;color:#114e3d}
+.{$prefix}-flags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.{$prefix}-flag{display:inline-flex;align-items:center;padding:2px 7px;border:1px solid var(--op-line-strong);border-radius:var(--op-pill);background:var(--op-surface);font-size:11px;font-weight:800;letter-spacing:.02em}
+.{$prefix}-flag--bad{border-color:#f1aeb5;background:#f8d7da;color:#58151c}
+.{$prefix}-flag--warn{border-color:#ffe69c;background:#fff3cd;color:#664d03}
+.{$prefix}-flag--ok{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
+.{$prefix}-flag--moved{border-color:#a3cfbb;background:#d1e7dd;color:#0a3622}
+.{$prefix}-flag--cycle{border-color:#ced4da;background:#e9ecef;color:#41464b}
+.{$prefix}-flag--time{border-color:#a6e9d5;background:#d2f4ea;color:#114e3d}
+/* A raised hand is the one thing on this board the learner said out loud, and
+   its flag had been rendering with no rule of its own since the feature
+   shipped -- it read as an ordinary grey pill among the inferred signals it is
+   meant to outrank. Blue rather than red: it is a request for help, not a
+   fault. */
+.{$prefix}-flag--hand{border-color:#9ec5fe;background:#cfe2ff;color:#052c65}
+/* In Wehel right now. Same blue family as the hand, one step quieter: both say
+   "this learner is already getting help", which is the reading that changes
+   what the teacher does next. */
+.{$prefix}-flag--live{border-color:#9ec5fe;background:#e7f1ff;color:#084298}
+.{$prefix}-reason{margin-top:6px;padding:6px 8px;border-left:2px solid #f1aeb5;background:var(--op-surface);font-size:12px;font-style:italic;color:var(--op-ink-muted);line-height:1.4}
+.{$prefix}-quiet{text-align:right;white-space:nowrap}
+.{$prefix}-quiet b{display:block;font-size:17px;font-weight:900;line-height:1.15;font-variant-numeric:tabular-nums}
+.{$prefix}-quiet span{display:block;margin-top:1px;font-size:11px;font-weight:700;color:var(--op-ink-soft);text-transform:uppercase;letter-spacing:.4px}
+.{$prefix}-tile--alert .{$prefix}-quiet b{color:#b02a37}
+.{$prefix}-tile--warn .{$prefix}-quiet b{color:#997404}
+
+.{$prefix}-empty{padding:26px 16px;text-align:center;font-size:14px}
+.{$prefix}-note{margin-top:18px;padding:12px 14px;background:var(--op-surface);border:1px solid var(--op-line);border-left:3px solid var(--op-primary);border-radius:var(--op-radius);font-size:12.5px;color:var(--op-ink-muted);line-height:1.55}
+.{$prefix}-note b{color:var(--op-ink)}
+.{$prefix}-noscript{padding:14px 16px;margin-bottom:16px;background:var(--op-warn-bg);border:1px solid var(--op-warn-line);border-radius:var(--op-radius);color:var(--op-warn-ink);font-size:13.5px;font-weight:700}
+@media (max-width:640px){.{$prefix}-groups{grid-template-columns:1fr}}
+/* The classroom chat, on the right of the tiles. A column rather than an
+   overlay, because the board is left open all session and a drawer that covers
+   tiles hides the thing the page exists to show. */
+.{$prefix}-cols{display:flex;gap:16px;align-items:start}
+.{$prefix}-main{flex:1;min-width:0}
+.{$prefix}-chat{width:320px;flex:0 0 320px;background:var(--op-surface);border:1px solid var(--op-line-strong);border-radius:10px;display:flex;flex-direction:column;max-height:78vh;position:sticky;top:72px}
+.{$prefix}-chat-head{padding:10px 12px;border-bottom:1px solid var(--op-line-strong);font-weight:800;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.{$prefix}-chat-tab{border:1px solid var(--op-line-strong);background:transparent;border-radius:999px;padding:3px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.{$prefix}-chat-tab.is-active{background:#cfe2ff;border-color:#9ec5fe;color:#052c65}
+.{$prefix}-chat-msgs{flex:1;overflow-y:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px;min-height:120px}
+.{$prefix}-chat-msg{max-width:92%;padding:7px 10px;border-radius:10px;background:#f1f3f5;font-size:13px;line-height:1.4}
+.{$prefix}-chat-msg b{display:block;font-size:11px;margin-bottom:2px;opacity:.75}
+.{$prefix}-chat-msg.is-mine{align-self:flex-end;background:#cfe2ff}
+/* A learner's message: only the teacher and the child see it, and the tint
+   says so — it must not read like something the room saw. */
+.{$prefix}-chat-msg.is-private{background:#fff3cd;border:1px solid #ffe69c}
+.{$prefix}-chat-msg.is-private small{display:block;font-size:10px;color:#664d03;margin-top:3px}
+.{$prefix}-chat-empty{color:var(--op-muted,#6c757d);font-size:13px;padding:8px 2px}
+.{$prefix}-chat-form{display:flex;flex-wrap:wrap;gap:8px;padding:10px 12px;border-top:1px solid var(--op-line-strong)}
+.{$prefix}-chat-chip{width:100%;font-size:11px;color:#664d03;background:#fff3cd;border:1px solid #ffe69c;border-radius:8px;padding:4px 8px}
+.{$prefix}-chat-chip-x{border:none;background:transparent;color:inherit;font:inherit;cursor:pointer;font-weight:800}
+.{$prefix}-chat-quote{display:block;font-size:11px;font-style:italic;opacity:.8;border-left:3px solid #9ec5fe;padding-left:6px;margin-bottom:4px}
+.{$prefix}-chat-msg.is-announcement{background:#052c65;color:#fff;max-width:100%;font-weight:700}
+.{$prefix}-chat-msg.is-announcement b{opacity:.85}
+.{$prefix}-chat-mega{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;opacity:.85;margin-bottom:3px}
+.{$prefix}-chat-announce{border:1px solid #052c65;background:transparent;color:#052c65;border-radius:8px;padding:3px 9px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.{$prefix}-chat-answer{display:block;margin-top:5px;border:1px solid #052c65;background:transparent;color:#052c65;border-radius:999px;padding:2px 9px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
+.{$prefix}-chat-shot{display:block;max-width:100%;max-height:140px;object-fit:cover;object-position:top;border-radius:8px;margin-top:4px;cursor:zoom-in}
+.{$prefix}-shot-lightbox{position:fixed;inset:0;z-index:120;background:rgba(10,30,45,.85);display:flex;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.{$prefix}-shot-lightbox img{max-width:96vw;max-height:92vh;border-radius:10px;box-shadow:0 12px 48px rgba(0,0,0,.5);background:#fff}
+.{$prefix}-chat-form input{flex:1;border:1px solid var(--op-line-strong);border-radius:8px;padding:7px 10px;font:inherit;font-size:13px;min-width:0}
+.{$prefix}-chat-form button{border:1px solid #052c65;background:#0d6efd;color:#fff;border-radius:8px;padding:7px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+@media (max-width:900px){.{$prefix}-cols{flex-direction:column}.{$prefix}-chat{width:100%;flex:1 1 auto;position:static;max-height:50vh}}
+
+/* ---- the teacher-dashboard family's chrome: Moodle furniture hidden, the
+   shared rail + app bar, and a workspace-style header card. Modelled on
+   teacher_workspace.php so the board reads as a sibling of the pages the
+   dashboard links, not a bare Moodle page. ---- */
+body.{$bodyclass} header,body.{$bodyclass} footer,body.{$bodyclass} nav.navbar,body.{$bodyclass} #page-header,body.{$bodyclass} #page-footer,body.{$bodyclass} .drawer,body.{$bodyclass} .drawer-toggles,body.{$bodyclass} .block-region,body.{$bodyclass} [data-region="drawer"],body.{$bodyclass} [data-region="right-hand-drawer"]{display:none!important}
+body.{$bodyclass} #page,body.{$bodyclass} #page-content,body.{$bodyclass} #region-main,body.{$bodyclass} .main-inner{margin:0!important;padding:0!important;max-width:none!important;border:0!important}
+.{$prefix}-shell{min-height:100vh;background:var(--op-canvas);font-family:var(--op-font);color:var(--op-ink)}
+.{$prefix}-wrap{margin:0 auto}
+.{$prefix}-top{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:16px;padding:20px 22px;background:#fff;border:1px solid #e4e9ef;border-radius:14px}
+.{$prefix}-top h1{margin:0;font-size:26px;font-weight:800;letter-spacing:-.02em;color:#0f2237}
+.{$prefix}-top p{margin:6px 0 0;color:#5b6b7c;font-size:14px;font-weight:500}
+.{$prefix}-top-actions{display:flex;flex-wrap:wrap;gap:9px}
+.{$prefix}-top-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:0 12px;border:1px solid #e4e9ef;border-radius:10px;background:#fff;color:#0f2237!important;text-decoration:none;font-size:13px;font-weight:650}
+.{$prefix}-top-actions a:hover{background:#edf3fc;border-color:#e0ebfa;text-decoration:none}
+@media(max-width:560px){.{$prefix}-top{display:block}.{$prefix}-top-actions{margin-top:10px}}
+CSS;
+}
+
+/**
  * Standard application shell markup: nav rail, blue app bar, and the
  * expandable-rail script. Echo directly after the page's <main> opens.
  */

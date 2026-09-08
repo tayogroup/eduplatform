@@ -73,127 +73,38 @@ echo $OUTPUT->header();
 ?>
 <style><?php echo pqh_openproject_skin_css('pqpb', 'pqpb-page'); ?></style>
 <style>
-.pqpb{font-family:var(--op-font);color:var(--op-ink);max-width:1240px;margin:0 auto;padding:4px 0 40px}
-.pqpb-top{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;padding:18px 18px 16px;margin-bottom:16px;
-  background:var(--op-surface);border:1px solid var(--op-line);border-radius:var(--op-radius)}
-.pqpb-top h1{margin:0;font-size:26px;font-weight:900;letter-spacing:-.02em}
-.pqpb-top p{margin:6px 0 0;font-size:14px;color:var(--op-ink-soft);max-width:64ch}
-.pqpb-noscript{padding:12px 14px;margin-bottom:16px;border-radius:var(--op-radius);
-  border:1px solid var(--op-line);background:var(--op-surface);font-size:14px}
-/* Grid, not wrapping flex: a tile that does not fit would wrap alone and then
-   grow to the whole row - the group board's own note, and its own fix. */
-.pqpb-totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
-.pqpb-total{padding:11px 14px;background:var(--op-surface);border:1px solid var(--op-line);border-radius:var(--op-radius)}
-.pqpb-total b{display:block;font-size:24px;font-weight:900;line-height:1.1;font-variant-numeric:tabular-nums}
-.pqpb-total span{display:block;margin-top:2px;font-size:12px;font-weight:700;color:var(--op-ink-soft)}
-/* ONE COLUMN BY DEFAULT, two only where there is genuinely room for both.
-   The first version was the other way round - two columns always, collapsing
-   below 900px - and it forced a 300px minimum on the chat whichever container
-   it landed in. Inside this page's actual content width that left the tile
-   about 190px, so every pill wrapped to one word and read as a stack of
-   circles, and the tile's own contents overflowed under the chat. A minimum
-   that cannot be met does not wrap; it squeezes whatever is beside it. */
-/* FLEX WRAP, NOT A MEDIA QUERY, and that is the whole fix. A media query
-   measures the VIEWPORT; this page's content column is narrow inside a wide
-   viewport, so `@media(max-width:900px)` never fired however cramped the
-   column got, and the chat's 300px minimum squeezed the tile to about 190px -
-   every pill wrapping to one word and reading as a stack of circles.
-   flex-wrap answers to the CONTAINER, so the two columns sit side by side
-   where there is room for both and stack where there is not, at any viewport. */
-.pqpb-cols{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
-.pqpb-cols>div{flex:1 1 460px;min-width:0}
-.pqpb-cols>.pqpb-chat{flex:1 1 320px;max-width:100%}
-@media(min-width:1100px){.pqpb-cols>.pqpb-chat{flex:0 0 340px}}
-.pqpb-tile{display:flex;flex-wrap:wrap;gap:12px;padding:13px 14px;margin-bottom:10px;background:var(--op-surface);
-  border:1px solid var(--op-line);border-left-width:4px;border-radius:var(--op-radius)}
-.pqpb-tile--ok{border-left-color:#2f8f5b}
-.pqpb-tile--warn{border-left-color:#b8860b}
-.pqpb-tile--alert{border-left-color:#b02a37}
-.pqpb-tile--nodata{border-left-color:var(--op-line-strong)}
-.pqpb-avatar{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
-  background:var(--op-surface-tint);font-weight:900;font-size:14px}
-/* min-width:0 is what lets a flex child actually shrink - without it the name
-   and the pills set a floor the tile cannot go below, and the quiet time is
-   pushed out past the edge. */
-.pqpb-who{flex:1 1 12em;min-width:0}
-.pqpb-who b{display:block;font-size:15.5px;font-weight:900;overflow-wrap:anywhere}
-.pqpb-place{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-/* white-space:nowrap so a pill is a pill: without it a squeezed row breaks
-   each one onto several lines and a lozenge with three words stacked in it
-   reads as a circle. */
-.pqpb-pl{padding:2px 9px;border-radius:999px;border:1px solid transparent;font-size:12px;font-weight:700;
-  white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
-/* LIGHT ON DARK, because the tile is dark. The first version borrowed the
-   teacher board's light pastels with dark ink, which work THERE because that
-   page's own forced rules style .pqlgb-pl--* explicitly. Here the surrounding
-   tile is dark and its inherited ink is light, so a dark colour of mine was
-   being lost while the light background stayed - pale text on a pale ground,
-   legible in neither.
-   
-   I checked all four platform stylesheets for the rule doing it and none of
-   them has one, so rather than escalate an !important war against something I
-   cannot see, the pills now belong to the surface they are actually on. This
-   is robust either way: if some rule does force the ink light, light is what
-   these pills want anyway.
-   
-   Translucent grounds rather than solid hex, so a pill sits correctly on
-   whatever --op-surface turns out to be. */
-.pqpb-pl--course{background:rgba(96,165,250,.18);border-color:rgba(96,165,250,.45);color:#d6e7ff}
-.pqpb-pl--pos{background:rgba(45,212,191,.18);border-color:rgba(45,212,191,.5);color:#bdf3ea}
-.pqpb-pl--done{background:rgba(244,114,182,.18);border-color:rgba(244,114,182,.45);color:#fbd3ea}
-.pqpb-pl--words{background:rgba(74,222,128,.18);border-color:rgba(74,222,128,.45);color:#d2f6dd}
-.pqpb-flags{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-.pqpb-flag{padding:2px 9px;border-radius:999px;border:1px solid transparent;font-size:12px;font-weight:700}
-.pqpb-flag--ok{border-color:rgba(74,222,128,.45);background:rgba(74,222,128,.16);color:#d2f6dd}
-.pqpb-flag--quiet{border-color:rgba(148,163,184,.45);background:rgba(148,163,184,.16);color:#dbe4ee}
-.pqpb-flag--time{border-color:rgba(45,212,191,.45);background:rgba(45,212,191,.16);color:#bdf3ea}
-.pqpb-flag--bad{border-color:rgba(248,113,113,.5);background:rgba(248,113,113,.18);color:#ffd7d7}
-.pqpb-note{margin-top:8px;padding:7px 10px;border-left:3px solid #f1aeb5;background:var(--op-surface-tint);
-  font-size:12.5px;font-style:italic;line-height:1.45}
-/* It may shrink and it may wrap to its own line rather than shoving the name
-   off the tile - flex:none was what pinned it and forced the overflow. */
-.pqpb-quiet{flex:0 1 auto;margin-left:auto;text-align:right;min-width:74px}
-.pqpb-quiet b{display:block;font-size:19px;font-weight:900;font-variant-numeric:tabular-nums}
-.pqpb-quiet span{display:block;font-size:11px;font-weight:700;color:var(--op-ink-soft);text-transform:uppercase}
-.pqpb-chat{background:var(--op-surface);border:1px solid var(--op-line);border-radius:var(--op-radius);
-  position:sticky;top:72px;overflow:hidden}
-.pqpb-chat-head{padding:12px 14px;border-bottom:1px solid var(--op-line);background:var(--op-surface-tint);
-  display:flex;align-items:baseline;gap:8px}
-.pqpb-chat-head h3{margin:0;font-size:15px;font-weight:900}
+<?php // THE SAME COMPONENTS THE TEACHER'S BOARD WEARS, not a second drawing of
+      // them. Totals, tiles, pills, flags, the chat column and the page chrome
+      // all come from one function now (accesslib :: pqh_ehel_board_components_css),
+      // which was inline in live_group_board.php and therefore unreachable from
+      // here. This page used to hand-roll approximations of every one of them
+      // underneath 34KB of a re-skin whose component rules all named .pqlgb-*
+      // and so matched nothing at all -- it wore the chrome and none of the
+      // parts. A parent tile IS a teacher tile now; the two cannot drift, and
+      // parent_boardlib's rule about not restating the board's own definitions
+      // finally holds for the stylesheet as well as for the numbers. ?>
+<?php echo pqh_ehel_board_components_css('pqpb', 'pqpb-page'); ?>
+<?php // The handful of things a FAMILY page has and a classroom one does not.
+      // Everything else above is shared. ?>
+.pqpb-reason em{font-style:normal;font-weight:700;color:var(--op-ink)}
+.pqpb-chat-head h3{margin:0;font-size:14px;font-weight:800}
 .pqpb-chat-head span{font-size:12px;font-weight:700;color:var(--op-ink-soft)}
-.pqpb-log{max-height:340px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:12px 14px}
-.pqpb-msg{max-width:88%;padding:8px 11px;border-radius:13px;font-size:13.5px;line-height:1.5}
-.pqpb-msg--them{align-self:flex-start;background:var(--op-surface-tint)}
-.pqpb-msg--me{align-self:flex-end;background:#cfe2ff;color:#052c65}
-.pqpb-msg b{display:block;font-size:11px;font-weight:800;opacity:.75}
-.pqpb-msg i{display:block;font-size:10.5px;opacity:.65;margin-top:3px;font-style:normal}
-.pqpb-compose{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--op-line)}
-.pqpb-compose input{flex:1 1 auto;min-width:0;padding:8px 12px;border-radius:999px;
-  border:1px solid var(--op-line-strong);background:var(--op-surface);color:var(--op-ink);font:inherit;font-size:13.5px}
-.pqpb-compose button{border:0;border-radius:999px;padding:8px 16px;background:#0d6efd;color:#fff;
-  font:inherit;font-weight:800;font-size:13px;cursor:pointer}
-.pqpb-compose button:disabled{opacity:.55;cursor:default}
-.pqpb-empty{padding:14px;font-size:13.5px;color:var(--op-ink-soft)}
-.pqpb-legend{margin-top:18px;padding:14px 16px;background:var(--op-surface);border:1px solid var(--op-line);
-  border-radius:var(--op-radius);font-size:13px;line-height:1.6;color:var(--op-ink-soft)}
-.pqpb-wrap{margin:0 auto}
-<?php // THE SHELL'S OWN STYLESHEET, and it is not optional: its first rule is
-      // {scope}{padding:0 0 54px 248px} — the left padding that clears the
-      // FIXED nav rail. Without it the page renders correctly and sits
-      // underneath the rail, which is what a formatting fault looks like from
-      // the outside. Emitted inside this block exactly as the group board does
-      // it, because the function returns raw CSS rather than a <style> tag. ?>
 <?php echo pqh_design_shell_css('.pqpb-shell'); ?>
 .pqpb-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 </style>
 <?php // Hides the Moodle furniture this page replaces. ?>
 <style><?php echo pqh_viewer_chrome_css('.pqpb-shell'); ?></style>
-<?php // 62 of this sheet's rules style the SHARED chrome (.pqh-appbar,
-      // .pqh-gnav) and do reach this page; the other 101 name .pqlgb-* and
-      // cannot. The tiles below are styled by this file's own rules above —
-      // renaming them to .pqlgb-* to inherit the board's would tie a family
-      // page to markup built for a different one. ?>
-<style><?php echo pqh_ehel_group_board_css('.pqpb-shell', 'pqpb-page'); ?></style>
+<?php // The dark re-skin over those components. It takes the prefix now, so
+      // all 144 of its rules reach this page; until they did, its component
+      // half named .pqlgb-* and matched nothing here.
+      //
+      // The fourth argument is the totals row's ICONS, and it is not
+      // decoration: they are applied by :nth-child, so a board that does not
+      // emit the teacher's seven rows in the teacher's order inherits the
+      // teacher's meanings. This board's first total is its CHILDREN and would
+      // otherwise have been given the raised-hand icon. ?>
+<style><?php echo pqh_ehel_group_board_css('.pqpb-shell', 'pqpb-page', 'pqpb',
+    ['users', 'star', 'calendar', 'clock']); ?></style>
 <main class="pqpb-shell">
 <?php
 echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
@@ -229,21 +140,21 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
 
   <div class="pqpb-totals" id="pqpb-totals"></div>
   <div class="pqpb-cols">
-    <div id="pqpb-children"></div>
+    <div class="pqpb-main" id="pqpb-children"></div>
     <aside class="pqpb-chat">
       <div class="pqpb-chat-head">
         <h3>Message the teacher</h3>
         <span id="pqpb-chat-who"></span>
       </div>
-      <div class="pqpb-log" id="pqpb-log"></div>
-      <form class="pqpb-compose" id="pqpb-form" autocomplete="off">
+      <div class="pqpb-chat-msgs" id="pqpb-chat-msgs"></div>
+      <form class="pqpb-chat-form" id="pqpb-form" autocomplete="off">
         <input id="pqpb-body" maxlength="2000" placeholder="Write a message&hellip;" aria-label="Message the teacher">
         <button type="submit">Send</button>
       </form>
     </aside>
   </div>
 
-  <div class="pqpb-legend">
+  <div class="pqpb-note">
     <b>What these say.</b> <b>Quiet for</b> is time since your child's app last reported anything — it is not a
     measure of effort, only of when the app last heard from them. <b>Finished this week</b> counts sections and
     quizzes completed since Monday; it reads <b>at least N</b> where counting began mid-week, and
@@ -308,33 +219,33 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
        where nothing was measured tells a parent their child did nothing on
        the strength of data that does not exist. */
     if (!c.weekcounted) {
-      flags.push('<span class="pqpb-flag pqpb-flag--quiet">not counted yet</span>');
+      flags.push('<span class="pqpb-flag pqpb-flag--cycle">not counted yet</span>');
     } else if (c.weekdone > 0) {
       flags.push('<span class="pqpb-flag pqpb-flag--ok">' + (c.weekcovered ? "" : "at least ")
         + c.weekdone + " finished this week</span>");
     } else {
-      flags.push('<span class="pqpb-flag pqpb-flag--quiet">nothing yet this week</span>');
+      flags.push('<span class="pqpb-flag pqpb-flag--cycle">nothing yet this week</span>');
     }
     if (!c.daycounted) {
-      flags.push('<span class="pqpb-flag pqpb-flag--quiet">today not counted yet</span>');
+      flags.push('<span class="pqpb-flag pqpb-flag--cycle">today not counted yet</span>');
     } else if (c.minutestoday > 0) {
       flags.push('<span class="pqpb-flag pqpb-flag--time">' + hm(c.minutestoday) + " today</span>");
     }
     if (c.checkscount > 1) {
-      flags.push('<span class="pqpb-flag pqpb-flag--quiet">' + c.checkscount + " checks &middot; avg " + c.checksavg + "%</span>");
+      flags.push('<span class="pqpb-flag pqpb-flag--cycle">' + c.checkscount + " checks &middot; avg " + c.checksavg + "%</span>");
     } else if (c.checkpoint) {
       flags.push('<span class="pqpb-flag pqpb-flag--' + (c.checkpoint.passed ? "ok" : "bad") + '">'
         + esc(c.checkpoint.section) + " " + c.checkpoint.score + "%</span>");
     }
 
     var notes = (c.leaving || []).slice(0, 2).map(function (n) {
-      return '<div class="pqpb-note">&ldquo;' + esc(n.reason) + "&rdquo;</div>";
+      return '<div class="pqpb-reason">&ldquo;' + esc(n.reason) + "&rdquo;</div>";
     }).join("");
 
     return '<article class="pqpb-tile pqpb-tile--' + esc(c.state) + '">'
       + '<span class="pqpb-avatar">' + esc(c.initials) + "</span>"
       + '<div class="pqpb-who"><b>' + esc(c.name) + "</b>"
-      + '<div class="pqpb-place">' + (place.length ? place.join("") : '<span class="pqpb-pl">No app activity recorded</span>') + "</div>"
+      + '<div class="pqpb-where">' + (place.length ? place.join("") : '<span class="pqpb-pl">No app activity recorded</span>') + "</div>"
       + '<div class="pqpb-flags">' + flags.join("") + "</div>"
       + notes
       + "</div>"
@@ -355,9 +266,16 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
     }).join("");
 
     var list = board.children || [];
-    document.getElementById("pqpb-children").innerHTML = list.length
-      ? list.map(tile).join("")
-      : '<div class="pqpb-empty">No children are linked to your account yet. The school links them when your place is confirmed.</div>';
+    // The teacher board's own card shape -- a titled group with the tiles
+    // inside it -- rather than bare tiles on the page background. Same
+    // markup, so the same rules paint it.
+    document.getElementById("pqpb-children").innerHTML =
+      '<section class="pqpb-group"><div class="pqpb-group-head"><h3>Your children</h3>'
+      + '<span>' + (list.length === 1 ? "1 child" : list.length + " children") + '</span></div>'
+      + '<div class="pqpb-tiles">'
+      + (list.length ? list.map(tile).join("")
+          : '<div class="pqpb-empty">No children are linked to your account yet. The school links them when your place is confirmed.</div>')
+      + '</div></section>';
 
     var who = document.getElementById("pqpb-chat-who");
     who.textContent = list.length ? "about " + list[0].name : "";
@@ -365,7 +283,7 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
 
   /* --- the chat, exactly the panel used everywhere else ----------------- */
   var chatChild = 0, since = 0, busy = false, chatTimer = null;
-  var log = document.getElementById("pqpb-log");
+  var log = document.getElementById("pqpb-chat-msgs");
   var form = document.getElementById("pqpb-form");
   var box = document.getElementById("pqpb-body");
 
@@ -374,7 +292,7 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
     var clock = when.getFullYear() > 1971
       ? when.toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })
       : "";
-    return '<div class="pqpb-msg ' + (m.mine ? "pqpb-msg--me" : "pqpb-msg--them") + '">'
+    return '<div class="pqpb-chat-msg ' + (m.mine ? "is-mine" : "is-theirs") + '">'
       + "<b>" + esc(m.who) + "</b>" + esc(m.body)
       + (clock ? "<i>" + esc(clock) + "</i>" : "") + "</div>";
   }
@@ -400,7 +318,7 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
           log.insertAdjacentHTML("beforeend", res.messages.map(line).join(""));
           if (atBottom) { log.scrollTop = log.scrollHeight; }
         } else if (!log.children.length) {
-          log.innerHTML = '<div class="pqpb-empty">No messages yet. Write the first one.</div>';
+          log.innerHTML = '<div class="pqpb-chat-empty">No messages yet. Write the first one.</div>';
         }
         since = Math.max(since, Number(res.lastmessageid) || 0);
         return true;
@@ -463,7 +381,7 @@ echo pqh_design_shell_html('pqpb-shell', 'parentboard', [
   paint();
   chatChild = (board.children && board.children.length) ? board.children[0].userid : 0;
   if (chatChild) { exchange(""); } else {
-    log.innerHTML = '<div class="pqpb-empty">A conversation opens here once a child is linked to your account.</div>';
+    log.innerHTML = '<div class="pqpb-chat-empty">A conversation opens here once a child is linked to your account.</div>';
     box.disabled = true;
     form.querySelector("button").disabled = true;
   }

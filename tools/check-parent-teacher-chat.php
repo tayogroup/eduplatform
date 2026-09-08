@@ -322,9 +322,9 @@ check('  but does carry the child\'s own words for stopping early',
 // Four different claims, and a zero where nothing was measured is the one that
 // tells a family their child did nothing on the strength of missing data.
 check('the four week-claims are all present',
-    strpos($pboardlive, 'pqpb-flag--quiet">not counted yet<') !== false
+    strpos($pboardlive, 'pqpb-flag--cycle">not counted yet<') !== false
         && strpos($pboardlive, '(c.weekcovered ? "" : "at least ")') !== false
-        && strpos($pboardlive, 'pqpb-flag--quiet">nothing yet this week<') !== false
+        && strpos($pboardlive, 'pqpb-flag--cycle">nothing yet this week<') !== false
         && strpos($pboardlive, 'finished this week') !== false);
 check('  and nothing polls while the tab is hidden',
     strpos($pboardlive, 'visibilityState === "visible"') !== false);
@@ -336,8 +336,7 @@ check('the page emits the shell stylesheet that clears the rail',
     strpos($pboardlive, "pqh_design_shell_css('.pqpb-shell')") !== false);
 check('  and the viewer chrome that hides the Moodle furniture',
     strpos($pboardlive, "pqh_viewer_chrome_css('.pqpb-shell')") !== false);
-check('  and gives its content wrapper a rule',
-    strpos($pboardlive, '.pqpb-wrap{') !== false);
+
 // pqlgb_course_label() FALLS BACK to the raw course key when the subject map
 // is absent, so a page that does not load the gateway library labels a tile
 // `ehel-eng-g01` and reports no error at all. The teacher's board requires it
@@ -348,10 +347,46 @@ check('  and gives its content wrapper a rule',
 // and nowhere else. check-php-syntax.mjs now refuses that shape repo-wide.
 check('the subject map is loaded, so a tile says English and not ehel-eng-g01',
     strpos($pliblive, "\$CFG->dirroot . '/local/prequran/progress_gatewaylib.php'") !== false);
-// The layout answers to the CONTAINER: a media query measures the viewport,
-// and this page's column is narrow inside a wide one.
-check('the two columns wrap on the container, not a viewport query',
-    strpos($pboardlive, '.pqpb-cols{display:flex;flex-wrap:wrap') !== false);
+// ---- one stylesheet, two boards -----------------------------------------
+// The components (totals, tiles, pills, flags, chat, chrome) were inline in
+// live_group_board.php, so this page could not reach them: it loaded 34KB of
+// pqh_ehel_group_board_css() whose component rules all named .pqlgb-* and
+// matched NOTHING here, then hand-rolled approximations underneath. Both
+// sheets take a $prefix now. What is asserted is the SHARING, because that is
+// the property that stops the two boards drifting -- a copy would pass any
+// check written against this page alone.
+$acc = @file_get_contents($root . '/local_hubredirect/accesslib.php');
+$tboard = @file_get_contents($root . '/local_hubredirect/live_group_board.php');
+if ($acc === false || $tboard === false) {
+    fwrite(STDERR, "cannot read accesslib.php or live_group_board.php\n");
+    exit(2);
+}
+$acclive = live_code($acc);
+check('the components live in ONE function, not in either page',
+    strpos($acclive, 'function pqh_ehel_board_components_css(') !== false
+        && strpos(live_code($tboard), '.pqlgb-tile{') === false
+        && strpos($pboardlive, '.pqpb-tile{') === false);
+check('  and both boards call it with their own prefix',
+    strpos(live_code($tboard), "pqh_ehel_board_components_css('pqlgb', 'pqlgb-page')") !== false
+        && strpos($pboardlive, "pqh_ehel_board_components_css('pqpb', 'pqpb-page')") !== false);
+check('  so the re-skin is asked for this page\'s prefix too',
+    strpos($pboardlive, "pqh_ehel_group_board_css('.pqpb-shell', 'pqpb-page', 'pqpb'") !== false);
+// The totals icons are applied by :nth-child, so they follow POSITION. The
+// teacher's seven are hands/Wehel/done/on-screen/quiet/left/not-started; this
+// board's four are children/working/this-week/minutes. Inheriting the order
+// silently would put the raised-hand icon on a parent's CHILDREN count.
+check('  and names its OWN totals icons rather than inheriting seven meanings',
+    strpos($pboardlive, "['users', 'star', 'calendar', 'clock']") !== false
+        && strpos($acclive, '$totalicons = [\'hand\', \'star\', \'data\', \'users\', \'alert\', \'exit\', \'calendar\']') !== false);
+// The rules the page used to carry itself, now asserted where they live. The
+// wrap rule is the content column; without .pqpb-main's min-width:0 a flex
+// item refuses to shrink below its content and the chat is pushed off the
+// page. (This replaces an earlier flex-wrap assertion: the container-vs-
+// viewport problem was a GRID with a 300px minimum, and the shared flex
+// layout does not have it.)
+check('  the shared sheet still carries the wrapper and the shrinkable column',
+    strpos($acclive, '.{$prefix}-wrap{margin:0 auto}') !== false
+        && strpos($acclive, '.{$prefix}-main{flex:1;min-width:0}') !== false);
 
 echo "\nthe message itself\n";
 

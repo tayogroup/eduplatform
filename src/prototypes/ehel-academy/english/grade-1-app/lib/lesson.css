@@ -557,3 +557,37 @@
     .wordrow { grid-template-columns: 38px 1fr; }
     .wordrow span { grid-column: 2; }
   }
+
+  /* ---- what this unit is about ---- */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; }
+  .ovw-bits { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 16px; }
+  .ovw-bits span { padding: 6px 14px; border-radius: 999px; background: var(--card);
+    border: 2px solid var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; text-align: center; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px; font-size: 19px; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+
+  /* ---- how did I do? ---- */
+  .selfs { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .selfrow { padding: 14px 16px; border-radius: 16px; border: 3px solid var(--line); background: var(--card); }
+  .selfrow.answered { border-color: var(--good); background: var(--good-soft); }
+  .selfrow p { margin: 0 0 10px; font-size: 18px; font-weight: 700; }
+  .selfopts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .selfopt { padding: 9px 16px; border-radius: 999px; border: 2px solid var(--line); background: var(--ground);
+    color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .selfopt.on { border-color: var(--teal); background: var(--teal); color: var(--accent-ink, #06222f); }
+
+  /* ---- live sessions and the grown-up guide ---- */
+  .livelist { display: flex; flex-direction: column; gap: 12px; }
+  .livecard { padding: 14px 16px; border-radius: 16px; border: 1px solid var(--line); background: var(--card); }
+  .livewhen { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+  .livecard h4 { margin: 4px 0 8px; font-size: 18px; }
+  .livecard p { margin: 0 0 6px; font-size: 15.5px; color: var(--muted); }
+  .livecard strong { color: var(--ink); }
+  .guide { max-width: 44em; }
+  .guide-intro { font-size: 18px; padding: 14px 16px; border-radius: 14px;
+    background: var(--card); border-left: 4px solid var(--teal); }
+  .guide section { margin-top: 18px; }
+  .guide h4 { font-size: 17px; margin: 0 0 6px; }
+  .guide p { font-size: 15.5px; line-height: 1.65; color: var(--muted); margin: 0 0 8px; }

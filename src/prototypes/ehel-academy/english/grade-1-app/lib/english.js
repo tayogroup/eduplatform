@@ -889,6 +889,80 @@
     drawShelf();
   }
 
+  /* ---- what this unit is for --------------------------------------
+     The unit's own learning outcomes, in the learner's words.
+     `evidenceOfLearning` is deliberately NOT drawn: it is prose written for
+     an adult ("Observed through pointing, speaking, drawing...") and belongs
+     with the grown-up guide rather than on a five-year-old's page.
+     ------------------------------------------------------------------ */
+  function unitOverview(o) {
+    const el = o.el;
+    const d = o.data || {};
+    const c = d.counts || {};
+    const bits = [];
+    if (c.words) bits.push(c.words + " new words");
+    if (c.books) bits.push(c.books + " books");
+    if (c.games) bits.push(c.games + " games");
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="ovw">' +
+      (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
+      '<h3 class="ovw-h">By the end of this unit you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + (d.outcomes || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage +
+      'r">&#128266; Read it to me</button></div></div>';
+    $(el.score).textContent = (d.outcomes || []).length + " things to learn";
+    $(el.stage + "r").addEventListener("click", () =>
+      say("By the end of this unit you will be able to. " + (d.outcomes || []).join(". ")));
+    finish(o.finish, o.done);
+  }
+
+  /* ---- how did I do? ----------------------------------------------
+     The unit's own selfAssessment statements, on their own authored scale.
+
+     THE CHILD'S ANSWER AND NOTHING ELSE. No mark is inferred from the steps
+     they finished: the only per-outcome signal a learner has actually given
+     is this one, and a page that guesses makes a confident claim about
+     something nobody measured. The shell's own recap keeps the same rule.
+
+     NOT SENT AS A CHECKPOINT. A self-rating is a claim, not a mark, and "By
+     myself" arriving in a gradebook would turn a child's confidence into a
+     grade. Kept on the device, the way the shell keeps progress.self.
+     ------------------------------------------------------------------ */
+  function selfCheck(o) {
+    const el = o.el;
+    const KEY = "ehel-eng-g1-u" + (o.unit || 1) + "-self-v1";
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (_) { saved = {}; }
+    function store() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (_) { /* private mode */ } }
+
+    function paint() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="selfs">' + o.items.map((it, k) =>
+        '<div class="selfrow' + (saved[it.id] ? " answered" : "") + '">' +
+        "<p>" + esc(it.say) + "</p><div class=\"selfopts\">" +
+        it.scale.map((sc) =>
+          '<button type="button" class="selfopt' + (saved[it.id] === sc ? " on" : "") +
+          '" data-k="' + k + '" data-v="' + esc(sc) + '">' + esc(sc) + "</button>").join("") +
+        "</div></div>").join("") + "</div>";
+      const answered = o.items.filter((it) => saved[it.id]).length;
+      $(el.score).textContent = answered + " of " + o.items.length + " answered";
+      if (answered === o.items.length) {
+        $(el.fb).className = "fb good";
+        $(el.fb).textContent = o.done;
+        finish(o.finish, o.done);
+      }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest("[data-v]");
+      if (!b) return;
+      saved[o.items[Number(b.dataset.k)].id] = b.dataset.v;
+      store();
+      paint();
+    });
+    paint();
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>

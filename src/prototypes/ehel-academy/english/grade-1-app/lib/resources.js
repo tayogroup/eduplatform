@@ -41,6 +41,19 @@
       { id: "write", icon: "\u{270D}", title: "How to write it", blurb: "Watch the pen write each word, and see where to start." },
       { id: "sheet", icon: "\u{1F5A8}", title: "Handwriting sheet", blurb: "This unit's words on handwriting lines. Trace each one, then write it yourself." },
     ];
+    /* Reference rather than activities, which is why these are cards and not
+       steps: one is a timetable, the other is a letter to an adult. The guide
+       is offered only where the unit authors one - 9 of the 10 do, and Unit 10
+       does not, so it simply is not there, the way the shell drops it from the
+       nav of a unit that lacks one. */
+    if ((res.live || []).length) {
+      CARDS.push({ id: "live", icon: "\u{1F4F9}", title: "Live sessions",
+        blurb: "When your class meets your teacher, and what to bring." });
+    }
+    if (res.guide) {
+      CARDS.push({ id: "guide", icon: "\u{1F46A}", title: res.guide.label || "Teacher & Parent Guide",
+        blurb: "For your grown-up: what this unit teaches, and how to help." });
+    }
 
     function drawShelf() {
       $(el.ask).innerHTML = o.ask || "Your word lists, your plans, and a pencil and paper.";
@@ -145,6 +158,36 @@
         const q = p.overlay.querySelector("#gloxq");
         q.addEventListener("input", () => draw(q.value));
         q.focus();
+        return;
+      }
+
+      if (id === "live") {
+        panel("Live sessions",
+          '<div class="livelist">' + (res.live || []).map((x) =>
+            '<article class="livecard"><span class="livewhen">Week ' + esc(String(x.week)) +
+            " \u00b7 session " + esc(String(x.no)) +
+            (x.mins ? " \u00b7 " + esc(String(x.mins)) + " min" : "") + "</span>" +
+            "<h4>" + esc(x.title) + "</h4>" +
+            (x.before ? "<p><strong>Before:</strong> " + esc(x.before) + "</p>" : "") +
+            (x.agenda ? "<p><strong>In class:</strong> " + esc(x.agenda) + "</p>" : "") +
+            (x.after ? "<p><strong>After:</strong> " + esc(x.after) + "</p>" : "") +
+            "</article>").join("") + "</div>",
+          '<span class="book-page-count">' + (res.live || []).length + " sessions in this unit</span>");
+        finish(o.finish, o.done);
+        return;
+      }
+
+      if (id === "guide") {
+        const g = res.guide || {};
+        panel(g.label || "Teacher & Parent Guide",
+          '<div class="guide">' +
+          (g.intro ? '<p class="guide-intro">' + esc(g.intro) + "</p>" : "") +
+          (g.sections || []).map((sx) =>
+            "<section><h4>" + esc(sx.title) + "</h4>" +
+            String(sx.body).split(/\n{2,}/).map((para) => "<p>" + esc(para.trim()) + "</p>").join("") +
+            "</section>").join("") + "</div>",
+          '<span class="book-page-count">For a grown-up</span>');
+        finish(o.finish, o.done);
         return;
       }
 

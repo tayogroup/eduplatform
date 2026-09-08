@@ -132,6 +132,8 @@ SENTENCES_SHOWN = 3
 # A step named here that a unit cannot build is skipped; a step BUILT that is
 # not named here aborts the build rather than vanishing quietly.
 STEP_ORDER = [
+    # What the unit is FOR, before the plan of when to do it.
+    "overview",
     # The plan is read BEFORE the unit is walked, so it opens it - the same
     # position the shell gives it (Overview, then Unit Study Plan, then the
     # teaching). It is a reference page rather than a step, which is why it
@@ -183,6 +185,9 @@ STEP_ORDER = [
     "activities",
     "fluency",
     "check",
+    # After the quiz, because it asks the learner to look back at the unit -
+    # and it is the child's own answer, not a mark.
+    "reflect",
     # Last, and deliberately AFTER the quiz: none of it is a step to finish.
     # It is the drawer a learner opens when they want the word list, the
     # plan, or a pencil and paper - the same role Student resources plays in
@@ -1433,6 +1438,64 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 (),
                 note=REVIEW_NOTE)
 
+    # ---- What this unit is for -------------------------------------------
+    #         The unit's own outcomes, in the learner's words. `evidenceOfLearning`
+    #         is deliberately NOT drawn here: it is prose written for an adult
+    #         ("Observed through pointing, speaking, drawing...") and it belongs
+    #         with the grown-up guide rather than on a five-year-old's page.
+    outs = [(o.get("learningOutcome") or "").strip() for o in (unit.get("outcomes") or [])]
+    outs = [x for x in outs if x]
+    if outs:
+        data["overview"] = {
+            "title": unit["unit"].get("unitTitle") or "",
+            "outcomes": outs,
+            "counts": {
+                "words": sum(len(g["words"]) for g in cw_unit["groups"]),
+                "books": len(data.get("books") or []),
+                "games": len((data.get("games") or {}).get("games") or []),
+            },
+        }
+        i = add("overview", "What this unit is about", "\U0001F9ED", "I know what this unit is for",
+                "What you will be able to do by the end.",
+                explain(
+                    ["This is what this unit is for."],
+                    ["Read the list, or press Listen.",
+                     "Every one of them is something you will be able to DO."],
+                    ["You do not have to be able to do them yet.",
+                     "That is what the unit is for."],
+                    ["Have a read, then start."]),
+                ())
+
+    # ---- Looking back -----------------------------------------------------
+    #         The unit's own selfAssessment statements, on their own authored
+    #         scale. THE CHILD'S ANSWER AND NOTHING ELSE: no tick is inferred
+    #         from the steps they finished, because the only per-outcome signal
+    #         a learner has actually given is this one, and a page that guesses
+    #         makes a confident claim about something nobody measured.
+    #
+    #         Not reported as a checkpoint either - a self-rating is a claim,
+    #         not a mark, and sending "By myself" to a gradebook would turn a
+    #         child's confidence into a grade.
+    selfs = []
+    for a in unit.get("selfAssessment") or []:
+        statement = (a.get("statement") or "").strip()
+        scale = [x.strip() for x in str(a.get("scale") or "").split("|") if x.strip()]
+        if statement and scale:
+            selfs.append({"id": a.get("selfAssessmentId") or statement[:40], "say": statement, "scale": scale})
+    if selfs:
+        data["reflect"] = selfs
+        i = add("reflect", "How did I do?", "\U0001F31F", "I thought about my learning",
+                "Say how you feel about each one.",
+                explain(
+                    ["This is you telling us how it went."],
+                    ["Read each one.",
+                     "Tap Not yet, With help, or By myself.",
+                     "There is no right answer - it is what YOU think."],
+                    ["Nobody is marking this.",
+                     "Not yet is a fine answer, and it is the honest one at the start."],
+                    ["Read the first one and tap."]),
+                ["self"])
+
     # ---- Student resources -----------------------------------------------
     #         The drawer, not a step. Five things, all of which the shell
     #         course already offers from its own Student resources page
@@ -1467,6 +1530,24 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
             # build_slides has the unit JSON rather than the number.
             "unit": unit["unit"]["unitNo"],
             "grade": 1,
+            # Reference, not activities - a timetable and a letter to an adult.
+            # Unit 10 authors no guide, so that card simply is not offered
+            # there, the way the shell drops it from a unit that lacks one.
+            "live": [{
+                "no": x.get("sessionNo"), "week": x.get("week"),
+                "title": (x.get("title") or "").strip(),
+                "mins": x.get("durationMin"),
+                "before": (x.get("beforeSession") or "").strip(),
+                "agenda": (x.get("agenda") or "").strip(),
+                "after": (x.get("afterSession") or "").strip(),
+            } for x in (unit.get("liveSessions") or [])],
+            "guide": ((unit.get("grownUpGuide") or {}).get("sections") and {
+                "label": (unit["grownUpGuide"].get("label") or "Teacher & Parent Guide"),
+                "intro": (unit["grownUpGuide"].get("intro") or "").strip(),
+                "sections": [{"title": (sx.get("title") or "").strip(),
+                              "body": (sx.get("body") or "").strip()}
+                             for sx in unit["grownUpGuide"]["sections"]],
+            }) or None,
         }
         i = add("resources", "Student resources", "\U0001F392", "I used my resources",
                 "Your word lists, your plans, and a pencil and paper.",
@@ -1647,6 +1728,9 @@ def bootstrap(slides, data):
             out.append('  buildSentence({ el: %s, ask: LESSON.write.ask, tiles: LESSON.write.tiles,\n'
                        '    answer: LESSON.write.answer, finish: %d,\n'
                        '    done: "That is a real sentence, written by you." });' % (el, i))
+        elif k == "reflect":
+            out.append('  selfCheck({ el: %s, items: LESSON.reflect, unit: LESSON.unitNo,\n'
+                       '    finish: %d, done: "Thank you for telling us." });' % (el, i))
         elif k == "resources":
             out.append('  studentResources({ el: %s, res: LESSON.resources, plan: LESSON.plan,\n'
                        '    finish: %d, done: "That is your drawer." });' % (el, i))
@@ -1656,6 +1740,9 @@ def bootstrap(slides, data):
         elif k == "fluency":
             out.append('  sequence({ el: %s, items: LESSON.fluency, finish: %d,\n'
                        '    label: "Question", done: "That is this unit\'s words and patterns practised." });' % (el, i))
+        elif k == "overview":
+            out.append('  unitOverview({ el: %s, data: LESSON.overview, finish: %d,\n'
+                       '    done: "Now you know what this unit is for." });' % (el, i))
         elif k == "plan":
             out.append('  unitPlan({ el: %s, plan: LESSON.plan, finish: %d,\n'
                        '    done: "You know what this unit looks like now." });' % (el, i))

@@ -2203,7 +2203,7 @@
       $("stem10").textContent = "That is all of them.";
       $("choices10").innerHTML = "";
       $("score10").textContent = right10 + " out of " + Q10.length + " right.";
-      if (right10 >= 7) finish(9, "");
+      if (right10 >= 6) finish(9, "");
       return;
     }
     $("stem10").textContent = Q10[c10].q;
@@ -2226,7 +2226,7 @@
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [ "\U0001f9ed", "\u2197\ufe0f", "🔷", "\U0001f6b6", "\U0001f5fa\ufe0f", "\u2195\ufe0f", "\u25fb\ufe0f", "Fold it up: nets", "\U0001fa9e" ];
+  const STICKERS = [ ["🔄", "Facing and turning"], ["↗️", "The eight points"], ["🧭", "Which way from here?"], ["🚶", "Following a route"], ["🗺️", "Coordinates"], ["↕️", "Along first, then up"], ["◻️", "The corners of a shape"], ["🪞", "Reflect it in the mirror"], ["🦋", "When the mirror is the edge"], ["✅", "Show what you know"] ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

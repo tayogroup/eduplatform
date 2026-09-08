@@ -1917,7 +1917,7 @@
   round5();
 
   /* ---- 6: stickers ---- */
-  const STICKERS = [ "📏", "How long is that?", "🕰️", "Three ways to say one time" ];
+  const STICKERS = [ ["📏", "How long is that?"], ["🕰️", "Three ways to say one time"], ["🚌", "Reading a timetable"], ["⏱️", "How long between?"], ["✅", "Show what you know"] ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

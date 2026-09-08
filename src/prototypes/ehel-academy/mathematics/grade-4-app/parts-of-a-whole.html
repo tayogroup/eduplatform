@@ -2047,7 +2047,7 @@
   round8();
 
   /* ---- 9: stickers ---- */
-  const STICKERS = [ "🍰", "More parts, smaller parts", "➗", "A fraction is a division", "🧺", "A fraction of an amount", "🟰" ];
+  const STICKERS = [ ["🍰", "More parts, smaller parts"], ["➗", "A fraction is a division"], ["🧺", "A fraction of an amount"], ["🟰", "Same value, different name"], ["💯", "Out of a hundred"], ["⚖️", "Which is bigger?"], ["➕", "Adding and taking away"], ["✅", "Show what you know"] ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

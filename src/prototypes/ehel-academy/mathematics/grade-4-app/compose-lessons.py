@@ -43,8 +43,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # slides that assume it -- a lesson whose foundation arrives after the things built on
 # it. None means "the whole source, in its own order".
 STRUCTURE = [
+    # Place value is built concretely first, then extended past ten thousand, and only
+    # then regrouped -- and the two rounding slides come after the number line has been
+    # drawn for ordering, because rounding is asking which neighbour on it is nearer.
     ("bignum", "Big Numbers and Below Zero", "num",
-     [("d", 1), 9, ("d", 2), 10], [8, 9]),
+     [("d", 1), ("n", 1), ("n", 2), 9, ("n", 3), ("d", 2), 10, ("n", 4), ("n", 5), ("n", 6)],
+     [8, 9]),
     ("patterns", "Patterns and Square Numbers", "num",
      [2, 3, 4, 5], [2, 3, 4, 5]),
     ("calc", "Ways to Calculate", "num",
@@ -100,8 +104,33 @@ DONOR_BODY, DONOR_JS = "g4-lesson-body.html", "g4-lesson.js"
 # panel, because each one judges the learner directly.
 #   lesson -> {slide number in the new file: (sticker, quiz item)}
 NEW_EXTRAS = {
+    "bignum": {
+        1: ("\\U0001f3f7\\ufe0f",
+            '{ q: "What is the 6 worth in 63,451?", o: ["60 000", "6 000", "6"], a: 0,'
+            ' w: "It sits in the ten thousands column, so it is worth 6 \\u00d7 10 000." }'),
+        2: ("\\U0001f9f1",
+            '{ q: "Which of these is the same number as 4,208?",'
+            ' o: ["3 thousands, 12 hundreds, 0 tens, 8 ones", "4 thousands, 12 hundreds, 0 tens, 8 ones",'
+            ' "3 thousands, 2 hundreds, 0 tens, 8 ones"], a: 0,'
+            ' w: "One thousand was swapped for ten hundreds: 3,000 + 1,200 + 8 = 4,208." }'),
+        3: ("\\U0001f463",
+            '{ q: "A sequence goes 1,240, 1,290, 1,340 \\u2026 what comes next?",'
+            ' o: ["1,390", "1,350", "1,440"], a: 0,'
+            ' w: "Each step adds 50, because 1,290 \\u2212 1,240 = 50. So 1,340 + 50 = 1,390." }'),
+        4: ("\\U0001fa9c",
+            '{ q: "Which list is in order, smallest first?",'
+            ' o: ["\\u22128, \\u22123, 0, 5", "\\u22123, \\u22128, 0, 5", "0, \\u22123, \\u22128, 5"], a: 0,'
+            ' w: "Further left on the line is smaller, so \\u22128 comes before \\u22123." }'),
+        5: ("\\U0001f3af",
+            '{ q: "Round 4,650 to the nearest 100.", o: ["4,700", "4,600", "5,000"], a: 0,'
+            ' w: "It is exactly halfway between 4,600 and 4,700, and halfway is the case that rounds up." }'),
+        6: ("\\U0001f9ee",
+            '{ q: "Round 47,318 to the nearest 1000.", o: ["47,000", "47,300", "50,000"], a: 0,'
+            ' w: "It sits between 47,000 and 48,000, and it is only 318 past 47,000. The other two answers'
+            ' round it to the nearest 100 and the nearest 10 000." }'),
+    },
     "where": {
-        1: ("\\U0001f9ed",
+        1: ("\\U0001f504",
             '{ q: "You face north and make a quarter turn clockwise. Which way now?",'
             ' o: ["East", "West", "South"], a: 0,'
             ' w: "The points run north, east, south, west, so one quarter turn moves you on one." }'),
@@ -118,7 +147,7 @@ NEW_EXTRAS = {
             '{ q: "A rectangle has corners at (1, 1) and (4, 3). What are the other two?",'
             ' o: ["(4, 1) and (1, 3)", "(1, 4) and (3, 1)", "(4, 4) and (1, 1)"], a: 0,'
             ' w: "The corners share their numbers: each one takes an along from one and an up from the other." }'),
-        6: ("\\U0001fa9e",
+        6: ("\\U0001f98b",
             '{ q: "The mirror line runs along the edge of a shape. Where does the reflection sit?",'
             ' o: ["Touching the shape", "One square away", "On top of the shape"], a: 0,'
             ' w: "A square against the mirror has no distance to cross, so its partner sits right beside it." }'),
@@ -167,6 +196,31 @@ def quiz_items(js):
     got = [p for p in parts if p.startswith("{")]
     assert len(got) == len(parts), "quiz parser dropped %d item(s)" % (len(parts) - len(got))
     return m, got
+
+
+def heading(section):
+    """The <h2> of a composed slide, as plain text -- what its sticker is called."""
+    m = re.search(r"<h2>(.*?)</h2>", section, re.S)
+    assert m, "a slide has no <h2> to name its sticker by"
+    t = re.sub(r"<[^>]*>", "", m.group(1))
+    for ent, ch in (("&amp;", "&"), ("&mdash;", u"—"), ("&ndash;", u"–"),
+                    ("&rsquo;", u"’"), ("&nbsp;", " ")):
+        t = t.replace(ent, ch)
+    return " ".join(t.split())
+
+
+def js_str(s):
+    """Text for a double-quoted JS string.
+
+    The extras tables spell an emoji \\U0001f522 so this file stays ASCII, and JS has
+    no \\U escape -- it reads the backslash as nothing and prints a literal U followed
+    by eight digits, which is half of what the sticker shelf was showing. Decode here
+    and emit the character. \\u2744 IS valid JS and would have survived either way,
+    which is why some stickers looked right and others did not.
+    """
+    if "\\" in s:
+        s = s.encode("ascii").decode("unicode_escape")
+    return s.replace("\\", "\\\\").replace('"', '\\"')
 
 
 def declared_names(js):
@@ -301,21 +355,56 @@ def compose(key, title, srckey, keep, keepq):
     picked += [DONOR_EXTRAS[d[1]][1] for d in seq if isinstance(d, tuple) and d[0] == "d"]
     picked += [NEW_EXTRAS[key][d[1]][1] for d in seq if isinstance(d, tuple) and d[0] == "n"]
     chk = chk[: m.start(2)] + "\n    " + ",\n    ".join(picked) + chk[m.end(2):]
+    # THE PASS MARK IS AN ABSOLUTE NUMBER AND THE QUIZ LENGTH JUST CHANGED.
+    # Each source ends its check with `if (rq >= 7) finish(...)` -- 7 of that
+    # source's 10 -- and the recut left the 7 while cutting the quiz to four
+    # questions, so in bignum, patterns and calc the check slide could not be
+    # finished at all: no dot, and no sticker for it either. The authors do not
+    # agree on a ratio (num 7/10, frac 6/8, time 6/11, stats 6/15), so the
+    # source's own standard is SCALED rather than replaced by a house rule.
+    mth = re.search(r"if \((\w+) >= (\d+)\) finish\(\s*%d\s*," % (checkno - 1), chk)
+    assert mth, "%s: cannot find the check slide's pass mark" % key
+    scaled = int(int(mth.group(2)) * len(picked) / float(len(items)) + 0.5)
+    scaled = max(2, min(len(picked), scaled))
+    chk = chk[: mth.start(2)] + str(scaled) + chk[mth.end(2):]
     chk = re.sub(r"\bfinish\(\s*%d\s*," % (checkno - 1), "finish(%d," % total, chk)
     parts.append(chk)
-    # stickers, one per teaching slide, in sequence order so they stay parallel to done[]
+    # Stickers, one per finishable step, in sequence order so they stay parallel to
+    # done[] -- which is every teaching slide AND the check, so total + 1 of them.
+    #
+    # EACH ENTRY IS A PAIR, ["emoji", "label"], and reading it as a flat list of
+    # strings is what shipped a broken shelf in all eight lessons: a findall over
+    # every quoted string took the emoji of slide 5 and the label of slide 5 as two
+    # separate stickers, and paintStickers does s[0] and s[1] -- so on a plain string
+    # it renders the first two CHARACTERS. The shelf read: U 0 | half a surrogate |
+    # a snowflake and its variation selector | N u.
+    #
+    # The label is read from the slide's own <h2> rather than carried in a second
+    # table. The source array agrees with the headings today; a sticker naming a
+    # different step than the one the learner finished is exactly the drift a
+    # parallel list invites, and the donor and newly written slides would each need
+    # a label of their own besides.
     stk = by[str(stickno)][0]
     sm = re.search(r"(const STICKERS = \[)(.*?)(\];)", stk, re.S)
     assert sm, "no STICKERS array"
-    allst = [s.strip() for s in re.findall(r'"[^"]*"', sm.group(2))]
+    src_st = re.findall(r'\[\s*"((?:[^"\\]|\\.)*)"\s*,\s*"((?:[^"\\]|\\.)*)"\s*\]', sm.group(2))
+    assert len(src_st) >= n_teach, (
+        "%s: STICKERS parsed as %d pair(s) against %d teaching slides -- if the array\n"
+        "has stopped being pairs, fix this parser rather than let it read fewer"
+        % (key, len(src_st), n_teach))
     picked_st = []
-    for item in seq:
+    for pos, item in enumerate(seq):
         if isinstance(item, tuple):
             table = DONOR_EXTRAS if item[0] == "d" else NEW_EXTRAS[key]
-            picked_st.append('"%s"' % table[item[1]][0])
+            emoji = table[item[1]][0]
         else:
-            picked_st.append(allst[item - 1] if item - 1 < len(allst) else '"\\u2b50"')
-    assert len(picked_st) == total, "STICKERS must be parallel to done[]: %d vs %d" % (len(picked_st), total)
+            emoji = src_st[item - 1][0] if item - 1 < len(src_st) else "\\u2b50"
+        picked_st.append('["%s", "%s"]' % (js_str(emoji), js_str(heading(out_secs[pos]))))
+    # the check slide is finishable too, so it has a sticker; the recut had been
+    # dropping it, leaving done[total] with nothing on the shelf to show for it
+    picked_st.append('["%s", "%s"]' % (js_str(src_st[-1][0]), js_str(heading(out_secs[total]))))
+    assert len(picked_st) == total + 1, (
+        "STICKERS must cover done[0..total]: %d vs %d" % (len(picked_st), total + 1))
     stk = stk[: sm.start(2)] + " " + ", ".join(picked_st) + " " + stk[sm.end(2):]
     stk = re.sub(r"\bfinish\(\s*%d\s*," % (stickno - 1), "finish(%d," % (total + 1), stk)
     parts.append(stk)

@@ -22,43 +22,36 @@ G2 = os.path.join(HERE, "..", "grade-2-app", "g2-index.html")
 CARDS = [
     ("big-numbers-below-zero.html", "c-number", "Place value",
      "Numbers up to a hundred thousand and down past zero. What each digit is worth, "
-     "building a number from its parts, ten times and a hundred times, rounding, and "
-     "putting positives and negatives in order.",
-     "4 steps"),
+     "building a number from its parts and swapping one thousand for ten hundreds, ten "
+     "times and a hundred times, counting on in steps of any size, putting positives and "
+     "negatives in order, and rounding to every place from ten to a hundred thousand."),
     ("patterns-and-squares.html", "c-pattern", "Counting and sequences",
      "What numbers do when you look for the rule. Odd and even and what adding them "
      "always gives, a shape standing for a number nobody has told you, sequences that "
-     "step evenly and ones that do not, and the dots that make a square.",
-     "4 steps"),
+     "step evenly and ones that do not, and the dots that make a square."),
     ("ways-to-calculate.html", "c-number", "Calculating",
      "Reading and writing numbers in words, estimating before you work, all ten times "
      "tables and the trick of regrouping them, multiples and factor pairs, and the tests "
-     "that tell you what divides exactly.",
-     "5 steps"),
+     "that tell you what divides exactly."),
     ("parts-of-a-whole.html", "c-frac", "Fractions",
      "More parts means smaller parts. A fraction as a division, a fraction of an amount, "
      "equivalence, per cent, comparing, and adding and taking away with the same bottom "
-     "number.",
-     "7 steps"),
+     "number."),
     ("telling-the-time.html", "c-measure", "Time",
      "Units of time and how to convert them, one moment written three ways, reading a "
-     "timetable, and working out how long something takes.",
-     "4 steps"),
+     "timetable, and working out how long something takes."),
     ("shape-and-measures.html", "c-shape", "Shape and measures",
      "The faces of a solid and the nets that fold into one, every line of symmetry, "
      "tessellation, area without counting, estimating an odd shape on a grid, reading "
-     "between the marks on a scale, and naming an angle.",
-     "8 steps"),
+     "between the marks on a scale, and naming an angle."),
     ("where-things-are.html", "c-shape", "Position and direction",
      "Saying where something is and how to get there: reflecting a shape in a mirror "
      "line, the eight points of the compass, and reading coordinates by going along "
-     "first and then up.",
-     "3 steps"),
+     "first and then up."),
     ("asking-sorting-chance.html", "c-data", "Statistics and probability",
      "Plan a question worth asking, tally it, show the same data three ways, sort it two "
      "ways at once, compare two classes, then put events on a line from impossible to "
-     "certain and spin a spinner a thousand times.",
-     "7 steps"),
+     "certain and spin a spinner a thousand times."),
 ]
 
 MARKS = {
@@ -74,7 +67,12 @@ MARKS = {
 }
 
 
-def card(file, cls, strand, covers, steps):
+def card(file, cls, strand, covers):
+    # DERIVED, never written down. The count was a hand-kept field and it drifted the
+    # first time a lesson grew: Where Things Are went from 3 slides to 9 and its card
+    # went on offering 3 steps. The lesson is built before this runs, so ask it.
+    steps = "%d steps" % (io.open(os.path.join(HERE, file), encoding="utf-8")
+                           .read().count('<section class="slide"') - 2)
     return (
         '    <a class="lesson %s" href="%s?from=g4">\n'
         '      <span class="mark" aria-hidden="true">\n'

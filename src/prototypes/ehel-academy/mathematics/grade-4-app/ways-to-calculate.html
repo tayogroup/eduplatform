@@ -2027,7 +2027,7 @@
       $("stem11").textContent = "That is all of them.";
       $("choices11").innerHTML = "";
       $("score11").textContent = rq + " out of " + Q11.length + " right.";
-      if (rq >= 7) finish(5, "");
+      if (rq >= 4) finish(5, "");
       return;
     }
     $("stem11").textContent = Q11[cq].q;
@@ -2050,7 +2050,7 @@
   round11();
 
   /* ---- 12: stickers ---- */
-  const STICKERS = [ "🔤", "The shape that hides a number", "\u2716\ufe0f", "🪜", "What comes next?" ];
+  const STICKERS = [ ["🔤", "Saying it in words"], ["🎯", "Estimate before you work"], ["✖️", "6s, 7s, 9s and factor pairs"], ["✖️", "Tables, and a shortcut"], ["➗", "Does it divide exactly?"], ["✅", "Show what you know"] ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }

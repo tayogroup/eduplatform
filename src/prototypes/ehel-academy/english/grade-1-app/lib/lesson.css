@@ -440,8 +440,28 @@
     .plan-when { grid-template-columns: 1fr; }
   }
 
-  /* ---- reading a unit text full-viewport (same chrome as a book) ---- */
-  .read-stage { width: 100%; max-width: 640px; max-height: 100%; overflow-y: auto;
-    padding: 22px 24px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
-  .read-stage .story p { font-size: 20px; line-height: 1.65; margin: 0 0 14px; }
-  .read-stage .story p:last-child { margin-bottom: 0; }
+  /* ---- reading a unit text: a PAGE, not a panel ----
+     A book is read on paper. The dark card the first version used is the app's
+     furniture, not a reading surface, and the owner's note was that it did not
+     look like something a child would want to read. Warm paper, dark ink, big
+     type and a lot of leading - the same font, because Atkinson Hyperlegible is
+     here for exactly these readers. */
+  .read-reader .book-stage-wrap { padding: 10px 12px 0; }
+  .read-stage { width: 100%; max-width: 680px; max-height: 100%; overflow-y: auto;
+    padding: 34px 34px 28px; border-radius: 20px;
+    background: #fbf6e9; color: #23303a;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38); }
+  .read-title { margin: 0 0 18px; font-size: 27px; color: #12303f; text-align: center;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; }
+  .read-title::after { content: ""; display: block; width: 62px; height: 4px; border-radius: 3px;
+    background: var(--teal); margin: 12px auto 0; }
+  .read-page p { font-size: 25px; line-height: 1.85; margin: 0 0 20px; }
+  .read-page p:last-child { margin-bottom: 0; }
+  /* the read-along highlight: gold behind the sentence being narrated */
+  .rd-line { border-radius: 7px; padding: 1px 3px; margin: 0 -3px;
+    transition: background-color 140ms ease, color 140ms ease; }
+  .rd-line.on { background: var(--gold, #f2c14e); color: #1b2530; box-shadow: 0 0 0 3px var(--gold, #f2c14e); }
+  @media (max-width: 560px) {
+    .read-stage { padding: 22px 20px 18px; }
+    .read-page p { font-size: 21px; line-height: 1.8; }
+  }

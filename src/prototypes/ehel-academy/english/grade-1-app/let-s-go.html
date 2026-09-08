@@ -462,11 +462,31 @@
     .plan-when { grid-template-columns: 1fr; }
   }
 
-  /* ---- reading a unit text full-viewport (same chrome as a book) ---- */
-  .read-stage { width: 100%; max-width: 640px; max-height: 100%; overflow-y: auto;
-    padding: 22px 24px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
-  .read-stage .story p { font-size: 20px; line-height: 1.65; margin: 0 0 14px; }
-  .read-stage .story p:last-child { margin-bottom: 0; }
+  /* ---- reading a unit text: a PAGE, not a panel ----
+     A book is read on paper. The dark card the first version used is the app's
+     furniture, not a reading surface, and the owner's note was that it did not
+     look like something a child would want to read. Warm paper, dark ink, big
+     type and a lot of leading - the same font, because Atkinson Hyperlegible is
+     here for exactly these readers. */
+  .read-reader .book-stage-wrap { padding: 10px 12px 0; }
+  .read-stage { width: 100%; max-width: 680px; max-height: 100%; overflow-y: auto;
+    padding: 34px 34px 28px; border-radius: 20px;
+    background: #fbf6e9; color: #23303a;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38); }
+  .read-title { margin: 0 0 18px; font-size: 27px; color: #12303f; text-align: center;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; }
+  .read-title::after { content: ""; display: block; width: 62px; height: 4px; border-radius: 3px;
+    background: var(--teal); margin: 12px auto 0; }
+  .read-page p { font-size: 25px; line-height: 1.85; margin: 0 0 20px; }
+  .read-page p:last-child { margin-bottom: 0; }
+  /* the read-along highlight: gold behind the sentence being narrated */
+  .rd-line { border-radius: 7px; padding: 1px 3px; margin: 0 -3px;
+    transition: background-color 140ms ease, color 140ms ease; }
+  .rd-line.on { background: var(--gold, #f2c14e); color: #1b2530; box-shadow: 0 0 0 3px var(--gold, #f2c14e); }
+  @media (max-width: 560px) {
+    .read-stage { padding: 22px 20px 18px; }
+    .read-page p { font-size: 21px; line-height: 1.8; }
+  }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -5718,23 +5738,24 @@
 
   /* ---- the unit's own readings, as a shelf -------------------------
      THE SAME SHAPE AS READING BOOKS (step 6), on the owner's instruction:
-     three texts are a shelf of three cards, not a tab strip. Tap Read and
-     the text opens full-viewport, the way a book does.
+     three texts are a shelf of three cards, not a tab strip.
 
-     DELIBERATELY NOT THE PICTURE BOOKS. That shelf is a separate thing with
-     a separate purpose, and its books are ADAPTATIONS - the Unit 1 book is
-     a 150-word retelling of this 219-word reading, and at least one
-     comprehension answer lives here and in no page of it. Same chrome, so
-     the two feel like one product; different content, because they are.
+     DELIBERATELY NOT THE PICTURE BOOKS. That shelf is a separate thing and
+     its books are ADAPTATIONS - the Unit 1 book is a 150-word retelling of
+     this 219-word reading, and at least one comprehension answer lives here
+     and in no page of it.
 
-     The reader is a TEXT reader: these readings have no artwork, so there
-     is no SVG to fetch and no tap sounds to play. Listen plays the whole
-     recording, as it always did - the page turns are for the eye, and the
-     voice does not take them.
+     THE PAGE FOLLOWS THE VOICE. The recording is ONE clip of the whole
+     passage, so a manual Next put a child on page 1 while page 3 was being
+     read. Each line's window of the audio is its share of the narration's
+     CHARACTERS - the estimate english.js :: startNarrationSync already uses,
+     and it says why: no clip in this course carries word timings, and a
+     character share tracks a steady narrator closely enough to follow with a
+     finger. The same estimate that highlights the line says which page it is
+     on, so the page turns itself while the voice reads.
 
-     THE STEP TURNS ON THE STORY, not on any reading. A child who reads only
-     the rhyme has not met the text the next step asks about. The other two
-     are there to be read; a rhyme is not a gate.
+     Manual Back and Next still work; they simply stop the audio first,
+     because a child who turns the page has decided where they are.
      ------------------------------------------------------------------ */
   function unitReadings(o) {
     const el = o.el;
@@ -5758,14 +5779,49 @@
       });
     }
 
+    /* One flat list of SENTENCES over the whole reading, each knowing its
+       page. Sentences rather than paragraphs because a paragraph is four
+       lines of a five-year-old's screen and highlighting all of it points at
+       nothing. Split after end punctuation, keeping a closing quote with the
+       sentence it ends - this text is full of "…she said." */
+    function linesOf(item) {
+      const out = [];
+      item.pages.forEach((page, p) => {
+        page.forEach((para) => {
+          const parts = String(para).split(/(?<=[.!?][")\u201d]?)\s+/).filter((x) => x.trim());
+          parts.forEach((t) => out.push({ page: p, text: t.trim(), chars: Math.max(1, t.trim().length) }));
+        });
+      });
+      return out;
+    }
+
     function openReading(k) {
       const it = o.items[k];
+      const lines = linesOf(it);
       let page = 0;
+      let player = null;
+      let timer = null;
+      let active = -1;
+
       const overlay = document.createElement("div");
-      overlay.className = "book-reader";
+      overlay.className = "book-reader read-reader";
       document.body.appendChild(overlay);
 
+      // Each line's [start, end) window, in characters over the whole clip.
+      let at = 0;
+      const bounds = lines.map((l) => { const r = [at, at + l.chars]; at += l.chars; return r; });
+      const totalChars = at;
+
+      function stopAudio() {
+        if (timer) { clearInterval(timer); timer = null; }
+        if (player) { try { player.pause(); } catch (_) { /* already gone */ } player = null; }
+        active = -1;
+        overlay.querySelectorAll(".rd-line.on").forEach((n) => n.classList.remove("on"));
+        const b = overlay.querySelector("#readListen");
+        if (b) b.innerHTML = "\u{1F50A} Listen";
+      }
       function close() {
+        stopAudio();
         overlay.remove();
         document.removeEventListener("keydown", onKey);
         drawShelf();
@@ -5773,17 +5829,58 @@
       function onKey(ev) { if (ev.key === "Escape") close(); }
       document.addEventListener("keydown", onKey);
 
-      function render() {
+      function tick() {
+        if (!player || !totalChars) return;
+        const d = player.duration;
+        if (!Number.isFinite(d) || d <= 0) return;
+        const pos = Math.min(Math.max(player.currentTime / d, 0), 1) * totalChars;
+        let i = bounds.findIndex(([, e2]) => pos < e2);
+        if (i === -1) i = lines.length - 1;
+        if (i === active) return;
+        active = i;
+        // The page follows the voice: turn to whichever page the line is on.
+        if (lines[i].page !== page) { page = lines[i].page; render(true); }
+        overlay.querySelectorAll(".rd-line.on").forEach((n) => n.classList.remove("on"));
+        const node = overlay.querySelector('.rd-line[data-i="' + i + '"]');
+        if (node) { node.classList.add("on"); node.scrollIntoView({ block: "nearest", behavior: "smooth" }); }
+      }
+
+      function listen() {
+        if (player) { stopAudio(); return; }
+        const url = clip(it.audio);
+        if (!url) { playClip(it.audio, ""); return; }
+        player = new Audio(url);
+        player.addEventListener("ended", () => stopAudio());
+        player.addEventListener("error", () => stopAudio());
+        player.play().then(() => {
+          const b = overlay.querySelector("#readListen");
+          if (b) b.innerHTML = "\u23F8 Pause";
+          timer = setInterval(tick, 120);
+        }).catch(() => { player = null; playClip(it.audio, ""); });
+      }
+
+      function render(keepAudio) {
+        if (!keepAudio) stopAudio();
         const last = page === it.pages.length - 1;
+        let n = 0;
+        const body = it.pages[page].map((para) => {
+          const parts = String(para).split(/(?<=[.!?][")\u201d]?)\s+/).filter((x) => x.trim());
+          return "<p>" + parts.map((t) => {
+            const idx = lines.findIndex((l, j) => j >= n && l.page === page && l.text === t.trim());
+            n = idx > -1 ? idx + 1 : n;
+            return '<span class="rd-line" data-i="' + idx + '">' + esc(t.trim()) + "</span>";
+          }).join(" ") + "</p>";
+        }).join("");
         overlay.innerHTML =
           '<div class="book-reader-top"><span class="booktitle">' + esc(it.title) + "</span>" +
           '<button type="button" class="book-close" aria-label="Close">&#10005;</button></div>' +
-          '<div class="book-stage-wrap"><div class="read-stage"><div class="story">' +
-          it.pages[page].map((t) => "<p>" + esc(t) + "</p>").join("") +
-          "</div></div></div>" +
+          '<div class="book-stage-wrap"><div class="read-stage"><div class="read-page">' +
+          (page === 0 ? '<h3 class="read-title">' + esc(it.title) + "</h3>" : "") +
+          body + "</div></div></div>" +
           '<div class="book-reader-bottom">' +
           '<button type="button" class="big small ghost" id="readBack"' + (page === 0 ? " disabled" : "") + ">&#9664; Back</button>" +
-          '<button type="button" class="big small teal" id="readListen">&#128266; Listen</button>' +
+          '<button type="button" class="big small teal" id="readListen">' +
+          (player ? "\u23F8 Pause" : "\u{1F50A} Listen") + "</button>" +
           '<span class="book-page-count">Page ' + (page + 1) + " of " + it.pages.length + "</span>" +
           (last
             ? '<button type="button" class="big small" id="readDone">I have read it &#10003;</button>'
@@ -5791,15 +5888,14 @@
           "</div>";
         overlay.querySelector(".book-close").addEventListener("click", close);
         const back = overlay.querySelector("#readBack");
-        if (back) back.addEventListener("click", () => { page--; render(); });
+        if (back) back.addEventListener("click", () => { page--; render(false); });
         const next = overlay.querySelector("#readNext");
-        if (next) next.addEventListener("click", () => { page++; render(); });
-        overlay.querySelector("#readListen").addEventListener("click", () => playClip(it.audio, ""));
+        if (next) next.addEventListener("click", () => { page++; render(false); });
+        overlay.querySelector("#readListen").addEventListener("click", listen);
         const done = overlay.querySelector("#readDone");
         if (done) done.addEventListener("click", () => {
           read[k] = true;
           close();
-          // The STORY is what the step turns on - see the note above.
           if (k === 0) {
             $(el.fb).className = "fb good";
             $(el.fb).textContent = o.done;
@@ -5807,7 +5903,7 @@
           }
         });
       }
-      render();
+      render(false);
     }
 
     drawShelf();

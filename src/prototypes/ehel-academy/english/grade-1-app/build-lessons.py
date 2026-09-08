@@ -117,18 +117,21 @@ def dictionary_index():
 # ~536. THE FIRST N, never a sample: sentenceAudio pairs with
 # practiceSentences BY INDEX, so slicing from the front keeps clip i under
 # sentence i. Taking any other subset would play the wrong recording.
-# How many questions "Show what you know" asks. Owner, 2026-09-08, raised from
-# the 10 the unit authors to 30.
+# "Show what you know" is TWO checks of ten, one mid-unit and one at the end.
+# Owner, 2026-09-08: thirty in a single sitting was about twenty minutes for a
+# five-year-old and far the longest step in the unit.
 #
-# MEASURED BEFORE CHOOSING WHERE THE OTHER 20 COME FROM. Each unit authors 10
-# reviewed quiz questions and 42 game choice rounds - but 14 of those rounds
-# are word for word one of the 10, and the seven choice games repeat each other
-# besides. 28 distinct extras survive per unit, in all ten units, so 30 is
-# reachable from content that already exists and nothing has to be invented.
-#
-# Raising this past 38 would start returning short units: there is no deeper
-# pool, and the next 20 questions would have to be written by somebody.
-QUIZ_TARGET = 30
+# The halves are the content's own division rather than a cut down a list.
+# Measured across every unit: the authored ten are five "Supported recall"
+# then five "Supported application" in units 1-9, and ten "Cumulative" in unit
+# 10, which is the capstone and falls back to five and five by position.
+QUIZ_PER_CHECK = 10
+
+# Which games feed which check, by the skill each one declares. The mid-unit
+# check asks what the first half of the unit teaches - words and their
+# meanings; the end check asks the learner to apply a pattern, which is what
+# the second half is about.
+QUIZ_SKILLS_MID = ("vocabulary", "meaning in context")
 
 SENTENCES_SHOWN = 3
 
@@ -160,6 +163,10 @@ STEP_ORDER = [
     "books",          # "Reading books" — the shelf, moved up from last
     "bookquestions",  # the shelf's own questions, already authored
     "sayit",
+    # The first check sits HERE because everything it asks about has happened:
+    # the lecture, the sounds, the new words, word-and-picture, the sight
+    # words, the books and their questions. Nothing after it is tested by it.
+    "checkmid",
     "rules",
     "write",
     "talk",           # "Let us talk" — say it out loud, and Azure checks it
@@ -1197,48 +1204,72 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                      "Your ears will tell you if a word is in the wrong place."]),
                 ["line", "tiles", "check", "clear"])
 
-    # ---- 10  the check -----------------------------------------------
-    #         THIRTY QUESTIONS, from the unit's own authored content and
-    #         nothing invented here. The reviewed ten first, then twenty drawn
-    #         from the unit's game pack - see QUIZ_TARGET below for what was
-    #         measured before choosing that.
-    quiz = []
-    seen_q = set()
+    # ---- 10  the two checks ------------------------------------------
+    #         Ten questions each: five authored, five drawn from the unit's own
+    #         game pack on the skill line above. Nothing is invented here.
+    reviewed = []
     for q in unit["quizzes"]:
         opts = [o.strip() for o in str(q.get("options") or "").split("|") if o.strip()]
         ok = (q.get("correctAnswer") or "").strip()
         if not opts or ok not in opts:
             continue
-        seen_q.add(str(q["question"]).strip().lower())
-        quiz.append({"ask": q["question"],
-                     "opts": [{"t": o, "ok": 1 if o == ok else 0} for o in opts],
-                     "why": q.get("explanation") or ""})
+        reviewed.append({
+            "ask": q["question"],
+            "opts": [{"t": o, "ok": 1 if o == ok else 0} for o in opts],
+            "why": q.get("explanation") or "",
+            "recall": str(q.get("difficulty") or "").lower().startswith("supported recall"),
+        })
+    # Units 1-9 label the first five recall and the last five application; unit
+    # 10 labels all ten cumulative, so `recall` is uniformly false there and the
+    # halves fall out by position instead. Both give five and five.
+    mid_r = [q for q in reviewed if q["recall"]] or reviewed[:len(reviewed) // 2]
+    end_r = [q for q in reviewed if not q["recall"]] or reviewed[len(reviewed) // 2:]
+    if not [q for q in reviewed if q["recall"]]:
+        mid_r, end_r = reviewed[:len(reviewed) // 2], reviewed[len(reviewed) // 2:]
 
-    # The extras, in a fixed order so two builds of the same content agree.
-    # Skipped: anything already asked above (14 per unit are word-for-word one
-    # of the reviewed ten) and anything the choice games repeat between
-    # themselves. 28 survive in every unit, which is why 30 is reachable.
+    seen_q = {str(q["ask"]).strip().lower() for q in reviewed}
+    mid_x, end_x = [], []
     for g in sorted((games or {}).values(), key=lambda x: x["id"]):
-        if len(quiz) >= QUIZ_TARGET:
-            break
         if g.get("type") != "choice":
             continue
+        bucket = mid_x if str(g.get("skill") or "").strip().lower() in QUIZ_SKILLS_MID else end_x
         for r in g.get("rounds") or []:
-            if len(quiz) >= QUIZ_TARGET:
-                break
             ask = str(r.get("prompt") or "").strip()
             ok = str(r.get("answer") or "").strip()
             opts = [str(c).strip() for c in (r.get("choices") or []) if str(c).strip()]
-            key = ask.lower()
-            if not ask or not ok or ok not in opts or key in seen_q:
+            if not ask or not ok or ok not in opts or ask.lower() in seen_q:
                 continue
-            seen_q.add(key)
-            quiz.append({"ask": ask,
-                         "opts": [{"t": o, "ok": 1 if o == ok else 0} for o in opts],
-                         "why": r.get("explanation") or ""})
+            seen_q.add(ask.lower())
+            bucket.append({"ask": ask,
+                           "opts": [{"t": o, "ok": 1 if o == ok else 0} for o in opts],
+                           "why": r.get("explanation") or ""})
+
+    def bank(core, extra):
+        out = list(core)
+        for x in extra:
+            if len(out) >= QUIZ_PER_CHECK:
+                break
+            out.append(x)
+        return [{k: v for k, v in q.items() if k != "recall"} for q in out]
+
+    quiz_mid = bank(mid_r, mid_x)
+    quiz = bank(end_r, end_x)
+    if quiz_mid:
+        data["quizmid"] = quiz_mid
+        i = add("checkmid", "Show what you know", "\u2705", "I showed what I know so far",
+                "Ten questions about the words so far.",
+                explain(
+                    ["A check on the words and the reading you have done so far."],
+                    ["Read the question.", "Tap the answer you think is right.",
+                     "There are ten."],
+                    ["This is halfway, not the end.",
+                     "Whatever you get, the rest of the unit is still ahead."],
+                    ["Take your time, then tap."]),
+                ())
+
     if quiz:
         data["quiz"] = quiz
-        i = add("check", "Show what you know", "✅", "I showed what I know",
+        i = add("check", "Show what you know again", "✅", "I showed what I know",
                 "Tap the answer.",
                 explain(
                     ["Nothing new here.", "Every question is something this unit already taught you."],
@@ -1776,6 +1807,9 @@ def bootstrap(slides, data):
         elif k == "resources":
             out.append('  studentResources({ el: %s, res: LESSON.resources, plan: LESSON.plan,\n'
                        '    finish: %d, done: "That is your drawer." });' % (el, i))
+        elif k == "checkmid":
+            out.append('  sequence({ el: %s, items: LESSON.quizmid, finish: %d,\n'
+                       '    label: "Question", done: "That is the first half checked." });' % (el, i))
         elif k == "check":
             out.append('  sequence({ el: %s, items: LESSON.quiz, finish: %d,\n'
                        '    label: "Question", done: "That is the whole unit finished." });' % (el, i))

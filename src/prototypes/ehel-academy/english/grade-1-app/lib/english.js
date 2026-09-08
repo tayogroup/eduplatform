@@ -597,6 +597,77 @@
     draw();
   }
 
+  /* ---- the unit's hands-on jobs ------------------------------------
+     Twelve per unit, and every one of them happens AWAY FROM THE SCREEN:
+     colour the classroom picture, fold a name card, act out the rhyme.
+     Nothing here can be marked by a page and nothing here pretends to be -
+     no score, no right answer, no recorder.
+
+     THE STEP IS FINISHED BY ONE BUTTON, not by twelve ticks. The shell's
+     own classic renderer does the same, and the reason is that this is
+     days of off-screen work with a grown-up: a step that will not complete
+     until all twelve are ticked is a step almost no child ever completes,
+     and a sticker nobody can earn stops meaning anything. The per-job ticks
+     are there for the CHILD to keep their place, and they say how many are
+     left; the button is what says "we did these".
+
+     "How did I do?" reveals answerSummary, which exists on all 120 of them
+     and which nothing in this build had ever drawn. It is written to the
+     grown-up - "Scribbly, over-the-line colouring is completely fine" - so
+     it is labelled as being for them rather than dressed up as the page
+     marking a child's work.
+     ------------------------------------------------------------------ */
+  function activityList(o) {
+    const el = o.el;
+    const did = new Array(o.items.length).fill(false);
+    const shown = new Array(o.items.length).fill(false);
+
+    function paint() {
+      $(el.ask).innerHTML = o.ask || "Jobs to do away from the screen.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="acts" id="' + el.acts + '">' + o.items.map((it, k) =>
+        '<div class="act' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
+        '<div class="act-head"><span class="act-n">' + it.n + "</span>" +
+        (it.kind ? '<span class="act-kind">' + esc(it.kind) + "</span>" : "") +
+        '<button type="button" class="hear" data-act="hear" aria-label="Hear this job">&#128266;</button></div>' +
+        '<p class="act-lead">' + esc(it.lead) + "</p>" +
+        (it.steps.length
+          ? '<ol class="act-steps">' + it.steps.map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>"
+          : "") +
+        (it.check
+          ? '<button type="button" class="act-how" data-act="how">' +
+            (shown[k] ? "Hide" : "How did I do?") + "</button>" +
+            (shown[k] ? '<p class="act-check"><span>For your grown-up</span>' + esc(it.check) + "</p>" : "")
+          : "") +
+        '<button type="button" class="tick" data-act="tick">' + (did[k] ? "\u2713 done" : "I did this") + "</button>" +
+        "</div>").join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small" id="' + el.acts + 'fin">' +
+        "We did these &#10003;</button></div>";
+
+      const left = did.filter((x) => !x).length;
+      $(el.score).textContent = did.filter(Boolean).length + " of " + o.items.length + " ticked"
+        + (left ? "" : " - all of them");
+
+      $(el.acts + "fin").addEventListener("click", () => {
+        $(el.fb).className = "fb good";
+        $(el.fb).textContent = o.done;
+        finish(o.finish, o.done);
+      });
+    }
+
+    $(el.stage).addEventListener("click", (e) => {
+      const card = e.target.closest(".act");
+      const button = e.target.closest("[data-act]");
+      if (!card || !button) return;
+      const k = Number(card.dataset.k);
+      if (button.dataset.act === "hear") { playClip(o.items[k].audio, o.items[k].lead); return; }
+      if (button.dataset.act === "how") { shown[k] = !shown[k]; paint(); return; }
+      if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
+    });
+
+    paint();
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>

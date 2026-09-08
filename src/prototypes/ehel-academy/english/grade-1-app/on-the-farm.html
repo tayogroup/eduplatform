@@ -423,6 +423,25 @@
   .sayline .sayrow { display: flex; align-items: center; gap: 10px; }
   .sayspeech { margin: 12px 0 4px; }
 
+  /* ---- the unit's hands-on jobs ---- */
+  .acts { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; width: 100%; }
+  .act { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); }
+  .act.did { border-color: var(--good); background: var(--good-soft); }
+  .act-head { display: flex; align-items: center; gap: 8px; }
+  .act-n { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 999px; background: var(--teal); color: #fff;
+    display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
+  .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
+  .act-lead { margin: 0; font-size: 17px; font-weight: 700; }
+  .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
+  .act-how { align-self: flex-start; border: 2px dashed var(--line); background: transparent; color: var(--muted);
+    border-radius: 12px; padding: 5px 12px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 13.5px; }
+  .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
+  .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act .tick { margin-top: auto; align-self: flex-start; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -681,25 +700,35 @@
         <p class="score" id="score13"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
-      <div class="slide-head"><span class="n">14</span><h2>Fluency Practice</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Tap the answer. Nothing here is new.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the jobs you do with your hands, not on the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press Listen.</s><s>Go and do it - colour it, draw it, act it out, make it.</s><s>Then come back and tick it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>Press How did I do to see what finished looks like.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and go and do it.</s></mstts:express-as>' data-say="Jobs to do away from the screen.">
+      <div class="slide-head"><span class="n">14</span><h2>Things to do</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Jobs to do away from the screen.</span></div>
       <div class="stage">
         <div id="stage14"></div>
         <div class="choices" id="ch14"></div>
         <p class="fb" id="fb14"></p>
         <p class="score" id="score14"></p>
-        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">15</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Tap the answer.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
+      <div class="slide-head"><span class="n">15</span><h2>Fluency Practice</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Tap the answer. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage15"></div>
         <div class="choices" id="ch15"></div>
         <p class="fb" id="fb15"></p>
         <p class="score" id="score15"></p>
+        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">16</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask16">Tap the answer.</span></div>
+      <div class="stage">
+        <div id="stage16"></div>
+        <div class="choices" id="ch16"></div>
+        <p class="fb" id="fb16"></p>
+        <p class="score" id="score16"></p>
       </div>
     </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1709,6 +1738,139 @@
           }
         ],
         "why": "First shows the beginning; then and next come in the middle and last comes at the end."
+      }
+    ],
+    "activities": [
+      {
+        "n": 1,
+        "kind": "Point and say",
+        "lead": "Colour the farm animals: the pig pink, the cow brown, the chick yellow and the duck white. Point to each one and say its name.",
+        "steps": [],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u05-act01.mp3",
+        "check": "Pig pink, cow brown, chick yellow and duck white, with each animal pointed to and named. The white duck may be left blank or lightly outlined and still counts. Approximate shades are fine."
+      },
+      {
+        "n": 2,
+        "kind": "Draw and tell",
+        "lead": "Draw your favourite farm animal big and bright. Then say: 'This is a ___. It says ___. It has ___ legs.'",
+        "steps": [],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u05-act02.mp3",
+        "check": "One farm animal drawn big and bright, then the three spoken parts: its name, its sound and its number of legs. Four legs for a cow or sheep, two for a hen or duck."
+      },
+      {
+        "n": 3,
+        "kind": "Colour and match",
+        "lead": "Draw a line from each animal to its sound: cow to moo, sheep to baa, duck to quack, hen to cluck. Make every sound aloud.",
+        "steps": [],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u05-act03.mp3",
+        "check": "The correct joins are cow to moo, sheep to baa, duck to quack and hen to cluck. Accept every sound made with gusto; making the noise shows they know the answer."
+      },
+      {
+        "n": 4,
+        "kind": "Move and act",
+        "lead": "Move like the farm animals.",
+        "steps": [
+          "Waddle like a duck.",
+          "Hop like a lamb.",
+          "Peck like a hen. Name each animal as you move."
+        ],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u05-act04.mp3",
+        "check": "Watch for a duck waddle, a lamb hop and a hen peck, each animal named. Accept a loose imitation, and the name said before or after the movement, whichever comes more easily."
+      },
+      {
+        "n": 5,
+        "kind": "Listen and choose",
+        "lead": "Point to things on the farm picture: barn, tractor, field, pond. Say 'I can see a ___' for each one you find.",
+        "steps": [],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u05-act05.mp3",
+        "check": "Barn, tractor, field and pond all found in the farm picture and named with 'I can see a ___'. Accept 'grass' for field or 'water' for pond, then supply the exact word warmly."
+      },
+      {
+        "n": 6,
+        "kind": "Make and share",
+        "lead": "Grow a bean.",
+        "steps": [
+          "Put cotton wool in a cup.",
+          "Add a bean and a little water.",
+          "Look every day. Tell an adult what changed if one is nearby, or say it out loud to yourself, or draw the change."
+        ],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u05-act06.mp3",
+        "check": "Cotton wool placed in a cup, a bean added with a little water, and a daily look. Success is telling you one change, such as 'it is bigger', or pointing at a sprouted root."
+      },
+      {
+        "n": 7,
+        "kind": "Read and say",
+        "lead": "Read each meaning with your grown-up. Say the word, then write it.",
+        "steps": [
+          "The big hot star that gives us light in the day.",
+          "A long vehicle that carries many people at once.",
+          "A tiny creature with legs that crawls or flies.",
+          "An animal that lives in water and swims with its tail."
+        ],
+        "audio": "",
+        "check": "Each meaning belongs to one word from this unit, and spelling counts less than choosing the right word. 1. sun 2. bus 3. bug 4. fish"
+      },
+      {
+        "n": 8,
+        "kind": "Write the word",
+        "lead": "Say each sentence. Write the missing word. Choose from: bun, cup, fun, nut. Use each word once.",
+        "steps": [
+          "She drank a big ______ and smiled.",
+          "It was so much ______!",
+          "Amal ate a warm ______ for breakfast.",
+          "The monkey ate a ______."
+        ],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u05-act08.mp3",
+        "check": "Each word is used once, so if one sentence is hard, do the others first and see what is left. These are the intended answers, not the only ones that could work — if a child's word also makes sense in the sentence, it is not wrong. 1. cup 2. fun 3. bun 4. nut"
+      },
+      {
+        "n": 9,
+        "kind": "Alphabet order",
+        "lead": "Say the alphabet to help you. Write these words again, in ABC order, starting with the one that comes first.",
+        "steps": [
+          "sun",
+          "cup",
+          "bus",
+          "fun",
+          "bun",
+          "nut"
+        ],
+        "audio": "",
+        "check": "In ABC order the words go: bun, bus, cup, fun, nut, sun. If two words start with the same letter, look at the second letter."
+      },
+      {
+        "n": 10,
+        "kind": "Talk about the text",
+        "lead": "Read “Amal and the Little Hen” again, or listen to it. Then answer these questions in your own words.",
+        "steps": [
+          "Who is in it?",
+          "Where does it happen?",
+          "What is your favourite part?",
+          "Tell someone one thing that happens in it."
+        ],
+        "audio": "",
+        "check": "Answers come from the text and will differ between children. Look for answers that point at something really in “Amal and the Little Hen” rather than a guess, and accept spoken answers at this stage."
+      },
+      {
+        "n": 11,
+        "kind": "Make and share",
+        "lead": "Make a small poster about “On the Farm”. Use the drawing space on this slide, or paper if you have some.\nDraw one picture that shows what this unit is about.\nWrite two words from this unit on your poster.\nShow it to someone and say one sentence about it.",
+        "steps": [],
+        "audio": "",
+        "check": "There is no single right poster. Success is one clear picture, two words from this unit spelled close enough to read, and one spoken sentence about it."
+      },
+      {
+        "n": 12,
+        "kind": "Show what you know",
+        "lead": "This one brings the unit together. Do each part.",
+        "steps": [
+          "Say a sentence out loud with the word “sun” in it.",
+          "Say a sentence out loud with the word “cup” in it.",
+          "Say one sentence that uses this pattern: This is a / an ___.",
+          "Write the word “bus” from memory, then check it."
+        ],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u05-act12.mp3",
+        "check": "Answers will differ between children. Check that each word is used with the right meaning, that item 3 really follows the pattern from “Name a farm animal”, and that the word in item 4 is spelled correctly."
       }
     ],
     "fluency": [
@@ -5268,6 +5430,77 @@
     draw();
   }
 
+  /* ---- the unit's hands-on jobs ------------------------------------
+     Twelve per unit, and every one of them happens AWAY FROM THE SCREEN:
+     colour the classroom picture, fold a name card, act out the rhyme.
+     Nothing here can be marked by a page and nothing here pretends to be -
+     no score, no right answer, no recorder.
+
+     THE STEP IS FINISHED BY ONE BUTTON, not by twelve ticks. The shell's
+     own classic renderer does the same, and the reason is that this is
+     days of off-screen work with a grown-up: a step that will not complete
+     until all twelve are ticked is a step almost no child ever completes,
+     and a sticker nobody can earn stops meaning anything. The per-job ticks
+     are there for the CHILD to keep their place, and they say how many are
+     left; the button is what says "we did these".
+
+     "How did I do?" reveals answerSummary, which exists on all 120 of them
+     and which nothing in this build had ever drawn. It is written to the
+     grown-up - "Scribbly, over-the-line colouring is completely fine" - so
+     it is labelled as being for them rather than dressed up as the page
+     marking a child's work.
+     ------------------------------------------------------------------ */
+  function activityList(o) {
+    const el = o.el;
+    const did = new Array(o.items.length).fill(false);
+    const shown = new Array(o.items.length).fill(false);
+
+    function paint() {
+      $(el.ask).innerHTML = o.ask || "Jobs to do away from the screen.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="acts" id="' + el.acts + '">' + o.items.map((it, k) =>
+        '<div class="act' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
+        '<div class="act-head"><span class="act-n">' + it.n + "</span>" +
+        (it.kind ? '<span class="act-kind">' + esc(it.kind) + "</span>" : "") +
+        '<button type="button" class="hear" data-act="hear" aria-label="Hear this job">&#128266;</button></div>' +
+        '<p class="act-lead">' + esc(it.lead) + "</p>" +
+        (it.steps.length
+          ? '<ol class="act-steps">' + it.steps.map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>"
+          : "") +
+        (it.check
+          ? '<button type="button" class="act-how" data-act="how">' +
+            (shown[k] ? "Hide" : "How did I do?") + "</button>" +
+            (shown[k] ? '<p class="act-check"><span>For your grown-up</span>' + esc(it.check) + "</p>" : "")
+          : "") +
+        '<button type="button" class="tick" data-act="tick">' + (did[k] ? "\u2713 done" : "I did this") + "</button>" +
+        "</div>").join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small" id="' + el.acts + 'fin">' +
+        "We did these &#10003;</button></div>";
+
+      const left = did.filter((x) => !x).length;
+      $(el.score).textContent = did.filter(Boolean).length + " of " + o.items.length + " ticked"
+        + (left ? "" : " - all of them");
+
+      $(el.acts + "fin").addEventListener("click", () => {
+        $(el.fb).className = "fb good";
+        $(el.fb).textContent = o.done;
+        finish(o.finish, o.done);
+      });
+    }
+
+    $(el.stage).addEventListener("click", (e) => {
+      const card = e.target.closest(".act");
+      const button = e.target.closest("[data-act]");
+      if (!card || !button) return;
+      const k = Number(card.dataset.k);
+      if (button.dataset.act === "hear") { playClip(o.items[k].audio, o.items[k].lead); return; }
+      if (button.dataset.act === "how") { shown[k] = !shown[k]; paint(); return; }
+      if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
+    });
+
+    paint();
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>
@@ -6234,7 +6467,7 @@
   }
 
 
-  const STICKERS = [["🎬", "I watched the lesson"], ["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["🤔", "I answered the story questions"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"]];
+  const STICKERS = [["🎬", "I watched the lesson"], ["👂", "I heard the sounds"], ["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["👀", "I know the everyday words"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["🤔", "I answered the story questions"], ["✋", "I did the activities"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"]];
 
   lectureStep({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", video: "video1", next: "next1" }, lecture: LESSON.lecture, finish: 0,
     done: "You watched the whole lesson." });
@@ -6269,9 +6502,11 @@
     done: "That is the Game Zone played." });
   sequence({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, items: LESSON.questions, finish: 12,
     label: "Question", done: "You remembered the story well." });
-  sequence({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, items: LESSON.fluency, finish: 13,
+  activityList({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14", acts: "acts14" }, items: LESSON.activities, finish: 13,
+    done: "That is this unit's jobs done." });
+  sequence({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, items: LESSON.fluency, finish: 14,
     label: "Question", done: "That is this unit's words and patterns practised." });
-  sequence({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, items: LESSON.quiz, finish: 14,
+  sequence({ el: { ask: "ask16", say: "ask16", stage: "stage16", ch: "ch16", fb: "fb16", score: "score16" }, items: LESSON.quiz, finish: 15,
     label: "Question", done: "That is the whole unit finished." });
 
   show(0, false);

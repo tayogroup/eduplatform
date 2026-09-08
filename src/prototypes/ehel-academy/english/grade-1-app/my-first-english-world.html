@@ -423,6 +423,25 @@
   .sayline .sayrow { display: flex; align-items: center; gap: 10px; }
   .sayspeech { margin: 12px 0 4px; }
 
+  /* ---- the unit's hands-on jobs ---- */
+  .acts { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; width: 100%; }
+  .act { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); }
+  .act.did { border-color: var(--good); background: var(--good-soft); }
+  .act-head { display: flex; align-items: center; gap: 8px; }
+  .act-n { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 999px; background: var(--teal); color: #fff;
+    display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
+  .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
+  .act-lead { margin: 0; font-size: 17px; font-weight: 700; }
+  .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
+  .act-how { align-self: flex-start; border: 2px dashed var(--line); background: transparent; color: var(--muted);
+    border-radius: 12px; padding: 5px 12px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 13.5px; }
+  .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
+  .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act .tick { margin-top: auto; align-self: flex-start; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -651,25 +670,35 @@
         <p class="score" id="score10"></p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
-      <div class="slide-head"><span class="n">11</span><h2>Fluency Practice</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Tap the answer. Nothing here is new.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the jobs you do with your hands, not on the screen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press Listen.</s><s>Go and do it - colour it, draw it, act it out, make it.</s><s>Then come back and tick it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Nothing here is marked.</s><s>Press How did I do to see what finished looks like.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick one and go and do it.</s></mstts:express-as>' data-say="Jobs to do away from the screen.">
+      <div class="slide-head"><span class="n">11</span><h2>Things to do</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Jobs to do away from the screen.</span></div>
       <div class="stage">
         <div id="stage11"></div>
         <div class="choices" id="ch11"></div>
         <p class="fb" id="fb11"></p>
         <p class="score" id="score11"></p>
-        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
       </div>
     </section>
-    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
-      <div class="slide-head"><span class="n">12</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Tap the answer.</span></div>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing here is new.</s><s>Every question is a word or a pattern this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question.</s><s>Think back to the lesson.</s><s>Then tap your answer.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>If you get one wrong, read the reason underneath.</s><s>That is the part that makes it stick.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time, then tap.</s></mstts:express-as>' data-say="Tap the answer. Nothing here is new.">
+      <div class="slide-head"><span class="n">12</span><h2>Fluency Practice</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Tap the answer. Nothing here is new.</span></div>
       <div class="stage">
         <div id="stage12"></div>
         <div class="choices" id="ch12"></div>
         <p class="fb" id="fb12"></p>
         <p class="score" id="score12"></p>
+        <p class="reviewnote">Practice, not marked work - a teacher has not checked these questions yet.</p>
+      </div>
+    </section>
+    <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing new here.</s><s>Every question is something this unit already taught you.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the question right to the end.</s><s>Then read every answer before you pick one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The answer that catches your eye first is often the one put there to catch it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Then tap.</s></mstts:express-as>' data-say="Tap the answer.">
+      <div class="slide-head"><span class="n">13</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Tap the answer.</span></div>
+      <div class="stage">
+        <div id="stage13"></div>
+        <div class="choices" id="ch13"></div>
+        <p class="fb" id="fb13"></p>
+        <p class="score" id="score13"></p>
       </div>
     </section>
     <section class="slide" data-explain='<break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -1465,6 +1494,141 @@
           }
         ],
         "why": "Practising and checking helps you share your best work; the other choices would spoil it."
+      }
+    ],
+    "activities": [
+      {
+        "n": 1,
+        "kind": "Capstone workshop",
+        "lead": "Hunt through your folder for:",
+        "steps": [
+          "your neatest writing,",
+          "a picture you coloured,",
+          "a word list,",
+          "work you found hard. Show your favourite to an adult if one is nearby, or look back over it yourself and say why you chose it."
+        ],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u10-act01.mp3",
+        "check": "Four pieces found in the folder: their neatest writing, a coloured picture, a word list, and work they found hard. Accept their own judgement on neatest and hardest, then listen to their favourite."
+      },
+      {
+        "n": 2,
+        "kind": "Capstone workshop",
+        "lead": "Spread out thirty word cards from this year. Sort them into piles: school, family, animals and town. Read each pile aloud to an adult if one is nearby, or read each pile aloud to yourself.",
+        "steps": [],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u10-act02.mp3",
+        "check": "Thirty cards sorted into school, family, animals and town piles, then each pile read aloud. Accept any card placed where the child can justify it, and words read with your finger underneath."
+      },
+      {
+        "n": 3,
+        "kind": "Capstone workshop",
+        "lead": "Put four story pictures in order. Retell the story using 'First', 'Then', 'Next' and 'Last'. Ask an adult to listen twice if one is nearby, or say it aloud to yourself twice.",
+        "steps": [],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u10-act03.mp3",
+        "check": "Four story pictures in the correct order, retold using First, Then, Next and Last. Accept an order self-corrected on the second telling, and the four linking words used in any sensible sequence."
+      },
+      {
+        "n": 4,
+        "kind": "Capstone workshop",
+        "lead": "Make your mini-book.",
+        "steps": [
+          "Fold three sheets.",
+          "Staple the middle.",
+          "Add your six pages.",
+          "Draw a cover with your name on it."
+        ],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u10-act04.mp3",
+        "check": "Three sheets folded, stapled through the middle by an adult, six pages added inside, and a cover carrying their name. Accept uneven folds and a name in wobbly or reversed letters."
+      },
+      {
+        "n": 5,
+        "kind": "Capstone workshop",
+        "lead": "Rehearse your talk for one minute. An adult can time you if one is nearby, or you can count slowly to sixty yourself, or use a clock. Stand tall, speak slowly, and hold your book so everyone can see it.",
+        "steps": [],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u10-act05.mp3",
+        "check": "A full minute of talking while you time them, standing tall, speaking slowly and holding the book turned outwards. Accept around forty seconds of real speaking and one pause to find their place."
+      },
+      {
+        "n": 6,
+        "kind": "Capstone workshop",
+        "lead": "Show your book at the class celebration.",
+        "steps": [
+          "Greet everyone.",
+          "Read two pages.",
+          "Say your next goal.",
+          "Thank your family."
+        ],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u10-act06.mp3",
+        "check": "A greeting, two pages read, one next goal said and a thank you to family. Accept pages recited from memory, a very simple goal such as 'read more', and quiet thanks with a nod."
+      },
+      {
+        "n": 7,
+        "kind": "Read and say",
+        "lead": "Read each meaning with your grown-up. Say the word, then write it.\n1. The number 3. It comes after two and before four.\n2. The number 4. It comes after three and before five.\n3. The number 5. It is how many fingers are on one hand.\n4. The number 8. It comes after seven and before nine.",
+        "steps": [],
+        "audio": "",
+        "check": "Each meaning belongs to one word from this unit, and spelling counts less than choosing the right word. 1. three 2. four 3. five 4. eight"
+      },
+      {
+        "n": 8,
+        "kind": "Write the word",
+        "lead": "Say each sentence. Write the missing word. Choose from: happy, nine, please, sad. Use each word once.",
+        "steps": [
+          "Adam is ______ today.",
+          "Why do you look so ______?",
+          "The clock says ______ o'clock.",
+          "______ come inside."
+        ],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u10-act08.mp3",
+        "check": "Each word is used once, so if one sentence is hard, do the others first and see what is left. These are the intended answers, not the only ones that could work — if a child's word also makes sense in the sentence, it is not wrong. 1. happy 2. sad 3. nine 4. please"
+      },
+      {
+        "n": 9,
+        "kind": "Alphabet order",
+        "lead": "Say the alphabet to help you. Write these words again, in ABC order, starting with the one that comes first.",
+        "steps": [
+          "happy",
+          "sad",
+          "three",
+          "four",
+          "five",
+          "eight"
+        ],
+        "audio": "",
+        "check": "In ABC order the words go: eight, five, four, happy, sad, three. If two words start with the same letter, look at the second letter."
+      },
+      {
+        "n": 10,
+        "kind": "Talk about the text",
+        "lead": "Read “Amal's English Year” again, or listen to it. Then answer these questions in your own words.",
+        "steps": [
+          "Who is in it?",
+          "Where does it happen?",
+          "What is your favourite part?",
+          "Tell someone one thing that happens in it."
+        ],
+        "audio": "",
+        "check": "Answers come from the text and will differ between children. Look for answers that point at something really in “Amal's English Year” rather than a guess, and accept spoken answers at this stage."
+      },
+      {
+        "n": 11,
+        "kind": "Make and share",
+        "lead": "Make a small poster about “My First English World”. Use the drawing space on this slide, or paper if you have some.\nDraw one picture that shows what this unit is about.\nWrite two words from this unit on your poster.\nShow it to someone and say one sentence about it.",
+        "steps": [],
+        "audio": "",
+        "check": "There is no single right poster. Success is one clear picture, two words from this unit spelled close enough to read, and one spoken sentence about it."
+      },
+      {
+        "n": 12,
+        "kind": "Show what you know",
+        "lead": "This one brings the unit together. Do each part.",
+        "steps": [
+          "Say a sentence out loud with the word “happy” in it.",
+          "Say a sentence out loud with the word “sad” in it.",
+          "Say one sentence that uses this pattern: My name is ___.",
+          "Write the word “three” from memory, then check it."
+        ],
+        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u10-act12.mp3",
+        "check": "Answers will differ between children. Check that each word is used with the right meaning, that item 3 really follows the pattern from “Introduce yourself with confidence”, and that the word in item 4 is spelled correctly."
       }
     ],
     "fluency": [
@@ -5021,6 +5185,77 @@
     draw();
   }
 
+  /* ---- the unit's hands-on jobs ------------------------------------
+     Twelve per unit, and every one of them happens AWAY FROM THE SCREEN:
+     colour the classroom picture, fold a name card, act out the rhyme.
+     Nothing here can be marked by a page and nothing here pretends to be -
+     no score, no right answer, no recorder.
+
+     THE STEP IS FINISHED BY ONE BUTTON, not by twelve ticks. The shell's
+     own classic renderer does the same, and the reason is that this is
+     days of off-screen work with a grown-up: a step that will not complete
+     until all twelve are ticked is a step almost no child ever completes,
+     and a sticker nobody can earn stops meaning anything. The per-job ticks
+     are there for the CHILD to keep their place, and they say how many are
+     left; the button is what says "we did these".
+
+     "How did I do?" reveals answerSummary, which exists on all 120 of them
+     and which nothing in this build had ever drawn. It is written to the
+     grown-up - "Scribbly, over-the-line colouring is completely fine" - so
+     it is labelled as being for them rather than dressed up as the page
+     marking a child's work.
+     ------------------------------------------------------------------ */
+  function activityList(o) {
+    const el = o.el;
+    const did = new Array(o.items.length).fill(false);
+    const shown = new Array(o.items.length).fill(false);
+
+    function paint() {
+      $(el.ask).innerHTML = o.ask || "Jobs to do away from the screen.";
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="acts" id="' + el.acts + '">' + o.items.map((it, k) =>
+        '<div class="act' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
+        '<div class="act-head"><span class="act-n">' + it.n + "</span>" +
+        (it.kind ? '<span class="act-kind">' + esc(it.kind) + "</span>" : "") +
+        '<button type="button" class="hear" data-act="hear" aria-label="Hear this job">&#128266;</button></div>' +
+        '<p class="act-lead">' + esc(it.lead) + "</p>" +
+        (it.steps.length
+          ? '<ol class="act-steps">' + it.steps.map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>"
+          : "") +
+        (it.check
+          ? '<button type="button" class="act-how" data-act="how">' +
+            (shown[k] ? "Hide" : "How did I do?") + "</button>" +
+            (shown[k] ? '<p class="act-check"><span>For your grown-up</span>' + esc(it.check) + "</p>" : "")
+          : "") +
+        '<button type="button" class="tick" data-act="tick">' + (did[k] ? "\u2713 done" : "I did this") + "</button>" +
+        "</div>").join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small" id="' + el.acts + 'fin">' +
+        "We did these &#10003;</button></div>";
+
+      const left = did.filter((x) => !x).length;
+      $(el.score).textContent = did.filter(Boolean).length + " of " + o.items.length + " ticked"
+        + (left ? "" : " - all of them");
+
+      $(el.acts + "fin").addEventListener("click", () => {
+        $(el.fb).className = "fb good";
+        $(el.fb).textContent = o.done;
+        finish(o.finish, o.done);
+      });
+    }
+
+    $(el.stage).addEventListener("click", (e) => {
+      const card = e.target.closest(".act");
+      const button = e.target.closest("[data-act]");
+      if (!card || !button) return;
+      const k = Number(card.dataset.k);
+      if (button.dataset.act === "hear") { playClip(o.items[k].audio, o.items[k].lead); return; }
+      if (button.dataset.act === "how") { shown[k] = !shown[k]; paint(); return; }
+      if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
+    });
+
+    paint();
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>
@@ -5987,7 +6222,7 @@
   }
 
 
-  const STICKERS = [["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["🤔", "I answered the story questions"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"]];
+  const STICKERS = [["📖", "I met the new words"], ["🖼️", "I matched word to picture"], ["📚", "I read a picture book"], ["🔍", "I answered the book questions"], ["🗣️", "I said it out loud"], ["🧩", "I learned the patterns"], ["✍️", "I wrote a sentence"], ["💬", "I practised talking"], ["🎮", "I played the games"], ["🤔", "I answered the story questions"], ["✋", "I did the activities"], ["🔁", "I practised what I know"], ["✅", "I showed what I know"]];
 
   wordWalk({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1", replay: "replay1", next: "next1", hearSent: "hearSent1", nextSent: "nextSent1" }, items: LESSON.newwords, finish: 0,
     ask: "Say this word out loud.", label: "Word",
@@ -6014,9 +6249,11 @@
     done: "That is the Game Zone played." });
   sequence({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, items: LESSON.questions, finish: 9,
     label: "Question", done: "You remembered the story well." });
-  sequence({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, items: LESSON.fluency, finish: 10,
+  activityList({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11", acts: "acts11" }, items: LESSON.activities, finish: 10,
+    done: "That is this unit's jobs done." });
+  sequence({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, items: LESSON.fluency, finish: 11,
     label: "Question", done: "That is this unit's words and patterns practised." });
-  sequence({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, items: LESSON.quiz, finish: 11,
+  sequence({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, items: LESSON.quiz, finish: 12,
     label: "Question", done: "That is the whole unit finished." });
 
   show(0, false);

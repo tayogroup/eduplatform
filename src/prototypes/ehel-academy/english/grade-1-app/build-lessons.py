@@ -158,6 +158,11 @@ STEP_ORDER = [
     # still answerable — checked question by question — from the book on
     # the shelf.
     "questions",
+    # Immediately before Fluency, which is where the shell course puts it
+    # (writing, activities, fluency, quiz). These are the unit's hands-on jobs
+    # - colour it, draw it, act it, make it - so they sit after the reading and
+    # the writing that give them something to be about.
+    "activities",
     "fluency",
     "check",
 ]
@@ -382,6 +387,43 @@ def speakable_target(target):
     if not t or len(t) > 70 or ADULT_LED.search(t) or not SPEAKABLE_OPENER.match(t):
         return ""
     return t
+
+
+# Splitting an activity's instruction into steps, by the SHELL'S OWN RULE
+# (english.js :: ACTIVITY_INLINE_MARK) rather than a second invention.
+#
+# Grade 1 numbers its items INLINE - "Make a name card. 1. Fold the card.
+# 2. Write your name big." - so a newline split, which is what the other grades
+# need, finds nothing here at all. The shell records measuring exactly that and
+# adding this second pass for it.
+#
+# THE GUARD IS THAT THE NUMBERS MUST BE A RUN, starting at 1 and climbing by
+# one. Without it any sentence containing a numeral becomes a checklist, and a
+# checklist is a thing a child has to tick off before the activity will
+# complete - prose served as a list of jobs. The lookbehind stops a decimal or
+# a digit inside a larger number from opening a run.
+#
+# Measured on this grade: 64 of the 120 activities split, 56 are genuinely one
+# instruction a sentence or two long and keep a single block. Both shapes are
+# drawn; neither is a failure.
+ACTIVITY_INLINE_MARK = re.compile(r"(?<![\d.])(\d+)\.\s+")
+
+
+def activity_steps(text):
+    """(lead, [items]) - items is empty where the instruction is one block."""
+    text = (text or "").strip()
+    marks = list(ACTIVITY_INLINE_MARK.finditer(text))
+    if len(marks) < 2:
+        return text, []
+    for i, m in enumerate(marks):
+        if int(m.group(1)) != i + 1:
+            return text, []
+    lead = text[:marks[0].start()].strip()
+    items = []
+    for i, m in enumerate(marks):
+        end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
+        items.append(text[m.end():end].strip())
+    return lead, [x for x in items if x]
 
 
 def load_games(unit_no):
@@ -974,6 +1016,51 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                     ["Take your time. Then tap."]),
                 ())
 
+    # ---- The unit's hands-on activities ----------------------------------
+    #         Twelve per unit, 120 across the grade, every one already
+    #         authored and reviewed - and NONE of them reachable in this build
+    #         until now. They are the one thing the shell course offered a
+    #         Grade 1 learner that this one did not.
+    #
+    #         THEY ARE OFF-SCREEN WORK. Colour the classroom picture, draw
+    #         yourself in your uniform, fold a name card, act out the rhyme.
+    #         Nothing here can be marked by the page, and nothing pretends to
+    #         be: no scoring, no right answer, no recorder.
+    #
+    #         `answerSummary` IS DRAWN, behind "How did I do?". It exists on
+    #         all 120 and the shell's own note records that nothing had ever
+    #         shown it - a child could do the work and had no way to find out
+    #         whether they had done it right. It is written to the grown-up
+    #         ("Scribbly, over-the-line colouring is completely fine"), which
+    #         is exactly who is standing there for work like this, so it is
+    #         labelled as being for them rather than dressed up as feedback.
+    acts = []
+    for a in unit.get("activities") or []:
+        lead, items = activity_steps(a.get("instructionsAndItems"))
+        if not lead and not items:
+            continue
+        acts.append({
+            "n": a.get("sequence") or (len(acts) + 1),
+            "kind": a.get("activityType") or "",
+            "lead": lead,
+            "steps": items,
+            "audio": source_of(a),
+            "check": (a.get("answerSummary") or "").strip(),
+        })
+    if acts:
+        data["activities"] = acts
+        i = add("activities", "Things to do", "\u270B", "I did the activities",
+                "Jobs to do away from the screen.",
+                explain(
+                    ["These are the jobs you do with your hands, not on the screen."],
+                    ["Read one, or press Listen.",
+                     "Go and do it - colour it, draw it, act it out, make it.",
+                     "Then come back and tick it."],
+                    ["Nothing here is marked.",
+                     "Press How did I do to see what finished looks like."],
+                    ["Pick one and go and do it."]),
+                ["acts"])
+
     # ---- 11  Fluency Practice ------------------------------------------
     #         Consolidation of what this unit already taught - no new words,
     #         no new patterns. Authored by
@@ -1292,6 +1379,9 @@ def bootstrap(slides, data):
         elif k == "bookquestions":
             out.append('  bookQuestions({ el: %s, items: LESSON.bookquestions, books: LESSON.books,\n'
                        '    finish: %d, done: "You answered the book questions." });' % (el, i))
+        elif k == "activities":
+            out.append('  activityList({ el: %s, items: LESSON.activities, finish: %d,\n'
+                       '    done: "That is this unit\'s jobs done." });' % (el, i))
         elif k == "talk":
             out.append('  letUsTalk({ el: %s, items: LESSON.talk, finish: %d,\n'
                        '    label: "Round", done: "That is talking practised." });' % (el, i))

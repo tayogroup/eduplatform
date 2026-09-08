@@ -400,3 +400,22 @@
   /* the say-it-out-loud list, now that a line can open a recorder */
   .sayline .sayrow { display: flex; align-items: center; gap: 10px; }
   .sayspeech { margin: 12px 0 4px; }
+
+  /* ---- the unit's hands-on jobs ---- */
+  .acts { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; width: 100%; }
+  .act { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); }
+  .act.did { border-color: var(--good); background: var(--good-soft); }
+  .act-head { display: flex; align-items: center; gap: 8px; }
+  .act-n { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 999px; background: var(--teal); color: #fff;
+    display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
+  .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
+  .act-lead { margin: 0; font-size: 17px; font-weight: 700; }
+  .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
+  .act-how { align-self: flex-start; border: 2px dashed var(--line); background: transparent; color: var(--muted);
+    border-radius: 12px; padding: 5px 12px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 13.5px; }
+  .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
+  .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act .tick { margin-top: auto; align-self: flex-start; }

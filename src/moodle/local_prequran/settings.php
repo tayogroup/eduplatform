@@ -402,6 +402,33 @@ if ($hassiteconfig) {
         ''
     ));
 
+    $settings->add(new admin_setting_heading(
+        'local_prequran/pronunciation_heading',
+        'Pronunciation check (Azure Speech)',
+        'Used by pronunciation_check.php, which scores a learner\'s recording against the sentence they were asked to say. '
+        . 'This is Azure rather than ElevenLabs because only Azure returns per-word and per-phoneme accuracy, which is what '
+        . 'lets the lesson tell a child WHICH sound to practise. Key and region are read server-side only; the browser never '
+        . 'sees either. Leave them blank and the check answers 503 and the lesson says it is not switched on yet, which is '
+        . 'safe - nothing in the lesson depends on it.'
+    ));
+
+    $settings->add(new admin_setting_configpasswordunmask(
+        'local_prequran/azure_speech_key',
+        'Azure Speech key',
+        'Either key from the Azure Speech resource (Keys and Endpoint). Never place this key in Bunny/static JavaScript.',
+        ''
+    ));
+
+    $settings->add(new admin_setting_configtext(
+        'local_prequran/azure_speech_region',
+        'Azure Speech region',
+        'The resource\'s region SHORT NAME, lowercase and unspaced, exactly as Azure prints it under Keys and Endpoint - '
+        . 'for example eastus, westeurope, uaenorth. It becomes the request host, so "East US" or a full URL will not work. '
+        . 'The region governs latency for every check a learner runs.',
+        'eastus',
+        PARAM_ALPHANUMEXT
+    ));
+
     $settings->add(new admin_setting_configcheckbox(
         'local_prequran/practice_coach_enabled',
         'Enable Chatbot Practice Coach',

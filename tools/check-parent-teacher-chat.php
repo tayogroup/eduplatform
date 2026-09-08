@@ -126,9 +126,17 @@ check('  and a caller with neither link is refused',
 // `true` makes every logged-in user a guardian of every child, and a
 // name-presence assertion sailed straight past it — the third time in this one
 // gate that presence stood in for position.
-check('  with the guardian link REBUILT, not trusted',
-    strpos($teacherlive, "record_exists(\$consenttable, ['guardianid' => (int)\$USER->id, 'studentid' => \$studentid])") !== false
-        && strpos($teacherlive, "p.userid = :uid AND p.role = 'parent' AND t.studentid = :sid") !== false);
+// The guardian question has ONE definition, in parent_boardlib, shared with
+// the parent board. The door must ASK it rather than carry a second copy.
+check('  with the guardian link asked of the shared resolver',
+    strpos($teacherlive, 'pqpb_parent_owns_child((int)$USER->id, $studentid)') !== false
+        && strpos($teacherlive, "require_once(__DIR__ . '/parent_boardlib.php')") !== false);
+// A plain substring, not a regex: "\$consenttable" inside a double-quoted PHP
+// string interpolates an undefined variable and leaves a pattern that matches
+// nothing — an assertion that passes for the wrong reason, which is the same
+// family of fault as everything else this gate has caught in itself.
+check('  and the door keeps no second copy of it',
+    strpos($teacherlive, 'record_exists($consenttable') === false);
 check('the parent door sends "parent", literally',
     (bool)preg_match("/parent_teacher_chat_exchange\(\s*\\\$userid,\s*\\\$studentid,\s*'parent'/s", $parentdoor));
 check('neither door reads a role from the request',
@@ -245,6 +253,61 @@ check('  while students and teachers keep their Messages entry',
 check('neither side polls while its tab is hidden',
     substr_count($teacherpage, "visibilityState === 'visible'") >= 1
         && substr_count($familypage, 'visibilityState === "visible"') >= 1);
+
+// ---- the parent board ------------------------------------------------
+// A page with no route is a page nobody finds — which is exactly what happened
+// to the chat card twice before this board existed.
+echo "\nthe parent board is reachable and reuses the board's own numbers\n";
+$pboard = @file_get_contents($root . '/local_hubredirect/parent_board.php');
+$plib = @file_get_contents($root . '/local_hubredirect/parent_boardlib.php');
+$pdata = @file_get_contents($root . '/local_hubredirect/parent_board_data.php');
+if ($pboard === false || $plib === false || $pdata === false) {
+    fwrite(STDERR, "cannot read the parent board files\n");
+    exit(2);
+}
+// Comment-stripped, like the doors above. Three mutations survived the first
+// version of this block because it matched the RAW file: a commented-out
+// require_sesskey() and a commented-out require of the board library both
+// still contained their own text. Presence standing in for position, again.
+$pboardlive = live_code($pboard);
+$pliblive = live_code($plib);
+$pdatalive = live_code($pdata);
+check('the parent rail links to it',
+    strpos($dash, '/local/hubredirect/parent_board.php') !== false
+        && strpos($dash, 'Parent board') !== false);
+// One builder for both: a page painted by PHP and refreshed by JS drifts, and
+// the drift shows as a tile that changes shape the moment it refreshes.
+check('page and poll endpoint both call pqpb_build',
+    strpos($pboardlive, 'pqpb_build(') !== false && strpos($pdatalive, 'pqpb_build(') !== false);
+check('the board is always built for the CALLER',
+    strpos($pdatalive, 'pqpb_build((int)$USER->id)') !== false
+        && strpos($pdatalive, "optional_param('studentid'") === false
+        && strpos($pdatalive, "optional_param('parentid'") === false);
+check('the poll endpoint restates its gating',
+    strpos($pdatalive, 'require_login();') !== false && strpos($pdatalive, 'require_sesskey();') !== false);
+// The per-child facts have ONE definition. A second copy is two boards
+// disagreeing about the same child in front of two people who talk to
+// each other.
+check('per-child facts come from the group board library',
+    strpos($pliblive, "require_once(__DIR__ . '/live_group_boardlib.php')") !== false
+        && strpos($pliblive, 'pqlgb_progress_snapshot(') !== false
+        && strpos($pliblive, 'pqpr_learning_day(') !== false);
+// The break count stays on the teacher's board — see the note in
+// parent_boardlib for why a family must not be handed it.
+check('it carries no focus BREAK count',
+    strpos($pliblive, 'pqlgb_focus_signals') === false
+        && strpos($pboardlive, 'left page') === false);
+check('  but does carry the child\'s own words for stopping early',
+    strpos($pliblive, "'course_left_early'") !== false);
+// Four different claims, and a zero where nothing was measured is the one that
+// tells a family their child did nothing on the strength of missing data.
+check('the four week-claims are all present',
+    strpos($pboardlive, 'pqpb-flag--quiet">not counted yet<') !== false
+        && strpos($pboardlive, '(c.weekcovered ? "" : "at least ")') !== false
+        && strpos($pboardlive, 'pqpb-flag--quiet">nothing yet this week<') !== false
+        && strpos($pboardlive, 'finished this week') !== false);
+check('  and nothing polls while the tab is hidden',
+    strpos($pboardlive, 'visibilityState === "visible"') !== false);
 
 echo "\nthe message itself\n";
 

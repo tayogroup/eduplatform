@@ -2972,6 +2972,16 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
       <span class="pqh-gnav__label">Create a ticket</span>
     </a>
+  <?php // THE PARENT BOARD, first thing in a parent's rail after Workspace
+      // (owner, 2026-09-08). The teacher-chat card was added to the dashboard
+      // and to the parent Workspace and still was not found, so the page got a
+      // route of its own rather than a card to scroll to.
+      if ($role === 'parent'): ?>
+    <a class="pqh-gnav__item" href="<?php echo (new moodle_url('/local/hubredirect/parent_board.php', $pqhpageparams))->out(false); ?>">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      <span class="pqh-gnav__label">Parent board</span>
+    </a>
+  <?php endif; ?>
   <?php // A PARENT'S "Messages" rail entry is GONE (owner, 2026-09-08). It
       // opened communications.php - the POST-and-reload messaging the live
       // teacher chat below replaces - so beside a live panel it offered the

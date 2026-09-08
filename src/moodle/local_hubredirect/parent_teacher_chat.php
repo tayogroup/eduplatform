@@ -30,6 +30,7 @@ declare(strict_types=1);
 define('AJAX_SCRIPT', true);
 require_once(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/accesslib.php');
+require_once(__DIR__ . '/parent_boardlib.php');
 require_once($CFG->dirroot . '/local/prequran/externallib_v4.php');
 require_login();
 require_sesskey();
@@ -96,27 +97,11 @@ if (!$teaches && pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
     $teaches = true;   // a manager reads their workspace's families, as staff
 }
 
-// A GUARDIAN OF THIS CHILD, by the same two links workspace_parent.php uses to
-// build a parent's own list of children: a consent row, or an existing
-// parent participant row on a thread about them.
-$guardian = false;
-if (!$teaches) {
-    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $consenttable) {
-        if (pqh_table_exists_safe($consenttable)
-                && $DB->record_exists($consenttable, ['guardianid' => (int)$USER->id, 'studentid' => $studentid])) {
-            $guardian = true;
-            break;
-        }
-    }
-    if (!$guardian && pqh_table_exists_safe('local_prequran_comm_participant')) {
-        $guardian = $DB->record_exists_sql(
-            "SELECT 1
-               FROM {local_prequran_comm_participant} p
-               JOIN {local_prequran_comm_thread} t ON t.id = p.threadid
-              WHERE p.userid = :uid AND p.role = 'parent' AND t.studentid = :sid",
-            ['uid' => (int)$USER->id, 'sid' => $studentid]);
-    }
-}
+// A GUARDIAN OF THIS CHILD. ONE DEFINITION, in parent_boardlib, shared with
+// the parent board that asks the same question of the same tables — two copies
+// of "who is this person's child" is the drift that ends with one surface
+// showing a family a child and another refusing to talk about them.
+$guardian = !$teaches && pqpb_parent_owns_child((int)$USER->id, $studentid);
 
 if (!$teaches && !$guardian) {
     http_response_code(403);

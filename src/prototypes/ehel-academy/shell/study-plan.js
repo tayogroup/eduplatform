@@ -78,7 +78,14 @@ export function termWeekTotal(termNo) {
   return calendarTerm(termNo)?.weeks.length ?? FALLBACK_TERM_WEEKS;
 }
 
-function groupIntoTerms(units) {
+// Exported since 2026-09-08 for a SECOND consumer that draws its own markup:
+// english/grade-1-app/build-lessons.py asks this module for the schedule at
+// BUILD time (node can import this file - it has no imports and touches no
+// DOM at module scope) and bakes the answer into the standalone lesson pages,
+// which have none of the shell's CSS and so cannot use renderStudyPlan's
+// markup. Exporting the allocation rather than copying it is the whole point:
+// one calendar, one unit-to-weeks rule, two presentations that cannot drift.
+export function groupIntoTerms(units) {
   const byTerm = new Map();
   for (const unit of units) {
     const termNo = Number(String(unit.termId || "").replace(/\D/g, "")) || 0;
@@ -103,7 +110,7 @@ function groupIntoTerms(units) {
     .filter((term) => term.units.length);
 }
 
-function weekRows(units, weekTotal) {
+export function weekRows(units, weekTotal) {
   const base = Math.floor(weekTotal / units.length);
   const extra = weekTotal - base * units.length;
   let start = 1;

@@ -13,6 +13,7 @@ the lesson build follows about a control that reaches nobody.
 
     python build-hub.py
 """
+import importlib.util
 import io
 import json
 import os
@@ -27,6 +28,15 @@ LIB = os.path.join(HERE, "lib")
 # What each unit is about, in a sentence a six-year-old's grown-up can read at
 # a glance. Drawn from the unit's own unitOverview, first sentence, because a
 # hand-written blurb goes stale the first time the content is corrected.
+# The year's schedule comes from build-lessons.py :: unit_schedule(), which
+# asks shell/study-plan.js - the school's real 2026-27 calendar and the one
+# place it is defined. The hub does not re-derive it and does not keep a copy.
+_spec = importlib.util.spec_from_file_location(
+    "ehel_g1_lessons", os.path.join(HERE, "build-lessons.py"))
+_lessons = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_lessons)
+
+
 def blurb(unit_json):
     t = (unit_json.get("unit", {}).get("unitOverview") or "").strip()
     t = re.sub(r"\s+", " ", t)
@@ -74,6 +84,20 @@ PAGE = """<meta charset="utf-8">
   .soon { flex: 0 0 auto; color: var(--muted); font-size: 13.5px; font-weight: 700; }
   .card.locked { opacity: 0.62; }
   .hubfoot { color: var(--muted); font-size: 14.5px; padding: 26px 4px 0; max-width: 60ch; }
+  .yearplan { padding: 34px 4px 0; }
+  .yearplan h2 { font-size: 30px; }
+  .yearnote { color: var(--muted); font-size: 16px; margin: 8px 0 18px; max-width: 62ch; }
+  .term { margin-bottom: 18px; padding: 16px 18px; border-radius: 20px;
+    border: 1px solid var(--line); background: rgba(20, 43, 62, 0.88); }
+  .term h3 { font-size: 19px; }
+  .term .termdates { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif;
+    font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: .07em; }
+  .term ol { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .term li { display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: baseline;
+    padding: 8px 12px; border-radius: 12px; background: var(--card); }
+  .term li .wk { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; }
+  .term li .when { display: block; color: var(--muted); font-weight: 400; font-size: 12.5px; }
+  @media (max-width: 560px) { .term li { grid-template-columns: 1fr; gap: 2px; } }
 </style>
 
 <div class="wrap">
@@ -85,6 +109,11 @@ PAGE = """<meta charset="utf-8">
 
   <main class="cards">
 %(cards)s  </main>
+
+  <section class="yearplan">
+    <h2>The year at a glance</h2>
+    <p class="yearnote">%(yearnote)s</p>
+%(terms)s  </section>
 
   <p class="hubfoot">Every word, story and recording here is the Grade 1 English course content, shown a different way.</p>
 </div>
@@ -122,8 +151,37 @@ def main():
         }
 
     css = io.open(os.path.join(LIB, "lesson.css"), encoding="utf-8").read()
+    # ---- the year at a glance -------------------------------------------
+    sched = _lessons.unit_schedule(manifest)
+    by_term = {}
+    for unit in manifest["units"]:
+        row = sched.get(str(unit["number"])) or sched.get(unit["number"])
+        if not row:
+            continue
+        by_term.setdefault(row["term"], []).append((unit, row))
+    year = next(iter(sched.values()), {}).get("year", "")
+    total_weeks = sum(r["weeks"] for _, r in
+                      [(u, r) for rows in by_term.values() for u, r in rows])
+    year_note = ("Ten units across three terms of the %s school year, %d teaching weeks in all. "
+                 "The dates are the school's, half terms taken out. Nobody is behind: if a unit "
+                 "takes longer, it takes longer." % (year, total_weeks))
+    terms_html = ""
+    for term_no in sorted(by_term):
+        rows = by_term[term_no]
+        items = ""
+        for unit, row in rows:
+            weeks = ("Week %d" % row["from"]) if row["from"] == row["to"] else ("Weeks %d–%d" % (row["from"], row["to"]))
+            items += ('        <li><span class="wk">%s<span class="when">%s</span></span>'
+                      '<span><strong>Unit %d: %s</strong></span></li>\n'
+                      % (weeks, _lessons.text(row["fromDate"]), unit["number"], _lessons.text(unit["title"])))
+        terms_html += ('    <div class="term"><span class="termdates">Term %d &middot; %s</span>'
+                       '<h3>%d unit%s</h3>\n      <ol>\n%s      </ol></div>\n'
+                       % (term_no, _lessons.text(rows[0][1]["termDates"]), len(rows),
+                          "" if len(rows) == 1 else "s", items))
+
     io.open(os.path.join(HERE, cfg["hub"]), "w", encoding="utf-8", newline="").write(
-        PAGE % {"css": css, "cards": cards})
+        PAGE % {"css": css, "cards": cards,
+                "yearnote": year_note, "terms": terms_html})
     print("\n  ok   %s  -  %d of %d units live\n" % (cfg["hub"], live, len(manifest["units"])))
 
 

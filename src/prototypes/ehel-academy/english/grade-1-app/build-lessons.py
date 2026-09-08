@@ -132,6 +132,11 @@ SENTENCES_SHOWN = 3
 # A step named here that a unit cannot build is skipped; a step BUILT that is
 # not named here aborts the build rather than vanishing quietly.
 STEP_ORDER = [
+    # The plan is read BEFORE the unit is walked, so it opens it - the same
+    # position the shell gives it (Overview, then Unit Study Plan, then the
+    # teaching). It is a reference page rather than a step, which is why it
+    # completes on being read and gates nothing.
+    "plan",
     "lecture",        # the unit's video lesson (units 1-9; Unit 10 has none)
     "sounds",
     "newwords",
@@ -177,6 +182,92 @@ STEP_ORDER = [
 # say so on their face, the way the shell course's section badge does.
 REVIEW_NOTE = ("Practice, not marked work - a teacher has not checked these "
                "questions yet.")
+
+
+def unit_schedule(manifest):
+    """{unitNo: {term, from, to, fromDate, toDate, weeks, termDates}}.
+
+    THE CALENDAR IS NOT RE-DERIVED HERE. shell/study-plan.js holds
+    SCHOOL_CALENDAR and the unit-to-weeks allocation, its own comment names it
+    "the one place to change" when the school publishes next year's dates, and
+    all six shell subjects already read it. A second copy in Python would be a
+    second school year, wrong in a way nobody notices until September.
+
+    So the builder IMPORTS the real module through node and calls the real
+    functions - it has no imports of its own and touches no DOM at module
+    scope, so node can load it. groupIntoTerms and weekRows were exported in
+    the same change for this caller; everything else was already public.
+
+    What is NOT shared is the day-by-day spread below. renderUnitStudyPlan
+    spreads the SHELL's sections and this spreads the STANDALONE BUILD's steps,
+    which are different lists by design - so the two pages plan the same weeks
+    from the same calendar and fill them with each build's own walk.
+    """
+    src = os.path.join(SHELL, "..", "study-plan.js")
+    src = os.path.abspath(src).replace("\\", "/")
+    script = (
+        'const m = await import("file:///%s");\n'
+        'const units = %s;\n'
+        'const out = {};\n'
+        'for (const term of m.groupIntoTerms(units)) {\n'
+        '  const cal = m.calendarTerm(term.termNo);\n'
+        '  const total = m.termWeekTotal(term.termNo);\n'
+        '  for (const row of m.weekRows(term.units, total)) {\n'
+        '    const last = new Date(cal.weeks[row.to - 1].getTime() + 4 * 24 * 3600 * 1000);\n'
+        '    out[row.unit.number] = {\n'
+        '      term: term.termNo, from: row.from, to: row.to,\n'
+        '      fromDate: m.formatDay(cal.weeks[row.from - 1], { long: true }),\n'
+        '      toDate: m.formatDay(last, { long: true }),\n'
+        '      weeks: row.to - row.from + 1,\n'
+        '      termDates: m.termDatesLabel(term.termNo),\n'
+        '      year: m.SCHOOL_CALENDAR.yearLabel,\n'
+        '    };\n'
+        '  }\n'
+        '}\n'
+        'process.stdout.write(JSON.stringify(out));\n'
+        % (src, json.dumps(manifest["units"]))
+    )
+    r = subprocess.run(["node", "--input-type=module", "-e", script], capture_output=True)
+    if r.returncode != 0:
+        sys.exit("REFUSED: could not read the school calendar from shell/study-plan.js.\n" +
+                 r.stderr.decode("utf-8", "replace"))
+    return json.loads(r.stdout.decode("utf-8"))
+
+
+def plan_days(step_titles, weeks):
+    """One line per school day: the unit's own steps spread over its weeks.
+
+    Five days a week, and the LAST day is always the look-back - a plan that
+    ends on new work has no room to be behind. Two shapes, chosen by which side
+    is scarcer, which is the rule renderUnitStudyPlan settled on for the shell:
+    more steps than days and a day carries several; more days than steps and a
+    step gets a run of days. The first cut of the shell's version gave every
+    part one day and padded the rest with "go back over", which read as empty
+    weeks - so this does not do that either.
+    """
+    total = max(1, weeks * 5)
+    body = total - 1                       # the last day is the look-back
+    parts = list(step_titles)
+    lines = []
+    if not parts:
+        return ["Work through the unit."] * body + ["Look back over the whole unit."]
+    if len(parts) >= body:
+        base, extra = divmod(len(parts), body)
+        at = 0
+        for day in range(body):
+            size = base + (1 if day < extra else 0)
+            lines.append(" · ".join(parts[at:at + size]))
+            at += size
+    else:
+        base, extra = divmod(body, len(parts))
+        for i, part in enumerate(parts):
+            span = base + (1 if i < extra else 0)
+            for d in range(span):
+                lines.append(part if span == 1
+                             else ("Start " + part if d == 0
+                                   else ("Finish " + part if d == span - 1 else "Carry on with " + part)))
+    lines.append("Look back over the whole unit before you move on.")
+    return lines
 
 
 def ebook_catalog():
@@ -564,7 +655,8 @@ def distractors(pool, right, n, key=lambda x: x):
 # ----------------------------------------------------------------------
 # the slides
 # ----------------------------------------------------------------------
-def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, book_questions, talk_rounds):
+def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, book_questions,
+                 talk_rounds, plan):
     """Return (slides, stickers, data) for one unit.
 
     A slide is only built where its content exists. Units 4, 7, 9 and 10 have
@@ -635,6 +727,30 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
         if missing:
             sys.exit("REFUSED: these steps were built but STEP_ORDER does not place them, "
                      "so they would silently vanish from the lesson: " + ", ".join(missing))
+
+    # ---- The unit's study plan -------------------------------------------
+    #         WHEN this unit happens, and what to do on each school day of it.
+    #         The term, the weeks and the dates all come from
+    #         shell/study-plan.js through unit_schedule() above - the school's
+    #         real 2026-27 calendar, half terms removed, the same one the shell
+    #         course plans against.
+    #
+    #         A REFERENCE PAGE, NOT A STEP. It completes the moment it is read,
+    #         because there is nothing here to get right and a plan that has to
+    #         be "finished" before the unit opens is a lock on the front door.
+    if plan:
+        data["plan"] = plan
+        i = add("plan", "The plan for this unit", "\U0001F4C5", "I read the plan",
+                "When this unit happens, and what to do each day.",
+                explain(
+                    ["This is when this unit happens and what to do each day."],
+                    ["Look at the weeks at the top.",
+                     "Then read down the days.",
+                     "One line is one school day."],
+                    ["Nobody is behind.",
+                     "If a day takes two days, take two days."],
+                    ["Have a look, then start the unit."]),
+                ["plan"])
 
     # ---- The unit's video lesson -----------------------------------------
     #         Units 1-9 only. lecture-media.json is keyed by the unit-N
@@ -1208,6 +1324,13 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 note=REVIEW_NOTE)
 
     emit_in_order()
+    # The day-by-day lines are written LAST, because they list the unit's own
+    # steps and those are only settled once emit_in_order has placed them. The
+    # plan step itself is dropped from the list it appears in - a day that says
+    # "read the plan" is a day spent reading the plan.
+    if data.get("plan"):
+        titles = [x["title"] for x in slides if x["kind"] != "plan"]
+        data["plan"] = dict(data["plan"], days=plan_days(titles, data["plan"].get("weeks") or 2))
     return slides, stickers, data
 
 
@@ -1370,6 +1493,9 @@ def bootstrap(slides, data):
         elif k == "fluency":
             out.append('  sequence({ el: %s, items: LESSON.fluency, finish: %d,\n'
                        '    label: "Question", done: "That is this unit\'s words and patterns practised." });' % (el, i))
+        elif k == "plan":
+            out.append('  unitPlan({ el: %s, plan: LESSON.plan, finish: %d,\n'
+                       '    done: "You know what this unit looks like now." });' % (el, i))
         elif k == "lecture":
             out.append('  lectureStep({ el: %s, lecture: LESSON.lecture, finish: %d,\n'
                        '    done: "You watched the whole lesson." });' % (el, i))
@@ -1393,7 +1519,7 @@ def bootstrap(slides, data):
 
 
 def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games_js,
-          speech_js, ebooks, book_sets, lectures, release):
+          speech_js, ebooks, book_sets, lectures, schedule, release):
     entry = next(u for u in manifest["units"] if u["number"] == unit_no)
     unit = load_json(os.path.join(DATA, "units", "unit-%d.json" % unit_no))
     cw_unit = next(u for u in cw["units"] if u["unitNo"] == unit_no)
@@ -1437,8 +1563,12 @@ def build(unit_no, manifest, cw, dic, css, voice, deck, english, books_js, games
 
     talk_rounds = talk_items(unit)
 
+    # The schedule for THIS unit, plus the day lines, which need the step
+    # titles - so it is finished after build_slides() below has named them.
+    sched = (schedule or {}).get(str(unit_no)) or (schedule or {}).get(unit_no) or {}
+
     slides, stickers, data = build_slides(unit, cw_unit, pics, dic, games, games_meta,
-                                          shelf, lecture, book_questions, talk_rounds)
+                                          shelf, lecture, book_questions, talk_rounds, sched)
     data = {k: v for k, v in data.items() if not k.endswith("_slide")}
     data["audioRelease"] = release
     data["unitNo"] = unit_no
@@ -1494,8 +1624,9 @@ def main():
 
     units = wanted or [u["number"] for u in manifest["units"]]
     print("\n  Building Grade 1 English lessons  (audio stamp %s)\n" % release)
+    schedule = unit_schedule(manifest)
     built = [build(n, manifest, cw, dic, css, voice, deck, english, books_js, games_js, speech_js, ebooks,
-                   book_sets, lectures, release) for n in units]
+                   book_sets, lectures, schedule, release) for n in units]
     print("\n  %d page(s). Now run the shared pipeline - see the docstring.\n" % len(built))
 
 

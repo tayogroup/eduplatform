@@ -668,6 +668,49 @@
     paint();
   }
 
+  /* ---- the plan for this unit --------------------------------------
+     WHEN the unit happens and what to do on each school day of it. The
+     term, the weeks and the dates come from the school's real 2026-27
+     calendar (shell/study-plan.js), read at BUILD time - so this page and
+     the shell course's own Study Plan cannot disagree about the year.
+
+     IT COMPLETES ON BEING READ. There is nothing here to get right, and a
+     plan a child has to finish before the unit will open is a lock on the
+     front door. It is marked done as soon as it is drawn.
+
+     "Nobody is behind" is on the page on purpose. A dated plan handed to a
+     six-year-old is the first thing in this course that can make a child
+     feel late, and the honest thing to say is that the dates are the
+     school's guess at a pace, not a debt.
+     ------------------------------------------------------------------ */
+  function unitPlan(o) {
+    const el = o.el;
+    const p = o.plan || {};
+    const days = p.days || [];
+    const DAY = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="plan" id="' + el.plan + '">' +
+      '<div class="plan-when">' +
+      '<div><span>Term</span><strong>' + esc(String(p.term || "-")) + "</strong></div>" +
+      '<div><span>Weeks</span><strong>' + (p.from === p.to ? esc(String(p.from))
+        : esc(String(p.from) + "\u2013" + String(p.to))) + "</strong></div>" +
+      '<div class="wide"><span>Dates</span><strong>' + esc(p.fromDate || "") +
+      " \u2013 " + esc(p.toDate || "") + "</strong></div>" +
+      "</div>" +
+      '<p class="plan-note">' + esc(p.termDates ? "Term " + p.term + ": " + p.termDates : "") +
+      (p.year ? "  \u00b7  " + esc(p.year) + " school year" : "") + "</p>" +
+      days.map((line, k) =>
+        '<div class="plan-day' + (k === days.length - 1 ? " last" : "") + '">' +
+        '<span class="plan-wk">Week ' + (Math.floor(k / 5) + 1) + "</span>" +
+        '<span class="plan-dow">' + DAY[k % 5] + "</span>" +
+        '<span class="plan-do">' + esc(line) + "</span></div>").join("") +
+      '<p class="plan-note">Nobody is behind. If a day takes two days, take two days.</p>' +
+      "</div>";
+    $(el.score).textContent = days.length + " school days";
+    finish(o.finish, o.done);
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>

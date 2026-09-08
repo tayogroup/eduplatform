@@ -20,14 +20,26 @@
 // The school's academic calendar as published for 2026-27, half terms
 // included. A term's teaching weeks are the Mondays from its opening week to
 // its closing week with the half-term week removed — so the three terms
-// really hold 12, 11 and 10 teaching weeks, not a nominal 12 each. English's own
+// really hold 14, 11 and 10 teaching weeks, not a nominal 12 each. English's own
 // renderers import these too, so every plan reads one calendar. When the
 // school publishes the next year's dates, this constant is the one place to
 // change.
+//
+// Term 1 opened on 25 August, not 7 September (Raeburn Nanyuki's published
+// dates, owner 2026-09-09). The old date made the year 33 teaching weeks when
+// it is 35, and every subject's study plan allocates its units across a term's
+// teaching weeks — so all six were pacing against a term that started a
+// fortnight late. Terms 2 and 3 were already correct.
+//
+// The half-term weeks are UNCHANGED and are the one thing here not confirmed
+// against the published dates. Terms 2 and 3 matched exactly, so theirs are
+// almost certainly right; term 1's start moved, and 12 October now falls in
+// its 8th week of 14 rather than its 6th of 12 — still mid-term, but worth
+// confirming with the school rather than assuming.
 export const SCHOOL_CALENDAR = {
   yearLabel: "2026–27",
   terms: [
-    { termNo: 1, opens: "2026-09-07", ends: "2026-12-04", halfTerm: { from: "2026-10-12", to: "2026-10-16" } },
+    { termNo: 1, opens: "2026-08-25", ends: "2026-12-04", halfTerm: { from: "2026-10-12", to: "2026-10-16" } },
     { termNo: 2, opens: "2027-01-05", ends: "2027-03-25", halfTerm: { from: "2027-02-15", to: "2027-02-19" } },
     { termNo: 3, opens: "2027-04-20", ends: "2027-07-02", halfTerm: { from: "2027-05-24", to: "2027-05-28" } },
   ],

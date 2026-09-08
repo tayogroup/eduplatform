@@ -136,7 +136,23 @@ echo $OUTPUT->header();
 .pqpb-empty{padding:14px;font-size:13.5px;color:var(--op-ink-soft)}
 .pqpb-legend{margin-top:18px;padding:14px 16px;background:var(--op-surface);border:1px solid var(--op-line);
   border-radius:var(--op-radius);font-size:13px;line-height:1.6;color:var(--op-ink-soft)}
+.pqpb-wrap{margin:0 auto}
+<?php // THE SHELL'S OWN STYLESHEET, and it is not optional: its first rule is
+      // {scope}{padding:0 0 54px 248px} — the left padding that clears the
+      // FIXED nav rail. Without it the page renders correctly and sits
+      // underneath the rail, which is what a formatting fault looks like from
+      // the outside. Emitted inside this block exactly as the group board does
+      // it, because the function returns raw CSS rather than a <style> tag. ?>
+<?php echo pqh_design_shell_css('.pqpb-shell'); ?>
+.pqpb-shell .pqh-appbar{background:linear-gradient(90deg,#cfe9ff 0%,#e3f4ff 50%,#f2fbff 100%)}
 </style>
+<?php // Hides the Moodle furniture this page replaces. ?>
+<style><?php echo pqh_viewer_chrome_css('.pqpb-shell'); ?></style>
+<?php // 62 of this sheet's rules style the SHARED chrome (.pqh-appbar,
+      // .pqh-gnav) and do reach this page; the other 101 name .pqlgb-* and
+      // cannot. The tiles below are styled by this file's own rules above —
+      // renaming them to .pqlgb-* to inherit the board's would tie a family
+      // page to markup built for a different one. ?>
 <style><?php echo pqh_ehel_group_board_css('.pqpb-shell', 'pqpb-page'); ?></style>
 <main class="pqpb-shell">
 <?php

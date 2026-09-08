@@ -308,6 +308,16 @@ check('the four week-claims are all present',
         && strpos($pboardlive, 'finished this week') !== false);
 check('  and nothing polls while the tab is hidden',
     strpos($pboardlive, 'visibilityState === "visible"') !== false);
+// THE SHELL'S OWN STYLESHEET. Its first rule is the 248px left padding that
+// clears the FIXED nav rail; without it the page renders correctly and sits
+// underneath the rail. Shipped once without it, and that is exactly what a
+// formatting fault looks like from the outside.
+check('the page emits the shell stylesheet that clears the rail',
+    strpos($pboardlive, "pqh_design_shell_css('.pqpb-shell')") !== false);
+check('  and the viewer chrome that hides the Moodle furniture',
+    strpos($pboardlive, "pqh_viewer_chrome_css('.pqpb-shell')") !== false);
+check('  and gives its content wrapper a rule',
+    strpos($pboardlive, '.pqpb-wrap{') !== false);
 
 echo "\nthe message itself\n";
 

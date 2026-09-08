@@ -9340,10 +9340,23 @@
           ui: { escapeHtml, toast },
           tutorLabel: "Wehel Tutor",
           placeholder: "Ask about Welcome to School\u2026",
+          /* The chips a young learner presses, written as the sentence they
+             would have said. Four, because a row a six-year-old scans has to
+             be short and a fifth makes the other four less likely to be read.
+
+             "Give me a hint" is the one that carries a teaching stance: it
+             says "not the answer" in the message itself, so pressing it cannot
+             turn the tutor into an answer machine even before the prompt file
+             has its say.
+
+             True of every app this tool wires - Grade 1 English and the four
+             Mathematics builds - which is why none of them names a word, a
+             sentence or a number. */
           quickPrompts: [
-            { label: "Explain it simply", message: "Explain this step in a simpler way." },
+            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
+            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
+            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
             { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
-            { label: "An easier one", message: "Give me an easier question to build up with." },
           ],
         });
       } catch (e) {

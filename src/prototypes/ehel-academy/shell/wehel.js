@@ -567,6 +567,25 @@ export function formatWehelClock(seconds) {
 // nothing to mirror and no server behaviour hangs on this.
 export const WEHEL_TOKENS_ON_CHIP_FROM_GRADE = 7;
 
+// Below this grade the panel wears its young skin: bigger type, bigger
+// targets, rounder bubbles, and the tutor's own name on the greeting rather
+// than a control row read first.
+export const WEHEL_YOUNG_MAX_GRADE = 4;
+
+// Is this a young learner? The gate for the young skin, and NOT a gate for any
+// content or capability - a six-year-old and an adult get the same tutor,
+// the same allowance rules and the same prompts, drawn at different sizes.
+//
+// Intensive English is excluded for the same reason it is excluded from the
+// token count below: it sends its CEFR LEVEL as `grade`, so `grade <= 4` there
+// means "an adult beginner at Level 2", who must not be handed a skin built
+// for a five-year-old. Explicit rather than left to arithmetic.
+export function wehelIsYoung({ grade, subject } = {}) {
+  if (subject === "intensive-english") return false;
+  const n = Number(grade) || 0;
+  return n > 0 && n <= WEHEL_YOUNG_MAX_GRADE;
+}
+
 export function wehelShowsTokenCount({ grade, subject } = {}) {
   // Intensive English sends its CEFR LEVEL as the grade (1-5), so a numeric
   // grade test cannot mean "an older learner" there — the same reason it has
@@ -1106,9 +1125,72 @@ export function wehelIcon(name) {
 // The look is warm and rounded for a young learner, but deliberately stops short
 // of babyish: intensive-english mounts this identical panel for ADULT beginners,
 // and a Grade 8 student is not a small child either. Friendly, not cartoonish.
+// The YOUNG skin and the FULL-SCREEN state, both as extra rules on the same
+// stylesheet rather than a second sheet - one injection, one place to read.
+//
+// Every rule here is under `.wehel-panel.is-young` or `.wehel-panel.is-max`,
+// so a learner who is neither renders exactly the bytes they rendered before.
+// That is the whole design: intensive-english mounts this panel for adults and
+// a Grade 8 is not a small child, so the young look had to be a MODE.
+const PANEL_STYLE_EXTRA = `
+/* ---- young: bigger everything, and fewer things shouting ---- */
+/* THE PANEL ASSUMES A LIGHT GROUND and never said so: every bubble, chip and
+   input in the base sheet hardcodes background:#fff, while the ink is a dark
+   navy. Dropped into the standalone build's dark drawer, the tutor's own name
+   and the control labels came out dark-on-dark - a pre-existing fault the
+   bigger young type made impossible to miss. The panel now carries its own
+   ground where it wears this skin, so it reads the same in a dark drawer as in
+   a light rail. Scoped to is-young and is-max so the five shell subjects,
+   which mount into a light rail already, render exactly as before. */
+.wehel-panel.is-young{--w-radius:26px;font-size:17px;
+  background:var(--w-bg);color:var(--w-ink);border-radius:18px;padding:12px 14px}
+.wehel-panel.is-max{background:var(--w-bg);color:var(--w-ink)}
+/* The control row is chrome a six-year-old reads first and needs least, so it
+   goes quiet: smaller, lighter, and below the greeting in reading order it
+   already has. It is NOT removed - taking a control away is a product
+   decision, not a restyle. */
+.wehel-panel.is-young .ai-voice-row{gap:10px;opacity:.92}
+.wehel-panel.is-young .ai-voice-row label,
+.wehel-panel.is-young .ai-voice-row select{font-size:14px}
+.wehel-panel.is-young .ai-conversation{gap:18px}
+.wehel-panel.is-young .w-avatar{width:44px;height:44px}
+.wehel-panel.is-young .w-avatar svg{width:22px;height:22px}
+.wehel-panel.is-young .w-who{font-size:15px}
+.wehel-panel.is-young .w-text{font-size:18px;line-height:1.65}
+.wehel-panel.is-young .ai-message .w-body{border-radius:22px}
+/* A thumb, not a mouse pointer: 46px is the smallest target that is reliably
+   hit by a six-year-old, and the label wraps rather than truncating. */
+.wehel-panel.is-young .ai-prompts{gap:10px;margin:16px 0 14px}
+.wehel-panel.is-young .ai-prompts button{min-height:46px;padding:10px 18px;
+  font-size:16px;font-weight:700;white-space:normal;text-align:left}
+.wehel-panel.is-young .ai-compose{gap:10px}
+.wehel-panel.is-young .ai-compose input{font-size:17px;min-height:50px;border-radius:26px}
+.wehel-panel.is-young .ai-compose .button{min-height:50px;border-radius:26px;font-size:16px}
+.wehel-panel.is-young .w-timer{font-size:14px;padding:7px 14px}
+
+/* ---- full screen ---- */
+/* Fixed to the VIEWPORT rather than to the host box, because the panel does
+   not own its container: it is a 420px drawer in the standalone builds and a
+   rail in the shell, and only a fixed element escapes both the same way. */
+.wehel-panel.is-max{position:fixed;inset:0;z-index:2147483200;margin:0;
+  padding:16px 18px 18px;background:var(--w-bg,#fff);overflow:auto;
+  display:flex;flex-direction:column}
+.wehel-panel.is-max .ai-conversation{flex:1 1 auto;min-height:0;overflow:auto}
+/* Wide screens: a chat line running the full width of a monitor is unreadable,
+   so the column is capped and centred rather than stretched. */
+@media (min-width:900px){
+  .wehel-panel.is-max > *{width:100%;max-width:900px;margin-left:auto;margin-right:auto}
+}
+/* Prefixed like every other rule here: an id is unique, but the containment
+   this file promises is that no selector can reach a lesson page, and a bare
+   id does not keep that promise even when it happens to be safe. */
+.wehel-panel #wehel-max{border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700}
+.wehel-panel.is-young #wehel-max{font-size:14px;padding:8px 16px}
+`;
+
 const PANEL_STYLE_ID = "wehel-panel-style";
 const PANEL_STYLE = `
-.wehel-panel{--w-ink:#17324d;--w-teal:#0f766e;--w-teal-soft:#e8f5f2;--w-warm:#f8b34a;
+.wehel-panel{--w-ink:#17324d;--w-teal:#0f766e;--w-teal-soft:#e8f5f2;--w-warm:#f8b34a;--w-bg:#fff;
   --w-line:rgba(15,23,42,.12);--w-radius:20px;color:var(--w-ink)}
 .wehel-panel *{box-sizing:border-box}
 /* .sr-only is only defined in english/shared/course-ui.css, which four of the
@@ -1242,7 +1324,7 @@ function ensurePanelStyle() {
   if (typeof document === "undefined" || document.getElementById(PANEL_STYLE_ID)) return;
   const style = document.createElement("style");
   style.id = PANEL_STYLE_ID;
-  style.textContent = PANEL_STYLE;
+  style.textContent = PANEL_STYLE + PANEL_STYLE_EXTRA;
   document.head.appendChild(style);
 }
 
@@ -1351,6 +1433,26 @@ export function mountWehelChat(options) {
   // off, so the stylesheet cannot reach anything this module did not render.
   ensurePanelStyle();
   container.classList.add("wehel-panel");
+  // The young skin: bigger type and bigger targets, and nothing else. It
+  // changes no content, no prompt and no capability - a six-year-old and an
+  // adult get the same tutor drawn at different sizes. Intensive English is
+  // excluded inside the gate, because it sends a CEFR level as `grade`.
+  container.classList.toggle("is-young", wehelIsYoung(meta));
+  // Full screen survives a re-render: the panel rewrites its own innerHTML on
+  // every reply, so the state lives on the container's class list rather than
+  // in anything the template rebuilds.
+  const isMax = () => container.classList.contains("is-max");
+  // CAPTURE PHASE, and it stops the event only while maximised. The standalone
+  // builds bind Escape on `document` to close the whole tutor drawer; both
+  // listeners sit on the same node, capture runs before bubble, so from full
+  // screen the first press shrinks the panel and the second closes the drawer.
+  // Without this the first press would shut the tutor outright.
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !isMax()) return;
+    container.classList.remove("is-max");
+    event.stopPropagation();
+    render();
+  }, true);
   const key = options.key || "aiMessages";
   const escapeHtml = ui.escapeHtml;
   const tutorLabel = options.tutorLabel || "Wehel Tutor";
@@ -1579,6 +1681,7 @@ export function mountWehelChat(options) {
     container.innerHTML = `
       <div class="ai-voice-row">
         ${timeChipHtml()}
+        <button class="button secondary" id="wehel-max" type="button" aria-pressed="${isMax()}" title="${isMax() ? "Leave full screen" : "Make the tutor full screen"}">${isMax() ? "\u2715 Close full screen" : "\u26F6 Full screen"}</button>
         ${browserSpeechSupported ? `<button class="button secondary" id="wehel-voice-toggle" type="button" aria-pressed="${speakReplies}" title="${speakReplies ? `${escapeHtml(tutorLabel)} reads replies aloud` : "Replies are silent"}">${speakReplies ? `${wehelIcon("volume")} Voice on` : `${wehelIcon("volumeOff")} Voice off`}</button>` : ""}
         <label for="wehel-persona">Wehel is
           <select id="wehel-persona">
@@ -1611,6 +1714,17 @@ export function mountWehelChat(options) {
         <button class="button primary" type="submit" ${busy ? "disabled" : ""}>${wehelIcon("send")} Send</button>
       </form>`}`;
     if (ui.bindVoiceControls) ui.bindVoiceControls();
+    const maxToggle = container.querySelector("#wehel-max");
+    if (maxToggle) {
+      maxToggle.addEventListener("click", () => {
+        container.classList.toggle("is-max");
+        render();
+        // The conversation is what the learner was reading; keep them at the
+        // bottom of it across the size change rather than at the top.
+        const log = container.querySelector("#wehel-conversation");
+        if (log) log.scrollTop = log.scrollHeight;
+      });
+    }
     const voiceToggle = container.querySelector("#wehel-voice-toggle");
     if (voiceToggle) voiceToggle.addEventListener("click", () => {
       speakReplies = !speakReplies;

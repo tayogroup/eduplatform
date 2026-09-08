@@ -114,9 +114,21 @@ echo "\nthe caller's role comes from the DOOR, never the request\n";
 
 check('the exchange takes a role and validates it',
     (bool)preg_match("/in_array\(\\\$role, \['parent', 'teacher'\], true\)/", $exchange));
-check('the teacher door sends "teacher", literally',
-    (bool)preg_match("/parent_teacher_chat_exchange\(\s*\(int\)\\\$USER->id,\s*\\\$studentid,\s*'teacher'/", $teacherdoor),
+// The Moodle-side door serves BOTH adults - a teacher on the per-student page
+// and a parent on their own Workspace - so the role is chosen from the
+// relationship the door has just proved, never from the request.
+check('the session door decides the role from the relationship it proved',
+    (bool)preg_match("/parent_teacher_chat_exchange\(\s*\(int\)\\\$USER->id,\s*\\\$studentid,\s*\\\$teaches \? 'teacher' : 'parent'/", $teacherdoor),
     'A role read from the request would let a parent speak as staff.');
+check('  and a caller with neither link is refused',
+    strpos($teacherdoor, 'That child is not linked to you.') !== false);
+// THE WHOLE LOOKUP, not the table name. Replacing the consent check with
+// `true` makes every logged-in user a guardian of every child, and a
+// name-presence assertion sailed straight past it — the third time in this one
+// gate that presence stood in for position.
+check('  with the guardian link REBUILT, not trusted',
+    strpos($teacherlive, "record_exists(\$consenttable, ['guardianid' => (int)\$USER->id, 'studentid' => \$studentid])") !== false
+        && strpos($teacherlive, "p.userid = :uid AND p.role = 'parent' AND t.studentid = :sid") !== false);
 check('the parent door sends "parent", literally',
     (bool)preg_match("/parent_teacher_chat_exchange\(\s*\\\$userid,\s*\\\$studentid,\s*'parent'/s", $parentdoor));
 check('neither door reads a role from the request',
@@ -143,8 +155,14 @@ check('POST only', strpos($teacherlive, "!== 'POST'") !== false);
 check('the relationship to the child is REBUILT, not trusted',
     (bool)preg_match("/record_exists\('local_prequran_teacher_student',\s*\['teacherid' => \(int\)\\\$USER->id, 'studentid' => \\\$studentid, 'status' => 'active'\]\)/", $teacherlive)
         && (bool)preg_match('/JOIN \{local_prequran_class_group\} cg ON cg\.id = gm\.groupid/', $teacherlive));
-check('  and neither lookup is switched off',
+// A lookup can be neutralised without being removed, and the whole-expression
+// assertions above still match when it is: `if (false && …)` skips it and
+// `true || …` short-circuits past it, leaving every pattern intact. Both
+// mutations survived this gate until these two lines existed.
+check('  and no lookup is switched off',
     !preg_match('/if \(false/', $teacherlive));
+check('  or short-circuited past',
+    !preg_match('/(=\s*true\s*\|\||\|\|\s*true\b|\btrue\s*&&)/', $teacherlive));
 check('  and a manager is the only other way in',
     strpos($teacherdoor, 'pqh_user_can_manage_workspace') !== false);
 // dashboard.php RENDERS A PAGE; requiring it from an AJAX endpoint to borrow
@@ -190,6 +208,20 @@ check('  and only where the caller may teach',
     strpos($teacherpage, 'if ($canteach && $studentid > 0)') !== false);
 check('the family page posts the portal action',
     strpos($familypage, '"parent_teacher_chat"') !== false);
+// WHERE A PARENT ACTUALLY IS. The portal page is not in a parent's navigation
+// rail — its only inbound link anywhere in the codebase is from an admin
+// records page — so a panel there renders correctly on a page they cannot
+// reach. Their own Workspace is the first item in that rail.
+$parentworkspace = @file_get_contents($root . '/local_hubredirect/workspace_parent.php');
+if ($parentworkspace === false) {
+    fwrite(STDERR, "cannot read workspace_parent.php\n");
+    exit(2);
+}
+check('the parent\'s own Workspace has the panel',
+    strpos($parentworkspace, '/local/hubredirect/parent_teacher_chat.php') !== false
+        && strpos($parentworkspace, 'Message the teacher') !== false);
+check('  and it polls only while visible',
+    strpos($parentworkspace, "visibilityState === 'visible'") !== false);
 // A portal left open on a kitchen tablet would otherwise poll all day to
 // deliver one message from a teacher who works six hours.
 check('neither side polls while its tab is hidden',

@@ -375,6 +375,103 @@ echo pqh_design_shell_html('pqwp-shell', 'workspace', [
         <?php echo pqh_live_session_agenda_template_link('pqwp-btn pqwp-btn--light'); ?>
       </div>
     </section>
+    <section class="pqwp-panel" style="margin-top:14px">
+      <h2>Message the teacher</h2>
+      <div style="font-size:13px;opacity:.75;margin-bottom:8px">Your child's teacher sees this and replies here. Please allow a school day for an answer.</div>
+      <div id="pqptlog" style="max-height:300px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:2px 0 8px"></div>
+      <form id="pqptform" autocomplete="off" style="display:flex;gap:8px">
+        <input id="pqptbody" maxlength="2000" placeholder="Write a message&hellip;" aria-label="Message the teacher"
+               style="flex:1 1 auto;min-width:0;padding:9px 12px;border-radius:999px;border:1px solid #cbd5e1;font:inherit;font-size:14px">
+        <button type="submit" style="border:0;border-radius:999px;padding:9px 18px;font:inherit;font-weight:700;cursor:pointer;background:#1f5fa8;color:#fff">Send</button>
+      </form>
+    </section>
+    <script>
+    (function () {
+      /* Send and poll are ONE call, and the panel stops polling while the tab
+         is hidden - a parent leaves this open, and a timer that runs regardless
+         turns one tab into a day of requests. Both rules are the family
+         portal's, and the gate holds all four surfaces to them. */
+      var url = <?php echo json_encode((new moodle_url('/local/hubredirect/parent_teacher_chat.php'))->out(false)); ?>;
+      var sesskey = <?php echo json_encode(sesskey()); ?>;
+      var studentid = <?php echo (int)$childid; ?>;
+      var workspaceid = <?php echo (int)$pqwpworkspaceid; ?>;
+      var since = 0, busy = false, timer = null;
+      var log = document.getElementById('pqptlog');
+      var form = document.getElementById('pqptform');
+      var box = document.getElementById('pqptbody');
+      function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+      function line(m) {
+        var when = new Date((Number(m.at) || 0) * 1000);
+        var clock = when.getFullYear() > 1971
+          ? when.toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+          : '';
+        return '<div style="max-width:82%;padding:8px 12px;border-radius:14px;font-size:14px;line-height:1.5;'
+          + (m.mine ? 'align-self:flex-end;background:#dbeafe' : 'align-self:flex-start;background:#f1f5f9') + '">'
+          + '<span style="display:block;font-size:11.5px;font-weight:700;opacity:.7">' + esc(m.who) + '</span>'
+          + esc(m.body)
+          + (clock ? '<span style="display:block;font-size:11px;opacity:.6;margin-top:3px">' + esc(clock) + '</span>' : '')
+          + '</div>';
+      }
+      function exchange(body) {
+        if (busy) { return Promise.resolve(false); }
+        busy = true;
+        var p = new URLSearchParams();
+        p.set('sesskey', sesskey);
+        p.set('studentid', String(studentid));
+        p.set('workspaceid', String(workspaceid));
+        p.set('since', String(since));
+        p.set('body', body || '');
+        return fetch(url, { method: 'POST', credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+          body: p.toString() })
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            if (!res || !res.ok) { throw new Error((res && res.message) || 'Not available.'); }
+            if (res.messages && res.messages.length) {
+              var atBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
+              log.insertAdjacentHTML('beforeend', res.messages.map(line).join(''));
+              if (atBottom) { log.scrollTop = log.scrollHeight; }
+            } else if (!log.children.length) {
+              log.innerHTML = '<div style="font-size:13px;opacity:.7">No messages yet. Write the first one.</div>';
+            }
+            since = Math.max(since, Number(res.lastmessageid) || 0);
+            return true;
+          })
+          .catch(function (e) {
+            /* A failed poll is not worth interrupting a parent for; a failed
+               SEND is, because they are waiting to see their own words. */
+            if (body) { window.alert('Could not send: ' + e.message); }
+            return false;
+          })
+          .then(function (ok) { busy = false; return ok; });
+      }
+      function polling(on) {
+        if (timer) { clearInterval(timer); timer = null; }
+        if (on) { timer = setInterval(function () { exchange(''); }, 8000); }
+      }
+      document.addEventListener('visibilitychange', function () {
+        var visible = document.visibilityState === 'visible';
+        polling(visible);
+        if (visible) { exchange(''); }
+      });
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var body = box.value.trim();
+        if (!body) { return; }
+        var btn = form.querySelector('button');
+        btn.disabled = true;
+        box.value = '';
+        exchange(body).then(function (ok) {
+          if (!ok) { box.value = body; }
+          btn.disabled = false;
+          box.focus();
+        });
+      });
+      exchange('');
+      polling(document.visibilityState === 'visible');
+    })();
+    </script>
   </div>
 </main>
 <?php

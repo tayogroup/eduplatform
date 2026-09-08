@@ -1,7 +1,12 @@
 <?php
 declare(strict_types=1);
 
-// Parent <-> teacher chat, the TEACHER'S door.
+// Parent <-> teacher chat, the door for anyone inside MOODLE - a teacher on
+// the per-student page, a parent on their own Workspace.
+//
+// Two doors, split by AUTH rather than by party: this one is session +
+// sesskey, and the family portal's is the minted-token handler, because that
+// page is served from the CDN and has no Moodle session to offer.
 //
 // Everything after auth is
 // local_prequran_external::parent_teacher_chat_exchange(), the same function
@@ -44,9 +49,9 @@ $since = optional_param('since', 0, PARAM_INT);
 $body = trim((string)optional_param('body', '', PARAM_RAW));
 $workspaceid = pqh_current_workspace_id((int)$USER->id, $requestedworkspaceid);
 
-if ($workspaceid <= 0 || !pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)) {
+if ($workspaceid <= 0) {
     http_response_code(403);
-    echo json_encode(['ok' => false, 'message' => 'Teacher access to this workspace is required.']);
+    echo json_encode(['ok' => false, 'message' => 'A workspace is required.']);
     exit;
 }
 
@@ -66,12 +71,18 @@ if ($studentid <= 0) {
 // borrow one function would execute a dashboard. The two paths below are the
 // two that helper uses: an explicit teacher-student assignment, and a shared
 // class group.
+// WHICH ADULT IS THIS? Resolved from the caller's relationship to the child,
+// never from the request - a role read from a parameter would let a parent
+// send as staff, which is the invariant tools/check-parent-teacher-chat.php is
+// built around.
 $teaches = false;
-if (pqh_table_exists_safe('local_prequran_teacher_student')) {
+if (pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)
+        && pqh_table_exists_safe('local_prequran_teacher_student')) {
     $teaches = $DB->record_exists('local_prequran_teacher_student',
         ['teacherid' => (int)$USER->id, 'studentid' => $studentid, 'status' => 'active']);
 }
 if (!$teaches
+        && pqh_user_can_teach_in_workspace((int)$USER->id, $workspaceid)
         && pqh_table_exists_safe('local_prequran_class_group')
         && pqh_table_exists_safe('local_prequran_group_member')) {
     $teaches = $DB->record_exists_sql(
@@ -81,15 +92,42 @@ if (!$teaches
           WHERE gm.studentid = :sid AND cg.teacherid = :tid",
         ['sid' => $studentid, 'tid' => (int)$USER->id]);
 }
-if (!$teaches && !pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
+if (!$teaches && pqh_user_can_manage_workspace((int)$USER->id, $workspaceid)) {
+    $teaches = true;   // a manager reads their workspace's families, as staff
+}
+
+// A GUARDIAN OF THIS CHILD, by the same two links workspace_parent.php uses to
+// build a parent's own list of children: a consent row, or an existing
+// parent participant row on a thread about them.
+$guardian = false;
+if (!$teaches) {
+    foreach (['local_prequran_comm_consent', 'local_prequran_live_consent'] as $consenttable) {
+        if (pqh_table_exists_safe($consenttable)
+                && $DB->record_exists($consenttable, ['guardianid' => (int)$USER->id, 'studentid' => $studentid])) {
+            $guardian = true;
+            break;
+        }
+    }
+    if (!$guardian && pqh_table_exists_safe('local_prequran_comm_participant')) {
+        $guardian = $DB->record_exists_sql(
+            "SELECT 1
+               FROM {local_prequran_comm_participant} p
+               JOIN {local_prequran_comm_thread} t ON t.id = p.threadid
+              WHERE p.userid = :uid AND p.role = 'parent' AND t.studentid = :sid",
+            ['uid' => (int)$USER->id, 'sid' => $studentid]);
+    }
+}
+
+if (!$teaches && !$guardian) {
     http_response_code(403);
-    echo json_encode(['ok' => false, 'message' => 'That is not one of your students.']);
+    echo json_encode(['ok' => false, 'message' => 'That child is not linked to you.']);
     exit;
 }
 
-// Always as the CALLER. A manager reading a teacher's conversation writes as
-// themselves and is shown as staff — the board's rule for the same situation.
+// Always as the CALLER, and in the standing their relationship gives them. A
+// manager reading a teacher's conversation writes as themselves and is shown
+// as staff — the board's rule for the same situation.
 $result = local_prequran_external::parent_teacher_chat_exchange(
-    (int)$USER->id, $studentid, 'teacher', $body, $since);
+    (int)$USER->id, $studentid, $teaches ? 'teacher' : 'parent', $body, $since);
 
 echo json_encode($result, JSON_UNESCAPED_SLASHES);

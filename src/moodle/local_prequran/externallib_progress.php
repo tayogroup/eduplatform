@@ -226,12 +226,58 @@ class local_prequran_progress_external extends external_api {
             if ($total <= 0) {
                 continue;
             }
-            $out[$section] = [
+            $row = [
                 'answered' => min(max(0, (int)($counts['answered'] ?? 0)), $total),
                 'total' => $total,
             ];
+            // WHAT THE LEARNER'S OWN SCREEN CALLS IT, and what the two numbers
+            // count. Both optional, both from the app, because the SECTION ID
+            // cannot answer either question: in the standalone lesson builds it
+            // is a position (`step-08`) that means a different activity in each
+            // of the six apps sharing that pipeline, so no server-side table
+            // can name it. Same reason `resumeLabel` exists beside `resume`.
+            //
+            // Bounded and stripped here rather than trusted: this lands in
+            // statejson and two portals render it, and a client is not trusted
+            // to bound its own payload.
+            $label = self::sanitise_caption($counts['label'] ?? '', 48);
+            if ($label !== '') {
+                $row['label'] = $label;
+            }
+            // "3 of 7" is ambiguous in exactly the way the unlabelled row was.
+            // "3 of 7 books" is a fact, and it lets a surface that would rather
+            // print "watched 4%" of a video do that honestly.
+            $noun = self::sanitise_caption($counts['noun'] ?? '', 16);
+            if ($noun !== '') {
+                $row['noun'] = $noun;
+            }
+            $out[$section] = $row;
         }
         return $out;
+    }
+
+    /**
+     * A short plain-text caption from a client, or '' if there is nothing
+     * usable in it.
+     *
+     * Markup is stripped rather than escaped, because these are rendered by
+     * two portals and a board and each escapes for its own context; storing
+     * entities would double-escape in one of them. Whitespace is collapsed so
+     * a caption cannot smuggle newlines into a table cell, and the length cap
+     * is applied last so a long caption is cut rather than dropped.
+     */
+    private static function sanitise_caption($raw, int $max): string {
+        if (!is_string($raw)) {
+            return '';
+        }
+        $text = strip_tags($raw);
+        // Control characters, including the newlines a textarea would carry.
+        $text = preg_replace('/[\x00-\x1f\x7f]+/u', ' ', $text);
+        $text = trim(preg_replace('/\s+/u', ' ', (string)$text));
+        if ($text === '') {
+            return '';
+        }
+        return function_exists('mb_substr') ? mb_substr($text, 0, $max) : substr($text, 0, $max);
     }
 
     /** Apply one event onto a unit-state array. Returns [changed, isDurable]. */

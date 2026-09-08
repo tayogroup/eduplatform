@@ -5906,9 +5906,12 @@
   function reportScore(i, right, total, sub, subTitle) {
     if (window.__ehelScore) { try { window.__ehelScore(i, right, total, sub, subTitle); } catch (_) { /* never break the lesson */ } }
   }
-  /* Participation, where the step asked something but marked nothing. */
-  function reportAttempt(i, answered, total) {
-    if (window.__ehelAttempt) { try { window.__ehelAttempt(i, answered, total); } catch (_) { /* same */ } }
+  /* Participation, where the step asked something but marked nothing. The
+     noun says what the two numbers COUNT - books, words, seconds - because
+     "3 of 7" alone is what made a family portal print a row nobody could
+     read. */
+  function reportAttempt(i, answered, total, noun) {
+    if (window.__ehelAttempt) { try { window.__ehelAttempt(i, answered, total, noun); } catch (_) { /* same */ } }
   }
   /* A word the learner picked correctly for a sound or a picture - the one
      place this build has direct evidence that a word is known. */
@@ -6205,7 +6208,7 @@
       /* How many words the child has actually met. There is nothing to score
          on a walk-through, but "stopped at word 4 of 15" is a real fact and
          the step used to report nothing at all until the last card. */
-      reportAttempt(o.finish, i + 1, o.items.length);
+      reportAttempt(o.finish, i + 1, o.items.length, "words");
       ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
       playHere(o.finish, it.audio, it.w);
       paint();
@@ -6311,7 +6314,7 @@
     const el = o.el;
     function draw() {
       const it = o.items[i];
-      reportAttempt(o.finish, i + 1, o.items.length);   // rules met, as above
+      reportAttempt(o.finish, i + 1, o.items.length, "rules");   // rules met, as above
       $(el.ask).innerHTML = esc(it.title);
       $(el.stage).innerHTML =
         '<div class="rule">' +
@@ -6381,7 +6384,7 @@
       said[k] = true;
       // Participation only. What a child said out loud is not marked here, and
       // the pronunciation check that does listen is explicitly not a grade.
-      reportAttempt(o.finish, said.filter(Boolean).length, said.length);
+      reportAttempt(o.finish, said.filter(Boolean).length, said.length, "lines");
       if (said.every(Boolean)) {
         $(el.fb).className = "fb good";
         $(el.fb).textContent = o.done;
@@ -6465,7 +6468,7 @@
         if (ok) {
           // One sentence, so one mark out of one: built it first time, or not.
           reportScore(o.finish, tries === 1 ? 1 : 0, 1);
-          reportAttempt(o.finish, 1, tries);   // and how many goes it took
+          reportAttempt(o.finish, 1, tries, "goes");   // and how many goes it took
           finish(o.finish, o.done);
         }
       });
@@ -6529,7 +6532,10 @@
     };
     const reportWatched = (whole) => {
       const pair = secs();
-      if (pair) reportAttempt(o.finish, whole ? pair[1] : pair[0], pair[1]);
+      // The noun is what lets a family portal turn this into "watched 4%"
+      // rather than printing "5 of 122" at a parent. Omitted on the fallback,
+      // where the pair is a yes-or-no and counts nothing.
+      if (pair) reportAttempt(o.finish, whole ? pair[1] : pair[0], pair[1], "seconds");
       else reportAttempt(o.finish, whole ? 1 : 0, 1);   // no duration to divide
     };
     video.addEventListener("timeupdate", () => {
@@ -6685,7 +6691,7 @@
         "We did these &#10003;</button></div>";
 
       const left = did.filter((x) => !x).length;
-      reportAttempt(o.finish, did.filter(Boolean).length, did.length);
+      reportAttempt(o.finish, did.filter(Boolean).length, did.length, "activities");
       $(el.score).textContent = did.filter(Boolean).length + " of " + o.items.length + " ticked"
         + (left ? "" : " - all of them");
 
@@ -6914,7 +6920,7 @@
         const done = overlay.querySelector("#readDone");
         if (done) done.addEventListener("click", () => {
           read[k] = true;
-          reportAttempt(o.finish, read.filter(Boolean).length, read.length);
+          reportAttempt(o.finish, read.filter(Boolean).length, read.length, "readings");
           close();
           if (k === 0) {
             $(el.fb).className = "fb good";
@@ -6989,7 +6995,7 @@
       // How many the child ANSWERED, never what they answered: a self-rating
       // is a claim, and "By myself" in a gradebook would be a grade for
       // confidence. The answers themselves stay on the device.
-      reportAttempt(o.finish, answered, o.items.length);
+      reportAttempt(o.finish, answered, o.items.length, "questions");
       $(el.score).textContent = answered + " of " + o.items.length + " answered";
       if (answered === o.items.length) {
         $(el.fb).className = "fb good";
@@ -7290,7 +7296,7 @@
     function openReader(k) {
       openBookReader(books[k], () => {
         read[k] = true;
-        reportAttempt(o.finish, read.filter(Boolean).length, read.length);
+        reportAttempt(o.finish, read.filter(Boolean).length, read.length, "books");
         /* The step still COMPLETES on the first book finished - one book is
            what the unit asks for, and gating the rest of the unit on seven
            would be a different decision. What changed is only what is
@@ -7404,7 +7410,7 @@
         "  \u00b7  " + solved.size + " answered";
       /* How far through, sent as they go - so a child who stops halfway is on
          the record as halfway rather than as nothing. */
-      reportAttempt(o.finish, solved.size, questions.length);
+      reportAttempt(o.finish, solved.size, questions.length, "questions");
       if (!done) { $(el.fb).textContent = ""; $(el.fb).className = "fb"; }
 
       $(el.bq).addEventListener("click", onTap);
@@ -7604,7 +7610,7 @@
            "activity level" has to mean for a step that holds twelve
            activities. */
         reportScore(o.finish, right, game.rounds.length, game.id, game.title);
-        reportAttempt(o.finish, played.size, (pack.games || []).length);
+        reportAttempt(o.finish, played.size, (pack.games || []).length, "games");
         /* No cheer over a bad round. "Brilliant! 0 of 6 right" was the
            first version, and a child who can count can read that as the
            page not paying attention. */
@@ -8472,7 +8478,7 @@
 
     async function open(id) {
       opened.add(id);
-      reportAttempt(o.finish, opened.size, CARDS.length);
+      reportAttempt(o.finish, opened.size, CARDS.length, "cards");
       if (id === "plan") { finish(o.finish, o.done); show(0, true); return; }
       if (id === "gradeplan") { location.href = "index.html" + location.search; return; }
 
@@ -9136,10 +9142,24 @@
      ticked" is a real fact about a learner and is not a mark; sending it as a
      checkpoint would put a percentage on work nobody assessed, which is the
      thing the rollup already refuses to do for the Quran app's game stars. */
-  window.__ehelAttempt = function (i, answered, total) {
+  window.__ehelAttempt = function (i, answered, total, noun) {
     const n = Number(total) || 0;
     if (!n) return;
-    attempted[sectionId(i)] = { answered: Math.max(0, Math.min(Number(answered) || 0, n)), total: n };
+    /* WHAT THIS IS CALLED, and what the two numbers count. The section id is a
+       POSITION here - `step-08` - and the same position is a different
+       activity in each app sharing this pipeline, so no reader of the stored
+       document can name it. `labelOf(i)` is the caption the learner is looking
+       at, the same one resumeLabel carries for the same reason: a surface
+       printing the id names a section nobody can find.
+
+       The noun is passed by the call site because only it knows: books, words,
+       rules, seconds. Both are optional and the server bounds them. */
+    attempted[sectionId(i)] = {
+      answered: Math.max(0, Math.min(Number(answered) || 0, n)),
+      total: n,
+      label: labelOf(i),
+      ...(noun ? { noun: String(noun) } : {}),
+    };
     report(i);
   };
 

@@ -267,7 +267,7 @@
     function openReader(k) {
       openBookReader(books[k], () => {
         read[k] = true;
-        reportAttempt(o.finish, read.filter(Boolean).length, read.length);
+        reportAttempt(o.finish, read.filter(Boolean).length, read.length, "books");
         /* The step still COMPLETES on the first book finished - one book is
            what the unit asks for, and gating the rest of the unit on seven
            would be a different decision. What changed is only what is
@@ -381,7 +381,7 @@
         "  \u00b7  " + solved.size + " answered";
       /* How far through, sent as they go - so a child who stops halfway is on
          the record as halfway rather than as nothing. */
-      reportAttempt(o.finish, solved.size, questions.length);
+      reportAttempt(o.finish, solved.size, questions.length, "questions");
       if (!done) { $(el.fb).textContent = ""; $(el.fb).className = "fb"; }
 
       $(el.bq).addEventListener("click", onTap);

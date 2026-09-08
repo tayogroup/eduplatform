@@ -113,7 +113,7 @@
            "activity level" has to mean for a step that holds twelve
            activities. */
         reportScore(o.finish, right, game.rounds.length, game.id, game.title);
-        reportAttempt(o.finish, played.size, (pack.games || []).length);
+        reportAttempt(o.finish, played.size, (pack.games || []).length, "games");
         /* No cheer over a bad round. "Brilliant! 0 of 6 right" was the
            first version, and a child who can count can read that as the
            page not paying attention. */

@@ -53,9 +53,12 @@
   function reportScore(i, right, total, sub, subTitle) {
     if (window.__ehelScore) { try { window.__ehelScore(i, right, total, sub, subTitle); } catch (_) { /* never break the lesson */ } }
   }
-  /* Participation, where the step asked something but marked nothing. */
-  function reportAttempt(i, answered, total) {
-    if (window.__ehelAttempt) { try { window.__ehelAttempt(i, answered, total); } catch (_) { /* same */ } }
+  /* Participation, where the step asked something but marked nothing. The
+     noun says what the two numbers COUNT - books, words, seconds - because
+     "3 of 7" alone is what made a family portal print a row nobody could
+     read. */
+  function reportAttempt(i, answered, total, noun) {
+    if (window.__ehelAttempt) { try { window.__ehelAttempt(i, answered, total, noun); } catch (_) { /* same */ } }
   }
   /* A word the learner picked correctly for a sound or a picture - the one
      place this build has direct evidence that a word is known. */

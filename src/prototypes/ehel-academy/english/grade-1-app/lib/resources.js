@@ -113,7 +113,7 @@
 
     async function open(id) {
       opened.add(id);
-      reportAttempt(o.finish, opened.size, CARDS.length);
+      reportAttempt(o.finish, opened.size, CARDS.length, "cards");
       if (id === "plan") { finish(o.finish, o.done); show(0, true); return; }
       if (id === "gradeplan") { location.href = "index.html" + location.search; return; }
 

@@ -107,6 +107,20 @@ function pqpr_checkpoints_from_state(array $state, string $unit, int $unitupdate
  * counts as having answered — so every label built from this says "answered"
  * and never "correct".
  */
+/**
+ * Sections whose ID is a NAME, and whose count really is answers.
+ *
+ * These are Global Perspectives' written-answer sections - the original and,
+ * until 2026-09-08, the only producer of `attempted`. Their ids say what they
+ * are, so they need no caption from the app and "answered" is true of them.
+ *
+ * Nothing else may be added here by guessing. The standalone lesson builds
+ * report under POSITIONS (`step-08`), and the same position is a different
+ * activity in each of the six apps sharing that pipeline - which is why the
+ * caption travels with the row instead.
+ */
+const PQPR_NAMED_ATTEMPT_SECTIONS = ['quiz', 'reflect', 'assessment', 'challenge'];
+
 function pqpr_attempts_from_state(array $state, string $unit, int $unitupdated): array {
     $out = [];
     foreach ((array)($state['attempted'] ?? []) as $section => $counts) {
@@ -116,15 +130,34 @@ function pqpr_attempts_from_state(array $state, string $unit, int $unitupdated):
         if ($total <= 0) {
             continue;
         }
+        // NAMED, OR NOT SHOWN. The app's own caption first - it is what the
+        // learner is looking at - then the sections whose id is already a name.
+        // Anything else is DROPPED rather than printed as a route id: a parent
+        // who sees nothing asks, and a parent who reads "Step 08 answered" is
+        // told something false and cannot tell.
+        $caption = trim((string)($counts['label'] ?? ''));
+        $named = in_array($section, PQPR_NAMED_ATTEMPT_SECTIONS, true);
+        if ($caption === '' && !$named) {
+            continue;
+        }
         // Clamped again here, not only at ingest: this row set is also built
         // from state written before the ingest clamp existed.
         $answered = max(0, min((int)($counts['answered'] ?? 0), $total));
         $out[] = [
             'unit' => $unit,
             'section' => $section,
-            'label' => pqpr_unit_label($unit) . ' · ' . pqpr_section_label($section),
+            'label' => pqpr_unit_label($unit) . ' · '
+                . ($caption !== '' ? $caption : pqpr_section_label($section)),
             'answered' => $answered,
             'total' => $total,
+            // What the two numbers COUNT. Without it "5 of 122" is a video in
+            // seconds rendered as if it were questions, which is how this defect
+            // read on a parent's screen.
+            'noun' => trim((string)($counts['noun'] ?? '')),
+            // "answered" is true of a written answer and false of a book read.
+            // Only the named sections above are answers; everything else is
+            // participation and says so.
+            'verb' => $named ? 'answered' : 'done',
             'unit_updated' => $unitupdated,
         ];
     }

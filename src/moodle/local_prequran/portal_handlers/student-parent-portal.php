@@ -249,6 +249,45 @@ $tutoringsubjects = [
     'eng' => 'English', 'math' => 'Mathematics', 'sci' => 'Science',
     'comp' => 'Computing', 'gp' => 'Global Perspectives', 'intensive-eng' => 'Intensive English',
 ];
+// WHEN THE CHILD SAID THEY WERE STOPPING, and why - in their own words.
+//
+// The only focus signal a family sees, and the choice is deliberate. The
+// BREAK COUNT stays on the teacher's board: for a teacher two rooms away it
+// answers "who do I go to next", while "your six-year-old left the lesson six
+// times" on a parent's screen is a surveillance figure about a child in their
+// own house. It is not reliable as behaviour either - a blur fires when you
+// call them to dinner, when a sibling touches the screen, when the device
+// sleeps - and a teacher reads it against a room they can see. Reporting it
+// home would also make the setting adversarial: focus mode is opt-in, and the
+// rational move for a child reported on is to switch it off, which costs the
+// teacher the one signal that works.
+//
+// This row is the opposite thing. The child chose to write it, addressed to
+// the adults, and the parent is the right audience for it.
+$leavingnotes = [];
+if (pqh_table_exists_safe('local_prequran_live_audit')) {
+    try {
+        $notes = $DB->get_records_select('local_prequran_live_audit',
+            'actorid = :uid AND action = :action',
+            ['uid' => $studentid, 'action' => 'course_left_early'],
+            'timecreated DESC', 'id, details, timecreated', 0, 8);
+        foreach ($notes as $note) {
+            $d = json_decode((string)$note->details, true);
+            $reason = is_array($d) ? trim((string)($d['reason'] ?? '')) : '';
+            if ($reason === '') {
+                continue;   // nothing the child said; the bare event is the board's business
+            }
+            $leavingnotes[] = [
+                'at' => (int)$note->timecreated,
+                'at_label' => userdate((int)$note->timecreated),
+                'reason' => $reason,
+            ];
+        }
+    } catch (Throwable $e) {
+        $leavingnotes = [];   // never break the portal for a note
+    }
+}
+
 $progressrows = pqpr_progress_rows([$studentid]);
 if ($progressrows) {
     $bycourse = [];
@@ -284,7 +323,14 @@ if ($progressrows) {
             continue; // never the unit-percent rollup
         }
         if (!isset($bycourse[$key])) {
-            $bycourse[$key] = ['done' => 0, 'seen' => 0, 'checkpoints' => [], 'attempts' => []];
+            $bycourse[$key] = ['done' => 0, 'seen' => 0, 'checkpoints' => [], 'attempts' => [],
+                // Where they are, in the child's own words, and how many words
+                // they have shown they know. `at` tracks which unit row these
+                // came from so the two always describe ONE unit - the same
+                // trap the group board's tile hit: a section from one unit
+                // beside a unit name from another.
+                'where' => '', 'wheredone' => false, 'whereunit' => '',
+                'words' => 0, 'at' => 0];
         }
         $bycourse[$key]['seen']++;
         $state = json_decode((string)$row->statejson, true);
@@ -294,6 +340,24 @@ if ($progressrows) {
         if (!empty($state['completed'])) {
             $bycourse[$key]['done']++;
         }
+        // The most recently touched unit of this course is the one a parent
+        // means by "where are they".
+        if ((int)$row->timemodified >= $bycourse[$key]['at']) {
+            $bycourse[$key]['at'] = (int)$row->timemodified;
+            $resume = is_string($state['resume'] ?? null) ? (string)$state['resume'] : '';
+            $label = is_string($state['resumeLabel'] ?? null) ? trim((string)$state['resumeLabel']) : '';
+            // The CAPTION only. A route id on a parent's screen is the same
+            // defect as on a teacher's, one audience further from the code.
+            $bycourse[$key]['where'] = $label;
+            $bycourse[$key]['wheredone'] = $resume !== ''
+                && in_array($resume, (array)($state['sectionsDone'] ?? []), true);
+            $bycourse[$key]['whereunit'] = pqpr_unit_label((string)$row->unit);
+        }
+        // Words the learner has PROVED, summed across the course's units. No
+        // denominator on purpose: the unit's word list belongs to the content
+        // and this row knows only the learner, so a fraction would invent a
+        // deficit. It is a number that grows.
+        $bycourse[$key]['words'] += count((array)($state['knownWords'] ?? []));
         $bycourse[$key]['checkpoints'] = array_merge(
             $bycourse[$key]['checkpoints'],
             pqpr_checkpoints_from_state($state, (string)$row->unit, (int)$row->timemodified)
@@ -322,6 +386,14 @@ if ($progressrows) {
             'units_completed' => $counts['done'],
             'units_total' => $total,
             'percent' => (int)round(100 * $counts['done'] / $total),
+            // "Working on Reading books in Unit 1", or "Just finished ...".
+            // Empty for any app that does not send a caption, and the page
+            // says nothing rather than guessing.
+            'where' => $counts['where'],
+            'where_done' => !empty($counts['wheredone']),
+            'where_unit' => $counts['whereunit'],
+            'words_known' => (int)$counts['words'],
+            'last_seen' => (int)$counts['at'],
         ], pqpr_summarise($counts['checkpoints']), pqpr_summarise_attempts($counts['attempts']), [
             // Capped so a long course cannot balloon the family's payload.
             'checkpoints' => array_slice(pqpr_sort_checkpoints($counts['checkpoints']), 0, 40),
@@ -459,6 +531,7 @@ echo json_encode([
     'plans' => $plans,
     'grades' => $grades,
     'courseprogress' => $courseprogress,
+    'leavingnotes' => $leavingnotes,
     // Newest first, capped like checkpoints: a family's payload stays bounded
     // however much tutoring the child does.
     'tutoring' => (static function (array $sessions): array {

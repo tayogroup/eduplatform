@@ -232,7 +232,7 @@
       /* How many words the child has actually met. There is nothing to score
          on a walk-through, but "stopped at word 4 of 15" is a real fact and
          the step used to report nothing at all until the last card. */
-      reportAttempt(o.finish, i + 1, o.items.length);
+      reportAttempt(o.finish, i + 1, o.items.length, "words");
       ONSHOW[o.finish] = () => afterVoice(() => playClip(it.audio, it.w));
       playHere(o.finish, it.audio, it.w);
       paint();
@@ -338,7 +338,7 @@
     const el = o.el;
     function draw() {
       const it = o.items[i];
-      reportAttempt(o.finish, i + 1, o.items.length);   // rules met, as above
+      reportAttempt(o.finish, i + 1, o.items.length, "rules");   // rules met, as above
       $(el.ask).innerHTML = esc(it.title);
       $(el.stage).innerHTML =
         '<div class="rule">' +
@@ -408,7 +408,7 @@
       said[k] = true;
       // Participation only. What a child said out loud is not marked here, and
       // the pronunciation check that does listen is explicitly not a grade.
-      reportAttempt(o.finish, said.filter(Boolean).length, said.length);
+      reportAttempt(o.finish, said.filter(Boolean).length, said.length, "lines");
       if (said.every(Boolean)) {
         $(el.fb).className = "fb good";
         $(el.fb).textContent = o.done;
@@ -492,7 +492,7 @@
         if (ok) {
           // One sentence, so one mark out of one: built it first time, or not.
           reportScore(o.finish, tries === 1 ? 1 : 0, 1);
-          reportAttempt(o.finish, 1, tries);   // and how many goes it took
+          reportAttempt(o.finish, 1, tries, "goes");   // and how many goes it took
           finish(o.finish, o.done);
         }
       });
@@ -556,7 +556,10 @@
     };
     const reportWatched = (whole) => {
       const pair = secs();
-      if (pair) reportAttempt(o.finish, whole ? pair[1] : pair[0], pair[1]);
+      // The noun is what lets a family portal turn this into "watched 4%"
+      // rather than printing "5 of 122" at a parent. Omitted on the fallback,
+      // where the pair is a yes-or-no and counts nothing.
+      if (pair) reportAttempt(o.finish, whole ? pair[1] : pair[0], pair[1], "seconds");
       else reportAttempt(o.finish, whole ? 1 : 0, 1);   // no duration to divide
     };
     video.addEventListener("timeupdate", () => {
@@ -712,7 +715,7 @@
         "We did these &#10003;</button></div>";
 
       const left = did.filter((x) => !x).length;
-      reportAttempt(o.finish, did.filter(Boolean).length, did.length);
+      reportAttempt(o.finish, did.filter(Boolean).length, did.length, "activities");
       $(el.score).textContent = did.filter(Boolean).length + " of " + o.items.length + " ticked"
         + (left ? "" : " - all of them");
 
@@ -941,7 +944,7 @@
         const done = overlay.querySelector("#readDone");
         if (done) done.addEventListener("click", () => {
           read[k] = true;
-          reportAttempt(o.finish, read.filter(Boolean).length, read.length);
+          reportAttempt(o.finish, read.filter(Boolean).length, read.length, "readings");
           close();
           if (k === 0) {
             $(el.fb).className = "fb good";
@@ -1016,7 +1019,7 @@
       // How many the child ANSWERED, never what they answered: a self-rating
       // is a claim, and "By myself" in a gradebook would be a grade for
       // confidence. The answers themselves stay on the device.
-      reportAttempt(o.finish, answered, o.items.length);
+      reportAttempt(o.finish, answered, o.items.length, "questions");
       $(el.score).textContent = answered + " of " + o.items.length + " answered";
       if (answered === o.items.length) {
         $(el.fb).className = "fb good";

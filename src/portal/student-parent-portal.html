@@ -40,6 +40,10 @@
   .pqsp-bar{height:8px;max-width:240px;margin-top:6px;border-radius:999px;background:var(--sky);overflow:hidden}
   .pqsp-bar-fill{height:100%;border-radius:999px;background:var(--blue2)}
   .pqsp-quiz{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px;font-size:12px}
+  .pqsp-where{margin-top:4px;font-size:12.5px}
+  .pqsp-note{margin-top:8px;padding:8px 10px;border-left:3px solid var(--sky);background:var(--surface,#f7fafc);font-size:13px;line-height:1.45}
+  .pqsp-note q{font-style:italic}
+  .pqsp-note .when{display:block;margin-top:3px;font-size:11.5px;opacity:.75}
   .field{margin-bottom:10px}
   .field label{display:block;font-size:12px;font-weight:800;color:var(--ink2);margin-bottom:3px}
   .field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px;background:var(--card);color:var(--ink)}
@@ -64,6 +68,7 @@
     <div class="panel"><h2>Payment Plans</h2><table><tbody id="plans"></tbody></table></div>
     <div class="panel"><h2>Grades</h2><table><tbody id="grades"></tbody></table></div>
     <div class="panel"><h2>Course progress</h2><table><tbody id="courseprogress"></tbody></table></div>
+    <div class="panel" id="leaving-panel" hidden><h2>When they stopped early</h2><p class="muted">Your child wrote these when they chose to leave a lesson before finishing. The school sees them too.</p><div id="leavingnotes"></div></div>
     <div class="panel" id="tutoring-panel" hidden><h2>Tutoring support</h2><p class="sub" style="margin-bottom:10px">Help sessions your child ran: what they searched, the lesson used, and how the before/after check went. Numbers are question counts, not marks.</p><table><tbody id="tutoring"></tbody></table></div>
     <div class="panel" id="reportcards-panel" hidden><h2>Report cards</h2><table><tbody id="reportcards"></tbody></table></div>
     <div class="panel"><h2>Conduct &amp; Merits</h2><table><tbody id="behaviour"></tbody></table></div>
@@ -222,6 +227,22 @@
         + `<div style="margin-top:5px">${result}${practice}</div>${summary}</td></tr>`;
     }).join("") || "";
 
+    // WHEN THEY STOPPED EARLY, in the child's own words. The only focus signal
+    // a family sees: the break count stays on the teacher's board, because
+    // "your six-year-old left the lesson six times" is a surveillance figure
+    // about a child at home and is not reliable as behaviour anyway - a blur
+    // fires when you call them to dinner. This one the child chose to write,
+    // addressed to the adults.
+    //
+    // The panel HIDES itself when there are none, rather than saying "no notes"
+    // - an empty list here would read as an absence worth explaining, and there
+    // is nothing to explain.
+    const notes = d.leavingnotes || [];
+    $("#leaving-panel").hidden = notes.length === 0;
+    $("#leavingnotes").innerHTML = notes.map((n) =>
+      `<div class="pqsp-note"><q>${esc(String(n.reason || ""))}</q>`
+      + `<span class="when">${esc(String(n.at_label || ""))}</span></div>`).join("");
+
     $("#courseprogress").innerHTML = (d.courseprogress || []).map((c) => {
       // `title` already carries subject, stage and any distinguishing level;
       // the subject/stage build is the fallback for an older payload.
@@ -237,17 +258,46 @@
           + `<span>${esc(q.label || "Checkpoint")}</span>`
           + `<span class="muted">${esc((q.passed ? "passed" : "not passed") + retry)}</span></div>`;
       }).join("");
-      // Written answers, for a course that has nothing to mark. Separate list,
-      // separate render: no coloured pill and no pass/fail, because nothing
-      // scored these — the child wrote an answer and compared it with a model
-      // one. "answered" is the only claim the number supports.
+      // WORK WITH NOTHING TO MARK. Separate list, separate render: no coloured
+      // pill and no pass/fail, because nothing scored these.
+      //
+      // Every row here is NAMED by the server or it is not sent — the caption
+      // the child's own screen uses. This block used to print whatever arrived
+      // under a heading of "Written answers", which was right while Global
+      // Perspectives was the only producer and became "Unit 1 · Step 08
+      // answered" the day a second app started reporting.
+      //
+      // `verb` and `noun` come from the server for the same reason: "answered"
+      // is true of a written answer and false of a book read, and "5 of 122"
+      // is a video in seconds unless something says so.
       const written = (c.attempts || []).map((a) => {
         const answered = Number(a.answered) || 0;
         const total = Number(a.total) || 0;
-        return `<div class="pqsp-quiz"><span class="pill">${esc(answered + " / " + total)}</span>`
+        const noun = String(a.noun || "");
+        // Seconds are a duration, and a parent wants the share rather than the
+        // count. Everything else is a tally and reads as one.
+        const figure = noun === "seconds"
+          ? Math.round((answered / Math.max(1, total)) * 100) + "%"
+          : answered + " / " + total;
+        const tail = noun === "seconds"
+          ? "of the video watched"
+          : (noun ? noun + " " : "") + String(a.verb || "done");
+        return `<div class="pqsp-quiz"><span class="pill">${esc(figure)}</span>`
           + `<span>${esc(a.label || "Section")}</span>`
-          + `<span class="muted">answered</span></div>`;
+          + `<span class="muted">${esc(tail)}</span></div>`;
       }).join("");
+      // WHERE THEY ARE, in the child's own words. Silent for any app that does
+      // not send a caption rather than guessing at a route id.
+      const where = c.where
+        ? `<div class="pqsp-where">${esc((c.where_done ? "Just finished " : "Working on ") + c.where
+            + (c.where_unit ? " in " + c.where_unit : ""))}</div>`
+        : "";
+      // Words the child has shown they know. A number that GROWS, with no
+      // denominator: the unit's word list belongs to the content and this row
+      // knows only the learner, so a fraction would invent a deficit.
+      const words = Number(c.words_known) > 0
+        ? `<div class="pqsp-where muted">${esc(c.words_known + " words known so far")}</div>`
+        : "";
       const taken = Number(c.quizzes_taken) || 0;
       const qtotal = Number(c.questions_total) || 0;
       // "No quizzes yet" is true of Global Perspectives for ever, and reads as
@@ -260,7 +310,7 @@
         : qtotal > 0
           ? esc("Self-assessed · " + (Number(c.questions_answered) || 0) + " of " + qtotal + " questions answered")
           : "No quizzes yet";
-      return `<tr><td><strong>${label}</strong><div class="pqsp-bar"><div class="pqsp-bar-fill" style="width:${pct}%"></div></div>${quizzes}${written}</td>`
+      return `<tr><td><strong>${label}</strong>${where}${words}<div class="pqsp-bar"><div class="pqsp-bar-fill" style="width:${pct}%"></div></div>${quizzes}${written}</td>`
         + `<td class="muted">${esc((c.units_completed ?? 0) + " / " + (c.units_total ?? 0) + " units · " + pct + "%")}<div class="muted">${quizsummary}</div></td></tr>`;
     }).join("") || emptyRow(2, "No course progress recorded yet.");
 

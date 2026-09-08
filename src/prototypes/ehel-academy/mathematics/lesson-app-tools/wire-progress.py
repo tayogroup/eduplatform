@@ -21,8 +21,11 @@ the lessons, and emits the same four event types the shell emits:
                       only event that becomes a MARK a teacher or parent reads,
                       and the only one the gradebook takes
   attempted           participation without a score, via
-                      window.__ehelAttempt(i, answered, total); rides on
-                      progress.summary, capped at 20 sections by the server
+                      window.__ehelAttempt(i, answered, total, noun); rides on
+                      progress.summary, capped at 20 sections by the server.
+                      Carries the learner's own caption for the step and the
+                      noun the two numbers count, because the section id is a
+                      position and cannot be named server-side
   knownWords          via window.__ehelKnown(words); rides on the summary too
 
 POSITION IS FLUSHED, NOT LEFT TO THE IDLE TIMER. `progress.summary` is a
@@ -252,10 +255,24 @@ JS = """
      ticked" is a real fact about a learner and is not a mark; sending it as a
      checkpoint would put a percentage on work nobody assessed, which is the
      thing the rollup already refuses to do for the Quran app's game stars. */
-  window.__ehelAttempt = function (i, answered, total) {
+  window.__ehelAttempt = function (i, answered, total, noun) {
     const n = Number(total) || 0;
     if (!n) return;
-    attempted[sectionId(i)] = { answered: Math.max(0, Math.min(Number(answered) || 0, n)), total: n };
+    /* WHAT THIS IS CALLED, and what the two numbers count. The section id is a
+       POSITION here - `step-08` - and the same position is a different
+       activity in each app sharing this pipeline, so no reader of the stored
+       document can name it. `labelOf(i)` is the caption the learner is looking
+       at, the same one resumeLabel carries for the same reason: a surface
+       printing the id names a section nobody can find.
+
+       The noun is passed by the call site because only it knows: books, words,
+       rules, seconds. Both are optional and the server bounds them. */
+    attempted[sectionId(i)] = {
+      answered: Math.max(0, Math.min(Number(answered) || 0, n)),
+      total: n,
+      label: labelOf(i),
+      ...(noun ? { noun: String(noun) } : {}),
+    };
     report(i);
   };
 

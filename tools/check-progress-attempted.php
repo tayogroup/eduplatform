@@ -120,6 +120,50 @@ check('unknown nested keys do not survive',
     $call('sanitise_attempted', [['quiz' => ['answered' => 1, 'total' => 2, 'evil' => ['a']]]]),
     ['quiz' => ['answered' => 1, 'total' => 2]]);
 
+// ---- the caption channel ---------------------------------------------
+// `step-08` is a POSITION, not a section: the same id is a different activity
+// in each of the six apps sharing the standalone-lesson pipeline, so no
+// server-side table can name it and the app has to say. Without this a family
+// portal prints the route id, which is the defect this channel exists to fix.
+echo "
+the caption a learner's own screen uses
+";
+check('a label survives',
+    $call('sanitise_attempted', [['step-08' => ['answered' => 3, 'total' => 7, 'label' => 'Reading books']]]),
+    ['step-08' => ['answered' => 3, 'total' => 7, 'label' => 'Reading books']]);
+check('a noun survives beside it',
+    $call('sanitise_attempted', [['step-03' => ['answered' => 5, 'total' => 122,
+        'label' => 'Video lesson', 'noun' => 'seconds']]]),
+    ['step-03' => ['answered' => 5, 'total' => 122, 'label' => 'Video lesson', 'noun' => 'seconds']]);
+// Absent rather than empty: a portal tests for the key, and '' would read as a
+// caption that exists and says nothing.
+check('an empty label is absent, not blank',
+    $call('sanitise_attempted', [['quiz' => ['answered' => 1, 'total' => 2, 'label' => '   ']]]),
+    ['quiz' => ['answered' => 1, 'total' => 2]]);
+check('a non-string label is dropped',
+    $call('sanitise_attempted', [['quiz' => ['answered' => 1, 'total' => 2, 'label' => ['a']]]]),
+    ['quiz' => ['answered' => 1, 'total' => 2]]);
+// Two portals and a board render this, each escaping for its own context.
+// Storing entities would double-escape in one of them, so markup is STRIPPED.
+check('markup is stripped, not escaped',
+    $call('sanitise_attempted', [['quiz' => ['answered' => 1, 'total' => 2,
+        'label' => '<b>Read</b><script>x</script>']]]),
+    ['quiz' => ['answered' => 1, 'total' => 2, 'label' => 'Readx']]);
+check('newlines cannot smuggle into a table cell',
+    $call('sanitise_attempted', [['quiz' => ['answered' => 1, 'total' => 2,
+        'label' => "Reading
+
+books"]]]),
+    ['quiz' => ['answered' => 1, 'total' => 2, 'label' => 'Reading books']]);
+check('a long label is cut, not dropped',
+    $call('sanitise_attempted', [['quiz' => ['answered' => 1, 'total' => 2,
+        'label' => str_repeat('x', 90)]]])['quiz']['label'],
+    str_repeat('x', 48));
+check('the noun has its own, shorter cap',
+    $call('sanitise_attempted', [['quiz' => ['answered' => 1, 'total' => 2,
+        'noun' => str_repeat('y', 40)]]])['quiz']['noun'],
+    str_repeat('y', 16));
+
 echo "\nempty_unit_state\n";
 $empty = $emptyState();
 check('attempted present', array_key_exists('attempted', $empty), true);

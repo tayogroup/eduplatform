@@ -44,7 +44,12 @@ function shape(result) {
     // Keyed on the score, not on ErrorType: measured, a word scoring 68 still
     // came back "None". See the PHP for the numbers.
     if (error === 'Mispronunciation' || score < WORD_OK) {
-      const phonemes = (w.Phonemes || []).map((p) => ({ p: String(p.Phoneme || ''), score: round1(p.AccuracyScore) }));
+      // Unlabelled phonemes are dropped: en-GB returns a score for every
+      // sound and a symbol for none, and a sound the page cannot name is a
+      // sound it cannot ask a child to practise.
+      const phonemes = (w.Phonemes || [])
+        .filter((p) => String(p.Phoneme || '') !== '')
+        .map((p) => ({ p: String(p.Phoneme), score: round1(p.AccuracyScore) }));
       if (phonemes.length) entry.phonemes = phonemes;
     }
     return entry;
@@ -87,29 +92,16 @@ async function assessPronunciation({ audio, referenceText }) {
     EnableMiscue: 'True',
   })).toString('base64');
 
-  // THE LOCALE IS en-US, AND IT IS MEASURED RATHER THAN CHOSEN. Probed on
-  // 2026-09-08 with a committed narration clip that says "cat", scored against
-  // the right reference and a near-miss ("cap"):
+  // en-GB by owner decision (2026-09-08). It keeps word-level feedback - the
+  // page flags a word on its SCORE, and en-GB's 88 and 68 are caught exactly
+  // as en-US's 52 and 15 were - and loses only the phoneme LABELS, which
+  // en-GB does not return at all. Full measurement in pronunciation_check.php.
   //
-  //   locale   ref "cat"   ref "cap"                    phoneme labels
-  //   en-GB    100         88,  ErrorType None          (none)
-  //   en-US     98         52,  Mispronunciation        k ae t / k ae p
-  //   en-AU    100         94,  ErrorType None          (none)
-  //
-  // Only en-US returns phoneme LABELS at all, and only en-US notices that the
-  // child said a different word: en-GB and en-AU both wave an audibly wrong
-  // final consonant through at 88 and 94 with no error. Phoneme-level diagnosis
-  // is the entire reason this endpoint exists instead of reusing the ElevenLabs
-  // one already deployed, so en-GB would ship the cost of a new endpoint for
-  // none of the benefit.
-  //
-  // It is a real trade-off against the British-vocabulary decision of
-  // 2026-08-17, and it is narrower than it looks: the locale is the PRONUNCIATION
-  // REFERENCE MODEL, not the words. The course still teaches caretaker, lift and
-  // railway. What changes is which native accent a child is scored against.
-  // Flipping it back is this one constant in two files.
+  // THIS TWIN IS NOT CAPPED. The daily allowance lives in the PHP, where there
+  // is a learner to charge; here there is nobody, and a cap would only
+  // obstruct the testing it exists to allow.
   const url = `https://${encodeURIComponent(region)}.stt.speech.microsoft.com`
-    + '/speech/recognition/conversation/cognitiveservices/v1?language=en-US&format=detailed';
+    + '/speech/recognition/conversation/cognitiveservices/v1?language=en-GB&format=detailed';
 
   const response = await fetch(url, {
     method: 'POST',

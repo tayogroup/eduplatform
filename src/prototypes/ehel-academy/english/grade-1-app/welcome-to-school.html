@@ -6137,6 +6137,15 @@
       if (code === "rate-limit") {
         return '<p class="speech-note">That is a lot of checks at once. Wait a moment, then try again.</p>';
       }
+      /* Two different waits, and telling them apart is the whole point of the
+         endpoint answering with a code. "rate-limit" means slow down and try
+         again in a minute; "daily-limit" means the checker is finished for
+         today. A learner given the wrong one either waits for nothing or
+         presses a button that cannot work again until tomorrow. */
+      if (code === "daily-limit") {
+        return '<p class="speech-note">That is all the sound-checking for today - you have done a lot. '
+          + "Keep saying it out loud, press Done, and the checker comes back tomorrow.</p>";
+      }
       return '<p class="speech-note">The check did not work this time. Press Done and carry on.</p>';
     }
     if (!result.heard) {

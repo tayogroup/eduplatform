@@ -38,6 +38,21 @@ require_once(__DIR__ . '/accesslib.php');
 // five and six years old and learning English as an additional language.
 define('PQH_PRON_WORD_OK', 90);
 
+// A DAILY CAP PER LEARNER, because every check is a billed Azure call.
+// Owner, 2026-09-08. The per-minute limiter below it is an abuse guard and
+// says nothing about a day's spend: a learner who reloads and re-records all
+// afternoon stays under 40 a minute for ever.
+//
+// 60 is deliberately far above a working day and far below anything that costs
+// real money. Grade 1 carries 135 checkable items across ten units; a child
+// working through one unit's speaking does about fourteen, so 60 is four
+// units' worth including retries, and a learner who hits it has done more
+// speaking practice in a day than the course asks for in a week.
+//
+// It counts SUCCESSFUL checks only - see where it is charged, below.
+define('PQH_PRON_DAILY_CHECKS', 60);
+define('PQH_PRON_LEDGER', 'local_hubredirect_pron_checks');
+
 function pqh_pron_origin_allowed(string $origin): bool {
     global $CFG;
 
@@ -135,6 +150,31 @@ function pqh_pron_valid_ws_token(string $token): bool {
     }
 }
 
+/* The day's ledger, in a user preference: "YYYYMMDD|count".
+ *
+ * The same shape and for the same reasons as Wehel's time ledger and the
+ * attachment one beside it - no schema, survives sessions, and resets itself
+ * at midnight because the stored date simply stops matching. */
+function pqh_pron_checks_used(int $userid): int {
+    if ($userid <= 0) {
+        return 0;
+    }
+    $raw = (string)get_user_preferences(PQH_PRON_LEDGER, '', $userid);
+    $parts = explode('|', $raw);
+    if (count($parts) < 2 || $parts[0] !== date('Ymd')) {
+        return 0;
+    }
+    return max(0, (int)$parts[1]);
+}
+
+function pqh_pron_charge_check(int $userid): void {
+    if ($userid <= 0) {
+        return;
+    }
+    $used = pqh_pron_checks_used($userid);
+    set_user_preference(PQH_PRON_LEDGER, date('Ymd') . '|' . ($used + 1), $userid);
+}
+
 pqh_pron_send_cors();
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -220,6 +260,26 @@ if ($pqh_apiuserid > 0) {
     }
 }
 
+// WHO IS BEING CHARGED. A launch token names the learner; a session names
+// them too. An UNIDENTIFIABLE caller is not charged, exactly as
+// pqh_api_rate_limit_ok does not rate-limit one - in practice that is the
+// configured shared ws_token, which is an operator credential rather than a
+// child, and it is how the staged self-test runs uncapped.
+$pqh_learnerid = $pqh_apiuserid;
+if ($pqh_learnerid <= 0 && isloggedin() && !isguestuser()) {
+    global $USER;
+    $pqh_learnerid = (int)$USER->id;
+}
+
+// Its own code, never a bare 429. The rate limiter above says "slow down" and
+// means it; this one means "come back tomorrow", and a learner told the wrong
+// one of those either waits pointlessly or keeps pressing a button that will
+// not work again today. Same reason Wehel's spent allowance answers with
+// time-limit rather than letting the panel render it as an outage.
+if ($pqh_learnerid > 0 && pqh_pron_checks_used($pqh_learnerid) >= PQH_PRON_DAILY_CHECKS) {
+    pqh_pron_json_error(429, 'That is all the pronunciation checks for today.', 'daily-limit');
+}
+
 $apikey = pqh_pron_config_value(
     'azure_speech_key',
     'local_prequran_azure_speech_key',
@@ -237,28 +297,33 @@ if ($apikey === '' || $region === '') {
     pqh_pron_json_error(503, 'The pronunciation check is not configured yet.', 'not-configured');
 }
 
-// THE LOCALE IS en-US, AND IT IS MEASURED RATHER THAN CHOSEN. Probed on
-// 2026-09-08 with a committed narration clip that says "cat", scored against
-// the right reference and a near-miss ("cap"):
+// THE LOCALE IS en-GB, BY OWNER DECISION (2026-09-08), AND IT COSTS ONE
+// THING RATHER THAN THE FEATURE. It was set to en-US first, on a measurement;
+// the owner chose British to match the vocabulary decision of 2026-08-17. What
+// that costs is worth being exact about, because the first version of this
+// note overstated it. Probed with a clip that says "cat", against the right
+// word and three wrong ones:
 //
-//   locale   ref "cat"   ref "cap"                    phoneme labels
-//   en-GB    100         88,  ErrorType None          (none)
-//   en-US     98         52,  Mispronunciation        k ae t / k ae p
-//   en-AU    100         94,  ErrorType None          (none)
+//   locale  ref "cat"  ref "cap"   ref "kite"  "a cat sat"          phoneme labels
+//   en-GB   100        88, None    68, None    0/100/0, Omissions   NONE
+//   en-US    98        52, Mispro  15, Mispro  0/97/0,  Omissions   k ae t
 //
-// Only en-US returns phoneme LABELS at all, and only en-US notices that the
-// child said a different word: en-GB and en-AU both wave an audibly wrong
-// final consonant through at 88 and 94 with no error. Phoneme-level diagnosis
-// is the entire reason this endpoint exists instead of reusing the ElevenLabs
-// one already deployed, so en-GB would ship the cost of a new endpoint for
-// none of the benefit.
+// WORD-LEVEL FEEDBACK SURVIVES INTACT. The page flags a word for practice on
+// its SCORE (below PQH_PRON_WORD_OK, 90), not on Azure's ErrorType, so en-GB's
+// 88 and 68 are both caught exactly as en-US's 52 and 15 are, and omissions are
+// identified identically. A child still learns which words to say again.
 //
-// It is a real trade-off against the British-vocabulary decision of
-// 2026-08-17, and it is narrower than it looks: the locale is the PRONUNCIATION
-// REFERENCE MODEL, not the words. The course still teaches caretaker, lift and
-// railway. What changes is which native accent a child is scored against.
-// Flipping it back is this one constant in two files.
-$language = 'en-US';
+// WHAT IS LOST IS NAMING THE SOUND. en-GB returns no phoneme labels at all
+// (en-AU does not either; only en-US did), so "the sound to practise in six is
+// /s/" simply does not appear. The client already draws that line only when a
+// label is present, so nothing breaks - the feedback is a word list instead of
+// a word list plus a sound.
+//
+// One consequence to know: en-GB is systematically MORE LENIENT (88 where
+// en-US said 52). The threshold catches these four cases; a genuinely poor
+// attempt scoring above 90 would pass. Do not re-tune that on four samples -
+// measure a real cohort first.
+$language = 'en-GB';
 $assessment = base64_encode(json_encode([
     'ReferenceText' => $reference,
     'GradingSystem' => 'HundredMark',
@@ -306,6 +371,14 @@ curl_close($curl);
 if ($body === false || $httpcode < 200 || $httpcode >= 300) {
     pqh_pron_json_error(502, 'The pronunciation check could not be reached.', 'upstream');
 }
+
+// CHARGED HERE, AFTER AZURE ANSWERED, AND ONLY ON A REAL ANSWER. Wehel
+// charges its clock BEFORE its API call, because time passes whether the call
+// succeeds or not; a COUNT is different. Azure does not bill a 4xx or a 5xx,
+// so a failed call costs nothing and must not cost the child an allowance
+// either - and the per-minute limiter above is what stops a failure loop.
+// A "no words heard" reply IS charged: Azure ran and billed for it.
+pqh_pron_charge_check($pqh_learnerid);
 
 $result = json_decode((string)$body, true);
 if (!is_array($result)) {
@@ -359,8 +432,17 @@ foreach (($best['Words'] ?? []) as $word) {
             if (!is_array($phoneme)) {
                 continue;
             }
+            // A phoneme with no LABEL cannot be drawn - "the sound to
+            // practise is //" is not a sentence - and on en-GB that is every
+            // one of them: the scores come back, the symbols do not. Dropping
+            // them here rather than in the page keeps a few hundred wasted
+            // bytes per word off a connection that may be a phone.
+            $symbol = (string)($phoneme['Phoneme'] ?? '');
+            if ($symbol === '') {
+                continue;
+            }
             $phonemes[] = [
-                'p' => (string)($phoneme['Phoneme'] ?? ''),
+                'p' => $symbol,
                 'score' => round((float)($phoneme['AccuracyScore'] ?? 0), 1),
             ];
         }

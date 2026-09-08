@@ -8532,6 +8532,206 @@ $validate = [
     const TUTORING_CHAT_DOC_MAX_BYTES = 3145728;
 
     /** The tutor cohort for a subject slug, or null when none exists (= chat off). */
+    // ======================================================================
+    // PARENT <-> TEACHER, LIVE
+    //
+    // The conversation already existed as thread type `parent_teacher`; what
+    // it lacked was live behaviour. communications.php is POST-and-reload, so
+    // neither side learns of a reply without refreshing. This is the same
+    // exchange shape the classroom chat uses - one implementation, two doors,
+    // poll-and-send in a single call - on the same tables.
+    //
+    // SYMMETRIC, unlike the classroom room. There, a learner's message is
+    // stamped group_teacher_only because nine children share a room. Here two
+    // adults are talking about one child, and hiding a parent's message from
+    // the teacher it is addressed to would be absurd. No stamp is applied and
+    // no visibility filter is needed.
+    // ======================================================================
+
+    /** How many messages one poll may carry back. */
+    const PARENT_TEACHER_CHAT_PAGE = 60;
+    /** A message longer than this is refused rather than silently cut. */
+    const PARENT_TEACHER_CHAT_BODY_MAX = 2000;
+
+    /**
+     * The active parent_teacher thread about one child, created on first use.
+     *
+     * Keyed on the CHILD alone. Each side is authorised by its own relationship
+     * to that child before this is called, so a guardian can open the
+     * conversation with no teacher in it yet and whichever teacher answers
+     * joins then - rather than the thread being keyed to a teacher who may not
+     * be the one who replies.
+     */
+    protected static function parent_teacher_thread(int $studentid, int $asuserid, string $role): ?\stdClass {
+        global $DB;
+        if ($studentid <= 0 || $asuserid <= 0) {
+            return null;
+        }
+        $now = time();
+        $thread = $DB->get_record_select('local_prequran_comm_thread',
+            "type = :type AND studentid = :sid AND status = :st",
+            ['type' => 'parent_teacher', 'sid' => $studentid, 'st' => 'active'],
+            '*', IGNORE_MULTIPLE);
+        if (!$thread) {
+            $name = $DB->get_record('user', ['id' => $studentid], 'id, firstname, lastname');
+            $subject = 'Messages about ' . trim(($name->firstname ?? '') . ' ' . ($name->lastname ?? ''));
+            $threadid = (int)$DB->insert_record('local_prequran_comm_thread', (object)[
+                'type' => 'parent_teacher',
+                'cohortid' => 0,
+                'studentid' => $studentid,
+                'createdby' => $asuserid,
+                'status' => 'active',
+                'subject' => trim($subject) !== 'Messages about' ? $subject : 'Messages about your child',
+                'lastmessageat' => $now,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ]);
+            $thread = $DB->get_record('local_prequran_comm_thread', ['id' => $threadid], '*', IGNORE_MISSING);
+        }
+        if (!$thread) {
+            return null;
+        }
+        // Join on first contact. The participant row is what every later read
+        // is authorised against, and it is also what names the sender's role on
+        // the other side's screen.
+        if (!$DB->record_exists('local_prequran_comm_participant',
+                ['threadid' => (int)$thread->id, 'userid' => $asuserid])) {
+            $DB->insert_record('local_prequran_comm_participant', (object)[
+                'threadid' => (int)$thread->id,
+                'userid' => $asuserid,
+                'role' => $role,
+                'lastreadmessageid' => 0,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ]);
+        }
+        return $thread;
+    }
+
+    /**
+     * Poll and send in one call, for one child's parent_teacher thread.
+     *
+     * $role is the CALLER'S standing, decided by their door - 'parent' or
+     * 'teacher' - never by anything in the request. The doors prove the
+     * relationship to the child; this function trusts that and nothing else.
+     */
+    public static function parent_teacher_chat_exchange(int $userid, int $studentid, string $role,
+            string $body = '', int $sincemessageid = 0, int $limit = 0): array {
+        global $DB;
+
+        if ($userid <= 0 || $studentid <= 0 || !in_array($role, ['parent', 'teacher'], true)) {
+            return ['ok' => false, 'message' => 'Not available.'];
+        }
+        $body = trim($body);
+        if ($body !== '' && \core_text::strlen($body) > self::PARENT_TEACHER_CHAT_BODY_MAX) {
+            // Refused, not truncated: a message that arrives half-said is worse
+            // than one that did not send, because the sender believes it did.
+            return ['ok' => false, 'message' => 'That message is too long to send.'];
+        }
+        $thread = self::parent_teacher_thread($studentid, $userid, $role);
+        if (!$thread) {
+            return ['ok' => false, 'message' => 'This conversation could not be opened.'];
+        }
+        $threadid = (int)$thread->id;
+        $now = time();
+
+        if ($body !== '') {
+            // The same cleaner the rest of this store uses, called the way it
+            // is actually declared: it RETURNS the cleaned string and throws on
+            // a refusal, rather than handing back a verdict.
+            //
+            // `$studentcreated` is FALSE here and that is the whole point of
+            // passing it: the contact-detail filter exists to stop a CHILD
+            // exchanging phone numbers, and both parties in this thread are
+            // adults who may legitimately need to swap one. The length cap
+            // still applies.
+            try {
+                $body = self::support_clean_message_body($body, [], false, self::PARENT_TEACHER_CHAT_BODY_MAX);
+            } catch (\Throwable $e) {
+                return ['ok' => false, 'message' => 'That message could not be sent.'];
+            }
+            if ($body === '') {
+                return ['ok' => false, 'message' => 'That message could not be sent.'];
+            }
+            $DB->insert_record('local_prequran_comm_message', (object)[
+                'threadid' => $threadid,
+                'senderid' => $userid,
+                'senderrole' => $role,
+                'studentid' => $studentid,
+                'messagekind' => 'message',
+                'body' => $body,
+                'templatekey' => '',
+                'status' => 'visible',
+                'moderationflags' => '',
+                // NO STAMP. Both adults see everything - see the note above on
+                // why this must not copy the classroom room.
+                'visibility' => '',
+                'ticketid' => 0,
+                'timecreated' => $now,
+                'timemodified' => $now,
+            ]);
+            $DB->set_field('local_prequran_comm_thread', 'lastmessageat', $now, ['id' => $threadid]);
+            $DB->set_field('local_prequran_comm_thread', 'timemodified', $now, ['id' => $threadid]);
+        }
+
+        $limit = $limit > 0 ? max(1, min(200, $limit)) : self::PARENT_TEACHER_CHAT_PAGE;
+        $rows = $DB->get_records_select('local_prequran_comm_message',
+            "threadid = :t AND id > :since AND status = 'visible'",
+            ['t' => $threadid, 'since' => max(0, $sincemessageid)], 'id ASC', '*', 0, $limit);
+
+        // Who each sender IS, on the other side's screen. A parent sees the
+        // staff member as "Teacher" rather than by name for the same reason a
+        // child does - the roster's role is the fact, and an account's literal
+        // firstname has reached a screen it should not before now.
+        $roles = [];
+        foreach ($DB->get_records('local_prequran_comm_participant', ['threadid' => $threadid],
+                '', 'id, userid, role') as $prow) {
+            $roles[(int)$prow->userid] = (string)$prow->role;
+        }
+        $names = [];
+        $senderids = array_unique(array_map(static fn($r) => (int)$r->senderid, $rows));
+        if ($senderids) {
+            [$insql, $inparams] = $DB->get_in_or_equal($senderids);
+            foreach ($DB->get_records_select('user', "id $insql", $inparams, '', 'id, firstname, lastname') as $u) {
+                $names[(int)$u->id] = trim((string)$u->firstname) !== ''
+                    ? (string)$u->firstname : ('User ' . (int)$u->id);
+            }
+        }
+
+        $messages = [];
+        $lastid = (int)$sincemessageid;
+        foreach ($rows as $row) {
+            $senderrole = $roles[(int)$row->senderid] ?? (string)($row->senderrole ?? '');
+            $mine = (int)$row->senderid === $userid;
+            $messages[] = [
+                'id' => (int)$row->id,
+                'mine' => $mine,
+                'role' => $senderrole,
+                // Staff are "Teacher" to a family; the family are named.
+                'who' => $mine ? 'You'
+                    : ($senderrole === 'teacher' || $senderrole === 'admin'
+                        ? 'Teacher' : ($names[(int)$row->senderid] ?? 'Parent')),
+                'body' => (string)$row->body,
+                'at' => (int)$row->timecreated,
+            ];
+            $lastid = max($lastid, (int)$row->id);
+        }
+
+        // Read-to-here, so the other side's unread mark can clear. Written for
+        // the CALLER only - reading your own screen says nothing about theirs.
+        if ($lastid > 0) {
+            $DB->set_field('local_prequran_comm_participant', 'lastreadmessageid', $lastid,
+                ['threadid' => $threadid, 'userid' => $userid]);
+        }
+
+        return [
+            'ok' => true,
+            'threadid' => $threadid,
+            'messages' => $messages,
+            'lastmessageid' => $lastid,
+        ];
+    }
+
     protected static function tutoring_chat_cohort(string $slug): ?\stdClass {
         global $DB;
         if (!function_exists('pqtut_cohort_idnumber')) {

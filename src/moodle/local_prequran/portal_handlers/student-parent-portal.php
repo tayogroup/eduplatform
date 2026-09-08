@@ -36,7 +36,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
     // access resolution runs first; the action executes after it.
     $pendingdispute = json_decode((string)file_get_contents('php://input'), true);
     if (!is_array($pendingdispute)
-            || !in_array((string)($pendingdispute['do'] ?? ''), ['open_grade_dispute', 'confirm_parent_link', 'raise_lesson_dispute'], true)) {
+            || !in_array((string)($pendingdispute['do'] ?? ''), ['open_grade_dispute', 'confirm_parent_link', 'raise_lesson_dispute', 'parent_teacher_chat'], true)) {
         pqpd_fail(400, 'Unknown student-parent-portal action.');
     }
 }
@@ -249,6 +249,36 @@ $tutoringsubjects = [
     'eng' => 'English', 'math' => 'Mathematics', 'sci' => 'Science',
     'comp' => 'Computing', 'gp' => 'Global Perspectives', 'intensive-eng' => 'Intensive English',
 ];
+// PARENT <-> TEACHER CHAT, the FAMILY'S door.
+//
+// Everything after this is local_prequran_external::parent_teacher_chat_exchange(),
+// the same function the teacher's parent_teacher_chat.php calls. Two doors, one
+// implementation - the rule the classroom chat set so the two sides of one
+// conversation cannot drift.
+//
+// It rides THIS handler rather than taking an endpoint of its own, and that is
+// deliberate: portal_data.php already verifies the minted portal token and
+// already carries the CORS contract this page needs. A tenth endpoint would
+// have to be added to check-platform-cors.mjs and kept in step for nothing.
+//
+// The access block above has already established that the caller is a
+// guardian, sponsor or workspace admin of THIS student - $studentid is
+// resolved from their own linked children, never from the request - so by the
+// time this runs the relationship is proved.
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST'
+        && (string)($pendingdispute['do'] ?? '') === 'parent_teacher_chat') {
+    require_once($CFG->dirroot . '/local/prequran/externallib_v4.php');
+    $chat = local_prequran_external::parent_teacher_chat_exchange(
+        $userid,
+        $studentid,
+        'parent',
+        trim((string)($pendingdispute['body'] ?? '')),
+        (int)($pendingdispute['since'] ?? 0)
+    );
+    echo json_encode($chat, JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
 // WHEN THE CHILD SAID THEY WERE STOPPING, and why - in their own words.
 //
 // The only focus signal a family sees, and the choice is deliberate. The

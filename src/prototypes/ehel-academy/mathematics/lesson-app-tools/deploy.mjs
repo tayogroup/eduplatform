@@ -75,6 +75,14 @@ const MODULES = [
   [path.join(SHARED, "course-shell.js"), "course-shell.js"],
   // the write path every other course already uses; see wire-progress.py
   [path.join(SHARED, "progress-client.js"), "progress-client.js"],
+  /* Focus mode and the session bar. course_launch.php appends focusMode,
+     focusEndpoint and exitUrl to whatever URL the app-url override resolves
+     to, so these builds have been receiving those parameters and reading none
+     of them - the live group board's away state could not fire for a learner
+     here, and there was no "I'm leaving" flow to carry their reason. Self-
+     mounts on import and renders nothing without those parameters, so an
+     ordinary launch and every local run are unchanged. */
+  [path.join(SHARED, "seb-session.js"), "seb-session.js"],
 ];
 const flatten = (s) => s
   .replace(/from\s*(["'])\.\.\/shared\/([A-Za-z0-9_-]+\.js)(\?[^"']*)?\1/g, 'from "./$2"')

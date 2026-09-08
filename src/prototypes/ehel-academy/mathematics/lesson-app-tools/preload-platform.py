@@ -36,6 +36,7 @@ from _app import load  # noqa: E402
 HEAD = """<link rel="modulepreload" href="./learner-controls.js">
 <link rel="modulepreload" href="./wehel.js">
 <link rel="modulepreload" href="./course-shell.js">
+<link rel="modulepreload" href="./seb-session.js">
 <script>
   /* preconnect to whichever platform the launch names: DNS and TLS happen
      while the page parses, instead of in front of the first POST */

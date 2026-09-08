@@ -48,6 +48,14 @@ CSS = """
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -74,6 +82,13 @@ JS = """
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -98,6 +113,19 @@ JS = """
       progressUnit: "__UNITKEY__",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not

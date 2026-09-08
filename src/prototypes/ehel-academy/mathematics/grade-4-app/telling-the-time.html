@@ -737,8 +737,21 @@
 
     <!-- 2 clocks -->
     
+<section class="slide" data-say="Swapping between units works both ways. Multiply to go to the smaller unit and divide to go back.">
+      <div class="slide-head"><span class="n">2</span><h2>Swapping units, both ways</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay1">Going to the <b>smaller</b> unit you <b>multiply</b>, because there are more of them. Going back to the bigger one you <b>divide</b>. It is the same fact used two ways.</span></div>
+      <div class="stage">
+        <p class="qstem" id="tmq1"></p>
+        <div class="choices" id="tmpick1"></div>
+        <div class="working" id="tmwork1"></div>
+        <p class="fb" id="tmfb1"></p>
+        <p class="fb small-fb" id="tmtask1"></p>
+      </div>
+    </section>
+
+    
 <section class="slide" data-say="One moment can be written three ways. On a clock face, as a twelve hour time, or as a twenty four hour time. The am or pm tells you which half of the day it is.">
-      <div class="slide-head"><span class="n">2</span><h2>Three ways to say one time</h2></div>
+      <div class="slide-head"><span class="n">3</span><h2>Three ways to say one time</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">A clock face, a <b>12-hour</b> time with am or pm, and a <b>24-hour</b> time. One moment, three ways of writing it.</span></div>
       <div class="stage">
         <div class="clockrow">
@@ -754,14 +767,41 @@
         </div>
         <p class="fb" id="fb2"></p>
         <p class="fb small-fb" id="task2"></p>
-        <div class="askwrap" id="ask2"></div>
+        <div class="askwrap" id="ask3"></div>
       </div>
     </section>
 
     <!-- 3 timetable -->
     
+<section class="slide" data-say="Now read the clock with nothing to help you. The short hand gives the hour and the long hand gives the minutes.">
+      <div class="slide-head"><span class="n">4</span><h2>Read the clock</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay2">No numbers written out this time. The <b>short</b> hand gives the hour &mdash; the one it has <b>passed</b>, not the one it is heading for &mdash; and the <b>long</b> hand gives the minutes, five for every number.</span></div>
+      <div class="stage">
+        <svg class="clock" id="tmclock2" viewBox="0 0 200 200" role="img" aria-label="A clock face showing a time to read"></svg>
+        <p class="qstem" id="tmq2"></p>
+        <div class="choices" id="tmpick2"></div>
+        <div class="working" id="tmwork2"></div>
+        <p class="fb" id="tmfb2"></p>
+        <p class="fb small-fb" id="tmtask2"></p>
+      </div>
+    </section>
+
+    
+<section class="slide" data-say="Twenty four hour time never needs am or pm, because every hour of the day has its own number.">
+      <div class="slide-head"><span class="n">5</span><h2>Writing it in 24-hour</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay3">In <b>24-hour</b> time nothing is written twice, so no am or pm is needed. Morning hours stay as they are and afternoon hours have <b>12 added</b> &mdash; and midnight and midday are the two you have to learn.</span></div>
+      <div class="stage">
+        <p class="qstem" id="tmq3"></p>
+        <div class="choices" id="tmpick3"></div>
+        <div class="working" id="tmwork3"></div>
+        <p class="fb" id="tmfb3"></p>
+        <p class="fb small-fb" id="tmtask3"></p>
+      </div>
+    </section>
+
+    
 <section class="slide" data-say="A timetable reads down for one bus and across for one stop. Find the bus that gets you there in time.">
-      <div class="slide-head"><span class="n">3</span><h2>Reading a timetable</h2></div>
+      <div class="slide-head"><span class="n">6</span><h2>Reading a timetable</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Read <b>down</b> a column to follow one bus, and <b>across</b> a row to compare the same stop. Times are in 24-hour.</span></div>
       <div class="stage">
         <div class="ttwrap"><table class="tt" id="tt3"></table></div>
@@ -772,8 +812,22 @@
 
     <!-- 4 intervals -->
     
+<section class="slide" data-say="A timetable is only useful if you can work out which one to catch. Read across to your stop and pick the last one that gets you there in time.">
+      <div class="slide-head"><span class="n">7</span><h2>Which one do you catch?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay4">Find your stop&rsquo;s <b>row</b>, then look along it for the <b>last</b> bus that still gets you there in time. The latest one is the answer, because any earlier one means waiting about.</span></div>
+      <div class="stage">
+        <div class="ttwrap"><table class="tt" id="tmtt4"></table></div>
+        <p class="qstem" id="tmq4"></p>
+        <div class="choices" id="tmpick4"></div>
+        <div class="working" id="tmwork4"></div>
+        <p class="fb" id="tmfb4"></p>
+        <p class="fb small-fb" id="tmtask4"></p>
+      </div>
+    </section>
+
+    
 <section class="slide" data-say="To find how long something lasted, count on from the start to the finish.">
-      <div class="slide-head"><span class="n">4</span><h2>How long between?</h2></div>
+      <div class="slide-head"><span class="n">8</span><h2>How long between?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Count on from the start to the end. Do the <b>whole units</b> first, then the rest.</span></div>
       <div class="stage">
         <div class="chips" id="pick4"></div>
@@ -782,12 +836,39 @@
         <div class="bigbtns"><button type="button" class="big small ghost" id="new4">Another one</button></div>
         <p class="fb" id="fb4"></p>
         <p class="fb small-fb" id="task4"></p>
-        <div class="askwrap" id="ask4"></div>
+        <div class="askwrap" id="ask8"></div>
       </div>
     </section>
 
     <!-- 5 check -->
     
+<section class="slide" data-say="Counting days past the end of a month means knowing how many days that month has.">
+      <div class="slide-head"><span class="n">9</span><h2>Over the end of the month</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay5">Adding days is easy until you run off the end of the month. Use up the days that are <b>left</b> in this month first, and only what is over goes into the next one.</span></div>
+      <div class="stage">
+        <p class="qstem" id="tmq5"></p>
+        <div class="tgroups" id="tmcal5" aria-hidden="true"></div>
+        <div class="choices" id="tmpick5"></div>
+        <div class="working" id="tmwork5"></div>
+        <p class="fb" id="tmfb5"></p>
+        <p class="fb small-fb" id="tmtask5"></p>
+      </div>
+    </section>
+
+    
+<section class="slide" data-say="Months and years are units of time too, and the gaps between them are counted the same way.">
+      <div class="slide-head"><span class="n">10</span><h2>Months and years apart</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="tmsay6">Gaps are not only hours and minutes. <b>Months</b> and <b>years</b> are counted the same way &mdash; and to cross from one year into another, count the whole years first and the leftover months after.</span></div>
+      <div class="stage">
+        <p class="qstem" id="tmq6"></p>
+        <div class="tgroups" id="tmspan6" aria-hidden="true"></div>
+        <div class="choices" id="tmpick6"></div>
+        <div class="working" id="tmwork6"></div>
+        <p class="fb" id="tmfb6"></p>
+        <p class="fb small-fb" id="tmtask6"></p>
+      </div>
+    </section>
+
 <section class="slide" data-say="Show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Tap the answer.</span></div>
@@ -1726,6 +1807,85 @@
   $("many1").addEventListener("input", (e) => { many1 = Number(e.target.value); paint1(); });
   paint1();
 
+    /* ---- shared by the new Telling the Time slides ----
+
+     Prefixed tm. Its own to12/to24/pad2 rather than the kept slides' -- those are
+     declared inside slide 1's and slide 2's blocks, so relying on them would make
+     these slides depend on the lesson's teaching ORDER, which is a table in
+     compose-lessons.py and is meant to be free to change. */
+  const TM_MONTHS = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+  const TM_LEN = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const tmPad = (n) => (n < 10 ? "0" : "") + n;
+  const tm24 = (t) => tmPad(Math.floor(t / 60) % 24) + ":" + tmPad(t % 60);
+  const tm12 = (t) => {
+    const h = Math.floor(t / 60) % 24, m = t % 60;
+    return (((h + 11) % 12) + 1) + ":" + tmPad(m) + " " + (h < 12 ? "am" : "pm");
+  };
+  const tmPlural = (n, w) => n + " " + w + (n === 1 ? "" : "s");
+
+  /* ---- 1: converting between units in BOTH directions (4Gt.01) ----
+
+     The kept slide only ever goes from the bigger unit to the smaller one, on a
+     slider. Dividing back, and a mixed amount like 2 hours 15 minutes, are the two
+     halves it cannot ask for. */
+  const TM_UNITS = [
+    { big: "week", small: "day", per: 7 },
+    { big: "year", small: "month", per: 12 },
+    { big: "day", small: "hour", per: 24 },
+    { big: "hour", small: "minute", per: 60 },
+    { big: "minute", small: "second", per: 60 },
+  ];
+  let tm1 = null, tm1right = 0, tm1lock = false;
+  const tm1seen = {};
+  function tmNew1() {
+    const U = TM_UNITS[rnd(0, TM_UNITS.length - 1)], n = rnd(2, 6), k = rnd(0, 2);
+    if (k === 0) return { U: U, n: n, kind: "down", ans: n * U.per };
+    if (k === 1) return { U: U, n: n, kind: "up", ans: n };
+    const r = rnd(1, U.per - 1);
+    return { U: U, n: n, r: r, kind: "mixed", ans: n * U.per + r };
+  }
+  function tmPaint1() {
+    const P = tm1, U = P.U;
+    $("tmq1").innerHTML =
+      P.kind === "down" ? "How many <b>" + U.small + "s</b> are there in <b>" + tmPlural(P.n, U.big) + "</b>?"
+      : P.kind === "up" ? "How many <b>" + U.big + "s</b> is <b>" + tmPlural(P.n * U.per, U.small) + "</b>?"
+      : "How many <b>" + U.small + "s</b> is <b>" + tmPlural(P.n, U.big) + " and " + tmPlural(P.r, U.small) + "</b>?";
+    const cands = P.kind === "up"
+      ? [P.n + 1, P.n - 1, P.n * U.per]
+      : [P.ans + U.per, P.ans - U.per, P.n + U.per];
+    $("tmpick1").innerHTML = pick3(P.ans, cands)
+      .map((v) => '<button type="button" class="choice" data-v="' + v + '">' + fmt(v) + "</button>").join("");
+    $("tmtask1").textContent = "Right so far: " + tm1right + " of 5 · directions done: " +
+      Object.keys(tm1seen).length + " of 3";
+  }
+  $("tmpick1").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]"); if (!b || tm1lock) return;
+    tm1lock = true;
+    const P = tm1, U = P.U, ok = Number(b.dataset.v) === P.ans;
+    if (ok) { tm1right++; tm1seen[P.kind] = true; }
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("tmwork1"), [
+      { k: "The fact", v: "1 " + U.big + " = <b>" + tmPlural(U.per, U.small) + "</b>" },
+      { k: "Which way", v: P.kind === "up"
+        ? "to the <b>bigger</b> unit, so <b>divide</b>"
+        : "to the <b>smaller</b> unit, so <b>multiply</b>" },
+      { k: "The working", v: P.kind === "down" ? P.n + " × " + U.per + " = <b>" + fmt(P.ans) + "</b>"
+        : P.kind === "up" ? fmt(P.n * U.per) + " ÷ " + U.per + " = <b>" + P.ans + "</b>"
+        : P.n + " × " + U.per + " = " + fmt(P.n * U.per) + ", then + " + P.r + " = <b>" + fmt(P.ans) + "</b>" },
+      { k: "So", v: P.kind === "up" ? "<b>" + tmPlural(P.n * U.per, U.small) + " = " + tmPlural(P.ans, U.big) + "</b>"
+        : "<b>" + fmt(P.ans) + " " + U.small + "s</b>", total: true },
+    ]);
+    $("tmfb1").innerHTML = (ok ? cheer() + " " : "It is " + fmt(P.ans) + ". ") +
+      (P.kind === "up" ? "Going to a <b>bigger</b> unit always gives a <b>smaller</b> number."
+                       : "Going to a <b>smaller</b> unit always gives a <b>bigger</b> number.");
+    $("tmfb1").className = "fb " + (ok ? "good" : "bad");
+    say($("tmfb1").textContent);
+    if (tm1right >= 5 && Object.keys(tm1seen).length >= 3) finish(1, "You can swap units both ways!");
+    setTimeout(() => { tm1 = tmNew1(); tm1lock = false; tmPaint1(); }, 2400);
+  });
+  tm1 = tmNew1(); tmPaint1();
+
   /* ---- 2: clock faces, 12-hour and 24-hour (4Gt.02) ---- */
   let t2 = 9 * 60 + 35;                 /* minutes since midnight */
   const TARGETS2 = [14 * 60 + 30, 7 * 60 + 45, 18 * 60 + 15, 12 * 60, 21 * 60 + 5];
@@ -1764,7 +1924,7 @@
       $("fb2").className = "fb good";
       if (hit2 <= tgt2) { hit2 = tgt2 + 1; say(to12(t2) + " is the same moment as " + to24(t2)); }
       if (tgt2 < TARGETS2.length - 1) { tgt2++; setTimeout(() => { $("fb2").className = "fb"; drawClock(); }, 1400); }
-      if (hit2 >= 3) finish(1, "");
+      if (hit2 >= 3) finish(2, "");
     } else {
       $("fb2").className = "fb";
       $("fb2").textContent = "";
@@ -1774,6 +1934,132 @@
   $("h2").addEventListener("click", () => { t2 = (t2 + 60) % 1440; drawClock(); });
   $("m2").addEventListener("click", () => { t2 = (t2 + 5) % 1440; drawClock(); });
   drawClock();
+
+  /* ---- 2: reading an analogue clock (4Gt.02) ----
+
+     The kept clock slide prints the 12-hour and 24-hour times beside the face and
+     asks the learner to SET it, so the face never has to be read -- the boxes read
+     it for them. Here there is nothing but hands. */
+  let tm2 = null, tm2right = 0, tm2lock = false;
+  function tmNew2() {
+    const h = rnd(1, 12), m = rnd(0, 11) * 5;
+    return { h: h, m: m };
+  }
+  function tmDrawClock(el, h, m) {
+    const ha = (h % 12 + m / 60) * 30 - 90, ma = m * 6 - 90;
+    const arm = (a, len, cls) => '<line class="' + cls + '" x1="100" y1="100" x2="' +
+      (100 + len * Math.cos(a * Math.PI / 180)).toFixed(1) + '" y2="' +
+      (100 + len * Math.sin(a * Math.PI / 180)).toFixed(1) + '"></line>';
+    let s = '<circle class="face" cx="100" cy="100" r="92"></circle>';
+    for (let i = 0; i < 60; i++) {
+      const a = i * 6 - 90, r1 = i % 5 === 0 ? 76 : 84;
+      s += '<line class="tick' + (i % 5 === 0 ? " big" : "") + '" x1="' + (100 + r1 * Math.cos(a * Math.PI / 180)).toFixed(1) +
+        '" y1="' + (100 + r1 * Math.sin(a * Math.PI / 180)).toFixed(1) + '" x2="' + (100 + 88 * Math.cos(a * Math.PI / 180)).toFixed(1) +
+        '" y2="' + (100 + 88 * Math.sin(a * Math.PI / 180)).toFixed(1) + '"></line>';
+    }
+    for (let i = 1; i <= 12; i++) {
+      const a = i * 30 - 90;
+      s += '<text class="cnum" x="' + (100 + 62 * Math.cos(a * Math.PI / 180)).toFixed(1) +
+        '" y="' + (100 + 62 * Math.sin(a * Math.PI / 180) + 6).toFixed(1) + '">' + i + "</text>";
+    }
+    el.innerHTML = s + arm(ha, 44, "hand hour") + arm(ma, 66, "hand min") +
+      '<circle class="pin" cx="100" cy="100" r="5"></circle>';
+  }
+  const tmSay2 = (h, m) => h + ":" + tmPad(m);
+  function tmPaint2() {
+    tmDrawClock($("tmclock2"), tm2.h, tm2.m);
+    $("tmq2").innerHTML = "What time is the clock showing?";
+    /* The first distractor is the two hands READ THE WRONG WAY ROUND, which is the
+       mistake this slide exists for: at 3:40 the long hand sits on the 8 and the
+       short hand near the 4, so 8:20 looks right to a learner reading the long hand
+       as the hour. */
+    const swapH = tm2.m === 0 ? 12 : tm2.m / 5;
+    const opts = [tmSay2(tm2.h, tm2.m), tmSay2(swapH, (tm2.h % 12) * 5),
+      tmSay2(tm2.h % 12 + 1, tm2.m), tmSay2(tm2.h, (tm2.m + 5) % 60)];
+    const uniq = [];
+    opts.forEach((o) => { if (uniq.indexOf(o) < 0) uniq.push(o); });
+    $("tmpick2").innerHTML = shuffle(uniq.slice(0, 3))
+      .map((o) => '<button type="button" class="choice" data-t="' + o + '">' + o + "</button>").join("");
+    $("tmtask2").textContent = "Right so far: " + tm2right + " of 5";
+  }
+  $("tmpick2").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-t]"); if (!b || tm2lock) return;
+    tm2lock = true;
+    const right = tmSay2(tm2.h, tm2.m), ok = b.dataset.t === right;
+    if (ok) tm2right++;
+    b.classList.add(ok ? "right" : "wrong");
+    const nextH = tm2.h === 12 ? 1 : tm2.h + 1;
+    lines($("tmwork2"), [
+      { k: "The short hand", v: tm2.m === 0 ? "points straight at <b>" + tm2.h + "</b>"
+        : "sits between <b>" + tm2.h + "</b> and <b>" + nextH + "</b>, so the hour is the one it has passed: <b>" + tm2.h + "</b>" },
+      { k: "The long hand", v: "points at <b>" + (tm2.m === 0 ? 12 : tm2.m / 5) + "</b>, and each number is five minutes" },
+      { k: "So the minutes", v: (tm2.m === 0 ? 12 : tm2.m / 5) + " × 5 = <b>" + tm2.m + "</b>" },
+      { k: "The time is", v: "<b>" + right + "</b>", total: true },
+    ]);
+    $("tmfb2").innerHTML = (ok ? cheer() + " " : "It is " + right + ". ") +
+      "The <b>short</b> hand is the hour and it counts the number it has <b>gone past</b>.";
+    $("tmfb2").className = "fb " + (ok ? "good" : "bad");
+    say($("tmfb2").textContent);
+    if (tm2right >= 5) finish(3, "You can read a clock face!");
+    setTimeout(() => { tm2 = tmNew2(); tm2lock = false; tmPaint2(); }, 2400);
+  });
+  tm2 = tmNew2(); tmPaint2();
+
+  /* ---- 3: writing a 12-hour time in 24-hour notation (4Gt.02) ---- */
+  let tm3 = null, tm3right = 0, tm3lock = false;
+  const tm3seen = {};
+  function tmNew3() {
+    const k = rnd(0, 5);
+    const m = rnd(0, 11) * 5;
+    /* midnight and midday are dealt in on purpose: they are the two the rule as
+       usually remembered gets wrong, and at random they would hardly ever come up */
+    if (k === 0) return { t: m, kind: "midnight" };                 /* 12:mm am */
+    if (k === 1) return { t: 12 * 60 + m, kind: "midday" };          /* 12:mm pm */
+    if (k < 4) return { t: rnd(1, 11) * 60 + m, kind: "am" };
+    return { t: (rnd(13, 23)) * 60 + m, kind: "pm" };
+  }
+  function tmPaint3() {
+    const t = tm3.t, h24 = Math.floor(t / 60), m = t % 60;
+    $("tmq3").innerHTML = "Write <b>" + tm12(t) + "</b> in 24-hour time.";
+    const wrong = [];
+    if (tm3.kind === "midnight") wrong.push("12:" + tmPad(m), "24:" + tmPad(m));
+    else if (tm3.kind === "midday") wrong.push("00:" + tmPad(m), "24:" + tmPad(m));
+    else if (tm3.kind === "am") wrong.push(tmPad(h24 + 12) + ":" + tmPad(m), tmPad((h24 + 1) % 24) + ":" + tmPad(m));
+    else wrong.push(tmPad(h24 - 12) + ":" + tmPad(m), tmPad((h24 - 1) % 24) + ":" + tmPad(m));
+    const uniq = [tm24(t)];
+    wrong.forEach((w) => { if (uniq.indexOf(w) < 0) uniq.push(w); });
+    $("tmpick3").innerHTML = shuffle(uniq.slice(0, 3))
+      .map((o) => '<button type="button" class="choice" data-t="' + o + '">' + o + "</button>").join("");
+    $("tmtask3").textContent = "Right so far: " + tm3right + " of 5 · " +
+      "kinds done: " + Object.keys(tm3seen).length + " of 4";
+  }
+  $("tmpick3").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-t]"); if (!b || tm3lock) return;
+    tm3lock = true;
+    const right = tm24(tm3.t), ok = b.dataset.t === right;
+    if (ok) { tm3right++; tm3seen[tm3.kind] = true; }
+    b.classList.add(ok ? "right" : "wrong");
+    const h12 = ((Math.floor(tm3.t / 60) + 11) % 12) + 1;
+    lines($("tmwork3"), [
+      { k: "Which half of the day", v: tm3.t < 12 * 60 ? "<b>am</b> &mdash; before midday" : "<b>pm</b> &mdash; after midday" },
+      { k: "The rule", v: tm3.kind === "midnight"
+          ? "the hour after <b>midnight</b> is written <b>00</b>, not 12 and not 24"
+        : tm3.kind === "midday" ? "<b>midday</b> is already 12, so it stays <b>12</b> and nothing is added"
+        : tm3.kind === "am" ? "morning hours are written as they are" : "afternoon hours have <b>12 added</b>" },
+      { k: "The working", v: tm3.kind === "midnight" ? "12 becomes <b>00</b>"
+        : tm3.kind === "midday" ? "12 stays <b>12</b>"
+        : tm3.kind === "am" ? h12 + " stays <b>" + tmPad(h12) + "</b>"
+        : h12 + " + 12 = <b>" + (h12 + 12) + "</b>" },
+      { k: "So it is", v: "<b>" + right + "</b>", total: true },
+    ]);
+    $("tmfb3").innerHTML = (ok ? cheer() + " " : "It is " + right + ". ") +
+      "24-hour time runs <b>00:00 to 23:59</b>, so there is no 24 and no need for am or pm.";
+    $("tmfb3").className = "fb " + (ok ? "good" : "bad");
+    say($("tmfb3").textContent);
+    if (tm3right >= 5 && Object.keys(tm3seen).length >= 4) finish(4, "You can write any time in 24-hour!");
+    setTimeout(() => { tm3 = tmNew3(); tm3lock = false; tmPaint3(); }, 2600);
+  });
+  tm3 = tmNew3(); tmPaint3();
 
   /* ---- 3: timetables (4Gt.03) ---- */
   const STOPS3 = ["Market Gate", "Riverside", "Hill Road", "School"];
@@ -1812,11 +2098,70 @@
     $("fb3").textContent = (ok ? cheer() + " " : "Not that one. ") + Q3[q3].why;
     $("fb3").className = "fb " + (ok ? "good" : "bad");
     say(ok ? cheer() : Q3[q3].why);
-    if (right3 >= 2) finish(2, "");
+    if (right3 >= 2) finish(5, "");
     q3 = (q3 + 1) % Q3.length;
     setTimeout(paint3, 2600);
   });
   paint3();
+
+  /* ---- 4: using a timetable to choose (4Gt.03) ----
+
+     The kept timetable slide asks the learner to follow one bus down a column. This
+     one asks the question a timetable is actually for: which bus do I need? */
+  const TM_STOPS = ["High Street", "Market Square", "The Library", "School Gate"];
+  let tm4 = null, tm4right = 0, tm4lock = false;
+  function tmNew4() {
+    const first = rnd(7, 8) * 60 + rnd(0, 5) * 5, gap = rnd(15, 25);
+    const hops = [0, rnd(6, 10), rnd(5, 9), rnd(4, 8)];
+    const runs = [0, 1, 2, 3].map((i) => {
+      const dep = first + gap * i, t = [];
+      let at = dep;
+      hops.forEach((h) => { at += h; t.push(at); });
+      return t;
+    });
+    const stop = rnd(1, 3);
+    /* the deadline sits between two buses' arrivals, so exactly one of them is the
+       LATEST that still makes it -- and it is never simply the first or the last */
+    const pick = rnd(1, 2);
+    const by = runs[pick][stop] + rnd(1, gap - 1);
+    return { runs: runs, stop: stop, by: by, ans: pick };
+  }
+  function tmPaint4() {
+    const P = tm4;
+    let h = "<tr><th>Stop</th>" + P.runs.map((r) => "<th>" + tm24(r[0]) + "</th>").join("") + "</tr>";
+    TM_STOPS.forEach((s, i) => {
+      h += "<tr><td>" + s + "</td>" + P.runs.map((r) => "<td>" + tm24(r[i]) + "</td>").join("") + "</tr>";
+    });
+    $("tmtt4").innerHTML = h;
+    $("tmq4").innerHTML = "You must be at <b>" + TM_STOPS[P.stop] + "</b> by <b>" + tm24(P.by) +
+      "</b>. Which bus do you catch &mdash; the <b>latest</b> one that still gets you there?";
+    $("tmpick4").innerHTML = P.runs.map((r, i) =>
+      '<button type="button" class="choice" data-i="' + i + '">' + tm24(r[0]) + "</button>").join("");
+    $("tmtask4").textContent = "Right so far: " + tm4right + " of 4";
+  }
+  $("tmpick4").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-i]"); if (!b || tm4lock) return;
+    tm4lock = true;
+    const P = tm4, i = Number(b.dataset.i), ok = i === P.ans;
+    if (ok) tm4right++;
+    b.classList.add(ok ? "right" : "wrong");
+    const rows = P.runs.map((r) => ({
+      k: "The " + tm24(r[0]) + " bus",
+      v: "reaches " + TM_STOPS[P.stop] + " at <b>" + tm24(r[P.stop]) + "</b>" +
+        (r[P.stop] <= P.by ? " &mdash; in time" : " &mdash; too late"),
+    }));
+    rows.push({ k: "The latest in time", v: "<b>" + tm24(P.runs[P.ans][0]) + "</b>, arriving " +
+      tm24(P.runs[P.ans][P.stop]) + ", which is " + (P.by - P.runs[P.ans][P.stop]) +
+      " minutes to spare", total: true });
+    lines($("tmwork4"), rows);
+    $("tmfb4").innerHTML = (ok ? cheer() + " " : "It is the " + tm24(P.runs[P.ans][0]) + ". ") +
+      "An earlier bus would get you there too &mdash; but you would be <b>waiting about</b>, so the latest one that makes it is the answer.";
+    $("tmfb4").className = "fb " + (ok ? "good" : "bad");
+    say($("tmfb4").textContent);
+    if (tm4right >= 4) finish(6, "You can choose the right bus from a timetable!");
+    setTimeout(() => { tm4 = tmNew4(); tm4lock = false; tmPaint4(); }, 3000);
+  });
+  tm4 = tmNew4(); tmPaint4();
 
   /* ---- 4: time intervals (4Gt.04) ---- */
   let mode4 = 0;
@@ -1869,12 +2214,118 @@
   });
   $("new4").addEventListener("click", () => {
     iv4 = newInterval(); done4++; paint4();
-    if (done4 >= 3) finish(3, "");
+    if (done4 >= 3) finish(7, "");
     say($("fb4").textContent);
   });
   paint4();
 
-  /* ---- 5: check ---- */
+  /* ---- 5: adding days across the end of a month (4Gt.04) ---- */
+  let tm5 = null, tm5right = 0, tm5lock = false;
+  function tmNew5() {
+    const m = rnd(0, 11), len = TM_LEN[m];
+    const d = rnd(len - 8, len - 1), add = rnd(len - d + 1, len - d + 20);
+    const over = d + add - len;
+    return { m: m, len: len, d: d, add: add, over: over, left: len - d };
+  }
+  function tmPaint5() {
+    const P = tm5, nm = (P.m + 1) % 12;
+    $("tmq5").innerHTML = "It is <b>" + P.d + " " + TM_MONTHS[P.m] + "</b>. What is the date <b>" +
+      P.add + " days</b> later?";
+    $("tmcal5").innerHTML = [P.m, nm].map((k) =>
+      '<div class="tgrp"><span class="glab">' + TM_MONTHS[k] + '</span><span class="gnum">' +
+      TM_LEN[k] + '</span><span class="glab">days</span></div>').join("");
+    /* over can be 1, and "0 April" is not a date -- a distractor has to be a thing
+       somebody could believe, not an impossible string */
+    const cands = [P.over + 1 + " " + TM_MONTHS[nm], P.over - 1 + " " + TM_MONTHS[nm],
+      P.over + 2 + " " + TM_MONTHS[nm], P.over + " " + TM_MONTHS[(nm + 1) % 12]]
+      .filter((c) => parseInt(c, 10) >= 1);
+    const uniq = [P.over + " " + TM_MONTHS[nm]];
+    cands.forEach((c) => { if (uniq.indexOf(c) < 0) uniq.push(c); });
+    $("tmpick5").innerHTML = shuffle(uniq.slice(0, 3))
+      .map((o) => '<button type="button" class="choice word" data-t="' + o + '">' + o + "</button>").join("");
+    $("tmtask5").textContent = "Right so far: " + tm5right + " of 4";
+  }
+  $("tmpick5").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-t]"); if (!b || tm5lock) return;
+    tm5lock = true;
+    const P = tm5, nm = (P.m + 1) % 12, right = P.over + " " + TM_MONTHS[nm];
+    const ok = b.dataset.t === right;
+    if (ok) tm5right++;
+    b.classList.add(ok ? "right" : "wrong");
+    lines($("tmwork5"), [
+      { k: TM_MONTHS[P.m] + " has", v: "<b>" + P.len + " days</b>" },
+      { k: "Days left in it", v: P.len + " − " + P.d + " = <b>" + tmPlural(P.left, "day") + "</b>, which takes you to " +
+        P.len + " " + TM_MONTHS[P.m] },
+      { k: "Still to count", v: P.add + " − " + P.left + " = <b>" + tmPlural(P.over, "day") + "</b>" },
+      { k: "So the date is", v: "<b>" + right + "</b>", total: true },
+    ]);
+    $("tmfb5").innerHTML = (ok ? cheer() + " " : "It is " + right + ". ") +
+      "Use up what is <b>left</b> in the month first &mdash; only what is over goes into the next one.";
+    $("tmfb5").className = "fb " + (ok ? "good" : "bad");
+    say($("tmfb5").textContent);
+    if (tm5right >= 4) finish(8, "You can count days over the end of a month!");
+    setTimeout(() => { tm5 = tmNew5(); tm5lock = false; tmPaint5(); }, 2800);
+  });
+  tm5 = tmNew5(); tmPaint5();
+
+  /* ---- 6: intervals in months and years (4Gt.04) ----
+
+     The kept interval slide does clock times and days within one month. Months and
+     years are named in the objective and were not anywhere in the lesson. */
+  let tm6 = null, tm6right = 0, tm6lock = false;
+  const tm6seen = {};
+  function tmNew6() {
+    const y1 = rnd(2018, 2024);
+    if (rnd(0, 1)) {                                  /* within one year */
+      /* m1 stops at 9 so that rnd(m1 + 2, 11) always has a range: rnd(12, 11)
+         returns 12, which is not a month, and TM_MONTHS[12] is undefined */
+      const m1 = rnd(0, 9), m2 = rnd(m1 + 2, 11);
+      return { y1: y1, m1: m1, y2: y1, m2: m2, kind: "months", ans: m2 - m1 };
+    }
+    const m1 = rnd(0, 11), y2 = y1 + rnd(1, 5), m2 = rnd(0, 11);
+    return { y1: y1, m1: m1, y2: y2, m2: m2, kind: "years",
+      ans: (y2 - y1) * 12 + (m2 - m1) };
+  }
+  function tmPaint6() {
+    const P = tm6;
+    $("tmq6").innerHTML = "How many <b>months</b> from <b>" + TM_MONTHS[P.m1] + " " + P.y1 +
+      "</b> to <b>" + TM_MONTHS[P.m2] + " " + P.y2 + "</b>?";
+    $("tmspan6").innerHTML = [["From", P.m1, P.y1], ["To", P.m2, P.y2]].map((c) =>
+      '<div class="tgrp"><span class="glab">' + c[0] + '</span><span class="gnum">' +
+      TM_MONTHS[c[1]] + '</span><span class="glab">' + c[2] + "</span></div>").join("");
+    $("tmpick6").innerHTML = pick3(P.ans, [P.ans + 1, P.ans - 1, P.ans + 12].filter((v) => v >= 1))
+      .map((v) => '<button type="button" class="choice" data-v="' + v + '">' + v + "</button>").join("");
+    $("tmtask6").textContent = "Right so far: " + tm6right + " of 4 · both kinds needed";
+  }
+  $("tmpick6").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]"); if (!b || tm6lock) return;
+    tm6lock = true;
+    const P = tm6, ok = Number(b.dataset.v) === P.ans;
+    if (ok) { tm6right++; tm6seen[P.kind] = true; }
+    b.classList.add(ok ? "right" : "wrong");
+    const wholeYears = P.y2 - P.y1;
+    lines($("tmwork6"), P.kind === "months" ? [
+      { k: "The same year", v: "both dates are in <b>" + P.y1 + "</b>" },
+      { k: "Count the months", v: TM_MONTHS[P.m1] + " to " + TM_MONTHS[P.m2] + " is <b>" +
+        tmPlural(P.ans, "month") + "</b>" },
+      { k: "Or take away", v: "month " + (P.m2 + 1) + " − month " + (P.m1 + 1) + " = <b>" + P.ans + "</b>", total: true },
+    ] : [
+      { k: "Whole years first", v: P.y1 + " to " + P.y2 + " is <b>" + tmPlural(wholeYears, "year") + "</b>" },
+      { k: "In months", v: wholeYears + " × 12 = <b>" + wholeYears * 12 + "</b>" },
+      { k: "Then the months", v: TM_MONTHS[P.m1] + " to " + TM_MONTHS[P.m2] + " is <b>" +
+        (P.m2 - P.m1) + "</b>" + (P.m2 < P.m1 ? ", which is backwards, so it comes off" : "") },
+      { k: "Altogether", v: wholeYears * 12 + " " + (P.m2 - P.m1 < 0 ? "−" : "+") + " " +
+        Math.abs(P.m2 - P.m1) + " = <b>" + tmPlural(P.ans, "month") + "</b>", total: true },
+    ]);
+    $("tmfb6").innerHTML = (ok ? cheer() + " " : "It is " + tmPlural(P.ans, "month") + ". ") +
+      "Count the <b>whole years</b> first and deal with the leftover months after &mdash; the same order as hours and then minutes.";
+    $("tmfb6").className = "fb " + (ok ? "good" : "bad");
+    say($("tmfb6").textContent);
+    if (tm6right >= 4 && Object.keys(tm6seen).length >= 2) finish(9, "You can find a gap in months and years!");
+    setTimeout(() => { tm6 = tmNew6(); tm6lock = false; tmPaint6(); }, 2800);
+  });
+  tm6 = tmNew6(); tmPaint6();
+/* ---- 5: check ---- */
   const Q5 = shuffle([
     { q: "How many minutes are there in 3 hours?", o: ["180", "120", "300"], a: 0, w: "Each hour is 60 minutes, and 3 × 60 = 180." },
     { q: "How many days are there in 4 weeks?", o: ["28", "24", "30"], a: 0, w: "A week is 7 days, and 4 × 7 = 28." },
@@ -1883,7 +2334,13 @@
     { q: "A film starts at 16:20 and ends at 18:45. How long is it?", o: ["2 h 25 min", "2 h 35 min", "1 h 25 min"], a: 0, w: "16 to 18 is 2 hours, and 20 to 45 is 25 minutes." },
     { q: "How many months are there in 3 years?", o: ["36", "30", "33"], a: 0, w: "A year is 12 months, and 3 × 12 = 36." },
     { q: "A train leaves at 13:20 and arrives at 14:05. How long does it take?", o: ["45 minutes", "85 minutes", "1 hour 45 min"], a: 0, w: "From 13:20 to 14:00 is 40 minutes, and 5 more makes 45." },
-    { q: "From 5 March to 26 March is how many weeks?", o: ["3 weeks", "21 weeks", "2 weeks"], a: 0, w: "26 − 5 = 21 days, and 21 ÷ 7 = 3 weeks." }
+    { q: "From 5 March to 26 March is how many weeks?", o: ["3 weeks", "21 weeks", "2 weeks"], a: 0, w: "26 − 5 = 21 days, and 21 ÷ 7 = 3 weeks." },
+    { q: "How many hours is 180 minutes?", o: ["3", "180", "10 800"], a: 0, w: "Going to a BIGGER unit means dividing: 180 \u00f7 60 = 3. Multiplying would have given the seconds instead." },
+    { q: "The short hand is between 4 and 5, and the long hand points at 8. What time is it?", o: ["4:40", "8:20", "5:40"], a: 0, w: "The short hand gives the hour it has PASSED, so 4. The long hand on the 8 is 8 \u00d7 5 = 40 minutes." },
+    { q: "Write 12:20 am in 24-hour time.", o: ["00:20", "12:20", "24:20"], a: 0, w: "12 am is midnight, and the hour after midnight is written 00. There is no 24 in 24-hour time \u2014 it runs 00:00 to 23:59." },
+    { q: "Buses reach the library at 09:05, 09:25 and 09:45. You must be there by 09:30. Which do you catch?", o: ["The one arriving 09:25", "The one arriving 09:05", "The one arriving 09:45"], a: 0, w: "09:45 is too late. 09:05 would get you there, but 09:25 is the LATEST that still makes it, so it is the one to catch." },
+    { q: "It is 28 April. What is the date 9 days later?", o: ["7 May", "6 May", "37 April"], a: 0, w: "April has 30 days, so 2 days take you to the 30th and 7 are left over: 7 May." },
+    { q: "How many months from March 2024 to January 2026?", o: ["22", "10", "24"], a: 0, w: "Two whole years is 24 months, but January is two months BEFORE March, so it is 24 \u2212 2 = 22." }
   ]);
   let c5 = 0, right5 = 0, lock5 = false;
   function round5() {
@@ -1893,7 +2350,7 @@
       $("stem5").textContent = "That is all of them.";
       $("choices5").innerHTML = "";
       $("score5").textContent = right5 + " out of " + Q5.length + " right.";
-      if (right5 >= 6) finish(4, "");
+      if (right5 >= 11) finish(10, "");
       return;
     }
     const q = Q5[c5];
@@ -1917,7 +2374,7 @@
   round5();
 
   /* ---- 6: stickers ---- */
-  const STICKERS = [ ["📏", "How long is that?"], ["🕰️", "Three ways to say one time"], ["🚌", "Reading a timetable"], ["⏱️", "How long between?"], ["✅", "Show what you know"] ];
+  const STICKERS = [ ["📏", "How long is that?"], ["🔁", "Swapping units, both ways"], ["🕰️", "Three ways to say one time"], ["🕐", "Read the clock"], ["🌃", "Writing it in 24-hour"], ["🚌", "Reading a timetable"], ["🚏", "Which one do you catch?"], ["⏱️", "How long between?"], ["📆", "Over the end of the month"], ["🗓️", "Months and years apart"], ["✅", "Show what you know"] ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span>' + s[0] + "</span><b>" + s[1] + "</b></div>").join("");
   }
@@ -1941,7 +2398,7 @@
   });
 
   /* 2 (4Gt.02) 24-hour to 12-hour. Distractors are the am/pm slip and the next hour;
-     "subtract 12" is deliberately NOT offered because for 13:00-23:59 it is correct. */  ask(2, () => {
+     "subtract 12" is deliberately NOT offered because for 13:00-23:59 it is correct. */  ask(3, () => {
     const t = rnd(0, 23) * 60 + rnd(0, 11) * 5;
     const h = Math.floor(t / 60) % 24, m = t % 60;
     const hh = ((h + 11) % 12) + 1, suf = h < 12 ? "am" : "pm";
@@ -1955,7 +2412,7 @@
   });
 
   /* 4 (4Gt.04) an interval. Built the way the slide builds one, so the end minutes are
-     always the larger and the child never has to bridge through 60 here. */  ask(4, () => {
+     always the larger and the child never has to bridge through 60 here. */  ask(8, () => {
     const h1 = rnd(7, 10), m1 = rnd(0, 5) * 5;
     const h2 = h1 + rnd(1, 3), m2 = m1 + rnd(1, 5) * 5;
     const dh = h2 - h1, dm = m2 - m1;

@@ -59,7 +59,12 @@ STRUCTURE = [
     ("calc", "Ways to Calculate", "num",
      [1, 6, ("d", 6), 7, 8], [1, 6, 7, 10]),
     ("frac", "Parts of a Whole", "frac", None, None),
-    ("time", "Telling the Time", "time", None, None),
+    # Units are converted both ways before a clock is read; the clock is read before
+    # it is rewritten in 24-hour; the timetable is read before it is used to choose;
+    # and intervals go clock, then over a month end, then months and years.
+    ("time", "Telling the Time", "time",
+     [1, ("n", 1), 2, ("n", 2), ("n", 3), 3, ("n", 4), 4, ("n", 5), ("n", 6)],
+     None),
     ("shape", "Shape and Measures", "shape",
      [1, 2, 3, ("d", 10), 5, 6, 7, 8], [1, 2, 3, 4, 5, 6, 7, 8, 9]),
     # Direction is taught before it is used, coordinates are introduced before the
@@ -109,6 +114,35 @@ DONOR_BODY, DONOR_JS = "g4-lesson-body.html", "g4-lesson.js"
 # panel, because each one judges the learner directly.
 #   lesson -> {slide number in the new file: (sticker, quiz item)}
 NEW_EXTRAS = {
+    "time": {
+        1: ("\\U0001f501",
+            '{ q: "How many hours is 180 minutes?", o: ["3", "180", "10 800"], a: 0,'
+            ' w: "Going to a BIGGER unit means dividing: 180 \\u00f7 60 = 3. Multiplying would have'
+            ' given the seconds instead." }'),
+        2: ("\U0001f550",
+            '{ q: "The short hand is between 4 and 5, and the long hand points at 8. What time is it?",'
+            ' o: ["4:40", "8:20", "5:40"], a: 0,'
+            ' w: "The short hand gives the hour it has PASSED, so 4. The long hand on the 8 is'
+            ' 8 \\u00d7 5 = 40 minutes." }'),
+        3: ("\\U0001f303",
+            '{ q: "Write 12:20 am in 24-hour time.", o: ["00:20", "12:20", "24:20"], a: 0,'
+            ' w: "12 am is midnight, and the hour after midnight is written 00. There is no 24 in'
+            ' 24-hour time \\u2014 it runs 00:00 to 23:59." }'),
+        4: ("\U0001f68f",
+            '{ q: "Buses reach the library at 09:05, 09:25 and 09:45. You must be there by 09:30.'
+            ' Which do you catch?", o: ["The one arriving 09:25", "The one arriving 09:05",'
+            ' "The one arriving 09:45"], a: 0,'
+            ' w: "09:45 is too late. 09:05 would get you there, but 09:25 is the LATEST that still'
+            ' makes it, so it is the one to catch." }'),
+        5: ("\\U0001f4c6",
+            '{ q: "It is 28 April. What is the date 9 days later?",'
+            ' o: ["7 May", "6 May", "37 April"], a: 0,'
+            ' w: "April has 30 days, so 2 days take you to the 30th and 7 are left over: 7 May." }'),
+        6: ("\\U0001f5d3\\ufe0f",
+            '{ q: "How many months from March 2024 to January 2026?", o: ["22", "10", "24"], a: 0,'
+            ' w: "Two whole years is 24 months, but January is two months BEFORE March, so it is'
+            ' 24 \\u2212 2 = 22." }'),
+    },
     "patterns": {
         1: ("\\u2796",
             '{ q: "An odd number take away an odd number always gives:",'
@@ -285,12 +319,20 @@ def declared_names(js):
     return out
 
 
-def new_slide(key, no, newpos):
+def new_slide(key, no, newpos, with_pre):
     """One slide written for this build, from new-<key>-{body.html,slides.js}.
 
     No id prefixing and no declaration renaming: everything in those files is already
-    prefixed w, which is checked by the duplicate assertion in main() rather than
-    assumed here."""
+    prefixed, which is checked by the duplicate assertion in main() rather than
+    assumed here.
+
+    `with_pre` carries the file's shared preamble and is decided by the CALLER, which
+    is the only place that knows the teaching order. It used to be `no == 1` -- the
+    file's own first slide -- which is right only while the new slides happen to be
+    authored in the order the lesson uses them. Telling the Time wants its units slide
+    second and its clock slide fourth; numbering the clock 1 would have put every
+    shared helper into the file AFTER the slide that calls them, as a bare reference
+    error at load with nothing to say which file it came from."""
     body = io.open(os.path.join(HERE, "new-%s-body.html" % key), encoding="utf-8").read()
     js = io.open(os.path.join(HERE, "new-%s-slides.js" % key), encoding="utf-8").read()
     sec = re.split(r'(?=<section class="slide")', body)[1:][no - 1]
@@ -298,7 +340,7 @@ def new_slide(key, no, newpos):
     pos = [p for p, n in marks if n == no][0]
     nxt = [p for p, n in marks if n == no + 1]
     blk = js[pos:(nxt[0] if nxt else len(js))]
-    pre = js[: marks[0][0]] if no == min(n for _p, n in marks) else ""
+    pre = js[: marks[0][0]] if with_pre else ""
     sec = re.sub(r'(<span class="n">)\d+(</span>)', r"\g<1>%d\g<2>" % newpos, sec, count=1)
     blk = re.sub(r"\bfinish\(\s*%d\s*," % (no - 1), "finish(%d," % (newpos - 1), blk)
     return sec, pre + blk
@@ -359,7 +401,8 @@ def compose(key, title, srckey, keep, keepq):
         if isinstance(item, tuple) and item[0] == "d":    # a Four Digits Strong slide
             sec, blk = donor_slide(item[1], new)
         elif isinstance(item, tuple) and item[0] == "n":  # a slide written for this build
-            sec, blk = new_slide(key, item[1], new)
+            first_new = next(i for i in seq if isinstance(i, tuple) and i[0] == "n")
+            sec, blk = new_slide(key, item[1], new, item == first_new)
         else:
             newpos[item] = new
             sec = secs[item - 1]

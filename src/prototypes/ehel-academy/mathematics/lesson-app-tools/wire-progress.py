@@ -157,6 +157,32 @@ JS = """
   const known = new Set();
   let lastAt = 0;
 
+  /* WHAT THE RECORD ALREADY HOLDS FOR THIS UNIT, read once at load.
+
+     Both maps above are REPLACED by the reducer, not merged, and both start
+     empty on every page load - so without this the first participation event
+     of a new session deletes every section reported in an earlier one. A child
+     who read four books on Monday and answered one question on Tuesday would
+     have Monday erased by Tuesday's first tick.
+
+     It is kept SEPARATE from the live maps rather than copied into them,
+     because hydrate is asynchronous and a report can fire before it lands.
+     Merged at send time, an early report sends a partial map and the next one
+     repairs it; a seed would simply have missed the window. If hydrate cannot
+     be reached at all the baseline stays empty, which is the behaviour without
+     it. */
+  let baseAttempted = {};
+  let baseKnown = [];
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (!u) return;
+      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
+      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
+    } catch (_) { /* never break the lesson */ }
+  })();
+
   function report(i) {
     lastAt = i;
     const ev = {
@@ -165,8 +191,12 @@ JS = """
       resume: sectionId(i), resumeLabel: labelOf(i),
       xp: doneIds.size,
     };
-    if (Object.keys(attempted).length) ev.attempted = attempted;
-    if (known.size) ev.knownWords = [...known];
+    /* This session's answers WIN over the stored ones for the same section -
+       a child who re-does a step is telling us something newer. */
+    const allAttempted = { ...baseAttempted, ...attempted };
+    const allKnown = new Set([...baseKnown, ...known]);
+    if (Object.keys(allAttempted).length) ev.attempted = allAttempted;
+    if (allKnown.size) ev.knownWords = [...allKnown];
     emit(ev);
     try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
   }

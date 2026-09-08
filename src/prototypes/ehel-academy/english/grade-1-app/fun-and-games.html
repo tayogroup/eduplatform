@@ -614,6 +614,10 @@
   .guide h4 { font-size: 17px; margin: 0 0 6px; }
   .guide p { font-size: 15.5px; line-height: 1.65; color: var(--muted); margin: 0 0 8px; }
 
+  /* A shelf card the learner has been through - the picture-book shelf and
+     the unit's own readings both use it. */
+  .bookcard.played { border-color: var(--good); background: var(--good-soft); }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -6158,14 +6162,30 @@
        the child arrives, because those are two-second word clips; a lesson
        video starting itself is a room full of six-year-olds all playing
        different minutes of the same teacher. */
+    /* WATCHED IS NOT THE SAME AS MOVED ON, and until 2026-09-08 both paths
+       below sent the identical event, so the record could not tell a child
+       who sat through the lesson from one who pressed the button on arrival.
+       One of the two says something about the learner.
+
+       It is deliberately a yes or no rather than a share of the video: the
+       field is `{answered, total}` and a portal prints it as "N of M", so
+       seconds watched would read as questions answered. 1 of 1 means the
+       video reached its end; 0 of 1 means it did not. */
     video.addEventListener("ended", () => {
       $(el.fb).className = "fb good";
       $(el.fb).textContent = "You watched the whole lesson.";
+      reportAttempt(o.finish, 1, 1);
       finish(o.finish, o.done);
     });
     video.addEventListener("play", () => VOICE.stop && VOICE.stop());
     $(el.next).addEventListener("click", () => {
       try { video.pause(); } catch (_) { /* nothing to pause */ }
+      /* Only if the video has not already reported itself watched - the
+         button stays available afterwards, and pressing it then must not
+         overwrite a 1 with a 0. */
+      if (!(video.ended || video.currentTime >= (video.duration || Infinity) - 1)) {
+        reportAttempt(o.finish, 0, 1);
+      }
       finish(o.finish, o.done);
     });
   }
@@ -6215,6 +6235,18 @@
             $(el.fb).className = "fb good";
             $(el.fb).textContent = "You got " + right + " of " + o.items.length
               + " first time, and you said them all. " + o.done;
+            /* THE CHOOSING HALF ONLY, and it says so on the row. This step is
+               two things: tapping the right thing to say, which is a question
+               with a right answer, and then saying it, which Azure listens to
+               and which is deliberately never marked - it scores a five-year-
+               old against adult native speakers.
+
+               `right` was counted here and thrown away, so a real score sat
+               in a local variable through every unit. It is sent under its
+               own sub-key so the row cannot be read as a mark for the
+               speaking that happens beside it. */
+            reportScore(o.finish, right, o.items.length, "choosing", "choosing what to say");
+            reportAttempt(o.finish, o.items.length, o.items.length);
             finish(o.finish, o.done);
             return;
           }
@@ -6860,29 +6892,50 @@
   function bookShelf(o) {
     const el = o.el;
     const books = o.items;
-    let opened = false;
+    /* WHICH books were read, not just that one was. Reading is the largest
+       single block of screen time in the unit and its whole record used to be
+       the step's own done flag - a child who read all seven and a child who
+       opened one and pressed Done were indistinguishable. The shelf has known
+       the answer all along; it simply never said it. Same participation report
+       the unit's own readings already send, and for the same reason: a book
+       read is a real fact and is not a mark. */
+    const read = new Array(books.length).fill(false);
 
     function drawShelf() {
       $(el.ask).innerHTML = o.ask || "Choose a book to read.";
       $(el.stage).className = "stagewide";
       $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
-      $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
+      const got = read.filter(Boolean).length;
+      $(el.score).textContent = got
+        ? got + " of " + books.length + (books.length === 1 ? " book read" : " books read")
+        : books.length + (books.length === 1 ? " book" : " books");
       $(el.shelf).innerHTML = books.map((b, k) =>
-        '<div class="bookcard"><span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
+        '<div class="bookcard' + (read[k] ? " played" : "") + '">' +
+        '<span class="bookicon" aria-hidden="true">' + (read[k] ? "\u2705" : "\u{1F4D6}") + "</span>" +
         '<span class="booktitle">' + esc(b.title) + "</span>" +
         (b.author ? '<span class="bookmeta">by ' + esc(b.author) + "</span>" : "") +
         '<span class="bookmeta">' + b.pages.length + " pages</span>" +
-        '<button type="button" class="big small teal" data-book="' + k + '">Read ▶</button></div>').join("");
+        '<button type="button" class="big small teal" data-book="' + k + '">' +
+        (read[k] ? "Read again ▶" : "Read ▶") + "</button></div>").join("");
       $(el.shelf).addEventListener("click", (e) => {
         const b = e.target.closest("[data-book]");
         if (!b) return;
-        openReader(books[Number(b.dataset.book)]);
+        openReader(Number(b.dataset.book));
       });
     }
 
-    function openReader(book) {
-      opened = true;
-      openBookReader(book, () => finish(o.finish, o.done));
+    function openReader(k) {
+      openBookReader(books[k], () => {
+        read[k] = true;
+        reportAttempt(o.finish, read.filter(Boolean).length, read.length);
+        /* The step still COMPLETES on the first book finished - one book is
+           what the unit asks for, and gating the rest of the unit on seven
+           would be a different decision. What changed is only what is
+           reported: the shelf now redraws so a child can see which ones they
+           have been through. */
+        finish(o.finish, o.done);
+        drawShelf();
+      });
     }
 
     drawShelf();
@@ -6911,14 +6964,26 @@
 
      WRONG IS FREE HERE. A wrong tap says so and lets the child try again
      rather than marking and moving on: the answer is in a book they have,
-     and going back to look it up is reading, not cheating. So there is no
-     score - the step is finished when every question has a star.
+     and going back to look it up is reading, not cheating.
+
+     WHICH IS WHY THE SCORE HAD TO CHANGE, 2026-09-08. Reporting "solved out
+     of asked" meant every child who reached the end scored 100%, because the
+     step is built so that they can only reach the end by solving all of them.
+     It was a number that could not vary - a mark in the gradebook that said
+     nothing about the learner. What varies, and what a teacher can act on, is
+     how many were right FIRST TIME. Retries stay free and are not punished:
+     they cost the first-time score and nothing else, and the participation
+     count beside it still says how far through they are.
      ================================================================== */
   function bookQuestions(o) {
     const el = o.el;
     const questions = o.items || [];
     const books = o.books || [];
     const solved = new Set();
+    /* Answered wrongly at least once before being solved. A reset on an
+       `order` question counts, because tapping the pages in the wrong order
+       IS the wrong answer to that question. */
+    const missed = new Set();
     let index = 0;
     let picked = [];          // order-type taps so far, reset on every move
 
@@ -6974,6 +7039,9 @@
         "</div>";
       $(el.score).textContent = "Question " + (index + 1) + " of " + questions.length +
         "  \u00b7  " + solved.size + " answered";
+      /* How far through, sent as they go - so a child who stops halfway is on
+         the record as halfway rather than as nothing. */
+      reportAttempt(o.finish, solved.size, questions.length);
       if (!done) { $(el.fb).textContent = ""; $(el.fb).className = "fb"; }
 
       $(el.bq).addEventListener("click", onTap);
@@ -6988,10 +7056,10 @@
       if (allDone) {
         $(el.fb).className = "fb good";
         $(el.fb).textContent = "Every question has a star. " + o.done;
-        // Every question ends solved here - a wrong tap lets the child try
-        // again rather than marking them - so the honest score is the number
-        // ANSWERED out of the number asked, which is what it says on screen.
-        reportScore(o.finish, solved.size, questions.length);
+        // Right first time. See the note at the top of this section: solved
+        // out of asked is 100% for everyone who gets here, so it is not a
+        // score. This one varies, and retries are still free.
+        reportScore(o.finish, questions.length - missed.size, questions.length);
         finish(o.finish, o.done);
       }
     }
@@ -7020,6 +7088,7 @@
           $(el.fb).textContent = cheer();
           setTimeout(advance, 900);
         } else {
+          if (!solved.has(index)) missed.add(index);
           playStorySound("child-surprised");
           pick.classList.add("wrong");
           $(el.fb).className = "fb bad";
@@ -7043,6 +7112,7 @@
           }
           draw();
         } else {
+          if (!solved.has(index)) missed.add(index);
           playStorySound("child-surprised");
           picked = [];
           $(el.fb).className = "fb bad";
@@ -8581,6 +8651,32 @@
   const known = new Set();
   let lastAt = 0;
 
+  /* WHAT THE RECORD ALREADY HOLDS FOR THIS UNIT, read once at load.
+
+     Both maps above are REPLACED by the reducer, not merged, and both start
+     empty on every page load - so without this the first participation event
+     of a new session deletes every section reported in an earlier one. A child
+     who read four books on Monday and answered one question on Tuesday would
+     have Monday erased by Tuesday's first tick.
+
+     It is kept SEPARATE from the live maps rather than copied into them,
+     because hydrate is asynchronous and a report can fire before it lands.
+     Merged at send time, an early report sends a partial map and the next one
+     repairs it; a seed would simply have missed the window. If hydrate cannot
+     be reached at all the baseline stays empty, which is the behaviour without
+     it. */
+  let baseAttempted = {};
+  let baseKnown = [];
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (!u) return;
+      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
+      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
+    } catch (_) { /* never break the lesson */ }
+  })();
+
   function report(i) {
     lastAt = i;
     const ev = {
@@ -8589,8 +8685,12 @@
       resume: sectionId(i), resumeLabel: labelOf(i),
       xp: doneIds.size,
     };
-    if (Object.keys(attempted).length) ev.attempted = attempted;
-    if (known.size) ev.knownWords = [...known];
+    /* This session's answers WIN over the stored ones for the same section -
+       a child who re-does a step is telling us something newer. */
+    const allAttempted = { ...baseAttempted, ...attempted };
+    const allKnown = new Set([...baseKnown, ...known]);
+    if (Object.keys(allAttempted).length) ev.attempted = allAttempted;
+    if (allKnown.size) ev.knownWords = [...allKnown];
     emit(ev);
     try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
   }

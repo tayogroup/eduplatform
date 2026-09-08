@@ -518,14 +518,30 @@
        the child arrives, because those are two-second word clips; a lesson
        video starting itself is a room full of six-year-olds all playing
        different minutes of the same teacher. */
+    /* WATCHED IS NOT THE SAME AS MOVED ON, and until 2026-09-08 both paths
+       below sent the identical event, so the record could not tell a child
+       who sat through the lesson from one who pressed the button on arrival.
+       One of the two says something about the learner.
+
+       It is deliberately a yes or no rather than a share of the video: the
+       field is `{answered, total}` and a portal prints it as "N of M", so
+       seconds watched would read as questions answered. 1 of 1 means the
+       video reached its end; 0 of 1 means it did not. */
     video.addEventListener("ended", () => {
       $(el.fb).className = "fb good";
       $(el.fb).textContent = "You watched the whole lesson.";
+      reportAttempt(o.finish, 1, 1);
       finish(o.finish, o.done);
     });
     video.addEventListener("play", () => VOICE.stop && VOICE.stop());
     $(el.next).addEventListener("click", () => {
       try { video.pause(); } catch (_) { /* nothing to pause */ }
+      /* Only if the video has not already reported itself watched - the
+         button stays available afterwards, and pressing it then must not
+         overwrite a 1 with a 0. */
+      if (!(video.ended || video.currentTime >= (video.duration || Infinity) - 1)) {
+        reportAttempt(o.finish, 0, 1);
+      }
       finish(o.finish, o.done);
     });
   }
@@ -575,6 +591,18 @@
             $(el.fb).className = "fb good";
             $(el.fb).textContent = "You got " + right + " of " + o.items.length
               + " first time, and you said them all. " + o.done;
+            /* THE CHOOSING HALF ONLY, and it says so on the row. This step is
+               two things: tapping the right thing to say, which is a question
+               with a right answer, and then saying it, which Azure listens to
+               and which is deliberately never marked - it scores a five-year-
+               old against adult native speakers.
+
+               `right` was counted here and thrown away, so a real score sat
+               in a local variable through every unit. It is sent under its
+               own sub-key so the row cannot be read as a mark for the
+               speaking that happens beside it. */
+            reportScore(o.finish, right, o.items.length, "choosing", "choosing what to say");
+            reportAttempt(o.finish, o.items.length, o.items.length);
             finish(o.finish, o.done);
             return;
           }

@@ -232,29 +232,50 @@
   function bookShelf(o) {
     const el = o.el;
     const books = o.items;
-    let opened = false;
+    /* WHICH books were read, not just that one was. Reading is the largest
+       single block of screen time in the unit and its whole record used to be
+       the step's own done flag - a child who read all seven and a child who
+       opened one and pressed Done were indistinguishable. The shelf has known
+       the answer all along; it simply never said it. Same participation report
+       the unit's own readings already send, and for the same reason: a book
+       read is a real fact and is not a mark. */
+    const read = new Array(books.length).fill(false);
 
     function drawShelf() {
       $(el.ask).innerHTML = o.ask || "Choose a book to read.";
       $(el.stage).className = "stagewide";
       $(el.stage).innerHTML = '<div class="shelf" id="' + el.shelf + '"></div>';
-      $(el.score).textContent = books.length + (books.length === 1 ? " book" : " books");
+      const got = read.filter(Boolean).length;
+      $(el.score).textContent = got
+        ? got + " of " + books.length + (books.length === 1 ? " book read" : " books read")
+        : books.length + (books.length === 1 ? " book" : " books");
       $(el.shelf).innerHTML = books.map((b, k) =>
-        '<div class="bookcard"><span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
+        '<div class="bookcard' + (read[k] ? " played" : "") + '">' +
+        '<span class="bookicon" aria-hidden="true">' + (read[k] ? "\u2705" : "\u{1F4D6}") + "</span>" +
         '<span class="booktitle">' + esc(b.title) + "</span>" +
         (b.author ? '<span class="bookmeta">by ' + esc(b.author) + "</span>" : "") +
         '<span class="bookmeta">' + b.pages.length + " pages</span>" +
-        '<button type="button" class="big small teal" data-book="' + k + '">Read ▶</button></div>').join("");
+        '<button type="button" class="big small teal" data-book="' + k + '">' +
+        (read[k] ? "Read again ▶" : "Read ▶") + "</button></div>").join("");
       $(el.shelf).addEventListener("click", (e) => {
         const b = e.target.closest("[data-book]");
         if (!b) return;
-        openReader(books[Number(b.dataset.book)]);
+        openReader(Number(b.dataset.book));
       });
     }
 
-    function openReader(book) {
-      opened = true;
-      openBookReader(book, () => finish(o.finish, o.done));
+    function openReader(k) {
+      openBookReader(books[k], () => {
+        read[k] = true;
+        reportAttempt(o.finish, read.filter(Boolean).length, read.length);
+        /* The step still COMPLETES on the first book finished - one book is
+           what the unit asks for, and gating the rest of the unit on seven
+           would be a different decision. What changed is only what is
+           reported: the shelf now redraws so a child can see which ones they
+           have been through. */
+        finish(o.finish, o.done);
+        drawShelf();
+      });
     }
 
     drawShelf();
@@ -283,14 +304,26 @@
 
      WRONG IS FREE HERE. A wrong tap says so and lets the child try again
      rather than marking and moving on: the answer is in a book they have,
-     and going back to look it up is reading, not cheating. So there is no
-     score - the step is finished when every question has a star.
+     and going back to look it up is reading, not cheating.
+
+     WHICH IS WHY THE SCORE HAD TO CHANGE, 2026-09-08. Reporting "solved out
+     of asked" meant every child who reached the end scored 100%, because the
+     step is built so that they can only reach the end by solving all of them.
+     It was a number that could not vary - a mark in the gradebook that said
+     nothing about the learner. What varies, and what a teacher can act on, is
+     how many were right FIRST TIME. Retries stay free and are not punished:
+     they cost the first-time score and nothing else, and the participation
+     count beside it still says how far through they are.
      ================================================================== */
   function bookQuestions(o) {
     const el = o.el;
     const questions = o.items || [];
     const books = o.books || [];
     const solved = new Set();
+    /* Answered wrongly at least once before being solved. A reset on an
+       `order` question counts, because tapping the pages in the wrong order
+       IS the wrong answer to that question. */
+    const missed = new Set();
     let index = 0;
     let picked = [];          // order-type taps so far, reset on every move
 
@@ -346,6 +379,9 @@
         "</div>";
       $(el.score).textContent = "Question " + (index + 1) + " of " + questions.length +
         "  \u00b7  " + solved.size + " answered";
+      /* How far through, sent as they go - so a child who stops halfway is on
+         the record as halfway rather than as nothing. */
+      reportAttempt(o.finish, solved.size, questions.length);
       if (!done) { $(el.fb).textContent = ""; $(el.fb).className = "fb"; }
 
       $(el.bq).addEventListener("click", onTap);
@@ -360,10 +396,10 @@
       if (allDone) {
         $(el.fb).className = "fb good";
         $(el.fb).textContent = "Every question has a star. " + o.done;
-        // Every question ends solved here - a wrong tap lets the child try
-        // again rather than marking them - so the honest score is the number
-        // ANSWERED out of the number asked, which is what it says on screen.
-        reportScore(o.finish, solved.size, questions.length);
+        // Right first time. See the note at the top of this section: solved
+        // out of asked is 100% for everyone who gets here, so it is not a
+        // score. This one varies, and retries are still free.
+        reportScore(o.finish, questions.length - missed.size, questions.length);
         finish(o.finish, o.done);
       }
     }
@@ -392,6 +428,7 @@
           $(el.fb).textContent = cheer();
           setTimeout(advance, 900);
         } else {
+          if (!solved.has(index)) missed.add(index);
           playStorySound("child-surprised");
           pick.classList.add("wrong");
           $(el.fb).className = "fb bad";
@@ -415,6 +452,7 @@
           }
           draw();
         } else {
+          if (!solved.has(index)) missed.add(index);
           playStorySound("child-surprised");
           picked = [];
           $(el.fb).className = "fb bad";

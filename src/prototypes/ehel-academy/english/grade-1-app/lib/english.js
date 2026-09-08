@@ -711,6 +711,34 @@
     finish(o.finish, o.done);
   }
 
+  /* ---- the unit's own story, as its book ---------------------------
+     A NAME IN THE MENU for the story the unit is built around, and a
+     second route to the book the shelf already holds - not a second copy
+     of it. The step removed earlier today printed the same story as four
+     blocks of plain text; this opens the twelve illustrated, narrated
+     pages in the reader the shelf uses.
+
+     It sits directly above the questions that ask about it, which is
+     where a child looking for "the story" expects to find it.
+     ------------------------------------------------------------------ */
+  function storyBook(o) {
+    const el = o.el;
+    const book = (o.books || []).find((b) => b.id === o.id);
+    if (!book) return;
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="storycard">' +
+      '<span class="bookicon" aria-hidden="true">\u{1F4D6}</span>' +
+      '<span class="booktitle">' + esc(book.title) + "</span>" +
+      (book.author ? '<span class="bookmeta">by ' + esc(book.author) + "</span>" : "") +
+      '<span class="bookmeta">' + book.pages.length + " pages</span>" +
+      '<button type="button" class="big small teal" id="' + el.open + '">Read the story \u25B6</button>' +
+      "</div>";
+    $(el.open).addEventListener("click", () => {
+      openBookReader(book, () => finish(o.finish, o.done));
+    });
+  }
+
   /* ---- the stickers, one per step that can be earned --------------- */
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) =>

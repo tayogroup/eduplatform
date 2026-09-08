@@ -162,6 +162,15 @@ STEP_ORDER = [
     # (those are authored for the picture books), and every one of them is
     # still answerable — checked question by question — from the book on
     # the shelf.
+    #
+    # "story" IS BACK, and it is not the step that was removed. That one
+    # printed the story as four blocks of plain text; this one IS the picture
+    # book — the same twelve illustrated, narrated pages the shelf holds,
+    # opened in the same reader. One copy of the content, a second route to
+    # it, and a name in the MENU, which is what the owner was pointing at
+    # both times: the navigation listed Games then "What happened in the
+    # story?" with no story anywhere between them.
+    "story",
     "questions",
     # Immediately before Fluency, which is where the shell course puts it
     # (writing, activities, fluency, quiz). These are the unit's hands-on jobs
@@ -1299,6 +1308,25 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     if story_book:
         data["storyBook"] = story_book["id"]
 
+    # ---- The unit's own story --------------------------------------------
+    #         The picture book of it, by name, immediately above the questions
+    #         that ask about it. `storyBook` is matched by TITLE against the
+    #         shelf above (see below) rather than taken by position - it is
+    #         book 2 in all ten units and indexing it would hand the child the
+    #         wrong book, silently, the first time a shelf is reordered.
+    if data.get("storyBook"):
+        i = add("story", "The unit story", "\U0001F4D6", "I read the unit story",
+                "This unit's own story, from beginning to end.",
+                explain(
+                    ["This is the story this unit is built around."],
+                    ["Press Read the story.",
+                     "Turn the pages with Next.",
+                     "Press Listen on a page you want read to you."],
+                    ["The next step asks about this story.",
+                     "You can come back here whenever you like."],
+                    ["Press Read the story."]),
+                ["open"])
+
     if book_questions:
         data["bookquestions"] = book_questions
         i = add("bookquestions", "Story questions for each book", "\U0001F50D",
@@ -1481,6 +1509,9 @@ def bootstrap(slides, data):
             out.append('  pictureMatch({ el: %s, items: LESSON.match, finish: %d,\n'
                        '    ask: "Which word is this?", label: "Picture",\n'
                        '    done: "You can read those words on their own now." });' % (el, i))
+        elif k == "story":
+            out.append('  storyBook({ el: %s, books: LESSON.books, id: LESSON.storyBook,\n'
+                       '    finish: %d, done: "You read the whole story." });' % (el, i))
         elif k == "questions":
             out.append('  sequence({ el: %s, items: LESSON.questions, finish: %d,\n'
                        '    label: "Question", done: "You remembered the story well.",\n'

@@ -49,8 +49,13 @@ STRUCTURE = [
     ("bignum", "Big Numbers and Below Zero", "num",
      [("d", 1), ("n", 1), ("n", 2), 9, ("n", 3), ("d", 2), 10, ("n", 4), ("n", 5), ("n", 6)],
      [8, 9]),
+    # Odd and even is taught for adding and then for taking away; the unknown moves
+    # from the middle of the sum, to the front, to appearing twice; and sequences go
+    # find-the-next-term, classify, then NAME the rule -- which is the objective's own
+    # verb and the one thing the kept slide cannot ask, since its chip says the rule.
     ("patterns", "Patterns and Square Numbers", "num",
-     [2, 3, 4, 5], [2, 3, 4, 5]),
+     [2, ("n", 1), 3, ("n", 2), ("n", 3), 4, ("n", 4), ("n", 5), 5, ("n", 6)],
+     [2, 3, 4, 5]),
     ("calc", "Ways to Calculate", "num",
      [1, 6, ("d", 6), 7, 8], [1, 6, 7, 10]),
     ("frac", "Parts of a Whole", "frac", None, None),
@@ -104,6 +109,32 @@ DONOR_BODY, DONOR_JS = "g4-lesson-body.html", "g4-lesson.js"
 # panel, because each one judges the learner directly.
 #   lesson -> {slide number in the new file: (sticker, quiz item)}
 NEW_EXTRAS = {
+    "patterns": {
+        1: ("\\u2796",
+            '{ q: "An odd number take away an odd number always gives:",'
+            ' o: ["An even number", "An odd number", "It depends"], a: 0,'
+            ' w: "Each one has a single leftover, and those two leftovers cancel \\u2014 so nothing is left'
+            ' over and the answer pairs up exactly." }'),
+        2: ("\\u2753",
+            '{ q: "If \\u25b2 \\u2212 14 = 30, what is \\u25b2?", o: ["44", "16", "30"], a: 0,'
+            ' w: "Here the shape is the WHOLE, before anything was taken. Put the pieces back: 30 + 14 = 44." }'),
+        3: ("\\u2696\\ufe0f",
+            '{ q: "If \\u25a0 + \\u25a0 + \\u25a0 = 24, what is \\u25a0?", o: ["8", "12", "21"], a: 0,'
+            ' w: "The same shape is the same number every time, so 24 splits into three equal parts: 24 \\u00f7 3 = 8." }'),
+        4: ("\\U0001f4c8",
+            '{ q: "5, 12, 19, 26 \\u2026 is this linear or non-linear?",'
+            ' o: ["Linear", "Non-linear", "Neither"], a: 0,'
+            ' w: "The steps are +7, +7, +7 \\u2014 the same every time, which is what linear means." }'),
+        5: ("\\U0001f4dc",
+            '{ q: "2, 5, 9, 14 \\u2026 what is the term-to-term rule?",'
+            ' o: ["Add one more each time than you added before", "Add 3 every time", "Double it"], a: 0,'
+            ' w: "The steps are +3, +4, +5. They are not the same, so it is not add 3 every time \\u2014 each'
+            ' step is one bigger than the last." }'),
+        6: ("\\u2795",
+            '{ q: "How many dots turn a 6 by 6 square into a 7 by 7 one?", o: ["13", "12", "7"], a: 0,'
+            ' w: "An arm of 6 down one side, an arm of 6 along the other, and 1 in the corner: 6 + 6 + 1 = 13.'
+            ' That is why the gaps between square numbers are the odd numbers." }'),
+    },
     "bignum": {
         1: ("\\U0001f3f7\\ufe0f",
             '{ q: "What is the 6 worth in 63,451?", o: ["60 000", "6 000", "6"], a: 0,'

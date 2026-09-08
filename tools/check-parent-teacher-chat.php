@@ -376,8 +376,19 @@ check('  so the re-skin is asked for this page\'s prefix too',
 // board's four are children/working/this-week/minutes. Inheriting the order
 // silently would put the raised-hand icon on a parent's CHILDREN count.
 check('  and names its OWN totals icons rather than inheriting seven meanings',
-    strpos($pboardlive, "['users', 'star', 'calendar', 'clock']") !== false
-        && strpos($acclive, '$totalicons = [\'hand\', \'star\', \'data\', \'users\', \'alert\', \'exit\', \'calendar\']') !== false);
+    strpos($pboardlive, "['users', 'star', 'calendar', 'clock']") !== false);
+// The re-skin itself is checked ONLY where it exists. Both boards call it
+// unguarded, so a tree without it fatals on both pages -- a real failure, but
+// one that has to say SO rather than blame the icon list, which would be a
+// claim about a function that is not here. (It is absent from main as this
+// lands: another session holds it uncommitted, and git grep finds it twice in
+// the whole repository, both times as a call and never as a definition.)
+if (strpos($acclive, 'function pqh_ehel_group_board_css(') === false) {
+    check('the re-skin both boards call is DEFINED in this tree', false);
+} else {
+    check('  and the re-skin keeps the teacher\'s seven as its default',
+        strpos($acclive, '$totalicons = [\'hand\', \'star\', \'data\', \'users\', \'alert\', \'exit\', \'calendar\']') !== false);
+}
 // The rules the page used to carry itself, now asserted where they live. The
 // wrap rule is the content column; without .pqpb-main's min-width:0 a flex
 // item refuses to shrink below its content and the chat is pushed off the

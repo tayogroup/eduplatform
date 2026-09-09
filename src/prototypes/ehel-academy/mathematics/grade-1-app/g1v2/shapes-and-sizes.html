@@ -1864,7 +1864,15 @@
 
   /* ---- 7: mass ---- */
   function balance(tiltLeftDown, leftEmoji, rightEmoji) {
-    const t = tiltLeftDown === 0 ? 0 : (tiltLeftDown > 0 ? 10 : -10);
+    /* The rotation sign was inverted, and it CANCELLED the pans instead of
+       reinforcing them, so every balance in this step drew a tilted beam over
+       two LEVEL pans - measured: beam ends 71px apart, the two emoji 1px apart.
+       A child asked "which one is heavier" saw the pans they are meant to read
+       sitting level, and the only cue that did move, the beam, pointed at the
+       wrong side: with tiltLeftDown = 1 the ly/ry below put the left pan lower
+       while rotate(+10deg) drops the RIGHT end, because positive rotation in
+       SVG is clockwise. Negating it makes the beam agree with the pans. */
+    const t = tiltLeftDown === 0 ? 0 : (tiltLeftDown > 0 ? -10 : 10);
     const ly = 60 + (tiltLeftDown > 0 ? 22 : tiltLeftDown < 0 ? -12 : 5);
     const ry = 60 + (tiltLeftDown < 0 ? 22 : tiltLeftDown > 0 ? -12 : 5);
     return '<div class="picwrap"><svg viewBox="0 0 300 190" role="img" aria-label="A balance">' +
@@ -1887,7 +1895,7 @@
       { ask: "Which one is <b>heavier</b>?", pic: balance(1, "🍉", "🍓"),
         opts: [{ t: "🍉 melon", ok: true }, { t: "🍓 strawberry", ok: false }],
         why: "The melon is heavier, so its side went DOWN." },
-      { ask: "Which one is <b>lighter</b>?", pic: balance(-1, "🪨", "🪶"),
+      { ask: "Which one is <b>lighter</b>?", pic: balance(1, "🪨", "🪶"),
         opts: [{ t: "🪶 feather", ok: true }, { t: "🪨 stone", ok: false }],
         why: "The feather is lighter, so its side went UP." },
       { ask: "This balance is <b>level</b>. What does that tell you?", pic: balance(0, "🧱", "🧱"),

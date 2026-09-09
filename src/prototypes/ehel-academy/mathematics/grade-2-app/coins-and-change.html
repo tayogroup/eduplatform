@@ -520,9 +520,9 @@
     </section>
 
     <!-- 8 best value -->
-    <section class="slide" data-say="Two shops, the same thing. To see which is better, work out what just one costs.">
-      <div class="slide-head"><span class="n">8</span><h2>Which is better value?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Same thing, two shops. Work out what <b>one</b> costs, then choose.</span></div>
+    <section class="slide" data-say="Two purses. Add up what is in each one, then choose the one worth more.">
+      <div class="slide-head"><span class="n">8</span><h2>Which purse is worth more?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Two purses. Add up what is in each one, then choose the one worth <b>more</b>.</span></div>
       <div class="stage">
         <p class="fb" id="q8" style="font-size:20px"></p>
         <div class="offers" id="offers8"></div>
@@ -1595,41 +1595,48 @@
   });
   round7();
 
-  /* ---- 8: best value ---- */
-  const DEALS = [
-    { thing: "mangoes", a: [3, 60], b: [5, 90] },
-    { thing: "pencils", a: [4, 80], b: [6, 90] },
-    { thing: "eggs", a: [6, 90], b: [10, 160] },
-    { thing: "buns", a: [2, 50], b: [5, 100] },
-    { thing: "bars of soap", a: [2, 40], b: [3, 66] },
-    { thing: "juices", a: [4, 120], b: [6, 150] },
+  /* ---- 8: which purse is worth more (0096 2Nm.02) ----
+     This step used to compare UNIT COST - 60 sh for 3 mangoes against 90 sh
+     for 5, divide each out, pick the cheaper one. That is proportional
+     reasoning, which 0096 reaches at 6Nf, four stages above the child in front
+     of it. 2Nm.02 is "compare values of different combinations of coins or
+     notes", so the same two-offer control now asks which purse is worth more
+     and the working adds each purse up instead of dividing it. */
+  const PURSE_PAIRS = [
+    { a: [20, 20, 5], b: [50] },
+    { a: [10, 10, 10], b: [20, 5] },
+    { a: [50, 20], b: [100] },
+    { a: [50, 5], b: [20, 20, 10] },
+    { a: [20, 10], b: [5, 5, 5, 5, 5] },
+    { a: [50, 50], b: [100, 20] },
   ];
+  const purseTotal = (p) => p.reduce((x, y) => x + y, 0);
   let d8 = 0, right8 = 0, lock8 = false, list8 = [], deal8 = null;
   function round8() {
     lock8 = false; $("fb8").textContent = ""; $("fb8").className = "fb"; $("work8").innerHTML = "";
-    if (d8 === 0) list8 = shuffle(DEALS).slice(0, 4);
-    if (d8 >= list8.length) { $("q8").textContent = ""; $("offers8").innerHTML = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You picked the better deal " + right8 + " times out of " + list8.length + "!"; $("score8").textContent = ""; finish(7, "You can spot the better deal."); return; }
+    if (d8 === 0) list8 = shuffle(PURSE_PAIRS).slice(0, 4);
+    if (d8 >= list8.length) { $("q8").textContent = ""; $("offers8").innerHTML = ""; $("fb8").className = "fb good"; $("fb8").textContent = "You compared " + right8 + " purses out of " + list8.length + " correctly!"; $("score8").textContent = ""; finish(7, "You can compare two handfuls of money."); return; }
     deal8 = list8[d8];
-    $("score8").textContent = "Shop " + (d8 + 1) + " of " + list8.length;
-    const q = "Where are " + deal8.thing + " better value?";
+    $("score8").textContent = "Purse " + (d8 + 1) + " of " + list8.length;
+    const q = "Which purse is worth more?";
     $("q8").textContent = q; $("say8").textContent = q;
-    $("offers8").innerHTML = [["A", deal8.a], ["B", deal8.b]].map(([n, o]) => '<button type="button" class="offer" data-v="' + n + '"><span class="shop">Shop ' + n + '</span><span class="deal">' + o[0] + " for " + sh(o[1]) + '</span><span class="each" data-each>&nbsp;</span></button>').join("");
+    $("offers8").innerHTML = [["A", deal8.a], ["B", deal8.b]].map(([n, o]) => '<button type="button" class="offer" data-v="' + n + '"><span class="shop">Purse ' + n + '</span><span class="deal">' + o.map(sh).join(" + ") + '</span><span class="each" data-each>&nbsp;</span></button>').join("");
     say(q);
   }
   $("offers8").addEventListener("click", (e) => {
     const b = e.target.closest(".offer"); if (!b || lock8) return; lock8 = true;
-    const ea = deal8.a[1] / deal8.a[0], eb = deal8.b[1] / deal8.b[0], ans = ea < eb ? "A" : "B";
+    const ta = purseTotal(deal8.a), tb = purseTotal(deal8.b), ans = ta > tb ? "A" : "B";
     const els = [...$("offers8").querySelectorAll(".offer")];
-    els.forEach((el, i) => { el.disabled = true; el.querySelector("[data-each]").textContent = (i === 0 ? ea : eb) + " sh each"; if (el.dataset.v === ans) el.classList.add("right"); else if (el === b) el.classList.add("wrong"); });
+    els.forEach((el, i) => { el.disabled = true; el.querySelector("[data-each]").textContent = sh(i === 0 ? ta : tb) + " altogether"; if (el.dataset.v === ans) el.classList.add("right"); else if (el === b) el.classList.add("wrong"); });
     lines($("work8"), [
-      { k: "Shop A: " + sh(deal8.a[1]) + " ÷ " + deal8.a[0], v: "= " + sh(ea) + " each" },
-      { k: "Shop B: " + sh(deal8.b[1]) + " ÷ " + deal8.b[0], v: "= " + sh(eb) + " each" },
-      { k: "Cheaper for one", v: "Shop " + ans, total: true },
+      { k: "Purse A", v: deal8.a.join(" + ") + " = <b>" + sh(ta) + "</b>" },
+      { k: "Purse B", v: deal8.b.join(" + ") + " = <b>" + sh(tb) + "</b>" },
+      { k: "Worth more", v: "Purse " + ans + ", by " + sh(Math.abs(ta - tb)), total: true },
     ]);
     const ok = b.dataset.v === ans; if (ok) right8++;
     $("fb8").className = "fb " + (ok ? "good" : "bad");
-    $("fb8").textContent = (ok ? cheer() + " " : "Shop " + ans + " is better. ") + "One costs " + sh(Math.min(ea, eb)) + " there, against " + sh(Math.max(ea, eb)) + ".";
-    say(ok ? cheer() + " Shop " + ans : "Shop " + ans + " is better value");
+    $("fb8").textContent = (ok ? cheer() + " " : "Purse " + ans + " is worth more. ") + sh(Math.max(ta, tb)) + " against " + sh(Math.min(ta, tb)) + ". More coins does not always mean more money.";
+    say(ok ? cheer() + " Purse " + ans : "Purse " + ans + " is worth more");
     d8++; setTimeout(round8, 3800);
   });
   round8();
@@ -1677,7 +1684,7 @@
     { q: "It costs 80 sh. You pay 100 sh. Your change is…", opts: ["20 sh", "180 sh", "30 sh"], a: "20 sh" },
     { q: "250 cents written in shillings is…", opts: ["2 sh 50 c", "25 sh", "2 sh 05 c"], a: "2 sh 50 c" },
     { q: "3 mangoes for 60 sh. What does one cost?", opts: ["20 sh", "30 sh", "63 sh"], a: "20 sh" },
-    { q: "4 for 80 sh, or 5 for 90 sh. Which is better value?", opts: ["5 for 90", "4 for 80", "the same"], a: "5 for 90" },
+    { q: "Which is worth more: 20 sh + 20 sh + 5 sh, or one 50 sh note?", opts: ["the 50 sh note", "the three coins", "the same"], a: "the 50 sh note" },
     { q: "You save 25 sh a week. After 4 weeks you have…", opts: ["100 sh", "29 sh", "75 sh"], a: "100 sh" },
     { q: "You have 200 sh and spend 145 sh. What is left?", opts: ["55 sh", "65 sh", "345 sh"], a: "55 sh" },
   ];
@@ -1698,7 +1705,7 @@
   round10();
 
   /* ---- 11: stickers ---- */
-  const STICKERS = [["🪙", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🧺", "Shop totals"], ["↩️", "Counting change"], ["💯", "Shillings and cents"], ["⚖️", "Better value"], ["🏦", "Saving and spending"], ["✅", "Show what I know"]];
+  const STICKERS = [["🪙", "Coins and notes"], ["👛", "Counting a purse"], ["🎯", "Making an amount"], ["✨", "The fewest pieces"], ["🧺", "Shop totals"], ["↩️", "Counting change"], ["💯", "Shillings and cents"], ["⚖️", "Which purse is worth more"], ["🏦", "Saving and spending"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;

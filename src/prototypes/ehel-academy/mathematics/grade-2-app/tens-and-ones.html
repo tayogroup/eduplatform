@@ -609,9 +609,9 @@
     </section>
 
     <!-- 10 addition -->
-    <section class="slide" data-say="Add the tens, then add the ones. If the ones make ten or more, swap ten ones for a ten.">
+    <section class="slide" data-say="Add the tens, then add the ones, then put the two answers together.">
       <div class="slide-head"><span class="n">10</span><h2>Adding two-digit numbers</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Add the <b>tens</b>, then add the <b>ones</b>. If the ones make 10 or more, swap ten ones for one ten.</span></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Add the <b>tens</b>, then add the <b>ones</b>. Put the two answers together.</span></div>
       <div class="stage">
         <div class="bignum" id="sum4" style="font-size:clamp(36px,8vw,58px)"></div>
         <div class="blocks" id="blocks4"></div>
@@ -682,10 +682,10 @@
 
     <!-- 15 fractions -->
     <section class="slide" data-say="Cut the bar into equal parts. Tap the parts to shade them.">
-      <div class="slide-head"><span class="n">15</span><h2>Halves, quarters, thirds</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Halves and quarters</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Cut the bar into <b>equal</b> parts, then tap parts to shade them.</span></div>
       <div class="stage">
-        <div class="bigbtns"><button type="button" class="big small teal" data-parts="2">halves</button><button type="button" class="big small ghost" data-parts="3">thirds</button><button type="button" class="big small ghost" data-parts="4">quarters</button></div>
+        <div class="bigbtns"><button type="button" class="big small teal" data-parts="2">halves</button><button type="button" class="big small ghost" data-parts="4">quarters</button></div>
         <div class="fracbar" id="bar8"></div>
         <div class="bignum" id="frac8" style="font-size:clamp(30px,7vw,48px)"></div>
         <div class="working" id="work8"></div>
@@ -1623,7 +1623,15 @@
   function round4() {
     $("fb4").textContent = ""; $("fb4").className = "fb"; $("ch4").innerHTML = ""; stage4 = 0; $("step4").disabled = false;
     if (r4 >= ROUNDS4) { $("sum4").textContent = ""; $("est4").textContent = ""; $("blocks4").innerHTML = ""; $("work4").innerHTML = ""; $("step4").hidden = true; $("fb4").className = "fb good"; $("fb4").textContent = "You added " + right4 + " of " + ROUNDS4 + "!"; finish(9, "You can add two-digit numbers."); return; }
-    a4 = rnd(12, 58); b4 = rnd(11, 99 - a4); if (r4 % 2 === 1 && (a4 % 10) + (b4 % 10) < 10) b4 = Math.min(99 - a4, b4 + (10 - (a4 % 10) - (b4 % 10)) + 1);
+    // 2Ni.04 is two-digit addition WITH NO REGROUPING of ones or tens, and it
+    // says so in the objective itself - regrouping is 3Ni.04 and Cambridge
+    // defers it on purpose. The line that stood here did the opposite: on every
+    // odd round it pushed b4 up until the ones crossed ten, so half the sums a
+    // Stage 2 child met were forced carries. Both columns are now built to stay
+    // under ten, which also makes the "Swap" step below unreachable and gone.
+    const oa = rnd(1, 8), ta = rnd(1, 4);
+    const ob = rnd(1, 9 - oa), tb = rnd(1, 9 - ta);
+    a4 = ta * 10 + oa; b4 = tb * 10 + ob;
     $("score4").textContent = "Sum " + (r4 + 1) + " of " + ROUNDS4;
     $("sum4").innerHTML = a4 + ' <span class="t">+</span> ' + b4 + ' <span style="color:var(--muted)">= ?</span>';
     // 2Ni.04 asks for an ESTIMATE before the calculation, so the page makes one
@@ -1636,15 +1644,14 @@
     say(words(a4) + " add " + words(b4) + ". Press the button to see the next step.");
   }
   function paintWork4() {
-    const ta = Math.floor(a4 / 10) * 10, tb = Math.floor(b4 / 10) * 10, oa = a4 % 10, ob = b4 % 10, ones = oa + ob, regroup = ones >= 10, s = a4 + b4;
+    const ta = Math.floor(a4 / 10) * 10, tb = Math.floor(b4 / 10) * 10, oa = a4 % 10, ob = b4 % 10, ones = oa + ob, s = a4 + b4;
     const L = [
       { k: "Tens", v: ta + " + " + tb + " = <b>" + (ta + tb) + "</b>", hidden: stage4 < 1 },
-      { k: "Ones", v: oa + " + " + ob + " = <b>" + ones + "</b>" + (regroup ? ", that is <b>1 ten and " + (ones - 10) + "</b>" : ""), hidden: stage4 < 2 },
-      regroup ? { k: "Swap", v: "ten ones become one ten: " + (ta + tb) + " + 10 = <b>" + (ta + tb + 10) + "</b>, and " + (ones - 10) + " ones", hidden: stage4 < 3 } : null,
-      { k: "Altogether", v: (regroup ? (ta + tb + 10) + " + " + (ones - 10) : (ta + tb) + " + " + ones) + " = <b>" + s + "</b>", total: true, hidden: stage4 < (regroup ? 4 : 3) },
-    ].filter(Boolean);
+      { k: "Ones", v: oa + " + " + ob + " = <b>" + ones + "</b>", hidden: stage4 < 2 },
+      { k: "Altogether", v: (ta + tb) + " + " + ones + " = <b>" + s + "</b>", total: true, hidden: stage4 < 3 },
+    ];
     lines($("work4"), L);
-    const last = regroup ? 4 : 3;
+    const last = 3;
     if (stage4 >= last - 1 && !$("ch4").children.length) {
       $("ch4").innerHTML = shuffle([s, s + 10, s - 1 > 0 ? s - 1 : s + 1]).map((o) => '<button type="button" class="choice" data-v="' + o + '">' + o + "</button>").join("");
       $("step4").disabled = true;
@@ -1756,9 +1763,14 @@
   $("mode7group").addEventListener("click", () => { mode7 = "group"; reset7(); say("Group 12 into bags of 4."); });
   reset7();
 
-  /* ---- 8: halves, quarters, thirds ---- */
+  /* ---- 8: halves and quarters (0096 2Nf.01, 2Nf.02, 2Nf.04) ----
+     Stage 2 fractions are halves, quarters and three-quarters and nothing
+     else; the THIRD is 3Nf.05. This bar offered thirds as one of its three
+     buttons and asked the child to shade all three kinds before the step would
+     tick, so a Stage 2 learner could not finish it without meeting a Stage 3
+     fraction. Two kinds now, and the completion test counts two. */
   let parts8 = 2, shaded8 = [true, false], seen8 = new Set();
-  const NAMES8 = { 2: ["half", "halves"], 3: ["third", "thirds"], 4: ["quarter", "quarters"] };
+  const NAMES8 = { 2: ["half", "halves"], 4: ["quarter", "quarters"] };
   function paint8() {
     $("bar8").innerHTML = Array.from({ length: parts8 }, (_, i) => '<button type="button" class="' + (shaded8[i] ? "on" : "") + '" data-i="' + i + '">' + (i + 1) + "</button>").join("");
     document.querySelectorAll("#s8btns [data-parts], .slide [data-parts]").forEach((b) => { b.className = "big small " + (Number(b.dataset.parts) === parts8 ? "teal" : "ghost"); });
@@ -1770,8 +1782,8 @@
       { k: "Of 12 sweets", v: "one " + nm[0] + " of 12 is <b>" + 12 / parts8 + "</b>, so " + n + " " + (n === 1 ? nm[0] : nm[1]) + " is <b>" + n * (12 / parts8) + "</b>", total: true },
     ]);
     if (n > 0 && n < parts8) seen8.add(parts8);
-    $("fb8").className = "fb " + (seen8.size === 3 ? "good" : ""); $("fb8").textContent = seen8.size === 3 ? "Halves, thirds and quarters: you have shaded them all!" : "Shade a part of each kind of bar: halves, thirds and quarters.";
-    if (seen8.size === 3) finish(14, "Halves, thirds and quarters. Well done!");
+    $("fb8").className = "fb " + (seen8.size === 2 ? "good" : ""); $("fb8").textContent = seen8.size === 2 ? "Halves and quarters: you have shaded them both!" : "Shade a part of each kind of bar: halves and quarters.";
+    if (seen8.size === 2) finish(14, "Halves and quarters. Well done!");
   }
   document.querySelectorAll(".slide [data-parts]").forEach((b) => b.addEventListener("click", () => { parts8 = Number(b.dataset.parts); shaded8 = new Array(parts8).fill(false); shaded8[0] = true; paint8(); say("The bar is cut into " + parts8 + " " + NAMES8[parts8][1] + ". One " + NAMES8[parts8][0] + " is shaded."); }));
   $("bar8").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; shaded8[Number(b.dataset.i)] = !shaded8[Number(b.dataset.i)]; paint8(); const n = shaded8.filter(Boolean).length; say(n + " " + (n === 1 ? NAMES8[parts8][0] : NAMES8[parts8][1]) + " shaded"); });
@@ -2136,7 +2148,7 @@
   round11();
 
   /* ---- 18: stickers ---- */
-  const STICKERS = [["💯", "Numbers to 100"], ["👀", "A quick look"], ["🔤", "Numbers in words"], ["🧱", "Tens and ones"], ["⚖️", "Which is more"], ["🥇", "First, second, third"], ["🎯", "Rounding to 10"], ["👯", "Odd and even"], ["🧩", "Make 20 and 100"], ["➕", "Adding"], ["➖", "Taking away"], ["↩️", "One undoes the other"], ["🔢", "Arrays and tables"], ["🍬", "Sharing and grouping"], ["🍫", "Halves, thirds, quarters"], ["🪙", "Money"], ["✅", "Show what I know"]];
+  const STICKERS = [["💯", "Numbers to 100"], ["👀", "A quick look"], ["🔤", "Numbers in words"], ["🧱", "Tens and ones"], ["⚖️", "Which is more"], ["🥇", "First, second, third"], ["🎯", "Rounding to 10"], ["👯", "Odd and even"], ["🧩", "Make 20 and 100"], ["➕", "Adding"], ["➖", "Taking away"], ["↩️", "One undoes the other"], ["🔢", "Arrays and tables"], ["🍬", "Sharing and grouping"], ["🍫", "Halves and quarters"], ["🪙", "Money"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;

@@ -1361,7 +1361,9 @@
   const shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const cheer = () => ["Yes!", "Well done!", "Super!", "That's it!", "Brilliant!"][rnd(0, 4)];
   const gcd = (a, b) => (b ? gcd(b, a % b) : a);
-  const NAMES = { 2: ["half", "halves"], 3: ["third", "thirds"], 4: ["quarter", "quarters"], 5: ["fifth", "fifths"], 6: ["sixth", "sixths"], 8: ["eighth", "eighths"], 10: ["tenth", "tenths"], 12: ["twelfth", "twelfths"] };
+  /* 2Nf is halves, quarters and three-quarters. Thirds are 3Nf.05; fifths
+     and tenths 3Nf.06; eighths and twelfths Stage 5. All of them were here. */
+  const NAMES = { 2: ["half", "halves"], 4: ["quarter", "quarters"] };
   const fname = (n, d) => n + " " + (n === 1 ? NAMES[d][0] : NAMES[d][1]);
   const parts = (n) => n + (n === 1 ? " part" : " parts");
   const frac = (n, d, cls) => '<span class="frac ' + (cls || "mid") + '"><span>' + n + "</span><span>" + d + "</span></span>";
@@ -1392,10 +1394,10 @@
     { d: 4, equal: true, kind: "cols", why: "Four columns the same width: these ARE equal parts, so each one is a quarter." },
     { d: 4, equal: false, kind: "cols", why: "The parts are different widths, so they are NOT equal. You cannot call the shaded one a quarter." },
     { d: 2, equal: true, kind: "rows", why: "Two rows the same height: equal halves." },
-    { d: 3, equal: false, kind: "rows", why: "One strip is much fatter than the others, so these are not thirds." },
+    { d: 2, equal: false, kind: "rows", why: "One strip is much fatter than the other, so these are not halves." },
     { d: 4, equal: true, kind: "pie", why: "Four equal slices of the circle: quarters." },
-    { d: 3, equal: false, kind: "pie", why: "The slices are different sizes, so they are not thirds." },
-    { d: 6, equal: true, kind: "cols", why: "Six equal strips: sixths." },
+    { d: 4, equal: false, kind: "pie", why: "The slices are different sizes, so they are not quarters." },
+    { d: 4, equal: true, kind: "rows", why: "Four rows the same height: quarters, cut the other way." },
     { d: 2, equal: false, kind: "cols", why: "One piece is far wider than the other, so these are not halves." },
   ];
   let cuts1 = shuffle(CUTS).slice(0, 6), r1 = 0, right1 = 0, lock1 = false; const ROUNDS1 = 6;
@@ -1455,7 +1457,7 @@
     } else { $("fb2").className = "fb"; $("fb2").textContent = c ? c + " of the " + d2 + " parts shaded. You need " + n2 + "." : "Tap " + n2 + " part" + (n2 === 1 ? "" : "s") + "."; }
   }
   function newShade() {
-    const ds = [2, 3, 4, 5, 6, 8]; d2 = ds[rnd(0, 5)]; n2 = rnd(1, d2 - 1); on2 = [];
+    const ds = [2, 4]; d2 = ds[rnd(0, 1)]; n2 = rnd(1, d2 - 1); on2 = [];
     $("say2").innerHTML = "Shade " + frac(n2, d2, "sm") + " — that is <b>" + fname(n2, d2) + "</b>. The bottom number is how many equal parts.";
     paint2(); say("Shade " + fname(n2, d2));
   }
@@ -1482,7 +1484,7 @@
     } else { $("fb3").className = "fb"; $("fb3").textContent = picked3.length + " taken. You need " + want + "."; }
   }
   function newSet3() {
-    const opts = [[12, 3], [12, 4], [10, 5], [8, 4], [12, 6], [10, 2], [9, 3]];
+    const opts = [[12, 4], [8, 4], [10, 2], [12, 2], [16, 4], [8, 2], [20, 4]];
     const o = opts[rnd(0, opts.length - 1)]; total3 = o[0]; d3 = o[1]; n3 = rnd(1, Math.min(3, d3 - 1)); picked3 = [];
     $("say3").innerHTML = "Tap counters to take " + frac(n3, d3, "sm") + " of the <b>" + total3 + "</b> apples.";
     paint3(); say("Take " + fname(n3, d3) + " of the " + total3 + " apples.");
@@ -1492,7 +1494,7 @@
   newSet3();
 
   /* ---- 4: equivalent fractions ---- */
-  const ROWS4 = [1, 2, 3, 4, 6, 8, 12];
+  const ROWS4 = [1, 2, 4];
   let sel4 = { d: 2, n: 1 }, quiz4 = null, right4 = 0;
   function paint4() {
     const val = sel4.n / sel4.d;
@@ -1503,11 +1505,15 @@
   }
   $("wall4").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; const d = Number(b.closest(".wrow").dataset.d); sel4 = { d, n: Number(b.dataset.i) + 1 }; paint4(); say(fname(sel4.n, sel4.d) || sel4.n + " out of " + d); });
   function ask4() {
-    const pairs = [[1, 2, 2, 4], [1, 2, 3, 6], [1, 2, 6, 12], [1, 3, 2, 6], [1, 3, 4, 12], [1, 4, 2, 8], [1, 4, 3, 12], [2, 3, 4, 6], [3, 4, 6, 8], [2, 4, 1, 2], [3, 6, 1, 2], [2, 8, 1, 4]];
+    /* the only equivalences Stage 2 names: 2Nf.05 asks for one half = two
+       quarters, and four quarters = one whole. */
+    const pairs = [[1, 2, 2, 4], [2, 4, 1, 2], [2, 2, 4, 4], [4, 4, 2, 2]];
     const p = pairs[rnd(0, pairs.length - 1)];
     quiz4 = { n: p[0], d: p[1], an: p[2], ad: p[3] };
     $("say4").innerHTML = "Which fraction is the <b>same size</b> as " + frac(p[0], p[1], "sm") + "? Use the wall to check.";
-    const wrongs = [[p[2] + 1, p[3]], [p[2], p[3] + 2]];
+    /* right numerator over the other stage-2 denominator, and one too many
+       pieces - both wrong, both still halves or quarters */
+    const wrongs = [[p[2] + 1, p[3]], [p[2], p[1]]];
     $("ch4").innerHTML = shuffle([[p[2], p[3]], ...wrongs]).map((x) => '<button type="button" class="choice" data-v="' + x[0] + "/" + x[1] + '">' + frac(x[0], x[1], "sm") + "</button>").join("");
     $("score4").textContent = Math.min(right4, 3) + " of 3 right so far";
     say("Which fraction is the same size as " + fname(p[0], p[1]) + "?");
@@ -1532,9 +1538,9 @@
     if (r5 >= ROUNDS5) { $("cmp5").innerHTML = ""; $("fb5").className = "fb good"; $("fb5").textContent = "You compared " + right5 + " of " + ROUNDS5 + "!"; finish(4, "You can compare fractions."); return; }
     const kind = r5 < 2 ? "sameBottom" : r5 < 4 ? "sameTop" : "mixed";
     let a, b;
-    if (kind === "sameBottom") { const d = [4, 5, 6, 8][rnd(0, 3)]; const n1 = rnd(1, d - 1); let n2 = rnd(1, d - 1); while (n2 === n1) n2 = rnd(1, d - 1); a = [n1, d]; b = [n2, d]; }
-    else if (kind === "sameTop") { const ds = shuffle([2, 3, 4, 6, 8]).slice(0, 2); const n = 1; a = [n, ds[0]]; b = [n, ds[1]]; }
-    else { const opts = [[[1, 2], [1, 3]], [[3, 4], [1, 2]], [[2, 3], [1, 2]], [[1, 4], [2, 3]], [[5, 8], [1, 2]], [[1, 3], [3, 4]]]; const p = opts[rnd(0, opts.length - 1)]; a = p[0]; b = p[1]; }
+    if (kind === "sameBottom") { const d = 4; const n1 = rnd(1, d - 1); let n2 = rnd(1, d - 1); while (n2 === n1) n2 = rnd(1, d - 1); a = [n1, d]; b = [n2, d]; }
+    else if (kind === "sameTop") { const ds = shuffle([2, 4]).slice(0, 2); const n = 1; a = [n, ds[0]]; b = [n, ds[1]]; }
+    else { const opts = [[[3, 4], [1, 2]], [[1, 4], [1, 2]], [[3, 4], [2, 4]], [[1, 2], [1, 4]], [[2, 4], [3, 4]], [[1, 4], [3, 4]]]; const p = opts[rnd(0, opts.length - 1)]; a = p[0]; b = p[1]; }
     q5 = { a, b, kind };
     $("score5").textContent = "Pair " + (r5 + 1) + " of " + ROUNDS5;
     $("say5").innerHTML = kind === "sameTop" ? "Both have <b>1</b> on top. Tap the <b>bigger</b> one. A bigger bottom number means <b>smaller</b> pieces." : "Tap the <b>bigger</b> fraction.";
@@ -1562,7 +1568,7 @@
   function round6() {
     lock6 = false; $("fb6").textContent = ""; $("fb6").className = "fb";
     if (r6 >= ROUNDS6) { $("line6").innerHTML = ""; $("ask6").textContent = ""; $("fb6").className = "fb good"; $("fb6").textContent = "You placed " + right6 + " of " + ROUNDS6 + "!"; finish(5, "You can put fractions on a number line."); return; }
-    const d = [2, 3, 4, 5, 6, 8][rnd(0, 5)], n = rnd(1, d - 1);
+    const d = [2, 4][rnd(0, 1)], n = rnd(1, d - 1);
     q6 = { n, d };
     $("score6").textContent = "Fraction " + (r6 + 1) + " of " + ROUNDS6;
     $("ask6").innerHTML = "Where is " + frac(n, d, "mid") + "?"; $("say6").innerHTML = "Tap the mark where " + frac(n, d, "sm") + " belongs. The line from 0 to 1 is cut into <b>" + d + "</b> equal steps.";
@@ -1587,7 +1593,8 @@
   function round7() {
     lock7 = false; $("fb7").textContent = ""; $("fb7").className = "fb";
     if (r7 >= ROUNDS7) { $("bar7").innerHTML = ""; $("ch7").innerHTML = ""; $("sum7").textContent = ""; $("fb7").className = "fb good"; $("fb7").textContent = "You worked out " + right7 + " of " + ROUNDS7 + "!"; finish(6, "You can add and take away fractions."); return; }
-    const add = r7 % 2 === 0, d = [4, 5, 6, 8, 10][rnd(0, 4)];
+    /* quarters only: halves leave no room for a + b inside one whole */
+    const add = r7 % 2 === 0, d = 4;
     let a, b;
     if (add) { a = rnd(1, d - 2); b = rnd(1, d - a - 1) || 1; } else { a = rnd(2, d); b = rnd(1, a - 1); }
     const res = add ? a + b : a - b;
@@ -1596,7 +1603,11 @@
     $("sum7").innerHTML = frac(a, d, "mid") + (add ? " + " : " − ") + frac(b, d, "mid") + " = ?";
     $("say7").innerHTML = add ? "Count the parts: " + frac(a, d, "sm") + " and " + frac(b, d, "sm") + " more." : "Start with " + frac(a, d, "sm") + " and take " + frac(b, d, "sm") + " away.";
     $("bar7").innerHTML = Array.from({ length: d }, (_, i) => '<button type="button" class="' + (add ? (i < a ? "on" : i < a + b ? "b" : "") : (i < res ? "on" : i < a ? "b" : "")) + '" disabled>1/' + d + "</button>").join("");
-    const wrongs = [res + "/" + (d * 2), (res + 1) + "/" + d];
+    /* the old pair offered res/8, which teaches an eighth on the way past.
+       Neighbouring numerators over the same bottom, and one wrong bottom. */
+    const near = [res + 1, res - 1, res + 2].filter((x) => x >= 1 && x <= d && x !== res);
+    const wrongs = near.length >= 2 ? [near[0] + "/" + d, near[1] + "/" + d]
+                                    : [near[0] + "/" + d, res + "/2"];
     $("ch7").innerHTML = shuffle([res + "/" + d, ...wrongs]).map((v) => { const p = v.split("/"); return '<button type="button" class="choice" data-v="' + v + '">' + frac(p[0], p[1], "sm") + "</button>"; }).join("");
     say(add ? fname(a, d) + " add " + fname(b, d) : fname(a, d) + " take away " + fname(b, d));
   }
@@ -1641,7 +1652,7 @@
   }
   $("add8").addEventListener("click", () => { if (slices8 < d8 * 3) { slices8++; paint8(); say(fname(slices8, d8)); } });
   $("take8").addEventListener("click", () => { if (slices8 > 0) { slices8--; paint8(); } });
-  $("cut8").addEventListener("click", () => { const ds = [2, 3, 4, 6, 8]; d8 = ds[(ds.indexOf(d8) + 1) % ds.length]; slices8 = Math.min(slices8, d8 * 3); paint8(); say("Now the slices are " + NAMES[d8][1]); });
+  $("cut8").addEventListener("click", () => { const ds = [2, 4]; d8 = ds[(ds.indexOf(d8) + 1) % ds.length]; slices8 = Math.min(slices8, d8 * 3); paint8(); say("Now the slices are " + NAMES[d8][1]); });
   $("ch8").addEventListener("click", (e) => {
     const b = e.target.closest(".choice"); if (!b || b.disabled) return; const ok = Number(b.dataset.v) === quiz8.total;
     $("ch8").querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (Number(c.dataset.v) === quiz8.total) c.classList.add("right"); });
@@ -1656,13 +1667,13 @@
 
   /* ---- 9: real life ---- */
   const WORDS9 = [
-    { q: "A pizza is cut into 8 equal slices. Musa eats 3. What fraction has he eaten?", a: "3/8", opts: ["3/8", "8/3", "3/5"], w: ["3 slices out of 8 equal slices is 3/8.", "The bottom number is how many slices the whole was cut into: 8."] },
+    { q: "A pizza is cut into 4 equal slices. Musa eats 3. What fraction has he eaten?", a: "3/4", opts: ["3/4", "4/3", "3/1"], w: ["3 slices out of 4 equal slices is 3/4.", "The bottom number is how many slices the whole was cut into: 4."] },
     { q: "Amina has 20 shillings and spends a quarter. How much does she spend?", a: "5 sh", opts: ["5 sh", "4 sh", "15 sh"], w: ["A quarter means 20 ÷ 4 = 5 sh.", "15 sh is what is left, not what she spent."] },
-    { q: "A class has 24 learners. Two thirds walk to school. How many walk?", a: "16", opts: ["16", "8", "12"], w: ["24 ÷ 3 = 8 in one third, and 2 × 8 = 16.", "8 is only one third."] },
+    { q: "A class has 24 learners. Three quarters walk to school. How many walk?", a: "18", opts: ["18", "6", "12"], w: ["24 ÷ 4 = 6 in one quarter, and 3 × 6 = 18.", "6 is only one quarter."] },
     { q: "A bottle holds 1 litre. Hodan drinks half. How many millilitres are left?", a: "500 ml", opts: ["500 ml", "100 ml", "250 ml"], w: ["Half of 1000 ml is 500 ml.", "Half the bottle is left."] },
-    { q: "Kiki reads 1/5 of a 30 page book. How many pages?", a: "6", opts: ["6", "5", "10"], w: ["30 ÷ 5 = 6 pages.", "The 5 is how many equal parts, not the answer."] },
+    { q: "Kiki reads 1/4 of a 20 page book. How many pages?", a: "5", opts: ["5", "4", "10"], w: ["20 ÷ 4 = 5 pages.", "The 4 is how many equal parts, not the answer."] },
     { q: "Three quarters of an hour is how many minutes?", a: "45 min", opts: ["45 min", "30 min", "75 min"], w: ["An hour is 60 minutes. 60 ÷ 4 = 15, and 3 × 15 = 45.", ""] },
-    { q: "A cake is cut into 6 equal pieces. Two are eaten. What fraction is left?", a: "4/6", opts: ["4/6", "2/6", "4/2"], w: ["6 − 2 = 4 pieces left, out of 6, so 4/6 (which is the same as 2/3).", ""] },
+    { q: "A cake is cut into 4 equal pieces. One is eaten. What fraction is left?", a: "3/4", opts: ["3/4", "1/4", "4/3"], w: ["4 − 1 = 3 pieces left, out of 4, so 3/4.", ""] },
   ];
   let words9 = shuffle(WORDS9).slice(0, 5), r9 = 0, right9 = 0, lock9 = false; const ROUNDS9 = 5;
   function round9() {
@@ -1687,15 +1698,15 @@
   /* ---- 10: check ---- */
   const CHECK = [
     { q: "A shape is cut into 4 pieces of different sizes. Is one piece a quarter?", opts: ["no", "yes"], a: "no" },
-    { q: "In 3/5, what does the 5 tell you?", opts: ["how many equal parts", "how many you take", "the answer"], a: "how many equal parts" },
-    { q: "What is 1/3 of 12?", opts: [4, 3, 6], a: 4 },
-    { q: "Which is the same as 1/2?", opts: ["3/6", "2/3", "1/4"], a: "3/6" },
-    { q: "Which is bigger: 1/4 or 1/8?", opts: ["1/4", "1/8"], a: "1/4" },
-    { q: "Which is bigger: 3/5 or 2/5?", opts: ["3/5", "2/5"], a: "3/5" },
-    { q: "2/6 + 3/6 = ?", opts: ["5/6", "5/12", "6/6"], a: "5/6" },
-    { q: "4/5 − 1/5 = ?", opts: ["3/5", "3/0", "5/5"], a: "3/5" },
+    { q: "In 3/4, what does the 4 tell you?", opts: ["how many equal parts", "how many you take", "the answer"], a: "how many equal parts" },
+    { q: "What is 1/4 of 12?", opts: [3, 4, 6], a: 3 },
+    { q: "Which is the same as 1/2?", opts: ["2/4", "1/4", "4/4"], a: "2/4" },
+    { q: "Which is bigger: 1/2 or 1/4?", opts: ["1/2", "1/4"], a: "1/2" },
+    { q: "Which is bigger: 3/4 or 2/4?", opts: ["3/4", "2/4"], a: "3/4" },
+    { q: "1/4 + 2/4 = ?", opts: ["3/4", "2/4", "4/4"], a: "3/4" },
+    { q: "3/4 − 1/4 = ?", opts: ["2/4", "4/4", "1/4"], a: "2/4" },
     { q: "How many quarters make one whole?", opts: [4, 2, 8], a: 4 },
-    { q: "5 quarters is the same as…", opts: ["1 whole and 1/4", "5 wholes", "1/5"], a: "1 whole and 1/4" },
+    { q: "5 quarters is the same as…", opts: ["1 whole and 1/4", "5 wholes", "1 whole and 1/2"], a: "1 whole and 1/4" },
   ];
   let c10 = 0, right10 = 0, lock10 = false;
   function round10() {

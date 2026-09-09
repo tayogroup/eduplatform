@@ -176,13 +176,26 @@ def objects_in(block):
 # [0, 0, 0, 0]` beside `const PETC = [6, 4, 4, 2]` is the graph the CHILD
 # fills in, mutated as they add blocks; reading it as a dataset would verify
 # every question against zeroes.
+# CACHE ON id() AND HOLD THE STRING, because id() alone is WRONG. A CPython id
+# is unique among LIVE objects only, so once one lesson's script is freed the
+# next one can be allocated at the same address - measured in this very build,
+# three of seven lessons reused an earlier lesson's id. Keyed on the bare id,
+# a lesson could be handed another lesson's datasets, or an empty index, and
+# the graph rules would silently stop firing for it. It surfaced as a Grade 1
+# mutation "surviving" once and passing on the next run, which is the worst
+# way for a checker to be wrong: the tick is real, the work is not.
+#
+# Storing the string in the entry fixes both halves - the `is` test rejects a
+# recycled id, and holding the reference stops that id being recycled at all
+# while the entry lives.
 _DS_CACHE = {}
 
 
 def dataset_index(js):
     """{pairs: [(counts, cats)], defs: {name: source}} for one lesson."""
-    if id(js) in _DS_CACHE:
-        return _DS_CACHE[id(js)]
+    hit = _DS_CACHE.get(id(js))
+    if hit is not None and hit[0] is js:
+        return hit[1]
 
     cats, counts, defs = {}, {}, {}
     for m in re.finditer(r"\bconst\s+([A-Z][A-Za-z0-9_]*)\s*=\s*\[", js):
@@ -234,7 +247,7 @@ def dataset_index(js):
         defs.setdefault(m.group(1), balanced(js, js.index("{", m.end() - 1)))
 
     out = {"pairs": pairs, "defs": defs, "counts": counts, "cats": cats}
-    _DS_CACHE[id(js)] = out
+    _DS_CACHE[id(js)] = (js, out)          # the string, so the id cannot recycle
     return out
 
 
@@ -406,6 +419,169 @@ def facts_answer(low, opts):
     if m and m.group(1) in ROT_ORDER:
         turns = {"quarter": 4, "half": 2}[m.group(2)]
         return "yes" if ROT_ORDER[m.group(1)] % turns == 0 else "no"
+    return None
+
+
+# ---------------------------------------------------------------------------
+# MONEY AND FRACTIONS ANSWER WITH AN OPTION, NOT WITH A NUMBER, and that is
+# forced rather than stylistic. norm() strips a trailing unit only for the list
+# it knows, so norm("80 sh") is 80 and norm("100 c") is the STRING "100 c" -
+# and same("100 c", 100) is False. A rule returning the bare arithmetic would
+# therefore report a perfectly good key as wrong on every question answered in
+# cents, in mixed units ("2 sh 50 c") or as a fraction ("3/4").
+#
+# So these derive the VALUE and let the options supply the wording: compute,
+# then return the one option that carries that value, and decline when more
+# than one does. Same shape as the no-corners and equal-columns rules.
+FRACWORD = {"half": 2, "halves": 2, "third": 3, "thirds": 3, "quarter": 4,
+            "quarters": 4, "fifth": 5, "fifths": 5, "tenth": 10, "tenths": 10}
+
+
+def fval(s):
+    """the value of a fraction as these lessons write it, or None.
+
+    Reads "3/4", "4/4", "2/4", "1 whole and 1/4", "5 wholes" and the bare
+    words ("one quarter"). Deliberately NOT "the whole" or "none" - those are
+    Grade 1 wordings whose questions are answered from the picture long before
+    anything here runs, and giving them a value would put this rule in front of
+    the one that reads the drawing.
+    """
+    t = plain(s).lower().strip()
+    total, seen = 0.0, False
+    m = re.match(r"^(\d+)\s+whole", t)
+    if m:
+        total, seen, t = total + int(m.group(1)), True, t[m.end():]
+    for m in re.finditer(r"(\d+)\s*/\s*(\d+)", t):
+        n, d = int(m.group(1)), int(m.group(2))
+        if d == 0:
+            return None
+        total, seen = total + n / d, True
+    if seen:
+        return total
+    m = re.fullmatch(r"(?:one|1|a|an)?\s*(" + "|".join(FRACWORD) + r")", t)
+    return 1.0 / FRACWORD[m.group(1)] if m else None
+
+
+def pick(opts, want, read):
+    """the one option whose value is `want`, or None if that is not unique."""
+    if want is None:
+        return None
+    hit = [o for o in opts if read(o) is not None and abs(read(o) - want) < 1e-9]
+    return hit[0] if len(hit) == 1 else None
+
+
+def amount(s):
+    """the leading amount of an option like "80 sh", "100 c", "50 + 20"."""
+    n = nums(plain(s))
+    return float(n[0]) if n else None
+
+
+def money_answer(low, opts):
+    """what the shopping arithmetic makes true, named by one of the options."""
+    money = lambda o: amount(o)
+
+    if re.search(r"how many cents? (?:make|are in|in)\b.*\bone shilling", low):
+        return pick(opts, 100.0, money)
+    m = re.search(r"(\d+) cents? written in shillings", low)
+    if m:
+        # mixed units: the option must carry BOTH figures, in order
+        n = int(m.group(1))
+        want = [n // 100, n % 100]
+        hit = [o for o in opts if nums(plain(o)) == want]
+        return hit[0] if len(hit) == 1 else None
+    # a purse read out: "A 50 and a 20 and a 10. How much altogether?"
+    if re.search(r"how much altogether|how much is that|how much in all", low):
+        coins = re.findall(r"\ba (\d+)\b", low)
+        if len(coins) >= 2:
+            return pick(opts, float(sum(int(c) for c in coins)), money)
+    # two prices and a total
+    m = re.search(r"(\d+) sh\b.*?\band\b.*?(\d+) sh\b.*\b(?:total|altogether)", low)
+    if m:
+        return pick(opts, float(int(m.group(1)) + int(m.group(2))), money)
+    # change from what you paid
+    m = re.search(r"costs? (\d+).*you pay (\d+).*change", low)
+    if m:
+        return pick(opts, float(int(m.group(2)) - int(m.group(1))), money)
+    # what is left after spending
+    m = re.search(r"have (\d+).*spend (\d+).*(?:left|remain)", low)
+    if m:
+        return pick(opts, float(int(m.group(1)) - int(m.group(2))), money)
+    # unit cost
+    m = re.search(r"(\d+) \w+ for (\d+).*what does one cost", low)
+    if m:
+        n, tot = int(m.group(1)), int(m.group(2))
+        return pick(opts, tot / n, money) if n and tot % n == 0 else None
+    # repeated saving
+    # \2, not \3 - the backreference must name the PERIOD ("week"), and group 3
+    # is the count. Written as \3 it asked for "after 4 4s" and never fired.
+    m = re.search(r"save (\d+) \w+ a (week|day|month).*after (\d+) \2s", low)
+    if m:
+        return pick(opts, float(int(m.group(1)) * int(m.group(3))), money)
+    # FEWEST PIECES: every option is a way of making the amount, so the
+    # question is answered by counting the pieces in each and taking the
+    # smallest - but only among the ones that really do make it.
+    m = re.search(r"fewest (?:pieces|coins|notes) for (\d+)", low)
+    if m:
+        target, made = int(m.group(1)), []
+        for o in opts:
+            txt = plain(o).replace("×", "*").replace("x", "*")
+            mm = re.fullmatch(r"\s*(\d+)\s*\*\s*(\d+)\s*", txt)
+            if mm:
+                a, b = int(mm.group(1)), int(mm.group(2))
+                pieces, total = b, a * b
+            elif re.fullmatch(r"[\d\s+]+", txt):
+                parts = [int(x) for x in re.findall(r"\d+", txt)]
+                pieces, total = len(parts), sum(parts)
+            else:
+                continue
+            if total == target:
+                made.append((pieces, o))
+        if made:
+            made.sort()
+            if len(made) == 1 or made[0][0] < made[1][0]:
+                return made[0][1]
+    # which side is worth more, each side written as a sum
+    m = re.search(r"which is worth more:?\s*(.+?),?\s*\bor\b\s*(.+)", low)
+    if m:
+        a = sum(int(x) for x in re.findall(r"(\d+)\s*sh", m.group(1))) or None
+        b = sum(int(x) for x in re.findall(r"(\d+)\s*sh", m.group(2))) or None
+        if a and b and a != b:
+            return pick(opts, float(max(a, b)), money)
+    return None
+
+
+def fraction_answer(low, opts):
+    """what the fraction arithmetic makes true, named by one of the options."""
+    if re.search(r"how many (\w+) make (?:one|1|a) whole", low):
+        w = re.search(r"how many (\w+) make", low).group(1)
+        if w in FRACWORD:
+            return pick(opts, float(FRACWORD[w]), lambda o: amount(o))
+    # "5 quarters is the same as..."
+    m = re.search(r"(\d+) (\w+) is the same as", low)
+    if m and m.group(2) in FRACWORD:
+        return pick(opts, int(m.group(1)) / FRACWORD[m.group(2)], fval)
+    # "Which is the same as 1/2?"
+    m = re.search(r"which is the same as (\d+\s*/\s*\d+)", low)
+    if m:
+        return pick(opts, fval(m.group(1)), fval)
+    # "Which is bigger: 3/4 or 2/4?"
+    m = re.search(r"which is (bigger|larger|smaller|less):?\s*(\d+\s*/\s*\d+)\s*or\s*(\d+\s*/\s*\d+)", low)
+    if m:
+        a, b = fval(m.group(2)), fval(m.group(3))
+        if a is not None and b is not None and a != b:
+            want = max(a, b) if m.group(1) in ("bigger", "larger") else min(a, b)
+            return pick(opts, want, fval)
+    # "1/4 + 2/4 = ?" - the value is picked out of the options, so a lesson
+    # keying 2/4 and a lesson keying 1/2 are both answered correctly
+    m = re.search(r"(\d+\s*/\s*\d+)\s*([+\-])\s*(\d+\s*/\s*\d+)\s*=\s*\?", low)
+    if m:
+        a, b = fval(m.group(1)), fval(m.group(3))
+        if a is not None and b is not None:
+            return pick(opts, a + b if m.group(2) == "+" else a - b, fval)
+    # equal parts are what make a fraction; unequal pieces make none
+    if re.search(r"different sizes.*is one piece a (\w+)", low):
+        hit = [o for o in opts if norm(o) in ("no", "not a quarter", "none")]
+        return hit[0] if len(hit) == 1 else None
     return None
 
 
@@ -602,6 +778,12 @@ def expected(q, opts, item, js=""):
     if m and m.group(1) in DICE:
         return DICE[m.group(1)]
     got = facts_answer(low, opts)
+    if got is not None:
+        return got
+    got = money_answer(low, opts)
+    if got is not None:
+        return got
+    got = fraction_answer(low, opts)
     if got is not None:
         return got
     if picn is not None and re.search(r"^how many\b", low) and not nums(t):

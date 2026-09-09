@@ -160,7 +160,7 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
           // The 200k ceiling guards the text/tool blocks; attachments carry
           // their own per-block cap and are excluded from this measure.
           const plain = content.filter((block) => !files.includes(block));
-          if (JSON.stringify(plain).length > 200000) throw new Error("A chat message is too large.");
+          if (JSON.stringify(plain).length > 220000) throw new Error("A chat message is too large.");
           return { role, content };
         }
         const text = String(content).trim().slice(0, 4000);
@@ -237,7 +237,7 @@ function createWehelChatHandler({ apiKey, model: modelOverride = () => undefined
         // wehel_chat.php — the client strips audio descriptors before sending,
         // and at 120000 the cut hid every English unit's readings, grammar and
         // quizzes behind its word lists.
-        if (unitContent.length > 200000) unitContent = `${unitContent.slice(0, 200000)} …(unit content truncated)`;
+        if (unitContent.length > 220000) unitContent = `${unitContent.slice(0, 220000)} …(unit content truncated)`;
       }
       if (!unitContent) {
         unitContent = "(The unit content was not provided. Teach from the unit title and general Cambridge knowledge for this grade, and say when you are unsure what the lesson on screen shows.)";

@@ -442,7 +442,7 @@ foreach ($messages as $message) {
         // The 200k ceiling guards the text/tool blocks; attachments carry
         // their own per-block cap above and are excluded from this measure.
         $encoded = json_encode($plain, JSON_UNESCAPED_UNICODE);
-        if (!is_string($encoded) || strlen($encoded) > 200000) {
+        if (!is_string($encoded) || strlen($encoded) > 220000) {
             pqh_wehel_json(400, ['ok' => false, 'message' => 'A chat message is too large.']);
         }
         $conversation[] = ['role' => $role, 'content' => $content];
@@ -474,8 +474,8 @@ if (isset($payload['unit'])) {
     // taught vocabulary because vocabulary was all it could see. Every one of
     // the academy's 410 units now fits whole. The unit prompt is cached, so
     // the larger payload is paid for once per learner per unit.
-    if (core_text::strlen($unitcontent) > 200000) {
-        $unitcontent = core_text::substr($unitcontent, 0, 200000) . ' …(unit content truncated)';
+    if (core_text::strlen($unitcontent) > 220000) {
+        $unitcontent = core_text::substr($unitcontent, 0, 220000) . ' …(unit content truncated)';
     }
 }
 if ($unitcontent === '') {

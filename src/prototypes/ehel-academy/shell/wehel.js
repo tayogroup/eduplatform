@@ -402,9 +402,30 @@ export function unitForTutor(unit) {
   return compactDictionaryLinks(withoutMediaPlumbing(unit));
 }
 
-// One cap, matching wehel_chat.php's. Raised from 120000 with the strip above:
-// every one of the academy's 410 units now fits whole, with room to spare.
-export const UNIT_JSON_LIMIT = 200000;
+// One cap, matching wehel_chat.php's. Raised from 120000 with the strip above,
+// then from 200000 on 2026-09-09 because that sentence had stopped being true:
+// english/grade-8/unit-1 had grown to 200,280 characters and was being cut at
+// 200,000, so the tutor could not see the end of it and nothing said so.
+//
+// MEASURED across all 409 units, not guessed: largest 200,280, next largest
+// 180,821, p99 170,715, median 84,741. 220,000 clears the largest by ~10% and
+// the p99 by nearly 30%.
+//
+// Raising it costs almost nothing, which is the part that is easy to get
+// backwards: a unit under the cap is sent whole either way, so this changes
+// the payload of exactly ONE unit, by 280 characters (~70 tokens). What it
+// raises is the worst-case ceiling, and the day's spend is already bounded
+// separately by WEHEL_WEIGHTED_TOKENS_PER_MINUTE.
+//
+// The alternative was to stop sending something. Three keys in the payload are
+// not the child's lesson -- liveSessions (5.4KB, the class schedule), rubrics
+// (3.2KB, marking criteria, sent to a tutor whose whole instruction is to
+// guide and never mark) and grownUpGuide (5.7KB, addressed to the adult). Any
+// one of them would have freed twenty times what was needed, and dropping one
+// would cut ~1.2k tokens off EVERY question rather than 70 off one. That is a
+// decision about what the tutor knows, across all 409 units, and it belongs to
+// whoever owns the tutor's behaviour -- not to a fix for an overflow.
+export const UNIT_JSON_LIMIT = 220000;
 
 // --- homework ------------------------------------------------------------------
 // The learner's REAL assigned homework, so "help me with my homework" has a

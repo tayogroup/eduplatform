@@ -56,6 +56,9 @@
   const player = new Audio();
   player.preload = "none";
   function playClip(source, spokenFallback) {
+    /* Silent while the deck paints -- see window.__ehelPainting. Returning
+       false rather than throwing keeps every caller's promise chain intact. */
+    if (window.__ehelPainting) return Promise.resolve(false);
     const url = clip(source);
     if (!url) { if (spokenFallback) say(spokenFallback); return Promise.resolve(false); }
     try { VOICE.stop && VOICE.stop(); } catch (_) { /* the voice may be mid-sentence */ }

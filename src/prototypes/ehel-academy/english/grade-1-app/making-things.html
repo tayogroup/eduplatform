@@ -1082,6 +1082,22 @@
 <script>
 (function () {
 
+  /* SILENT WHILE THE DECK PAINTS. Every renderer draws once at load,
+     because the deck puts all its slides in the DOM at once -- so a quiz
+     that speaks its first question as it draws speaks it on page load,
+     and with several quizzes on a page a child met a burst of overlapping
+     questions before touching anything. Measured on Unit 1: 23 sound
+     attempts in the first 165ms, eight of them paid TTS fetches.
+
+     say() and playClip() return early while this is set. It is cleared
+     immediately before show(0, false), which is the last statement here,
+     so ONLY the draw pass is silenced -- every arrival clip, every
+     instruction and every answer still plays exactly as before.
+
+     playHere() already guarded this for the steps that used it; this is
+     the same rule for the call sites that speak while drawing. */
+  window.__ehelPainting = true;
+
   /* ==================================================================
      Making Things - Grade 1 English, Unit 4.
 
@@ -5795,7 +5811,11 @@
   })();
 
   /* Every call site in this lesson already says say(...). It now goes to Sonia. */
-  function say(text) { VOICE.speak(text); }
+  /* Silent while the deck paints -- see window.__ehelPainting in
+     build-lessons.py. Every call site in this lesson goes through say(), so
+     this is the one place the draw pass can be silenced without touching a
+     single renderer. */
+  function say(text) { if (window.__ehelPainting) return; VOICE.speak(text); }
 
   /* ==================================================================
      WHAT SHE SAYS BACK
@@ -6303,6 +6323,9 @@
   const player = new Audio();
   player.preload = "none";
   function playClip(source, spokenFallback) {
+    /* Silent while the deck paints -- see window.__ehelPainting. Returning
+       false rather than throwing keeps every caller's promise chain intact. */
+    if (window.__ehelPainting) return Promise.resolve(false);
     const url = clip(source);
     if (!url) { if (spokenFallback) say(spokenFallback); return Promise.resolve(false); }
     try { VOICE.stop && VOICE.stop(); } catch (_) { /* the voice may be mid-sentence */ }
@@ -9055,6 +9078,7 @@
   studentResources({ el: { ask: "ask21", say: "ask21", stage: "stage21", ch: "ch21", fb: "fb21", score: "score21", res: "res21" }, res: LESSON.resources, plan: LESSON.plan,
     finish: 20, done: "That is your drawer." });
 
+  window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);
 
 

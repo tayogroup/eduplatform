@@ -1732,6 +1732,22 @@ PAGE = """<meta charset="utf-8">
 <script>
 (function () {
 
+  /* SILENT WHILE THE DECK PAINTS. Every renderer draws once at load,
+     because the deck puts all its slides in the DOM at once -- so a quiz
+     that speaks its first question as it draws speaks it on page load,
+     and with several quizzes on a page a child met a burst of overlapping
+     questions before touching anything. Measured on Unit 1: 23 sound
+     attempts in the first 165ms, eight of them paid TTS fetches.
+
+     say() and playClip() return early while this is set. It is cleared
+     immediately before show(0, false), which is the last statement here,
+     so ONLY the draw pass is silenced -- every arrival clip, every
+     instruction and every answer still plays exactly as before.
+
+     playHere() already guarded this for the steps that used it; this is
+     the same rule for the call sites that speak while drawing. */
+  window.__ehelPainting = true;
+
   /* ==================================================================
      %(title)s - Grade 1 English, Unit %(unit)d.
 
@@ -1762,6 +1778,7 @@ PAGE = """<meta charset="utf-8">
   const STICKERS = %(stickers)s;
 
 %(bootstrap)s
+  window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);
 
 })();

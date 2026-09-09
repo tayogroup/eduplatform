@@ -432,7 +432,11 @@
   })();
 
   /* Every call site in this lesson already says say(...). It now goes to Sonia. */
-  function say(text) { VOICE.speak(text); }
+  /* Silent while the deck paints -- see window.__ehelPainting in
+     build-lessons.py. Every call site in this lesson goes through say(), so
+     this is the one place the draw pass can be silenced without touching a
+     single renderer. */
+  function say(text) { if (window.__ehelPainting) return; VOICE.speak(text); }
 
   /* ==================================================================
      WHAT SHE SAYS BACK

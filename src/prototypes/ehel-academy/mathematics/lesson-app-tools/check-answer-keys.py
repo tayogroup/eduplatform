@@ -48,7 +48,24 @@ if os.path.exists(cfgp):
     FILES = [l["file"] for l in cfg["lessons"]]
     LABEL = "%s %s" % (cfg.get("subjectLabel", ""), cfg.get("gradeLabel", ""))
 else:
-    # grade-1-app/g1v2 has no config; it is the one build that predates them
+    # ALL FOUR LIVE BUILDS CARRY A CONFIG, g1v2 included - it got one in
+    # b5721d234 (2026-09-07), and this tool reads it: the lesson ORDER and the
+    # "Mathematics Grade 1" label both come from there. An earlier version of
+    # this comment said g1v2 had none and was the one build predating them,
+    # which was simply wrong when written and made the branch below look like
+    # g1v2's path when it has never once been g1v2's path.
+    #
+    # What it IS for: a directory with no config, which here means
+    # ../grade-1-app itself - the superseded FIVE-lesson build sitting above
+    # g1v2, alongside the tools that built it. Pointing at it is a real thing
+    # to do and it reports a real finding: that build still holds the
+    # uncorrected balance(-1) and the inverted rotation sign that 0ba4a9cad
+    # fixed in g1v2, so its "Which one is lighter?" comes back WRONG. Left
+    # alone deliberately; nothing deploys from there.
+    #
+    # Order is alphabetical here rather than curricular, so the unit numbers a
+    # config would give are not available - which is another reason to prefer
+    # pointing at a configured build.
     FILES = sorted(f for f in os.listdir(SRC)
                    if f.endswith(".html") and not f.endswith("index.html"))
     LABEL = os.path.basename(SRC)

@@ -44,6 +44,11 @@ from _app import load  # noqa: E402
 MARK = "wire-platform-controls.py"
 
 CSS = """
+  /* WIRE-CSS-START -- owned by lesson-app-tools/wire-platform-controls.py.
+     Everything to WIRE-CSS-END is REPLACED on a re-run: this tool used to skip
+     a page it had already wired, so three separate changes to this block --
+     the panel surfaces, the dark theme, the canned prompts -- reached nothing
+     already built, and each needed its own carry-across tool afterwards. */
   /* --- a home for the class controls, and the tutor dock;
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
@@ -147,9 +152,11 @@ CSS = """
     --lc-private-ink: var(--gold);
   }
   /* WEHEL-THEME-END */
+  /* WIRE-CSS-END */
 """
 
 JS = """
+<!-- WIRE-JS-START -->
 <script type="module">
   /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
      learner-controls.js holds the SAME singletons the shell mounts. */
@@ -258,7 +265,106 @@ JS = """
     document.body.append(dock, drawer);
   }
 </script>
+<!-- WIRE-JS-END -->
 """
+
+CSS_START = "/* WIRE-CSS-START"
+CSS_END = "/* WIRE-CSS-END */"
+JS_START = "<!-- WIRE-JS-START -->"
+JS_END = "<!-- WIRE-JS-END -->"
+
+# The two shapes this tool's CSS block opened with before it carried markers.
+# The second is the hand-authored Grade 1 Mathematics vintage, which predates
+# the tool; it holds the same rules under its own comment.
+LEGACY_CSS_OPENERS = (
+    "  /* --- a home for the class controls, and the tutor dock;",
+    "  /* --- the tutor dock, and a home for the class controls --- */",
+)
+# The last thing this tool's CSS has ever ended with on a built page. Anything
+# after it inside the same <style> belongs to another tool -- add-header-bars.py
+# writes .eh-progtext and .hero .eyebrow before the SAME </style> -- so the end
+# is found by this marker and never by "the next </style>", which would swallow
+# somebody else's rules.
+LEGACY_CSS_END = "/* WEHEL-THEME-END */"
+LEGACY_JS_OPEN = "The platform controls - see lesson-app-tools/wire-platform-controls.py"
+
+
+def js_for(app, unit, title):
+    """The JS block for one page: one definition, used by insert and update."""
+    return (JS
+            .replace("__UNITKEY__", "%s%02d" % (app.cfg.get("progressUnitPrefix", "u"), unit))
+            .replace("__SUBJECT__", app.subject)
+            .replace("__SUBJECTLABEL__", app.subject_label)
+            .replace("__GRADE__", str(app.grade))
+            .replace("__UNIT__", str(unit))
+            .replace("__TITLE__", title))
+
+
+def _span(s, start_at, end_marker, end_len):
+    """The region [line containing start_at .. end of end_marker], or None."""
+    i = s.find(start_at)
+    if i == -1:
+        return None
+    a = s.rfind("\n", 0, i) + 1
+    j = s.find(end_marker, a)
+    if j == -1:
+        return None
+    return (a, j + end_len)
+
+
+def _css_span(s):
+    span = _span(s, CSS_START, CSS_END, len(CSS_END))
+    if span:
+        return span, "update"
+    for opener in LEGACY_CSS_OPENERS:
+        span = _span(s, opener, LEGACY_CSS_END, len(LEGACY_CSS_END))
+        if span:
+            return span, "migrate"
+    return None, None
+
+
+def _js_span(s):
+    span = _span(s, JS_START, JS_END, len(JS_END))
+    if span:
+        return span, "update"
+    i = s.find(LEGACY_JS_OPEN)
+    if i == -1:
+        return None, None
+    a = s.rfind("<script", 0, i)
+    j = s.find("</script>", i)
+    if a == -1 or j == -1:
+        return None, None
+    return (a, j + len("</script>")), "migrate"
+
+
+def rewire(s, name, js):
+    """Replace the blocks this tool owns. REFUSES rather than guessing.
+
+    A region whose boundaries cannot be identified is left alone and named,
+    because the alternative is editing by position into a page another tool
+    also writes into -- which is how a migration eats somebody else's rules.
+    """
+    notes = []
+    span, how = _css_span(s)
+    if span is None:
+        print("  REFUSED %-24s cannot find the CSS block to update" % name)
+        return None, None
+    # strip BOTH ends: the span ends immediately after the END marker, so a
+    # trailing newline here lands on top of the one already there -- one blank
+    # line per run, which is how idempotent quietly stops being true.
+    s = s[:span[0]] + CSS.strip("\n") + s[span[1]:]
+    notes.append("css:" + how)
+
+    span, how = _js_span(s)
+    if span is None:
+        # Not fatal: the CSS is the half three separate changes went stale in,
+        # and a hand-authored mount block is not this tool's to rewrite blind.
+        notes.append("js:LEFT(no marker)")
+    else:
+        s = s[:span[0]] + js.strip() + s[span[1]:]
+        notes.append("js:" + how)
+    return s, " ".join(notes)
+
 
 DOTS = re.compile(r'(<nav class="dots"[^>]*></nav>)')
 
@@ -267,8 +373,12 @@ def wire(app, unit, name, title):
     # progressUnit must be the SAME id wire-progress.py writes, or the
     # teacher sees a hand raised from a unit no progress row mentions
     s = app.read(name)
-    if MARK in s:
-        print("  skip %-26s already wired" % name)
+    if CSS_START in s or MARK in s:
+        s, note = rewire(s, name, js_for(app, unit, title))
+        if s is None:
+            return False
+        app.write(name, s)
+        print("  %-9s %-26s unit %d, %s" % (note, name, unit, title))
         return True
 
     if "top-actions" not in s:
@@ -286,13 +396,7 @@ def wire(app, unit, name, title):
         return False
     s = s[:i] + CSS + s[i:]
 
-    js = (JS
-          .replace("__UNITKEY__", "%s%02d" % (app.cfg.get("progressUnitPrefix", "u"), unit))
-          .replace("__SUBJECT__", app.subject)
-          .replace("__SUBJECTLABEL__", app.subject_label)
-          .replace("__GRADE__", str(app.grade))
-          .replace("__UNIT__", str(unit))
-          .replace("__TITLE__", title))
+    js = js_for(app, unit, title)
     app.write(name, s.rstrip() + "\n" + js)
     print("  ok   %-26s unit %d, %s" % (name, unit, title))
     return True

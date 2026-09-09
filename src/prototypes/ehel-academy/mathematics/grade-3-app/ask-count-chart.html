@@ -640,10 +640,23 @@
   }
   .lesson-back:hover, .lesson-back:focus-visible { border-color: var(--teal); }
 
+  /* WIRE-CSS-START -- owned by lesson-app-tools/wire-platform-controls.py.
+     Everything to WIRE-CSS-END is REPLACED on a re-run: this tool used to skip
+     a page it had already wired, so three separate changes to this block --
+     the panel surfaces, the dark theme, the canned prompts -- reached nothing
+     already built, and each needed its own carry-across tool afterwards. */
   /* --- a home for the class controls, and the tutor dock;
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
   .top-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  /* The session bar (seb-session.js) is a fixed pill at right:16 bottom:16
+     with a z-index above everything, so in focus mode it lands squarely on
+     top of Ask Wehel. Lift both above it when it is there, and only then.
+     --seb-lift is MEASURED from the bar below, because the bar's contents wrap
+     and it is half again as tall on a narrow screen as on a wide one; the
+     fallback is only for the instant before the first measurement. */
+  body:has(#seb-session-bar) .w-dock,
+  body:has(#seb-session-bar) .w-drawer { bottom: var(--seb-lift, 78px); }
   .w-dock { position: fixed; right: 14px; bottom: 14px; z-index: 70; display: inline-flex;
     align-items: center; gap: 8px; border: none; border-radius: 999px; cursor: pointer;
     background: var(--plum); color: var(--plum-ink, #fff); font: inherit; font-size: 16px; font-weight: 700;
@@ -661,6 +674,7 @@
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
   /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
      The dock and the drawer above already use --card/--line/--ink, so before
      this the drawer was a dark card containing a white sheet: shell/wehel.js
@@ -734,6 +748,7 @@
     --lc-private-ink: var(--gold);
   }
   /* WEHEL-THEME-END */
+  /* WIRE-CSS-END */
 
   /* --- said on the learner's own screen when their work is not reaching the
          school; see lesson-app-tools/wire-progress.py --- */
@@ -2359,12 +2374,20 @@
   })();
 </script>
 
+<!-- WIRE-JS-START -->
 <script type="module">
   /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
      learner-controls.js holds the SAME singletons the shell mounts. */
   import { mountLearnerControls } from "./learner-controls.js";
   import { mountWehelChat } from "./wehel.js";
   import { escapeHtml } from "./course-shell.js";
+  /* Focus mode and the session bar. Imported for its side effect - it mounts
+     itself, and mounts NOTHING unless the launch carries focusMode=1 or an
+     exitUrl, which is why an ordinary launch and every local run see no
+     change. It is what writes course_focus_break / course_left_early, so
+     without it the live group board's away state can never fire for a learner
+     in this build. */
+  import "./seb-session.js";
 
   const q = new URLSearchParams(location.search);
   const launchToken = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
@@ -2389,6 +2412,19 @@
       progressUnit: "l08",
     });
   } catch (e) { console.error("learner controls:", e); }
+
+  /* How far Ask Wehel has to sit above the session bar - see --seb-lift in the
+     stylesheet. Measured rather than assumed: the bar wraps, so its height is
+     a property of the screen. Re-measured on resize because its clock changes
+     width every second and its buttons re-flow. */
+  (function () {
+    const seb = document.getElementById("seb-session-bar");
+    if (!seb) return;                       /* no focus mode, nothing to avoid */
+    const lift = () => document.documentElement.style
+      .setProperty("--seb-lift", (seb.offsetHeight + 30) + "px");
+    lift();
+    try { new ResizeObserver(lift).observe(seb); } catch (e) { addEventListener("resize", lift); }
+  })();
 
   /* 2. Wehel. Mounted on first open, not on load: the panel asks the server for
         the day's allowance, and a lesson nobody opens the tutor on should not
@@ -2415,6 +2451,18 @@
           ui: { escapeHtml, toast },
           tutorLabel: "Wehel Tutor",
           placeholder: "Ask about Ask, Count and Chart\u2026",
+          /* The chips a young learner presses, written as the sentence they
+             would have said. Four, because a row a six-year-old scans has to
+             be short and a fifth makes the other four less likely to be read.
+
+             "Give me a hint" is the one that carries a teaching stance: it
+             says "not the answer" in the message itself, so pressing it cannot
+             turn the tutor into an answer machine even before the prompt file
+             has its say.
+
+             True of every app this tool wires - Grade 1 English and the four
+             Mathematics builds - which is why none of them names a word, a
+             sentence or a number. */
           quickPrompts: [
             { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
             { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
@@ -2435,6 +2483,7 @@
     document.body.append(dock, drawer);
   }
 </script>
+<!-- WIRE-JS-END -->
 
 <script type="module">
   /* Progress reporting - see lesson-app-tools/wire-progress.py, especially

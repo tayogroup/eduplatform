@@ -650,6 +650,11 @@
   }
   .lesson-back:hover, .lesson-back:focus-visible { border-color: var(--teal); }
 
+  /* WIRE-CSS-START -- owned by lesson-app-tools/wire-platform-controls.py.
+     Everything to WIRE-CSS-END is REPLACED on a re-run: this tool used to skip
+     a page it had already wired, so three separate changes to this block --
+     the panel surfaces, the dark theme, the canned prompts -- reached nothing
+     already built, and each needed its own carry-across tool afterwards. */
   /* --- a home for the class controls, and the tutor dock;
          see lesson-app-tools/wire-platform-controls.py --- */
   .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; max-width: 55%; }
@@ -679,6 +684,7 @@
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
   /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
      The dock and the drawer above already use --card/--line/--ink, so before
      this the drawer was a dark card containing a white sheet: shell/wehel.js
@@ -752,6 +758,7 @@
     --lc-private-ink: var(--gold);
   }
   /* WEHEL-THEME-END */
+  /* WIRE-CSS-END */
 
   /* --- said on the learner's own screen when their work is not reaching the
          school; see lesson-app-tools/wire-progress.py --- */
@@ -9167,6 +9174,7 @@
   })();
 </script>
 
+<!-- WIRE-JS-START -->
 <script type="module">
   /* The platform controls - see lesson-app-tools/wire-platform-controls.py.
      learner-controls.js holds the SAME singletons the shell mounts. */
@@ -9275,6 +9283,7 @@
     document.body.append(dock, drawer);
   }
 </script>
+<!-- WIRE-JS-END -->
 
 <script type="module">
   /* Progress reporting - see lesson-app-tools/wire-progress.py, especially

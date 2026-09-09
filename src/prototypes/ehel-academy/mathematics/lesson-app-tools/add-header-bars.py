@@ -73,7 +73,18 @@ CSS = """
   .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
     border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
   .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
-  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  /* --ink, not --muted. At 13.5px this is normal text and needs 4.5:1; on the
+     English Grade 1 palette --muted measured 4.04:1 on the --cell pill behind
+     it and failed. A fixed colour cannot fix that here - the five apps that
+     render this bar carry four different --muted values (#566669, #6B7F82,
+     #93AABE, #A4B7C8), so each would need its own answer.
+
+     --ink is the one that holds for all of them by construction: it is each
+     palette's own text colour against --card and --cell, which is what
+     .eh-brand and .eh-picker in this same bar already depend on. It also ends
+     an inconsistency rather than making one - this label was the ONLY text in
+     either bar not already drawn in --ink or --teal. */
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--ink); white-space: nowrap; }
   .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
   .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
   .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }

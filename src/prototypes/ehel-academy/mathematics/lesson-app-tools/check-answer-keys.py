@@ -500,8 +500,22 @@ def expected(q, opts, item, js=""):
     """the answer, when it can be derived; else None. Conservative by design."""
     t = plain(q).replace("−", "-").replace("×", "*")
     low = t.lower()
-    if re.search(r"estimate|about|roughly|nearest|guess", low):
+    # ESTIMATING IS EXCLUDED; ROUNDING IS NOT. The guard exists because
+    # "Estimate 3,872 + 5,145 to the nearest thousand" keys 9,000 on purpose
+    # and the exact sum is 9,017 - the key is deliberately not the arithmetic.
+    # Matching "nearest" alone also took "Round 63 to the nearest 10", where
+    # the key IS exact and IS the whole question, so the guard was skipping the
+    # rounding questions rather than the estimates. Ask for the estimating.
+    if re.search(r"\bestimate|\broughly\b|\bguess\b|\babout how", low):
         return None                                   # deliberately not exact
+    m = re.search(r"round\s+([\d,]+)\s+to the nearest\s+([\d,]+|ten|hundred|thousand)", low)
+    if m and not re.search(r"[+\-*/×]", m.group(1)):
+        n = int(m.group(1).replace(",", ""))
+        step = {"ten": 10, "hundred": 100, "thousand": 1000}.get(
+            m.group(2), None) or int(m.group(2).replace(",", ""))
+        # round half UP, which is the convention every one of these lessons
+        # teaches ("5 or more, round up")
+        return ((n + step // 2) // step) * step
 
     pic = re.search(r"\bpic:\s*(-?\d+)\b", item)
     picn = int(pic.group(1)) if pic else None
@@ -645,7 +659,55 @@ def expected(q, opts, item, js=""):
     if m:
         n = int(m.group(1))
         return n // 2 if n % 2 == 0 else None
-    m = re.search(r"((?:\d+\s*,\s*){2,})\?", t)
+    # times, and only where BOTH numbers are in the question - the ladder's
+    # standing rule that the expression must account for every number in it
+    m = re.search(r"(\d+)\s*\*\s*(\d+)\s*=\s*\?", t)
+    if m and len(nums(t)) == 2:
+        return int(m.group(1)) * int(m.group(2))
+    # a unit fraction OF a quantity: "A quarter of 12 is ?", "1/4 of 12"
+    m = re.search(r"\b(?:a\s+)?(half|third|quarter|fifth|tenth)\s+of\s+(\d+)", low)
+    if m:
+        d = {"half": 2, "third": 3, "quarter": 4, "fifth": 5, "tenth": 10}[m.group(1)]
+        n = int(m.group(2))
+        return n // d if n % d == 0 else None
+    m = re.search(r"\bwhat is 1/(\d+) of (\d+)", low)
+    if m:
+        d, n = int(m.group(1)), int(m.group(2))
+        return n // d if d and n % d == 0 else None
+    # one more / one less, and the counting-on form beside it
+    m = re.search(r"\b(\w+) (more|less|fewer) than (\d+) is\b", low)
+    if m and isinstance(norm(m.group(1)), int):
+        step = norm(m.group(1))
+        return int(m.group(3)) + (step if m.group(2) == "more" else -step)
+    # SHARING, by the shape of the sentence rather than by one phrasing. The
+    # old rule named the sharer ("with her brother", "between two"), so
+    # "12 shared between 3 is ? each" - the form Grade 2 actually uses - missed.
+    m = re.search(r"(\d+)\s+shared\s+(?:between|by|among)\s+(\d+)", low)
+    if m:
+        n, k = int(m.group(1)), int(m.group(2))
+        return n // k if k and n % k == 0 else None
+    # how many tens/ones in a number - place value.
+    #
+    # TENS ONLY BELOW A HUNDRED, because above it the question is ambiguous and
+    # the two readings differ: "how many tens in 347" is 4 if it means the tens
+    # DIGIT and 34 if it means how many tens the number contains. Both are
+    # taught. Below 100 they coincide, so that is the range where an answer can
+    # be given without picking a reading the lesson may not have meant.
+    m = re.search(r"how many (tens|ones|units|hundreds) (?:are )?in (\d+)", low)
+    if m:
+        n, which = int(m.group(2)), m.group(1)
+        if which == "tens":
+            return n // 10 if n < 100 else None
+        return {"ones": n % 10, "units": n % 10, "hundreds": n // 100}[which]
+    # THE RUN NEED NOT BE FOLLOWED IMMEDIATELY BY THE "?". "12, 14, 16, ?"
+    # matched and "5, 10, 15, 20... what comes next?" did not, though they ask
+    # the same thing - the ellipsis and four words sat between the numbers and
+    # the question mark. Allow that gap, but only when the words are asking
+    # what comes NEXT: "4, 7, 10, 13... what is the rule?" wants "add 3", and
+    # continuing the run would answer a question nobody asked.
+    m = (re.search(r"((?:\d+\s*,\s*){2,})\?", t)
+         or (re.search(r"((?:\d+\s*,\s*){2,}\d+\s*)(?:\.{2,}|…)\s*what comes next", t + " ")
+             if re.search(r"what comes next", low) else None))
     if m:
         seq = nums(m.group(1))
         d = {seq[i + 1] - seq[i] for i in range(len(seq) - 1)}

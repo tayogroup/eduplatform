@@ -725,6 +725,32 @@
     --w-low-fill: rgba(244, 201, 93, 0.32); --w-low-track: rgba(244, 201, 93, 0.12);
   }
   .wehel-panel.wehel-panel .ai-compose input::placeholder { color: var(--muted); }
+
+  /* THE CLASS CHAT, same treatment and a different scope. learner-controls.js
+     draws that panel with INLINE styles -- deliberately, so a cosmetic rule in
+     course-ui.css cannot make five other subjects' app tiers stale -- and an
+     inline style cannot be overridden by a stylesheet. It reads --lc-* through
+     var() instead, so this retints it; and the panel is appended to <body>
+     rather than to the drawer, so these live at :root and not on a class.
+
+     The bug this fixes is not only the tint. Every bubble set a background and
+     NO colour, so the text inherited the page's --ink -- white -- and a child
+     read white on #f2f4f6. The compose input was the same, so typing was
+     invisible. The defaults in learner-controls.js are course-ui.css's own
+     --ink (#17324d), which is exactly what the light subjects inherit today. */
+  :root {
+    --lc-panel-bg: var(--card); --lc-panel-line: var(--line);
+    --lc-head-a: rgba(53, 191, 178, 0.22); --lc-head-b: rgba(53, 191, 178, 0.07);
+    --lc-head-ink: var(--ink); --lc-head-sub: var(--muted);
+    --lc-form-bg: var(--cell); --lc-form-line: var(--line);
+    --lc-field-bg: var(--cell); --lc-field-ink: var(--ink);
+    --lc-them-bg: var(--cell); --lc-them-ink: var(--ink);
+    /* the learner's own turn in plum, the same signal the tutor panel uses */
+    --lc-mine-bg: rgba(183, 139, 209, 0.30); --lc-mine-ink: var(--ink);
+    /* "only your teacher sees this" keeps its amber, restated for a dark ground */
+    --lc-private-bg: rgba(244, 201, 93, 0.18); --lc-private-line: rgba(244, 201, 93, 0.45);
+    --lc-private-ink: var(--gold);
+  }
   /* WEHEL-THEME-END */
 
   /* --- said on the learner's own screen when their work is not reaching the

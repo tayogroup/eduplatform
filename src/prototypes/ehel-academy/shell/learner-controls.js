@@ -344,8 +344,10 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
           el.style.cssText = "max-width:92%;padding:" + PAD + ";border-radius:" + RADIUS + "px;"
             + "font-size:" + FS + "px;line-height:1.45;"
             + (m.mine
-              ? "align-self:flex-end;background:#d7ecff;border-bottom-right-radius:6px;"
-              : "background:#f2f4f6;border-bottom-left-radius:6px;");
+              ? "align-self:flex-end;background:var(--lc-mine-bg,#d7ecff);"
+                + "color:var(--lc-mine-ink,#17324d);border-bottom-right-radius:6px;"
+              : "background:var(--lc-them-bg,#f2f4f6);"
+                + "color:var(--lc-them-ink,#17324d);border-bottom-left-radius:6px;");
           // An announcement is the teacher's raised voice: full-width banner, so
           // "everyone stop and listen" cannot be mistaken for conversation.
           if (m.announcement) {
@@ -358,12 +360,13 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
             msgsEl.appendChild(el);
             continue;
           }
-          if (m.mine && m.toteacheronly) el.style.cssText += "background:#fff3cd;border:2px solid #ffe69c;";
+          if (m.mine && m.toteacheronly) el.style.cssText += "background:var(--lc-private-bg,#fff3cd);"
+            + "color:var(--lc-private-ink,#664d03);border:2px solid var(--lc-private-line,#ffe69c);";
           // No "(teacher)" suffix — the server sends staff as "Teacher" outright,
           // so the suffix would double it. Students arrive as first names.
           const who = m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`;
           const note = m.mine && m.toteacheronly
-            ? '<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">Only your teacher can see this</small>' : "";
+            ? '<small style="display:block;font-size:10px;color:var(--lc-private-ink,#664d03);margin-top:3px">Only your teacher can see this</small>' : "";
           // An answer-to-class arrives with the question and without the asker.
           // The asker's own panel says "You asked" -- they know; nobody else does.
           const quote = m.quote
@@ -452,7 +455,8 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
         const el = document.createElement("div");
         el.style.cssText = "max-width:92%;padding:" + PAD + ";border-radius:" + RADIUS + "px;"
           + "font-size:" + (FS - 1) + "px;"
-          + (m.mine ? "align-self:flex-end;background:#d7ecff;" : "background:#f2f4f6;");
+          + (m.mine ? "align-self:flex-end;background:var(--lc-mine-bg,#d7ecff);color:var(--lc-mine-ink,#17324d);"
+                    : "background:var(--lc-them-bg,#f2f4f6);color:var(--lc-them-ink,#17324d);");
         const name = (m.file && m.file.name) || "file";
         el.innerHTML = (m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`)
           + `<span>📎 ${escapeHtml(name)}</span>`;
@@ -538,10 +542,12 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
         const el = document.createElement("div");
         el.style.cssText = "max-width:92%;padding:" + PAD + ";border-radius:" + RADIUS + "px;"
           + "font-size:" + (FS - 1) + "px;"
-          + (m.mine ? "align-self:flex-end;background:#fff3cd;border:2px solid #ffe69c;" : "background:#f2f4f6;");
+          + (m.mine ? "align-self:flex-end;background:var(--lc-private-bg,#fff3cd);color:var(--lc-private-ink,#664d03);"
+                      + "border:2px solid var(--lc-private-line,#ffe69c);"
+                    : "background:var(--lc-them-bg,#f2f4f6);color:var(--lc-them-ink,#17324d);");
         el.innerHTML = (m.mine ? "" : `<b style="display:block;font-size:11px;opacity:.75">${escapeHtml(m.name)}</b>`)
           + '<span>📷 Screenshot</span>'
-          + (m.mine ? `<small style="display:block;font-size:10px;color:#664d03;margin-top:3px">${TUT ? "Only your tutors can see this" : "Only your teacher can see this"}</small>` : "");
+          + (m.mine ? `<small style="display:block;font-size:10px;color:var(--lc-private-ink,#664d03);margin-top:3px">${TUT ? "Only your tutors can see this" : "Only your teacher can see this"}</small>` : "");
         msgsEl.appendChild(el);
         // The tutoring door serves every stored file through one verb; the
         // classroom door keeps its image verb. Both re-run the visibility check.
@@ -583,7 +589,8 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
         if (!msgsEl) return;
         const note = document.createElement("div");
         note.textContent = text;
-        note.style.cssText = "align-self:flex-end;font-size:11px;color:#664d03;background:#fff3cd;"
+        note.style.cssText = "align-self:flex-end;font-size:11px;color:var(--lc-private-ink,#664d03);"
+          + "background:var(--lc-private-bg,#fff3cd);"
           + "border:1px solid #ffe69c;border-radius:8px;padding:4px 8px";
         msgsEl.appendChild(note);
         msgsEl.scrollTop = msgsEl.scrollHeight;
@@ -659,35 +666,40 @@ export function mountLearnerControls({ token = "", launchToken = "", launchEndpo
         panel.id = "class-chat-panel";
         panel.style.cssText = "position:fixed;right:12px;bottom:74px;z-index:55;"
           + "width:min(" + (YOUNG ? 360 : 330) + "px,94vw);"
-          + "max-height:60vh;display:none;flex-direction:column;background:#fdfdfb;"
-          + "border:2px solid #bcd9f0;border-radius:" + (RADIUS + 4) + "px;"
+          + "max-height:60vh;display:none;flex-direction:column;background:var(--lc-panel-bg,#fdfdfb);"
+          + "color:var(--lc-them-ink,#17324d);"
+          + "border:2px solid var(--lc-panel-line,#bcd9f0);border-radius:" + (RADIUS + 4) + "px;"
           + "box-shadow:0 10px 34px rgba(16,64,102,.22);overflow:hidden";
         // The header is the sky gradient the app's own banners use, and it says
         // the whole privacy rule in words a child reads: who can see what.
         panel.innerHTML = '<div style="padding:' + (YOUNG ? 13 : 10) + 'px 15px;'
-          + 'background:linear-gradient(90deg,#cfe9ff,#e9f6ff);border-bottom:2px solid #bcd9f0">'
-          + '<div style="font-weight:900;font-size:' + (FS + 1) + 'px;color:#0a2c47">\uD83D\uDCAC '
+          + 'background:linear-gradient(90deg,var(--lc-head-a,#cfe9ff),var(--lc-head-b,#e9f6ff));'
+          + 'border-bottom:2px solid var(--lc-panel-line,#bcd9f0)">'
+          + '<div style="font-weight:900;font-size:' + (FS + 1) + 'px;color:var(--lc-head-ink,#0a2c47)">\uD83D\uDCAC '
           + (TUT ? "Tutor chat \u00B7 " + escapeHtml(TUT.subjectlabel) : "Class chat") + '</div>'
-          + '<div style="font-weight:600;font-size:' + (FS - 4) + 'px;color:#3d6a8c;margin-top:1px">'
+          + '<div style="font-weight:600;font-size:' + (FS - 4) + 'px;color:var(--lc-head-sub,#3d6a8c);margin-top:1px">'
           + (TUT
             ? "Your " + escapeHtml(TUT.subjectlabel) + " tutors see what you write. A reply can take a while \u2014 ask Wehel while you wait."
             : "Everyone sees your teacher. Only your teacher sees you.") + '</div></div>'
           + '<div id="class-chat-msgs" style="flex:1;overflow-y:auto;padding:12px 14px;display:flex;'
-          + 'flex-direction:column;gap:9px;min-height:110px;background:#fdfdfb"></div>'
+          + 'flex-direction:column;gap:9px;min-height:110px;background:var(--lc-panel-bg,#fdfdfb)"></div>'
           + '<form id="class-chat-form" style="display:flex;gap:8px;padding:11px 13px;'
-          + 'border-top:2px solid #e3eef7;background:#f4f9fd">'
+          + 'border-top:2px solid var(--lc-form-line,#e3eef7);background:var(--lc-form-bg,#f4f9fd)">'
           + '<button type="button" id="class-chat-shot" title="Send a picture of this page to your ' + (TUT ? "tutors" : "teacher") + '" '
-          + 'style="border:2px solid #bcd9f0;background:#fff;border-radius:999px;'
+          + 'style="border:2px solid var(--lc-panel-line,#bcd9f0);background:var(--lc-field-bg,#fff);'
+          + 'color:var(--lc-field-ink,#17324d);border-radius:999px;'
           + 'padding:' + (YOUNG ? "9px 13px" : "7px 11px") + ';font-size:' + (FS + 2) + 'px;cursor:pointer;line-height:1">\uD83D\uDCF7</button>'
           + (TUT
             ? '<button type="button" id="class-chat-attach" title="Attach your homework: a photo, PDF, Word or PowerPoint file" '
-              + 'style="border:2px solid #bcd9f0;background:#fff;border-radius:999px;'
+              + 'style="border:2px solid var(--lc-panel-line,#bcd9f0);background:var(--lc-field-bg,#fff);'
+              + 'color:var(--lc-field-ink,#17324d);border-radius:999px;'
               + 'padding:' + (YOUNG ? "9px 13px" : "7px 11px") + ';font-size:' + (FS + 2) + 'px;cursor:pointer;line-height:1">\uD83D\uDCCE</button>'
               + '<input id="class-chat-file" type="file" accept="' + FILE_ACCEPT + '" hidden>'
             : "")
           + '<input id="class-chat-input" type="text" maxlength="1200" autocomplete="off" placeholder="' + (TUT ? "Ask your tutors…" : "Ask your teacher…") + '" '
-          + 'style="flex:1;border:2px solid #bcd9f0;border-radius:999px;padding:' + (YOUNG ? "9px 15px" : "7px 13px") + ';'
-          + 'font:inherit;font-size:' + FS + 'px;min-width:0;background:#fff">'
+          + 'style="flex:1;border:2px solid var(--lc-panel-line,#bcd9f0);border-radius:999px;padding:' + (YOUNG ? "9px 15px" : "7px 13px") + ';'
+          + 'font:inherit;font-size:' + FS + 'px;min-width:0;background:var(--lc-field-bg,#fff);'
+          + 'color:var(--lc-field-ink,#17324d)">'
           + '<button type="submit" style="border:none;background:#1a67a3;color:#fff;border-radius:999px;'
           + 'padding:' + (YOUNG ? "9px 18px" : "7px 15px") + ';font:inherit;font-size:' + FS + 'px;font-weight:800;cursor:pointer">Send</button></form>';
         document.body.appendChild(panel);

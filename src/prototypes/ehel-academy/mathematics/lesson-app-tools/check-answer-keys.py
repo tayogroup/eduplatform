@@ -76,6 +76,7 @@ WORD = {"zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 
         "seventeen": 17, "eighteen": 18, "nineteen": 19, "twenty": 20,
         "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "hundred": 100}
 DICE = {"⚀": 1, "⚁": 2, "⚂": 3, "⚃": 4, "⚄": 5, "⚅": 6}
+NEG = re.compile(r"\b(not|no|never|none|neither|nobody|nothing)\b|n't")
 
 
 def plain(s):
@@ -112,6 +113,13 @@ def same(key, want):
     if a == b:
         return True
     if isinstance(a, str) and isinstance(b, str):
+        # A NEGATION IS NOT A NEAR MISS, IT IS THE OPPOSITE ANSWER. The word
+        # test below matches "fair" against "not fair" - "fair" is a whole word
+        # inside it - so a key bound to the negated option compared EQUAL to
+        # the derived answer and the tool reported the pair as correct. Found
+        # by mutation: re-binding the spinner key to "not fair" survived.
+        if bool(NEG.search(a)) != bool(NEG.search(b)):
+            return False
         if a.startswith(b) or b.startswith(a):
             return True
         return b in a.split() or a in b.split()
@@ -373,7 +381,7 @@ def facts_answer(low, opts):
             return ring[i % len(ring)]
     if re.search(r"how many (months|days) (are there )?in a (year|week)", low):
         return 12 if "month" in low else 7
-    m = re.search(r"which is the (shortest|longest)", low)
+    m = re.search(r"which (?:one )?is the (shortest|longest)", low)
     if m and all(re.sub(r"^an? ", "", norm(o)) in SPANS for o in opts):
         rank = sorted(opts, key=lambda o: SPANS.index(re.sub(r"^an? ", "", norm(o))))
         return rank[0] if m.group(1) == "shortest" else rank[-1]
@@ -397,6 +405,29 @@ def facts_answer(low, opts):
     if m:
         a, cmp_, c = m.group(1), m.group(2), m.group(4)
         return a if m.group(5) == cmp_[:-2] + "est" else c
+    # a shape described by its sides and corners
+    m = re.search(r"a shape with (\d+) (equal )?sides and \1 (square|right) corners is", low)
+    if m:
+        want = "square" if m.group(2) and m.group(1) == "4" else \
+               "rectangle" if m.group(1) == "4" else None
+        hit = [o for o in opts if want and norm(o) == want]
+        return hit[0] if len(hit) == 1 else None
+    # the everyday object a solid is named for
+    LIKE = {"ball": "sphere", "tin": "cylinder", "can": "cylinder",
+            "box": "cuboid", "dice": "cube", "die": "cube",
+            "party hat": "cone", "ice cream cone": "cone"}
+    m = re.search(r"which solid is like an? ([\w ]+?)\??$", low)
+    if m and m.group(1).strip() in LIKE:
+        hit = [o for o in opts if norm(o) == LIKE[m.group(1).strip()]]
+        return hit[0] if len(hit) == 1 else None
+    # position said two ways
+    m = re.search(r"is (?:sitting )?on top of the (\w+)\. the \w+ is", low)
+    if m:
+        hit = [o for o in opts if re.search(r"\babove\b|\bon\b", norm(o))]
+        return hit[0] if len(hit) == 1 else None
+    if re.search(r"in the middle of the two\b", low):
+        hit = [o for o in opts if "between" in norm(o)]
+        return hit[0] if len(hit) == 1 else None
     # the measuring vocabulary, stated once here rather than per question
     if re.search(r"side that goes down", low):
         return "heavier"
@@ -581,6 +612,267 @@ def fraction_answer(low, opts):
     # equal parts are what make a fraction; unequal pieces make none
     if re.search(r"different sizes.*is one piece a (\w+)", low):
         hit = [o for o in opts if norm(o) in ("no", "not a quarter", "none")]
+        return hit[0] if len(hit) == 1 else None
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Measures, clocks, turns, patterns and charts. Same contract as money and
+# fractions above: derive the VALUE, then return the option that carries it,
+# because "500 ml" and "2 hours" normalise as strings and a bare number would
+# report a correct key as wrong.
+# BOTH THE SYMBOL AND THE WORD. The options say "900 g" and the questions say
+# "How many grams are in 1 kilogram?", so a table of symbols alone answers the
+# comparisons and silently declines every conversion question.
+SCALES = {                                   # quantity -> unit -> size in a base
+    "length": {"mm": 1, "millimetre": 1, "millimetres": 1,
+               "cm": 10, "centimetre": 10, "centimetres": 10,
+               "m": 1000, "metre": 1000, "metres": 1000,
+               "km": 1000000, "kilometre": 1000000, "kilometres": 1000000},
+    "mass": {"g": 1, "gram": 1, "grams": 1,
+             "kg": 1000, "kilogram": 1000, "kilograms": 1000},
+    "capacity": {"ml": 1, "millilitre": 1, "millilitres": 1,
+                 "l": 1000, "litre": 1000, "litres": 1000},
+    "time": {"second": 1, "seconds": 1, "minute": 60, "minutes": 60,
+             "hour": 3600, "hours": 3600, "day": 86400, "days": 86400,
+             "week": 604800, "weeks": 604800},
+}
+HEAVIER = {"heavier": "mass", "lighter": "mass", "longer": "length",
+           "shorter": "length", "taller": "length", "holds more": "capacity"}
+
+
+def measure(s):
+    """(quantity, size) for "900 g", "1 kg", "half a litre", or None."""
+    t = plain(s).lower().strip()
+    m = re.fullmatch(r"(?:(\d+(?:\.\d+)?)\s*|(half|a quarter of)\s+an?\s+)([a-z]+)", t)
+    if not m:
+        return None
+    unit = m.group(3)
+    for q, table in SCALES.items():
+        if unit in table:
+            n = (float(m.group(1)) if m.group(1)
+                 else 0.5 if m.group(2) == "half" else 0.25)
+            return q, n * table[unit]
+    return None
+
+
+def units_answer(low, opts):
+    """conversions and comparisons between units."""
+    # "How many grams are in 1 kilogram?", "How many minutes in half an hour?"
+    m = re.search(r"how many (\w+) (?:are )?in (?:(\d+)|half an?|an?|one)\s*(\w+)", low)
+    if m:
+        small, big = m.group(1), m.group(3)
+        n = float(m.group(2)) if m.group(2) else (0.5 if "half" in m.group(0) else 1.0)
+        for table in SCALES.values():
+            if small in table and big in table and table[small]:
+                v = n * table[big] / table[small]
+                if v == int(v):
+                    return pick(opts, float(int(v)), lambda o: amount(o)) or int(v)
+        return None
+    # "Half a litre is..." - the option carries the unit, so compare sizes
+    m = re.search(r"^(half an? \w+|a quarter of an? \w+) is", low)
+    if m:
+        got = measure(m.group(1))
+        if got:
+            return pick(opts, got[1], lambda o: (measure(o) or (None, None))[1])
+    # "Which is heavier: 1 kg or 900 g?"
+    m = re.search(r"which is (heavier|lighter|longer|shorter|taller):?\s*(.+?)\s+or\s+(.+?)\??$", low)
+    if m and m.group(1) in HEAVIER:
+        a, b = measure(m.group(2)), measure(m.group(3))
+        if a and b and a[0] == b[0] and a[1] != b[1]:
+            big = m.group(1) in ("heavier", "longer", "taller")
+            return pick(opts, max(a[1], b[1]) if big else min(a[1], b[1]),
+                        lambda o: (measure(o) or (None, None))[1])
+    # a length read off a ruler is a DIFFERENCE, not the far end
+    m = re.search(r"from (\d+) (\w+) to (\d+) \2 on a ruler.*how long", low)
+    if m:
+        return pick(opts, float(int(m.group(3)) - int(m.group(1))), lambda o: amount(o))
+    # a duration between two clock times
+    m = re.search(r"starts at (\d+):(\d+).*ends at (\d+):(\d+).*how long", low)
+    if m:
+        a = int(m.group(1)) * 60 + int(m.group(2))
+        b = int(m.group(3)) * 60 + int(m.group(4))
+        if b > a and (b - a) % 60 == 0:
+            return pick(opts, float((b - a) // 60), lambda o: amount(o))
+    return None
+
+
+CLOCKFACE = {12: "o'clock", 6: "half past", 3: "quarter past", 9: "quarter to"}
+
+
+def clock_answer(low, opts):
+    """what the hands say, and the same time written the other way."""
+    if re.search(r"which hand shows the hour", low):
+        hit = [o for o in opts if "short" in norm(o)]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"long hand points to (\d+)\. that is", low)
+    if m and int(m.group(1)) in CLOCKFACE:
+        want = CLOCKFACE[int(m.group(1))]
+        hit = [o for o in opts if norm(o) == want]
+        return hit[0] if len(hit) == 1 else None
+    # "Quarter to 5 is the same as..." -> 4:45
+    m = re.search(r"(quarter to|quarter past|half past) (\d+) is the same as", low)
+    if m:
+        h, kind = int(m.group(2)), m.group(1)
+        h24, mins = (h - 1 if h > 1 else 12, 45) if kind == "quarter to" else (h, 15 if kind == "quarter past" else 30)
+        want = "%d:%02d" % (h24, mins)
+        hit = [o for o in opts if norm(o) == want]
+        return hit[0] if len(hit) == 1 else None
+    # "What is 3:20 in words?"
+    m = re.search(r"what is (\d+):(\d+) in words", low)
+    if m:
+        h, mins = int(m.group(1)), int(m.group(2))
+        inw = {v: k for k, v in WORD.items()}
+        if mins == 0:
+            want = "%s o'clock" % inw.get(h, h)
+        elif mins <= 30:
+            want = "%s past %s" % (inw.get(mins, mins), inw.get(h, h))
+        else:
+            nxt = h + 1 if h < 12 else 1
+            want = "%s to %s" % (inw.get(60 - mins, 60 - mins), inw.get(nxt, nxt))
+        hit = [o for o in opts if norm(o) == want]
+        return hit[0] if len(hit) == 1 else None
+    # the same weekday a whole number of weeks later
+    m = re.search(r"the (\d+)(?:st|nd|rd|th) of \w+ is an? (\w+)\. what day is the (\d+)", low)
+    if m and m.group(2) in DAYS:
+        step = int(m.group(3)) - int(m.group(1))
+        return DAYS[(DAYS.index(m.group(2)) + step) % 7]
+    return None
+
+
+FACING = ["up", "right", "down", "left"]      # clockwise
+PAGE = {"top": "up", "bottom": "down", "right": "right", "left": "left"}
+TURNS = {"quarter": 1, "half": 2, "three-quarter": 3, "whole": 4, "full": 4}
+TURNNAME = {0: "no turn", 1: "a quarter turn", 2: "a half turn",
+            3: "a three-quarter turn", 4: "a full turn"}
+
+
+def turn_answer(low, opts):
+    """turns compose, and a turn from a heading gives a heading."""
+    # "Two quarter turns the same way make..."
+    m = re.search(r"(\w+) (quarter|half|three-quarter) turns the same way make", low)
+    if m and isinstance(norm(m.group(1)), int):
+        q = norm(m.group(1)) * TURNS[m.group(2)]
+        want = TURNNAME.get(q % 4 or 4)
+        hit = [o for o in opts if norm(o).replace("whole", "full") == want]
+        return hit[0] if len(hit) == 1 else None
+    # "Facing up, you make a half turn. Now you face..."
+    m = re.search(r"facing (\w+),? you make a (quarter|half|three-quarter) turn", low)
+    if m and m.group(1) in FACING:
+        i = (FACING.index(m.group(1)) + TURNS[m.group(2)]) % 4
+        hit = [o for o in opts if norm(o) == FACING[i]]
+        return hit[0] if len(hit) == 1 else None
+    # "The robot faces the top of the page and turns right. It now faces..."
+    m = re.search(r"faces the (\w+) of the page and turns (right|left)", low)
+    if m and m.group(1) in PAGE:
+        i = (FACING.index(PAGE[m.group(1)]) + (1 if m.group(2) == "right" else -1)) % 4
+        side = [k for k, v in PAGE.items() if v == FACING[i]]
+        hit = [o for o in opts if side and side[0] in norm(o)]
+        return hit[0] if len(hit) == 1 else None
+    return None
+
+
+def period_of(seq):
+    """the shortest repeat length, or None if the run does not repeat."""
+    for p in range(1, len(seq) // 2 + 1):
+        if all(seq[i] == seq[i - p] for i in range(p, len(seq))):
+            return p
+    return None
+
+
+def pattern_answer(low, t, opts):
+    """repeats, rules, nth terms and membership."""
+    # "In the pattern ABB ABB ABB, how long is the part that repeats?" - read
+    # from `t`, not `low`, because the letters ARE the data and lowercasing
+    # them would merge A with a; matched case-insensitively so the capital at
+    # the start of the sentence does not stop it.
+    m = re.search(r"in the pattern ([A-Za-z ]+?), how long is the part that repeats",
+                  plain(t), re.I)
+    if m:
+        p = period_of(m.group(1).replace(" ", ""))
+        return p if p else None
+    # a word run: "Circle, square, circle, square, circle... what comes next?"
+    m = re.search(r"^([a-z]+(?:,\s*[a-z]+){2,})\s*(?:\.{2,}|…)\s*what comes next", low)
+    if m:
+        seq = [w.strip() for w in m.group(1).split(",")]
+        p = period_of(seq)
+        return seq[len(seq) - p] if p else None
+    # "4, 7, 10, 13... what is the rule?"
+    m = re.search(r"((?:\d+\s*,\s*){2,}\d+)\s*(?:\.{2,}|…)\s*what is the rule", t)
+    if m:
+        seq = nums(m.group(1))
+        d = {seq[i + 1] - seq[i] for i in range(len(seq) - 1)}
+        if len(d) == 1:
+            step = d.pop()
+            want = ("add %d" if step > 0 else "subtract %d") % abs(step)
+            hit = [o for o in opts if norm(o) == want]
+            return hit[0] if len(hit) == 1 else None
+    # "Pattern 1 has 3 blocks and each adds 2. Pattern 5 has..."
+    m = re.search(r"pattern (\d+) has (\d+) \w+ and each adds (\d+)\. pattern (\d+) has", low)
+    if m:
+        start, first, step, want = int(m.group(1)), int(m.group(2)), int(m.group(3)), int(m.group(4))
+        return first + step * (want - start)
+    # "A growing pattern goes 1, 4, 7, 10. Is 15 in it?"
+    m = re.search(r"growing pattern goes ((?:\d+\s*,\s*)+\d+)\.\s*is (\d+) in it", low)
+    if m:
+        seq, n = nums(m.group(1)), int(m.group(2))
+        d = {seq[i + 1] - seq[i] for i in range(len(seq) - 1)}
+        if len(d) == 1:
+            step = d.pop()
+            inside = step and n >= seq[0] and (n - seq[0]) % step == 0
+            hit = [o for o in opts if norm(o) == ("yes" if inside else "no")]
+            return hit[0] if len(hit) == 1 else None
+    # "Which is a repeating pattern?" - the options are the evidence
+    if re.search(r"which is a repeating pattern", low):
+        hit = []
+        for o in opts:
+            toks = [x for x in re.split(r"[,\s]+", plain(o)) if x]
+            if len(toks) >= 3 and period_of(toks):
+                hit.append(o)
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"from pattern (\d+) to pattern (\d+), how many jumps", low)
+    if m:
+        return int(m.group(2)) - int(m.group(1))
+    return None
+
+
+LIKELIHOOD = {"definitely happen": "certain", "never happen": "impossible",
+              "certainly happen": "certain"}
+
+
+def chart_answer(low, opts):
+    """tallies, keys, steps and the likelihood words."""
+    if re.search(r"in a tally.*crossed through stand for", low):
+        return pick(opts, 5.0, lambda o: amount(o)) or 5
+    # a pictogram or bar KEY multiplies; the pictures are never the quantity
+    m = re.search(r"one \S+ = (\d+).*how many \w+ do (\d+) pictures show", low)
+    if m:
+        return pick(opts, float(int(m.group(1)) * int(m.group(2))), lambda o: amount(o))
+    m = re.search(r"each step is (\d+).*reaching the (\d+)(?:st|nd|rd|th) step", low)
+    if m:
+        return pick(opts, float(int(m.group(1)) * int(m.group(2))), lambda o: amount(o))
+    m = re.search(r"bar chart shows ((?:\d+[,\s]+)+(?:and\s+)?\d+).*how many altogether", low)
+    if m:
+        return pick(opts, float(sum(nums(m.group(1)))), lambda o: amount(o))
+    # "A bag has 8 red and 1 blue. Which are you most likely to pull out?"
+    m = re.search(r"has (\d+) (\w+) and (\d+) (\w+).*most likely", low)
+    if m:
+        a, b = int(m.group(1)), int(m.group(3))
+        if a != b:
+            want = m.group(2) if a > b else m.group(4)
+            hit = [o for o in opts if norm(o) == want]
+            return hit[0] if len(hit) == 1 else None
+    for phrase, word in LIKELIHOOD.items():
+        if re.search(r"which word means it will " + phrase, low):
+            hit = [o for o in opts if norm(o) == word]
+            return hit[0] if len(hit) == 1 else None
+    if re.search(r"fair coin, heads is", low):
+        hit = [o for o in opts if re.search(r"even chance|equally likely|fifty", norm(o))]
+        return hit[0] if len(hit) == 1 else None
+    # equal shares of a spinner make a fair game
+    m = re.search(r"spinner is half (\w+), half (\w+).*game on \1 or \2 is", low)
+    if m:
+        hit = [o for o in opts if norm(o) == "fair"]
         return hit[0] if len(hit) == 1 else None
     return None
 
@@ -780,10 +1072,12 @@ def expected(q, opts, item, js=""):
     got = facts_answer(low, opts)
     if got is not None:
         return got
-    got = money_answer(low, opts)
-    if got is not None:
-        return got
-    got = fraction_answer(low, opts)
+    for rule in (money_answer, fraction_answer, units_answer,
+                 clock_answer, turn_answer, chart_answer):
+        got = rule(low, opts)
+        if got is not None:
+            return got
+    got = pattern_answer(low, t, opts)
     if got is not None:
         return got
     if picn is not None and re.search(r"^how many\b", low) and not nums(t):

@@ -441,7 +441,22 @@ function mountFocusMode(p, bar) {
   const token = (p.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
   if (!/^https?:\/\//i.test(endpoint) || !token) return;
 
-  let breaks = 0;
+  // THE COUNT SURVIVES A PAGE CHANGE, and it has to. It used to be a bare
+  // `let breaks = 0`, so moving from unit 3 to unit 4 reset it — which was
+  // invisible while the only reader was a text note nobody watched, and is
+  // wrong the moment a traffic light reads it: the light would go green every
+  // time a child changed page. sessionStorage is the right scope on purpose —
+  // per tab, gone when the tab closes — because "this session" is exactly what
+  // the light claims. A new tab starting at green is honest; a new PAGE was not.
+  //
+  // The server keeps the durable record either way; this is only what the
+  // learner is shown, so a cleared or unreadable store costs nothing.
+  const STORE = "ehel-focus-breaks-v1";
+  const readBreaks = () => {
+    try { return Math.max(0, parseInt(sessionStorage.getItem(STORE), 10) || 0); }
+    catch { return 0; }
+  };
+  let breaks = readBreaks();
   let lastSent = 0;
 
   const report = (kind) => {
@@ -465,10 +480,45 @@ function mountFocusMode(p, bar) {
   const note = document.createElement("span");
   note.style.cssText = "font-size:12px;opacity:.8";
   bar.insertBefore(note, bar.firstChild);
-  const paint = () => { note.textContent = breaks ? `Left lesson ${breaks}×` : "Focus mode"; };
-  paint();
 
-  const broke = (kind) => { breaks += 1; paint(); report(kind); };
+  // THE THRESHOLDS LIVE HERE AND NOWHERE ELSE (owner, 2026-09-09): 0 green,
+  // 1-2 amber, 3 or more red. Two header builders draw the light and neither
+  // knows the numbers — they emit an empty #ehFocus and this paints it — so
+  // there is one definition to change rather than three to keep in step. Same
+  // reason the Wehel bands are one string read three ways.
+  const FOCUS_STATE = (n) => (n === 0 ? "ok" : n < 3 ? "warn" : "bad");
+  const FOCUS_WORDS = (n) => (n === 0 ? "On the lesson" : `Left the lesson ${n}×`);
+
+  // Painted, never drawn: an element that is not on the page is not created.
+  // The hub and the lesson pages both put one there when focusMode is on, and
+  // any page without one simply has no light — the rule that a control which
+  // says nothing is better absent than present and meaningless.
+  const paintLight = () => {
+    document.querySelectorAll("#ehFocus").forEach((el) => {
+      el.hidden = false;
+      el.className = "eh-focus is-" + FOCUS_STATE(breaks);
+      el.title = FOCUS_WORDS(breaks);
+      el.setAttribute("aria-label", "Focus: " + FOCUS_WORDS(breaks));
+    });
+  };
+
+  const paint = () => {
+    note.textContent = breaks ? `Left lesson ${breaks}×` : "Focus mode";
+    paintLight();
+  };
+  paint();
+  // The light is emitted by a header the page may build AFTER this module runs,
+  // so paint once more when the document is ready rather than assuming order.
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", paintLight, { once: true });
+  }
+
+  const broke = (kind) => {
+    breaks += 1;
+    try { sessionStorage.setItem(STORE, String(breaks)); } catch { /* private mode */ }
+    paint();
+    report(kind);
+  };
 
   // A page of this course being replaced by another page of this course hides
   // and blurs the document on its way out. Counting that as a break told the

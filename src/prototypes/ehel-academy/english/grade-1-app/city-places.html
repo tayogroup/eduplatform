@@ -794,6 +794,14 @@
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
     color: var(--ink); font-size: 17px; cursor: pointer; }
+  /* The focus light. Emitted empty and hidden; shared/seb-session.js unhides it
+     and sets is-ok / is-warn / is-bad, because that file owns the thresholds.
+     A page without focus mode never shows it at all. */
+  .eh-focus { width: 14px; height: 14px; border-radius: 999px; flex: 0 0 auto; display: block;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+  .eh-focus.is-ok { background: var(--good, #3E9C63); }
+  .eh-focus.is-warn { background: var(--gold, #E8B84B); }
+  .eh-focus.is-bad { background: var(--bad, #D7584B); }
   .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
   .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
     background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
@@ -830,6 +838,7 @@
     <span class="eh-track"><i id="ehFill"></i></span>
   </div>
   <div class="eh-b1right">
+    <span id="ehFocus" hidden></span>
     <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="welcome-to-school.html">Welcome to School</option><option value="family-time.html">Family Time</option><option value="fun-and-games.html">Fun and Games</option><option value="making-things.html">Making Things</option><option value="on-the-farm.html">On the Farm</option><option value="my-five-senses.html">My Five Senses</option><option value="let-s-go.html">Let's Go!</option><option value="wonderful-water.html">Wonderful Water</option><option value="city-places.html" selected>City Places</option><option value="my-first-english-world.html">My First English World</option></select>
     <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>
   </div>

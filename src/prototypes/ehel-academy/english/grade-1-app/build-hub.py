@@ -145,8 +145,16 @@ PAGE = """<!doctype html>
   @media (max-width: 900px) { .eh-year .eh-track, .eh-year .eh-progtext { display: none; }
     .eh-year { flex: 0 0 auto; max-width: none; padding: 5px 6px; } }
   @media (max-width: 620px) { .eh-year { display: none; } }
+
+  /* the focus light: emitted empty and hidden, painted by shared/seb-session.js */
+  .eh-focus { width: 14px; height: 14px; border-radius: 999px; flex: 0 0 auto; display: block;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+  .eh-focus.is-ok { background: var(--good, #3E9C63); }
+  .eh-focus.is-warn { background: var(--gold, #E8B84B); }
+  .eh-focus.is-bad { background: var(--bad, #D7584B); }
 </style>
 
+<script type="module">import "./seb-session.js";</script>
 <header class="eh-bar1">
   <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
   <div class="eh-brand"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></div>
@@ -161,6 +169,7 @@ PAGE = """<!doctype html>
     <span class="eh-track"><i id="ehYearFill"></i></span>
   </div>
   <div class="eh-b1right">
+    <span id="ehFocus" hidden></span>
     <select class="eh-picker" id="ehPicker" aria-label="Choose a unit"><option value="welcome-to-school.html">Welcome to School</option><option value="family-time.html">Family Time</option><option value="fun-and-games.html">Fun and Games</option><option value="making-things.html">Making Things</option><option value="on-the-farm.html">On the Farm</option><option value="my-five-senses.html">My Five Senses</option><option value="let-s-go.html">Let's Go!</option><option value="wonderful-water.html">Wonderful Water</option><option value="city-places.html">City Places</option><option value="my-first-english-world.html">My First English World</option></select>
   </div>
 </header>

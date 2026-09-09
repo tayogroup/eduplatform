@@ -81,6 +81,14 @@ CSS = """
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
     color: var(--ink); font-size: 17px; cursor: pointer; }
+  /* The focus light. Emitted empty and hidden; shared/seb-session.js unhides it
+     and sets is-ok / is-warn / is-bad, because that file owns the thresholds.
+     A page without focus mode never shows it at all. */
+  .eh-focus { width: 14px; height: 14px; border-radius: 999px; flex: 0 0 auto; display: block;
+    box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
+  .eh-focus.is-ok { background: var(--good, #3E9C63); }
+  .eh-focus.is-warn { background: var(--gold, #E8B84B); }
+  .eh-focus.is-bad { background: var(--bad, #D7584B); }
   .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
   .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
     background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;
@@ -197,6 +205,7 @@ def bar_html(app, title, current):
         '    <span class="eh-track"><i id="ehFill"></i></span>\n'
         '  </div>\n'
         '  <div class="eh-b1right">\n'
+        '    <span id="ehFocus" hidden></span>\n'
         '    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson">%s</select>\n'
         '    <button type="button" class="eh-icon" id="ehAudio" aria-pressed="false" title="Turn the voice off">♪</button>\n'
         '  </div>\n'

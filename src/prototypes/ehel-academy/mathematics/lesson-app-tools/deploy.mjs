@@ -137,7 +137,15 @@ for (const f of plan) {
 
 console.log(bad ? "\n" + bad + " file(s) did not land" : "\nall " + plan.length + " files verified on storage");
 console.log("\n" + CDN + "/" + enc(REMOTE) + "/index.html");
-console.log("\nNothing routes a learner here yet: the launch override "
-  + "(local_prequran/ehel_app_url_overrides) still has to name it, which is a\n"
-  + "Moodle setting and an operator loop, not a step this tool can take.");
+/* This used to close with "Nothing routes a learner here yet". It is not a
+ * thing this tool can know: routing lives in local_prequran/ehel_app_url_overrides
+ * on the Moodle, which is unreachable from here. Grade 2 had been routed to
+ * grade-2-lessons for some time while this line said otherwise, so a deploy
+ * that was announced as landing on a dormant path went straight to learners.
+ * The README repeated the same claim, which made one assumption look like two
+ * sources. Say what is checkable and stop. */
+console.log("\nWHO SEES THIS depends on local_prequran/ehel_app_url_overrides, a\n"
+  + "Moodle setting this tool cannot read. If that map names " + (cfg.courseKey || "this course")
+  + ",\nthese bytes are live to learners NOW. Check it before assuming either way:\n"
+  + "  cd /home/ehelacad/quraantest.academy && php <staged-repoint-script>.php");
 process.exitCode = bad ? 1 : 0;

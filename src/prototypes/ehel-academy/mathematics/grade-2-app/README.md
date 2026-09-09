@@ -13,7 +13,7 @@ python ../lesson-app-tools/check-lessons.py       # the gate
 node   ../lesson-app-tools/deploy.mjs --app .     # plan; --upload writes
 ```
 
-## Status: wired, gated, ON the CDN, NOT routed
+## Status: LIVE — on the CDN, and Grade 2 learners are routed here
 
 | | grade-1-v2 (live) | here |
 | --- | --- | --- |
@@ -27,25 +27,34 @@ node   ../lesson-app-tools/deploy.mjs --app .     # plan; --upload writes
 | hub links | siblings | ✓ siblings |
 | deploy path | own `deploy.mjs` | ✓ shared |
 | **on the CDN** | ✓ | ✓ |
-| **a learner can reach it** | ✓ | **no** |
+| **a learner can reach it** | ✓ | ✓ |
 
-**It IS uploaded, and this table said otherwise until 2026-09-09.** Storage was
-listed with the access key rather than probed through the edge: `Ehel
-Primary/app/mathematics/grade-2-lessons` holds 14 objects — 10 pages and the
-four platform modules — newest 2026-09-07. `../lesson-app-tools/README.md` had
-it right ("uploaded … routed to by nobody") and this file was the stale one.
+**Both rows in this table said "no" until 2026-09-09, and both were wrong.**
+The build is uploaded — `Ehel Primary/app/mathematics/grade-2-lessons`, listed
+on storage with the access key rather than probed through the edge — and Grade
+2 learners are ROUTED to it. `local_prequran/ehel_app_url_overrides` reads:
 
-Being on the zone is not being reachable. No learner arrives until the launch
-override (`local_prequran/ehel_app_url_overrides`, read by
-`pqpg_ehel_app_base()`) names it — a Moodle setting through the staged-script +
-cPanel loop, like `../grade-1-app/repoint-grade-1.php`. That setting cannot be
-read from this repo, so whether Grade 2 is routed is **unverified in both
-directions** rather than known to be no.
+```json
+{"ehel-math-g01":".../mathematics/grade-1-v2/index.html",
+ "ehel-math-g02":".../mathematics/grade-2-lessons/index.html",
+ "ehel-eng-g01":".../english/grade-1-v2/index.html"}
+```
 
-**The deployed copy is the pre-Stage-2-fix build.** Everything below about
-removing out-of-stage steps is true of the working tree and of nothing on the
-CDN; a learner sent there today still gets the 24-hour clock and four
-quadrants.
+`repoint-grade-2.php` was written to make that change and, run on 2026-09-09,
+reported "Already pointed at grade-2-lessons. Nothing to do." It is kept for the
+rollback it prints, not because the repoint is outstanding.
+
+**How this file came to be wrong is the part worth keeping.** The setting cannot
+be read from this repo, so "not routed" was never a measurement — it was an
+assumption that got written down as a status, and then repeated by
+`../lesson-app-tools/deploy.mjs`, which closes every run with "Nothing routes a
+learner here yet". Two independent-looking sources, one origin. The only thing
+that can answer it is the Moodle setting, and that means the cPanel loop.
+
+The consequence was real rather than theoretical: this build served Grade 2
+learners the whole time it carried the out-of-stage material below, and the
+2026-09-09 deploy that removed it went live to them on the spot — not to a
+dormant path, which is what the deploy was announced as at the time.
 
 Note the shell course at `app/mathematics/grade-2/` is untouched and still
 serves Grade 2 on v415. This build is an alternative to it, not a patch on it.

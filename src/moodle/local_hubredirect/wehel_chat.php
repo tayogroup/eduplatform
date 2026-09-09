@@ -439,7 +439,7 @@ foreach ($messages as $message) {
             }
             $plain[] = $block;
         }
-        // The 200k ceiling guards the text/tool blocks; attachments carry
+        // The 220k ceiling guards the text/tool blocks; attachments carry
         // their own per-block cap above and are excluded from this measure.
         $encoded = json_encode($plain, JSON_UNESCAPED_UNICODE);
         if (!is_string($encoded) || strlen($encoded) > 220000) {
@@ -472,7 +472,9 @@ if (isset($payload['unit'])) {
     // cut landed just after the word lists — so in all 81 English units the
     // tutor could not see the readings, grammar, quizzes or answer keys, and
     // taught vocabulary because vocabulary was all it could see. Every one of
-    // the academy's 410 units now fits whole. The unit prompt is cached, so
+    // the academy's 409 units now fits whole -- raised to 220k on 2026-09-09,
+    // when grade-8 unit-1 reached 200,280 and was being cut at 200,000. The
+    // unit prompt is cached, so
     // the larger payload is paid for once per learner per unit.
     if (core_text::strlen($unitcontent) > 220000) {
         $unitcontent = core_text::substr($unitcontent, 0, 220000) . ' …(unit content truncated)';

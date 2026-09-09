@@ -161,7 +161,12 @@
       });
       if (!ok) b.classList.add("wrong"); else { right++; reportKnown(it.w); }
       $(el.fb).className = "fb " + (ok ? "good" : "bad");
-      $(el.fb).textContent = ok ? cheer() + " " + it.w : "That word was " + it.w + ".";
+      /* Spoken as well as printed. One expression for both so the voice cannot
+         drift from the words on screen - the reason this section exists is that
+         a five-year-old cannot read them. */
+      const fbMsg = ok ? cheer() + " " + it.w : "That word was " + it.w + ".";
+      $(el.fb).textContent = fbMsg;
+      say(fbMsg);
       i++;
       setTimeout(() => {
         if (i >= o.items.length) {
@@ -202,6 +207,12 @@
       if (!ok) b.classList.add("wrong"); else { right++; reportKnown(it.w || (it.opts || []).filter((c) => c.ok).map((c) => c.w)); }
       $(el.fb).className = "fb " + (ok ? "good" : "bad");
       $(el.fb).textContent = ok ? cheer() + " " + it.w : "It is " + it.w + ".";
+      /* NOT spoken by say(), deliberately, and this is the one feedback line in
+         the build that is left to something else. playClip below plays the
+         word's own recording, and playClip stops the voice - so a say() here
+         would be cut off mid-sentence by the very clip that answers the
+         question. The child hears the word either way, in the recorded voice
+         rather than the tutor's. */
       playClip(it.audio, it.w);
       i++;
       setTimeout(() => {
@@ -491,7 +502,9 @@
         /* the sentence read back to the child, not the tile list: "This is a
            chair ." is what the answer literally is, and it is not a sentence */
         const written = o.answer.replace(/\s+([.!?])/g, "$1").replace(/\s+/g, " ").trim();
-        $(el.fb).textContent = ok ? cheer() + " " + written : "Not yet. Try the words in another order.";
+        const fbMsg = ok ? cheer() + " " + written : "Not yet. Try the words in another order.";
+        $(el.fb).textContent = fbMsg;
+        say(fbMsg);
         if (ok) {
           // One sentence, so one mark out of one: built it first time, or not.
           reportScore(o.finish, tries === 1 ? 1 : 0, 1);

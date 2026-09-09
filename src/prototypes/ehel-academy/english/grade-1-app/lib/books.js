@@ -461,14 +461,21 @@
           playStorySound("child-happy");
           pick.classList.add("right");
           $(el.fb).className = "fb good";
-          $(el.fb).textContent = cheer();
+          /* Bound to a const before it is used twice. cheer() ROTATES its bank,
+             so printing cheer() and speaking cheer() would praise the child in
+             one wording on screen and another in her ear. */
+          const fbMsg = cheer();
+          $(el.fb).textContent = fbMsg;
+          say(fbMsg);
           setTimeout(advance, 900);
         } else {
           if (!solved.has(index)) missed.add(index);
           playStorySound("child-surprised");
           pick.classList.add("wrong");
           $(el.fb).className = "fb bad";
-          $(el.fb).textContent = "Not that one - look again and try another.";
+          const fbMsg = "Not that one - look again and try another.";
+          $(el.fb).textContent = fbMsg;
+          say(fbMsg);
           setTimeout(() => pick.classList.remove("wrong"), 600);
         }
         return;
@@ -482,7 +489,9 @@
             solved.add(index);
             playStorySound("child-happy");
             $(el.fb).className = "fb good";
-            $(el.fb).textContent = cheer() + " That is the order it happened in.";
+            const fbMsg = cheer() + " That is the order it happened in.";
+            $(el.fb).textContent = fbMsg;
+            say(fbMsg);
             setTimeout(advance, 900);
             return;
           }
@@ -492,7 +501,13 @@
           playStorySound("child-surprised");
           picked = [];
           $(el.fb).className = "fb bad";
-          $(el.fb).textContent = "Almost! Start again from what happened first.";
+          const fbMsg = "Almost! Start again from what happened first.";
+          $(el.fb).textContent = fbMsg;
+          say(fbMsg);
+          /* 650ms, then draw() re-reads the question and supersedes this line.
+             Left as it was: the redraw is what puts the pictures back in their
+             starting order, and delaying it to finish a sentence would leave a
+             child looking at a board they cannot use yet. */
           setTimeout(draw, 650);
         }
       }

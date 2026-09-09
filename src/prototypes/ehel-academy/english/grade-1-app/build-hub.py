@@ -110,7 +110,46 @@ PAGE = """<!doctype html>
   .term li .wk { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; }
   .term li .when { display: block; color: var(--muted); font-weight: 400; font-size: 12.5px; }
   @media (max-width: 560px) { .term li { grid-template-columns: 1fr; gap: 2px; } }
+
+  /* ---- the header bar, the same one the lesson pages carry ---- */
+  .eh-bar1 { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px; }
+  .eh-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
+  .eh-bar1 .hubhead-spacer { display: none; }
+  @media (max-width: 720px) {
+    .eh-progtext, .eh-brandtext { display: none; }
+    .eh-picker { max-width: 130px; }
+  }
 </style>
+
+<header class="eh-bar1">
+  <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
+  <div class="eh-brand"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></div>
+  <div class="eh-prog" id="ehProg">
+    <span class="eh-pct" id="ehPct">0%%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a unit"><option value="welcome-to-school.html">Welcome to School</option><option value="family-time.html">Family Time</option><option value="fun-and-games.html">Fun and Games</option><option value="making-things.html">Making Things</option><option value="on-the-farm.html">On the Farm</option><option value="my-five-senses.html">My Five Senses</option><option value="let-s-go.html">Let's Go!</option><option value="wonderful-water.html">Wonderful Water</option><option value="city-places.html">City Places</option><option value="my-first-english-world.html">My First English World</option></select>
+  </div>
+</header>
 
 <div class="wrap">
   <header class="hubhead">
@@ -129,6 +168,75 @@ PAGE = """<!doctype html>
 
   <p class="hubfoot">Every word, story and recording here is the Grade 1 English course content, shown a different way.</p>
 </div>
+
+<script>
+/* ---- the header bar: which unit, how far through it, and the way out ----
+   Everything here is answered by the launch URL and by the progress document
+   the LESSONS write. This page stores nothing of its own. */
+(function () {
+  var COURSE = "ehel-eng-g01";
+  var STEPS  = {"u01": 22, "u02": 22, "u03": 22, "u04": 21, "u05": 22, "u06": 22, "u07": 22, "u08": 21, "u09": 21, "u10": 19};     /* unit id -> slides-1, the lesson's own denominator */
+  var FILES  = {"u01": "welcome-to-school.html", "u02": "family-time.html", "u03": "fun-and-games.html", "u04": "making-things.html", "u05": "on-the-farm.html", "u06": "my-five-senses.html", "u07": "let-s-go.html", "u08": "wonderful-water.html", "u09": "city-places.html", "u10": "my-first-english-world.html"};     /* unit id -> the page that teaches it */
+  var q = new URLSearchParams(location.search);
+  var id = function (n) { return "u" + (n < 10 ? "0" : "") + n; };
+  var N = Object.keys(FILES).length;
+
+  /* the progress document the lessons write through shared/progress-client.js;
+     a missing or unreadable one is "nothing done yet", never an error. */
+  var doc = null;
+  try {
+    doc = JSON.parse(localStorage.getItem(
+      "ehel-progress:" + COURSE + ":" + (q.get("studentid") || "local")) || "null");
+  } catch (e) { doc = null; }
+  var unitOf = function (u) { return (doc && doc.units && doc.units[u]) || null; };
+
+  /* WHICH UNIT. The launch URL wins when it names one - that is how a teacher
+     links to a unit. With no ?unit=, fall back to the furthest unit the learner
+     has actually touched, so a bare hub link opens where they left off. */
+  var n = parseInt(q.get("unit"), 10);
+  if (!(n >= 1 && n <= N)) {
+    n = 1;
+    for (var i = N; i >= 1; i--) {
+      var st = unitOf(id(i));
+      if (st && ((st.sectionsDone && st.sectionsDone.length) || st.resume)) { n = i; break; }
+    }
+  }
+  var cur = id(n);
+
+  /* HOW FAR. sectionsDone against this unit's own step count - the same
+     arithmetic the lesson page's bar does, so the two always agree. */
+  var st = unitOf(cur);
+  var done = (st && st.sectionsDone && st.sectionsDone.length) || 0;
+  var total = STEPS[cur] || 0;
+  var pct = total ? Math.min(100, Math.round((done / total) * 100)) : 0;
+  var pctEl = document.getElementById("ehPct");
+  if (pctEl) pctEl.textContent = pct + "%%";
+  var fill = document.getElementById("ehFill");
+  if (fill) fill.style.width = pct + "%%";
+  var prog = document.getElementById("ehProg");
+  if (prog) prog.title = done + " of " + total + " steps done in this unit";
+
+  /* THE PICKER names the current unit and moves to another. It reuses the card
+     link's href rather than rebuilding the query string, so the picker and the
+     cards carry the launch parameters identically - one definition, not two.
+     Read at change time, after wire-navigation's carrier has rewritten them. */
+  var pick = document.getElementById("ehPicker");
+  if (pick) {
+    pick.value = FILES[cur] || "";
+    pick.addEventListener("change", function () {
+      var f = pick.value;
+      if (!f) return;
+      var card = document.querySelector('a.card[href^="' + f + '"]');
+      location.href = card ? card.getAttribute("href") : f;
+    });
+  }
+
+  /* THE WAY OUT, drawn only when the launch gave us one. */
+  var exit = q.get("exitUrl");
+  var back = document.getElementById("ehBack");
+  if (back && exit) { back.setAttribute("href", exit); back.hidden = false; }
+})();
+</script>
 """
 
 

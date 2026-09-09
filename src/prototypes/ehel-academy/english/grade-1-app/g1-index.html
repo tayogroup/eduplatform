@@ -447,6 +447,177 @@
     .plan-when { grid-template-columns: 1fr; }
   }
 
+  /* ---- reading a unit text: a STORYBOOK PAGE ----
+     The first pass made this legible and stopped there, so it still read as a
+     document. A book a five-year-old wants to open has a drop cap, paper that
+     looks like paper, and a page you can see the end of. */
+  .read-reader .book-stage-wrap { padding: 12px 12px 0; }
+  .read-stage { position: relative; width: 100%; max-width: 700px; max-height: 100%; overflow-y: auto;
+    padding: 38px 40px 32px; border-radius: 26px;
+    background:
+      radial-gradient(120% 90% at 50% 0%, #fffdf6 0%, #fbf4e4 62%, #f4ead4 100%);
+    color: #24313c;
+    box-shadow: 0 26px 60px rgba(0,0,0,.45), 0 2px 0 rgba(255,255,255,.7) inset;
+    border: 1px solid rgba(120, 96, 54, .18); }
+  /* the soft crease down the inside edge, so it reads as a leaf of a book */
+  .read-stage::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 16px;
+    border-radius: 26px 0 0 26px; pointer-events: none;
+    background: linear-gradient(90deg, rgba(120,96,54,.16), rgba(120,96,54,0)); }
+
+  .read-title { margin: 0 0 22px; font-size: 30px; color: #123243; text-align: center;
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; letter-spacing: -.01em; }
+  .read-title::after { content: "\2766"; display: block; margin: 10px auto 0;
+    font-size: 21px; color: var(--teal); }
+
+  .read-page p { font-size: 25px; line-height: 1.85; margin: 0 0 20px; }
+  .read-page p:last-child { margin-bottom: 0; }
+  /* A story starts here - the oldest signal in children's publishing. */
+  .read-page.first > p:first-of-type::first-letter {
+    float: left; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 68px; line-height: .82; padding: 6px 12px 0 0; color: var(--teal); }
+
+  /* ---- the read-along highlight, on both surfaces ----
+     A warm wash UNDER the words, not a block around them: the old version
+     boxed the line in gold with a shadow ring, which cut it out of the page
+     and made the highlight louder than the reading. */
+  .rd-line, .cap-line { border-radius: 10px; padding: 2px 6px; margin: 0 -2px;
+    transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease; }
+  .rd-line.on, .cap-line.on {
+    background: linear-gradient(180deg, rgba(255,214,110,.55), rgba(250,190,60,.85));
+    box-shadow: 0 2px 0 rgba(196,140,20,.35); color: #1e2a33; }
+
+  /* ---- how far through the book you are ----
+     Dots, because a five-year-old counts them faster than they read "3 of 12",
+     and they show what is left rather than only where you are. */
+  .page-pips { display: inline-flex; align-items: center; gap: 6px; min-width: 5em; justify-content: center; }
+  .page-pips .pip { width: 9px; height: 9px; border-radius: 999px; background: rgba(255,255,255,.26); }
+  .page-pips .pip.done { background: rgba(255,255,255,.5); }
+  .page-pips .pip.on { width: 22px; background: var(--gold, #f2c14e); }
+
+  @media (max-width: 560px) {
+    .read-stage { padding: 26px 22px 20px; border-radius: 20px; }
+    .read-page p { font-size: 21px; line-height: 1.8; }
+    .read-page.first > p:first-of-type::first-letter { font-size: 54px; }
+    .read-title { font-size: 24px; }
+    .page-pips .pip { width: 7px; height: 7px; }
+    .page-pips .pip.on { width: 17px; }
+  }
+
+  /* ---- the picture book's caption ----
+     It belongs to the picture above it, so it points at it: a notch at the
+     top, the same paper as a reading page, and the same highlight. Without
+     that it reads as a strip parked underneath rather than as the words for
+     what the child is looking at. */
+  .book-caption { position: relative; flex: 0 0 auto; width: 100%; max-width: 640px;
+    margin: 18px auto 0; padding: 18px 26px; border-radius: 20px;
+    background: radial-gradient(120% 120% at 50% 0%, #fffdf6 0%, #fbf4e4 70%, #f5ebd6 100%);
+    color: #24313c; font-size: 23px; line-height: 1.65; text-align: center;
+    box-shadow: 0 14px 34px rgba(0,0,0,.35), 0 2px 0 rgba(255,255,255,.75) inset;
+    border: 1px solid rgba(120,96,54,.18); }
+  .book-caption::before { content: ""; position: absolute; top: -9px; left: 50%; width: 18px; height: 18px;
+    transform: translateX(-50%) rotate(45deg); background: #fffdf6;
+    border-left: 1px solid rgba(120,96,54,.18); border-top: 1px solid rgba(120,96,54,.18);
+    border-radius: 4px 0 0 0; }
+  @media (max-width: 560px) {
+    .book-caption { font-size: 18.5px; padding: 14px 16px; line-height: 1.6; margin-top: 14px; }
+  }
+
+  /* ---- student resources: the drawer ---- */
+  .res-stage { width: 100%; max-width: 760px; max-height: 100%; overflow-y: auto; padding: 4px 2px 10px; }
+  .wordgroup { margin-bottom: 18px; }
+  .wordgroup h4 { margin: 0 0 8px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); }
+  .wordrow { display: grid; grid-template-columns: 42px 7em 1fr; gap: 10px; align-items: baseline;
+    padding: 9px 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); margin-bottom: 6px; }
+  .wordrow strong { font-size: 19px; }
+  .wordrow span { color: var(--muted); font-size: 15.5px; }
+  .wordrow .hear { align-self: center; }
+  .gloxq { width: 100%; padding: 13px 16px; border-radius: 14px; border: 3px solid var(--teal);
+    background: var(--card); color: var(--ink); font-family: inherit; font-size: 19px; margin-bottom: 12px; }
+  .gloxmore { color: var(--muted); font-size: 14px; text-align: center; }
+
+  /* ---- how to write it ---- */
+  .hw { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  /* 40 words is a lot of tabs; give them their own scroll rather than
+     pushing the writing off the screen. */
+  .hwpick { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center;
+    max-height: 22vh; overflow-y: auto; padding: 2px; }
+  .hwtab { padding: 6px 14px; border-radius: 999px; border: 2px solid var(--line); background: var(--card);
+    color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
+  .hwtab.on { border-color: var(--teal); background: var(--teal); color: var(--accent-ink, #06222f); }
+  .hwstage { width: 100%; max-width: 640px; border-radius: 18px; padding: 10px 6px;
+    background: radial-gradient(120% 120% at 50% 0%, #fffdf6, #f7efdc);
+    display: flex; justify-content: center; }
+  /* Height-first, not width-first. The word frame is nearly square, so a
+     width:100% svg in a 640px box is 580px tall and runs off the bottom of
+     the overlay - which is what it did. Bounding the HEIGHT and letting the
+     width follow keeps the whole word on screen at any viewport. */
+  .hwsvg { max-height: 34vh; max-width: 100%; width: auto; height: auto; display: block; }
+  .hwl { stroke: #c8b997; stroke-width: 1.6; }
+  .hwl.base { stroke: #8a99a4; stroke-width: 2.4; }
+  .hws { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 9; }
+  .hws.body { stroke: #17384a; }
+  .hws.join { stroke: #7fb0c4; stroke-width: 6; }
+  .hws.mark { stroke: var(--bad, #d4553f); }
+  .hwsay { min-height: 1.5em; color: var(--muted); font-size: 17px; text-align: center; margin: 0; }
+  @media (max-width: 560px) {
+    .wordrow { grid-template-columns: 38px 1fr; }
+    .wordrow span { grid-column: 2; }
+  }
+
+  /* ---- what this unit is about ---- */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; }
+  .ovw-bits { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 16px; }
+  .ovw-bits span { padding: 6px 14px; border-radius: 999px; background: var(--card);
+    border: 2px solid var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; text-align: center; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px; font-size: 19px; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+
+  /* ---- how did I do? ---- */
+  .selfs { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .selfrow { padding: 14px 16px; border-radius: 16px; border: 3px solid var(--line); background: var(--card); }
+  .selfrow.answered { border-color: var(--good); background: var(--good-soft); }
+  .selfrow p { margin: 0 0 10px; font-size: 18px; font-weight: 700; }
+  .selfopts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .selfopt { padding: 9px 16px; border-radius: 999px; border: 2px solid var(--line); background: var(--ground);
+    color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .selfopt.on { border-color: var(--teal); background: var(--teal); color: var(--accent-ink, #06222f); }
+
+  /* ---- live sessions and the grown-up guide ---- */
+  .livelist { display: flex; flex-direction: column; gap: 12px; }
+  .livecard { padding: 14px 16px; border-radius: 16px; border: 1px solid var(--line); background: var(--card); }
+  .livewhen { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800;
+    font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+  .livecard h4 { margin: 4px 0 8px; font-size: 18px; }
+  .livecard p { margin: 0 0 6px; font-size: 15.5px; color: var(--muted); }
+  .livecard strong { color: var(--ink); }
+  .guide { max-width: 44em; }
+  .guide-intro { font-size: 18px; padding: 14px 16px; border-radius: 14px;
+    background: var(--card); border-left: 4px solid var(--teal); }
+  .guide section { margin-top: 18px; }
+  .guide h4 { font-size: 17px; margin: 0 0 6px; }
+  .guide p { font-size: 15.5px; line-height: 1.65; color: var(--muted); margin: 0 0 8px; }
+
+  /* A shelf card the learner has been through - the picture-book shelf and
+     the unit's own readings both use it. */
+  .bookcard.played { border-color: var(--good); background: var(--good-soft); }
+
+  /* ---- Word finder: the whole entry ---- */
+  .gloxrow { display: flex; gap: 12px; align-items: flex-start; padding: 11px 4px;
+    border-bottom: 1px solid var(--line); }
+  .gloxrow:last-child { border-bottom: 0; }
+  /* Fixed width whether or not there is a picture, so the words stay in a
+     column - 54% of these entries have none, and a ragged left edge makes a
+     list of 80 unreadable. */
+  .gloxpic { flex: 0 0 2.1em; font-size: 27px; line-height: 1.1; text-align: center; }
+  .gloxbody { flex: 1 1 auto; min-width: 0; }
+  .gloxhead { display: flex; align-items: center; gap: 8px; }
+  .gloxhead strong { font-size: 19px; }
+  .gloxdef { margin: 3px 0 0; font-size: 15.5px; line-height: 1.5; color: var(--muted); }
+  .gloxeg { margin: 4px 0 0; font-size: 15px; line-height: 1.5; font-style: italic; }
+  .gloxdef .hear, .gloxeg .hear { vertical-align: middle; margin-left: 6px; }
+
   /* ---- the hub ---- */
   .hubhead { padding: 26px 4px 18px; }
   .hubhead h1 { font-size: clamp(34px, 7vw, 54px); }
@@ -481,7 +652,46 @@
   .term li .wk { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; }
   .term li .when { display: block; color: var(--muted); font-weight: 400; font-size: 12.5px; }
   @media (max-width: 560px) { .term li { grid-template-columns: 1fr; gap: 2px; } }
+
+  /* ---- the header bar, the same one the lesson pages carry ---- */
+  .eh-bar1 { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px; }
+  .eh-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: var(--teal-ink, #06231F); font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
+  .eh-bar1 .hubhead-spacer { display: none; }
+  @media (max-width: 720px) {
+    .eh-progtext, .eh-brandtext { display: none; }
+    .eh-picker { max-width: 130px; }
+  }
 </style>
+
+<header class="eh-bar1">
+  <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
+  <div class="eh-brand"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></div>
+  <div class="eh-prog" id="ehProg">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Lesson progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a unit"><option value="welcome-to-school.html">Welcome to School</option><option value="family-time.html">Family Time</option><option value="fun-and-games.html">Fun and Games</option><option value="making-things.html">Making Things</option><option value="on-the-farm.html">On the Farm</option><option value="my-five-senses.html">My Five Senses</option><option value="let-s-go.html">Let's Go!</option><option value="wonderful-water.html">Wonderful Water</option><option value="city-places.html">City Places</option><option value="my-first-english-world.html">My First English World</option></select>
+  </div>
+</header>
 
 <div class="wrap">
   <header class="hubhead">
@@ -495,72 +705,72 @@
         <span class="cardno">Unit 1</span>
         <h2>Welcome to School</h2>
         <p>You will learn the words for things in your classroom, some colour words, and how to say your own name and how old you are.</p>
-        <span class="cardfoot"><span class="meta">17 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
       <a class="card" href="family-time.html?from=eng1">
         <span class="cardno">Unit 2</span>
         <h2>Family Time</h2>
         <p>In this unit you will learn the words for the people in your family — mum, dad, sister, brother, grandma and grandpa.</p>
-        <span class="cardfoot"><span class="meta">17 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
       <a class="card" href="fun-and-games.html?from=eng1">
         <span class="cardno">Unit 3</span>
         <h2>Fun and Games</h2>
         <p>In this unit you will learn the words for games and play, like bounce, roll, throw and catch.</p>
-        <span class="cardfoot"><span class="meta">17 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
       <a class="card" href="making-things.html?from=eng1">
         <span class="cardno">Unit 4</span>
         <h2>Making Things</h2>
         <p>In this unit you will learn the words for shapes, colours and clothes.</p>
-        <span class="cardfoot"><span class="meta">16 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">21 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
       <a class="card" href="on-the-farm.html?from=eng1">
         <span class="cardno">Unit 5</span>
         <h2>On the Farm</h2>
         <p>In this unit you will learn about the farm.</p>
-        <span class="cardfoot"><span class="meta">17 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
       <a class="card" href="my-five-senses.html?from=eng1">
         <span class="cardno">Unit 6</span>
         <h2>My Five Senses</h2>
         <p>In this unit you will learn about your five senses — seeing, hearing, smelling, tasting and touching — and the parts of your body you use for each one.</p>
-        <span class="cardfoot"><span class="meta">17 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
       <a class="card" href="let-s-go.html?from=eng1">
         <span class="cardno">Unit 7</span>
         <h2>Let's Go!</h2>
         <p>In this unit you will learn how we travel and get around.</p>
-        <span class="cardfoot"><span class="meta">17 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">22 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
       <a class="card" href="wonderful-water.html?from=eng1">
         <span class="cardno">Unit 8</span>
         <h2>Wonderful Water</h2>
         <p>In this unit you will learn about water — where it comes from, where we find it, and all the ways we use it every day.</p>
-        <span class="cardfoot"><span class="meta">16 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">21 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
       <a class="card" href="city-places.html?from=eng1">
         <span class="cardno">Unit 9</span>
         <h2>City Places</h2>
         <p>In this unit you will learn the words for places in a town — the shop, the market, the school, the hospital and the library.</p>
-        <span class="cardfoot"><span class="meta">16 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">21 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
       <a class="card" href="my-first-english-world.html?from=eng1">
         <span class="cardno">Unit 10</span>
         <h2>My First English World</h2>
         <p>You will choose your favourite work for a picture-and-word portfolio, make a six-page mini-book, give a one-minute presentation, and think about what you would like to learn next.</p>
-        <span class="cardfoot"><span class="meta">14 steps &middot; stickers</span><span class="go">Start</span></span>
+        <span class="cardfoot"><span class="meta">19 steps &middot; stickers</span><span class="go">Start</span></span>
       </a>
   </main>
 
   <section class="yearplan">
     <h2>The year at a glance</h2>
-    <p class="yearnote">Ten units across three terms of the 2026–27 school year, 33 teaching weeks in all. The dates are the school's, half terms taken out. Nobody is behind: if a unit takes longer, it takes longer.</p>
-    <div class="term"><span class="termdates">Term 1 &middot; 7 September – 4 December 2026</span><h3>3 units</h3>
+    <p class="yearnote">Ten units across three terms of the 2026–27 school year, 35 teaching weeks in all. The dates are the school's, half terms taken out. Nobody is behind: if a unit takes longer, it takes longer.</p>
+    <div class="term"><span class="termdates">Term 1 &middot; 25 August – 4 December 2026</span><h3>3 units</h3>
       <ol>
-        <li><span class="wk">Weeks 1–4<span class="when">7 September</span></span><span><strong>Unit 1: Welcome to School</strong></span></li>
-        <li><span class="wk">Weeks 5–8<span class="when">5 October</span></span><span><strong>Unit 2: Family Time</strong></span></li>
-        <li><span class="wk">Weeks 9–12<span class="when">9 November</span></span><span><strong>Unit 3: Fun and Games</strong></span></li>
+        <li><span class="wk">Weeks 1–5<span class="when">24 August</span></span><span><strong>Unit 1: Welcome to School</strong></span></li>
+        <li><span class="wk">Weeks 6–10<span class="when">28 September</span></span><span><strong>Unit 2: Family Time</strong></span></li>
+        <li><span class="wk">Weeks 11–14<span class="when">9 November</span></span><span><strong>Unit 3: Fun and Games</strong></span></li>
       </ol></div>
     <div class="term"><span class="termdates">Term 2 &middot; 5 January – 25 March 2027</span><h3>3 units</h3>
       <ol>
@@ -579,6 +789,75 @@
 
   <p class="hubfoot">Every word, story and recording here is the Grade 1 English course content, shown a different way.</p>
 </div>
+
+<script>
+/* ---- the header bar: which unit, how far through it, and the way out ----
+   Everything here is answered by the launch URL and by the progress document
+   the LESSONS write. This page stores nothing of its own. */
+(function () {
+  var COURSE = "ehel-eng-g01";
+  var STEPS  = {"u01": 22, "u02": 22, "u03": 22, "u04": 21, "u05": 22, "u06": 22, "u07": 22, "u08": 21, "u09": 21, "u10": 19};     /* unit id -> slides-1, the lesson's own denominator */
+  var FILES  = {"u01": "welcome-to-school.html", "u02": "family-time.html", "u03": "fun-and-games.html", "u04": "making-things.html", "u05": "on-the-farm.html", "u06": "my-five-senses.html", "u07": "let-s-go.html", "u08": "wonderful-water.html", "u09": "city-places.html", "u10": "my-first-english-world.html"};     /* unit id -> the page that teaches it */
+  var q = new URLSearchParams(location.search);
+  var id = function (n) { return "u" + (n < 10 ? "0" : "") + n; };
+  var N = Object.keys(FILES).length;
+
+  /* the progress document the lessons write through shared/progress-client.js;
+     a missing or unreadable one is "nothing done yet", never an error. */
+  var doc = null;
+  try {
+    doc = JSON.parse(localStorage.getItem(
+      "ehel-progress:" + COURSE + ":" + (q.get("studentid") || "local")) || "null");
+  } catch (e) { doc = null; }
+  var unitOf = function (u) { return (doc && doc.units && doc.units[u]) || null; };
+
+  /* WHICH UNIT. The launch URL wins when it names one - that is how a teacher
+     links to a unit. With no ?unit=, fall back to the furthest unit the learner
+     has actually touched, so a bare hub link opens where they left off. */
+  var n = parseInt(q.get("unit"), 10);
+  if (!(n >= 1 && n <= N)) {
+    n = 1;
+    for (var i = N; i >= 1; i--) {
+      var st = unitOf(id(i));
+      if (st && ((st.sectionsDone && st.sectionsDone.length) || st.resume)) { n = i; break; }
+    }
+  }
+  var cur = id(n);
+
+  /* HOW FAR. sectionsDone against this unit's own step count - the same
+     arithmetic the lesson page's bar does, so the two always agree. */
+  var st = unitOf(cur);
+  var done = (st && st.sectionsDone && st.sectionsDone.length) || 0;
+  var total = STEPS[cur] || 0;
+  var pct = total ? Math.min(100, Math.round((done / total) * 100)) : 0;
+  var pctEl = document.getElementById("ehPct");
+  if (pctEl) pctEl.textContent = pct + "%";
+  var fill = document.getElementById("ehFill");
+  if (fill) fill.style.width = pct + "%";
+  var prog = document.getElementById("ehProg");
+  if (prog) prog.title = done + " of " + total + " steps done in this unit";
+
+  /* THE PICKER names the current unit and moves to another. It reuses the card
+     link's href rather than rebuilding the query string, so the picker and the
+     cards carry the launch parameters identically - one definition, not two.
+     Read at change time, after wire-navigation's carrier has rewritten them. */
+  var pick = document.getElementById("ehPicker");
+  if (pick) {
+    pick.value = FILES[cur] || "";
+    pick.addEventListener("change", function () {
+      var f = pick.value;
+      if (!f) return;
+      var card = document.querySelector('a.card[href^="' + f + '"]');
+      location.href = card ? card.getAttribute("href") : f;
+    });
+  }
+
+  /* THE WAY OUT, drawn only when the launch gave us one. */
+  var exit = q.get("exitUrl");
+  var back = document.getElementById("ehBack");
+  if (back && exit) { back.setAttribute("href", exit); back.hidden = false; }
+})();
+</script>
 
 <script>
   /* wire-navigation.py :: carry

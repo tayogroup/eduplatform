@@ -409,10 +409,21 @@ def facts_answer(low, opts):
             return ring[i % len(ring)]
     if re.search(r"how many (months|days) (are there )?in a (year|week)", low):
         return 12 if "month" in low else 7
+    span_of = lambda o: re.sub(r"^an? ", "", str(norm(o)))
     m = re.search(r"which (?:one )?is the (shortest|longest)", low)
-    if m and all(re.sub(r"^an? ", "", norm(o)) in SPANS for o in opts):
-        rank = sorted(opts, key=lambda o: SPANS.index(re.sub(r"^an? ", "", norm(o))))
+    if m and all(span_of(o) in SPANS for o in opts):
+        rank = sorted(opts, key=lambda o: SPANS.index(span_of(o)))
         return rank[0] if m.group(1) == "shortest" else rank[-1]
+    # THE SAME QUESTION ASKED OF TWO, which is the form Grade 1 uses: "Which is
+    # longer: a week or a day?". The superlative rule above needs a set to rank
+    # and this one names its pair in the question, so neither covers the other.
+    m = re.search(r"which is (longer|shorter)[:,]?\s*(.+?)\s+or\s+(.+?)\s*\??$", low)
+    if m:
+        a, b = re.sub(r"^an? ", "", m.group(2)), re.sub(r"^an? ", "", m.group(3))
+        if a in SPANS and b in SPANS and a != b:
+            want = (max if m.group(1) == "longer" else min)(a, b, key=SPANS.index)
+            hit = [o for o in opts if span_of(o) == want]
+            return hit[0] if len(hit) == 1 else None
     # the long hand says o'clock or half past; the short hand says which hour
     m = re.search(r"long hand is on (\d+).*short hand is (?:just past |on )(\d+)", low)
     if m:
@@ -1682,6 +1693,14 @@ def expected(q, opts, item, js=""):
     if picn is not None and re.search(r"^how many\b", low) and not nums(t):
         return picn                                   # "How many counters?" + pic: N
     if re.search(r"\bno .* left\b|are none left", low) and re.search(r"which number", low):
+        return 0
+    # ALL OF THEM LEAVE, SO NONE ARE LEFT. The rule above answers "which number
+    # says there are none left"; this answers the count itself. The repeated
+    # number is required - "5 birds ... all 5 fly away" - so an ordinary
+    # take-away ("5 birds ... 2 fly away") falls through to the arithmetic
+    # ladder rather than being answered 0.
+    m = re.search(r"(\d+) \w+ (?:are|is)\b.*?\ball \1\b.*?\bhow many (?:are )?left", low)
+    if m:
         return 0
     m = re.search(r"which word says (\d+)", low)
     if m:

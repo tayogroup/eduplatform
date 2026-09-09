@@ -70,7 +70,8 @@ else:
                    if f.endswith(".html") and not f.endswith("index.html"))
     LABEL = os.path.basename(SRC)
 
-WORD = {"zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
+WORD = {"zero": 0, "none": 0,
+        "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
         "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12,
         "thirteen": 13, "fourteen": 14, "fifteen": 15, "sixteen": 16,
         "seventeen": 17, "eighteen": 18, "nineteen": 19, "twenty": 20,
@@ -97,6 +98,13 @@ def norm(v):
     s = re.sub(r"(?<=[\d\s])(sh|shillings?|cm|mm|m|kg|g|ml|l)\b\.?$", "", s).strip()
     if s in WORD:
         return WORD[s]
+    # A THOUSANDS SEPARATOR IS PUNCTUATION, NOT A LIST. Grade 4 writes its
+    # options as "4,700" and "47,000", so without this the key stayed a string
+    # while the arithmetic produced an int and every four-figure answer was
+    # reported wrong. The grouping is required strictly - "2, 4, 6" is a
+    # sequence and must not collapse into 246.
+    if re.fullmatch(r"-?\d{1,3}(?:,\d{3})+", s):
+        return int(s.replace(",", ""))
     m = re.fullmatch(r"-?\d+", s)
     return int(m.group(0)) if m else s
 
@@ -925,21 +933,129 @@ def beads_answer(low, item):
     return None
 
 
+def literal_run(s):
+    """true when a value is written out rather than computed.
+
+    A generated question interpolates - `q: "A tally shows " + n + " bundles"` -
+    and reading only the first literal chunk would harvest a TRUNCATED question
+    and could report a correct key as wrong. Strings are blanked first, so what
+    is left is the structure: a concatenation, call or index means the value is
+    computed at runtime and this file cannot know it. `shuffle` is not such a
+    marker - shuffling options does not change a key matched by value, and the
+    one build that keys by INDEX is checked separately for that below.
+    """
+    bare = re.sub(r'"(?:[^"\\]|\\.)*"', '""', s)
+    bare = re.sub(r"'(?:[^'\\]|\\.)*'", "''", bare)
+    return not re.search(r"\+|\b(?:rnd|Math)\b|\b(?!shuffle\b)[A-Za-z_]\w*\s*[\(\[]", bare)
+
+
+def field_is_literal(obj, end):
+    """is the value that ENDS at `end` complete, or is it concatenated on?"""
+    return not re.match(r"\s*\+", obj[end:])
+
+
+def split_top(body):
+    """split an array literal on its OWN commas.
+
+    The comma inside "4,700" is not a separator, and splitting on it turned
+    `o: ["4,700", "4,600", "5,000"]` into six options - so an index key of 0
+    resolved to "4" and the tool reported a correct Grade 4 key as wrong. The
+    old guard only knew about commas inside nested brackets.
+    """
+    out, depth, q, cur = [], 0, None, ""
+    for c in body:
+        if q:
+            cur += c
+            if c == q:
+                q = None
+            continue
+        if c in "\"'":
+            q, cur = c, cur + c
+            continue
+        if c in "[{(":
+            depth += 1
+        elif c in "]})":
+            depth -= 1
+        if c == "," and depth == 0:
+            out.append(cur)
+            cur = ""
+            continue
+        cur += c
+    if cur.strip():
+        out.append(cur)
+    return [x.strip().strip("\"'") for x in out if x.strip()]
+
+
+def only_nums(t, wanted):
+    """THE EXPRESSION MUST ACCOUNT FOR EVERY NUMBER IN THE QUESTION.
+
+    Carried from tools/check-math-answer-keys.mjs and needed again here: "Half
+    of 8 is 4. So 4 and 4 make..." was answered 4 by the half-of rule, which
+    read the 8 and ignored the two 4s that are the actual ask.
+    """
+    return sorted(nums(t)) == sorted(wanted)
+
+
 def harvest(js):
-    """(question, options, key, item-source) for every check question"""
-    qs = []
-    for m in re.finditer(r"const CHECK\s*=\s*\[", js):
-        for o in objects_in(balanced(js, m.end() - 1)[1:-1]):
-            q = re.search(r'\bq:\s*"((?:[^"\\]|\\.)*)"', o)
-            a = re.search(r'\ba:\s*("(?:[^"\\]|\\.)*"|-?\d+)', o)
-            if not (q and a):
+    """(question, options, key, item-source) for every check question.
+
+    THE ARRAY IS FOUND BY SHAPE, NOT BY NAME. This read `const CHECK` only, so
+    Grade 3's `const QS` and Grade 4's `const Q5` were invisible - 135 readable
+    questions checked by nothing because of a variable name, while the tool
+    refused with "no questions found" and that refusal was read as a fact about
+    the CONTENT. A list of names would need editing every time a build picks a
+    new one; a question object is recognisable on its own: a `q:` string, an
+    options array, and a key.
+    """
+    qs, generated = [], 0
+    spans = []
+    for m in re.finditer(r"=\s*(?:shuffle\s*\()?\s*\[", js):
+        i = js.index("[", m.end() - 1)
+        if any(s <= i < e for s, e in spans):
+            continue                      # an array nested in one already read
+        block = balanced(js, i)
+        spans.append((i, i + len(block)))
+        for o in objects_in(block[1:-1]):
+            # an element may BE the question, or be a function returning it
+            r = re.search(r"\breturn\s*\{", o)
+            obj = balanced(o, o.index("{", r.end() - 1)) if r else o
+            # QUESTION-SHAPED FIRST, READABLE SECOND. Requiring all three
+            # fields to PARSE before counting anything dropped 28 of Grade 3's
+            # 33 generated questions in silence - their key is written
+            # `a: String(sum)`, which the value regex cannot match, so they
+            # were neither read nor reported. Anything with a `q:` and an
+            # options array is a question; if it cannot be read in full it is
+            # counted as generated rather than forgotten.
+            om = re.search(r"\b(opts|o):\s*(?:shuffle\s*\()?\[", obj)
+            if not (re.search(r'\bq:\s*"', obj) and om):
                 continue
-            om = re.search(r"\bopts:\s*(?:shuffle\()?\[", o)
-            opts = []
-            if om:
-                body = balanced(o, o.index("[", om.start()))[1:-1]
-                opts = [x.strip().strip("\"'") for x in re.split(r",(?![^\[\]]*\])", body) if x.strip()]
-            qs.append((plain(q.group(1)), opts, a.group(1).strip('"'), o))
+            q = re.search(r'\bq:\s*"((?:[^"\\]|\\.)*)"', obj)
+            a = re.search(r'\ba:\s*("(?:[^"\\]|\\.)*"|-?\d+)', obj)
+            if not (q and a):
+                generated += 1
+                continue
+            body = balanced(obj, obj.index("[", om.start()))[1:-1]
+            # ONLY THE FIELDS THAT CARRY THE KEY. Testing the whole object
+            # disqualified ten perfectly readable Grade 1 questions whose
+            # PICTURE is computed - `pic: '<svg>' + flatSvg(FLAT[1]) + '</svg>'`
+            # - while their q, options and answer are all written out. What the
+            # picture is made of has nothing to do with whether the key is
+            # bound to the right option.
+            if not (field_is_literal(obj, q.end()) and field_is_literal(obj, a.end())
+                    and literal_run(body)):
+                generated += 1
+                continue
+            opts = split_top(body)
+            key = a.group(1).strip('"')
+            if om.group(1) == "o":
+                # THE KEY IS AN INDEX HERE, NOT A VALUE. Grade 4 writes
+                # `o: [...], a: 0`, and a wrong index is exactly the mis-bound
+                # key this file exists to find - so resolve it, and refuse if
+                # it points outside the options rather than guessing.
+                if not re.fullmatch(r"-?\d+", key) or not 0 <= int(key) < len(opts):
+                    continue
+                key = opts[int(key)]
+            qs.append((plain(q.group(1)), opts, key, obj))
     for m in re.finditer(r"\bitems:\s*\[", js):
         for o in objects_in(balanced(js, m.end() - 1)[1:-1]):
             q = re.search(r'\bask:\s*"((?:[^"\\]|\\.)*)"', o)
@@ -957,7 +1073,7 @@ def harvest(js):
                     key = v
             if opts and key is not None:
                 qs.append((plain(q.group(1)), opts, key, o))
-    return qs
+    return qs, generated
 
 
 def nums(t):
@@ -1132,7 +1248,7 @@ def expected(q, opts, item, js=""):
     if m:
         return int(m.group(1)) * 2
     m = re.search(r"\bhalf of\s+(\d+)", low)
-    if m:
+    if m and only_nums(t, [int(m.group(1))]):
         n = int(m.group(1))
         return n // 2 if n % 2 == 0 else None
     # times, and only where BOTH numbers are in the question - the ladder's
@@ -1145,10 +1261,14 @@ def expected(q, opts, item, js=""):
     if m:
         d = {"half": 2, "third": 3, "quarter": 4, "fifth": 5, "tenth": 10}[m.group(1)]
         n = int(m.group(2))
+        if not only_nums(t, [n]):
+            return None
         return n // d if n % d == 0 else None
     m = re.search(r"\bwhat is 1/(\d+) of (\d+)", low)
     if m:
         d, n = int(m.group(1)), int(m.group(2))
+        if not only_nums(t, [1, d, n]):
+            return None
         return n // d if d and n % d == 0 else None
     # one more / one less, and the counting-on form beside it
     m = re.search(r"\b(\w+) (more|less|fewer) than (\d+) is\b", low)
@@ -1248,7 +1368,7 @@ def expected(q, opts, item, js=""):
     return None
 
 
-tot = ver = wrong = 0
+tot = ver = wrong = gen = 0
 bad, unver = [], []
 print("\n  Check answers, verified against the question and the item  -  %s\n" % LABEL)
 for f in FILES:
@@ -1258,7 +1378,9 @@ for f in FILES:
     js = "\n".join(re.findall(r"<script[^>]*>(.*?)</script>",
                               io.open(p, encoding="utf-8").read(), re.S))
     n = v = w = 0
-    for q, opts, key, item in harvest(js):
+    items, g = harvest(js)
+    gen += g
+    for q, opts, key, item in items:
         n += 1; tot += 1
         want = expected(q, opts, item, js)
         if want is None:
@@ -1270,9 +1392,16 @@ for f in FILES:
         elif opts and not any(same(o, want) for o in opts):
             w += 1; wrong += 1
             bad.append((f, q, key, "key not among options", opts))
-    print("  %-4s %-32s %3d asked  %3d verified  %d wrong" % ("ok" if not w else "FAIL", f[:32], n, v, w))
+    print("  %-4s %-32s %3d asked  %3d verified  %d wrong%s"
+          % ("ok" if not w else "FAIL", f[:32], n, v, w,
+             "   (+%d generated)" % g if g else ""))
 
 print("\n  %d questions, %d verified, %d WRONG, %d not verifiable" % (tot, ver, wrong, tot - ver))
+if gen:
+    # SAY IT, do not let it be an absence. A question built at runtime has no
+    # key this file can read, and leaving it out of every number would make a
+    # build look smaller and better-covered than it is.
+    print("  %d more are generated at runtime and cannot be read from source" % gen)
 for f, q, key, want, opts in bad:
     print("\n  WRONG  %s" % f)
     print("     q:      %s" % q[:100])

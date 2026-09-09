@@ -678,15 +678,29 @@
     .eh-progtext, .eh-brandtext { display: none; }
     .eh-picker { max-width: 130px; }
   }
+
+  /* the crest replaces the drawn shield: square, so a square box */
+  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
+  /* the second bar is the YEAR; it yields space before the unit bar does */
+  .eh-year .eh-pct { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
+  .eh-year { max-width: 300px; }
+  @media (max-width: 900px) { .eh-year .eh-track, .eh-year .eh-progtext { display: none; }
+    .eh-year { flex: 0 0 auto; max-width: none; padding: 5px 6px; } }
+  @media (max-width: 620px) { .eh-year { display: none; } }
 </style>
 
 <header class="eh-bar1">
   <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
-  <div class="eh-brand"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></div>
+  <div class="eh-brand"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></div>
   <div class="eh-prog" id="ehProg">
     <span class="eh-pct" id="ehPct">0%</span>
     <span class="eh-progtext">Lesson progress</span>
     <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-prog eh-year" id="ehYear">
+    <span class="eh-pct eh-yearpct" id="ehYearPct">0%</span>
+    <span class="eh-progtext">Year progress</span>
+    <span class="eh-track"><i id="ehYearFill"></i></span>
   </div>
   <div class="eh-b1right">
     <select class="eh-picker" id="ehPicker" aria-label="Choose a unit"><option value="welcome-to-school.html">Welcome to School</option><option value="family-time.html">Family Time</option><option value="fun-and-games.html">Fun and Games</option><option value="making-things.html">Making Things</option><option value="on-the-farm.html">On the Farm</option><option value="my-five-senses.html">My Five Senses</option><option value="let-s-go.html">Let's Go!</option><option value="wonderful-water.html">Wonderful Water</option><option value="city-places.html">City Places</option><option value="my-first-english-world.html">My First English World</option></select>
@@ -836,6 +850,22 @@
   if (fill) fill.style.width = pct + "%";
   var prog = document.getElementById("ehProg");
   if (prog) prog.title = done + " of " + total + " steps done in this unit";
+
+  /* THE YEAR. The same arithmetic summed over every unit, so the two bars are
+     one measurement at two scales and cannot contradict each other. */
+  var yDone = 0, yTotal = 0;
+  for (var k = 1; k <= N; k++) {
+    var u = id(k), s = unitOf(u);
+    yTotal += STEPS[u] || 0;
+    yDone += Math.min((s && s.sectionsDone && s.sectionsDone.length) || 0, STEPS[u] || 0);
+  }
+  var ypct = yTotal ? Math.min(100, Math.round((yDone / yTotal) * 100)) : 0;
+  var ypctEl = document.getElementById("ehYearPct");
+  if (ypctEl) ypctEl.textContent = ypct + "%";
+  var yfill = document.getElementById("ehYearFill");
+  if (yfill) yfill.style.width = ypct + "%";
+  var yearEl = document.getElementById("ehYear");
+  if (yearEl) yearEl.title = yDone + " of " + yTotal + " steps done across the year";
 
   /* THE PICKER names the current unit and moves to another. It reuses the card
      link's href rather than rebuilding the query string, so the picker and the

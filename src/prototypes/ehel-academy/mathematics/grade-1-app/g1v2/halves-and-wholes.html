@@ -2069,9 +2069,10 @@
           tutorLabel: "Wehel Tutor",
           placeholder: "Ask about Halves and Wholes\u2026",
           quickPrompts: [
-            { label: "Explain it simply", message: "Explain this step in a simpler way." },
+            { label: "I do not understand", message: "I do not understand this step. Please explain it again in a simpler way, with a small example." },
+            { label: "Give me a hint", message: "Give me a hint for this step, not the answer, so I can try it myself." },
+            { label: "Make it easier", message: "This is too hard for me right now. Break it into a smaller, easier step and start me there." },
             { label: "Quiz me", message: "Quiz me on this lesson, one question at a time." },
-            { label: "An easier one", message: "Give me an easier question to build up with." },
           ],
         });
       } catch (e) {

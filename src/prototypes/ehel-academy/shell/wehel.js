@@ -1191,7 +1191,24 @@ const PANEL_STYLE_EXTRA = `
 const PANEL_STYLE_ID = "wehel-panel-style";
 const PANEL_STYLE = `
 .wehel-panel{--w-ink:#17324d;--w-teal:#0f766e;--w-teal-soft:#e8f5f2;--w-warm:#f8b34a;--w-bg:#fff;
-  --w-line:rgba(15,23,42,.12);--w-radius:20px;color:var(--w-ink)}
+  --w-line:rgba(15,23,42,.12);--w-radius:20px;
+  /* The SURFACES, named rather than repeated as literals. Every default below
+     is the value that was hardcoded at the call site, so a page setting none
+     of them renders exactly as before -- verified by computed style, not by
+     reading the diff. A page with its own palette (the standalone Grade 1
+     builds are dark: --ground #142B3E, --card #1B3A52) sets these, and the
+     tutor stops being a white sheet on a navy page.
+     These are NOT read from the page's --card/--ink/--line. english/shared/
+     course-ui.css defines --ink, --line, --teal, --teal-soft and --muted, so
+     reading those would silently restyle the tutor in all five shell subjects
+     that load it. A page opts in by these names instead. */
+  --w-surface:var(--w-bg);--w-bubble:var(--w-bg);--w-prompt-bg:var(--w-bg);
+  --w-compose-bg:var(--w-bg);--w-timer-bg:var(--w-bg);--w-timer-track:var(--w-bg);
+  --w-prompt-line:rgba(15,118,110,.28);--w-prompt-ink:var(--w-teal);
+  --w-user-a:#eef2ff;--w-user-b:#e7ecff;--w-user-ink:var(--w-ink);
+  --w-user-avatar-a:#5b7cfa;--w-user-avatar-b:#7f6ef0;
+  --w-teal-2:#12a594;--w-low-track:#fff4e5;--w-low-fill:#ffe6c2;--w-low-ink:#7a4a00;
+  color:var(--w-ink)}
 .wehel-panel *{box-sizing:border-box}
 /* .sr-only is only defined in english/shared/course-ui.css, which four of the
    six subjects never load — so the panel carries its own copy rather than
@@ -1207,7 +1224,7 @@ const PANEL_STYLE = `
 .wehel-panel .ai-voice-row label{display:inline-flex;align-items:center;gap:6px;
   font-size:12.5px;font-weight:650;letter-spacing:.01em;opacity:.8}
 .wehel-panel .ai-voice-row select{font:inherit;font-size:13px;padding:6px 10px;
-  border:1px solid var(--w-line);border-radius:999px;background:#fff;color:inherit;
+  border:1px solid var(--w-line);border-radius:999px;background:var(--w-timer-bg);color:inherit;
   cursor:pointer;max-width:min(46vw,190px)}
 .wehel-panel .ai-voice-row select:hover{border-color:var(--w-teal)}
 .wehel-panel #wehel-voice-toggle{border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700}
@@ -1220,16 +1237,16 @@ const PANEL_STYLE = `
    stop rather than a gradient, so the edge reads as a measurement. */
 .wehel-panel .w-timer{--w-used:0%;display:inline-flex;align-items:center;gap:5px;padding:6px 12px;
   border:1px solid rgba(15,118,110,.28);border-radius:999px;
-  background:linear-gradient(90deg,var(--w-teal-soft) 0 var(--w-used),#fff var(--w-used));
+  background:linear-gradient(90deg,var(--w-teal-soft) 0 var(--w-used),var(--w-timer-track) var(--w-used));
   color:var(--w-teal);font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;
   white-space:nowrap;cursor:default}
-.wehel-panel .w-timer.is-low{border-color:rgba(224,176,112,.85);color:#7a4a00;
-  background:linear-gradient(90deg,#ffe6c2 0 var(--w-used),#fff4e5 var(--w-used))}
+.wehel-panel .w-timer.is-low{border-color:rgba(224,176,112,.85);color:var(--w-low-ink);
+  background:linear-gradient(90deg,var(--w-low-fill) 0 var(--w-used),var(--w-low-track) var(--w-used))}
 .wehel-panel .w-timer.is-spent{border-color:var(--w-line);color:rgba(23,50,77,.6);
   background:rgba(15,23,42,.05)}
 .wehel-panel .w-time-spent{display:flex;align-items:center;gap:8px;margin:0;
   padding:13px 16px;border:1px solid var(--w-line);border-radius:var(--w-radius);
-  background:linear-gradient(170deg,#fff,var(--w-teal-soft));
+  background:linear-gradient(170deg,var(--w-surface),var(--w-teal-soft));
   font-size:14.5px;line-height:1.5;color:var(--w-ink)}
 
 /* conversation */
@@ -1239,9 +1256,9 @@ const PANEL_STYLE = `
   align-items:start;border:0;padding:0;margin:0;background:none;animation:wehel-rise .22s ease both}
 .wehel-panel .ai-message.user{grid-template-columns:1fr auto;justify-items:end}
 .wehel-panel .w-avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
-  flex:none;color:#fff;background:linear-gradient(140deg,var(--w-teal),#12a594);
+  flex:none;color:#fff;background:linear-gradient(140deg,var(--w-teal),var(--w-teal-2));
   box-shadow:0 2px 8px rgba(15,118,110,.28)}
-.wehel-panel .ai-message.user .w-avatar{background:linear-gradient(140deg,#5b7cfa,#7f6ef0);
+.wehel-panel .ai-message.user .w-avatar{background:linear-gradient(140deg,var(--w-user-avatar-a),var(--w-user-avatar-b));
   box-shadow:0 2px 8px rgba(91,124,250,.28);order:2}
 .wehel-panel .w-body{min-width:0;max-width:min(88%,52ch)}
 .wehel-panel .ai-message.user .w-body{order:1;text-align:left}
@@ -1249,11 +1266,11 @@ const PANEL_STYLE = `
   letter-spacing:.05em;text-transform:uppercase;opacity:.55}
 .wehel-panel .w-text{margin:0;padding:12px 15px;border-radius:var(--w-radius);
   font-size:15.5px;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;
-  background:#fff;border:1px solid var(--w-line);border-top-left-radius:6px;
+  background:var(--w-bubble);border:1px solid var(--w-line);border-top-left-radius:6px;
   box-shadow:0 1px 2px rgba(15,23,42,.05)}
-.wehel-panel .ai-message.user .w-text{background:linear-gradient(160deg,#eef2ff,#e7ecff);
+.wehel-panel .ai-message.user .w-text{background:linear-gradient(160deg,var(--w-user-a),var(--w-user-b));color:var(--w-user-ink);
   border-color:rgba(91,124,250,.28);border-top-left-radius:var(--w-radius);border-top-right-radius:6px}
-.wehel-panel .ai-message.assistant .w-text{background:linear-gradient(170deg,#fff,var(--w-teal-soft))}
+.wehel-panel .ai-message.assistant .w-text{background:linear-gradient(170deg,var(--w-bubble),var(--w-teal-soft))}
 .wehel-panel .w-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
 .wehel-panel .w-tools .button{border-radius:999px;padding:5px 12px;font-size:12.5px;font-weight:700}
 .wehel-panel .voice-button.is-playing{background:var(--w-warm);border-color:var(--w-warm);color:#4a3208}
@@ -1268,7 +1285,7 @@ const PANEL_STYLE = `
 /* quick prompts — tappable chips, big enough for a small finger */
 .wehel-panel .ai-prompts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 12px}
 .wehel-panel .ai-prompts button{min-height:38px;padding:8px 15px;border-radius:999px;
-  border:1.5px solid rgba(15,118,110,.28);background:#fff;color:var(--w-teal);
+  border:1.5px solid var(--w-prompt-line);background:var(--w-prompt-bg);color:var(--w-prompt-ink);
   font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;
   transition:transform .12s ease,background .12s ease,box-shadow .12s ease}
 .wehel-panel .ai-prompts button:hover:not(:disabled){background:var(--w-teal-soft);
@@ -1286,7 +1303,7 @@ const PANEL_STYLE = `
 
 /* compose */
 .wehel-panel .ai-compose{display:flex;align-items:center;gap:8px;padding:7px 7px 7px 8px;
-  border:1.5px solid var(--w-line);border-radius:999px;background:#fff;
+  border:1.5px solid var(--w-line);border-radius:999px;background:var(--w-compose-bg);
   transition:border-color .15s ease,box-shadow .15s ease}
 .wehel-panel .ai-compose:focus-within{border-color:var(--w-teal);
   box-shadow:0 0 0 4px rgba(15,118,110,.13)}
@@ -1304,7 +1321,7 @@ const PANEL_STYLE = `
 .wehel-panel #wehel-mic.is-recording{background:#e4572e;border-color:#e4572e;color:#fff;
   animation:wehel-pulse 1.3s infinite}
 .wehel-panel .ai-compose button[type=submit]{padding:0 18px;display:inline-flex;align-items:center;gap:7px;
-  background:linear-gradient(140deg,var(--w-teal),#12a594);border-color:transparent;color:#fff}
+  background:linear-gradient(140deg,var(--w-teal),var(--w-teal-2));border-color:transparent;color:#fff}
 
 @keyframes wehel-rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes wehel-bounce{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-5px);opacity:1}}

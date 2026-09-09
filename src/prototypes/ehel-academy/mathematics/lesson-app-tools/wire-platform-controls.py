@@ -73,6 +73,51 @@ CSS = """
   .w-toast { position: fixed; left: 50%; bottom: 88px; transform: translateX(-50%); z-index: 90;
     background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
     font-weight: 700; font-size: 15px; box-shadow: var(--shadow); }
+
+  /* WEHEL-THEME-START -- the tutor PANEL, dressed in this page's palette.
+     The dock and the drawer above already use --card/--line/--ink, so before
+     this the drawer was a dark card containing a white sheet: shell/wehel.js
+     ships a light panel (--w-bg #fff, --w-ink #17324d) and these pages are
+     always dark -- the bare `:root` in their theme selector makes the dark
+     block unconditional, so there is no light case to preserve here.
+     wehel.js now NAMES its surfaces instead of repeating literals, every
+     default being the value it already had, so this block is the whole of the
+     change a page needs and the five shell subjects that also load the tutor
+     are untouched. Mapped by ROLE, not by hue: panel takes --card, anything
+     raised off it takes --cell, so the bubbles, prompt buttons, compose row
+     and timer stay readable against the panel rather than against the page. */
+  /* DOUBLED selector, and that is load-bearing: wehel.js injects PANEL_STYLE
+     with document.head.appendChild at mount, so its own `.wehel-panel{...}`
+     always comes after this stylesheet. At equal specificity the later rule
+     wins, so the single-class version of this block lost every declaration to
+     it and the panel stayed white -- which only rendering it showed. */
+  .wehel-panel.wehel-panel {
+    --w-bg: var(--card); --w-surface: var(--card); --w-ink: var(--ink);
+    --w-line: var(--line);
+    --w-teal: var(--teal); --w-teal-2: #2AA79B; --w-teal-soft: var(--teal-soft);
+    --w-bubble: var(--cell);
+    --w-prompt-bg: var(--cell); --w-prompt-line: var(--line);
+    /* NOT var(--teal) here. The page's teal on the prompt buttons' --cell
+       ground measures 4.28:1, under the 4.5 floor -- the one surface in the
+       panel that failed when this was measured rather than eyeballed. This
+       lighter teal is 6.27:1 on the same ground. It is a literal because the
+       palette has no light-teal token: --teal-soft is a dark fill (#143A4A),
+       and --good (#4FD1A0) is the green that means "correct" in this build,
+       which a row of suggestions must not borrow. */
+    --w-prompt-ink: #7FE0D6;
+    --w-compose-bg: var(--cell);
+    --w-timer-bg: var(--cell); --w-timer-track: var(--cell);
+    /* the learner's own turn: plum, the page's third accent, so a child can
+       tell their words from Wehel's at a glance without reading the label */
+    --w-user-a: rgba(183, 139, 209, 0.30); --w-user-b: rgba(183, 139, 209, 0.16);
+    --w-user-ink: var(--ink);
+    --w-user-avatar-a: var(--plum); --w-user-avatar-b: #8E5AA8;
+    /* time nearly up: the page's gold, not the light build's cream */
+    --w-warm: var(--gold); --w-low-ink: var(--gold);
+    --w-low-fill: rgba(244, 201, 93, 0.32); --w-low-track: rgba(244, 201, 93, 0.12);
+  }
+  .wehel-panel.wehel-panel .ai-compose input::placeholder { color: var(--muted); }
+  /* WEHEL-THEME-END */
 """
 
 JS = """

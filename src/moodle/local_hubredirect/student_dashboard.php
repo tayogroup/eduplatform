@@ -383,6 +383,7 @@ body.pqhsd-page #page,body.pqhsd-page #page-content,body.pqhsd-page #region-main
 .pqhsd-shell{min-height:100vh;background:#fff;color:#0f2237;font:400 15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
 .pqhsd-wrap{max-width:1440px}
 .pqhsd-pagehead{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.pqhsd-kicker{margin:0 0 6px;color:#5b6b7c;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em}
 .pqhsd-pagehead h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-.02em}
 .pqhsd-pagehead p{margin:4px 0 0;color:#5b6b7c;font-weight:500}
 .pqhsd-cta{display:inline-flex;align-items:center;min-height:40px;padding:0 18px;border-radius:12px;background:#2166d1;color:#fff!important;font-weight:700;font-size:13.5px;text-decoration:none!important;box-shadow:0 6px 14px -8px rgba(33,102,209,.55)}
@@ -497,6 +498,9 @@ body.pqhsd-page #page,body.pqhsd-page #page-content,body.pqhsd-page #region-main
 .pqhsd-courses .pqhsd-empty{grid-column:1/-1;border:2px dashed #d8e0ea;border-radius:22px;background:#f8fafc;color:#5b6b7c;font-size:14px;font-weight:700}
 @media(prefers-reduced-motion:reduce){.pqhsd-jc,.pqhsd-jc-btn{transition:none}.pqhsd-jc:hover{transform:none}.pqhsd-jc-btn:active{transform:none}}
 </style>
+<?php // The lesson's own design, over everything above it. Last on the
+      // page on purpose -- it wins its ties by position, not by force. ?>
+<style><?php echo pqh_ehel_academy_css('.pqhsd-shell', 'pqhsd-page'); ?></style>
 <main class="pqhsd-shell">
 <?php
 echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
@@ -536,10 +540,18 @@ echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
 ?>
 <div class="pqhsd-wrap">
   <div class="pqhsd-pagehead">
-    <div>
-      <?php $pqhsdaccountno = pqh_account_no_value($USER); ?>
-      <h1>Welcome back, <?php echo s((string)$USER->firstname); ?><?php echo $pqhsdaccountno !== '' ? ' (' . s($pqhsdaccountno) . ')' : ''; ?></h1>
-      <p><?php echo $courses ? "You're on track in " . max(0, $oncourses) . ' of ' . count($courses) . ' course' . (count($courses) === 1 ? '' : 's') : 'Your learning home.'; ?></p>
+    <div class="pqhsd-idcard">
+      <span class="pqhsd-avatar"><?php echo $OUTPUT->user_picture($USER, ['size' => 88, 'link' => false]); ?></span>
+      <div>
+        <?php $pqhsdaccountno = pqh_account_no_value($USER); ?>
+        <p class="pqhsd-kicker">Ehel Academy &middot; My learning</p>
+        <h1>Welcome back, <?php echo s((string)$USER->firstname); ?><?php echo $pqhsdaccountno !== '' ? ' (' . s($pqhsdaccountno) . ')' : ''; ?></h1>
+        <p><?php echo $courses ? "You're on track in " . max(0, $oncourses) . ' of ' . count($courses) . ' course' . (count($courses) === 1 ? '' : 's') : 'Your learning home.'; ?></p>
+      </div>
+    </div>
+    <div class="pqhsd-quickstats">
+      <div><strong><?php echo count($courses); ?></strong><span>Course<?php echo count($courses) === 1 ? '' : 's'; ?></span></div>
+      <div><strong><?php echo $avgpct !== null ? (int)round($avgpct) . '%' : '—'; ?></strong><span>Average</span></div>
     </div>
     <?php if ($courses): $pqhsdfirst = reset($courses);
       $pqhsd_ctahref = $pqhsdfirst['continue']->out(false);
@@ -563,13 +575,13 @@ echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
         <p class="pqhsd-label">My courses</p>
         <?php if ($pqhsd_sebavailable): ?>
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:#4a5b6e" role="group" aria-label="How lessons open">
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ea-muted,#4a5b6e)" role="group" aria-label="How lessons open">
             <span>Lessons open in</span>
-            <span style="display:inline-flex;border:1px solid #cfd9e4;border-radius:999px;overflow:hidden">
+            <span style="display:inline-flex;border:1px solid var(--ea-line,#cfd9e4);border-radius:999px;overflow:hidden">
               <?php foreach ($pqhsd_sebmodes as $pqhsd_mode => $pqhsd_meta): ?>
                 <a href="<?php echo $pqhsd_seburl($pqhsd_mode)->out(false); ?>"
                    title="<?php echo s($pqhsd_meta[1]); ?>"
-                   style="padding:4px 13px;text-decoration:none;font-weight:600;<?php echo $pqhsd_sebpref === $pqhsd_mode ? 'background:#1f5fa8;color:#fff' : 'color:#4a5b6e'; ?>"
+                   style="padding:4px 13px;text-decoration:none;font-weight:600;<?php echo $pqhsd_sebpref === $pqhsd_mode ? 'background:var(--ea-teal,#1f5fa8);color:var(--ea-teal-ink,#fff)' : 'color:var(--ea-body,#4a5b6e)'; ?>"
                    <?php echo $pqhsd_sebpref === $pqhsd_mode ? 'aria-current="true"' : ''; ?>><?php echo s($pqhsd_meta[0]); ?></a>
               <?php endforeach; ?>
             </span>
@@ -577,15 +589,15 @@ echo pqh_design_shell_html('pqhsd-shell', 'dashboard', [
         <?php endif; ?>
       </div>
       <?php if ($pqhsd_sebnotice === 'keepgoing'): ?>
-        <div class="pqhsd-ccard__meta" style="margin:-4px 0 10px;color:#7a6a3f">You're not finished yet — your lesson and homework are waiting when you're ready.</div>
+        <div class="pqhsd-ccard__meta pqhsd-note--warn" style="margin:-4px 0 10px">You're not finished yet — your lesson and homework are waiting when you're ready.</div>
       <?php endif; ?>
       <?php if ($pqhsd_sebavailable && $pqhsd_sebnotice === 'stale'): ?>
-        <div class="pqhsd-ccard__meta" style="margin:-4px 0 10px;color:#8a3f3f">That page had expired, so the change was not saved. Try the buttons again.</div>
+        <div class="pqhsd-ccard__meta pqhsd-note--risk" style="margin:-4px 0 10px">That page had expired, so the change was not saved. Try the buttons again.</div>
       <?php elseif ($pqhsd_sebavailable && $pqhsd_sebnotice === 'saved'): ?>
-        <div class="pqhsd-ccard__meta" style="margin:-4px 0 10px;color:#1f5fa8">Saved — lessons will open in <?php echo s($pqhsd_sebmodes[$pqhsd_sebpref][0] ?? $pqhsd_sebpref); ?>.</div>
+        <div class="pqhsd-ccard__meta pqhsd-note--info" style="margin:-4px 0 10px">Saved — lessons will open in <?php echo s($pqhsd_sebmodes[$pqhsd_sebpref][0] ?? $pqhsd_sebpref); ?>.</div>
       <?php endif; ?>
       <?php if ($pqhsd_sebavailable && $pqhsd_sebpref !== 'seb'): ?>
-        <div class="pqhsd-ccard__meta" style="margin:-4px 0 10px;color:#7a6a3f">
+        <div class="pqhsd-ccard__meta pqhsd-note--warn" style="margin:-4px 0 10px">
           <?php echo $pqhsd_sebpref === 'focus'
             ? 'Focus mode: lessons open in this browser and ask for full screen. Your teacher can see if you leave the lesson.'
             : 'Lessons open normally, with no lock and no monitoring. Choose Focus mode or Safe Exam Browser if your teacher asks for it.'; ?>

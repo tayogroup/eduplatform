@@ -2867,6 +2867,12 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 <style><?php echo pqh_openproject_skin_css(['pqh', 'pqh-teacher', 'pqh-course'], 'pqh-dashboard-page'); ?></style>
 <style><?php echo pqh_openproject_skin_css(['pqh-todo', 'pqh-student-profile', 'pqh-course-panel', 'pqh-course-card', 'pqh-notif', 'pqh-live-session', 'pqh-tkpi', 'pqh-appbar', 'pqh-tccard'], '', '__'); ?></style>
 <style><?php echo pqh_viewer_chrome_css('.pqh-shell'); ?></style>
+<?php // The lesson's own design, for the two roles whose home this is.
+      // An admin, principal or SQA tester reads finance, compliance and
+      // governance panels on this same file and keeps the console look.
+      if (in_array($role, ['teacher', 'parent'], true)): ?>
+<style><?php echo pqh_ehel_academy_css('.pqh-shell', 'pqh-dashboard-page'); ?></style>
+<?php endif; ?>
 <main class="pqh-shell pqh-font-<?php echo s($pqhfontsize); ?><?php echo $pqhdensity === 'compact' ? ' pqh-compact' : ''; ?>">
 <?php $pqhdashboardhomeurl = new moodle_url('/local/hubredirect/dashboard.php', $pqhpageparams); ?>
 <nav class="pqh-gnav" aria-label="Global navigation">
@@ -3078,11 +3084,33 @@ body.pqh-dashboard-page .pq-comm-panel__sheet{border-radius:16px;border-color:va
 </div>
 <div class="pqh-wrap<?php echo $role === 'teacher' && !empty($teacherliveoverview['ready']) ? ' pqh-wrap--tcols' : ''; ?>">
   <section class="pqh-hero pqh-workspace-top">
-    <div>
-      <p class="pqh-kicker"><?php echo s($pqhherokicker); ?></p>
-      <h1 class="pqh-title pqh-workspace-title"><?php echo s($pqhheropagetitle); ?></h1>
-      <p class="pqh-subtitle pqh-workspace-sub"><?php echo s($pqhherosubtitle); ?></p>
-    </div>
+    <?php if (in_array($role, ['teacher', 'parent'], true)): ?>
+      <div class="pqh-idcard">
+        <span class="pqh-avatar"><?php echo $OUTPUT->user_picture($USER, ['size' => 88, 'link' => false]); ?></span>
+        <div>
+          <p class="pqh-kicker"><?php echo s($pqhherokicker); ?></p>
+          <h1 class="pqh-title pqh-workspace-title"><?php echo s($pqhheropagetitle); ?></h1>
+          <p class="pqh-subtitle pqh-workspace-sub"><?php echo s($pqhherosubtitle); ?></p>
+        </div>
+      </div>
+      <?php if ($role === 'teacher'): $pqhheroliveoverviewmetrics = (array)($teacherliveoverview['metrics'] ?? []); ?>
+        <div class="pqh-idcard-stats">
+          <div><strong><?php echo (int)($pqhheroliveoverviewmetrics['today'] ?? 0); ?></strong><span>Classes today</span></div>
+          <div><strong><?php echo (int)($messages['unread'] ?? 0); ?></strong><span>Unread</span></div>
+        </div>
+      <?php else: ?>
+        <div class="pqh-idcard-stats">
+          <div><strong><?php echo count($children); ?></strong><span>Child<?php echo count($children) === 1 ? '' : 'ren'; ?></span></div>
+          <div><strong><?php echo (int)($messages['unread'] ?? 0); ?></strong><span>Unread</span></div>
+        </div>
+      <?php endif; ?>
+    <?php else: ?>
+      <div>
+        <p class="pqh-kicker"><?php echo s($pqhherokicker); ?></p>
+        <h1 class="pqh-title pqh-workspace-title"><?php echo s($pqhheropagetitle); ?></h1>
+        <p class="pqh-subtitle pqh-workspace-sub"><?php echo s($pqhherosubtitle); ?></p>
+      </div>
+    <?php endif; ?>
     <?php if ($children): ?>
       <form method="get">
         <label class="accesshide" for="pqh-childid"><?php echo $role === 'teacher' ? 'Student' : 'Child'; ?></label>

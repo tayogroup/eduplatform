@@ -97,17 +97,48 @@ dropped its horizontal and diagonal mirrors to leave `2Gp.02`'s vertical one.
 Fair Shares kept all nine of its steps and had every denominator constrained to
 halves and quarters.
 
-**Coverage did not move: 47 of 48 objectives, before and after.** The one gap is
-`2Ni.07` (know the 1, 2, 5 and 10 times tables) — there is no recall practice
-anywhere in the build. It is a gap rather than over-reach, it was here before,
-and it is still open.
+**Coverage did not move: 47 of 48 objectives, before and after.** The one gap
+was `2Ni.07`, and it is closed by the step below, which takes this build to
+**48 of 48**.
+
+### 2Ni.07 was the last gap: "Know them by heart", step 14 of Tens and Ones
+
+`2Ni.07` says KNOW the 1, 2, 5 and 10 times tables, and know is recall. The
+arrays step is `2Ni.05` — multiplication AS an array — and its own comment
+already named `2Ni.07`, because it ends with three multiplication questions.
+That is not the same thing: the array is still on screen while the child
+answers and the multiplier only runs to 6, so it asks them to WORK IT OUT with
+the manipulative in front of them. Reading that comment and stopping is how the
+gap stayed invisible.
+
+The new step asks the fact on its own. No array, the full table to ten, and the
+skip-count behind a **Count it up** button the child presses when stuck rather
+than shown by default — the crutch offered, not imposed. Six correct to finish.
+
+Three details that are decisions rather than defaults:
+
+- **The tables rotate; they are not picked at random.** `ORDER7` cycles
+  2, 1, 5, 10, 2, 5, 10 … because a random pick over six rounds can miss a
+  table entirely, and the 1s — which 0096 names, and which are trivial — should
+  appear once rather than a quarter of the time. Checked by playing it through:
+  six questions, all four tables met.
+- **The distractors are the errors the fact invites** — one step further along
+  the table, one step short, and adding instead of multiplying.
+- **They are capped at 100**, because Stage 2 numbers stop there and the top of
+  the 10s reaches it. Without the cap `10 × 10` offers 110: the one fact where
+  "one step further" runs out of the stage. All 40 facts the step can generate
+  were checked exhaustively — every answer and every distractor at or below
+  100, and every fact still has two distinct wrong options.
+
+It takes Tens and Ones to 17 steps and the build to 87.
 
 Three lessons are now much shorter — 16 steps became 6 in *Half Past, Quarter
 To*, 13 became 5 in *Which Way From Here*, 13 became 11 in *Sides and Corners*.
 That is what Stage 2 actually asks for in those strands (time has three
-objectives, position two), but it takes the build from 104 teaching steps to
-86 (122 sections to 104, counting each lesson's check and sticker pages), and
-the whole grade already held only about three weeks of a thirty-five-week year.
+objectives, position two). With the times-table step added back the build stands
+at 87 teaching steps against 104 before (105 sections against 122, counting each
+lesson's check and sticker pages), and the whole grade already held only about
+three weeks of a thirty-five-week year.
 
 ### Removing a step breaks the helper that happened to sit beside it
 

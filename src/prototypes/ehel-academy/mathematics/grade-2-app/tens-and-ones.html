@@ -667,9 +667,23 @@
       </div>
     </section>
 
-    <!-- 14 sharing and grouping -->
+    <!-- 14 know them by heart -->
+    <section class="slide" data-say="No array this time. Answer from memory if you can, and press Count it up only when you are stuck.">
+      <div class="slide-head"><span class="n">14</span><h2>Know them by heart</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayT">The <b>1</b>, <b>2</b>, <b>5</b> and <b>10</b> times tables. Answer from memory if you can.</span></div>
+      <div class="stage">
+        <div class="bignum" id="factT"></div>
+        <div class="choices" id="chT"></div>
+        <div class="bigbtns"><button type="button" class="big ghost small" id="skipT">Count it up</button></div>
+        <div class="working" id="workT"></div>
+        <p class="fb" id="fbT"></p>
+        <p class="fb small-fb" id="scoreT"></p>
+      </div>
+    </section>
+
+    <!-- 15 sharing and grouping -->
     <section class="slide" data-say="Sharing gives one each until they are gone. Grouping makes groups of the same size.">
-      <div class="slide-head"><span class="n">14</span><h2>Sharing and grouping</h2></div>
+      <div class="slide-head"><span class="n">15</span><h2>Sharing and grouping</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7"><b>Share</b> 12 sweets between 3 friends: one each, round and round.</span></div>
       <div class="stage">
         <div class="bigbtns"><button type="button" class="big small teal" id="mode7share">Share between 3</button><button type="button" class="big small ghost" id="mode7group">Make groups of 4</button></div>
@@ -682,7 +696,7 @@
 
     <!-- 15 fractions -->
     <section class="slide" data-say="Cut the bar into equal parts. Tap the parts to shade them.">
-      <div class="slide-head"><span class="n">15</span><h2>Halves and quarters</h2></div>
+      <div class="slide-head"><span class="n">16</span><h2>Halves and quarters</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Cut the bar into <b>equal</b> parts, then tap parts to shade them.</span></div>
       <div class="stage">
         <div class="bigbtns"><button type="button" class="big small teal" data-parts="2">halves</button><button type="button" class="big small ghost" data-parts="4">quarters</button></div>
@@ -695,7 +709,7 @@
 
     <!-- 16 money -->
     <section class="slide" data-say="Pay for it with coins. Tap coins until you have exactly the right amount.">
-      <div class="slide-head"><span class="n">16</span><h2>Money</h2></div>
+      <div class="slide-head"><span class="n">17</span><h2>Money</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Pay for it. Tap coins until you have <b>exactly</b> the right amount.</span></div>
       <div class="stage">
         <div class="price" id="price10"></div>
@@ -1731,6 +1745,76 @@
   });
   paint6(); ask6();
 
+  /* ---- 6b: know them by heart (0096 2Ni.07) ----
+     The arrays step above teaches multiplication AS an array and answers with
+     the array still on screen, multiplier 2..6. 2Ni.07 says KNOW the tables,
+     which is recall, so this asks the fact on its own, runs the full table to
+     ten, and keeps the skip-count behind a button the child presses when they
+     are stuck instead of showing it by default.
+
+     ORDER7 rotates the four tables rather than picking at random, because a
+     random pick over six rounds can miss a table entirely - and the 1s, which
+     0096 names and which are trivial, appear once rather than a quarter of the
+     time. */
+  const ORDER7 = [2, 1, 5, 10, 2, 5, 10, 2, 5, 10];
+  let iT = 0, rightT = 0, lockT = false, qT = null; const NEEDT = 6;
+  const skipCount = (t, n) => Array.from({ length: n }, (_, i) => t * (i + 1)).join(", ");
+  function roundT() {
+    lockT = false; $("fbT").textContent = ""; $("fbT").className = "fb"; $("workT").innerHTML = "";
+    $("skipT").hidden = false; $("skipT").disabled = false;
+    if (rightT >= NEEDT) {
+      $("factT").textContent = ""; $("chT").innerHTML = ""; $("skipT").hidden = true;
+      $("fbT").className = "fb good";
+      $("fbT").textContent = "You knew " + rightT + " of them. That is the 1, 2, 5 and 10 times tables.";
+      $("scoreT").textContent = "";
+      $("sayT").textContent = "You know your tables.";
+      finish(13, "You know the 1, 2, 5 and 10 times tables.");
+      return;
+    }
+    const t = ORDER7[iT % ORDER7.length], n = rnd(1, 10), ans = t * n;
+    qT = { t: t, n: n, ans: ans };
+    $("factT").innerHTML = n + " <span class=\"t\">\u00d7</span> " + t + " <span style=\"color:var(--muted)\">= ?</span>";
+    /* the three errors this fact actually invites: one step too far along the
+       table, one step short, and adding instead of multiplying.
+       Capped at 100 because Stage 2 numbers stop there (2Ni.01, 2Nc.01) - and
+       the top of the 10s reaches it: 10 x 10 is 100, so "one step further"
+       would offer 110 on the one fact where the range runs out. Three
+       candidates and two are taken, so dropping one always leaves enough. */
+    const wrong = [t * (n + 1), n > 1 ? t * (n - 1) : t * (n + 2), t + n]
+      .filter(function (x, i, a) { return x !== ans && x > 0 && x <= 100 && a.indexOf(x) === i; })
+      .slice(0, 2);
+    choices($("chT"), [ans].concat(wrong));
+    $("scoreT").textContent = rightT + " of " + NEEDT + " known";
+    $("sayT").innerHTML = "What is <b>" + n + " \u00d7 " + t + "</b>?";
+    say(n + " times " + t);
+  }
+  $("skipT").addEventListener("click", function () {
+    if (lockT || !qT) return;
+    $("skipT").disabled = true;
+    lines($("workT"), [
+      { k: "Count in " + qT.t + "s", v: skipCount(qT.t, qT.n) },
+      { k: "So", v: qT.n + " \u00d7 " + qT.t + " = <b>" + qT.ans + "</b>", total: true },
+    ]);
+    say("Count in " + qT.t + "s: " + skipCount(qT.t, qT.n));
+  });
+  $("chT").addEventListener("click", function (e) {
+    const b = e.target.closest(".choice"); if (!b || lockT) return; lockT = true;
+    const ok = Number(b.dataset.v) === qT.ans;
+    reveal($("chT"), qT.ans, b);
+    if (ok) rightT++;
+    lines($("workT"), [
+      { k: "Count in " + qT.t + "s", v: skipCount(qT.t, qT.n) },
+      { k: "So", v: qT.n + " \u00d7 " + qT.t + " = <b>" + qT.ans + "</b>", total: true },
+    ]);
+    $("fbT").className = "fb " + (ok ? "good" : "bad");
+    $("fbT").textContent = (ok ? cheer() + " " : "Not this time. ") + qT.n + " \u00d7 " + qT.t + " = " + qT.ans + ".";
+    say((ok ? cheer() + " " : "") + qT.n + " times " + qT.t + " is " + qT.ans);
+    $("scoreT").textContent = rightT + " of " + NEEDT + " known";
+    iT++;
+    setTimeout(roundT, 2200);
+  });
+  roundT();
+
   /* ---- 7: sharing and grouping ---- */
   let mode7 = "share", pool7 = 12, plates7 = [];
   const FRIENDS = ["Amina", "Musa", "Hodan", "Kiki"];
@@ -1749,7 +1833,7 @@
       const text = mode7 === "share" ? "12 shared between 3 is 4 each. 12 ÷ 3 = 4." : "12 in groups of 4 makes 3 bags. 12 ÷ 4 = 3.";
       $("fb7").className = "fb good"; $("fb7").textContent = cheer() + " " + text; say(cheer() + " " + text);
       if (mode7 === "share") done7.share = true; else done7.group = true;
-      if (done7.share && done7.group) finish(13, "Sharing and grouping: you can do both!");
+      if (done7.share && done7.group) finish(14, "Sharing and grouping: you can do both!");
     }
   }
   const done7 = { share: false, group: false };
@@ -1783,7 +1867,7 @@
     ]);
     if (n > 0 && n < parts8) seen8.add(parts8);
     $("fb8").className = "fb " + (seen8.size === 2 ? "good" : ""); $("fb8").textContent = seen8.size === 2 ? "Halves and quarters: you have shaded them both!" : "Shade a part of each kind of bar: halves and quarters.";
-    if (seen8.size === 2) finish(14, "Halves and quarters. Well done!");
+    if (seen8.size === 2) finish(15, "Halves and quarters. Well done!");
   }
   document.querySelectorAll(".slide [data-parts]").forEach((b) => b.addEventListener("click", () => { parts8 = Number(b.dataset.parts); shaded8 = new Array(parts8).fill(false); shaded8[0] = true; paint8(); say("The bar is cut into " + parts8 + " " + NAMES8[parts8][1] + ". One " + NAMES8[parts8][0] + " is shaded."); }));
   $("bar8").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; shaded8[Number(b.dataset.i)] = !shaded8[Number(b.dataset.i)]; paint8(); const n = shaded8.filter(Boolean).length; say(n + " " + (n === 1 ? NAMES8[parts8][0] : NAMES8[parts8][1]) + " shaded"); });
@@ -1823,7 +1907,7 @@
   let it10 = 0, paid10 = [], right10 = 0; const ROUNDS10 = 4;
   function round10() {
     paid10 = []; $("fb10").textContent = ""; $("fb10").className = "fb"; $("next10").hidden = true;
-    if (it10 >= ROUNDS10) { $("price10").innerHTML = ""; $("coins10").innerHTML = ""; $("paid10").innerHTML = ""; $("total10").textContent = ""; $("undo10").hidden = true; $("fb10").className = "fb good"; $("fb10").textContent = "You paid for " + right10 + " things exactly!"; finish(15, "You can pay with coins!"); return; }
+    if (it10 >= ROUNDS10) { $("price10").innerHTML = ""; $("coins10").innerHTML = ""; $("paid10").innerHTML = ""; $("total10").textContent = ""; $("undo10").hidden = true; $("fb10").className = "fb good"; $("fb10").textContent = "You paid for " + right10 + " things exactly!"; finish(16, "You can pay with coins!"); return; }
     const item = ITEMS[it10];
     $("score10").textContent = "Buy " + (it10 + 1) + " of " + ROUNDS10;
     $("price10").innerHTML = '<span class="item">' + item[0] + '</span><div><div>' + item[1] + '</div><div class="tag">' + item[2] + " sh</div></div>";
@@ -2130,7 +2214,7 @@
   let c11 = 0, right11 = 0, lock11 = false;
   function round11() {
     lock11 = false; $("fb11").textContent = ""; $("fb11").className = "fb";
-    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(16, "You got " + right11 + " out of " + CHECK.length + "."); return; }
+    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(17, "You got " + right11 + " out of " + CHECK.length + "."); return; }
     const q = CHECK[c11];
     $("score11").textContent = "Question " + (c11 + 1) + " of " + CHECK.length; $("q11").textContent = q.q; $("say11").textContent = q.q;
     $("ch11").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" && !/\d/.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
@@ -2148,7 +2232,7 @@
   round11();
 
   /* ---- 18: stickers ---- */
-  const STICKERS = [["💯", "Numbers to 100"], ["👀", "A quick look"], ["🔤", "Numbers in words"], ["🧱", "Tens and ones"], ["⚖️", "Which is more"], ["🥇", "First, second, third"], ["🎯", "Rounding to 10"], ["👯", "Odd and even"], ["🧩", "Make 20 and 100"], ["➕", "Adding"], ["➖", "Taking away"], ["↩️", "One undoes the other"], ["🔢", "Arrays and tables"], ["🍬", "Sharing and grouping"], ["🍫", "Halves and quarters"], ["🪙", "Money"], ["✅", "Show what I know"]];
+  const STICKERS = [["💯", "Numbers to 100"], ["👀", "A quick look"], ["🔤", "Numbers in words"], ["🧱", "Tens and ones"], ["⚖️", "Which is more"], ["🥇", "First, second, third"], ["🎯", "Rounding to 10"], ["👯", "Odd and even"], ["🧩", "Make 20 and 100"], ["➕", "Adding"], ["➖", "Taking away"], ["↩️", "One undoes the other"], ["🔢", "Arrays and tables"], ["🧠", "Tables by heart"], ["🍬", "Sharing and grouping"], ["🍫", "Halves and quarters"], ["🪙", "Money"], ["✅", "Show what I know"]];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;

@@ -28,10 +28,18 @@ place one grade can be sent elsewhere is `pqpg_ehel_app_base()` in
 `local_prequran/ehel_app_url_overrides` setting. Candidates are host-locked to
 `https://ehelacademy.b-cdn.net/`.
 
-Grade 1 points at **grade-1-v2** (the seven). `repoint-grade-1.php` moves it
-between the two builds; it reports by default and needs `--apply` to write.
-Rolling back is the same setting, and `grade-1-preview` is kept as a complete
-build rather than a partial one.
+Grade 1 points at **grade-1-v2** (the seven).
+`../lesson-app-tools/repoint-grade.php --grade 1` moves it; it reports by
+default and needs `--apply` to write. The per-grade `repoint-grade-1.php` that
+lived here is gone - one script now carries every grade, because four copies of
+two safety fences is four chances for them to drift apart.
+
+**Rolling back Grade 1 does NOT mean the subject entry.** It means
+`grade-1-preview`, the five-lesson build kept complete rather than partial for
+exactly this. The shared script prints the override map as it was before the
+run, so it restores whatever Grade 1 was on - which is that, not
+`app/mathematics/index.html`. That distinction is the one thing the deleted
+script knew that the shared one had to be taught.
 
 **The five are one commit ahead of the CDN, deliberately, and cannot be
 shipped by anything in this folder.** They carry the contrast fix the seven

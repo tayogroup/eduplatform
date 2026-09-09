@@ -40,9 +40,11 @@ on storage with the access key rather than probed through the edge — and Grade
  "ehel-eng-g01":".../english/grade-1-v2/index.html"}
 ```
 
-`repoint-grade-2.php` was written to make that change and, run on 2026-09-09,
-reported "Already pointed at grade-2-lessons. Nothing to do." It is kept for the
-rollback it prints, not because the repoint is outstanding.
+A per-grade `repoint-grade-2.php` was written to make that change and, run on
+2026-09-09, reported "Already pointed at grade-2-lessons. Nothing to do." - the
+run that proved the routing had been live all along. It has been replaced by
+`../lesson-app-tools/repoint-grade.php --grade 2`, which reports the same way
+and prints the same rollback.
 
 **How this file came to be wrong is the part worth keeping.** The setting cannot
 be read from this repo, so "not routed" was never a measurement — it was an

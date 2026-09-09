@@ -122,7 +122,7 @@ been uploaded, and no learner can reach any of it.
 Routing, when it happens, is one Moodle setting —
 `local_prequran/ehel_app_url_overrides`, read by `pqpg_ehel_app_base()`, host-locked
 to `ehelacademy.b-cdn.net` — through the staged-script + cPanel Terminal loop, on
-the model of `../grade-1-app/repoint-grade-1.php`. The course idnumber is
+run by `../lesson-app-tools/repoint-grade.php --grade 3`. The course idnumber is
 `ehel-math-g03`. The shell course at `app/mathematics/grade-3/` is untouched and
 still serves Grade 3; this is an alternative to it, not a patch on it.
 

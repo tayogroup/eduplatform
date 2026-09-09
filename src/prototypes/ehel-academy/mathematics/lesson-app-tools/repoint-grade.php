@@ -239,7 +239,17 @@ rp_say("To roll back, paste this into Site administration > Plugins >");
 rp_say("Local plugins > Ehel app URL overrides:");
 $rollback = $before;
 rp_say("  " . (empty($rollback) ? "(clear the box)" : json_encode($rollback, JSON_UNESCAPED_SLASHES)));
-rp_say("which sends them back to " . RP_ENTRY);
+/* This is the map EXACTLY as it was before this run, which is not the same as
+ * "back to the subject entry" - and saying the latter would be wrong for any
+ * grade that was already overridden. Grade 1 is the case that proves it: its
+ * rollback target is grade-1-preview, the five-lesson build kept complete for
+ * exactly this, not app/mathematics/index.html. A grade whose key was absent
+ * before does go back to the entry, and for that one the line below says so. */
+rp_say("");
+rp_say("That restores the overrides exactly as they were before this run.");
+foreach ($todo as $k => $v) {
+    rp_say("  " . $k . " -> " . (isset($before[$k]) ? $before[$k] : "removed, i.e. " . RP_ENTRY));
+}
 rp_say("");
 rp_say("Now delete this script.");
 exit(0);

@@ -1205,6 +1205,12 @@ const PANEL_STYLE = `
   --w-surface:var(--w-bg);--w-bubble:var(--w-bg);--w-prompt-bg:var(--w-bg);
   --w-compose-bg:var(--w-bg);--w-timer-bg:var(--w-bg);--w-timer-track:var(--w-bg);
   --w-prompt-line:rgba(15,118,110,.28);--w-prompt-ink:var(--w-teal);
+  /* Written as rgba() rather than hex, which is why the first pass at naming
+     these surfaces missed them: the audit grepped for #rrggbb. The voice row
+     is the strip carrying the timer, Full screen and the voice picker, and it
+     stayed a pale sheet at the top of an otherwise dark panel. */
+  --w-row-a:rgba(232,245,242,.75);--w-row-b:rgba(232,245,242,.35);
+  --w-low-line:rgba(224,176,112,.85);
   --w-user-a:#eef2ff;--w-user-b:#e7ecff;--w-user-ink:var(--w-ink);
   --w-user-avatar-a:#5b7cfa;--w-user-avatar-b:#7f6ef0;
   --w-teal-2:#12a594;--w-low-track:#fff4e5;--w-low-fill:#ffe6c2;--w-low-ink:#7a4a00;
@@ -1220,7 +1226,7 @@ const PANEL_STYLE = `
 /* toolbar — voice, focus and language, compact so it never outweighs the talk */
 .wehel-panel .ai-voice-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;
   padding:8px;margin-bottom:12px;border:1px solid var(--w-line);border-radius:14px;
-  background:linear-gradient(180deg,rgba(232,245,242,.75),rgba(232,245,242,.35))}
+  background:linear-gradient(180deg,var(--w-row-a),var(--w-row-b))}
 .wehel-panel .ai-voice-row label{display:inline-flex;align-items:center;gap:6px;
   font-size:12.5px;font-weight:650;letter-spacing:.01em;opacity:.8}
 .wehel-panel .ai-voice-row select{font:inherit;font-size:13px;padding:6px 10px;
@@ -1240,7 +1246,7 @@ const PANEL_STYLE = `
   background:linear-gradient(90deg,var(--w-teal-soft) 0 var(--w-used),var(--w-timer-track) var(--w-used));
   color:var(--w-teal);font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;
   white-space:nowrap;cursor:default}
-.wehel-panel .w-timer.is-low{border-color:rgba(224,176,112,.85);color:var(--w-low-ink);
+.wehel-panel .w-timer.is-low{border-color:var(--w-low-line);color:var(--w-low-ink);
   background:linear-gradient(90deg,var(--w-low-fill) 0 var(--w-used),var(--w-low-track) var(--w-used))}
 .wehel-panel .w-timer.is-spent{border-color:var(--w-line);color:rgba(23,50,77,.6);
   background:rgba(15,23,42,.05)}

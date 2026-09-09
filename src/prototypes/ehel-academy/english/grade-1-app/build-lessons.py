@@ -1044,9 +1044,43 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
     reading_title = {r["readingId"]: (r.get("title") or "") for r in unit.get("readings") or []}
     factual.sort(key=lambda c: reading_order.get(c.get("readingId"), len(reading_order)))
 
+    # SHARED EVENLY BETWEEN THE READINGS, as far as the content allows (owner,
+    # 2026-09-10, asking for "three from each reading"). Taking the first six
+    # gave every question to the FIRST reading in nine units of ten, because
+    # the authored comprehension is grouped by reading and the first group is
+    # six long.
+    #
+    # A LITERAL THREE-AND-THREE IS NOT POSSIBLE AND MUST NOT BE FORCED. The
+    # second reading of each unit is the "Talk about ..." shared reading, and
+    # its items are questionType "Point, act or say" - speaking tasks whose
+    # answers are open templates ("My name is ___.", "This is a chair. (any
+    # object named correctly)"). is_factual above excludes them on purpose,
+    # and its own note says why: as a quiz option that asks a child to tap a
+    # literal blank. Measured across Grade 1, the second readings hold 58
+    # items and 11 of them are answerable as multiple choice - SIX units have
+    # none at all. Forcing an even split there would either invent questions
+    # or reintroduce exactly the defect the filter was written to stop.
+    #
+    # So: take one from each reading in turn until six are found. A reading
+    # with three usable questions contributes three; one with two contributes
+    # two; one with none is simply skipped and the others fill the space. Then
+    # sort back into reading order, because the questions are still meant to
+    # be GROUPED by story - round-robin decides WHICH, not what order.
+    by_reading = {}
+    for c in factual:
+        by_reading.setdefault(c.get("readingId"), []).append(c)
+    queues = [by_reading[r] for r in sorted(by_reading, key=lambda r: reading_order.get(r, len(reading_order)))]
+    chosen, n = [], 0
+    while len(chosen) < 6 and any(len(q) > n for q in queues):
+        for q in queues:
+            if n < len(q) and len(chosen) < 6:
+                chosen.append(q[n])
+        n += 1
+    chosen.sort(key=lambda c: reading_order.get(c.get("readingId"), len(reading_order)))
+
     if len(factual) >= 3:
         items = []
-        for c in factual[:6]:
+        for c in chosen:
             wrong = distractors([x for x in factual if x is not c], c, 2,
                                 key=lambda x: x["correctAnswer"])
             items.append({

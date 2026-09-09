@@ -317,8 +317,36 @@
      ================================================================== */
   function bookQuestions(o) {
     const el = o.el;
-    const questions = o.items || [];
     const books = o.books || [];
+
+    /* SORTED BY BOOK, IN THE SHELF'S OWN ORDER (owner, 2026-09-10), so "the
+       first book, then the second" means the same thing here as on the shelf
+       the child has just read from. Sorted HERE rather than by reordering the
+       authored arrays: the questions live in BOOK_COMPREHENSION_SETS in
+       shell/subjects/english.js, which is the one file this repo's own
+       pre-commit guard names as co-edited, and doing it at render time covers
+       every unit and every grade instead of forty arrays reordered by hand.
+
+       THE PICTURE QUESTIONS GO LAST AND KEEP NO BOOK TITLE, and that is the
+       whole reason this is not a one-line sort. A `choice` or an `order`
+       question names one book. A `picture` question deliberately spans THREE
+       - "Tap the picture of Miss Twiga" offers a page from each of three books
+       and the child has to know which - so it has no book to sort under, and
+       heading its slide with a book name would HAND OVER THE ANSWER: the
+       answer to that one is the kiki-goes-to-school page. Six of the eighteen
+       questions in a unit are this kind, so titling them would make a third of
+       the section passable without looking at the pictures.
+
+       The sort is stable on the authored order within each book, so the
+       author's sequencing inside a book survives. */
+    const bookRank = new Map(books.map((b, i) => [b.id, i]));
+    const rankOf = (q) =>
+      (q.book != null && bookRank.has(q.book) ? bookRank.get(q.book) : books.length);
+    const questions = (o.items || [])
+      .map((q, i) => [q, i])
+      .sort((a, b) => rankOf(a[0]) - rankOf(b[0]) || a[1] - b[1])
+      .map((pair) => pair[0]);
+
     const solved = new Set();
     /* Answered wrongly at least once before being solved. A reset on an
        `order` question counts, because tapping the pages in the wrong order
@@ -369,7 +397,15 @@
         }).join("") + "</div>";
       }
 
-      $(el.ask).innerHTML = esc(q.q);
+      /* The book's name above the question, so a child always knows which
+         story they are being asked about. A picture question gets "Across the
+         books" instead of a title - it is the same words on all six, so it
+         gives nothing away, and it says why there is no book name rather than
+         leaving the slide looking as though one is missing. */
+      const b = q.book != null ? bookOf(q.book) : null;
+      const eyebrow = b ? b.title : (q.kind === "picture" ? "Across the books" : "");
+      $(el.ask).innerHTML =
+        (eyebrow ? '<span class="qbook">' + esc(eyebrow) + "</span>" : "") + esc(q.q);
       $(el.stage).className = "stagewide";
       $(el.stage).innerHTML =
         '<div class="bookq" id="' + el.bq + '">' + answers + "</div>" +

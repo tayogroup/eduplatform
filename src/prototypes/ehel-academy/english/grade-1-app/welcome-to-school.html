@@ -310,6 +310,11 @@
   /* ---- the question text above a set of choices ---- */
   .ask { max-width: 32ch; text-align: center; font-size: clamp(20px, 4vw, 26px); font-weight: 700;
     font-family: "Inter", "Segoe UI", sans-serif; }
+  /* the book (or story) a question is about, above the question itself */
+  .qbook { display: block; color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em;
+    margin-bottom: 6px; }
+
   .askpic { font-size: clamp(70px, 17vw, 120px); line-height: 1.1; }
 
   /* ---- long answers do not fit a 34px chunky button ---- */
@@ -1775,7 +1780,8 @@
             "ok": 0
           }
         ],
-        "why": "The boy says, 'Hello, my name is Adam.'"
+        "why": "The boy says, 'Hello, my name is Adam.'",
+        "srcTitle": "Amal's First Day"
       },
       {
         "ask": "How old does Amal tell her teacher she is?",
@@ -1793,7 +1799,8 @@
             "ok": 0
           }
         ],
-        "why": "At the door Amal says, 'I am six years old.'"
+        "why": "At the door Amal says, 'I am six years old.'",
+        "srcTitle": "Amal's First Day"
       },
       {
         "ask": "Amal spoke softly. Does softly mean loudly or quietly?",
@@ -1811,7 +1818,8 @@
             "ok": 0
           }
         ],
-        "why": "Amal says her name softly at the door, in a small quiet voice."
+        "why": "Amal says her name softly at the door, in a small quiet voice.",
+        "srcTitle": "Amal's First Day"
       },
       {
         "ask": "What did the children do after the teacher said, 'Let us sing'?",
@@ -1829,7 +1837,8 @@
             "ok": 0
           }
         ],
-        "why": "Straight after 'Let us sing!' all the children sang 'A, B, C, D...'"
+        "why": "Straight after 'Let us sing!' all the children sang 'A, B, C, D...'",
+        "srcTitle": "Amal's First Day"
       },
       {
         "ask": "What green thing did Amal find in the treasure hunt?",
@@ -1847,7 +1856,8 @@
             "ok": 0
           }
         ],
-        "why": "The teacher says 'Find something green!' and Amal finds a green crayon."
+        "why": "The teacher says 'Find something green!' and Amal finds a green crayon.",
+        "srcTitle": "Amal's First Day"
       },
       {
         "ask": "How did Amal feel when Adam asked to be her friend?",
@@ -1865,7 +1875,8 @@
             "ok": 0
           }
         ],
-        "why": "Amal says 'Yes!' to Adam and the story says she was happy now."
+        "why": "Amal says 'Yes!' to Adam and the story says she was happy now.",
+        "srcTitle": "Amal's First Day"
       }
     ],
     "sayit": [
@@ -6408,7 +6419,17 @@
     function draw() {
       lock = false;
       const it = o.items[i];
-      $(el.say).innerHTML = it.ask;
+      /* THE STORY A QUESTION IS ABOUT, above the question (owner, 2026-09-10),
+         the same eyebrow the book questions carry. Only the unit-story step
+         supplies `srcTitle`, so the three other sequence() steps - the mid
+         quiz, fluency and the unit quiz - draw exactly what they drew before.
+         `ask` stays raw because it is authored markup; only the title we add
+         is escaped, and it comes from the unit's own readings. */
+      const src = it.srcTitle
+        ? '<span class="qbook">' + String(it.srcTitle)
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</span>"
+        : "";
+      $(el.say).innerHTML = src + it.ask;
       $(el.stage).innerHTML = it.pic || "";
       $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
@@ -7831,8 +7852,36 @@
      ================================================================== */
   function bookQuestions(o) {
     const el = o.el;
-    const questions = o.items || [];
     const books = o.books || [];
+
+    /* SORTED BY BOOK, IN THE SHELF'S OWN ORDER (owner, 2026-09-10), so "the
+       first book, then the second" means the same thing here as on the shelf
+       the child has just read from. Sorted HERE rather than by reordering the
+       authored arrays: the questions live in BOOK_COMPREHENSION_SETS in
+       shell/subjects/english.js, which is the one file this repo's own
+       pre-commit guard names as co-edited, and doing it at render time covers
+       every unit and every grade instead of forty arrays reordered by hand.
+
+       THE PICTURE QUESTIONS GO LAST AND KEEP NO BOOK TITLE, and that is the
+       whole reason this is not a one-line sort. A `choice` or an `order`
+       question names one book. A `picture` question deliberately spans THREE
+       - "Tap the picture of Miss Twiga" offers a page from each of three books
+       and the child has to know which - so it has no book to sort under, and
+       heading its slide with a book name would HAND OVER THE ANSWER: the
+       answer to that one is the kiki-goes-to-school page. Six of the eighteen
+       questions in a unit are this kind, so titling them would make a third of
+       the section passable without looking at the pictures.
+
+       The sort is stable on the authored order within each book, so the
+       author's sequencing inside a book survives. */
+    const bookRank = new Map(books.map((b, i) => [b.id, i]));
+    const rankOf = (q) =>
+      (q.book != null && bookRank.has(q.book) ? bookRank.get(q.book) : books.length);
+    const questions = (o.items || [])
+      .map((q, i) => [q, i])
+      .sort((a, b) => rankOf(a[0]) - rankOf(b[0]) || a[1] - b[1])
+      .map((pair) => pair[0]);
+
     const solved = new Set();
     /* Answered wrongly at least once before being solved. A reset on an
        `order` question counts, because tapping the pages in the wrong order
@@ -7883,7 +7932,15 @@
         }).join("") + "</div>";
       }
 
-      $(el.ask).innerHTML = esc(q.q);
+      /* The book's name above the question, so a child always knows which
+         story they are being asked about. A picture question gets "Across the
+         books" instead of a title - it is the same words on all six, so it
+         gives nothing away, and it says why there is no book name rather than
+         leaving the slide looking as though one is missing. */
+      const b = q.book != null ? bookOf(q.book) : null;
+      const eyebrow = b ? b.title : (q.kind === "picture" ? "Across the books" : "");
+      $(el.ask).innerHTML =
+        (eyebrow ? '<span class="qbook">' + esc(eyebrow) + "</span>" : "") + esc(q.q);
       $(el.stage).className = "stagewide";
       $(el.stage).innerHTML =
         '<div class="bookq" id="' + el.bq + '">' + answers + "</div>" +

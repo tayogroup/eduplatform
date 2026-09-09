@@ -73,7 +73,17 @@
     function draw() {
       lock = false;
       const it = o.items[i];
-      $(el.say).innerHTML = it.ask;
+      /* THE STORY A QUESTION IS ABOUT, above the question (owner, 2026-09-10),
+         the same eyebrow the book questions carry. Only the unit-story step
+         supplies `srcTitle`, so the three other sequence() steps - the mid
+         quiz, fluency and the unit quiz - draw exactly what they drew before.
+         `ask` stays raw because it is authored markup; only the title we add
+         is escaped, and it comes from the unit's own readings. */
+      const src = it.srcTitle
+        ? '<span class="qbook">' + String(it.srcTitle)
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</span>"
+        : "";
+      $(el.say).innerHTML = src + it.ask;
       $(el.stage).innerHTML = it.pic || "";
       $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice' + (o.smallOpts ? " small" : "") + '" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
       $(el.fb).textContent = ""; $(el.fb).className = "fb";

@@ -1029,6 +1029,21 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
         return len(ans) <= 70
 
     factual = [c for c in unit["comprehension"] if is_factual(c)]
+
+    # SORTED BY THE STORY THEY ARE ABOUT, in the unit's own reading order
+    # (owner, 2026-09-10), so the first story's questions come first. The
+    # authored comprehension already happens to be grouped that way, so today
+    # this changes nothing - it is here so the grouping is guaranteed rather
+    # than inherited, and it is what makes the order right if the selection
+    # below is ever widened.
+    #
+    # Each item now carries the story's TITLE, which the deck draws above the
+    # question. Resolved from the unit's readings rather than typed, so a
+    # corrected title reaches the slide with no edit here.
+    reading_order = {r["readingId"]: n for n, r in enumerate(unit.get("readings") or [])}
+    reading_title = {r["readingId"]: (r.get("title") or "") for r in unit.get("readings") or []}
+    factual.sort(key=lambda c: reading_order.get(c.get("readingId"), len(reading_order)))
+
     if len(factual) >= 3:
         items = []
         for c in factual[:6]:
@@ -1039,6 +1054,7 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
                 "opts": [{"t": c["correctAnswer"], "ok": 1}] +
                         [{"t": x["correctAnswer"], "ok": 0} for x in wrong],
                 "why": c.get("explanation") or "",
+                "srcTitle": reading_title.get(c.get("readingId"), ""),
             })
         data["questions"] = items
         i = add("questions", "What happened in the story?", "\U0001F914", "I answered the story questions",

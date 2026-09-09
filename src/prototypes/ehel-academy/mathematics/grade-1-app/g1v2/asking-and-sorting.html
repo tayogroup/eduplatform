@@ -736,6 +736,14 @@
 <script>
 (function () {
 
+  /* SILENT WHILE THE DECK PAINTS. Every renderer draws once at load,
+     because the deck puts all its slides in the DOM at once -- so a step
+     that speaks as it draws speaks on page load, several at a time and
+     over each other. Cleared before show(0, false) below, so only the
+     draw pass is affected. Measured, not assumed: 19 sound attempts on
+     this build before the gate, 0 after. */
+  window.__ehelPainting = true;
+
   (function () {
     if (new URLSearchParams(location.search).get("from") !== "g1") return;
     const wrap = document.querySelector(".wrap");
@@ -1181,7 +1189,8 @@
   })();
 
   /* Every call site in this lesson already says say(...). It now goes to Sonia. */
-  function say(text) { VOICE.speak(text); }
+  /* Silent while the deck paints -- see window.__ehelPainting above. */
+  function say(text) { if (window.__ehelPainting) return; VOICE.speak(text); }
 
   /* ==================================================================
      WHAT SHE SAYS BACK
@@ -2065,6 +2074,7 @@
   }
   $("restart").addEventListener("click", () => location.reload());
 
+  window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);
 
   /* ================= the two header bars =================

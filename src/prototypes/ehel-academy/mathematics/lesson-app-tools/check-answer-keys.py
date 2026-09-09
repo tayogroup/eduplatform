@@ -81,21 +81,40 @@ NEG = re.compile(r"\b(not|no|never|none|neither|nobody|nothing)\b|n't")
 
 
 def plain(s):
-    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]*>", "", str(s)))).strip()
+    # A JS STRING LITERAL'S ESCAPES ARE PART OF THE LITERAL, NOT THE TEXT.
+    # Grade 4 writes `q: "What is 623 − 187?"`, so reading the literal
+    # verbatim gives a question containing the six characters − rather
+    # than a minus sign - no arithmetic rule could match it, and the
+    # unverified list printed the escape, which reads as the terminal quoting
+    # the output rather than as the data itself. That misreading cost a round.
+    s = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), str(s))
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]*>", "", s))).strip()
 
 
 def norm(v):
     """compare answers as values, not as strings: 7 == '7' == 'seven' == '7 sh'"""
     if v is None:
         return None
-    s = plain(v).lower().strip().rstrip(".")
+    s = plain(v).lower().strip().rstrip(".").replace("−", "-")
     # A UNIT FOLLOWS A NUMBER. Without that lookbehind this ate the last
     # letter of any answer ending in one of these: jug -> "ju", dog -> "do",
     # ball -> "bal", small -> "smal". It survived because the prefix test in
     # same() forgives a one-letter truncation on both sides at once - so the
     # comparison agreed for the wrong reason, and a rule returning "jug"
     # against options ["Ruler", "Jug"] found no match at all.
-    s = re.sub(r"(?<=[\d\s])(sh|shillings?|cm|mm|m|kg|g|ml|l)\b\.?$", "", s).strip()
+    # A UNIT FOLLOWS A NUMBER, AND THE WHOLE STRING IS THE TWO OF THEM. The
+    # lookbehind this replaced allowed any space, so widening the list ate the
+    # noun out of "an hour" and "a minute" - which are ANSWERS in the
+    # duration questions, not measurements - and four Grade 2 questions
+    # silently stopped verifying. Anchoring the number makes the rule say what
+    # it means. The list stays a list: stripping any trailing word would
+    # collapse "24 squares" and "24 apples", and two options differing only in
+    # their unit would become one.
+    m = re.fullmatch(r"(-?\d[\d,. ]*?)\s*(?:sh|shillings?|cm|mm|m|kg|g|ml|l"
+                     r"|squares?|degrees?|weeks?|days?|hours?|minutes?|mins?"
+                     r"|seconds?|secs?|months?|years?|cents?|c|°c|°f|°)\.?", s)
+    if m:
+        s = m.group(1).strip()
     if s in WORD:
         return WORD[s]
     # A THOUSANDS SEPARATOR IS PUNCTUATION, NOT A LIST. Grade 4 writes its
@@ -103,8 +122,9 @@ def norm(v):
     # while the arithmetic produced an int and every four-figure answer was
     # reported wrong. The grouping is required strictly - "2, 4, 6" is a
     # sequence and must not collapse into 246.
-    if re.fullmatch(r"-?\d{1,3}(?:,\d{3})+", s):
-        return int(s.replace(",", ""))
+    # a thousands separator is written both ways here: "4,700" and "60 000"
+    if re.fullmatch(r"-?\d{1,3}(?:[, ]\d{3})+", s):
+        return int(s.replace(",", "").replace(" ", ""))
     m = re.fullmatch(r"-?\d+", s)
     return int(m.group(0)) if m else s
 
@@ -604,7 +624,12 @@ def fraction_answer(low, opts):
     if m:
         return pick(opts, fval(m.group(1)), fval)
     # "Which is bigger: 3/4 or 2/4?"
-    m = re.search(r"which is (bigger|larger|smaller|less):?\s*(\d+\s*/\s*\d+)\s*or\s*(\d+\s*/\s*\d+)", low)
+    # "1/2 is the same as which fraction?" - the same question the other way up
+    m = re.search(r"(\d+\s*/\s*\d+) is the same as which fraction", low)
+    if m:
+        return pick(opts, fval(m.group(1)), fval)
+    # a comma may stand where the colon does: "Which is bigger, 1/4 or 1/10?"
+    m = re.search(r"which is (bigger|larger|smaller|less)[:,]?\s*(\d+\s*/\s*\d+)\s*or\s*(\d+\s*/\s*\d+)", low)
     if m:
         a, b = fval(m.group(2)), fval(m.group(3))
         if a is not None and b is not None and a != b:
@@ -617,6 +642,46 @@ def fraction_answer(low, opts):
         a, b = fval(m.group(1)), fval(m.group(3))
         if a is not None and b is not None:
             return pick(opts, a + b if m.group(2) == "+" else a - b, fval)
+    # fractions written in WORDS, which is how Stage 4 asks them
+    m = re.search(r"which is the bigger piece,? an? (\w+) or an? (\w+) of the same", low)
+    if m and m.group(1) in FRACWORD and m.group(2) in FRACWORD:
+        a, b = 1.0 / FRACWORD[m.group(1)], 1.0 / FRACWORD[m.group(2)]
+        if a != b:
+            want = m.group(1) if a > b else m.group(2)
+            hit = [o for o in opts if re.search(r"\b" + want + r"\b", norm(o))]
+            return hit[0] if len(hit) == 1 else None
+    m = re.search(r"what is (\w+) (\w+) add (\w+) (\w+)", low)
+    if m and m.group(2).rstrip("s") + "s" in FRACWORD and isinstance(norm(m.group(1)), int):
+        d = FRACWORD[m.group(2).rstrip("s") + "s"]
+        n1, n3 = norm(m.group(1)), norm(m.group(3))
+        if isinstance(n3, int) and m.group(4).rstrip("s") == m.group(2).rstrip("s"):
+            return pick(opts, (n1 + n3) / d, lambda o: fval(o) if fval(o) is not None
+                        else (norm(o) if isinstance(norm(o), float) else None))
+    # N things shared between M, answered as a fraction
+    m = re.search(r"(\w+) \w+ shared fairly between (\w+)", low)
+    if m and isinstance(norm(m.group(1)), int) and isinstance(norm(m.group(2)), int):
+        n, k = norm(m.group(1)), norm(m.group(2))
+        if k:
+            return pick(opts, n / k, fval)
+    m = re.search(r"which fraction is equivalent to (\w+) (\w+)", low)
+    if m and m.group(2).rstrip("s") + "s" in FRACWORD and isinstance(norm(m.group(1)), int):
+        return pick(opts, norm(m.group(1)) / FRACWORD[m.group(2).rstrip("s") + "s"], fval)
+    # a hundred square IS the percentage
+    m = re.search(r"(\d+) squares? of a hundred square (?:is|are) shaded.*percentage", low)
+    if m:
+        return pick(opts, float(m.group(1)), lambda o: amount(o))
+    # which comparison sign belongs between two fractions in words
+    m = re.search(r"which sign belongs between (\w+) (\w+) and (\w+) (\w+)", low)
+    if m:
+        def wordfrac(a, b):
+            b = b.rstrip("s") + "s"
+            n = norm(a)
+            return n / FRACWORD[b] if b in FRACWORD and isinstance(n, int) else None
+        a, b = wordfrac(m.group(1), m.group(2)), wordfrac(m.group(3), m.group(4))
+        if a is not None and b is not None and a != b:
+            want = "<" if a < b else ">"
+            hit = [o for o in opts if norm(o) == want]
+            return hit[0] if len(hit) == 1 else None
     # equal parts are what make a fraction; unequal pieces make none
     if re.search(r"different sizes.*is one piece a (\w+)", low):
         hit = [o for o in opts if norm(o) in ("no", "not a quarter", "none")]
@@ -882,6 +947,411 @@ def chart_answer(low, opts):
     if m:
         hit = [o for o in opts if norm(o) == "fair"]
         return hit[0] if len(hit) == 1 else None
+    # a spinner split into named fractions: the biggest share comes up most
+    if re.search(r"spinner is .*which colou?r comes up most", low):
+        share = {}
+        for f, c in re.findall(r"an? (half|third|quarter|fifth|tenth) (\w+)", low):
+            share[c] = share.get(c, 0) + 1.0 / FRACWORD[f]
+        for f, c in re.findall(r"\b(half) (\w+)", low):
+            share.setdefault(c, 0.5)
+        if len(share) > 1:
+            top = max(share.values())
+            win = [c for c, v in share.items() if v == top]
+            if len(win) == 1:
+                hit = [o for o in opts if norm(o) == win[0]]
+                return hit[0] if len(hit) == 1 else None
+    # A CARROLL BOX IS TWO CONDITIONS, so the option that satisfies both is the
+    # answer - read from the numbers rather than from the wording.
+    m = re.search(r"carroll diagram box says '(not )?even' and '(not )?more than (\d+)'", low)
+    if m:
+        want_even, want_more, n = not m.group(1), not m.group(2), int(m.group(3))
+        hit = []
+        for o in opts:
+            v = norm(o)
+            if isinstance(v, int) and (v % 2 == 0) == want_even and (v > n) == want_more:
+                hit.append(o)
+        return hit[0] if len(hit) == 1 else None
+    # both conditions true means the overlap of two rings
+    if re.search(r"both .* and .* go on a venn diagram", low) or \
+       re.search(r"both\b.*\band\b.*venn", low):
+        hit = [o for o in opts if re.search(r"middle|overlap|both", norm(o))]
+        return hit[0] if len(hit) == 1 else None
+    # a tally's crossing line, asked the other way round
+    if re.search(r"tally.*line drawn across four marks", low):
+        return pick(opts, 5.0, lambda o: amount(o)) or 5
+    # a pictogram key, both directions
+    m = re.search(r"one picture (?:=|stands for) (\d+) \w+.*how many is half a picture", low)
+    if m and int(m.group(1)) % 2 == 0:
+        return pick(opts, float(int(m.group(1)) // 2), lambda o: amount(o))
+    m = re.search(r"one picture (?:=|stands for) (\d+) (\w+).*how many pictures show (\d+)", low)
+    if m:
+        per, n = int(m.group(1)), int(m.group(3))
+        if per:
+            want = n / per
+            return pick(opts, want, lambda o: fval(o) if fval(o) is not None
+                        else (float(norm(o)) if isinstance(norm(o), int) else None))
+    # LIKELIHOOD FROM THE NUMBERS, not from the wording. An outcome the dice
+    # cannot show is impossible; a 9-in-10 draw is likely.
+    m = re.search(r"(?:rolling a|how likely is a) (\d+).*?(\w+)-sided dice|dice.*how likely is a (\d+)", low)
+    if m:
+        face = int(m.group(1) or m.group(3))
+        sides = norm(m.group(2)) if m.group(2) else 6
+        if not isinstance(sides, int):
+            sides = 6
+        if face > sides:
+            hit = [o for o in opts if re.search(r"impossible|will not happen|cannot happen", norm(o))]
+            return hit[0] if len(hit) == 1 else None
+    if re.search(r"toss a coin.*how likely is heads", low):
+        hit = [o for o in opts if re.search(r"might happen|even chance|equally likely", norm(o))]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"bag holds (\d+) (\w+) counters and (\d+) (\w+).*taking an? \2", low)
+    if m:
+        a, b = int(m.group(1)), int(m.group(3))
+        want = "likely" if a > b else "unlikely" if a < b else "an even chance"
+        hit = [o for o in opts if norm(o) == want]
+        return hit[0] if len(hit) == 1 else None
+    return None
+
+
+# ---------------------------------------------------------------------------
+# STAGE 3 AND 4. Same contract as everything above: derive the value, return
+# the option that carries it, decline when more than one does.
+COMPASS = ["north", "north-east", "east", "south-east",
+           "south", "south-west", "west", "north-west"]
+SYMMETRY = {"square": 4, "rectangle": 2, "oblong": 2, "circle": 99,
+            "equilateral triangle": 3, "isosceles triangle": 1,
+            "parallelogram": 0, "rhombus": 2, "regular pentagon": 5,
+            "regular hexagon": 6, "kite": 1, "scalene triangle": 0}
+CALENDAR = {("months", "year"): 12, ("days", "week"): 7, ("hours", "day"): 24,
+            ("minutes", "hour"): 60, ("seconds", "minute"): 60,
+            ("days", "year"): 365, ("weeks", "year"): 52}
+MONTHNAMES = ["january", "february", "march", "april", "may", "june", "july",
+              "august", "september", "october", "november", "december"]
+MONTHLEN = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+
+def compass_of(s):
+    """the 8-point compass bearing named by a string, or None."""
+    t = norm(s)
+    if not isinstance(t, str):
+        return None
+    t = t.replace("northeast", "north-east").replace("southeast", "south-east")
+    t = t.replace("southwest", "south-west").replace("northwest", "north-west")
+    return t if t in COMPASS else None
+
+
+def stage34_number(low, t, opts):
+    """Stage 3-4 arithmetic, place value and number properties."""
+    # "What is 347 + 185?" - the ladder above wants a trailing "= ?"
+    m = re.search(r"what is\s+(-?\d+)\s*([+\-*/])\s*(\d+)\s*\??$", low)
+    if m and len(nums(t)) == 2:
+        a, op, b = int(m.group(1)), m.group(2), int(m.group(3))
+        if op == "+":
+            return a + b
+        if op == "-":
+            return a - b
+        if op == "*":
+            return a * b
+        if b and a % b == 0:
+            return a // b
+        # a remainder is written out, so let the options say how
+        if b:
+            want = "%d r %d" % (a // b, a % b)
+            # norm() returns an int for a bare number, so str() first
+            hit = [o for o in opts if str(norm(o)).replace("remainder", "r") == want]
+            return hit[0] if len(hit) == 1 else None
+    # a missing addend behind a shape: "If 38 + ? = 62, what is ?"
+    m = re.search(r"if\s+(\d+)\s*\+\s*\W\s*=\s*(\d+)", low)
+    if m:
+        return int(m.group(2)) - int(m.group(1))
+    m = re.search(r"if\s+\W\s*-\s*(\d+)\s*=\s*(\d+)", low)
+    if m:
+        return int(m.group(1)) + int(m.group(2))
+    m = re.search(r"if\s+(\W)\s*\+\s*\1\s*\+\s*\1\s*=\s*(\d+)", low)
+    if m and int(m.group(2)) % 3 == 0:
+        return int(m.group(2)) // 3
+    # what a digit is WORTH: its place value, not the digit
+    m = re.search(r"what is the (\d) worth in (\d+)", low)
+    if m:
+        d, n = m.group(1), m.group(2)
+        if n.count(d) == 1:
+            return int(d) * 10 ** (len(n) - n.index(d) - 1)
+    # negatives: comparison and a fall in temperature
+    m = re.search(r"which is (bigger|larger|smaller|colder|warmer),?\s*(-?\d+)\s*(?:or|and)\s*(-?\d+)", low)
+    if m:
+        a, b = int(m.group(2)), int(m.group(3))
+        if a != b:
+            return max(a, b) if m.group(1) in ("bigger", "larger", "warmer") else min(a, b)
+    m = re.search(r"it is (-?\d+)\s*\W?c and it gets (\d+) degrees (colder|warmer)", low)
+    if m:
+        a, d = int(m.group(1)), int(m.group(2))
+        return a - d if m.group(3) == "colder" else a + d
+    # odd/even algebra, which is a property rather than a sum
+    m = re.search(r"an odd number (added to|take away|minus|plus) an odd number", low)
+    if m:
+        hit = [o for o in opts if norm(o) in ("even", "an even number")]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"an odd number (?:added to|plus) an even number", low)
+    if m:
+        hit = [o for o in opts if norm(o) in ("odd", "an odd number")]
+        return hit[0] if len(hit) == 1 else None
+    if re.search(r"which of these is a square number", low):
+        hit = [o for o in opts if isinstance(norm(o), int)
+               and norm(o) >= 0 and int(norm(o) ** 0.5 + 0.5) ** 2 == norm(o)]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"which of these is a factor pair of (\d+)", low)
+    if m:
+        target, hit = int(m.group(1)), []
+        for o in opts:
+            f = nums(plain(o))
+            if len(f) == 2 and f[0] * f[1] == target:
+                hit.append(o)
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"does (\d+) divide exactly by (\d+)", low)
+    if m:
+        yes = int(m.group(1)) % int(m.group(2)) == 0
+        hit = [o for o in opts if norm(o) == ("yes" if yes else "no")]
+        return hit[0] if len(hit) == 1 else None
+    # "Which list is in order, smallest first?"
+    m = re.search(r"which list is in order,?\s*(smallest|largest|biggest) first", low)
+    if m:
+        want_up = m.group(1) == "smallest"
+        hit = []
+        for o in opts:
+            v = nums(plain(o).replace(",", ""))
+            if len(v) >= 3 and v == (sorted(v) if want_up else sorted(v, reverse=True)):
+                hit.append(o)
+        return hit[0] if len(hit) == 1 else None
+    # "Which of these is the same number as 4,208?"
+    m = re.search(r"which of these is the same number as (\d+)", low)
+    if m:
+        target, hit = int(m.group(1)), []
+        for o in opts:
+            parts = nums(plain(o).replace(",", ""))
+            if parts and sum(parts) == target and "+" in plain(o):
+                hit.append(o)
+        return hit[0] if len(hit) == 1 else None
+    # a square grid growing by one on each side
+    m = re.search(r"how many dots turn a (\d+) by \1 square into a (\d+) by \2 one", low)
+    if m:
+        a, b = int(m.group(1)), int(m.group(2))
+        return b * b - a * a
+    # linear or not: a constant step is linear
+    m = re.search(r"((?:\d+\s*,\s*){2,}\d+)\s*(?:\.{2,}|…)\s*is this (linear|non-linear)", low)
+    if m:
+        seq = nums(m.group(1))
+        d = {seq[i + 1] - seq[i] for i in range(len(seq) - 1)}
+        want = "linear" if len(d) == 1 else "non-linear"
+        hit = [o for o in opts if norm(o).replace("nonlinear", "non-linear") == want]
+        return hit[0] if len(hit) == 1 else None
+    return None
+
+
+def stage34_shape(low, opts):
+    """area, perimeter, symmetry, solids and angles."""
+    m = re.search(r"(\d+) squares? wide and (\d+) (?:squares? )?(?:tall|high).*area", low)
+    if m:
+        return int(m.group(1)) * int(m.group(2))
+    m = re.search(r"(\d+) by (\d+).*perimeter", low)
+    if m:
+        return 2 * (int(m.group(1)) + int(m.group(2)))
+    m = re.search(r"(\d+) squares? wide and (\d+) (?:squares? )?(?:tall|high).*perimeter", low)
+    if m:
+        return 2 * (int(m.group(1)) + int(m.group(2)))
+    # lines of symmetry, with the shape named in whatever words the item uses
+    if re.search(r"lines of symmetry", low):
+        named = [(k, v) for k, v in SYMMETRY.items() if re.search(r"\b" + k + r"\b", low)]
+        if named:
+            k, v = max(named, key=lambda kv: len(kv[0]))     # prefer the longest name
+            if re.search(r"not a square", low) and k == "rectangle":
+                pass                                          # the aside confirms it
+            return v if v != 99 else None
+    # a solid named by more than one word
+    m = re.search(r"how many (?:flat )?(faces|edges|corners|vertices) does an? ([\w -]+?) have", low)
+    if m:
+        want = m.group(1).replace("vertices", "corners")
+        for name, (f, e, c) in SOLIDS.items():
+            if re.search(r"\b" + name + r"\b", m.group(2)):
+                return {"faces": f, "edges": e, "corners": c}[want]
+    if re.search(r"two circular faces and a curved surface", low):
+        hit = [o for o in opts if norm(o) == "cylinder"]
+        return hit[0] if len(hit) == 1 else None
+    if re.search(r"six squares in a cross fold up", low):
+        hit = [o for o in opts if norm(o) == "cube"]
+        return hit[0] if len(hit) == 1 else None
+    # right angles make a straight line, and a quarter turn is one of them
+    m = re.search(r"how many right angles make a (straight line|full turn|whole turn)", low)
+    if m:
+        return 2 if m.group(1) == "straight line" else 4
+    # counting the squares a shape covers is what AREA means
+    if re.search(r"covers \d+ squares on a grid.*what is that called", low):
+        hit = [o for o in opts if norm(o) in ("area", "its area", "the area")]
+        return hit[0] if len(hit) == 1 else None
+    # a reflection is congruent
+    if re.search(r"reflected in a mirror line.*what happens to its size", low):
+        hit = [o for o in opts if re.search(r"stays the same|same size|does not change|unchanged", norm(o))]
+        return hit[0] if len(hit) == 1 else None
+    if re.search(r"look different but each has half shaded.*is the shaded amount the same", low):
+        hit = [o for o in opts if norm(o) in ("yes", 1) or str(norm(o)).startswith("yes")]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"an angle of (\d+)", low)
+    if m:
+        a = int(m.group(1))
+        want = ("acute" if a < 90 else "a right angle" if a == 90
+                else "obtuse" if a < 180 else "reflex")
+        hit = [o for o in opts if want in norm(o)]
+        return hit[0] if len(hit) == 1 else None
+    # a scale divided into equal parts
+    m = re.search(r"marked every (\d+) (\w+) with (\w+) small marks between.*one small mark", low)
+    if m and isinstance(norm(m.group(3)), int):
+        step, parts = int(m.group(1)), norm(m.group(3)) + 1
+        if step % parts == 0:
+            return pick(opts, float(step // parts), lambda o: amount(o)) or step // parts
+    return None
+
+
+def stage34_place(low, opts):
+    """the compass, coordinates and turns at Stage 3-4."""
+    m = re.search(r"opposite of (\w+(?:-\w+)?)", low)
+    c = compass_of(m.group(1)) if m else None
+    if c:
+        return COMPASS[(COMPASS.index(c) + 4) % 8]
+    m = re.search(r"fac(?:ing|e) (\w+(?:-\w+)?)[, ].*(quarter|half) turn (clockwise|anticlockwise|to your right|to your left|right|left)", low)
+    if not m:
+        m = re.search(r"fac(?:ing|e) (\w+(?:-\w+)?) and you turn to your (right|left)", low)
+        if m:
+            c = compass_of(m.group(1))
+            if c:
+                step = 2 if m.group(2) == "right" else -2
+                return COMPASS[(COMPASS.index(c) + step) % 8]
+    else:
+        c = compass_of(m.group(1))
+        if c:
+            quarters = 1 if m.group(2) == "quarter" else 2
+            back = m.group(3) in ("anticlockwise", "to your left", "left")
+            step = quarters * 2 * (-1 if back else 1)
+            return COMPASS[(COMPASS.index(c) + step) % 8]
+    m = re.search(r"which point lies between (\w+) and (\w+)", low)
+    if m:
+        a, b = compass_of(m.group(1)), compass_of(m.group(2))
+        if a and b:
+            ia, ib = COMPASS.index(a), COMPASS.index(b)
+            mid = COMPASS[(ia + ((ib - ia) % 8) // 2) % 8]
+            hit = [o for o in opts if compass_of(o) == mid]
+            return hit[0] if len(hit) == 1 else None
+    if re.search(r"ordinal point of the compass", low):
+        hit = [o for o in opts if compass_of(o) in COMPASS[1::2]]
+        return hit[0] if len(hit) == 1 else None
+    # coordinates
+    m = re.search(r"in the coordinates \((\d+),\s*(\d+)\), what does the (\d+) tell you", low)
+    if m:
+        which = "across" if m.group(3) == m.group(1) else "up"
+        hit = [o for o in opts if which in norm(o)]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"is \((\d+),\s*(\d+)\) the same place as \((\d+),\s*(\d+)\)", low)
+    if m:
+        same_pt = (m.group(1), m.group(2)) == (m.group(3), m.group(4))
+        hit = [o for o in opts if norm(o) == ("yes" if same_pt else "no")]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"go (\d+) (east|west|north|south) then (\d+) (east|west|north|south).*how far (east|west|north|south)", low)
+    if m:
+        legs = {m.group(2): int(m.group(1)), m.group(4): int(m.group(3))}
+        return legs.get(m.group(5))
+    return None
+
+
+def stage34_time(low, opts):
+    """24-hour time, durations in hours and minutes, and the calendar."""
+    m = re.search(r"how many (\w+) (?:are there |are )?in (\d+) (\w+?)s?\b", low)
+    if m:
+        n = int(m.group(2))
+        r = CALENDAR.get((m.group(1), m.group(3)))
+        if r:
+            return n * r
+    m = re.search(r"how many (\w+?)s? is (\d+) (\w+)", low)
+    if m:
+        r = CALENDAR.get((m.group(3), m.group(1)))
+        if r and int(m.group(2)) % r == 0:
+            return int(m.group(2)) // r
+    # 12-hour to 24-hour and back
+    m = re.search(r"(\d+):(\d+)\s*(am|pm).*24-hour|24-hour.*?(\d+):(\d+)\s*(am|pm)", low)
+    if m:
+        g = [x for x in m.groups() if x is not None]
+        h, mins, ap = int(g[0]), int(g[1]), g[2]
+        h24 = (0 if h == 12 else h) if ap == "am" else (12 if h == 12 else h + 12)
+        want = "%02d:%02d" % (h24, mins)
+        hit = [o for o in opts if norm(o).replace(" ", "") == want]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"12-hour.*?(\d{1,2}):(\d{2})|(\d{1,2}):(\d{2}).*12-hour", low)
+    if m:
+        g = [x for x in m.groups() if x is not None]
+        h, mins = int(g[0]), int(g[1])
+        ap = "am" if h < 12 else "pm"
+        h12 = h % 12 or 12
+        want = "%d:%02d %s" % (h12, mins, ap)
+        hit = [o for o in opts if norm(o) == want]
+        return hit[0] if len(hit) == 1 else None
+    # a duration that is not a whole number of hours
+    m = re.search(r"(?:starts|leaves) at (\d+):(\d+).*?(?:ends|arrives) at (\d+):(\d+)", low)
+    if m:
+        a = int(m.group(1)) * 60 + int(m.group(2))
+        b = int(m.group(3)) * 60 + int(m.group(4))
+        if b > a:
+            d = b - a
+            forms = {"%d min" % d, "%d minutes" % d}
+            if d >= 60:
+                forms |= {"%d h %d min" % (d // 60, d % 60),
+                          "%d hours %d minutes" % (d // 60, d % 60),
+                          "%d hour %d min" % (d // 60, d % 60)}
+            if d % 60 == 0:
+                forms |= {"%d hours" % (d // 60), "%d h" % (d // 60)}
+            hit = [o for o in opts if norm(o) in forms]
+            return hit[0] if len(hit) == 1 else None
+    # dates within one year
+    m = re.search(r"from (\d+) (\w+) to (\d+) \2 is how many weeks", low)
+    if m:
+        days = int(m.group(3)) - int(m.group(1))
+        if days > 0 and days % 7 == 0:
+            return days // 7
+    m = re.search(r"it is (\d+) (\w+)\. what is the date (\d+) days later", low)
+    if m and m.group(2) in MONTHNAMES:
+        mi = MONTHNAMES.index(m.group(2))
+        d = int(m.group(1)) + int(m.group(3))
+        if d > MONTHLEN[mi]:
+            d -= MONTHLEN[mi]
+            mi = (mi + 1) % 12
+        want = "%d %s" % (d, MONTHNAMES[mi])
+        hit = [o for o in opts if norm(o) == want]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"how many months from (\w+) (\d{4}) to (\w+) (\d{4})", low)
+    if m and m.group(1) in MONTHNAMES and m.group(3) in MONTHNAMES:
+        a = int(m.group(2)) * 12 + MONTHNAMES.index(m.group(1))
+        b = int(m.group(4)) * 12 + MONTHNAMES.index(m.group(3))
+        return b - a
+    # at half past, the hour hand has moved halfway to the NEXT hour
+    m = re.search(r"at half past (\d+), where is the hour hand", low)
+    if m:
+        h = int(m.group(1))
+        nxt = h + 1 if h < 12 else 1
+        hit = [o for o in opts if re.search(r"between %d and %d" % (h, nxt), norm(o))]
+        return hit[0] if len(hit) == 1 else None
+    # the hands, when the hour hand sits between two numbers
+    m = re.search(r"short hand is between (\d+) and (\d+), and the long hand points at (\d+)", low)
+    if m:
+        h, mins = int(m.group(1)), int(m.group(3)) * 5
+        want = "%d:%02d" % (h, mins)
+        hit = [o for o in opts if norm(o).replace(" ", "") == want]
+        return hit[0] if len(hit) == 1 else None
+    # the latest departure that still arrives in time
+    m = re.search(r"at ((?:\d+:\d+[,\s]*(?:and\s*)?)+).*by (\d+):(\d+)", low)
+    if m and re.search(r"must be there|latest", low):
+        deadline = int(m.group(2)) * 60 + int(m.group(3))
+        times = re.findall(r"(\d+):(\d+)", m.group(1))
+        ok = [h + ":" + mm for h, mm in times if int(h) * 60 + int(mm) <= deadline]
+        if ok:
+            want = ok[-1]
+            hit = [o for o in opts if norm(o).replace(" ", "") == want]
+            return hit[0] if len(hit) == 1 else None
     return None
 
 
@@ -1045,8 +1515,13 @@ def harvest(js):
                     and literal_run(body)):
                 generated += 1
                 continue
-            opts = split_top(body)
-            key = a.group(1).strip('"')
+            # plain() HERE, not at each use: the options carry the same JS
+            # escapes the question does, so a raw option compares against a
+            # decoded answer and never matches - and the escape then printed
+            # into the WRONG report, where it reads as a tooling artefact
+            # rather than as the data.
+            opts = [plain(x) for x in split_top(body)]
+            key = plain(a.group(1).strip('"'))
             if om.group(1) == "o":
                 # THE KEY IS AN INDEX HERE, NOT A VALUE. Grade 4 writes
                 # `o: [...], a: 0`, and a wrong index is exactly the mis-bound
@@ -1082,7 +1557,13 @@ def nums(t):
 
 def expected(q, opts, item, js=""):
     """the answer, when it can be derived; else None. Conservative by design."""
-    t = plain(q).replace("−", "-").replace("×", "*")
+    t = plain(q).replace("−", "-").replace("×", "*").replace("÷", "/")
+    # A THOUSANDS SEPARATOR IS PART OF THE NUMBER. Stage 4 writes "3,406" and
+    # "1,240, 1,290, 1,340", which nums() read as 3 and 406, and as six numbers
+    # rather than three - so every rule downstream saw the wrong arithmetic.
+    # Merged only for a comma sitting between digits with exactly three after
+    # it, so the sequence "2, 4, 6" is untouched.
+    t = re.sub(r"(?<=\d),(?=\d{3}(?!\d))", "", t)
     low = t.lower()
     # ESTIMATING IS EXCLUDED; ROUNDING IS NOT. The guard exists because
     # "Estimate 3,872 + 5,145 to the nearest thousand" keys 9,000 on purpose
@@ -1189,13 +1670,15 @@ def expected(q, opts, item, js=""):
     if got is not None:
         return got
     for rule in (money_answer, fraction_answer, units_answer,
-                 clock_answer, turn_answer, chart_answer):
+                 clock_answer, turn_answer, chart_answer,
+                 stage34_shape, stage34_place, stage34_time):
         got = rule(low, opts)
         if got is not None:
             return got
-    got = pattern_answer(low, t, opts)
-    if got is not None:
-        return got
+    for rule in (pattern_answer, stage34_number):
+        got = rule(low, t, opts)
+        if got is not None:
+            return got
     if picn is not None and re.search(r"^how many\b", low) and not nums(t):
         return picn                                   # "How many counters?" + pic: N
     if re.search(r"\bno .* left\b|are none left", low) and re.search(r"which number", low):

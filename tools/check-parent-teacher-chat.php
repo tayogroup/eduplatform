@@ -272,9 +272,73 @@ if ($pboard === false || $plib === false || $pdata === false) {
 $pboardlive = live_code($pboard);
 $pliblive = live_code($plib);
 $pdatalive = live_code($pdata);
-check('the parent rail links to it',
-    preg_match('~pqh-gnav__label">Parent board<~', $dash) === 1
+// THE RAIL IS RUN, NOT GREPPED.
+//
+// The previous assertion here was `preg_match('~pqh-gnav__label">Parent
+// board<~', $dash) === 1`, and it passed for a day over an entry that rendered
+// for NOBODY: the `if ($role === 'parent')` had been opened inside
+// `elseif ($role === 'teacher')`, so it was only ever evaluated when the role
+// was teacher, when it is false by construction. The label was in the file.
+// That is a true fact about the bytes and no fact at all about the page --
+// presence standing in for position, which is the fault this gate's own
+// mutations have now found ten times.
+//
+// So this extracts the <nav> region, keeps every control-flow line VERBATIM
+// (the branching is therefore the real thing, not a model of it), replaces
+// each label with an echo, and runs it per role.
+function pqpb_rail_labels(string $dash, string $role, bool $child): array {
+    $lines = explode("\n", $dash);
+    $a = null; $b = null;
+    foreach ($lines as $i => $l) {
+        if ($a === null && strpos($l, 'class="pqh-gnav"') !== false) { $a = $i; continue; }
+        if ($a !== null && trim($l) === '</nav>') { $b = $i; break; }
+    }
+    if ($a === null || $b === null) { return []; }
+    $out = [];
+    foreach (array_slice($lines, $a, $b - $a + 1) as $l) {
+        $t = trim($l);
+        if (preg_match('~^<\?php\s*(if|elseif|else|endif)\b~', $t)
+                || preg_match('~^(if|elseif|else|endif)\b.*\?>$~', $t)
+                || preg_match('~^<\?php\s*//~', $t)
+                || preg_match('~^//~', $t)) {
+            $out[] = $l;                      // verbatim
+        } else if (preg_match('~pqh-gnav__label">([^<]+)<~', $l, $m)) {
+            $out[] = '<?php echo ' . var_export(html_entity_decode($m[1]) . "\n", true) . '; ?>';
+        }
+    }
+    $code = '$role = ' . var_export($role, true) . '; $selectedchild = '
+        . ($child ? "['studentid' => 1]" : 'null') . '; ?>' . "\n" . implode("\n", $out);
+    ob_start();
+    try {
+        eval($code);
+    } catch (Throwable $e) {
+        ob_end_clean();
+        return ['__ERROR__'];
+    }
+    $txt = (string)ob_get_clean();
+    return array_values(array_filter(array_map('trim', explode("\n", $txt)), 'strlen'));
+}
+$pqpbparentrail = pqpb_rail_labels($dash, 'parent', true);
+// A reduction that produced nothing would make every assertion below vacuously
+// true, so prove the harness works before trusting what it says.
+if (!in_array('Courses', $pqpbparentrail, true)) {
+    fwrite(STDERR, "cannot run the dashboard rail (extracted " . count($pqpbparentrail) . " entries)\n");
+    exit(2);
+}
+check('the parent RAIL actually renders it',
+    in_array('Parent board', $pqpbparentrail, true)
         && strpos($dash, '/local/hubredirect/parent_board.php') !== false);
+// The board answers for the whole family and says so when there is nobody in
+// it yet, so the route must not wait on a child being linked.
+check('  including for a parent with no child linked yet',
+    in_array('Parent board', pqpb_rail_labels($dash, 'parent', false), true));
+// It sits where the teacher's Group Board sits: the entry used DURING a lesson.
+check('  directly under Live Classes, the Group Board slot',
+    array_search('Parent board', $pqpbparentrail, true)
+        === array_search('Live Classes', $pqpbparentrail, true) + 1);
+check('  and no other role\'s rail grew one',
+    !in_array('Parent board', pqpb_rail_labels($dash, 'student', true), true)
+        && !in_array('Parent board', pqpb_rail_labels($dash, 'admin', true), true));
 // AND the body, because a rail entry is one route and the owner asked for the
 // card too. Both are asserted separately: with a single "does the path appear"
 // check, deleting either one leaves the other and the gate still passes —

@@ -1134,10 +1134,15 @@ def chart_answer(low, opts):
             if isinstance(v, int) and (v % 2 == 0) == want_even and (v > n) == want_more:
                 hit.append(o)
         return hit[0] if len(hit) == 1 else None
-    # both conditions true means the overlap of two rings
+    # BOTH CONDITIONS TRUE MEANS THE OVERLAP OF TWO RINGS. The filter said
+    # "middle|overlap|both", and bare "both" also matched the DISTRACTOR
+    # "outside both hoops" - so two options matched, the rule declined, and it
+    # read as a question nothing could answer rather than as a filter that was
+    # too loose. "in both" is the wording that means the overlap; "outside
+    # both" is its opposite and must not match it.
     if re.search(r"both .* and .* go on a venn diagram", low) or \
        re.search(r"both\b.*\band\b.*venn", low):
-        hit = [o for o in opts if re.search(r"middle|overlap|both", norm(o))]
+        hit = [o for o in opts if re.search(r"middle|overlap|in both", str(norm(o)))]
         return hit[0] if len(hit) == 1 else None
     # a tally's crossing line, asked the other way round
     if re.search(r"tally.*line drawn across four marks", low):

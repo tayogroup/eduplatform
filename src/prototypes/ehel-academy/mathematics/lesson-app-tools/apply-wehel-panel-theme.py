@@ -28,8 +28,14 @@ def theme() -> str:
 
 def apply(path: str, block: str, dry: bool) -> str:
     s = io.open(path, encoding="utf-8", newline="").read()
-    if "wire-platform-controls.py" not in s:
-        return "not wired"
+    # ASK WHETHER THE PAGE HAS THE CONTROLS, not whether this tool wrote them.
+    # The first version tested for the wiring tool's own marker, and reported
+    # "not wired" for all eight Grade 1 Mathematics pages -- which carry the
+    # dock, the drawer, the toast and both module imports, under an older
+    # hand-written comment that predates the marker. The precondition that
+    # actually matters is the anchor this tool needs, so test for that.
+    if ".w-toast {" not in s:
+        return "no tutor controls on this page"
     if START in s:
         a = s.rfind("\n", 0, s.index(START)) + 1
         b = s.index(END, a) + len(END) + 1

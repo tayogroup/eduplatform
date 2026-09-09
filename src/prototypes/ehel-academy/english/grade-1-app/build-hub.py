@@ -146,12 +146,20 @@ PAGE = """<!doctype html>
     .eh-year { flex: 0 0 auto; max-width: none; padding: 5px 6px; } }
   @media (max-width: 620px) { .eh-year { display: none; } }
 
-  /* the focus light: emitted empty and hidden, painted by shared/seb-session.js */
-  .eh-focus { width: 14px; height: 14px; border-radius: 999px; flex: 0 0 auto; display: block;
-    box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
-  .eh-focus.is-ok { background: var(--good, #3E9C63); }
-  .eh-focus.is-warn { background: var(--gold, #E8B84B); }
-  .eh-focus.is-bad { background: var(--bad, #D7584B); }
+  /* the focus chip: emitted empty and hidden, painted by shared/seb-session.js.
+     A PILL with a word, not a bare dot - the dot-only version measured perfectly
+     and could not be found on the page, and colour alone says nothing to anyone
+     who cannot separate red from green. */
+  .eh-focus { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+    border-radius: 999px; padding: 5px 12px 5px 9px; white-space: nowrap;
+    font-size: 12.5px; font-weight: 800; }
+  .eh-focus i { width: 9px; height: 9px; border-radius: 999px; background: currentColor; display: block; }
+  .eh-focus.is-ok { background: var(--good, #3E9C63); color: var(--good-ink, #06231F); }
+  .eh-focus.is-warn { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
+  .eh-focus.is-bad { background: var(--bad, #D7584B); color: var(--bad-ink, #2A0A07); }
+  .eh-focus b { font-weight: 800; }
+  @media (max-width: 620px) { .eh-focus b { display: none; }
+    .eh-focus { padding: 6px; gap: 0; } .eh-focus i { width: 11px; height: 11px; } }
 </style>
 
 <script type="module">import "./seb-session.js";</script>

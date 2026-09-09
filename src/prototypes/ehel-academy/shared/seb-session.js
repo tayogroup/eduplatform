@@ -493,10 +493,22 @@ function mountFocusMode(p, bar) {
   // The hub and the lesson pages both put one there when focusMode is on, and
   // any page without one simply has no light — the rule that a control which
   // says nothing is better absent than present and meaningless.
+  // IT CARRIES A WORD, not just a colour. The first version was a bare 14px
+  // dot and the owner could not find it on the page it had just shipped to —
+  // correct in every measurement and invisible to a person, which is the only
+  // test that counts. A colour alone also fails anyone who cannot separate red
+  // from green, and this is the one control on the bar whose whole job is to be
+  // noticed. The label is the count once there is one to show.
+  const FOCUS_LABEL = (n) => (n === 0 ? "Focus" : "Left " + n + "×");
   const paintLight = () => {
     document.querySelectorAll("#ehFocus").forEach((el) => {
       el.hidden = false;
       el.className = "eh-focus is-" + FOCUS_STATE(breaks);
+      // the label is our own text and a number, never anything a learner typed
+      // the word goes in its own element so a narrow bar can drop it and keep
+      // the dot: at 375px the chip's full width crushed the unit progress bar
+      // from 108px to 21px, and that bar is the one about the work in hand
+      el.innerHTML = "<i></i><b>" + FOCUS_LABEL(breaks) + "</b>";
       el.title = FOCUS_WORDS(breaks);
       el.setAttribute("aria-label", "Focus: " + FOCUS_WORDS(breaks));
     });

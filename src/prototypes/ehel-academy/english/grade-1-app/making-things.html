@@ -794,14 +794,22 @@
     border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
   .eh-icon { width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line); background: var(--card);
     color: var(--ink); font-size: 17px; cursor: pointer; }
-  /* The focus light. Emitted empty and hidden; shared/seb-session.js unhides it
-     and sets is-ok / is-warn / is-bad, because that file owns the thresholds.
-     A page without focus mode never shows it at all. */
-  .eh-focus { width: 14px; height: 14px; border-radius: 999px; flex: 0 0 auto; display: block;
-    box-shadow: 0 0 0 3px rgba(255,255,255,.06); }
-  .eh-focus.is-ok { background: var(--good, #3E9C63); }
-  .eh-focus.is-warn { background: var(--gold, #E8B84B); }
-  .eh-focus.is-bad { background: var(--bad, #D7584B); }
+  /* The focus chip. Emitted empty and hidden; shared/seb-session.js unhides it,
+     writes the dot and the word, and sets is-ok / is-warn / is-bad, because that
+     file owns the thresholds. A page without focus mode never shows it at all.
+     It is a PILL with a label, not a bare dot: the dot-only version measured
+     perfectly and could not be found on the page, and colour alone says nothing
+     to anyone who cannot separate red from green. */
+  .eh-focus { display: inline-flex; align-items: center; gap: 7px; flex: 0 0 auto;
+    border-radius: 999px; padding: 5px 12px 5px 9px; white-space: nowrap;
+    font-size: 12.5px; font-weight: 800; }
+  .eh-focus i { width: 9px; height: 9px; border-radius: 999px; background: currentColor; display: block; }
+  .eh-focus.is-ok { background: var(--good, #3E9C63); color: var(--good-ink, #06231F); }
+  .eh-focus.is-warn { background: var(--gold, #E8B84B); color: var(--gold-ink, #2A1F05); }
+  .eh-focus.is-bad { background: var(--bad, #D7584B); color: var(--bad-ink, #2A0A07); }
+  .eh-focus b { font-weight: 800; }
+  @media (max-width: 620px) { .eh-focus b { display: none; }
+    .eh-focus { padding: 6px; gap: 0; } .eh-focus i { width: 11px; height: 11px; } }
   .eh-icon[aria-pressed="true"] { background: var(--cell); color: var(--muted); text-decoration: line-through; }
   .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
     background: var(--teal); color: var(--teal-ink, #06231F); font: inherit; font-size: 15px; font-weight: 700; padding: 9px 15px;

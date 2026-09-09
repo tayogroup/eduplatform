@@ -528,7 +528,12 @@ def facts_answer(low, opts):
 # then return the one option that carries that value, and decline when more
 # than one does. Same shape as the no-corners and equal-columns rules.
 FRACWORD = {"half": 2, "halves": 2, "third": 3, "thirds": 3, "quarter": 4,
-            "quarters": 4, "fifth": 5, "fifths": 5, "tenth": 10, "tenths": 10}
+            "quarters": 4, "fifth": 5, "fifths": 5, "sixth": 6, "sixths": 6,
+            "eighth": 8, "eighths": 8, "ninth": 9, "ninths": 9,
+            "tenth": 10, "tenths": 10, "twelfth": 12, "twelfths": 12,
+            "hundredth": 100, "hundredths": 100}
+PLACE = {"ones": 1, "units": 1, "tens": 10, "hundreds": 100,
+         "thousands": 1000, "ten thousands": 10000}
 
 
 def fval(s):
@@ -552,8 +557,27 @@ def fval(s):
         total, seen = total + n / d, True
     if seen:
         return total
+    # GRADE 4 WRITES ITS OPTIONS IN WORDS - "Six eighths", "Four and a half",
+    # "Fifty hundredths" - so a reader that only knows figures matches none of
+    # them and every word-fraction rule declines in silence.
+    m = re.fullmatch(r"(\w+) and (?:a|one) (" + "|".join(FRACWORD) + r")", t)
+    if m and isinstance(norm(m.group(1)), int):
+        return norm(m.group(1)) + 1.0 / FRACWORD[m.group(2)]
+    m = re.fullmatch(r"(\w+)\s+(" + "|".join(FRACWORD) + r")", t)
+    if m:
+        k = norm(m.group(1))
+        if isinstance(k, int):
+            return k / FRACWORD[m.group(2)]
     m = re.fullmatch(r"(?:one|1|a|an)?\s*(" + "|".join(FRACWORD) + r")", t)
-    return 1.0 / FRACWORD[m.group(1)] if m else None
+    if m:
+        return 1.0 / FRACWORD[m.group(1)]
+    # a bare number word, so "Nine" can be compared with 9
+    n = norm(t)
+    if isinstance(n, int):
+        return float(n)
+    # a percentage IS a fraction of a hundred
+    m = re.fullmatch(r"(\d+(?:\.\d+)?)\s*%", t)
+    return float(m.group(1)) / 100 if m else None
 
 
 def pick(opts, want, read):
@@ -568,6 +592,26 @@ def amount(s):
     """the leading amount of an option like "80 sh", "100 c", "50 + 20"."""
     n = nums(plain(s))
     return float(n[0]) if n else None
+
+
+def minutes_of(s):
+    """an option read as a number of MINUTES, however it is spelled.
+
+    "45 minutes", "2 h 25 min", "1 hour 45 min", "2 hours" all resolve; a
+    string with no time in it does not, so an option list of something else
+    simply fails to match rather than matching by accident.
+    """
+    t = plain(s).lower()
+    total, seen = 0, False
+    m = re.search(r"(\d+)\s*(?:h\b|hours?\b)", t)
+    if m:
+        total, seen = total + int(m.group(1)) * 60, True
+    m = re.search(r"(\d+)\s*(?:min\b|mins\b|minutes?\b)", t)
+    if m:
+        total, seen = total + int(m.group(1)), True
+    if seen:
+        return float(total)
+    return None
 
 
 def money_answer(low, opts):
@@ -767,6 +811,18 @@ def fraction_answer(low, opts):
             want = "<" if a < b else ">"
             hit = [o for o in opts if norm(o) == want]
             return hit[0] if len(hit) == 1 else None
+    # THE ODD ONE OUT. "Half of a hundred square is shaded. Which of these is
+    # NOT another name for it?" is answered by the option that does NOT equal
+    # the value - so the derivation is the same one, read the other way. It
+    # needs exactly one mismatch, or the question has more than one answer.
+    m = re.search(r"(half|a half|third|quarter|fifth|tenth) of a hundred square is shaded"
+                  r".*which of these is not another name", low)
+    if m:
+        want = 1.0 / FRACWORD[m.group(1).replace("a ", "")]
+        odd = [o for o in opts if fval(o) is not None and abs(fval(o) - want) > 1e-9]
+        unreadable = [o for o in opts if fval(o) is None]
+        if len(odd) == 1 and not unreadable:
+            return odd[0]
     # equal parts are what make a fraction; unequal pieces make none
     if re.search(r"different sizes.*is one piece a (\w+)", low):
         hit = [o for o in opts if norm(o) in ("no", "not a quarter", "none")]
@@ -1137,13 +1193,23 @@ MONTHNAMES = ["january", "february", "march", "april", "may", "june", "july",
 MONTHLEN = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 
+COMPASS_ABBR = {"n": "north", "ne": "north-east", "e": "east", "se": "south-east",
+                "s": "south", "sw": "south-west", "w": "west", "nw": "north-west"}
+
+
 def compass_of(s):
-    """the 8-point compass bearing named by a string, or None."""
+    """the 8-point compass bearing named by a string, or None.
+
+    The ABBREVIATIONS are how Grade 4 writes its options - "SW", "SE", "NW" -
+    so a reader that only knows the spelled-out names matches none of them.
+    """
     t = norm(s)
     if not isinstance(t, str):
         return None
     t = t.replace("northeast", "north-east").replace("southeast", "south-east")
     t = t.replace("southwest", "south-west").replace("northwest", "north-west")
+    if t in COMPASS_ABBR:
+        return COMPASS_ABBR[t]
     return t if t in COMPASS else None
 
 
@@ -1225,17 +1291,28 @@ def stage34_number(low, t, opts):
         want_up = m.group(1) == "smallest"
         hit = []
         for o in opts:
-            v = nums(plain(o).replace(",", ""))
+            # SIGNED, because the lesson is about negatives: nums() drops the
+            # minus, so "-8, -3, 0, 5" read as 8, 3, 0, 5 and the correctly
+            # ordered option looked unsorted.
+            txt = plain(o).replace("−", "-").replace(",", " ")
+            v = [int(x) for x in re.findall(r"-?\d+", txt)]
             if len(v) >= 3 and v == (sorted(v) if want_up else sorted(v, reverse=True)):
                 hit.append(o)
         return hit[0] if len(hit) == 1 else None
-    # "Which of these is the same number as 4,208?"
+    # "Which of these is the same number as 4,208?" - the options are written
+    # as PLACE VALUE ("3 thousands, 12 hundreds, 0 tens, 8 ones"), which is the
+    # point: the digits need not match, the value must. A "+" was required
+    # before, and none of these carry one.
     m = re.search(r"which of these is the same number as (\d+)", low)
     if m:
         target, hit = int(m.group(1)), []
         for o in opts:
-            parts = nums(plain(o).replace(",", ""))
-            if parts and sum(parts) == target and "+" in plain(o):
+            txt = plain(o).lower()
+            places = re.findall(r"(\d+)\s+(ten thousands|thousands|hundreds|tens|ones|units)", txt)
+            if places:
+                if sum(int(n) * PLACE[p] for n, p in places) == target:
+                    hit.append(o)
+            elif "+" in txt and sum(nums(txt.replace(",", ""))) == target:
                 hit.append(o)
         return hit[0] if len(hit) == 1 else None
     # a square grid growing by one on each side
@@ -1281,10 +1358,10 @@ def stage34_shape(low, opts):
             if re.search(r"\b" + name + r"\b", m.group(2)):
                 return {"faces": f, "edges": e, "corners": c}[want]
     if re.search(r"two circular faces and a curved surface", low):
-        hit = [o for o in opts if norm(o) == "cylinder"]
+        hit = [o for o in opts if re.search(r"\bcylinder\b", str(norm(o)))]
         return hit[0] if len(hit) == 1 else None
     if re.search(r"six squares in a cross fold up", low):
-        hit = [o for o in opts if norm(o) == "cube"]
+        hit = [o for o in opts if re.search(r"\bcube\b", str(norm(o)))]
         return hit[0] if len(hit) == 1 else None
     # right angles make a straight line, and a quarter turn is one of them
     m = re.search(r"how many right angles make a (straight line|full turn|whole turn)", low)
@@ -1317,7 +1394,7 @@ def stage34_shape(low, opts):
         hit = [o for o in opts if want in norm(o)]
         return hit[0] if len(hit) == 1 else None
     # a scale divided into equal parts
-    m = re.search(r"marked every (\d+) (\w+) with (\w+) small marks between.*one small mark", low)
+    m = re.search(r"marked every (\d+) (\w+) with (\w+) small marks between.*one small (?:mark|step)", low)
     if m and isinstance(norm(m.group(3)), int):
         step, parts = int(m.group(1)), norm(m.group(3)) + 1
         if step % parts == 0:
@@ -1360,8 +1437,8 @@ def stage34_place(low, opts):
     # coordinates
     m = re.search(r"in the coordinates \((\d+),\s*(\d+)\), what does the (\d+) tell you", low)
     if m:
-        which = "across" if m.group(3) == m.group(1) else "up"
-        hit = [o for o in opts if which in norm(o)]
+        which = r"across|along" if m.group(3) == m.group(1) else r"\bup\b"
+        hit = [o for o in opts if re.search(which, str(norm(o)))]
         return hit[0] if len(hit) == 1 else None
     m = re.search(r"is \((\d+),\s*(\d+)\) the same place as \((\d+),\s*(\d+)\)", low)
     if m:
@@ -1372,6 +1449,19 @@ def stage34_place(low, opts):
     if m:
         legs = {m.group(2): int(m.group(1)), m.group(4): int(m.group(3))}
         return legs.get(m.group(5))
+    # THE OTHER TWO CORNERS OF AN AXIS-ALIGNED RECTANGLE are the two mixed
+    # pairs: opposite corners (1,1) and (4,3) give (4,1) and (1,3).
+    m = re.search(r"rectangle has corners at \((\d+),\s*(\d+)\) and \((\d+),\s*(\d+)\)"
+                  r".*what are the other two", low)
+    if m:
+        x1, y1, x2, y2 = (int(g) for g in m.groups())
+        want = {(x2, y1), (x1, y2)}
+        hit = []
+        for o in opts:
+            pts = {(int(a), int(b)) for a, b in re.findall(r"\((\d+),\s*(\d+)\)", plain(o))}
+            if pts == want:
+                hit.append(o)
+        return hit[0] if len(hit) == 1 else None
     return None
 
 
@@ -1412,16 +1502,13 @@ def stage34_time(low, opts):
         a = int(m.group(1)) * 60 + int(m.group(2))
         b = int(m.group(3)) * 60 + int(m.group(4))
         if b > a:
-            d = b - a
-            forms = {"%d min" % d, "%d minutes" % d}
-            if d >= 60:
-                forms |= {"%d h %d min" % (d // 60, d % 60),
-                          "%d hours %d minutes" % (d // 60, d % 60),
-                          "%d hour %d min" % (d // 60, d % 60)}
-            if d % 60 == 0:
-                forms |= {"%d hours" % (d // 60), "%d h" % (d // 60)}
-            hit = [o for o in opts if norm(o) in forms]
-            return hit[0] if len(hit) == 1 else None
+            # COMPARE MINUTES, NOT SPELLINGS. This built a set of strings and
+            # matched norm(option) against it - but norm("45 minutes") strips
+            # the unit and returns the INT 45, so the set never matched and a
+            # rule I had written was declining every duration question in
+            # silence. Reading each option as a number of minutes handles
+            # "45 minutes", "2 h 25 min" and "1 hour 45 min" alike.
+            return pick(opts, float(b - a), minutes_of)
     # dates within one year
     m = re.search(r"from (\d+) (\w+) to (\d+) \2 is how many weeks", low)
     if m:
@@ -1464,8 +1551,10 @@ def stage34_time(low, opts):
         times = re.findall(r"(\d+):(\d+)", m.group(1))
         ok = [h + ":" + mm for h, mm in times if int(h) * 60 + int(mm) <= deadline]
         if ok:
+            # the option is a SENTENCE round the time ("The one arriving
+            # 09:25"), so look for the time inside it rather than equalling it
             want = ok[-1]
-            hit = [o for o in opts if norm(o).replace(" ", "") == want]
+            hit = [o for o in opts if re.search(re.escape(want), plain(o))]
             return hit[0] if len(hit) == 1 else None
     return None
 
@@ -1888,19 +1977,23 @@ def expected(q, opts, item, js=""):
     if m:
         n, k = int(m.group(1)), int(m.group(2))
         return n // k if k and n % k == 0 else None
-    # how many tens/ones in a number - place value.
-    #
-    # TENS ONLY BELOW A HUNDRED, because above it the question is ambiguous and
-    # the two readings differ: "how many tens in 347" is 4 if it means the tens
-    # DIGIT and 34 if it means how many tens the number contains. Both are
-    # taught. Below 100 they coincide, so that is the range where an answer can
-    # be given without picking a reading the lesson may not have meant.
-    m = re.search(r"how many (tens|ones|units|hundreds) (?:are )?in (\d+)", low)
+    # "HOW MANY HUNDREDS ARE IN 4,072" HAS TWO TAUGHT READINGS and they differ:
+    # 40 if it means how many hundreds the number CONTAINS, 0 if it means the
+    # hundreds DIGIT. I first declined above a hundred for that reason, then
+    # decided the division reading was the real one - and this build keys the
+    # DIGIT, with options 0, 4, 7 that cannot even express 40. Neither fixed
+    # choice is right, so let the OPTIONS settle it: compute both, and answer
+    # only when exactly one of them is on offer. Below a hundred they coincide,
+    # so nothing there depends on this.
+    m = re.search(r"how many (tens|ones|units|hundreds|thousands) (?:are )?(?:there )?in ([\d,]+)", low)
     if m:
-        n, which = int(m.group(2)), m.group(1)
-        if which == "tens":
-            return n // 10 if n < 100 else None
-        return {"ones": n % 10, "units": n % 10, "hundreds": n // 100}[which]
+        n, place = int(m.group(2).replace(",", "")), PLACE[m.group(1)]
+        contained, digit = n // place, n // place % 10
+        vals = {norm(o) for o in opts}
+        if contained == digit:
+            return contained
+        can = [v for v in (contained, digit) if v in vals]
+        return can[0] if len(can) == 1 else None
     # THE RUN NEED NOT BE FOLLOWED IMMEDIATELY BY THE "?". "12, 14, 16, ?"
     # matched and "5, 10, 15, 20... what comes next?" did not, though they ask
     # the same thing - the ellipsis and four words sat between the numbers and

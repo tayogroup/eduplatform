@@ -10,8 +10,10 @@
 #
 # Running the tools here instead means a rebuild RE-APPLIES the wiring rather
 # than losing it, and the tools stay the one shared definition of what wiring
-# is - the same four that wire Grade 2. All four are idempotent (verified: a
-# second run of the set changes no byte), so this is safe to run repeatedly.
+# is - the same FIVE that wire Grade 2. It said four, and listed four, while
+# Grade 2's own chain had five; the missing one was add-header-bars and the
+# stale count is what made the omission read as deliberate. All five are
+# idempotent, so this is safe to run repeatedly.
 #
 # The built .html files are committed as well as generated, because they are
 # what deploys and a deploy must not depend on a shell that can run bash.
@@ -30,7 +32,15 @@ build l8 "Ask, Count and Chart"          ask-count-chart
 echo
 echo "wiring to the platform:"
 cd ..
-for t in wire-navigation wire-platform-controls wire-progress preload-platform; do
+# add-header-bars LAST: it moves .top-actions onto bar 2, and the class
+# controls mount themselves into that container, so it has to run after
+# wire-platform-controls has put the container on the page. It was missing from
+# this list while Grades 1, 2 and 4 all had the bars, which is why a Grade 3
+# learner had no brand, no lesson picker, no voice toggle, no Menu and no Full
+# screen - and the class controls floated in the hero instead of sitting beside
+# it. The tool's own docstring describes that exact symptom, from when Grade 2
+# shipped without it.
+for t in wire-navigation wire-platform-controls wire-progress preload-platform add-header-bars; do
   python "../lesson-app-tools/$t.py" > /dev/null || { echo "  FAILED: $t"; exit 1; }
   echo "  ok  $t"
 done

@@ -27,6 +27,38 @@ records ("the CDN was the only copy"), one step worse.
 **byte-identical** from the sources here; do that after any refactor of
 `shell.js`, the way the ebook kit extraction was proved safe.
 
+## check-judging.py moved, because it was reading half the build
+
+It lived here and carried its own file list:
+
+```python
+LES=[("time-slides.js","Telling the Time",4), ("stats-slides.js", ...), ... ]
+```
+
+Five `*-slides.js` SOURCES with a hardcoded teaching count each, written when
+this build was five lessons. By 2026-09-09 it was eight, and the gate reported
+**"teaching slides: 37"** against 72, named two lessons that no longer ship
+(*Shape, Space and Place*, *Numbers and How They Behave*), and printed
+`slides that can never disagree with the child: 0` over the half it could not
+see. Green because it did no work.
+
+It is now `../lesson-app-tools/check-judging.py`, which reads
+`app.config.json` like every other tool in that directory, reads the BUILT
+pages rather than the sources — a source that is not assembled into a page is
+not a lesson — and maps JS to slides by the element ids it touches rather than
+by the `/* ---- N: title ---- */` markers, which are activity counters and have
+already drifted in these files.
+
+It reports **72 teaching slides, 71 judging**. The one that does not is
+*Numbers to 10,000*, a place-value builder with no right answer, recorded in
+`app.config.json :: explorationSteps` along with Grade 2's ten and Grade 3's
+seven. **An exemption that stops firing fails the gate** — if a listed step
+starts judging, or names a step that is gone, it says so rather than becoming a
+permanent amnesty. Mutation-tested four ways: an unrecorded display-only slide,
+a stale exemption, a judging step losing its wrong branch, and a slide parser
+that matches nothing (which refuses rather than passing). All four caught, green
+again on restore.
+
 ## The tools
 
 ```bash
@@ -34,7 +66,8 @@ records ("the CDN was the only copy"), one step worse.
 python build-time-lesson.py     # and stats / frac / shape / num
 
 # check
-python check-judging.py            # every teaching slide can disagree with the learner
+python ../lesson-app-tools/check-judging.py   # every teaching slide can disagree
+python ../lesson-app-tools/check-lessons.py   # the shared structural gate
 python audit-deployed-course.py    # the DEPLOYED 18-unit course vs Cambridge 0096 Stage 4
 python build-course-audit.py       # renders that audit as course-audit.html
 python build-stage4-audit.py       # renders these five lessons' audit as stage4-audit.html

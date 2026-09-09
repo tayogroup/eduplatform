@@ -1,16 +1,6 @@
 <script>
 (function () {
 
-  (function () {
-    if (new URLSearchParams(location.search).get("from") !== "g1") return;
-    const wrap = document.querySelector(".wrap");
-    if (!wrap) return;
-    const back = document.createElement("a");
-    back.className = "g1-back";
-    back.href = "index.html";
-    back.innerHTML = '<span aria-hidden="true">←</span> Grade 1 Maths';
-    wrap.insertBefore(back, wrap.firstChild);
-  })();
 
   /* ==================================================================
      THE VOICE — authored for Azure en-GB-SoniaNeural, spoken here by

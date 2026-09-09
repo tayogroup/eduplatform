@@ -44,7 +44,7 @@ for (const c of cards) {
     heads: [...document.querySelectorAll(".slide-head .n")].map((x) => x.textContent),
     title: document.title,
     eyebrow: document.querySelector(".eyebrow").textContent,
-    back: !!document.querySelector(".g1-back"),
+    back: !!document.querySelector(".lesson-back"),
   }));
   const teaching = g.heads.filter((h) => /^\d+$/.test(h)).length;
   const claimed = Number(c.steps.match(/^(\d+) steps/)[1]);
@@ -54,10 +54,14 @@ for (const c of cards) {
   if (!/Grade 3/.test(g.eyebrow)) bad.push(`${c.title}: eyebrow does not say Grade 3 -> ${g.eyebrow}`);
   await q.close();
 
-  // arriving with ?from=g3 must add the back link; arriving without must not
+  // arriving with ?from=g3 must add the back link; arriving without must not.
+  // Keyed on .lesson-back, which wire-navigation.py adds. It used to be
+  // .g1-back - a second, identical back link inherited from the Grade 1 build
+  // this one was copied from, so a learner with ?from=g3 saw the same link
+  // twice. That one is gone; the property this asserts is unchanged.
   const r = await ctx.newPage();
   await r.goto(pathToFileURL(L(file)).href + "?from=g3");
-  const withBack = await r.evaluate(() => { const a = document.querySelector(".g1-back"); return a ? { href: a.getAttribute("href"), text: a.textContent.trim() } : null; });
+  const withBack = await r.evaluate(() => { const a = document.querySelector(".lesson-back"); return a ? { href: a.getAttribute("href"), text: a.textContent.trim() } : null; });
   if (!withBack) bad.push(`${c.title}: no back link with ?from=g3`);
   else {
     if (withBack.href !== "index.html") bad.push(`${c.title}: back link points at ${withBack.href}`);
@@ -66,7 +70,7 @@ for (const c of cards) {
   await r.close();
   const s = await ctx.newPage();
   await s.goto(pathToFileURL(L(file)).href);
-  const noBack = await s.evaluate(() => !!document.querySelector(".g1-back"));
+  const noBack = await s.evaluate(() => !!document.querySelector(".lesson-back"));
   if (noBack) bad.push(`${c.title}: back link present without ?from=g3`);
   await s.close();
 }

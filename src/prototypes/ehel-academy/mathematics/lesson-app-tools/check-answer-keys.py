@@ -287,6 +287,50 @@ def dataset_index(js):
     return out
 
 
+def named_counts(js):
+    """{varname: {category: count}} for a dataset written as ONE object.
+
+    Grade 4 declares its chart as `const A4 = { Walk: 9, Bus: 6, Car: 4,
+    Bike: 3 }` - categories and counts in the same literal. dataset_index
+    above only knows Grade 1's shape, a `[{emoji, name}]` array paired with a
+    separate counts array, so it reported this file as having no data at all
+    and every question that reads the chart went unverified. Two or more
+    fields, all of them plain integers: that is a dataset, whatever it is
+    called.
+    """
+    out = {}
+    for m in re.finditer(r"\bconst\s+([A-Za-z_]\w*)\s*=\s*\{", js):
+        body = balanced(js, js.index("{", m.end() - 1))[1:-1]
+        if not body.strip() or "{" in body or "[" in body:
+            continue
+        fields = re.findall(r"([A-Za-z_]\w*|\"[^\"]+\")\s*:\s*(-?\d+)\s*(?:,|$)", body)
+        if len(fields) >= 2 and len(fields) == len([x for x in body.split(",") if x.strip()]):
+            out[m.group(1)] = {k.strip('"').lower(): int(v) for k, v in fields}
+    return out
+
+
+def dataset_labels(js, names):
+    """{varname: label} taken from the call that DRAWS each dataset.
+
+    `bars5(A4, "Class 4A - ...")` is what ties the variable to the words a
+    question uses, and nothing else in the file does. Without it "most common
+    in Class 4B" cannot pick between two datasets that are otherwise alike.
+    """
+    out = {}
+    for n in names:
+        m = re.search(r"\b\w+\s*\(\s*" + re.escape(n) + r"\s*,\s*\"([^\"]+)\"", js)
+        if m:
+            # THE LABEL IS THE HEADING, NOT THE WHOLE CAPTION. It is written
+            # `"Class 4A · " + totalOf(A4) + " children"`, so the literal ends
+            # in the separator - and "class 4a ·" is not a substring of a
+            # question that says "in Class 4A", so every lookup missed.
+            lab = plain(m.group(1)).lower()
+            lab = re.sub(r"[\s·:,;|/-]+$", "", lab)
+            if lab:
+                out[n] = lab
+    return out
+
+
 def dataset_for(js, item):
     """the (counts, categories) the item's own picture was drawn from, or None.
 
@@ -1172,6 +1216,18 @@ def chart_answer(low, opts):
     if re.search(r"toss a coin.*how likely is heads", low):
         hit = [o for o in opts if re.search(r"might happen|even chance|equally likely", norm(o))]
         return hit[0] if len(hit) == 1 else None
+    # TWO GROUPS OF THE SAME SIZE, so a bigger count is a bigger SHARE and the
+    # comparison is the whole answer: "Two classes both have 22 children. 4A
+    # walks 9 and 4B walks 5." The equal totals are what make it derivable -
+    # the distractor "4A is bigger" is false precisely because they match.
+    m = re.search(r"both have (\d+) \w+\.\s*(\w+) \w+ (\d+) and (\w+) \w+ (\d+)", low)
+    if m and re.search(r"what can you say", low):
+        one, a, two, b = m.group(2), int(m.group(3)), m.group(4), int(m.group(5))
+        if a != b:
+            win = one if a > b else two
+            hit = [o for o in opts if re.search(r"\bmore\b", str(norm(o)))
+                   and re.search(r"\b" + re.escape(win) + r"\b", str(norm(o)))]
+            return hit[0] if len(hit) == 1 else None
     m = re.search(r"bag holds (\d+) (\w+) counters and (\d+) (\w+).*taking an? \2", low)
     if m:
         a, b = int(m.group(1)), int(m.group(3))
@@ -1564,6 +1620,49 @@ def stage34_time(low, opts):
     return None
 
 
+def named_chart_answer(low, opts, js):
+    """questions read off a dataset written as a named-count object.
+
+    ONLY WHAT THE NUMBERS DECIDE. "What is the same in both classes?" offers
+    three prose CLAIMS ("The same number come by car", "The most common
+    answer", "Nobody cycles"), and picking the true one needs a predicate per
+    wording - which is restating the key, not deriving it, and would find
+    nothing a new wording had not already broken. That one is left alone.
+    """
+    if not js:
+        return None
+    data = named_counts(js)
+    if not data:
+        return None
+    labels = dataset_labels(js, data)
+
+    # which dataset does the question name?
+    named = [n for n, lab in labels.items() if lab and re.search(re.escape(lab), low)]
+    if len(named) != 1:
+        # a bare variable name is a label too: "in 4B"
+        named = [n for n in data if re.search(r"\b" + re.escape(n.lower()) + r"\b", low)]
+    if len(named) != 1:
+        return None
+    d = data[named[0]]
+
+    m = re.search(r"\b(most|least|fewest) common\b", low)
+    if m:
+        want = (max if m.group(1) == "most" else min)(d.values())
+        if list(d.values()).count(want) != 1:
+            return None
+        cat = [k for k, v in d.items() if v == want][0]
+        hit = [o for o in opts if re.search(r"\b" + re.escape(cat) + r"\b", str(norm(o)))]
+        return hit[0] if len(hit) == 1 else None
+    m = re.search(r"how many .*\bby (\w+)\b|how many (\w+)\b", low)
+    if m:
+        cat = (m.group(1) or m.group(2) or "").lower()
+        if cat in d:
+            return pick(opts, float(d[cat]), lambda o: amount(o)) or d[cat]
+    if re.search(r"how many .*(altogether|in total|in all)", low):
+        return pick(opts, float(sum(d.values())), lambda o: amount(o)) or sum(d.values())
+    return None
+
+
 def beads_answer(low, item):
     """the bead pattern IS the answer: `beads:` carries the whole row.
 
@@ -1888,6 +1987,9 @@ def expected(q, opts, item, js=""):
         got = rule(low, t, opts)
         if got is not None:
             return got
+    got = named_chart_answer(low, opts, js)
+    if got is not None:
+        return got
     if picn is not None and re.search(r"^how many\b", low) and not nums(t):
         return picn                                   # "How many counters?" + pic: N
     if re.search(r"\bno .* left\b|are none left", low) and re.search(r"which number", low):

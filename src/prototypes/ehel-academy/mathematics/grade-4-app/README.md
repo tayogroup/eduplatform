@@ -1,13 +1,27 @@
 # Grade 4 Mathematics — the standalone lesson build
 
-Five self-contained HTML lessons for Stage 4, built on the same pattern as
+**Eight** self-contained HTML lessons for Stage 4, built on the same pattern as
 `../grade-1-app`: each page carries its own CSS, its own activity JS and its own
 copy of the voice engine, with no dependency on `shell/course-app.js`.
 
-**None of this is deployed.** Until this commit none of it was in git either —
-it lived in a session scratchpad under `AppData/Local/Temp`, with no CDN copy
-and no second copy anywhere. That is the same failure `../grade-1-app/README.md`
-records ("the CDN was the only copy"), one step worse.
+## Status: LIVE — deployed, and Grade 4 learners are routed here
+
+This file said "**None of this is deployed**" until 2026-09-09, and by then it
+was both deployed and routed. It is at `Ehel Primary/app/mathematics/grade-4-lessons`
+on the zone, and `local_prequran/ehel_app_url_overrides` names `ehel-math-g04`.
+
+That claim could not be checked from this repo — routing lives in a Moodle
+setting — so it was an assumption written down as a status, which is exactly how
+`../grade-2-app/README.md` came to say the same wrong thing about Grade 2. The
+only thing that answers it is the setting, via
+`../lesson-app-tools/repoint-grade.php --grade 4` through the cPanel loop.
+
+The count was stale too: this opened describing five lessons and a donor, and
+the build has been eight since 2026-09-08. Several rows of the table below still
+name files from the five-lesson era (`four-digits-strong.html`,
+`shape-space-place.html`, `numbers-and-behaviour.html`,
+`build-<b>-lesson.py`); `app.config.json` is the one description that is
+current, and its `lessons` order IS the unit number.
 
 ## What is where
 
@@ -62,8 +76,13 @@ again on restore.
 ## The tools
 
 ```bash
-# build
-python build-time-lesson.py     # and stats / frac / shape / num
+# build AND wire, in one step - see the warning below for why they are one
+bash build-all.sh
+
+# the pieces it runs, if you need them singly
+python compose-lessons.py   # regenerates c-*-body.html and c-*-slides.js (OVERWRITES them)
+python build-lessons.py     # assembles the eight lessons; replaced the six per-lesson builders
+python build-hub.py         # g4-index.html, on Grade 2's design
 
 # check
 python ../lesson-app-tools/check-judging.py   # every teaching slide can disagree
@@ -163,14 +182,23 @@ python ../lesson-app-tools/check-lessons.py           # the gate
 node   ../lesson-app-tools/deploy.mjs --app .         # plan; --upload writes
 ```
 
-> **A REBUILD DISCARDS THE WIRING.** The wiring tools edit the built HTML in
-> place, so re-running any `build-*-lesson.py` throws all of it away —
-> measured: `progress-client` 1 → 0 and `learner-controls` 3 → 0 in one rebuild.
-> This is the same hazard `build:math` carries and it has no `--force` guard, so
-> the rule is the order above: **build first, wire after, always the whole
-> chain.** `check-lessons.py` does catch it (it reports "does not carry the
-> launch parameters", "no way back", "no class controls", "no Wehel"), which is
-> the only thing standing between a rebuild and a silently unwired release.
+> **A REBUILD DISCARDS THE WIRING — which is why `build-all.sh` exists now.**
+> The wiring tools edit the built HTML in place, so a bare `build-lessons.py`
+> throws all of it away. Re-measured 2026-09-09 in an isolated copy:
+> `learner-controls` 3 → 0, `progress-client` 1 → 0, `eh-bar1` 3 → 0 and the
+> launch parameters 6 → 2, with `check-lessons.py` reporting **128 findings**.
+>
+> Until that day this risked nothing, because no learner could reach these
+> pages. **Grade 4 is routed now**, so the same rebuild would put pages in
+> front of children with no Class chat, no Raise hand, no Wehel and nothing
+> reaching the live group board — and the symptom is ABSENCE, so it shows up
+> as a quiet board rather than an error.
+>
+> `build-all.sh` builds and then wires, the way Grade 3's has since it was
+> written, and ends on both gates. Verified in a copy: after the bare rebuild
+> above it restores 5 / 1 / 3 / 6, all eight lessons carry every marker, 49
+> inline scripts parse and both gates pass. `check-lessons.py` is still the
+> backstop if somebody bypasses it.
 
 The four modules the pages import — `learner-controls.js`, `wehel.js`,
 `course-shell.js`, `progress-client.js` — are **not** in this directory and must

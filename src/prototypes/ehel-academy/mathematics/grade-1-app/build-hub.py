@@ -9,6 +9,18 @@ time".
 import re, io, os
 
 SP = os.path.dirname(os.path.abspath(__file__))
+
+# A page with no doctype renders in QUIRKS MODE, and these pages had none --
+# `document.compatMode` read "BackCompat" on all eight. The doctype is added to
+# the BUILT pages by lesson-app-tools/add-page-doctype-lang.py; putting it here
+# is what makes it survive a rebuild. Measured before adding it: layout is
+# identical either way at these widths, so this changes the parsing mode and
+# nothing a learner sees.
+def with_doctype(doc):
+    if re.match(r"\s*<!doctype", doc, re.I):
+        return doc
+    return '<!doctype html>\n<html lang="en-GB">\n' + doc.lstrip("\n")
+
 src = io.open(os.path.join(SP, "g1-index.html"), encoding="utf-8").read()
 
 ICON = {
@@ -110,7 +122,7 @@ PROPAGATE = """
 """
 out = out.rstrip() + "\n" + PROPAGATE
 
-io.open(os.path.join(SP, "g1v2", "g1-index.html"), "w", encoding="utf-8", newline="").write(out)
+io.open(os.path.join(SP, "g1v2", "g1-index.html"), "w", encoding="utf-8", newline="").write(with_doctype(out))
 print("  g1v2/g1-index.html written: %d cards, %d bytes" % (len(CARDS), len(out)))
 for c in CARDS:
     print("    %-18s %-26s %2d steps  -> %s" % (c[2], c[3], c[5], c[4]))

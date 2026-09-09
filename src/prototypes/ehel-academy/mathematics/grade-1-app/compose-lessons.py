@@ -29,6 +29,18 @@ Structure (teaching slides, excluding each lesson's check and sticker pages):
 import re, io, os, sys
 
 SP = os.path.dirname(os.path.abspath(__file__))
+
+# A page with no doctype renders in QUIRKS MODE, and these pages had none --
+# `document.compatMode` read "BackCompat" on all eight. The doctype is added to
+# the BUILT pages by lesson-app-tools/add-page-doctype-lang.py; putting it here
+# is what makes it survive a rebuild. Measured before adding it: layout is
+# identical either way at these widths, so this changes the parsing mode and
+# nothing a learner sees.
+def with_doctype(doc):
+    if re.match(r"\s*<!doctype", doc, re.I):
+        return doc
+    return '<!doctype html>\n<html lang="en-GB">\n' + doc.lstrip("\n")
+
 RE_SEC = re.compile(r"/\*\s*-+\s*\d+\s*:([^*]*?)-*\*/")
 RE_SUB = re.compile(r"/\*\s*-+\s*(check|stickers)\s*-+\s*\*/")
 
@@ -193,7 +205,7 @@ def compose(base, keep, title, check_keep, out_name):
 
     js = base.prelude + "".join(blocks) + chk + st
     doc = head + "\n".join(slides) + base.tail_pre + js + base.tail_post
-    io.open(os.path.join(SP, "g1v2", out_name), "w", encoding="utf-8", newline="").write(doc)
+    io.open(os.path.join(SP, "g1v2", out_name), "w", encoding="utf-8", newline="").write(with_doctype(doc))
     return doc, n_teach
 
 

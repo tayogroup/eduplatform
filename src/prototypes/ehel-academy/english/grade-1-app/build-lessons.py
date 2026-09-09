@@ -1703,7 +1703,19 @@ STICKER_SLIDE = """    <section class="slide" data-explain='%(explain)s' data-sa
     </section>
 """
 
-PAGE = """<meta charset="utf-8">
+# THE DOCTYPE IS NOT DECORATION. Without it the browser renders in QUIRKS mode
+# (document.compatMode "BackCompat"), a legacy box model these pages were never
+# written for -- they were simply never given one. Measured before adding it:
+# every element's box, font size, line height and padding is identical either
+# way on this build, so the mode flip moves nothing.
+#
+# lang="en-GB" is what a screen reader reads the page WITH. Without it the
+# reader guesses, and may pronounce English with another language's rules --
+# on a course whose subject is English. British English, matching the course's
+# own standing spelling rule.
+PAGE = """<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>%(title)s</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">

@@ -153,7 +153,7 @@
           '<div class="bigbtns" id="gameCh">' +
           shuffle(round.choices).map((c) =>
             '<button type="button" class="choice" data-c="' + esc(c) + '">' + esc(c) + "</button>").join("") +
-          "</div><div class='fb' id='gameFb'></div>");
+          "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
         say(plain(round.prompt));
         let lock = false;
         overlay.querySelector("#gameCh").addEventListener("click", (e) => {
@@ -191,7 +191,7 @@
             '<div class="bigbtns" id="gameTiles">' +
             pool.map((t, k) => '<button type="button" class="tile letter" data-tile="' + k + '"' +
               (line.includes(k) ? " disabled" : "") + ">" + esc(t) + "</button>").join("") +
-            "</div><div class='fb' id='gameFb'></div>",
+            "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>",
             '<button type="button" class="big small" id="gameCheck">Check it</button>');
           overlay.querySelector("#gameTiles").addEventListener("click", (e) => {
             const b = e.target.closest("[data-tile]"); if (!b || b.disabled) return;
@@ -228,7 +228,7 @@
             '<div class="bigbtns" id="gameTiles">' +
             round.tokens.map((t, k) => '<button type="button" class="tile" data-tile="' + k + '"' +
               (line.includes(k) ? " disabled" : "") + ">" + esc(t) + "</button>").join("") +
-            "</div><div class='fb' id='gameFb'></div>",
+            "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>",
             '<button type="button" class="big small" id="gameCheck">Check it</button>');
           overlay.querySelector("#gameTiles").addEventListener("click", (e) => {
             const b = e.target.closest("[data-tile]"); if (!b || b.disabled) return;
@@ -268,7 +268,7 @@
           tiles.map((t) => '<button type="button" class="pairtile" data-k="' + t.k + '">' +
             '<span class="back" aria-hidden="true">?</span>' +
             '<span class="face">' + esc(t.text) + "</span></button>").join("") +
-          "</div><div class='fb' id='gameFb'></div>");
+          "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
         say(plain(round.prompt || "Tap two tiles that go together."));
         overlay.querySelector("#gameGrid").addEventListener("click", (e) => {
           const b = e.target.closest(".pairtile");

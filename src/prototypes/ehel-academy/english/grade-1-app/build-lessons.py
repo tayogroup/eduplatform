@@ -1730,13 +1730,34 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
 # ----------------------------------------------------------------------
 # the page
 # ----------------------------------------------------------------------
+# THE FEEDBACK PARAGRAPH IS A LIVE REGION. `.fb` is where every renderer
+# writes the answer to what the child just did - right or wrong, and why. It is
+# painted in place, so a screen reader is never moved to it and would otherwise
+# announce nothing at all: the question is read aloud on demand by the speaker
+# button beside it, and the correction that follows was silent.
+#
+# role="status" carries polite+atomic on its own; both are stated anyway
+# because the pair is what every renderer here depends on and a role that
+# quietly changes its implicit values would take the announcement with it.
+# atomic matters more than usual - the text is replaced wholesale each time
+# ("Not quite." then a whole sentence of reason), and a non-atomic region
+# announces only the diff.
+#
+# The attributes survive the renderers. Every one of them assigns
+# `className = "fb good"` rather than touching classList, and className writes
+# the class attribute alone - role and aria-live are untouched by it. Checked
+# across english.js, books.js, deck.js and games.js before relying on it.
+#
+# One live region per slide is safe because the inactive slides are
+# `display: none`, which takes them out of the accessibility tree entirely, so
+# only the slide on screen can announce.
 SLIDE = """    <section class="slide" data-explain='%(explain)s' data-say="%(say)s">
       <div class="slide-head"><span class="n">%(n)d</span><h2>%(title)s</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask%(n)d">%(ask)s</span></div>
       <div class="stage">
         <div id="stage%(n)d"></div>
         <div class="choices" id="ch%(n)d"></div>
-        <p class="fb" id="fb%(n)d"></p>
+        <p class="fb" id="fb%(n)d" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score%(n)d"></p>
 %(note)s      </div>
     </section>
@@ -1747,7 +1768,7 @@ STICKER_SLIDE = """    <section class="slide" data-explain='%(explain)s' data-sa
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fbstick"></p>
+        <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1763,6 +1784,27 @@ STICKER_SLIDE = """    <section class="slide" data-explain='%(explain)s' data-sa
 # reader guesses, and may pronounce English with another language's rules --
 # on a course whose subject is English. British English, matching the course's
 # own standing spelling rule.
+#
+# THE SKIP LINK IS FIRST IN THE BODY, AND IT HAS TO STAY THERE. A keyboard or
+# screen-reader user meets the two sticky app bars and then the step-dot rail
+# before any lesson content, on every one of the 23 steps - the dots alone are
+# 23 tab stops in front of the thing they came to do. The link is written here,
+# immediately before .wrap, because add-header-bars.py inserts the bars AT the
+# index of `<div class="wrap">`: anything above that line stays above them.
+# Moving this below .wrap, or letting a later pipeline step insert ahead of it,
+# silently makes it the second thing focused and it stops being a skip link.
+#
+# The deck is <main>, not the .wrap around it. .wrap has to keep its exact
+# `<div class="wrap">` spelling - that literal string is add-header-bars.py's
+# only anchor, and that tool is shared with the two Mathematics lesson builds,
+# so renaming it here to gain a landmark would reach two other apps. The deck
+# is also the better destination: it skips the dot rail as well as the bars,
+# which .wrap would not.
+#
+# tabindex="-1" is what makes the link move FOCUS and not just the scroll
+# position. Without it the browser scrolls to the deck and leaves focus on the
+# link, so the next Tab goes back into the chrome the user just asked to skip.
+# -1 is focusable-but-not-tabbable, so it adds no tab stop of its own.
 PAGE = """<!doctype html>
 <html lang="en-GB">
 <meta charset="utf-8">
@@ -1772,6 +1814,7 @@ PAGE = """<!doctype html>
 <style>
 %(css)s</style>
 
+<a class="skip" href="#deck">Skip to the lesson</a>
 <div class="wrap">
   <header class="hero">
     <div>
@@ -1781,8 +1824,8 @@ PAGE = """<!doctype html>
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
-%(slides)s  </div>
+  <main class="deck" id="deck" tabindex="-1">
+%(slides)s  </main>
 
   <div class="foot">
     <button type="button" class="big small ghost" id="back">&#9664; Back</button>

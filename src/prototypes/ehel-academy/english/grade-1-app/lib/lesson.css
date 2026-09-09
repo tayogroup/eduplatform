@@ -25,6 +25,35 @@
   button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
   button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
 
+  /* THE SKIP LINK. Off-screen until it is focused, then a real button in the
+     top-left corner. It is not `display: none` and not `visibility: hidden` -
+     either of those would take it out of the tab order and there would be
+     nothing to focus. Moving it off-screen keeps it reachable by Tab while
+     leaving the page looking untouched.
+
+     z-index clears the two app bars, which are sticky at 40. A skip link that
+     appears UNDER the chrome it exists to skip is a skip link nobody can see
+     they have focused.
+
+     THE FILL IS --ink, NOT --teal, and that is a contrast decision rather than
+     a style one. This build is a single dark theme - the Wehel block below
+     redefines every token from bare :root, so the light palette above it never
+     renders and only the dark values matter. There --teal is #35BFB2, and the
+     obvious teal-pill-with-white-text measures 2.3:1 on it. The link renders
+     at 18px bold, which is below the 18.66px that would let it count as large
+     text, so it needs 4.5:1 and not 3:1 - it fails twice over. --ink and
+     --ground are the pair that is guaranteed to oppose each other whatever the
+     palette does, and here they give a white pill with #142B3E text at 14.5:1
+     (measured, not derived). Teal stays as the ring, which is the same 4px the
+     buttons already focus with, so the link still reads as part of this
+     product. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 100; }
+  .skip:focus {
+    left: 8px; top: 8px; padding: 12px 18px; border-radius: 12px;
+    background: var(--ink); color: var(--ground); font-weight: 700; text-decoration: none;
+    box-shadow: var(--shadow); outline: 4px solid var(--teal); outline-offset: 2px;
+  }
+
   .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
   .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
   .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
@@ -36,6 +65,13 @@
   .dots button.done { background: var(--good); border-color: var(--good); }
 
   .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  /* The deck carries tabindex="-1" so the skip link can move focus into it.
+     That makes it focusable, and a browser that rings a programmatically
+     focused container would draw a 4px outline around the whole lesson. The
+     ring is kept for :focus-visible, which is what a genuine keyboard focus
+     would match, and dropped for the skip link's own arrival. */
+  .deck:focus { outline: none; }
+  .deck:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
   .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
   .slide.active { display: flex; }
   .slide-head { display: flex; align-items: center; gap: 12px; }

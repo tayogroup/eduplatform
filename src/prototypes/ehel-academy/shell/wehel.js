@@ -305,6 +305,26 @@ function courseDataRoot(subjectKey, grade) {
     const stageDir = subjectKey === "intensive-english" ? `level-${grade}` : `grade-${grade}`;
     return new URL(`${location.pathname.slice(0, at + marker.length)}${subjectKey}/${stageDir}/data/`, location.origin);
   }
+  // ANCHOR ON /app/, never on a count of ../ hops. The content tier is a
+  // SIBLING of app/ at the zone root, and `../../content/` only reaches it
+  // from a page exactly two levels in -- which is the five shell subjects,
+  // whose app runs from app/{subject}/index.html (app/{subject}/grade-N/ is a
+  // 319-byte grade-redirect stub, not the app).
+  //
+  // The STANDALONE lesson builds sit one level deeper --
+  // app/english/grade-1-v2/<page>.html, app/mathematics/grade-3-lessons/ --
+  // so the same hop resolved to app/content/... and 404'd on every page load.
+  // Nothing dead-ended, because fetchTeacherScripts catches a miss and falls
+  // back to the live path, which is exactly why it went unseen: the cost was
+  // a model call and a TTS call per "Teach me" instead of the stored script
+  // and its pre-rendered clip, and teacherClipUrl() builds on this same root
+  // so the clips were unreachable too.
+  const appAt = location.pathname.indexOf("/app/");
+  if (appAt !== -1) {
+    return new URL(`${location.pathname.slice(0, appAt + 1)}content/${subjectKey}/g${pad2(grade)}/`, location.origin);
+  }
+  // No app/ segment: some other layout (a bare static server). Keep the old
+  // relative hop rather than guess -- it is what every such host has had.
   return new URL(`../../content/${subjectKey}/g${pad2(grade)}/`, document.baseURI);
 }
 

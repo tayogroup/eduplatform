@@ -419,11 +419,35 @@ def facts_answer(low, opts):
     # and this one names its pair in the question, so neither covers the other.
     m = re.search(r"which is (longer|shorter)[:,]?\s*(.+?)\s+or\s+(.+?)\s*\??$", low)
     if m:
-        a, b = re.sub(r"^an? ", "", m.group(2)), re.sub(r"^an? ", "", m.group(3))
+        # strip the comma HERE, not at each use: "100 minutes," carried it into
+        # norm(), which then would not read the number and matched no option
+        a, b = (re.sub(r"^an? ", "", x).strip().rstrip(",")
+                for x in (m.group(2), m.group(3)))
         if a in SPANS and b in SPANS and a != b:
             want = (max if m.group(1) == "longer" else min)(a, b, key=SPANS.index)
             hit = [o for o in opts if span_of(o) == want]
             return hit[0] if len(hit) == 1 else None
+        # NAMED SPANS RANK; MEASURED ONES MUST BE CONVERTED. "100 minutes, or
+        # 1 hour" is not a pair of span WORDS, and comparing them by name would
+        # answer the wrong way - 100 minutes is the longer.
+        ma, mb = measure(a), measure(b)
+        if ma and mb and ma[0] == mb[0] == "time" and ma[1] != mb[1]:
+            want_big = m.group(1) == "longer"
+            keep = a if (ma[1] > mb[1]) == want_big else b
+            hit = [o for o in opts if norm(o) == norm(keep)]
+            return hit[0] if len(hit) == 1 else None
+    # "Shortest first, which order is right?" - the OPTION is the ordering
+    m = re.search(r"(shortest|longest) first, which order is right", low)
+    if m:
+        up = m.group(1) == "shortest"
+        hit = []
+        for o in opts:
+            names = [re.sub(r"^an? ", "", x.strip()) for x in str(norm(o)).split(",")]
+            if len(names) >= 2 and all(n in SPANS for n in names):
+                idx = [SPANS.index(n) for n in names]
+                if idx == (sorted(idx) if up else sorted(idx, reverse=True)):
+                    hit.append(o)
+        return hit[0] if len(hit) == 1 else None
     # the long hand says o'clock or half past; the short hand says which hour
     m = re.search(r"long hand is on (\d+).*short hand is (?:just past |on )(\d+)", low)
     if m:
@@ -653,6 +677,56 @@ def fraction_answer(low, opts):
         a, b = fval(m.group(1)), fval(m.group(3))
         if a is not None and b is not None:
             return pick(opts, a + b if m.group(2) == "+" else a - b, fval)
+    # A FRACTION OF A QUANTITY, IN A WORD PROBLEM. "A quarter of 12" is
+    # handled by the ladder; these name the quantity in one sentence and the
+    # fraction in the next - "Amina has 20 shillings and spends a quarter",
+    # "A class has 24 learners. Three quarters walk to school" - which is the
+    # form Grade 2 actually asks and no rule read. The quantity must be the
+    # ONLY number in the question, so nothing here guesses which one to divide.
+    m = re.search(r"\b(?:has|holds|is|reads|of)\s+(?:a\s+)?(\d+)[\s\w]*?\b"
+                  r"(?:.*?\b(\w+)\s+(halves|thirds|quarters|fifths|tenths)\b"
+                  r"|.*?\ba (half|third|quarter|fifth|tenth)\b)", low)
+    if m and re.search(r"how (?:many|much)", low):
+        n = int(m.group(1))
+        if m.group(3):                                   # "three quarters"
+            k, d = norm(m.group(2)), FRACWORD[m.group(3)]
+        else:                                            # "a quarter"
+            k, d = 1, FRACWORD[m.group(4)]
+        if isinstance(k, int) and d and n % d == 0 and len(nums(low)) == 1:
+            want = float(n // d * k)
+            got = pick(opts, want, lambda o: amount(o))
+            if got is not None:
+                return got
+    # the same, with the fraction written in figures: "1/4 of a 20 page book"
+    m = re.search(r"(\d+)\s*/\s*(\d+) of an? (\d+)", low)
+    if m and re.search(r"how (?:many|much)", low):
+        k, d, n = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        if d and n % d == 0:
+            return pick(opts, float(n // d * k), lambda o: amount(o))
+    # a fraction of a UNIT quantity, where the answer changes unit
+    m = re.search(r"holds (\d+) (\w+).*?\b(?:drinks|pours|uses|takes) (?:an?\s+)?"
+                  r"(half|third|quarter|fifth|tenth).*how many (\w+) are left", low)
+    if m:
+        whole, unit, frac, want_unit = m.groups()
+        base = measure("%s %s" % (whole, unit))
+        one = measure("1 %s" % want_unit)
+        if base and one and one[1] and base[0] == one[0]:
+            total = base[1] / one[1]
+            left = total * (1 - 1.0 / FRACWORD[frac])
+            return pick(opts, left, lambda o: amount(o))
+    # how much of a whole is LEFT after some equal pieces go
+    m = re.search(r"cut into (\d+) equal (?:slices|pieces|parts)\.\s*\w+ (?:eats|takes) (\w+)\.", low)
+    if m:
+        d = int(m.group(1))
+        gone = norm(m.group(2))
+        if isinstance(gone, int) and 0 <= gone <= d:
+            kept = re.search(r"what fraction (?:is left|remains)", low)
+            return pick(opts, (d - gone) / d if kept else gone / d, fval)
+    m = re.search(r"cut into (\d+) equal (?:slices|pieces|parts)\.\s*(\w+) (?:is|are) eaten", low)
+    if m:
+        d, gone = int(m.group(1)), norm(m.group(2))
+        if isinstance(gone, int) and 0 <= gone <= d:
+            return pick(opts, (d - gone) / d, fval)
     # fractions written in WORDS, which is how Stage 4 asks them
     m = re.search(r"which is the bigger piece,? an? (\w+) or an? (\w+) of the same", low)
     if m and m.group(1) in FRACWORD and m.group(2) in FRACWORD:
@@ -750,6 +824,28 @@ def units_answer(low, opts):
         for table in SCALES.values():
             if small in table and big in table and table[small]:
                 v = n * table[big] / table[small]
+                if v == int(v):
+                    return pick(opts, float(int(v)), lambda o: amount(o)) or int(v)
+        return None
+    # "How many minutes in quarter of an hour?", and the same conversion asked
+    # the other way round - "Three quarters of an hour is how many minutes?".
+    # Only "half an hour" was ever read.
+    small = frac = big = None
+    parts = 1
+    m = re.search(r"how many (\w+) in (?:an? )?(half|third|quarter|fifth|tenth)"
+                  r" (?:of )?an? (\w+)", low)
+    if m:
+        small, frac, big = m.group(1), m.group(2), m.group(3)
+    else:
+        m = re.search(r"(\w+) (halves|thirds|quarters|fifths|tenths) of an? (\w+)"
+                      r" is how many (\w+)", low)
+        if m and isinstance(norm(m.group(1)), int):
+            parts, big, small = norm(m.group(1)), m.group(3), m.group(4)
+            frac = m.group(2)
+    if small and frac in FRACWORD:
+        for table in SCALES.values():
+            if small in table and big in table and table[small]:
+                v = table[big] / table[small] / FRACWORD[frac] * parts
                 if v == int(v):
                     return pick(opts, float(int(v)), lambda o: amount(o)) or int(v)
         return None
@@ -1194,6 +1290,14 @@ def stage34_shape(low, opts):
     m = re.search(r"how many right angles make a (straight line|full turn|whole turn)", low)
     if m:
         return 2 if m.group(1) == "straight line" else 4
+    # A RADIUS IS THE SAME ALL THE WAY ROUND - that is what makes it a circle,
+    # so the distance asked for is the distance given.
+    m = re.search(r"edge of a circle is (\d+) (\w+) from the centre.*how far", low)
+    if m:
+        return pick(opts, float(m.group(1)), lambda o: amount(o))
+    if re.search(r"what do we call the middle point of a circle", low):
+        hit = [o for o in opts if "centre" in str(norm(o)) or "center" in str(norm(o))]
+        return hit[0] if len(hit) == 1 else None
     # counting the squares a shape covers is what AREA means
     if re.search(r"covers \d+ squares on a grid.*what is that called", low):
         hit = [o for o in opts if norm(o) in ("area", "its area", "the area")]

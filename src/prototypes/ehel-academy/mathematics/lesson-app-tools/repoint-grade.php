@@ -103,6 +103,16 @@ $SUBJECTS = [
             1 => ['ehel-comp-g01', RP_HOST . 'Ehel%20Primary/app/computing/grade-1-v2/index.html'],
         ],
     ],
+    // The course key is the shell's `ehel-gp-g${pad2(s)}` (shell/subjects/
+    // global-perspectives.js) and pqpg_ehel_subject_map() knows 'gp' with
+    // letter g. The build reports progress as l01..l08 against 0838 directly;
+    // the shell course is four topic units - THE UNIT PROBLEM applies.
+    'global-perspectives' => [
+        'entry' => RP_HOST . 'Ehel%20Primary/app/global-perspectives/index.html',
+        'targets' => [
+            1 => ['ehel-gp-g01', RP_HOST . 'Ehel%20Primary/app/global-perspectives/grade-1-v2/index.html'],
+        ],
+    ],
 ];
 
 $argv = $argv ?? [];

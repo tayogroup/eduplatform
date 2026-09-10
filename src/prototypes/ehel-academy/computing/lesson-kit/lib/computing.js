@@ -268,6 +268,42 @@
       if (has("call")) g += T(260, 175, 44, "\u{1F431}") + (has("food") && has("floor") ? T(230, 130, 22, "❤️") : "");
       return '<svg viewBox="0 0 320 240" role="img" aria-label="Feeding the cat: ' + (ids.join(", ") || "nothing yet") + '">' + g + "</svg>";
     },
+    /* Stage 2: a cup of tea - cup, bag, water, milk, stir; water before the cup is a puddle */
+    tea: (ids) => {
+      ids = ids || [];
+      const has = (id) => ids.includes(id);
+      const puddle = ids.indexOf("water") >= 0 && (ids.indexOf("cup") < 0 || ids.indexOf("water") < ids.indexOf("cup"));
+      let g = '<rect width="320" height="240" fill="#F4EAD4"/><rect x="0" y="180" width="320" height="60" fill="#C9B79C"/>';
+      if (puddle) g += '<ellipse cx="160" cy="205" rx="90" ry="16" fill="#A9C7E8" opacity="0.9"/>';
+      if (has("cup")) {
+        const level = has("water") && !puddle;
+        const colour = level ? (has("milk") ? "#C9A27A" : (has("bag") ? "#7A4B2A" : "#CFE6F5")) : "none";
+        g += '<path d="M100 100 h120 v70 q0 22 -22 22 h-76 q-22 0 -22 -22z" fill="#fff" stroke="#93AABE" stroke-width="4"/><path d="M220 116 q40 0 40 26 q0 26 -40 26" fill="none" stroke="#93AABE" stroke-width="6"/>';
+        if (level) g += '<rect x="106" y="112" width="108" height="50" fill="' + colour + '"/>';
+        if (has("bag")) g += '<rect x="138" y="' + (level ? 118 : 150) + '" width="30" height="24" rx="4" fill="#8B5A2B"/><line x1="153" y1="' + (level ? 118 : 150) + '" x2="200" y2="96" stroke="#fff" stroke-width="2"/>';
+        if (has("stir") && level) g += '<line x1="128" y1="80" x2="182" y2="150" stroke="#93AABE" stroke-width="6" stroke-linecap="round"/><path d="M120 130 q40 -14 80 0" fill="none" stroke="#fff" stroke-width="2" opacity="0.7"/>';
+      } else if (has("bag")) g += '<rect x="138" y="150" width="30" height="24" rx="4" fill="#8B5A2B"/>';
+      if (has("milk") && !has("cup")) g += T(60, 170, 40, "\u{1F95B}");
+      if (has("water") && !puddle) g += T(260, 70, 36, "\u{1F4A7}");
+      if (has("stir") && !has("cup")) g += T(60, 100, 36, "\u{1F944}");
+      return '<svg viewBox="0 0 320 240" role="img" aria-label="Making a cup of tea: ' + (ids.join(", ") || "nothing yet") + (puddle ? ", water on the table" : "") + '">' + g + (puddle ? LABEL(160, 232, "water on the table, not in a cup!") : "") + "</svg>";
+    },
+    /* Stage 2: bedtime - pyjamas, teeth, story, bed, lights; lights before the story reads in the dark */
+    bed: (ids) => {
+      ids = ids || [];
+      const has = (id) => ids.includes(id);
+      const dark = has("lights");
+      const readingInDark = has("story") && has("lights") && ids.indexOf("lights") < ids.indexOf("story");
+      let g = '<rect width="320" height="240" fill="' + (dark ? "#0B1D2C" : "#F4EAD4") + '"/><rect x="0" y="180" width="320" height="60" fill="' + (dark ? "#08151F" : "#C9B79C") + '"/>';
+      g += '<rect x="40" y="120" width="200" height="70" rx="10" fill="' + (dark ? "#1B3A52" : "#6E9DE8") + '"/><rect x="40" y="110" width="200" height="20" rx="6" fill="' + (dark ? "#2B5673" : "#fff") + '"/>';
+      const child = has("bed") ? '<circle cx="70" cy="112" r="18" fill="#C68642"/>' : '<circle cx="280" cy="120" r="18" fill="#C68642"/><rect x="264" y="138" width="32" height="50" rx="8" fill="' + (has("pyjamas") ? "#B78BD1" : "#35BFB2") + '"/>';
+      g += child;
+      if (has("pyjamas") && has("bed")) g += '<rect x="90" y="132" width="140" height="40" rx="8" fill="#B78BD1"/>';
+      if (has("teeth")) g += T(has("bed") ? 70 : 280, has("bed") ? 90 : 98, 22, "✨");
+      if (has("story")) g += T(has("bed") ? 130 : 240, has("bed") ? 108 : 160, 34, "\u{1F4D6}") + (readingInDark ? T(200, 80, 30, "❓") : "");
+      if (!dark) g += '<circle cx="160" cy="30" r="12" fill="#F4C95D"/><line x1="160" y1="0" x2="160" y2="18" stroke="#93AABE" stroke-width="3"/>';
+      return '<svg viewBox="0 0 320 240" role="img" aria-label="Bedtime: ' + (ids.join(", ") || "nothing yet") + (readingInDark ? ", trying to read in the dark" : "") + '">' + g + (readingInDark ? LABEL(160, 232, "reading a story in the dark?") : "") + "</svg>";
+    },
     /* the internet: 0 one computer, 1 two joined, 2 many around the world, 3 a message hopping */
     internet: (s) => {
       s = Number(s) || 0;
@@ -302,6 +338,11 @@
     hide: { label: "hide", icon: "\u{1F648}", cat: "look" },
     home: { label: "go home", icon: "\u{1F3E0}", cat: "control" },
     wait: { label: "wait", icon: "⏳", cat: "control" },
+    /* Stage 2: the repeat block repeats the block after it (2P.03); the
+       counts here are mirrored in _rules.py and the builder checks they agree */
+    repeat2: { label: "repeat 2 times", icon: "\u{1F501}", cat: "control", repeat: 2 },
+    repeat3: { label: "repeat 3 times", icon: "\u{1F501}", cat: "control", repeat: 3 },
+    repeat4: { label: "repeat 4 times", icon: "\u{1F501}", cat: "control", repeat: 4 },
   };
   function blockHtml(id, extra) {
     const b = BLOCKS[id] || { label: id, icon: "?", cat: "control" };
@@ -311,36 +352,81 @@
     const b = BLOCKS[id] || { label: id, icon: "?", cat: "control" };
     return '<button type="button" class="block ' + b.cat + '" ' + (attr || "") + '><span class="bicon" aria-hidden="true">' + b.icon + "</span>" + esc(b.label) + "</button>";
   }
-  function spriteStage(box, sprite) {
+  function spriteStage(box, sprites) {
+    /* One stage, one or more sprites. Stage 1 gives one; Stage 2's "plan the
+       instructions for objects" gives two, side by side, and a program runs on
+       the one the round names. Each sprite keeps its own position, size and
+       spin; the ground is shared. */
+    sprites = Array.isArray(sprites) ? sprites : [sprites];
+    const n = sprites.length;
     box.className = "spritestage";
-    box.innerHTML = '<div class="spriteground"></div><div class="sprite" id="' + box.id + 'sp">' + esc(sprite) + '</div><div class="bubble" id="' + box.id + 'bb" hidden></div>';
-    const st = { x: 0, scale: 1, spin: 0, hidden: false };
-    const sp = $(box.id + "sp"), bb = $(box.id + "bb");
-    function paint(jump) {
-      sp.style.transform = "translateX(" + (st.x * 64) + "px) translateY(" + (jump ? -70 : 0) + "px) rotate(" + st.spin + "deg) scale(" + st.scale + ")";
-      sp.style.opacity = st.hidden ? "0.15" : "1";
+    box.innerHTML = '<div class="spriteground"></div>' + sprites.map((s, k) => {
+      const off = (k - (n - 1) / 2) * 120;
+      return '<div class="sprite" id="' + box.id + 'sp' + k + '" style="left:calc(50% - 32px + ' + off + 'px)">' + esc(s) + "</div>" +
+        '<div class="bubble" id="' + box.id + 'bb' + k + '" style="left:calc(50% + ' + off + 'px)" hidden></div>';
+    }).join("");
+    const st = sprites.map(() => ({ x: 0, scale: 1, spin: 0, hidden: false }));
+    const sp = (k) => $(box.id + "sp" + k), bb = (k) => $(box.id + "bb" + k);
+    function paint(k, jump) {
+      const s = st[k];
+      sp(k).style.transform = "translateX(" + (s.x * 64) + "px) translateY(" + (jump ? -70 : 0) + "px) rotate(" + s.spin + "deg) scale(" + s.scale + ")";
+      sp(k).style.opacity = s.hidden ? "0.15" : "1";
     }
-    function reset() { st.x = 0; st.scale = 1; st.spin = 0; st.hidden = false; bb.hidden = true; paint(false); }
-    /* run one block; resolves when its move is over */
-    function run(id) {
+    function reset() { st.forEach((s, k) => { s.x = 0; s.scale = 1; s.spin = 0; s.hidden = false; bb(k).hidden = true; paint(k, false); }); }
+    function active(k) { sprites.forEach((_, j) => sp(j).classList.toggle("active", n > 1 && j === k)); }
+    /* run one block on sprite k; resolves when its move is over */
+    function run(id, k) {
+      k = k || 0;
+      const s = st[k];
       return new Promise((r) => {
-        bb.hidden = true;
-        if (id === "right") { st.x = Math.min(3, st.x + 1); paint(false); SOUND.play("pop", 0.3); }
-        else if (id === "left") { st.x = Math.max(-3, st.x - 1); paint(false); SOUND.play("pop", 0.3); }
-        else if (id === "jump") { paint(true); SOUND.play("boing", 0.4); setTimeout(() => paint(false), 320); }
-        else if (id === "spin") { st.spin += 360; paint(false); SOUND.play("whoosh", 0.3); }
-        else if (id === "say") { bb.textContent = "Hello!"; bb.hidden = false; SOUND.play("ding", 0.3); }
-        else if (id === "grow") { st.scale = Math.min(2.2, st.scale * 1.4); paint(false); SOUND.play("boing", 0.3); }
-        else if (id === "shrink") { st.scale = Math.max(0.4, st.scale / 1.4); paint(false); SOUND.play("pop", 0.3); }
-        else if (id === "hide") { st.hidden = true; paint(false); SOUND.play("click", 0.3); }
-        else if (id === "home") { st.x = 0; st.spin = 0; st.scale = 1; st.hidden = false; paint(false); SOUND.play("click", 0.3); }
+        bb(k).hidden = true;
+        if (id === "right") { s.x = Math.min(3, s.x + 1); paint(k, false); SOUND.play("pop", 0.3); }
+        else if (id === "left") { s.x = Math.max(-3, s.x - 1); paint(k, false); SOUND.play("pop", 0.3); }
+        else if (id === "jump") { paint(k, true); SOUND.play("boing", 0.4); setTimeout(() => paint(k, false), 320); }
+        else if (id === "spin") { s.spin += 360; paint(k, false); SOUND.play("whoosh", 0.3); }
+        else if (id === "say") { bb(k).textContent = "Hello!"; bb(k).hidden = false; SOUND.play("ding", 0.3); }
+        else if (id === "grow") { s.scale = Math.min(2.2, s.scale * 1.4); paint(k, false); SOUND.play("boing", 0.3); }
+        else if (id === "shrink") { s.scale = Math.max(0.4, s.scale / 1.4); paint(k, false); SOUND.play("pop", 0.3); }
+        else if (id === "hide") { s.hidden = true; paint(k, false); SOUND.play("click", 0.3); }
+        else if (id === "home") { s.x = 0; s.spin = 0; s.scale = 1; s.hidden = false; paint(k, false); SOUND.play("click", 0.3); }
         else if (id === "wait") { /* nothing, for a beat */ }
         setTimeout(r, 720);
       });
     }
     reset();
-    return { run, reset, state: st };
+    return { run, reset, active, state: st };
   }
+  /* THE REPEAT BLOCK (2P.03). A repeat block repeats the block AFTER it that
+     many times; a repeat with nothing after it, or another repeat after it,
+     repeats nothing. expandProgram() turns a script into the plain list of
+     moves the sprite actually makes, which is what gets run AND what gets
+     compared - so "jump, jump, jump" and "repeat 3 times, jump" do the same
+     thing, and a round that asks for the repeat block says so separately
+     (mustRepeat). _rules.py mirrors this for the builder and the gate. */
+  const REPEAT = { repeat2: 2, repeat3: 3, repeat4: 4 };
+  function expandProgram(ids) {
+    const out = [];
+    for (let i = 0; i < ids.length; i++) {
+      const n = REPEAT[ids[i]];
+      if (n) {
+        const next = ids[i + 1];
+        if (next && !REPEAT[next]) { for (let j = 0; j < n; j++) out.push(next); i++; }
+      } else out.push(ids[i]);
+    }
+    return out;
+  }
+  const usesRepeat = (ids) => ids.some((id) => !!REPEAT[id]);
+  /* words for a run: "jump 3 times, then say hello" rather than jump, jump, jump */
+  function runWords(ids) {
+    const parts = [];
+    for (let i = 0; i < ids.length; i++) {
+      let n = 1;
+      while (ids[i + 1] === ids[i]) { n++; i++; }
+      parts.push((BLOCKS[ids[i]] || { label: ids[i] }).label + (n > 1 ? " " + n + " times" : ""));
+    }
+    return parts.join(", then ");
+  }
+
   /* a program as the words a child reads: "move right, then jump, then say hello" */
   const programWords = (ids) => ids.map((id) => (BLOCKS[id] || { label: id }).label).join(", then ");
 
@@ -441,23 +527,33 @@
      The child taps what comes FIRST, then next; a wrong tap shakes and
      says which end it belongs at rather than just "no". 1CT.04 and
      1CT.06 as behaviour: an ordered set of instructions, and the order
-     mattering. */
+     mattering. Stage 2 (2CT.04, identify the steps NEEDED) adds
+     `extras`: steps in the pool that the task does not need at all. They
+     are never placed; the algorithm is complete when every needed step
+     is, and tapping an extra says why it is not needed. */
   function order(o) {
-    const el = o.el, items = o.items, placed = [];
+    const el = o.el, items = o.items, extras = (o.extras || []).map((x) => Object.assign({ extra: true }, x)), placed = [];
+    const pool = shuffle(items.map((it, k) => ({ it, k })).concat(extras.map((it, j) => ({ it, k: -1 - j }))));
     let lock = false, wrong = 0;
     function draw() {
-      const left = items.filter((_, k) => !placed.includes(k));
       $(el.stage).innerHTML = '<div class="stagewide">' + (o.scene ? '<div class="sim scenebox">' + SCENES[o.scene](placed.map((k) => items[k].id)) + "</div>" : "") +
         '<div class="orderrow">' +
         (placed.length ? placed.map((k, p) => '<span class="ordered"><b>' + (p + 1) + "</b>" + small(items[k].pic) + " " + esc(items[k].label) + "</span>").join('<span class="arrow" aria-hidden="true">&rarr;</span>') : '<span class="sub">Tap what comes first</span>') +
-        '</div><div class="cardsgrid" id="' + el.stage + 'pool">' + shuffle(items.map((it, k) => ({ it, k }))).filter((x) => !placed.includes(x.k)).map((x) =>
+        '</div><div class="cardsgrid" id="' + el.stage + 'pool">' + pool.filter((x) => !placed.includes(x.k)).map((x) =>
           '<button type="button" class="tapcard" data-k="' + x.k + '"><span class="cpic" aria-hidden="true">' + small(x.it.pic) + "</span>" + esc(x.it.label) + "</button>").join("") + "</div></div>";
-      $(el.score).textContent = placed.length + " of " + items.length + " in order";
-      if (left.length === 0) return;
+      $(el.score).textContent = placed.length + " of " + items.length + " in order" + (extras.length ? " · " + extras.length + " not needed" : "");
     }
     $(el.stage).addEventListener("click", (e) => {
       const b = e.target.closest(".tapcard"); if (!b || lock) return;
       const k = Number(b.dataset.k), expect = placed.length;
+      if (k < 0) {
+        const x = extras[-1 - k];
+        wrong++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+        const hint = "Not needed. " + (x.why || x.label + " is not part of this task.");
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = hint; say(hint);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+        return;
+      }
       if (k === expect) {
         placed.push(k); SOUND.play("pop", 0.35);
         $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + (items[k].say || "");
@@ -466,7 +562,7 @@
         if (placed.length === items.length) {
           lock = true;
           setTimeout(() => {
-            const line = "All " + items.length + " in the right order. " + o.done;
+            const line = "All " + items.length + " needed steps in the right order" + (extras.length ? ", and the " + extras.length + " that were not needed left out" : "") + ". " + o.done;
             $(el.fb).className = "fb good"; $(el.fb).textContent = line;
             reportScore(o.finish, Math.max(0, items.length - wrong), items.length);
             finish(o.finish, line);
@@ -893,29 +989,39 @@
     tappable ? blockBtn(id, 'data-k="' + k + '"' + (k === now ? ' class="block ' + (BLOCKS[id] || {}).cat + ' now"' : "")) : blockHtml(id, k === now ? " now" : "")).join("")
     : '<span class="hint">Tap the blocks below to build the program</span>') + "</div>";
 
-  /* ---- recreate an algorithm as a program, then run it (1P.02, 1P.05) --
+  /* ---- recreate an algorithm as a program, then run it (1P.02, 1P.05;
+     2P.02, 2P.03, 2P.04) --
      Build rounds: the algorithm is words; the child places the blocks
      that say the same, then runs the program and sees whether the sprite
      did what the algorithm said. A wrong program is not marked wrong by
      the page; it RUNS, the child watches, and the page reads back what
-     the program did against what the algorithm asked, which is testing
-     (1P.05). Predict rounds: the program is given and the question is
-     what the sprite will do before Run is pressed (1P.03). */
+     the program did against what the algorithm asked, which is testing.
+     Programs are compared EXPANDED, so a repeat block and its plain form
+     do the same thing; a round with `mustRepeat` asks for the block by
+     name. With two sprites, a round's `object` says which one the program
+     is for (planning the instructions for objects). Predict rounds: the
+     program is given and the question is what the sprite will do before
+     Run is pressed (1P.03). */
   function blockProgram(o) {
     const el = o.el, rounds = o.rounds;
+    const sprites = o.sprites || [o.sprite || "\u{1F431}"];
+    const names = o.spriteNames || [o.spriteName || "cat"];
     let r = 0, script = [], running = false, firstRun = true, score = 0, lock = false, predicted = null;
     let sprite = null;
     const round = () => rounds[r];
+    const who = () => names[round().object || 0] || names[0];
     function draw(now) {
       const rd = round(), given = !!rd.given;
       $(el.stage).innerHTML = '<div class="stagewide">' +
-        (rd.algorithm ? '<p class="goal">The algorithm says:</p><ol class="algo words">' + rd.algorithm.map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" : "") +
+        (rd.algorithm ? '<p class="goal">' + (sprites.length > 1 ? "The algorithm for the <b>" + esc(who()) + "</b> says:" : "The algorithm says:") + '</p><ol class="algo words">' + rd.algorithm.map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" : "") +
         '<div class="spritestage" id="' + el.stage + 'sp"></div>' +
+        (sprites.length > 1 ? '<p class="sub">Program for the ' + esc(who()) + "</p>" : "") +
         scriptHtml(script, now, !given && !running) +
         (given ? "" : '<div class="palette">' + (o.blocks || Object.keys(BLOCKS)).map((id) => blockBtn(id, 'data-add="' + id + '"' + (running ? " disabled" : ""))).join("") + "</div>") +
         '<div class="bigbtns">' + (given ? "" : '<button type="button" class="big small ghost" id="' + el.stage + 'clear"' + (running || !script.length ? " disabled" : "") + ">Clear</button>") +
         '<button type="button" class="big small teal" id="' + el.stage + 'run"' + (running || !script.length || (given && !predicted) ? " disabled" : "") + '>&#9654; Run</button></div></div>';
-      sprite = spriteStage($(el.stage + "sp"), o.sprite || "\u{1F431}");
+      sprite = spriteStage($(el.stage + "sp"), sprites);
+      sprite.active(rd.object || 0);
       $(el.score).textContent = "Program " + (r + 1) + " of " + rounds.length;
       const clear = $(el.stage + "clear"), run = $(el.stage + "run");
       if (clear) clear.addEventListener("click", () => { script = []; draw(); });
@@ -932,18 +1038,22 @@
         $(el.ch).innerHTML = shuffle(rd.predict.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
         sayHere(o.finish, plain(rd.predict.ask));
       } else {
-        $(el.ask).innerHTML = "Build this algorithm as a program: <b>" + esc(rd.algorithm.join(", ")) + "</b>. Then press Run.";
-        sayHere(o.finish, "Build this algorithm as a program. " + rd.algorithm.join(". ") + ". Then press Run.");
+        const lead = sprites.length > 1 ? "Build the " + who() + "'s program: " : "Build this algorithm as a program: ";
+        $(el.ask).innerHTML = lead + "<b>" + esc(rd.algorithm.join(", ")) + "</b>." + (rd.mustRepeat ? " Use a <b>repeat</b> block." : "") + " Then press Run.";
+        sayHere(o.finish, lead + rd.algorithm.join(". ") + "." + (rd.mustRepeat ? " Use a repeat block." : "") + " Then press Run.");
       }
     }
     function runIt() {
       if (running || !script.length) return;
       running = true; sprite.reset(); draw(-1);
-      let k = 0;
+      const moves = expandProgram(script), k = round().object || 0;
+      /* highlight the block being run: the repeat block stays lit for all its turns */
+      const owner = []; for (let i = 0, m = 0; i < script.length; i++) { const n = REPEAT[script[i]]; if (n) { const next = script[i + 1]; if (next && !REPEAT[next]) { for (let j = 0; j < n; j++) owner[m++] = i; i++; } } else owner[m++] = i; }
+      let i = 0;
       const step = () => {
-        if (k >= script.length) return finished();
-        draw(k);
-        sprite.run(script[k]).then(() => { k++; step(); });
+        if (i >= moves.length) return finished();
+        draw(owner[i]);
+        sprite.run(moves[i], k).then(() => { i++; step(); });
       };
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
       setTimeout(step, 300);
@@ -951,24 +1061,32 @@
     function finished() {
       const rd = round();
       running = false; draw(-1);
+      const did = expandProgram(script);
       if (rd.given) {
-        const line = (predicted.ok ? cheer() + " You predicted it. " : "Look what it did. ") + "The program made the " + (o.spriteName || "cat") + " " + programWords(script) + ". " + rd.predict.why;
+        const line = (predicted.ok ? cheer() + " You predicted it. " : "Look what it did. ") + "The program made the " + who() + " " + runWords(did) + ". " + rd.predict.why;
         if (predicted.ok) score++;
         $(el.fb).className = "fb " + (predicted.ok ? "good" : "bad"); $(el.fb).textContent = line; say(line);
         setTimeout(next, 3400);
         return;
       }
-      const same = script.length === rd.expect.length && script.every((id, k) => id === rd.expect[k]);
+      const want = expandProgram(rd.expect);
+      const same = did.length === want.length && did.every((id, j) => id === want[j]);
+      if (same && rd.mustRepeat && !usesRepeat(script)) {
+        firstRun = false; SOUND.play("click", 0.3);
+        const line = "It did the right thing, but the algorithm asked you to use a repeat block. Build it again with a repeat block.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        return;
+      }
       if (same) {
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
-        const line = cheer() + " Your program did exactly what the algorithm said: " + programWords(script) + ".";
+        const line = cheer() + " Your program did exactly what the algorithm said: " + runWords(did) + "." + (usesRepeat(script) ? " The repeat block did the repeating for you." : "");
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         setTimeout(next, 3200);
       } else {
         firstRun = false; SOUND.play("error", 0.3);
-        const line = "Your program made the " + (o.spriteName || "cat") + " " + programWords(script) + ". The algorithm says " + rd.algorithm.join(", ").toLowerCase() + ". Change the blocks and run it again.";
+        const line = "Your program made the " + who() + " " + runWords(did) + ". The algorithm says " + rd.algorithm.join(", ").toLowerCase() + ". Change the blocks and run it again.";
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
       }
     }
@@ -997,24 +1115,34 @@
   }
 
   /* ---- a program that does not do what we want: find the bug, fix it,
-     run it again (1P.04, 1P.05, 1P.06, 1P.07). Run FIRST, so the child
-     sees the wrong thing happen before hunting for why. */
+     run it again (1P.04, 1P.05, 1P.06, 1P.07; 2P.05, 2P.07). Run FIRST,
+     so the child sees the wrong thing happen before hunting for why. A
+     Stage 2 round can carry TWO bugs (`bugs`): after the first fix the
+     program is run again, still goes wrong, and the hunt continues -
+     which is why testing after every fix matters. A round's `partner` is
+     a classmate whose hint the child can ask for: debugging with others. */
   function debugProgram(o) {
     const el = o.el, rounds = o.rounds;
-    let r = 0, program = [], phase = "run", running = false, score = 0, lock = false, missed = false, sprite = null;
+    let r = 0, program = [], phase = "run", running = false, score = 0, lock = false, missed = false, sprite = null, bugNow = -1;
     const round = () => rounds[r];
+    const bugsOf = (rd) => rd.bugs || [rd.bug];
+    const fixOf = (rd, k) => (rd.fixes && rd.fixes[k]) || rd.fix;
+    const remaining = () => bugsOf(round()).filter((k) => program[k] !== round().expect[k]);
     function draw(now) {
       const rd = round();
       $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">We want: <b>' + esc(rd.goal) + "</b></p>" +
         '<div class="spritestage" id="' + el.stage + 'sp"></div>' +
         scriptHtml(program, now, phase === "find") +
+        (rd.partner && phase === "find" ? '<div class="partner"><span class="ppic" aria-hidden="true">' + small(rd.partner.pic) + '</span><span>' + esc(rd.partner.name) + ' is looking too.</span><button type="button" class="big small ghost" id="' + el.stage + 'ask">Ask ' + esc(rd.partner.name) + '</button><p class="pbubble" id="' + el.stage + 'hint" hidden></p></div>' : "") +
         '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'run"' + (running || phase === "find" || phase === "fix" ? " disabled" : "") + '>&#9654; ' + (phase === "again" ? "Run it again" : "Run") + "</button></div></div>";
       sprite = spriteStage($(el.stage + "sp"), o.sprite || "\u{1F436}");
       $(el.score).textContent = "Program " + (r + 1) + " of " + rounds.length + (phase === "find" ? " · find the bug" : phase === "fix" ? " · fix it" : "");
       const run = $(el.stage + "run"); if (run) run.addEventListener("click", runIt);
+      const ask = $(el.stage + "ask");
+      if (ask) ask.addEventListener("click", () => { const h = $(el.stage + "hint"); h.hidden = false; h.textContent = rd.partner.hint; say(rd.partner.name + " says: " + rd.partner.hint); ask.disabled = true; });
     }
     function start() {
-      program = round().program.slice(); phase = "run"; running = false; lock = false; missed = false;
+      program = round().program.slice(); phase = "run"; running = false; lock = false; missed = false; bugNow = -1;
       $(el.ch).innerHTML = ""; $(el.ch).className = "choices"; $(el.fb).textContent = ""; $(el.fb).className = "fb";
       $(el.ask).innerHTML = "We want: <b>" + esc(round().goal) + "</b>. Press Run and watch carefully.";
       draw(-1);
@@ -1023,67 +1151,73 @@
     function runIt() {
       if (running) return;
       running = true; sprite.reset(); draw(-1);
+      const moves = expandProgram(program);
       let k = 0;
       const step = () => {
-        if (k >= program.length) return finished();
+        if (k >= moves.length) return finished();
         draw(k);
-        sprite.run(program[k]).then(() => { k++; step(); });
+        sprite.run(moves[k]).then(() => { k++; step(); });
       };
       setTimeout(step, 300);
     }
     function finished() {
       const rd = round();
       running = false;
-      const fixed = program.length === rd.expect.length && program.every((id, k) => id === rd.expect[k]);
-      if (fixed) {
+      const left = remaining();
+      if (!left.length) {
         SOUND.play("tada", 0.5); phase = "done"; draw(-1);
-        const line = cheer() + " Debugged! The program does what we wanted: " + programWords(program) + ".";
+        const line = cheer() + " Debugged! The program does what we wanted: " + runWords(expandProgram(program)) + ".";
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         r++;
         setTimeout(() => {
-          if (r >= rounds.length) { reportScore(o.finish, score, rounds.length * 2); endStep(o, "You debugged " + rounds.length + " programs. " + o.done); }
+          if (r >= rounds.length) { reportScore(o.finish, score, rounds.reduce((n, x) => n + bugsOf(x).length * 2, 0)); endStep(o, "You debugged " + rounds.length + " programs. " + o.done); }
           else start();
         }, 3200);
         return;
       }
-      phase = "find"; draw(-1); SOUND.play("error", 0.3);
-      $(el.ask).innerHTML = "That is not what we wanted. It did: <b>" + esc(programWords(program)) + "</b>. Which block is the bug? Tap it.";
-      const line = "That is not what we wanted. The program made it " + programWords(program) + ". Which block is the bug? Tap it.";
-      $(el.fb).className = "fb bad"; $(el.fb).textContent = "Something is wrong."; say(line);
+      const fixedSome = bugsOf(rd).length > left.length;
+      /* lock was taken when the last bug was tapped and again when its fix was
+         chosen; a round with a SECOND bug comes back here still holding it,
+         and a held lock ignores every tap on the script. Release it. */
+      phase = "find"; lock = false; missed = false; draw(-1); SOUND.play("error", 0.3);
+      $(el.ask).innerHTML = (fixedSome ? "Better, but still not right. " : "That is not what we wanted. ") + "It did: <b>" + esc(runWords(expandProgram(program))) + "</b>. Which block is " + (fixedSome ? "the other bug" : "the bug") + "? Tap it.";
+      const line = (fixedSome ? "Better, but still not right. " : "That is not what we wanted. ") + "The program made it " + runWords(expandProgram(program)) + ". Which block is " + (fixedSome ? "the other bug" : "the bug") + "? Tap it.";
+      $(el.fb).className = "fb bad"; $(el.fb).textContent = fixedSome ? "One bug fixed. There is another." : "Something is wrong."; say(line);
     }
     function fixPhase() {
-      const rd = round();
-      phase = "fix"; lock = false; missed = false; draw(rd.bug);
+      const rd = round(), fx = fixOf(rd, bugNow);
+      phase = "fix"; lock = false; missed = false; draw(bugNow);
       $(el.ask).innerHTML = "What should that block be instead?";
       $(el.ch).className = "choices blocks";
-      $(el.ch).innerHTML = shuffle(rd.fix.opts).map((c) => blockBtn(c.id, 'data-id="' + esc(c.id) + '" data-ok="' + (c.ok ? 1 : 0) + '"')).join("");
+      $(el.ch).innerHTML = shuffle(fx.opts).map((c) => blockBtn(c.id, 'data-id="' + esc(c.id) + '" data-ok="' + (c.ok ? 1 : 0) + '"')).join("");
       sayHere(o.finish, "What should that block be instead?");
     }
     $(el.stage).addEventListener("click", (e) => {
       const b = e.target.closest(".script [data-k]"); if (!b || phase !== "find" || lock) return;
       const rd = round(), k = Number(b.dataset.k);
-      if (k === rd.bug) {
-        lock = true; if (!missed) score++;
+      if (remaining().includes(k)) {
+        lock = true; if (!missed) score++; bugNow = k;
         b.classList.add("bug"); SOUND.play("ding", 0.4);
-        const line = cheer() + " " + rd.why;
+        const why = (rd.whys && rd.whys[k]) || rd.why;
+        const line = cheer() + " " + why;
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         setTimeout(fixPhase, 2600);
       } else {
         missed = true; b.classList.add("wrong"); SOUND.play("error", 0.3);
-        const line = "That block is fine: " + (BLOCKS[program[k]] || {}).label + ". Which block made it go wrong?";
+        const line = "That block is fine: " + (BLOCKS[program[k]] || {}).label + ". Which block made it go wrong?" + (rd.partner ? " You could ask " + rd.partner.name + "." : "");
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
         setTimeout(() => b.classList.remove("wrong"), 700);
       }
     });
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest("[data-id]"); if (!b || phase !== "fix" || lock) return;
-      const rd = round(), ok = b.dataset.ok === "1";
+      const rd = round(), fx = fixOf(rd, bugNow), ok = b.dataset.ok === "1";
       if (ok) {
         lock = true; if (!missed) score++;
-        program[rd.bug] = b.dataset.id;
+        program[bugNow] = b.dataset.id;
         $(el.ch).querySelectorAll("button").forEach((c) => { c.disabled = true; }); b.classList.add("right");
         SOUND.play("pop", 0.4);
-        const line = cheer() + " " + rd.fix.why + " Now run it again to test it.";
+        const line = cheer() + " " + fx.why + " Now run it again to test it.";
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         setTimeout(() => { phase = "again"; $(el.ch).innerHTML = ""; $(el.ch).className = "choices"; $(el.ask).innerHTML = "Fixed. Now <b>run it again</b> to test it."; draw(-1); }, 2600);
       } else {
@@ -1620,6 +1754,352 @@
       }
     });
     ask();
+  }
+
+  /* ==================================================================
+     STAGE 2 - what Grade 2 asked for that Grade 1 did not have.
+     Same rules as everything above: a step is a KIND of doing, a machine
+     only does what it is told, and nothing waits on a paint callback.
+     ================================================================== */
+
+  /* ---- DRAWINGS: what Robo draws from the instructions it is given.
+     A precise id draws the part where it belongs; a vague or wrong id
+     draws EXACTLY what was said, which is the lesson (2CT.03, 2CT.06). */
+  const DRAWINGS = {
+    house: (ids) => {
+      ids = ids || [];
+      const has = (id) => ids.includes(id);
+      let g = '<rect width="320" height="240" fill="#BFE3F5"/><rect x="0" y="190" width="320" height="50" fill="#3E8E4A"/>';
+      if (has("walls")) g += '<rect x="100" y="110" width="120" height="80" fill="#E9744F" stroke="#7A2E2E" stroke-width="3"/>';
+      if (has("roof")) g += '<polygon points="90,112 160,58 230,112" fill="#7A2E2E"/>';
+      if (has("door")) g += '<rect x="148" y="150" width="24" height="40" rx="3" fill="#6B4A2B"/><circle cx="167" cy="171" r="2" fill="#F4C95D"/>';
+      if (has("window")) g += '<rect x="112" y="124" width="26" height="24" fill="#DDEFF7" stroke="#fff" stroke-width="3"/><line x1="125" y1="124" x2="125" y2="148" stroke="#fff" stroke-width="2"/>';
+      if (has("sun")) g += '<circle cx="270" cy="40" r="22" fill="#F4C95D"/>';
+      /* what a vague or wrong instruction gets you */
+      if (has("blob")) g += '<path d="M120 140 q20 -40 40 0 t40 0 q-30 30 -60 10 q-10 20 -20 -10z" fill="none" stroke="#B78BD1" stroke-width="5" stroke-linecap="round"/>';
+      if (has("roof-corner")) g += '<polygon points="10,60 50,20 90,60" fill="#7A2E2E"/>';
+      if (has("door-roof")) g += '<rect x="148" y="70" width="24" height="40" rx="3" fill="#6B4A2B"/>';
+      if (has("window-grass")) g += '<rect x="250" y="200" width="26" height="24" fill="#DDEFF7" stroke="#fff" stroke-width="3"/>';
+      if (has("sun-grass")) g += '<circle cx="60" cy="215" r="22" fill="#F4C95D"/>';
+      if (has("tiny-square")) g += '<rect x="156" y="182" width="8" height="8" fill="#E9744F"/>';
+      if (has("huge-square")) g += '<rect x="4" y="4" width="312" height="232" fill="#E9744F" opacity="0.7"/>';
+      return '<svg viewBox="0 0 320 240" role="img" aria-label="Robo\'s drawing of a house: ' + (ids.join(", ") || "nothing yet") + '">' + g + "</svg>";
+    },
+    boat: (ids) => {
+      ids = ids || [];
+      const has = (id) => ids.includes(id);
+      let g = '<rect width="320" height="240" fill="#BFE3F5"/><path d="M0 150 q40 -12 80 0 t80 0 t80 0 t80 0 V240 H0z" fill="#3B7FD1"/>';
+      if (has("hull")) g += '<path d="M70 150 h180 l-30 44 h-120z" fill="#C76B3B" stroke="#7A2E2E" stroke-width="3"/>';
+      if (has("mast")) g += '<rect x="156" y="50" width="8" height="100" fill="#6B4A2B"/>';
+      if (has("sail")) g += '<polygon points="166,54 240,136 166,136" fill="#FFFDF6" stroke="#93AABE" stroke-width="2"/>';
+      if (has("flag")) g += '<polygon points="164,50 194,60 164,70" fill="#E9744F"/>';
+      if (has("sun")) g += '<circle cx="270" cy="40" r="22" fill="#F4C95D"/>';
+      if (has("blob")) g += '<path d="M120 100 q20 -40 40 0 t40 0 q-30 30 -60 10 q-10 20 -20 -10z" fill="none" stroke="#B78BD1" stroke-width="5" stroke-linecap="round"/>';
+      if (has("mast-sea")) g += '<rect x="30" y="190" width="100" height="8" fill="#6B4A2B"/>';
+      if (has("sail-sky")) g += '<polygon points="230,20 300,60 230,60" fill="#FFFDF6" stroke="#93AABE" stroke-width="2"/>';
+      if (has("hull-sky")) g += '<path d="M70 40 h180 l-30 44 h-120z" fill="#C76B3B" stroke="#7A2E2E" stroke-width="3"/>';
+      if (has("flag-hull")) g += '<polygon points="100,160 130,170 100,180" fill="#E9744F"/>';
+      return '<svg viewBox="0 0 320 240" role="img" aria-label="Robo\'s drawing of a boat: ' + (ids.join(", ") || "nothing yet") + '">' + g + "</svg>";
+    },
+  };
+
+  /* ---- give Robo precise instructions, and watch it draw them literally
+     (2CT.03, 2CT.06). Each round is one instruction chosen from three: the
+     precise one draws the part in its place; a vague or wrong one draws
+     exactly what it says - a shape, a roof in the corner - and Robo says so.
+     The drawing keeps every precise part; a silly part is shown and taken
+     back, so the child tries that instruction again. */
+  function preciseDraw(o) {
+    const el = o.el, rounds = o.rounds, drawing = DRAWINGS[o.drawing];
+    const have = [];
+    let r = 0, score = 0, lock = false, missed = false;
+    function paint(extra) {
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="sim drawbox">' + drawing(have.concat(extra ? [extra] : [])) + '<div class="tag">Robo draws exactly what you say</div></div></div>';
+      $(el.score).textContent = "Instruction " + (Math.min(r, rounds.length - 1) + 1) + " of " + rounds.length;
+    }
+    function ask() {
+      lock = false; missed = false;
+      const rd = rounds[r];
+      paint(null);
+      $(el.ask).innerHTML = rd.ask;
+      $(el.ch).className = "choices stack";
+      $(el.ch).innerHTML = shuffle(rd.opts).map((c) => '<button type="button" class="choice text" data-id="' + esc(c.id) + '" data-ok="' + (c.ok ? 1 : 0) + '">' + esc(c.t) + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      sayHere(o.finish, plain(rd.ask) + " Which instruction is precise?");
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      const rd = rounds[r], ok = b.dataset.ok === "1", id = b.dataset.id;
+      if (ok) {
+        lock = true; if (!missed) score++;
+        have.push(id); paint(null); SOUND.play("ding", 0.4);
+        $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
+        const line = "Precise! " + rd.why;
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        r++;
+        setTimeout(() => {
+          if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "Every instruction was precise, and Robo drew the " + o.drawing + ". " + o.done); }
+          else ask();
+        }, 2800);
+      } else {
+        lock = true; missed = true; b.classList.add("wrong"); b.disabled = true; SOUND.play("error", 0.3);
+        paint(id);
+        const line = "Robo did exactly what you said: " + b.textContent.trim().toLowerCase() + ". That is not precise enough. Try another instruction.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => { paint(null); lock = false; }, 2800);
+      }
+    });
+    ask();
+  }
+
+  /* ---- a block graph the child builds, then reads a pattern from (2MD.02)
+     The values are given (they came from the survey the step before); the
+     child stacks a block per unit in each column, and the graph is finished
+     when every column is the right height. Then one question about it -
+     the most, the fewest - which is presenting data and reading it back.
+     Lifted from the Science kit's Stage 2 blockGraph. */
+  function blockGraph(o) {
+    const el = o.el, cols = o.columns, count = cols.map(() => 0);
+    const maxV = Math.max.apply(null, cols.map((c) => c.value));
+    let asked = false, lock = false;
+    function draw() {
+      $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small"><thead><tr><th>' + esc(o.columns_label || "") + "</th><th>" + esc(o.value_label || "how many") + "</th></tr></thead><tbody>" +
+        cols.map((c) => '<tr><td><span class="rowlab">' + small(c.pic) + " " + esc(c.label) + '</span></td><td><span class="cell filled">' + c.value + (o.unit ? " " + esc(o.unit) : "") + "</span></td></tr>").join("") + "</tbody></table>" +
+        '<div class="graph" role="img" aria-label="A block graph">' + cols.map((c, k) =>
+          '<div class="gcol"><div class="gstack" style="height:' + (maxV * 26 + 6) + 'px">' + Array.from({ length: count[k] }, () => '<i class="gblock"></i>').join("") + "</div>" +
+          '<button type="button" class="big small' + (count[k] >= c.value ? " ghost" : " teal") + '" data-k="' + k + '"' + (count[k] >= c.value ? " disabled" : "") + '>+ block</button>' +
+          '<span class="glab">' + small(c.pic) + "<br>" + esc(c.label) + (count[k] >= c.value ? " &#10003;" : "") + "</span></div>").join("") + "</div></div>";
+      const done = cols.filter((c, k) => count[k] >= c.value).length;
+      $(el.score).textContent = done + " of " + cols.length + " columns built";
+    }
+    function askPattern() {
+      asked = true;
+      $(el.ask).innerHTML = o.pattern.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(o.pattern.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.score).textContent = "Read the graph";
+      sayHere(o.finish, plain(o.pattern.ask));
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest("[data-k]"); if (!b || asked) return;
+      const k = Number(b.dataset.k);
+      if (count[k] >= cols[k].value) return;
+      count[k]++; SOUND.play("click", 0.35); draw();
+      if (count[k] === cols[k].value) { $(el.fb).className = "fb good"; $(el.fb).textContent = cols[k].label + ": " + cols[k].value + ". That column is right."; say(cols[k].label + ", " + cols[k].value + "."); }
+      if (cols.every((c, j) => count[j] >= c.value)) {
+        reportAttempt(o.finish, cols.length, cols.length, "columns");
+        setTimeout(() => { $(el.fb).textContent = ""; $(el.fb).className = "fb"; askPattern(); }, 1800);
+      }
+    });
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const ok = b.dataset.ok === "1";
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + o.pattern.why; say($(el.fb).textContent);
+      reportScore(o.finish, ok ? 1 : 0, 1);
+      setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 2800);
+    });
+    draw();
+  }
+
+  /* ---- FIGURES: hardware with parts to tap (2CS.01). Every part is a
+     <g data-part> carrying an .outline the CSS rings; tabbable, named. The
+     outline is ALSO the tap target (fill: transparent, not none): a speaker
+     is six dots and a volume control is two bars with a gap, and a tap that
+     lands between them must still count. A small part is drawn after the
+     big part it sits on, so its ring wins where the two overlap. */
+  const FIGURES = {
+    laptop: () => (
+      '<svg viewBox="0 0 360 260" role="img" aria-label="A laptop, open">' +
+      '<g data-part="screen" tabindex="0" role="button" aria-label="screen"><rect x="60" y="20" width="240" height="150" rx="10" fill="#2B5673" stroke="#93AABE" stroke-width="4"/><rect x="72" y="32" width="216" height="126" rx="4" fill="#0B1D2C"/><text x="180" y="102" text-anchor="middle" fill="#35BFB2" font-size="16" font-family="Inter, sans-serif" font-weight="800">hello</text><rect class="outline" x="54" y="14" width="252" height="162" rx="14"/></g>' +
+      '<g data-part="camera" tabindex="0" role="button" aria-label="camera"><circle cx="180" cy="26" r="4" fill="#0B1D2C" stroke="#93AABE" stroke-width="2"/><circle class="outline" cx="180" cy="26" r="16"/></g>' +
+      '<rect x="30" y="172" width="300" height="60" rx="8" fill="#93AABE"/>' +
+      '<g data-part="keyboard" tabindex="0" role="button" aria-label="keyboard"><g fill="#2B5673">' +
+      Array.from({ length: 4 }, (_, r) => Array.from({ length: 12 }, (_, c) => '<rect x="' + (46 + c * 19) + '" y="' + (178 + r * 12) + '" width="15" height="9" rx="2"/>').join("")).join("") +
+      '</g><rect class="outline" x="40" y="174" width="234" height="52" rx="8"/></g>' +
+      '<g data-part="touchpad" tabindex="0" role="button" aria-label="touchpad"><rect x="282" y="180" width="40" height="42" rx="6" fill="#B9C8D6"/><rect class="outline" x="276" y="174" width="52" height="54" rx="10"/></g>' +
+      '<g data-part="speaker" tabindex="0" role="button" aria-label="speaker"><g fill="#0B1D2C">' + Array.from({ length: 6 }, (_, i) => '<circle cx="' + (300 + (i % 3) * 6) + '" cy="' + (246 + Math.floor(i / 3) * 6) + '" r="2"/>').join("") + '</g><rect class="outline" x="292" y="238" width="30" height="20" rx="6"/></g>' +
+      '<g data-part="port" tabindex="0" role="button" aria-label="charging port"><rect x="30" y="240" width="22" height="10" rx="3" fill="#0B1D2C"/><rect class="outline" x="24" y="234" width="34" height="22" rx="6"/></g>' +
+      "</svg>"),
+    tablet: () => (
+      '<svg viewBox="0 0 260 360" role="img" aria-label="A tablet">' +
+      '<rect x="20" y="10" width="220" height="340" rx="22" fill="#2B5673" stroke="#93AABE" stroke-width="4"/>' +
+      '<g data-part="screen" tabindex="0" role="button" aria-label="touchscreen"><rect x="36" y="44" width="188" height="270" rx="6" fill="#0B1D2C"/>' +
+      '<g>' + Array.from({ length: 6 }, (_, i) => '<rect x="' + (52 + (i % 3) * 56) + '" y="' + (64 + Math.floor(i / 3) * 56) + '" width="40" height="40" rx="10" fill="' + ["#35BFB2", "#F4C95D", "#B78BD1", "#E9744F", "#4FD1A0", "#6E9DE8"][i] + '"/>').join("") + "</g>" +
+      '<rect class="outline" x="30" y="38" width="200" height="282" rx="10"/></g>' +
+      '<g data-part="camera" tabindex="0" role="button" aria-label="camera"><circle cx="130" cy="28" r="5" fill="#0B1D2C" stroke="#93AABE" stroke-width="2"/><circle class="outline" cx="130" cy="28" r="16"/></g>' +
+      '<g data-part="home" tabindex="0" role="button" aria-label="home button"><circle cx="130" cy="334" r="10" fill="#0B1D2C" stroke="#93AABE" stroke-width="2"/><circle class="outline" cx="130" cy="334" r="16"/></g>' +
+      '<g data-part="volume" tabindex="0" role="button" aria-label="volume buttons"><rect x="12" y="90" width="8" height="26" rx="3" fill="#93AABE"/><rect x="12" y="124" width="8" height="26" rx="3" fill="#93AABE"/><rect class="outline" x="6" y="84" width="20" height="72" rx="6"/></g>' +
+      '<g data-part="port" tabindex="0" role="button" aria-label="charging port"><rect x="118" y="352" width="24" height="6" rx="2" fill="#0B1D2C"/><rect class="outline" x="110" y="344" width="40" height="16" rx="5"/></g>' +
+      '<g data-part="speaker" tabindex="0" role="button" aria-label="speaker"><g fill="#0B1D2C">' + Array.from({ length: 5 }, (_, i) => '<circle cx="' + (62 + i * 8) + '" cy="336" r="2"/>').join("") + '</g><rect class="outline" x="54" y="326" width="48" height="20" rx="6"/></g>' +
+      "</svg>"),
+  };
+
+  /* ---- tap the named part of a figure (2CS.01) -------------------------
+     Lifted from the Science kit: a keyboard user tabs between the parts and
+     presses Enter or Space. */
+  function labelParts(o) {
+    const el = o.el, order = shuffle(o.parts), found = new Set();
+    let i = 0, right = 0, lock = false;
+    $(el.stage).innerHTML = '<div class="stagewide"><div class="figure" id="' + el.stage + 'fig">' + FIGURES[o.figure]() + '</div><div class="partlist" id="' + el.stage + 'pl"></div></div>';
+    const fig = $(el.stage + "fig");
+    function paintList() {
+      $(el.stage + "pl").innerHTML = o.parts.map((p) => '<span class="' + (found.has(p.id) ? "found" : (order[i] && order[i].id === p.id ? "now" : "")) + '">' + esc(p.label) + "</span>").join("");
+    }
+    function ask() {
+      lock = false;
+      const p = order[i];
+      $(el.ask).innerHTML = o.ask.replace("%s", "<b>" + esc(p.label) + "</b>");
+      $(el.score).textContent = "Part " + (i + 1) + " of " + order.length;
+      paintList();
+      sayHere(o.finish, plain(o.ask.replace("%s", p.label)));
+    }
+    fig.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const g = e.target.closest("[data-part]"); if (!g) return;
+      e.preventDefault(); g.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+    fig.addEventListener("click", (e) => {
+      const g = e.target.closest("[data-part]"); if (!g || lock) return;
+      const p = order[i], hit = g.dataset.part === p.id;
+      if (hit) {
+        lock = true; right++; found.add(p.id); g.classList.add("found"); SOUND.play("ding", 0.35);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + p.say; say(cheer() + " " + p.say);
+        i++;
+        setTimeout(() => {
+          $(el.fb).textContent = ""; $(el.fb).className = "fb";
+          if (i >= order.length) {
+            paintList(); $(el.ask).innerHTML = "You found every part."; $(el.score).textContent = "";
+            const line = "You found all " + order.length + ". " + o.done;
+            $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+            reportScore(o.finish, right, order.length);
+            finish(o.finish, line);
+          } else ask();
+        }, 2600);
+      } else {
+        const other = o.parts.find((x) => x.id === g.dataset.part);
+        g.classList.add("ping"); setTimeout(() => g.classList.remove("ping"), 700);
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = "That is the " + (other ? other.label : "wrong part") + ". Find the " + p.label + ".";
+        say("That is the " + (other ? other.label : "wrong part") + ". Find the " + p.label + ".");
+      }
+    });
+    ask();
+  }
+
+  /* ---- investigate ways of collecting data for a purpose (2MD.03, 2MD.04)
+     Three phases. First every WAY is tried - shouting, guessing, a paper
+     tally, an online form - and each shows what it gets you. Then the form
+     collects the class's answers in front of the child and the computer
+     counts them. Then one question about which way did the job. */
+  function surveyDesign(o) {
+    const el = o.el, ways = o.ways, people = o.people, options = o.options;
+    const tried = new Set();
+    const counts = {}; options.forEach((x) => { counts[x.id] = 0; });
+    let phase = "ways", lock = false, p = 0;
+    const id = el.stage + "sv";
+    function tally() {
+      return '<table class="rec small tally"><thead><tr><th>' + esc(o.question) + "</th><th>How many</th></tr></thead><tbody>" +
+        options.map((x) => '<tr><td><span class="rowlab">' + small(x.pic) + " " + esc(x.t) + '</span></td><td><span class="cell filled"><span class="picto" aria-hidden="true">' + small(x.pic).repeat(counts[x.id]) + "</span>" + counts[x.id] + "</span></td></tr>").join("") + "</tbody></table>";
+    }
+    function drawWays(outcome) {
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">We want to find out: <b>' + esc(o.purpose) + "</b></p>" +
+        '<div class="cardsgrid">' + ways.map((w, k) => '<button type="button" class="tapcard' + (tried.has(w.id) ? " heard" : "") + '" data-way="' + k + '"><span class="cpic" aria-hidden="true">' + small(w.pic) + "</span>" + esc(w.label) + "</button>").join("") + "</div>" +
+        (outcome ? '<div class="outcome"><span class="cpic" aria-hidden="true">' + small(outcome.opic || outcome.pic) + "</span><b>" + esc(outcome.outcome) + "</b></div>" : "") + "</div>";
+      $(el.score).textContent = tried.size + " of " + ways.length + " ways tried";
+    }
+    function drawCollect(started) {
+      const person = started && p < people.length ? people[p] : null;
+      $(el.stage).innerHTML = '<div class="stagewide">' +
+        (person ? '<div class="person"><span class="ppic" aria-hidden="true">' + small(person.pic) + '</span><div><b>' + esc(person.name) + '</b><p class="pbubble">' + esc(options.find((x) => x.id === person.answer).t) + "</p></div></div>" : "") +
+        tablet('<p class="formq">' + esc(o.question) + "</p><div class=\"formopts\">" + options.map((x) => '<button type="button" class="opt' + (person && person.answer === x.id ? " on" : "") + '" disabled><span class="radio" aria-hidden="true"></span><span class="cpic" aria-hidden="true">' + small(x.pic) + "</span>" + esc(x.t) + "</button>").join("") + "</div>", "Form") +
+        tally() + (started ? "" : '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'go">Start collecting</button></div>') + "</div>";
+      $(el.score).textContent = started ? p + " of " + people.length + " answers collected" : "the form is ready";
+      const go = $(id + "go"); if (go) go.addEventListener("click", collect);
+    }
+    function collect() {
+      lock = true;
+      const tick = () => {
+        if (p >= people.length) {
+          drawCollect(true); SOUND.play("tada", 0.4);
+          const line = people.length + " answers collected, and the computer counted them as they came in.";
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          reportAttempt(o.finish, people.length, people.length, "answers");
+          setTimeout(() => { $(el.fb).textContent = ""; askOnce(o, o.then, (ok) => { reportScore(o.finish, ok ? 1 : 0, 1); endStep(o); }); }, 3000);
+          return;
+        }
+        counts[people[p].answer]++; drawCollect(true); SOUND.play("send", 0.25);
+        p++;
+        setTimeout(tick, 900);
+      };
+      $(el.ask).innerHTML = "Everyone answers on the form. Watch the table count.";
+      tick();
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest("[data-way]"); if (!b || lock || phase !== "ways") return;
+      const w = ways[Number(b.dataset.way)];
+      tried.add(w.id); SOUND.play(w.works ? "ding" : "error", 0.35);
+      drawWays(w);
+      $(el.fb).className = "fb " + (w.works ? "good" : "bad"); $(el.fb).textContent = w.why; say(w.label + ". " + w.outcome + " " + w.why);
+      reportAttempt(o.finish, tried.size, ways.length, "ways");
+      if (tried.size >= ways.length) {
+        lock = true;
+        setTimeout(() => {
+          phase = "collect"; lock = false; $(el.fb).textContent = ""; $(el.fb).className = "fb";
+          $(el.ask).innerHTML = "The form is the way that works. Press <b>Start collecting</b> and watch the answers come in.";
+          drawCollect(false);
+          sayHere(o.finish, "The form is the way that works. Press Start collecting and watch the answers come in.");
+        }, 3000);
+      }
+    });
+    drawWays(null);
+  }
+
+  /* ---- you against the computer (2CS.04) -------------------------------
+     Five sums, a stopwatch, and the computer's time beside yours. The
+     computer is not smarter; it is faster at exactly this kind of job, and
+     the question at the end asks which jobs it is NOT better at. */
+  function race(o) {
+    const el = o.el, rounds = o.rounds;
+    let i = 0, right = 0, lock = false, t0 = 0, timer = null;
+    const id = el.stage + "rc";
+    const fmt = (ms) => (ms / 1000).toFixed(1) + " s";
+    function board(finalMs) {
+      return '<div class="racebox"><div class="racer you"><span class="cpic" aria-hidden="true">\u{1F9D2}</span><b>You</b><span class="stopwatch" id="' + id + 'w">' + fmt(finalMs != null ? finalMs : (t0 ? Date.now() - t0 : 0)) + "</span></div>" +
+        '<div class="racer pc"><span class="cpic" aria-hidden="true">\u{1F4BB}</span><b>Computer</b><span class="stopwatch">0.0001 s</span></div></div>';
+    }
+    function draw() {
+      const rd = rounds[i];
+      $(el.stage).innerHTML = '<div class="stagewide">' + board() + '<p class="lead">' + esc(rd.ask) + "</p></div>";
+      $(el.ask).innerHTML = "Tap the answer as fast as you can. The stopwatch is running.";
+      $(el.ch).className = "choices";
+      $(el.ch).innerHTML = shuffle(rd.opts).map((t) => '<button type="button" class="choice" data-t="' + esc(t) + '">' + esc(t) + "</button>").join("");
+      $(el.score).textContent = "Sum " + (i + 1) + " of " + rounds.length;
+      lock = false;
+    }
+    function tickClock() { const w = $(id + "w"); if (w && t0) w.textContent = fmt(Date.now() - t0); }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      if (!t0) { t0 = Date.now(); timer = setInterval(tickClock, 100); }
+      lock = true;
+      const rd = rounds[i], ok = b.dataset.t === String(rd.answer);
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.t === String(rd.answer)) c.classList.add("right"); });
+      if (ok) right++; else b.classList.add("wrong");
+      SOUND.play(ok ? "pop" : "error", 0.3);
+      i++;
+      if (i >= rounds.length) {
+        clearInterval(timer);
+        const ms = Date.now() - t0;
+        $(el.stage).innerHTML = '<div class="stagewide">' + board(ms) + '<p class="lead">You: ' + right + " of " + rounds.length + " right in " + fmt(ms) + ".<br>The computer: " + rounds.length + " of " + rounds.length + " right in less than a blink.</p></div>";
+        const line = "You got " + right + " of " + rounds.length + " in " + fmt(ms) + ". The computer got all " + rounds.length + " in less than a blink. Computers are faster at sums. But there are things they are not better at.";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        reportScore(o.finish, right, rounds.length);
+        setTimeout(() => { $(el.fb).textContent = ""; askOnce(o, o.then, () => endStep(o)); }, 4200);
+      } else setTimeout(draw, 500);
+    });
+    ONSHOW[o.finish] = (function () { let said = false; return () => { if (said) return; said = true; t0 = 0; }; })();
+    draw();
   }
 
   /* ==================================================================

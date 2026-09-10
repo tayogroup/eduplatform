@@ -294,8 +294,50 @@
   .pscreen p { margin: 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 17px; }
   .pscreen p.dim { color: #6B7F82; font-weight: 400; }
 
+  /* ==================================================================
+     STAGE 2 additions - same tokens, no new hue.
+     ================================================================== */
+  /* a figure with parts to tap (2CS.01) */
+  .figure { width: 100%; max-width: 420px; }
+  .figure svg { width: 100%; height: auto; display: block; }
+  .figure [data-part] { cursor: pointer; transition: filter 140ms ease; }
+  .figure [data-part]:hover { filter: brightness(1.15); }
+  .figure [data-part].found { filter: drop-shadow(0 0 6px var(--good)); }
+  .figure [data-part].found .outline { stroke: var(--good); stroke-width: 4; }
+  .figure .outline { fill: transparent; stroke: transparent; stroke-width: 3; } /* transparent, not none: the ring's inside takes the tap */
+  .figure [data-part].ping .outline { stroke: var(--gold); stroke-width: 5; }
+  .figure [data-part]:focus-visible { outline: none; }
+  .figure [data-part]:focus-visible .outline { stroke: var(--teal); stroke-width: 5; }
+  .partlist { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .partlist span { padding: 5px 12px; border-radius: 999px; border: 2px solid var(--line); font-weight: 700; font-size: 15px; color: var(--muted); }
+  .partlist span.found { border-color: var(--good); color: var(--good); }
+  .partlist span.now { border-color: var(--gold); color: var(--ink); }
+  /* a block graph (2MD.02) */
+  .graph { display: flex; gap: 14px; align-items: flex-end; justify-content: center; width: 100%; max-width: 560px; padding: 12px 8px 4px;
+    border-radius: 18px; border: 1px solid var(--line); background: var(--card); }
+  .gcol { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1 1 0; min-width: 0; }
+  .gstack { width: 100%; max-width: 64px; display: flex; flex-direction: column-reverse; gap: 2px; justify-content: flex-start;
+    border-bottom: 3px solid var(--ink); border-left: 2px solid var(--line); padding: 2px; }
+  .gblock { display: block; height: 24px; border-radius: 4px; background: var(--teal); animation: pop 200ms ease; }
+  .glab { text-align: center; font-size: 13px; font-weight: 700; color: var(--muted); line-height: 1.2; }
+  .glab::first-line { font-size: 24px; }
+  /* Robo's drawing, a way's outcome, the race, a partner, the active sprite */
+  .drawbox { max-width: 420px; }
+  .outcome { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 16px; border: 3px solid var(--teal); background: var(--card); max-width: 34em; text-align: left; }
+  .outcome .cpic { font-size: 36px; line-height: 1.1; }
+  .racebox { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 420px; }
+  .racer { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px; border-radius: 16px; border: 3px solid var(--line); background: var(--card); }
+  .racer.you { border-color: var(--gold); } .racer.pc { border-color: var(--teal); }
+  .racer .cpic { font-size: 36px; line-height: 1.1; }
+  .racer b { font-family: "Inter", "Segoe UI", sans-serif; }
+  .stopwatch { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 24px; font-variant-numeric: tabular-nums; }
+  .partner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; width: 100%; max-width: 560px; padding: 8px 12px; border-radius: 16px; border: 2px dashed var(--plum); text-align: left; }
+  .partner .ppic { font-size: 32px; line-height: 1.1; }
+  .partner .pbubble { flex-basis: 100%; margin: 0; }
+  .sprite.active { filter: drop-shadow(0 0 8px var(--gold)); }
+
   @media (prefers-reduced-motion: reduce) {
-    .sortnow.shake, .tapcard.wrong, .algostep.wrong, .block.wrong, .stile, .iobadge, .canvas .dot, .spin { animation: none; }
+    .sortnow.shake, .tapcard.wrong, .algostep.wrong, .block.wrong, .stile, .iobadge, .canvas .dot, .spin, .gblock { animation: none; }
     .sprite { transition: none; }
   }
 

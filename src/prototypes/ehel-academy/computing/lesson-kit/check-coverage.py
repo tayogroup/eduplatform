@@ -33,7 +33,7 @@ import sys
 
 KIT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, KIT)
-from _rules import run_robot, table_answer  # noqa: E402
+from _rules import REPEATS, run_robot, sum_answer, table_answer  # noqa: E402
 
 REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-computing-0059.json")
@@ -118,13 +118,50 @@ def main():
                         fail(entry["file"], "step %d bug round %r has no single bug and fix" % (k, rd["goal"]))
             elif kind == "debug":
                 for rd in d["rounds"]:
-                    ok = [o for o in rd["fix"]["opts"] if o.get("ok")]
+                    bugs = sorted(rd.get("bugs") or [rd["bug"]])
                     fixed = list(rd["program"])
-                    if len(ok) == 1 and 0 <= rd["bug"] < len(fixed):
-                        fixed[rd["bug"]] = ok[0]["id"]
-                    if len(ok) != 1 or fixed != rd["expect"]:
-                        fail(entry["file"], "step %d debug round %r: the fix does not make the expected program" % (k, rd["goal"]))
+                    good = True
+                    for bug in bugs:
+                        fix = (rd.get("fixes") or {}).get(str(bug)) or rd.get("fix") or {}
+                        ok = [o for o in fix.get("opts", []) if o.get("ok")]
+                        if len(ok) != 1 or not 0 <= bug < len(fixed):
+                            good = False; break
+                        fixed[bug] = ok[0]["id"]
+                    if not good or fixed != rd["expect"]:
+                        fail(entry["file"], "step %d debug round %r: the fixes do not make the expected program" % (k, rd["goal"]))
                     computed += 1
+            elif kind == "program":
+                for rd in d["rounds"]:
+                    if rd.get("mustRepeat") and not any(b in REPEATS for b in rd.get("expect", [])):
+                        fail(entry["file"], "step %d program round %r asks for a repeat block its expected program lacks" % (k, rd.get("algorithm")))
+            elif kind == "race":
+                for rd in d["rounds"]:
+                    want = sum_answer(rd["ask"])
+                    if want is None or str(rd["answer"]) != want or want not in [str(t) for t in rd["opts"]]:
+                        fail(entry["file"], "step %d race %r is keyed %r but the sum is %r" % (k, rd["ask"], rd["answer"], want))
+                    computed += 1
+                if not one_key(d["then"]["opts"]):
+                    fail(entry["file"], "step %d's race question does not have exactly one key" % k)
+            elif kind == "chart":
+                if not one_key(d["pattern"]["opts"]):
+                    fail(entry["file"], "step %d's chart question does not have exactly one key" % k)
+                if d["pattern"].get("check"):
+                    want = table_answer(d["columns"], d["pattern"]["check"])
+                    keyed = next((o["t"] for o in d["pattern"]["opts"] if o.get("ok")), None)
+                    if want is None or keyed != want:
+                        fail(entry["file"], "step %d chart is keyed %r but the columns say %r" % (k, keyed, want))
+                    computed += 1
+            elif kind == "precise":
+                for rd in d["rounds"]:
+                    if not one_key(rd["opts"]):
+                        fail(entry["file"], "step %d precise round %r does not have exactly one key" % (k, rd["ask"]))
+            elif kind == "survey":
+                if not one_key(d["then"]["opts"]):
+                    fail(entry["file"], "step %d's survey question does not have exactly one key" % k)
+            elif kind == "label":
+                ids = [p["id"] for p in d["parts"]]
+                if len(set(ids)) != len(ids):
+                    fail(entry["file"], "step %d labels the same part twice" % k)
             elif kind == "robot":
                 for lv in d["levels"]:
                     if lv.get("predict"):

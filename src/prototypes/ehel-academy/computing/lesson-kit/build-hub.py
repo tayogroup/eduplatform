@@ -48,6 +48,8 @@ MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "order": 2,
            "program": 5, "debug": 5,
            "form": 4, "table": 3, "sorter": 2, "ask": 3,
            "network": 3, "offline": 4, "io": 3, "apps": 4,
+           # Stage 2
+           "precise": 4, "chart": 3, "survey": 4, "label": 3, "race": 3,
            "questions": 3, "quiz": 4,
            # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
            "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
@@ -68,6 +70,12 @@ UNPLUGGED = {
     "offline": "With a grown-up, switch the wi-fi off for five minutes. Which apps still work? Switch it back on.",
     "io": "Find the inputs and outputs on a real device: what do you press or speak into, and where does the information come out?",
     "apps": "Look at a tablet's home screen together. Name what each program is for: a game, drawing, writing, watching, talking.",
+    # Stage 2
+    "precise": "One person gives instructions for drawing a house; the other draws EXACTLY what is said and nothing more. 'Draw a shape' gets a shape. Then swap, and try to be precise enough that the drawing comes out right first time.",
+    "chart": "Count something at home - shoes by colour, cups by size - and build a block graph out of toy bricks, one brick per thing. Which column is tallest?",
+    "survey": "Plan a survey with a purpose (what to cook on Friday). Try collecting the answers by shouting, then by ticking a paper tally, then by a form if there is a tablet. Which way gave you data you could count?",
+    "label": "Find the parts on a real laptop or tablet together: the screen, the keyboard, the touchpad, the camera, the speaker, the charging port. Say what each one does.",
+    "race": "Race a calculator or a phone at five sums. Then find three jobs the calculator cannot do at all.",
 }
 
 
@@ -283,7 +291,22 @@ def keys_for(s):
         out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), "; ".join(
             "<b>%s</b>: %s" % (text(g), text(", ".join(v))) for g, v in groups.items())))
     elif k in ("order", "follow"):
-        out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), text(" &rarr; ".join(it["label"] for it in d.get("items") or d.get("steps")))))
+        out.append("<li><b>%s</b> <span class=\"key\">%s%s</span></li>" % (text(s["title"]), text(" &rarr; ".join(it["label"] for it in d.get("items") or d.get("steps"))),
+                                                                        ("; not needed: " + text(", ".join(x["label"] for x in d["extras"]))) if d.get("extras") else ""))
+    elif k == "precise":
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(rd["ask"])), text(ok_text(rd["opts"]))) for rd in d["rounds"])))
+    elif k == "chart":
+        out.append("<li><b>%s</b> <span class=\"key\">%s; %s &rarr; <b>%s</b></span></li>" % (text(s["title"]), text(", ".join("%s %d" % (c["label"], c["value"]) for c in d["columns"])),
+                                                                                                 text(plain(d["pattern"]["ask"])), text(ok_text(d["pattern"]["opts"]))))
+    elif k == "survey":
+        out.append("<li><b>%s</b> <span class=\"key\">works: %s; %s &rarr; <b>%s</b></span></li>" % (text(s["title"]), text(", ".join(w["label"] for w in d["ways"] if w["works"])),
+                                                                                                        text(plain(d["then"]["ask"])), text(ok_text(d["then"]["opts"]))))
+    elif k == "label":
+        out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), text(", ".join(p["label"] for p in d["parts"]))))
+    elif k == "race":
+        out.append("<li><b>%s</b> <span class=\"key\">%s; %s &rarr; <b>%s</b></span></li>" % (text(s["title"]), text("; ".join("%s = %s" % (rd["ask"], rd["answer"]) for rd in d["rounds"])),
+                                                                                                 text(plain(d["then"]["ask"])), text(ok_text(d["then"]["opts"]))))
     elif k == "bugs":
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
             "<li>%s <span class=\"key\">the bug is step %d, <b>%s</b>; %s</span></li>" % (
@@ -309,12 +332,15 @@ def keys_for(s):
             if rd.get("given"):
                 items.append("<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(rd["predict"]["ask"])), text(ok_text(rd["predict"]["opts"]))))
             else:
-                items.append("<li>%s <span class=\"key\">&rarr; blocks <b>%s</b></span></li>" % (text(", ".join(rd["algorithm"])), text(", ".join(rd["expect"]))))
+                items.append("<li>%s%s <span class=\"key\">&rarr; blocks <b>%s</b>%s</span></li>" % (
+                    ("(%s) " % text((d.get("spriteNames") or [""])[rd.get("object", 0)])) if d.get("sprites") else "",
+                    text(", ".join(rd["algorithm"])), text(", ".join(rd["expect"])), " (a repeat block is required)" if rd.get("mustRepeat") else ""))
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(items)))
     elif k == "debug":
         out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
-            "<li>%s <span class=\"key\">the bug is block %d (<b>%s</b>); it should be <b>%s</b></span></li>" % (
-                text(rd["goal"]), rd["bug"] + 1, text(rd["program"][rd["bug"]]), text(rd["expect"][rd["bug"]])) for rd in d["rounds"])))
+            "<li>%s <span class=\"key\">%s</span></li>" % (
+                text(rd["goal"]), "; ".join("the bug is block %d (<b>%s</b>); it should be <b>%s</b>" % (b + 1, text(rd["program"][b]), text(rd["expect"][b]))
+                                            for b in sorted(rd.get("bugs") or [rd["bug"]]))) for rd in d["rounds"])))
     elif k == "form":
         names = {x["id"]: x["t"] for x in d["options"]}
         out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), "; ".join(

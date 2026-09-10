@@ -20,6 +20,8 @@ the builder and the gate).
                 claimed.
 """
 
+import re
+
 DIRS = {"up": (0, -1), "right": (1, 0), "down": (0, 1), "left": (-1, 0)}
 TURN_L = {"up": "left", "left": "down", "down": "right", "right": "up"}
 TURN_R = {"up": "right", "right": "down", "down": "left", "left": "up"}
@@ -66,3 +68,40 @@ def table_answer(rows, check):
     if kind == "any":
         return "Yes" if row["value"] > 0 else "No"
     return None
+
+
+# Stage 2: the repeat block (2P.03). A repeat block repeats the block AFTER
+# it; a repeat with nothing after it, or another repeat after it, repeats
+# nothing. This mirrors expandProgram() in lib/computing.js, and the builder
+# checks these counts against the BLOCKS table in the JS so the two cannot
+# drift - the same reason the Wehel contract holds three files equal.
+REPEATS = {"repeat2": 2, "repeat3": 3, "repeat4": 4}
+
+
+def expand_program(ids):
+    """The plain list of moves a program makes, repeats unrolled."""
+    out = []
+    i = 0
+    while i < len(ids):
+        n = REPEATS.get(ids[i])
+        if n:
+            nxt = ids[i + 1] if i + 1 < len(ids) else None
+            if nxt and nxt not in REPEATS:
+                out.extend([nxt] * n)
+                i += 1
+        else:
+            out.append(ids[i])
+        i += 1
+    return out
+
+
+def sum_answer(expr):
+    """The answer of a race sum - `a + b` or `a - b` in whole numbers - as the
+    string a child taps, or None if the expression is not one of those. The
+    race keys are computed, never trusted, the same stance the Mathematics
+    answer-key gate takes."""
+    m = re.fullmatch(r"\s*(\d+)\s*([+−-])\s*(\d+)\s*", str(expr))
+    if not m:
+        return None
+    a, op, b = int(m.group(1)), m.group(2), int(m.group(3))
+    return str(a + b if op == "+" else a - b)

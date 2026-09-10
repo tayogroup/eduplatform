@@ -89,15 +89,18 @@ KINDS = {
     "form": "dataForm", "table": "dataTable", "sorter": "sortMachine", "ask": "askDevice",
     # networks and computer systems
     "network": "networkBuild", "offline": "offlineTest", "io": "inputOutput", "apps": "appScreen",
+    # Stage 2
+    "precise": "preciseDraw", "chart": "blockGraph", "survey": "surveyDesign", "label": "labelParts", "race": "race",
     "questions": "sequence", "quiz": "sequence",
     # the unit shell, drawn around every lesson by _shell.py
     "overview": "unitOverview", "lecture": "lecture", "words": "computingWords",
     "games": "gameZone", "home": "homeProjects", "world": "computingWorld", "resources": "resources",
 }
 
-# Robo's rules and the table arithmetic live in _rules.py, shared with the
-# gate, so the builder and check-coverage.py cannot disagree about either.
-from _rules import DIRS, run_robot, table_answer  # noqa: E402
+# Robo's rules, the table arithmetic, the repeat block and the race sums live
+# in _rules.py, shared with the gate, so the builder and check-coverage.py
+# cannot disagree about any of them.
+from _rules import DIRS, REPEATS, expand_program, run_robot, sum_answer, table_answer  # noqa: E402
 
 
 def read(name):
@@ -130,7 +133,19 @@ def js_keys(src, name, indent="  "):
     m = re.search(r"\n%sconst %s = \{\n(.*?)\n%s\};" % (indent, name, indent), src, re.S)
     if not m:
         sys.exit("REFUSED: cannot find `const %s = {` in lib/computing.js" % name)
-    return set(re.findall(r"^%s  ([A-Za-z]+): " % indent, m.group(1), re.M))
+    return set(re.findall(r"^%s  ([A-Za-z0-9]+): " % indent, m.group(1), re.M))
+
+
+def js_block(src, name, indent="  "):
+    """The text of `const NAME = { ... };`, for looking inside its entries."""
+    m = re.search(r"\n%sconst %s = \{\n(.*?)\n%s\};" % (indent, name, indent), src, re.S)
+    return m.group(1) if m else ""
+
+
+def js_entry(block, key):
+    """The text of one entry of a js_block, up to the next top-level key."""
+    m = re.search(r"^    %s: (.*?)(?=^    [A-Za-z0-9]+: |\Z)" % re.escape(key), block, re.M | re.S)
+    return m.group(1) if m else ""
 
 
 def load_lessons(wanted):
@@ -170,7 +185,8 @@ def one_ok(opts, where):
                  % (where, sum(1 for o in opts if o.get("ok"))))
 
 
-def check_step(n, k, s, codes, scenes, blocks, apps, sounds):
+def check_step(n, k, s, codes, libs):
+    scenes, blocks, apps, sounds = libs["scenes"], libs["blocks"], libs["apps"], libs["sounds"]
     where = "lesson %d step %d (%s)" % (n, k + 1, s["title"])
     if s["kind"] not in KINDS:
         sys.exit("REFUSED: %s has unknown kind %r" % (where, s["kind"]))
@@ -217,6 +233,12 @@ def check_step(n, k, s, codes, scenes, blocks, apps, sounds):
             scene_ok(d["scene"])
             if any("id" not in it for it in d["items"]):
                 sys.exit("REFUSED: %s draws a scene, so every item needs an id" % where)
+        labels = [it["label"] for it in d["items"]] + [x["label"] for x in d.get("extras") or []]
+        if len(set(labels)) != len(labels):
+            sys.exit("REFUSED: %s repeats a step label between the needed steps and the extras" % where)
+        for x in d.get("extras") or []:
+            if not x.get("why"):
+                sys.exit("REFUSED: %s extra %r needs a why (it is not needed because...)" % (where, x["label"]))
     elif kind == "demo":
         if len(d["frames"]) < 2:
             sys.exit("REFUSED: %s has fewer than 2 frames" % where)
@@ -291,17 +313,28 @@ def check_step(n, k, s, codes, scenes, blocks, apps, sounds):
                     sys.exit("REFUSED: %s level %r: the authored solution stops at %r, not on the target %r" % (where, lv["title"], end, lv["target"]))
     elif kind == "program":
         blocks_ok(d.get("blocks") or [], "palette")
+        nsprites = len(d.get("sprites") or [d.get("sprite") or "cat"])
+        if d.get("sprites") and len(d.get("spriteNames") or []) != nsprites:
+            sys.exit("REFUSED: %s names %d sprites but %d spriteNames" % (where, nsprites, len(d.get("spriteNames") or [])))
         if len(d["rounds"]) < 2:
             sys.exit("REFUSED: %s has fewer than 2 programs" % where)
         for rd in d["rounds"]:
+            if not 0 <= int(rd.get("object", 0)) < nsprites:
+                sys.exit("REFUSED: %s round is for object %r, of %d" % (where, rd.get("object"), nsprites))
             if rd.get("given"):
                 blocks_ok(rd["given"], "given program")
                 one_ok(rd["predict"]["opts"], where + " prediction")
                 if not rd["predict"].get("why"):
                     sys.exit("REFUSED: %s prediction has no why" % where)
+                if not expand_program(rd["given"]):
+                    sys.exit("REFUSED: %s: the given program does nothing when run" % where)
             else:
                 blocks_ok(rd["expect"], "expected program")
-                if len(rd["algorithm"]) != len(rd["expect"]):
+                if not expand_program(rd["expect"]):
+                    sys.exit("REFUSED: %s round %r: the expected program does nothing when run" % (where, rd["algorithm"]))
+                if rd.get("mustRepeat") and not any(b in REPEATS for b in rd["expect"]):
+                    sys.exit("REFUSED: %s round %r asks for a repeat block but its expected program has none" % (where, rd["algorithm"]))
+                if not any(b in REPEATS for b in rd["expect"]) and len(rd["algorithm"]) != len(rd["expect"]):
                     sys.exit("REFUSED: %s round %r: %d words but %d blocks" % (where, rd["algorithm"], len(rd["algorithm"]), len(rd["expect"])))
                 for b in rd["expect"]:
                     if b not in (d.get("blocks") or blocks):
@@ -313,16 +346,93 @@ def check_step(n, k, s, codes, scenes, blocks, apps, sounds):
             blocks_ok(rd["program"], "buggy program"); blocks_ok(rd["expect"], "expected program")
             if len(rd["program"]) != len(rd["expect"]):
                 sys.exit("REFUSED: %s round %r: the fix must keep the program the same length" % (where, rd["goal"]))
+            bugs = sorted(rd.get("bugs") or [rd["bug"]])
             diffs = [k2 for k2 in range(len(rd["program"])) if rd["program"][k2] != rd["expect"][k2]]
-            if diffs != [rd["bug"]]:
-                sys.exit("REFUSED: %s round %r: the program differs from the expected one at %r, but the bug is marked at %d" % (where, rd["goal"], diffs, rd["bug"]))
-            one_ok(rd["fix"]["opts"], where + " fix for %r" % rd["goal"])
-            ok = next(o for o in rd["fix"]["opts"] if o["ok"])
-            if ok["id"] != rd["expect"][rd["bug"]]:
-                sys.exit("REFUSED: %s round %r: the fix %r does not make the expected program" % (where, rd["goal"], ok["id"]))
-            blocks_ok([o["id"] for o in rd["fix"]["opts"]], "fix options")
-            if not rd.get("why") or not rd["fix"].get("why"):
-                sys.exit("REFUSED: %s round %r needs a why for the bug and a why for the fix" % (where, rd["goal"]))
+            if diffs != bugs:
+                sys.exit("REFUSED: %s round %r: the program differs from the expected one at %r, but the bugs are marked at %r" % (where, rd["goal"], diffs, bugs))
+            for bug in bugs:
+                fix = (rd.get("fixes") or {}).get(str(bug)) or (rd.get("fixes") or {}).get(bug) or rd.get("fix")
+                if not fix:
+                    sys.exit("REFUSED: %s round %r has no fix for the bug at %d" % (where, rd["goal"], bug))
+                one_ok(fix["opts"], where + " fix for %r at %d" % (rd["goal"], bug))
+                ok = next(o for o in fix["opts"] if o["ok"])
+                if ok["id"] != rd["expect"][bug]:
+                    sys.exit("REFUSED: %s round %r: the fix %r at %d does not make the expected program" % (where, rd["goal"], ok["id"], bug))
+                blocks_ok([o["id"] for o in fix["opts"]], "fix options")
+                if not fix.get("why"):
+                    sys.exit("REFUSED: %s round %r: the fix at %d needs a why" % (where, rd["goal"], bug))
+                if not ((rd.get("whys") or {}).get(str(bug)) or rd.get("why")):
+                    sys.exit("REFUSED: %s round %r needs a why for the bug at %d" % (where, rd["goal"], bug))
+            if rd.get("partner") and not (rd["partner"].get("name") and rd["partner"].get("pic") and rd["partner"].get("hint")):
+                sys.exit("REFUSED: %s round %r: a partner needs a name, a pic and a hint" % (where, rd["goal"]))
+    elif kind == "precise":
+        if d["drawing"] not in libs["drawings"]:
+            sys.exit("REFUSED: %s draws %r; lib/computing.js has %s" % (where, d["drawing"], sorted(libs["drawings"])))
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s gives fewer than 2 instructions" % where)
+        drawn = libs["drawing_ids"].get(d["drawing"], set())
+        for rd in d["rounds"]:
+            one_ok(rd["opts"], where + " %r" % plain(rd["ask"]))
+            if not rd.get("why"):
+                sys.exit("REFUSED: %s %r has no why" % (where, plain(rd["ask"])))
+            for o in rd["opts"]:
+                if o.get("id") not in drawn:
+                    sys.exit("REFUSED: %s option %r has id %r, which DRAWINGS.%s does not draw (it would draw nothing)" % (where, o["t"], o.get("id"), d["drawing"]))
+    elif kind == "chart":
+        if len(d["columns"]) < 2:
+            sys.exit("REFUSED: %s graphs fewer than 2 columns" % where)
+        for c in d["columns"]:
+            if not isinstance(c["value"], int) or not 1 <= c["value"] <= 10:
+                sys.exit("REFUSED: %s column %r has value %r; keep it a whole number 1-10" % (where, c["label"], c["value"]))
+        one_ok(d["pattern"]["opts"], where + " pattern")
+        if not d["pattern"].get("why"):
+            sys.exit("REFUSED: %s pattern has no why" % where)
+        if d["pattern"].get("check"):
+            want = table_answer(d["columns"], d["pattern"]["check"])
+            keyed = next(o["t"] for o in d["pattern"]["opts"] if o["ok"])
+            if want is None or keyed != want:
+                sys.exit("REFUSED: %s pattern is keyed %r but the columns say %r" % (where, keyed, want))
+    elif kind == "survey":
+        ids = {x["id"] for x in d["options"]}
+        if len(d["ways"]) < 3 or len(d["people"]) < 4 or len(ids) < 2:
+            sys.exit("REFUSED: %s needs 3+ ways, 4+ people and 2+ options" % where)
+        for w in d["ways"]:
+            if not isinstance(w.get("works"), bool) or not w.get("outcome") or not w.get("why"):
+                sys.exit("REFUSED: %s way %r needs a boolean `works`, an outcome and a why" % (where, w.get("label")))
+        if not any(w["works"] for w in d["ways"]) or all(w["works"] for w in d["ways"]):
+            sys.exit("REFUSED: %s: the ways must include some that work and some that do not" % where)
+        for p in d["people"]:
+            if p["answer"] not in ids:
+                sys.exit("REFUSED: %s: %s answers %r, not an option" % (where, p["name"], p["answer"]))
+        one_ok(d["then"]["opts"], where + " question")
+        if not d["then"].get("why") or not d.get("purpose") or not d.get("question"):
+            sys.exit("REFUSED: %s needs a purpose, a question and a why for the final question" % where)
+    elif kind == "label":
+        if d["figure"] not in libs["figures"]:
+            sys.exit("REFUSED: %s names figure %r; lib/computing.js draws %s" % (where, d["figure"], sorted(libs["figures"])))
+        if not d["parts"] or "%s" not in d["ask"]:
+            sys.exit("REFUSED: %s needs parts and an ask with %%s" % where)
+        drawn = libs["figure_parts"].get(d["figure"], set())
+        for p in d["parts"]:
+            if p["id"] not in drawn:
+                sys.exit("REFUSED: %s part %r is not a data-part of FIGURES.%s (%s)" % (where, p["id"], d["figure"], sorted(drawn)))
+            if not p.get("label") or not p.get("say"):
+                sys.exit("REFUSED: %s part %r needs a label and a say" % (where, p["id"]))
+    elif kind == "race":
+        if len(d["rounds"]) < 3:
+            sys.exit("REFUSED: %s races fewer than 3 sums" % where)
+        for rd in d["rounds"]:
+            want = sum_answer(rd["ask"])
+            if want is None:
+                sys.exit("REFUSED: %s %r is not a sum this kit can compute (a + b or a - b)" % (where, rd["ask"]))
+            if str(rd["answer"]) != want:
+                sys.exit("REFUSED: %s %r is keyed %r but the sum is %s" % (where, rd["ask"], rd["answer"], want))
+            opts = [str(t) for t in rd["opts"]]
+            if want not in opts or len(set(opts)) != len(opts) or len(opts) < 2:
+                sys.exit("REFUSED: %s %r: the options must include the answer once and repeat nothing" % (where, rd["ask"]))
+        one_ok(d["then"]["opts"], where + " question")
+        if not d["then"].get("why"):
+            sys.exit("REFUSED: %s question has no why" % where)
     elif kind == "form":
         ids = {x["id"] for x in d["options"]}
         if len(d["people"]) < 3 or len(ids) < 2:
@@ -579,10 +689,10 @@ def prepare_quiz_pics(step):
     return step
 
 
-def build(n, fname, lesson, codes, scenes, blocks, apps, sounds, css, voice, deck, computing, finder):
+def build(n, fname, lesson, codes, libs, css, voice, deck, computing, finder):
     steps = expand(n, lesson, codes, finder, CFG)
     for k, s in enumerate(steps):
-        check_step(n, k, s, codes, scenes, blocks, apps, sounds)
+        check_step(n, k, s, codes, libs)
         prepare_quiz_pics(s)
 
     title = lesson["title"]
@@ -631,25 +741,41 @@ def main():
     wanted = [int(a) for a in sys.argv[1:] if a.isdigit()]
     codes = stage_codes()
     computing = read("computing.js")
-    scenes = js_keys(computing, "SCENES")
-    blocks = js_keys(computing, "BLOCKS")
-    apps = js_keys(computing, "APPS")
-    sounds = js_keys(computing, "BANK", indent="    ")
-    if not (scenes and blocks and apps and sounds):
-        sys.exit("REFUSED: lib/computing.js read as having no scenes, blocks, apps or sounds - the parser is broken")
+    libs = {
+        "scenes": js_keys(computing, "SCENES"),
+        "blocks": js_keys(computing, "BLOCKS"),
+        "apps": js_keys(computing, "APPS"),
+        "sounds": js_keys(computing, "BANK", indent="    "),
+        "drawings": js_keys(computing, "DRAWINGS"),
+        "figures": js_keys(computing, "FIGURES"),
+    }
+    if not all(libs.values()):
+        sys.exit("REFUSED: lib/computing.js read as having no scenes, blocks, apps, sounds, drawings or figures - the parser is broken")
+    # what each drawing can draw and each figure can name, read out of the
+    # JS itself: an option id or a part id the JS does not know would draw
+    # nothing, silently, on a child's page
+    drawings_src, figures_src = js_block(computing, "DRAWINGS"), js_block(computing, "FIGURES")
+    libs["drawing_ids"] = {name: set(re.findall(r'has\("([a-z0-9-]+)"\)', js_entry(drawings_src, name))) for name in libs["drawings"]}
+    libs["figure_parts"] = {name: set(re.findall(r'data-part="([a-z0-9-]+)"', js_entry(figures_src, name))) for name in libs["figures"]}
+    # the repeat counts in the JS BLOCKS table must be the ones _rules.py
+    # unrolls with, or the page and the gate would disagree about what a
+    # program does
+    js_repeats = {k: int(v) for k, v in re.findall(r"^    (repeat\d): \{.*?repeat: (\d)", js_block(computing, "BLOCKS"), re.M)}
+    if js_repeats != REPEATS:
+        sys.exit("REFUSED: the repeat blocks in lib/computing.js are %r but _rules.py unrolls %r" % (js_repeats, REPEATS))
     css = read("lesson.css") + "\n" + read("computing.css")
     voice = read("voice.js")
     deck = read("deck.js")
 
-    print("\n  Building %s Computing lessons  (0059 Stage %d: %d objectives; %d scenes, %d blocks, %d apps, %d sounds)\n"
-          % (GRADE_LABEL, STAGE, len(codes), len(scenes), len(blocks), len(apps), len(sounds)))
+    print("\n  Building %s Computing lessons  (0059 Stage %d: %d objectives; %d scenes, %d blocks, %d apps, %d sounds, %d drawings, %d figures)\n"
+          % (GRADE_LABEL, STAGE, len(codes), len(libs["scenes"]), len(libs["blocks"]), len(libs["apps"]), len(libs["sounds"]), len(libs["drawings"]), len(libs["figures"])))
     covered = set()
     everything = load_lessons([])
     finder = finder_words(everything)
     for n, fname, lesson in everything:
         if wanted and n not in wanted:
             continue
-        covered |= set(build(n, fname, lesson, codes, scenes, blocks, apps, sounds, css, voice, deck, computing, finder))
+        covered |= set(build(n, fname, lesson, codes, libs, css, voice, deck, computing, finder))
     if not wanted:
         missing = sorted(set(codes) - covered)
         print("\n  %d of %d Stage %d objectives reached by at least one step%s\n"

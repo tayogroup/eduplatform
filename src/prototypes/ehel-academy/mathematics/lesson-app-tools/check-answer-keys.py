@@ -73,7 +73,7 @@ RULE_FUNCS = {
     "pattern_answer", "chart_answer", "stage34_number", "stage34_shape",
     "stage34_place", "stage34_time", "named_chart_answer", "beads_answer",
     "calc_answer", "words_answer", "term_rule_answer", "estimate_answer", "stage3_runtime",
-    "fraction_notation",
+    "fraction_notation", "chart_claim", "sorting_logic", "sample_answer",
     "part_square_answer",
 }
 RULE_HITS = "--rule-hits" in argv
@@ -2136,6 +2136,137 @@ def money(s):
     return float(m.group(0)) if m else None
 
 
+def chart_claim(counts, cats, opts):
+    """"Which of these is TRUE about the pet graph?" - every option is a claim.
+
+    The graph's own numbers settle each one, so this evaluates all three and
+    takes the single true one. dog 6, cat 4, fish 4, bird 2 makes "More children
+    have a dog than a bird" true, "Every child has a dog" false and "Nobody has
+    a fish" false - none of which can be told apart by how the sentence reads.
+
+    ANSWERS ONLY WHEN EVERY OPTION PARSES, the discipline the Stage 4
+    factor/multiple rule keeps: an unreadable claim might be the true one, and
+    answering from the rest would report a correct key as wrong. That is why
+    "Cats are the best pet" correctly stops this rule rather than being treated
+    as false - an opinion is not a false claim, it is an unevaluable one.
+    """
+    total = sum(counts)
+    def value(word):
+        hit = [c for c, (e, w) in zip(counts, cats)
+               if re.search(r"\b%ss?\b" % re.escape(w), word)]
+        return hit[0] if len(hit) == 1 else None
+
+    true = []
+    for o in opts:
+        s = plain(o).lower().rstrip(".")
+        m = re.search(r"\bmore\b.*?\b(?:have|like|chose|choose)\b(.*?)\bthan\b(.*)", s)
+        if m:
+            a, b = value(m.group(1)), value(m.group(2))
+            if a is None or b is None:
+                return None
+            if a > b:
+                true.append(o)
+            continue
+        m = re.search(r"same number.*?\b(?:have|like|chose)\b(.*?)\bas\b(.*)", s)
+        if m:
+            a, b = value(m.group(1)), value(m.group(2))
+            if a is None or b is None:
+                return None
+            if a == b:
+                true.append(o)
+            continue
+        m = re.search(r"\b(?:every child|everybody|everyone)\b.*?"
+                      r"\b(?:has|have|likes?|chose)\b(.*)", s)
+        if m:
+            a = value(m.group(1))
+            if a is None:
+                return None
+            if a == total:
+                true.append(o)
+            continue
+        m = re.search(r"\bnobody\b.*?\b(?:has|have|likes?|chose)\b(.*)", s)
+        if m:
+            a = value(m.group(1))
+            if a is None:
+                return None
+            if a == 0:
+                true.append(o)
+            continue
+        m = re.search(r"(.*?)\bwas (?:chosen|picked) (?:most often|the most)", s)
+        if m:
+            a = value(m.group(1))
+            if a is None or counts.count(max(counts)) != 1:
+                return None
+            if a == max(counts):
+                true.append(o)
+            continue
+        return None                       # an option no form reads: decline
+    return true[0] if len(true) == 1 else None
+
+
+def sorting_logic(low, opts):
+    """Sorting hoops and Carroll diagrams, answered by SET MEMBERSHIP.
+
+    "A blue square goes in the Carroll diagram with rows red / not red and
+    columns circle / not a circle. Which box?" is decided by testing the object
+    against each criterion - blue is not red, a square is not a circle - so the
+    box is "not red, not a circle" and a key bound to any other box is caught.
+    The same test places a card in crossing hoops: a red circle matches both
+    labels, so it goes in the middle.
+
+    This is logic rather than vocabulary, which is what separates it from the
+    definitional questions in the same lesson ("A hoop holds the things
+    that...") that are left alone.
+    """
+    # a card described by colour and shape: "A blue square", "A red circle"
+    m = re.search(r"\ba (\w+) (square|circle|triangle|star|rectangle)\b", low)
+    if not m:
+        return None
+    colour, shape = m.group(1), m.group(2)
+
+    # CARROLL: the two criteria are named in the question itself
+    c = re.search(r"rows? (\w+) / not \w+ and columns? (?:a )?(\w+) / not a \w+", low)
+    if c and "carroll" in low:
+        want = ("%s, %s" % (c.group(1) if colour == c.group(1) else "not " + c.group(1),
+                            c.group(2) if shape == c.group(2) else "not a " + c.group(2)))
+        hit = [o for o in opts if plain(o).lower().rstrip(".") == want]
+        return hit[0] if len(hit) == 1 else None
+
+    # HOOPS: the two labels are named, and the card may match both, one, neither
+    h = re.search(r"hoops? labelled (\w+) and (\w+)", low)
+    if h:
+        a, b = h.group(1).rstrip("s"), h.group(2).rstrip("s")
+        n = (colour == a or shape == a) + (colour == b or shape == b)
+        want = (r"\bin the middle\b" if n == 2 else
+                r"\boutside\b" if n == 0 else r"\bonly\b")
+        hit = [o for o in opts if re.search(want, plain(o).lower())]
+        return hit[0] if len(hit) == 1 else None
+    return None
+
+
+def sample_answer(low, opts):
+    """A graph of ONE class cannot speak for a school, and MOST is not EVERY.
+
+    Both are inferences the data itself refuses, so they are checkable: the
+    question names the group asked and the larger group it is being stretched
+    to, and the answer is the option that denies the stretch. A key bound to
+    "yes, all classes are the same" is caught.
+
+    NARROW ON PURPOSE. The tempting version is "among a yes/no pair, pick no",
+    and this lesson has a question that would wrongly ride on it - "A list is
+    easy to write, but is it easy to count?" is also answered "No" and for a
+    reason about lists, not about sampling. A rule that got it right by
+    accident would be the same rule that gets the next one wrong.
+    """
+    stretch = (re.search(r"\b(?:our |the )?class\b.*\bwhole school\b", low) or
+               re.search(r"\bmost\b.*\b(?:everybody|everyone|every child)\b", low))
+    if not stretch or len(opts) != 2:
+        return None
+    no = [o for o in opts if re.match(r"\s*no\b", plain(o).lower())]
+    yes = [o for o in opts if re.match(r"\s*yes\b", plain(o).lower())]
+    return no[0] if len(no) == 1 and len(yes) == 1 else None
+
+
 def fraction_notation(low, opts):
     """What a PART of the fraction notation means - the line, or one digit.
 
@@ -2352,6 +2483,12 @@ def expected(q, opts, item, js=""):
         got = graph_answer(low, ds[0], ds[1], opts)
         if got is not None:
             return got
+        # after graph_answer, which reads a question ABOUT the data; this reads
+        # options that are each a CLAIM about it
+        if re.search(r"which of these is\b.*\btrue\b|which is true", low):
+            got = chart_claim(ds[0], ds[1], opts)
+            if got is not None:
+                return got
 
     b = re.search(r"balance\(\s*(-?\d+)\s*,\s*\"([^\"]*)\"\s*,\s*\"([^\"]*)\"", item)
     if b:
@@ -2450,6 +2587,12 @@ def expected(q, opts, item, js=""):
     if got is not None:
         return got
     got = term_rule_answer(low, t, opts)
+    if got is not None:
+        return got
+    got = sorting_logic(low, opts)
+    if got is not None:
+        return got
+    got = sample_answer(low, opts)
     if got is not None:
         return got
     got = fraction_notation(low, opts)

@@ -740,6 +740,41 @@ CASES = [
      'what does the 4 tell you?',
      'a: "how many equal parts"',
      'a: "how many you take"'),
+
+    # ---- the Grade 1 data-handling questions, added with the rules for them ----
+    # These are the ones that look least checkable and are not: a card's place
+    # is decided by testing it against the criteria, a claim about a graph is
+    # decided by the graph's own numbers, and "most" does not license "every".
+    # Each mutation binds the key to an option that is FALSE for the stated
+    # reason, so a rule that matched on wording would let it through.
+    ('grade-1-app/g1v2', 'asking-and-sorting.html',
+     'sorted into hoops labelled',
+     'a: "in the middle"',
+     'a: "in the red hoop only"'),
+    ('grade-1-app/g1v2', 'asking-and-sorting.html',
+     'Carroll diagram with rows',
+     'a: "not red, not a circle"',
+     'a: "not red, circle"'),
+    ('grade-1-app/g1v2', 'asking-and-sorting.html',
+     'most chose mango',
+     'opts: ["no", "yes"], a: "no"',
+     'opts: ["no", "yes"], a: "yes"'),
+    ('grade-1-app/g1v2', 'asking-and-sorting.html',
+     'Does the graph tell us about the <b>whole school</b>?',
+     'a: "no, only the class we asked"',
+     'a: "yes, all classes are the same"'),
+    ('grade-1-app/g1v2', 'asking-and-sorting.html',
+     'true</b> about the pet graph?',
+     '{ t: "More children have a dog than a bird", ok: true },\n          { t: "Every child has a dog", ok: false }',
+     '{ t: "More children have a dog than a bird", ok: false },\n          { t: "Every child has a dog", ok: true }'),
+    ('grade-1-app/g1v2', 'asking-and-sorting.html',
+     'Look back at the fruit graph',
+     '{ t: "Mango was chosen most often", ok: true },\n          { t: "Everybody likes mango", ok: false }',
+     '{ t: "Mango was chosen most often", ok: false },\n          { t: "Everybody likes mango", ok: true }'),
+    ('grade-1-app/g1v2', 'asking-and-sorting.html',
+     'Can it tell us what the whole school likes best?',
+     '{ t: "No, we only asked our class", ok: true }, { t: "Yes, it is the same everywhere", ok: false }',
+     '{ t: "No, we only asked our class", ok: false }, { t: "Yes, it is the same everywhere", ok: true }'),
 ]
 
 

@@ -681,6 +681,17 @@
     .eyebrow { white-space: normal; }
     .dots { max-width: 100%; justify-content: flex-start; }
   }
+
+  /* --- said on the learner's own screen when their work is not reaching the
+         school; see lesson-app-tools/wire-progress.py --- */
+  .progress-notice {
+    margin: 0 0 12px; padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--bad-soft); border: 1px solid var(--bad);
+    color: var(--ink);
+    font-family: "Inter", "Segoe UI", sans-serif;
+    font-size: 14px; font-weight: 600;
+  }
 </style>
 
 
@@ -1738,12 +1749,35 @@
     if (cur === slides.length - 1) paintStickers();
     if (speak) say(slides[cur].dataset.say);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }
   }
+  /* RESUME ON REOPEN. The stored record already knew which steps were
+     done and where the learner was; until this hook every reopened
+     lesson drew an empty dot rail and step 1. Called once, after the
+     progress document hydrates, and only if the learner has not already
+     moved off step 1 on their own - hydrate is asynchronous and a child
+     who tapped Next is not to be yanked back. show() is looked up by
+     name at call time, so every wrapper the build or the pipeline puts
+     around it (the header bar\x27s percentage, a step\x27s arrival line)
+     runs exactly as it does for a tap on a dot. */
+  window.__ehelRestore = function (doneIdx, resumeIdx) {
+    /* read BEFORE the ticks land: the record\x27s own step 1 must not
+       count as the learner having touched it (measured: it did, and the
+       page stayed on step 1 with the dots restored) */
+    const untouched = cur === 0 && !done[0];
+    let changed = false;
+    for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }
+    if (changed) paintDots();
+    const target = Number.isInteger(resumeIdx) && resumeIdx > 0 && resumeIdx < slides.length
+      ? resumeIdx : done.findIndex((d, i) => !d && i < done.length - 1);
+    if (untouched && target > 0) show(target, false);
+    else if (changed) show(cur, false);
+  };
   $("next").addEventListener("click", () => show(cur + 1, true));
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
-  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } if (msg) say(msg); }
 
   /* ---- shared drawing ---- */
   function frameHtml(n, cls, tap) {
@@ -2688,4 +2722,233 @@
       a.setAttribute("href", base + "?" + own.toString());
     });
   })();
+</script>
+
+<script type="module">
+  /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
+     THE UNIT PROBLEM for why this writes lNN and not uNN. */
+  import { createProgressClient } from "./progress-client.js";
+
+  const q = new URLSearchParams(location.search);
+  const endpoint = (q.get("pwsEndpoint") || "").trim();
+  const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
+
+  const COURSE = "ehel-math-g01";
+  const UNIT = "l01";
+  const STUDENT = q.get("studentid") || "local";
+
+  /* Without a launch endpoint the backend is "local": everything still
+     reduces into localStorage so resume works, and nothing is sent. That is
+     the same rule the shell follows, and it is why opening a lesson as a file
+     or an artifact costs nothing and reports nothing. */
+  const ws = createProgressClient({
+    course: COURSE, student: STUDENT,
+    backend: endpoint ? "remote" : "local",
+    endpoint: endpoint || undefined,
+    token: token || undefined,
+    /* A blocked or expired write path is INVISIBLE otherwise - the throw is
+       caught, the events queue, and the learner is told nothing while their
+       work stops reaching the school. Said on the learner's own screen
+       because the server cannot tell a blocked learner from a closed tab. */
+    onAuthLost: () => notice("Your session has expired. Your work is saved on this device \u2014 open the lesson again from your class page."),
+    onDeliveryFailing: () => notice(navigator.onLine
+      ? "Your work is saved here, but it is not reaching your school right now."
+      : "You are offline. Your work is saved here and will be sent when you are back."),
+    onDeliveryRecovered: () => clearNotice(),
+  });
+
+  const emit = (e) => { try { ws.emit(e); } catch (_) { /* never break the lesson */ } };
+
+  let noticeEl = null;
+  function notice(text) {
+    if (!noticeEl) {
+      noticeEl = document.createElement("p");
+      noticeEl.className = "progress-notice";
+      noticeEl.setAttribute("role", "status");
+      document.querySelector(".wrap")?.prepend(noticeEl);
+    }
+    noticeEl.textContent = text;
+  }
+  function clearNotice() { if (noticeEl) { noticeEl.remove(); noticeEl = null; } }
+
+  const slides = [...document.querySelectorAll(".slide")];
+  /* The lesson's own arithmetic: show() prints "Step n of slides.length - 1",
+     so the last slide is the sticker shelf and not a step. Read from the
+     lesson rather than counted here, so the two cannot disagree. */
+  const STEPS = Math.max(1, slides.length - 1);
+  const sectionId = (i) => "step-" + String(i + 1).padStart(2, "0");
+  const labelOf = (i) => (slides[i]?.querySelector("h2")?.textContent || "").trim() || sectionId(i);
+
+  const doneIds = new Set();
+  let unitSent = false;
+
+  /* WHERE the learner is, which is not what sectionsDone says: a learner
+     stuck twenty minutes into the next step is exactly the one a supervising
+     teacher needs to see. `resumeLabel` rides beside the id because a board
+     printing "step-04" shows a teacher a word that appears nowhere on the
+     child's screen. */
+  /* Activity-level participation, {section: {answered, total}}, and the words
+     the learner has shown they know. Both ride on progress.summary because the
+     reducer keeps them there and nowhere else; both are whole-map
+     last-write-wins, so every summary sends everything known so far rather
+     than a delta that could strand a count.
+
+     The server caps `attempted` at 20 sections and requires
+     ^[a-z0-9][a-z0-9_-]{0,39}$ - no dots, no slashes - so ids are kept in that
+     shape here rather than being rejected silently there. */
+  const attempted = {};
+  const known = new Set();
+  let lastAt = 0;
+
+  /* WHAT THE RECORD ALREADY HOLDS FOR THIS UNIT, read once at load.
+
+     Both maps above are REPLACED by the reducer, not merged, and both start
+     empty on every page load - so without this the first participation event
+     of a new session deletes every section reported in an earlier one. A child
+     who read four books on Monday and answered one question on Tuesday would
+     have Monday erased by Tuesday's first tick.
+
+     It is kept SEPARATE from the live maps rather than copied into them,
+     because hydrate is asynchronous and a report can fire before it lands.
+     Merged at send time, an early report sends a partial map and the next one
+     repairs it; a seed would simply have missed the window. If hydrate cannot
+     be reached at all the baseline stays empty, which is the behaviour without
+     it. */
+  let baseAttempted = {};
+  let baseKnown = [];
+  /* step-NN -> the slide's 0-based index; anything else -> -1 */
+  const indexOf = (id) => {
+    const m = /^step-(\d{2})$/.exec(String(id || ""));
+    return m ? Number(m[1]) - 1 : -1;
+  };
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (!u) return;
+      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
+      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
+      /* RESUME. The sections the record says are done are done - seeded into
+         doneIds too, so unit.completed still fires on the day the LAST step
+         is finished even if the first seven were finished last week - and
+         the deck is told to tick them and open where the learner was. Without
+         this a child who closed the tab reopened to an empty dot rail and
+         step 1, while the school's record said otherwise; measured on the
+         Science build on 2026-09-10, and true of every build this tool wires. */
+      const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
+      for (const i of doneIdx) doneIds.add(sectionId(i));
+      const resumeIdx = indexOf(u.resume);
+      if (window.__ehelRestore && (doneIdx.length || resumeIdx > 0)) {
+        try { window.__ehelRestore(doneIdx, resumeIdx); } catch (_) { /* never break the lesson */ }
+      }
+    } catch (_) { /* never break the lesson */ }
+  })();
+
+
+  function report(i) {
+    lastAt = i;
+    const ev = {
+      type: "progress.summary", unit: UNIT,
+      sectionsDone: [...doneIds],
+      resume: sectionId(i), resumeLabel: labelOf(i),
+      xp: doneIds.size,
+    };
+    /* This session's answers WIN over the stored ones for the same section -
+       a child who re-does a step is telling us something newer. */
+    const allAttempted = { ...baseAttempted, ...attempted };
+    const allKnown = new Set([...baseKnown, ...known]);
+    if (Object.keys(allAttempted).length) ev.attempted = allAttempted;
+    if (allKnown.size) ev.knownWords = [...allKnown];
+    emit(ev);
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  }
+
+  window.__ehelStep = function (i, done) {
+    const id = sectionId(i);
+    if (!doneIds.has(id)) {
+      doneIds.add(id);
+      emit({ type: "section.completed", unit: UNIT, section: id, title: labelOf(i) });
+    }
+    if (!unitSent && doneIds.size >= STEPS) {
+      unitSent = true;
+      emit({ type: "unit.completed", unit: UNIT, sectionsDone: [...doneIds], total: STEPS });
+    }
+    report(i);
+  };
+  window.__ehelAt = function (i) { lastAt = i; report(i); };
+
+  /* A SCORE, where a step actually produces one.
+     checkpoint.result is the only event the reducer turns into something a
+     teacher or a parent can read as a mark - the portal's quiz tables and the
+     gradebook are both fed from it - and nothing here emitted it, so every
+     scored step reported that it was DONE and never how it went.
+
+     ADDITIVE ON PURPOSE. A lesson that never calls this behaves exactly as it
+     did, which is what makes it safe in a tool three builds share.
+
+     ONLY WHERE THERE IS A REAL DENOMINATOR. `total` must be the number of
+     questions asked; a step that cannot say how many it asked must not call
+     this, because a score with an invented denominator is a mark nobody
+     measured. Play is deliberately excluded for the same reason the rollup
+     drops the Quran app's `games` star counts: a game is for practising. */
+  window.__ehelScore = function (i, right, total, sub, subTitle) {
+    const n = Number(total) || 0;
+    const got = Math.max(0, Math.min(Number(right) || 0, n));
+    if (!n) return;
+    /* `sub` gives ONE ACTIVITY INSIDE A STEP its own row - a single game out
+       of the twelve, say. The reducer keys checkpoints by this string and does
+       not validate it, so it is normalised here: lower case, hyphens only, and
+       short enough to read in a portal table. */
+    const key = sub
+      ? sectionId(i) + "-" + String(sub).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 28)
+      : sectionId(i);
+    emit({
+      type: "checkpoint.result", unit: UNIT, section: key,
+      title: subTitle ? labelOf(i) + ": " + subTitle : labelOf(i),
+      score: Math.round((got / n) * 100), correct: got, total: n,
+    });
+    try { ws.flush?.(); } catch (_) { /* never break the lesson */ }
+  };
+
+  /* PARTICIPATION where there is no score to give. "8 of 12 activities
+     ticked" is a real fact about a learner and is not a mark; sending it as a
+     checkpoint would put a percentage on work nobody assessed, which is the
+     thing the rollup already refuses to do for the Quran app's game stars. */
+  window.__ehelAttempt = function (i, answered, total, noun) {
+    const n = Number(total) || 0;
+    if (!n) return;
+    /* WHAT THIS IS CALLED, and what the two numbers count. The section id is a
+       POSITION here - `step-08` - and the same position is a different
+       activity in each app sharing this pipeline, so no reader of the stored
+       document can name it. `labelOf(i)` is the caption the learner is looking
+       at, the same one resumeLabel carries for the same reason: a surface
+       printing the id names a section nobody can find.
+
+       The noun is passed by the call site because only it knows: books, words,
+       rules, seconds. Both are optional and the server bounds them. */
+    attempted[sectionId(i)] = {
+      answered: Math.max(0, Math.min(Number(answered) || 0, n)),
+      total: n,
+      label: labelOf(i),
+      ...(noun ? { noun: String(noun) } : {}),
+    };
+    report(i);
+  };
+
+  /* Words the learner has shown they know, by tapping the right one when it
+     was said or pictured. A set, so hearing the same word in two steps counts
+     once, and the summary sends the whole list because the reducer replaces
+     rather than merges. */
+  window.__ehelKnown = function (words) {
+    const list = Array.isArray(words) ? words : [words];
+    let added = false;
+    for (const w of list) {
+      const t = String(w || "").trim().toLowerCase();
+      if (t && !known.has(t)) { known.add(t); added = true; }
+    }
+    // `cur` belongs to the deck's IIFE and this block is a separate module,
+    // so it is not in scope here - reading it would throw. The last position
+    // the deck told us about is, and that is the honest answer anyway.
+    if (added) report(lastAt);
+  };
 </script>

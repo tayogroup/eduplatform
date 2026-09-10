@@ -91,6 +91,8 @@ KINDS = {
     "order": "order", "graph": "blockGraph", "lookup": "lookup", "build": "build",
     # Stage 3
     "diagram": "makeDiagram",
+    # Stage 4
+    "key": "useKey",
     # the unit shell, drawn around every lesson by _shell.py
     "overview": "unitOverview", "lecture": "lecture", "words": "scienceWords",
     "games": "gameZone", "home": "homeProjects", "world": "scienceWorld", "resources": "resources",
@@ -239,6 +241,31 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
             sys.exit("REFUSED: %s names figure %r; lib/science.js draws %s" % (where, d["figure"], sorted(figures)))
         if not d["parts"] or "%s" not in d["ask"]:
             sys.exit("REFUSED: %s needs parts and an ask with %%s" % where)
+    elif kind == "key":
+        ids = {n["id"] for n in d["nodes"]}
+        if len(d["nodes"]) < 2 or len(d["items"]) < 3:
+            sys.exit("REFUSED: %s needs at least 2 key questions and 3 things to identify" % where)
+        for n in d["nodes"]:
+            for br in ("yes", "no"):
+                t = n[br]
+                if not (t.startswith("=") or t in ids):
+                    sys.exit("REFUSED: %s key node %r points %s at %r, which is neither a node nor a =name" % (where, n["id"], br, t))
+        leaves = {n[br][1:] for n in d["nodes"] for br in ("yes", "no") if n[br].startswith("=")}
+        for it in d["items"]:
+            if it["answer"] not in leaves:
+                sys.exit("REFUSED: %s item %r answers %r, which no leaf of the key names" % (where, it["label"], it["answer"]))
+            # walk the key with the item's facts and check it lands on its answer
+            node = d["nodes"][0]["id"]
+            for _ in range(len(d["nodes"]) + 1):
+                nd = next(x for x in d["nodes"] if x["id"] == node)
+                if node not in it["facts"]:
+                    sys.exit("REFUSED: %s item %r has no fact for key question %r" % (where, it["label"], node))
+                t = nd["yes"] if it["facts"][node] else nd["no"]
+                if t.startswith("="):
+                    if t[1:] != it["answer"]:
+                        sys.exit("REFUSED: %s item %r follows its facts to %r, not %r" % (where, it["label"], t[1:], it["answer"]))
+                    break
+                node = t
     elif kind == "diagram":
         if d["figure"] not in figures:
             sys.exit("REFUSED: %s names figure %r; lib/science.js draws %s" % (where, d["figure"], sorted(figures)))
@@ -269,7 +296,8 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
         if len(d["columns"]) < 2:
             sys.exit("REFUSED: %s graphs fewer than 2 columns" % where)
         for c in d["columns"]:
-            if not isinstance(c["value"], int) or not 1 <= c["value"] <= 10:
+            # a dot plot may show a value nobody measured: an empty column is the point
+            if not isinstance(c["value"], int) or not (0 if d.get("dot") else 1) <= c["value"] <= 10:
                 sys.exit("REFUSED: %s column %r has value %r; keep it a whole number 1-10" % (where, c["label"], c["value"]))
         one_ok(d["pattern"]["opts"], where + " pattern")
         if not d["pattern"].get("why"):

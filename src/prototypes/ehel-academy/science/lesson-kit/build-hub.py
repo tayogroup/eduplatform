@@ -46,7 +46,7 @@ CONTENT = os.path.join(APP, "content")
 # minutes a six-year-old spends on a step of each kind, including listening
 MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "experiment": 4, "predictEach": 5,
            "record": 2, "measure": 2.5, "label": 3, "tester": 3, "ask": 1.5, "questions": 3, "quiz": 4,
-           "order": 2, "graph": 3, "lookup": 3, "build": 3, "diagram": 3,
+           "order": 2, "graph": 3, "lookup": 3, "build": 3, "diagram": 3, "key": 4,
            # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
            "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
 
@@ -71,6 +71,16 @@ AT_HOME = {
     "separate": "A tray of dry sand with a few pebbles and a handful of paperclips mixed in, a sieve, a magnet; then a jug of muddy water and a coffee filter. Separate each mixture and say which property you used.",
     "states": "A glass of water, a wooden block and a balloon. Pour the water into a different-shaped glass; turn the block every way; untie the balloon.",
     "moonPhases": "A clear night sky and a notebook. Draw the Moon's shape every night you can see it for four weeks, with the date.",
+    # Stage 4
+    "muscles": "Your own arm. Hold the top of it with the other hand, bend the arm slowly and feel the biceps go short and hard; straighten it and feel the back of the arm tighten instead.",
+    "particles": "An ice cube on a plate in a warm room, and the ice tray afterwards. Melt it, then freeze it, and say what the particles were doing at each step.",
+    "reaction": "Two cups: sand stirred into water, and a spoon of bicarbonate of soda with a splash of vinegar. Which one fizzes? Which one could you get back?",
+    "energyDrop": "A ball dropped on a hard floor. Watch each bounce get lower, listen for the sound, and say where the energy went.",
+    "rayMirror": "A torch, a small mirror and a dark room. Bounce the beam off the mirror onto the wall, then get it into a friend's eye (never look straight into the torch).",
+    "seriesCircuit": "A torch with two batteries. Take one battery out and see if it still lights; if it does, compare the brightness.",
+    "conductor": "A torch that opens, a strip of foil, a plastic ruler, a coin, a key. With a grown-up, bridge the battery to the bulb with each one and see which light the bulb.",
+    "dayNight": "A lamp in a dark room and a globe or a ball with a sticker for you. Turn the ball slowly and watch your sticker go from day to night and back.",
+    "spinner": "A paper spinner (a strip of paper cut and folded into two wings and a stem, with a paperclip at the bottom) and a stopwatch. Drop it from the same height three times and time each drop.",
 }
 
 

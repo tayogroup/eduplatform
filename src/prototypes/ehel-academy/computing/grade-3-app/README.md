@@ -213,7 +213,7 @@ course does not declare.
   are the topic's own words. Every line is read aloud, so the level is a
   ceiling, not a gate. No US spellings; no quiz stem repeated anywhere.
 
-## Deployed 2026-09-10; not routed
+## Deployed and routed 2026-09-10
 
 Uploaded on the owner's instruction to
 `https://ehelacademy.b-cdn.net/Ehel%20Primary/app/computing/grade-3-v2/` —
@@ -226,13 +226,25 @@ failed requests, and three of the new renderers driven to a tick on the
 shipped bytes — all three tidy rounds of Lesson 5, both parallel rounds with
 the static tree in Lesson 6, and all four cipher messages in Lesson 12.
 
-**Nothing routes a learner to it.** `ehel-comp-g03` still launches wherever
-`local_prequran/ehel_app_url_overrides` points it, so these bytes are
-reachable by URL and live to nobody until the map is changed. Routing needs a
-`3 => ['ehel-comp-g03', …/grade-3-v2/index.html]` row in
-`lesson-app-tools/repoint-grade.php`'s computing targets, staged on the
-quraanacademy zone and run by the operator from the docroot, as Grades 1 and
-2 had. That, and redeploying Grades 1 and 2 on this kit, are owner decisions.
+**Routed the same day.** The Grade 3 row (`3 => ['ehel-comp-g03',
+…/grade-3-v2/index.html]`) was added to `lesson-app-tools/repoint-grade.php`'s
+computing targets (`9e2f5994b`), the script staged on the quraanacademy zone
+under a fresh name and verified by storage read-back and edge hash, and the
+operator ran it from the docroot with `--subject computing --grade 3 --apply`:
+it read back clean with all 9 overrides intact, so `ehel-comp-g03` now
+launches here (`local_prequran/ehel_app_url_overrides`). That is the script's
+own read-back, not a learner launch observed from this machine. The zone copy
+was deleted afterwards. Rollback is the pre-run map the report run printed,
+pasted into Site admin > Local plugins > Ehel app URL overrides, or removing
+the `ehel-comp-g03` key to return the course to `app/computing/index.html`.
+
+**The same read-back showed the map WITHOUT `ehel-comp-g01` and
+`ehel-comp-g02`**, both of which had been applied and read back clean
+earlier the same day (7 and 8 overrides intact at the time). Another hand
+edits this setting — the map had also lost `ehel-gp-g01` and never showed
+`ehel-math-g03`/`g04` — so a routing proved by its read-back is proved for
+that moment only. Read the map before assuming what it holds; the report
+run of `repoint-grade.php` prints it without writing anything.
 
 ## What was deliberately not done
 

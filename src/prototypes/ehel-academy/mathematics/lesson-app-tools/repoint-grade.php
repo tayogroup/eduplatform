@@ -1,6 +1,6 @@
 <?php
 /**
- * Point a Mathematics grade at its standalone lesson build.
+ * Point a grade of a subject at its standalone lesson build.
  *
  * Changes exactly one Moodle config value:
  *   local_prequran / ehel_app_url_overrides
@@ -11,8 +11,14 @@
  * read what it says the before and after will be.
  *
  *     cd /home/ehelacad/quraantest.academy
- *     php <thisfile>.php --grade 3,4            # report
- *     php <thisfile>.php --grade 3,4 --apply    # write
+ *     php <thisfile>.php --grade 3,4                          # report (mathematics)
+ *     php <thisfile>.php --grade 3,4 --apply                  # write
+ *     php <thisfile>.php --subject science --grade 1          # another subject
+ *
+ * --subject defaults to mathematics, so every earlier invocation means what it
+ * meant. Each subject carries its own TARGETS table and its own shared entry
+ * (where a course goes when its key is removed), because those are the two
+ * facts that differ between subjects and nothing else in this file does.
  *
  * Run it from the DOCROOT, not the home directory: the require below is
  * __DIR__-relative, so a home-directory run fails loudly rather than doing
@@ -61,18 +67,44 @@ const RP_PLUGIN   = 'local_prequran';
 const RP_SETTING  = 'ehel_app_url_overrides';
 const RP_EXPECTDB = 'ehelacad_quraantest';
 const RP_HOST     = 'https://ehelacademy.b-cdn.net/';
-// the shared subject entry, where a course goes when its key is removed
-const RP_ENTRY    = 'https://ehelacademy.b-cdn.net/Ehel%20Primary/app/mathematics/index.html';
-
-$TARGETS = [
-    1 => ['ehel-math-g01', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-1-v2/index.html'],
-    2 => ['ehel-math-g02', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-2-lessons/index.html'],
-    3 => ['ehel-math-g03', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-3-lessons/index.html'],
-    4 => ['ehel-math-g04', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-4-lessons/index.html'],
+// Per subject: the shared entry (where a course goes when its key is removed)
+// and the grade -> [course key, standalone build] table. The course key is the
+// shell's own courseKey for that subject and grade (shell/subjects/<subject>.js),
+// which is what pqpg_ehel_app_base() looks up.
+$SUBJECTS = [
+    'mathematics' => [
+        'entry' => RP_HOST . 'Ehel%20Primary/app/mathematics/index.html',
+        'targets' => [
+            1 => ['ehel-math-g01', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-1-v2/index.html'],
+            2 => ['ehel-math-g02', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-2-lessons/index.html'],
+            3 => ['ehel-math-g03', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-3-lessons/index.html'],
+            4 => ['ehel-math-g04', RP_HOST . 'Ehel%20Primary/app/mathematics/grade-4-lessons/index.html'],
+        ],
+    ],
+    'english' => [
+        'entry' => RP_HOST . 'Ehel%20Primary/app/english/index.html',
+        'targets' => [
+            1 => ['ehel-eng-g01', RP_HOST . 'Ehel%20Primary/app/english/grade-1-v2/index.html'],
+        ],
+    ],
+    'science' => [
+        'entry' => RP_HOST . 'Ehel%20Primary/app/science/index.html',
+        'targets' => [
+            1 => ['ehel-sci-g01', RP_HOST . 'Ehel%20Primary/app/science/grade-1-v2/index.html'],
+        ],
+    ],
 ];
 
 $argv = $argv ?? [];
 $apply = in_array('--apply', $argv, true);
+$si = array_search('--subject', $argv, true);
+$subject = ($si !== false && isset($argv[$si + 1])) ? strtolower(trim($argv[$si + 1])) : 'mathematics';
+if (!isset($SUBJECTS[$subject])) {
+    rp_fail("unknown subject '" . $subject . "'. Known: " . implode(', ', array_keys($SUBJECTS)));
+}
+$TARGETS = $SUBJECTS[$subject]['targets'];
+// the shared subject entry, where a course goes when its key is removed
+define('RP_ENTRY', $SUBJECTS[$subject]['entry']);
 $gi = array_search('--grade', $argv, true);
 if ($gi === false || !isset($argv[$gi + 1])) {
     rp_fail("which grade? e.g. --grade 3   or   --grade 3,4\n"
@@ -90,7 +122,7 @@ foreach (explode(',', $argv[$gi + 1]) as $g) {
 $grades = array_values(array_unique($grades));
 sort($grades);
 
-fwrite(STDOUT, "\n  Repoint Mathematics grade(s) " . implode(', ', $grades)
+fwrite(STDOUT, "\n  Repoint " . ucfirst($subject) . " grade(s) " . implode(', ', $grades)
     . " (" . ($apply ? "APPLY" : "report only") . ")\n");
 fwrite(STDOUT, "  " . str_repeat('-', 66) . "\n");
 

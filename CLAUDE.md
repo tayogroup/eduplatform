@@ -1355,8 +1355,36 @@ The CDN-staging loop is self-verifying and is the better route: stage under
 `curl -fsS -o <name>.new` on the box, hash it, `mv` only if it matches, then
 delete both copies. Downloading to a temporary name is what keeps a partial
 transfer from truncating a live file — and for the progress gateway that file is
-every learner's ingest path. Note the pull zone is **`quraanacademy.b-cdn.net`**
-(`BUNNY_STORAGE_ZONE`), not `ehelacademy`, which 404s for `Ehel Primary/qa/`.
+every learner's ingest path.
+
+**THE PULL ZONE MUST MATCH THE STORAGE ZONE YOU STAGED TO, and there are TWO of
+them, each with its own key and its own `Ehel Primary/qa/`.** This note used to
+say the pull zone "is `quraanacademy.b-cdn.net` (`BUNNY_STORAGE_ZONE`), not
+`ehelacademy`, which 404s for `Ehel Primary/qa/`" — true of the zone it was
+written about and false as a general rule, which cost a step on 2026-09-10 when
+a script staged to the `ehelacademy` zone 404'd on the URL this file named.
+
+| storage zone (`AccessKey`) | staged with | fetch from |
+| --- | --- | --- |
+| `ehelacademy` | `BUNNY_KEY` — the app/content zone `deploy.mjs` writes | `https://ehelacademy.b-cdn.net/Ehel%20Primary/qa/…` |
+| `quraanacademy` | `BUNNY_STORAGE_ACCESS_KEY` / `BUNNY_STORAGE_ZONE` | `https://quraanacademy.b-cdn.net/Ehel%20Primary/qa/…` |
+
+Measured both ways that day: a file PUT to `ehelacademy` returns 200 with a
+matching hash from `ehelacademy.b-cdn.net` and 404 from `quraanacademy.b-cdn.net`;
+the `IN-FLIGHT-prequran-fix-20260831` file sitting on the `quraanacademy` zone
+returns 200 from `quraanacademy.b-cdn.net`. Neither zone fronts the other, so
+picking the wrong pair is a 404 on a perfectly good upload — and, worse, **mints
+a cached 404 that burns that filename on that zone**, which is the other half of
+why a re-stage takes a new name.
+
+`BUNNY_STORAGE_ZONE` naming the second zone is what makes this easy to get
+wrong: it is a STORAGE zone name and reads like the answer to "which pull zone",
+which it only is when you staged to that zone. Check where you actually PUT the
+file, not what the variable is called.
+
+Do not resolve the ambiguity by probing. A storage listing with the access key
+answers "is it there" passively; an edge fetch of an absent path is a write to
+the cache.
 
 Two things about `design_version.php` that look contradictory and are not: its
 listing globs `local/hubredirect/*.php`, so it **cannot show** a file in

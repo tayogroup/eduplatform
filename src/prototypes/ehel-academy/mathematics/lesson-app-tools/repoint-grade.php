@@ -101,6 +101,7 @@ $SUBJECTS = [
         'entry' => RP_HOST . 'Ehel%20Primary/app/computing/index.html',
         'targets' => [
             1 => ['ehel-comp-g01', RP_HOST . 'Ehel%20Primary/app/computing/grade-1-v2/index.html'],
+            2 => ['ehel-comp-g02', RP_HOST . 'Ehel%20Primary/app/computing/grade-2-v2/index.html'],
         ],
     ],
     // The course key is the shell's `ehel-gp-g${pad2(s)}` (shell/subjects/

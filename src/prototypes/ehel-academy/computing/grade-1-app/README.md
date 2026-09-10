@@ -157,9 +157,16 @@ reading.
 - **Sound needs a gesture.** The synthesiser creates its AudioContext on the
   first tap. A synthetic click from a script may leave it suspended; a child's
   tap does not.
-- **Nothing routes a learner here.** Deploying (`deploy.mjs --upload`) would
-  make the build reachable by URL and by nobody's course; Grade 1 routing is the
-  `local_prequran/ehel_app_url_overrides` Moodle setting. Not done, on purpose.
+- **It is deployed, and nothing routes a learner to it.** Uploaded on
+  2026-09-10 (owner's instruction) to
+  `https://ehelacademy.b-cdn.net/Ehel%20Primary/app/computing/grade-1-v2/`
+  — all 14 files verified on storage by read-back, all 14 hashed again off
+  the edge against the plan, and the live hub and two lessons booted in real
+  Chromium with the five platform modules resolving (0 console errors, 0
+  failed requests; the toast demo ticked and Robo's level 1 was solved on the
+  live page). Reachable by URL and by nobody's course: Grade 1 routing is the
+  `local_prequran/ehel_app_url_overrides` Moodle setting, which does not name
+  `ehel-comp-g01`. Routing is a separate, owner decision.
 
 ## Progress: `l01`..`l08`, and why not `u01`
 
@@ -209,7 +216,8 @@ the mapping is one function in `wire-progress.py` and a curriculum decision.
 
 ## What was deliberately not done
 
-Deploying; routing a learner; recorded narration; reusing the Word-pack
+Routing a learner (the build is deployed but no course points at it);
+recorded narration; reusing the Word-pack
 course's text; anything at Stage 2; a Scratch Jr embed (the framework
 recommends the real tool for on-screen programming from Stage 1, and a
 self-contained page cannot carry it — the block program here is the shape of

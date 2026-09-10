@@ -729,6 +729,17 @@ CASES = [
      '9 whole squares and 6 part squares',
      'a: 0',
      'a: 1'),
+
+    # WHICH DIGIT WAS ASKED ABOUT DECIDES THIS, so binding the key to the
+    # numerator's meaning has to fail. The two options are the two halves of
+    # what a fraction says - "how many equal parts" and "how many you take" -
+    # and both are true statements ABOUT 3/4; only one answers the question
+    # asked. A rule matching the option that mentions "parts" would pass this
+    # mutation happily.
+    ('grade-2-app', 'fair-shares.html',
+     'what does the 4 tell you?',
+     'a: "how many equal parts"',
+     'a: "how many you take"'),
 ]
 
 

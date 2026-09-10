@@ -73,6 +73,7 @@ RULE_FUNCS = {
     "pattern_answer", "chart_answer", "stage34_number", "stage34_shape",
     "stage34_place", "stage34_time", "named_chart_answer", "beads_answer",
     "calc_answer", "words_answer", "term_rule_answer", "estimate_answer", "stage3_runtime",
+    "fraction_notation",
     "part_square_answer",
 }
 RULE_HITS = "--rule-hits" in argv
@@ -2135,6 +2136,41 @@ def money(s):
     return float(m.group(0)) if m else None
 
 
+def fraction_notation(low, opts):
+    """What a PART of the fraction notation means - the line, or one digit.
+
+    Both are settled by POSITION, which is why they can be checked at all.
+    "What does the line in 3/4 mean?" is "3 shared between 4" and never "4
+    shared between 3"; and in "In 3/4, what does the 4 tell you?" the 4 is the
+    denominator, so it counts the equal parts, where the 3 would say how many
+    are taken. Ask which position the digit occupies and the answer follows, so
+    a key bound to the other option is caught. Recognising the option that says
+    "shared" or "parts" would pass either binding, which is the whole
+    difference between checking a key and restating it.
+
+    Grade 2 asks the digit form and Grade 3 the line form, so this sits outside
+    both grades' rule sets.
+    """
+    m = re.search(r"what does the line in (\d+)/(\d+) mean", low)
+    if m:
+        hit = [o for o in opts
+               if re.fullmatch(r"\s*%s shared between %s\s*" % (m.group(1), m.group(2)),
+                               plain(o).lower())]
+        return hit[0] if len(hit) == 1 else None
+
+    m = re.search(r"in (\d+)/(\d+), what does the (\d+) tell you", low)
+    if m:
+        top, bottom, asked = m.group(1), m.group(2), m.group(3)
+        if (asked == top) == (asked == bottom):
+            return None            # 2/2, or a digit in neither position
+        want = (r"how many equal parts|number of equal parts|parts .*cut into"
+                if asked == bottom else
+                r"how many you take|how many .*taken|how many parts you take")
+        hit = [o for o in opts if re.search(want, plain(o).lower())]
+        return hit[0] if len(hit) == 1 else None
+    return None
+
+
 def stage3_runtime(low, t, opts):
     """The Grade 3 questions that are BUILT AT RUNTIME.
 
@@ -2226,14 +2262,6 @@ def stage3_runtime(low, t, opts):
     if m:
         a, b, n = int(m.group(1)), int(m.group(2)), int(m.group(3))
         return n * a // b if b and n * a % b == 0 else None
-    # what the LINE means: the order comes from the fraction, not from the
-    # wording, so a key bound to the reversed option is caught
-    m = re.search(r"what does the line in (\d+)/(\d+) mean", low)
-    if m:
-        hit = [o for o in opts
-               if re.fullmatch(r"\s*%s shared between %s\s*" % (m.group(1), m.group(2)),
-                               plain(o).lower())]
-        return hit[0] if len(hit) == 1 else None
 
     # ---- shape and measure ----
     m = re.search(r"rectangle is (\d+) ?cm by (\d+) ?cm.*perimeter", low)
@@ -2422,6 +2450,9 @@ def expected(q, opts, item, js=""):
     if got is not None:
         return got
     got = term_rule_answer(low, t, opts)
+    if got is not None:
+        return got
+    got = fraction_notation(low, opts)
     if got is not None:
         return got
     got = stage3_runtime(low, t, opts)

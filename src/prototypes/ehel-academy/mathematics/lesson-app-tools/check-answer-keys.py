@@ -34,13 +34,45 @@ because it called a CORRECT key wrong:
 Usage:  python ../lesson-app-tools/check-answer-keys.py           # from a build
         python ../lesson-app-tools/check-answer-keys.py --app ../grade-1-app/g1v2
 """
-import io, os, re, sys, json, html, unicodedata
+import io, os, re, sys, json, html, hashlib, unicodedata
 
 sys.stdout.reconfigure(encoding="utf-8")
 
 argv = sys.argv[1:]
 app = argv[argv.index("--app") + 1] if "--app" in argv else "."
 SRC = os.path.abspath(app)
+
+# ---------------------------------------------------------------------------
+# --rule-hits: WHICH RULE ANSWERED, AND WHICH ANSWERED NOTHING.
+#
+# A rule that never matches looks exactly like a question that cannot be
+# answered: both leave the count where it was. Six rules in this file had never
+# once fired - a pattern that missed the question, a comparison that could not
+# succeed, a selector that matched two options and disqualified itself - and
+# each was found days apart by noticing a number had not moved. This reports it
+# in one run.
+#
+# It counts RETURN STATEMENTS, not functions, because that is the granularity
+# the problem lives at: every one of those six sat inside a function that fired
+# happily for other questions, so a per-function tally would have shown it busy.
+# Tracing costs nothing when the flag is off and needs no edit to any rule.
+RULE_FUNCS = {
+    "expected", "facts_answer", "graph_answer", "money_answer",
+    "fraction_answer", "units_answer", "clock_answer", "turn_answer",
+    "pattern_answer", "chart_answer", "stage34_number", "stage34_shape",
+    "stage34_place", "stage34_time", "named_chart_answer", "beads_answer",
+}
+RULE_HITS = "--rule-hits" in argv
+_hits = {}
+
+
+def _trace(frame, event, arg):
+    if event == "call":
+        return _trace if frame.f_code.co_name in RULE_FUNCS else None
+    if event == "return" and arg is not None:
+        k = (frame.f_code.co_name, frame.f_lineno)
+        _hits[k] = _hits.get(k, 0) + 1
+    return _trace
 
 cfgp = os.path.join(SRC, "app.config.json")
 if os.path.exists(cfgp):
@@ -2203,6 +2235,8 @@ def expected(q, opts, item, js=""):
 
 tot = ver = wrong = gen = 0
 bad, unver = [], []
+if RULE_HITS:
+    sys.settrace(_trace)
 print("\n  Check answers, verified against the question and the item  -  %s\n" % LABEL)
 for f in FILES:
     p = os.path.join(SRC, f)
@@ -2229,6 +2263,8 @@ for f in FILES:
           % ("ok" if not w else "FAIL", f[:32], n, v, w,
              "   (+%d generated)" % g if g else ""))
 
+if RULE_HITS:
+    sys.settrace(None)
 print("\n  %d questions, %d verified, %d WRONG, %d not verifiable" % (tot, ver, wrong, tot - ver))
 if gen:
     # SAY IT, do not let it be an absence. A question built at runtime has no
@@ -2246,6 +2282,109 @@ if "--list-unverified" in argv:
     print("\n  not verifiable by any rule here:")
     for f, q in unver:
         print("     %-30s %s" % (f[:30], q[:78]))
+
+if RULE_HITS:
+    import ast
+
+    src_lines = io.open(__file__, encoding="utf-8").read().splitlines()
+    tree = ast.parse("\n".join(src_lines))
+    sites = []                       # every return that can carry an answer
+    for fn in tree.body:
+        if isinstance(fn, ast.FunctionDef) and fn.name in RULE_FUNCS:
+            for node in ast.walk(fn):
+                # `return None` is a DECLINE, not a rule - counting it as one
+                # put 40-odd lines in the dead list that could never fire by
+                # construction and buried the sites worth reading
+                if not isinstance(node, ast.Return) or node.value is None:
+                    continue
+                if isinstance(node.value, ast.Constant) and node.value.value is None:
+                    continue
+                sites.append((fn.name, node.lineno))
+
+    def text(ln):
+        return src_lines[ln - 1].strip()[:74]
+
+    # A DISPATCH LINE IS NOT A RULE. `return got` in expected() fires whenever
+    # any sub-rule answers, so counting it as a rule would report the busiest
+    # line in the file and say nothing about coverage.
+    def dispatch(name, ln):
+        return name == "expected" and re.match(r"return (got|picn)\b", text(ln))
+
+    sites = [s for s in sites if not dispatch(*s)]
+
+    # ACCUMULATE ACROSS BUILDS, because a rule dead HERE is usually just a rule
+    # for another grade: 170 of Grade 2's 245 sites are Stage 3-4 rules, and a
+    # list that long is one nobody reads. Sites dead in EVERY build are the
+    # ones worth looking at. The file is per-checkout scratch, not shared.
+    tally = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".rule-hits.json")
+    fp = hashlib.sha1(io.open(__file__, "rb").read()).hexdigest()
+    seen, carried = {}, None
+    if os.path.exists(tally):
+        try:
+            old = json.load(io.open(tally, encoding="utf-8"))
+            # A SITE IS A LINE NUMBER, AND EDITING THIS FILE MOVES EVERY ONE OF
+            # THEM. A tally written against different source does not report
+            # less, it reports the WRONG rules - the counts land on whatever now
+            # occupies those lines. So it is discarded rather than migrated, and
+            # the discard is announced: re-running the four builds costs three
+            # seconds and is the only thing that makes the dead list mean
+            # anything. (Adding the two comment lines that fixed the bug below
+            # was itself enough to shift every site in the file.)
+            carried = old.get("#source") == fp
+            if carried:
+                # int(), because the line number goes through JSON as a STRING
+                # and ("facts_answer", "532") never matches ("facts_answer", 532):
+                # every reload looked like a fresh tally, so the first version of
+                # this reported 151 sites dead including ones seen firing minutes
+                # earlier. Exactly the failure the whole feature exists to catch.
+                seen = {(k.rsplit("@", 1)[0], int(k.rsplit("@", 1)[1])): v
+                        for k, v in old.items() if k != "#source"}
+        except Exception:
+            seen, carried = {}, False
+
+    # A HIT THAT MATCHES NO SITE IS A BROKEN TALLY, NOT A BUSY RULE. The trace
+    # keys on frame.f_lineno and the site list on ast.Return.lineno; if those
+    # two ever disagree - a return whose expression spans lines, a decorator, a
+    # future Python - every affected rule fires, is counted under a key nothing
+    # looks up, and reads as DEAD. Counted and printed, because the number being
+    # zero is the only evidence that the two halves are talking about the same
+    # thing at all.
+    ghosts = 0
+    for s, n in _hits.items():
+        if s in sites:
+            seen[s] = seen.get(s, 0) + n
+        elif not dispatch(*s):
+            ghosts += 1
+    out = {"%s@%s" % k: v for k, v in seen.items()}
+    out["#source"] = fp
+    io.open(tally, "w", encoding="utf-8").write(json.dumps(out, indent=0))
+
+    here_live = [(s, _hits[s]) for s in sites if s in _hits]
+    ever_dead = [s for s in sites if s not in seen]
+
+    print("\n  RULES THAT ANSWERED HERE: %d of %d sites" % (len(here_live), len(sites)))
+    for (name, ln), n in sorted(here_live, key=lambda x: -x[1])[:10]:
+        print("     %4d  %-18s :%-5d %s" % (n, name, ln, text(ln)))
+    if len(here_live) > 10:
+        print("     ... and %d more" % (len(here_live) - 10))
+
+    if ghosts:
+        print("\n  %d hit(s) matched NO site. The dead list below is not to be"
+              " trusted -" % ghosts)
+        print("  the trace and the source agree about fewer rules than they should.")
+
+    if carried is False:
+        print("\n  TALLY RESET: it was written against a different version of this")
+        print("  file, so its line numbers name other rules now. Only this build's")
+        print("  hits are counted below - run the other builds before reading it.")
+    print("\n  NEVER ANSWERED IN ANY BUILD %s: %d"
+          % ("RUN SO FAR" if carried else "(THIS BUILD ONLY)", len(ever_dead)))
+    print("  (accumulated in .rule-hits.json - run every --app to make this mean")
+    print("  anything; delete the file to start the tally again)")
+    for name, ln in sorted(ever_dead, key=lambda s: s[1]):
+        print("     %-18s :%-5d %s" % (name, ln, text(ln)))
+    print("\n  A dead site is not automatically a defect - some are the `else`")
+    print("  half of a live rule. It is a LIST TO READ, not a number to zero.")
 
 if tot == 0:
     sys.exit("\n  REFUSED: no questions found. A checker that reads nothing is not a pass.")

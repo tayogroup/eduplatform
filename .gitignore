@@ -86,3 +86,10 @@ docs/marketing/*.mp4
 # Nested inside the repo, so without this a whole-tree `git add` stages one as an
 # embedded repository. Several sessions share this checkout - see CLAUDE.md :: Git.
 .claude/worktrees/
+
+# check-answer-keys.py --rule-hits accumulates which rules have answered across
+# builds. It is keyed on LINE NUMBERS in the checker, so it is meaningful only
+# for the exact source that wrote it - the tool stores that file's sha1 and
+# discards the tally when it moves. Per-checkout scratch; committing one would
+# hand the next clone a tally naming rules it has never run.
+src/prototypes/ehel-academy/mathematics/lesson-app-tools/.rule-hits.json

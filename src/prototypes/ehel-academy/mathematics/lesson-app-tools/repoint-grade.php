@@ -109,6 +109,20 @@ $SUBJECTS = [
     // global-perspectives.js) and pqpg_ehel_subject_map() knows 'gp' with
     // letter g. The build reports progress as l01..l08 against 0838 directly;
     // the shell course is four topic units - THE UNIT PROBLEM applies.
+    // Art & Design has NO shell entry: app/art-and-design/index.html does not
+    // exist, so the standalone build is the only page a Stage 1 learner can
+    // land on. `entry` (where a course goes when its key is REMOVED) is
+    // therefore the same page - removing the override would otherwise send
+    // the course to a 404. The course key is the catalogue's ehel-art-g01
+    // (tools/generate-ehel-catalog.js, ART family); the slug `art` was added
+    // to pqpg_ehel_subject_map() in the same change and must be on the box
+    // before this row does anything.
+    'art-and-design' => [
+        'entry' => RP_HOST . 'Ehel%20Primary/app/art-and-design/grade-1-v2/index.html',
+        'targets' => [
+            1 => ['ehel-art-g01', RP_HOST . 'Ehel%20Primary/app/art-and-design/grade-1-v2/index.html'],
+        ],
+    ],
     'global-perspectives' => [
         'entry' => RP_HOST . 'Ehel%20Primary/app/global-perspectives/index.html',
         'targets' => [

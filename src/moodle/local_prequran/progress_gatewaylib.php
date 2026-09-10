@@ -210,6 +210,14 @@ function pqpg_ehel_subject_map(): array {
         'sci'  => ['dir' => 'science', 'param' => 'stage', 'letter' => 'g', 'maxstage' => 8, 'label' => 'Science'],
         'comp' => ['dir' => 'computing', 'param' => 'stage', 'letter' => 'g', 'maxstage' => 8, 'label' => 'Computing'],
         'gp'   => ['dir' => 'global-perspectives', 'param' => 'stage', 'letter' => 'g', 'maxstage' => 8, 'label' => 'Global Perspectives'],
+        // Art & Design (Cambridge Primary 0067, Stages 1-6) has NO shell app:
+        // app/art-and-design/index.html does not exist, and every stage of it
+        // is a standalone lesson build routed by ehel_app_url_overrides
+        // (lesson-app-tools/repoint-grade.php --subject art-and-design). The
+        // entry here is what makes ehel-art-gNN an EHEL course key at all - the
+        // launch door, SEB and the progress gateway all ask this map - and the
+        // default URL it yields is a 404 until the override row is applied.
+        'art'  => ['dir' => 'art-and-design', 'param' => 'stage', 'letter' => 'g', 'maxstage' => 6, 'label' => 'Art & Design'],
         // Intensive English is published by the catalog as ehel-intensive-eng-lNN
         // and that is the canonical form, because pqpg_ehel_app_base() is looked
         // up by a Moodle course idnumber and that is what catalog_sync writes.

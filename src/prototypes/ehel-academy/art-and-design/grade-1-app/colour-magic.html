@@ -5772,7 +5772,7 @@
   try {
     mountLearnerControls({
       token: q.get("pwsToken") || "", launchToken, launchEndpoint,
-      progressUnit: "l02",
+      progressUnit: "u02",
     });
   } catch (e) { console.error("learner controls:", e); }
 
@@ -5858,7 +5858,7 @@
   const token = (q.get("pwsToken") || "").replace(/[^A-Za-z0-9._-]/g, "");
 
   const COURSE = "ehel-art-g01";
-  const UNIT = "l02";
+  const UNIT = "u02";
   const STUDENT = q.get("studentid") || "local";
 
   /* Without a launch endpoint the backend is "local": everything still

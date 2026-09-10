@@ -118,8 +118,11 @@ foreach (['pqpg_tutoring_stage', 'pqpg_tutoring_anchor', 'pqpg_tutoring_declared
     }
 }
 $map = pqpg_ehel_subject_map();
-if (count(pqpg_ehel_subject_slugs()) !== 6) {
-    fwrite(STDERR, "✗ expected 6 real subjects, found " . count(pqpg_ehel_subject_slugs()) . " — the map or its alias handling moved.\n");
+// Seven since 2026-09-10: Art & Design ('art') joined the map as the first
+// subject with no shell app. A count that moves without this line moving is
+// the map or its alias handling drifting, which is what this guards.
+if (count(pqpg_ehel_subject_slugs()) !== 7) {
+    fwrite(STDERR, "✗ expected 7 real subjects, found " . count(pqpg_ehel_subject_slugs()) . " — the map or its alias handling moved.\n");
     exit(2);
 }
 
@@ -306,7 +309,9 @@ foreach (pqpg_ehel_subject_slugs() as $slug) {
 // stages, this and that file move together; the gate names the numbers so the
 // change is deliberate rather than discovered by a learner hitting a 404.
 check('the published stage counts are the ones the apps declare',
-    $maxes, ['eng' => 8, 'math' => 8, 'sci' => 8, 'comp' => 8, 'gp' => 8, 'intensive-eng' => 2]);
+    // Art & Design 0067 is Primary only: six stages, and no shell app declares
+    // a maxStage for it - the six is the framework's own count.
+    $maxes, ['eng' => 8, 'math' => 8, 'sci' => 8, 'comp' => 8, 'gp' => 8, 'art' => 6, 'intensive-eng' => 2]);
 
 printf("\n%d passed, %d failed\n", $pass, $fail);
 if ($fail > 0) {

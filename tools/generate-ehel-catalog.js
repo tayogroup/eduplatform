@@ -129,6 +129,61 @@ function addIntensiveCourses(courses, categorySet) {
   }
 }
 
+// Art & Design (Cambridge Primary 0067) is the first subject with NO shell
+// course behind it: it exists only as standalone lesson builds
+// (art-and-design/grade-N-app, one page per lesson), so its source of truth is
+// each build's app.config.json rather than a grade-N/data/course-manifest.json.
+// The lessons ARE the units - there is no other course for them to be confused
+// with, so THE UNIT PROBLEM (wire-progress.py) does not arise and the build
+// writes progress under u01..uNN, which is exactly what these grade items carry.
+const ART = {
+  dir: "art-and-design",
+  key: "art",
+  name: "Art & Design",
+  code: "0067",
+  maxStage: 6,
+};
+
+function readArtConfig(stage) {
+  const file = path.join(EHEL, ART.dir, `grade-${stage}-app`, "app.config.json");
+  if (!fs.existsSync(file)) return null;
+  return JSON.parse(fs.readFileSync(file, "utf8"));
+}
+
+function addArtCourses(courses, categorySet) {
+  for (let stage = 1; stage <= ART.maxStage; stage += 1) {
+    const cfg = readArtConfig(stage);
+    if (!cfg) continue;
+    const idnumber = `ehel-${ART.key}-g${pad2(stage)}`;
+    if (withdrawn[idnumber]) {
+      withdrawnNotes.push(`${idnumber} (${withdrawn[idnumber].reason || "withdrawn"})`);
+      continue;
+    }
+    const categoryPath = ["Ehel Academy", "Primary", ART.name];
+    categorySet.set(categoryPath.join(" / "), { name: ART.name, path: categoryPath });
+    const units = (cfg.lessons || []).map((l, i) => ({
+      number: i + 1,
+      idnumber: `${idnumber}-u${pad2(i + 1)}`,
+      title: l.title,
+      termId: null,
+    }));
+    courses.push({
+      idnumber,
+      subject: ART.name,
+      subjectKey: ART.key,
+      stage,
+      level: "Primary",
+      cambridgeCode: ART.code,
+      fullname: `Ehel ${ART.name} — Stage ${stage}`,
+      shortname: idnumber.toUpperCase(),
+      categoryPath,
+      summary: `Cambridge-aligned ${ART.name} (${ART.code}), Stage ${stage}. ${units.length} lessons.`,
+      unitCount: units.length,
+      units,
+    });
+  }
+}
+
 function buildCatalog() {
   const courses = [];
   const categorySet = new Map(); // path-string → {name, path[]}
@@ -176,6 +231,7 @@ function buildCatalog() {
   }
 
   addIntensiveCourses(courses, categorySet);
+  addArtCourses(courses, categorySet);
 
   courses.sort((a, b) => a.idnumber.localeCompare(b.idnumber));
   const categories = [...categorySet.values()].sort((a, b) => a.path.join("/").localeCompare(b.path.join("/")));

@@ -248,6 +248,7 @@ $tutoringsessions = [];
 $tutoringsubjects = [
     'eng' => 'English', 'math' => 'Mathematics', 'sci' => 'Science',
     'comp' => 'Computing', 'gp' => 'Global Perspectives', 'intensive-eng' => 'Intensive English',
+    'art' => 'Art & Design',
 ];
 // PARENT <-> TEACHER CHAT, the FAMILY'S door.
 //

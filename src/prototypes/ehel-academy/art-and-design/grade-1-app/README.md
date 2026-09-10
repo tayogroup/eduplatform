@@ -178,19 +178,31 @@ authored, not computed. Nothing here has had a human reading.
   healthy page shows.
 - **Sound needs a gesture.** The synthesiser creates its AudioContext on the
   first tap.
-- **Nothing routes a learner here, and nothing could.** Deploying
-  (`deploy.mjs --upload`) would make the build reachable by URL and by nobody's
-  course; routing needs a Moodle course with idnumber `ehel-art-g01`, a
-  `catalog.json` entry, and an Art & Design row in
-  `lesson-app-tools/repoint-grade.php`. None exists. Not done, on purpose.
+- **Routing has FOUR parts, not three, and the fourth is in the plugin.**
+  `pqpg_ehel_app_base()` only recognises a course key whose slug is in
+  `pqpg_ehel_subject_map()` (`progress_gatewaylib.php`), and the launch door,
+  SEB and the gateway all ask it. So beside the catalogue entry, the course
+  and the `repoint-grade.php` row, the `art` slug has to be on the box, or
+  `ehel-art-g01` is not an EHEL course at all. `check-tutoring-anchor.php`
+  pins the subject count and the per-subject stage counts; both moved with
+  this. See [GO-LIVE.md](GO-LIVE.md).
 
-## Progress: `l01`..`l08`, and why
+## Progress: `u01`..`u08`, and why
 
-Written under `l01`..`l08` beneath `ehel-art-g01`. THE UNIT PROBLEM (see
-`wire-progress.py`) applies in its simplest form: there is no shell course with
-units for these lessons to be confused with, so `l` is the honest prefix, and
-the day a course exists the mapping is one function in `wire-progress.py` and a
-curriculum decision.
+Written under `u01`..`u08` beneath `ehel-art-g01`. THE UNIT PROBLEM (see
+`wire-progress.py`) does not arise here: the catalogue's `ehel-art-g01` is
+generated FROM this build's lesson list (`tools/generate-ehel-catalog.js`, the
+`ART` family), so the eight grade items ARE the eight lessons and a finished
+lesson is a finished unit. Every sibling build writes `lNN` because its shell
+course has a different unit list; this subject has no shell course.
+
+## Going live
+
+The app is uploaded and verified (`deploy.mjs --upload`, 2026-09-10) and the
+catalogue carries the course, but a learner reaches it only after the Moodle
+side is done — the launch door has to learn the `art` slug, the sync task has
+to create the course, and the override has to route it. The exact steps, with
+the staged files and their hashes, are in [GO-LIVE.md](GO-LIVE.md).
 
 ## Verification on 2026-09-10
 
@@ -225,8 +237,8 @@ curriculum decision.
 
 ## What was deliberately not done
 
-Deploying; routing a learner; creating the Moodle course or the catalogue
-entry; recorded narration (the voice engine speaks); anything at Stage 2; saving
+The Moodle-side steps (they need the box: see GO-LIVE.md); recorded
+narration (the voice engine speaks); anything at Stage 2; saving
 a child's drawing anywhere (the journal lives in the page and is gone on
 reload, which the journal's own wording allows for); a human reading of the
 content.

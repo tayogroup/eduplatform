@@ -120,6 +120,72 @@
     }, 200);
   }
 
+  /* ---- the feedback can be heard AGAIN ------------------------------
+     Every check step already speaks its correction as it appears and
+     announces it in a live region. That is one hearing, at a moment the
+     child does not choose: look away, or have a grown-up talking over it,
+     and the teaching is gone. The explanation IS the teaching - "The word
+     can tells what you are able to do" - and a five-year-old cannot
+     re-read it.
+
+     Three decisions, each of which could have gone the other way:
+
+     THE BUTTON IS BUILT HERE, not written into the page, so that one
+     definition serves all 23 feedback lines and the games' overlay rather
+     than 23 copies in the builder's templates.
+
+     IT SITS OUTSIDE THE LIVE REGION. Inside `.fb`, its own label would be
+     read out as part of every correction - the live region is atomic, so a
+     screen reader would announce the button on every answer.
+
+     IT IS HIDDEN WHILE THERE IS NOTHING TO HEAR. An always-present button
+     that says nothing on nine steps out of ten reads as broken, which is
+     the rule Raise-hand and the capstone door already keep. It speaks
+     `fb.textContent` - exactly what is on screen, so the voice and the
+     words cannot drift, which is why the corrections were written as one
+     expression in the first place.
+     ------------------------------------------------------------------ */
+  function wireFeedbackListen(root) {
+    const scope = root || document;
+    (scope.querySelectorAll ? scope.querySelectorAll(".fb") : []).forEach((fb) => {
+      if (fb.dataset.hearWired) return;
+      fb.dataset.hearWired = "1";
+      const row = document.createElement("div");
+      row.className = "fbrow";
+      fb.parentNode.insertBefore(row, fb);
+      row.appendChild(fb);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "fbsay";
+      btn.hidden = true;
+      btn.setAttribute("aria-label", "Hear that again");
+      btn.innerHTML = "&#128266;";
+      btn.addEventListener("click", () => {
+        const said = fb.textContent.trim();
+        if (said) say(said);
+      });
+      row.appendChild(btn);
+      /* The speaker carries the feedback's own colour - red beside a
+         correction, green beside a cheer. It cannot inherit it: the button
+         is a SIBLING of `.fb`, not a child, so `.fb.bad { color }` never
+         reaches it. The state class is copied across instead, which needs
+         no `:has()` and follows the theme through the same tokens. */
+      const sync = () => {
+        btn.hidden = !fb.textContent.trim();
+        btn.className = "fbsay" + (fb.classList.contains("bad") ? " bad"
+          : fb.classList.contains("good") ? " good" : "");
+      };
+      try {
+        new MutationObserver(sync).observe(fb, { childList: true, characterData: true, subtree: true });
+      } catch (_) { /* no observer, no button - never break the lesson */ }
+      sync();
+    });
+  }
+  wireFeedbackListen();
+  /* the games build their feedback line inside an overlay that does not
+     exist yet, so they wire theirs when they first use it */
+  window.__ehelWireFeedback = wireFeedbackListen;
+
   /* ---- hear the word, tap the word --------------------------------
      The clip plays on its own, then the child picks. The distractors are
      other words from THIS unit, so a wrong tap is a word they are also

@@ -142,6 +142,10 @@
       function feedback(ok, message) {
         const fb = overlay.querySelector("#gameFb");
         if (!fb) return;
+        /* the overlay is built after the page, so its feedback line gets its
+           Listen button on first use rather than at load (english.js ::
+           wireFeedbackListen, idempotent) */
+        if (window.__ehelWireFeedback) window.__ehelWireFeedback(fb.parentNode);
         fb.className = "fb " + (ok ? "good" : "bad");
         fb.textContent = message;
         say(message);

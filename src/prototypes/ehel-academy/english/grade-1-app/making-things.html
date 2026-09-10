@@ -134,6 +134,30 @@
   .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
   .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
   .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  /* The feedback and its Listen button are one row, built at run time by
+     wireFeedbackListen(), which also copies the feedback's state class onto
+     the button so a correction's speaker is red and a cheer's is green.
+     The button is 28px - the step dots' size, over WCAG 2.5.8's 24px, and
+     under the 44px a phone would want, for the same reason the dots are:
+     it sits beside text, not in a row of its own. `.fb` keeps its
+     1.6em min-height, so the row reserves its space whether or not there
+     is anything to hear and the page does not jump on an answer. */
+  .fbrow { display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .fbsay {
+    width: 28px; height: 28px; flex: 0 0 28px; padding: 0; border: 0; border-radius: 50%;
+    background: none; color: inherit; font-size: 15px; line-height: 1; cursor: pointer;
+    display: grid; place-items: center;
+  }
+  /* `display: grid` above is an AUTHOR rule and the browser's own
+     `[hidden] { display: none }` is a user-agent rule, so without this line
+     the author rule wins and `btn.hidden = true` hides nothing: the speaker
+     sat under every empty feedback line, offering to read out nothing. The
+     property said hidden and the page disagreed - caught by looking at it,
+     not by asking the element. */
+  .fbsay[hidden] { display: none; }
+  .fbsay.good { color: var(--good); } .fbsay.bad { color: var(--bad); }
+  .fbsay:hover { background: var(--line); }
+  .fbsay:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   .score { color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
 
   .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
@@ -849,7 +873,6 @@
   .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
   .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
   .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
-  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
   .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
   .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
   .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
@@ -921,7 +944,7 @@
 <a class="skip" href="#deck">Skip to the lesson</a>
 
 <header class="eh-bar1">
-  <a class="eh-brand" href="index.html"><img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" width="32" height="32" decoding="async"><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></a>
+  <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary English</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
     <span class="eh-progtext">Lesson progress</span>
@@ -6576,6 +6599,72 @@
     }, 200);
   }
 
+  /* ---- the feedback can be heard AGAIN ------------------------------
+     Every check step already speaks its correction as it appears and
+     announces it in a live region. That is one hearing, at a moment the
+     child does not choose: look away, or have a grown-up talking over it,
+     and the teaching is gone. The explanation IS the teaching - "The word
+     can tells what you are able to do" - and a five-year-old cannot
+     re-read it.
+
+     Three decisions, each of which could have gone the other way:
+
+     THE BUTTON IS BUILT HERE, not written into the page, so that one
+     definition serves all 23 feedback lines and the games' overlay rather
+     than 23 copies in the builder's templates.
+
+     IT SITS OUTSIDE THE LIVE REGION. Inside `.fb`, its own label would be
+     read out as part of every correction - the live region is atomic, so a
+     screen reader would announce the button on every answer.
+
+     IT IS HIDDEN WHILE THERE IS NOTHING TO HEAR. An always-present button
+     that says nothing on nine steps out of ten reads as broken, which is
+     the rule Raise-hand and the capstone door already keep. It speaks
+     `fb.textContent` - exactly what is on screen, so the voice and the
+     words cannot drift, which is why the corrections were written as one
+     expression in the first place.
+     ------------------------------------------------------------------ */
+  function wireFeedbackListen(root) {
+    const scope = root || document;
+    (scope.querySelectorAll ? scope.querySelectorAll(".fb") : []).forEach((fb) => {
+      if (fb.dataset.hearWired) return;
+      fb.dataset.hearWired = "1";
+      const row = document.createElement("div");
+      row.className = "fbrow";
+      fb.parentNode.insertBefore(row, fb);
+      row.appendChild(fb);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "fbsay";
+      btn.hidden = true;
+      btn.setAttribute("aria-label", "Hear that again");
+      btn.innerHTML = "&#128266;";
+      btn.addEventListener("click", () => {
+        const said = fb.textContent.trim();
+        if (said) say(said);
+      });
+      row.appendChild(btn);
+      /* The speaker carries the feedback's own colour - red beside a
+         correction, green beside a cheer. It cannot inherit it: the button
+         is a SIBLING of `.fb`, not a child, so `.fb.bad { color }` never
+         reaches it. The state class is copied across instead, which needs
+         no `:has()` and follows the theme through the same tokens. */
+      const sync = () => {
+        btn.hidden = !fb.textContent.trim();
+        btn.className = "fbsay" + (fb.classList.contains("bad") ? " bad"
+          : fb.classList.contains("good") ? " good" : "");
+      };
+      try {
+        new MutationObserver(sync).observe(fb, { childList: true, characterData: true, subtree: true });
+      } catch (_) { /* no observer, no button - never break the lesson */ }
+      sync();
+    });
+  }
+  wireFeedbackListen();
+  /* the games build their feedback line inside an overlay that does not
+     exist yet, so they wire theirs when they first use it */
+  window.__ehelWireFeedback = wireFeedbackListen;
+
   /* ---- hear the word, tap the word --------------------------------
      The clip plays on its own, then the child picks. The distractors are
      other words from THIS unit, so a wrong tap is a word they are also
@@ -8194,6 +8283,10 @@
       function feedback(ok, message) {
         const fb = overlay.querySelector("#gameFb");
         if (!fb) return;
+        /* the overlay is built after the page, so its feedback line gets its
+           Listen button on first use rather than at load (english.js ::
+           wireFeedbackListen, idempotent) */
+        if (window.__ehelWireFeedback) window.__ehelWireFeedback(fb.parentNode);
         fb.className = "fb " + (ok ? "good" : "bad");
         fb.textContent = message;
         say(message);

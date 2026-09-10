@@ -61,6 +61,8 @@ RULE_FUNCS = {
     "fraction_answer", "units_answer", "clock_answer", "turn_answer",
     "pattern_answer", "chart_answer", "stage34_number", "stage34_shape",
     "stage34_place", "stage34_time", "named_chart_answer", "beads_answer",
+    "calc_answer", "words_answer", "term_rule_answer", "estimate_answer",
+    "part_square_answer",
 }
 RULE_HITS = "--rule-hits" in argv
 _hits = {}
@@ -665,9 +667,75 @@ def pick(opts, want, read):
 
 
 def amount(s):
-    """the leading amount of an option like "80 sh", "100 c", "50 + 20"."""
-    n = nums(plain(s))
+    """the leading amount of an option like "80 sh", "100 c", "50 + 20".
+
+    A THOUSANDS SEPARATOR IS PART OF THE NUMBER, the same rule expected()
+    applies to the question. Without it nums() splits "About 2,400" and this
+    returned 2.0, so every four-figure option silently failed to match and the
+    question read as unverifiable - amount() and norm() disagreed about the
+    same string ("1,000 g" was 1.0 here and 1000 there). It costs coverage
+    rather than correctness, which is why nothing reported it.
+    """
+    n = nums(re.sub(r"(?<=\d),(?=\d{3}(?!\d))", "", plain(s)))
     return float(n[0]) if n else None
+
+
+def expr_value(s):
+    """an option that IS a sum: "8 x 50" -> 400. None if it is not one.
+
+    Stage 4 asks "16 x 25 is the same as:" and offers arithmetic as the
+    options, so the comparison is between two VALUES rather than two strings -
+    amount() would read "8 x 50" as 8 and pick the wrong one.
+    """
+    t = plain(s).replace("×", "*").replace("÷", "/").replace("−", "-")
+    m = re.fullmatch(r"\s*(-?[\d,]+)\s*([+\-*/])\s*([\d,]+)\s*", t)
+    if not m:
+        return None
+    a, op, b = (int(m.group(1).replace(",", "")), m.group(2),
+                int(m.group(3).replace(",", "")))
+    if op == "+":
+        return float(a + b)
+    if op == "-":
+        return float(a - b)
+    if op == "*":
+        return float(a * b)
+    return float(a) / b if b else None
+
+
+_ONES = {"zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+         "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+         "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
+         "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18,
+         "nineteen": 19}
+_TENS = {"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60,
+         "seventy": 70, "eighty": 80, "ninety": 90}
+
+
+def words_to_int(s):
+    """"Four thousand two hundred and seven" -> 4207. None if it is not a number.
+
+    THE OPTIONS ARE PARSED RATHER THAN THE ANSWER SPELLED. Generating one
+    canonical spelling and comparing strings would fail on every choice the
+    content is free to make - "and" or no "and", a hyphen in "twenty-seven",
+    a capital - and each of those would report a correct key as wrong.
+    """
+    t = plain(s).lower().replace("-", " ").replace(",", " ")
+    words = [w for w in re.findall(r"[a-z]+", t) if w != "and"]
+    if not words or any(w not in _ONES and w not in _TENS and
+                        w not in ("hundred", "thousand", "million") for w in words):
+        return None
+    total = run = 0
+    for w in words:
+        if w in _ONES:
+            run += _ONES[w]
+        elif w in _TENS:
+            run += _TENS[w]
+        elif w == "hundred":
+            run = (run or 1) * 100
+        else:
+            total += (run or 1) * (1000 if w == "thousand" else 1000000)
+            run = 0
+    return total + run
 
 
 def minutes_of(s):
@@ -1908,6 +1976,135 @@ def nums(t):
     return [int(x) for x in re.findall(r"(?<![\w.])\d+(?![\w.])", t)]
 
 
+def calc_answer(low, t, opts):
+    """Stage 4's "ways to calculate": the METHOD questions, answered by arithmetic.
+
+    These read as opinion ("easiest", "the same as", "true about") and are not:
+    each one has a determinate answer that can be COMPUTED from the numbers in
+    the question. That distinction is the whole point - a rule that recognised
+    the right option by its wording would pass any key, including a wrong one.
+    """
+    # "16 x 25 is the same as:" - the option with the same VALUE.
+    m = re.search(r"(-?[\d,]+\s*[+\-*/]\s*[\d,]+)\s*"
+                  r"(?:is the same as|is equal to|equals)", low)
+    if m:
+        return pick(opts, expr_value(m.group(1)), expr_value)
+
+    # "4 x 25 x 3 is easiest if you first work out:" - the pair making a round
+    # number, which IS the strategy the lesson teaches rather than a preference.
+    if re.search(r"easiest if you (?:first|start)", low):
+        have = nums(t)
+        good = []
+        for o in opts:
+            v = expr_value(o)
+            # the pair must be the question's OWN numbers: an option built from
+            # numbers that are not in the sum is not a regrouping of it
+            if v is None or v % 10 or not all(n in have for n in nums(plain(o))):
+                continue
+            good.append(o)
+        return good[0] if len(good) == 1 else None
+
+    # "Which sentence is true about 6 and 24?" - every option is a CLAIM about
+    # divisibility, so each is evaluated and the true one wins. Answers only
+    # when EVERY option parses: an unreadable option might be the true one, and
+    # answering from the rest would report a correct key as wrong.
+    if re.search(r"which (?:sentence|statement) is true", low):
+        true = []
+        for o in opts:
+            m = re.fullmatch(r"\s*(\d+) is a (factor|multiple) of (\d+)\.?\s*",
+                             plain(o).lower())
+            if not m:
+                return None
+            a, kind, b = int(m.group(1)), m.group(2), int(m.group(3))
+            if (b % a == 0) if kind == "factor" else (a % b == 0):
+                true.append(o)
+        return true[0] if len(true) == 1 else None
+    return None
+
+
+def words_answer(low, t, opts):
+    """"How do you write 4,207 in words?" - the options are read as numbers."""
+    m = re.search(r"(?:write|spell)\s+(-?[\d,]+)\s+in words", low)
+    if not m:
+        return None
+    want = int(m.group(1).replace(",", ""))
+    hit = [o for o in opts if words_to_int(o) == want]
+    return hit[0] if len(hit) == 1 else None
+
+
+def term_rule_answer(low, t, opts):
+    """"2, 5, 9, 14 ... what is the term-to-term rule?" - the sequence decides.
+
+    The rule is CLASSIFIED from the differences and only then matched to an
+    option, so the arithmetic does the work: a constant difference is "add n",
+    a constant SECOND difference is "one more each time", a constant ratio is
+    doubling. A sequence that is none of those is declined.
+    """
+    if not re.search(r"term.to.term rule", low):
+        return None
+    seq = nums(t)
+    if len(seq) < 4:
+        return None
+    d = [b - a for a, b in zip(seq, seq[1:])]
+    dd = {b - a for a, b in zip(d, d[1:])}
+    if len(set(d)) == 1:
+        want = r"add\s+%d\b" % d[0]
+    elif len(dd) == 1 and dd != {0}:
+        step = dd.pop()
+        want = (r"(?:one|1) more each time" if step == 1
+                else r"%d more each time" % step)
+    elif all(a and b % a == 0 for a, b in zip(seq, seq[1:])) and \
+            len({b // a for a, b in zip(seq, seq[1:])}) == 1:
+        r = seq[1] // seq[0]
+        want = r"\bdouble\b" if r == 2 else r"multiply by %d\b" % r
+    else:
+        return None
+    hit = [o for o in opts if re.search(want, plain(o).lower())]
+    return hit[0] if len(hit) == 1 else None
+
+
+def estimate_answer(low, t, opts):
+    """AN ESTIMATE IS DETERMINATE WHEN ITS OPTIONS ARE FAR APART.
+
+    expected() declines estimates, because "Estimate 3,872 + 5,145 to the
+    nearest thousand" keys 9,000 and the exact sum is 9,017 - the key is
+    deliberately not the arithmetic. But "Roughly, what is 412 x 6?" offers
+    2,400 / 240 / 24,000, an order of magnitude apart, and the exact 2,472
+    settles it beyond argument. So the test is not "is the key exact" but "is
+    ONE option unambiguously nearest": within a quarter of the true value, and
+    at least three times nearer than the runner-up. Anything closer than that
+    is a judgement about rounding and is left alone.
+    """
+    m = re.search(r"(?:roughly|about|estimate),?\s+(?:what is|how much is)\s+"
+                  r"(-?[\d,]+\s*[+\-*/]\s*[\d,]+)", low)
+    if not m:
+        return None
+    exact = expr_value(m.group(1))
+    vals = [(o, amount(o)) for o in opts]
+    if exact in (None, 0) or any(v is None for _, v in vals):
+        return None
+    vals.sort(key=lambda x: abs(x[1] - exact))
+    best, second = vals[0], vals[1]
+    if abs(best[1] - exact) > 0.25 * abs(exact):
+        return None
+    if abs(second[1] - exact) < 3 * max(abs(best[1] - exact), 1e-9):
+        return None
+    return best[0]
+
+
+def part_square_answer(low, opts):
+    """"9 whole squares and 6 part squares" - a part square counts as a half.
+
+    That is the method these lessons teach for the area of an odd shape, so it
+    is arithmetic rather than an opinion, even though the question says
+    "roughly" and the guard in expected() would otherwise decline it.
+    """
+    m = re.search(r"(\d+)\s+whole squares?\s+and\s+(\d+)\s+part squares?", low)
+    if not m:
+        return None
+    return pick(opts, int(m.group(1)) + int(m.group(2)) / 2.0, amount)
+
+
 def expected(q, opts, item, js=""):
     """the answer, when it can be derived; else None. Conservative by design."""
     t = plain(q).replace("−", "-").replace("×", "*").replace("÷", "/")
@@ -1924,6 +2121,17 @@ def expected(q, opts, item, js=""):
     # Matching "nearest" alone also took "Round 63 to the nearest 10", where
     # the key IS exact and IS the whole question, so the guard was skipping the
     # rounding questions rather than the estimates. Ask for the estimating.
+    # THE TWO RULES THAT CAN PROVE AN ESTIMATE RUN BEFORE THE GUARD BELOW.
+    # The guard is right in general and would otherwise decline these two
+    # before any rule saw them - it is placed by WORDING ("roughly"), and these
+    # are the cases where the wording says estimate and the options are still
+    # decisive. Each proves its own determinacy rather than trusting the phrase.
+    got = estimate_answer(low, t, opts)
+    if got is not None:
+        return got
+    got = part_square_answer(low, opts)
+    if got is not None:
+        return got
     if re.search(r"\bestimate|\broughly\b|\bguess\b|\babout how", low):
         return None                                   # deliberately not exact
     m = re.search(r"round\s+([\d,]+)\s+to the nearest\s+([\d,]+|ten|hundred|thousand)", low)
@@ -2033,6 +2241,15 @@ def expected(q, opts, item, js=""):
         if got is not None:
             return got
     got = named_chart_answer(low, opts, js)
+    if got is not None:
+        return got
+    got = calc_answer(low, t, opts)
+    if got is not None:
+        return got
+    got = words_answer(low, t, opts)
+    if got is not None:
+        return got
+    got = term_rule_answer(low, t, opts)
     if got is not None:
         return got
     if picn is not None and re.search(r"^how many\b", low) and not nums(t):

@@ -693,6 +693,42 @@ CASES = [
      'What is a quarter of 24?',
      'a: 0',
      'a: 1'),
+
+    # ---- the Stage 4 METHOD questions, added with the rules that read them ----
+    # Every one of these reads as opinion - "easiest", "the same as", "true
+    # about", "roughly" - and every one is decided by arithmetic. That is
+    # exactly the case where a rule can cheat: recognising the right option by
+    # its wording passes the real key and would pass a wrong one too, and
+    # nothing in the checker's own output can tell the two apart. These are the
+    # cases that make the difference visible.
+    ('grade-4-app', 'patterns-and-squares.html',
+     'what is the term-to-term rule?',
+     'a: 0',
+     'a: 1'),
+    ('grade-4-app', 'ways-to-calculate.html',
+     'write 4,207 in words?',
+     'a: 0',
+     'a: 1'),
+    ('grade-4-app', 'ways-to-calculate.html',
+     'Roughly, what is 412',
+     'a: 0',
+     'a: 1'),
+    ('grade-4-app', 'ways-to-calculate.html',
+     'easiest if you first work out:',
+     'a: 0',
+     'a: 1'),
+    ('grade-4-app', 'ways-to-calculate.html',
+     '25 is the same as:',
+     'a: 0',
+     'a: 1'),
+    ('grade-4-app', 'ways-to-calculate.html',
+     'true about 6 and 24?',
+     'a: 0',
+     'a: 1'),
+    ('grade-4-app', 'shape-and-measures.html',
+     '9 whole squares and 6 part squares',
+     'a: 0',
+     'a: 1'),
 ]
 
 

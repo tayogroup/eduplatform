@@ -132,7 +132,8 @@ Three details that are decisions rather than defaults:
   were checked exhaustively — every answer and every distractor at or below
   100, and every fact still has two distinct wrong options.
 
-It takes Tens and Ones to 17 steps and the build to 87.
+It takes Tens and Ones to 17 steps and the build to 87. (Both figures moved
+again when the fractions and money steps came out of that lesson -- see below.)
 
 Three lessons are now much shorter — 16 steps became 6 in *Half Past, Quarter
 To*, 13 became 5 in *Which Way From Here*, 13 became 11 in *Sides and Corners*.
@@ -141,6 +142,53 @@ objectives, position two). With the times-table step added back the build stands
 at 87 teaching steps against 104 before (105 sections against 122, counting each
 lesson's check and sticker pages), and the whole grade already held only about
 three weeks of a thirty-five-week year.
+
+## Tens and Ones is about number now: the fractions and money steps came out
+
+Every step in this build was Stage 2 after 2026-09-09, and Tens and Ones was
+still the one lesson that was not about ONE thing. Its last two steps taught
+fractions and money, and this build has a nine-step fractions lesson and a
+nine-step money lesson:
+
+| Tens and Ones | the lesson that owns it |
+| --- | --- |
+| 16 *Halves and quarters* — cut the bar into equal parts, tap to shade | *Fair Shares* 1 *Equal parts first*, 2 *Top number, bottom number* |
+| 17 *Money* — pay for it with coins, tap until exactly right | *Coins and Change* 3 *Make this exact amount* |
+
+The same activity twice, the second time in more depth. `recut-tens-and-ones.py`
+removes them; the lesson goes 17 steps to **15** and the build 87 to **85** (103
+sections). It is idempotent and reports what it changed, so its output is the
+review surface.
+
+**Coverage did not move — 23 of 48 declared, before and after — and the
+ANNOTATIONS had to move for that to be true.** `2Nf.01`, `2Nf.02` and `2Nf.04`
+were written down on the step that was cut and NOWHERE else in the build; Fair
+Shares annotated only `2Nf.05`. Deleting the step would have deleted the only
+record that this grade teaches them while leaving the teaching in place, so the
+three codes are now on the Fair Shares steps that actually teach them — equal
+parts, a fraction of a group, and fractions in real life. A coverage figure that
+lives on the one step you are about to cut is not a fact about the course.
+
+**THE MONEY BLOCK OWNED TWO HELPERS THAT SEVEN OTHER STEPS CALL.** `choices()`
+and `reveal()` were declared at top level inside it, and *Tables by heart*, *A
+quick look*, *Numbers in words*, *Which is more*, *First second third*, *Make 20
+make 100* and *One undoes the other* all call them — 11 and 7 call sites. They
+are hoisted function declarations, so nothing reads as though it depends on
+where they live, and no static check would have said a word: the page parses,
+the gate passes, and seven steps throw on the first tap. They are moved up
+beside `lines()` before the block is deleted. This is the same failure the
+section below records from 2026-09-09, which is why it was looked for rather
+than found.
+
+Verified in a browser rather than by reading: all seven of those steps draw
+their options and mark them right/wrong on a tap, with zero page errors; the
+check completes and earns its sticker through the renumbered `finish(15)`; the
+shelf carries 16 stickers with no fractions or money entry; and Fair Shares
+still draws its nine steps, since the annotations are HTML comments.
+
+The hub card's step count is DERIVED by the script now. It said 17 while the
+lesson had 15 — the same drift Grade 4's card had when a lesson grew, and there
+is no `build-hub.py` here to prevent it.
 
 ### Removing a step breaks the helper that happened to sit beside it
 

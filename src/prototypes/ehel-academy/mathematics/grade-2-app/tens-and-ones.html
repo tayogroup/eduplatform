@@ -696,34 +696,6 @@
     </section>
 
     <!-- 15 fractions -->
-    <section class="slide" data-say="Cut the bar into equal parts. Tap the parts to shade them.">
-      <div class="slide-head"><span class="n">16</span><h2>Halves and quarters</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Cut the bar into <b>equal</b> parts, then tap parts to shade them.</span></div>
-      <div class="stage">
-        <div class="bigbtns"><button type="button" class="big small teal" data-parts="2">halves</button><button type="button" class="big small ghost" data-parts="4">quarters</button></div>
-        <div class="fracbar" id="bar8"></div>
-        <div class="bignum" id="frac8" style="font-size:clamp(30px,7vw,48px)"></div>
-        <div class="working" id="work8"></div>
-        <p class="fb" id="fb8"></p>
-      </div>
-    </section>
-
-    <!-- 16 money -->
-    <section class="slide" data-say="Pay for it with coins. Tap coins until you have exactly the right amount.">
-      <div class="slide-head"><span class="n">17</span><h2>Money</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Pay for it. Tap coins until you have <b>exactly</b> the right amount.</span></div>
-      <div class="stage">
-        <div class="price" id="price10"></div>
-        <div class="coins" id="coins10"></div>
-        <div class="paid" id="paid10"></div>
-        <div class="bignum" id="total10" style="font-size:clamp(30px,7vw,48px)"></div>
-        <p class="fb" id="fb10"></p>
-        <div class="bigbtns"><button type="button" class="big small ghost" id="undo10">Take one back</button><button type="button" class="big small teal" id="next10" hidden>Next thing to buy</button></div>
-        <p class="fb small-fb" id="score10"></p>
-      </div>
-    </section>
-
-    <!-- 17 check -->
     <section class="slide" data-say="Time to show what you know. Tap the answer.">
       <div class="slide-head"><span class="n">✓</span><h2>Show what you know</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the answer.</span></div>
@@ -1594,6 +1566,10 @@
   }
   function lines(el, arr) { el.innerHTML = arr.map((l) => '<div class="line' + (l.total ? " total" : "") + (l.hidden ? " hidden" : "") + '"><span class="k">' + l.k + '</span><span class="v">' + l.v + "</span></div>").join(""); }
 
+  function reveal(el, answer, picked) { el.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(answer)) c.classList.add("right"); }); if (picked && picked.dataset.v !== String(answer)) picked.classList.add("wrong"); }
+
+  function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
+
   /* ---- 1: hundred chart ---- */
   let sel1 = 47, finds1 = shuffle([23, 68, 90, 15, 76]).slice(0, 3), found1 = 0;
   $("chart1").innerHTML = Array.from({ length: 100 }, (_, i) => '<button type="button" data-n="' + (i + 1) + '">' + (i + 1) + "</button>").join("");
@@ -1869,32 +1845,6 @@
   $("mode7group").addEventListener("click", () => { mode7 = "group"; reset7(); say("Group 12 into bags of 4."); });
   reset7();
 
-  /* ---- 8: halves and quarters (0096 2Nf.01, 2Nf.02, 2Nf.04) ----
-     Stage 2 fractions are halves, quarters and three-quarters and nothing
-     else; the THIRD is 3Nf.05. This bar offered thirds as one of its three
-     buttons and asked the child to shade all three kinds before the step would
-     tick, so a Stage 2 learner could not finish it without meeting a Stage 3
-     fraction. Two kinds now, and the completion test counts two. */
-  let parts8 = 2, shaded8 = [true, false], seen8 = new Set();
-  const NAMES8 = { 2: ["half", "halves"], 4: ["quarter", "quarters"] };
-  function paint8() {
-    $("bar8").innerHTML = Array.from({ length: parts8 }, (_, i) => '<button type="button" class="' + (shaded8[i] ? "on" : "") + '" data-i="' + i + '">' + (i + 1) + "</button>").join("");
-    document.querySelectorAll("#s8btns [data-parts], .slide [data-parts]").forEach((b) => { b.className = "big small " + (Number(b.dataset.parts) === parts8 ? "teal" : "ghost"); });
-    const n = shaded8.filter(Boolean).length, nm = NAMES8[parts8];
-    $("frac8").innerHTML = '<span class="fraction"><span>' + n + "</span><span>" + parts8 + "</span></span>";
-    lines($("work8"), [
-      { k: "Equal parts", v: "the bar is cut into <b>" + parts8 + "</b> " + nm[1] },
-      { k: "Shaded", v: "<b>" + n + "</b> " + (n === 1 ? nm[0] : nm[1]) + (n === parts8 ? ": the whole bar" : n === 0 ? ": nothing yet" : "") },
-      { k: "Of 12 sweets", v: "one " + nm[0] + " of 12 is <b>" + 12 / parts8 + "</b>, so " + n + " " + (n === 1 ? nm[0] : nm[1]) + " is <b>" + n * (12 / parts8) + "</b>", total: true },
-    ]);
-    if (n > 0 && n < parts8) seen8.add(parts8);
-    $("fb8").className = "fb " + (seen8.size === 2 ? "good" : ""); $("fb8").textContent = seen8.size === 2 ? "Halves and quarters: you have shaded them both!" : "Shade a part of each kind of bar: halves and quarters.";
-    if (seen8.size === 2) finish(15, "Halves and quarters. Well done!");
-  }
-  document.querySelectorAll(".slide [data-parts]").forEach((b) => b.addEventListener("click", () => { parts8 = Number(b.dataset.parts); shaded8 = new Array(parts8).fill(false); shaded8[0] = true; paint8(); say("The bar is cut into " + parts8 + " " + NAMES8[parts8][1] + ". One " + NAMES8[parts8][0] + " is shaded."); }));
-  $("bar8").addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return; shaded8[Number(b.dataset.i)] = !shaded8[Number(b.dataset.i)]; paint8(); const n = shaded8.filter(Boolean).length; say(n + " " + (n === 1 ? NAMES8[parts8][0] : NAMES8[parts8][1]) + " shaded"); });
-  paint8();
-
   /* ---- 9: odd and even ---- */
   let n9 = 7, quiz9 = null, right9 = 0;
   function paint9() {
@@ -1922,38 +1872,6 @@
     if (right9 >= 3) finish(7, "Odd and even: you know them!"); setTimeout(ask9, 1800);
   });
   paint9(); ask9();
-
-  /* ---- 10: money ---- */
-  const ITEMS = [["🥭", "a mango", 35], ["✏️", "a pencil", 60], ["🍞", "a loaf", 85], ["🧃", "a juice", 120], ["📒", "a notebook", 150]];
-  const COINS = [5, 10, 20, 50, 100];
-  let it10 = 0, paid10 = [], right10 = 0; const ROUNDS10 = 4;
-  function round10() {
-    paid10 = []; $("fb10").textContent = ""; $("fb10").className = "fb"; $("next10").hidden = true;
-    if (it10 >= ROUNDS10) { $("price10").innerHTML = ""; $("coins10").innerHTML = ""; $("paid10").innerHTML = ""; $("total10").textContent = ""; $("undo10").hidden = true; $("fb10").className = "fb good"; $("fb10").textContent = "You paid for " + right10 + " things exactly!"; finish(16, "You can pay with coins!"); return; }
-    const item = ITEMS[it10];
-    $("score10").textContent = "Buy " + (it10 + 1) + " of " + ROUNDS10;
-    $("price10").innerHTML = '<span class="item">' + item[0] + '</span><div><div>' + item[1] + '</div><div class="tag">' + item[2] + " sh</div></div>";
-    $("coins10").innerHTML = COINS.map((c) => '<button type="button" class="coin' + (c === 100 ? " note" : "") + '" data-v="' + c + '">' + c + "<small>sh</small></button>").join("");
-    paint10(); say("Pay for " + item[1] + ". It costs " + item[2] + " shillings.");
-  }
-  function paint10() {
-    const total = paid10.reduce((a, b) => a + b, 0), price = ITEMS[it10][2];
-    $("paid10").innerHTML = paid10.map((c) => "<span" + (c === 100 ? ' class="n"' : "") + ">" + c + "</span>").join("") || '<span style="background:transparent;color:var(--muted)">no coins yet</span>';
-    $("total10").innerHTML = (paid10.length ? paid10.join(" + ") + " = " : "") + "<b>" + total + " sh</b>";
-    $("undo10").disabled = !paid10.length;
-    if (total === price) { $("fb10").className = "fb good"; $("fb10").textContent = cheer() + " Exactly " + price + " sh, with " + paid10.length + (paid10.length === 1 ? " coin." : " coins."); say(cheer() + " Exactly " + price + " shillings"); $("next10").hidden = false; right10++; it10++; $("coins10").querySelectorAll(".coin").forEach((c) => { c.disabled = true; }); }
-    else if (total > price) { $("fb10").className = "fb bad"; $("fb10").textContent = "Too much! You have " + total + " sh but it costs " + price + ". Take one back."; }
-    else { $("fb10").className = "fb"; $("fb10").textContent = total ? (price - total) + " sh more to go." : ""; }
-  }
-  $("coins10").addEventListener("click", (e) => { const c = e.target.closest(".coin"); if (!c || c.disabled) return; paid10.push(Number(c.dataset.v)); paint10(); const t = paid10.reduce((a, b) => a + b, 0); if (t !== ITEMS[Math.min(it10, ITEMS.length - 1)][2]) say(t + " shillings"); });
-  $("undo10").addEventListener("click", () => { paid10.pop(); paint10(); });
-  $("next10").addEventListener("click", round10);
-  round10();
-
-
-  /* the two helpers the new steps need */
-  function choices(el, opts, wordy) { el.innerHTML = shuffle([...new Set(opts.map(String))]).map((o) => '<button type="button" class="choice' + (wordy || /[a-z]/i.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join(""); }
-  function reveal(el, answer, picked) { el.querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.v === String(answer)) c.classList.add("right"); }); if (picked && picked.dataset.v !== String(answer)) picked.classList.add("wrong"); }
 
   /* ---- 11: a quick look (0096 2Nc.02 subitise, 2Nc.03 estimate, 2Nc.01 count to 100) ---- */
   let rA = 0, rightA = 0, lockA = false, qA = null; const ROUNDSA = 6;
@@ -2228,15 +2146,13 @@
     { q: "56 − 20 = ?", opts: [36, 46, 54], a: 36 },
     { q: "4 × 5 = ?", opts: [20, 25, 9], a: 20 },
     { q: "12 shared between 3 is ? each", opts: [4, 3, 6], a: 4 },
-    { q: "A quarter of 12 is ?", opts: [3, 4, 6], a: 3 },
     { q: "Is 17 odd or even?", opts: ["odd", "even"], a: "odd" },
-    { q: "20 sh + 20 sh + 5 sh = ?", opts: ["45 sh", "40 sh", "25 sh"], a: "45 sh" },
-    { q: "One more than 59 is ?", opts: [60, 58, 69], a: 60 },
+    { q: "One more than 59 is ?", opts: [60, 58, 69], a: 60 }
   ];
   let c11 = 0, right11 = 0, lock11 = false;
   function round11() {
     lock11 = false; $("fb11").textContent = ""; $("fb11").className = "fb";
-    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(17, "You got " + right11 + " out of " + CHECK.length + "."); return; }
+    if (c11 >= CHECK.length) { $("q11").textContent = ""; $("ch11").innerHTML = ""; $("fb11").className = "fb good"; $("fb11").innerHTML = "You got <b>" + right11 + "</b> out of " + CHECK.length + "!"; $("score11").textContent = right11 === CHECK.length ? "Every single one!" : right11 >= 7 ? "Nearly all of them!" : "Try the steps again, then come back."; finish(15, "You got " + right11 + " out of " + CHECK.length + "."); return; }
     const q = CHECK[c11];
     $("score11").textContent = "Question " + (c11 + 1) + " of " + CHECK.length; $("q11").textContent = q.q; $("say11").textContent = q.q;
     $("ch11").innerHTML = shuffle(q.opts).map((o) => '<button type="button" class="choice' + (typeof o === "string" && !/\d/.test(o) ? " word" : "") + '" data-v="' + o + '">' + o + "</button>").join("");
@@ -2254,7 +2170,14 @@
   round11();
 
   /* ---- 18: stickers ---- */
-  const STICKERS = [["💯", "Numbers to 100"], ["👀", "A quick look"], ["🔤", "Numbers in words"], ["🧱", "Tens and ones"], ["⚖️", "Which is more"], ["🥇", "First, second, third"], ["🎯", "Rounding to 10"], ["👯", "Odd and even"], ["🧩", "Make 20 and 100"], ["➕", "Adding"], ["➖", "Taking away"], ["↩️", "One undoes the other"], ["🔢", "Arrays and tables"], ["🧠", "Tables by heart"], ["🍬", "Sharing and grouping"], ["🍫", "Halves and quarters"], ["🪙", "Money"], ["✅", "Show what I know"]];
+  const STICKERS = [
+    ["💯", "Numbers to 100"], ["👀", "A quick look"], ["🔤", "Numbers in words"],
+    ["🧱", "Tens and ones"], ["⚖️", "Which is more"], ["🥇", "First, second, third"],
+    ["🎯", "Rounding to 10"], ["👯", "Odd and even"], ["🧩", "Make 20 and 100"],
+    ["➕", "Adding"], ["➖", "Taking away"], ["↩️", "One undoes the other"],
+    ["🔢", "Arrays and tables"], ["🧠", "Tables by heart"], ["🍬", "Sharing and grouping"],
+    ["✅", "Show what I know"]
+  ];
   function paintStickers() {
     $("stickers").innerHTML = STICKERS.map((s, i) => '<div class="sticker' + (done[i] ? " got" : "") + '"><span class="ic">' + s[0] + "</span>" + s[1] + (done[i] ? "" : '<br><small style="color:var(--muted);font-weight:400">not yet</small>') + "</div>").join("");
     const got = done.slice(0, STICKERS.length).filter(Boolean).length;

@@ -326,6 +326,47 @@ const IS_STAFF = ["admin", "teacher", "staff"].includes(launchRole());
 // by design (the ±2 help window is their whole premise).
 const IS_TUTORING = LAUNCH_CLAIMS?.category === "tutoring" || routeParams.get("category") === "tutoring";
 
+/* GRADE 1 IS WITHDRAWN FROM THIS SHELL FOR SCHOOL LEARNERS. Owner, 2026-09-10.
+   Its teaching is served by the standalone build at app/english/grade-1-v2/,
+   which carries all twenty-two steps of a unit, and a school learner meeting
+   the same ten units through this shell as well is the duplication this
+   withdrawal removes. The per-grade door (app/english/grade-1/index.html) was
+   retired the same day; this closes the subject entry behind it.
+
+   TWO CASES ARE DELIBERATELY EXEMPT, and neither is a compromise - each is
+   something this shell is the ONLY front end for.
+
+   - THE PREREQUISITE UNIT (-1) STAYS. It is not the course: it is the 12
+     question placement exam over the earlier grades, plus the grade-level
+     Study Plan that hangs off the same unit. The standalone build has no
+     concept of unit -1 - zero references to placement or the prerequisite in
+     its builder, its hub or any of its ten pages - so redirecting this would
+     not move the exam anywhere, it would delete a learner's only route to it.
+   - A TUTORING LEARNER STAYS, the same LEARNER-rather-than-section exemption
+     the deck already makes for this category. 472 Grade 1 topics are indexed
+     for tutoring and land on eleven of this shell's sections (activities 126,
+     ebooks 70, grammar 64, writing 60, speaking 60, reading 30, comprehension
+     21, dictionary 20, quiz 10, games 10, glossary 1); the standalone build
+     implements none of those section routes, and get-help's own session
+     workspace opens on this entry too. Sending this category away would strand
+     all of it on a search that is their whole premise.
+
+   So "one body of content, one front end" is now true for the learner who was
+   actually meeting it twice, and the two routes that exist nowhere else are
+   left working. Withdrawing those as well needs somewhere for them to go
+   first, which is a content job rather than a gate.
+
+   The whole URL is carried across - a launch token, studentid, unit and the
+   hash - because a redirect that drops the token stops the school recording
+   that child's work. location.replace, so the shell leaves no history entry to
+   bounce back through. */
+if (gradeNumber === 1 && !isPrereqUnit && !IS_TUTORING) {
+  const toStandalone = new URL("./grade-1-v2/index.html", location.href);
+  toStandalone.search = location.search;
+  toStandalone.hash = location.hash;
+  location.replace(toStandalone.href);
+}
+
 // ===================== english body (verbatim) =====================
 
 // The grades with a Story Library (renderStoryLibrary, far below). Declared up

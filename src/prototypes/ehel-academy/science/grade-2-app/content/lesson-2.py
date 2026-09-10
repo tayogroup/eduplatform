@@ -6,7 +6,7 @@ diet, hygiene and exercise; 2Bp.02 what illness is and its common signs; with
 2TWSc.01, 2TWSc.02, 2TWSc.05 (a fact card as a secondary source), 2SIC.02 and
 2SIC.03.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 TEETH = [
     {"id": "incisors", "label": "incisors", "say": "The incisors are the flat front teeth. They cut food, like biting into an apple."},
@@ -181,3 +181,61 @@ LESSON = {
              "That is the whole lesson finished. Look after those teeth."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Name the three kinds of teeth and what each is for.",
+    "Say how to look after your teeth.",
+    "Say what keeps a body healthy.",
+    "Say what illness looks like and what to do.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F9B7", "Three kinds of teeth",
+         "Open wide. At the front are incisors, for cutting. Beside them are canines, pointed, for tearing. At the back are molars, big and flat, for grinding food."),
+    part("\U0001FAA5", "Brushing",
+         "Brush twice a day. A pea of paste. Small gentle circles. Front, sides, backs, and the tops of the molars. Two whole minutes."),
+    part("\U0001F36C", "Sugar and teeth",
+         "Sugar feeds the germs in your mouth, and they make holes in your teeth. Sweets and fizzy drinks every day means holes. Water and fruit are kinder to teeth."),
+    part("\U0001F3C3\U0001F3FE", "A healthy body",
+         "A healthy body needs good food, water, sleep, washing, and moving every day. Run, play, climb. Then rest."),
+    part("\U0001F912", "When you are ill",
+         "Being ill means your body is not working as it should. A hot forehead, a cough, feeling very tired. Tell a grown-up, rest, drink water. Your body will mend."),
+]
+
+LESSON["words"] = [
+    word("incisors", "\U0001F9B7", "The flat front teeth, for cutting food.",
+         ["Incisors bite into an apple.", "You have eight incisors."]),
+    word("canines", "\U0001F43A", "The pointed teeth beside the incisors, for tearing.",
+         ["A dog has big canines.", "Canines tear food."]),
+    word("molars", "\U0001F37D\uFE0F", "The big flat teeth at the back, for grinding.",
+         ["Molars grind food small.", "Brush the tops of your molars."]),
+    word("germs", "\U0001F9A0", "Tiny living things, too small to see, that can make you ill.",
+         ["Wash your hands to get rid of germs.", "Germs make holes in teeth."]),
+    word("healthy", "\U0001F34E", "Well, and looking after your body.",
+         ["Fruit is a healthy food.", "Playing outside keeps you healthy."]),
+    word("illness", "\U0001F912", "Being ill. When your body is not working as it should.",
+         ["A cold is an illness.", "Rest helps an illness get better."]),
+    word("fever", "\U0001F321\uFE0F", "When your body gets too hot because you are ill.",
+         ["A fever makes your forehead hot.", "Tell a grown-up if you have a fever."]),
+]
+
+LESSON["home"] = [
+    home("The two-minute brush", "A toothbrush, toothpaste, a timer or a two-minute song",
+         ["Put a pea of paste on the brush.",
+          "Brush in small circles: front, sides, backs, tops. Keep going until the song ends.",
+          "Do it morning and night for a week."],
+         "Does two minutes feel longer than you thought?"),
+    home("The egg and the fizzy drink", "Two boiled eggs still in their shells, a cup of fizzy drink, a cup of water, a grown-up",
+         ["Put one egg in the fizzy drink and one in the water.",
+          "Leave them overnight.",
+          "Rinse them and compare the shells."],
+         "Eggshell is a bit like the outside of a tooth. What has the fizzy drink done to it?"),
+    home("Healthy day chart", "Paper and a pencil",
+         ["Draw a chart with a row for each day of the week.",
+          "Each day tick: fruit or vegetables, water, played outside, washed, slept well.",
+          "Count the ticks at the end of the week."],
+         "Which one was hardest to tick every day?"),
+]

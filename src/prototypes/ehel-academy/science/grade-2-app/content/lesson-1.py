@@ -6,7 +6,7 @@ in body parts and skin covering; 2Bp.03 how young animals change as they grow;
 2Bp.04 offspring have a mix of their parents' features; 2TWSm.03 a diagram
 versus a picture; with 2TWSc.01, 2TWSp.01 and 2SIC.03.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 # a diagram is a drawing that shows the parts and names them; a picture just shows the thing
 BIRD_DIAGRAM = ('<svg viewBox="0 0 120 90"><path d="M20 55 q30 -30 60 -10 l20 -6 l-16 14 q-10 22 -44 18z" fill="none" stroke="#fff" stroke-width="2"/>'
@@ -211,3 +211,61 @@ LESSON = {
              "That is the whole lesson finished. You can compare animals like a scientist."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say what covers an animal: fur, feathers, scales or skin.",
+    "Say how animals are alike and how they are different.",
+    "Put the stages of a young animal's life in order.",
+    "Tell a diagram from a picture.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F431", "Coverings",
+         "Every animal has a covering. A cat has fur. A bird has feathers. A fish has scales. A frog has smooth wet skin. You have skin, with hair on your head. You are an animal too."),
+    part("\U0001F436", "Alike and different",
+         "A cat and a dog both have four legs, two ears and fur. But a cat has claws it can pull in, and a dog does not. Animals are alike in some ways and different in others."),
+    part("\U0001F423", "Growing up",
+         "An egg. A chick. A young hen. A grown hen. Young animals change as they grow: bigger, new feathers, new food, new things they can do."),
+    part("\U0001F46A", "Like their parents",
+         "Puppies look like their parents. Not exactly like the mother, and not exactly like the father. Each puppy gets a mix from both."),
+    part("\u270F\uFE0F", "Diagram or picture",
+         "A picture shows what an animal looks like. A diagram is a drawing with labels that name the parts. Scientists draw diagrams to show what matters."),
+]
+
+LESSON["words"] = [
+    word("fur", "\U0001F431", "Soft, thick hair all over an animal's body.",
+         ["A cat has fur.", "Fur keeps a rabbit warm."]),
+    word("feathers", "\U0001FAB6", "The light covering of a bird.",
+         ["A duck's feathers keep the water off.", "Feathers help a bird fly."]),
+    word("scales", "\U0001F41F", "Small hard plates that cover a fish or a snake.",
+         ["A fish has scales.", "The snake's scales are dry."]),
+    word("skin", "\U0001F438", "The covering on the outside of a body.",
+         ["A frog has smooth skin.", "Your skin is your covering."]),
+    word("offspring", "\U0001F425", "An animal's young. Its babies.",
+         ["A hen's offspring are chicks.", "Offspring look a bit like each parent."]),
+    word("diagram", "\u270F\uFE0F", "A drawing with labels that name the parts.",
+         ["The diagram names the wing, the beak and the legs.", "Draw a diagram, not a picture."]),
+    word("label", "\U0001F3F7\uFE0F", "A word on a diagram that names a part.",
+         ["The label says beak.", "Add a label for the tail."]),
+]
+
+LESSON["home"] = [
+    home("Covering hunt", "A garden, a park or a window, paper and a pencil",
+         ["Spot five animals: birds, insects, a cat, a dog, a snail.",
+          "For each one, say what covers it.",
+          "Draw a table: animal and covering."],
+         "Which covering did you see most? Insects have a hard case."),
+    home("Draw a diagram of a pet", "A pet or a picture of an animal, paper, a pencil, a ruler",
+         ["Draw the animal simply.",
+          "Draw a straight line from each part out to the edge.",
+          "Write a label at the end of each line."],
+         "A diagram names the parts. A picture only shows the look."),
+    home("Family look-alikes", "Photos of your family",
+         ["Look at a child and both parents.",
+          "Find two things the child got from one parent and two from the other.",
+          "Say what is different from both."],
+         "Offspring get a mix, not a copy."),
+]

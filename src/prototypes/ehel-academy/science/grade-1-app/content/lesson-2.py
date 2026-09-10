@@ -5,7 +5,7 @@
 light and water (the light half); with 1TWSp.01, 1TWSp.02, 1TWSc.02,
 1TWSc.03, 1TWSc.04, 1TWSc.05, 1TWSa.01 and 1SIC.03.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 PLANT_PARTS = [
     {"id": "roots", "label": "roots", "say": "The roots hide in the soil. They hold the plant steady and drink up water."},
@@ -213,3 +213,61 @@ LESSON = {
              "That is the whole lesson finished. You know a plant from root to flower."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Name the roots, stem, leaves and flower of a plant.",
+    "Say what each part does.",
+    "Do an experiment to find out whether a plant needs light.",
+    "Measure how tall a plant is in cubes.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F330", "A seed wakes up",
+         "A seed looks dead, but it is not. Give it water and warmth and it wakes up. A root pushes down first. Then a shoot pushes up, towards the light."),
+    part("\U0001F33F", "Roots and stem",
+         "The roots hold the plant in the soil and drink up water. The stem holds the plant up and carries the water to every part."),
+    part("\U0001F343", "Leaves and flower",
+         "Leaves catch sunlight and use it to make the plant's food. The flower makes seeds, so there can be new plants next year."),
+    part("\u2600\uFE0F", "Light and water",
+         "A plant needs water AND light. Take away the water and it droops. Take away the light and it goes pale and thin. You will test that today."),
+    part("\U0001F4CF", "Tools and measuring",
+         "Scientists use tools. A magnifying glass to look closely. A ruler or cubes to measure. Gloves to keep hands safe. You will measure a plant in cubes."),
+]
+
+LESSON["words"] = [
+    word("roots", "\U0001F33F", "The parts of a plant under the soil. They hold it up and drink water.",
+         ["The roots grow down into the soil.", "Pull up a weed and you can see its roots."]),
+    word("stem", "\U0001F331", "The part that holds a plant up and carries water to the leaves.",
+         ["A sunflower has a tall stem.", "Water goes up the stem to the leaves."]),
+    word("leaf", "\U0001F343", "The flat green part of a plant. Leaves make the plant's food from sunlight.",
+         ["A leaf catches sunlight.", "This tree has lost its leaves."]),
+    word("flower", "\U0001F338", "The part of a plant that makes seeds.",
+         ["The flower is red.", "Bees visit the flower."]),
+    word("seed", "\U0001F330", "The small thing a new plant grows from.",
+         ["We planted a seed.", "A bean is a seed."]),
+    word("shoot", "\U0001F331", "The first green stem that pushes up out of a seed.",
+         ["The shoot came up on day five.", "A shoot grows towards the light."]),
+    word("measure", "\U0001F4CF", "To find out how long, tall or heavy something is.",
+         ["We measure the plant in cubes.", "Measure it again next week."]),
+]
+
+LESSON["home"] = [
+    home("Grow a bean in a jar", "A dried bean, a glass jar, kitchen paper, water",
+         ["Line the jar with wet kitchen paper and push the bean between the paper and the glass.",
+          "Keep the paper damp and the jar on a windowsill.",
+          "Look every day. Draw what you see."],
+         "The root comes first, going DOWN. Then the shoot, going UP."),
+    home("Plant in the dark", "Two small plants, a cupboard, water",
+         ["Put one plant on a sunny windowsill and one inside a dark cupboard.",
+          "Water both the same.",
+          "After four days, put them side by side."],
+         "The plant from the dark is pale, thin and floppy."),
+    home("Measure a plant in cubes", "A plant, some building bricks or sugar cubes",
+         ["Stand the bricks in a tower next to the plant.",
+          "Count the bricks up to the top leaf.",
+          "Do it again in a week."],
+         "Did the number go up? By how many?"),
+]

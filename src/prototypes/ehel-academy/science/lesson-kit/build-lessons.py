@@ -50,6 +50,8 @@ import os
 import re
 import sys
 
+from _shell import META_KINDS, expand, finder_words
+
 KIT = os.path.dirname(os.path.abspath(__file__))
 ACADEMY = os.path.abspath(os.path.join(KIT, "..", ".."))
 REPO = os.path.abspath(os.path.join(ACADEMY, "..", "..", ".."))
@@ -87,6 +89,9 @@ KINDS = {
     "questions": "sequence", "quiz": "sequence",
     # Stage 2
     "order": "order", "graph": "blockGraph", "lookup": "lookup", "build": "build",
+    # the unit shell, drawn around every lesson by _shell.py
+    "overview": "unitOverview", "lecture": "lecture", "words": "scienceWords",
+    "games": "gameZone", "home": "homeProjects", "world": "scienceWorld", "resources": "resources",
 }
 
 
@@ -167,7 +172,7 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
     where = "lesson %d step %d (%s)" % (n, k + 1, s["title"])
     if s["kind"] not in KINDS:
         sys.exit("REFUSED: %s has unknown kind %r" % (where, s["kind"]))
-    if not s["objectives"]:
+    if not s["objectives"] and s["kind"] not in META_KINDS:
         sys.exit("REFUSED: %s names no objective" % where)
     for c in s["objectives"]:
         if c not in codes:
@@ -270,6 +275,39 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
             sys.exit("REFUSED: %s names sim %r" % (where, d["sim"]))
         if len(d["parts"]) < 2:
             sys.exit("REFUSED: %s builds from fewer than 2 parts" % where)
+    elif kind == "overview":
+        if len(d["about"]) < 3:
+            sys.exit("REFUSED: %s says fewer than 3 things the lesson is about" % where)
+    elif kind == "lecture":
+        if len(d["parts"]) < 3:
+            sys.exit("REFUSED: %s has fewer than 3 parts" % where)
+        for p in d["parts"]:
+            if not (p.get("pic") and p.get("title") and p.get("say")):
+                sys.exit("REFUSED: %s has a part without a pic, a title and something to say" % where)
+    elif kind == "words":
+        if len(d["items"]) < 4:
+            sys.exit("REFUSED: %s has fewer than 4 words" % where)
+        for w in d["items"]:
+            if not (w.get("w") and w.get("pic") and w.get("meaning") and len(w.get("uses") or []) >= 1):
+                sys.exit("REFUSED: %s word %r needs a pic, a meaning and a sample use" % (where, w.get("w")))
+        ws = [w["w"].lower() for w in d["items"]]
+        if len(set(ws)) != len(ws):
+            sys.exit("REFUSED: %s repeats a word" % where)
+    elif kind == "games":
+        if len(d["games"]) < 2:
+            sys.exit("REFUSED: %s derived fewer than 2 games - the lesson needs words and questions" % where)
+        for g in d["games"]:
+            if len(g["rounds"]) < 1:
+                sys.exit("REFUSED: %s game %r has no rounds" % (where, g["id"]))
+    elif kind == "home":
+        if len(d["items"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 home projects" % where)
+        for h in d["items"]:
+            if not (h.get("title") and h.get("materials") and len(h.get("steps") or []) >= 2 and h.get("look")):
+                sys.exit("REFUSED: %s project %r needs materials, 2+ steps and something to look for" % (where, h.get("title")))
+    elif kind == "resources":
+        if not d["finder"]:
+            sys.exit("REFUSED: %s has an empty word finder" % where)
     elif kind in ("questions", "quiz"):
         if len(d["items"]) < (6 if kind == "quiz" else 3):
             sys.exit("REFUSED: %s has only %d questions" % (where, len(d["items"])))
@@ -418,8 +456,8 @@ def prepare_quiz_pics(step):
     return step
 
 
-def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, deck, science):
-    steps = lesson["steps"]
+def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, deck, science, finder):
+    steps = expand(n, lesson, codes, finder, CFG)
     for k, s in enumerate(steps):
         check_step(n, k, s, codes, sims, figures, scenes, sounds)
         prepare_quiz_pics(s)
@@ -484,8 +522,12 @@ def main():
     print("\n  Building %s Science lessons  (0097 Stage %d: %d objectives; %d sims, %d figures, %d scenes, %d sounds)\n"
           % (GRADE_LABEL, STAGE, len(codes), len(sims), len(figures), len(scenes), len(sounds)))
     covered = set()
-    for n, fname, lesson in load_lessons(wanted):
-        covered |= set(build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, deck, science))
+    everything = load_lessons([])
+    finder = finder_words(everything)
+    for n, fname, lesson in everything:
+        if wanted and n not in wanted:
+            continue
+        covered |= set(build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, deck, science, finder))
     if not wanted:
         missing = sorted(set(codes) - covered)
         print("\n  %d of %d Stage %d objectives reached by at least one step%s\n"

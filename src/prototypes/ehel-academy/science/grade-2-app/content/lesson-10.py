@@ -5,7 +5,7 @@
 2TWSm.02, 2TWSp.02, 2TWSa.01, 2TWSa.02, 2TWSa.03, 2TWSc.03, 2TWSc.04,
 2TWSc.06, 2SIC.01 and 2SIC.03.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "the-sun-across-the-sky",
@@ -170,3 +170,61 @@ LESSON = {
              "That is the whole lesson finished, and the whole of Grade 2 Science."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say where the Sun rises, where it is at midday, and where it sets.",
+    "Measure a shadow through the day and record it.",
+    "Graph the shadows and read the pattern.",
+    "Put a day's events in order.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F305", "Sunrise",
+         "In the morning the Sun comes up low in the east. Long shadows stretch across the ground, pointing west."),
+    part("\u2600\uFE0F", "Midday",
+         "By midday the Sun has climbed to its highest point. Shadows are short, the shortest all day."),
+    part("\U0001F307", "Sunset",
+         "In the evening the Sun sinks low in the west and disappears. Shadows are long again, pointing east. The Sun rises in the east and sets in the west, every day."),
+    part("\U0001F4CA", "Measuring shadows",
+         "Stand a stick in the sun. Measure its shadow at nine, at midday and at three. Long, short, long. Write it in a table and graph it."),
+    part("\U0001F30D", "It is the Earth that turns",
+         "It looks as if the Sun moves across the sky. It does not. The Earth turns, once a day, and that swings us past the Sun. Scientists worked that out by watching and measuring."),
+]
+
+LESSON["words"] = [
+    word("sunrise", "\U0001F305", "When the Sun first comes up in the morning, in the east.",
+         ["Sunrise was at six o'clock.", "At sunrise the shadows are long."]),
+    word("sunset", "\U0001F307", "When the Sun goes down in the evening, in the west.",
+         ["We watched the sunset.", "After sunset it gets dark."]),
+    word("midday", "\u2600\uFE0F", "The middle of the day, when the Sun is highest.",
+         ["At midday my shadow is short.", "We eat lunch at midday."]),
+    word("east", "\U0001F9ED", "The side of the sky where the Sun rises.",
+         ["The Sun rises in the east.", "My window faces east."]),
+    word("west", "\U0001F5FA\uFE0F", "The side of the sky where the Sun sets.",
+         ["The Sun sets in the west.", "The shadow pointed west in the morning."]),
+    word("shadow", "\U0001F464", "A dark shape on the ground where something blocks the Sun's light.",
+         ["The stick's shadow points west.", "Shadows are shortest at midday."]),
+    word("turn", "\U0001F300", "To go round. The Earth turns once a day.",
+         ["The Earth turns.", "Turn the globe slowly."]),
+]
+
+LESSON["home"] = [
+    home("Shadow clock", "A stick, a pot of sand or soil, some small stones, a sunny day",
+         ["Stand the stick in the pot in a sunny place.",
+          "Every hour, put a stone at the tip of the shadow.",
+          "By evening, look at the curve of stones."],
+         "The shadow swings round and changes length. Shortest at midday."),
+    home("Sunrise and sunset watch", "A window, a grown-up, a clock",
+         ["Note where in the sky the Sun comes up. Which side of the house?",
+          "Note where it sets. Which side?",
+          "Do it again the next day."],
+         "The same sides both days. East and west. Never look straight at the Sun."),
+    home("Measure your own shadow", "A sunny day, a friend, chalk or a tape measure",
+         ["At nine, midday and three, stand on the same spot.",
+          "A friend marks the end of your shadow.",
+          "Measure each one in foot-lengths and write them down."],
+         "Long, short, long."),
+]

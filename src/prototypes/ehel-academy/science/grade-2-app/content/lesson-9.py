@@ -6,7 +6,7 @@
 activity affects the environment; with 2Cp.03, 2TWSc.01, 2TWSc.03, 2TWSc.05,
 2TWSc.06, 2TWSp.01 and 2SIC.04.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "rocks-and-the-earth",
@@ -183,3 +183,61 @@ LESSON = {
              "That is the whole lesson finished. You know your rocks."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say that not all rock is the same, and name some kinds.",
+    "Test rocks and record their properties.",
+    "Say where rock is taken from the Earth.",
+    "Say how what people do helps or harms the land.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001FAA8", "Many kinds of rock",
+         "Granite is hard and speckled. Chalk is soft and white. Sandstone is grainy. Marble is smooth and shiny. Slate splits into sheets. Pumice is full of holes and floats. Not all rock is the same."),
+    part("\U0001F50D", "Testing rocks",
+         "Scratch it: is it hard or soft? Drip water on it: does it soak in? Look closely: is it grainy, smooth or full of holes? Every rock has its own properties."),
+    part("\u26CF\uFE0F", "Where rock comes from",
+         "A quarry is a huge pit where rock is cut from a hillside. A mine is tunnels deep underground. A riverbed is where water has worn rock into pebbles."),
+    part("\U0001F3E0", "Rock all around",
+         "Slate on roofs. Stone in walls. Gravel on paths. Marble on floors. Chalk on the board. Rock is everywhere you look."),
+    part("\U0001F333", "Helping or harming",
+         "Dumping rubbish, smoke, covering a meadow with concrete: these harm the land. Planting trees, recycling, keeping streams clean: these help. What we do changes the Earth."),
+]
+
+LESSON["words"] = [
+    word("rock", "\U0001FAA8", "The hard material the Earth is made of under the soil.",
+         ["Granite is a hard rock.", "Rock is dug from a quarry."]),
+    word("pebble", "\u26AA", "A small, smooth piece of rock, worn smooth by water.",
+         ["I found a pebble on the beach.", "The river makes pebbles smooth."]),
+    word("quarry", "\u26CF\uFE0F", "A big open pit where rock is dug from the ground.",
+         ["Stone for the wall came from a quarry.", "A quarry is cut into a hillside."]),
+    word("mine", "\U0001F573\uFE0F", "Tunnels dug deep underground to take out rock or metal.",
+         ["Miners work in a mine.", "Coal comes from a mine."]),
+    word("soak", "\U0001F4A7", "To take in water.",
+         ["Chalk soaks up water.", "Marble does not soak."]),
+    word("grainy", "\U0001F7E4", "Made of tiny grains you can see or feel.",
+         ["Sandstone is grainy.", "The grainy rock felt rough."]),
+    word("environment", "\U0001F30D", "Everything around us: the land, the water, the air and the living things.",
+         ["Litter harms the environment.", "Planting trees helps the environment."]),
+]
+
+LESSON["home"] = [
+    home("Rock collection", "A bag, a walk outside, a magnifying glass",
+         ["Collect five different stones.",
+          "Look at each with the magnifying glass. Grainy, smooth, speckled, holes?",
+          "Sort them by one property."],
+         "No two are quite the same."),
+    home("The drip test on rocks", "Your five stones, a dropper or a spoon, water",
+         ["Put one drop of water on each stone.",
+          "Watch for one minute.",
+          "Say which soaked it up and which stayed wet on top."],
+         "Soft, grainy rocks soak. Hard, smooth ones do not."),
+    home("Rock spotting walk", "A street, paper and a pencil",
+         ["Find rock used in five places: a wall, a roof, a path, a step, a kerb.",
+          "Say what kind it might be.",
+          "Draw the one you like best."],
+         "Rock is all around, doing jobs."),
+]

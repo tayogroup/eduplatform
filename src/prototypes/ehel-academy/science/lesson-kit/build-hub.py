@@ -32,6 +32,8 @@ import os
 import re
 import sys
 
+from _shell import expand, finder_words
+
 KIT = os.path.dirname(os.path.abspath(__file__))
 LIB = os.path.join(KIT, "lib")
 REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
@@ -43,7 +45,10 @@ CONTENT = os.path.join(APP, "content")
 
 # minutes a six-year-old spends on a step of each kind, including listening
 MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "experiment": 4, "predictEach": 5,
-           "record": 2, "measure": 2.5, "label": 3, "tester": 3, "ask": 1.5, "questions": 3, "quiz": 4}
+           "record": 2, "measure": 2.5, "label": 3, "tester": 3, "ask": 1.5, "questions": 3, "quiz": 4,
+           "order": 2, "graph": 3, "lookup": 3, "build": 3,
+           # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
+           "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
 
 # the real-world version of each experiment, for a grown-up to run at home
 AT_HOME = {
@@ -268,6 +273,9 @@ def grownups_for(n, lesson, codes, minutes, steps, stage):
         sim = s["data"].get("sim") if s["kind"] in ("experiment", "predictEach") else None
         if sim and sim in AT_HOME:
             home.append("<li><b>%s.</b> %s</li>" % (text(s["title"]), text(AT_HOME[sim])))
+    for h in lesson.get("home") or []:
+        home.append("<li><b>%s.</b> You need: %s. %s Look for: %s</li>" % (
+            text(h["title"]), text(h["materials"]), text(" ".join(h["steps"])), text(h["look"])))
     keys = []
     for s in lesson["steps"]:
         d = s["data"]
@@ -312,11 +320,17 @@ def main():
     prefix = cfg.get("progressUnitPrefix", "l")
     cards, steps, files, options, grownups = "", {}, {}, "", ""
     live, total_minutes = 0, 0
+    # The shell steps (_shell.py) wrap every lesson, so the hub counts the
+    # same steps the page draws; the word finder needs every lesson's words.
+    modules = {n: lesson_module(n) for n, _ in enumerate(cfg["lessons"], 1)}
+    finder = finder_words([(n, l["file"], modules[n]) for n, l in enumerate(cfg["lessons"], 1) if modules[n]])
     for n, l in enumerate(cfg["lessons"], 1):
         f = l["file"]
         uid = "%s%02d" % (prefix, n)
         here = os.path.isfile(os.path.join(APP, f))
-        lesson = lesson_module(n)
+        lesson = modules[n]
+        if lesson:
+            lesson = dict(lesson, steps=expand(n, lesson, codes, finder, cfg))
         if here and lesson:
             live += 1
             page = io.open(os.path.join(APP, f), encoding="utf-8").read()

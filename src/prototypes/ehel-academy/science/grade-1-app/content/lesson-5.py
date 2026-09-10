@@ -6,7 +6,7 @@ objects; 1Pf.02 pushes and pulls as forces; 1Pf.03 some objects float and
 some sink; with 1TWSp.01, 1TWSp.02, 1TWSc.01, 1TWSc.03, 1TWSc.04, 1TWSc.05,
 1TWSa.01 and 1SIC.02.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "pushes-pulls-and-floating",
@@ -184,3 +184,61 @@ LESSON = {
              "That is the whole lesson finished. You know pushes, pulls, floating and sinking."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say how things move: roll, swing, spin, slide, bounce.",
+    "Tell a push from a pull.",
+    "Say what a bigger push does.",
+    "Predict and test which things float and which sink.",
+]
+
+LESSON["lecture"] = [
+    part("\u26BD", "Pushes and pulls",
+         "A push moves something away from you. A pull moves it towards you. Kicking a ball is a push. Opening a drawer is a pull. Pushes and pulls are forces."),
+    part("\U0001F4A8", "A bigger push",
+         "Push a ball gently and it rolls a little way. Push it hard and it rolls a long way. A bigger push makes a bigger move."),
+    part("\U0001F6D1", "Stop it, turn it",
+         "A push can start something moving. A push can stop it too. Put your hand in front of a rolling ball and it stops. Tap it on the side and it turns."),
+    part("\U0001F34E", "Float or sink",
+         "Drop an apple into water and it floats on top. Drop a stone and it sinks to the bottom. You cannot always tell by looking. You have to test."),
+    part("\U0001F6B2", "Forces all around",
+         "A bicycle moves because you push the pedals. A boat floats because the water pushes up on it. Pushes and pulls are inside everything that moves."),
+]
+
+LESSON["words"] = [
+    word("push", "\U0001F450", "A force that moves something away from you.",
+         ["I push the trolley.", "Kicking a ball is a push."]),
+    word("pull", "\U0001FAA2", "A force that moves something towards you.",
+         ["I pull the drawer open.", "Tug of war is a pull."]),
+    word("force", "\U0001F4AA\U0001F3FE", "A push or a pull. It makes things start, stop, speed up, slow down or turn.",
+         ["A force made the ball move.", "A bigger force, a bigger move."]),
+    word("float", "\U0001F34E", "To stay on top of the water.",
+         ["An apple floats.", "The boat floats on the sea."]),
+    word("sink", "\U0001FAA8", "To go down under the water.",
+         ["A stone sinks.", "The key sank to the bottom."]),
+    word("predict", "\U0001F52E", "To say what you think will happen, before you test it.",
+         ["I predict the leaf will float.", "Predict first, then test."]),
+    word("roll", "\u26BD", "To move by turning over and over.",
+         ["The ball rolls down the hill.", "Round things roll."]),
+]
+
+LESSON["home"] = [
+    home("Float or sink in the sink", "A bowl of water and eight things from the kitchen: an apple, a stone, a coin, a cork, a leaf, a spoon, a lid, a grape",
+         ["Before each one goes in, say: float or sink.",
+          "Drop it in gently and watch.",
+          "Put the floaters in one pile and the sinkers in another."],
+         "Which prediction was wrong? Heavy things do not always sink."),
+    home("Gentle push, hard push", "A ball, a smooth floor, some tape",
+         ["Stick tape marks on the floor a step apart.",
+          "Push the ball gently and count the marks it passes.",
+          "Push it hard and count again."],
+         "How many more marks the hard push passed."),
+    home("Push or pull hunt", "Paper and a pencil",
+         ["Walk round the house and find ten things you push or pull: doors, drawers, taps, switches.",
+          "Draw each one.",
+          "Write push or pull next to it."],
+         "Some things need a push AND a pull. A drawer is both."),
+]

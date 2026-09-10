@@ -6,7 +6,7 @@ senses, what they detect and which body part; 1Bp.04 how humans are similar
 to and different from each other; with 1TWSp.01, 1TWSc.01, 1TWSc.03,
 1TWSc.05 and 1SIC.02.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 BODY_PARTS = [
     {"id": "head", "label": "head", "say": "Your head is at the top. Your brain is inside it."},
@@ -239,3 +239,61 @@ LESSON = {
              "That is the whole lesson finished. You know your body and your senses."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Name the main parts of your body.",
+    "Say what each of your five senses tells you.",
+    "Say how people are the same and how they are different.",
+    "Measure a friend in hand spans and write it in a table.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F9CD", "Parts of the body",
+         "Head, arms, hands, tummy, legs, feet. Eyes, ears, nose, mouth. Every person has the same parts. Touch each one as I say it."),
+    part("\U0001F440", "Five senses",
+         "You have five senses. Eyes see. Ears hear. Your nose smells. Your tongue tastes. Your skin feels. Your senses tell you about the world."),
+    part("\u26A0\uFE0F", "Senses keep you safe",
+         "Your senses keep you safe. Your ears hear a car coming. Your nose smells smoke. Your skin feels that a cup is too hot, before you burn."),
+    part("\U0001F467\U0001F3FE", "Same and different",
+         "Everyone has two eyes. But some are brown, some are green. Everyone has hair. But some is curly, some is straight. We are alike, and we are different."),
+    part("\u270B", "Measuring in hands",
+         "Long ago, people measured with their hands and feet. You can too. A hand span is from your thumb to your little finger. Today you measure your friends in hand spans."),
+]
+
+LESSON["words"] = [
+    word("senses", "\U0001F440", "The five ways your body finds out about the world: seeing, hearing, smelling, tasting and touching.",
+         ["I use my senses to find my way.", "Which sense tells you the soup is hot?"]),
+    word("sight", "\U0001F441\uFE0F", "Seeing, with your eyes.",
+         ["Sight tells me the sky is blue.", "Glasses help some people's sight."]),
+    word("hearing", "\U0001F442\U0001F3FE", "The sense that uses your ears.",
+         ["My hearing told me a car was coming.", "Cover your ears and your hearing goes quiet."]),
+    word("smell", "\U0001F443\U0001F3FE", "The sense that uses your nose.",
+         ["I can smell bread baking.", "Smell warns you of smoke."]),
+    word("taste", "\U0001F445", "The sense that uses your tongue.",
+         ["Lemons taste sour.", "My tongue tastes sweet, salty and sour things."]),
+    word("touch", "\u270B\U0001F3FE", "The sense that uses your skin, to feel things.",
+         ["Touch tells me the ice is cold.", "In the feely bag, only touch could help."]),
+    word("hand span", "\u270B", "The distance from your thumb to your little finger, stretched wide.",
+         ["Nora is seven hand spans tall.", "We measured the table in hand spans."]),
+]
+
+LESSON["home"] = [
+    home("The feely bag", "A bag or a pillowcase, six small things from the kitchen: a spoon, a sponge, a key, a potato",
+         ["A grown-up puts the things in the bag without showing you.",
+          "Put your hand in and feel one, without looking.",
+          "Say what it is, then pull it out and check."],
+         "Which sense told you? Touch. What tricked you?"),
+    home("Measure your family in hands", "Your hand, a wall, a pencil, paper",
+         ["Stand each person against the wall and mark their height with a pencil.",
+          "Measure from the floor to the mark in your hand spans.",
+          "Write each name and number in a table."],
+         "Who is tallest? Why does a grown-up's hand span give a smaller number?"),
+    home("Same and different survey", "Paper and a pencil, three people",
+         ["Ask three people: what colour are your eyes? Is your hair curly or straight?",
+          "Draw a table with a row for each person.",
+          "Count what is the same and what is different."],
+         "Everyone has the same parts. The details are different."),
+]

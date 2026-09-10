@@ -6,7 +6,7 @@ electricity and how to be safe with it; 2Pe.02 the parts of a simple circuit
 (cells, wires, lamps); 2Pe.03 building a simple series circuit; with 2TWSm.01,
 2TWSm.02 (make and use a model), 2TWSm.03, 2TWSc.02, 2TWSc.04 and 2SIC.02.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 CIRCUIT_PARTS = [
     {"id": "cell", "label": "cell", "say": "The cell. It is what people call a battery. It pushes the electricity round the circuit."},
@@ -156,3 +156,61 @@ LESSON = {
              "That is the whole lesson finished. You can build a circuit."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say what electricity does for us.",
+    "Say the rules that keep you safe with electricity.",
+    "Name the parts of a simple circuit.",
+    "Build a circuit that lights a lamp, and break it.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F4A1", "What electricity does",
+         "Electricity lights lamps, heats rooms, cooks food, keeps the fridge cold, makes toys move and makes sound. It does all of it."),
+    part("\u26A0\uFE0F", "Staying safe",
+         "Only plugs in sockets. Dry hands on switches. Never poke a socket. Never fly a kite near power lines. If a wire is broken, tell a grown-up."),
+    part("\U0001F50B", "The parts of a circuit",
+         "A cell, which is a small battery. Wires. A lamp. Join them in a loop and the lamp lights. That loop is a circuit."),
+    part("\U0001F50C", "A gap breaks it",
+         "Take one wire out. The lamp goes out. Electricity can only flow round a complete loop. A gap anywhere, and it stops."),
+    part("\U0001F4DD", "The diagram is a model",
+         "A circuit diagram uses symbols: a long line and a short line for the cell, a circle with a cross for the lamp, straight lines for the wires. It is a model of the real circuit."),
+]
+
+LESSON["words"] = [
+    word("circuit", "\U0001F501", "A complete loop that electricity can flow round.",
+         ["The lamp lights when the circuit is complete.", "A gap breaks the circuit."]),
+    word("cell", "\U0001F50B", "A small battery that pushes electricity round a circuit.",
+         ["Put the cell in the torch.", "The cell is one part of the circuit."]),
+    word("wire", "\U0001F50C", "A thin metal strand that carries electricity.",
+         ["Join the wire to the lamp.", "Never touch a broken wire."]),
+    word("lamp", "\U0001F4A1", "The part of a circuit that lights up.",
+         ["The lamp glows.", "A torch has a lamp inside."]),
+    word("switch", "\U0001F39A\uFE0F", "A part that opens or closes a gap in a circuit.",
+         ["Flick the switch and the lamp lights.", "A switch makes a gap you control."]),
+    word("symbol", "\u2B55", "A simple sign that stands for a part in a diagram.",
+         ["The symbol for a lamp is a circle with a cross.", "Learn the symbol for a cell."]),
+    word("socket", "\U0001F3E0", "The holes in a wall that electricity comes out of.",
+         ["Only plugs go in a socket.", "Keep water away from the socket."]),
+]
+
+LESSON["home"] = [
+    home("Inside a torch", "A torch that opens, a grown-up",
+         ["Open the torch and take out the battery.",
+          "Find the metal strips and the little bulb.",
+          "Put it back together and switch it on."],
+         "Cell, wires, lamp, switch. A torch is a circuit in a tube."),
+    home("Switch hunt", "Paper and a pencil",
+         ["Find every switch in one room.",
+          "For each, say what it switches on: a lamp, a fan, a kettle.",
+          "Say what the switch does to the circuit."],
+         "A switch is a gap you control."),
+    home("Safety walk with a grown-up", "A grown-up, one room",
+         ["Check every socket: only plugs in it?",
+          "Check every wire: none broken?",
+          "Check that nothing electric is near water."],
+         "Say the rules out loud together."),
+]

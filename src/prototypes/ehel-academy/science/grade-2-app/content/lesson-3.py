@@ -7,7 +7,7 @@ animals; 2Be.03 compare local environments (hot, cold, dry, wet, many or few
 plants and animals); with 2TWSc.01, 2TWSc.05, 2TWSa.02, 2TWSa.03, 2TWSp.01
 and 2SIC.04.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "habitats",
@@ -168,3 +168,61 @@ LESSON = {
              "That is the whole lesson finished. You know where living things live."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say what a habitat is.",
+    "Match animals and plants to the habitat that suits them.",
+    "Compare habitats: hot or cold, wet or dry.",
+    "Count animals and show them in a block graph.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F3DE\uFE0F", "What a habitat is",
+         "A habitat is where a living thing naturally lives. A pond is a habitat. So is a desert, a forest and the icy Arctic. A habitat gives a living thing what it needs."),
+    part("\U0001F438", "The pond",
+         "A pond is wet. Frogs, ducks, fish and water plants live there. A frog's smooth skin and long legs suit a pond. A camel would not last a day."),
+    part("\U0001F42A", "The desert and the Arctic",
+         "A desert is hot and dry. A camel can go days without water. The Arctic is icy. A polar bear's thick fur keeps it warm. Each animal suits its habitat."),
+    part("\U0001F4CA", "Counting and graphing",
+         "Scientists count what lives in a habitat. Six frogs, three ducks, eight fish. A block graph shows the most and the least at a glance."),
+    part("\U0001F333", "Looking after habitats",
+         "Rubbish in a pond, cutting down a forest: what people do changes habitats. Planting flowers and leaving a log pile helps. Science shows us how."),
+]
+
+LESSON["words"] = [
+    word("habitat", "\U0001F33F", "The place where a living thing naturally lives.",
+         ["A pond is a frog's habitat.", "A desert is a hot, dry habitat."]),
+    word("pond", "\U0001F438", "A small area of still water. A wet habitat.",
+         ["Ducks live on the pond.", "The pond is full of frogspawn."]),
+    word("desert", "\U0001F42A", "A hot, dry place with very little rain.",
+         ["A camel lives in the desert.", "A cactus grows in the desert."]),
+    word("forest", "\U0001F333", "A large area covered in trees.",
+         ["Deer live in the forest.", "The forest is shady."]),
+    word("Arctic", "\U0001F9CA", "The icy, cold place at the top of the world.",
+         ["Polar bears live in the Arctic.", "The Arctic is very cold."]),
+    word("suit", "\u2705", "To be right for. An animal suits its habitat.",
+         ["Thick fur suits a cold place.", "Webbed feet suit a pond."]),
+    word("block graph", "\U0001F4CA", "A graph made of blocks, one block for each thing counted.",
+         ["The block graph shows eight fish.", "Read the tallest column of the block graph."]),
+]
+
+LESSON["home"] = [
+    home("Minibeast count", "A garden, a park or a window box, a magnifying glass, paper",
+         ["Look under a stone, a log or a leaf. Put it back gently afterwards.",
+          "Count each kind: ants, woodlice, snails, worms, spiders.",
+          "Draw a block graph: one block per animal."],
+         "Which spot had the most? Damp, dark places are full of life."),
+    home("Make a log pile", "A few logs or sticks, a shady corner, a grown-up",
+         ["Pile the logs loosely in a shady, damp corner.",
+          "Leave it alone for two weeks.",
+          "Lift one log and look under it. Put it back."],
+         "Who has moved in? A log pile is a habitat you made."),
+    home("Hot or cold, wet or dry", "Your street or garden",
+         ["Find the hottest spot and the coldest spot outside.",
+          "Find the wettest and the driest.",
+          "Say which animal or plant you found in each."],
+         "Moss in the damp shade, ants on the warm path."),
+]

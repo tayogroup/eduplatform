@@ -54,18 +54,18 @@ byte-identical to the live pages apart from the generated-by comment.
 ## What a lesson is
 
 Eight lessons, organised by the framework's sub-strands (not by the six 0846
-units), 8 to 12 steps each plus the sticker shelf:
+units), 15 to 19 steps each plus the sticker shelf (8 to 12 of the lesson's own, plus the seven of the unit shell - see below):
 
 | lesson | steps | objectives |
 | --- | --- | --- |
-| 1 Alive or Never Alive | 10 | 10 |
-| 2 Parts of a Plant | 11 | 10 |
-| 3 My Body and My Senses | 12 | 8 |
-| 4 What Is It Made Of? | 10 | 12 |
-| 5 Pushes, Pulls and Floating | 9 | 11 |
-| 6 Sounds Near and Far | 8 | 12 |
-| 7 Electricity and Magnets | 9 | 9 |
-| 8 Our Earth, Our Sun | 11 | 12 |
+| 1 Alive or Never Alive | 17 | 10 |
+| 2 Parts of a Plant | 18 | 10 |
+| 3 My Body and My Senses | 19 | 8 |
+| 4 What Is It Made Of? | 17 | 12 |
+| 5 Pushes, Pulls and Floating | 16 | 11 |
+| 6 Sounds Near and Far | 15 | 12 |
+| 7 Electricity and Magnets | 16 | 9 |
+| 8 Our Earth, Our Sun | 18 | 12 |
 
 Eleven step kinds, one renderer each in `lib/science.js`:
 
@@ -209,3 +209,31 @@ one function in `wire-progress.py` and a curriculum decision.
   fixed and recorded under "Things that will bite". Nothing here has had a
   human reading, and the content's reading level and the quiz keys are
   claims, not measurements.
+
+## The unit shell (2026-09-10)
+
+Owner, 2026-09-10: every lesson now carries the furniture the English Grade 1
+build carries around a unit. `lesson-kit/_shell.py` draws seven steps around
+the lesson's own, in this order:
+
+    overview  lecture  words  <the lesson's own steps>  games  home  quiz  world  resources
+
+| step | what it is | where the content comes from |
+| --- | --- | --- |
+| What this lesson is about | the outcomes in the child's words, with counts | `LESSON["about"]` |
+| Unit lecture | the lesson told in five parts by the voice, one picture each; says on its face that there is no video | `LESSON["lecture"]` |
+| Science words | word, picture, meaning and sample uses; tap each, then "which word means…?" | `LESSON["words"]` |
+| Games | a quick quiz, a sort race, word pairs and a spelling game, DERIVED from the lesson; two earn the sticker | nothing new: the questions, the sorts and the words |
+| Things to do at home | three real projects: what you need, what to do, what to look for | `LESSON["home"]` |
+| Science world | a placeholder that says so and ticks itself | none yet |
+| Student resources | a drawer: the words, the grade's word finder, the home projects, the objectives for a grown-up, the strands, the hub | assembled by the builder |
+
+The hub counts the same steps the page draws (it expands each lesson through
+the same function), and its grown-ups section lists the home projects beside
+the experiments. Every shell step except the placeholder and the drawer carries
+the lesson's own objective codes, so the coverage floors did not move.
+
+Added on 2026-09-10 and verified the same day: 136 steps in all, about 345
+minutes by the hub's estimate; 55 science words; both gates green; the seven
+shell steps driven to completion in the browser on Lesson 1 and looked at on
+Lesson 4; no horizontal overflow at 375px on any step of Lesson 3.

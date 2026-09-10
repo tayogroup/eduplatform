@@ -7,7 +7,7 @@ describe materials by their properties; 1Cc.01 changing materials by
 stretching, compressing, bending and twisting; with 1TWSc.01, 1TWSc.02,
 1TWSc.04, 1TWSc.05, 1TWSp.02, 1TWSa.01 and 1SIC.02.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "what-is-it-made-of",
@@ -219,3 +219,61 @@ LESSON = {
              "That is the whole lesson finished. You know your materials."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say what everyday objects are made of.",
+    "Tell an object from a material.",
+    "Test a material and describe it with science words.",
+    "Say why a material was chosen for a job.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F944", "Object and material",
+         "A spoon is an object. It is made of metal. Metal is the material. A chair is an object. It is made of wood. Wood is the material. The object is the thing; the material is what it is made of."),
+    part("\U0001F9F1", "Seven materials",
+         "Wood, metal, plastic, glass, rock, paper and fabric. Look around the room. Almost everything you see is made of one of these seven."),
+    part("\U0001F50D", "Testing materials",
+         "Scientists test materials. Press it: is it hard or soft? Bend it: does it bend or break? Wet it: does the water go through? Each test tells you a property."),
+    part("\U0001F9F6", "Squash, bend, twist, stretch",
+         "Push on clay and it squashes. Pull an elastic band and it stretches. Push on a stone and nothing happens. Some materials change shape, some do not."),
+    part("\U0001FA9F", "The right material for the job",
+         "A window is glass because you can see through it. A raincoat is plastic because water runs off it. The right material has the right properties for the job."),
+]
+
+LESSON["words"] = [
+    word("material", "\U0001F9F1", "What a thing is made of, like wood, metal or glass.",
+         ["Wood is a material.", "What material is a window made of?"]),
+    word("object", "\U0001F944", "A thing you can see and touch.",
+         ["A spoon is an object.", "Every object is made of a material."]),
+    word("metal", "\U0001F529", "A hard, shiny material that feels cold to touch.",
+         ["A key is made of metal.", "Metal spoons are strong."]),
+    word("plastic", "\U0001F9F4", "A light material that people make. It can be soft or hard.",
+         ["A bottle can be plastic.", "Plastic does not let water through."]),
+    word("hard", "\U0001FAA8", "Does not press in when you push it.",
+         ["A stone is hard.", "Wood is hard, but a sponge is soft."]),
+    word("waterproof", "\u2614", "Water does not go through it.",
+         ["A raincoat is waterproof.", "Paper is not waterproof. It goes soggy."]),
+    word("property", "\U0001F50D", "Something a material is like: hard, soft, bendy, shiny, waterproof.",
+         ["Being shiny is a property of metal.", "Each test finds one property."]),
+]
+
+LESSON["home"] = [
+    home("Material hunt", "Paper and a pencil, your house",
+         ["Find something made of wood, metal, plastic, glass, paper and fabric.",
+          "Draw each one and write its material.",
+          "Find one object made of TWO materials."],
+         "An object can have more than one material. A pencil is wood and something else."),
+    home("The waterproof test", "A tray, a cup of water, small pieces of paper, fabric, plastic, foil, a leaf",
+         ["Lay each piece on the tray.",
+          "Drip a little water on each one.",
+          "Wait a minute and lift each piece up."],
+         "Which pieces let the water through, and which kept it out."),
+    home("Squash it, bend it", "Play dough, an elastic band, a stone, a sponge",
+         ["Squash each thing. Then bend it. Then stretch it.",
+          "Say what happened to each one.",
+          "Put them in two piles: changed shape, did not change shape."],
+         "Does the sponge go back to its shape? Does the clay?"),
+]

@@ -7,7 +7,7 @@ on; 1ESs.02 the Sun is a source of heat and light and one of many stars;
 with 1TWSp.01, 1TWSp.02, 1TWSc.01, 1TWSc.04, 1TWSc.05, 1TWSa.01, 1SIC.01
 and 1SIC.03.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "our-earth-our-sun",
@@ -206,3 +206,61 @@ LESSON = {
              "That is the whole lesson finished. You know your Earth and your Sun."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say what the Earth is like: round, and mostly water.",
+    "Say what the land is made of: soil on top, rock underneath.",
+    "Say what the Sun gives us: light and heat.",
+    "Say that the Sun is a star.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F30D", "Our planet",
+         "Zoom out from your house. Your street, your town, your country. Zoom out again and there is the whole Earth: a round planet, floating in space. That is where we live."),
+    part("\U0001F4A7", "Mostly water",
+         "Look at the Earth from space and most of it is blue. That is the sea. Earth is mostly water. The green and brown parts are the land."),
+    part("\U0001FAA8", "Under the ground",
+         "Dig down through the grass. First there is soil, dark and crumbly. In it are small stones. Deeper down the spade hits hard rock. Land is soil on top and rock underneath."),
+    part("\u2600\uFE0F", "The Sun gives light and heat",
+         "The Sun lights up the day. It warms the ground, the sea and your skin. Without the Sun it would be dark and cold. Never look straight at the Sun."),
+    part("\u2B50", "The Sun is a star",
+         "At night the sky is full of tiny lights: stars. Each one is a huge ball of fire, very far away. The Sun is a star too. It looks big because it is the nearest one."),
+]
+
+LESSON["words"] = [
+    word("Earth", "\U0001F30D", "The planet we live on.",
+         ["Earth is round.", "Earth is mostly covered in water."]),
+    word("planet", "\U0001FA90", "A huge round world that goes round a star.",
+         ["Earth is a planet.", "There are other planets, far away."]),
+    word("soil", "\U0001FAB4", "The dark, crumbly top part of the land, where plants grow.",
+         ["Seeds grow in soil.", "Dig down and there is soil."]),
+    word("rock", "\U0001FAA8", "The hard stuff under the soil. A stone is a small piece of rock.",
+         ["The mountain is made of rock.", "Under the soil is rock."]),
+    word("Sun", "\u2600\uFE0F", "The star that gives Earth light and heat.",
+         ["The Sun rises in the morning.", "The Sun warms the ground."]),
+    word("star", "\u2B50", "A huge ball of fire, very far away. The Sun is a star.",
+         ["I can see a star.", "The Sun is our nearest star."]),
+    word("heat", "\U0001F525", "Warmth. The Sun gives us heat.",
+         ["Feel the heat of the Sun.", "The shade has less heat."]),
+]
+
+LESSON["home"] = [
+    home("Catch the globe", "A ball with blue and green paper stuck on it, or a globe; two people",
+         ["Throw the ball to each other and catch it ten times.",
+          "Each catch, look where your right thumb landed: water or land.",
+          "Keep a tally of water and land."],
+         "More water than land. Earth is mostly water."),
+    home("Dig a hole", "A trowel or a spoon, a patch of garden or a big plant pot, a grown-up",
+         ["Dig down slowly.",
+          "Put what you find in a line: grass, soil, little stones.",
+          "Feel the soil. Is it crumbly? Is it damp?"],
+         "Small stones in the soil are little pieces of rock."),
+    home("Sun or shade", "Two cups of water, a sunny day",
+         ["Put one cup in the sun and one in the shade.",
+          "Wait an hour.",
+          "Dip a finger in each."],
+         "The sunny cup is warmer. The Sun gives heat. Never look straight at the Sun."),
+]

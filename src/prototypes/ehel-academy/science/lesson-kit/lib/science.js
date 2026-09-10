@@ -1269,6 +1269,492 @@
     },
   };
 
+  /* ==================================================================
+     THE UNIT SHELL - seven steps drawn AROUND every lesson (owner,
+     2026-09-10), the furniture the English Grade 1 build carries around a
+     unit: what it is about, a lecture, the words, games, things to do at
+     home, a placeholder for Science world, and the student-resources
+     drawer. _shell.py decides where they sit and what they carry; these
+     only draw.
+
+     Three of them tick themselves off - the overview and Science world on
+     arrival, the drawer on first opening - for the reason the English
+     build's plan step records: a page you have to finish before the
+     lesson will open is a lock on the front door. Everything else is
+     earned.
+     ================================================================== */
+
+  /* ---- what this lesson is about ---- */
+  function unitOverview(o) {
+    const el = o.el;
+    const c = o.counts || {};
+    const bits = [];
+    if (c.steps) bits.push(c.steps + " steps");
+    if (c.words) bits.push(c.words + " science words");
+    if (c.games) bits.push(c.games + " games");
+    if (c.home) bits.push(c.home + " things to do at home");
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="ovw">' +
+      (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
+      '<h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + (o.about || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div></div>';
+    $(el.score).textContent = (o.about || []).length + " things to learn";
+    $(el.stage + "r").addEventListener("click", () =>
+      say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+    finish(o.finish, o.done);
+  }
+
+  /* ---- the unit lecture: the lesson told in parts, by the voice ----
+     No video exists for these lessons, and this says so on its face
+     rather than drawing an empty player. The voice reads each part when
+     the child arrives at it; Next part moves on; the last part finishes
+     the step. How far they got is reported in parts. */
+  function lecture(o) {
+    const el = o.el;
+    const parts = o.parts || [];
+    let k = 0, furthest = 0;
+    const id = el.stage + "l";
+    function paint() {
+      const p = parts[k];
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        '<div class="lec">' +
+        '<p class="phase">Part ' + (k + 1) + " of " + parts.length + "</p>" +
+        picHtml(p.pic, "pic lecpic") +
+        '<h3 class="lec-h">' + esc(p.title) + "</h3>" +
+        '<p class="lec-p">' + esc(p.say) + "</p>" +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : "") +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? "Next part &#9654;" : "I heard it all &#10003;") + "</button>" +
+        "</div>" +
+        '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>' +
+        "</div>";
+      furthest = Math.max(furthest, k + 1);
+      reportAttempt(o.finish, furthest, parts.length, "parts");
+      $(el.score).textContent = furthest + " of " + parts.length + " parts heard";
+      $(id + "hear").addEventListener("click", () => say(p.title + ". " + p.say));
+      if (k > 0) $(id + "back").addEventListener("click", () => { k--; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
+      $(id + "next").addEventListener("click", () => {
+        if (k + 1 < parts.length) { k++; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
+        else {
+          $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
+          reportAttempt(o.finish, parts.length, parts.length, "parts");
+          finish(o.finish, o.done);
+        }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+    /* The slide's own instruction is spoken on arrival; the first part
+       follows it rather than talking over it. */
+    ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+  }
+
+  /* ---- the science words: hear each one, then show you know them ----
+     Two halves. First every word is tapped - picture, meaning, and the
+     word used in a sentence, all spoken. Then the page asks "which word
+     means ...?" for each of them, with the other words of THIS lesson as
+     the wrong answers, so a wrong tap is a word they are also learning. */
+  function scienceWords(o) {
+    const el = o.el;
+    const items = o.items || [];
+    const heard = new Set();
+    let open = -1;
+    const id = el.stage + "w";
+
+    function paintGrid() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        '<div class="cardsgrid words" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard wordcard' + (heard.has(k) ? " heard" : "") + (open === k ? " now" : "") + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + small(w.pic) + "</span>" + esc(w.w) + "</button>").join("") + "</div>" +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? " hidden" : "") + "></div>";
+      if (open >= 0) paintPanel();
+      $(el.score).textContent = heard.size + " of " + items.length + " heard";
+      reportAttempt(o.finish, heard.size, items.length, "words");
+      $(id + "g").addEventListener("click", (e) => {
+        const b = e.target.closest(".wordcard"); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + ". " + w.meaning + " " + (w.uses[0] || ""));
+        if (heard.size === items.length) {
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You have heard every word. Now, which word is which?";
+          $(el.ch).innerHTML = '<button type="button" class="big small" id="' + id + 'go">Show I know them &#9654;</button>';
+          $(id + "go").addEventListener("click", () => { $(el.ch).innerHTML = ""; $(el.fb).textContent = ""; check(); });
+        }
+      });
+    }
+    function paintPanel() {
+      const w = items[open];
+      $(id + "p").hidden = false;
+      $(id + "p").innerHTML =
+        '<div class="wp-head">' + picHtml(w.pic, "pic mid") + '<div><p class="wp-word">' + esc(w.w) + "</p>" +
+        '<p class="wp-meaning">' + esc(w.meaning) + "</p></div></div>" +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => "<li>" + esc(u) + "</li>").join("") + "</ul>" +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      $(id + "h").addEventListener("click", () => say(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")));
+    }
+
+    /* the check: which word means this? */
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      const known = [];
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        $(el.ask).innerHTML = "Which word means: <b>" + esc(w.meaning) + "</b>";
+        $(el.stage).className = "stagewide";
+        $(el.stage).innerHTML = "";
+        $(el.ch).className = "wordbtns";
+        $(el.ch).innerHTML = opts.map((j) =>
+          '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '" data-j="' + j + '">' +
+          '<span class="pic" aria-hidden="true">' + small(items[j].pic) + "</span>" + esc(items[j].w) + "</button>").join("");
+        $(el.fb).textContent = ""; $(el.fb).className = "fb";
+        $(el.score).textContent = "Word " + (i + 1) + " of " + items.length;
+        sayHere(o.finish, "Which word means: " + w.meaning);
+      }
+      $(el.ch).addEventListener("click", (e) => {
+        const b = e.target.closest(".wordbtn"); if (!b || lock) return;
+        lock = true;
+        const ok = b.dataset.ok === "1", w = items[order[i]];
+        $(el.ch).querySelectorAll(".wordbtn").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong"); else { right++; known.push(w.w); }
+        const msg = ok ? cheer() + " " + w.w + "." : "That word is " + w.w + ". " + w.meaning;
+        $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = msg; say(msg);
+        i++;
+        setTimeout(() => {
+          if (i >= items.length) {
+            $(el.ch).innerHTML = ""; $(el.ch).className = "choices";
+            $(el.ask).innerHTML = "You know " + right + " of " + items.length + " science words.";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = "You got " + right + " of " + items.length + ". " + o.done;
+            $(el.score).textContent = "";
+            reportScore(o.finish, right, items.length);
+            if (known.length) reportKnown(known);
+            finish(o.finish, o.done);
+          } else draw();
+        }, 2400);
+      });
+      draw();
+    }
+    paintGrid();
+  }
+
+  /* ---- Science world: a placeholder that says it is one ---- */
+  function scienceWorld(o) {
+    const el = o.el;
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
+      '<h3 class="lec-h">Science world is being built</h3>' +
+      '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
+      '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
+      '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
+    $(el.score).textContent = "coming soon";
+    finish(o.finish, o.done);
+  }
+
+  /* ---- the game zone: the lesson's own games, derived by the builder ----
+     A shelf of cards; tap one to play it in a full-screen overlay, the
+     shape the English build's Game Zone uses. Three mechanics, read off
+     the round's own shape: choice (prompt, choices, answer, explanation),
+     spelling (letter tiles from the answer plus two strays), pairs
+     (reveal-and-match). Two games earn the sticker; the count says so. */
+  function gameZone(o) {
+    const el = o.el;
+    const games = o.games || [];
+    const played = new Set();
+    const NEEDED = Math.min(o.mastery || 2, games.length);
+    const id = el.stage + "gz";
+    const tidy = (s) => String(s).replace(/\s+/g, " ").trim().toLowerCase();
+
+    function drawShelf() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="shelf gamelist" id="' + id + '">' + games.map((g, k) =>
+        '<div class="bookcard gamecard' + (played.has(g.id) ? " played" : "") + '">' +
+        '<span class="bookicon" aria-hidden="true">' + (played.has(g.id) ? "✅" : "\u{1F3AE}") + "</span>" +
+        '<span class="booktitle">' + esc(g.title) + "</span>" +
+        (g.skill ? '<span class="bookmeta">' + esc(g.skill) + "</span>" : "") +
+        '<span class="bookmeta">' + g.rounds.length + " rounds</span>" +
+        '<button type="button" class="big small teal" data-game="' + k + '">' + (played.has(g.id) ? "Play again ▶" : "Play ▶") + "</button></div>").join("") + "</div>";
+      $(id).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-game]");
+        if (b) openGame(games[Number(b.dataset.game)]);
+      });
+      const left = Math.max(0, NEEDED - played.size);
+      $(el.score).textContent = games.length + " games";
+      $(el.fb).className = "fb" + (left ? "" : " good");
+      $(el.fb).textContent = left
+        ? "Play " + left + (left === 1 ? " more game" : " games") + " to earn this step's sticker."
+        : "You played " + played.size + ". " + o.done;
+    }
+
+    function openGame(game) {
+      let r = 0, right = 0;
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader game-overlay";
+      document.body.appendChild(overlay);
+      function close() { overlay.remove(); document.removeEventListener("keydown", onKey); try { VOICE.stop(); } catch (_) { /* nothing */ } drawShelf(); }
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+
+      function frame(bodyHtml, footHtml) {
+        overlay.innerHTML =
+          '<div class="book-reader-top"><span class="booktitle">' + esc(game.title) + "</span>" +
+          '<button type="button" class="book-close" aria-label="Close the game">&#10005;</button></div>' +
+          '<div class="book-stage-wrap"><div class="game-stage">' + bodyHtml + "</div></div>" +
+          '<div class="book-reader-bottom">' +
+          '<button type="button" class="big small ghost" id="gameQuit">&#9664; Back to games</button>' +
+          '<span class="book-page-count">Round ' + Math.min(r + 1, game.rounds.length) + " of " + game.rounds.length + "</span>" +
+          (footHtml || "") + "</div>";
+        overlay.querySelector(".book-close").addEventListener("click", close);
+        overlay.querySelector("#gameQuit").addEventListener("click", close);
+      }
+      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
+      function endGame() {
+        played.add(game.id);
+        reportScore(o.finish, right, game.rounds.length, game.id, game.title);
+        reportAttempt(o.finish, played.size, games.length, "games");
+        const well = right * 2 >= game.rounds.length;
+        frame('<div class="game-done"><p class="gamebig">' + (well ? cheer() : "That is the game played.") + "</p>" +
+          "<p>You finished <strong>" + esc(game.title) + "</strong>: " + right + " of " + game.rounds.length + " right.</p>" +
+          "<p>Getting one wrong costs nothing in a game. It is for practising.</p></div>",
+          '<button type="button" class="big small" id="gameOut">Back to the games &#10003;</button>');
+        overlay.querySelector("#gameOut").addEventListener("click", close);
+        say("You finished " + game.title + ". " + right + " of " + game.rounds.length + " right.");
+        if (played.size >= NEEDED) finish(o.finish, o.done);
+      }
+      function feedback(ok, message) {
+        const fb = overlay.querySelector("#gameFb"); if (!fb) return;
+        fb.className = "fb " + (ok ? "good" : "bad"); fb.textContent = message; say(message);
+      }
+      function drawRound() {
+        const round = game.rounds[r];
+        if (game.type === "spelling") return drawSpelling(round);
+        if (game.type === "pairs") return drawPairs(round);
+        return drawChoice(round);
+      }
+      function drawChoice(round) {
+        frame('<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+          '<div class="bigbtns" id="gameCh">' + shuffle(round.choices).map((c) =>
+            '<button type="button" class="choice" data-c="' + esc(c) + '">' + esc(c) + "</button>").join("") +
+          "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
+        say(plain(round.prompt));
+        let lock = false;
+        overlay.querySelector("#gameCh").addEventListener("click", (e) => {
+          const b = e.target.closest(".choice"); if (!b || lock) return;
+          lock = true;
+          const ok = tidy(b.dataset.c) === tidy(round.answer);
+          overlay.querySelectorAll("#gameCh .choice").forEach((c) => { c.disabled = true; if (tidy(c.dataset.c) === tidy(round.answer)) c.classList.add("right"); });
+          if (!ok) b.classList.add("wrong"); else right++;
+          feedback(ok, (ok ? cheer() + " " : "") + (round.explanation || round.answer));
+          nextRound();
+        });
+      }
+      function drawSpelling(round) {
+        const answer = String(round.answer);
+        const letters = answer.replace(/[^A-Za-z]/g, "").split("");
+        const extra = "abcdefghijklmnopqrstuvwxyz".split("").filter((c) => !letters.includes(c));
+        const pool = shuffle(letters.concat([extra[letters.length % extra.length], extra[(letters.length + 7) % extra.length]]));
+        let line = [];
+        function paint() {
+          frame('<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+            (round.clue ? '<p class="gameclue">' + esc(round.clue) + "</p>" : "") +
+            '<div class="buildline" id="gameLine">' +
+            (line.length ? line.map((t, k) => '<button type="button" class="tile letter" data-line="' + k + '">' + esc(pool[t]) + "</button>").join("")
+              : '<span class="hint">Tap the letters to build the word.</span>') + "</div>" +
+            '<div class="bigbtns" id="gameTiles">' + pool.map((t, k) =>
+              '<button type="button" class="tile letter" data-tile="' + k + '"' + (line.includes(k) ? " disabled" : "") + ">" + esc(t) + "</button>").join("") +
+            "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>",
+            '<button type="button" class="big small" id="gameCheck">Check it</button>');
+          overlay.querySelector("#gameTiles").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-tile]"); if (!b || b.disabled) return;
+            line.push(Number(b.dataset.tile)); paint();
+          });
+          overlay.querySelector("#gameLine").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-line]"); if (!b) return;
+            line.splice(Number(b.dataset.line), 1); paint();
+          });
+          overlay.querySelector("#gameCheck").addEventListener("click", () => {
+            const got = line.map((k) => pool[k]).join("");
+            const ok = got.toLowerCase() === letters.join("").toLowerCase();
+            overlay.querySelector("#gameLine").className = "buildline " + (ok ? "right" : "wrong");
+            if (ok) right++;
+            feedback(ok, ok ? cheer() + " " + answer : "Not yet. The word is " + answer + ".");
+            nextRound();
+          });
+        }
+        paint();
+        say(plain(round.prompt) + " " + plain(round.clue || ""));
+      }
+      function drawPairs(round) {
+        let tiles = round.pairs.flatMap((p, pi) => [{ text: p[0], pair: pi }, { text: p[1], pair: pi }]);
+        tiles = shuffle(tiles).map((t, k) => Object.assign({}, t, { k }));
+        let picked = [], matched = 0, lock = false;
+        frame('<p class="gameprompt">' + esc(round.prompt || "Tap two tiles that go together.") + "</p>" +
+          '<div class="pairsgrid" id="gameGrid">' + tiles.map((t) =>
+            '<button type="button" class="pairtile" data-k="' + t.k + '"><span class="back" aria-hidden="true">?</span><span class="face">' + esc(t.text) + "</span></button>").join("") +
+          "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
+        say(plain(round.prompt || "Tap two tiles that go together."));
+        overlay.querySelector("#gameGrid").addEventListener("click", (e) => {
+          const b = e.target.closest(".pairtile");
+          if (!b || lock || b.classList.contains("matched") || b.classList.contains("revealed")) return;
+          b.classList.add("revealed");
+          picked.push({ pair: tiles[Number(b.dataset.k)].pair, el: b });
+          if (picked.length < 2) return;
+          lock = true;
+          const [a, c] = picked;
+          if (a.pair === c.pair) {
+            a.el.classList.add("matched"); c.el.classList.add("matched"); a.el.disabled = true; c.el.disabled = true;
+            matched++; picked = []; lock = false;
+            SOUND.play("ding", 0.4);
+            if (matched === round.pairs.length) { right++; feedback(true, cheer() + " Every pair matched."); nextRound(); }
+          } else {
+            a.el.classList.add("wrong"); c.el.classList.add("wrong");
+            setTimeout(() => { a.el.classList.remove("revealed", "wrong"); c.el.classList.remove("revealed", "wrong"); picked = []; lock = false; }, 900);
+          }
+        });
+      }
+      drawRound();
+    }
+    drawShelf();
+  }
+
+  /* ---- things to do at home: real projects, ticked when done ---- */
+  function homeProjects(o) {
+    const el = o.el;
+    const items = o.items || [];
+    const did = new Array(items.length).fill(false);
+    const id = el.stage + "h";
+    function paint() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="acts" id="' + id + '">' + items.map((it, k) =>
+        '<div class="act' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
+        '<div class="act-head"><span class="act-n">' + it.n + "</span><span class=\"act-kind\">project</span>" +
+        '<button type="button" class="hear" data-act="hear" aria-label="Hear this project">&#128266;</button></div>' +
+        '<p class="act-lead">' + esc(it.title) + "</p>" +
+        '<p class="act-mat"><span>You need</span>' + esc(it.materials) + "</p>" +
+        '<ol class="act-steps">' + (it.steps || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
+        '<p class="act-check"><span>Look for</span>' + esc(it.look) + "</p>" +
+        '<button type="button" class="tick" data-act="tick">' + (did[k] ? "✓ we did this" : "We did this") + "</button>" +
+        "</div>").join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small" id="' + id + 'fin">We did these &#10003;</button></div>';
+      reportAttempt(o.finish, did.filter(Boolean).length, did.length, "projects");
+      $(el.score).textContent = did.filter(Boolean).length + " of " + items.length + " ticked";
+      $(id + "fin").addEventListener("click", () => { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); });
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const card = e.target.closest(".act"), button = e.target.closest("[data-act]");
+      if (!card || !button) return;
+      const k = Number(card.dataset.k), it = items[k];
+      if (button.dataset.act === "hear") { say(it.title + ". You need " + it.materials + ". " + (it.steps || []).join(" ") + " Look for: " + it.look); return; }
+      if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
+    });
+    paint();
+  }
+
+  /* ---- student resources: the drawer, not a step ----
+     Words, the grade's word finder, the home projects (a jump), what the
+     lesson teaches (for a grown-up, with the 0097 codes), the strands, and
+     the hub. Ticked on first opening, for the reason the English drawer
+     records: a drawer you have to finish is not a drawer. */
+  function resources(o) {
+    const el = o.el;
+    const id = el.stage + "rs";
+    const CARDS = [
+      { id: "words", icon: "\u{1F524}", title: "Science words", blurb: "This lesson's words, what they mean, and a voice to hear them." },
+      { id: "finder", icon: "\u{1F50E}", title: "Word finder", blurb: "Look up any science word from any lesson in " + (o.gradeLabel || "this grade") + "." },
+      { id: "home", icon: "\u{1F3E0}", title: "Things to do at home", blurb: "This lesson's projects, to do with a grown-up." },
+      { id: "teaches", icon: "\u{1F46A}", title: "For your grown-up", blurb: "What this lesson teaches, in the words of the Cambridge framework." },
+      { id: "strands", icon: "\u{1F9EA}", title: "What science covers", blurb: "The six parts of primary science, and what each one is." },
+      { id: "hub", icon: "\u{1F5FA}", title: "All the lessons", blurb: "Back to the list of every lesson in " + (o.gradeLabel || "this grade") + "." },
+    ];
+    const opened = new Set();
+    function drawShelf() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="shelf" id="' + id + '">' + CARDS.map((c) =>
+        '<div class="bookcard"><span class="bookicon" aria-hidden="true">' + c.icon + "</span>" +
+        '<span class="booktitle">' + esc(c.title) + "</span><span class=\"bookmeta\">" + esc(c.blurb) + "</span>" +
+        '<button type="button" class="big small teal" data-res="' + c.id + '">Open ▶</button></div>').join("") + "</div>";
+      $(el.score).textContent = CARDS.length + " things for you";
+      $(id).addEventListener("click", (e) => { const b = e.target.closest("[data-res]"); if (b) open(b.dataset.res); });
+    }
+    function panel(title, bodyHtml, footHtml) {
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader res-reader";
+      overlay.innerHTML =
+        '<div class="book-reader-top"><span class="booktitle">' + esc(title) + "</span>" +
+        '<button type="button" class="book-close" aria-label="Close">&#10005;</button></div>' +
+        '<div class="book-stage-wrap"><div class="res-stage">' + bodyHtml + "</div></div>" +
+        '<div class="book-reader-bottom">' + (footHtml || "") + "</div>";
+      document.body.appendChild(overlay);
+      const close = () => { try { VOICE.stop(); } catch (_) { /* nothing */ } overlay.remove(); document.removeEventListener("keydown", onKey); };
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+      overlay.querySelector(".book-close").addEventListener("click", close);
+      overlay.addEventListener("click", (e) => { const b = e.target.closest("[data-say]"); if (b) say(b.dataset.say); });
+      return overlay;
+    }
+    const wordRows = (words, withLesson) => words.map((w) =>
+      '<div class="wordrow"><span class="gloxpic" aria-hidden="true">' + small(w.pic) + "</span>" +
+      '<div class="gloxbody"><div class="gloxhead"><strong>' + esc(w.w) + "</strong>" +
+      '<button type="button" class="hear" data-say="' + esc(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")) + '" aria-label="Hear ' + esc(w.w) + '">&#128266;</button>' +
+      (withLesson && w.file ? '<a class="gloxlesson" href="' + esc(w.file) + location.search + '">Lesson ' + w.lesson + "</a>" : "") + "</div>" +
+      '<p class="gloxdef">' + esc(w.meaning) + "</p>" +
+      ((w.uses || []).length ? '<p class="gloxeg">“' + esc(w.uses[0]) + "”</p>" : "") + "</div></div>").join("");
+
+    function open(which) {
+      opened.add(which);
+      reportAttempt(o.finish, opened.size, CARDS.length, "cards");
+      finish(o.finish, o.done);
+      if (which === "home") { if (o.homeStep >= 0) show(o.homeStep, true); return; }
+      if (which === "hub") { location.href = (o.hub || "index.html") + location.search; return; }
+      if (which === "words") {
+        panel("Science words", '<div class="wordlist">' + wordRows(o.words || [], false) + "</div>",
+          '<span class="book-page-count">' + (o.words || []).length + " words in this lesson</span>");
+        return;
+      }
+      if (which === "finder") {
+        const all = o.finder || [];
+        const ov = panel("Word finder",
+          '<div class="glossary"><input type="search" id="' + id + 'q" class="gloxq" placeholder="Type a word…" autocomplete="off" aria-label="Search the words">' +
+          '<div id="' + id + 'r" class="gloxr"></div></div>',
+          '<span class="book-page-count" id="' + id + 'n"></span>');
+        const box = ov.querySelector("#" + id + "r"), count = ov.querySelector("#" + id + "n"), q = ov.querySelector("#" + id + "q");
+        const draw = (term) => {
+          term = String(term || "").trim().toLowerCase();
+          const hits = term
+            ? all.filter((w) => w.w.toLowerCase().startsWith(term)).concat(all.filter((w) => !w.w.toLowerCase().startsWith(term) && (w.w.toLowerCase().includes(term) || w.meaning.toLowerCase().includes(term))))
+            : all;
+          count.textContent = hits.length + " of " + all.length + " words";
+          box.innerHTML = hits.length ? wordRows(hits, true) : '<p class="gloxmore">No word starts like that. Try fewer letters.</p>';
+        };
+        draw(""); q.addEventListener("input", () => draw(q.value)); q.focus();
+        return;
+      }
+      if (which === "teaches") {
+        panel("For your grown-up",
+          '<div class="teaches"><p class="lec-p">Lesson ' + o.lessonNo + " teaches these objectives of Cambridge Primary Science 0097. The code is the framework’s own.</p><ul class=\"ovw-list codes\">" +
+          (o.teaches || []).map((t) => "<li><code>" + esc(t.code) + "</code> " + esc(t.text) + "</li>").join("") + "</ul></div>",
+          '<span class="book-page-count">' + (o.teaches || []).length + " objectives</span>");
+        return;
+      }
+      if (which === "strands") {
+        panel("What science covers",
+          '<div class="teaches">' + (o.strands || []).map((s) => '<section class="wordgroup"><h4>' + esc(s[0]) + "</h4><p class=\"lec-p\">" + esc(s[1]) + "</p></section>").join("") + "</div>",
+          '<span class="book-page-count">' + (o.strands || []).length + " strands</span>");
+      }
+    }
+    drawShelf();
+  }
+
   /* ---- the sticker shelf --------------------------------------------- */
   function paintStickers() {
     const got = done.filter(Boolean).length;

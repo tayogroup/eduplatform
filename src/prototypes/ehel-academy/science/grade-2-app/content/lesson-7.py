@@ -5,7 +5,7 @@
 is the absence of light; 2TWSm.01 a model represents an idea; with 2TWSp.01,
 2TWSp.02, 2TWSa.01, 2TWSc.01 and 2SIC.01.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 RAY_MODEL = ('<svg viewBox="0 0 160 90"><rect width="160" height="90" fill="#0E2434"/><circle cx="24" cy="45" r="12" fill="#F4C95D"/>'
              '<g stroke="#F4C95D" stroke-width="2"><line x1="36" y1="45" x2="130" y2="20"/><line x1="36" y1="45" x2="130" y2="45"/><line x1="36" y1="45" x2="130" y2="70"/></g>'
@@ -162,3 +162,61 @@ LESSON = {
              "That is the whole lesson finished. You know where light comes from."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Name things that make their own light.",
+    "Tell a light source from something that only shines light back.",
+    "Say what darkness is.",
+    "Say what a model is and why scientists use them.",
+]
+
+LESSON["lecture"] = [
+    part("\u2600\uFE0F", "Light sources",
+         "The Sun, a lamp, a candle, a torch, a fire. Each one makes its own light. It is a light source. The Sun is the biggest light source we have."),
+    part("\U0001F315", "Shining back",
+         "The Moon is bright at night, but it makes no light of its own. It shines back the Sun's light. So does a mirror, and white paper. Put them in a dark cupboard and they are dark."),
+    part("\U0001F311", "Darkness",
+         "Close the curtains. Switch off the lamp. Now it is dark. Darkness is what is left when there is no light. You cannot see anything, because there is no light to see by."),
+    part("\U0001F4D0", "A model of light",
+         "Scientists draw light as straight lines from the source to your eye. That is a model: a clear way of showing an idea, leaving the rest out. A globe is a model of the Earth."),
+    part("\U0001F4A1", "How ideas changed",
+         "Long ago some people thought eyes sent out beams. Testing showed that light comes from a source, into the eye. What people know changes when they test it."),
+]
+
+LESSON["words"] = [
+    word("light", "\u2600\uFE0F", "What lets you see. It comes from a light source.",
+         ["Light comes from the Sun.", "Without light you cannot see."]),
+    word("light source", "\U0001F526", "Something that makes its own light.",
+         ["A torch is a light source.", "The Sun is the biggest light source."]),
+    word("dark", "\U0001F311", "No light at all.",
+         ["The cupboard is dark inside.", "At night, without lamps, it is dark."]),
+    word("reflect", "\U0001FA9E", "To shine light back.",
+         ["A mirror reflects light.", "The Moon reflects the Sun's light."]),
+    word("shadow", "\U0001F464", "A dark shape made where something blocks the light.",
+         ["My shadow is long in the evening.", "A shadow needs a light source."]),
+    word("model", "\U0001F310", "A clear way of showing an object or an idea, leaving the rest out.",
+         ["A globe is a model of Earth.", "We drew a model of light."]),
+    word("torch", "\U0001F526", "A small lamp you carry, with a battery inside.",
+         ["Shine the torch in the dark.", "A torch is a light source."]),
+]
+
+LESSON["home"] = [
+    home("The dark cupboard test", "A torch, a mirror, a shiny spoon, white paper, a glow star, a cupboard you can shut",
+         ["Put one thing in the cupboard and shut the door.",
+          "Look through a crack: can you see it glowing?",
+          "Now switch on the torch inside. What happens?"],
+         "Only a light source glows in the dark. The rest need the torch."),
+    home("Shadow shapes", "A torch, a wall, a dark room, your hands",
+         ["Shine the torch at the wall.",
+          "Put your hand between the torch and the wall.",
+          "Move your hand nearer the torch, then nearer the wall."],
+         "The shadow grows and shrinks. Where is the light coming from?"),
+    home("Light source count", "Paper and a pencil, one evening",
+         ["When it gets dark, walk round the house.",
+          "Count everything that makes its own light.",
+          "Then count things that only shine it back: mirrors, windows, shiny taps."],
+         "Which list is longer?"),
+]

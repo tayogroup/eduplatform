@@ -37,18 +37,18 @@ node   $T/deploy.mjs                --app .    # plan only; --upload is an owner
 
 | lesson | steps | objectives | what is new here |
 | --- | --- | --- | --- |
-| 1 Animals and Their Coverings | 10 | 7 | put-in-order (egg to hen), diagram versus picture |
-| 2 Teeth and Staying Healthy | 9 | 8 | the `mouth` figure, the first fact-card lookup |
-| 3 Habitats | 8 | 9 | habitat scenes, the first block graph with a pattern question |
-| 4 Natural or Made? | 7 | 8 | the tester with a hold-it-to-the-light test |
-| 5 Changing Materials | 8 | 8 | the `newMaterial` sim: an egg that cooks and will not un-cook |
-| 6 Forces Change Things | 9 | 10 | push table → block graph → increasing pattern |
-| 7 Light and Dark | 8 | 9 | the `darkRoom` sim: curtains, lamp, total darkness |
-| 8 Electricity and Circuits | 8 | 10 | the `circuit` figure, then **build** the circuit and break it |
-| 9 Rocks and the Earth | 9 | 11 | rocks in the tester, quarry / mine / riverbed scenes |
-| 10 The Sun Across the Sky | 9 | 11 | the `sunPath` sim, shadows measured, recorded, graphed |
+| 1 Animals and Their Coverings | 17 | 7 | put-in-order (egg to hen), diagram versus picture |
+| 2 Teeth and Staying Healthy | 16 | 8 | the `mouth` figure, the first fact-card lookup |
+| 3 Habitats | 15 | 9 | habitat scenes, the first block graph with a pattern question |
+| 4 Natural or Made? | 14 | 8 | the tester with a hold-it-to-the-light test |
+| 5 Changing Materials | 15 | 8 | the `newMaterial` sim: an egg that cooks and will not un-cook |
+| 6 Forces Change Things | 16 | 10 | push table → block graph → increasing pattern |
+| 7 Light and Dark | 15 | 9 | the `darkRoom` sim: curtains, lamp, total darkness |
+| 8 Electricity and Circuits | 15 | 10 | the `circuit` figure, then **build** the circuit and break it |
+| 9 Rocks and the Earth | 16 | 11 | rocks in the tester, quarry / mine / riverbed scenes |
+| 10 The Sun Across the Sky | 16 | 11 | the `sunPath` sim, shadows measured, recorded, graphed |
 
-83 steps in all, about 210 minutes by the hub's estimate.
+155 steps in all (83 of the lessons' own plus the seven-step unit shell on each, see below), about 400 minutes by the hub's estimate.
 
 **Four new step kinds carry the new objectives, and each was added because
 no Stage 1 kind could honestly claim the code:**
@@ -84,3 +84,31 @@ no Stage 1 kind could honestly claim the code:**
 
 Not done: a teacher's read, a screen-reader session, the school's own devices,
 watching children use it — the same open rows as the Grade 1 validation.
+
+## The unit shell (2026-09-10)
+
+Owner, 2026-09-10: every lesson now carries the furniture the English Grade 1
+build carries around a unit. `lesson-kit/_shell.py` draws seven steps around
+the lesson's own, in this order:
+
+    overview  lecture  words  <the lesson's own steps>  games  home  quiz  world  resources
+
+| step | what it is | where the content comes from |
+| --- | --- | --- |
+| What this lesson is about | the outcomes in the child's words, with counts | `LESSON["about"]` |
+| Unit lecture | the lesson told in five parts by the voice, one picture each; says on its face that there is no video | `LESSON["lecture"]` |
+| Science words | word, picture, meaning and sample uses; tap each, then "which word means…?" | `LESSON["words"]` |
+| Games | a quick quiz, a sort race, word pairs and a spelling game, DERIVED from the lesson; two earn the sticker | nothing new: the questions, the sorts and the words |
+| Things to do at home | three real projects: what you need, what to do, what to look for | `LESSON["home"]` |
+| Science world | a placeholder that says so and ticks itself | none yet |
+| Student resources | a drawer: the words, the grade's word finder, the home projects, the objectives for a grown-up, the strands, the hub | assembled by the builder |
+
+The hub counts the same steps the page draws (it expands each lesson through
+the same function), and its grown-ups section lists the home projects beside
+the experiments. Every shell step except the placeholder and the drawer carries
+the lesson's own objective codes, so the coverage floors did not move.
+
+Added on 2026-09-10 and verified the same day: 70 science words; both gates
+green; the seven shell steps driven to completion in the browser on Lesson 8;
+no horizontal overflow at 375px on any step of Lesson 3, in the game overlay,
+or in the word finder.

@@ -5,7 +5,7 @@
 2Cp.03 testing; with 2TWSp.02, 2TWSa.01, 2TWSc.01, 2TWSc.04, 2TWSc.06 and
 2SIC.01.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "changing-materials",
@@ -159,3 +159,61 @@ LESSON = {
              "That is the whole lesson finished. You know which changes make something new."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say whether a change makes a new material or keeps the same one.",
+    "Cook an egg and try to un-cook it.",
+    "Record what heating did to four materials.",
+    "Say the safety rules for anything hot.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F9CA", "Same material back",
+         "Ice melts into water. Put the water in the freezer and it is ice again. Melting and freezing keep the same material. You can get it back."),
+    part("\U0001F373", "A new material",
+         "A raw egg is runny and clear. Cook it and it goes white and solid. Cool it down and it stays cooked. Cooking made a new material. You cannot get the egg back."),
+    part("\U0001F525", "Burning",
+         "Wood burns. What is left is ash and smoke. You cannot turn ash back into wood. Burning always makes a new material."),
+    part("\U0001F35E", "Baking",
+         "Soft dough goes into the oven. Bread comes out. A new material: the dough is gone for good. Cake mix does the same."),
+    part("\U0001F9E4", "Safe with heat",
+         "A grown-up does the heating. Use oven gloves. Never touch to test if it is hot. Tie back hair. Wait for things to cool. Heat changes materials, and heat rules keep hands safe."),
+]
+
+LESSON["words"] = [
+    word("melt", "\U0001F9CA", "To change from solid to liquid when heated.",
+         ["Ice melts in the sun.", "Chocolate melts in your hand."]),
+    word("freeze", "\u2744\uFE0F", "To change from liquid to solid when cooled.",
+         ["Water freezes into ice.", "Juice freezes into an ice lolly."]),
+    word("heat", "\U0001F525", "To make something hotter.",
+         ["We heat the pan.", "Heat cooks the egg."]),
+    word("cool", "\U0001F32C\uFE0F", "To make something colder.",
+         ["Let the pan cool before you touch it.", "Cool the egg and it stays cooked."]),
+    word("cook", "\U0001F373", "To heat food until it changes into something new.",
+         ["We cook the egg.", "Cooking makes a new material."]),
+    word("burn", "\U0001F56F\uFE0F", "To be on fire and turn into ash and smoke.",
+         ["The candle burns.", "Wood burns to ash."]),
+    word("reversible", "\u21A9\uFE0F", "A change you can undo, getting the same material back.",
+         ["Melting ice is reversible.", "Freezing water is reversible too."]),
+]
+
+LESSON["home"] = [
+    home("Melt it, freeze it", "An ice cube, a plate, an ice tray, a freezer",
+         ["Put an ice cube on a plate in a warm room and watch it melt.",
+          "Pour the water into the ice tray and put it in the freezer.",
+          "Look the next morning."],
+         "The same water came back as ice. Reversible."),
+    home("Cook an egg with a grown-up", "An egg, a pan, a hob, a grown-up",
+         ["Crack the egg into a bowl. Look: runny and clear.",
+          "A grown-up cooks it in the pan. Watch it change.",
+          "Let it cool. Is it runny again?"],
+         "It stays cooked. A new material. You cannot get the egg back."),
+    home("Toast test", "A slice of bread, a toaster, a grown-up",
+         ["Look at the bread. Soft and pale.",
+          "A grown-up toasts it.",
+          "Let it cool and look again."],
+         "Brown and crisp, and cooling does not make it bread again."),
+]

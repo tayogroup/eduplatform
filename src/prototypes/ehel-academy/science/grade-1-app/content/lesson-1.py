@@ -7,7 +7,7 @@ and water (the water half - light is Lesson 2's experiment); with 1TWSp.01,
 1TWSp.02, 1TWSc.01, 1TWSc.04, 1TWSc.05, 1TWSa.01 and 1SIC.04 exercised on
 the way.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "alive-or-never-alive",
@@ -205,3 +205,61 @@ LESSON = {
              "That is the whole lesson finished. You know what alive means."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say whether something is alive or was never alive.",
+    "Name what every animal needs: air, water and the right food.",
+    "Do an experiment with a plant and say what happened.",
+    "Fill in a science table.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F410", "What alive means",
+         "Look at a goat. It eats grass. It drinks water. It grows from a little kid into a big goat. It can have babies. Anything that does all of that is alive."),
+    part("\U0001FAA8", "Never alive",
+         "Now look at a stone. It does not eat. It does not drink. It never grows and it never has babies. A stone was never alive. Neither was a spoon, a car or a teddy bear."),
+    part("\U0001F431", "What animals need",
+         "Every animal needs three things to stay alive. Air to breathe. Water to drink. And the right food. A cat does not need a ball of wool. It wants one. That is different."),
+    part("\U0001F331", "What plants need",
+         "Plants are alive too. They do not eat like animals. They need water from the soil, light from the Sun, and air. Today you will find out what happens to a plant with no water."),
+    part("\U0001F52C", "Being a scientist",
+         "A scientist looks closely, asks a question, tries something, and writes down what happened. That is what you will do in this lesson. Ready? Let us go."),
+]
+
+LESSON["words"] = [
+    word("alive", "\U0001F423", "Something that eats or drinks, grows, and can have babies.",
+         ["A chick is alive. It eats, drinks and grows.", "My cat is alive, but my toy cat is not."]),
+    word("non-living", "\U0001FAA8", "Something that was never alive. It does not eat, grow or have babies.",
+         ["A stone is non-living.", "A spoon is a non-living thing."]),
+    word("animal", "\U0001F415", "A living thing that moves about and eats to stay alive.",
+         ["A dog is an animal.", "Every animal needs air, water and food."]),
+    word("plant", "\U0001F331", "A living thing that grows in soil and makes its own food from sunlight.",
+         ["A sunflower is a plant.", "The plant needs water, or it droops."]),
+    word("need", "\U0001F4A7", "Something you must have to stay alive.",
+         ["Water is a need. A toy is not.", "A cat needs air, water and food."]),
+    word("grow", "\U0001F4C8", "To get bigger and change over time.",
+         ["A kid grows into a goat.", "The plant grew taller after we watered it."]),
+    word("experiment", "\U0001F9EA", "A fair test you do to find out an answer.",
+         ["Our experiment showed that a plant needs water.", "Predict first, then do the experiment."]),
+]
+
+LESSON["home"] = [
+    home("Two plants, one watering can", "Two small plants or two cuttings in cups, water, a sunny windowsill",
+         ["Put both plants on the windowsill.",
+          "Water one plant every day. Give the other no water at all.",
+          "Look at both plants every day for a week, and say what you see."],
+         "Which plant droops and goes yellow, and how many days it takes."),
+    home("Alive or never alive hunt", "A garden or a park, paper and a pencil",
+         ["Walk round slowly and point at ten things.",
+          "For each one, ask: does it eat, drink, grow or have babies?",
+          "Draw two lists: alive, and never alive."],
+         "Things that trick you, like a fallen leaf. It WAS alive."),
+    home("Feed a pet, or a bird", "A pet, or a bird table with seeds and a dish of water",
+         ["Put out food and water.",
+          "Watch from a window, without moving, for five minutes.",
+          "Say which of the three needs you gave: air, water or food."],
+         "Whether the animal eats, drinks, or both."),
+]

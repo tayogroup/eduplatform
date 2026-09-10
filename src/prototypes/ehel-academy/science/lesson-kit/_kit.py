@@ -70,3 +70,20 @@ def opt(t, ok=False):
 def q(ask, pic, right, wrongs, why):
     """A multiple-choice question: the right answer first, then the wrong ones."""
     return {"ask": ask, "pic": pic, "opts": [opt(right, True)] + [opt(w) for w in wrongs], "why": why}
+
+
+# ---- the unit shell: written beside the steps, drawn by _shell.py ----------
+
+def part(pic, title, say):
+    """One part of the unit lecture: a picture, a heading, and what the voice says."""
+    return {"pic": pic, "title": title, "say": say}
+
+
+def word(w, pic, meaning, uses):
+    """A science word: the word, its picture, what it means, and sentences that use it."""
+    return {"w": w, "pic": pic, "meaning": meaning, "uses": list(uses)}
+
+
+def home(title, materials, steps, look):
+    """A project to do at home: what you need, what to do, and what to look for."""
+    return {"title": title, "materials": materials, "steps": list(steps), "look": look}

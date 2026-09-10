@@ -6,7 +6,7 @@ quieter as it travels from its source; with 1Bs.02 (the ear), 1TWSp.02,
 1TWSc.01, 1TWSc.02, 1TWSc.03, 1TWSc.04, 1TWSc.05, 1TWSa.01, 1SIC.02 and
 1SIC.03. The sounds are synthesised on the page - tap a drum and it thuds.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "sounds-near-and-far",
@@ -164,3 +164,59 @@ LESSON = {
              "That is the whole lesson finished. You know where sounds come from."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say where a sound comes from.",
+    "Say what makes a sound.",
+    "Do an experiment about sounds near and far.",
+    "Use sound makers safely.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F941", "Every sound has a source",
+         "Tap a drum. Ring a bell. A bird sings. Rain falls. Every sound comes from somewhere. The thing that makes it is called the source."),
+    part("\u3030\uFE0F", "Sound is shaking",
+         "Pluck an elastic band. It shakes so fast it looks blurry, and you hear a sound. Hum, and put your hand on your throat. You can feel it shaking."),
+    part("\U0001F442\U0001F3FE", "Near and far",
+         "Stand next to a bell and it is loud. Walk away and it gets quieter. The further a sound travels, the quieter it gets."),
+    part("\U0001F92B", "Loud, medium, quiet",
+         "Sounds can be loud, medium or quiet. A drum next to you is loud. A whisper is quiet. You can write it down in a table, like a scientist."),
+    part("\U0001F3A7", "Look after your ears",
+         "Very loud sounds can hurt your ears. Never shout into someone's ear. Never bang a drum right next to your head. Use sound makers carefully."),
+]
+
+LESSON["words"] = [
+    word("sound", "\U0001F50A", "Something you hear.",
+         ["A drum makes a loud sound.", "Where did that sound come from?"]),
+    word("source", "\U0001F941", "The thing a sound comes from.",
+         ["The bell is the source of the ringing.", "Find the source of the sound."]),
+    word("loud", "\U0001F4E2", "A big sound, easy to hear.",
+         ["A car horn is loud.", "Do not be so loud."]),
+    word("quiet", "\U0001F92B", "A small sound, hard to hear.",
+         ["A whisper is quiet.", "Far away, the bell was quiet."]),
+    word("vibrate", "\u3030\uFE0F", "To shake very fast. Things vibrate when they make a sound.",
+         ["The drum skin vibrates.", "Feel your throat vibrate when you hum."]),
+    word("ear", "\U0001F442\U0001F3FE", "The part of your body that hears.",
+         ["I hear with my ears.", "Cover your ears if it is too loud."]),
+]
+
+LESSON["home"] = [
+    home("The walking away test", "A bell, or a spoon and a cup, or a shaker; two people; a big room or a garden",
+         ["One person makes the same sound over and over.",
+          "The other walks away one step at a time.",
+          "At each step say: loud, medium or quiet."],
+         "How many steps before it is quiet? Where does it disappear?"),
+    home("Feel the shaking", "An elastic band, a tin or a drum, your throat",
+         ["Stretch the band and pluck it. Watch it blur.",
+          "Bang the tin and touch it straight away.",
+          "Hum and put your hand flat on your throat."],
+         "The shaking you can feel is the sound you can hear."),
+    home("Sound hunt", "Paper and a pencil, a quiet minute",
+         ["Sit still and shut your eyes for one minute.",
+          "Count every sound you hear.",
+          "For each one, say where it came from."],
+         "Sounds from animals, people, things and machines."),
+]

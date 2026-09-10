@@ -11,7 +11,8 @@ and `content/lesson-N.py`.
 | `build-lessons.py --app <dir>` | writes `<slug>.html` per lesson from the content; refuses a bad objective code, a quiz with no single key, a sort into a missing bin |
 | `build-hub.py --app <dir>` | writes the hub: cards with step counts and time estimates, the strands panel, the printable teachers-and-parents section |
 | `check-coverage.py --app <dir>` | the curriculum gate on the BUILT pages: every objective of the stage reached, per-lesson floors, keys single |
-| `_kit.py` | `step()`, `explain()`, `q()`, `opt()` — the vocabulary the content is written in |
+| `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in |
+| `_shell.py` | the unit shell: the seven steps drawn AROUND every lesson (overview, lecture, words, games, home, world, resources), and the games derived from the lesson's own content; used by both builders so the hub and the page agree |
 | `lib/lesson.css` | the Mathematics design system, verbatim via English's copy |
 | `lib/science.css` | this kit's own styles; no new hue |
 | `lib/voice.js`, `lib/deck.js` | lifted verbatim from `english/grade-1-app/lib` (the deck **unwired** — see the Grade 1 README) |
@@ -41,6 +42,13 @@ codes the builder accepts and which the gate demands.
 | `graph` (Stage 2) | `blockGraph` | stacks a block per unit in each column, then reads the pattern |
 | `lookup` (Stage 2) | `lookup` | answers questions from a fact card that stays on screen |
 | `build` (Stage 2) | `build` | assembles a model from parts, then does something with it |
+| `overview` (shell) | `unitOverview` | reads what the lesson is for; ticks on arrival |
+| `lecture` (shell) | `lecture` | hears the lesson in parts, one picture each; no video, and it says so |
+| `words` (shell) | `scienceWords` | taps each word for its picture, meaning and sample uses, then picks the word for each meaning |
+| `games` (shell) | `gameZone` | plays the lesson's derived games in a full-screen overlay: choice, spelling, pairs |
+| `home` (shell) | `homeProjects` | ticks off real projects done at home |
+| `world` (shell) | `scienceWorld` | a placeholder that says it is one; ticks on arrival |
+| `resources` (shell) | `resources` | the drawer; ticks on first opening |
 
 Sims: `plantWater`, `plantLight`, `pushBall`, `floatSink`, `magnet`,
 `soundFar`, `shapeChange`, `globeCatch`, `sunShade` (Stage 1); `circuit`,
@@ -66,3 +74,26 @@ build rather than the page.
   same order. The Grade 1 rebuild through this kit came out byte-identical
   to its live pages apart from the generated-by comment, which is how the
   kit was proved safe to extract.
+
+## The unit shell (2026-09-10)
+
+Owner, 2026-09-10: every lesson now carries the furniture the English Grade 1
+build carries around a unit. `lesson-kit/_shell.py` draws seven steps around
+the lesson's own, in this order:
+
+    overview  lecture  words  <the lesson's own steps>  games  home  quiz  world  resources
+
+| step | what it is | where the content comes from |
+| --- | --- | --- |
+| What this lesson is about | the outcomes in the child's words, with counts | `LESSON["about"]` |
+| Unit lecture | the lesson told in five parts by the voice, one picture each; says on its face that there is no video | `LESSON["lecture"]` |
+| Science words | word, picture, meaning and sample uses; tap each, then "which word means…?" | `LESSON["words"]` |
+| Games | a quick quiz, a sort race, word pairs and a spelling game, DERIVED from the lesson; two earn the sticker | nothing new: the questions, the sorts and the words |
+| Things to do at home | three real projects: what you need, what to do, what to look for | `LESSON["home"]` |
+| Science world | a placeholder that says so and ticks itself | none yet |
+| Student resources | a drawer: the words, the grade's word finder, the home projects, the objectives for a grown-up, the strands, the hub | assembled by the builder |
+
+The hub counts the same steps the page draws (it expands each lesson through
+the same function), and its grown-ups section lists the home projects beside
+the experiments. Every shell step except the placeholder and the drawer carries
+the lesson's own objective codes, so the coverage floors did not move.

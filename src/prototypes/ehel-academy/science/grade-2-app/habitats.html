@@ -515,6 +515,135 @@
     .sortnow.shake, .mtrack .unit, .badge, .gblock, .tapcard.wrong { animation: none; }
   }
 
+  /* ==================================================================
+     THE UNIT SHELL (owner, 2026-09-10): the overview, the lecture, the
+     words, the game zone, the home projects, Science world and the
+     resources drawer. The shelf, the full-screen overlay, the tiles and
+     the drawer rows are the English Grade 1 build's own rules, copied so
+     the two builds look like one family; the rest borrows the tokens
+     above and invents no hue.
+     ================================================================== */
+
+  /* ---- what this lesson is about ---- */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; }
+  .ovw-bits { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 16px; }
+  .ovw-bits span { padding: 6px 14px; border-radius: 999px; background: var(--card);
+    border: 2px solid var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; text-align: center; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px; font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .ovw-list.codes { font-size: 16px; }
+  .ovw-list code { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12.5px; color: var(--teal); margin-right: 6px; }
+
+  /* ---- the lecture, one part at a time ---- */
+  .lec, .world { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+  .lecpic { font-size: clamp(64px, 14vw, 110px); }
+  .lecpic svg { width: clamp(160px, 50vw, 300px); }
+  .lec-h { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+
+  /* ---- the words: a card opens a panel ---- */
+  .cardsgrid.words { max-width: 720px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px; border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-word { margin: 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px; font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 22px; }
+  .wordbtn .pic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn .pic svg { width: 56px; height: 56px; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
+
+  /* ---- a shelf of cards, and the full-screen overlay behind them ---- */
+  .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; width: 100%; }
+  .bookcard { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); text-align: left; }
+  .bookcard .bookicon { font-size: 34px; line-height: 1; }
+  .bookcard .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .bookcard .bookmeta { color: var(--muted); font-size: 13.5px; }
+  .bookcard .big { margin-top: auto; align-self: flex-start; }
+  .bookcard.played { border-color: var(--good); background: var(--good-soft); }
+  .book-reader { position: fixed; inset: 0; z-index: 200; background: var(--ground); display: flex; flex-direction: column; }
+  .book-reader-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; }
+  .book-reader-top .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .book-close { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font-size: 18px; }
+  .book-stage-wrap { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 0 10px; }
+  .book-reader-bottom { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 14px 18px; flex-wrap: wrap; }
+  .book-page-count { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; min-width: 5em; text-align: center; }
+
+  /* ---- the game zone ---- */
+  .game-overlay .game-stage { width: 100%; max-width: 720px; max-height: 100%; overflow-y: auto; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 10px 0; }
+  .game-overlay .gameprompt { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 21px; text-align: center; margin: 0; }
+  .game-overlay .gameclue { color: var(--muted); font-size: 17px; text-align: center; margin: 0; max-width: 30em; }
+  .game-overlay .fb { min-height: 1.6em; }
+  .game-overlay .pairsgrid { max-width: 640px; }
+  .game-done { text-align: center; }
+  .game-done .gamebig { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 30px; margin: 0 0 6px; }
+  .buildline { min-height: 74px; width: 100%; max-width: 30em; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; padding: 12px;
+    border-radius: 18px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
+  .buildline .hint { color: var(--muted); font-size: 17px; }
+  .tile { padding: 10px 16px; border-radius: 14px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 24px; }
+  .tile:active { transform: scale(0.96); }
+  .tile.letter { min-width: 54px; text-align: center; text-transform: lowercase; font-size: 26px; }
+  .buildline .tile { border-color: var(--teal); }
+  .buildline.right { border-color: var(--good); border-style: solid; }
+  .buildline.wrong { border-color: var(--bad); border-style: solid; }
+  .pairsgrid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 10px; width: 100%; max-width: 30em; }
+  .pairtile { min-height: 76px; border-radius: 16px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px;
+    line-height: 1.3; padding: 10px 12px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .pairtile .face { display: none; }
+  .pairtile .back { font-size: 26px; opacity: 0.6; }
+  .pairtile.revealed .face, .pairtile.matched .face { display: block; }
+  .pairtile.revealed .back, .pairtile.matched .back { display: none; }
+  .pairtile.revealed { border-color: var(--teal); background: var(--teal-soft); }
+  .pairtile.matched { border-color: var(--good); background: var(--good-soft); cursor: default; }
+  .pairtile.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .pairtile:disabled { cursor: default; }
+
+  /* ---- things to do at home ---- */
+  .acts { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; width: 100%; }
+  .act { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px; border: 3px solid var(--line); background: var(--card); text-align: left; }
+  .act.did { border-color: var(--good); background: var(--good-soft); }
+  .act-head { display: flex; align-items: center; gap: 8px; }
+  .act-n { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 999px; background: var(--teal); color: #06231F;
+    display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
+  .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
+  .act-lead { margin: 0; font-size: 18px; font-weight: 700; }
+  .act-mat, .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
+  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
+  button.hear { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
+  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; }
+  .act.did .tick { border-color: var(--good); color: var(--good); }
+
+  /* ---- the resources drawer ---- */
+  .res-stage { width: 100%; max-width: 760px; max-height: 100%; overflow-y: auto; padding: 4px 2px 10px; }
+  .wordgroup { margin-bottom: 18px; }
+  .wordgroup h4 { margin: 0 0 6px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); }
+  .teaches .lec-p { text-align: left; font-size: 17px; }
+  .wordrow { display: flex; gap: 12px; align-items: flex-start; padding: 11px 6px; border-bottom: 1px solid var(--line); text-align: left; }
+  .wordrow:last-child { border-bottom: 0; }
+  .gloxpic { flex: 0 0 2.1em; font-size: 27px; line-height: 1.1; text-align: center; }
+  .gloxpic svg { width: 40px; height: 40px; }
+  .gloxbody { flex: 1 1 auto; min-width: 0; }
+  .gloxhead { display: flex; align-items: center; gap: 8px; }
+  .gloxhead strong { font-size: 19px; }
+  .gloxlesson { margin-left: auto; color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .gloxdef { margin: 3px 0 0; font-size: 15.5px; line-height: 1.5; color: var(--muted); }
+  .gloxeg { margin: 4px 0 0; font-size: 15px; line-height: 1.5; font-style: italic; }
+  .gloxq { width: 100%; padding: 13px 16px; border-radius: 14px; border: 3px solid var(--teal); background: var(--card); color: var(--ink); font-family: inherit; font-size: 19px; margin-bottom: 12px; }
+  .gloxmore { color: var(--muted); font-size: 14px; text-align: center; }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -759,9 +888,9 @@
   </header>
 
   <main class="deck" id="deck" tabindex="-1">
-    <section class="slide" data-objectives="2Be.01 2Be.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A habitat is the place where a plant or animal naturally lives, and where it finds what it needs.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A frog&#39;s habitat is a pond: water, insects to eat, plants to hide in.</s><s>A camel&#39;s habitat is the desert: hot, dry, sandy.</s><s>A deer&#39;s habitat is a forest: trees, shade, leaves to eat.</s><s>A polar bear&#39;s habitat is the icy Arctic.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a habitat is a house.</s><s>It is the whole place: the water, the ground, the weather, the food.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and look at what lives in each place.</s></mstts:express-as>' data-say="A habitat is the place a plant or animal naturally lives. Press Next to visit four.">
-      <div class="slide-head"><span class="n">1</span><h2>Where things live</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask1">A <b>habitat</b> is the place a plant or animal naturally lives. Press <b>Next</b> to visit four.</span></div>
+    <section class="slide" data-objectives="2Be.01 2Be.02 2TWSc.01 2Be.03 2TWSc.05 2TWSa.03 2TWSa.02 2TWSp.01 2SIC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is what this lesson is for.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the list, or press Read it to me.</s><s>Every one of them is something you will be able to DO.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>You do not have to be able to do them yet.</s><s>That is what the lesson is for.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a read, then start.</s></mstts:express-as>' data-say="What you will be able to do by the end.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask1">What you will be able to do by the end.</span></div>
       <div class="stage">
         <div id="stage1"></div>
         <div class="choices" id="ch1"></div>
@@ -769,9 +898,9 @@
         <p class="score" id="score1"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="2Be.02 2TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Each plant and animal suits its habitat.</s><s>A fish needs water, so it lives in a pond, not a desert.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A frog: pond.</s><s>A camel: desert.</s><s>A polar bear: the Arctic.</s><s>A deer: forest.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put the penguin in the pond because it swims.</s><s>Penguins live where it is icy cold.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Think about what the animal needs: water, heat, cold, trees.</s></mstts:express-as>' data-say="Which habitat does this animal or plant live in? Tap the right bin.">
-      <div class="slide-head"><span class="n">2</span><h2>Who lives where?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Which habitat does this animal or plant live in? Tap the right bin.</span></div>
+    <section class="slide" data-objectives="2Be.01 2Be.02 2TWSc.01 2Be.03 2TWSc.05 2TWSa.03 2TWSa.02 2TWSp.01 2SIC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson, told to you before you do it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to each part.</s><s>Look at the picture while you listen.</s><s>Press Next part to go on, and Listen again to hear it twice.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Listening is not the same as hearing.</s><s>Sit still, and actually listen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen.</s></mstts:express-as>' data-say="Listen to the lesson, one part at a time. Press Next part when you are ready.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Listen to the lesson, one part at a time. Press Next part when you are ready.</span></div>
       <div class="stage">
         <div id="stage2"></div>
         <div class="choices" id="ch2"></div>
@@ -779,9 +908,9 @@
         <p class="score" id="score2"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="2Be.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You can compare places with a few words: hot or cold, wet or dry, many plants or few, many animals or few.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A garden is wet after rain and has many plants.</s><s>A car park is dry and has few plants and few animals.</s><s>A pond is wet with many animals.</s><s>A sandy beach is dry with few plants.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a place with no animals in sight has none.</s><s>Look under a stone: a car park has a few, a garden has many more.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Picture the two places, then tap the words that fit.</s></mstts:express-as>' data-say="Compare two places near you. Which words describe them? Tap the answer.">
-      <div class="slide-head"><span class="n">3</span><h2>Hot, cold, wet, dry</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask3">Compare two places near you. Which words describe them? Tap the answer.</span></div>
+    <section class="slide" data-objectives="2Be.01 2Be.02 2TWSc.01 2Be.03 2TWSc.05 2TWSa.03 2TWSa.02 2TWSp.01 2SIC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the science words in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a word.</s><s>You will see its picture, hear what it means, and hear it used in a sentence.</s><s>When you have heard them all, the page asks which word is which.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A science word often means something very exact.</s><s>Listen to the meaning, not just the word.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the first word.</s></mstts:express-as>' data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Science words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask3">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
       <div class="stage">
         <div id="stage3"></div>
         <div class="choices" id="ch3"></div>
@@ -789,9 +918,9 @@
         <p class="score" id="score3"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="2TWSc.05 2Be.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A fact card is a secondary source: somebody else looked, and wrote down what they found.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find the question&#39;s words in the card and read the answer next to them.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the card, then answer each question from it.</s></mstts:express-as>' data-say="Read the fact card about a pond, then answer from the card .">
-      <div class="slide-head"><span class="n">4</span><h2>Look it up: the pond</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Read the fact card about a pond, then answer <b>from the card</b>.</span></div>
+    <section class="slide" data-objectives="2Be.01 2Be.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A habitat is the place where a plant or animal naturally lives, and where it finds what it needs.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A frog&#39;s habitat is a pond: water, insects to eat, plants to hide in.</s><s>A camel&#39;s habitat is the desert: hot, dry, sandy.</s><s>A deer&#39;s habitat is a forest: trees, shade, leaves to eat.</s><s>A polar bear&#39;s habitat is the icy Arctic.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a habitat is a house.</s><s>It is the whole place: the water, the ground, the weather, the food.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next and look at what lives in each place.</s></mstts:express-as>' data-say="A habitat is the place a plant or animal naturally lives. Press Next to visit four.">
+      <div class="slide-head"><span class="n">4</span><h2>Where things live</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">A <b>habitat</b> is the place a plant or animal naturally lives. Press <b>Next</b> to visit four.</span></div>
       <div class="stage">
         <div id="stage4"></div>
         <div class="choices" id="ch4"></div>
@@ -799,9 +928,9 @@
         <p class="score" id="score4"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="2TWSa.03 2TWSa.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A block graph shows numbers as stacks of blocks, so you can see at a glance which is most and which is least.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The table says the pond had eight animals, so the pond column needs eight blocks.</s><s>Tap plus until each column matches its number.</s><s>Then look: the tallest column is the place with the most animals.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children stop stacking too early or go one too far.</s><s>Count the blocks against the table number each time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Build all four columns, then read the graph.</s></mstts:express-as>' data-say="A class counted the animals they found in four places. Build the block graph : one block for each animal.">
-      <div class="slide-head"><span class="n">5</span><h2>Count and graph the animals</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">A class counted the animals they found in four places. Build the <b>block graph</b>: one block for each animal.</span></div>
+    <section class="slide" data-objectives="2Be.02 2TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Each plant and animal suits its habitat.</s><s>A fish needs water, so it lives in a pond, not a desert.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A frog: pond.</s><s>A camel: desert.</s><s>A polar bear: the Arctic.</s><s>A deer: forest.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put the penguin in the pond because it swims.</s><s>Penguins live where it is icy cold.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Think about what the animal needs: water, heat, cold, trees.</s></mstts:express-as>' data-say="Which habitat does this animal or plant live in? Tap the right bin.">
+      <div class="slide-head"><span class="n">5</span><h2>Who lives where?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Which habitat does this animal or plant live in? Tap the right bin.</span></div>
       <div class="stage">
         <div id="stage5"></div>
         <div class="choices" id="ch5"></div>
@@ -809,9 +938,9 @@
         <p class="score" id="score5"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="2TWSp.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every habitat is full of questions.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>How does a camel go so long without water? Why does a cactus have spines? What comes out at night?</s><s>Some of these you can answer by looking, some by looking it up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap a question, then tap the best way to find its answer.</s></mstts:express-as>' data-say="Look at the desert. Tap a question you would like to ask about it.">
-      <div class="slide-head"><span class="n">6</span><h2>Ask a question about a habitat</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Look at the desert. Tap a question you would like to ask about it.</span></div>
+    <section class="slide" data-objectives="2Be.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You can compare places with a few words: hot or cold, wet or dry, many plants or few, many animals or few.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A garden is wet after rain and has many plants.</s><s>A car park is dry and has few plants and few animals.</s><s>A pond is wet with many animals.</s><s>A sandy beach is dry with few plants.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a place with no animals in sight has none.</s><s>Look under a stone: a car park has a few, a garden has many more.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Picture the two places, then tap the words that fit.</s></mstts:express-as>' data-say="Compare two places near you. Which words describe them? Tap the answer.">
+      <div class="slide-head"><span class="n">6</span><h2>Hot, cold, wet, dry</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Compare two places near you. Which words describe them? Tap the answer.</span></div>
       <div class="stage">
         <div id="stage6"></div>
         <div class="choices" id="ch6"></div>
@@ -819,9 +948,9 @@
         <p class="score" id="score6"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="2SIC.04 2Be.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Because we know what living things need from their habitat, we can see how what we do affects them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Rubbish in a pond can hurt the frogs and fish.</s><s>Cutting down a forest takes away the deer&#39;s home.</s><s>Planting flowers gives bees a habitat.</s><s>A pile of logs in a corner gives beetles somewhere to live.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each picture, then answer the question.</s></mstts:express-as>' data-say="What people do can change a habitat. Tap each picture.">
-      <div class="slide-head"><span class="n">7</span><h2>Looking after habitats</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">What people do can change a habitat. Tap each picture.</span></div>
+    <section class="slide" data-objectives="2TWSc.05 2Be.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A fact card is a secondary source: somebody else looked, and wrote down what they found.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find the question&#39;s words in the card and read the answer next to them.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Read the card, then answer each question from it.</s></mstts:express-as>' data-say="Read the fact card about a pond, then answer from the card .">
+      <div class="slide-head"><span class="n">7</span><h2>Look it up: the pond</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Read the fact card about a pond, then answer <b>from the card</b>.</span></div>
       <div class="stage">
         <div id="stage7"></div>
         <div class="choices" id="ch7"></div>
@@ -829,14 +958,84 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="2Be.01 2Be.02 2Be.03 2TWSa.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A habitat is where a living thing naturally lives.</s><s>Different habitats, different living things.</s><s>Compare places with hot, cold, wet, dry, many, few.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">8</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Time to show what you know. Tap the answer.</span></div>
+    <section class="slide" data-objectives="2TWSa.03 2TWSa.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A block graph shows numbers as stacks of blocks, so you can see at a glance which is most and which is least.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The table says the pond had eight animals, so the pond column needs eight blocks.</s><s>Tap plus until each column matches its number.</s><s>Then look: the tallest column is the place with the most animals.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children stop stacking too early or go one too far.</s><s>Count the blocks against the table number each time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Build all four columns, then read the graph.</s></mstts:express-as>' data-say="A class counted the animals they found in four places. Build the block graph : one block for each animal.">
+      <div class="slide-head"><span class="n">8</span><h2>Count and graph the animals</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">A class counted the animals they found in four places. Build the <b>block graph</b>: one block for each animal.</span></div>
       <div class="stage">
         <div id="stage8"></div>
         <div class="choices" id="ch8"></div>
         <p class="fb" id="fb8" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score8"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="2TWSp.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every habitat is full of questions.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>How does a camel go so long without water? Why does a cactus have spines? What comes out at night?</s><s>Some of these you can answer by looking, some by looking it up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap a question, then tap the best way to find its answer.</s></mstts:express-as>' data-say="Look at the desert. Tap a question you would like to ask about it.">
+      <div class="slide-head"><span class="n">9</span><h2>Ask a question about a habitat</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Look at the desert. Tap a question you would like to ask about it.</span></div>
+      <div class="stage">
+        <div id="stage9"></div>
+        <div class="choices" id="ch9"></div>
+        <p class="fb" id="fb9" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score9"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="2SIC.04 2Be.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Because we know what living things need from their habitat, we can see how what we do affects them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Rubbish in a pond can hurt the frogs and fish.</s><s>Cutting down a forest takes away the deer&#39;s home.</s><s>Planting flowers gives bees a habitat.</s><s>A pile of logs in a corner gives beetles somewhere to live.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each picture, then answer the question.</s></mstts:express-as>' data-say="What people do can change a habitat. Tap each picture.">
+      <div class="slide-head"><span class="n">10</span><h2>Looking after habitats</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">What people do can change a habitat. Tap each picture.</span></div>
+      <div class="stage">
+        <div id="stage10"></div>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score10"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="2Be.01 2Be.02 2TWSc.01 2Be.03 2TWSc.05 2TWSa.03 2TWSa.02 2TWSp.01 2SIC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
+      <div class="slide-head"><span class="n">11</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Choose a game to play. Nothing here is new.</span></div>
+      <div class="stage">
+        <div id="stage11"></div>
+        <div class="choices" id="ch11"></div>
+        <p class="fb" id="fb11" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score11"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="2Be.01 2Be.02 2TWSc.01 2Be.03 2TWSc.05 2TWSa.03 2TWSa.02 2TWSp.01 2SIC.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, with your hands and with a grown-up.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Doing it once is science.</s><s>Doing it again to check is BETTER science.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Real science with real things, away from the screen. Do one with a grown-up.">
+      <div class="slide-head"><span class="n">12</span><h2>Things to do at home</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Real science with real things, away from the screen. Do one with a grown-up.</span></div>
+      <div class="stage">
+        <div id="stage12"></div>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score12"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="2Be.01 2Be.02 2Be.03 2TWSa.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A habitat is where a living thing naturally lives.</s><s>Different habitats, different living things.</s><s>Compare places with hot, cold, wet, dry, many, few.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">13</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Time to show what you know. Tap the answer.</span></div>
+      <div class="stage">
+        <div id="stage13"></div>
+        <div class="choices" id="ch13"></div>
+        <p class="fb" id="fb13" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score13"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Science world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s science is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this science is out in the real world. This part is still being built.">
+      <div class="slide-head"><span class="n">14</span><h2>Science world</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Where this science is out in the real world. This part is still being built.</span></div>
+      <div class="stage">
+        <div id="stage14"></div>
+        <div class="choices" id="ch14"></div>
+        <p class="fb" id="fb14" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score14"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
+      <div class="slide-head"><span class="n">15</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+      <div class="stage">
+        <div id="stage15"></div>
+        <div class="choices" id="ch15"></div>
+        <p class="fb" id="fb15" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score15"></p>
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -894,6 +1093,161 @@
       "2TWSp.01"
     ],
     "steps": [
+      {
+        "kind": "overview",
+        "title": "What this lesson is about",
+        "objectives": [
+          "2Be.01",
+          "2Be.02",
+          "2TWSc.01",
+          "2Be.03",
+          "2TWSc.05",
+          "2TWSa.03",
+          "2TWSa.02",
+          "2TWSp.01",
+          "2SIC.04"
+        ],
+        "data": {
+          "about": [
+            "Say what a habitat is.",
+            "Match animals and plants to the habitat that suits them.",
+            "Compare habitats: hot or cold, wet or dry.",
+            "Count animals and show them in a block graph."
+          ],
+          "counts": {
+            "steps": 15,
+            "words": 7,
+            "games": 4,
+            "home": 3
+          }
+        }
+      },
+      {
+        "kind": "lecture",
+        "title": "Unit lecture",
+        "objectives": [
+          "2Be.01",
+          "2Be.02",
+          "2TWSc.01",
+          "2Be.03",
+          "2TWSc.05",
+          "2TWSa.03",
+          "2TWSa.02",
+          "2TWSp.01",
+          "2SIC.04"
+        ],
+        "data": {
+          "parts": [
+            {
+              "pic": "🏞️",
+              "title": "What a habitat is",
+              "say": "A habitat is where a living thing naturally lives. A pond is a habitat. So is a desert, a forest and the icy Arctic. A habitat gives a living thing what it needs."
+            },
+            {
+              "pic": "🐸",
+              "title": "The pond",
+              "say": "A pond is wet. Frogs, ducks, fish and water plants live there. A frog's smooth skin and long legs suit a pond. A camel would not last a day."
+            },
+            {
+              "pic": "🐪",
+              "title": "The desert and the Arctic",
+              "say": "A desert is hot and dry. A camel can go days without water. The Arctic is icy. A polar bear's thick fur keeps it warm. Each animal suits its habitat."
+            },
+            {
+              "pic": "📊",
+              "title": "Counting and graphing",
+              "say": "Scientists count what lives in a habitat. Six frogs, three ducks, eight fish. A block graph shows the most and the least at a glance."
+            },
+            {
+              "pic": "🌳",
+              "title": "Looking after habitats",
+              "say": "Rubbish in a pond, cutting down a forest: what people do changes habitats. Planting flowers and leaving a log pile helps. Science shows us how."
+            }
+          ]
+        }
+      },
+      {
+        "kind": "words",
+        "title": "Science words",
+        "objectives": [
+          "2Be.01",
+          "2Be.02",
+          "2TWSc.01",
+          "2Be.03",
+          "2TWSc.05",
+          "2TWSa.03",
+          "2TWSa.02",
+          "2TWSp.01",
+          "2SIC.04"
+        ],
+        "data": {
+          "items": [
+            {
+              "w": "habitat",
+              "pic": "🌿",
+              "meaning": "The place where a living thing naturally lives.",
+              "uses": [
+                "A pond is a frog's habitat.",
+                "A desert is a hot, dry habitat."
+              ]
+            },
+            {
+              "w": "pond",
+              "pic": "🐸",
+              "meaning": "A small area of still water. A wet habitat.",
+              "uses": [
+                "Ducks live on the pond.",
+                "The pond is full of frogspawn."
+              ]
+            },
+            {
+              "w": "desert",
+              "pic": "🐪",
+              "meaning": "A hot, dry place with very little rain.",
+              "uses": [
+                "A camel lives in the desert.",
+                "A cactus grows in the desert."
+              ]
+            },
+            {
+              "w": "forest",
+              "pic": "🌳",
+              "meaning": "A large area covered in trees.",
+              "uses": [
+                "Deer live in the forest.",
+                "The forest is shady."
+              ]
+            },
+            {
+              "w": "Arctic",
+              "pic": "🧊",
+              "meaning": "The icy, cold place at the top of the world.",
+              "uses": [
+                "Polar bears live in the Arctic.",
+                "The Arctic is very cold."
+              ]
+            },
+            {
+              "w": "suit",
+              "pic": "✅",
+              "meaning": "To be right for. An animal suits its habitat.",
+              "uses": [
+                "Thick fur suits a cold place.",
+                "Webbed feet suit a pond."
+              ]
+            },
+            {
+              "w": "block graph",
+              "pic": "📊",
+              "meaning": "A graph made of blocks, one block for each thing counted.",
+              "uses": [
+                "The block graph shows eight fish.",
+                "Read the tallest column of the block graph."
+              ]
+            }
+          ]
+        }
+      },
       {
         "kind": "demo",
         "title": "Where things live",
@@ -1396,6 +1750,322 @@
         }
       },
       {
+        "kind": "games",
+        "title": "Games",
+        "objectives": [
+          "2Be.01",
+          "2Be.02",
+          "2TWSc.01",
+          "2Be.03",
+          "2TWSc.05",
+          "2TWSa.03",
+          "2TWSa.02",
+          "2TWSp.01",
+          "2SIC.04"
+        ],
+        "data": {
+          "games": [
+            {
+              "id": "l3-quiz-1",
+              "type": "choice",
+              "title": "Quick quiz: Hot, cold, wet, dry",
+              "skill": "Remembering",
+              "rounds": [
+                {
+                  "prompt": "A garden and a car park. Which has MORE plants?",
+                  "choices": [
+                    "the garden",
+                    "the car park",
+                    "they have the same"
+                  ],
+                  "answer": "the garden",
+                  "explanation": "A garden is full of plants; a car park has a few weeds in the cracks."
+                },
+                {
+                  "prompt": "A pond and a sandy beach. Which is WETTER?",
+                  "choices": [
+                    "the pond",
+                    "the beach sand",
+                    "they are the same"
+                  ],
+                  "answer": "the pond",
+                  "explanation": "A pond is water; sand dries in the sun."
+                },
+                {
+                  "prompt": "A desert and a forest. Which is HOTTER and DRIER?",
+                  "choices": [
+                    "the desert",
+                    "the forest",
+                    "they are the same"
+                  ],
+                  "answer": "the desert",
+                  "explanation": "A desert is hot and dry; a forest is shady and damp."
+                },
+                {
+                  "prompt": "Where would you find MORE animals?",
+                  "choices": [
+                    "under a log in a garden",
+                    "on a concrete playground",
+                    "on a tarmac road"
+                  ],
+                  "answer": "under a log in a garden",
+                  "explanation": "Damp dark places under logs are full of small animals."
+                },
+                {
+                  "prompt": "A snowy mountain top. Which words fit?",
+                  "choices": [
+                    "cold, few plants",
+                    "hot, many plants",
+                    "wet, many animals"
+                  ],
+                  "answer": "cold, few plants",
+                  "explanation": "It is cold up high, and few plants can grow there."
+                },
+                {
+                  "prompt": "A shady forest floor. Which words fit?",
+                  "choices": [
+                    "damp, many plants, many animals",
+                    "dry, no plants",
+                    "hot, no animals"
+                  ],
+                  "answer": "damp, many plants, many animals",
+                  "explanation": "A forest is damp and full of plants and small animals."
+                }
+              ]
+            },
+            {
+              "id": "l3-sort-1",
+              "type": "choice",
+              "title": "Sort race: Who lives where?",
+              "skill": "Sorting",
+              "rounds": [
+                {
+                  "prompt": "Where does fish go? 🐟",
+                  "choices": [
+                    "Pond",
+                    "Desert",
+                    "Forest",
+                    "Arctic"
+                  ],
+                  "answer": "Pond",
+                  "explanation": "A fish needs water. Pond."
+                },
+                {
+                  "prompt": "Where does camel go? 🐪",
+                  "choices": [
+                    "Pond",
+                    "Desert",
+                    "Forest",
+                    "Arctic"
+                  ],
+                  "answer": "Desert",
+                  "explanation": "A camel can go for days without water in the hot desert."
+                },
+                {
+                  "prompt": "Where does polar bear go? 🐻‍❄️",
+                  "choices": [
+                    "Pond",
+                    "Desert",
+                    "Forest",
+                    "Arctic"
+                  ],
+                  "answer": "Arctic",
+                  "explanation": "Thick fur and fat for the icy Arctic."
+                },
+                {
+                  "prompt": "Where does deer go? 🦌",
+                  "choices": [
+                    "Pond",
+                    "Desert",
+                    "Forest",
+                    "Arctic"
+                  ],
+                  "answer": "Forest",
+                  "explanation": "A deer eats leaves and hides among trees. Forest."
+                },
+                {
+                  "prompt": "Where does cactus go? 🌵",
+                  "choices": [
+                    "Pond",
+                    "Desert",
+                    "Forest",
+                    "Arctic"
+                  ],
+                  "answer": "Desert",
+                  "explanation": "A cactus stores water and lives in the dry desert."
+                },
+                {
+                  "prompt": "Where does duck go? 🦆",
+                  "choices": [
+                    "Pond",
+                    "Desert",
+                    "Forest",
+                    "Arctic"
+                  ],
+                  "answer": "Pond",
+                  "explanation": "A duck swims and feeds on a pond."
+                },
+                {
+                  "prompt": "Where does penguin go? 🐧",
+                  "choices": [
+                    "Pond",
+                    "Desert",
+                    "Forest",
+                    "Arctic"
+                  ],
+                  "answer": "Arctic",
+                  "explanation": "Penguins live where it is icy cold."
+                },
+                {
+                  "prompt": "Where does mushroom go? 🍄",
+                  "choices": [
+                    "Pond",
+                    "Desert",
+                    "Forest",
+                    "Arctic"
+                  ],
+                  "answer": "Forest",
+                  "explanation": "Mushrooms grow in the damp shade of a forest."
+                }
+              ]
+            },
+            {
+              "id": "l3-pairs",
+              "type": "pairs",
+              "title": "Word pairs",
+              "skill": "Science words",
+              "rounds": [
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "habitat",
+                      "The place where a living thing naturally lives."
+                    ],
+                    [
+                      "pond",
+                      "A small area of still water. A wet habitat."
+                    ],
+                    [
+                      "desert",
+                      "A hot, dry place with very little rain."
+                    ]
+                  ]
+                },
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "forest",
+                      "A large area covered in trees."
+                    ],
+                    [
+                      "Arctic",
+                      "The icy, cold place at the top of the world."
+                    ],
+                    [
+                      "suit",
+                      "To be right for. An animal suits its habitat."
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "l3-spell",
+              "type": "spelling",
+              "title": "Spell the science word",
+              "skill": "Science words",
+              "rounds": [
+                {
+                  "prompt": "The place where a living thing naturally lives.",
+                  "clue": "It starts with h. 🌿",
+                  "answer": "habitat"
+                },
+                {
+                  "prompt": "A small area of still water. A wet habitat.",
+                  "clue": "It starts with p. 🐸",
+                  "answer": "pond"
+                },
+                {
+                  "prompt": "A hot, dry place with very little rain.",
+                  "clue": "It starts with d. 🐪",
+                  "answer": "desert"
+                },
+                {
+                  "prompt": "A large area covered in trees.",
+                  "clue": "It starts with f. 🌳",
+                  "answer": "forest"
+                },
+                {
+                  "prompt": "The icy, cold place at the top of the world.",
+                  "clue": "It starts with a. 🧊",
+                  "answer": "arctic"
+                },
+                {
+                  "prompt": "To be right for. An animal suits its habitat.",
+                  "clue": "It starts with s. ✅",
+                  "answer": "suit"
+                }
+              ]
+            }
+          ],
+          "mastery": 2
+        }
+      },
+      {
+        "kind": "home",
+        "title": "Things to do at home",
+        "objectives": [
+          "2Be.01",
+          "2Be.02",
+          "2TWSc.01",
+          "2Be.03",
+          "2TWSc.05",
+          "2TWSa.03",
+          "2TWSa.02",
+          "2TWSp.01",
+          "2SIC.04"
+        ],
+        "data": {
+          "items": [
+            {
+              "title": "Minibeast count",
+              "materials": "A garden, a park or a window box, a magnifying glass, paper",
+              "steps": [
+                "Look under a stone, a log or a leaf. Put it back gently afterwards.",
+                "Count each kind: ants, woodlice, snails, worms, spiders.",
+                "Draw a block graph: one block per animal."
+              ],
+              "look": "Which spot had the most? Damp, dark places are full of life.",
+              "n": 1
+            },
+            {
+              "title": "Make a log pile",
+              "materials": "A few logs or sticks, a shady corner, a grown-up",
+              "steps": [
+                "Pile the logs loosely in a shady, damp corner.",
+                "Leave it alone for two weeks.",
+                "Lift one log and look under it. Put it back."
+              ],
+              "look": "Who has moved in? A log pile is a habitat you made.",
+              "n": 2
+            },
+            {
+              "title": "Hot or cold, wet or dry",
+              "materials": "Your street or garden",
+              "steps": [
+                "Find the hottest spot and the coldest spot outside.",
+                "Find the wettest and the driest.",
+                "Say which animal or plant you found in each."
+              ],
+              "look": "Moss in the damp shade, ants on the warm path.",
+              "n": 3
+            }
+          ]
+        }
+      },
+      {
         "kind": "quiz",
         "title": "Show what you know",
         "objectives": [
@@ -1575,6 +2245,1001 @@
               "why": "Different habitats hold different living things because each suits its place."
             }
           ]
+        }
+      },
+      {
+        "kind": "world",
+        "title": "Science world",
+        "objectives": [],
+        "data": {
+          "title": "Habitats",
+          "soon": [
+            "Real places where this science happens.",
+            "People who use it every day at work.",
+            "Things near you to go and look at."
+          ]
+        }
+      },
+      {
+        "kind": "resources",
+        "title": "Student resources",
+        "objectives": [],
+        "data": {
+          "words": [
+            {
+              "w": "habitat",
+              "pic": "🌿",
+              "meaning": "The place where a living thing naturally lives.",
+              "uses": [
+                "A pond is a frog's habitat.",
+                "A desert is a hot, dry habitat."
+              ]
+            },
+            {
+              "w": "pond",
+              "pic": "🐸",
+              "meaning": "A small area of still water. A wet habitat.",
+              "uses": [
+                "Ducks live on the pond.",
+                "The pond is full of frogspawn."
+              ]
+            },
+            {
+              "w": "desert",
+              "pic": "🐪",
+              "meaning": "A hot, dry place with very little rain.",
+              "uses": [
+                "A camel lives in the desert.",
+                "A cactus grows in the desert."
+              ]
+            },
+            {
+              "w": "forest",
+              "pic": "🌳",
+              "meaning": "A large area covered in trees.",
+              "uses": [
+                "Deer live in the forest.",
+                "The forest is shady."
+              ]
+            },
+            {
+              "w": "Arctic",
+              "pic": "🧊",
+              "meaning": "The icy, cold place at the top of the world.",
+              "uses": [
+                "Polar bears live in the Arctic.",
+                "The Arctic is very cold."
+              ]
+            },
+            {
+              "w": "suit",
+              "pic": "✅",
+              "meaning": "To be right for. An animal suits its habitat.",
+              "uses": [
+                "Thick fur suits a cold place.",
+                "Webbed feet suit a pond."
+              ]
+            },
+            {
+              "w": "block graph",
+              "pic": "📊",
+              "meaning": "A graph made of blocks, one block for each thing counted.",
+              "uses": [
+                "The block graph shows eight fish.",
+                "Read the tallest column of the block graph."
+              ]
+            }
+          ],
+          "finder": [
+            {
+              "w": "Arctic",
+              "pic": "🧊",
+              "meaning": "The icy, cold place at the top of the world.",
+              "uses": [
+                "Polar bears live in the Arctic.",
+                "The Arctic is very cold."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
+            },
+            {
+              "w": "block graph",
+              "pic": "📊",
+              "meaning": "A graph made of blocks, one block for each thing counted.",
+              "uses": [
+                "The block graph shows eight fish.",
+                "Read the tallest column of the block graph."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
+            },
+            {
+              "w": "burn",
+              "pic": "🕯️",
+              "meaning": "To be on fire and turn into ash and smoke.",
+              "uses": [
+                "The candle burns.",
+                "Wood burns to ash."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
+              "w": "canines",
+              "pic": "🐺",
+              "meaning": "The pointed teeth beside the incisors, for tearing.",
+              "uses": [
+                "A dog has big canines.",
+                "Canines tear food."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
+            },
+            {
+              "w": "cell",
+              "pic": "🔋",
+              "meaning": "A small battery that pushes electricity round a circuit.",
+              "uses": [
+                "Put the cell in the torch.",
+                "The cell is one part of the circuit."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
+            },
+            {
+              "w": "circuit",
+              "pic": "🔁",
+              "meaning": "A complete loop that electricity can flow round.",
+              "uses": [
+                "The lamp lights when the circuit is complete.",
+                "A gap breaks the circuit."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
+            },
+            {
+              "w": "cook",
+              "pic": "🍳",
+              "meaning": "To heat food until it changes into something new.",
+              "uses": [
+                "We cook the egg.",
+                "Cooking makes a new material."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
+              "w": "cool",
+              "pic": "🌬️",
+              "meaning": "To make something colder.",
+              "uses": [
+                "Let the pan cool before you touch it.",
+                "Cool the egg and it stays cooked."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
+              "w": "dark",
+              "pic": "🌑",
+              "meaning": "No light at all.",
+              "uses": [
+                "The cupboard is dark inside.",
+                "At night, without lamps, it is dark."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
+            },
+            {
+              "w": "desert",
+              "pic": "🐪",
+              "meaning": "A hot, dry place with very little rain.",
+              "uses": [
+                "A camel lives in the desert.",
+                "A cactus grows in the desert."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
+            },
+            {
+              "w": "diagram",
+              "pic": "✏️",
+              "meaning": "A drawing with labels that name the parts.",
+              "uses": [
+                "The diagram names the wing, the beak and the legs.",
+                "Draw a diagram, not a picture."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
+            },
+            {
+              "w": "distance",
+              "pic": "📏",
+              "meaning": "How far something travels.",
+              "uses": [
+                "The hard push went the biggest distance.",
+                "Measure the distance in steps."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
+            },
+            {
+              "w": "east",
+              "pic": "🧭",
+              "meaning": "The side of the sky where the Sun rises.",
+              "uses": [
+                "The Sun rises in the east.",
+                "My window faces east."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
+            },
+            {
+              "w": "environment",
+              "pic": "🌍",
+              "meaning": "Everything around us: the land, the water, the air and the living things.",
+              "uses": [
+                "Litter harms the environment.",
+                "Planting trees helps the environment."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
+            },
+            {
+              "w": "feathers",
+              "pic": "🪶",
+              "meaning": "The light covering of a bird.",
+              "uses": [
+                "A duck's feathers keep the water off.",
+                "Feathers help a bird fly."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
+            },
+            {
+              "w": "fever",
+              "pic": "🌡️",
+              "meaning": "When your body gets too hot because you are ill.",
+              "uses": [
+                "A fever makes your forehead hot.",
+                "Tell a grown-up if you have a fever."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
+            },
+            {
+              "w": "flexible",
+              "pic": "🧶",
+              "meaning": "Bends easily without breaking.",
+              "uses": [
+                "Wool is flexible.",
+                "A rubber tyre is flexible."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
+              "w": "force",
+              "pic": "💪🏾",
+              "meaning": "A push or a pull.",
+              "uses": [
+                "A kick is a force.",
+                "A force made the ball move."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
+            },
+            {
+              "w": "forest",
+              "pic": "🌳",
+              "meaning": "A large area covered in trees.",
+              "uses": [
+                "Deer live in the forest.",
+                "The forest is shady."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
+            },
+            {
+              "w": "freeze",
+              "pic": "❄️",
+              "meaning": "To change from liquid to solid when cooled.",
+              "uses": [
+                "Water freezes into ice.",
+                "Juice freezes into an ice lolly."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
+              "w": "fur",
+              "pic": "🐱",
+              "meaning": "Soft, thick hair all over an animal's body.",
+              "uses": [
+                "A cat has fur.",
+                "Fur keeps a rabbit warm."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
+            },
+            {
+              "w": "germs",
+              "pic": "🦠",
+              "meaning": "Tiny living things, too small to see, that can make you ill.",
+              "uses": [
+                "Wash your hands to get rid of germs.",
+                "Germs make holes in teeth."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
+            },
+            {
+              "w": "grainy",
+              "pic": "🟤",
+              "meaning": "Made of tiny grains you can see or feel.",
+              "uses": [
+                "Sandstone is grainy.",
+                "The grainy rock felt rough."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
+            },
+            {
+              "w": "habitat",
+              "pic": "🌿",
+              "meaning": "The place where a living thing naturally lives.",
+              "uses": [
+                "A pond is a frog's habitat.",
+                "A desert is a hot, dry habitat."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
+            },
+            {
+              "w": "healthy",
+              "pic": "🍎",
+              "meaning": "Well, and looking after your body.",
+              "uses": [
+                "Fruit is a healthy food.",
+                "Playing outside keeps you healthy."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
+            },
+            {
+              "w": "heat",
+              "pic": "🔥",
+              "meaning": "To make something hotter.",
+              "uses": [
+                "We heat the pan.",
+                "Heat cooks the egg."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
+              "w": "illness",
+              "pic": "🤒",
+              "meaning": "Being ill. When your body is not working as it should.",
+              "uses": [
+                "A cold is an illness.",
+                "Rest helps an illness get better."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
+            },
+            {
+              "w": "incisors",
+              "pic": "🦷",
+              "meaning": "The flat front teeth, for cutting food.",
+              "uses": [
+                "Incisors bite into an apple.",
+                "You have eight incisors."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
+            },
+            {
+              "w": "label",
+              "pic": "🏷️",
+              "meaning": "A word on a diagram that names a part.",
+              "uses": [
+                "The label says beak.",
+                "Add a label for the tail."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
+            },
+            {
+              "w": "lamp",
+              "pic": "💡",
+              "meaning": "The part of a circuit that lights up.",
+              "uses": [
+                "The lamp glows.",
+                "A torch has a lamp inside."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
+            },
+            {
+              "w": "light",
+              "pic": "☀️",
+              "meaning": "What lets you see. It comes from a light source.",
+              "uses": [
+                "Light comes from the Sun.",
+                "Without light you cannot see."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
+            },
+            {
+              "w": "light source",
+              "pic": "🔦",
+              "meaning": "Something that makes its own light.",
+              "uses": [
+                "A torch is a light source.",
+                "The Sun is the biggest light source."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
+            },
+            {
+              "w": "manufactured",
+              "pic": "🏭",
+              "meaning": "Made by people, usually in a factory.",
+              "uses": [
+                "Plastic is manufactured.",
+                "Glass is manufactured from sand."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
+              "w": "melt",
+              "pic": "🧊",
+              "meaning": "To change from solid to liquid when heated.",
+              "uses": [
+                "Ice melts in the sun.",
+                "Chocolate melts in your hand."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
+              "w": "midday",
+              "pic": "☀️",
+              "meaning": "The middle of the day, when the Sun is highest.",
+              "uses": [
+                "At midday my shadow is short.",
+                "We eat lunch at midday."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
+            },
+            {
+              "w": "mine",
+              "pic": "🕳️",
+              "meaning": "Tunnels dug deep underground to take out rock or metal.",
+              "uses": [
+                "Miners work in a mine.",
+                "Coal comes from a mine."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
+            },
+            {
+              "w": "model",
+              "pic": "🌐",
+              "meaning": "A clear way of showing an object or an idea, leaving the rest out.",
+              "uses": [
+                "A globe is a model of Earth.",
+                "We drew a model of light."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
+            },
+            {
+              "w": "molars",
+              "pic": "🍽️",
+              "meaning": "The big flat teeth at the back, for grinding.",
+              "uses": [
+                "Molars grind food small.",
+                "Brush the tops of your molars."
+              ],
+              "lesson": 2,
+              "title": "Teeth and Staying Healthy",
+              "file": "teeth-and-staying-healthy.html"
+            },
+            {
+              "w": "natural",
+              "pic": "🪵",
+              "meaning": "Comes from nature: it grows, or is dug from the ground.",
+              "uses": [
+                "Wood is a natural material.",
+                "Wool is natural. It comes from sheep."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
+              "w": "offspring",
+              "pic": "🐥",
+              "meaning": "An animal's young. Its babies.",
+              "uses": [
+                "A hen's offspring are chicks.",
+                "Offspring look a bit like each parent."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
+            },
+            {
+              "w": "pattern",
+              "pic": "📈",
+              "meaning": "Something that happens the same way each time, so you can predict it.",
+              "uses": [
+                "The pattern is: bigger push, further roll.",
+                "Find the pattern in the table."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
+            },
+            {
+              "w": "pebble",
+              "pic": "⚪",
+              "meaning": "A small, smooth piece of rock, worn smooth by water.",
+              "uses": [
+                "I found a pebble on the beach.",
+                "The river makes pebbles smooth."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
+            },
+            {
+              "w": "pond",
+              "pic": "🐸",
+              "meaning": "A small area of still water. A wet habitat.",
+              "uses": [
+                "Ducks live on the pond.",
+                "The pond is full of frogspawn."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
+            },
+            {
+              "w": "property",
+              "pic": "🔍",
+              "meaning": "Something a material is like: hard, bendy, shiny, waterproof.",
+              "uses": [
+                "Being waterproof is a property of glass.",
+                "Test to find each property."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
+              "w": "quarry",
+              "pic": "⛏️",
+              "meaning": "A big open pit where rock is dug from the ground.",
+              "uses": [
+                "Stone for the wall came from a quarry.",
+                "A quarry is cut into a hillside."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
+            },
+            {
+              "w": "reflect",
+              "pic": "🪞",
+              "meaning": "To shine light back.",
+              "uses": [
+                "A mirror reflects light.",
+                "The Moon reflects the Sun's light."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
+            },
+            {
+              "w": "reversible",
+              "pic": "↩️",
+              "meaning": "A change you can undo, getting the same material back.",
+              "uses": [
+                "Melting ice is reversible.",
+                "Freezing water is reversible too."
+              ],
+              "lesson": 5,
+              "title": "Changing Materials",
+              "file": "changing-materials.html"
+            },
+            {
+              "w": "rigid",
+              "pic": "🧱",
+              "meaning": "Stiff. Does not bend.",
+              "uses": [
+                "Brick is rigid.",
+                "A rigid ruler draws a straight line."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
+              "w": "rock",
+              "pic": "🪨",
+              "meaning": "The hard material the Earth is made of under the soil.",
+              "uses": [
+                "Granite is a hard rock.",
+                "Rock is dug from a quarry."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
+            },
+            {
+              "w": "scales",
+              "pic": "🐟",
+              "meaning": "Small hard plates that cover a fish or a snake.",
+              "uses": [
+                "A fish has scales.",
+                "The snake's scales are dry."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
+            },
+            {
+              "w": "shadow",
+              "pic": "👤",
+              "meaning": "A dark shape made where something blocks the light.",
+              "uses": [
+                "My shadow is long in the evening.",
+                "A shadow needs a light source."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
+            },
+            {
+              "w": "shadow",
+              "pic": "👤",
+              "meaning": "A dark shape on the ground where something blocks the Sun's light.",
+              "uses": [
+                "The stick's shadow points west.",
+                "Shadows are shortest at midday."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
+            },
+            {
+              "w": "skin",
+              "pic": "🐸",
+              "meaning": "The covering on the outside of a body.",
+              "uses": [
+                "A frog has smooth skin.",
+                "Your skin is your covering."
+              ],
+              "lesson": 1,
+              "title": "Animals and Their Coverings",
+              "file": "animals-and-their-coverings.html"
+            },
+            {
+              "w": "slow down",
+              "pic": "🐢",
+              "meaning": "To go slower.",
+              "uses": [
+                "The ball slows down on the grass.",
+                "Brakes make a bike slow down."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
+            },
+            {
+              "w": "soak",
+              "pic": "💧",
+              "meaning": "To take in water.",
+              "uses": [
+                "Chalk soaks up water.",
+                "Marble does not soak."
+              ],
+              "lesson": 9,
+              "title": "Rocks and the Earth",
+              "file": "rocks-and-the-earth.html"
+            },
+            {
+              "w": "socket",
+              "pic": "🏠",
+              "meaning": "The holes in a wall that electricity comes out of.",
+              "uses": [
+                "Only plugs go in a socket.",
+                "Keep water away from the socket."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
+            },
+            {
+              "w": "speed up",
+              "pic": "🏃🏾",
+              "meaning": "To go faster.",
+              "uses": [
+                "The ball speeds up when I push it along.",
+                "Bikes speed up going downhill."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
+            },
+            {
+              "w": "squash",
+              "pic": "🧶",
+              "meaning": "To press something flat.",
+              "uses": [
+                "Squash the clay.",
+                "You cannot squash a stone."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
+            },
+            {
+              "w": "stretch",
+              "pic": "🪢",
+              "meaning": "To pull something longer.",
+              "uses": [
+                "Stretch the elastic band.",
+                "Wool stretches a little."
+              ],
+              "lesson": 6,
+              "title": "Forces Change Things",
+              "file": "forces-change-things.html"
+            },
+            {
+              "w": "suit",
+              "pic": "✅",
+              "meaning": "To be right for. An animal suits its habitat.",
+              "uses": [
+                "Thick fur suits a cold place.",
+                "Webbed feet suit a pond."
+              ],
+              "lesson": 3,
+              "title": "Habitats",
+              "file": "habitats.html"
+            },
+            {
+              "w": "sunrise",
+              "pic": "🌅",
+              "meaning": "When the Sun first comes up in the morning, in the east.",
+              "uses": [
+                "Sunrise was at six o'clock.",
+                "At sunrise the shadows are long."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
+            },
+            {
+              "w": "sunset",
+              "pic": "🌇",
+              "meaning": "When the Sun goes down in the evening, in the west.",
+              "uses": [
+                "We watched the sunset.",
+                "After sunset it gets dark."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
+            },
+            {
+              "w": "switch",
+              "pic": "🎚️",
+              "meaning": "A part that opens or closes a gap in a circuit.",
+              "uses": [
+                "Flick the switch and the lamp lights.",
+                "A switch makes a gap you control."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
+            },
+            {
+              "w": "symbol",
+              "pic": "⭕",
+              "meaning": "A simple sign that stands for a part in a diagram.",
+              "uses": [
+                "The symbol for a lamp is a circle with a cross.",
+                "Learn the symbol for a cell."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
+            },
+            {
+              "w": "torch",
+              "pic": "🔦",
+              "meaning": "A small lamp you carry, with a battery inside.",
+              "uses": [
+                "Shine the torch in the dark.",
+                "A torch is a light source."
+              ],
+              "lesson": 7,
+              "title": "Light and Dark",
+              "file": "light-and-dark.html"
+            },
+            {
+              "w": "transparent",
+              "pic": "🪟",
+              "meaning": "You can see through it.",
+              "uses": [
+                "Glass is transparent.",
+                "A window must be transparent."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
+              "w": "turn",
+              "pic": "🌀",
+              "meaning": "To go round. The Earth turns once a day.",
+              "uses": [
+                "The Earth turns.",
+                "Turn the globe slowly."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
+            },
+            {
+              "w": "waterproof",
+              "pic": "☔",
+              "meaning": "Water does not go through it.",
+              "uses": [
+                "Plastic is waterproof.",
+                "A sponge is not waterproof."
+              ],
+              "lesson": 4,
+              "title": "Natural or Made?",
+              "file": "natural-or-made.html"
+            },
+            {
+              "w": "west",
+              "pic": "🗺️",
+              "meaning": "The side of the sky where the Sun sets.",
+              "uses": [
+                "The Sun sets in the west.",
+                "The shadow pointed west in the morning."
+              ],
+              "lesson": 10,
+              "title": "The Sun Across the Sky",
+              "file": "the-sun-across-the-sky.html"
+            },
+            {
+              "w": "wire",
+              "pic": "🔌",
+              "meaning": "A thin metal strand that carries electricity.",
+              "uses": [
+                "Join the wire to the lamp.",
+                "Never touch a broken wire."
+              ],
+              "lesson": 8,
+              "title": "Electricity and Circuits",
+              "file": "electricity-and-circuits.html"
+            }
+          ],
+          "teaches": [
+            {
+              "code": "2Be.01",
+              "text": "Know that an environment in which a plant or animal naturally lives is its habitat."
+            },
+            {
+              "code": "2Be.02",
+              "text": "Know that different habitats contain different plants and animals."
+            },
+            {
+              "code": "2TWSc.01",
+              "text": "Sort and group objects, materials and living things based on observations of the similarities and differences between them."
+            },
+            {
+              "code": "2Be.03",
+              "text": "Identify similarities and differences between local environments in terms of hot, cold, dry, wet, many plants, few plants, many animals and few animals."
+            },
+            {
+              "code": "2TWSc.05",
+              "text": "Use a given secondary information source to find an answer to a question."
+            },
+            {
+              "code": "2TWSa.03",
+              "text": "Present and interpret results using tables and block graphs."
+            },
+            {
+              "code": "2TWSa.02",
+              "text": "Identify simple patterns in results, e.g. increasing and decreasing patterns."
+            },
+            {
+              "code": "2TWSp.01",
+              "text": "Ask questions about the world around us and talk about how to find answers."
+            },
+            {
+              "code": "2SIC.04",
+              "text": "Talk about how science helps us understand our effect on the world around us."
+            }
+          ],
+          "strands": [
+            [
+              "Thinking and Working Scientifically",
+              "Models and diagrams; ask, predict, sort, use equipment, measure in non-standard units, look things up in a fact card, record in tables, spot patterns, and build block graphs."
+            ],
+            [
+              "Biology",
+              "How animals are alike and different; teeth and how to care for them; staying healthy and the signs of illness; how young animals change and take after their parents; habitats."
+            ],
+            [
+              "Chemistry",
+              "Natural and manufactured materials; properties, and testing for them; why a material is chosen for a job; changes that make a new material."
+            ],
+            [
+              "Physics",
+              "Forces change movement and shape, and nothing changes speed on its own; light sources and darkness; using electricity safely; cells, wires and lamps in a circuit."
+            ],
+            [
+              "Earth and Space",
+              "Kinds of rock and where rock comes from; how people affect the environment; the Sun's path across the sky."
+            ],
+            [
+              "Science in Context",
+              "How thinking has changed, how everyday things work, who uses science at work, and how what we do affects the world."
+            ]
+          ],
+          "hub": "g2-index.html",
+          "gradeLabel": "Grade 2",
+          "lessonNo": 3,
+          "homeStep": 11
         }
       }
     ]
@@ -3786,6 +5451,492 @@
     },
   };
 
+  /* ==================================================================
+     THE UNIT SHELL - seven steps drawn AROUND every lesson (owner,
+     2026-09-10), the furniture the English Grade 1 build carries around a
+     unit: what it is about, a lecture, the words, games, things to do at
+     home, a placeholder for Science world, and the student-resources
+     drawer. _shell.py decides where they sit and what they carry; these
+     only draw.
+
+     Three of them tick themselves off - the overview and Science world on
+     arrival, the drawer on first opening - for the reason the English
+     build's plan step records: a page you have to finish before the
+     lesson will open is a lock on the front door. Everything else is
+     earned.
+     ================================================================== */
+
+  /* ---- what this lesson is about ---- */
+  function unitOverview(o) {
+    const el = o.el;
+    const c = o.counts || {};
+    const bits = [];
+    if (c.steps) bits.push(c.steps + " steps");
+    if (c.words) bits.push(c.words + " science words");
+    if (c.games) bits.push(c.games + " games");
+    if (c.home) bits.push(c.home + " things to do at home");
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="ovw">' +
+      (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
+      '<h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + (o.about || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div></div>';
+    $(el.score).textContent = (o.about || []).length + " things to learn";
+    $(el.stage + "r").addEventListener("click", () =>
+      say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+    finish(o.finish, o.done);
+  }
+
+  /* ---- the unit lecture: the lesson told in parts, by the voice ----
+     No video exists for these lessons, and this says so on its face
+     rather than drawing an empty player. The voice reads each part when
+     the child arrives at it; Next part moves on; the last part finishes
+     the step. How far they got is reported in parts. */
+  function lecture(o) {
+    const el = o.el;
+    const parts = o.parts || [];
+    let k = 0, furthest = 0;
+    const id = el.stage + "l";
+    function paint() {
+      const p = parts[k];
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        '<div class="lec">' +
+        '<p class="phase">Part ' + (k + 1) + " of " + parts.length + "</p>" +
+        picHtml(p.pic, "pic lecpic") +
+        '<h3 class="lec-h">' + esc(p.title) + "</h3>" +
+        '<p class="lec-p">' + esc(p.say) + "</p>" +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : "") +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? "Next part &#9654;" : "I heard it all &#10003;") + "</button>" +
+        "</div>" +
+        '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>' +
+        "</div>";
+      furthest = Math.max(furthest, k + 1);
+      reportAttempt(o.finish, furthest, parts.length, "parts");
+      $(el.score).textContent = furthest + " of " + parts.length + " parts heard";
+      $(id + "hear").addEventListener("click", () => say(p.title + ". " + p.say));
+      if (k > 0) $(id + "back").addEventListener("click", () => { k--; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
+      $(id + "next").addEventListener("click", () => {
+        if (k + 1 < parts.length) { k++; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
+        else {
+          $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
+          reportAttempt(o.finish, parts.length, parts.length, "parts");
+          finish(o.finish, o.done);
+        }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+    /* The slide's own instruction is spoken on arrival; the first part
+       follows it rather than talking over it. */
+    ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+  }
+
+  /* ---- the science words: hear each one, then show you know them ----
+     Two halves. First every word is tapped - picture, meaning, and the
+     word used in a sentence, all spoken. Then the page asks "which word
+     means ...?" for each of them, with the other words of THIS lesson as
+     the wrong answers, so a wrong tap is a word they are also learning. */
+  function scienceWords(o) {
+    const el = o.el;
+    const items = o.items || [];
+    const heard = new Set();
+    let open = -1;
+    const id = el.stage + "w";
+
+    function paintGrid() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        '<div class="cardsgrid words" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard wordcard' + (heard.has(k) ? " heard" : "") + (open === k ? " now" : "") + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + small(w.pic) + "</span>" + esc(w.w) + "</button>").join("") + "</div>" +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? " hidden" : "") + "></div>";
+      if (open >= 0) paintPanel();
+      $(el.score).textContent = heard.size + " of " + items.length + " heard";
+      reportAttempt(o.finish, heard.size, items.length, "words");
+      $(id + "g").addEventListener("click", (e) => {
+        const b = e.target.closest(".wordcard"); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + ". " + w.meaning + " " + (w.uses[0] || ""));
+        if (heard.size === items.length) {
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You have heard every word. Now, which word is which?";
+          $(el.ch).innerHTML = '<button type="button" class="big small" id="' + id + 'go">Show I know them &#9654;</button>';
+          $(id + "go").addEventListener("click", () => { $(el.ch).innerHTML = ""; $(el.fb).textContent = ""; check(); });
+        }
+      });
+    }
+    function paintPanel() {
+      const w = items[open];
+      $(id + "p").hidden = false;
+      $(id + "p").innerHTML =
+        '<div class="wp-head">' + picHtml(w.pic, "pic mid") + '<div><p class="wp-word">' + esc(w.w) + "</p>" +
+        '<p class="wp-meaning">' + esc(w.meaning) + "</p></div></div>" +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => "<li>" + esc(u) + "</li>").join("") + "</ul>" +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      $(id + "h").addEventListener("click", () => say(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")));
+    }
+
+    /* the check: which word means this? */
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      const known = [];
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        $(el.ask).innerHTML = "Which word means: <b>" + esc(w.meaning) + "</b>";
+        $(el.stage).className = "stagewide";
+        $(el.stage).innerHTML = "";
+        $(el.ch).className = "wordbtns";
+        $(el.ch).innerHTML = opts.map((j) =>
+          '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '" data-j="' + j + '">' +
+          '<span class="pic" aria-hidden="true">' + small(items[j].pic) + "</span>" + esc(items[j].w) + "</button>").join("");
+        $(el.fb).textContent = ""; $(el.fb).className = "fb";
+        $(el.score).textContent = "Word " + (i + 1) + " of " + items.length;
+        sayHere(o.finish, "Which word means: " + w.meaning);
+      }
+      $(el.ch).addEventListener("click", (e) => {
+        const b = e.target.closest(".wordbtn"); if (!b || lock) return;
+        lock = true;
+        const ok = b.dataset.ok === "1", w = items[order[i]];
+        $(el.ch).querySelectorAll(".wordbtn").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong"); else { right++; known.push(w.w); }
+        const msg = ok ? cheer() + " " + w.w + "." : "That word is " + w.w + ". " + w.meaning;
+        $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = msg; say(msg);
+        i++;
+        setTimeout(() => {
+          if (i >= items.length) {
+            $(el.ch).innerHTML = ""; $(el.ch).className = "choices";
+            $(el.ask).innerHTML = "You know " + right + " of " + items.length + " science words.";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = "You got " + right + " of " + items.length + ". " + o.done;
+            $(el.score).textContent = "";
+            reportScore(o.finish, right, items.length);
+            if (known.length) reportKnown(known);
+            finish(o.finish, o.done);
+          } else draw();
+        }, 2400);
+      });
+      draw();
+    }
+    paintGrid();
+  }
+
+  /* ---- Science world: a placeholder that says it is one ---- */
+  function scienceWorld(o) {
+    const el = o.el;
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
+      '<h3 class="lec-h">Science world is being built</h3>' +
+      '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
+      '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
+      '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
+    $(el.score).textContent = "coming soon";
+    finish(o.finish, o.done);
+  }
+
+  /* ---- the game zone: the lesson's own games, derived by the builder ----
+     A shelf of cards; tap one to play it in a full-screen overlay, the
+     shape the English build's Game Zone uses. Three mechanics, read off
+     the round's own shape: choice (prompt, choices, answer, explanation),
+     spelling (letter tiles from the answer plus two strays), pairs
+     (reveal-and-match). Two games earn the sticker; the count says so. */
+  function gameZone(o) {
+    const el = o.el;
+    const games = o.games || [];
+    const played = new Set();
+    const NEEDED = Math.min(o.mastery || 2, games.length);
+    const id = el.stage + "gz";
+    const tidy = (s) => String(s).replace(/\s+/g, " ").trim().toLowerCase();
+
+    function drawShelf() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="shelf gamelist" id="' + id + '">' + games.map((g, k) =>
+        '<div class="bookcard gamecard' + (played.has(g.id) ? " played" : "") + '">' +
+        '<span class="bookicon" aria-hidden="true">' + (played.has(g.id) ? "✅" : "\u{1F3AE}") + "</span>" +
+        '<span class="booktitle">' + esc(g.title) + "</span>" +
+        (g.skill ? '<span class="bookmeta">' + esc(g.skill) + "</span>" : "") +
+        '<span class="bookmeta">' + g.rounds.length + " rounds</span>" +
+        '<button type="button" class="big small teal" data-game="' + k + '">' + (played.has(g.id) ? "Play again ▶" : "Play ▶") + "</button></div>").join("") + "</div>";
+      $(id).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-game]");
+        if (b) openGame(games[Number(b.dataset.game)]);
+      });
+      const left = Math.max(0, NEEDED - played.size);
+      $(el.score).textContent = games.length + " games";
+      $(el.fb).className = "fb" + (left ? "" : " good");
+      $(el.fb).textContent = left
+        ? "Play " + left + (left === 1 ? " more game" : " games") + " to earn this step's sticker."
+        : "You played " + played.size + ". " + o.done;
+    }
+
+    function openGame(game) {
+      let r = 0, right = 0;
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader game-overlay";
+      document.body.appendChild(overlay);
+      function close() { overlay.remove(); document.removeEventListener("keydown", onKey); try { VOICE.stop(); } catch (_) { /* nothing */ } drawShelf(); }
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+
+      function frame(bodyHtml, footHtml) {
+        overlay.innerHTML =
+          '<div class="book-reader-top"><span class="booktitle">' + esc(game.title) + "</span>" +
+          '<button type="button" class="book-close" aria-label="Close the game">&#10005;</button></div>' +
+          '<div class="book-stage-wrap"><div class="game-stage">' + bodyHtml + "</div></div>" +
+          '<div class="book-reader-bottom">' +
+          '<button type="button" class="big small ghost" id="gameQuit">&#9664; Back to games</button>' +
+          '<span class="book-page-count">Round ' + Math.min(r + 1, game.rounds.length) + " of " + game.rounds.length + "</span>" +
+          (footHtml || "") + "</div>";
+        overlay.querySelector(".book-close").addEventListener("click", close);
+        overlay.querySelector("#gameQuit").addEventListener("click", close);
+      }
+      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
+      function endGame() {
+        played.add(game.id);
+        reportScore(o.finish, right, game.rounds.length, game.id, game.title);
+        reportAttempt(o.finish, played.size, games.length, "games");
+        const well = right * 2 >= game.rounds.length;
+        frame('<div class="game-done"><p class="gamebig">' + (well ? cheer() : "That is the game played.") + "</p>" +
+          "<p>You finished <strong>" + esc(game.title) + "</strong>: " + right + " of " + game.rounds.length + " right.</p>" +
+          "<p>Getting one wrong costs nothing in a game. It is for practising.</p></div>",
+          '<button type="button" class="big small" id="gameOut">Back to the games &#10003;</button>');
+        overlay.querySelector("#gameOut").addEventListener("click", close);
+        say("You finished " + game.title + ". " + right + " of " + game.rounds.length + " right.");
+        if (played.size >= NEEDED) finish(o.finish, o.done);
+      }
+      function feedback(ok, message) {
+        const fb = overlay.querySelector("#gameFb"); if (!fb) return;
+        fb.className = "fb " + (ok ? "good" : "bad"); fb.textContent = message; say(message);
+      }
+      function drawRound() {
+        const round = game.rounds[r];
+        if (game.type === "spelling") return drawSpelling(round);
+        if (game.type === "pairs") return drawPairs(round);
+        return drawChoice(round);
+      }
+      function drawChoice(round) {
+        frame('<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+          '<div class="bigbtns" id="gameCh">' + shuffle(round.choices).map((c) =>
+            '<button type="button" class="choice" data-c="' + esc(c) + '">' + esc(c) + "</button>").join("") +
+          "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
+        say(plain(round.prompt));
+        let lock = false;
+        overlay.querySelector("#gameCh").addEventListener("click", (e) => {
+          const b = e.target.closest(".choice"); if (!b || lock) return;
+          lock = true;
+          const ok = tidy(b.dataset.c) === tidy(round.answer);
+          overlay.querySelectorAll("#gameCh .choice").forEach((c) => { c.disabled = true; if (tidy(c.dataset.c) === tidy(round.answer)) c.classList.add("right"); });
+          if (!ok) b.classList.add("wrong"); else right++;
+          feedback(ok, (ok ? cheer() + " " : "") + (round.explanation || round.answer));
+          nextRound();
+        });
+      }
+      function drawSpelling(round) {
+        const answer = String(round.answer);
+        const letters = answer.replace(/[^A-Za-z]/g, "").split("");
+        const extra = "abcdefghijklmnopqrstuvwxyz".split("").filter((c) => !letters.includes(c));
+        const pool = shuffle(letters.concat([extra[letters.length % extra.length], extra[(letters.length + 7) % extra.length]]));
+        let line = [];
+        function paint() {
+          frame('<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+            (round.clue ? '<p class="gameclue">' + esc(round.clue) + "</p>" : "") +
+            '<div class="buildline" id="gameLine">' +
+            (line.length ? line.map((t, k) => '<button type="button" class="tile letter" data-line="' + k + '">' + esc(pool[t]) + "</button>").join("")
+              : '<span class="hint">Tap the letters to build the word.</span>') + "</div>" +
+            '<div class="bigbtns" id="gameTiles">' + pool.map((t, k) =>
+              '<button type="button" class="tile letter" data-tile="' + k + '"' + (line.includes(k) ? " disabled" : "") + ">" + esc(t) + "</button>").join("") +
+            "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>",
+            '<button type="button" class="big small" id="gameCheck">Check it</button>');
+          overlay.querySelector("#gameTiles").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-tile]"); if (!b || b.disabled) return;
+            line.push(Number(b.dataset.tile)); paint();
+          });
+          overlay.querySelector("#gameLine").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-line]"); if (!b) return;
+            line.splice(Number(b.dataset.line), 1); paint();
+          });
+          overlay.querySelector("#gameCheck").addEventListener("click", () => {
+            const got = line.map((k) => pool[k]).join("");
+            const ok = got.toLowerCase() === letters.join("").toLowerCase();
+            overlay.querySelector("#gameLine").className = "buildline " + (ok ? "right" : "wrong");
+            if (ok) right++;
+            feedback(ok, ok ? cheer() + " " + answer : "Not yet. The word is " + answer + ".");
+            nextRound();
+          });
+        }
+        paint();
+        say(plain(round.prompt) + " " + plain(round.clue || ""));
+      }
+      function drawPairs(round) {
+        let tiles = round.pairs.flatMap((p, pi) => [{ text: p[0], pair: pi }, { text: p[1], pair: pi }]);
+        tiles = shuffle(tiles).map((t, k) => Object.assign({}, t, { k }));
+        let picked = [], matched = 0, lock = false;
+        frame('<p class="gameprompt">' + esc(round.prompt || "Tap two tiles that go together.") + "</p>" +
+          '<div class="pairsgrid" id="gameGrid">' + tiles.map((t) =>
+            '<button type="button" class="pairtile" data-k="' + t.k + '"><span class="back" aria-hidden="true">?</span><span class="face">' + esc(t.text) + "</span></button>").join("") +
+          "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
+        say(plain(round.prompt || "Tap two tiles that go together."));
+        overlay.querySelector("#gameGrid").addEventListener("click", (e) => {
+          const b = e.target.closest(".pairtile");
+          if (!b || lock || b.classList.contains("matched") || b.classList.contains("revealed")) return;
+          b.classList.add("revealed");
+          picked.push({ pair: tiles[Number(b.dataset.k)].pair, el: b });
+          if (picked.length < 2) return;
+          lock = true;
+          const [a, c] = picked;
+          if (a.pair === c.pair) {
+            a.el.classList.add("matched"); c.el.classList.add("matched"); a.el.disabled = true; c.el.disabled = true;
+            matched++; picked = []; lock = false;
+            SOUND.play("ding", 0.4);
+            if (matched === round.pairs.length) { right++; feedback(true, cheer() + " Every pair matched."); nextRound(); }
+          } else {
+            a.el.classList.add("wrong"); c.el.classList.add("wrong");
+            setTimeout(() => { a.el.classList.remove("revealed", "wrong"); c.el.classList.remove("revealed", "wrong"); picked = []; lock = false; }, 900);
+          }
+        });
+      }
+      drawRound();
+    }
+    drawShelf();
+  }
+
+  /* ---- things to do at home: real projects, ticked when done ---- */
+  function homeProjects(o) {
+    const el = o.el;
+    const items = o.items || [];
+    const did = new Array(items.length).fill(false);
+    const id = el.stage + "h";
+    function paint() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="acts" id="' + id + '">' + items.map((it, k) =>
+        '<div class="act' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
+        '<div class="act-head"><span class="act-n">' + it.n + "</span><span class=\"act-kind\">project</span>" +
+        '<button type="button" class="hear" data-act="hear" aria-label="Hear this project">&#128266;</button></div>' +
+        '<p class="act-lead">' + esc(it.title) + "</p>" +
+        '<p class="act-mat"><span>You need</span>' + esc(it.materials) + "</p>" +
+        '<ol class="act-steps">' + (it.steps || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
+        '<p class="act-check"><span>Look for</span>' + esc(it.look) + "</p>" +
+        '<button type="button" class="tick" data-act="tick">' + (did[k] ? "✓ we did this" : "We did this") + "</button>" +
+        "</div>").join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small" id="' + id + 'fin">We did these &#10003;</button></div>';
+      reportAttempt(o.finish, did.filter(Boolean).length, did.length, "projects");
+      $(el.score).textContent = did.filter(Boolean).length + " of " + items.length + " ticked";
+      $(id + "fin").addEventListener("click", () => { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); });
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const card = e.target.closest(".act"), button = e.target.closest("[data-act]");
+      if (!card || !button) return;
+      const k = Number(card.dataset.k), it = items[k];
+      if (button.dataset.act === "hear") { say(it.title + ". You need " + it.materials + ". " + (it.steps || []).join(" ") + " Look for: " + it.look); return; }
+      if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
+    });
+    paint();
+  }
+
+  /* ---- student resources: the drawer, not a step ----
+     Words, the grade's word finder, the home projects (a jump), what the
+     lesson teaches (for a grown-up, with the 0097 codes), the strands, and
+     the hub. Ticked on first opening, for the reason the English drawer
+     records: a drawer you have to finish is not a drawer. */
+  function resources(o) {
+    const el = o.el;
+    const id = el.stage + "rs";
+    const CARDS = [
+      { id: "words", icon: "\u{1F524}", title: "Science words", blurb: "This lesson's words, what they mean, and a voice to hear them." },
+      { id: "finder", icon: "\u{1F50E}", title: "Word finder", blurb: "Look up any science word from any lesson in " + (o.gradeLabel || "this grade") + "." },
+      { id: "home", icon: "\u{1F3E0}", title: "Things to do at home", blurb: "This lesson's projects, to do with a grown-up." },
+      { id: "teaches", icon: "\u{1F46A}", title: "For your grown-up", blurb: "What this lesson teaches, in the words of the Cambridge framework." },
+      { id: "strands", icon: "\u{1F9EA}", title: "What science covers", blurb: "The six parts of primary science, and what each one is." },
+      { id: "hub", icon: "\u{1F5FA}", title: "All the lessons", blurb: "Back to the list of every lesson in " + (o.gradeLabel || "this grade") + "." },
+    ];
+    const opened = new Set();
+    function drawShelf() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="shelf" id="' + id + '">' + CARDS.map((c) =>
+        '<div class="bookcard"><span class="bookicon" aria-hidden="true">' + c.icon + "</span>" +
+        '<span class="booktitle">' + esc(c.title) + "</span><span class=\"bookmeta\">" + esc(c.blurb) + "</span>" +
+        '<button type="button" class="big small teal" data-res="' + c.id + '">Open ▶</button></div>').join("") + "</div>";
+      $(el.score).textContent = CARDS.length + " things for you";
+      $(id).addEventListener("click", (e) => { const b = e.target.closest("[data-res]"); if (b) open(b.dataset.res); });
+    }
+    function panel(title, bodyHtml, footHtml) {
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader res-reader";
+      overlay.innerHTML =
+        '<div class="book-reader-top"><span class="booktitle">' + esc(title) + "</span>" +
+        '<button type="button" class="book-close" aria-label="Close">&#10005;</button></div>' +
+        '<div class="book-stage-wrap"><div class="res-stage">' + bodyHtml + "</div></div>" +
+        '<div class="book-reader-bottom">' + (footHtml || "") + "</div>";
+      document.body.appendChild(overlay);
+      const close = () => { try { VOICE.stop(); } catch (_) { /* nothing */ } overlay.remove(); document.removeEventListener("keydown", onKey); };
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+      overlay.querySelector(".book-close").addEventListener("click", close);
+      overlay.addEventListener("click", (e) => { const b = e.target.closest("[data-say]"); if (b) say(b.dataset.say); });
+      return overlay;
+    }
+    const wordRows = (words, withLesson) => words.map((w) =>
+      '<div class="wordrow"><span class="gloxpic" aria-hidden="true">' + small(w.pic) + "</span>" +
+      '<div class="gloxbody"><div class="gloxhead"><strong>' + esc(w.w) + "</strong>" +
+      '<button type="button" class="hear" data-say="' + esc(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")) + '" aria-label="Hear ' + esc(w.w) + '">&#128266;</button>' +
+      (withLesson && w.file ? '<a class="gloxlesson" href="' + esc(w.file) + location.search + '">Lesson ' + w.lesson + "</a>" : "") + "</div>" +
+      '<p class="gloxdef">' + esc(w.meaning) + "</p>" +
+      ((w.uses || []).length ? '<p class="gloxeg">“' + esc(w.uses[0]) + "”</p>" : "") + "</div></div>").join("");
+
+    function open(which) {
+      opened.add(which);
+      reportAttempt(o.finish, opened.size, CARDS.length, "cards");
+      finish(o.finish, o.done);
+      if (which === "home") { if (o.homeStep >= 0) show(o.homeStep, true); return; }
+      if (which === "hub") { location.href = (o.hub || "index.html") + location.search; return; }
+      if (which === "words") {
+        panel("Science words", '<div class="wordlist">' + wordRows(o.words || [], false) + "</div>",
+          '<span class="book-page-count">' + (o.words || []).length + " words in this lesson</span>");
+        return;
+      }
+      if (which === "finder") {
+        const all = o.finder || [];
+        const ov = panel("Word finder",
+          '<div class="glossary"><input type="search" id="' + id + 'q" class="gloxq" placeholder="Type a word…" autocomplete="off" aria-label="Search the words">' +
+          '<div id="' + id + 'r" class="gloxr"></div></div>',
+          '<span class="book-page-count" id="' + id + 'n"></span>');
+        const box = ov.querySelector("#" + id + "r"), count = ov.querySelector("#" + id + "n"), q = ov.querySelector("#" + id + "q");
+        const draw = (term) => {
+          term = String(term || "").trim().toLowerCase();
+          const hits = term
+            ? all.filter((w) => w.w.toLowerCase().startsWith(term)).concat(all.filter((w) => !w.w.toLowerCase().startsWith(term) && (w.w.toLowerCase().includes(term) || w.meaning.toLowerCase().includes(term))))
+            : all;
+          count.textContent = hits.length + " of " + all.length + " words";
+          box.innerHTML = hits.length ? wordRows(hits, true) : '<p class="gloxmore">No word starts like that. Try fewer letters.</p>';
+        };
+        draw(""); q.addEventListener("input", () => draw(q.value)); q.focus();
+        return;
+      }
+      if (which === "teaches") {
+        panel("For your grown-up",
+          '<div class="teaches"><p class="lec-p">Lesson ' + o.lessonNo + " teaches these objectives of Cambridge Primary Science 0097. The code is the framework’s own.</p><ul class=\"ovw-list codes\">" +
+          (o.teaches || []).map((t) => "<li><code>" + esc(t.code) + "</code> " + esc(t.text) + "</li>").join("") + "</ul></div>",
+          '<span class="book-page-count">' + (o.teaches || []).length + " objectives</span>");
+        return;
+      }
+      if (which === "strands") {
+        panel("What science covers",
+          '<div class="teaches">' + (o.strands || []).map((s) => '<section class="wordgroup"><h4>' + esc(s[0]) + "</h4><p class=\"lec-p\">" + esc(s[1]) + "</p></section>").join("") + "</div>",
+          '<span class="book-page-count">' + (o.strands || []).length + " strands</span>");
+      }
+    }
+    drawShelf();
+  }
+
   /* ---- the sticker shelf --------------------------------------------- */
   function paintStickers() {
     const got = done.filter(Boolean).length;
@@ -3797,16 +5948,23 @@
   if (restart) restart.addEventListener("click", () => location.reload());
 
 
-  const STICKERS = [["🏡", "Habitats"], ["🗂️", "Habitat sorter"], ["🌡️", "Place compared"], ["📖", "Fact finder"], ["📊", "Block graph"], ["❓", "Asked why"], ["💚", "Habitat carer"], ["⭐", "Star scientist"]];
+  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Science words"], ["🏡", "Habitats"], ["🗂️", "Habitat sorter"], ["🌡️", "Place compared"], ["📖", "Fact finder"], ["📊", "Block graph"], ["❓", "Asked why"], ["💚", "Habitat carer"], ["🎮", "I played the games"], ["🏠", "Science at home"], ["⭐", "Star scientist"], ["🌍", "Science world"], ["🗂️", "My resources"]];
 
-  demo(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "A habitat is where a living thing naturally lives. Different habitats, different living things." }, LESSON.steps[0].data));
-  sortBins(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "Every plant and animal lives in the habitat that suits it." }, LESSON.steps[1].data));
-  sequence(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "Hot or cold, wet or dry, many or few. That is how scientists compare places." }, LESSON.steps[2].data));
-  lookup(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "You found every answer in the card." }, LESSON.steps[3].data));
-  blockGraph(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "A block graph shows the most and the least at a glance." }, LESSON.steps[4].data));
-  askQuestion(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Ask, then watch or look it up." }, LESSON.steps[5].data));
-  tapCards(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "What we do changes habitats. Science helps us see how." }, LESSON.steps[6].data));
-  sequence(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "That is the whole lesson finished. You know where living things live." }, LESSON.steps[7].data));
+  unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
+  scienceWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the science words of this lesson." }, LESSON.steps[2].data));
+  demo(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "A habitat is where a living thing naturally lives. Different habitats, different living things." }, LESSON.steps[3].data));
+  sortBins(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Every plant and animal lives in the habitat that suits it." }, LESSON.steps[4].data));
+  sequence(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Hot or cold, wet or dry, many or few. That is how scientists compare places." }, LESSON.steps[5].data));
+  lookup(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "You found every answer in the card." }, LESSON.steps[6].data));
+  blockGraph(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "A block graph shows the most and the least at a glance." }, LESSON.steps[7].data));
+  askQuestion(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "Ask, then watch or look it up." }, LESSON.steps[8].data));
+  tapCards(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "What we do changes habitats. Science helps us see how." }, LESSON.steps[9].data));
+  gameZone(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[10].data));
+  homeProjects(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "Science at home. That is the best kind." }, LESSON.steps[11].data));
+  sequence(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "That is the whole lesson finished. You know where living things live." }, LESSON.steps[12].data));
+  scienceWorld(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "Science world is on its way." }, LESSON.steps[13].data));
+  resources(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Your resources are always here." }, LESSON.steps[14].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);

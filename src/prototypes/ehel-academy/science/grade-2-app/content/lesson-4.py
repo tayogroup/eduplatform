@@ -6,7 +6,7 @@ is a characteristic and a material has more than one; 2Cp.02 why a material
 is chosen for a purpose; 2Cp.03 materials can be tested for their properties;
 with 2TWSc.01, 2TWSc.02, 2TWSc.06 and 2SIC.02.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "natural-or-made",
@@ -158,3 +158,61 @@ LESSON = {
              "That is the whole lesson finished. You know your materials and why they are chosen."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Tell a natural material from a manufactured one.",
+    "Test materials to find their properties.",
+    "Record which materials are waterproof in a table.",
+    "Say why the right material was chosen for a job.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001FAB5", "Natural materials",
+         "Wood comes from trees. Wool comes from sheep. Stone is dug out of the ground. A natural material grows or is dug up. People do not make it."),
+    part("\U0001F3ED", "Manufactured materials",
+         "Plastic, glass, brick and paper are made by people, in factories. Glass is made by melting sand. Paper is made from mashed-up wood. These are manufactured."),
+    part("\U0001F50D", "Testing for properties",
+         "Is it hard? Does it bend? Does water go through it? Can you see through it? Each test finds one property. A material has several."),
+    part("\U0001F4A7", "Waterproof or not",
+         "Drip water on glass and it runs off. Drip it on wool and it soaks in. Glass is waterproof. Wool is not. You will record that in a table."),
+    part("\U0001FAD6", "Chosen for the job",
+         "A kettle is metal because metal does not melt when it gets hot. A tyre is rubber because rubber grips and bends. Every material is chosen for its properties."),
+]
+
+LESSON["words"] = [
+    word("natural", "\U0001FAB5", "Comes from nature: it grows, or is dug from the ground.",
+         ["Wood is a natural material.", "Wool is natural. It comes from sheep."]),
+    word("manufactured", "\U0001F3ED", "Made by people, usually in a factory.",
+         ["Plastic is manufactured.", "Glass is manufactured from sand."]),
+    word("property", "\U0001F50D", "Something a material is like: hard, bendy, shiny, waterproof.",
+         ["Being waterproof is a property of glass.", "Test to find each property."]),
+    word("waterproof", "\u2614", "Water does not go through it.",
+         ["Plastic is waterproof.", "A sponge is not waterproof."]),
+    word("transparent", "\U0001FA9F", "You can see through it.",
+         ["Glass is transparent.", "A window must be transparent."]),
+    word("flexible", "\U0001F9F6", "Bends easily without breaking.",
+         ["Wool is flexible.", "A rubber tyre is flexible."]),
+    word("rigid", "\U0001F9F1", "Stiff. Does not bend.",
+         ["Brick is rigid.", "A rigid ruler draws a straight line."]),
+]
+
+LESSON["home"] = [
+    home("Natural or manufactured hunt", "Paper and a pencil, your house",
+         ["Find ten things and ask: did this grow, get dug up, or get made in a factory?",
+          "Draw two lists.",
+          "Find one thing that is natural AND manufactured, like a wooden table with a plastic top."],
+         "Most things are manufactured. Which natural ones did you find?"),
+    home("Drip test", "A tray, water, small pieces of paper, fabric, plastic, foil, cardboard, a leaf",
+         ["Lay each piece on the tray.",
+          "Drip water on each one and wait a minute.",
+          "Write a table: material, and waterproof yes or no."],
+         "Which soaked it up, and which let it run off?"),
+    home("Why this material?", "A kitchen, a grown-up",
+         ["Pick five things: a pan, a cup, a spoon, a chopping board, a cloth.",
+          "Say what each is made of.",
+          "Say one property that makes it right for the job."],
+         "The pan is metal because it does not melt. What about the cloth?"),
+]

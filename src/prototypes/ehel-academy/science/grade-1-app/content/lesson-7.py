@@ -6,7 +6,7 @@ electricity to work; 1Pe.02 what happens when magnets approach and touch
 different materials; with 1TWSp.02, 1TWSc.01, 1TWSc.04, 1TWSc.05, 1TWSa.01,
 1SIC.01 and 1SIC.04.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "electricity-and-magnets",
@@ -189,3 +189,61 @@ LESSON = {
              "That is the whole lesson finished. You know electricity and magnets."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say which things need electricity to work.",
+    "Say where electricity comes from and how to stay safe with it.",
+    "Say what a magnet does.",
+    "Predict and test which things a magnet sticks to.",
+]
+
+LESSON["lecture"] = [
+    part("\U0001F4A1", "What needs electricity",
+         "A lamp, a television, a fridge and a phone all need electricity. A book, a chair and a bicycle do not. If it would stop when the power went off, it needs electricity."),
+    part("\U0001F50C", "Where it comes from",
+         "Electricity comes into your house through wires to the sockets in the wall. A battery is electricity stored in a little box, for torches and toys."),
+    part("\u26A0\uFE0F", "Three safety rules",
+         "Only plugs go into sockets. Never fingers or toys. Keep electric things away from water. And if a wire is broken, do not touch it. Tell a grown-up."),
+    part("\U0001F9F2", "What a magnet does",
+         "A magnet pulls some things towards it. Bring it near a paperclip and the clip jumps across. Bring it near paper and nothing happens."),
+    part("\U0001F529", "Iron and steel",
+         "A magnet sticks to iron and steel. It does not stick to wood, plastic, paper or foil. Today you predict, then test, and see the pattern for yourself."),
+]
+
+LESSON["words"] = [
+    word("electricity", "\u26A1", "The power that makes lamps, televisions and fridges work.",
+         ["The lamp needs electricity.", "Electricity comes through the wires."]),
+    word("battery", "\U0001F50B", "Electricity stored in a small box, for torches and toys.",
+         ["The torch needs a new battery.", "Batteries make the toy car go."]),
+    word("plug", "\U0001F50C", "The part on the end of a wire that goes into a socket.",
+         ["Only a plug goes into a socket.", "Pull it out by the plug, not the wire."]),
+    word("socket", "\U0001F3E0", "The holes in the wall that electricity comes out of.",
+         ["Never poke anything into a socket.", "The socket is behind the sofa."]),
+    word("magnet", "\U0001F9F2", "A piece of metal that pulls iron and steel towards it.",
+         ["A fridge magnet holds up my drawing.", "The magnet picked up the paperclips."]),
+    word("magnetic", "\U0001F4CE", "Sticks to a magnet.",
+         ["A paperclip is magnetic.", "Wood is not magnetic."]),
+    word("steel", "\U0001F529", "A strong metal that magnets stick to.",
+         ["The key is made of steel.", "Steel spoons are magnetic."]),
+]
+
+LESSON["home"] = [
+    home("Magnet hunt", "A fridge magnet and a tray of small things: a paperclip, a wooden spoon, a plastic cup, a key, kitchen foil, a coin, a nail",
+         ["Before each one, say: will it stick?",
+          "Hold the magnet close to it.",
+          "Sort them into sticks and does not stick."],
+         "The pattern: iron and steel stick, and nothing else. Keep the magnet away from phones and bank cards."),
+    home("Electricity hunt", "Paper and a pencil",
+         ["Walk round one room and find everything that needs electricity.",
+          "Find three things that use a battery instead of a socket.",
+          "Find five things that need no electricity at all."],
+         "Anything with a plug, a switch or a battery."),
+    home("Safety check with a grown-up", "A grown-up, and a look at the plugs and sockets in one room",
+         ["Look at each socket. Is anything poked in it that is not a plug?",
+          "Look at each wire. Is any wire broken or frayed?",
+          "Look for electric things near water."],
+         "Say the three rules out loud: only plugs, away from water, tell a grown-up."),
+]

@@ -482,9 +482,167 @@
     border: 1px solid var(--accent); background: var(--accent-soft); font-size: 16.5px; }
   .safety b { color: var(--accent); }
 
+  /* ==================================================================
+     STAGE 2 additions - same tokens, no new hue.
+     ================================================================== */
+  /* put in order: the placed row, then the pool */
+  .orderrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; min-height: 64px;
+    width: 100%; padding: 10px; border-radius: 18px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
+  .ordered { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 14px; border: 3px solid var(--good);
+    background: var(--good-soft); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .ordered b { width: 24px; height: 24px; border-radius: 50%; background: var(--good); color: #06231F; display: grid; place-items: center; font-size: 13px; }
+  .orderrow .arrow { color: var(--muted); font-size: 22px; }
+  .tapcard.wrong { border-color: var(--bad); background: var(--bad-soft); animation: shake 360ms ease; }
+  /* a block graph */
+  .rec.small { max-width: 420px; } .rec.small .rowlab, .rec.small .cell { min-height: 44px; font-size: 16px; padding: 6px 10px; }
+  .graph { display: flex; gap: 14px; align-items: flex-end; justify-content: center; width: 100%; max-width: 560px; padding: 12px 8px 4px;
+    border-radius: 18px; border: 1px solid var(--line); background: var(--card); }
+  .gcol { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1 1 0; min-width: 0; }
+  .gstack { width: 100%; max-width: 64px; display: flex; flex-direction: column-reverse; gap: 2px; justify-content: flex-start;
+    border-bottom: 3px solid var(--ink); border-left: 2px solid var(--line); padding: 2px; }
+  .gblock { display: block; height: 24px; border-radius: 4px; background: var(--teal); animation: pop 200ms ease; }
+  .glab { text-align: center; font-size: 13px; font-weight: 700; color: var(--muted); line-height: 1.2; }
+  .glab::first-line { font-size: 24px; }
+  /* a fact card, the secondary source */
+  .factcard { width: 100%; max-width: 34em; padding: 18px 22px; border-radius: 18px; color: #24313c;
+    background: radial-gradient(120% 90% at 50% 0%, #fffdf6 0%, #fbf4e4 62%, #f4ead4 100%);
+    box-shadow: 0 14px 34px rgba(0,0,0,.35), 0 2px 0 rgba(255,255,255,.7) inset; border: 1px solid rgba(120,96,54,.18); }
+  .factcard h3 { margin: 0 0 8px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: #123243; }
+  .factcard p { margin: 0 0 6px; font-size: 17px; line-height: 1.5; }
+  .factcard b { color: #1E8C86; }
+
   @media (prefers-reduced-motion: reduce) {
-    .sortnow.shake, .mtrack .unit, .badge { animation: none; }
+    .sortnow.shake, .mtrack .unit, .badge, .gblock, .tapcard.wrong { animation: none; }
   }
+
+  /* ==================================================================
+     THE UNIT SHELL (owner, 2026-09-10): the overview, the lecture, the
+     words, the game zone, the home projects, Science world and the
+     resources drawer. The shelf, the full-screen overlay, the tiles and
+     the drawer rows are the English Grade 1 build's own rules, copied so
+     the two builds look like one family; the rest borrows the tokens
+     above and invents no hue.
+     ================================================================== */
+
+  /* ---- what this lesson is about ---- */
+  .ovw { width: 100%; max-width: 34em; margin: 0 auto; }
+  .ovw-bits { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 0 0 16px; }
+  .ovw-bits span { padding: 6px 14px; border-radius: 999px; background: var(--card);
+    border: 2px solid var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14.5px; }
+  .ovw-h { font-size: 19px; margin: 0 0 12px; text-align: center; }
+  .ovw-list { margin: 0; padding-left: 26px; display: flex; flex-direction: column; gap: 11px; font-size: 19px; text-align: left; }
+  .ovw-list li::marker { color: var(--teal); font-weight: 800; }
+  .ovw-list.codes { font-size: 16px; }
+  .ovw-list code { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12.5px; color: var(--teal); margin-right: 6px; }
+
+  /* ---- the lecture, one part at a time ---- */
+  .lec, .world { width: 100%; max-width: 36em; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+  .lecpic { font-size: clamp(64px, 14vw, 110px); }
+  .lecpic svg { width: clamp(160px, 50vw, 300px); }
+  .lec-h { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: clamp(21px, 4vw, 26px); margin: 0; }
+  .lec-p { margin: 0; font-size: 19px; line-height: 1.55; max-width: 34em; }
+  .lec-note { margin: 4px 0 0; color: var(--muted); font-size: 13.5px; }
+
+  /* ---- the words: a card opens a panel ---- */
+  .cardsgrid.words { max-width: 720px; }
+  .wordpanel { width: 100%; max-width: 560px; padding: 16px 18px; border-radius: 20px; border: 3px solid var(--teal); background: var(--card); text-align: left; }
+  .wp-head { display: flex; align-items: center; gap: 16px; }
+  .wp-word { margin: 0; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 28px; }
+  .wp-meaning { margin: 4px 0 0; font-size: 17.5px; line-height: 1.45; }
+  .wp-uses-h { margin: 12px 0 4px; color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; }
+  .wp-uses { margin: 0 0 10px; padding-left: 20px; display: flex; flex-direction: column; gap: 5px; font-size: 16.5px; font-style: italic; }
+  .wordbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .wordbtn { min-width: 118px; padding: 12px 18px; border-radius: 18px; border: 3px solid var(--line);
+    background: var(--card); color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 22px; }
+  .wordbtn .pic { display: block; font-size: 40px; line-height: 1.15; }
+  .wordbtn .pic svg { width: 56px; height: 56px; }
+  .wordbtn:active { transform: scale(0.96); }
+  .wordbtn.right { background: var(--good-soft); border-color: var(--good); }
+  .wordbtn.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .wordbtn:disabled { cursor: default; }
+
+  /* ---- a shelf of cards, and the full-screen overlay behind them ---- */
+  .shelf { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; width: 100%; }
+  .bookcard { display: flex; flex-direction: column; gap: 8px; padding: 16px; border-radius: 18px;
+    border: 3px solid var(--line); background: var(--card); text-align: left; }
+  .bookcard .bookicon { font-size: 34px; line-height: 1; }
+  .bookcard .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .bookcard .bookmeta { color: var(--muted); font-size: 13.5px; }
+  .bookcard .big { margin-top: auto; align-self: flex-start; }
+  .bookcard.played { border-color: var(--good); background: var(--good-soft); }
+  .book-reader { position: fixed; inset: 0; z-index: 200; background: var(--ground); display: flex; flex-direction: column; }
+  .book-reader-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; }
+  .book-reader-top .booktitle { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .book-close { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink); font-size: 18px; }
+  .book-stage-wrap { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 0 10px; }
+  .book-reader-bottom { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 14px 18px; flex-wrap: wrap; }
+  .book-page-count { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; min-width: 5em; text-align: center; }
+
+  /* ---- the game zone ---- */
+  .game-overlay .game-stage { width: 100%; max-width: 720px; max-height: 100%; overflow-y: auto; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 10px 0; }
+  .game-overlay .gameprompt { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 21px; text-align: center; margin: 0; }
+  .game-overlay .gameclue { color: var(--muted); font-size: 17px; text-align: center; margin: 0; max-width: 30em; }
+  .game-overlay .fb { min-height: 1.6em; }
+  .game-overlay .pairsgrid { max-width: 640px; }
+  .game-done { text-align: center; }
+  .game-done .gamebig { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 30px; margin: 0 0 6px; }
+  .buildline { min-height: 74px; width: 100%; max-width: 30em; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; padding: 12px;
+    border-radius: 18px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
+  .buildline .hint { color: var(--muted); font-size: 17px; }
+  .tile { padding: 10px 16px; border-radius: 14px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 24px; }
+  .tile:active { transform: scale(0.96); }
+  .tile.letter { min-width: 54px; text-align: center; text-transform: lowercase; font-size: 26px; }
+  .buildline .tile { border-color: var(--teal); }
+  .buildline.right { border-color: var(--good); border-style: solid; }
+  .buildline.wrong { border-color: var(--bad); border-style: solid; }
+  .pairsgrid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 10px; width: 100%; max-width: 30em; }
+  .pairtile { min-height: 76px; border-radius: 16px; border: 3px solid var(--line); background: var(--card);
+    color: var(--ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px;
+    line-height: 1.3; padding: 10px 12px; display: flex; align-items: center; justify-content: center; text-align: center; }
+  .pairtile .face { display: none; }
+  .pairtile .back { font-size: 26px; opacity: 0.6; }
+  .pairtile.revealed .face, .pairtile.matched .face { display: block; }
+  .pairtile.revealed .back, .pairtile.matched .back { display: none; }
+  .pairtile.revealed { border-color: var(--teal); background: var(--teal-soft); }
+  .pairtile.matched { border-color: var(--good); background: var(--good-soft); cursor: default; }
+  .pairtile.wrong { border-color: var(--bad); background: var(--bad-soft); }
+  .pairtile:disabled { cursor: default; }
+
+  /* ---- things to do at home ---- */
+  .acts { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; width: 100%; }
+  .act { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: 18px; border: 3px solid var(--line); background: var(--card); text-align: left; }
+  .act.did { border-color: var(--good); background: var(--good-soft); }
+  .act-head { display: flex; align-items: center; gap: 8px; }
+  .act-n { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 999px; background: var(--teal); color: #06231F;
+    display: grid; place-items: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 15px; }
+  .act-kind { flex: 1 1 auto; color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; }
+  .act-lead { margin: 0; font-size: 18px; font-weight: 700; }
+  .act-mat, .act-check { margin: 0; font-size: 14.5px; color: var(--muted); border-left: 3px solid var(--teal); padding-left: 10px; }
+  .act-mat span, .act-check span { display: block; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 11.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); margin-bottom: 2px; }
+  .act-steps { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 5px; font-size: 16px; }
+  button.hear { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--teal); color: #06231F; font-size: 18px; display: grid; place-items: center; }
+  .tick { margin-top: auto; align-self: flex-start; border-radius: 999px; border: 2px solid var(--line); background: transparent; color: var(--ink); font-size: 15px; font-weight: 700; padding: 7px 13px; }
+  .act.did .tick { border-color: var(--good); color: var(--good); }
+
+  /* ---- the resources drawer ---- */
+  .res-stage { width: 100%; max-width: 760px; max-height: 100%; overflow-y: auto; padding: 4px 2px 10px; }
+  .wordgroup { margin-bottom: 18px; }
+  .wordgroup h4 { margin: 0 0 6px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--teal); }
+  .teaches .lec-p { text-align: left; font-size: 17px; }
+  .wordrow { display: flex; gap: 12px; align-items: flex-start; padding: 11px 6px; border-bottom: 1px solid var(--line); text-align: left; }
+  .wordrow:last-child { border-bottom: 0; }
+  .gloxpic { flex: 0 0 2.1em; font-size: 27px; line-height: 1.1; text-align: center; }
+  .gloxpic svg { width: 40px; height: 40px; }
+  .gloxbody { flex: 1 1 auto; min-width: 0; }
+  .gloxhead { display: flex; align-items: center; gap: 8px; }
+  .gloxhead strong { font-size: 19px; }
+  .gloxlesson { margin-left: auto; color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .gloxdef { margin: 3px 0 0; font-size: 15.5px; line-height: 1.5; color: var(--muted); }
+  .gloxeg { margin: 4px 0 0; font-size: 15px; line-height: 1.5; font-style: italic; }
+  .gloxq { width: 100%; padding: 13px 16px; border-radius: 14px; border: 3px solid var(--teal); background: var(--card); color: var(--ink); font-family: inherit; font-size: 19px; margin-bottom: 12px; }
+  .gloxmore { color: var(--muted); font-size: 14px; text-align: center; }
 
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
@@ -730,9 +888,9 @@
   </header>
 
   <main class="deck" id="deck" tabindex="-1">
-    <section class="slide" data-objectives="1Ps.01 1Bs.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every sound comes from somewhere.</s><s>The thing making the sound is called the source.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap the drum. Boom. The drum is the source.</s><s>Tap the bird. Tweet. The bird is the source.</s><s>Your ears hear the sound, but the source is the thing that made it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say the sound comes from their ears.</s><s>Ears hear it. The drum makes it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every picture, listen, and say what the source is.</s></mstts:express-as>' data-say="Tap each picture and listen . The thing making the sound is called the source .">
-      <div class="slide-head"><span class="n">1</span><h2>Where does the sound come from?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask1">Tap each picture and <b>listen</b>. The thing making the sound is called the <b>source</b>.</span></div>
+    <section class="slide" data-objectives="1Ps.01 1Bs.02 1TWSc.01 1Ps.02 1TWSp.02 1TWSc.03 1TWSc.04 1TWSa.01 1TWSc.05 1TWSc.02 1SIC.02 1SIC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is what this lesson is for.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read the list, or press Read it to me.</s><s>Every one of them is something you will be able to DO.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>You do not have to be able to do them yet.</s><s>That is what the lesson is for.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a read, then start.</s></mstts:express-as>' data-say="What you will be able to do by the end.">
+      <div class="slide-head"><span class="n">1</span><h2>What this lesson is about</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask1">What you will be able to do by the end.</span></div>
       <div class="stage">
         <div id="stage1"></div>
         <div class="choices" id="ch1"></div>
@@ -740,9 +898,9 @@
         <p class="score" id="score1"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Ps.01 1TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sound sources can be sorted into groups.</s><s>Some sounds come from living things, some from objects and machines.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A cow mooing: an animal.</s><s>A bell ringing: a thing.</s><s>A baby crying: a person.</s><s>A car horn: a machine.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Think about what made the sound, then tap its bin.</s></mstts:express-as>' data-say="Was that sound made by an animal or person , or by a thing ? Tap the right bin.">
-      <div class="slide-head"><span class="n">2</span><h2>Who or what made it?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Was that sound made by an <b>animal or person</b>, or by a <b>thing</b>? Tap the right bin.</span></div>
+    <section class="slide" data-objectives="1Ps.01 1Bs.02 1TWSc.01 1Ps.02 1TWSp.02 1TWSc.03 1TWSc.04 1TWSa.01 1TWSc.05 1TWSc.02 1SIC.02 1SIC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson, told to you before you do it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Listen to each part.</s><s>Look at the picture while you listen.</s><s>Press Next part to go on, and Listen again to hear it twice.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Listening is not the same as hearing.</s><s>Sit still, and actually listen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Listen.</s></mstts:express-as>' data-say="Listen to the lesson, one part at a time. Press Next part when you are ready.">
+      <div class="slide-head"><span class="n">2</span><h2>Unit lecture</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask2">Listen to the lesson, one part at a time. Press Next part when you are ready.</span></div>
       <div class="stage">
         <div id="stage2"></div>
         <div class="choices" id="ch2"></div>
@@ -750,9 +908,9 @@
         <p class="score" id="score2"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Ps.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A sound happens when something shakes very fast.</s><s>Scientists call that fast shaking vibrating.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Pluck a rubber band and watch it.</s><s>It goes blurry because it is shaking, and you hear a twang.</s><s>Hit a drum and touch the skin: you can feel it shaking.</s><s>Hum, and put your hand on your throat: it buzzes.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think the sound is in the air by itself.</s><s>Stop the band shaking with your finger and the sound stops too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next, listen, and try the throat one for real.</s></mstts:express-as>' data-say="A sound is made when something shakes very fast. Press Next and listen.">
-      <div class="slide-head"><span class="n">3</span><h2>What makes a sound?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask3">A sound is made when something <b>shakes</b> very fast. Press <b>Next</b> and listen.</span></div>
+    <section class="slide" data-objectives="1Ps.01 1Bs.02 1TWSc.01 1Ps.02 1TWSp.02 1TWSc.03 1TWSc.04 1TWSa.01 1TWSc.05 1TWSc.02 1SIC.02 1SIC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are the science words in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a word.</s><s>You will see its picture, hear what it means, and hear it used in a sentence.</s><s>When you have heard them all, the page asks which word is which.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A science word often means something very exact.</s><s>Listen to the meaning, not just the word.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap the first word.</s></mstts:express-as>' data-say="Tap each word to hear what it means and how to use it. Then show you know them.">
+      <div class="slide-head"><span class="n">3</span><h2>Science words</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask3">Tap each word to hear what it means and how to use it. Then show you know them.</span></div>
       <div class="stage">
         <div id="stage3"></div>
         <div class="choices" id="ch3"></div>
@@ -760,9 +918,9 @@
         <p class="score" id="score3"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Ps.02 1TWSp.02 1TWSc.03 1TWSc.04 1TWSa.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>As you get further from the source, the sound gets quieter.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Predict first.</s><s>Then ring the bell right next to it and listen.</s><s>Take a step back and ring it again.</s><s>Keep going, six steps.</s><s>Watch the loudness meter and listen to the bell.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a bell is just as loud from anywhere.</s><s>Try it. Six steps away it is much quieter.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your prediction, then ring, step back, ring, step back.</s></mstts:express-as>' data-say="What happens to a sound as you walk away from it? Predict, then ring the bell and step back.">
-      <div class="slide-head"><span class="n">4</span><h2>Near and far</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">What happens to a sound as you walk away from it? Predict, then ring the bell and step back.</span></div>
+    <section class="slide" data-objectives="1Ps.01 1Bs.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every sound comes from somewhere.</s><s>The thing making the sound is called the source.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap the drum. Boom. The drum is the source.</s><s>Tap the bird. Tweet. The bird is the source.</s><s>Your ears hear the sound, but the source is the thing that made it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say the sound comes from their ears.</s><s>Ears hear it. The drum makes it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every picture, listen, and say what the source is.</s></mstts:express-as>' data-say="Tap each picture and listen . The thing making the sound is called the source .">
+      <div class="slide-head"><span class="n">4</span><h2>Where does the sound come from?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask4">Tap each picture and <b>listen</b>. The thing making the sound is called the <b>source</b>.</span></div>
       <div class="stage">
         <div id="stage4"></div>
         <div class="choices" id="ch4"></div>
@@ -770,9 +928,9 @@
         <p class="score" id="score4"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1TWSc.05 1Ps.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A table can hold measurements as words: loud, medium, quiet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One step away the bell was loud.</s><s>Three steps away it was medium.</s><s>Six steps away it was quiet.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Fill in each row from what you heard.</s></mstts:express-as>' data-say="Record how loud the bell was at each distance. How loud was it %s ?">
-      <div class="slide-head"><span class="n">5</span><h2>How loud was it?</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Record how loud the bell was at each distance. How loud was it <b>%s</b>?</span></div>
+    <section class="slide" data-objectives="1Ps.01 1TWSc.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sound sources can be sorted into groups.</s><s>Some sounds come from living things, some from objects and machines.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A cow mooing: an animal.</s><s>A bell ringing: a thing.</s><s>A baby crying: a person.</s><s>A car horn: a machine.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Think about what made the sound, then tap its bin.</s></mstts:express-as>' data-say="Was that sound made by an animal or person , or by a thing ? Tap the right bin.">
+      <div class="slide-head"><span class="n">5</span><h2>Who or what made it?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask5">Was that sound made by an <b>animal or person</b>, or by a <b>thing</b>? Tap the right bin.</span></div>
       <div class="stage">
         <div id="stage5"></div>
         <div class="choices" id="ch5"></div>
@@ -780,9 +938,9 @@
         <p class="score" id="score5"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1TWSc.02 1TWSc.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Loud sounds can hurt your ears, so sound makers have rules.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A drum is hit with the stick, gently, never near somebody&#39;s ear.</s><s>A whistle is blown outdoors, not right next to a friend.</s><s>A shaker is shaken by the handle.</s><s>If a sound hurts, cover your ears and move away.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think louder is always better.</s><s>Very loud sounds can damage ears for good.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every sound maker and listen to its rule.</s></mstts:express-as>' data-say="Sound makers are tools. Tap each one to hear how to use it safely.">
-      <div class="slide-head"><span class="n">6</span><h2>Use the sound makers safely</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">Sound makers are tools. Tap each one to hear how to use it safely.</span></div>
+    <section class="slide" data-objectives="1Ps.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A sound happens when something shakes very fast.</s><s>Scientists call that fast shaking vibrating.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Pluck a rubber band and watch it.</s><s>It goes blurry because it is shaking, and you hear a twang.</s><s>Hit a drum and touch the skin: you can feel it shaking.</s><s>Hum, and put your hand on your throat: it buzzes.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think the sound is in the air by itself.</s><s>Stop the band shaking with your finger and the sound stops too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next, listen, and try the throat one for real.</s></mstts:express-as>' data-say="A sound is made when something shakes very fast. Press Next and listen.">
+      <div class="slide-head"><span class="n">6</span><h2>What makes a sound?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask6">A sound is made when something <b>shakes</b> very fast. Press <b>Next</b> and listen.</span></div>
       <div class="stage">
         <div id="stage6"></div>
         <div class="choices" id="ch6"></div>
@@ -790,9 +948,9 @@
         <p class="score" id="score6"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1SIC.02 1SIC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Because we know how sound works, we can make instruments, and some people make sound their job.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A guitar works because plucked strings shake.</s><s>A musician uses that all day.</s><s>A doctor uses a stethoscope to hear your heart, because the sound travels up the tube.</s><s>A person who checks ears is an audiologist.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each one and hear how sound science is used.</s></mstts:express-as>' data-say="Science explains how sound things work, and some people use sound science all day. Tap each one.">
-      <div class="slide-head"><span class="n">7</span><h2>Sound at work</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">Science explains how sound things work, and some people use sound science all day. Tap each one.</span></div>
+    <section class="slide" data-objectives="1Ps.02 1TWSp.02 1TWSc.03 1TWSc.04 1TWSa.01" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>As you get further from the source, the sound gets quieter.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Predict first.</s><s>Then ring the bell right next to it and listen.</s><s>Take a step back and ring it again.</s><s>Keep going, six steps.</s><s>Watch the loudness meter and listen to the bell.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a bell is just as loud from anywhere.</s><s>Try it. Six steps away it is much quieter.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap your prediction, then ring, step back, ring, step back.</s></mstts:express-as>' data-say="What happens to a sound as you walk away from it? Predict, then ring the bell and step back.">
+      <div class="slide-head"><span class="n">7</span><h2>Near and far</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask7">What happens to a sound as you walk away from it? Predict, then ring the bell and step back.</span></div>
       <div class="stage">
         <div id="stage7"></div>
         <div class="choices" id="ch7"></div>
@@ -800,14 +958,84 @@
         <p class="score" id="score7"></p>
       </div>
     </section>
-    <section class="slide" data-objectives="1Ps.01 1Ps.02 1Bs.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks where a sound comes from, name the thing that made it.</s><s>If it asks about far away, remember the bell getting quieter.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
-      <div class="slide-head"><span class="n">8</span><h2>Show what you know</h2></div>
-      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Time to show what you know. Tap the answer.</span></div>
+    <section class="slide" data-objectives="1TWSc.05 1Ps.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A table can hold measurements as words: loud, medium, quiet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One step away the bell was loud.</s><s>Three steps away it was medium.</s><s>Six steps away it was quiet.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Fill in each row from what you heard.</s></mstts:express-as>' data-say="Record how loud the bell was at each distance. How loud was it %s ?">
+      <div class="slide-head"><span class="n">8</span><h2>How loud was it?</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask8">Record how loud the bell was at each distance. How loud was it <b>%s</b>?</span></div>
       <div class="stage">
         <div id="stage8"></div>
         <div class="choices" id="ch8"></div>
         <p class="fb" id="fb8" role="status" aria-live="polite" aria-atomic="true"></p>
         <p class="score" id="score8"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="1TWSc.02 1TWSc.04" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Loud sounds can hurt your ears, so sound makers have rules.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A drum is hit with the stick, gently, never near somebody&#39;s ear.</s><s>A whistle is blown outdoors, not right next to a friend.</s><s>A shaker is shaken by the handle.</s><s>If a sound hurts, cover your ears and move away.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think louder is always better.</s><s>Very loud sounds can damage ears for good.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap every sound maker and listen to its rule.</s></mstts:express-as>' data-say="Sound makers are tools. Tap each one to hear how to use it safely.">
+      <div class="slide-head"><span class="n">9</span><h2>Use the sound makers safely</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask9">Sound makers are tools. Tap each one to hear how to use it safely.</span></div>
+      <div class="stage">
+        <div id="stage9"></div>
+        <div class="choices" id="ch9"></div>
+        <p class="fb" id="fb9" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score9"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="1SIC.02 1SIC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Because we know how sound works, we can make instruments, and some people make sound their job.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A guitar works because plucked strings shake.</s><s>A musician uses that all day.</s><s>A doctor uses a stethoscope to hear your heart, because the sound travels up the tube.</s><s>A person who checks ears is an audiologist.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Tap each one and hear how sound science is used.</s></mstts:express-as>' data-say="Science explains how sound things work, and some people use sound science all day. Tap each one.">
+      <div class="slide-head"><span class="n">10</span><h2>Sound at work</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask10">Science explains how sound things work, and some people use sound science all day. Tap each one.</span></div>
+      <div class="stage">
+        <div id="stage10"></div>
+        <div class="choices" id="ch10"></div>
+        <p class="fb" id="fb10" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score10"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="1Ps.01 1Bs.02 1TWSc.01 1Ps.02 1TWSp.02 1TWSc.03 1TWSc.04 1TWSa.01 1TWSc.05 1TWSc.02 1SIC.02 1SIC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the lesson&#39;s own game zone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Tap a game to play it.</s><s>Each game asks a few short questions about this lesson.</s><s>Play two games to earn the sticker, and as many as you like after that.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Getting one wrong costs nothing here.</s><s>A game is for practising, not for marking.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a game and play.</s></mstts:express-as>' data-say="Choose a game to play. Nothing here is new.">
+      <div class="slide-head"><span class="n">11</span><h2>Games</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask11">Choose a game to play. Nothing here is new.</span></div>
+      <div class="stage">
+        <div id="stage11"></div>
+        <div class="choices" id="ch11"></div>
+        <p class="fb" id="fb11" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score11"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="1Ps.01 1Bs.02 1TWSc.01 1Ps.02 1TWSp.02 1TWSc.03 1TWSc.04 1TWSa.01 1TWSc.05 1TWSc.02 1SIC.02 1SIC.03" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>These are projects to do at home, with your hands and with a grown-up.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Read one, or press the speaker to hear it.</s><s>Get the things it needs.</s><s>Do it, and look for the thing it tells you to look for.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Doing it once is science.</s><s>Doing it again to check is BETTER science.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Pick a project and tick it when you have done it.</s></mstts:express-as>' data-say="Real science with real things, away from the screen. Do one with a grown-up.">
+      <div class="slide-head"><span class="n">12</span><h2>Things to do at home</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask12">Real science with real things, away from the screen. Do one with a grown-up.</span></div>
+      <div class="stage">
+        <div id="stage12"></div>
+        <div class="choices" id="ch12"></div>
+        <p class="fb" id="fb12" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score12"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="1Ps.01 1Ps.02 1Bs.02" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it asks where a sound comes from, name the thing that made it.</s><s>If it asks about far away, remember the bell getting quieter.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time. Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
+      <div class="slide-head"><span class="n">13</span><h2>Show what you know</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask13">Time to show what you know. Tap the answer.</span></div>
+      <div class="stage">
+        <div id="stage13"></div>
+        <div class="choices" id="ch13"></div>
+        <p class="fb" id="fb13" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score13"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Science world is not built yet.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>It will show where this lesson&#39;s science is out in the real world.</s><s>Places you can visit, people who use it, and things you can go and look at.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>There is nothing to do here yet.</s><s>It ticks itself off.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Press Next.</s></mstts:express-as>' data-say="Where this science is out in the real world. This part is still being built.">
+      <div class="slide-head"><span class="n">14</span><h2>Science world</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask14">Where this science is out in the real world. This part is still being built.</span></div>
+      <div class="stage">
+        <div id="stage14"></div>
+        <div class="choices" id="ch14"></div>
+        <p class="fb" id="fb14" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score14"></p>
+      </div>
+    </section>
+    <section class="slide" data-objectives="" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This is the drawer.</s><s>Nothing here is a step you have to finish.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Open the word list to hear any word again.</s><s>Open the word finder to look up a word from any lesson.</s><s>Open the grown-up page to see what this lesson teaches.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Come back to this drawer any time.</s><s>It does not close.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Open one.</s></mstts:express-as>' data-say="Your word list, the word finder, your home projects, and a page for your grown-up.">
+      <div class="slide-head"><span class="n">15</span><h2>Student resources</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask15">Your word list, the word finder, your home projects, and a page for your grown-up.</span></div>
+      <div class="stage">
+        <div id="stage15"></div>
+        <div class="choices" id="ch15"></div>
+        <p class="fb" id="fb15" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score15"></p>
       </div>
     </section>
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -842,10 +1070,10 @@
   /* ==================================================================
      Sounds Near and Far - Grade 1 Science, Lesson 6.
 
-     GENERATED by science/grade-1-app/build-lessons.py from
-     science/grade-1-app/content/lesson-6.py. Do not hand-edit: the
+     GENERATED by science/lesson-kit/build-lessons.py from
+     grade-1-app/content/lesson-6.py. Do not hand-edit: the
      next build overwrites it, and the fix for anything wrong on this page
-     is in the content module or in lib/science.js.
+     is in the content module or in lesson-kit/lib/science.js.
 
      Objectives (Cambridge Primary Science 0097, Stage 1): 1Bs.02, 1Ps.01, 1Ps.02, 1SIC.02, 1SIC.03, 1TWSa.01, 1TWSc.01, 1TWSc.02, 1TWSc.03, 1TWSc.04, 1TWSc.05, 1TWSp.02
      ================================================================== */
@@ -868,6 +1096,161 @@
       "1TWSp.02"
     ],
     "steps": [
+      {
+        "kind": "overview",
+        "title": "What this lesson is about",
+        "objectives": [
+          "1Ps.01",
+          "1Bs.02",
+          "1TWSc.01",
+          "1Ps.02",
+          "1TWSp.02",
+          "1TWSc.03",
+          "1TWSc.04",
+          "1TWSa.01",
+          "1TWSc.05",
+          "1TWSc.02",
+          "1SIC.02",
+          "1SIC.03"
+        ],
+        "data": {
+          "about": [
+            "Say where a sound comes from.",
+            "Say what makes a sound.",
+            "Do an experiment about sounds near and far.",
+            "Use sound makers safely."
+          ],
+          "counts": {
+            "steps": 15,
+            "words": 6,
+            "games": 4,
+            "home": 3
+          }
+        }
+      },
+      {
+        "kind": "lecture",
+        "title": "Unit lecture",
+        "objectives": [
+          "1Ps.01",
+          "1Bs.02",
+          "1TWSc.01",
+          "1Ps.02",
+          "1TWSp.02",
+          "1TWSc.03",
+          "1TWSc.04",
+          "1TWSa.01",
+          "1TWSc.05",
+          "1TWSc.02",
+          "1SIC.02",
+          "1SIC.03"
+        ],
+        "data": {
+          "parts": [
+            {
+              "pic": "🥁",
+              "title": "Every sound has a source",
+              "say": "Tap a drum. Ring a bell. A bird sings. Rain falls. Every sound comes from somewhere. The thing that makes it is called the source."
+            },
+            {
+              "pic": "〰️",
+              "title": "Sound is shaking",
+              "say": "Pluck an elastic band. It shakes so fast it looks blurry, and you hear a sound. Hum, and put your hand on your throat. You can feel it shaking."
+            },
+            {
+              "pic": "👂🏾",
+              "title": "Near and far",
+              "say": "Stand next to a bell and it is loud. Walk away and it gets quieter. The further a sound travels, the quieter it gets."
+            },
+            {
+              "pic": "🤫",
+              "title": "Loud, medium, quiet",
+              "say": "Sounds can be loud, medium or quiet. A drum next to you is loud. A whisper is quiet. You can write it down in a table, like a scientist."
+            },
+            {
+              "pic": "🎧",
+              "title": "Look after your ears",
+              "say": "Very loud sounds can hurt your ears. Never shout into someone's ear. Never bang a drum right next to your head. Use sound makers carefully."
+            }
+          ]
+        }
+      },
+      {
+        "kind": "words",
+        "title": "Science words",
+        "objectives": [
+          "1Ps.01",
+          "1Bs.02",
+          "1TWSc.01",
+          "1Ps.02",
+          "1TWSp.02",
+          "1TWSc.03",
+          "1TWSc.04",
+          "1TWSa.01",
+          "1TWSc.05",
+          "1TWSc.02",
+          "1SIC.02",
+          "1SIC.03"
+        ],
+        "data": {
+          "items": [
+            {
+              "w": "sound",
+              "pic": "🔊",
+              "meaning": "Something you hear.",
+              "uses": [
+                "A drum makes a loud sound.",
+                "Where did that sound come from?"
+              ]
+            },
+            {
+              "w": "source",
+              "pic": "🥁",
+              "meaning": "The thing a sound comes from.",
+              "uses": [
+                "The bell is the source of the ringing.",
+                "Find the source of the sound."
+              ]
+            },
+            {
+              "w": "loud",
+              "pic": "📢",
+              "meaning": "A big sound, easy to hear.",
+              "uses": [
+                "A car horn is loud.",
+                "Do not be so loud."
+              ]
+            },
+            {
+              "w": "quiet",
+              "pic": "🤫",
+              "meaning": "A small sound, hard to hear.",
+              "uses": [
+                "A whisper is quiet.",
+                "Far away, the bell was quiet."
+              ]
+            },
+            {
+              "w": "vibrate",
+              "pic": "〰️",
+              "meaning": "To shake very fast. Things vibrate when they make a sound.",
+              "uses": [
+                "The drum skin vibrates.",
+                "Feel your throat vibrate when you hum."
+              ]
+            },
+            {
+              "w": "ear",
+              "pic": "👂🏾",
+              "meaning": "The part of your body that hears.",
+              "uses": [
+                "I hear with my ears.",
+                "Cover your ears if it is too loud."
+              ]
+            }
+          ]
+        }
+      },
       {
         "kind": "explore",
         "title": "Where does the sound come from?",
@@ -1257,6 +1640,338 @@
         }
       },
       {
+        "kind": "games",
+        "title": "Games",
+        "objectives": [
+          "1Ps.01",
+          "1Bs.02",
+          "1TWSc.01",
+          "1Ps.02",
+          "1TWSp.02",
+          "1TWSc.03",
+          "1TWSc.04",
+          "1TWSa.01",
+          "1TWSc.05",
+          "1TWSc.02",
+          "1SIC.02",
+          "1SIC.03"
+        ],
+        "data": {
+          "games": [
+            {
+              "id": "l6-quiz-1",
+              "type": "choice",
+              "title": "Quick quiz: Show what you know",
+              "skill": "Remembering",
+              "rounds": [
+                {
+                  "prompt": "We hear with our...",
+                  "choices": [
+                    "ears",
+                    "eyes",
+                    "nose",
+                    "feet"
+                  ],
+                  "answer": "ears",
+                  "explanation": "Ears hear. That is the sense of hearing."
+                },
+                {
+                  "prompt": "A drum booms. What is the source of the sound?",
+                  "choices": [
+                    "the drum",
+                    "your ears",
+                    "the air",
+                    "the floor"
+                  ],
+                  "answer": "the drum",
+                  "explanation": "The drum made the sound. It is the source."
+                },
+                {
+                  "prompt": "A sound is made when something...",
+                  "choices": [
+                    "shakes very fast",
+                    "gets wet",
+                    "goes dark",
+                    "sits still"
+                  ],
+                  "answer": "shakes very fast",
+                  "explanation": "Shaking very fast, vibrating, is what makes a sound."
+                },
+                {
+                  "prompt": "You walk away from a ringing bell. The sound gets...",
+                  "choices": [
+                    "quieter",
+                    "louder",
+                    "higher",
+                    "faster"
+                  ],
+                  "answer": "quieter",
+                  "explanation": "Sound gets quieter as it travels away from its source. You tested it."
+                },
+                {
+                  "prompt": "Which of these is a source of sound?",
+                  "choices": [
+                    "a barking dog",
+                    "a sleeping cat",
+                    "a still stone",
+                    "an empty room"
+                  ],
+                  "answer": "a barking dog",
+                  "explanation": "A barking dog makes a sound. The dog is the source."
+                },
+                {
+                  "prompt": "You hum and feel your throat. What do you feel?",
+                  "choices": [
+                    "shaking",
+                    "nothing",
+                    "cold",
+                    "wet"
+                  ],
+                  "answer": "shaking",
+                  "explanation": "Your voice is your throat shaking."
+                },
+                {
+                  "prompt": "A sound hurts your ears. What should you do?",
+                  "choices": [
+                    "cover your ears and move away",
+                    "get closer",
+                    "shout louder"
+                  ],
+                  "answer": "cover your ears and move away",
+                  "explanation": "Loud sounds can hurt ears. Move away from the source."
+                },
+                {
+                  "prompt": "Stop a rubber band shaking with your finger. What happens to the sound?",
+                  "choices": [
+                    "it stops",
+                    "it gets louder",
+                    "it gets higher"
+                  ],
+                  "answer": "it stops",
+                  "explanation": "No shaking, no sound."
+                }
+              ]
+            },
+            {
+              "id": "l6-sort-1",
+              "type": "choice",
+              "title": "Sort race: Who or what made it?",
+              "skill": "Sorting",
+              "rounds": [
+                {
+                  "prompt": "Where does moo go? 🐮",
+                  "choices": [
+                    "Animal or person",
+                    "A thing or machine"
+                  ],
+                  "answer": "Animal or person",
+                  "explanation": "A cow moos. An animal made it."
+                },
+                {
+                  "prompt": "Where does ding go? 🔔",
+                  "choices": [
+                    "Animal or person",
+                    "A thing or machine"
+                  ],
+                  "answer": "A thing or machine",
+                  "explanation": "A bell rings. A thing made it."
+                },
+                {
+                  "prompt": "Where does waaah go? 👶",
+                  "choices": [
+                    "Animal or person",
+                    "A thing or machine"
+                  ],
+                  "answer": "Animal or person",
+                  "explanation": "A baby cries. A person made it."
+                },
+                {
+                  "prompt": "Where does honk go? 🚗",
+                  "choices": [
+                    "Animal or person",
+                    "A thing or machine"
+                  ],
+                  "answer": "A thing or machine",
+                  "explanation": "A car horn honks. A machine made it."
+                },
+                {
+                  "prompt": "Where does woof go? 🐕",
+                  "choices": [
+                    "Animal or person",
+                    "A thing or machine"
+                  ],
+                  "answer": "Animal or person",
+                  "explanation": "A dog barks. An animal made it."
+                },
+                {
+                  "prompt": "Where does boom go? 🥁",
+                  "choices": [
+                    "Animal or person",
+                    "A thing or machine"
+                  ],
+                  "answer": "A thing or machine",
+                  "explanation": "A drum booms. A thing made it, when somebody hit it."
+                },
+                {
+                  "prompt": "Where does singing go? 🎤",
+                  "choices": [
+                    "Animal or person",
+                    "A thing or machine"
+                  ],
+                  "answer": "Animal or person",
+                  "explanation": "A person sings."
+                },
+                {
+                  "prompt": "Where does ring ring go? ⏰",
+                  "choices": [
+                    "Animal or person",
+                    "A thing or machine"
+                  ],
+                  "answer": "A thing or machine",
+                  "explanation": "An alarm clock rings. A machine made it."
+                }
+              ]
+            },
+            {
+              "id": "l6-pairs",
+              "type": "pairs",
+              "title": "Word pairs",
+              "skill": "Science words",
+              "rounds": [
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "sound",
+                      "Something you hear."
+                    ],
+                    [
+                      "source",
+                      "The thing a sound comes from."
+                    ],
+                    [
+                      "loud",
+                      "A big sound, easy to hear."
+                    ]
+                  ]
+                },
+                {
+                  "prompt": "Match each word to what it means.",
+                  "pairs": [
+                    [
+                      "quiet",
+                      "A small sound, hard to hear."
+                    ],
+                    [
+                      "vibrate",
+                      "To shake very fast. Things vibrate when they make a sound."
+                    ],
+                    [
+                      "ear",
+                      "The part of your body that hears."
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "l6-spell",
+              "type": "spelling",
+              "title": "Spell the science word",
+              "skill": "Science words",
+              "rounds": [
+                {
+                  "prompt": "Something you hear.",
+                  "clue": "It starts with s. 🔊",
+                  "answer": "sound"
+                },
+                {
+                  "prompt": "The thing a sound comes from.",
+                  "clue": "It starts with s. 🥁",
+                  "answer": "source"
+                },
+                {
+                  "prompt": "A big sound, easy to hear.",
+                  "clue": "It starts with l. 📢",
+                  "answer": "loud"
+                },
+                {
+                  "prompt": "A small sound, hard to hear.",
+                  "clue": "It starts with q. 🤫",
+                  "answer": "quiet"
+                },
+                {
+                  "prompt": "To shake very fast. Things vibrate when they make a sound.",
+                  "clue": "It starts with v. 〰️",
+                  "answer": "vibrate"
+                },
+                {
+                  "prompt": "The part of your body that hears.",
+                  "clue": "It starts with e. 👂🏾",
+                  "answer": "ear"
+                }
+              ]
+            }
+          ],
+          "mastery": 2
+        }
+      },
+      {
+        "kind": "home",
+        "title": "Things to do at home",
+        "objectives": [
+          "1Ps.01",
+          "1Bs.02",
+          "1TWSc.01",
+          "1Ps.02",
+          "1TWSp.02",
+          "1TWSc.03",
+          "1TWSc.04",
+          "1TWSa.01",
+          "1TWSc.05",
+          "1TWSc.02",
+          "1SIC.02",
+          "1SIC.03"
+        ],
+        "data": {
+          "items": [
+            {
+              "title": "The walking away test",
+              "materials": "A bell, or a spoon and a cup, or a shaker; two people; a big room or a garden",
+              "steps": [
+                "One person makes the same sound over and over.",
+                "The other walks away one step at a time.",
+                "At each step say: loud, medium or quiet."
+              ],
+              "look": "How many steps before it is quiet? Where does it disappear?",
+              "n": 1
+            },
+            {
+              "title": "Feel the shaking",
+              "materials": "An elastic band, a tin or a drum, your throat",
+              "steps": [
+                "Stretch the band and pluck it. Watch it blur.",
+                "Bang the tin and touch it straight away.",
+                "Hum and put your hand flat on your throat."
+              ],
+              "look": "The shaking you can feel is the sound you can hear.",
+              "n": 2
+            },
+            {
+              "title": "Sound hunt",
+              "materials": "Paper and a pencil, a quiet minute",
+              "steps": [
+                "Sit still and shut your eyes for one minute.",
+                "Count every sound you hear.",
+                "For each one, say where it came from."
+              ],
+              "look": "Sounds from animals, people, things and machines.",
+              "n": 3
+            }
+          ]
+        }
+      },
+      {
         "kind": "quiz",
         "title": "Show what you know",
         "objectives": [
@@ -1443,6 +2158,824 @@
               "why": "No shaking, no sound."
             }
           ]
+        }
+      },
+      {
+        "kind": "world",
+        "title": "Science world",
+        "objectives": [],
+        "data": {
+          "title": "Sounds Near and Far",
+          "soon": [
+            "Real places where this science happens.",
+            "People who use it every day at work.",
+            "Things near you to go and look at."
+          ]
+        }
+      },
+      {
+        "kind": "resources",
+        "title": "Student resources",
+        "objectives": [],
+        "data": {
+          "words": [
+            {
+              "w": "sound",
+              "pic": "🔊",
+              "meaning": "Something you hear.",
+              "uses": [
+                "A drum makes a loud sound.",
+                "Where did that sound come from?"
+              ]
+            },
+            {
+              "w": "source",
+              "pic": "🥁",
+              "meaning": "The thing a sound comes from.",
+              "uses": [
+                "The bell is the source of the ringing.",
+                "Find the source of the sound."
+              ]
+            },
+            {
+              "w": "loud",
+              "pic": "📢",
+              "meaning": "A big sound, easy to hear.",
+              "uses": [
+                "A car horn is loud.",
+                "Do not be so loud."
+              ]
+            },
+            {
+              "w": "quiet",
+              "pic": "🤫",
+              "meaning": "A small sound, hard to hear.",
+              "uses": [
+                "A whisper is quiet.",
+                "Far away, the bell was quiet."
+              ]
+            },
+            {
+              "w": "vibrate",
+              "pic": "〰️",
+              "meaning": "To shake very fast. Things vibrate when they make a sound.",
+              "uses": [
+                "The drum skin vibrates.",
+                "Feel your throat vibrate when you hum."
+              ]
+            },
+            {
+              "w": "ear",
+              "pic": "👂🏾",
+              "meaning": "The part of your body that hears.",
+              "uses": [
+                "I hear with my ears.",
+                "Cover your ears if it is too loud."
+              ]
+            }
+          ],
+          "finder": [
+            {
+              "w": "alive",
+              "pic": "🐣",
+              "meaning": "Something that eats or drinks, grows, and can have babies.",
+              "uses": [
+                "A chick is alive. It eats, drinks and grows.",
+                "My cat is alive, but my toy cat is not."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "animal",
+              "pic": "🐕",
+              "meaning": "A living thing that moves about and eats to stay alive.",
+              "uses": [
+                "A dog is an animal.",
+                "Every animal needs air, water and food."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "battery",
+              "pic": "🔋",
+              "meaning": "Electricity stored in a small box, for torches and toys.",
+              "uses": [
+                "The torch needs a new battery.",
+                "Batteries make the toy car go."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
+            },
+            {
+              "w": "ear",
+              "pic": "👂🏾",
+              "meaning": "The part of your body that hears.",
+              "uses": [
+                "I hear with my ears.",
+                "Cover your ears if it is too loud."
+              ],
+              "lesson": 6,
+              "title": "Sounds Near and Far",
+              "file": "sounds-near-and-far.html"
+            },
+            {
+              "w": "Earth",
+              "pic": "🌍",
+              "meaning": "The planet we live on.",
+              "uses": [
+                "Earth is round.",
+                "Earth is mostly covered in water."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "electricity",
+              "pic": "⚡",
+              "meaning": "The power that makes lamps, televisions and fridges work.",
+              "uses": [
+                "The lamp needs electricity.",
+                "Electricity comes through the wires."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
+            },
+            {
+              "w": "experiment",
+              "pic": "🧪",
+              "meaning": "A fair test you do to find out an answer.",
+              "uses": [
+                "Our experiment showed that a plant needs water.",
+                "Predict first, then do the experiment."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "float",
+              "pic": "🍎",
+              "meaning": "To stay on top of the water.",
+              "uses": [
+                "An apple floats.",
+                "The boat floats on the sea."
+              ],
+              "lesson": 5,
+              "title": "Pushes, Pulls and Floating",
+              "file": "pushes-pulls-and-floating.html"
+            },
+            {
+              "w": "flower",
+              "pic": "🌸",
+              "meaning": "The part of a plant that makes seeds.",
+              "uses": [
+                "The flower is red.",
+                "Bees visit the flower."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
+            },
+            {
+              "w": "force",
+              "pic": "💪🏾",
+              "meaning": "A push or a pull. It makes things start, stop, speed up, slow down or turn.",
+              "uses": [
+                "A force made the ball move.",
+                "A bigger force, a bigger move."
+              ],
+              "lesson": 5,
+              "title": "Pushes, Pulls and Floating",
+              "file": "pushes-pulls-and-floating.html"
+            },
+            {
+              "w": "grow",
+              "pic": "📈",
+              "meaning": "To get bigger and change over time.",
+              "uses": [
+                "A kid grows into a goat.",
+                "The plant grew taller after we watered it."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "hand span",
+              "pic": "✋",
+              "meaning": "The distance from your thumb to your little finger, stretched wide.",
+              "uses": [
+                "Nora is seven hand spans tall.",
+                "We measured the table in hand spans."
+              ],
+              "lesson": 3,
+              "title": "My Body and My Senses",
+              "file": "my-body-and-my-senses.html"
+            },
+            {
+              "w": "hard",
+              "pic": "🪨",
+              "meaning": "Does not press in when you push it.",
+              "uses": [
+                "A stone is hard.",
+                "Wood is hard, but a sponge is soft."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "hearing",
+              "pic": "👂🏾",
+              "meaning": "The sense that uses your ears.",
+              "uses": [
+                "My hearing told me a car was coming.",
+                "Cover your ears and your hearing goes quiet."
+              ],
+              "lesson": 3,
+              "title": "My Body and My Senses",
+              "file": "my-body-and-my-senses.html"
+            },
+            {
+              "w": "heat",
+              "pic": "🔥",
+              "meaning": "Warmth. The Sun gives us heat.",
+              "uses": [
+                "Feel the heat of the Sun.",
+                "The shade has less heat."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "leaf",
+              "pic": "🍃",
+              "meaning": "The flat green part of a plant. Leaves make the plant's food from sunlight.",
+              "uses": [
+                "A leaf catches sunlight.",
+                "This tree has lost its leaves."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
+            },
+            {
+              "w": "loud",
+              "pic": "📢",
+              "meaning": "A big sound, easy to hear.",
+              "uses": [
+                "A car horn is loud.",
+                "Do not be so loud."
+              ],
+              "lesson": 6,
+              "title": "Sounds Near and Far",
+              "file": "sounds-near-and-far.html"
+            },
+            {
+              "w": "magnet",
+              "pic": "🧲",
+              "meaning": "A piece of metal that pulls iron and steel towards it.",
+              "uses": [
+                "A fridge magnet holds up my drawing.",
+                "The magnet picked up the paperclips."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
+            },
+            {
+              "w": "magnetic",
+              "pic": "📎",
+              "meaning": "Sticks to a magnet.",
+              "uses": [
+                "A paperclip is magnetic.",
+                "Wood is not magnetic."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
+            },
+            {
+              "w": "material",
+              "pic": "🧱",
+              "meaning": "What a thing is made of, like wood, metal or glass.",
+              "uses": [
+                "Wood is a material.",
+                "What material is a window made of?"
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "measure",
+              "pic": "📏",
+              "meaning": "To find out how long, tall or heavy something is.",
+              "uses": [
+                "We measure the plant in cubes.",
+                "Measure it again next week."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
+            },
+            {
+              "w": "metal",
+              "pic": "🔩",
+              "meaning": "A hard, shiny material that feels cold to touch.",
+              "uses": [
+                "A key is made of metal.",
+                "Metal spoons are strong."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "need",
+              "pic": "💧",
+              "meaning": "Something you must have to stay alive.",
+              "uses": [
+                "Water is a need. A toy is not.",
+                "A cat needs air, water and food."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "non-living",
+              "pic": "🪨",
+              "meaning": "Something that was never alive. It does not eat, grow or have babies.",
+              "uses": [
+                "A stone is non-living.",
+                "A spoon is a non-living thing."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "object",
+              "pic": "🥄",
+              "meaning": "A thing you can see and touch.",
+              "uses": [
+                "A spoon is an object.",
+                "Every object is made of a material."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "planet",
+              "pic": "🪐",
+              "meaning": "A huge round world that goes round a star.",
+              "uses": [
+                "Earth is a planet.",
+                "There are other planets, far away."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "plant",
+              "pic": "🌱",
+              "meaning": "A living thing that grows in soil and makes its own food from sunlight.",
+              "uses": [
+                "A sunflower is a plant.",
+                "The plant needs water, or it droops."
+              ],
+              "lesson": 1,
+              "title": "Alive or Never Alive",
+              "file": "alive-or-never-alive.html"
+            },
+            {
+              "w": "plastic",
+              "pic": "🧴",
+              "meaning": "A light material that people make. It can be soft or hard.",
+              "uses": [
+                "A bottle can be plastic.",
+                "Plastic does not let water through."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "plug",
+              "pic": "🔌",
+              "meaning": "The part on the end of a wire that goes into a socket.",
+              "uses": [
+                "Only a plug goes into a socket.",
+                "Pull it out by the plug, not the wire."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
+            },
+            {
+              "w": "predict",
+              "pic": "🔮",
+              "meaning": "To say what you think will happen, before you test it.",
+              "uses": [
+                "I predict the leaf will float.",
+                "Predict first, then test."
+              ],
+              "lesson": 5,
+              "title": "Pushes, Pulls and Floating",
+              "file": "pushes-pulls-and-floating.html"
+            },
+            {
+              "w": "property",
+              "pic": "🔍",
+              "meaning": "Something a material is like: hard, soft, bendy, shiny, waterproof.",
+              "uses": [
+                "Being shiny is a property of metal.",
+                "Each test finds one property."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            },
+            {
+              "w": "pull",
+              "pic": "🪢",
+              "meaning": "A force that moves something towards you.",
+              "uses": [
+                "I pull the drawer open.",
+                "Tug of war is a pull."
+              ],
+              "lesson": 5,
+              "title": "Pushes, Pulls and Floating",
+              "file": "pushes-pulls-and-floating.html"
+            },
+            {
+              "w": "push",
+              "pic": "👐",
+              "meaning": "A force that moves something away from you.",
+              "uses": [
+                "I push the trolley.",
+                "Kicking a ball is a push."
+              ],
+              "lesson": 5,
+              "title": "Pushes, Pulls and Floating",
+              "file": "pushes-pulls-and-floating.html"
+            },
+            {
+              "w": "quiet",
+              "pic": "🤫",
+              "meaning": "A small sound, hard to hear.",
+              "uses": [
+                "A whisper is quiet.",
+                "Far away, the bell was quiet."
+              ],
+              "lesson": 6,
+              "title": "Sounds Near and Far",
+              "file": "sounds-near-and-far.html"
+            },
+            {
+              "w": "rock",
+              "pic": "🪨",
+              "meaning": "The hard stuff under the soil. A stone is a small piece of rock.",
+              "uses": [
+                "The mountain is made of rock.",
+                "Under the soil is rock."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "roll",
+              "pic": "⚽",
+              "meaning": "To move by turning over and over.",
+              "uses": [
+                "The ball rolls down the hill.",
+                "Round things roll."
+              ],
+              "lesson": 5,
+              "title": "Pushes, Pulls and Floating",
+              "file": "pushes-pulls-and-floating.html"
+            },
+            {
+              "w": "roots",
+              "pic": "🌿",
+              "meaning": "The parts of a plant under the soil. They hold it up and drink water.",
+              "uses": [
+                "The roots grow down into the soil.",
+                "Pull up a weed and you can see its roots."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
+            },
+            {
+              "w": "seed",
+              "pic": "🌰",
+              "meaning": "The small thing a new plant grows from.",
+              "uses": [
+                "We planted a seed.",
+                "A bean is a seed."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
+            },
+            {
+              "w": "senses",
+              "pic": "👀",
+              "meaning": "The five ways your body finds out about the world: seeing, hearing, smelling, tasting and touching.",
+              "uses": [
+                "I use my senses to find my way.",
+                "Which sense tells you the soup is hot?"
+              ],
+              "lesson": 3,
+              "title": "My Body and My Senses",
+              "file": "my-body-and-my-senses.html"
+            },
+            {
+              "w": "shoot",
+              "pic": "🌱",
+              "meaning": "The first green stem that pushes up out of a seed.",
+              "uses": [
+                "The shoot came up on day five.",
+                "A shoot grows towards the light."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
+            },
+            {
+              "w": "sight",
+              "pic": "👁️",
+              "meaning": "Seeing, with your eyes.",
+              "uses": [
+                "Sight tells me the sky is blue.",
+                "Glasses help some people's sight."
+              ],
+              "lesson": 3,
+              "title": "My Body and My Senses",
+              "file": "my-body-and-my-senses.html"
+            },
+            {
+              "w": "sink",
+              "pic": "🪨",
+              "meaning": "To go down under the water.",
+              "uses": [
+                "A stone sinks.",
+                "The key sank to the bottom."
+              ],
+              "lesson": 5,
+              "title": "Pushes, Pulls and Floating",
+              "file": "pushes-pulls-and-floating.html"
+            },
+            {
+              "w": "smell",
+              "pic": "👃🏾",
+              "meaning": "The sense that uses your nose.",
+              "uses": [
+                "I can smell bread baking.",
+                "Smell warns you of smoke."
+              ],
+              "lesson": 3,
+              "title": "My Body and My Senses",
+              "file": "my-body-and-my-senses.html"
+            },
+            {
+              "w": "socket",
+              "pic": "🏠",
+              "meaning": "The holes in the wall that electricity comes out of.",
+              "uses": [
+                "Never poke anything into a socket.",
+                "The socket is behind the sofa."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
+            },
+            {
+              "w": "soil",
+              "pic": "🪴",
+              "meaning": "The dark, crumbly top part of the land, where plants grow.",
+              "uses": [
+                "Seeds grow in soil.",
+                "Dig down and there is soil."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "sound",
+              "pic": "🔊",
+              "meaning": "Something you hear.",
+              "uses": [
+                "A drum makes a loud sound.",
+                "Where did that sound come from?"
+              ],
+              "lesson": 6,
+              "title": "Sounds Near and Far",
+              "file": "sounds-near-and-far.html"
+            },
+            {
+              "w": "source",
+              "pic": "🥁",
+              "meaning": "The thing a sound comes from.",
+              "uses": [
+                "The bell is the source of the ringing.",
+                "Find the source of the sound."
+              ],
+              "lesson": 6,
+              "title": "Sounds Near and Far",
+              "file": "sounds-near-and-far.html"
+            },
+            {
+              "w": "star",
+              "pic": "⭐",
+              "meaning": "A huge ball of fire, very far away. The Sun is a star.",
+              "uses": [
+                "I can see a star.",
+                "The Sun is our nearest star."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "steel",
+              "pic": "🔩",
+              "meaning": "A strong metal that magnets stick to.",
+              "uses": [
+                "The key is made of steel.",
+                "Steel spoons are magnetic."
+              ],
+              "lesson": 7,
+              "title": "Electricity and Magnets",
+              "file": "electricity-and-magnets.html"
+            },
+            {
+              "w": "stem",
+              "pic": "🌱",
+              "meaning": "The part that holds a plant up and carries water to the leaves.",
+              "uses": [
+                "A sunflower has a tall stem.",
+                "Water goes up the stem to the leaves."
+              ],
+              "lesson": 2,
+              "title": "Parts of a Plant",
+              "file": "parts-of-a-plant.html"
+            },
+            {
+              "w": "Sun",
+              "pic": "☀️",
+              "meaning": "The star that gives Earth light and heat.",
+              "uses": [
+                "The Sun rises in the morning.",
+                "The Sun warms the ground."
+              ],
+              "lesson": 8,
+              "title": "Our Earth, Our Sun",
+              "file": "our-earth-our-sun.html"
+            },
+            {
+              "w": "taste",
+              "pic": "👅",
+              "meaning": "The sense that uses your tongue.",
+              "uses": [
+                "Lemons taste sour.",
+                "My tongue tastes sweet, salty and sour things."
+              ],
+              "lesson": 3,
+              "title": "My Body and My Senses",
+              "file": "my-body-and-my-senses.html"
+            },
+            {
+              "w": "touch",
+              "pic": "✋🏾",
+              "meaning": "The sense that uses your skin, to feel things.",
+              "uses": [
+                "Touch tells me the ice is cold.",
+                "In the feely bag, only touch could help."
+              ],
+              "lesson": 3,
+              "title": "My Body and My Senses",
+              "file": "my-body-and-my-senses.html"
+            },
+            {
+              "w": "vibrate",
+              "pic": "〰️",
+              "meaning": "To shake very fast. Things vibrate when they make a sound.",
+              "uses": [
+                "The drum skin vibrates.",
+                "Feel your throat vibrate when you hum."
+              ],
+              "lesson": 6,
+              "title": "Sounds Near and Far",
+              "file": "sounds-near-and-far.html"
+            },
+            {
+              "w": "waterproof",
+              "pic": "☔",
+              "meaning": "Water does not go through it.",
+              "uses": [
+                "A raincoat is waterproof.",
+                "Paper is not waterproof. It goes soggy."
+              ],
+              "lesson": 4,
+              "title": "What Is It Made Of?",
+              "file": "what-is-it-made-of.html"
+            }
+          ],
+          "teaches": [
+            {
+              "code": "1Ps.01",
+              "text": "Identify different sources of sound."
+            },
+            {
+              "code": "1Bs.02",
+              "text": "Identify the senses (limited to sight, hearing, taste, smell and touch) and what they detect, linking each to the correct body part."
+            },
+            {
+              "code": "1TWSc.01",
+              "text": "Sort and group objects, materials and living things based on observations of the similarities and differences between them."
+            },
+            {
+              "code": "1Ps.02",
+              "text": "Explore that as sound travels from a source it becomes quieter."
+            },
+            {
+              "code": "1TWSp.02",
+              "text": "Make predictions about what they think will happen."
+            },
+            {
+              "code": "1TWSc.03",
+              "text": "Take measurements in non-standard units."
+            },
+            {
+              "code": "1TWSc.04",
+              "text": "Follow instructions safely when doing practical work."
+            },
+            {
+              "code": "1TWSa.01",
+              "text": "Describe what happened during an enquiry and if it matched predictions."
+            },
+            {
+              "code": "1TWSc.05",
+              "text": "Collect and record observations and/or measurements by annotating images and completing simple tables."
+            },
+            {
+              "code": "1TWSc.02",
+              "text": "Use given equipment appropriately."
+            },
+            {
+              "code": "1SIC.02",
+              "text": "Talk about how science explains how objects they use, or know about, work."
+            },
+            {
+              "code": "1SIC.03",
+              "text": "Know that everyone uses science and identify people who use science professionally."
+            }
+          ],
+          "strands": [
+            [
+              "Thinking and Working Scientifically",
+              "Ask questions, predict, sort, use equipment safely, measure in hands and cubes, record in tables, say whether it matched."
+            ],
+            [
+              "Biology",
+              "Living and never alive; what animals and plants need; parts of a plant; the body and the five senses; how people are alike and different."
+            ],
+            [
+              "Chemistry",
+              "Wood, metal, plastic, glass, rock, paper and fabric; object versus material; properties; squashing, bending, twisting and stretching."
+            ],
+            [
+              "Physics",
+              "How things move; pushes and pulls; floating and sinking; sources of sound and sound fading with distance; electricity and magnets."
+            ],
+            [
+              "Earth and Space",
+              "Earth is our planet and mostly water; land is rock and soil; the Sun gives light and heat and is one of many stars."
+            ],
+            [
+              "Science in Context",
+              "How thinking has changed, how everyday things work, who uses science at work, and how what we do affects the world."
+            ]
+          ],
+          "hub": "g1-index.html",
+          "gradeLabel": "Grade 1",
+          "lessonNo": 6,
+          "homeStep": 11
         }
       }
     ]
@@ -3312,6 +4845,834 @@
     });
   }
 
+  /* ==================================================================
+     STAGE 2 - what Grade 2 asked for that Grade 1 did not have.
+     Same rules as everything above: a step is a KIND of doing, a sim is
+     a real state machine, and nothing here waits on a paint callback.
+     ================================================================== */
+
+  /* ---- put things in order ------------------------------------------
+     Life stages (egg, chick, hen), a day (morning, midday, evening). The
+     child taps what comes FIRST, then next; a wrong tap shakes and says
+     which end it belongs at rather than just "no". */
+  function order(o) {
+    const el = o.el, items = o.items, placed = [];
+    let lock = false, wrong = 0;
+    function draw() {
+      const left = items.filter((_, k) => !placed.includes(k));
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="orderrow">' +
+        (placed.length ? placed.map((k, p) => '<span class="ordered"><b>' + (p + 1) + "</b>" + small(items[k].pic) + " " + esc(items[k].label) + "</span>").join('<span class="arrow" aria-hidden="true">&rarr;</span>') : '<span class="sub">Tap what comes first</span>') +
+        '</div><div class="cardsgrid" id="' + el.stage + 'pool">' + shuffle(items.map((it, k) => ({ it, k }))).filter((x) => !placed.includes(x.k)).map((x) =>
+          '<button type="button" class="tapcard" data-k="' + x.k + '"><span class="cpic" aria-hidden="true">' + small(x.it.pic) + "</span>" + esc(x.it.label) + "</button>").join("") + "</div></div>";
+      $(el.score).textContent = placed.length + " of " + items.length + " in order";
+      if (left.length === 0) return;
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".tapcard"); if (!b || lock) return;
+      const k = Number(b.dataset.k), expect = placed.length;
+      if (k === expect) {
+        placed.push(k); SOUND.play("pop", 0.35);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + (items[k].say || "");
+        say(cheer() + " " + (items[k].say || items[k].label));
+        draw();
+        if (placed.length === items.length) {
+          lock = true;
+          setTimeout(() => {
+            const line = "All " + items.length + " in the right order. " + o.done;
+            $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+            reportScore(o.finish, Math.max(0, items.length - wrong), items.length);
+            finish(o.finish, line);
+          }, 2200);
+        }
+      } else {
+        wrong++; b.classList.add("wrong");
+        const hint = k < expect ? "That one has already happened." : "Not yet. Something comes before " + items[k].label + ".";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = hint; say(hint);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+      }
+    });
+    draw();
+  }
+
+  /* ---- a block graph the child builds, then reads a pattern from -----
+     The values are given (they came from the experiment or the count the
+     step before); the child stacks a block per unit in each column, and
+     the graph is finished when every column is the right height. Then
+     one question about the pattern - increasing, decreasing, the biggest,
+     the smallest - which is 2TWSa.02, and the graph itself is 2TWSa.03. */
+  function blockGraph(o) {
+    const el = o.el, cols = o.columns, count = cols.map(() => 0);
+    const maxV = Math.max.apply(null, cols.map((c) => c.value));
+    let asked = false, lock = false;
+    function draw() {
+      $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small"><thead><tr><th>' + esc(o.columns_label || "") + "</th><th>" + esc(o.value_label || "how many") + "</th></tr></thead><tbody>" +
+        cols.map((c) => '<tr><td><span class="rowlab">' + small(c.pic) + " " + esc(c.label) + '</span></td><td><span class="cell filled">' + c.value + (o.unit ? " " + esc(o.unit) : "") + "</span></td></tr>").join("") + "</tbody></table>" +
+        '<div class="graph" role="img" aria-label="A block graph">' + cols.map((c, k) =>
+          '<div class="gcol"><div class="gstack" style="height:' + (maxV * 26 + 6) + 'px">' + Array.from({ length: count[k] }, () => '<i class="gblock"></i>').join("") + "</div>" +
+          '<button type="button" class="big small' + (count[k] >= c.value ? " ghost" : " teal") + '" data-k="' + k + '"' + (count[k] >= c.value ? " disabled" : "") + '>+ block</button>' +
+          '<span class="glab">' + small(c.pic) + "<br>" + esc(c.label) + (count[k] >= c.value ? " &#10003;" : "") + "</span></div>").join("") + "</div></div>";
+      const done = cols.filter((c, k) => count[k] >= c.value).length;
+      $(el.score).textContent = done + " of " + cols.length + " columns built";
+    }
+    function askPattern() {
+      asked = true;
+      $(el.ask).innerHTML = o.pattern.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(o.pattern.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.score).textContent = "Read the graph";
+      sayHere(o.finish, plain(o.pattern.ask));
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest("[data-k]"); if (!b || asked) return;
+      const k = Number(b.dataset.k);
+      if (count[k] >= cols[k].value) return;
+      count[k]++; SOUND.play("click", 0.35); draw();
+      if (count[k] === cols[k].value) { $(el.fb).className = "fb good"; $(el.fb).textContent = cols[k].label + ": " + cols[k].value + ". That column is right."; say(cols[k].label + ", " + cols[k].value + "."); }
+      if (cols.every((c, j) => count[j] >= c.value)) {
+        reportAttempt(o.finish, cols.length, cols.length, "columns");
+        setTimeout(() => { $(el.fb).textContent = ""; $(el.fb).className = "fb"; askPattern(); }, 1800);
+      }
+    });
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const ok = b.dataset.ok === "1";
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + o.pattern.why; say($(el.fb).textContent);
+      reportScore(o.finish, ok ? 1 : 0, 1);
+      setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 2800);
+    });
+    draw();
+  }
+
+  /* ---- find the answer in a fact card ---------------------------------
+     2TWSc.05: use a given secondary source. The card stays on screen while
+     the questions are asked, and each answer is IN the card, so the skill
+     being practised is reading for an answer rather than remembering one. */
+  function lookup(o) {
+    const el = o.el;
+    let i = 0, right = 0, lock = false;
+    $(el.stage).innerHTML = '<div class="stagewide"><div class="factcard"><h3>' + esc(o.source.title) + "</h3>" +
+      o.source.lines.map((l) => "<p>" + l + "</p>").join("") + "</div></div>";
+    function draw() {
+      lock = false;
+      const it = o.items[i];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = "Find it in the card: question " + (i + 1) + " of " + o.items.length;
+      sayHere(o.finish, plain(it.ask) + " Look in the card.");
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = o.items[i], ok = b.dataset.ok === "1";
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Read the card again. ") + it.why; say($(el.fb).textContent);
+      i++;
+      setTimeout(() => {
+        if (i >= o.items.length) {
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          const line = "You found " + right + " of " + o.items.length + " in the card. " + o.done;
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+          reportScore(o.finish, right, o.items.length);
+          finish(o.finish, line);
+        } else draw();
+      }, 2700);
+    });
+    draw();
+  }
+
+  /* ---- build a model --------------------------------------------------
+     2TWSm.02 (make and use a model) and 2Pe.03 (construct a circuit) in
+     one shape: a palette of parts, a sim that accepts them one at a time
+     and knows when the model is complete, then something to DO with the
+     model (break the circuit, mend it) before the step is done. */
+  function build(o) {
+    const el = o.el, sim = SIMS[o.sim];
+    const added = new Set();
+    $(el.stage).innerHTML = '<div class="stagewide"><div class="sim" id="' + el.stage + 'sim"></div><div class="simrow" id="' + el.stage + 'ctl"></div>' +
+      '<div class="cardsgrid" id="' + el.stage + 'parts">' + o.parts.map((p) => '<button type="button" class="tapcard" data-p="' + p.id + '"><span class="cpic" aria-hidden="true">' + small(p.pic) + "</span>" + esc(p.label) + "</button>").join("") + "</div></div>";
+    const box = $(el.stage + "sim"), api = { id: el.stage, controls: $(el.stage + "ctl"), say: (t) => sayHere(o.finish, t),
+      done: () => { $(el.stage + "parts").innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; reportAttempt(o.finish, o.parts.length, o.parts.length, "parts"); finish(o.finish, o.done); } };
+    sim.init(box);
+    $(el.score).textContent = "Tap each part to add it";
+    $(el.stage + "parts").addEventListener("click", (e) => {
+      const b = e.target.closest(".tapcard"); if (!b || added.has(b.dataset.p)) return;
+      const part = o.parts.find((p) => p.id === b.dataset.p);
+      added.add(part.id); b.classList.add("heard"); b.disabled = true;
+      SOUND.play("click", 0.4);
+      const line = sim.add(box, part.id, api);
+      $(el.fb).className = "fb"; $(el.fb).textContent = line || part.label + " added."; say(line || part.label + " added.");
+      $(el.score).textContent = added.size + " of " + o.parts.length + " parts added";
+      if (added.size >= o.parts.length) setTimeout(() => sim.complete(box, api), 900);
+    });
+  }
+
+  /* ---- Stage 2 figures ------------------------------------------------ */
+  FIGURES.mouth = () => (
+    '<svg viewBox="0 0 320 240" role="img" aria-label="An open mouth showing the teeth">' +
+    '<ellipse cx="160" cy="120" rx="150" ry="100" fill="#C4453A"/>' +
+    '<ellipse cx="160" cy="132" rx="118" ry="70" fill="#7A2E2E"/>' +
+    '<g data-part="tongue" tabindex="0" role="button" aria-label="tongue"><ellipse cx="160" cy="170" rx="70" ry="28" fill="#E9744F"/><ellipse class="outline" cx="160" cy="170" rx="76" ry="34"/></g>' +
+    '<g data-part="molars" tabindex="0" role="button" aria-label="molars"><g fill="#FFFDF6" stroke="#D9D2C0" stroke-width="2">' +
+    '<rect x="44" y="82" width="26" height="24" rx="6"/><rect x="72" y="72" width="26" height="24" rx="6"/><rect x="222" y="72" width="26" height="24" rx="6"/><rect x="250" y="82" width="26" height="24" rx="6"/>' +
+    '<rect x="44" y="140" width="26" height="24" rx="6"/><rect x="72" y="150" width="26" height="24" rx="6"/><rect x="222" y="150" width="26" height="24" rx="6"/><rect x="250" y="140" width="26" height="24" rx="6"/></g>' +
+    '<path class="outline" d="M40 68 h62 v42 h-62z M218 68 h62 v42 h-62z M40 136 h62 v42 h-62z M218 136 h62 v42 h-62z"/></g>' +
+    '<g data-part="canines" tabindex="0" role="button" aria-label="canines"><g fill="#FFFDF6" stroke="#D9D2C0" stroke-width="2">' +
+    '<path d="M104 62 h18 v18 l-9 16 l-9 -16z"/><path d="M198 62 h18 v18 l-9 16 l-9 -16z"/><path d="M104 178 h18 v-18 l-9 -16 l-9 16z"/><path d="M198 178 h18 v-18 l-9 -16 l-9 16z"/></g>' +
+    '<path class="outline" d="M100 56 h26 v46 h-26z M194 56 h26 v46 h-26z M100 138 h26 v46 h-26z M194 138 h26 v46 h-26z"/></g>' +
+    '<g data-part="incisors" tabindex="0" role="button" aria-label="incisors"><g fill="#FFFDF6" stroke="#D9D2C0" stroke-width="2">' +
+    '<rect x="126" y="58" width="16" height="30" rx="4"/><rect x="144" y="56" width="16" height="32" rx="4"/><rect x="162" y="56" width="16" height="32" rx="4"/><rect x="180" y="58" width="16" height="30" rx="4"/>' +
+    '<rect x="126" y="152" width="16" height="30" rx="4"/><rect x="144" y="152" width="16" height="32" rx="4"/><rect x="162" y="152" width="16" height="32" rx="4"/><rect x="180" y="152" width="16" height="30" rx="4"/></g>' +
+    '<rect class="outline" x="122" y="52" width="78" height="40" rx="8"/><rect class="outline" x="122" y="148" width="78" height="40" rx="8"/></g>' +
+    "</svg>");
+
+  function circuitSvg(state) {
+    /* state: {cell, lamp, wireTop, wireBottom, gap, on} - missing parts are dashed ghosts */
+    const g = (present) => present ? 'stroke="#F4C95D" stroke-width="6"' : 'stroke="#2B5673" stroke-width="4" stroke-dasharray="8 8"';
+    const on = state.on && state.cell && state.lamp && state.wireTop && state.wireBottom && !state.gap;
+    return '<svg viewBox="0 0 320 220" role="img" aria-label="A circuit: a cell, two wires and a lamp' + (on ? ", lit" : "") + '">' +
+      '<rect width="320" height="220" fill="#0E2434"/>' +
+      '<path d="M60 60 H260" fill="none" ' + g(state.wireTop) + ' stroke-linecap="round"/>' +
+      (state.gap ? '<rect x="140" y="150" width="40" height="20" fill="#0E2434"/><text x="160" y="196" text-anchor="middle" fill="#F0806F" font-size="13" font-family="Inter, sans-serif" font-weight="800">a gap</text>' : "") +
+      '<path d="M60 160 H' + (state.gap ? "140" : "260") + '" fill="none" ' + g(state.wireBottom) + ' stroke-linecap="round"/>' +
+      (state.gap ? '<path d="M180 160 H260" fill="none" ' + g(state.wireBottom) + ' stroke-linecap="round"/>' : "") +
+      '<g data-part="cell" tabindex="0" role="button" aria-label="cell"><path d="M60 60 V92 M60 128 V160" fill="none" ' + g(state.cell) + '/>' +
+      (state.cell ? '<rect x="40" y="92" width="40" height="10" fill="#F4C95D"/><rect x="50" y="118" width="20" height="10" fill="#F4C95D"/><text x="26" y="118" fill="#93AABE" font-size="14" font-family="Inter, sans-serif" font-weight="800">cell</text>' : '<rect x="40" y="92" width="40" height="36" fill="none" stroke="#2B5673" stroke-dasharray="6 6"/>') +
+      '<rect class="outline" x="30" y="84" width="60" height="52" rx="8"/></g>' +
+      '<g data-part="wire" tabindex="0" role="button" aria-label="wires"><rect class="outline" x="92" y="48" width="136" height="24" rx="8"/></g>' +
+      '<g data-part="lamp" tabindex="0" role="button" aria-label="lamp"><path d="M260 60 V88 M260 132 V160" fill="none" ' + g(state.lamp) + '/>' +
+      (state.lamp ? '<circle cx="260" cy="110" r="22" fill="' + (on ? "#F4C95D" : "#1B3A52") + '" stroke="#F4C95D" stroke-width="4"/><path d="M246 96 L274 124 M274 96 L246 124" stroke="' + (on ? "#0E2434" : "#F4C95D") + '" stroke-width="3"/>' + (on ? '<g stroke="#F4C95D" stroke-width="3" stroke-linecap="round"><line x1="260" y1="74" x2="260" y2="66"/><line x1="292" y1="110" x2="300" y2="110"/><line x1="283" y1="87" x2="289" y2="81"/><line x1="283" y1="133" x2="289" y2="139"/></g>' : "") : '<circle cx="260" cy="110" r="22" fill="none" stroke="#2B5673" stroke-dasharray="6 6"/>') +
+      '<text x="260" y="196" text-anchor="middle" fill="#93AABE" font-size="14" font-family="Inter, sans-serif" font-weight="800">' + (state.lamp ? (on ? "lamp ON" : "lamp off") : "") + "</text>" +
+      '<circle class="outline" cx="260" cy="110" r="30"/></g>' +
+      "</svg>";
+  }
+  FIGURES.circuit = () => circuitSvg({ cell: true, lamp: true, wireTop: true, wireBottom: true, on: true });
+
+  /* ---- Stage 2 scenes ------------------------------------------------- */
+  SCENES.habitat = (s) => {
+    const sky = ["#BFE3F5", "#F6D28B", "#A9D3B6", "#DDEFF7"][s], ground = ["#3B7FD1", "#E0B86A", "#2F6B3A", "#EAF4FA"][s];
+    const items = [
+      '<text x="70" y="150" font-size="40">\u{1F438}</text><text x="200" y="120" font-size="40">\u{1F986}</text><text x="130" y="185" font-size="34">\u{1F41F}</text><text x="250" y="180" font-size="34">\u{1FAB7}</text>',
+      '<text x="60" y="170" font-size="44">\u{1F42A}</text><text x="200" y="160" font-size="40">\u{1F335}</text><text x="260" y="180" font-size="30">\u{1F98E}</text><text x="130" y="185" font-size="30">\u{1F982}</text>',
+      '<text x="40" y="120" font-size="48">\u{1F333}</text><text x="220" y="120" font-size="48">\u{1F333}</text><text x="120" y="180" font-size="36">\u{1F98C}</text><text x="230" y="185" font-size="30">\u{1F344}</text><text x="170" y="100" font-size="26">\u{1F426}</text>',
+      '<text x="60" y="170" font-size="44">\u{1F43B}‍❄️</text><text x="200" y="175" font-size="40">\u{1F427}</text><text x="130" y="110" font-size="30">❄️</text><text x="260" y="100" font-size="30">❄️</text>',
+    ][s];
+    const name = ["A pond", "A desert", "A forest", "The icy Arctic"][s];
+    return '<svg viewBox="0 0 320 200" role="img" aria-label="' + name + '"><rect width="320" height="200" fill="' + sky + '"/><rect x="0" y="130" width="320" height="70" fill="' + ground + '"/>' + (s === 1 ? '<circle cx="270" cy="40" r="26" fill="#F4C95D"/>' : "") + items + "</svg>";
+  };
+  SCENES.extract = (s) => {
+    const parts = [
+      '<path d="M0 200 V90 L60 90 L60 120 L120 120 L120 150 L200 150 L200 180 L320 180 V200z" fill="#7D7F86"/><text x="230" y="140" font-size="40">\u{1F69C}</text><text x="70" y="80" font-size="34">\u{1F477}</text>',
+      '<rect x="0" y="80" width="320" height="120" fill="#5B5D63"/><rect x="60" y="80" width="120" height="70" fill="#0B1D2C"/><text x="90" y="135" font-size="34">\u{1F477}</text><text x="220" y="140" font-size="34">\u{1F4A1}</text><rect x="0" y="60" width="320" height="20" fill="#3E8E4A"/>',
+      '<path d="M0 120 Q160 80 320 120 V200 H0z" fill="#3B7FD1"/><ellipse cx="80" cy="170" rx="14" ry="8" fill="#B7B7B7"/><ellipse cx="150" cy="185" rx="10" ry="6" fill="#B7B7B7"/><ellipse cx="240" cy="165" rx="16" ry="9" fill="#B7B7B7"/><text x="180" y="120" font-size="34">\u{1F9CD}</text>',
+    ][s];
+    return '<svg viewBox="0 0 320 200" role="img" aria-label="' + ["A quarry", "A mine", "A riverbed"][s] + '"><rect width="320" height="200" fill="#BFE3F5"/>' + parts + "</svg>";
+  };
+
+  /* ---- Stage 2 sims ---------------------------------------------------- */
+  SIMS.circuit = {
+    state: null,
+    init(box) { this.state = { cell: false, lamp: false, wireTop: false, wireBottom: false, gap: false, on: true }; box.innerHTML = circuitSvg(this.state); },
+    add(box, part, api) {
+      const s = this.state;
+      if (part === "cell") s.cell = true; else if (part === "lamp") s.lamp = true; else if (part === "wire1") s.wireTop = true; else if (part === "wire2") s.wireBottom = true;
+      box.innerHTML = circuitSvg(s);
+      const all = s.cell && s.lamp && s.wireTop && s.wireBottom;
+      if (all) { SOUND.play("ding", 0.5); return "The loop is closed. The lamp lights up!"; }
+      return { cell: "The cell. It pushes the electricity round.", lamp: "The lamp. It lights when electricity flows through it.", wire1: "A wire, from the cell towards the lamp.", wire2: "Another wire, from the lamp back to the cell." }[part];
+    },
+    complete(box, api) {
+      let broken = false, mended = false;
+      api.controls.innerHTML = '<button type="button" class="big small" id="' + api.id + 'gap">Take a wire out</button>';
+      $(api.id + "gap").addEventListener("click", () => {
+        const s = this.state;
+        if (!s.gap) { s.gap = true; broken = true; box.innerHTML = circuitSvg(s); SOUND.play("click", 0.4); api.say("A gap in the loop. The electricity cannot go round, and the lamp goes out."); $(api.id + "gap").textContent = "Put the wire back"; }
+        else { s.gap = false; mended = true; box.innerHTML = circuitSvg(s); SOUND.play("ding", 0.5); api.say("The loop is closed again and the lamp is back on. A circuit only works as a complete loop."); }
+        if (broken && mended) setTimeout(() => { api.controls.innerHTML = ""; api.done(); }, 2200);
+      });
+      api.say("Your model works like a real torch. Now take a wire out and see what happens.");
+    },
+  };
+  SIMS.darkRoom = {
+    draw(box, curtains, lamp) {
+      const dark = curtains && !lamp;
+      const light = lamp || !curtains;
+      box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A room, ' + (dark ? "completely dark" : lamp ? "lit by a lamp" : "lit by the window") + '">' +
+        '<rect width="320" height="200" fill="' + (dark ? "#000" : light ? "#F4EAD4" : "#2A3A4A") + '"/>' +
+        (dark ? "" : '<rect x="30" y="30" width="80" height="70" fill="' + (curtains ? "#5B3A2E" : "#BFE3F5") + '" stroke="#6B4A2B" stroke-width="6"/>' + (curtains ? "" : '<circle cx="90" cy="50" r="14" fill="#F4C95D"/>') +
+          '<rect x="0" y="150" width="320" height="50" fill="' + (light ? "#C9B79C" : "#1B2A2F") + '"/>' +
+          '<text x="200" y="145" font-size="44">\u{1F431}</text><text x="130" y="150" font-size="40">\u{1FA91}</text>' +
+          '<g><line x1="270" y1="150" x2="270" y2="60" stroke="#93AABE" stroke-width="4"/><path d="M245 60 h50 l-10 -30 h-30z" fill="' + (lamp ? "#F4C95D" : "#4A5A6A") + '"/>' + (lamp ? '<ellipse cx="270" cy="110" rx="60" ry="50" fill="#F4C95D" opacity="0.18"/>' : "") + "</g>") +
+        (dark ? '<text x="160" y="110" text-anchor="middle" fill="#334" font-size="16" font-family="Inter, sans-serif" font-weight="800">no light at all</text>' : "") +
+        "</svg>";
+    },
+    init(box) { SIMS.darkRoom.draw(box, false, true); },
+    run(box, api) {
+      return new Promise((done) => {
+        let curtains = false, lamp = true, wentDark = false;
+        const paint = () => {
+          SIMS.darkRoom.draw(box, curtains, lamp);
+          api.controls.innerHTML = '<button type="button" class="big small ghost" id="' + api.id + 'c">' + (curtains ? "Open the curtains" : "Close the curtains") + '</button><button type="button" class="big small" id="' + api.id + 'l">' + (lamp ? "Switch the lamp off" : "Switch the lamp on") + "</button>";
+          $(api.id + "c").addEventListener("click", () => { curtains = !curtains; SOUND.play("click", 0.3); paint(); api.say(curtains ? (lamp ? "Curtains closed. The lamp still lights the room." : "Curtains closed and no lamp. It is completely dark. You cannot see the cat, the chair, anything.") : "Curtains open. Daylight comes in from the Sun."); check(); });
+          $(api.id + "l").addEventListener("click", () => { lamp = !lamp; SOUND.play("click", 0.3); paint(); api.say(lamp ? "Lamp on. Light again, and you can see." : (curtains ? "Lamp off and curtains closed. Darkness. Darkness is what is left when there is no light." : "Lamp off, but daylight still comes through the window.")); check(); });
+        };
+        const check = () => {
+          if (curtains && !lamp) wentDark = true;
+          if (wentDark && lamp) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 1600);
+        };
+        paint();
+      });
+    },
+  };
+  SIMS.sunPath = {
+    /* t = 0..4: 9am, midday, 3pm, 6pm (sunset), and the start at sunrise */
+    draw(box, t) {
+      const pos = [[40, 150], [100, 70], [160, 30], [220, 70], [280, 150]][t];
+      const shadow = [[160, 150, 100, 150], [160, 150, 220, 150], [160, 150, 172, 150], [160, 150, 100, 150], [160, 150, 40, 150]];
+      const label = ["Sunrise, in the east", "9 in the morning", "Midday, high in the sky", "3 in the afternoon", "Sunset, in the west"][t];
+      const sh = [["long", 3], ["medium", 2], ["short", 1], ["medium", 2], ["long", 3]][t];
+      const shx = { 0: [160, 60], 1: [160, 100], 2: [160, 148], 3: [160, 220], 4: [160, 260] }[t];
+      return '<svg viewBox="0 0 320 200" role="img" aria-label="' + label + ', the shadow is ' + sh[0] + '">' +
+        '<rect width="320" height="150" fill="' + (t === 0 || t === 4 ? "#F0A56B" : "#BFE3F5") + '"/><rect x="0" y="150" width="320" height="50" fill="#3E8E4A"/>' +
+        '<path d="M20 150 Q160 -40 300 150" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="5 6" opacity="0.6"/>' +
+        '<text x="20" y="180" fill="#fff" font-size="13" font-family="Inter, sans-serif" font-weight="800">EAST</text><text x="262" y="180" fill="#fff" font-size="13" font-family="Inter, sans-serif" font-weight="800">WEST</text>' +
+        '<line x1="' + shx[0] + '" y1="150" x2="' + shx[1] + '" y2="' + (t === 2 ? 150 : 150) + '" stroke="#0B1D2C" stroke-width="' + (t === 2 ? 10 : 8) + '" opacity="0.6" stroke-linecap="round"/>' +
+        '<rect x="156" y="90" width="8" height="60" fill="#6B4A2B"/>' +
+        '<circle cx="' + pos[0] + '" cy="' + pos[1] + '" r="18" fill="#F4C95D"/>' +
+        '<text x="160" y="24" text-anchor="middle" fill="#0B1D2C" font-size="14" font-family="Inter, sans-serif" font-weight="800">' + label + ' &middot; shadow: ' + sh[0] + '</text></svg>';
+    },
+    init(box) { box.innerHTML = SIMS.sunPath.draw(box, 0); },
+    run(box, api) {
+      return new Promise((done) => {
+        let t = 0;
+        api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 'h">⏳ Three hours later</button>';
+        $(api.id + "h").addEventListener("click", () => {
+          if (t >= 4) return;
+          t++; box.innerHTML = SIMS.sunPath.draw(box, t); SOUND.play("click", 0.3);
+          api.say(["", "Nine in the morning. The Sun is higher in the east. The shadow points west and is shorter.", "Midday. The Sun is at its highest. The shadow is the shortest it will be all day.", "Three in the afternoon. The Sun is going down in the west. The shadow points east and is getting longer.", "Sunset. The Sun is low in the west, where it will disappear. The shadow is long again. The Sun seems to move across the sky - it rises in the east, climbs, and sets in the west."][t]);
+          if (t >= 4) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 2600);
+        });
+      });
+    },
+  };
+  SIMS.newMaterial = {
+    draw(box, heat, cooled) {
+      const stage = heat >= 3 ? "cooked" : heat === 2 ? "turning white" : heat === 1 ? "warming" : "raw";
+      const white = heat >= 3 ? "#FFFDF6" : heat === 2 ? "#F7EEDC" : "rgba(255,253,246,0.55)";
+      box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="An egg in a pan, ' + stage + '">' +
+        '<rect width="320" height="200" fill="#2A3A4A"/><ellipse cx="160" cy="130" rx="120" ry="44" fill="#4A5A6A"/><rect x="270" y="122" width="44" height="12" rx="6" fill="#1B2A2F"/>' +
+        (heat > 0 && !cooled ? '<g fill="#E9744F" opacity="0.7"><path d="M90 178 q10 -20 0 -40 q10 20 20 40z"/><path d="M160 180 q10 -22 0 -44 q10 22 20 44z"/><path d="M230 178 q10 -20 0 -40 q10 20 20 40z"/></g>' : "") +
+        '<ellipse cx="160" cy="126" rx="58" ry="26" fill="' + white + '" stroke="#D9D2C0" stroke-width="2"/><circle cx="160" cy="124" r="16" fill="#F4C95D"/>' +
+        '<text x="160" y="40" text-anchor="middle" fill="#fff" font-size="16" font-family="Inter, sans-serif" font-weight="800">' + (cooled ? "cooled down - still cooked" : stage) + "</text></svg>";
+    },
+    init(box) { SIMS.newMaterial.draw(box, 0, false); },
+    run(box, api) {
+      return new Promise((done) => {
+        let heat = 0, cooled = false;
+        const paint = () => {
+          api.controls.innerHTML = heat < 3
+            ? '<button type="button" class="big small" id="' + api.id + 'h">🔥 Heat it</button>'
+            : (cooled ? "" : '<button type="button" class="big teal small" id="' + api.id + 'c">❄️ Cool it down</button>');
+          const h = $(api.id + "h"), c = $(api.id + "c");
+          if (h) h.addEventListener("click", () => { heat++; SIMS.newMaterial.draw(box, heat, false); SOUND.play("kettle", 0.3); api.say(["", "The pan warms up. The clear part of the egg starts to change.", "It is turning white and going solid.", "Cooked. The runny clear egg is now white and solid. It is a different material now."][heat]); paint(); });
+          if (c) c.addEventListener("click", () => { cooled = true; SIMS.newMaterial.draw(box, heat, true); SOUND.play("click", 0.3); api.say("Cooled down, and still cooked. Cooling does not turn it back into a raw egg. Cooking made a NEW material, and there is no going back."); paint(); setTimeout(() => { api.controls.innerHTML = ""; done(); }, 2600); });
+        };
+        paint();
+      });
+    },
+  };
+
+  /* ==================================================================
+     THE UNIT SHELL - seven steps drawn AROUND every lesson (owner,
+     2026-09-10), the furniture the English Grade 1 build carries around a
+     unit: what it is about, a lecture, the words, games, things to do at
+     home, a placeholder for Science world, and the student-resources
+     drawer. _shell.py decides where they sit and what they carry; these
+     only draw.
+
+     Three of them tick themselves off - the overview and Science world on
+     arrival, the drawer on first opening - for the reason the English
+     build's plan step records: a page you have to finish before the
+     lesson will open is a lock on the front door. Everything else is
+     earned.
+     ================================================================== */
+
+  /* ---- what this lesson is about ---- */
+  function unitOverview(o) {
+    const el = o.el;
+    const c = o.counts || {};
+    const bits = [];
+    if (c.steps) bits.push(c.steps + " steps");
+    if (c.words) bits.push(c.words + " science words");
+    if (c.games) bits.push(c.games + " games");
+    if (c.home) bits.push(c.home + " things to do at home");
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="ovw">' +
+      (bits.length ? '<p class="ovw-bits">' + bits.map((b) => "<span>" + esc(b) + "</span>").join("") + "</p>" : "") +
+      '<h3 class="ovw-h">By the end of this lesson you will be able to&hellip;</h3>' +
+      '<ol class="ovw-list">' + (o.about || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
+      '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'r">&#128266; Read it to me</button></div></div>';
+    $(el.score).textContent = (o.about || []).length + " things to learn";
+    $(el.stage + "r").addEventListener("click", () =>
+      say("By the end of this lesson you will be able to. " + (o.about || []).join(". ")));
+    finish(o.finish, o.done);
+  }
+
+  /* ---- the unit lecture: the lesson told in parts, by the voice ----
+     No video exists for these lessons, and this says so on its face
+     rather than drawing an empty player. The voice reads each part when
+     the child arrives at it; Next part moves on; the last part finishes
+     the step. How far they got is reported in parts. */
+  function lecture(o) {
+    const el = o.el;
+    const parts = o.parts || [];
+    let k = 0, furthest = 0;
+    const id = el.stage + "l";
+    function paint() {
+      const p = parts[k];
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        '<div class="lec">' +
+        '<p class="phase">Part ' + (k + 1) + " of " + parts.length + "</p>" +
+        picHtml(p.pic, "pic lecpic") +
+        '<h3 class="lec-h">' + esc(p.title) + "</h3>" +
+        '<p class="lec-p">' + esc(p.say) + "</p>" +
+        '<div class="bigbtns">' +
+        '<button type="button" class="big small teal" id="' + id + 'hear">&#128266; Listen</button>' +
+        (k > 0 ? '<button type="button" class="big small ghost" id="' + id + 'back">&#9664; Last part</button>' : "") +
+        '<button type="button" class="big small" id="' + id + 'next">' + (k + 1 < parts.length ? "Next part &#9654;" : "I heard it all &#10003;") + "</button>" +
+        "</div>" +
+        '<p class="lec-note">Read aloud by the lesson\'s voice. There is no video for this lesson yet.</p>' +
+        "</div>";
+      furthest = Math.max(furthest, k + 1);
+      reportAttempt(o.finish, furthest, parts.length, "parts");
+      $(el.score).textContent = furthest + " of " + parts.length + " parts heard";
+      $(id + "hear").addEventListener("click", () => say(p.title + ". " + p.say));
+      if (k > 0) $(id + "back").addEventListener("click", () => { k--; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); });
+      $(id + "next").addEventListener("click", () => {
+        if (k + 1 < parts.length) { k++; paint(); sayHere(o.finish, parts[k].title + ". " + parts[k].say); }
+        else {
+          $(el.fb).className = "fb good"; $(el.fb).textContent = o.done;
+          reportAttempt(o.finish, parts.length, parts.length, "parts");
+          finish(o.finish, o.done);
+        }
+      });
+    }
+    if (!parts.length) return;
+    paint();
+    /* The slide's own instruction is spoken on arrival; the first part
+       follows it rather than talking over it. */
+    ONSHOW[o.finish] = () => afterVoice(() => sayHere(o.finish, parts[k].title + ". " + parts[k].say));
+  }
+
+  /* ---- the science words: hear each one, then show you know them ----
+     Two halves. First every word is tapped - picture, meaning, and the
+     word used in a sentence, all spoken. Then the page asks "which word
+     means ...?" for each of them, with the other words of THIS lesson as
+     the wrong answers, so a wrong tap is a word they are also learning. */
+  function scienceWords(o) {
+    const el = o.el;
+    const items = o.items || [];
+    const heard = new Set();
+    let open = -1;
+    const id = el.stage + "w";
+
+    function paintGrid() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML =
+        '<div class="cardsgrid words" id="' + id + 'g">' + items.map((w, k) =>
+          '<button type="button" class="tapcard wordcard' + (heard.has(k) ? " heard" : "") + (open === k ? " now" : "") + '" data-k="' + k + '">' +
+          '<span class="cpic" aria-hidden="true">' + small(w.pic) + "</span>" + esc(w.w) + "</button>").join("") + "</div>" +
+        '<div class="wordpanel" id="' + id + 'p"' + (open < 0 ? " hidden" : "") + "></div>";
+      if (open >= 0) paintPanel();
+      $(el.score).textContent = heard.size + " of " + items.length + " heard";
+      reportAttempt(o.finish, heard.size, items.length, "words");
+      $(id + "g").addEventListener("click", (e) => {
+        const b = e.target.closest(".wordcard"); if (!b) return;
+        open = Number(b.dataset.k); heard.add(open);
+        paintGrid();
+        const w = items[open];
+        say(w.w + ". " + w.meaning + " " + (w.uses[0] || ""));
+        if (heard.size === items.length) {
+          $(el.fb).className = "fb good";
+          $(el.fb).textContent = "You have heard every word. Now, which word is which?";
+          $(el.ch).innerHTML = '<button type="button" class="big small" id="' + id + 'go">Show I know them &#9654;</button>';
+          $(id + "go").addEventListener("click", () => { $(el.ch).innerHTML = ""; $(el.fb).textContent = ""; check(); });
+        }
+      });
+    }
+    function paintPanel() {
+      const w = items[open];
+      $(id + "p").hidden = false;
+      $(id + "p").innerHTML =
+        '<div class="wp-head">' + picHtml(w.pic, "pic mid") + '<div><p class="wp-word">' + esc(w.w) + "</p>" +
+        '<p class="wp-meaning">' + esc(w.meaning) + "</p></div></div>" +
+        '<p class="wp-uses-h">Use it</p><ul class="wp-uses">' + (w.uses || []).map((u) => "<li>" + esc(u) + "</li>").join("") + "</ul>" +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + id + 'h">&#128266; Hear it again</button></div>';
+      $(id + "h").addEventListener("click", () => say(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")));
+    }
+
+    /* the check: which word means this? */
+    function check() {
+      const order = shuffle(items.map((_, k) => k));
+      let i = 0, right = 0, lock = false;
+      const known = [];
+      function draw() {
+        lock = false;
+        const k = order[i], w = items[k];
+        const others = shuffle(items.map((_, j) => j).filter((j) => j !== k)).slice(0, Math.min(2, items.length - 1));
+        const opts = shuffle([k].concat(others));
+        $(el.ask).innerHTML = "Which word means: <b>" + esc(w.meaning) + "</b>";
+        $(el.stage).className = "stagewide";
+        $(el.stage).innerHTML = "";
+        $(el.ch).className = "wordbtns";
+        $(el.ch).innerHTML = opts.map((j) =>
+          '<button type="button" class="wordbtn" data-ok="' + (j === k ? 1 : 0) + '" data-j="' + j + '">' +
+          '<span class="pic" aria-hidden="true">' + small(items[j].pic) + "</span>" + esc(items[j].w) + "</button>").join("");
+        $(el.fb).textContent = ""; $(el.fb).className = "fb";
+        $(el.score).textContent = "Word " + (i + 1) + " of " + items.length;
+        sayHere(o.finish, "Which word means: " + w.meaning);
+      }
+      $(el.ch).addEventListener("click", (e) => {
+        const b = e.target.closest(".wordbtn"); if (!b || lock) return;
+        lock = true;
+        const ok = b.dataset.ok === "1", w = items[order[i]];
+        $(el.ch).querySelectorAll(".wordbtn").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+        if (!ok) b.classList.add("wrong"); else { right++; known.push(w.w); }
+        const msg = ok ? cheer() + " " + w.w + "." : "That word is " + w.w + ". " + w.meaning;
+        $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = msg; say(msg);
+        i++;
+        setTimeout(() => {
+          if (i >= items.length) {
+            $(el.ch).innerHTML = ""; $(el.ch).className = "choices";
+            $(el.ask).innerHTML = "You know " + right + " of " + items.length + " science words.";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = "You got " + right + " of " + items.length + ". " + o.done;
+            $(el.score).textContent = "";
+            reportScore(o.finish, right, items.length);
+            if (known.length) reportKnown(known);
+            finish(o.finish, o.done);
+          } else draw();
+        }, 2400);
+      });
+      draw();
+    }
+    paintGrid();
+  }
+
+  /* ---- Science world: a placeholder that says it is one ---- */
+  function scienceWorld(o) {
+    const el = o.el;
+    $(el.stage).className = "stagewide";
+    $(el.stage).innerHTML =
+      '<div class="world"><div class="pic" aria-hidden="true">\u{1F30D}</div>' +
+      '<h3 class="lec-h">Science world is being built</h3>' +
+      '<p class="lec-p">This part of <b>' + esc(o.title || "the lesson") + "</b> is not here yet. When it is, it will show:</p>" +
+      '<ul class="ovw-list">' + (o.soon || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ul>" +
+      '<p class="lec-note">Nothing to do here. It ticks itself off.</p></div>';
+    $(el.score).textContent = "coming soon";
+    finish(o.finish, o.done);
+  }
+
+  /* ---- the game zone: the lesson's own games, derived by the builder ----
+     A shelf of cards; tap one to play it in a full-screen overlay, the
+     shape the English build's Game Zone uses. Three mechanics, read off
+     the round's own shape: choice (prompt, choices, answer, explanation),
+     spelling (letter tiles from the answer plus two strays), pairs
+     (reveal-and-match). Two games earn the sticker; the count says so. */
+  function gameZone(o) {
+    const el = o.el;
+    const games = o.games || [];
+    const played = new Set();
+    const NEEDED = Math.min(o.mastery || 2, games.length);
+    const id = el.stage + "gz";
+    const tidy = (s) => String(s).replace(/\s+/g, " ").trim().toLowerCase();
+
+    function drawShelf() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="shelf gamelist" id="' + id + '">' + games.map((g, k) =>
+        '<div class="bookcard gamecard' + (played.has(g.id) ? " played" : "") + '">' +
+        '<span class="bookicon" aria-hidden="true">' + (played.has(g.id) ? "✅" : "\u{1F3AE}") + "</span>" +
+        '<span class="booktitle">' + esc(g.title) + "</span>" +
+        (g.skill ? '<span class="bookmeta">' + esc(g.skill) + "</span>" : "") +
+        '<span class="bookmeta">' + g.rounds.length + " rounds</span>" +
+        '<button type="button" class="big small teal" data-game="' + k + '">' + (played.has(g.id) ? "Play again ▶" : "Play ▶") + "</button></div>").join("") + "</div>";
+      $(id).addEventListener("click", (e) => {
+        const b = e.target.closest("[data-game]");
+        if (b) openGame(games[Number(b.dataset.game)]);
+      });
+      const left = Math.max(0, NEEDED - played.size);
+      $(el.score).textContent = games.length + " games";
+      $(el.fb).className = "fb" + (left ? "" : " good");
+      $(el.fb).textContent = left
+        ? "Play " + left + (left === 1 ? " more game" : " games") + " to earn this step's sticker."
+        : "You played " + played.size + ". " + o.done;
+    }
+
+    function openGame(game) {
+      let r = 0, right = 0;
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader game-overlay";
+      document.body.appendChild(overlay);
+      function close() { overlay.remove(); document.removeEventListener("keydown", onKey); try { VOICE.stop(); } catch (_) { /* nothing */ } drawShelf(); }
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+
+      function frame(bodyHtml, footHtml) {
+        overlay.innerHTML =
+          '<div class="book-reader-top"><span class="booktitle">' + esc(game.title) + "</span>" +
+          '<button type="button" class="book-close" aria-label="Close the game">&#10005;</button></div>' +
+          '<div class="book-stage-wrap"><div class="game-stage">' + bodyHtml + "</div></div>" +
+          '<div class="book-reader-bottom">' +
+          '<button type="button" class="big small ghost" id="gameQuit">&#9664; Back to games</button>' +
+          '<span class="book-page-count">Round ' + Math.min(r + 1, game.rounds.length) + " of " + game.rounds.length + "</span>" +
+          (footHtml || "") + "</div>";
+        overlay.querySelector(".book-close").addEventListener("click", close);
+        overlay.querySelector("#gameQuit").addEventListener("click", close);
+      }
+      function nextRound() { r++; if (r >= game.rounds.length) return endGame(); setTimeout(drawRound, 1000); }
+      function endGame() {
+        played.add(game.id);
+        reportScore(o.finish, right, game.rounds.length, game.id, game.title);
+        reportAttempt(o.finish, played.size, games.length, "games");
+        const well = right * 2 >= game.rounds.length;
+        frame('<div class="game-done"><p class="gamebig">' + (well ? cheer() : "That is the game played.") + "</p>" +
+          "<p>You finished <strong>" + esc(game.title) + "</strong>: " + right + " of " + game.rounds.length + " right.</p>" +
+          "<p>Getting one wrong costs nothing in a game. It is for practising.</p></div>",
+          '<button type="button" class="big small" id="gameOut">Back to the games &#10003;</button>');
+        overlay.querySelector("#gameOut").addEventListener("click", close);
+        say("You finished " + game.title + ". " + right + " of " + game.rounds.length + " right.");
+        if (played.size >= NEEDED) finish(o.finish, o.done);
+      }
+      function feedback(ok, message) {
+        const fb = overlay.querySelector("#gameFb"); if (!fb) return;
+        fb.className = "fb " + (ok ? "good" : "bad"); fb.textContent = message; say(message);
+      }
+      function drawRound() {
+        const round = game.rounds[r];
+        if (game.type === "spelling") return drawSpelling(round);
+        if (game.type === "pairs") return drawPairs(round);
+        return drawChoice(round);
+      }
+      function drawChoice(round) {
+        frame('<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+          '<div class="bigbtns" id="gameCh">' + shuffle(round.choices).map((c) =>
+            '<button type="button" class="choice" data-c="' + esc(c) + '">' + esc(c) + "</button>").join("") +
+          "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
+        say(plain(round.prompt));
+        let lock = false;
+        overlay.querySelector("#gameCh").addEventListener("click", (e) => {
+          const b = e.target.closest(".choice"); if (!b || lock) return;
+          lock = true;
+          const ok = tidy(b.dataset.c) === tidy(round.answer);
+          overlay.querySelectorAll("#gameCh .choice").forEach((c) => { c.disabled = true; if (tidy(c.dataset.c) === tidy(round.answer)) c.classList.add("right"); });
+          if (!ok) b.classList.add("wrong"); else right++;
+          feedback(ok, (ok ? cheer() + " " : "") + (round.explanation || round.answer));
+          nextRound();
+        });
+      }
+      function drawSpelling(round) {
+        const answer = String(round.answer);
+        const letters = answer.replace(/[^A-Za-z]/g, "").split("");
+        const extra = "abcdefghijklmnopqrstuvwxyz".split("").filter((c) => !letters.includes(c));
+        const pool = shuffle(letters.concat([extra[letters.length % extra.length], extra[(letters.length + 7) % extra.length]]));
+        let line = [];
+        function paint() {
+          frame('<p class="gameprompt">' + esc(round.prompt) + "</p>" +
+            (round.clue ? '<p class="gameclue">' + esc(round.clue) + "</p>" : "") +
+            '<div class="buildline" id="gameLine">' +
+            (line.length ? line.map((t, k) => '<button type="button" class="tile letter" data-line="' + k + '">' + esc(pool[t]) + "</button>").join("")
+              : '<span class="hint">Tap the letters to build the word.</span>') + "</div>" +
+            '<div class="bigbtns" id="gameTiles">' + pool.map((t, k) =>
+              '<button type="button" class="tile letter" data-tile="' + k + '"' + (line.includes(k) ? " disabled" : "") + ">" + esc(t) + "</button>").join("") +
+            "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>",
+            '<button type="button" class="big small" id="gameCheck">Check it</button>');
+          overlay.querySelector("#gameTiles").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-tile]"); if (!b || b.disabled) return;
+            line.push(Number(b.dataset.tile)); paint();
+          });
+          overlay.querySelector("#gameLine").addEventListener("click", (e) => {
+            const b = e.target.closest("[data-line]"); if (!b) return;
+            line.splice(Number(b.dataset.line), 1); paint();
+          });
+          overlay.querySelector("#gameCheck").addEventListener("click", () => {
+            const got = line.map((k) => pool[k]).join("");
+            const ok = got.toLowerCase() === letters.join("").toLowerCase();
+            overlay.querySelector("#gameLine").className = "buildline " + (ok ? "right" : "wrong");
+            if (ok) right++;
+            feedback(ok, ok ? cheer() + " " + answer : "Not yet. The word is " + answer + ".");
+            nextRound();
+          });
+        }
+        paint();
+        say(plain(round.prompt) + " " + plain(round.clue || ""));
+      }
+      function drawPairs(round) {
+        let tiles = round.pairs.flatMap((p, pi) => [{ text: p[0], pair: pi }, { text: p[1], pair: pi }]);
+        tiles = shuffle(tiles).map((t, k) => Object.assign({}, t, { k }));
+        let picked = [], matched = 0, lock = false;
+        frame('<p class="gameprompt">' + esc(round.prompt || "Tap two tiles that go together.") + "</p>" +
+          '<div class="pairsgrid" id="gameGrid">' + tiles.map((t) =>
+            '<button type="button" class="pairtile" data-k="' + t.k + '"><span class="back" aria-hidden="true">?</span><span class="face">' + esc(t.text) + "</span></button>").join("") +
+          "</div><div class='fb' id='gameFb' role='status' aria-live='polite' aria-atomic='true'></div>");
+        say(plain(round.prompt || "Tap two tiles that go together."));
+        overlay.querySelector("#gameGrid").addEventListener("click", (e) => {
+          const b = e.target.closest(".pairtile");
+          if (!b || lock || b.classList.contains("matched") || b.classList.contains("revealed")) return;
+          b.classList.add("revealed");
+          picked.push({ pair: tiles[Number(b.dataset.k)].pair, el: b });
+          if (picked.length < 2) return;
+          lock = true;
+          const [a, c] = picked;
+          if (a.pair === c.pair) {
+            a.el.classList.add("matched"); c.el.classList.add("matched"); a.el.disabled = true; c.el.disabled = true;
+            matched++; picked = []; lock = false;
+            SOUND.play("ding", 0.4);
+            if (matched === round.pairs.length) { right++; feedback(true, cheer() + " Every pair matched."); nextRound(); }
+          } else {
+            a.el.classList.add("wrong"); c.el.classList.add("wrong");
+            setTimeout(() => { a.el.classList.remove("revealed", "wrong"); c.el.classList.remove("revealed", "wrong"); picked = []; lock = false; }, 900);
+          }
+        });
+      }
+      drawRound();
+    }
+    drawShelf();
+  }
+
+  /* ---- things to do at home: real projects, ticked when done ---- */
+  function homeProjects(o) {
+    const el = o.el;
+    const items = o.items || [];
+    const did = new Array(items.length).fill(false);
+    const id = el.stage + "h";
+    function paint() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="acts" id="' + id + '">' + items.map((it, k) =>
+        '<div class="act' + (did[k] ? " did" : "") + '" data-k="' + k + '">' +
+        '<div class="act-head"><span class="act-n">' + it.n + "</span><span class=\"act-kind\">project</span>" +
+        '<button type="button" class="hear" data-act="hear" aria-label="Hear this project">&#128266;</button></div>' +
+        '<p class="act-lead">' + esc(it.title) + "</p>" +
+        '<p class="act-mat"><span>You need</span>' + esc(it.materials) + "</p>" +
+        '<ol class="act-steps">' + (it.steps || []).map((t) => "<li>" + esc(t) + "</li>").join("") + "</ol>" +
+        '<p class="act-check"><span>Look for</span>' + esc(it.look) + "</p>" +
+        '<button type="button" class="tick" data-act="tick">' + (did[k] ? "✓ we did this" : "We did this") + "</button>" +
+        "</div>").join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small" id="' + id + 'fin">We did these &#10003;</button></div>';
+      reportAttempt(o.finish, did.filter(Boolean).length, did.length, "projects");
+      $(el.score).textContent = did.filter(Boolean).length + " of " + items.length + " ticked";
+      $(id + "fin").addEventListener("click", () => { $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); });
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const card = e.target.closest(".act"), button = e.target.closest("[data-act]");
+      if (!card || !button) return;
+      const k = Number(card.dataset.k), it = items[k];
+      if (button.dataset.act === "hear") { say(it.title + ". You need " + it.materials + ". " + (it.steps || []).join(" ") + " Look for: " + it.look); return; }
+      if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
+    });
+    paint();
+  }
+
+  /* ---- student resources: the drawer, not a step ----
+     Words, the grade's word finder, the home projects (a jump), what the
+     lesson teaches (for a grown-up, with the 0097 codes), the strands, and
+     the hub. Ticked on first opening, for the reason the English drawer
+     records: a drawer you have to finish is not a drawer. */
+  function resources(o) {
+    const el = o.el;
+    const id = el.stage + "rs";
+    const CARDS = [
+      { id: "words", icon: "\u{1F524}", title: "Science words", blurb: "This lesson's words, what they mean, and a voice to hear them." },
+      { id: "finder", icon: "\u{1F50E}", title: "Word finder", blurb: "Look up any science word from any lesson in " + (o.gradeLabel || "this grade") + "." },
+      { id: "home", icon: "\u{1F3E0}", title: "Things to do at home", blurb: "This lesson's projects, to do with a grown-up." },
+      { id: "teaches", icon: "\u{1F46A}", title: "For your grown-up", blurb: "What this lesson teaches, in the words of the Cambridge framework." },
+      { id: "strands", icon: "\u{1F9EA}", title: "What science covers", blurb: "The six parts of primary science, and what each one is." },
+      { id: "hub", icon: "\u{1F5FA}", title: "All the lessons", blurb: "Back to the list of every lesson in " + (o.gradeLabel || "this grade") + "." },
+    ];
+    const opened = new Set();
+    function drawShelf() {
+      $(el.stage).className = "stagewide";
+      $(el.stage).innerHTML = '<div class="shelf" id="' + id + '">' + CARDS.map((c) =>
+        '<div class="bookcard"><span class="bookicon" aria-hidden="true">' + c.icon + "</span>" +
+        '<span class="booktitle">' + esc(c.title) + "</span><span class=\"bookmeta\">" + esc(c.blurb) + "</span>" +
+        '<button type="button" class="big small teal" data-res="' + c.id + '">Open ▶</button></div>').join("") + "</div>";
+      $(el.score).textContent = CARDS.length + " things for you";
+      $(id).addEventListener("click", (e) => { const b = e.target.closest("[data-res]"); if (b) open(b.dataset.res); });
+    }
+    function panel(title, bodyHtml, footHtml) {
+      const overlay = document.createElement("div");
+      overlay.className = "book-reader res-reader";
+      overlay.innerHTML =
+        '<div class="book-reader-top"><span class="booktitle">' + esc(title) + "</span>" +
+        '<button type="button" class="book-close" aria-label="Close">&#10005;</button></div>' +
+        '<div class="book-stage-wrap"><div class="res-stage">' + bodyHtml + "</div></div>" +
+        '<div class="book-reader-bottom">' + (footHtml || "") + "</div>";
+      document.body.appendChild(overlay);
+      const close = () => { try { VOICE.stop(); } catch (_) { /* nothing */ } overlay.remove(); document.removeEventListener("keydown", onKey); };
+      function onKey(e) { if (e.key === "Escape") close(); }
+      document.addEventListener("keydown", onKey);
+      overlay.querySelector(".book-close").addEventListener("click", close);
+      overlay.addEventListener("click", (e) => { const b = e.target.closest("[data-say]"); if (b) say(b.dataset.say); });
+      return overlay;
+    }
+    const wordRows = (words, withLesson) => words.map((w) =>
+      '<div class="wordrow"><span class="gloxpic" aria-hidden="true">' + small(w.pic) + "</span>" +
+      '<div class="gloxbody"><div class="gloxhead"><strong>' + esc(w.w) + "</strong>" +
+      '<button type="button" class="hear" data-say="' + esc(w.w + ". " + w.meaning + " " + (w.uses || []).join(" ")) + '" aria-label="Hear ' + esc(w.w) + '">&#128266;</button>' +
+      (withLesson && w.file ? '<a class="gloxlesson" href="' + esc(w.file) + location.search + '">Lesson ' + w.lesson + "</a>" : "") + "</div>" +
+      '<p class="gloxdef">' + esc(w.meaning) + "</p>" +
+      ((w.uses || []).length ? '<p class="gloxeg">“' + esc(w.uses[0]) + "”</p>" : "") + "</div></div>").join("");
+
+    function open(which) {
+      opened.add(which);
+      reportAttempt(o.finish, opened.size, CARDS.length, "cards");
+      finish(o.finish, o.done);
+      if (which === "home") { if (o.homeStep >= 0) show(o.homeStep, true); return; }
+      if (which === "hub") { location.href = (o.hub || "index.html") + location.search; return; }
+      if (which === "words") {
+        panel("Science words", '<div class="wordlist">' + wordRows(o.words || [], false) + "</div>",
+          '<span class="book-page-count">' + (o.words || []).length + " words in this lesson</span>");
+        return;
+      }
+      if (which === "finder") {
+        const all = o.finder || [];
+        const ov = panel("Word finder",
+          '<div class="glossary"><input type="search" id="' + id + 'q" class="gloxq" placeholder="Type a word…" autocomplete="off" aria-label="Search the words">' +
+          '<div id="' + id + 'r" class="gloxr"></div></div>',
+          '<span class="book-page-count" id="' + id + 'n"></span>');
+        const box = ov.querySelector("#" + id + "r"), count = ov.querySelector("#" + id + "n"), q = ov.querySelector("#" + id + "q");
+        const draw = (term) => {
+          term = String(term || "").trim().toLowerCase();
+          const hits = term
+            ? all.filter((w) => w.w.toLowerCase().startsWith(term)).concat(all.filter((w) => !w.w.toLowerCase().startsWith(term) && (w.w.toLowerCase().includes(term) || w.meaning.toLowerCase().includes(term))))
+            : all;
+          count.textContent = hits.length + " of " + all.length + " words";
+          box.innerHTML = hits.length ? wordRows(hits, true) : '<p class="gloxmore">No word starts like that. Try fewer letters.</p>';
+        };
+        draw(""); q.addEventListener("input", () => draw(q.value)); q.focus();
+        return;
+      }
+      if (which === "teaches") {
+        panel("For your grown-up",
+          '<div class="teaches"><p class="lec-p">Lesson ' + o.lessonNo + " teaches these objectives of Cambridge Primary Science 0097. The code is the framework’s own.</p><ul class=\"ovw-list codes\">" +
+          (o.teaches || []).map((t) => "<li><code>" + esc(t.code) + "</code> " + esc(t.text) + "</li>").join("") + "</ul></div>",
+          '<span class="book-page-count">' + (o.teaches || []).length + " objectives</span>");
+        return;
+      }
+      if (which === "strands") {
+        panel("What science covers",
+          '<div class="teaches">' + (o.strands || []).map((s) => '<section class="wordgroup"><h4>' + esc(s[0]) + "</h4><p class=\"lec-p\">" + esc(s[1]) + "</p></section>").join("") + "</div>",
+          '<span class="book-page-count">' + (o.strands || []).length + " strands</span>");
+      }
+    }
+    drawShelf();
+  }
+
   /* ---- the sticker shelf --------------------------------------------- */
   function paintStickers() {
     const got = done.filter(Boolean).length;
@@ -3323,16 +5684,23 @@
   if (restart) restart.addEventListener("click", () => location.reload());
 
 
-  const STICKERS = [["🔔", "Sound sources"], ["🗂️", "Sound sorter"], ["🎸", "Shake it"], ["🧪", "Near and far"], ["📝", "Loudness table"], ["🎶", "Safe ears"], ["🎷", "Sound jobs"], ["⭐", "Star scientist"]];
+  const STICKERS = [["🧭", "I know what it is for"], ["🎬", "I heard the lesson"], ["🔤", "Science words"], ["🔔", "Sound sources"], ["🗂️", "Sound sorter"], ["🎸", "Shake it"], ["🧪", "Near and far"], ["📝", "Loudness table"], ["🎶", "Safe ears"], ["🎷", "Sound jobs"], ["🎮", "I played the games"], ["🏠", "Science at home"], ["⭐", "Star scientist"], ["🌍", "Science world"], ["🗂️", "My resources"]];
 
-  tapCards(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Every sound has a source. Your ears find it." }, LESSON.steps[0].data));
-  sortBins(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "Sounds come from animals, people, things and machines." }, LESSON.steps[1].data));
-  demo(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "Sound is made when something shakes very fast." }, LESSON.steps[2].data));
-  experiment(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Sound gets quieter the further it travels." }, LESSON.steps[3].data));
-  recordTable(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Loud, medium, quiet. Your table shows the sound fading." }, LESSON.steps[4].data));
-  tapCards(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Use sound makers carefully and look after your ears." }, LESSON.steps[5].data));
-  tapCards(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "People use sound science at work every day." }, LESSON.steps[6].data));
-  sequence(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "That is the whole lesson finished. You know where sounds come from." }, LESSON.steps[7].data));
+  unitOverview(Object.assign({ el: { ask: "ask1", say: "ask1", stage: "stage1", ch: "ch1", fb: "fb1", score: "score1" }, finish: 0, done: "Now you know what this lesson is for. Off you go." }, LESSON.steps[0].data));
+  lecture(Object.assign({ el: { ask: "ask2", say: "ask2", stage: "stage2", ch: "ch2", fb: "fb2", score: "score2" }, finish: 1, done: "That is the whole lesson in 5 parts. Now do it yourself." }, LESSON.steps[1].data));
+  scienceWords(Object.assign({ el: { ask: "ask3", say: "ask3", stage: "stage3", ch: "ch3", fb: "fb3", score: "score3" }, finish: 2, done: "You know the science words of this lesson." }, LESSON.steps[2].data));
+  tapCards(Object.assign({ el: { ask: "ask4", say: "ask4", stage: "stage4", ch: "ch4", fb: "fb4", score: "score4" }, finish: 3, done: "Every sound has a source. Your ears find it." }, LESSON.steps[3].data));
+  sortBins(Object.assign({ el: { ask: "ask5", say: "ask5", stage: "stage5", ch: "ch5", fb: "fb5", score: "score5" }, finish: 4, done: "Sounds come from animals, people, things and machines." }, LESSON.steps[4].data));
+  demo(Object.assign({ el: { ask: "ask6", say: "ask6", stage: "stage6", ch: "ch6", fb: "fb6", score: "score6" }, finish: 5, done: "Sound is made when something shakes very fast." }, LESSON.steps[5].data));
+  experiment(Object.assign({ el: { ask: "ask7", say: "ask7", stage: "stage7", ch: "ch7", fb: "fb7", score: "score7" }, finish: 6, done: "Sound gets quieter the further it travels." }, LESSON.steps[6].data));
+  recordTable(Object.assign({ el: { ask: "ask8", say: "ask8", stage: "stage8", ch: "ch8", fb: "fb8", score: "score8" }, finish: 7, done: "Loud, medium, quiet. Your table shows the sound fading." }, LESSON.steps[7].data));
+  tapCards(Object.assign({ el: { ask: "ask9", say: "ask9", stage: "stage9", ch: "ch9", fb: "fb9", score: "score9" }, finish: 8, done: "Use sound makers carefully and look after your ears." }, LESSON.steps[8].data));
+  tapCards(Object.assign({ el: { ask: "ask10", say: "ask10", stage: "stage10", ch: "ch10", fb: "fb10", score: "score10" }, finish: 9, done: "People use sound science at work every day." }, LESSON.steps[9].data));
+  gameZone(Object.assign({ el: { ask: "ask11", say: "ask11", stage: "stage11", ch: "ch11", fb: "fb11", score: "score11" }, finish: 10, done: "You played the games. That is the lesson practised twice over." }, LESSON.steps[10].data));
+  homeProjects(Object.assign({ el: { ask: "ask12", say: "ask12", stage: "stage12", ch: "ch12", fb: "fb12", score: "score12" }, finish: 11, done: "Science at home. That is the best kind." }, LESSON.steps[11].data));
+  sequence(Object.assign({ el: { ask: "ask13", say: "ask13", stage: "stage13", ch: "ch13", fb: "fb13", score: "score13" }, finish: 12, done: "That is the whole lesson finished. You know where sounds come from." }, LESSON.steps[12].data));
+  scienceWorld(Object.assign({ el: { ask: "ask14", say: "ask14", stage: "stage14", ch: "ch14", fb: "fb14", score: "score14" }, finish: 13, done: "Science world is on its way." }, LESSON.steps[13].data));
+  resources(Object.assign({ el: { ask: "ask15", say: "ask15", stage: "stage15", ch: "ch15", fb: "fb15", score: "score15" }, finish: 14, done: "Your resources are always here." }, LESSON.steps[14].data));
 
   window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
   show(0, false);

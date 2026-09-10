@@ -6,7 +6,7 @@
 when something makes them; with 2TWSp.02, 2TWSa.01, 2TWSa.02, 2TWSa.03,
 2TWSc.01, 2TWSc.03 and 2TWSc.06.
 """
-from _kit import explain, step, opt, q
+from _kit import explain, step, opt, q, part, word, home
 
 LESSON = {
     "slug": "forces-change-things",
@@ -171,3 +171,61 @@ LESSON = {
              "That is the whole lesson finished. You know what forces do."),
     ],
 }
+
+
+# ---- the unit shell (drawn by lesson-kit/_shell.py): what this lesson is about,
+#      the lecture, its science words, and things to do at home ----------------
+LESSON["about"] = [
+    "Say what a force can do to how something moves.",
+    "Push a ball three ways and graph how far it goes.",
+    "Say that a force can change shape too.",
+    "Say that nothing speeds up, slows down or turns by itself.",
+]
+
+LESSON["lecture"] = [
+    part("\u26BD", "A force changes movement",
+         "A still ball sits there for ever unless a force acts on it. A kick starts it. Push it along and it speeds up. Push back and it slows and stops. Tap the side and it turns."),
+    part("\U0001F4CF", "Bigger push, further roll",
+         "Push a ball gently: it rolls a little way. Medium: further. Hard: furthest. Measure each one and there is a pattern. A bigger push, a bigger move."),
+    part("\U0001F4CA", "Graph it",
+         "Write the three distances in a table. Then build a block graph, one block for each step. The columns get taller. That is an increasing pattern."),
+    part("\U0001F9F6", "A force changes shape",
+         "Squash clay and it goes flat. Stretch an elastic band and it goes long. Push a stone and nothing happens. Forces change shape as well as movement."),
+    part("\U0001F9F1", "Nothing changes by itself",
+         "A ball slows down because the floor rubs against it. It stops at the wall because the wall pushes back. Every change in movement has a cause."),
+]
+
+LESSON["words"] = [
+    word("force", "\U0001F4AA\U0001F3FE", "A push or a pull.",
+         ["A kick is a force.", "A force made the ball move."]),
+    word("speed up", "\U0001F3C3\U0001F3FE", "To go faster.",
+         ["The ball speeds up when I push it along.", "Bikes speed up going downhill."]),
+    word("slow down", "\U0001F422", "To go slower.",
+         ["The ball slows down on the grass.", "Brakes make a bike slow down."]),
+    word("distance", "\U0001F4CF", "How far something travels.",
+         ["The hard push went the biggest distance.", "Measure the distance in steps."]),
+    word("pattern", "\U0001F4C8", "Something that happens the same way each time, so you can predict it.",
+         ["The pattern is: bigger push, further roll.", "Find the pattern in the table."]),
+    word("squash", "\U0001F9F6", "To press something flat.",
+         ["Squash the clay.", "You cannot squash a stone."]),
+    word("stretch", "\U0001FAA2", "To pull something longer.",
+         ["Stretch the elastic band.", "Wool stretches a little."]),
+]
+
+LESSON["home"] = [
+    home("Three pushes", "A ball, a smooth floor, tape, and your feet to measure with",
+         ["Mark a start line with tape.",
+          "Push gently, then medium, then hard. Measure each roll in foot-lengths.",
+          "Draw a block graph of the three."],
+         "Do the columns get taller each time? That is the pattern."),
+    home("Squash, bend, twist, stretch", "Play dough, an elastic band, a stone, a sponge, a wooden spoon",
+         ["Try all four actions on each thing.",
+          "Say which changed shape and which did not.",
+          "Say which went back to its shape by itself."],
+         "The band springs back. The clay does not. The stone never changed."),
+    home("What stopped it?", "A toy car or a ball, a carpet, a wooden floor, a wall",
+         ["Push the car the same way on carpet and on wood.",
+          "Watch where it stops each time.",
+          "Push it gently at the wall."],
+         "The car goes further on wood. Why? What stopped it at the wall?"),
+]

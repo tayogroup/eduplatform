@@ -2030,6 +2030,20 @@ def expected(q, opts, item, js=""):
     if m:
         a, b2 = int(m.group(2)), int(m.group(3))
         return max(a, b2) if m.group(1) in ("more", "bigger", "greater") else min(a, b2)
+    # THE NUMBERS ARE IN THE OPTIONS, not in the question. Every comparison
+    # rule above reads the pair out of the sentence, so "Which is the smallest
+    # of these numbers?" - whose whole content is the option list - had nothing
+    # to read. Answered only when every option is a number and the extreme is
+    # unique; the question must carry none of its own, so the rule above keeps
+    # the cases it already handles.
+    m = re.search(r"which is the (smallest|lowest|biggest|largest|greatest|highest)"
+                  r"(?: of these)?(?: numbers?)?\s*\??$", low)
+    if m and opts and not nums(t):
+        vals = [norm(o) for o in opts]
+        if all(isinstance(v, int) for v in vals):
+            want = min(vals) if m.group(1) in ("smallest", "lowest") else max(vals)
+            if vals.count(want) == 1:
+                return want
     m = re.search(r"is (\d+) odd or even", low)
     if m:
         return "odd" if int(m.group(1)) % 2 else "even"

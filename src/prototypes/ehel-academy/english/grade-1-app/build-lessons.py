@@ -701,6 +701,13 @@ def explain(calm, friendly, watch, go):
 
 def source_of(item, *keys):
     a = item.get("audio") or {}
+    # A descriptor marked unavailable is a clip that must not be played - it
+    # was deleted, or its words were rewritten and the recording still says
+    # the old ones. Handing its path across would play it anyway, from the
+    # CDN, over text that no longer matches; leaving it out makes playClip()
+    # speak the field itself, which is the new wording by construction.
+    if a.get("available") is False:
+        return ""
     for k in keys:
         if a.get(k):
             return a[k]

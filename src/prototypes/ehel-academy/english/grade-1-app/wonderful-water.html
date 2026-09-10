@@ -1912,20 +1912,20 @@
       {
         "title": "Say what floats on water",
         "pattern": "The ___ floats.",
-        "explanation": "Drop something safely into water and watch. If it stays on top, it floats.",
+        "explanation": "Drop a thing safely into water and watch. If it stays on top, it floats.",
         "mistake": "Floating and sinking get mixed up. Floats means it stays on top; sinks means it goes down.",
         "tip": "Float your hand on top of the table, then sink it down low for 'sinks'.",
         "practice": "Test and say three: The leaf floats. The boat floats. The stone sinks.",
-        "audio": "./media/audio/grade-1/grammar/eng-g01-t03-u08-grammar04.mp3"
+        "audio": ""
       },
       {
         "title": "A rule about saving water",
         "pattern": "We must not waste water.",
-        "explanation": "Say this rule out loud. 'Must not' tells us something we should never do.",
+        "explanation": "Say this rule out loud. 'Must not' tells us a thing we should never do.",
         "mistake": "'We must not to waste water' has an extra 'to'. After 'must not' we use the plain word: 'waste'.",
         "tip": "Turn an imaginary tap off tightly as you say 'must not waste'.",
         "practice": "Say the rule, then three ways to save: Turn off the tap. Use a small cup. Mend a dripping tap.",
-        "audio": "./media/audio/grade-1/grammar/eng-g01-t03-u08-grammar05.mp3"
+        "audio": ""
       },
       {
         "title": "Name creatures that live in water",
@@ -1997,10 +1997,10 @@
             "ok": 0
           }
         ],
-        "why": "Rain makes clothes wet. Dry is the opposite, and hot and loud do not describe rainy clothes."
+        "why": "Rain makes clothes wet. Dry is not wet at all, and hot and loud do not tell us about rainy clothes."
       },
       {
-        "ask": "Which word means the opposite of wet?",
+        "ask": "Which word means not wet?",
         "opts": [
           {
             "t": "rain",
@@ -2019,7 +2019,7 @@
             "ok": 0
           }
         ],
-        "why": "Dry is the opposite of wet. Rain, drop and float are all still to do with water."
+        "why": "Dry means not wet. Rain, drop and float are all still to do with water."
       },
       {
         "ask": "A leaf stays on top of the water. What is the leaf doing?",
@@ -2265,7 +2265,29 @@
             "ok": 0
           }
         ],
-        "why": "We say it is for the weather. The other sentences have the words muddled up."
+        "why": "We say it is for the weather. The other ones have the words muddled up."
+      },
+      {
+        "ask": "Which word means the opposite of wet?",
+        "opts": [
+          {
+            "t": "rain",
+            "ok": 0
+          },
+          {
+            "t": "drop",
+            "ok": 0
+          },
+          {
+            "t": "dry",
+            "ok": 1
+          },
+          {
+            "t": "float",
+            "ok": 0
+          }
+        ],
+        "why": "Dry is the opposite of wet. Rain, drop and float are all still to do with water."
       },
       {
         "ask": "Who walked to the well with Amal every morning?",
@@ -2338,24 +2360,6 @@
           }
         ],
         "why": "Amal shouts, 'Rain! It is raining!' and the children dance outside."
-      },
-      {
-        "ask": "Why did the whole village share the water?",
-        "opts": [
-          {
-            "t": "It is rainy.",
-            "ok": 0
-          },
-          {
-            "t": "An empty pot",
-            "ok": 0
-          },
-          {
-            "t": "Because the well was getting low",
-            "ok": 1
-          }
-        ],
-        "why": "Adam says the well is getting low, so everyone shares and is careful."
       }
     ],
     "activities": [
@@ -2370,9 +2374,9 @@
       {
         "n": 2,
         "kind": "Draw and tell",
-        "lead": "Draw yourself using water. Then say: 'I use water to ___.' Choose drinking, washing or watering the plants.",
+        "lead": "Draw yourself using water. Then say: 'I use water to ___.' Choose drinking, washing or giving the plants a drink.",
         "steps": [],
-        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u08-act02.mp3",
+        "audio": "",
         "check": "Themselves drawn using water, plus 'I use water to ___' completed with drink, wash or water the plants. Accept 'drink' on its own, and any one of the three choices."
       },
       {
@@ -2440,7 +2444,7 @@
       {
         "n": 9,
         "kind": "Alphabet order",
-        "lead": "Say the alphabet to help you. Write these words again, in ABC order, starting with the one that comes first.",
+        "lead": "Say your ABC to help you. Write these words again, in ABC order, starting with the one that comes first.",
         "steps": [
           "duck",
           "sock",
@@ -2476,14 +2480,14 @@
       {
         "n": 12,
         "kind": "Show what you know",
-        "lead": "This one brings the unit together. Do each part.",
+        "lead": "This one uses the whole unit. Do each part.",
         "steps": [
           "Say a sentence out loud with the word “duck” in it.",
           "Say a sentence out loud with the word “sock” in it.",
           "Say one sentence that uses this pattern: I use water to ___.",
           "Write the word “clock” from memory, then check it."
         ],
-        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u08-act12.mp3",
+        "audio": "",
         "check": "Answers will differ between children. Check that each word is used with the right meaning, that item 3 really follows the pattern from “Say what you use water for”, and that the word in item 4 is spelled correctly."
       }
     ],
@@ -4614,7 +4618,7 @@
             "ok": 0
           }
         ],
-        "why": "Drop something safely into water and watch. If it stays on top, it floats.",
+        "why": "Drop a thing safely into water and watch. If it stays on top, it floats.",
         "reference": "The leaf floats."
       },
       {
@@ -4633,7 +4637,7 @@
             "ok": 0
           }
         ],
-        "why": "Say this rule out loud. 'Must not' tells us something we should never do.",
+        "why": "Say this rule out loud. 'Must not' tells us a thing we should never do.",
         "reference": "Turn off the tap."
       },
       {
@@ -7077,7 +7081,15 @@
       const button = e.target.closest("[data-act]");
       if (!card || !button) return;
       const k = Number(card.dataset.k);
-      if (button.dataset.act === "hear") { playClip(o.items[k].audio, o.items[k].lead); return; }
+      /* The spoken fallback is the WHOLE job, not its first line. It used to
+         be the lead alone, which was harmless while every job had a clip;
+         a job whose clip has been withdrawn (its words rewritten, the
+         recording not yet redone) would otherwise be read out as one
+         sentence with its numbered steps missing. */
+      if (button.dataset.act === "hear") {
+        playClip(o.items[k].audio, [o.items[k].lead].concat(o.items[k].steps || []).join(" "));
+        return;
+      }
       if (button.dataset.act === "how") { shown[k] = !shown[k]; paint(); return; }
       if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
     });

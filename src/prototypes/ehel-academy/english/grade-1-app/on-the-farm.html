@@ -2279,7 +2279,7 @@
             "ok": 0
           }
         ],
-        "why": "The -ing word running shows an action happening now. The others tell us a colour, a body part or a name."
+        "why": "The -ing word running shows an action going on now. The others tell us a colour, a body part or a name."
       },
       {
         "ask": "Which sentence tells us what a sheep has?",
@@ -2302,6 +2302,28 @@
           }
         ],
         "why": "Sheep are covered in wool. Feathers and wings belong to birds and fins belong to fish."
+      },
+      {
+        "ask": "Which word do we use to tell what happens at the start of a story?",
+        "opts": [
+          {
+            "t": "Last",
+            "ok": 0
+          },
+          {
+            "t": "Next",
+            "ok": 0
+          },
+          {
+            "t": "Then",
+            "ok": 0
+          },
+          {
+            "t": "First",
+            "ok": 1
+          }
+        ],
+        "why": "First shows the start. Then and next come in the middle and last comes at the end."
       },
       {
         "ask": "Which word do we use to tell what happens at the beginning of a story?",
@@ -2396,24 +2418,6 @@
           }
         ],
         "why": "After waving to Adam the story says she was tired, but she was happy."
-      },
-      {
-        "ask": "Why did the hen give Amal an egg?",
-        "opts": [
-          {
-            "t": "The ___ is ___ing.",
-            "ok": 0
-          },
-          {
-            "t": "A little white egg",
-            "ok": 0
-          },
-          {
-            "t": "Because Amal was kind and fed her",
-            "ok": 1
-          }
-        ],
-        "why": "Grandma says, 'When you are kind to the animals, they are kind to you.'"
       }
     ],
     "activities": [
@@ -2502,7 +2506,7 @@
       {
         "n": 9,
         "kind": "Alphabet order",
-        "lead": "Say the alphabet to help you. Write these words again, in ABC order, starting with the one that comes first.",
+        "lead": "Say your ABC to help you. Write these words again, in ABC order, starting with the one that comes first.",
         "steps": [
           "sun",
           "cup",
@@ -2538,14 +2542,14 @@
       {
         "n": 12,
         "kind": "Show what you know",
-        "lead": "This one brings the unit together. Do each part.",
+        "lead": "This one uses the whole unit. Do each part.",
         "steps": [
           "Say a sentence out loud with the word “sun” in it.",
           "Say a sentence out loud with the word “cup” in it.",
           "Say one sentence that uses this pattern: This is a / an ___.",
           "Write the word “bus” from memory, then check it."
         ],
-        "audio": "./media/audio/grade-1/activities/eng-g01-t02-u05-act12.mp3",
+        "audio": "",
         "check": "Answers will differ between children. Check that each word is used with the right meaning, that item 3 really follows the pattern from “Name a farm animal”, and that the word in item 4 is spelled correctly."
       }
     ],
@@ -7198,7 +7202,15 @@
       const button = e.target.closest("[data-act]");
       if (!card || !button) return;
       const k = Number(card.dataset.k);
-      if (button.dataset.act === "hear") { playClip(o.items[k].audio, o.items[k].lead); return; }
+      /* The spoken fallback is the WHOLE job, not its first line. It used to
+         be the lead alone, which was harmless while every job had a clip;
+         a job whose clip has been withdrawn (its words rewritten, the
+         recording not yet redone) would otherwise be read out as one
+         sentence with its numbered steps missing. */
+      if (button.dataset.act === "hear") {
+        playClip(o.items[k].audio, [o.items[k].lead].concat(o.items[k].steps || []).join(" "));
+        return;
+      }
       if (button.dataset.act === "how") { shown[k] = !shown[k]; paint(); return; }
       if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
     });

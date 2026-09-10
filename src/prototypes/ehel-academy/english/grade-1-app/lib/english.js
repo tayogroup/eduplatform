@@ -747,7 +747,15 @@
       const button = e.target.closest("[data-act]");
       if (!card || !button) return;
       const k = Number(card.dataset.k);
-      if (button.dataset.act === "hear") { playClip(o.items[k].audio, o.items[k].lead); return; }
+      /* The spoken fallback is the WHOLE job, not its first line. It used to
+         be the lead alone, which was harmless while every job had a clip;
+         a job whose clip has been withdrawn (its words rewritten, the
+         recording not yet redone) would otherwise be read out as one
+         sentence with its numbered steps missing. */
+      if (button.dataset.act === "hear") {
+        playClip(o.items[k].audio, [o.items[k].lead].concat(o.items[k].steps || []).join(" "));
+        return;
+      }
       if (button.dataset.act === "how") { shown[k] = !shown[k]; paint(); return; }
       if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
     });

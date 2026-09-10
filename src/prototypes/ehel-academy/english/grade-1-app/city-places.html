@@ -1799,11 +1799,11 @@
       {
         "title": "Ask politely and say thank you",
         "pattern": "Please ___. Thank you.",
-        "explanation": "Use 'please' when you ask for something, and 'thank you' when someone helps you.",
+        "explanation": "Use 'please' when you ask for a thing, and 'thank you' when someone helps you.",
         "mistake": "'Please' is often forgotten in a hurry. Pause, smile, and start the sentence with 'Please'.",
         "tip": "Please opens the door and thank you closes it kindly.",
         "practice": "Ask politely three times: Please help me. Thank you. Please pass the bread. Thank you. Please open the door. Thank you.",
-        "audio": "./media/audio/grade-1/grammar/eng-g01-t03-u09-grammar06.mp3"
+        "audio": ""
       }
     ],
     "write": {
@@ -1843,7 +1843,7 @@
             "ok": 0
           }
         ],
-        "why": "A market is a place you can go to. A pencil is a thing, a goat is an animal and wet describes something."
+        "why": "A market is a place you can go to. A pencil is a thing, a goat is an animal and wet tells what a thing is like."
       },
       {
         "ask": "Where do you go if you are very ill and need a doctor?",
@@ -1887,7 +1887,7 @@
             "ok": 0
           }
         ],
-        "why": "The library is where books are kept and borrowed. The market is for shopping, the park for playing and the bus stop for waiting."
+        "why": "The library is where you go to get books to read. The market is for shopping, the park for playing and the bus stop for waiting."
       },
       {
         "ask": "Where do you go to buy bread and milk?",
@@ -2111,7 +2111,7 @@
             "ok": 0
           }
         ],
-        "why": "Next to means beside. Under, inside and in tell us something different."
+        "why": "Next to means beside. Under, inside and in tell us other places."
       },
       {
         "ask": "Which sentence tells where you are going?",
@@ -2133,7 +2133,7 @@
             "ok": 1
           }
         ],
-        "why": "We need the little word to before the place. The other sentences are missing it or muddled."
+        "why": "We need the little word to before the place. The other ones are missing it or muddled."
       },
       {
         "ask": "What does the red traffic light mean in the story?",
@@ -2309,7 +2309,7 @@
       {
         "n": 9,
         "kind": "Alphabet order",
-        "lead": "Say the alphabet to help you. Write these words again, in ABC order, starting with the one that comes first.",
+        "lead": "Say your ABC to help you. Write these words again, in ABC order, starting with the one that comes first.",
         "steps": [
           "flag",
           "swim",
@@ -2345,14 +2345,14 @@
       {
         "n": 12,
         "kind": "Show what you know",
-        "lead": "This one brings the unit together. Do each part.",
+        "lead": "This one uses the whole unit. Do each part.",
         "steps": [
           "Say a sentence out loud with the word “flag” in it.",
           "Say a sentence out loud with the word “swim” in it.",
           "Say one sentence that uses this pattern: There is a / an ___.",
           "Write the word “stop” from memory, then check it."
         ],
-        "audio": "./media/audio/grade-1/activities/eng-g01-t03-u09-act12.mp3",
+        "audio": "",
         "check": "Answers will differ between children. Check that each word is used with the right meaning, that item 3 really follows the pattern from “Say what is in your town”, and that the word in item 4 is spelled correctly."
       }
     ],
@@ -4507,7 +4507,7 @@
             "ok": 1
           }
         ],
-        "why": "Use 'please' when you ask for something, and 'thank you' when someone helps you.",
+        "why": "Use 'please' when you ask for a thing, and 'thank you' when someone helps you.",
         "reference": "Please help me."
       }
     ],
@@ -6895,7 +6895,15 @@
       const button = e.target.closest("[data-act]");
       if (!card || !button) return;
       const k = Number(card.dataset.k);
-      if (button.dataset.act === "hear") { playClip(o.items[k].audio, o.items[k].lead); return; }
+      /* The spoken fallback is the WHOLE job, not its first line. It used to
+         be the lead alone, which was harmless while every job had a clip;
+         a job whose clip has been withdrawn (its words rewritten, the
+         recording not yet redone) would otherwise be read out as one
+         sentence with its numbered steps missing. */
+      if (button.dataset.act === "hear") {
+        playClip(o.items[k].audio, [o.items[k].lead].concat(o.items[k].steps || []).join(" "));
+        return;
+      }
       if (button.dataset.act === "how") { shown[k] = !shown[k]; paint(); return; }
       if (button.dataset.act === "tick") { did[k] = !did[k]; paint(); }
     });

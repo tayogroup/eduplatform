@@ -241,11 +241,36 @@ course does not declare.
   spellings; no quiz stem repeated anywhere; the one learner-facing sentence
   over thirty words was split.
 
-## Not deployed, not routed
+## Deployed 2026-09-10
 
-Built, verified and committed on 2026-09-10. Deploying to
-`Ehel Primary/app/computing/grade-4-v2`, routing `ehel-comp-g04` through
-`repoint-grade.php --subject computing --grade 4` (the script's computing
-table has rows for Grades 1 to 3 only and needs a fourth row first), and
-redeploying Grades 1 to 3 on this kit are owner decisions and have not been
-taken.
+Uploaded on the owner's instruction to
+`https://ehelacademy.b-cdn.net/Ehel%20Primary/app/computing/grade-4-v2/` —
+all 20 files (fourteen lessons, the hub, the five platform modules) PUT 201,
+storage read-back byte-identical, every edge path fresh. Booted from the CDN
+in real Chromium: the hub draws its fourteen cards and four lessons draw
+their dot rails, with 0 console errors and 0 failed requests, and four of the
+new Stage 4 renderers were driven to a tick on the shipped bytes — a loop
+algorithm followed round its repeat and forever loops (30 taps), a branch
+taken both ways, a table sorted four ways, and five Caesar messages written
+and read. Live bytes are byte-identical to HEAD and carry the Stage 4 kit
+markers.
+
+**Grades 1, 2 and 3 were redeployed the same day** on this kit (14, 16 and 20
+files, all verified on storage, all edge fresh, all three live bundles booted
+clean with a real step driven to a tick in each), so live equals HEAD for all
+four grades and all four run the same kit.
+
+## Routing
+
+`repoint-grade.php` gained the Grade 4 row in 4185533e6 —
+`ehel-comp-g04` → `…/computing/grade-4-v2/index.html`; the script's computing
+table had rows 1 to 3 only. The staged script goes on the quraanacademy zone
+under `Ehel Primary/qa/` with a fresh filename, the operator curls it into
+`/home/ehelacad/quraantest.academy` and runs report mode before `--apply`,
+and both copies are deleted afterwards.
+
+**Read the override map on every run.** It has dropped keys before — Computing
+Grades 1 and 2 vanished from it between two applies on 2026-09-10, because
+another hand writes that setting from a stale copy. The repoint script only
+ever adds, so a missing key means somebody else removed it, and a read-back
+proves the map for that moment only.

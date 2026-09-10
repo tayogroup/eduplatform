@@ -249,3 +249,12 @@ a Scratch Jr embed (the framework recommends the real tool for on-screen
 programming, and a self-contained page cannot carry it — the block program
 here, with its repeats and objects, is the shape of that work, not a
 replacement for it); a human reading of the content.
+
+## Redeployed 2026-09-10 on the Stage 4 kit
+
+Rebuilt on the kit the Grade 4 build extended, re-driven in the browser to
+100% on every lesson, and redeployed on the owner's instruction alongside the
+Grade 4 deploy: 16 files PUT 201, all verified on storage by read-back, every
+edge path fresh, and the live bundle booted from the CDN in real Chromium with
+0 console errors, 0 failed requests and a real step driven to a tick. Live
+bytes are byte-identical to HEAD and carry the Stage 4 kit markers.

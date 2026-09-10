@@ -91,6 +91,7 @@ $SUBJECTS = [
         'entry' => RP_HOST . 'Ehel%20Primary/app/science/index.html',
         'targets' => [
             1 => ['ehel-sci-g01', RP_HOST . 'Ehel%20Primary/app/science/grade-1-v2/index.html'],
+            2 => ['ehel-sci-g02', RP_HOST . 'Ehel%20Primary/app/science/grade-2-v2/index.html'],
         ],
     ],
 ];

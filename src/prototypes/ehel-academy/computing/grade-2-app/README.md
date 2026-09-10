@@ -57,8 +57,8 @@ pipeline and both gates green, and the `LESSON` data block of all eight pages
 byte-identical to the committed ones (the pages differ from HEAD only by the
 inlined kit). Then every step of every Grade 1 lesson was driven again in the
 browser — see Verification. Grade 1's rebuilt pages are committed with this
-build; **its live pages are the previous kit**, and redeploying them is an
-owner decision, not part of this work.
+build and were redeployed on the owner's instruction the same day, so its
+live pages are this kit too.
 
 ## What a lesson is
 
@@ -229,8 +229,9 @@ was deleted afterwards. Rollback is the pre-run map the report run printed,
 pasted into Site admin > Local plugins > Ehel app URL overrides, or removing
 the `ehel-comp-g02` key to return the course to `app/computing/index.html`.
 
-Still an owner decision: redeploying Grade 1's rebuilt pages (live is the
-previous kit; lesson data identical).
+Grade 1's rebuilt pages were redeployed the same day on the owner's
+instruction (14 files, storage read-back and edge hashes clean), so both
+grades' live pages are the committed tree on the same kit.
 
 ## What was deliberately not done
 

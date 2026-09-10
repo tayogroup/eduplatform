@@ -172,6 +172,13 @@ reading.
   machine. Rollback is the pre-run map the script printed, pasted into Site
   admin > Local plugins > Ehel app URL overrides, or removing the
   `ehel-comp-g01` key to return to `app/computing/index.html`.
+  **Redeployed later the same day, on the owner's instruction, after the kit
+  was extended for Grade 2**: the eight pages were rebuilt on the extended
+  kit with their `LESSON` data byte-identical (only the inlined kit changed),
+  re-driven to 100% in the browser, then uploaded again — 14 files PUT,
+  storage read-back and edge hashes clean, and the live hub and two lessons
+  booted in real Chromium with 0 console errors and 0 failed requests (the
+  toast demo ticked, Robo's level 1 was solved). Live is the committed tree.
 
 ## Progress: `l01`..`l08`, and why not `u01`
 

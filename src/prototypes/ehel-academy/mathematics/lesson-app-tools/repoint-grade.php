@@ -95,6 +95,14 @@ $SUBJECTS = [
             3 => ['ehel-sci-g03', RP_HOST . 'Ehel%20Primary/app/science/grade-3-v2/index.html'],
         ],
     ],
+    // The course key is the shell's `ehel-comp-g${pad2(s)}` (shell/subjects/
+    // computing.js) and pqpg_ehel_subject_map() knows 'comp' with letter g.
+    'computing' => [
+        'entry' => RP_HOST . 'Ehel%20Primary/app/computing/index.html',
+        'targets' => [
+            1 => ['ehel-comp-g01', RP_HOST . 'Ehel%20Primary/app/computing/grade-1-v2/index.html'],
+        ],
+    ],
 ];
 
 $argv = $argv ?? [];

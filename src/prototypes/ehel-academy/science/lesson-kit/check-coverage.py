@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""The curriculum gate on the BUILT Grade 1 Science pages.
+"""The curriculum gate on a grade's BUILT Science pages.
 
 build-lessons.py refuses an objective code the framework does not publish and
 reports what its run reached. This asks the pages that actually ship the same
 question, plus what only the shipped bytes can answer:
 
-  - every one of the 35 Cambridge Primary Science 0097 Stage 1 objectives is
+  - every Cambridge Primary Science 0097 objective of the app's stage is
     named by at least one step of at least one lesson (data-objectives)
-  - no page names a code the framework does not publish for Stage 1
+  - no page names a code the framework does not publish for that stage
   - the objective counts per lesson may not fall below the recorded floor -
     a builder that quietly drops a step keeps every other check green
   - every quiz key in the shipped LESSON data has exactly one correct option,
@@ -18,7 +18,7 @@ Exit 0 clean, 1 on a finding, 2 when it could not run (no framework, fewer
 pages than app.config.json names) - a gate that cannot read its target and
 passes is green about nothing.
 
-    python check-coverage.py
+    python ../lesson-kit/check-coverage.py --app .
 """
 import io
 import json
@@ -26,21 +26,30 @@ import os
 import re
 import sys
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", "..", ".."))
+KIT = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-science-0097.json")
-
-# per-lesson objective counts at the time of writing; may rise, may not fall
-FLOORS = {1: 10, 2: 10, 3: 8, 4: 12, 5: 11, 6: 12, 7: 9, 8: 12}
+HERE = os.path.abspath(sys.argv[sys.argv.index("--app") + 1] if "--app" in sys.argv else os.getcwd())
 LESSON_RE = re.compile(r"\n  const LESSON = (\{.*?\n  \});\n", re.S)
 
 
 def main():
     if not os.path.isfile(FRAMEWORK):
         print("  cannot run: %s is missing" % FRAMEWORK); sys.exit(2)
-    fw = json.load(io.open(FRAMEWORK, encoding="utf-8"))
-    codes = {o["code"]: o for o in fw["objectivesByStage"]["1"]}
+    if not os.path.isfile(os.path.join(HERE, "app.config.json")):
+        print("  cannot run: no app.config.json in %s" % HERE); sys.exit(2)
     cfg = json.load(io.open(os.path.join(HERE, "app.config.json"), encoding="utf-8"))
+    stage = int(cfg["stage"])
+    fw = json.load(io.open(FRAMEWORK, encoding="utf-8"))
+    codes = {o["code"]: o for o in fw["objectivesByStage"].get(str(stage), [])}
+    if not codes:
+        print("  cannot run: the framework publishes no Stage %d" % stage); sys.exit(2)
+    # per-lesson objective counts recorded in the config; may rise, may not fall.
+    # A floor set at what you had before the last thing you added is a formality,
+    # so record it AT the measured value and move it up when a lesson grows.
+    FLOORS = {int(k): int(v) for k, v in (cfg.get("objectiveFloors") or {}).items()}
+    if len(FLOORS) != len(cfg["lessons"]):
+        print("  cannot run: objectiveFloors in app.config.json must name every lesson (%d of %d)" % (len(FLOORS), len(cfg["lessons"]))); sys.exit(2)
     bad = []
 
     def fail(where, msg):
@@ -62,7 +71,7 @@ def main():
         for k, attr_ in enumerate(slides, 1):
             for c in attr_.split():
                 if c not in codes:
-                    fail(entry["file"], "step %d names %s, not a Stage 1 code" % (k, c))
+                    fail(entry["file"], "step %d names %s, not a Stage %d code" % (k, c, stage))
                 else:
                     reached[c].append("L%d.%d" % (n, k)); mine.add(c)
         floor = FLOORS.get(n, 0)
@@ -101,7 +110,7 @@ def main():
     if pages < len(cfg["lessons"]):
         print("  cannot run: %d of %d pages" % (pages, len(cfg["lessons"]))); sys.exit(2)
 
-    print("\n  Cambridge Primary Science 0097 - Stage 1\n")
+    print("\n  Cambridge Primary Science 0097 - Stage %d\n" % stage)
     for c, o in codes.items():
         where = reached[c]
         print("  %-5s %-9s %2d  %s" % ("ok" if where else "MISS", c, len(where), o["text"][:70]))
@@ -111,7 +120,7 @@ def main():
     print()
     if bad:
         print("  %d finding(s)\n" % len(bad)); sys.exit(1)
-    print("  all %d Stage 1 objectives are reached, every key is single, every sort bin exists\n" % len(codes))
+    print("  all %d Stage %d objectives are reached, every key is single, every sort bin exists\n" % (len(codes), stage))
     sys.exit(0)
 
 

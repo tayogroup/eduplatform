@@ -1,7 +1,8 @@
 {
-  "_comment": "The Grade 1 Science standalone lesson build, described for ../../mathematics/lesson-app-tools. Order here IS the lesson number. These eight lessons are organised by the sub-strands of Cambridge Primary Science 0097 Stage 1, NOT by the six units of the 0846-aligned course under science/grade-1/data, so progress is written under l01..l08 - see THE UNIT PROBLEM in wire-progress.py. Emitting u01 would claim a 0846 unit was completed by a lesson built to a different framework.",
+  "_comment": "The Grade 1 Science standalone lesson build, described for ../../mathematics/lesson-app-tools and built by ../lesson-kit. Order here IS the lesson number. These eight lessons are organised by the sub-strands of Cambridge Primary Science 0097 Stage 1, NOT by the six units of the 0846-aligned course under science/grade-1/data, so progress is written under l01..l08 - see THE UNIT PROBLEM in wire-progress.py. Emitting u01 would claim a 0846 unit was completed by a lesson built to a different framework.",
   "grade": 1,
   "gradeLabel": "Grade 1",
+  "stage": 1,
   "subject": "science",
   "subjectLabel": "Science",
   "courseKey": "ehel-sci-g01",
@@ -10,14 +11,74 @@
   "backLabel": "Grade 1 Science",
   "hub": "g1-index.html",
   "remote": "Ehel Primary/app/science/grade-1-v2",
+  "objectiveFloors": {
+    "1": 10,
+    "2": 10,
+    "3": 8,
+    "4": 12,
+    "5": 11,
+    "6": 12,
+    "7": 9,
+    "8": 12
+  },
+  "hubStrands": [
+    [
+      "Thinking and Working Scientifically",
+      "Ask questions, predict, sort, use equipment safely, measure in hands and cubes, record in tables, say whether it matched."
+    ],
+    [
+      "Biology",
+      "Living and never alive; what animals and plants need; parts of a plant; the body and the five senses; how people are alike and different."
+    ],
+    [
+      "Chemistry",
+      "Wood, metal, plastic, glass, rock, paper and fabric; object versus material; properties; squashing, bending, twisting and stretching."
+    ],
+    [
+      "Physics",
+      "How things move; pushes and pulls; floating and sinking; sources of sound and sound fading with distance; electricity and magnets."
+    ],
+    [
+      "Earth and Space",
+      "Earth is our planet and mostly water; land is rock and soil; the Sun gives light and heat and is one of many stars."
+    ],
+    [
+      "Science in Context",
+      "How thinking has changed, how everyday things work, who uses science at work, and how what we do affects the world."
+    ]
+  ],
   "lessons": [
-    { "file": "alive-or-never-alive.html", "title": "Alive or Never Alive" },
-    { "file": "parts-of-a-plant.html", "title": "Parts of a Plant" },
-    { "file": "my-body-and-my-senses.html", "title": "My Body and My Senses" },
-    { "file": "what-is-it-made-of.html", "title": "What Is It Made Of?" },
-    { "file": "pushes-pulls-and-floating.html", "title": "Pushes, Pulls and Floating" },
-    { "file": "sounds-near-and-far.html", "title": "Sounds Near and Far" },
-    { "file": "electricity-and-magnets.html", "title": "Electricity and Magnets" },
-    { "file": "our-earth-our-sun.html", "title": "Our Earth, Our Sun" }
+    {
+      "file": "alive-or-never-alive.html",
+      "title": "Alive or Never Alive"
+    },
+    {
+      "file": "parts-of-a-plant.html",
+      "title": "Parts of a Plant"
+    },
+    {
+      "file": "my-body-and-my-senses.html",
+      "title": "My Body and My Senses"
+    },
+    {
+      "file": "what-is-it-made-of.html",
+      "title": "What Is It Made Of?"
+    },
+    {
+      "file": "pushes-pulls-and-floating.html",
+      "title": "Pushes, Pulls and Floating"
+    },
+    {
+      "file": "sounds-near-and-far.html",
+      "title": "Sounds Near and Far"
+    },
+    {
+      "file": "electricity-and-magnets.html",
+      "title": "Electricity and Magnets"
+    },
+    {
+      "file": "our-earth-our-sun.html",
+      "title": "Our Earth, Our Sun"
+    }
   ]
 }

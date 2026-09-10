@@ -1,27 +1,33 @@
 # -*- coding: utf-8 -*-
 """Build the Grade 1 Science standalone lesson pages.
 
-WHAT THIS IS. A Grade 1 Science course in the design of the Grade 1
-Mathematics and English standalone builds (mathematics/grade-1-app/g1v2,
-english/grade-1-app): one self-contained HTML page per lesson, carrying its
-own CSS, its own activity JS and its own copy of the voice engine, bypassing
-shell/course-app.js entirely.
+WHAT THIS IS. The Science standalone lesson generator, one kit for every
+grade: a course in the design of the Grade 1 Mathematics and English
+standalone builds (mathematics/grade-1-app/g1v2, english/grade-1-app), one
+self-contained HTML page per lesson, carrying its own CSS, its own activity JS
+and its own copy of the voice engine, bypassing shell/course-app.js entirely.
 
-WHAT THE CONTENT IS. Cambridge Primary Science 0097, Stage 1 - all 35 learning
-objectives, authored in content/lesson-N.py against the framework file
-src/curriculum/cambridge-science-0097.json (extracted from the published PDF
-by tools/extract-cambridge-science-framework.py --code 0097). It is NOT the
-six-unit 0846 course under science/grade-1/data: that course is 0846-aligned
-and its explorations are "follow the plan in your experiments book". These
-lessons carry the experiment on the page.
+ONE KIT, ONE DIRECTORY PER GRADE. science/grade-N-app holds app.config.json
+(grade, stage, floors, hub text) and content/lesson-N.py; everything that
+draws a page lives here. The Grade 1 originals were correct and grade-agnostic
+in every respect except the stage number and a handful of labels, which is
+the same reason mathematics/lesson-app-tools exists.
+
+WHAT THE CONTENT IS. Cambridge Primary Science 0097, the stage named in the
+app's config - every learning objective of it, authored against the framework
+file src/curriculum/cambridge-science-0097.json (extracted from the published
+PDF by tools/extract-cambridge-science-framework.py --code 0097). It is NOT
+the 0846 course under science/grade-N/data: that course is 0846-aligned and
+its explorations are "follow the plan in your experiments book". These lessons
+carry the experiment on the page.
 
 Every step names the objectives it exercises, and the builder refuses a code
-the framework does not publish for Stage 1. check-coverage.py then asks the
-BUILT pages whether all 35 are reached, so a lesson that loses a step fails
-the gate rather than the syllabus.
+the framework does not publish for the stage. check-coverage.py then asks the
+BUILT pages whether every objective is reached, so a lesson that loses a step
+fails the gate rather than the syllabus.
 
-    python build-lessons.py            # every lesson named in app.config.json
-    python build-lessons.py 3          # just lesson 3
+    python ../lesson-kit/build-lessons.py --app .       # from a grade directory
+    python ../lesson-kit/build-lessons.py --app . 3     # just lesson 3
 
 Then the shared pipeline, in this order (each step assumes the last):
 
@@ -32,7 +38,7 @@ Then the shared pipeline, in this order (each step assumes the last):
     python $T/wire-progress.py          --app .
     python $T/add-header-bars.py        --app .
     python $T/check-lessons.py          --app .
-    python check-coverage.py
+    python ../lesson-kit/check-coverage.py --app .
 
 This tool writes the page from scratch every time, so it must run BEFORE any
 of them; running it again over a wired page throws the wiring away.
@@ -44,12 +50,27 @@ import os
 import re
 import sys
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-ACADEMY = os.path.abspath(os.path.join(HERE, "..", ".."))
+KIT = os.path.dirname(os.path.abspath(__file__))
+ACADEMY = os.path.abspath(os.path.join(KIT, "..", ".."))
 REPO = os.path.abspath(os.path.join(ACADEMY, "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-science-0097.json")
-LIB = os.path.join(HERE, "lib")
-CONTENT = os.path.join(HERE, "content")
+LIB = os.path.join(KIT, "lib")
+
+
+def app_dir(argv):
+    """--app <dir>, else the cwd; refuses a directory with no app.config.json."""
+    d = argv[argv.index("--app") + 1] if "--app" in argv else os.getcwd()
+    d = os.path.abspath(d)
+    if not os.path.isfile(os.path.join(d, "app.config.json")):
+        sys.exit("REFUSED: no app.config.json in %s. Run from a grade directory or pass --app <dir>." % d)
+    return d
+
+
+APP = app_dir(sys.argv[1:])
+CONTENT = os.path.join(APP, "content")
+CFG = json.load(io.open(os.path.join(APP, "app.config.json"), encoding="utf-8"))
+STAGE = int(CFG["stage"])
+GRADE_LABEL = CFG["gradeLabel"]
 
 # kind -> the renderer in lib/science.js that draws it
 KINDS = {
@@ -75,13 +96,16 @@ def load_json(path):
     return json.load(io.open(path, encoding="utf-8"))
 
 
-def stage1_codes():
+def stage_codes():
     if not os.path.isfile(FRAMEWORK):
         sys.exit("REFUSED: %s is missing. Extract it first:\n"
                  "  python tools/extract-cambridge-science-framework.py --pdf <0097.pdf> --code 0097 "
                  "--output src/curriculum/cambridge-science-0097.json" % FRAMEWORK)
     fw = load_json(FRAMEWORK)
-    return {o["code"]: o["text"] for o in fw["objectivesByStage"]["1"]}
+    stage = fw["objectivesByStage"].get(str(STAGE))
+    if not stage:
+        sys.exit("REFUSED: the framework publishes no Stage %d" % STAGE)
+    return {o["code"]: o["text"] for o in stage}
 
 
 def js_keys(src, name):
@@ -97,7 +121,7 @@ def js_keys(src, name):
 
 
 def load_lessons(wanted):
-    cfg = load_json(os.path.join(HERE, "app.config.json"))
+    cfg = CFG
     out = []
     for n, entry in enumerate(cfg["lessons"], 1):
         if wanted and n not in wanted:
@@ -108,7 +132,8 @@ def load_lessons(wanted):
                      % (n, entry["title"], n))
         spec = importlib.util.spec_from_file_location("lesson_%d" % n, path)
         mod = importlib.util.module_from_spec(spec)
-        sys.path.insert(0, CONTENT)
+        if KIT not in sys.path:
+            sys.path.insert(0, KIT)   # `from _kit import ...`
         spec.loader.exec_module(mod)
         lesson = mod.LESSON
         if lesson["title"] != entry["title"]:
@@ -140,7 +165,7 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
         sys.exit("REFUSED: %s names no objective" % where)
     for c in s["objectives"]:
         if c not in codes:
-            sys.exit("REFUSED: %s names %s, which 0097 does not publish for Stage 1" % (where, c))
+            sys.exit("REFUSED: %s names %s, which 0097 does not publish for Stage %d" % (where, c, STAGE))
     d = s["data"]
     kind = s["kind"]
     if kind in ("explore", "context"):
@@ -284,7 +309,7 @@ PAGE = """<!doctype html>
 <div class="wrap">
   <header class="hero">
     <div>
-      <p class="eyebrow">Ehel Academy &middot; Grade 1 Science &middot; Lesson %(unit)d</p>
+      <p class="eyebrow">Ehel Academy &middot; %(gradeLabel)s Science &middot; Lesson %(unit)d</p>
       <h1>%(h1)s</h1>
     </div>
     <nav class="dots" id="dots" aria-label="Steps"></nav>
@@ -312,14 +337,14 @@ PAGE = """<!doctype html>
   window.__ehelPainting = true;
 
   /* ==================================================================
-     %(title)s - Grade 1 Science, Lesson %(unit)d.
+     %(title)s - %(gradeLabel)s Science, Lesson %(unit)d.
 
-     GENERATED by science/grade-1-app/build-lessons.py from
-     science/grade-1-app/content/lesson-%(unit)d.py. Do not hand-edit: the
+     GENERATED by science/lesson-kit/build-lessons.py from
+     %(appName)s/content/lesson-%(unit)d.py. Do not hand-edit: the
      next build overwrites it, and the fix for anything wrong on this page
-     is in the content module or in lib/science.js.
+     is in the content module or in lesson-kit/lib/science.js.
 
-     Objectives (Cambridge Primary Science 0097, Stage 1): %(codes)s
+     Objectives (Cambridge Primary Science 0097, Stage %(stage)d): %(codes)s
      ================================================================== */
 
   const LESSON = %(data)s;
@@ -398,13 +423,14 @@ def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, de
 
     page = PAGE % {
         "title": title, "unit": n, "h1": h1, "css": css, "slides": body,
+        "gradeLabel": text(GRADE_LABEL), "stage": STAGE, "appName": os.path.basename(APP),
         "codes": ", ".join(all_codes),
         "data": json.dumps(data, ensure_ascii=False, indent=2).replace("\n", "\n  "),
         "voice": voice, "deck": deck, "science": science,
         "stickers": json.dumps(stickers, ensure_ascii=False),
         "bootstrap": bootstrap(steps),
     }
-    io.open(os.path.join(HERE, fname), "w", encoding="utf-8", newline="").write(page)
+    io.open(os.path.join(APP, fname), "w", encoding="utf-8", newline="").write(page)
     print("  ok   %-32s lesson %d  %2d steps + stickers  %3d objectives  %6d bytes"
           % (fname, n, len(steps), len(all_codes), len(page)))
     return all_codes
@@ -412,7 +438,7 @@ def build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, de
 
 def main():
     wanted = [int(a) for a in sys.argv[1:] if a.isdigit()]
-    codes = stage1_codes()
+    codes = stage_codes()
     science = read("science.js")
     sims = js_keys(science, "SIMS")
     figures = js_keys(science, "FIGURES")
@@ -425,15 +451,15 @@ def main():
     voice = read("voice.js")
     deck = read("deck.js")
 
-    print("\n  Building Grade 1 Science lessons  (0097 Stage 1: %d objectives; %d sims, %d figures, %d scenes, %d sounds)\n"
-          % (len(codes), len(sims), len(figures), len(scenes), len(sounds)))
+    print("\n  Building %s Science lessons  (0097 Stage %d: %d objectives; %d sims, %d figures, %d scenes, %d sounds)\n"
+          % (GRADE_LABEL, STAGE, len(codes), len(sims), len(figures), len(scenes), len(sounds)))
     covered = set()
     for n, fname, lesson in load_lessons(wanted):
         covered |= set(build(n, fname, lesson, codes, sims, figures, scenes, sounds, css, voice, deck, science))
     if not wanted:
         missing = sorted(set(codes) - covered)
-        print("\n  %d of %d Stage 1 objectives reached by at least one step%s\n"
-              % (len(covered), len(codes), ("; NOT reached: " + ", ".join(missing)) if missing else ""))
+        print("\n  %d of %d Stage %d objectives reached by at least one step%s\n"
+              % (len(covered), len(codes), STAGE, ("; NOT reached: " + ", ".join(missing)) if missing else ""))
         if missing:
             sys.exit(1)
     print("  Now run the shared pipeline - see the docstring.\n")

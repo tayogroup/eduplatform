@@ -47,7 +47,7 @@ def step(kind, title, icon, sticker, objectives, ask, explain_ssml, data, done, 
     title       the heading a child sees
     icon        the emoji on its sticker
     sticker     the sticker's caption, two or three words
-    objectives  0097 Stage 1 codes this step actually exercises - checked
+    objectives  0097 codes of the app's stage this step exercises - checked
                 against the framework at build time and reported by the gate
     ask         the instruction in the voice bar (HTML allowed)
     explain     the SSML mini-lesson behind the Explain button

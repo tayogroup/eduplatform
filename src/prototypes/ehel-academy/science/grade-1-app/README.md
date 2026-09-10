@@ -16,16 +16,9 @@ Nothing under `science/grade-1/` is read or written by this build.
 | | |
 | --- | --- |
 | `content/lesson-N.py` | the authored lessons: every step names its 0097 codes |
-| `content/_kit.py` | `step()`, `explain()`, `q()`, `opt()` — the authoring vocabulary |
-| `lib/lesson.css` | the Mathematics design system, verbatim via English's copy |
-| `lib/science.css` | this build's own styles; no new hue |
-| `lib/voice.js`, `lib/deck.js` | lifted verbatim from `english/grade-1-app/lib` (deck **unwired**, see below) |
-| `lib/science.js` | the renderers, the sims, the figures, the scenes, the synthesiser |
-| `build-lessons.py` | writes `<slug>.html` per lesson; refuses bad content |
-| `build-hub.py` | writes `g1-index.html`, the eight cards |
-| `check-coverage.py` | the curriculum gate on the BUILT pages |
-| `app.config.json` | what `../../mathematics/lesson-app-tools` reads |
+| `app.config.json` | grade, stage, floors, hub strands, lessons — what `../lesson-kit` and `../../mathematics/lesson-app-tools` read |
 | `<slug>.html`, `g1-index.html` | **GENERATED.** Do not hand-edit |
+| `../lesson-kit/` | **the generator, shared by every grade** (moved here 2026-09-10 when Grade 2 started): `build-lessons.py`, `build-hub.py`, `check-coverage.py`, `_kit.py` (`step()`, `explain()`, `q()`, `opt()`), and `lib/` — `lesson.css` (the Mathematics design system via English's copy), `science.css`, `voice.js` and `deck.js` (lifted verbatim, deck **unwired**, see below), `science.js` (renderers, sims, figures, scenes, synthesiser) |
 
 The framework file is `src/curriculum/cambridge-science-0097.json`, extracted
 from the published PDF by
@@ -36,9 +29,10 @@ because `science/grade-*/data` still declares it.
 ## Build
 
 ```bash
-python build-lessons.py            # every lesson in app.config.json; refuses on a bad code or key
-python build-lessons.py 3          # just lesson 3
-python build-hub.py                # after the lessons
+K=../lesson-kit
+python $K/build-lessons.py --app .      # every lesson in app.config.json; refuses on a bad code or key
+python $K/build-lessons.py --app . 3    # just lesson 3
+python $K/build-hub.py --app .          # after the lessons
 
 T=../../mathematics/lesson-app-tools
 python $T/wire-navigation.py        --app .
@@ -47,13 +41,15 @@ python $T/preload-platform.py       --app .
 python $T/wire-progress.py          --app .
 python $T/add-header-bars.py        --app .
 python $T/check-lessons.py          --app .    # the shared gate
-python check-coverage.py                       # the curriculum gate
+python $K/check-coverage.py         --app .    # the curriculum gate
 node   $T/deploy.mjs                --app .    # plan only; --upload is an owner decision
 ```
 
 `build-lessons.py` writes each page from scratch, so re-running it throws the
 pipeline's wiring away and the pipeline has to be re-run. Deliberate — same
-rule as English.
+rule as English. The kit was proved safe to extract the way the English ebook
+kit was: Grade 1 rebuilt through it into a scratch directory came out
+byte-identical to the live pages apart from the generated-by comment.
 
 ## What a lesson is
 

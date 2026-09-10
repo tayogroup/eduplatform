@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Build the Grade 1 Science hub - the page a learner lands on.
+"""Build a grade's Science hub - the page a learner lands on.
 
-Eight cards, one per lesson, in the order app.config.json lists them. A
+One card per lesson, in the order app.config.json lists them. A
 card's step count comes from the BUILT page and its blurb, objectives and
 answer keys from the content module, so the hub cannot promise a step the page
 does not have. A lesson whose page is not built is drawn as "Coming soon" with
@@ -23,7 +23,7 @@ do for real with things from home, and the answer keys. It rides inside the
 hub because deploy.mjs ships the hub and the lessons and nothing else, and a
 second page would need the shared deploy tool taught about it.
 
-    python build-hub.py        # after build-lessons.py
+    python ../lesson-kit/build-hub.py --app .     # after build-lessons.py
 """
 import importlib.util
 import io
@@ -32,11 +32,14 @@ import os
 import re
 import sys
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-LIB = os.path.join(HERE, "lib")
-CONTENT = os.path.join(HERE, "content")
-REPO = os.path.abspath(os.path.join(HERE, "..", "..", "..", "..", ".."))
+KIT = os.path.dirname(os.path.abspath(__file__))
+LIB = os.path.join(KIT, "lib")
+REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-science-0097.json")
+APP = os.path.abspath(sys.argv[sys.argv.index("--app") + 1] if "--app" in sys.argv else os.getcwd())
+if not os.path.isfile(os.path.join(APP, "app.config.json")):
+    sys.exit("REFUSED: no app.config.json in %s. Run from a grade directory or pass --app <dir>." % APP)
+CONTENT = os.path.join(APP, "content")
 
 # minutes a six-year-old spends on a step of each kind, including listening
 MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "experiment": 4, "predictEach": 5,
@@ -74,7 +77,8 @@ def lesson_module(n):
         return None
     spec = importlib.util.spec_from_file_location("lesson_%d" % n, path)
     mod = importlib.util.module_from_spec(spec)
-    sys.path.insert(0, CONTENT)
+    if KIT not in sys.path:
+        sys.path.insert(0, KIT)
     spec.loader.exec_module(mod)
     return mod.LESSON
 
@@ -99,7 +103,7 @@ PAGE = """<!doctype html>
 <html lang="en-GB">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grade 1 Science</title>
+<title>%(gradeLabel)s Science</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
 <style>
 %(css)s
@@ -185,15 +189,15 @@ PAGE = """<!doctype html>
 <div class="wrap">
   <header class="hubhead">
     <p class="eyebrow">Ehel Academy &middot; Science</p>
-    <h1>Grade 1 <em>Science</em></h1>
-    <p>Eight lessons, in the order they are meant to be done. Every one has a real experiment in it: predict, try it, say what happened. About %(total)d minutes in all, one lesson a week.</p>
+    <h1>%(gradeLabel)s <em>Science</em></h1>
+    <p>%(nlessons)s lessons, in the order they are meant to be done. Every one has a real experiment in it: predict, try it, say what happened. About %(total)d minutes in all, one lesson a week.</p>
   </header>
 
   <main class="cards">
 %(cards)s  </main>
 
   <section class="strands">
-    <h2>What Stage 1 science covers</h2>
+    <h2>What Stage %(stage)d science covers</h2>
 %(strands)s  </section>
 
   <section class="grownups" id="grown-ups">
@@ -201,7 +205,7 @@ PAGE = """<!doctype html>
     <p>What each lesson teaches, in Cambridge's own words; the experiment to do for real with things from home; and the answer keys. Open a lesson to read it, or print this page for the lot.</p>
 %(grownups)s  </section>
 
-  <p class="hubfoot">Built to Cambridge Primary Science 0097, Stage 1 &mdash; all %(ncodes)d learning objectives, including Thinking and Working Scientifically and Science in Context. The stickers are earned, not given.</p>
+  <p class="hubfoot">Built to Cambridge Primary Science 0097, Stage %(stage)d &mdash; all %(ncodes)d learning objectives, including Thinking and Working Scientifically and Science in Context. The stickers are earned, not given.</p>
 </div>
 
 <script>
@@ -250,17 +254,7 @@ PAGE = """<!doctype html>
 </script>
 """
 
-STRANDS = [
-    ("Thinking and Working Scientifically", "Ask questions, predict, sort, use equipment safely, measure in hands and cubes, record in tables, say whether it matched."),
-    ("Biology", "Living and never alive; what animals and plants need; parts of a plant; the body and the five senses; how people are alike and different."),
-    ("Chemistry", "Wood, metal, plastic, glass, rock, paper and fabric; object versus material; properties; squashing, bending, twisting and stretching."),
-    ("Physics", "How things move; pushes and pulls; floating and sinking; sources of sound and sound fading with distance; electricity and magnets."),
-    ("Earth and Space", "Earth is our planet and mostly water; land is rock and soil; the Sun gives light and heat and is one of many stars."),
-    ("Science in Context", "How thinking has changed, how everyday things work, who uses science at work, and how what we do affects the world."),
-]
-
-
-def grownups_for(n, lesson, codes, minutes, steps):
+def grownups_for(n, lesson, codes, minutes, steps, stage):
     """One <details> per lesson: objectives, steps, the experiment at home, the keys."""
     reached = []
     for s in lesson["steps"]:
@@ -299,31 +293,33 @@ def grownups_for(n, lesson, codes, minutes, steps):
     return (
         '    <details class="gu"><summary>Lesson %d: %s<small>%d steps &middot; about %d minutes &middot; %d objectives</small></summary>\n'
         '      <div class="body">\n'
-        '        <h3>What it teaches (Cambridge Primary Science 0097, Stage 1)</h3><ul>%s</ul>\n'
+        '        <h3>What it teaches (Cambridge Primary Science 0097, Stage %d)</h3><ul>%s</ul>\n'
         '        <h3>The steps</h3><ol>%s</ol>\n'
         '%s'
         '        <h3>Answer keys</h3><ul>%s</ul>\n'
         '      </div>\n    </details>\n'
-        % (n, text(lesson["title"]), steps, minutes, len(reached), objectives, steplist,
+        % (n, text(lesson["title"]), steps, minutes, len(reached), stage, objectives, steplist,
            ('        <h3>Do the experiment for real</h3><ul>%s</ul>\n' % "".join(home)) if home else "",
            "".join(keys)))
 
 
 def main():
-    cfg = load_json(os.path.join(HERE, "app.config.json"))
-    fw = load_json(FRAMEWORK) if os.path.isfile(FRAMEWORK) else {"objectivesByStage": {"1": []}}
-    codes = {o["code"]: o["text"] for o in fw["objectivesByStage"]["1"]}
+    cfg = load_json(os.path.join(APP, "app.config.json"))
+    stage = int(cfg["stage"])
+    fw = load_json(FRAMEWORK) if os.path.isfile(FRAMEWORK) else {"objectivesByStage": {}}
+    codes = {o["code"]: o["text"] for o in fw["objectivesByStage"].get(str(stage), [])}
+    strands = cfg.get("hubStrands") or []
     prefix = cfg.get("progressUnitPrefix", "l")
     cards, steps, files, options, grownups = "", {}, {}, "", ""
     live, total_minutes = 0, 0
     for n, l in enumerate(cfg["lessons"], 1):
         f = l["file"]
         uid = "%s%02d" % (prefix, n)
-        here = os.path.isfile(os.path.join(HERE, f))
+        here = os.path.isfile(os.path.join(APP, f))
         lesson = lesson_module(n)
         if here and lesson:
             live += 1
-            page = io.open(os.path.join(HERE, f), encoding="utf-8").read()
+            page = io.open(os.path.join(APP, f), encoding="utf-8").read()
             count = len(re.findall(r'<section class="slide"', page)) - 1
             minutes = minutes_of(lesson)
             total_minutes += minutes
@@ -333,21 +329,23 @@ def main():
             cta = '<span class="go">Start</span>'
             tag, href, cls = "a", ' href="%s?from=%s"' % (f, cfg["fromParam"]), ""
             options += '<option value="%s">%s</option>' % (f, text(l["title"]))
-            grownups += grownups_for(n, lesson, codes, minutes, count)
+            grownups += grownups_for(n, lesson, codes, minutes, count, stage)
         else:
             meta, cta = "", '<span class="soon">Coming soon</span>'
             tag, href, cls = "div", "", " locked"
         cards += CARD % {"tag": tag, "href": href, "cls": cls, "n": n, "title": text(l["title"]),
                          "blurb": text((lesson or {}).get("blurb", "")), "meta": meta, "cta": cta}
     css = io.open(os.path.join(LIB, "lesson.css"), encoding="utf-8").read()
-    strands = "".join('    <div class="strand"><b>%s</b><span>%s</span></div>\n' % (text(a), text(b)) for a, b in STRANDS)
+    strands_html = "".join('    <div class="strand"><b>%s</b><span>%s</span></div>\n' % (text(a), text(b)) for a, b in strands)
+    WORDS = {6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven", 12: "Twelve"}
     page = PAGE % {
-        "css": css, "cards": cards, "shield": SHIELD, "strands": strands, "ncodes": len(codes) or 35,
-        "grownups": grownups, "total": total_minutes,
+        "css": css, "cards": cards, "shield": SHIELD, "strands": strands_html, "ncodes": len(codes),
+        "grownups": grownups, "total": total_minutes, "stage": stage,
+        "gradeLabel": text(cfg["gradeLabel"]), "nlessons": WORDS.get(len(cfg["lessons"]), str(len(cfg["lessons"]))),
         "course": cfg["courseKey"], "steps": json.dumps(steps), "files": json.dumps(files),
         "from": cfg["fromParam"], "options": '<option value="" selected>Jump to a lesson…</option>' + options,
     }
-    io.open(os.path.join(HERE, cfg["hub"]), "w", encoding="utf-8", newline="").write(page)
+    io.open(os.path.join(APP, cfg["hub"]), "w", encoding="utf-8", newline="").write(page)
     print("\n  ok   %s  -  %d of %d lessons live, about %d minutes of lessons\n" % (cfg["hub"], live, len(cfg["lessons"]), total_minutes))
 
 

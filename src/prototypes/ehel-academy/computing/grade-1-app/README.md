@@ -164,9 +164,14 @@ reading.
   the edge against the plan, and the live hub and two lessons booted in real
   Chromium with the five platform modules resolving (0 console errors, 0
   failed requests; the toast demo ticked and Robo's level 1 was solved on the
-  live page). Reachable by URL and by nobody's course: Grade 1 routing is the
-  `local_prequran/ehel_app_url_overrides` Moodle setting, which does not name
-  `ehel-comp-g01`. Routing is a separate, owner decision.
+  live page). **Routed the same day**: the operator ran the staged
+  `lesson-app-tools/repoint-grade.php --subject computing --grade 1 --apply`
+  from the docroot, and it read back clean with all 7 overrides intact, so
+  `ehel-comp-g01` now launches here (`local_prequran/ehel_app_url_overrides`).
+  That is the script's own read-back, not a learner launch observed from this
+  machine. Rollback is the pre-run map the script printed, pasted into Site
+  admin > Local plugins > Ehel app URL overrides, or removing the
+  `ehel-comp-g01` key to return to `app/computing/index.html`.
 
 ## Progress: `l01`..`l08`, and why not `u01`
 
@@ -216,8 +221,7 @@ the mapping is one function in `wire-progress.py` and a curriculum decision.
 
 ## What was deliberately not done
 
-Routing a learner (the build is deployed but no course points at it);
-recorded narration; reusing the Word-pack
+Recorded narration; reusing the Word-pack
 course's text; anything at Stage 2; a Scratch Jr embed (the framework
 recommends the real tool for on-screen programming from Stage 1, and a
 self-contained page cannot carry it — the block program here is the shape of

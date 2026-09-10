@@ -158,6 +158,45 @@ NEW_HYDRATE = """  let baseAttempted = {};
 """
 
 
+# A page wired EARLIER STILL has no hydrate block at all: it only ever wrote,
+# and never read the record back. So there is nothing for the upgrade above to
+# swap, and the resume hook has to be given a reader of its own. This is the
+# whole of the difference -- deliberately WITHOUT baseAttempted/baseKnown,
+# which belong to builds that carry an attempted or knownWords baseline and are
+# undefined here; referencing them would take the module down at load and the
+# lesson's reporting with it.
+BARE_HYDRATE = """  /* step-NN -> the slide's 0-based index; anything else -> -1 */
+  const indexOf = (id) => {
+    const m = /^step-(\\d{2})$/.exec(String(id || ""));
+    return m ? Number(m[1]) - 1 : -1;
+  };
+  /* RESUME. This build reported from the day it shipped and never read back,
+     so a child who closed the tab reopened to an empty dot rail and step 1
+     while the school's record said otherwise. The sections the record calls
+     done are seeded into doneIds as well as ticked, so unit.completed still
+     fires on the day the LAST step is finished even if the first seven were
+     finished last week. */
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (!u) return;
+      const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
+      for (const i of doneIdx) doneIds.add(sectionId(i));
+      const resumeIdx = indexOf(u.resume);
+      if (window.__ehelRestore && (doneIdx.length || resumeIdx > 0)) {
+        try { window.__ehelRestore(doneIdx, resumeIdx); } catch (_) { /* never break the lesson */ }
+      }
+    } catch (_) { /* never break the lesson */ }
+  })();
+
+"""
+
+# Where BARE_HYDRATE goes: immediately before the step hook, which is after
+# ws, doneIds and sectionId are all declared and inside the same module scope.
+STEP_HOOK = "  window.__ehelStep = function (i, done) {"
+
+
 JS = """
 <script type="module">
   /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
@@ -374,21 +413,47 @@ CSS = """
 
 
 def upgrade(app, name, s):
-    """A page wired before 2026-09-10 reports but does not resume: it reads
-    the record back for its attempted/knownWords baseline and ignores
-    sectionsDone and resume. Add the hook after show() and swap the hydrate
-    block, anchored on the exact text the older tool wrote. Nothing else on
-    the page moves, so a build's owner can bring it up to date without a
-    rebuild - and without this path the gate's new assertion would turn every
-    older build red with no way to green it but a from-scratch rebuild."""
+    """A page wired before the resume hook existed (2026-09-10) reports but does
+    not resume. Two shapes exist and they need different repairs, which is why
+    this refuses rather than guesses when it recognises neither.
+
+    A page wired by the FIRST version reads the record back for its
+    attempted/knownWords baseline and ignores sectionsDone and resume, so its
+    hydrate block is swapped for one that uses them.
+
+    A page wired EARLIER STILL has no hydrate block at all -- it only ever
+    wrote. All nine Grade 2, eight Grade 3 and eight Grade 4 maths lessons are
+    that shape. There is nothing to swap, so a reader is INSERTED before the
+    step hook, and it must not mention baseAttempted or baseKnown: those are
+    undefined on these pages, and a reference would take the module down at
+    load and the reporting with it.
+
+    Both paths add the hook after show() and touch nothing else, so a build's
+    owner can bring it up to date without a rebuild -- and without them the
+    gate's assertion would turn every older build red with no way to green it
+    but a from-scratch rebuild."""
     anchor = '    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }\n  }'
     if s.count(anchor) != 1:
         print("  REFUSED %-24s wired, but show() is not the shape this upgrades (%d matches)" % (name, s.count(anchor)))
         return False
-    if s.count(OLD_HYDRATE) != 1:
-        print("  REFUSED %-24s wired, but the hydrate block is not the shape this upgrades (%d matches)" % (name, s.count(OLD_HYDRATE)))
+    if s.count(OLD_HYDRATE) == 1:
+        s = s.replace(anchor, anchor + RESTORE_HOOK, 1).replace(OLD_HYDRATE, NEW_HYDRATE, 1)
+    elif "ws.hydrate()" not in s:
+        # the never-read-back shape. Every name the inserted reader uses has to
+        # be there already, or it would be a ReferenceError at load rather than
+        # a refusal here.
+        missing = [n for n in ("const doneIds", "const sectionId", "const ws =") if n not in s]
+        if missing:
+            print("  REFUSED %-24s wired, but the reader needs %s" % (name, ", ".join(missing)))
+            return False
+        if s.count(STEP_HOOK) != 1:
+            print("  REFUSED %-24s wired, but the step hook is not the shape this upgrades (%d matches)"
+                  % (name, s.count(STEP_HOOK)))
+            return False
+        s = s.replace(anchor, anchor + RESTORE_HOOK, 1).replace(STEP_HOOK, BARE_HYDRATE + STEP_HOOK, 1)
+    else:
+        print("  REFUSED %-24s wired and hydrates, but in neither shape this upgrades" % name)
         return False
-    s = s.replace(anchor, anchor + RESTORE_HOOK, 1).replace(OLD_HYDRATE, NEW_HYDRATE, 1)
     app.write(name, s)
     print("  up   %-26s now resumes on reopen" % name)
     return True

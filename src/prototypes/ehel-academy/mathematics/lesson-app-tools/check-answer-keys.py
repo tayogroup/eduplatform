@@ -33,6 +33,17 @@ because it called a CORRECT key wrong:
 
 Usage:  python ../lesson-app-tools/check-answer-keys.py           # from a build
         python ../lesson-app-tools/check-answer-keys.py --app ../grade-1-app/g1v2
+
+THE RUNTIME QUESTIONS NEED TWO STEPS, because they have to be RUN first. Grade
+3 builds most of its check questions from `const QS = [() => ...]`, so they have
+no key in this file's reach until a JS engine has made them:
+
+        node lesson-app-tools/emit-generated-questions.mjs --app grade-3-app --out qs.json
+        python lesson-app-tools/check-answer-keys.py --app grade-3-app --generated qs.json
+
+The emitter never judges an answer and this file never runs JavaScript; the
+rules stay in one place, so the two cannot drift into disagreeing about what a
+correct answer is.
 """
 import io, os, re, sys, json, html, hashlib, unicodedata
 
@@ -61,7 +72,7 @@ RULE_FUNCS = {
     "fraction_answer", "units_answer", "clock_answer", "turn_answer",
     "pattern_answer", "chart_answer", "stage34_number", "stage34_shape",
     "stage34_place", "stage34_time", "named_chart_answer", "beads_answer",
-    "calc_answer", "words_answer", "term_rule_answer", "estimate_answer",
+    "calc_answer", "words_answer", "term_rule_answer", "estimate_answer", "stage3_runtime",
     "part_square_answer",
 }
 RULE_HITS = "--rule-hits" in argv
@@ -2105,6 +2116,167 @@ def part_square_answer(low, opts):
     return pick(opts, int(m.group(1)) + int(m.group(2)) / 2.0, amount)
 
 
+def sum_expr(s):
+    """"400 + 10 + 0" -> 410. None if the option is not a run of additions."""
+    t = plain(s).replace(",", "")
+    if not re.fullmatch(r"\s*\d+(?:\s*\+\s*\d+)+\s*", t):
+        return None
+    return float(sum(int(x) for x in re.findall(r"\d+", t)))
+
+
+def money(s):
+    """the first decimal amount in an option: "0.10" -> 0.1, "sh 5.00" -> 5.0.
+
+    amount() cannot read these: nums() matches whole numbers only, so every
+    part of "0.10" is excluded - the 0 by the following point and the 10 by the
+    preceding one - and it returns None for the entire option.
+    """
+    m = re.search(r"\d+(?:\.\d+)?", plain(s))
+    return float(m.group(0)) if m else None
+
+
+def stage3_runtime(low, t, opts):
+    """The Grade 3 questions that are BUILT AT RUNTIME.
+
+    These have no answer key in the source - the generator computes one beside
+    each question - so nothing could read them until emit-generated-questions.mjs
+    started running the generators. Every rule here derives the answer from the
+    question's own numbers, so a generator whose key expression is wrong (`a: n
+    + 10` under "What is n x 10?") is caught however many times it is drawn.
+    """
+    # ---- place value, comparison, partition, counting on ----
+    m = re.search(r"^in (\d+), what is the (\d) worth", low)
+    if m and str(m.group(1)).count(m.group(2)) == 1:      # ambiguous if repeated
+        n = m.group(1)
+        return int(m.group(2)) * 10 ** (len(n) - 1 - n.index(m.group(2)))
+    m = re.search(r"which sign goes between (\d+) and (\d+)", low)
+    if m:
+        a, b = int(m.group(1)), int(m.group(2))
+        return ">" if a > b else "<" if a < b else "="
+    m = re.search(r"which of these adds up to (\d+)", low)
+    if m:
+        return pick(opts, float(m.group(1)), sum_expr)
+    m = re.search(r"count on in (\d+)s from (\d+)", low)
+    if m:
+        return int(m.group(2)) + int(m.group(1))
+
+    # ---- the missing number, written two ways ----
+    m = re.search(r"(\d+)\s*\+\s*\?\s*=\s*(\d+)", low)
+    if m:
+        return int(m.group(2)) - int(m.group(1))
+    m = re.search(r"\?\s*\+\s*(\d+)\s*=\s*(\d+)", low)
+    if m:
+        return int(m.group(2)) - int(m.group(1))
+
+    # ---- money ----
+    # \d+\.\d+ and NOT [\d.]+ - the greedy class eats the sentence's own full
+    # stop and float("5.00.") is a crash rather than a wrong answer
+    m = re.search(r"costs sh (\d+\.\d+) and you pay sh (\d+\.\d+)", low)
+    if m:
+        return pick(opts, round(float(m.group(2)) - float(m.group(1)), 2), money)
+    m = re.search(r"how much is sh (\d+)\.(\d+)\b", low)
+    if m:
+        sh, c = int(m.group(1)), int(m.group(2))
+        hit = [o for o in opts
+               if re.fullmatch(r"\s*%d shillings? and %d cents?\s*" % (sh, c),
+                               plain(o).lower())]
+        return hit[0] if len(hit) == 1 else None
+    # the pair that makes a round number - the same strategy Stage 4 asks about
+    m = re.search(r"which two would you add first in ([\d\s+]+)", low)
+    if m:
+        have = nums(m.group(1))
+        good = []
+        for o in opts:
+            p = re.fullmatch(r"\s*(\d+) and (\d+)\s*", plain(o).lower())
+            if not p:
+                continue
+            a, b = int(p.group(1)), int(p.group(2))
+            if a in have and b in have and (a + b) % 10 == 0:
+                good.append(o)
+        return good[0] if len(good) == 1 else None
+
+    # ---- times tables, sharing, multiples ----
+    m = re.search(r"= \d+\. so what is (\d+) \* (\d+)", low)
+    if m:
+        return int(m.group(1)) * int(m.group(2))       # computed, not copied
+    m = re.search(r"(\d+) shared between (\d+)\. what is left over", low)
+    if m:
+        return int(m.group(1)) % int(m.group(2))
+    m = re.search(r"is (\d+) a multiple of (\d+)", low)
+    if m:
+        return "yes" if int(m.group(1)) % int(m.group(2)) == 0 else "no"
+
+    # ---- sequences: the numbers are in the question, so the rule is arithmetic
+    m = re.search(r"a sequence goes ([\d,\s]+)\. what is the rule", low)
+    if m:
+        d = [b - a for a, b in zip(nums(m.group(1)), nums(m.group(1))[1:])]
+        if len(set(d)) == 1 and d:
+            want = (r"add %d\b" % d[0]) if d[0] > 0 else (r"take away %d\b" % -d[0])
+            hit = [o for o in opts if re.search(want, plain(o).lower())]
+            return hit[0] if len(hit) == 1 else None
+        return None
+    m = re.search(r"grow ([\d,\s]+) squares\. how many next", low)
+    if m:
+        seq = nums(m.group(1))
+        d = [b - a for a, b in zip(seq, seq[1:])]
+        return seq[-1] + d[0] if len(set(d)) == 1 and d else None
+
+    # ---- fractions ----
+    m = re.search(r"what is (\d+)/(\d+) of (\d+)", low)
+    if m:
+        a, b, n = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        return n * a // b if b and n * a % b == 0 else None
+    # what the LINE means: the order comes from the fraction, not from the
+    # wording, so a key bound to the reversed option is caught
+    m = re.search(r"what does the line in (\d+)/(\d+) mean", low)
+    if m:
+        hit = [o for o in opts
+               if re.fullmatch(r"\s*%s shared between %s\s*" % (m.group(1), m.group(2)),
+                               plain(o).lower())]
+        return hit[0] if len(hit) == 1 else None
+
+    # ---- shape and measure ----
+    m = re.search(r"rectangle is (\d+) ?cm by (\d+) ?cm.*perimeter", low)
+    if m:
+        return 2 * (int(m.group(1)) + int(m.group(2)))
+    m = re.fullmatch(r"\s*(\d+) (m|km|kg|l|cm) = \? (cm|m|g|ml|mm)\s*", low)
+    if m:
+        f = {("m", "cm"): 100, ("m", "mm"): 1000, ("km", "m"): 1000,
+             ("kg", "g"): 1000, ("l", "ml"): 1000, ("cm", "mm"): 10}
+        k = f.get((m.group(2), m.group(3)))
+        return int(m.group(1)) * k if k else None
+    m = re.search(r"halfway between (\d+) and (\d+)", low)
+    if m:
+        h = (int(m.group(1)) + int(m.group(2))) / 2.0
+        return int(h) if h == int(h) else h
+
+    # ---- clocks ----
+    m = re.search(r"it is (\d+):(\d+)\. what time is it (\d+) minutes later", low)
+    if m:
+        h, mi = int(m.group(1)), int(m.group(2)) + int(m.group(3))
+        h, mi = h + mi // 60, mi % 60
+        return "%d:%02d" % (12 if h % 12 == 0 else h % 12, mi)
+    m = re.search(r"what is (quarter past|half past|quarter to) (\d+) on a digital", low)
+    if m:
+        h, kind = int(m.group(2)), m.group(1)
+        if kind == "quarter to":
+            h = 12 if h - 1 == 0 else h - 1
+            return "%d:45" % h
+        return "%d:%02d" % (h, 15 if kind == "quarter past" else 30)
+
+    # ---- charts ----
+    m = re.search(r"tally shows (\d+) bundles? of five and (\d+) single marks?", low)
+    if m:
+        return int(m.group(1)) * 5 + int(m.group(2))
+    m = re.search(r"one picture = (\d+) \w+\. how many is (\d+) pictures?", low)
+    if m:
+        return int(m.group(1)) * int(m.group(2))
+    m = re.search(r"bar chart, \w+ is (\d+) and \w+ is (\d+)\. how many more", low)
+    if m:
+        return abs(int(m.group(1)) - int(m.group(2)))
+    return None
+
+
 def expected(q, opts, item, js=""):
     """the answer, when it can be derived; else None. Conservative by design."""
     t = plain(q).replace("−", "-").replace("×", "*").replace("÷", "/")
@@ -2250,6 +2422,9 @@ def expected(q, opts, item, js=""):
     if got is not None:
         return got
     got = term_rule_answer(low, t, opts)
+    if got is not None:
+        return got
+    got = stage3_runtime(low, t, opts)
     if got is not None:
         return got
     if picn is not None and re.search(r"^how many\b", low) and not nums(t):
@@ -2494,6 +2669,71 @@ for f, q, key, want, opts in bad:
     print("     key:    %r" % key)
     print("     should: %r" % want)
     print("     opts:   %s" % opts)
+
+GENERATED = argv[argv.index("--generated") + 1] if "--generated" in argv else None
+if GENERATED:
+    # THE RUNTIME QUESTIONS, JUDGED BY THE SAME RULES AS EVERY OTHER ONE.
+    # Grade 3 builds most of its check questions from `const QS = [() => ...]`,
+    # so 33 of the 53 a learner meets have no key in the source and this file
+    # reported them as unreadable - which is true of a static reader and was
+    # being read as "cannot be checked". They can be: the key is an expression
+    # over the same variables as the question (`a: n * 10` beside "What is n x
+    # 10?"), so running the generator produces an ordinary question with an
+    # ordinary key. emit-generated-questions.mjs runs them; this judges them,
+    # with expected() and nothing new, because a second copy of the rules would
+    # be free to drift from the one every other question is checked against.
+    #
+    # The item source is "" - a generated question has none - so the rules that
+    # read a pic:, a balance() or a beads: row correctly decline rather than
+    # matching something from another question.
+    gq = json.load(io.open(GENERATED, encoding="utf-8"))
+    _js = {}
+    gtot = gver = gwrong = 0
+    gbad, gper = [], {}
+    for e in gq:
+        f = e["file"]
+        if f not in _js:
+            p = os.path.join(SRC, f)
+            _js[f] = "\n".join(re.findall(r"<script[^>]*>(.*?)</script>",
+                                          io.open(p, encoding="utf-8").read(), re.S)) \
+                if os.path.exists(p) else ""
+        gtot += 1
+        d = gper.setdefault((f, e["gen"]), [0, 0, 0])
+        d[0] += 1
+        want = expected(e["q"], e["opts"], "", _js[f])
+        if want is None:
+            continue
+        gver += 1
+        d[1] += 1
+        if not same(e["a"], want):
+            gwrong += 1
+            d[2] += 1
+            gbad.append((f, e["gen"], e["q"], e["a"], want, e["opts"]))
+
+    print("\n  RUNTIME QUESTIONS  -  %d sampled from %d generator(s)"
+          % (gtot, len(gper)))
+    # PER GENERATOR, because that is the unit a defect lives in: one arrow
+    # function makes every instance of its question, so a wrong key there is
+    # wrong every time it is drawn, and a generator no rule reads is a gap in
+    # exactly one place.
+    dead = [k for k, d in sorted(gper.items()) if d[1] == 0]
+    print("  %d verified, %d WRONG, %d not verifiable  (%d generator(s) no rule reads)"
+          % (gver, gwrong, gtot - gver, len(dead)))
+    for f, gi, q, key, want, opts in gbad[:20]:
+        print("\n  WRONG  %s  generator %d" % (f, gi))
+        print("     q:      %s" % q[:100])
+        print("     key:    %r" % key)
+        print("     should: %r" % want)
+        print("     opts:   %s" % opts)
+    if len(gbad) > 20:
+        print("\n  ... and %d more wrong" % (len(gbad) - 20))
+    if dead and "--list-unverified" in argv:
+        print("\n  generators no rule reads:")
+        for f, gi in dead:
+            ex = next(e for e in gq if e["file"] == f and e["gen"] == gi)
+            print("     %-26s gen %-3d %s" % (f[:26], gi, ex["q"][:70]))
+    if gwrong:
+        wrong += gwrong
 
 if "--list-unverified" in argv:
     print("\n  not verifiable by any rule here:")

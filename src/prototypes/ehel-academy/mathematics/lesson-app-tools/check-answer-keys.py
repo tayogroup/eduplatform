@@ -1441,9 +1441,22 @@ def stage34_shape(low, opts):
         hit = [o for o in opts if norm(o) in ("area", "its area", "the area")]
         return hit[0] if len(hit) == 1 else None
     # a reflection is congruent
-    if re.search(r"reflected in a mirror line.*what happens to its size", low):
-        hit = [o for o in opts if re.search(r"stays the same|same size|does not change|unchanged", norm(o))]
-        return hit[0] if len(hit) == 1 else None
+    # A REFLECTION IS CONGRUENT AND EQUIDISTANT - two properties, and the
+    # OPTIONS say which one is being asked. The rule read only "what happens to
+    # its size", so the same fact worded as "the reflection is..." went
+    # unverified, and the equidistance half was not stated at all. Branching on
+    # the options rather than on the phrasing is what makes this one rule
+    # instead of a list of sentences.
+    if re.search(r"\breflect(?:ion|ed)\b", low):
+        if any(re.search(r"\bsize\b|bigger|smaller|doubles|halves", str(norm(o))) for o in opts):
+            hit = [o for o in opts
+                   if re.search(r"stays the same|same size|does not change|unchanged", str(norm(o)))]
+        elif any(re.search(r"distance|further|nearer", str(norm(o))) for o in opts):
+            hit = [o for o in opts if re.search(r"same distance", str(norm(o)))]
+        else:
+            hit = []
+        if len(hit) == 1:
+            return hit[0]
     if re.search(r"look different but each has half shaded.*is the shaded amount the same", low):
         hit = [o for o in opts if norm(o) in ("yes", 1) or str(norm(o)).startswith("yes")]
         return hit[0] if len(hit) == 1 else None

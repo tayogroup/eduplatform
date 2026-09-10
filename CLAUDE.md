@@ -2974,6 +2974,18 @@ works in this checkout at once, so the tree routinely holds somebody else's
 half-finished change. Run `git status` before every commit and stage the paths you
 actually touched.
 
+**Run it BARE. A filtered `git status` is not that check** (2026-09-10). Asking
+`git status --short src/.../lesson-app-tools/` before a commit is the natural
+move — it is the directory you edited — and it answers only about that
+directory. Across several commits that day it printed exactly the two tool files
+being committed and nothing else, while seven `grade-1-app/g1v2` lessons in the
+same subject carried another session's unfinished 134-line feature. The output
+of a narrow status is *indistinguishable* from a clean tree: it cannot tell you
+"nothing else changed" from "I did not ask". Same shape as a pathspec that
+matches nothing at all, which reads as clean for the same reason. Filter
+afterwards to read detail; never to decide whether the tree is clean, and never
+before a release, where what else is in the tree is the whole question.
+
 **And then commit with a pathspec, because staging them is not enough.** The
 index is shared state and `git add` is not atomic with `git commit`, so between
 your add and your commit another session can add its own files — and your commit
@@ -3213,6 +3225,40 @@ NON-English subject through it:
   prints "this deploy leaves the tiers out of step", which is a verdict it never
   reached. Same class as the ✓-after-skip, one case short. If you see that
   message with a stack trace above it, the tiers were not compared at all.
+
+#### A mutation harness is a WRITER in this tree, and it restores from a snapshot
+
+Every gate in this file described as "mutation-tested" works the same way:
+snapshot the files once, break one, run the gate, require a failure, restore.
+The rebuilt Wehel harness earned that shape by leaving two files mutated on
+disk, and the rule it bought — *a harness that cannot prove it put the tree back
+is not evidence about anything it printed* — is right and is not enough here.
+**It verifies the restore against ITS OWN snapshot, so it is fully satisfied by
+a tree it has just overwritten with somebody else's older content.**
+
+Worked example, 2026-09-10: `mathematics/lesson-app-tools/mutate-answer-keys.py`
+was run three times over `grade-1-app/g1v2` while another session was adding a
+134-line header-bar feature to all seven lessons there. Each case rewrites a
+whole file and restores it, so a peer write landing inside that window is
+replaced by the snapshot and never reported. Nothing was lost — verified
+byte-for-byte on the third run against an independent copy taken first — but the
+first two runs were luck rather than design, and the failure mode is the worst
+kind: their edit simply gone, no error, no conflict, nothing to notice.
+
+Two cheap habits, and the first is the one that turns luck into a measurement:
+
+- **Copy the files the harness will touch to the scratchpad first, and `cmp`
+  them afterwards.** It costs one command and converts "probably fine" into
+  evidence. It is also the only thing that can detect this at all.
+- **Look at a bare `git status` before starting**, and do not run a
+  whole-suite mutation over a build somebody else has open. A per-`--app` run
+  confines the blast radius to one build.
+
+This is not specific to that harness. It applies to every mutate-and-restore
+tool here, and to anything else that rewrites tracked files in place —
+`repair-*` scripts, the renormalise-style fixers, `--write-fixture` runs. A tool
+that assumes it is the only writer is correct in a private clone and wrong in
+this one.
 
 #### Committing half a co-edited file: `git apply --cached`
 

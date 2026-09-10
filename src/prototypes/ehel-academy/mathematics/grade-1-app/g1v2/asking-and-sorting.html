@@ -563,10 +563,41 @@
     font-family: "Inter", "Segoe UI", sans-serif;
     font-size: 14px; font-weight: 600;
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+
+/* ==== fix-review-findings.py ==== */
+/* A finished step you are standing on is BOTH done and current, and the dot
+   used to show only "current" -- so a child re-did steps they had completed and
+   the dots disagreed with the sticker board. Green says done; the ring and the
+   scale say you are here. Declared after the .now and .done rules so it wins on
+   order rather than on specificity. */
+.dots button.done.now {
+  background: var(--good); border-color: var(--good);
+  box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--good);
+}
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -594,82 +625,82 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="deck" id="deck" role="main">
 
-    <!-- 1 collect -->
+    <!-- 1  1Ss.01, 1Ss.02  collect -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Before you can draw anything, you need answers.</s><s>Asking everyone the same question is how you get them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Our question is which fruit do you like best.</s><s>Tap Amina and she tells you her answer.</s><s>Tap Musa and he tells you his.</s><s>Keep going until every child has been asked.</s><s>Then you have twelve answers, one from each child.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children often tap the same child twice, or stop partway because it feels done.</s><s>Then the numbers are wrong, and every chart you build after this is wrong too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So tap each child once.</s><s>When you think you have finished, check that nobody is left.</s></mstts:express-as>' data-say="Ask everyone the question. Tap each child to hear the answer, and watch the answers line up in rows.">
       <div class="slide-head"><span class="n">1</span><h2>Ask everyone</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">Our question is: <b>which fruit do you like best?</b> Tap each child to hear their answer.</span></div>
       <div class="stage">
         <div class="kids" id="kids1"></div>
         <div class="rows" id="rows1"></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
       </div>
     </section>
 
-    <!-- 2 list -->
+    <!-- 2  1Ss.02  list -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A list writes every answer down, one under the other, in the order you got them.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Amina said mango, so mango goes first.</s><s>Musa said banana, so banana goes underneath.</s><s>Twelve children, twelve lines.</s><s>To find how many liked mango, you read down the list and count every mango you see.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A list is long, and it is easy to lose your place.</s><s>Children count the same line twice, or skip one without noticing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So put your finger on each line as you count it and slide it down.</s><s>Your finger keeps your place.</s></mstts:express-as>' data-say="Here are the answers written as a list. Read down the list and count.">
       <div class="slide-head"><span class="n">2</span><h2>Write a list</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">A <b>list</b> writes down every answer, one under the other.</span></div>
       <div class="stage" id="stage2"></div>
       <div class="choices" id="ch2"></div>
-      <p class="fb" id="fb2"></p>
+      <p class="fb" id="fb2" role="status" aria-live="polite"></p>
       <p class="score" id="sc2"></p>
     </section>
 
-    <!-- 3 table -->
+    <!-- 3  1Ss.02  table -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A table is shorter than a list.</s><s>Each answer is written once, with a number beside it saying how many children chose it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The list had mango written on five separate lines.</s><s>The table writes mango once, and puts five next to it.</s><s>Same answers, far less writing.</s><s>One number is missing here, so count that fruit in the list and fill it in.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Here is the slip.</s><s>Children read the number as how many kinds of fruit there are.</s><s>It is not.</s><s>The number beside mango is how many children, not how many mangoes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find the row with the gap, count that answer in the list, and put in the number you counted.</s></mstts:express-as>' data-say="A table is shorter than a list. It says each answer once, with how many children chose it. One number is missing.">
       <div class="slide-head"><span class="n">3</span><h2>Make a table</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">A <b>table</b> says each answer once, with <b>how many</b> chose it.</span></div>
       <div class="stage" id="stage3"></div>
       <div class="choices" id="ch3"></div>
-      <p class="fb" id="fb3"></p>
+      <p class="fb" id="fb3" role="status" aria-live="polite"></p>
       <p class="score" id="sc3"></p>
     </section>
 
-    <!-- 4 build block graph -->
+    <!-- 4  1Ss.02  build block graph -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A block graph turns the numbers into towers.</s><s>One block means one child.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Five children chose mango, so the mango tower needs five blocks.</s><s>Press the plus under mango five times and watch it grow.</s><s>Do that for every fruit, and the towers match the table exactly.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children press the plus until the tower looks about right, instead of counting.</s><s>A tower that looks tall is not the same as a tower with the right number of blocks in it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say the number out loud first.</s><s>Then press the plus that many times, counting as you go.</s></mstts:express-as>' data-say="Build the block graph. Press the plus under a fruit to add one block for one child.">
       <div class="slide-head"><span class="n">4</span><h2>Build a block graph</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">One <b>block</b> stands for <b>one child</b>. Press <b>+</b> to add a block.</span></div>
       <div class="stage">
         <div class="graph" id="graph4"></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
       </div>
     </section>
 
-    <!-- 5 read block graph -->
+    <!-- 5  1Ss.03  read block graph -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Once the graph is built, you can answer questions just by looking at it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The tallest tower is the one most children chose.</s><s>The shortest is the one fewest chose.</s><s>You do not have to count every block to see that.</s><s>Just look at which tower reaches highest.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Watch this one.</s><s>Tallest means most children chose it.</s><s>It does not mean the biggest fruit, and it does not mean the best fruit.</s><s>The graph only knows what people said.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So run your eye along the tops of the towers.</s><s>Find the highest.</s><s>Tap its name.</s></mstts:express-as>' data-say="Now read the graph. Which is the tallest? Which is the shortest? Tap the answer.">
       <div class="slide-head"><span class="n">5</span><h2>Read the block graph</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Look at the graph, then tap the answer.</span></div>
       <div class="stage" id="stage5"></div>
       <div class="choices" id="ch5"></div>
-      <p class="fb" id="fb5"></p>
+      <p class="fb" id="fb5" role="status" aria-live="polite"></p>
       <p class="score" id="sc5"></p>
     </section>
 
-    <!-- 6 pictogram -->
+    <!-- 6  1Ss.02  pictogram -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A pictogram is the same idea as a block graph, with a little picture instead of a block.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here one picture stands for one child.</s><s>Five children chose mango, so there are five mango pictures in that row.</s><s>Count the pictures and you have your number.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count the rows instead of the pictures, or think a bigger picture must mean more.</s><s>Every picture here is worth the same.</s><s>One picture, one child.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So point at each picture in the row and count them one by one.</s></mstts:express-as>' data-say="A pictogram uses a little picture instead of a block. One picture stands for one child.">
       <div class="slide-head"><span class="n">6</span><h2>Make a pictogram</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">A <b>pictogram</b> uses a picture instead of a block.</span></div>
       <div class="stage" id="stage6"></div>
       <div class="choices" id="ch6"></div>
-      <p class="fb" id="fb6"></p>
+      <p class="fb" id="fb6" role="status" aria-live="polite"></p>
       <p class="score" id="sc6"></p>
     </section>
 
-    <!-- 7 one hoop -->
+    <!-- 7  1Ss.02  one hoop -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A hoop is a ring that holds the things which follow one rule.</s><s>Everything else stays outside it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If the rule is red, then every red card goes inside the hoop, and every card that is not red stays out.</s><s>Look at your card, ask does it follow the rule, then decide.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put a card in because they like it, or because it looks a bit similar to the others.</s><s>The hoop does not care about any of that.</s><s>Only the rule decides.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read the rule again, look at your card, and ask yourself one question.</s><s>Does it follow.</s></mstts:express-as>' data-say="A hoop holds the things that follow the rule. Tap a card to put it in the hoop.">
       <div class="slide-head"><span class="n">7</span><h2>Sort into a hoop</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Tap the cards that follow the rule.</span></div>
       <div class="stage">
         <div class="hoopwrap" id="hoop7"></div>
         <div class="cardrow" id="pool7"></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <p class="score" id="sc7"></p>
       </div>
     </section>
 
-    <!-- 8 two hoops -->
+    <!-- 8  1Ss.02  two hoops -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Two hoops, crossing over, with a space in the middle.</s><s>Two hoops that cross like this are called a Venn diagram.</s><s>Each hoop has its own rule.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Say one hoop is red and the other is round.</s><s>A red square follows the red rule only, so it goes in the red hoop.</s><s>A blue circle follows the round rule only.</s><s>A red circle follows both rules at once, so it goes in the middle where the hoops cross.</s><s>A blue square follows neither, so it stays outside both.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>The middle is where children slip.</s><s>They think it means a bit of one and a bit of the other.</s><s>It does not.</s><s>It means both rules, at the same time, in the same card.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask two questions.</s><s>Is it red.</s><s>Is it round.</s><s>Two yeses means the middle.</s></mstts:express-as>' data-say="This is a Venn diagram: two hoops that cross over. A card that follows both rules goes in the middle, where the hoops overlap.">
       <div class="slide-head"><span class="n">8</span><h2>A Venn diagram</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Where does this card go?</span></div>
@@ -679,11 +710,11 @@
         <div id="now8"></div>
       </div>
       <div class="choices" id="ch8"></div>
-      <p class="fb" id="fb8"></p>
+      <p class="fb" id="fb8" role="status" aria-live="polite"></p>
       <p class="score" id="sc8"></p>
     </section>
 
-    <!-- 9 carroll -->
+    <!-- 9  1Ss.02  carroll -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A Carroll diagram does the same job as the hoops, using boxes instead.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>There are four boxes.</s><s>Red and round.</s><s>Red and not round.</s><s>Not red and round.</s><s>Not red and not round.</s><s>Every card belongs in exactly one of them.</s><s>A red circle goes in red and round.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children hunt for a box that is nearly right.</s><s>There is always exactly one box that fits, so if two of them seem to fit, you have read one of the labels wrongly.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So answer the two questions, yes or no, then find the box with those two answers on it.</s></mstts:express-as>' data-say="A Carroll diagram has boxes instead of hoops. Every card has a box of its own. Where does this one go?">
       <div class="slide-head"><span class="n">9</span><h2>A Carroll diagram</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Which box does this card belong in?</span></div>
@@ -692,27 +723,27 @@
         <div id="now9"></div>
       </div>
       <div class="choices" id="ch9"></div>
-      <p class="fb" id="fb9"></p>
+      <p class="fb" id="fb9" role="status" aria-live="polite"></p>
       <p class="score" id="sc9"></p>
     </section>
 
-    <!-- 10 answer the question -->
+    <!-- 10  1Ss.01  answer the question -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A graph is built to answer questions.</s><s>The answer is in the picture, not in your head.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Here is a graph about pets.</s><s>If it asks how many children have a cat, find the cat tower and count it.</s><s>If it asks which pet is most popular, find the tallest tower.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children answer with what they think, or with their own favourite pet.</s><s>Your favourite is not in this graph.</s><s>Only what these children said is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read the question, find the part of the graph it is asking about, and read the answer straight off the graph.</s></mstts:express-as>' data-say="Here is a graph about pets. Every question has one right answer, and the graph tells you what it is.">
       <div class="slide-head"><span class="n">10</span><h2>Answer the question</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Read the graph and tap the answer.</span></div>
       <div class="stage" id="stage10"></div>
       <div class="choices" id="ch10"></div>
-      <p class="fb" id="fb10"></p>
+      <p class="fb" id="fb10" role="status" aria-live="polite"></p>
       <p class="score" id="sc10"></p>
     </section>
 
-    <!-- 11 conclusions -->
+    <!-- 11  1Ss.03  conclusions -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A graph tells you some things and stays completely silent about others.</s><s>Only some sentences are true.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Say the graph shows six children have a dog and two have a fish.</s><s>More children have a dog than a fish is true, and you can point at it.</s><s>Dogs are better than fish is not true, because the graph never said that.</s><s>And how many children have no pet at all is not there either, because nobody was asked.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>This is the hardest step in the lesson.</s><s>A sentence can sound completely sensible and still not be something the graph shows.</s><s>Sounding right is not the same as being on the graph.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So take each sentence and ask one thing.</s><s>Can I point at the part of the graph that proves it.</s></mstts:express-as>' data-say="What can we really say about this graph? Only one of these is true. Tap it.">
       <div class="slide-head"><span class="n">11</span><h2>What can we say?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Only one of these is <b>true</b>. Tap it.</span></div>
       <div class="stage" id="stage11"></div>
       <div class="choices" id="ch11"></div>
-      <p class="fb" id="fb11"></p>
+      <p class="fb" id="fb11" role="status" aria-live="polite"></p>
       <p class="score" id="sc11"></p>
     </section>
 
@@ -722,7 +753,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayck">Tap the answer.</span></div>
       <div class="stage" id="stageck"></div>
       <div class="choices" id="chck"></div>
-      <p class="fb" id="fbck"></p>
+      <p class="fb" id="fbck" role="status" aria-live="polite"></p>
       <p class="score" id="scck"></p>
     </section>
 
@@ -732,7 +763,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fbstick"></p>
+        <p class="fb" id="fbstick" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Start again</button></div>
       </div>
     </section>
@@ -1540,7 +1571,7 @@
   const done = new Array(slides.length).fill(false);
   let cur = 0;
   function paintDots() {
-    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join("");
+    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (done[i] ? "done" : "") + (i === cur ? " now" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + (done[i] ? ", done" : "") + '"></button>').join("");
   }
   function show(i, speak) {
     cur = Math.max(0, Math.min(slides.length - 1, i));
@@ -1809,9 +1840,9 @@
   ];
   function cardSvg(c) {
     const fill = "var(--" + c.col + ")";
-    if (c.kind === "circle") return '<svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="' + fill + '" stroke="var(--ink)" stroke-width="3"></circle></svg>';
-    if (c.kind === "square") return '<svg viewBox="0 0 60 60"><rect x="8" y="8" width="44" height="44" rx="4" fill="' + fill + '" stroke="var(--ink)" stroke-width="3"></rect></svg>';
-    return '<svg viewBox="0 0 60 60"><polygon points="30,6 54,52 6,52" fill="' + fill + '" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"></polygon></svg>';
+    if (c.kind === "circle") return '<svg viewBox="0 0 60 60" role="img" aria-label="' + cardName(c) + '"><circle cx="30" cy="30" r="24" fill="' + fill + '" stroke="var(--ink)" stroke-width="3"></circle></svg>';
+    if (c.kind === "square") return '<svg viewBox="0 0 60 60" role="img" aria-label="' + cardName(c) + '"><rect x="8" y="8" width="44" height="44" rx="4" fill="' + fill + '" stroke="var(--ink)" stroke-width="3"></rect></svg>';
+    return '<svg viewBox="0 0 60 60" role="img" aria-label="' + cardName(c) + '"><polygon points="30,6 54,52 6,52" fill="' + fill + '" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"></polygon></svg>';
   }
   const cardName = (c) => (c.col === "red" ? "red" : "blue") + " " + c.kind;
 

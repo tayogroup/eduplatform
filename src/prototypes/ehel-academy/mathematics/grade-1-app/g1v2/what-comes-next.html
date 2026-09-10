@@ -566,10 +566,41 @@
     font-family: "Inter", "Segoe UI", sans-serif;
     font-size: 14px; font-weight: 600;
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+
+/* ==== fix-review-findings.py ==== */
+/* A finished step you are standing on is BOTH done and current, and the dot
+   used to show only "current" -- so a child re-did steps they had completed and
+   the dots disagreed with the sticker board. Green says done; the ring and the
+   scale say you are here. Declared after the .now and .done rules so it wins on
+   order rather than on specificity. */
+.dots button.done.now {
+  background: var(--good); border-color: var(--good);
+  box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--good);
+}
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -597,25 +628,26 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
-    <!-- 1 what comes next -->
+  <div class="deck" id="deck" role="main">
+    <!-- 1  1Nc.06  What comes next? -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A pattern is something that happens again and again in the same order.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the beads.</s><s>Red, blue, red, blue, red.</s><s>Say it out loud with me and listen to your own voice.</s><s>Red, blue, red, blue, red.</s><s>Your voice wants to say blue next, and it is right.</s><s>The next bead is blue.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children look at the very last bead and pick a different colour, as if the pattern were taking turns.</s><s>It is not taking turns.</s><s>It is repeating.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say the beads out loud from the start.</s><s>Let your voice run on past the end.</s><s>Whatever it wants to say next, tap that.</s></mstts:express-as>' data-say="A pattern repeats. Say the pattern out loud, then tap the bead that comes next.">
       <div class="slide-head"><span class="n">1</span><h2>What comes next?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">A pattern <b>repeats</b>. Say it out loud, then tap the bead that comes <b>next</b>.</span></div>
       <div class="stage">
         <div class="beads" id="row1"></div>
         <div class="choices" id="ch1"></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="score" id="sc1"></p>
       </div>
     </section>
+<!-- 2  1Nc.06  The part that repeats -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every repeating pattern is built from one small part, said over and over.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take red, blue, red, blue, red, blue.</s><s>The part that repeats is red, blue.</s><s>Two beads.</s><s>Now take red, red, blue, red, red, blue.</s><s>That part is red, red, blue.</s><s>Three beads.</s><s>Find where the pattern starts saying the same thing again, and stop just before it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count all the beads on the screen instead of the part that repeats.</s><s>Six beads on the line can still be a part of two.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So point at the first bead and say the colours until you hear yourself start again.</s><s>Count only the beads before that.</s></mstts:express-as>' data-say="Every pattern has a part that repeats. How many beads are in that part? Tap the number.">
       <div class="slide-head"><span class="n">2</span><h2>The part that repeats</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Every pattern has a <b>part that repeats</b>. How many beads are in that part? Tap the number.</span></div>
       <div class="stage">
         <div class="beads" id="row2"></div>
         <div class="choices" id="ch2"></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <p class="score" id="sc2"></p>
       </div>
     </section>
@@ -625,7 +657,7 @@
       <div class="stage">
         <div class="beads" id="rowm"></div>
         <div class="choices" id="chm"></div>
-        <p class="fb" id="fbm"></p>
+        <p class="fb" id="fbm" role="status" aria-live="polite"></p>
         <p class="score" id="scm"></p>
       </div>
     </section>
@@ -635,7 +667,7 @@
       <div class="stage">
         <div class="seqbox" id="seqn"></div>
         <div class="choices" id="chn"></div>
-        <p class="fb" id="fbn"></p>
+        <p class="fb" id="fbn" role="status" aria-live="polite"></p>
         <p class="score" id="scn"></p>
       </div>
     </section>
@@ -645,7 +677,7 @@
       <div class="stage">
         <div class="track" id="track4"></div>
         <div class="choices" id="ch4"></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="score" id="sc4"></p>
       </div>
     </section>
@@ -657,7 +689,7 @@
         <div class="unitbox"><span class="lab">My part</span><div class="beads" id="unit3"></div></div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="clear3">Clear</button><button type="button" class="big small teal" id="repeat3" disabled>Repeat it</button></div>
         <div class="beads" id="row3"></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
       </div>
     </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some patterns do not repeat.</s><s>They grow.</s><s>Each one is bigger than the one before, by the same amount every time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look along the row.</s><s>The first has one square, the next has three, the next has five.</s><s>Each one adds two more.</s><s>So the one after five squares must have seven, because it adds two as well.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children see the shapes getting bigger and guess a much bigger number.</s><s>Growing does not mean growing by any amount.</s><s>It grows by the same amount every single time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So work out how many are added from the first to the second.</s><s>Check it is the same from the second to the third.</s><s>Then add that to the last one.</s></mstts:express-as>' data-say="These patterns grow. Each one adds another row of shapes. Count them, then work out how many are in the next one.">
@@ -667,7 +699,7 @@
         <div class="growrow" id="grow"></div>
         <div class="seqbox" id="gseq"></div>
         <div class="choices" id="chg"></div>
-        <p class="fb" id="fbg"></p>
+        <p class="fb" id="fbg" role="status" aria-live="polite"></p>
         <p class="score" id="scg"></p>
       </div>
     </section>
@@ -678,7 +710,7 @@
         <div class="seqbox" id="seq5"></div>
         <p class="fb" id="rule5" style="color:var(--teal);font-size:20px"></p>
         <div class="choices" id="ch5"></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <p class="score" id="sc5"></p>
       </div>
     </section>
@@ -688,11 +720,12 @@
       <div class="stage">
         <div class="seqbox" id="seqf"></div>
         <div class="choices" id="chf"></div>
-        <p class="fb" id="fbf"></p>
+        <p class="fb" id="fbf" role="status" aria-live="polite"></p>
         <p class="fb" id="rulef" style="color:var(--teal);font-size:20px"></p>
         <p class="score" id="scf"></p>
       </div>
     </section>
+<!-- 10  1Nc.04  My own number pattern -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Now you build a number pattern of your own, and you choose what kind.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A repeating one says the same numbers over and over.</s><s>One, two, three, one, two, three.</s><s>A jump pattern keeps adding the same amount.</s><s>Two, four, six, eight.</s><s>Pick which kind you want, then build it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children mix the two kinds together halfway through, and the pattern stops being a pattern.</s><s>Choose one kind and stay with it to the end.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So decide first.</s><s>Repeating, or jumping.</s><s>Then build the whole thing that way.</s></mstts:express-as>' data-say="Now you make a number pattern. Choose a jump pattern or a repeating one, then build it.">
       <div class="slide-head"><span class="n">10</span><h2>My own number pattern</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayo">Now <b>you</b> make a number pattern. Pick which kind, then build it.</span></div>
@@ -711,7 +744,7 @@
         </div>
         <div class="bigbtns"><button type="button" class="big small ghost" id="clearo">Clear</button><button type="button" class="big small teal" id="buildo" disabled>Build it</button></div>
         <div class="seqbox" id="seqo"></div>
-        <p class="fb" id="fbo"></p>
+        <p class="fb" id="fbo" role="status" aria-live="polite"></p>
       </div>
     </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The question mark is hiding a number, and your job is to find out which one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Three add something makes seven.</s><s>Start with three counters.</s><s>Press the plus and count on.</s><s>Four, five, six, seven.</s><s>Stop at seven.</s><s>Now count how many you pressed.</s><s>You pressed four.</s><s>So the hidden number is four.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children answer seven, because seven is the biggest number they can see.</s><s>Seven is the number you finish on.</s><s>The answer is how many you added to get there.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So count on from three, stop at seven, then count only the ones you added.</s></mstts:express-as>' data-say="Three add something makes seven. Tap the plus to add counters until you reach seven, and count how many you added.">
@@ -721,7 +754,7 @@
         <div class="bignum" id="sent6"></div>
         <div class="frames" id="frames6"></div>
         <div class="bigbtns"><button type="button" class="big ghost" id="minus6">−</button><button type="button" class="big" id="plus6">+</button></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="next6" hidden>Next one</button></div>
         <p class="score" id="sc6"></p>
       </div>
@@ -733,7 +766,7 @@
         <div class="bignum" id="sent7"></div>
         <div class="frames" id="frames7"></div>
         <div class="choices" id="ch7"></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="next7" hidden>Next one</button></div>
         <p class="score" id="sc7"></p>
       </div>
@@ -745,7 +778,7 @@
         <div class="bignum" id="sent8"></div>
         <svg class="balance" id="bal8" viewBox="0 0 520 230" aria-hidden="true"></svg>
         <div class="bigbtns"><button type="button" class="big ghost" id="minus8">−</button><button type="button" class="big" id="plus8">+</button></div>
-        <p class="fb" id="fb8"></p>
+        <p class="fb" id="fb8" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="next8" hidden>Next one</button></div>
         <p class="score" id="sc8"></p>
       </div>
@@ -757,7 +790,7 @@
         <div class="machine" id="mach9"></div>
         <div class="mtable" id="mt9"></div>
         <div class="choices" id="ch9"></div>
-        <p class="fb" id="fb9"></p>
+        <p class="fb" id="fb9" role="status" aria-live="polite"></p>
         <p class="score" id="sc9"></p>
       </div>
     </section>
@@ -768,7 +801,7 @@
         <p class="fb" id="q10" style="font-size:26px"></p>
         <div class="beads" id="pic10"></div>
         <div class="choices" id="ch10"></div>
-        <p class="fb" id="fb10"></p>
+        <p class="fb" id="fb10" role="status" aria-live="polite"></p>
         <p class="score" id="sc10"></p>
       </div>
     </section>
@@ -777,7 +810,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb11"></p>
+        <p class="fb" id="fb11" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1583,7 +1616,7 @@
   const slides = [...document.querySelectorAll(".slide")];
   const done = new Array(slides.length).fill(false);
   let cur = 0;
-  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join(""); }
+  function paintDots() { $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (done[i] ? "done" : "") + (i === cur ? " now" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + (done[i] ? ", done" : "") + '"></button>').join(""); }
   function show(i, speak) {
     cur = Math.max(0, Math.min(slides.length - 1, i));
     slides.forEach((s, k) => s.classList.toggle("active", k === cur));

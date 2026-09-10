@@ -692,10 +692,41 @@
     font-family: "Inter", "Segoe UI", sans-serif;
     font-size: 14px; font-weight: 600;
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+
+/* ==== fix-review-findings.py ==== */
+/* A finished step you are standing on is BOTH done and current, and the dot
+   used to show only "current" -- so a child re-did steps they had completed and
+   the dots disagreed with the sticker board. Green says done; the ring and the
+   scale say you are here. Declared after the .now and .done rules so it wins on
+   order rather than on specificity. */
+.dots button.done.now {
+  background: var(--good); border-color: var(--good);
+  box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--good);
+}
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -723,8 +754,8 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
-    <!-- 1 count to 10 -->
+  <div class="deck" id="deck" role="main">
+    <!-- 1  1Nc.01  Count to 10 -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting is saying one number for each thing, and never saying two numbers for the same thing.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press the plus.</s><s>One counter appears, and we say one.</s><s>Press again.</s><s>Two.</s><s>Each press puts exactly one counter in a hole and we say exactly one number.</s><s>When the frame is full we have said ten.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children rush and say numbers faster than the counters appear, so the last number they say is not how many there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press once, say one number, then wait.</s><s>Let your voice keep up with your finger.</s></mstts:express-as>' data-say="Press the plus to put a counter in the frame. Count out loud with me.">
       <div class="slide-head"><span class="n">1</span><h2>Count to 10</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Press <b>+</b> to put a counter in the frame. Count out loud with me.</span></div>
@@ -733,9 +764,10 @@
         <div class="bignum" id="num1">0</div>
         <div class="word" id="word1">zero</div>
         <div class="bigbtns"><button type="button" class="big ghost" id="minus1">−</button><button type="button" class="big" id="plus1">+</button></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
       </div>
     </section>
+<!-- 2  1Nc.02  See how many -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You do not always have to count.</s><s>Some patterns you can just see.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press look.</s><s>The counters flash up in a pattern, like the dots on a dice, and then they are gone.</s><s>Five in a dice pattern looks like five.</s><s>You did not count it.</s><s>You recognised it.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children panic when the pattern disappears and guess wildly.</s><s>You saw it.</s><s>Trust the picture in your head.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So press look, hold the picture, then tap what you saw.</s></mstts:express-as>' data-say="Do not count! Press look, see the pattern, then tap how many you saw.">
       <div class="slide-head"><span class="n">2</span><h2>See how many</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="saysub">Press <b>Look!</b> The pattern shows for a moment. Tap <b>how many</b> you saw, without counting.</span></div>
@@ -743,10 +775,11 @@
         <div class="flashbox hide" id="flashsub"></div>
         <div class="bigbtns"><button type="button" class="big teal" id="looksub">Look!</button></div>
         <div class="choices" id="chsub"></div>
-        <p class="fb" id="fbsub"></p>
+        <p class="fb" id="fbsub" role="status" aria-live="polite"></p>
         <p class="fb" id="scsub" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 3  1Nc.01, 1Np.02  Then to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>After ten we do not start again.</s><s>We keep the ten and add the rest on.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Fill the first frame right up.</s><s>That is ten.</s><s>Now put one counter in the second frame.</s><s>Ten and one more is eleven.</s><s>Another.</s><s>Ten and two is twelve.</s><s>All the way to twenty, which is two full frames.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think the second frame starts a new count and say one again.</s><s>It does not.</s><s>The ten is still there, sitting in the first frame.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say ten and, then count the loose ones on top.</s></mstts:express-as>' data-say="Fill the first frame. That is ten. Then keep going. Ten and one more is eleven.">
       <div class="slide-head"><span class="n">3</span><h2>Then to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Fill the first frame. That is <b>10</b>. Then keep going: 10 and 1 more is 11.</span></div>
@@ -756,19 +789,21 @@
         <div class="word" id="word2">zero</div>
         <p class="fb" id="split2" style="color:var(--teal)"></p>
         <div class="bigbtns"><button type="button" class="big ghost" id="minus2">−</button><button type="button" class="big" id="plus2">+</button></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
       </div>
     </section>
+<!-- 4  1Ni.01  Read the number -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every amount of counters has one number that names it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the frame.</s><s>One full row and three more.</s><s>That is thirteen.</s><s>Now find thirteen among the numbers and tap it.</s><s>The counters and the number are two ways of saying exactly the same thing.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children tap a number that looks like the one they want.</s><s>Thirteen and thirty sound alike and look alike at a glance.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So count the counters first, say the number out loud, then look for that number.</s></mstts:express-as>' data-say="Look at the counters. Which number is it? Tap the number.">
       <div class="slide-head"><span class="n">4</span><h2>Read the number</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">Look at the counters. Which number is it? Tap it.</span></div>
       <div class="stage">
         <div class="frames" id="show3"></div>
         <div class="choices" id="ch3"></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <p class="fb" id="score3" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 5  1Ni.01  Write the number -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Writing a number means choosing its digits and putting them in the right order.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>For fourteen you press one, then four.</s><s>The one is not saying one.</s><s>It is saying one whole ten.</s><s>The four beside it is the four loose ones.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children press the digits in the order they hear them, and forty one comes out instead of fourteen.</s><s>The tens digit goes first, on the left.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So count the full frames first and press that digit.</s><s>Then count the loose ones and press that.</s></mstts:express-as>' data-say="Now write the number. Press the digit keys to build it.">
       <div class="slide-head"><span class="n">5</span><h2>Write the number</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="saywr">Press the keys to <b>write</b> the number.</span></div>
@@ -777,10 +812,11 @@
         <div class="numbox" id="boxwr">&nbsp;</div>
         <div class="keys" id="keyswr"></div>
         <div class="bigbtns"><button type="button" class="big ghost small" id="clearwr">Clear</button></div>
-        <p class="fb" id="fbwr"></p>
+        <p class="fb" id="fbwr" role="status" aria-live="polite"></p>
         <p class="fb" id="scwr" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 6  1Np.01  Zero means none -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Zero is a number, and it means there are none at all.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take the counters away one at a time.</s><s>Three.</s><s>Two.</s><s>One.</s><s>Now take the last one.</s><s>The frame is empty, and the number for an empty frame is zero.</s><s>Not nothing, not blank.</s><s>Zero.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think zero means the counting stopped, or that it is not really a number.</s><s>It is a number, and it has its own place at the very start of the number line.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So take them away one by one and say the number each time, right down to zero.</s></mstts:express-as>' data-say="Take the counters away one at a time. When there are none left, that is zero.">
       <div class="slide-head"><span class="n">6</span><h2>Zero means none</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayzr">Press <b>Take one away</b> until the plate is empty.</span></div>
@@ -789,10 +825,11 @@
         <div class="bignum" id="numzr">5</div>
         <div class="bigbtns"><button type="button" class="big" id="takezr">Take one away</button></div>
         <div class="choices" id="chzr"></div>
-        <p class="fb" id="fbzr"></p>
+        <p class="fb" id="fbzr" role="status" aria-live="polite"></p>
         <p class="fb" id="sczr" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 7  1Nc.04, 1Np.02  Counting in tens -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting in tens works the same way, in bigger steps.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>One full frame is one ten.</s><s>Press next ten and another full frame appears.</s><s>Ten.</s><s>Twenty.</s><s>Thirty.</s><s>Each press is a whole frame of ten, not one counter.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count the frames as ones, and say one, two, three instead of ten, twenty, thirty.</s><s>Each frame is worth ten all by itself.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say ten every time a new frame appears, and count them in tens.</s></mstts:express-as>' data-say="A full frame is one ten. Press next ten and count in tens: ten, twenty.">
       <div class="slide-head"><span class="n">7</span><h2>Counting in tens</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10s">A full frame is <b>one ten</b>. Press <b>Next ten</b> and count in tens: 10, 20.</span></div>
@@ -804,10 +841,11 @@
         <div class="bigbtns"><button type="button" class="big" id="next10s">Next ten</button></div>
         <div class="choices" id="tens10s"></div>
         <div class="choices" id="ones10s"></div>
-        <p class="fb" id="fb10s"></p>
+        <p class="fb" id="fb10s" role="status" aria-live="polite"></p>
         <p class="fb" id="score10s" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 8  1Nc.04  Counting in twos -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Counting in twos means saying every second number and skipping the ones between.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Socks come in pairs, and a pair is two.</s><s>Press next pair.</s><s>Two.</s><s>Again.</s><s>Four.</s><s>Again.</s><s>Six.</s><s>You are counting the socks, but two at a time, so it is much quicker than counting them one by one.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say the numbers in between out of habit.</s><s>In twos you go two, four, six.</s><s>Three and five are skipped over.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say it out loud with me and let the rhythm carry you.</s><s>Two, four, six, eight, ten.</s></mstts:express-as>' data-say="Socks come in pairs. Press next pair and count in twos with me: two, four, six.">
       <div class="slide-head"><span class="n">8</span><h2>Counting in twos</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2s">Socks come in <b>pairs</b>. Press <b>Next pair</b> and count in twos with me: 2, 4, 6…</span></div>
@@ -818,10 +856,11 @@
         <div class="bigbtns"><button type="button" class="big" id="next2s">Next pair</button></div>
         <div class="choices" id="seq2s"></div>
         <div class="choices" id="ch2s"></div>
-        <p class="fb" id="fb2s"></p>
+        <p class="fb" id="fb2s" role="status" aria-live="polite"></p>
         <p class="fb" id="score2s" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 9  1Nc.05  Odd and even -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An even number can be split into pairs with nobody left out.</s><s>An odd number always has one left over.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take six.</s><s>Pair them up.</s><s>Two, two, two.</s><s>Everybody has a partner, so six is even.</s><s>Now take seven.</s><s>Pair them up and one counter is standing on its own with nobody to go with.</s><s>So seven is odd.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children guess by whether the number looks big or small.</s><s>Size has nothing to do with it.</s><s>Only the pairing does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So pair them up and look for one left over.</s></mstts:express-as>' data-say="Tap a number. If every counter has a partner, the number is even. If one is left alone, it is odd.">
       <div class="slide-head"><span class="n">9</span><h2>Odd and even</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayoe">Tap a number. If every counter has a <b>partner</b>, the number is <b>even</b>. If one is left alone, it is <b>odd</b>. Sort <b>8</b> numbers.</span></div>
@@ -830,29 +869,32 @@
         <div class="pairsrow" id="pairsoe"></div>
         <div class="bignum" id="sayoenum" style="font-size:clamp(30px,6.5vw,48px)"></div>
         <div class="choices" id="choe"></div>
-        <p class="fb" id="fboe"></p>
+        <p class="fb" id="fboe" role="status" aria-live="polite"></p>
         <p class="fb" id="scoreoe" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 10  1Nc.01, 1Np.03  More or fewer? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>More means a bigger amount.</s><s>Fewer means a smaller one.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Two groups on the screen.</s><s>Match them up, one from this group with one from that group.</s><s>When one group runs out first, the other group has more.</s><s>If they run out together, they are the same.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children choose the group that takes up more room.</s><s>Six big things spread out is still fewer than eight little things squeezed together.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So pair them off one to one and see which group still has some left.</s></mstts:express-as>' data-say="Which group has more? Tap it.">
       <div class="slide-head"><span class="n">10</span><h2>More or fewer?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Which group has <b>more</b>? Tap it.</span></div>
       <div class="stage">
         <div class="groups" id="groups4"></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="fb" id="score4" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 11  1Np.03  Put them in order -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Putting numbers in order means starting at the smallest and working up.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at all the cards and find the smallest number of them all.</s><s>Tap that first.</s><s>Now look at what is left and find the smallest of those.</s><s>Tap that.</s><s>Keep going and the cards line up in order.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children order the cards by how they are arranged on the screen, or start from the biggest.</s><s>Read the numbers, not the positions.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So each time, ask which of the ones still left is smallest.</s></mstts:express-as>' data-say="Tap the cards from the smallest number to the biggest.">
       <div class="slide-head"><span class="n">11</span><h2>Put them in order</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Tap the cards from the <b>smallest</b> to the <b>biggest</b>.</span></div>
       <div class="stage">
         <div class="cards" id="cards5"></div>
         <div class="nline" id="nl5"></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="again5">New cards</button></div>
       </div>
     </section>
+<!-- 12  1Np.03  Numbers to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The number line settles any argument about which number is bigger.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Find both numbers on the line.</s><s>The one further to the right is the bigger one, every time.</s><s>Fifteen sits to the right of nine, so fifteen is bigger.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children compare the digits and pick the one that looks longer or louder.</s><s>Nine has a big digit but it sits well to the left of fifteen.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find both numbers on the line, and tap the one further along.</s></mstts:express-as>' data-say="Two numbers. Which one is bigger? Tap it. The number line will help you.">
       <div class="slide-head"><span class="n">12</span><h2>Numbers to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayc">Two numbers. Which one is <b>bigger</b>? Tap it. The number line will help you.</span></div>
@@ -861,20 +903,22 @@
         <div class="cards" id="cardsc"></div>
         <div class="nline" id="nlc"></div>
         <div class="choices" id="chc"></div>
-        <p class="fb" id="fbc"></p>
+        <p class="fb" id="fbc" role="status" aria-live="polite"></p>
         <p class="fb" id="scorec" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 13  1Np.03  Compare to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>With bigger numbers, look at the tens before you look at the ones.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Two pictures.</s><s>Count the full frames in each.</s><s>If one has two full frames and the other has one, the first one is bigger, and you can stop right there.</s><s>Only if the tens match do you need to compare the loose ones.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start with the loose ones because they are easier to see.</s><s>Nine loose ones is still fewer than one full ten.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So count the full frames first.</s><s>If those are equal, then count the loose ones.</s></mstts:express-as>' data-say="Two pictures. Does the first have more, fewer, or the same? Look at the tens first, then the ones.">
       <div class="slide-head"><span class="n">13</span><h2>Compare to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayk">Two pictures. Does the <b>first</b> one have <b>more</b>, <b>fewer</b>, or <b>the same</b>? Look at the tens first, then the ones.</span></div>
       <div class="stage">
         <div class="picrow" id="pick"></div>
         <div class="choices" id="chk"></div>
-        <p class="fb" id="fbk"></p>
+        <p class="fb" id="fbk" role="status" aria-live="polite"></p>
         <p class="fb" id="scorek" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 14  1Np.04  First, second, third -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Ordinal numbers say what position something is in, not how many there are.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Ten runners heading for the flag.</s><s>The one nearest the flag is first.</s><s>Behind them is second, then third.</s><s>Press next runner and follow them all the way to tenth.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children mix up first and one.</s><s>One tells you how many.</s><s>First tells you where in the line.</s><s>There is one runner in first place.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find the flag, then count back from the runner nearest to it.</s></mstts:express-as>' data-say="Ten runners in a race. The one nearest the flag is first. Press next runner: first, second, third.">
       <div class="slide-head"><span class="n">14</span><h2>First, second, third</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayord">Ten runners in a race. The one nearest the <b>flag</b> is <b>first</b>. Press <b>Next runner</b> and say the places with me.</span></div>
@@ -884,20 +928,22 @@
         <div class="word" id="ordword"></div>
         <div class="bigbtns"><button type="button" class="big" id="nextord">Next runner</button></div>
         <div class="choices" id="chord"></div>
-        <p class="fb" id="fbord"></p>
+        <p class="fb" id="fbord" role="status" aria-live="polite"></p>
         <p class="fb" id="scoreord" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
+<!-- 15  1Nc.03  Guess, then count -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>An estimate is a sensible guess made before you count.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the stars for a moment.</s><s>Do not count.</s><s>Does it look like about five, or about ten, or about twenty?</s><s>Say the closest one.</s><s>That is your estimate.</s><s>Then count and see how near you were.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a guess has to be exactly right and freeze.</s><s>An estimate is allowed to be a bit out.</s><s>Being close is the whole job.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look, say the first sensible number that comes to mind, then count to check.</s></mstts:express-as>' data-say="Do not count yet! How many stars do you think there are? Tap your guess.">
       <div class="slide-head"><span class="n">15</span><h2>Guess, then count</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Don't count yet! How many stars do you <b>think</b> there are? Tap your guess.</span></div>
       <div class="stage">
         <div class="field" id="field6"></div>
         <div class="choices" id="guess6"></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="again6" hidden>New stars</button></div>
       </div>
     </section>
+<!-- 16  1Nc.03  Estimate to 20 -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>You can estimate on a number line by sliding to about the right place.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the apples.</s><s>If it seems like more than ten but not as many as twenty, slide to somewhere near fifteen and lock it in.</s><s>Then tap each apple one at a time and count.</s><s>Compare your guess with the real count.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children slide to a number they like rather than one that fits the picture.</s><s>Look at the apples first, then move the slider to match what you saw.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look, slide, lock, then count and compare.</s></mstts:express-as>' data-say="How many apples? Slide your guess on the number line and lock it. Then tap each apple to count it into the frames.">
       <div class="slide-head"><span class="n">16</span><h2>Estimate to 20</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="saye">How many apples? <b>Slide</b> your guess on the number line and lock it. Then tap each apple to count it into the frames.</span></div>
@@ -908,7 +954,7 @@
         <input type="range" id="este" min="0" max="20" value="10" step="1" style="width:100%;max-width:560px;accent-color:var(--accent)">
         <div class="bigbtns"><button type="button" class="big small teal" id="locke">Lock my guess</button></div>
         <div class="frames" id="framese"></div>
-        <p class="fb" id="fbe"></p>
+        <p class="fb" id="fbe" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="againe" hidden>New apples</button></div>
         <p class="fb" id="scoree" style="font-size:18px;color:var(--muted)"></p>
       </div>
@@ -920,7 +966,7 @@
         <p class="fb" id="q12" style="font-size:26px"></p>
         <div class="frames" id="pic12"></div>
         <div class="choices" id="ch12"></div>
-        <p class="fb" id="fb12"></p>
+        <p class="fb" id="fb12" role="status" aria-live="polite"></p>
         <p class="fb" id="score12" style="font-size:18px;color:var(--muted)"></p>
       </div>
     </section>
@@ -929,7 +975,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fb13"></p>
+        <p class="fb" id="fb13" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big small teal" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1737,7 +1783,7 @@
   const done = new Array(slides.length).fill(false);
   let cur = 0;
   function paintDots() {
-    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join("");
+    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (done[i] ? "done" : "") + (i === cur ? " now" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + (done[i] ? ", done" : "") + '"></button>').join("");
   }
   function show(i, speak) {
     cur = Math.max(0, Math.min(slides.length - 1, i));
@@ -2486,7 +2532,7 @@
     { q: "Which digits do you press to write fourteen?", pic: null, opts: ["1 then 4", "4 then 1", "1 then 40"], a: "1 then 4", say: "Which digits do you press to write fourteen?" },
     { q: "There are no apples left on the plate. Which number is that?", pic: null, opts: [0, 1, 10], a: 0, say: "There are no apples left. Which number is that?" },
     { q: "Which is more, 9 or 6?", pic: null, opts: [9, 6], a: 9, say: "Which is more, nine or six?" },
-    { q: "How many counters?", pic: 14, opts: [14, 13, 15], a: 14, say: "How many counters?" },
+    { q: "And how many counters now?", pic: 14, opts: [14, 13, 15], a: 14, say: "And how many counters now?" },
     { q: "Which number comes just after 16?", pic: null, opts: [17, 15, 18], a: 17, say: "Which number comes just after sixteen?" },
     { q: "2, 4, 6, 8, ?", pic: null, opts: [10, 9, 12], a: 10, say: "two, four, six, eight, what comes next?" },
     { q: "17 is 1 ten and ? ones", pic: 17, opts: [7, 17, 6], a: 7, say: "seventeen is one ten and how many ones?" },

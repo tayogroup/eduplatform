@@ -108,7 +108,7 @@
 
      Every shape on this page is one <svg> from shapeSvg(): the outline,
      one divider, and a shaded part or none. Cambridge Stage 1 is halves
-     ONLY — quarters, thirds and equivalence are all 2Nf — so nothing here
+     ONLY — quarters, thirds and equivalence are all a Stage 2 matter — so nothing here
      ever draws more than two parts, and the non-examples are two UNEQUAL
      parts rather than three equal ones. A three-part picture would teach
      thirds a year early to make a point about halves.
@@ -541,10 +541,41 @@
     font-family: "Inter", "Segoe UI", sans-serif;
     font-size: 14px; font-weight: 600;
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+
+/* ==== fix-review-findings.py ==== */
+/* A finished step you are standing on is BOTH done and current, and the dot
+   used to show only "current" -- so a child re-did steps they had completed and
+   the dots disagreed with the sticker board. Green says done; the ring and the
+   scale say you are here. Declared after the .now and .done rules so it wins on
+   order rather than on specificity. */
+.dots button.done.now {
+  background: var(--good); border-color: var(--good);
+  box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--good);
+}
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -572,7 +603,7 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="deck" id="deck" role="main">
 
     <!-- 1  1Nf.01  two equal parts, or two unequal parts -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>This lesson stands on one word.</s><s>Equal.</s><s>Equal means exactly the same size.</s><s>Not nearly.</s><s>Exactly.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the square with the line straight down the middle.</s><s>The left part and the right part are the same size.</s><s>Swap them over and you would not notice.</s><s>That is equal.</s><s>Now the long shape, cut near one end.</s><s>One part is fat, one is thin.</s><s>Not equal.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Here is where children slip up.</s><s>They see two parts and say equal, because there are two.</s><s>Two parts is not enough.</s><s>They have to be the same size.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So cover one part with your hand.</s><s>Is the part left over the same size?</s><s>Now tap your answer.</s></mstts:express-as>' data-say="A half means two parts that are exactly the same size. Look at each shape and say whether the two parts are equal.">
@@ -581,7 +612,7 @@
       <div class="stage">
         <div class="shapes" id="pic1"></div>
         <div class="choices" id="ch1"></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
         <p class="score" id="score1"></p>
       </div>
     </section>
@@ -592,7 +623,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Tap the shape that is cut into <b>two equal parts</b>.</span></div>
       <div class="stage">
         <div class="shapes" id="pic2"></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <p class="score" id="score2"></p>
       </div>
     </section>
@@ -604,7 +635,7 @@
       <div class="stage">
         <div class="shapes" id="pic3"></div>
         <p class="word" id="word3">&nbsp;</p>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
         <p class="score" id="score3"></p>
       </div>
     </section>
@@ -616,7 +647,7 @@
       <div class="stage">
         <div class="pool" id="pool4"></div>
         <div class="plates" id="plates4"></div>
-        <p class="fb" id="fb4"></p>
+        <p class="fb" id="fb4" role="status" aria-live="polite"></p>
         <p class="score" id="score4"></p>
       </div>
     </section>
@@ -630,7 +661,7 @@
         <div class="rows2" id="rows5"></div>
         <div class="bigbtns"><button type="button" class="big small teal" id="share5">Share</button></div>
         <div class="choices" id="ch5"></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <p class="score" id="score5"></p>
       </div>
     </section>
@@ -642,7 +673,7 @@
       <div class="stage">
         <div id="stage6"></div>
         <div class="choices" id="ch6"></div>
-        <p class="fb" id="fb6"></p>
+        <p class="fb" id="fb6" role="status" aria-live="polite"></p>
         <p class="score" id="score6"></p>
       </div>
     </section>
@@ -654,7 +685,7 @@
       <div class="stage">
         <div class="join" id="join7"></div>
         <div class="shapes" id="pic7"></div>
-        <p class="fb" id="fb7"></p>
+        <p class="fb" id="fb7" role="status" aria-live="polite"></p>
         <p class="score" id="score7"></p>
       </div>
     </section>
@@ -666,7 +697,7 @@
       <div class="stage">
         <div class="shapes" id="pic8"></div>
         <div class="choices" id="ch8"></div>
-        <p class="fb" id="fb8"></p>
+        <p class="fb" id="fb8" role="status" aria-live="polite"></p>
         <p class="score" id="score8"></p>
       </div>
     </section>
@@ -678,7 +709,7 @@
       <div class="stage">
         <div id="stage9"></div>
         <div class="choices" id="ch9"></div>
-        <p class="fb" id="fb9"></p>
+        <p class="fb" id="fb9" role="status" aria-live="polite"></p>
         <p class="score" id="score9"></p>
       </div>
     </section>
@@ -689,7 +720,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fbstick"></p>
+        <p class="fb" id="fbstick" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
       </div>
     </section>
@@ -1497,7 +1528,7 @@
   const done = new Array(slides.length).fill(false);
   let cur = 0;
   function paintDots() {
-    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join("");
+    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (done[i] ? "done" : "") + (i === cur ? " now" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + (done[i] ? ", done" : "") + '"></button>').join("");
   }
   function show(i, speak) {
     cur = Math.max(0, Math.min(slides.length - 1, i));
@@ -1586,10 +1617,11 @@
                                                       steps 5 and 6
        1Nf.04  halves can be combined to make wholes  steps 7 and 8
 
-     The Stage 2 line is held on purpose. Quarters (2Nf.01, 2Nf.02),
-     halves as division (2Nf.03), fractions as operators beyond a half
-     (2Nf.04), relative size and equivalence (2Nf.05) and combining into
-     new fractions (2Nf.06) are all a year away, so no picture here is
+     The Stage 2 line is held on purpose. Quarters, halves as
+     division, fractions as operators beyond a half, relative size and
+     equivalence, and combining into new fractions are the whole of the
+     next stage's fractions strand and are all a year away, so no
+     picture here is
      ever cut into more than two parts and no answer is ever a fraction
      of anything but one whole. A three-part shape used as a "not a half"
      non-example would teach thirds early to make a point about halves.

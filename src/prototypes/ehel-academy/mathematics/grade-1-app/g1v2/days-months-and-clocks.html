@@ -537,10 +537,41 @@
     font-family: "Inter", "Segoe UI", sans-serif;
     font-size: 14px; font-weight: 600;
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+
+/* ==== fix-review-findings.py ==== */
+/* A finished step you are standing on is BOTH done and current, and the dot
+   used to show only "current" -- so a child re-did steps they had completed and
+   the dots disagreed with the sticker board. Green says done; the ring and the
+   scale say you are here. Declared after the .now and .done rules so it wins on
+   order rather than on specificity. */
+.dots button.done.now {
+  background: var(--good); border-color: var(--good);
+  box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--good);
+}
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -568,33 +599,36 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="deck" id="deck" role="main">
 
-    <!-- 1 flat shapes -->
+    <!-- 1  1Gt.02  Days of the week -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>The days of the week always come round in the same order, and that order never changes.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.</s><s>Seven of them.</s><s>Say them out loud with me, and after Sunday it starts at Monday again, round and round.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children start at whatever day it is today.</s><s>The list on this screen always starts at Monday, whatever day it happens to be outside.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So say the whole seven out loud from Monday, then tap them in that order.</s></mstts:express-as>' data-say="Seven days make a week. Tap the days in order, starting with Monday.">
       <div class="slide-head"><span class="n">1</span><h2>Days of the week</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say11">Tap the days in order, starting with <b>Monday</b>.</span></div>
       <div class="stage" id="stage11"></div>
       <div class="choices" id="ch11"></div>
-      <p class="fb" id="fb11"></p>
+      <p class="fb" id="fb11" role="status" aria-live="polite"></p>
       <p class="score" id="sc11"></p>
     </section>
+<!-- 2  1Gt.02  Months of the year -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Twelve months make one year, and they always come in the same order too.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>January, February, March, April, May, June, July, August, September, October, November, December.</s><s>One is missing from the line.</s><s>Say the months out loud and listen for the one your voice says where the gap is.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children guess from what the missing month sounds like, or pick a month they like.</s><s>Say the list instead.</s><s>Your voice knows the order better than your guess does.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start at January and say them out loud until you reach the gap.</s><s>Whatever you say there is the answer.</s></mstts:express-as>' data-say="Twelve months make a year. One month is missing. Tap the one that belongs in the gap.">
       <div class="slide-head"><span class="n">2</span><h2>Months of the year</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say12">One month is missing. Which one belongs in the gap?</span></div>
       <div class="stage" id="stage12"></div>
       <div class="choices" id="ch12"></div>
-      <p class="fb" id="fb12"></p>
+      <p class="fb" id="fb12" role="status" aria-live="polite"></p>
       <p class="score" id="sc12"></p>
     </section>
+<!-- 3  1Gt.01  Short times and long times -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Some things take a tiny amount of time and some take a very long time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A second is about as long as saying one elephant.</s><s>A minute is sixty of those.</s><s>An hour is long enough for a film.</s><s>A day is one whole sleep to the next.</s><s>A week is seven days, and a year is all twelve months.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children put them in the order they meet them in the day, rather than by how long they last.</s><s>Order them by length of time, from the shortest to the longest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start with the very shortest one you can find, then keep asking which of the ones left is shortest now.</s></mstts:express-as>' data-say="A second is very short. A year is very long. Tap them in order, from the shortest to the longest.">
       <div class="slide-head"><span class="n">3</span><h2>Short times and long times</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say13">Tap them in order, from the <b>shortest</b> to the <b>longest</b>.</span></div>
       <div class="stage" id="stage13"></div>
       <div class="choices" id="ch13"></div>
-      <p class="fb" id="fb13"></p>
+      <p class="fb" id="fb13" role="status" aria-live="polite"></p>
       <p class="score" id="sc13"></p>
     </section>
+<!-- 4  1Gt.03  Telling the time -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A clock has two hands, and they do two different jobs.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>The short hand tells you the hour.</s><s>The long hand tells you how far through the hour you are.</s><s>When the long hand points straight up to twelve, the hour has just begun, and we say o clock.</s><s>If the short hand is on three and the long hand is on twelve, it is three o clock.</s><s>When the long hand points straight down to six, we are halfway through, and we say half past.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children read the long hand as the hour, because it is bigger and easier to see.</s><s>It is the short hand that tells you the hour, every time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find the short hand first and see which number it is nearest.</s><s>Then look at the long hand to see whether it is o clock or half past.</s></mstts:express-as>' data-say="A clock. The short hand tells the hour. When the long hand points to twelve, it is something o'clock. Press next hour.">
       <div class="slide-head"><span class="n">4</span><h2>Telling the time</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say14">The <b>short</b> hand tells the hour. When the <b>long</b> hand points to 12, it is something <b>o'clock</b>. Press <b>Next hour</b>.</span></div>
@@ -603,7 +637,7 @@
         <div class="word" id="timesay"></div>
         <div class="bigbtns"><button type="button" class="big" id="nexthour">Next hour</button></div>
         <div class="choices" id="chtime"></div>
-        <p class="fb" id="fbtime"></p>
+        <p class="fb" id="fbtime" role="status" aria-live="polite"></p>
         <p class="score" id="scoretime"></p>
       </div>
     </section>
@@ -612,7 +646,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayck">Tap the answer.</span></div>
       <div class="stage" id="stageck"></div>
       <div class="choices" id="chck"></div>
-      <p class="fb" id="fbck"></p>
+      <p class="fb" id="fbck" role="status" aria-live="polite"></p>
       <p class="score" id="scck"></p>
     </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -620,7 +654,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fbstick"></p>
+        <p class="fb" id="fbstick" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Start again</button></div>
       </div>
     </section>
@@ -1432,7 +1466,7 @@
   const done = new Array(slides.length).fill(false);
   let cur = 0;
   function paintDots() {
-    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join("");
+    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (done[i] ? "done" : "") + (i === cur ? " now" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + (done[i] ? ", done" : "") + '"></button>').join("");
   }
   function show(i, speak) {
     cur = Math.max(0, Math.min(slides.length - 1, i));

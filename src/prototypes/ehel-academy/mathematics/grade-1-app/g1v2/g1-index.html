@@ -168,16 +168,36 @@
   .slide-head .n { color: var(--teal-ink); }
   .say button { color: var(--teal-ink); }
   .big.teal { color: var(--teal-ink); }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
 </style>
 
 <div class="wrap">
+  <a class="eh-skip" href="#lessons">Skip to the lesson</a>
   <header>
     <p class="eyebrow">Ehel Academy &middot; Mathematics</p>
     <h1>Grade 1 <em>Mathematics</em></h1>
-    <p class="lede">Seven lessons, in the order they are meant to be done. Start at the top &mdash; each one gets you ready for the next.</p>
+    <p class="lede">Seven lessons, in the order they are meant to be done. Start at the top &mdash; each one gets you ready for the next. About 190 minutes in all, one lesson a week.</p>
   </header>
 
-  <div class="grid">
+  <div class="grid" id="lessons" role="main">
     <a class="lesson c-number" href="counting-to-twenty.html?from=g1">
       <span class="mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
@@ -187,7 +207,7 @@
       <span class="strand">Number</span>
       <h2>Counting to Twenty</h2>
       <p class="covers">Count to 20 and know what the numbers mean: read them, write them, count in twos and tens, put them in order, compare them, say which is odd and which is even, and estimate before you count.</p>
-      <span class="foot"><span class="steps">16 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">16 steps &middot; about 40 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-number" href="adding-and-taking-away.html?from=g1">
@@ -199,7 +219,7 @@
       <span class="strand">Number</span>
       <h2>Adding and Taking Away</h2>
       <p class="covers">Add by counting on and by putting two groups together, take away, find how many more, make ten, learn your doubles, and pay with coins.</p>
-      <span class="foot"><span class="steps">8 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">8 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-frac" href="halves-and-wholes.html?from=g1">
@@ -211,7 +231,7 @@
       <span class="strand">Halves</span>
       <h2>Halves and Wholes</h2>
       <p class="covers">Split a shape into two equal parts, colour one half, find half of a group and half of a number, and put two halves back together to make a whole.</p>
-      <span class="foot"><span class="steps">8 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">8 steps &middot; about 20 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-pattern" href="what-comes-next.html?from=g1">
@@ -223,7 +243,7 @@
       <span class="strand">Patterns</span>
       <h2>What Comes Next</h2>
       <p class="covers">Find the part that repeats, fill the missing shape and the missing number, count on in jumps, balance both sides, and make a pattern of your own.</p>
-      <span class="foot"><span class="steps">14 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">14 steps &middot; about 40 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-shape" href="shapes-and-sizes.html?from=g1">
@@ -235,7 +255,7 @@
       <span class="strand">Shape and measure</span>
       <h2>Shapes and Sizes</h2>
       <p class="covers">Name flat and solid shapes and sort them by their sides, faces and edges, turn a shape round, compare length, weight and how much a jug holds, pick the right measuring tool, and say where something is.</p>
-      <span class="foot"><span class="steps">10 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">10 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-time" href="days-months-and-clocks.html?from=g1">
@@ -247,7 +267,7 @@
       <span class="strand">Time</span>
       <h2>Days, Months and Clocks</h2>
       <p class="covers">Say the days of the week and the months of the year in order, work out which things take longer, and read the clock at o'clock and half past.</p>
-      <span class="foot"><span class="steps">4 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">4 steps &middot; about 10 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
 
     <a class="lesson c-data" href="asking-and-sorting.html?from=g1">
@@ -259,11 +279,294 @@
       <span class="strand">Data</span>
       <h2>Asking and Sorting</h2>
       <p class="covers">Ask everyone a question, write the answers in a list and a table, build a block graph and a pictogram, sort into hoops and a Carroll diagram, then say what the data shows.</p>
-      <span class="foot"><span class="steps">11 steps &middot; check &middot; stickers</span><span class="go">Start</span></span>
+      <span class="foot"><span class="steps">11 steps &middot; about 30 min &middot; check &middot; stickers</span><span class="go">Start</span></span>
     </a>
   </div>
 
   <p class="note"><b>For the grown-up.</b> These seven lessons cover the Cambridge Primary Mathematics Stage 1 strands: number, fractions, pattern, geometry and measure, time, and statistics. They are ordered so that each lesson only needs what the ones above it have already taught &mdash; halving comes straight after doubling, and the data lesson comes last because it needs counting and sorting. Fractions at Stage 1 is halves only &mdash; quarters, thirds and equivalence are Stage 2, so nothing here is ever cut into more than two parts.</p>
+  <!-- GROWNUP:START  built by build-grownup-section.py -->
+  <section class="grownup" id="grownups">
+    <h3>For teachers and parents</h3>
+    <p>What each lesson teaches, in Cambridge's own words; what every step asks the child to do; and the answer keys for the end-of-lesson check. Open a lesson to work through it, or print this page for the lot. The minutes are an estimate of about two and a half minutes a step, not yet timed against a real class, so treat them as a guide to the length of a sitting rather than a plan.</p>
+    <details class="gu">
+      <summary><b>Lesson 1: Counting to Twenty</b> <span class="gu-meta">16 steps &middot; about 40 min &middot; 10 objectives &middot; 15 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
+      <ul>
+        <li><b>1Nc.01</b> Count objects from 0 to 20, recognising conservation of number and one-to-one correspondence.</li>
+        <li><b>1Nc.02</b> Recognise the number of objects presented in familiar patterns up to 10, without counting.</li>
+        <li><b>1Nc.03</b> Estimate the number of objects or people (up to 20), and check by counting.</li>
+        <li><b>1Nc.04</b> Count on in ones, twos or tens, and count back in ones and tens, starting from any number (from 0 to 20).</li>
+        <li><b>1Nc.05</b> Understand even and odd numbers as ‘every other number’ when counting (from 0 to 20).</li>
+        <li><b>1Ni.01</b> Recite, read and write number names and whole numbers (from 0 to 20).</li>
+        <li><b>1Np.01</b> Understand that zero represents none of something.</li>
+        <li><b>1Np.02</b> Compose, decompose and regroup numbers from 10 to 20.</li>
+        <li><b>1Np.03</b> Understand the relative size of quantities to compare and order numbers from 0 to 20.</li>
+        <li><b>1Np.04</b> Recognise and use ordinal numbers from 1st to 10th.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Count to 10</b> &middot; Press the plus to put a counter in the frame. Count out loud with me.</li>
+        <li><b>See how many</b> &middot; Do not count! Press look, see the pattern, then tap how many you saw.</li>
+        <li><b>Then to 20</b> &middot; Fill the first frame. That is ten. Then keep going. Ten and one more is eleven.</li>
+        <li><b>Read the number</b> &middot; Look at the counters. Which number is it? Tap the number.</li>
+        <li><b>Write the number</b> &middot; Now write the number. Press the digit keys to build it.</li>
+        <li><b>Zero means none</b> &middot; Take the counters away one at a time. When there are none left, that is zero.</li>
+        <li><b>Counting in tens</b> &middot; A full frame is one ten. Press next ten and count in tens: ten, twenty.</li>
+        <li><b>Counting in twos</b> &middot; Socks come in pairs. Press next pair and count in twos with me: two, four, six.</li>
+        <li><b>Odd and even</b> &middot; Tap a number. If every counter has a partner, the number is even. If one is left alone, it is odd.</li>
+        <li><b>More or fewer?</b> &middot; Which group has more? Tap it.</li>
+        <li><b>Put them in order</b> &middot; Tap the cards from the smallest number to the biggest.</li>
+        <li><b>Numbers to 20</b> &middot; Two numbers. Which one is bigger? Tap it. The number line will help you.</li>
+        <li><b>Compare to 20</b> &middot; Two pictures. Does the first have more, fewer, or the same? Look at the tens first, then the ones.</li>
+        <li><b>First, second, third</b> &middot; Ten runners in a race. The one nearest the flag is first. Press next runner: first, second, third.</li>
+        <li><b>Guess, then count</b> &middot; Do not count yet! How many stars do you think there are? Tap your guess.</li>
+        <li><b>Estimate to 20</b> &middot; How many apples? Slide your guess on the number line and lock it. Then tap each apple to count it into the frames.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <ul>
+        <li>How many counters? <b>7</b></li>
+        <li>A dice shows ⚄. How many dots, without counting? <b>5</b></li>
+        <li>Which word says 13? <b>thirteen</b></li>
+        <li>Which digits do you press to write fourteen? <b>1 then 4</b></li>
+        <li>There are no apples left on the plate. Which number is that? <b>0</b></li>
+        <li>Which is more, 9 or 6? <b>9</b></li>
+        <li>How many counters? <b>14</b></li>
+        <li>Which number comes just after 16? <b>17</b></li>
+        <li>2, 4, 6, 8, ? <b>10</b></li>
+        <li>17 is 1 ten and ? ones <b>7</b></li>
+        <li>Count on in tens: 0, 10, ? <b>20</b></li>
+        <li>Which is more, 14 or 17? <b>17</b></li>
+        <li>Is 15 odd or even? <b>odd</b></li>
+        <li>In the line A, B, C, D, who is 3rd? <b>C</b></li>
+        <li>20, 19, 18, 17, ? <b>16</b></li>
+      </ul>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 2: Adding and Taking Away</b> <span class="gu-meta">8 steps &middot; about 20 min &middot; 6 objectives &middot; 11 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
+      <ul>
+        <li><b>1Ni.02</b> Understand addition as: counting on combining two sets.</li>
+        <li><b>1Ni.03</b> Understand subtraction as: counting back take away difference.</li>
+        <li><b>1Ni.04</b> Recognise complements of 10.</li>
+        <li><b>1Ni.05</b> Estimate, add and subtract whole numbers (where the answer is from 0 to 20).</li>
+        <li><b>1Ni.06</b> Know doubles up to double 10.</li>
+        <li><b>1Nm.01</b> Recognise money used in local currency.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Adding</b> &middot; Put the two groups together. How many altogether? Tap the answer.</li>
+        <li><b>Taking away</b> &middot; Take some away. Tap the counters to cross them out.</li>
+        <li><b>How many more?</b> &middot; Two rows. Match them up in pairs, and the ones left over tell you how many more.</li>
+        <li><b>Making 10</b> &middot; Ten friends in a row. Tap where to split them. Two numbers that make ten are a number bond.</li>
+        <li><b>Through 10</b> &middot; Adding and taking away with bigger numbers. First tap the answer. Then we will go through ten together.</li>
+        <li><b>Doubles</b> &middot; A ladybird has the same spots on both sides. Double means the same again.</li>
+        <li><b>Doubles to 20</b> &middot; Tap a double to see it in the frames. Double seven is fourteen: that is ten and four.</li>
+        <li><b>Money to 20</b> &middot; Coins! Tap coins from the purse to pay the price. Watch the total.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <ul>
+        <li>6 + 4 = ? <b>10</b></li>
+        <li>8 red and 5 blue. How many more red than blue? <b>3</b></li>
+        <li>10 − 3 = ? <b>7</b></li>
+        <li>4 and ? make 10 <b>6</b></li>
+        <li>Double 5 is ? <b>10</b></li>
+        <li>8 + 5 = ? <b>13</b></li>
+        <li>14 − 6 = ? <b>8</b></li>
+        <li>6 and ? make 10 <b>4</b></li>
+        <li>Double 8 is ? <b>16</b></li>
+        <li>6 + 7 = ? (double 6 and 1 more) <b>13</b></li>
+        <li>10 sh + 5 sh + 2 sh = ? <b>17 sh</b></li>
+      </ul>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 3: Halves and Wholes</b> <span class="gu-meta">8 steps &middot; about 20 min &middot; 4 objectives &middot; 10 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
+      <ul>
+        <li><b>1Nf.01</b> Understand that an object or shape can be split into two equal parts or two unequal parts.</li>
+        <li><b>1Nf.02</b> Understand that a half can describe one of two equal parts of a quantity or set of objects.</li>
+        <li><b>1Nf.03</b> Understand that a half can act as an operator (whole number answers).</li>
+        <li><b>1Nf.04</b> Understand and visualise that halves can be combined to make wholes.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Two equal parts</b> &middot; A half means two parts that are exactly the same size. Look at each shape and say whether the two parts are equal.</li>
+        <li><b>Cut it in half</b> &middot; Only one of these cuts makes two equal parts. Tap the shape that is cut fairly.</li>
+        <li><b>Colour one half</b> &middot; This shape is cut into two equal parts. Tap one part to colour it. One of two equal parts is one half.</li>
+        <li><b>Half of a group</b> &middot; Half works on a group of things too. Share them onto the two plates so both plates have the same.</li>
+        <li><b>Half of a number</b> &middot; Half of a number means sharing it into two equal rows. Press share, then read how many are in one row.</li>
+        <li><b>Halve it in your head</b> &middot; Now try without the counters. Halving is sharing into two equal parts.</li>
+        <li><b>Two halves make a whole</b> &middot; Two halves fit back together to make one whole. Tap the half that finishes the shape.</li>
+        <li><b>How many halves?</b> &middot; If two halves make one whole, how many halves make more wholes? Count them.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <ul>
+        <li>Are these two parts equal? <b>Yes</b></li>
+        <li>Are these two parts equal? <b>No</b></li>
+        <li>How much of this shape is coloured? <b>one half</b></li>
+        <li>How much of this shape is coloured? <b>the whole</b></li>
+        <li>What is half of 6? <b>3</b></li>
+        <li>What is half of 10? <b>5</b></li>
+        <li>What is half of 20? <b>10</b></li>
+        <li>Amina shares 8 mangoes fairly with her brother. How many does each get? <b>4</b></li>
+        <li>How many halves make one whole? <b>2</b></li>
+        <li>How many halves make 3 wholes? <b>6</b></li>
+      </ul>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 4: What Comes Next</b> <span class="gu-meta">14 steps &middot; about 40 min &middot; 2 objectives &middot; 15 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
+      <ul>
+        <li><b>1Nc.04</b> Count on in ones, twos or tens, and count back in ones and tens, starting from any number (from 0 to 20).</li>
+        <li><b>1Nc.06</b> Use familiar language to describe sequences of objects.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>What comes next?</b> &middot; A pattern repeats. Say the pattern out loud, then tap the bead that comes next.</li>
+        <li><b>The part that repeats</b> &middot; Every pattern has a part that repeats. How many beads are in that part? Tap the number.</li>
+        <li><b>Missing shapes</b> &middot; A shape has fallen out of the middle of the pattern. Look at the bead before it and the bead after it. Which one belongs in the hole?</li>
+        <li><b>Numbers that repeat</b> &middot; Numbers can repeat too, just like the beads. Say the pattern out loud, then tap the number that belongs.</li>
+        <li><b>Missing numbers</b> &middot; Some numbers have fallen off the track. Tap a gap, then tap the number that belongs there.</li>
+        <li><b>Make your own</b> &middot; Make your own pattern. Tap two or three beads for the part that repeats, then press repeat it.</li>
+        <li><b>Growing shapes</b> &middot; These patterns grow. Each one adds another row of shapes. Count them, then work out how many are in the next one.</li>
+        <li><b>Jump patterns</b> &middot; These patterns jump. Find the jump, then fill the gaps in order.</li>
+        <li><b>Find the missing numbers</b> &middot; This time nobody tells you the jump. Look at two numbers that are next to each other to work it out, then fill the holes.</li>
+        <li><b>My own number pattern</b> &middot; Now you make a number pattern. Choose a jump pattern or a repeating one, then build it.</li>
+        <li><b>3 + ? = 7</b> &middot; Three add something makes seven. Tap the plus to add counters until you reach seven, and count how many you added.</li>
+        <li><b>9 − ? = 4</b> &middot; Nine take away something leaves four. Cross out counters until four are left, and count the crossed ones.</li>
+        <li><b>The same on both sides</b> &middot; The equals sign means the same on both sides. Add counters to the light side until the scale is level.</li>
+        <li><b>The number machine</b> &middot; A number machine does the same thing to every number. Look at what goes in and what comes out. What is the machine doing?</li>
+      </ul>
+      <h4>Check answers</h4>
+      <ul>
+        <li>What comes next? <b>teal</b></li>
+        <li>How many beads repeat? <b>3</b></li>
+        <li>2, 4, 6, ? <b>8</b></li>
+        <li>10, 9, 8, ? <b>7</b></li>
+        <li>What is missing: 13, 14, ?, 16 <b>15</b></li>
+        <li>3 + 4 = ? <b>7</b></li>
+        <li>9 − 5 = ? <b>4</b></li>
+        <li>4 + 5 = ? <b>9</b></li>
+        <li>12 − 4 = ? <b>8</b></li>
+        <li>The machine does +2. 6 goes in. What comes out? <b>8</b></li>
+        <li>12, 14, 16, ? <b>18</b></li>
+        <li>Pattern 1 has 2 squares, pattern 2 has 4, pattern 3 has 6. How many in pattern 4? <b>8</b></li>
+        <li>3, 8, 3, 8, 3, ? <b>8</b></li>
+        <li>?, 8, 10, 12, 14 <b>6</b></li>
+        <li>Which shape is missing in the middle? <b>teal square</b></li>
+      </ul>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 5: Shapes and Sizes</b> <span class="gu-meta">10 steps &middot; about 30 min &middot; 9 objectives &middot; 13 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
+      <ul>
+        <li><b>1Gg.01</b> Identify, describe and sort 2D shapes by their characteristics or properties, including reference to number of sides and whether the sides are curved or straight.</li>
+        <li><b>1Gg.02</b> Use familiar language to describe length, including long, longer, longest, thin, thinner, thinnest, short, shorter, shortest, tall, taller and tallest.</li>
+        <li><b>1Gg.03</b> Identify, describe and sort 3D shapes by their properties, including reference to the number of faces, edges and whether faces are flat or curved.</li>
+        <li><b>1Gg.04</b> Use familiar language to describe mass, including heavy, light, less and more.</li>
+        <li><b>1Gg.05</b> Use familiar language to describe capacity, including full, empty, less and more.</li>
+        <li><b>1Gg.06</b> Differentiate between 2D and 3D shapes.</li>
+        <li><b>1Gg.07</b> Identify when a shape looks identical as it rotates.</li>
+        <li><b>1Gg.08</b> Explore instruments that have numbered scales, and select the most appropriate instrument to measure length, mass, capacity and temperature.</li>
+        <li><b>1Gp.01</b> Use familiar language to describe position and direction.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Flat shapes</b> &middot; Here is a flat shape. Press count the sides and I will count them with you. Then press next shape.</li>
+        <li><b>Sort the shapes</b> &middot; Read the rule, then tap every shape that follows it.</li>
+        <li><b>Solid shapes</b> &middot; A solid shape is not flat. You can hold it. Press next shape to meet them all.</li>
+        <li><b>Flat or solid?</b> &middot; Look at the shape. Is it flat, or is it solid? Tap your answer.</li>
+        <li><b>Turn it round</b> &middot; Press turn it. The shape makes a quarter turn. Does it look the same as before?</li>
+        <li><b>Long, longer, longest</b> &middot; Tap the pictures in order, from the shortest to the longest.</li>
+        <li><b>Heavy and light</b> &middot; Two things on a balance. The heavier one goes down. Tap the answer.</li>
+        <li><b>Full and empty</b> &middot; These jugs hold water. Full, empty, more or less. Tap the answer.</li>
+        <li><b>Which tool measures it?</b> &middot; Every measuring tool has numbers on it. Which one would you use for this job? Tap it.</li>
+        <li><b>Where is it?</b> &middot; Where is the ball? Look at the box, then tap the word that says where the ball is.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <ul>
+        <li>How many sides does a triangle have? <b>3</b></li>
+        <li>Which shape has no corners? <b>circle</b></li>
+        <li>How many sides does a hexagon have? <b>6</b></li>
+        <li>How many faces does a cube have? <b>6</b></li>
+        <li>Which solid shape has no edges at all? <b>sphere</b></li>
+        <li>Is a cylinder flat or solid? <b>solid</b></li>
+        <li>A square is turned a quarter turn. Does it look the same? <b>Yes</b></li>
+        <li>Amina is taller than Musa. Musa is taller than Kiki. Who is the tallest? <b>Amina</b></li>
+        <li>On a balance, the side that goes down holds the… <b>heavier thing</b></li>
+        <li>A jug with no water in it is… <b>empty</b></li>
+        <li>Which tool would you use to see how heavy a bag is? <b>scales</b></li>
+        <li>Which tool would you use to see how hot the water is? <b>a thermometer</b></li>
+        <li>The cat is below the table. So the cat is… <b>under the table</b></li>
+      </ul>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 6: Days, Months and Clocks</b> <span class="gu-meta">4 steps &middot; about 10 min &middot; 3 objectives &middot; 5 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
+      <ul>
+        <li><b>1Gt.01</b> Use familiar language to describe units of time.</li>
+        <li><b>1Gt.02</b> Know the days of the week and the months of the year.</li>
+        <li><b>1Gt.03</b> Recognise time to the hour and half hour.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Days of the week</b> &middot; Seven days make a week. Tap the days in order, starting with Monday.</li>
+        <li><b>Months of the year</b> &middot; Twelve months make a year. One month is missing. Tap the one that belongs in the gap.</li>
+        <li><b>Short times and long times</b> &middot; A second is very short. A year is very long. Tap them in order, from the shortest to the longest.</li>
+        <li><b>Telling the time</b> &middot; A clock. The short hand tells the hour. When the long hand points to twelve, it is something o'clock. Press next hour.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <ul>
+        <li>Which day comes after Sunday? <b>Monday</b></li>
+        <li>How many months are there in a year? <b>12</b></li>
+        <li>Which is the shortest? <b>a second</b></li>
+        <li>The long hand is on 12 and the short hand is on 3. What time is it? <b>3 o'clock</b></li>
+        <li>The long hand is on 6 and the short hand is just past 4. What time is it? <b>half past 4</b></li>
+      </ul>
+    </details>
+    <details class="gu">
+      <summary><b>Lesson 7: Asking and Sorting</b> <span class="gu-meta">11 steps &middot; about 30 min &middot; 3 objectives &middot; 16 check questions</span></summary>
+      <h4>What it teaches (Cambridge Primary Mathematics 0096, Stage 1)</h4>
+      <ul>
+        <li><b>1Ss.01</b> Answer non-statistical questions (categorical data).</li>
+        <li><b>1Ss.02</b> Record, organise and represent categorical data using: practical resources and drawings lists and tables Venn and Carroll diagrams block graphs and pictograms.</li>
+        <li><b>1Ss.03</b> Describe data, using familiar language including reference to more, less, most or least to answer non-statistical questions and discuss conclusions.</li>
+      </ul>
+      <h4>The steps</h4>
+      <ul>
+        <li><b>Ask everyone</b> &middot; Ask everyone the question. Tap each child to hear the answer, and watch the answers line up in rows.</li>
+        <li><b>Write a list</b> &middot; Here are the answers written as a list. Read down the list and count.</li>
+        <li><b>Make a table</b> &middot; A table is shorter than a list. It says each answer once, with how many children chose it. One number is missing.</li>
+        <li><b>Build a block graph</b> &middot; Build the block graph. Press the plus under a fruit to add one block for one child.</li>
+        <li><b>Read the block graph</b> &middot; Now read the graph. Which is the tallest? Which is the shortest? Tap the answer.</li>
+        <li><b>Make a pictogram</b> &middot; A pictogram uses a little picture instead of a block. One picture stands for one child.</li>
+        <li><b>Sort into a hoop</b> &middot; A hoop holds the things that follow the rule. Tap a card to put it in the hoop.</li>
+        <li><b>A Venn diagram</b> &middot; This is a Venn diagram: two hoops that cross over. A card that follows both rules goes in the middle, where the hoops overlap.</li>
+        <li><b>A Carroll diagram</b> &middot; A Carroll diagram has boxes instead of hoops. Every card has a box of its own. Where does this one go?</li>
+        <li><b>Answer the question</b> &middot; Here is a graph about pets. Every question has one right answer, and the graph tells you what it is.</li>
+        <li><b>What can we say?</b> &middot; What can we really say about this graph? Only one of these is true. Tap it.</li>
+      </ul>
+      <h4>Check answers</h4>
+      <ul>
+        <li>What is the first thing to do when you want to collect data? <b>ask a question</b></li>
+        <li>In a block graph, one block stands for… <b>one child</b></li>
+        <li>Which fruit column is the tallest? <b>🥭 mango</b></li>
+        <li>Which fruit did the fewest children choose? <b>🍎 apple</b></li>
+        <li>How many more chose mango 🥭 than orange 🍊? <b>3</b></li>
+        <li>In a pictogram the key says one 🍌 stands for one child. There are 4 bananas. How many children? <b>4</b></li>
+        <li>A table is better than a list because… <b>it shows how many chose each answer</b></li>
+        <li>A hoop holds the things that… <b>follow the rule</b></li>
+        <li>Two hoops cross over. A card in the middle… <b>follows both rules</b></li>
+        <li>A red circle is sorted into hoops labelled red and circles. Where does it go? <b>in the middle</b></li>
+        <li>In a Carroll diagram, how many cards are left out? <b>none, every card has a box</b></li>
+        <li>A blue square goes in the Carroll diagram with rows red / not red and columns circle / not a circle. Which box? <b>not red, not a circle</b></li>
+        <li>6 children have a dog and 2 have a bird. Which is true? <b>more have a dog</b></li>
+        <li>Our class graph says most chose mango. Can we say everybody likes mango? <b>no</b></li>
+        <li>We asked our class. Does the graph tell us about the whole school? <b>no, only the class we asked</b></li>
+        <li>Which word means the smallest number in a graph? <b>least</b></li>
+      </ul>
+    </details>
+  </section>
+  <!-- GROWNUP:END -->
 </div>
 
 <script>

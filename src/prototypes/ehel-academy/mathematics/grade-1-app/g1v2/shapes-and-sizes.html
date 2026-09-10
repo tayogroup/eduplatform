@@ -537,10 +537,41 @@
     font-family: "Inter", "Segoe UI", sans-serif;
     font-size: 14px; font-weight: 600;
   }
+
+/* ==== wire-accessibility.py ==== */
+/* The skip link is off-screen until focused rather than display:none, because
+   a display:none link cannot be focused and a skip link nobody can reach is
+   worse than none. */
+.eh-skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--card); color: var(--ink); border: 3px solid var(--teal);
+  border-radius: 0 0 12px 0; padding: 10px 16px; font-weight: 800;
+  font-family: "Inter", "Segoe UI", sans-serif; text-decoration: none;
+}
+.eh-skip:focus { left: 0; }
+/* The dots are a flex row with a max-width, so 18 of them were squeezed to 4px
+   wide. `flex: 0 0 16px` holds the size the rule above already declares; the
+   ::after widens the TARGET to 32px without changing the dot a child sees. */
+.dots button { flex: 0 0 16px; position: relative; }
+.dots button::after {
+  content: ""; position: absolute; left: -8px; top: -8px; right: -8px; bottom: -8px;
+}
+
+/* ==== fix-review-findings.py ==== */
+/* A finished step you are standing on is BOTH done and current, and the dot
+   used to show only "current" -- so a child re-did steps they had completed and
+   the dots disagreed with the sticker board. Green says done; the ring and the
+   scale say you are here. Declared after the .now and .done rules so it wins on
+   order rather than on specificity. */
+.dots button.done.now {
+  background: var(--good); border-color: var(--good);
+  box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--good);
+}
 </style>
 
 
-<header class="eh-bar1">
+<a class="eh-skip" href="#deck">Skip to the lesson</a>
+  <header class="eh-bar1">
   <a class="eh-brand" href="index.html"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Mathematics</i></span></a>
   <div class="eh-prog" title="How much of this lesson you have finished">
     <span class="eh-pct" id="ehPct">0%</span>
@@ -568,9 +599,9 @@
     <nav class="dots" id="dots" aria-label="Steps"></nav>
   </header>
 
-  <div class="deck" id="deck">
+  <div class="deck" id="deck" role="main">
 
-    <!-- 1 flat shapes -->
+    <!-- 1  1Gg.01  Flat shapes -->
     <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A flat shape is one you could draw on paper.</s><s>It has sides and it has corners.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Take the square.</s><s>Press count the sides and watch each one light up as we say it.</s><s>One, two, three, four.</s><s>Four sides.</s><s>And look where two sides meet, at each corner.</s><s>Four of those as well.</s><s>A triangle lights up three sides and three corners.</s><s>A circle has one edge that curves all the way round, and no corners at all.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children count a corner twice, or start counting again where they began and get one too many.</s><s>It is easy to lose your place going round a shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So start at one corner and remember it.</s><s>Go round once.</s><s>Stop when you are back where you started.</s></mstts:express-as>' data-say="Here is a flat shape. Press count the sides and I will count them with you. Then press next shape.">
       <div class="slide-head"><span class="n">1</span><h2>Flat shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say1">This is a flat shape. Press <b>Count the sides</b>, then <b>Next shape</b>.</span></div>
@@ -579,18 +610,20 @@
         <div class="word" id="name1"></div>
         <div class="facts" id="facts1"></div>
         <div class="bigbtns"><button type="button" class="big teal" id="count1">Count the sides</button><button type="button" class="big" id="next1">Next shape</button></div>
-        <p class="fb" id="fb1"></p>
+        <p class="fb" id="fb1" role="status" aria-live="polite"></p>
       </div>
     </section>
+<!-- 2  1Gg.01  Sort the shapes -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Sorting means picking out only the shapes that follow one rule, and leaving the rest.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If the rule is four sides, then squares and rectangles go in, because they both have four.</s><s>Triangles stay out, because they have three.</s><s>The colour does not matter.</s><s>The size does not matter.</s><s>Only the rule matters.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children pick shapes that look alike, or ones they like the look of.</s><s>A big red square and a small blue square both follow four sides, even though they look different.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So read the rule again.</s><s>Then take each shape and ask it that one question.</s></mstts:express-as>' data-say="Read the rule, then tap every shape that follows it.">
       <div class="slide-head"><span class="n">2</span><h2>Sort the shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say2">Tap every shape that follows the rule.</span></div>
       <div class="stage">
         <div class="picks" id="picks2"></div>
-        <p class="fb" id="fb2"></p>
+        <p class="fb" id="fb2" role="status" aria-live="polite"></p>
         <p class="score" id="sc2"></p>
       </div>
     </section>
+<!-- 3  1Gg.03  Solid shapes -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A solid shape is not flat.</s><s>It is a thing you could pick up and hold in your hand.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press next shape to meet them.</s><s>A cube is like a dice, with flat square faces.</s><s>A sphere is like a ball, and it rolls.</s><s>A cylinder is like a tin, flat at each end and round in the middle.</s><s>A cone has a point at the top, like a party hat.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children mix up a circle and a sphere, or a square and a cube.</s><s>A circle is drawn on paper.</s><s>A sphere is a ball you can hold.</s><s>The flat one and the solid one are not the same shape.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask yourself, could I pick this up, or is it drawn flat.</s></mstts:express-as>' data-say="A solid shape is not flat. You can hold it. Press next shape to meet them all.">
       <div class="slide-head"><span class="n">3</span><h2>Solid shapes</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say3">A <b>solid</b> shape is not flat: you can hold it in your hand. Press <b>Next shape</b>.</span></div>
@@ -599,17 +632,19 @@
         <div class="word" id="name3"></div>
         <div class="facts" id="facts3"></div>
         <div class="bigbtns"><button type="button" class="big" id="next3">Next shape</button></div>
-        <p class="fb" id="fb3"></p>
+        <p class="fb" id="fb3" role="status" aria-live="polite"></p>
       </div>
     </section>
+<!-- 4  1Gg.06  Flat or solid? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Every shape here is either flat or solid, and you can tell by asking one question.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Could you hold it in your hand and turn it over?</s><s>A ball, yes, so it is solid.</s><s>A triangle drawn on the page, no, so it is flat.</s><s>That one question sorts every shape on the screen.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>A picture of a solid shape is still a picture, and that catches children out.</s><s>The drawing of a cube is flat on your screen, but the shape it shows is a solid one.</s><s>Think about the real thing, not the paper.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the shape and ask, is this a thing I could pick up.</s></mstts:express-as>' data-say="Look at the shape. Is it flat, or is it solid? Tap your answer.">
       <div class="slide-head"><span class="n">4</span><h2>Flat or solid?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say4">Is this shape <b>flat</b> or <b>solid</b>? Tap the answer.</span></div>
       <div class="stage" id="stage4"></div>
       <div class="choices" id="ch4"></div>
-      <p class="fb" id="fb4"></p>
+      <p class="fb" id="fb4" role="status" aria-live="polite"></p>
       <p class="score" id="sc4"></p>
     </section>
+<!-- 5  1Gg.07  Turn it round -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Turning a shape moves it round without changing it.</s><s>It is the same shape, just facing a different way.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Press turn it and the shape swings round, the way the hand of a clock moves from twelve round to three.</s><s>That is a quarter turn.</s><s>A square looks exactly the same after a quarter turn, because all its sides match.</s><s>A rectangle does not.</s><s>It was lying down and now it is standing up.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think a turned shape has become a new shape.</s><s>It has not.</s><s>Nothing was added and nothing was taken away.</s><s>It only moved.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So watch one corner as it turns.</s><s>Follow that corner and you will see the shape is the same one.</s></mstts:express-as>' data-say="Press turn it. The shape makes a quarter turn. Does it look the same as before?">
       <div class="slide-head"><span class="n">5</span><h2>Turn it round</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say5">Press <b>Turn it</b>. Does the shape look <b>the same</b> after the turn, or <b>different</b>?</span></div>
@@ -617,47 +652,52 @@
         <div class="shapebox"><svg id="sv5" viewBox="0 0 200 200" role="img" aria-label="A shape that turns"></svg></div>
         <div class="bigbtns"><button type="button" class="big teal" id="turn5">Turn it</button></div>
         <div class="choices" id="ch5"></div>
-        <p class="fb" id="fb5"></p>
+        <p class="fb" id="fb5" role="status" aria-live="polite"></p>
         <p class="score" id="sc5"></p>
       </div>
     </section>
+<!-- 6  1Gg.02  Long, longer, longest -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>To put things in order by length, you compare them two at a time.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the pencil and the ruler.</s><s>Line up one end of each and see which one goes further.</s><s>The one that goes further is longer.</s><s>Find the shortest of all, tap that first, then the next shortest, and keep going.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children compare things that are not lined up at the same end, and pick wrong.</s><s>A short pencil held high can look longer than a long one lying low.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So imagine both ends starting in the same place, then see which one reaches further.</s></mstts:express-as>' data-say="Tap the pictures in order, from the shortest to the longest.">
       <div class="slide-head"><span class="n">6</span><h2>Long, longer, longest</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say6">Tap them in order.</span></div>
       <div class="stage" id="stage6"></div>
-      <p class="fb" id="fb6"></p>
+      <p class="fb" id="fb6" role="status" aria-live="polite"></p>
       <p class="score" id="sc6"></p>
     </section>
+<!-- 7  1Gg.04  Heavy and light -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>A balance tells you which thing is heavier without you having to guess.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Put an apple on one side and a feather on the other.</s><s>The side that goes down is holding the heavier thing.</s><s>The side that rises is holding the lighter one.</s><s>If the balance stays level, they weigh the same.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children think the bigger thing must be heavier.</s><s>Size and weight are not the same.</s><s>A big empty box can be lighter than a small stone.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look only at which side of the balance has gone down.</s></mstts:express-as>' data-say="Two things on a balance. The heavier one goes down. Tap the answer.">
       <div class="slide-head"><span class="n">7</span><h2>Heavy and light</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say7">Which one is it? Tap the answer.</span></div>
       <div class="stage" id="stage7"></div>
       <div class="choices" id="ch7"></div>
-      <p class="fb" id="fb7"></p>
+      <p class="fb" id="fb7" role="status" aria-live="polite"></p>
       <p class="score" id="sc7"></p>
     </section>
+<!-- 8  1Gg.05  Full and empty -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Capacity is how much a container holds, and you can see it by looking at the water.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>A full jug has water right up to the top.</s><s>An empty one has none at all.</s><s>Between the two, one jug holds more than another if its water comes up higher, when the jugs are the same shape and size.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say a tall jug holds more just because it is tall.</s><s>A tall thin jug can hold less than a short wide one.</s><s>Look at how much water is in it, not how high the jug is.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So look at the water itself, and compare how much of the jug it fills.</s></mstts:express-as>' data-say="These jugs hold water. Full, empty, more or less. Tap the answer.">
       <div class="slide-head"><span class="n">8</span><h2>Full and empty</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say8">Tap the answer.</span></div>
       <div class="stage" id="stage8"></div>
       <div class="choices" id="ch8"></div>
-      <p class="fb" id="fb8"></p>
+      <p class="fb" id="fb8" role="status" aria-live="polite"></p>
       <p class="score" id="sc8"></p>
     </section>
+<!-- 9  1Gg.08  Which tool measures it? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Different jobs need different tools, and each tool has numbers on it for its own kind of measuring.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>To find out how long something is, you use a ruler or a tape.</s><s>To find out how heavy, you use scales.</s><s>To find out how much a jug holds, you use a measuring jug.</s><s>To find out how long something takes, you use a clock.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children pick the tool they have seen most often, rather than the one for this job.</s><s>A ruler cannot tell you how heavy something is, however many numbers it has on it.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So ask what the question wants to know.</s><s>How long, how heavy, how much, or how much time.</s></mstts:express-as>' data-say="Every measuring tool has numbers on it. Which one would you use for this job? Tap it.">
       <div class="slide-head"><span class="n">9</span><h2>Which tool measures it?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say9">Which tool would you use? Tap it.</span></div>
       <div class="stage" id="stage9"></div>
       <div class="choices" id="ch9"></div>
-      <p class="fb" id="fb9"></p>
+      <p class="fb" id="fb9" role="status" aria-live="polite"></p>
       <p class="score" id="sc9"></p>
     </section>
+<!-- 10  1Gp.01  Where is it? -->
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Position words say where something is compared with something else.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>Look at the ball and the box.</s><s>If the ball sits on top, that is above.</s><s>Underneath is below.</s><s>Tucked inside is in.</s><s>Off to one side is beside, and hidden round the back is behind.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="empathetic" styledegree="1.3"><prosody rate="-6%"><s>Children say the word for where they would put it, instead of where it actually is.</s><s>Look at the picture in front of you and describe what you can see.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>So find the ball, find the box, and say out loud where the ball is compared to the box.</s></mstts:express-as>' data-say="Where is the ball? Look at the box, then tap the word that says where the ball is.">
       <div class="slide-head"><span class="n">10</span><h2>Where is it?</h2></div>
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="say10">Tap the word that says where it is.</span></div>
       <div class="stage" id="stage10"></div>
       <div class="choices" id="ch10"></div>
-      <p class="fb" id="fb10"></p>
+      <p class="fb" id="fb10" role="status" aria-live="polite"></p>
       <p class="score" id="sc10"></p>
     </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>No new ideas here.</s><s>Every question uses something you have already done in this lesson.</s></prosody></mstts:express-as><break time="330ms"/><mstts:express-as style="friendly" styledegree="1.25"><s>If it shows a shape, count the sides or ask whether you could hold it.</s><s>If it asks about size, compare the two things.</s><s>If it shows a clock, find the short hand first.</s></mstts:express-as><break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Take your time.</s><s>Read it, look at it, then tap.</s></mstts:express-as>' data-say="Time to show what you know. Tap the answer.">
@@ -665,7 +705,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span id="sayck">Tap the answer.</span></div>
       <div class="stage" id="stageck"></div>
       <div class="choices" id="chck"></div>
-      <p class="fb" id="fbck"></p>
+      <p class="fb" id="fbck" role="status" aria-live="polite"></p>
       <p class="score" id="scck"></p>
     </section>
 <section class="slide" data-explain='<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s><s>This is your shelf.</s><s>One sticker for every step you finished.</s><s>Have a look at what you earned.</s></prosody></mstts:express-as>' data-say="Look at all the stickers you earned!">
@@ -673,7 +713,7 @@
       <div class="say"><button type="button" class="speak" aria-label="Read it to me">🔊</button><span>Every step you finished earned a sticker.</span></div>
       <div class="stage">
         <div class="stickers" id="stickers"></div>
-        <p class="fb" id="fbstick"></p>
+        <p class="fb" id="fbstick" role="status" aria-live="polite"></p>
         <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Start again</button></div>
       </div>
     </section>
@@ -1485,7 +1525,7 @@
   const done = new Array(slides.length).fill(false);
   let cur = 0;
   function paintDots() {
-    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (i === cur ? "now" : done[i] ? "done" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + '"></button>').join("");
+    $("dots").innerHTML = slides.map((s, i) => '<button type="button" class="' + (done[i] ? "done" : "") + (i === cur ? " now" : "") + '" data-i="' + i + '" aria-label="Step ' + (i + 1) + (done[i] ? ", done" : "") + '"></button>').join("");
   }
   function show(i, speak) {
     cur = Math.max(0, Math.min(slides.length - 1, i));

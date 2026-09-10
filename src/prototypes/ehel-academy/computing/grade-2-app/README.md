@@ -204,13 +204,26 @@ the strength of a lesson that is not that unit.
   across lessons, and the one stem repeated three times inside Lesson 1's
   quiz was reworded.
 
-## Not deployed, not routed
+## Deployed 2026-09-10; not routed
 
-`deploy.mjs --app .` plans 16 files (ten lessons, the hub, the five platform
-modules) for `Ehel Primary/app/computing/grade-2-v2/`; nothing has been
-uploaded. Routing `ehel-comp-g02` here needs a Grade 2 row in
-`lesson-app-tools/repoint-grade.php`'s computing targets and the operator's
-run from the docroot, as Grade 1 had. Both, and redeploying Grade 1's rebuilt
+Uploaded on the owner's instruction to
+`https://ehelacademy.b-cdn.net/Ehel%20Primary/app/computing/grade-2-v2/` —
+all 16 files (ten lessons, the hub, the five platform modules) PUT 201,
+verified on storage by read-back, and fresh off the edge against the plan's
+hashes. Then the live hub and two lessons were booted in real Chromium from
+the CDN with the five platform modules resolving: 0 console errors, 0 failed
+requests, and the two Stage 2 defects the local drive found were proved fixed
+on the shipped bytes — all four rounds of Lesson 5's debug step (both two-bug
+rounds included) driven to a tick, and all six parts of the laptop tapped,
+the speaker first.
+
+**Nothing routes a learner to it.** `ehel-comp-g02` still launches wherever
+`local_prequran/ehel_app_url_overrides` points it (the shell course unless a
+Grade 2 row is added), so these bytes are reachable by URL and live to nobody
+until the map is changed. Routing needs a `2 => ['ehel-comp-g02',
+…/grade-2-v2/index.html]` row in `lesson-app-tools/repoint-grade.php`'s
+computing targets, staged on the quraanacademy zone and run by the operator
+from the docroot, as Grade 1 had. That, and redeploying Grade 1's rebuilt
 pages, are owner decisions.
 
 ## What was deliberately not done

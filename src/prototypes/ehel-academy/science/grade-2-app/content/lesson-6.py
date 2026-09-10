@@ -1,0 +1,173 @@
+# -*- coding: utf-8 -*-
+"""Lesson 6 - Forces Change Things.
+
+0097 Stage 2 Forces and energy, all three: 2Pf.01 forces change movement;
+2Pf.02 forces change shape; 2Pf.03 things only speed up, slow down or turn
+when something makes them; with 2TWSp.02, 2TWSa.01, 2TWSa.02, 2TWSa.03,
+2TWSc.01, 2TWSc.03 and 2TWSc.06.
+"""
+from _kit import explain, step, opt, q
+
+LESSON = {
+    "slug": "forces-change-things",
+    "title": "Forces Change Things",
+    "blurb": "Push a ball three ways and graph how far it goes, squash and stretch things to change their shape, and find out that nothing speeds up or stops by itself.",
+    "steps": [
+        step("demo", "A force changes how things move", "\U0001F4AA", "Forces move", ["2Pf.01", "2Pf.03"],
+             "A push or a pull is a <b>force</b>. Press <b>Next</b> to see five things a force can do to a moving thing.",
+             explain(
+                 ["A force is a push or a pull.", "A force can start a thing moving, make it go faster, slow it down, stop it, or turn it."],
+                 ["A still ball: push it and it starts.", "A rolling ball: push it along and it goes faster.", "Push against it and it slows and stops.", "Tap its side and it turns."],
+                 ["Children think a rolling ball just stops by itself.", "Something always slows it: the ground rubbing on it, or a wall."],
+                 ["Press Next and name what the force did each time."]),
+             {"frames": [
+                 {"pic": "⚽", "cap": "A still ball. Nothing happens until a force acts.", "say": "A still ball. It will sit there for ever unless a force acts on it."},
+                 {"pic": "\U0001F9B6⚽➡️", "cap": "A kick: the force <b>starts</b> it moving.", "say": "A kick. The force starts the ball moving.", "sound": "thud"},
+                 {"pic": "⚽\U0001F4A8", "cap": "Push it along as it rolls: it goes <b>faster</b>.", "say": "Push it along while it rolls and it goes faster."},
+                 {"pic": "⚽✋", "cap": "Push back against it: it <b>slows</b> and <b>stops</b>.", "say": "Push back against it and it slows down and stops.", "sound": "thud"},
+                 {"pic": "⚽↗️", "cap": "Tap its side: it <b>turns</b>.", "say": "Tap it on the side and it changes direction.", "sound": "pop"},
+                 {"pic": "\U0001F9F6⚽", "cap": "A pull on a string: it comes <b>towards</b> you.", "say": "A pull on a string brings it towards you. Pushes and pulls are both forces, and forces change movement."},
+             ]},
+             "A force can start, speed up, slow, stop or turn a thing."),
+
+        step("experiment", "Gentle, medium, hard", "\U0001F9EA", "Push test", ["2Pf.01", "2TWSp.02", "2TWSa.01", "2TWSc.03"],
+             "Does a bigger push move the ball further? Predict, then try both pushes and count the steps.",
+             explain(
+                 ["The size of the force changes how far the thing moves.", "You can test it by pushing the same ball two ways and measuring in steps."],
+                 ["Predict.", "Push gently and count the steps.", "Push hard and count again.", "Compare."],
+                 ["Children think a heavier ball goes further than a lighter one whatever the push.", "Here it is the same ball, so only the push changes."],
+                 ["Tap your prediction, press both buttons, and compare the steps."]),
+             {"sim": "pushBall",
+              "predict": {"ask": "What will a <b>hard</b> push do, compared with a gentle one?",
+                          "opts": [opt("Move the ball further", True), opt("Move it the same distance", False), opt("Move it a shorter way", False)]},
+              "runAsk": "Press Push gently, then Push HARD. Count the steps each time.",
+              "happened": {"ask": "What happened?",
+                           "opts": [opt("The hard push moved the ball further: nine steps instead of three", True), opt("Both pushes moved it three steps", False), opt("The gentle push moved it further", False)],
+                           "why": "The gentle push: three steps. The hard push: nine steps. A bigger force, a bigger change in movement."}},
+             "A bigger push, a bigger move."),
+
+        step("record", "Record the pushes", "\U0001F4DD", "Push table", ["2TWSc.06"],
+             "Put the results in the table. How far did the ball go after a <b>%s</b>?",
+             explain(
+                 ["A results table puts each push beside how far the ball went."],
+                 ["A gentle push moved it three steps.", "A medium push, in between, moves it about six.", "A hard push moved it nine."],
+                 [],
+                 ["Fill in each row."]),
+             {"ask": "How far did the ball go after a %s?",
+              "columns": ["Push", "Steps rolled"],
+              "rows": [
+                  {"pic": "\U0001F449", "label": "gentle push", "answer": "3", "why": "the gentle push rolled it three steps."},
+                  {"pic": "\U0001F44A", "label": "medium push", "answer": "6", "why": "a medium push rolls it about six steps, between the other two."},
+                  {"pic": "\U0001F4A5", "label": "hard push", "answer": "9", "why": "the hard push rolled it nine steps."},
+              ],
+              "choices": [{"id": "3", "t": "3 steps", "pic": "3️⃣"}, {"id": "6", "t": "6 steps", "pic": "6️⃣"}, {"id": "9", "t": "9 steps", "pic": "9️⃣"}]},
+             "Three pushes, three distances, in a table."),
+
+        step("graph", "Graph the pushes", "\U0001F4CA", "Push graph", ["2TWSa.03", "2TWSa.02"],
+             "Build a block graph from your table: one block for each step the ball rolled. Then read the pattern.",
+             explain(
+                 ["A block graph shows the pattern in your results.", "Here the columns go up in steps as the push gets bigger. That is an increasing pattern."],
+                 ["Three blocks for the gentle push.", "Six for medium.", "Nine for hard.", "Look at the shape: each column is taller than the last."],
+                 ["Children see three columns and stop.", "The pattern is in how they change from left to right."],
+                 ["Build the three columns, then say what the pattern is."]),
+             {"columns_label": "Push", "value_label": "Steps", "unit": "steps",
+              "columns": [
+                  {"pic": "\U0001F449", "label": "gentle", "value": 3},
+                  {"pic": "\U0001F44A", "label": "medium", "value": 6},
+                  {"pic": "\U0001F4A5", "label": "hard", "value": 9},
+              ],
+              "pattern": {"ask": "What is the pattern in your graph?",
+                          "opts": [opt("The bigger the push, the further the ball goes: the columns go up", True), opt("The columns all stay the same", False), opt("The bigger the push, the shorter the roll", False)],
+                          "why": "Each column is taller than the last. An increasing pattern: bigger push, further roll."}},
+             "An increasing pattern: bigger push, further roll."),
+
+        step("experiment", "A force changes shape too", "\U0001F9EA", "Shape changer", ["2Pf.02", "2TWSp.02", "2TWSa.01"],
+             "Forces can change the <b>shape</b> of a thing. Predict, then squash, bend, twist and stretch.",
+             explain(
+                 ["A force does not only move things. Pressing, pulling, bending and twisting are forces too, and they can change a thing's shape."],
+                 ["Squash the clay: your push changes its shape.", "Stretch the band: your pull changes its shape.", "The stone: your force is not big enough to change it."],
+                 ["Children think the stone did not feel a force.", "It did; the force was just too small to change its shape."],
+                 ["Tap your prediction, then try two actions on each thing."]),
+             {"sim": "shapeChange",
+              "predict": {"ask": "Which thing will your push and pull change the shape of MOST?",
+                          "opts": [opt("The clay", True), opt("The stone", False), opt("None of them", False)]},
+              "runAsk": "Press two actions on each thing. Watch which shapes change.",
+              "happened": {"ask": "What happened?",
+                           "opts": [opt("The clay and the band changed shape; the stone did not", True), opt("Everything changed shape the same", False), opt("Nothing changed", False)],
+                           "why": "A force changed the clay and the band. The stone needs a far bigger force than a hand can give."}},
+             "Forces change shape as well as movement."),
+
+        step("sort", "Movement, or shape?", "\U0001F5C2️", "Force sorter", ["2Pf.01", "2Pf.02", "2TWSc.01"],
+             "Does this force change how the thing <b>moves</b>, or its <b>shape</b>? Tap the bin.",
+             explain(
+                 ["Every force does one of two things, or both: changes movement, or changes shape."],
+                 ["Kicking a ball: movement.", "Squeezing a sponge: shape.", "Pulling a sledge: movement.", "Stretching a band: shape."],
+                 ["Children say squashing the ball changes its movement because it wobbles.", "The big change is its shape."],
+                 ["Ask: did the thing go somewhere, or did it change how it looks?"]),
+             {"ask": "Changes movement, or changes shape?",
+              "bins": [{"id": "move", "label": "Changes movement", "pic": "➡️"}, {"id": "shape", "label": "Changes shape", "pic": "\U0001F7E4"}],
+              "items": [
+                  {"pic": "⚽", "label": "kicking a ball", "bin": "move", "why": "The kick sends the ball moving."},
+                  {"pic": "\U0001F9FD", "label": "squeezing a sponge", "bin": "shape", "why": "The squeeze changes the sponge's shape."},
+                  {"pic": "\U0001F6F7", "label": "pulling a sledge", "bin": "move", "why": "The pull moves the sledge along."},
+                  {"pic": "➰", "label": "stretching an elastic band", "bin": "shape", "why": "Stretching changes its shape."},
+                  {"pic": "\U0001F6D1", "label": "catching a ball", "bin": "move", "why": "Your hands stop the ball moving."},
+                  {"pic": "\U0001F7E4", "label": "rolling clay into a snake", "bin": "shape", "why": "Rolling changes the clay's shape."},
+                  {"pic": "\U0001F3A0", "label": "pushing a swing", "bin": "move", "why": "The push makes the swing move."},
+                  {"pic": "\U0001F4C4", "label": "folding paper", "bin": "shape", "why": "Folding changes the paper's shape."},
+              ]},
+             "A force changes movement, or shape, or both."),
+
+        step("demo", "Nothing changes by itself", "\U0001F6D1", "Needs a cause", ["2Pf.03"],
+             "A thing only speeds up, slows down or turns when <b>something makes it</b>. Press <b>Next</b>.",
+             explain(
+                 ["This is the big idea.", "A still thing stays still, and a moving thing keeps moving the same way, until a force changes it."],
+                 ["The ball on the floor does not start rolling on its own.", "The rolling ball slows because the floor rubs against it. That rubbing is a force.",
+                  "A ball in space, with nothing to rub, would roll on for ever."],
+                 ["Children say the ball ran out of go.", "Balls do not have go. The floor and the air pushed against it the whole way."],
+                 ["Press Next and find the cause each time."]),
+             {"frames": [
+                 {"pic": "⚽", "cap": "A still ball stays still. <b>Nothing</b> made it move, so it does not.", "say": "A still ball stays still. Nothing has pushed or pulled it, so it does not move."},
+                 {"pic": "\U0001F9B6⚽", "cap": "It moves because a <b>foot</b> pushed it.", "say": "Now it moves, because a foot pushed it. Something caused the change.", "sound": "thud"},
+                 {"pic": "⚽\U0001F32C️", "cap": "It slows because the <b>floor rubs</b> against it. Rubbing is a force.", "say": "It slows down because the floor rubs against it all the way along. That rubbing is a force called friction."},
+                 {"pic": "⚽\U0001F9F1", "cap": "It stops because the <b>wall</b> pushed back.", "say": "It stops at the wall because the wall pushed back on it.", "sound": "thud"},
+                 {"pic": "⚽\U0001F30C", "cap": "In space, with nothing to rub, it would roll on <b>for ever</b>.", "say": "Out in space, with no floor and no air to rub against it, a ball would keep going for ever. Things only change speed or direction when something makes them."},
+             ]},
+             "Speed up, slow down, turn: only when something makes it happen."),
+
+        step("questions", "What made it change?", "✅", "Cause finder", ["2Pf.03", "2Pf.01"],
+             "Something changed how it moved. What caused it? Tap the answer.",
+             explain(
+                 ["Every change in movement has a cause: a push, a pull, rubbing, or a bump."],
+                 ["The bike slows on grass because the grass rubs harder than the road.", "The swing stops because the air and the chains rub.", "The trolley turns because a hand pushed its side."],
+                 [],
+                 ["Find the force that caused the change."]),
+             {"label": "Question", "items": [
+                 q("A bike slows down when it goes onto grass. Why?", "\U0001F6B2", "the grass rubs against the wheels more than the road did", ["the bike ran out of go", "the grass is green"], "Rubbing, friction, is a force that slows things."),
+                 q("A ball rolls across the floor and stops. What stopped it?", "⚽", "the floor rubbing against it", ["nothing, it just stopped", "the ball got tired"], "Nothing stops by itself. The floor's rubbing did it."),
+                 q("A trolley rolling straight suddenly turns. What happened?", "\U0001F6D2", "something pushed it from the side", ["it decided to turn", "nothing"], "A change of direction needs a sideways force."),
+                 q("A swing goes higher. What made it?", "\U0001F3A0", "a push", ["the wind stopped", "nothing, swings go up on their own"], "Speeding up needs a force: a push."),
+                 q("A ball sits still on the grass. What will it do if nobody touches it?", "⚽", "stay still", ["start rolling", "jump"], "A still thing stays still until a force acts."),
+             ]},
+             "Every change in movement has a cause."),
+
+        step("quiz", "Show what you know", "⭐", "Star scientist", ["2Pf.01", "2Pf.02", "2Pf.03", "2TWSa.02"],
+             "Time to show what you know. Tap the answer.",
+             explain(
+                 ["No new ideas here.", "Every question uses something you have already done in this lesson."],
+                 ["Forces change movement and shape.", "Nothing changes speed on its own.", "Bigger push, further roll: an increasing pattern."],
+                 [],
+                 ["Take your time. Read it, look at it, then tap."]),
+             {"items": [
+                 q("A push or a pull is called a...", "\U0001F4AA", "force", ["habitat", "material", "property"], "Pushes and pulls are forces."),
+                 q("You push the ball harder. It goes...", "⚽", "further", ["a shorter way", "the same distance"], "Bigger push, bigger move. You measured it."),
+                 q("What pattern did your graph show?", "\U0001F4CA", "the columns went up as the push got bigger", ["the columns went down", "all the columns were equal"], "An increasing pattern."),
+                 q("Squashing clay changes its...", "\U0001F7E4", "shape", ["colour", "habitat", "sound"], "A force can change the shape of a thing."),
+                 q("Why does a rolling ball slow down?", "⚽", "the floor rubs against it", ["it runs out of go", "it gets bored"], "Rubbing, friction, is a force that slows things."),
+                 q("What does a still ball do if nobody touches it?", "⚽", "stays still", ["starts to roll", "spins"], "Nothing changes until a force acts."),
+                 q("Which force changes the SHAPE of a thing?", "❓", "stretching an elastic band", ["kicking a ball", "pulling a sledge", "catching a ball"], "Stretching changes shape; the others change movement."),
+                 q("A ball turns while rolling. What must have happened?", "↗️", "a force pushed it from the side", ["nothing", "it wanted to"], "A change of direction needs a sideways force."),
+             ]},
+             "That is the whole lesson finished. You know what forces do."),
+    ],
+}

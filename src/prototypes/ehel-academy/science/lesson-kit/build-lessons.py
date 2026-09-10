@@ -85,6 +85,8 @@ KINDS = {
     "tester": "tester",
     "ask": "askQuestion",
     "questions": "sequence", "quiz": "sequence",
+    # Stage 2
+    "order": "order", "graph": "blockGraph", "lookup": "lookup", "build": "build",
 }
 
 
@@ -117,7 +119,11 @@ def js_keys(src, name):
     m = re.search(r"\n  const %s = \{\n(.*?)\n  \};" % name, src, re.S)
     if not m:
         sys.exit("REFUSED: cannot find `const %s = {` in lib/science.js" % name)
-    return set(re.findall(r"^    ([A-Za-z]+): (?:\(|\{)", m.group(1), re.M))
+    keys = set(re.findall(r"^    ([A-Za-z]+): (?:\(|\{)", m.group(1), re.M))
+    # Stage 2 adds to the same objects by assignment (SIMS.circuit = {...}),
+    # so a sim written that way is a real sim the builder must accept.
+    keys |= set(re.findall(r"^  %s\.([A-Za-z]+) = " % name, src, re.M))
+    return keys
 
 
 def load_lessons(wanted):
@@ -240,6 +246,30 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
         one_ok(d["findOut"]["opts"], where + " find-out")
         if len(d["questions"]) < 2:
             sys.exit("REFUSED: %s offers fewer than 2 questions" % where)
+    elif kind == "order":
+        if len(d["items"]) < 3:
+            sys.exit("REFUSED: %s orders fewer than 3 things" % where)
+    elif kind == "graph":
+        if len(d["columns"]) < 2:
+            sys.exit("REFUSED: %s graphs fewer than 2 columns" % where)
+        for c in d["columns"]:
+            if not isinstance(c["value"], int) or not 1 <= c["value"] <= 10:
+                sys.exit("REFUSED: %s column %r has value %r; keep it a whole number 1-10" % (where, c["label"], c["value"]))
+        one_ok(d["pattern"]["opts"], where + " pattern")
+        if not d["pattern"].get("why"):
+            sys.exit("REFUSED: %s pattern has no why" % where)
+    elif kind == "lookup":
+        if not d["source"].get("lines") or len(d["items"]) < 2:
+            sys.exit("REFUSED: %s needs a source with lines and at least 2 questions" % where)
+        for it in d["items"]:
+            one_ok(it["opts"], where + " %r" % it["ask"])
+            if not it.get("why"):
+                sys.exit("REFUSED: %s %r has no why" % (where, it["ask"]))
+    elif kind == "build":
+        if d["sim"] not in sims:
+            sys.exit("REFUSED: %s names sim %r" % (where, d["sim"]))
+        if len(d["parts"]) < 2:
+            sys.exit("REFUSED: %s builds from fewer than 2 parts" % where)
     elif kind in ("questions", "quiz"):
         if len(d["items"]) < (6 if kind == "quiz" else 3):
             sys.exit("REFUSED: %s has only %d questions" % (where, len(d["items"])))

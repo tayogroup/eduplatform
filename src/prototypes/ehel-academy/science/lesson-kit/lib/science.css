@@ -182,6 +182,35 @@
     border: 1px solid var(--accent); background: var(--accent-soft); font-size: 16.5px; }
   .safety b { color: var(--accent); }
 
+  /* ==================================================================
+     STAGE 2 additions - same tokens, no new hue.
+     ================================================================== */
+  /* put in order: the placed row, then the pool */
+  .orderrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; min-height: 64px;
+    width: 100%; padding: 10px; border-radius: 18px; border: 3px dashed var(--line); background: rgba(0,0,0,0.15); }
+  .ordered { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 14px; border: 3px solid var(--good);
+    background: var(--good-soft); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .ordered b { width: 24px; height: 24px; border-radius: 50%; background: var(--good); color: #06231F; display: grid; place-items: center; font-size: 13px; }
+  .orderrow .arrow { color: var(--muted); font-size: 22px; }
+  .tapcard.wrong { border-color: var(--bad); background: var(--bad-soft); animation: shake 360ms ease; }
+  /* a block graph */
+  .rec.small { max-width: 420px; } .rec.small .rowlab, .rec.small .cell { min-height: 44px; font-size: 16px; padding: 6px 10px; }
+  .graph { display: flex; gap: 14px; align-items: flex-end; justify-content: center; width: 100%; max-width: 560px; padding: 12px 8px 4px;
+    border-radius: 18px; border: 1px solid var(--line); background: var(--card); }
+  .gcol { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1 1 0; min-width: 0; }
+  .gstack { width: 100%; max-width: 64px; display: flex; flex-direction: column-reverse; gap: 2px; justify-content: flex-start;
+    border-bottom: 3px solid var(--ink); border-left: 2px solid var(--line); padding: 2px; }
+  .gblock { display: block; height: 24px; border-radius: 4px; background: var(--teal); animation: pop 200ms ease; }
+  .glab { text-align: center; font-size: 13px; font-weight: 700; color: var(--muted); line-height: 1.2; }
+  .glab::first-line { font-size: 24px; }
+  /* a fact card, the secondary source */
+  .factcard { width: 100%; max-width: 34em; padding: 18px 22px; border-radius: 18px; color: #24313c;
+    background: radial-gradient(120% 90% at 50% 0%, #fffdf6 0%, #fbf4e4 62%, #f4ead4 100%);
+    box-shadow: 0 14px 34px rgba(0,0,0,.35), 0 2px 0 rgba(255,255,255,.7) inset; border: 1px solid rgba(120,96,54,.18); }
+  .factcard h3 { margin: 0 0 8px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 20px; color: #123243; }
+  .factcard p { margin: 0 0 6px; font-size: 17px; line-height: 1.5; }
+  .factcard b { color: #1E8C86; }
+
   @media (prefers-reduced-motion: reduce) {
-    .sortnow.shake, .mtrack .unit, .badge { animation: none; }
+    .sortnow.shake, .mtrack .unit, .badge, .gblock, .tapcard.wrong { animation: none; }
   }

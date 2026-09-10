@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 2 Science</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /* ==================================================================
+     THE BASE - lifted verbatim from the Grade 1 Mathematics standalone
+     build (mathematics/grade-1-app/g1v2), because these two are meant to
+     be one product. Everything above the ENGLISH heading further down is
+     that build's design system unchanged: the same tokens, the same deck,
+     the same gold action colour, the same voice bar.
+
+     The light palette is declared first and then overridden by the Wehel
+     block below, exactly as it is there. It is kept rather than deleted
+     so a token the override forgets still resolves to something legible
+     instead of to nothing.
+     ================================================================== */
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  /* THE SKIP LINK. Off-screen until it is focused, then a real button in the
+     top-left corner. It is not `display: none` and not `visibility: hidden` -
+     either of those would take it out of the tab order and there would be
+     nothing to focus. Moving it off-screen keeps it reachable by Tab while
+     leaving the page looking untouched.
+
+     z-index clears the two app bars, which are sticky at 40. A skip link that
+     appears UNDER the chrome it exists to skip is a skip link nobody can see
+     they have focused.
+
+     THE FILL IS --ink, NOT --teal, and that is a contrast decision rather than
+     a style one. This build is a single dark theme - the Wehel block below
+     redefines every token from bare :root, so the light palette above it never
+     renders and only the dark values matter. There --teal is #35BFB2, and the
+     obvious teal-pill-with-white-text measures 2.3:1 on it. The link renders
+     at 18px bold, which is below the 18.66px that would let it count as large
+     text, so it needs 4.5:1 and not 3:1 - it fails twice over. --ink and
+     --ground are the pair that is guaranteed to oppose each other whatever the
+     palette does, and here they give a white pill with #142B3E text at 14.5:1
+     (measured, not derived). Teal stays as the ring, which is the same 4px the
+     buttons already focus with, so the link still reads as part of this
+     product. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 100; }
+  .skip:focus {
+    left: 8px; top: 8px; padding: 12px 18px; border-radius: 12px;
+    background: var(--ink); color: var(--ground); font-weight: 700; text-decoration: none;
+    box-shadow: var(--shadow); outline: 4px solid var(--teal); outline-offset: 2px;
+  }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  /* THE DOT IS NOT THE TARGET ANY MORE. There are 23 of these — one per step —
+     and each used to BE a 16px button with a 6px gap, so the tap area was 16px
+     across with centres 22px apart. WCAG 2.5.8 asks for 24x24, and its spacing
+     exception wants 24px between centres, so this failed on both counts in an
+     app whose users are five and six years old.
+
+     The button is now a 28px target with the dot drawn inside it by ::before,
+     which buys the tap area without turning the rail into a row of fat circles:
+     the dot a child SEES is the same 16px it always was. gap goes to 0 because
+     the spacing now lives in the button's own box — leaving the 6px there would
+     push the centres to 34px and cost a row on a phone for nothing.
+
+     Every state moved to ::before with it. Leaving `background` on the button
+     would paint the whole 28px square, which is what makes this look like a
+     grid of blocks rather than a row of dots — check the dark-theme block
+     further down if you change either one. */
+  .dots { display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
+  .dots button::before { content: ""; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+  /* Growing the target costs rows, and on a phone the rail is capped at 45% of
+     380px — six per row, five rows, 140px of dots above the lesson. Letting it
+     take the full width below the title puts thirteen on a row and two rows on
+     the screen, which is shorter than the 16px version ever was. The cap is
+     what needs lifting, not the target size. */
+  @media (max-width: 560px) {
+    .hero { flex-wrap: wrap; }
+    .dots { max-width: 100%; width: 100%; justify-content: flex-start; }
+  }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  /* The deck carries tabindex="-1" so the skip link can move focus into it.
+     That makes it focusable, and a browser that rings a programmatically
+     focused container would draw a 4px outline around the whole lesson. The
+     ring is kept for :focus-visible, which is what a genuine keyboard focus
+     would match, and dropped for the skip link's own arrival. */
+  .deck:focus { outline: none; }
+  .deck:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; }
+  .choice.small { min-width: 80px; height: 64px; font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { border-radius: 18px; border: 3px solid var(--line); background: var(--card); padding: 14px 10px; text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .sticker .ic { display: block; font-size: 38px; line-height: 1.2; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker:not(.got) .ic { filter: grayscale(1); opacity: 0.35; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px 0; }
+  .foot .mid { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to the
+     viewer's setting. The selector list carries the same specificity as
+     the light block above and comes later, so it wins in both light and
+     dark. The palette is Ehel Academy's own - gold #f4c95d is the action
+     colour, teal #0f766e and coral #c2482c lifted to the same hues at a
+     lightness that is legible on a dark ground.
+
+     Copied from the Grade 1 Mathematics build. Do not re-solve it here:
+     the two builds are meant to be indistinguishable in colour.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  /* ::before, matching the block above — the button itself stays transparent
+     so the 28px tap area never paints. */
+  .dots button::before { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--teal); border-color: var(--teal); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* the fixed ground, painted by a pseudo-element rather than
+     background-attachment, which iOS Safari does not honour */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+  .deck { background: rgba(20, 43, 62, 0.88); }
+
+  /* ---- the voice bar: the speaker reads the step, Explain walks
+          through the idea behind it ---- */
+  .say button.explain {
+    flex: 0 0 auto;
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+  @media (max-width: 420px) {
+    .say button.explain .explain-t { display: none; }
+    .say button.explain { width: 44px; height: 44px; padding: 0; justify-content: center; font-size: 18px; }
+  }
+
+  /* ---- the hub ---- */
+  .hubhead { padding: 26px 4px 18px; }
+  .hubhead h1 { font-size: clamp(34px, 7vw, 54px); }
+  .hubhead h1 em { font-style: normal; color: var(--teal); }
+  .hubhead p { color: var(--muted); max-width: 46ch; margin-top: 10px; font-size: 19px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .card { display: flex; flex-direction: column; gap: 10px; padding: 20px;
+    border-radius: 22px; border: 1px solid var(--line); background: rgba(20, 43, 62, 0.88);
+    box-shadow: var(--shadow); color: var(--ink); text-decoration: none; }
+  a.card:hover, a.card:focus-visible { border-color: var(--teal); }
+  .card h2 { font-size: 25px; }
+  .card p { color: var(--muted); font-size: 16.5px; }
+  .cardno { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+  .cardfoot { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .meta { color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .go { flex: 0 0 auto; border-radius: 999px; background: var(--gold); color: var(--accent-ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; padding: 9px 20px; }
+  .soon { flex: 0 0 auto; color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .card.locked { opacity: 0.62; }
+  .hubfoot { color: var(--muted); font-size: 14.5px; padding: 26px 4px 0; max-width: 62ch; }
+  .strands, .grownups { padding: 30px 4px 0; }
+  .strands h2, .grownups h2 { font-size: 26px; margin-bottom: 10px; }
+  .strand { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: baseline; padding: 10px 14px;
+    border-radius: 14px; border: 1px solid var(--line); background: var(--card); margin-bottom: 8px; font-size: 16px; }
+  .strand b { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  @media (max-width: 560px) { .strand { grid-template-columns: 1fr; gap: 2px; } }
+  .grownups > p { color: var(--muted); font-size: 16px; max-width: 64ch; margin-bottom: 14px; }
+  .gu { border: 1px solid var(--line); border-radius: 16px; background: var(--card); margin-bottom: 10px; }
+  .gu summary { cursor: pointer; padding: 14px 16px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .gu summary small { color: var(--muted); font-weight: 700; font-size: 13.5px; margin-left: 8px; }
+  .gu .body { padding: 0 16px 16px; font-size: 15.5px; display: flex; flex-direction: column; gap: 10px; }
+  .gu h3 { font-size: 13px; color: var(--teal); text-transform: uppercase; letter-spacing: .07em; margin: 8px 0 2px; font-family: "Inter", "Segoe UI", sans-serif; }
+  .gu ul, .gu ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .gu code { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12.5px; color: var(--teal); }
+  .gu .key { color: var(--muted); }
+  .gu .key b { color: var(--ink); }
+  @media print {
+    .eh-bar1, .cards, .strands, .hubhead p { display: none; }
+    body::before { display: none; } html, body { background: #fff; }
+    .gu { break-inside: avoid; border-color: #999; } .gu summary { list-style: none; }
+    .gu .body { display: flex !important; } details:not([open]) .body { display: flex !important; }
+  }
+
+  /* ---- the header bar, the same one the lesson pages carry ---- */
+  .eh-bar1 { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px; }
+  .eh-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: #06231F; font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: #06231F; font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
+  @media (max-width: 720px) { .eh-progtext, .eh-brandtext { display: none; } .eh-picker { max-width: 130px; } }
+</style>
+
+<header class="eh-bar1">
+  <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
+  <div class="eh-brand"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Science</i></span></div>
+  <div class="eh-prog" id="ehProg">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Course progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="" selected>Jump to a lesson…</option><option value="animals-and-their-coverings.html">Animals and Their Coverings</option><option value="teeth-and-staying-healthy.html">Teeth and Staying Healthy</option><option value="habitats.html">Habitats</option><option value="natural-or-made.html">Natural or Made?</option><option value="changing-materials.html">Changing Materials</option><option value="forces-change-things.html">Forces Change Things</option><option value="light-and-dark.html">Light and Dark</option><option value="electricity-and-circuits.html">Electricity and Circuits</option><option value="rocks-and-the-earth.html">Rocks and the Earth</option><option value="the-sun-across-the-sky.html">The Sun Across the Sky</option></select>
+  </div>
+</header>
+
+<div class="wrap">
+  <header class="hubhead">
+    <p class="eyebrow">Ehel Academy &middot; Science</p>
+    <h1>Grade 2 <em>Science</em></h1>
+    <p>Ten lessons, in the order they are meant to be done. Every one has a real experiment in it: predict, try it, say what happened. About 210 minutes in all, one lesson a week.</p>
+  </header>
+
+  <main class="cards">
+      <a class="card" href="animals-and-their-coverings.html?from=sci2">
+        <span class="cardno">Lesson 1</span>
+        <h2>Animals and Their Coverings</h2>
+        <p>Compare fur, feathers, scales and skin, put a chick's life in order, find out why puppies look like their parents, and tell a diagram from a picture.</p>
+        <span class="cardfoot"><span class="meta">10 steps &middot; about 25 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="teeth-and-staying-healthy.html?from=sci2">
+        <span class="cardno">Lesson 2</span>
+        <h2>Teeth and Staying Healthy</h2>
+        <p>Find the three kinds of teeth in your mouth and what each is for, look after them, and find out what keeps a body healthy and what illness looks like.</p>
+        <span class="cardfoot"><span class="meta">9 steps &middot; about 20 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="habitats.html?from=sci2">
+        <span class="cardno">Lesson 3</span>
+        <h2>Habitats</h2>
+        <p>Visit a pond, a desert, a forest and the icy Arctic, sort the animals that live in each, compare hot and cold and wet and dry places, and build a block graph of what you counted.</p>
+        <span class="cardfoot"><span class="meta">8 steps &middot; about 20 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="natural-or-made.html?from=sci2">
+        <span class="cardno">Lesson 4</span>
+        <h2>Natural or Made?</h2>
+        <p>Sort materials that come from nature from ones people make, test materials to find their properties, and work out why the right material was chosen for each job.</p>
+        <span class="cardfoot"><span class="meta">7 steps &middot; about 20 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="changing-materials.html?from=sci2">
+        <span class="cardno">Lesson 5</span>
+        <h2>Changing Materials</h2>
+        <p>Cook an egg and try to un-cook it, sort changes that make a new material from ones that do not, and learn the safety rules for anything hot.</p>
+        <span class="cardfoot"><span class="meta">8 steps &middot; about 20 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="forces-change-things.html?from=sci2">
+        <span class="cardno">Lesson 6</span>
+        <h2>Forces Change Things</h2>
+        <p>Push a ball three ways and graph how far it goes, squash and stretch things to change their shape, and find out that nothing speeds up or stops by itself.</p>
+        <span class="cardfoot"><span class="meta">9 steps &middot; about 25 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="light-and-dark.html?from=sci2">
+        <span class="cardno">Lesson 7</span>
+        <h2>Light and Dark</h2>
+        <p>Find the things that make light, including the Sun, tell them from things that only shine light back, switch a room to total darkness, and see how scientists model light.</p>
+        <span class="cardfoot"><span class="meta">8 steps &middot; about 20 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="electricity-and-circuits.html?from=sci2">
+        <span class="cardno">Lesson 8</span>
+        <h2>Electricity and Circuits</h2>
+        <p>See what electricity does for us, learn the rules that keep you safe with it, name the parts of a circuit, and build one that really lights a lamp.</p>
+        <span class="cardfoot"><span class="meta">8 steps &middot; about 20 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="rocks-and-the-earth.html?from=sci2">
+        <span class="cardno">Lesson 9</span>
+        <h2>Rocks and the Earth</h2>
+        <p>Compare six kinds of rock by testing them, measure a rock in cubes, see how rock is taken out of the ground, and sort what people do to the land into help and harm.</p>
+        <span class="cardfoot"><span class="meta">9 steps &middot; about 20 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="the-sun-across-the-sky.html?from=sci2">
+        <span class="cardno">Lesson 10</span>
+        <h2>The Sun Across the Sky</h2>
+        <p>Watch the Sun rise in the east and set in the west, measure a stick's shadow through the day, graph it, and find out what people used to think the Sun was doing.</p>
+        <span class="cardfoot"><span class="meta">9 steps &middot; about 20 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+  </main>
+
+  <section class="strands">
+    <h2>What Stage 2 science covers</h2>
+    <div class="strand"><b>Thinking and Working Scientifically</b><span>Models and diagrams; ask, predict, sort, use equipment, measure in non-standard units, look things up in a fact card, record in tables, spot patterns, and build block graphs.</span></div>
+    <div class="strand"><b>Biology</b><span>How animals are alike and different; teeth and how to care for them; staying healthy and the signs of illness; how young animals change and take after their parents; habitats.</span></div>
+    <div class="strand"><b>Chemistry</b><span>Natural and manufactured materials; properties, and testing for them; why a material is chosen for a job; changes that make a new material.</span></div>
+    <div class="strand"><b>Physics</b><span>Forces change movement and shape, and nothing changes speed on its own; light sources and darkness; using electricity safely; cells, wires and lamps in a circuit.</span></div>
+    <div class="strand"><b>Earth and Space</b><span>Kinds of rock and where rock comes from; how people affect the environment; the Sun's path across the sky.</span></div>
+    <div class="strand"><b>Science in Context</b><span>How thinking has changed, how everyday things work, who uses science at work, and how what we do affects the world.</span></div>
+  </section>
+
+  <section class="grownups" id="grown-ups">
+    <h2>For teachers and parents</h2>
+    <p>What each lesson teaches, in Cambridge's own words; the experiment to do for real with things from home; and the answer keys. Open a lesson to read it, or print this page for the lot.</p>
+    <details class="gu"><summary>Lesson 1: Animals and Their Coverings<small>10 steps &middot; about 25 minutes &middot; 7 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2Bs.01</code> Compare how animals, including humans, are similar and different in their external body parts and skin covering.</li><li><code>2TWSc.01</code> Sort and group objects, materials and living things based on observations of the similarities and differences between them.</li><li><code>2Bp.03</code> Describe how the offspring of animals, including humans, change as they become older.</li><li><code>2Bp.04</code> Know that animals, including humans, produce offspring that have a combination of features from their parents.</li><li><code>2TWSm.03</code> Describe the difference between a diagram and a picture.</li><li><code>2TWSp.01</code> Ask questions about the world around us and talk about how to find answers.</li><li><code>2SIC.03</code> Know that everyone uses science and identify people who use science professionally.</li></ul>
+        <h3>The steps</h3><ol><li>What covers an animal? <span class="key">&middot; Tap each animal. What is its body covered with?</span></li><li>Sort by covering <span class="key">&middot; What is this animal covered with? Tap the right bin.</span></li><li>Alike and different <span class="key">&middot; How are these animals alike, and how are they different? Tap the answer.</span></li><li>From egg to hen <span class="key">&middot; Put a hen's life in order. Tap what comes first , then next.</span></li><li>Growing up <span class="key">&middot; Press Next . Watch how a young animal changes as it gets older.</span></li><li>Like mother, like father <span class="key">&middot; Young animals get a mix of features from both parents. Tap each family.</span></li><li>Diagram, or picture? <span class="key">&middot; A picture shows what a thing looks like. A diagram shows its parts and names them. Which is this?</span></li><li>Ask a question about an animal <span class="key">&middot; Look at the tortoise. Tap a question you would like to ask.</span></li><li>People who work with animals <span class="key">&middot; Some people use animal science every day. Tap each one.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Answer keys</h3><ul><li><b>Sort by covering</b> <span class="key"><b>Fur</b>: dog, mouse, rabbit; <b>Feathers</b>: duck, penguin, hen; <b>Scales</b>: crocodile, lizard; <b>Bare skin</b>: person, dolphin</span></li><li><b>Alike and different</b><ol><li>A cat and a dog. What do they BOTH have? <span class="key">&rarr; <b>fur and four legs</b></span></li><li>A bird and a fish. What is DIFFERENT? <span class="key">&rarr; <b>feathers and wings, or scales and fins</b></span></li><li>You and a monkey. What do you BOTH have? <span class="key">&rarr; <b>two arms and two legs</b></span></li><li>How many legs does a spider have? <span class="key">&rarr; <b>eight</b></span></li><li>Which animal has NO legs? <span class="key">&rarr; <b>a snake</b></span></li><li>What do you have that a fish does not? <span class="key">&rarr; <b>arms and legs</b></span></li></ol></li><li><b>Diagram, or picture?</b> <span class="key"><b>Diagram</b>: a bird drawing with labels, a fish drawing with labels; <b>Picture</b>: a photo of a bird, a photo of a fish, a painting of a cat</span></li><li><b>Show what you know</b><ol><li>What is a bird covered with? <span class="key">&rarr; <b>feathers</b></span></li><li>What is a fish covered with? <span class="key">&rarr; <b>scales</b></span></li><li>Which animal has bare skin and hair only on its head? <span class="key">&rarr; <b>a person</b></span></li><li>What comes FIRST in a hen's life? <span class="key">&rarr; <b>an egg</b></span></li><li>A newborn kitten... <span class="key">&rarr; <b>has its eyes shut and drinks milk</b></span></li><li>A brown dog and a spotty dog have puppies. The puppies are... <span class="key">&rarr; <b>a mix: some brown, some spotty, some both</b></span></li><li>A drawing of a plant with lines pointing to 'root', 'stem' and 'leaf' is a... <span class="key">&rarr; <b>diagram</b></span></li><li>Which two animals BOTH have four legs and fur? <span class="key">&rarr; <b>a cat and a dog</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 2: Teeth and Staying Healthy<small>9 steps &middot; about 20 minutes &middot; 8 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2Bs.02</code> Identify the different types of human teeth, explain how they are suited to their functions and describe how to care for teeth.</li><li><code>2TWSc.05</code> Use a given secondary information source to find an answer to a question.</li><li><code>2TWSc.02</code> Use given equipment appropriately.</li><li><code>2Bp.01</code> Know that humans need to manage diet, maintain hygiene and move regularly to be healthy.</li><li><code>2TWSc.01</code> Sort and group objects, materials and living things based on observations of the similarities and differences between them.</li><li><code>2Bp.02</code> Describe what illness is and describe the common signs of illness in humans.</li><li><code>2SIC.02</code> Talk about how science explains how objects they use, or know about, work.</li><li><code>2SIC.03</code> Know that everyone uses science and identify people who use science professionally.</li></ul>
+        <h3>The steps</h3><ol><li>Find the teeth <span class="key">&middot; Look in the mouth. Tap the %s .</span></li><li>What each tooth does <span class="key">&middot; Each kind of tooth has a job. Tap to hear it, then try it with a mouthful of air.</span></li><li>Look it up: caring for teeth <span class="key">&middot; Scientists look things up. Read the fact card, then answer from the card .</span></li><li>Brush it right <span class="key">&middot; A toothbrush is a tool. Press Next to see how to use it properly.</span></li><li>Healthy or not? <span class="key">&middot; To stay healthy a body needs good food, to be clean, and to move. Is this a healthy habit ?</span></li><li>When you are ill <span class="key">&middot; Sometimes a body is ill. Press Next to learn the signs, and what to do.</span></li><li>Health check <span class="key">&middot; Which is the healthy choice? Tap the answer.</span></li><li>Science that keeps us well <span class="key">&middot; Science explains how the things that keep us healthy work, and some people make it their job. Tap each one.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Answer keys</h3><ul><li><b>Healthy or not?</b> <span class="key"><b>Healthy habit</b>: eating vegetables, washing hands before eating, running and playing outside, a good night's sleep, washing every day, drinking water; <b>Not healthy</b>: sweets all day, sitting still all day, fizzy drinks every day</span></li><li><b>Health check</b><ol><li>Your friend has a hot forehead and feels shivery. What is that a sign of? <span class="key">&rarr; <b>a fever, being ill</b></span></li><li>Before you eat, you should... <span class="key">&rarr; <b>wash your hands</b></span></li><li>Which keeps your heart and muscles strong? <span class="key">&rarr; <b>moving and playing every day</b></span></li><li>How many times a day should you brush your teeth? <span class="key">&rarr; <b>two</b></span></li><li>Which teeth grind food at the back of your mouth? <span class="key">&rarr; <b>molars</b></span></li><li>You feel ill. What should you do first? <span class="key">&rarr; <b>tell a grown-up</b></span></li></ol></li><li><b>Show what you know</b><ol><li>Which teeth are flat and at the front, for cutting? <span class="key">&rarr; <b>incisors</b></span></li><li>Which teeth are pointed, for tearing? <span class="key">&rarr; <b>canines</b></span></li><li>How long should you brush your teeth for? <span class="key">&rarr; <b>two minutes</b></span></li><li>What feeds the germs that make holes in teeth? <span class="key">&rarr; <b>sugar</b></span></li><li>What are the three things a body needs to stay healthy? <span class="key">&rarr; <b>good food, keeping clean and moving</b></span></li><li>Which is a sign of illness? <span class="key">&rarr; <b>a fever and a cough</b></span></li><li>Why do your adult teeth matter so much? <span class="key">&rarr; <b>they have to last your whole life</b></span></li><li>Where did you find the answer 'brush for two minutes'? <span class="key">&rarr; <b>in the fact card, a secondary source</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 3: Habitats<small>8 steps &middot; about 20 minutes &middot; 9 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2Be.01</code> Know that an environment in which a plant or animal naturally lives is its habitat.</li><li><code>2Be.02</code> Know that different habitats contain different plants and animals.</li><li><code>2TWSc.01</code> Sort and group objects, materials and living things based on observations of the similarities and differences between them.</li><li><code>2Be.03</code> Identify similarities and differences between local environments in terms of hot, cold, dry, wet, many plants, few plants, many animals and few animals.</li><li><code>2TWSc.05</code> Use a given secondary information source to find an answer to a question.</li><li><code>2TWSa.03</code> Present and interpret results using tables and block graphs.</li><li><code>2TWSa.02</code> Identify simple patterns in results, e.g. increasing and decreasing patterns.</li><li><code>2TWSp.01</code> Ask questions about the world around us and talk about how to find answers.</li><li><code>2SIC.04</code> Talk about how science helps us understand our effect on the world around us.</li></ul>
+        <h3>The steps</h3><ol><li>Where things live <span class="key">&middot; A habitat is the place a plant or animal naturally lives. Press Next to visit four.</span></li><li>Who lives where? <span class="key">&middot; Which habitat does this animal or plant live in? Tap the right bin.</span></li><li>Hot, cold, wet, dry <span class="key">&middot; Compare two places near you. Which words describe them? Tap the answer.</span></li><li>Look it up: the pond <span class="key">&middot; Read the fact card about a pond, then answer from the card .</span></li><li>Count and graph the animals <span class="key">&middot; A class counted the animals they found in four places. Build the block graph : one block for each animal.</span></li><li>Ask a question about a habitat <span class="key">&middot; Look at the desert. Tap a question you would like to ask about it.</span></li><li>Looking after habitats <span class="key">&middot; What people do can change a habitat. Tap each picture.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Answer keys</h3><ul><li><b>Who lives where?</b> <span class="key"><b>Pond</b>: fish, duck; <b>Desert</b>: camel, cactus, lizard; <b>Arctic</b>: polar bear, penguin; <b>Forest</b>: deer, mushroom, squirrel</span></li><li><b>Hot, cold, wet, dry</b><ol><li>A garden and a car park. Which has MORE plants? <span class="key">&rarr; <b>the garden</b></span></li><li>A pond and a sandy beach. Which is WETTER? <span class="key">&rarr; <b>the pond</b></span></li><li>A desert and a forest. Which is HOTTER and DRIER? <span class="key">&rarr; <b>the desert</b></span></li><li>Where would you find MORE animals? <span class="key">&rarr; <b>under a log in a garden</b></span></li><li>A snowy mountain top. Which words fit? <span class="key">&rarr; <b>cold, few plants</b></span></li><li>A shady forest floor. Which words fit? <span class="key">&rarr; <b>damp, many plants, many animals</b></span></li></ol></li><li><b>Show what you know</b><ol><li>What is a habitat? <span class="key">&rarr; <b>the place where a plant or animal naturally lives</b></span></li><li>Which animal lives in a pond? <span class="key">&rarr; <b>a frog</b></span></li><li>Which habitat is hot and dry? <span class="key">&rarr; <b>a desert</b></span></li><li>A polar bear has thick fur and fat. Which habitat suits it? <span class="key">&rarr; <b>the icy Arctic</b></span></li><li>A garden and a car park. Which has MORE animals? <span class="key">&rarr; <b>the garden</b></span></li><li>In a block graph, the tallest column shows... <span class="key">&rarr; <b>the biggest number</b></span></li><li>Which of these HARMS a pond habitat? <span class="key">&rarr; <b>throwing rubbish in it</b></span></li><li>Why does a forest hold different animals from a desert? <span class="key">&rarr; <b>each animal suits the place it lives in</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 4: Natural or Made?<small>7 steps &middot; about 20 minutes &middot; 8 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2Cm.01</code> Understand that some materials occur naturally and others are manufactured.</li><li><code>2TWSc.01</code> Sort and group objects, materials and living things based on observations of the similarities and differences between them.</li><li><code>2Cp.01</code> Describe a property as a characteristic of a material and understand that materials can have more than one property.</li><li><code>2Cp.03</code> Know that materials can be tested to determine their properties.</li><li><code>2TWSc.02</code> Use given equipment appropriately.</li><li><code>2TWSc.06</code> Collect and record observations and/or measurements by annotating images and completing simple tables.</li><li><code>2Cp.02</code> Explain why materials are chosen for specific purposes on the basis of their properties.</li><li><code>2SIC.02</code> Talk about how science explains how objects they use, or know about, work.</li></ul>
+        <h3>The steps</h3><ol><li>Where does it come from? <span class="key">&middot; Some materials come straight from nature. Others are manufactured : made by people. Tap each one.</span></li><li>Natural, or manufactured? <span class="key">&middot; Does this material come from nature, or did people make it? Tap the right bin.</span></li><li>Test the materials <span class="key">&middot; A property is what a material is like. Every material has several. Press each test on at least four materials.</span></li><li>Record: is it waterproof? <span class="key">&middot; Put your water test into the table. Was %s waterproof?</span></li><li>The right material for the job <span class="key">&middot; Why was this material chosen? Tap the property that made it the right one.</span></li><li>The science in everyday things <span class="key">&middot; Science explains why everyday objects are made the way they are. Tap each one.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Answer keys</h3><ul><li><b>Natural, or manufactured?</b> <span class="key"><b>Natural</b>: sand, leather, wool, wood, cotton; <b>Manufactured</b>: plastic bag, glass, brick, paper, steel</span></li><li><b>The right material for the job</b><ol><li>Why is a window made of glass? <span class="key">&rarr; <b>glass is see-through</b></span></li><li>Why is a saucepan made of metal? <span class="key">&rarr; <b>metal is hard and does not burn</b></span></li><li>Why is a jumper made of wool? <span class="key">&rarr; <b>wool is soft and warm</b></span></li><li>Why is a raincoat made of plastic? <span class="key">&rarr; <b>plastic is waterproof</b></span></li><li>Why is a towel made of cotton? <span class="key">&rarr; <b>cotton soaks up water</b></span></li><li>Why is a bicycle frame made of metal? <span class="key">&rarr; <b>metal is strong and stiff</b></span></li><li>Would a sponge make a good window? <span class="key">&rarr; <b>No. A sponge is not see-through</b></span></li></ol></li><li><b>Show what you know</b><ol><li>Which material is NATURAL? <span class="key">&rarr; <b>wood</b></span></li><li>Which material is MANUFACTURED? <span class="key">&rarr; <b>plastic</b></span></li><li>What is a property? <span class="key">&rarr; <b>what a material is like, such as hard or bendy</b></span></li><li>How many properties can one material have? <span class="key">&rarr; <b>several at once</b></span></li><li>How do we find out if a material is waterproof? <span class="key">&rarr; <b>test it: pour water on it and watch</b></span></li><li>Why is a raincoat made of plastic? <span class="key">&rarr; <b>plastic is waterproof</b></span></li><li>Glass is made by melting... <span class="key">&rarr; <b>sand</b></span></li><li>Which is the best material for a towel? <span class="key">&rarr; <b>cotton, because it soaks up water</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 5: Changing Materials<small>8 steps &middot; about 20 minutes &middot; 8 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2Cc.01</code> Know that some changes can turn a material into a different material.</li><li><code>2TWSp.02</code> Make predictions about what they think will happen.</li><li><code>2TWSc.04</code> Follow instructions safely when doing practical work.</li><li><code>2TWSa.01</code> Describe what happened during an enquiry and if it matched their predictions.</li><li><code>2TWSc.01</code> Sort and group objects, materials and living things based on observations of the similarities and differences between them.</li><li><code>2TWSc.06</code> Collect and record observations and/or measurements by annotating images and completing simple tables.</li><li><code>2TWSc.02</code> Use given equipment appropriately.</li><li><code>2SIC.01</code> Talk about how some of the scientific knowledge and thinking now was different in the past.</li></ul>
+        <h3>The steps</h3><ol><li>Same material, or a new one? <span class="key">&middot; Some changes make a new material . Some do not. Press Next .</span></li><li>Cook an egg, then try to un-cook it <span class="key">&middot; Heat the egg until it is cooked, then cool it down. Predict first: will cooling turn it back into a raw egg?</span></li><li>New material, or the same one back? <span class="key">&middot; Does this change make a new material , or can you get the same material back? Tap the bin.</span></li><li>Record what heating did <span class="key">&middot; Record what happened to each thing when it was heated. What happened to %s ?</span></li><li>Safe with heat <span class="key">&middot; Heating changes materials, and heat can hurt. Tap each rule.</span></li><li>Long ago, and now <span class="key">&middot; What people knew about materials has changed. Tap each picture.</span></li><li>Same or new? <span class="key">&middot; Does the change make a new material? Tap the answer.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Answer keys</h3><ul><li><b>Cook an egg, then try to un-cook it</b> <span class="key">prediction: <b>It will stay cooked</b>; what happened: <b>It stayed cooked. It did not go back to raw</b></span></li><li><b>New material, or the same one back?</b> <span class="key"><b>Same material back</b>: ice melting, clay squashed flat, chocolate melting, paper folded, water freezing; <b>New material</b>: bread toasting brown, a candle burning, an egg frying, wood burning, cake mix baking</span></li><li><b>Same or new?</b><ol><li>Butter melts in a hot pan. Can you get solid butter back? <span class="key">&rarr; <b>Yes, let it cool. Same material.</b></span></li><li>A marshmallow is toasted brown over a fire. Same material? <span class="key">&rarr; <b>No. Toasting made a new material.</b></span></li><li>A snowman melts in the sun. What is the water? <span class="key">&rarr; <b>the same material as the snow</b></span></li><li>A match is struck and burns. Same material after? <span class="key">&rarr; <b>No. Burning made ash and smoke, new materials.</b></span></li></ol></li><li><b>Show what you know</b><ol><li>You cook an egg. Can you cool it back into a raw egg? <span class="key">&rarr; <b>No. Cooking made a new material.</b></span></li><li>Ice melts. Is the water a new material? <span class="key">&rarr; <b>No. It is the same water, and can freeze again.</b></span></li><li>Which change makes a NEW material? <span class="key">&rarr; <b>burning wood</b></span></li><li>Which change keeps the SAME material? <span class="key">&rarr; <b>melting butter</b></span></li><li>Dough goes in the oven. What comes out? <span class="key">&rarr; <b>bread, a new material</b></span></li><li>Who works the cooker in a heating experiment? <span class="key">&rarr; <b>a grown-up</b></span></li><li>The pan has stopped steaming. What do you do? <span class="key">&rarr; <b>wait, or use oven gloves</b></span></li><li>Long ago people tried to make gold by heating other materials. What happened? <span class="key">&rarr; <b>It never worked, but it started chemistry</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 6: Forces Change Things<small>9 steps &middot; about 25 minutes &middot; 10 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2Pf.01</code> Know that forces can change the movement of an object.</li><li><code>2Pf.03</code> Recognise that things will only speed up, slow down or change direction when something else causes them to do so.</li><li><code>2TWSp.02</code> Make predictions about what they think will happen.</li><li><code>2TWSa.01</code> Describe what happened during an enquiry and if it matched their predictions.</li><li><code>2TWSc.03</code> Take measurements in non-standard units.</li><li><code>2TWSc.06</code> Collect and record observations and/or measurements by annotating images and completing simple tables.</li><li><code>2TWSa.03</code> Present and interpret results using tables and block graphs.</li><li><code>2TWSa.02</code> Identify simple patterns in results, e.g. increasing and decreasing patterns.</li><li><code>2Pf.02</code> Know that forces can change the shape of an object.</li><li><code>2TWSc.01</code> Sort and group objects, materials and living things based on observations of the similarities and differences between them.</li></ul>
+        <h3>The steps</h3><ol><li>A force changes how things move <span class="key">&middot; A push or a pull is a force . Press Next to see five things a force can do to a moving thing.</span></li><li>Gentle, medium, hard <span class="key">&middot; Does a bigger push move the ball further? Predict, then try both pushes and count the steps.</span></li><li>Record the pushes <span class="key">&middot; Put the results in the table. How far did the ball go after a %s ?</span></li><li>Graph the pushes <span class="key">&middot; Build a block graph from your table: one block for each step the ball rolled. Then read the pattern.</span></li><li>A force changes shape too <span class="key">&middot; Forces can change the shape of a thing. Predict, then squash, bend, twist and stretch.</span></li><li>Movement, or shape? <span class="key">&middot; Does this force change how the thing moves , or its shape ? Tap the bin.</span></li><li>Nothing changes by itself <span class="key">&middot; A thing only speeds up, slows down or turns when something makes it . Press Next .</span></li><li>What made it change? <span class="key">&middot; Something changed how it moved. What caused it? Tap the answer.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Do the experiment for real</h3><ul><li><b>Gentle, medium, hard.</b> A ball on a smooth floor and some tape marks a step apart. Push gently, then hard, and count how many marks the ball passes each time.</li><li><b>A force changes shape too.</b> A ball of play dough, an elastic band and a stone. Squash, bend, twist and stretch each one. Which changed shape? Which did not?</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Gentle, medium, hard</b> <span class="key">prediction: <b>Move the ball further</b>; what happened: <b>The hard push moved the ball further: nine steps instead of three</b></span></li><li><b>A force changes shape too</b> <span class="key">prediction: <b>The clay</b>; what happened: <b>The clay and the band changed shape; the stone did not</b></span></li><li><b>Movement, or shape?</b> <span class="key"><b>Changes movement</b>: kicking a ball, pulling a sledge, catching a ball, pushing a swing; <b>Changes shape</b>: squeezing a sponge, stretching an elastic band, rolling clay into a snake, folding paper</span></li><li><b>What made it change?</b><ol><li>A bike slows down when it goes onto grass. Why? <span class="key">&rarr; <b>the grass rubs against the wheels more than the road did</b></span></li><li>A ball rolls across the floor and stops. What stopped it? <span class="key">&rarr; <b>the floor rubbing against it</b></span></li><li>A trolley rolling straight suddenly turns. What happened? <span class="key">&rarr; <b>something pushed it from the side</b></span></li><li>A swing goes higher. What made it? <span class="key">&rarr; <b>a push</b></span></li><li>A ball sits still on the grass. What will it do if nobody touches it? <span class="key">&rarr; <b>stay still</b></span></li></ol></li><li><b>Show what you know</b><ol><li>A push or a pull is called a... <span class="key">&rarr; <b>force</b></span></li><li>You push the ball harder. It goes... <span class="key">&rarr; <b>further</b></span></li><li>What pattern did your graph show? <span class="key">&rarr; <b>the columns went up as the push got bigger</b></span></li><li>Squashing clay changes its... <span class="key">&rarr; <b>shape</b></span></li><li>Why does a rolling ball slow down? <span class="key">&rarr; <b>the floor rubs against it</b></span></li><li>What does a still ball do if nobody touches it? <span class="key">&rarr; <b>stays still</b></span></li><li>Which force changes the SHAPE of a thing? <span class="key">&rarr; <b>stretching an elastic band</b></span></li><li>A ball turns while rolling. What must have happened? <span class="key">&rarr; <b>a force pushed it from the side</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 7: Light and Dark<small>8 steps &middot; about 20 minutes &middot; 9 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2Ps.01</code> Know that there are many light sources, including the Sun.</li><li><code>2TWSc.01</code> Sort and group objects, materials and living things based on observations of the similarities and differences between them.</li><li><code>2Ps.02</code> Know that darkness is the absence of light.</li><li><code>2TWSp.02</code> Make predictions about what they think will happen.</li><li><code>2TWSa.01</code> Describe what happened during an enquiry and if it matched their predictions.</li><li><code>2TWSm.01</code> Know that a model represents an object or idea in a clear way.</li><li><code>2TWSm.03</code> Describe the difference between a diagram and a picture.</li><li><code>2TWSp.01</code> Ask questions about the world around us and talk about how to find answers.</li><li><code>2SIC.01</code> Talk about how some of the scientific knowledge and thinking now was different in the past.</li></ul>
+        <h3>The steps</h3><ol><li>Things that make light <span class="key">&middot; A light source makes its own light. Tap each one.</span></li><li>Source, or not? <span class="key">&middot; Does this make light, or only shine light back? Tap the right bin.</span></li><li>Total darkness <span class="key">&middot; What is darkness? Predict, then close the curtains and switch the lamp off.</span></li><li>A model of light <span class="key">&middot; Light is hard to see moving, so scientists draw a model of it. Press Next .</span></li><li>Ask a question about light <span class="key">&middot; Look at the torch beam. Tap a question you would like to ask.</span></li><li>What people thought about light <span class="key">&middot; People have not always understood light. Tap each picture.</span></li><li>Light or dark? <span class="key">&middot; Tap the answer.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Answer keys</h3><ul><li><b>Source, or not?</b> <span class="key"><b>Makes light</b>: the Sun, a candle, a torch, a fire, a switched-on screen; <b>Only shines it back</b>: the Moon, a mirror, a cat's shining eyes, white paper, a diamond</span></li><li><b>Total darkness</b> <span class="key">prediction: <b>Nothing at all. It will be completely dark</b>; what happened: <b>It was completely dark. You could see nothing</b></span></li><li><b>Light or dark?</b><ol><li>Which is a light source? <span class="key">&rarr; <b>a candle</b></span></li><li>Why is the Moon bright at night? <span class="key">&rarr; <b>it shines back the Sun's light</b></span></li><li>What is darkness? <span class="key">&rarr; <b>what is left when there is no light</b></span></li><li>You are in a room with no windows and the lamp off. What can you see? <span class="key">&rarr; <b>nothing</b></span></li><li>Which is the biggest light source we have? <span class="key">&rarr; <b>the Sun</b></span></li></ol></li><li><b>Show what you know</b><ol><li>Which of these makes its own light? <span class="key">&rarr; <b>the Sun</b></span></li><li>Which of these is NOT a light source? <span class="key">&rarr; <b>a mirror</b></span></li><li>What is darkness? <span class="key">&rarr; <b>the absence of light</b></span></li><li>In the experiment, what made the room completely dark? <span class="key">&rarr; <b>shutting the curtains AND switching the lamp off</b></span></li><li>A drawing of straight lines from a lamp to an eye is a... <span class="key">&rarr; <b>model of how light travels</b></span></li><li>A globe is a model of... <span class="key">&rarr; <b>the Earth</b></span></li><li>Long ago some people thought eyes sent out light. Why is that wrong? <span class="key">&rarr; <b>in total darkness you see nothing, so light must come into the eyes</b></span></li><li>Why can you see a screen in a dark room? <span class="key">&rarr; <b>the screen makes its own light</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 8: Electricity and Circuits<small>8 steps &middot; about 20 minutes &middot; 10 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2Pe.01</code> Identify how we use electricity and describe how to be safe with it.</li><li><code>2TWSc.04</code> Follow instructions safely when doing practical work.</li><li><code>2TWSc.01</code> Sort and group objects, materials and living things based on observations of the similarities and differences between them.</li><li><code>2Pe.02</code> Recognise the components of simple circuits (limited to cells, wires and lamps).</li><li><code>2Pe.03</code> Explore the construction of simple series circuits (limited to cells, wires and lamps).</li><li><code>2TWSm.02</code> Make and use a physical model of a familiar system or idea.</li><li><code>2TWSc.02</code> Use given equipment appropriately.</li><li><code>2TWSm.01</code> Know that a model represents an object or idea in a clear way.</li><li><code>2TWSm.03</code> Describe the difference between a diagram and a picture.</li><li><code>2SIC.02</code> Talk about how science explains how objects they use, or know about, work.</li></ul>
+        <h3>The steps</h3><ol><li>What electricity does for us <span class="key">&middot; We use electricity in lots of ways. Tap each picture.</span></li><li>Safe, or not safe? <span class="key">&middot; Electricity is useful and it can hurt. Is this safe , or not safe ?</span></li><li>The parts of a circuit <span class="key">&middot; A torch is a circuit inside. Tap the %s .</span></li><li>Build a circuit <span class="key">&middot; Make a model of a torch: tap the parts to build the circuit. When the loop is complete, the lamp lights.</span></li><li>The diagram is a model <span class="key">&middot; The circuit you built is a drawing, a diagram . Press Next to see how it stands for the real thing.</span></li><li>How a torch works <span class="key">&middot; Science explains how the electric things you use work. Tap each one.</span></li><li>Circuit check <span class="key">&middot; Tap the answer.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Answer keys</h3><ul><li><b>Safe, or not safe?</b> <span class="key"><b>Safe</b>: a plug in a socket, putting a cell in a torch, telling a grown-up about a broken wire, switching a lamp off before bed; <b>Not safe</b>: wet hands on a switch, poking a socket with a pencil, flying a kite near power lines, a phone charging by the bath</span></li><li><b>Circuit check</b><ol><li>Which part pushes the electricity round the circuit? <span class="key">&rarr; <b>the cell</b></span></li><li>Which part lights up? <span class="key">&rarr; <b>the lamp</b></span></li><li>A circuit has a cell, a lamp and only ONE wire. Does the lamp light? <span class="key">&rarr; <b>No. The loop is not complete</b></span></li><li>You take a wire out of a working circuit. What happens? <span class="key">&rarr; <b>the lamp goes out</b></span></li><li>Which is safe? <span class="key">&rarr; <b>putting a small cell in a torch</b></span></li></ol></li><li><b>Show what you know</b><ol><li>A kettle turns electricity into... <span class="key">&rarr; <b>heat</b></span></li><li>What goes into a wall socket? <span class="key">&rarr; <b>only a plug</b></span></li><li>Electric things and water... <span class="key">&rarr; <b>must stay apart</b></span></li><li>What are the three parts of a simple circuit? <span class="key">&rarr; <b>a cell, wires and a lamp</b></span></li><li>For the lamp to light, the circuit must be... <span class="key">&rarr; <b>a complete loop</b></span></li><li>What did you make when you built the circuit? <span class="key">&rarr; <b>a model of a torch</b></span></li><li>The circle with a cross in a circuit diagram stands for... <span class="key">&rarr; <b>the lamp</b></span></li><li>What does a switch do? <span class="key">&rarr; <b>opens or closes a gap in the loop</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 9: Rocks and the Earth<small>9 steps &middot; about 20 minutes &middot; 11 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2ESp.01</code> Describe and compare different types of rock.</li><li><code>2Cp.03</code> Know that materials can be tested to determine their properties.</li><li><code>2TWSc.02</code> Use given equipment appropriately.</li><li><code>2TWSc.06</code> Collect and record observations and/or measurements by annotating images and completing simple tables.</li><li><code>2TWSc.03</code> Take measurements in non-standard units.</li><li><code>2ESp.02</code> Know rocks are extracted from the Earth in different ways, including from quarries, mines and riverbeds.</li><li><code>2TWSc.05</code> Use a given secondary information source to find an answer to a question.</li><li><code>2ESp.03</code> Know that human activity can affect the environment.</li><li><code>2SIC.04</code> Talk about how science helps us understand our effect on the world around us.</li><li><code>2TWSc.01</code> Sort and group objects, materials and living things based on observations of the similarities and differences between them.</li><li><code>2TWSp.01</code> Ask questions about the world around us and talk about how to find answers.</li></ul>
+        <h3>The steps</h3><ol><li>Not all rock is the same <span class="key">&middot; There are many kinds of rock. Tap each one and hear what it is like.</span></li><li>Test the rocks <span class="key">&middot; Test each rock the way a geologist does. Press each test on at least four rocks.</span></li><li>Record: does water soak in? <span class="key">&middot; Put your water test into the table. Did water soak into %s ?</span></li><li>How big is the rock? <span class="key">&middot; Measure %s in cubes. Press to lay a cube along it each time.</span></li><li>Where rock comes from <span class="key">&middot; Rock is taken out of the Earth in different ways. Press Next to see three.</span></li><li>Look it up: rock facts <span class="key">&middot; Read the fact card, then answer from the card .</span></li><li>Helping the land, or harming it? <span class="key">&middot; What people do can change the land, the water and the air. Does this help or harm ?</span></li><li>Ask a question about rock <span class="key">&middot; Look at the pebble. Tap a question you would like to ask.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Answer keys</h3><ul><li><b>Helping the land, or harming it?</b> <span class="key"><b>Harms</b>: dumping rubbish in a river, smoke from burning rubbish, covering a meadow with concrete, leaving litter on the beach; <b>Helps</b>: planting trees, turning an old quarry into a lake, recycling glass and cans, keeping streams clean</span></li><li><b>Show what you know</b><ol><li>Which rock is soft, white and crumbly? <span class="key">&rarr; <b>chalk</b></span></li><li>Which rock is so full of holes that it floats? <span class="key">&rarr; <b>pumice</b></span></li><li>Which rock splits into flat sheets for roofs? <span class="key">&rarr; <b>slate</b></span></li><li>Which rock soaked up the water in your test? <span class="key">&rarr; <b>chalk</b></span></li><li>A huge open pit where rock is cut out is a... <span class="key">&rarr; <b>quarry</b></span></li><li>Where do smooth pebbles come from? <span class="key">&rarr; <b>a riverbed, where water rolled them smooth</b></span></li><li>Which of these HARMS the environment? <span class="key">&rarr; <b>dumping rubbish in a river</b></span></li><li>How do we find out a rock's properties? <span class="key">&rarr; <b>test it: scratch, look, drop water, rub</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 10: The Sun Across the Sky<small>9 steps &middot; about 20 minutes &middot; 11 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Science 0097, Stage 2)</h3><ul><li><code>2ESs.01</code> Describe the apparent movement of the Sun during the day.</li><li><code>2TWSp.02</code> Make predictions about what they think will happen.</li><li><code>2TWSa.01</code> Describe what happened during an enquiry and if it matched their predictions.</li><li><code>2TWSc.04</code> Follow instructions safely when doing practical work.</li><li><code>2TWSc.03</code> Take measurements in non-standard units.</li><li><code>2TWSc.06</code> Collect and record observations and/or measurements by annotating images and completing simple tables.</li><li><code>2TWSa.03</code> Present and interpret results using tables and block graphs.</li><li><code>2TWSa.02</code> Identify simple patterns in results, e.g. increasing and decreasing patterns.</li><li><code>2TWSm.02</code> Make and use a physical model of a familiar system or idea.</li><li><code>2SIC.01</code> Talk about how some of the scientific knowledge and thinking now was different in the past.</li><li><code>2SIC.03</code> Know that everyone uses science and identify people who use science professionally.</li></ul>
+        <h3>The steps</h3><ol><li>Sunrise to sunset <span class="key">&middot; The Sun seems to move across the sky every day. Press Next and follow it.</span></li><li>A stick and its shadow <span class="key">&middot; A stick in the ground makes a shadow. Predict, then watch the Sun and the shadow through the day.</span></li><li>Measure the shadow <span class="key">&middot; Measure the stick's shadow in hand spans . Lay a hand along it each time.</span></li><li>Record the shadows <span class="key">&middot; Put your shadow measurements into the table. How long was the shadow at %s ?</span></li><li>Graph the shadow <span class="key">&middot; Build a block graph from your table: one block for each hand span. Then read the pattern.</span></li><li>A day in order <span class="key">&middot; Put the Sun's day in order. Tap what comes first .</span></li><li>Make a shadow clock <span class="key">&middot; You can make a model that shows the Sun's movement: a shadow clock. Press Next .</span></li><li>What people thought the Sun was doing <span class="key">&middot; People have always watched the Sun cross the sky. Tap each picture.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li></ol>
+        <h3>Answer keys</h3><ul><li><b>A stick and its shadow</b> <span class="key">prediction: <b>High in the sky, at its highest</b>; what happened: <b>Long in the morning, shortest at midday, long again in the evening, and it swung round</b></span></li><li><b>Show what you know</b><ol><li>Where does the Sun rise? <span class="key">&rarr; <b>in the east</b></span></li><li>Where does the Sun set? <span class="key">&rarr; <b>in the west</b></span></li><li>When is the Sun highest in the sky? <span class="key">&rarr; <b>at midday</b></span></li><li>When is a stick's shadow shortest? <span class="key">&rarr; <b>at midday, when the Sun is highest</b></span></li><li>Which way does a shadow point? <span class="key">&rarr; <b>away from the Sun</b></span></li><li>What pattern did the shadow graph show? <span class="key">&rarr; <b>shorter towards midday, then longer again</b></span></li><li>A shadow clock is a... <span class="key">&rarr; <b>model of the Sun's day</b></span></li><li>Why does the Sun SEEM to move across the sky? <span class="key">&rarr; <b>the Earth is turning</b></span></li></ol></li></ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="hubfoot">Built to Cambridge Primary Science 0097, Stage 2 &mdash; all 44 learning objectives, including Thinking and Working Scientifically and Science in Context. The stickers are earned, not given.</p>
+</div>
+
+<script>
+/* ---- the header bar: how far through the course, and the way out ----
+   Everything here is answered by the launch URL and by the progress document
+   the LESSONS write. This page stores nothing of its own. */
+(function () {
+  var COURSE = "ehel-sci-g02";
+  var STEPS  = {"l01": 10, "l02": 9, "l03": 8, "l04": 7, "l05": 8, "l06": 9, "l07": 8, "l08": 8, "l09": 9, "l10": 9};     /* lesson id -> slides-1, the lesson's own denominator */
+  var FILES  = {"l01": "animals-and-their-coverings.html", "l02": "teeth-and-staying-healthy.html", "l03": "habitats.html", "l04": "natural-or-made.html", "l05": "changing-materials.html", "l06": "forces-change-things.html", "l07": "light-and-dark.html", "l08": "electricity-and-circuits.html", "l09": "rocks-and-the-earth.html", "l10": "the-sun-across-the-sky.html"};     /* lesson id -> the page that teaches it */
+  var q = new URLSearchParams(location.search);
+  var doc = null;
+  try {
+    doc = JSON.parse(localStorage.getItem(
+      "ehel-progress:" + COURSE + ":" + (q.get("studentid") || "local")) || "null");
+  } catch (e) { doc = null; }
+  var unitOf = function (u) { return (doc && doc.units && doc.units[u]) || null; };
+  var done = 0, total = 0;
+  Object.keys(STEPS).forEach(function (u) {
+    var s = unitOf(u);
+    total += STEPS[u];
+    done += Math.min((s && s.sectionsDone && s.sectionsDone.length) || 0, STEPS[u]);
+  });
+  var pct = total ? Math.min(100, Math.round((done / total) * 100)) : 0;
+  var pctEl = document.getElementById("ehPct");
+  if (pctEl) pctEl.textContent = pct + "%";
+  var fill = document.getElementById("ehFill");
+  if (fill) fill.style.width = pct + "%";
+  var prog = document.getElementById("ehProg");
+  if (prog) prog.title = done + " of " + total + " steps done across the course";
+
+  /* the picker jumps to a lesson, carrying the launch parameters */
+  var picker = document.getElementById("ehPicker");
+  if (picker) picker.addEventListener("change", function () {
+    if (!picker.value) return;
+    var p = new URLSearchParams(location.search);
+    p.set("from", "sci2");
+    location.href = picker.value + "?" + p.toString();
+  });
+
+  /* THE WAY OUT, drawn only when the launch gave us one. */
+  var exit = q.get("exitUrl");
+  var back = document.getElementById("ehBack");
+  if (back && exit) { back.setAttribute("href", exit); back.hidden = false; }
+})();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>

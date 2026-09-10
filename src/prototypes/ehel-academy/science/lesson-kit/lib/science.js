@@ -927,6 +927,348 @@
     });
   }
 
+  /* ==================================================================
+     STAGE 2 - what Grade 2 asked for that Grade 1 did not have.
+     Same rules as everything above: a step is a KIND of doing, a sim is
+     a real state machine, and nothing here waits on a paint callback.
+     ================================================================== */
+
+  /* ---- put things in order ------------------------------------------
+     Life stages (egg, chick, hen), a day (morning, midday, evening). The
+     child taps what comes FIRST, then next; a wrong tap shakes and says
+     which end it belongs at rather than just "no". */
+  function order(o) {
+    const el = o.el, items = o.items, placed = [];
+    let lock = false, wrong = 0;
+    function draw() {
+      const left = items.filter((_, k) => !placed.includes(k));
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="orderrow">' +
+        (placed.length ? placed.map((k, p) => '<span class="ordered"><b>' + (p + 1) + "</b>" + small(items[k].pic) + " " + esc(items[k].label) + "</span>").join('<span class="arrow" aria-hidden="true">&rarr;</span>') : '<span class="sub">Tap what comes first</span>') +
+        '</div><div class="cardsgrid" id="' + el.stage + 'pool">' + shuffle(items.map((it, k) => ({ it, k }))).filter((x) => !placed.includes(x.k)).map((x) =>
+          '<button type="button" class="tapcard" data-k="' + x.k + '"><span class="cpic" aria-hidden="true">' + small(x.it.pic) + "</span>" + esc(x.it.label) + "</button>").join("") + "</div></div>";
+      $(el.score).textContent = placed.length + " of " + items.length + " in order";
+      if (left.length === 0) return;
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest(".tapcard"); if (!b || lock) return;
+      const k = Number(b.dataset.k), expect = placed.length;
+      if (k === expect) {
+        placed.push(k); SOUND.play("pop", 0.35);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + (items[k].say || "");
+        say(cheer() + " " + (items[k].say || items[k].label));
+        draw();
+        if (placed.length === items.length) {
+          lock = true;
+          setTimeout(() => {
+            const line = "All " + items.length + " in the right order. " + o.done;
+            $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+            reportScore(o.finish, Math.max(0, items.length - wrong), items.length);
+            finish(o.finish, line);
+          }, 2200);
+        }
+      } else {
+        wrong++; b.classList.add("wrong");
+        const hint = k < expect ? "That one has already happened." : "Not yet. Something comes before " + items[k].label + ".";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = hint; say(hint);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+      }
+    });
+    draw();
+  }
+
+  /* ---- a block graph the child builds, then reads a pattern from -----
+     The values are given (they came from the experiment or the count the
+     step before); the child stacks a block per unit in each column, and
+     the graph is finished when every column is the right height. Then
+     one question about the pattern - increasing, decreasing, the biggest,
+     the smallest - which is 2TWSa.02, and the graph itself is 2TWSa.03. */
+  function blockGraph(o) {
+    const el = o.el, cols = o.columns, count = cols.map(() => 0);
+    const maxV = Math.max.apply(null, cols.map((c) => c.value));
+    let asked = false, lock = false;
+    function draw() {
+      $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small"><thead><tr><th>' + esc(o.columns_label || "") + "</th><th>" + esc(o.value_label || "how many") + "</th></tr></thead><tbody>" +
+        cols.map((c) => '<tr><td><span class="rowlab">' + small(c.pic) + " " + esc(c.label) + '</span></td><td><span class="cell filled">' + c.value + (o.unit ? " " + esc(o.unit) : "") + "</span></td></tr>").join("") + "</tbody></table>" +
+        '<div class="graph" role="img" aria-label="A block graph">' + cols.map((c, k) =>
+          '<div class="gcol"><div class="gstack" style="height:' + (maxV * 26 + 6) + 'px">' + Array.from({ length: count[k] }, () => '<i class="gblock"></i>').join("") + "</div>" +
+          '<button type="button" class="big small' + (count[k] >= c.value ? " ghost" : " teal") + '" data-k="' + k + '"' + (count[k] >= c.value ? " disabled" : "") + '>+ block</button>' +
+          '<span class="glab">' + small(c.pic) + "<br>" + esc(c.label) + (count[k] >= c.value ? " &#10003;" : "") + "</span></div>").join("") + "</div></div>";
+      const done = cols.filter((c, k) => count[k] >= c.value).length;
+      $(el.score).textContent = done + " of " + cols.length + " columns built";
+    }
+    function askPattern() {
+      asked = true;
+      $(el.ask).innerHTML = o.pattern.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(o.pattern.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.score).textContent = "Read the graph";
+      sayHere(o.finish, plain(o.pattern.ask));
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest("[data-k]"); if (!b || asked) return;
+      const k = Number(b.dataset.k);
+      if (count[k] >= cols[k].value) return;
+      count[k]++; SOUND.play("click", 0.35); draw();
+      if (count[k] === cols[k].value) { $(el.fb).className = "fb good"; $(el.fb).textContent = cols[k].label + ": " + cols[k].value + ". That column is right."; say(cols[k].label + ", " + cols[k].value + "."); }
+      if (cols.every((c, j) => count[j] >= c.value)) {
+        reportAttempt(o.finish, cols.length, cols.length, "columns");
+        setTimeout(() => { $(el.fb).textContent = ""; $(el.fb).className = "fb"; askPattern(); }, 1800);
+      }
+    });
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const ok = b.dataset.ok === "1";
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Look at the columns again. ") + o.pattern.why; say($(el.fb).textContent);
+      reportScore(o.finish, ok ? 1 : 0, 1);
+      setTimeout(() => { $(el.ch).innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; finish(o.finish, o.done); }, 2800);
+    });
+    draw();
+  }
+
+  /* ---- find the answer in a fact card ---------------------------------
+     2TWSc.05: use a given secondary source. The card stays on screen while
+     the questions are asked, and each answer is IN the card, so the skill
+     being practised is reading for an answer rather than remembering one. */
+  function lookup(o) {
+    const el = o.el;
+    let i = 0, right = 0, lock = false;
+    $(el.stage).innerHTML = '<div class="stagewide"><div class="factcard"><h3>' + esc(o.source.title) + "</h3>" +
+      o.source.lines.map((l) => "<p>" + l + "</p>").join("") + "</div></div>";
+    function draw() {
+      lock = false;
+      const it = o.items[i];
+      $(el.ask).innerHTML = it.ask;
+      $(el.ch).classList.add("stack");
+      $(el.ch).innerHTML = shuffle(it.opts).map((c) => '<button type="button" class="choice text" data-ok="' + (c.ok ? 1 : 0) + '">' + c.t + "</button>").join("");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      $(el.score).textContent = "Find it in the card: question " + (i + 1) + " of " + o.items.length;
+      sayHere(o.finish, plain(it.ask) + " Look in the card.");
+    }
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest(".choice"); if (!b || lock) return;
+      lock = true;
+      const it = o.items[i], ok = b.dataset.ok === "1";
+      $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; if (c.dataset.ok === "1") c.classList.add("right"); });
+      if (!ok) b.classList.add("wrong"); else right++;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = (ok ? cheer() + " " : "Read the card again. ") + it.why; say($(el.fb).textContent);
+      i++;
+      setTimeout(() => {
+        if (i >= o.items.length) {
+          $(el.ch).innerHTML = ""; $(el.score).textContent = "";
+          const line = "You found " + right + " of " + o.items.length + " in the card. " + o.done;
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line;
+          reportScore(o.finish, right, o.items.length);
+          finish(o.finish, line);
+        } else draw();
+      }, 2700);
+    });
+    draw();
+  }
+
+  /* ---- build a model --------------------------------------------------
+     2TWSm.02 (make and use a model) and 2Pe.03 (construct a circuit) in
+     one shape: a palette of parts, a sim that accepts them one at a time
+     and knows when the model is complete, then something to DO with the
+     model (break the circuit, mend it) before the step is done. */
+  function build(o) {
+    const el = o.el, sim = SIMS[o.sim];
+    const added = new Set();
+    $(el.stage).innerHTML = '<div class="stagewide"><div class="sim" id="' + el.stage + 'sim"></div><div class="simrow" id="' + el.stage + 'ctl"></div>' +
+      '<div class="cardsgrid" id="' + el.stage + 'parts">' + o.parts.map((p) => '<button type="button" class="tapcard" data-p="' + p.id + '"><span class="cpic" aria-hidden="true">' + small(p.pic) + "</span>" + esc(p.label) + "</button>").join("") + "</div></div>";
+    const box = $(el.stage + "sim"), api = { id: el.stage, controls: $(el.stage + "ctl"), say: (t) => sayHere(o.finish, t),
+      done: () => { $(el.stage + "parts").innerHTML = ""; $(el.score).textContent = ""; $(el.fb).className = "fb good"; $(el.fb).textContent = o.done; reportAttempt(o.finish, o.parts.length, o.parts.length, "parts"); finish(o.finish, o.done); } };
+    sim.init(box);
+    $(el.score).textContent = "Tap each part to add it";
+    $(el.stage + "parts").addEventListener("click", (e) => {
+      const b = e.target.closest(".tapcard"); if (!b || added.has(b.dataset.p)) return;
+      const part = o.parts.find((p) => p.id === b.dataset.p);
+      added.add(part.id); b.classList.add("heard"); b.disabled = true;
+      SOUND.play("click", 0.4);
+      const line = sim.add(box, part.id, api);
+      $(el.fb).className = "fb"; $(el.fb).textContent = line || part.label + " added."; say(line || part.label + " added.");
+      $(el.score).textContent = added.size + " of " + o.parts.length + " parts added";
+      if (added.size >= o.parts.length) setTimeout(() => sim.complete(box, api), 900);
+    });
+  }
+
+  /* ---- Stage 2 figures ------------------------------------------------ */
+  FIGURES.mouth = () => (
+    '<svg viewBox="0 0 320 240" role="img" aria-label="An open mouth showing the teeth">' +
+    '<ellipse cx="160" cy="120" rx="150" ry="100" fill="#C4453A"/>' +
+    '<ellipse cx="160" cy="132" rx="118" ry="70" fill="#7A2E2E"/>' +
+    '<g data-part="tongue" tabindex="0" role="button" aria-label="tongue"><ellipse cx="160" cy="170" rx="70" ry="28" fill="#E9744F"/><ellipse class="outline" cx="160" cy="170" rx="76" ry="34"/></g>' +
+    '<g data-part="molars" tabindex="0" role="button" aria-label="molars"><g fill="#FFFDF6" stroke="#D9D2C0" stroke-width="2">' +
+    '<rect x="44" y="82" width="26" height="24" rx="6"/><rect x="72" y="72" width="26" height="24" rx="6"/><rect x="222" y="72" width="26" height="24" rx="6"/><rect x="250" y="82" width="26" height="24" rx="6"/>' +
+    '<rect x="44" y="140" width="26" height="24" rx="6"/><rect x="72" y="150" width="26" height="24" rx="6"/><rect x="222" y="150" width="26" height="24" rx="6"/><rect x="250" y="140" width="26" height="24" rx="6"/></g>' +
+    '<path class="outline" d="M40 68 h62 v42 h-62z M218 68 h62 v42 h-62z M40 136 h62 v42 h-62z M218 136 h62 v42 h-62z"/></g>' +
+    '<g data-part="canines" tabindex="0" role="button" aria-label="canines"><g fill="#FFFDF6" stroke="#D9D2C0" stroke-width="2">' +
+    '<path d="M104 62 h18 v18 l-9 16 l-9 -16z"/><path d="M198 62 h18 v18 l-9 16 l-9 -16z"/><path d="M104 178 h18 v-18 l-9 -16 l-9 16z"/><path d="M198 178 h18 v-18 l-9 -16 l-9 16z"/></g>' +
+    '<path class="outline" d="M100 56 h26 v46 h-26z M194 56 h26 v46 h-26z M100 138 h26 v46 h-26z M194 138 h26 v46 h-26z"/></g>' +
+    '<g data-part="incisors" tabindex="0" role="button" aria-label="incisors"><g fill="#FFFDF6" stroke="#D9D2C0" stroke-width="2">' +
+    '<rect x="126" y="58" width="16" height="30" rx="4"/><rect x="144" y="56" width="16" height="32" rx="4"/><rect x="162" y="56" width="16" height="32" rx="4"/><rect x="180" y="58" width="16" height="30" rx="4"/>' +
+    '<rect x="126" y="152" width="16" height="30" rx="4"/><rect x="144" y="152" width="16" height="32" rx="4"/><rect x="162" y="152" width="16" height="32" rx="4"/><rect x="180" y="152" width="16" height="30" rx="4"/></g>' +
+    '<rect class="outline" x="122" y="52" width="78" height="40" rx="8"/><rect class="outline" x="122" y="148" width="78" height="40" rx="8"/></g>' +
+    "</svg>");
+
+  function circuitSvg(state) {
+    /* state: {cell, lamp, wireTop, wireBottom, gap, on} - missing parts are dashed ghosts */
+    const g = (present) => present ? 'stroke="#F4C95D" stroke-width="6"' : 'stroke="#2B5673" stroke-width="4" stroke-dasharray="8 8"';
+    const on = state.on && state.cell && state.lamp && state.wireTop && state.wireBottom && !state.gap;
+    return '<svg viewBox="0 0 320 220" role="img" aria-label="A circuit: a cell, two wires and a lamp' + (on ? ", lit" : "") + '">' +
+      '<rect width="320" height="220" fill="#0E2434"/>' +
+      '<path d="M60 60 H260" fill="none" ' + g(state.wireTop) + ' stroke-linecap="round"/>' +
+      (state.gap ? '<rect x="140" y="150" width="40" height="20" fill="#0E2434"/><text x="160" y="196" text-anchor="middle" fill="#F0806F" font-size="13" font-family="Inter, sans-serif" font-weight="800">a gap</text>' : "") +
+      '<path d="M60 160 H' + (state.gap ? "140" : "260") + '" fill="none" ' + g(state.wireBottom) + ' stroke-linecap="round"/>' +
+      (state.gap ? '<path d="M180 160 H260" fill="none" ' + g(state.wireBottom) + ' stroke-linecap="round"/>' : "") +
+      '<g data-part="cell" tabindex="0" role="button" aria-label="cell"><path d="M60 60 V92 M60 128 V160" fill="none" ' + g(state.cell) + '/>' +
+      (state.cell ? '<rect x="40" y="92" width="40" height="10" fill="#F4C95D"/><rect x="50" y="118" width="20" height="10" fill="#F4C95D"/><text x="26" y="118" fill="#93AABE" font-size="14" font-family="Inter, sans-serif" font-weight="800">cell</text>' : '<rect x="40" y="92" width="40" height="36" fill="none" stroke="#2B5673" stroke-dasharray="6 6"/>') +
+      '<rect class="outline" x="30" y="84" width="60" height="52" rx="8"/></g>' +
+      '<g data-part="wire" tabindex="0" role="button" aria-label="wires"><rect class="outline" x="92" y="48" width="136" height="24" rx="8"/></g>' +
+      '<g data-part="lamp" tabindex="0" role="button" aria-label="lamp"><path d="M260 60 V88 M260 132 V160" fill="none" ' + g(state.lamp) + '/>' +
+      (state.lamp ? '<circle cx="260" cy="110" r="22" fill="' + (on ? "#F4C95D" : "#1B3A52") + '" stroke="#F4C95D" stroke-width="4"/><path d="M246 96 L274 124 M274 96 L246 124" stroke="' + (on ? "#0E2434" : "#F4C95D") + '" stroke-width="3"/>' + (on ? '<g stroke="#F4C95D" stroke-width="3" stroke-linecap="round"><line x1="260" y1="74" x2="260" y2="66"/><line x1="292" y1="110" x2="300" y2="110"/><line x1="283" y1="87" x2="289" y2="81"/><line x1="283" y1="133" x2="289" y2="139"/></g>' : "") : '<circle cx="260" cy="110" r="22" fill="none" stroke="#2B5673" stroke-dasharray="6 6"/>') +
+      '<text x="260" y="196" text-anchor="middle" fill="#93AABE" font-size="14" font-family="Inter, sans-serif" font-weight="800">' + (state.lamp ? (on ? "lamp ON" : "lamp off") : "") + "</text>" +
+      '<circle class="outline" cx="260" cy="110" r="30"/></g>' +
+      "</svg>";
+  }
+  FIGURES.circuit = () => circuitSvg({ cell: true, lamp: true, wireTop: true, wireBottom: true, on: true });
+
+  /* ---- Stage 2 scenes ------------------------------------------------- */
+  SCENES.habitat = (s) => {
+    const sky = ["#BFE3F5", "#F6D28B", "#A9D3B6", "#DDEFF7"][s], ground = ["#3B7FD1", "#E0B86A", "#2F6B3A", "#EAF4FA"][s];
+    const items = [
+      '<text x="70" y="150" font-size="40">\u{1F438}</text><text x="200" y="120" font-size="40">\u{1F986}</text><text x="130" y="185" font-size="34">\u{1F41F}</text><text x="250" y="180" font-size="34">\u{1FAB7}</text>',
+      '<text x="60" y="170" font-size="44">\u{1F42A}</text><text x="200" y="160" font-size="40">\u{1F335}</text><text x="260" y="180" font-size="30">\u{1F98E}</text><text x="130" y="185" font-size="30">\u{1F982}</text>',
+      '<text x="40" y="120" font-size="48">\u{1F333}</text><text x="220" y="120" font-size="48">\u{1F333}</text><text x="120" y="180" font-size="36">\u{1F98C}</text><text x="230" y="185" font-size="30">\u{1F344}</text><text x="170" y="100" font-size="26">\u{1F426}</text>',
+      '<text x="60" y="170" font-size="44">\u{1F43B}‍❄️</text><text x="200" y="175" font-size="40">\u{1F427}</text><text x="130" y="110" font-size="30">❄️</text><text x="260" y="100" font-size="30">❄️</text>',
+    ][s];
+    const name = ["A pond", "A desert", "A forest", "The icy Arctic"][s];
+    return '<svg viewBox="0 0 320 200" role="img" aria-label="' + name + '"><rect width="320" height="200" fill="' + sky + '"/><rect x="0" y="130" width="320" height="70" fill="' + ground + '"/>' + (s === 1 ? '<circle cx="270" cy="40" r="26" fill="#F4C95D"/>' : "") + items + "</svg>";
+  };
+  SCENES.extract = (s) => {
+    const parts = [
+      '<path d="M0 200 V90 L60 90 L60 120 L120 120 L120 150 L200 150 L200 180 L320 180 V200z" fill="#7D7F86"/><text x="230" y="140" font-size="40">\u{1F69C}</text><text x="70" y="80" font-size="34">\u{1F477}</text>',
+      '<rect x="0" y="80" width="320" height="120" fill="#5B5D63"/><rect x="60" y="80" width="120" height="70" fill="#0B1D2C"/><text x="90" y="135" font-size="34">\u{1F477}</text><text x="220" y="140" font-size="34">\u{1F4A1}</text><rect x="0" y="60" width="320" height="20" fill="#3E8E4A"/>',
+      '<path d="M0 120 Q160 80 320 120 V200 H0z" fill="#3B7FD1"/><ellipse cx="80" cy="170" rx="14" ry="8" fill="#B7B7B7"/><ellipse cx="150" cy="185" rx="10" ry="6" fill="#B7B7B7"/><ellipse cx="240" cy="165" rx="16" ry="9" fill="#B7B7B7"/><text x="180" y="120" font-size="34">\u{1F9CD}</text>',
+    ][s];
+    return '<svg viewBox="0 0 320 200" role="img" aria-label="' + ["A quarry", "A mine", "A riverbed"][s] + '"><rect width="320" height="200" fill="#BFE3F5"/>' + parts + "</svg>";
+  };
+
+  /* ---- Stage 2 sims ---------------------------------------------------- */
+  SIMS.circuit = {
+    state: null,
+    init(box) { this.state = { cell: false, lamp: false, wireTop: false, wireBottom: false, gap: false, on: true }; box.innerHTML = circuitSvg(this.state); },
+    add(box, part, api) {
+      const s = this.state;
+      if (part === "cell") s.cell = true; else if (part === "lamp") s.lamp = true; else if (part === "wire1") s.wireTop = true; else if (part === "wire2") s.wireBottom = true;
+      box.innerHTML = circuitSvg(s);
+      const all = s.cell && s.lamp && s.wireTop && s.wireBottom;
+      if (all) { SOUND.play("ding", 0.5); return "The loop is closed. The lamp lights up!"; }
+      return { cell: "The cell. It pushes the electricity round.", lamp: "The lamp. It lights when electricity flows through it.", wire1: "A wire, from the cell towards the lamp.", wire2: "Another wire, from the lamp back to the cell." }[part];
+    },
+    complete(box, api) {
+      let broken = false, mended = false;
+      api.controls.innerHTML = '<button type="button" class="big small" id="' + api.id + 'gap">Take a wire out</button>';
+      $(api.id + "gap").addEventListener("click", () => {
+        const s = this.state;
+        if (!s.gap) { s.gap = true; broken = true; box.innerHTML = circuitSvg(s); SOUND.play("click", 0.4); api.say("A gap in the loop. The electricity cannot go round, and the lamp goes out."); $(api.id + "gap").textContent = "Put the wire back"; }
+        else { s.gap = false; mended = true; box.innerHTML = circuitSvg(s); SOUND.play("ding", 0.5); api.say("The loop is closed again and the lamp is back on. A circuit only works as a complete loop."); }
+        if (broken && mended) setTimeout(() => { api.controls.innerHTML = ""; api.done(); }, 2200);
+      });
+      api.say("Your model works like a real torch. Now take a wire out and see what happens.");
+    },
+  };
+  SIMS.darkRoom = {
+    draw(box, curtains, lamp) {
+      const dark = curtains && !lamp;
+      const light = lamp || !curtains;
+      box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="A room, ' + (dark ? "completely dark" : lamp ? "lit by a lamp" : "lit by the window") + '">' +
+        '<rect width="320" height="200" fill="' + (dark ? "#000" : light ? "#F4EAD4" : "#2A3A4A") + '"/>' +
+        (dark ? "" : '<rect x="30" y="30" width="80" height="70" fill="' + (curtains ? "#5B3A2E" : "#BFE3F5") + '" stroke="#6B4A2B" stroke-width="6"/>' + (curtains ? "" : '<circle cx="90" cy="50" r="14" fill="#F4C95D"/>') +
+          '<rect x="0" y="150" width="320" height="50" fill="' + (light ? "#C9B79C" : "#1B2A2F") + '"/>' +
+          '<text x="200" y="145" font-size="44">\u{1F431}</text><text x="130" y="150" font-size="40">\u{1FA91}</text>' +
+          '<g><line x1="270" y1="150" x2="270" y2="60" stroke="#93AABE" stroke-width="4"/><path d="M245 60 h50 l-10 -30 h-30z" fill="' + (lamp ? "#F4C95D" : "#4A5A6A") + '"/>' + (lamp ? '<ellipse cx="270" cy="110" rx="60" ry="50" fill="#F4C95D" opacity="0.18"/>' : "") + "</g>") +
+        (dark ? '<text x="160" y="110" text-anchor="middle" fill="#334" font-size="16" font-family="Inter, sans-serif" font-weight="800">no light at all</text>' : "") +
+        "</svg>";
+    },
+    init(box) { SIMS.darkRoom.draw(box, false, true); },
+    run(box, api) {
+      return new Promise((done) => {
+        let curtains = false, lamp = true, wentDark = false;
+        const paint = () => {
+          SIMS.darkRoom.draw(box, curtains, lamp);
+          api.controls.innerHTML = '<button type="button" class="big small ghost" id="' + api.id + 'c">' + (curtains ? "Open the curtains" : "Close the curtains") + '</button><button type="button" class="big small" id="' + api.id + 'l">' + (lamp ? "Switch the lamp off" : "Switch the lamp on") + "</button>";
+          $(api.id + "c").addEventListener("click", () => { curtains = !curtains; SOUND.play("click", 0.3); paint(); api.say(curtains ? (lamp ? "Curtains closed. The lamp still lights the room." : "Curtains closed and no lamp. It is completely dark. You cannot see the cat, the chair, anything.") : "Curtains open. Daylight comes in from the Sun."); check(); });
+          $(api.id + "l").addEventListener("click", () => { lamp = !lamp; SOUND.play("click", 0.3); paint(); api.say(lamp ? "Lamp on. Light again, and you can see." : (curtains ? "Lamp off and curtains closed. Darkness. Darkness is what is left when there is no light." : "Lamp off, but daylight still comes through the window.")); check(); });
+        };
+        const check = () => {
+          if (curtains && !lamp) wentDark = true;
+          if (wentDark && lamp) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 1600);
+        };
+        paint();
+      });
+    },
+  };
+  SIMS.sunPath = {
+    /* t = 0..4: 9am, midday, 3pm, 6pm (sunset), and the start at sunrise */
+    draw(box, t) {
+      const pos = [[40, 150], [100, 70], [160, 30], [220, 70], [280, 150]][t];
+      const shadow = [[160, 150, 100, 150], [160, 150, 220, 150], [160, 150, 172, 150], [160, 150, 100, 150], [160, 150, 40, 150]];
+      const label = ["Sunrise, in the east", "9 in the morning", "Midday, high in the sky", "3 in the afternoon", "Sunset, in the west"][t];
+      const sh = [["long", 3], ["medium", 2], ["short", 1], ["medium", 2], ["long", 3]][t];
+      const shx = { 0: [160, 60], 1: [160, 100], 2: [160, 148], 3: [160, 220], 4: [160, 260] }[t];
+      return '<svg viewBox="0 0 320 200" role="img" aria-label="' + label + ', the shadow is ' + sh[0] + '">' +
+        '<rect width="320" height="150" fill="' + (t === 0 || t === 4 ? "#F0A56B" : "#BFE3F5") + '"/><rect x="0" y="150" width="320" height="50" fill="#3E8E4A"/>' +
+        '<path d="M20 150 Q160 -40 300 150" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="5 6" opacity="0.6"/>' +
+        '<text x="20" y="180" fill="#fff" font-size="13" font-family="Inter, sans-serif" font-weight="800">EAST</text><text x="262" y="180" fill="#fff" font-size="13" font-family="Inter, sans-serif" font-weight="800">WEST</text>' +
+        '<line x1="' + shx[0] + '" y1="150" x2="' + shx[1] + '" y2="' + (t === 2 ? 150 : 150) + '" stroke="#0B1D2C" stroke-width="' + (t === 2 ? 10 : 8) + '" opacity="0.6" stroke-linecap="round"/>' +
+        '<rect x="156" y="90" width="8" height="60" fill="#6B4A2B"/>' +
+        '<circle cx="' + pos[0] + '" cy="' + pos[1] + '" r="18" fill="#F4C95D"/>' +
+        '<text x="160" y="24" text-anchor="middle" fill="#0B1D2C" font-size="14" font-family="Inter, sans-serif" font-weight="800">' + label + ' &middot; shadow: ' + sh[0] + '</text></svg>';
+    },
+    init(box) { box.innerHTML = SIMS.sunPath.draw(box, 0); },
+    run(box, api) {
+      return new Promise((done) => {
+        let t = 0;
+        api.controls.innerHTML = '<button type="button" class="big teal small" id="' + api.id + 'h">⏳ Three hours later</button>';
+        $(api.id + "h").addEventListener("click", () => {
+          if (t >= 4) return;
+          t++; box.innerHTML = SIMS.sunPath.draw(box, t); SOUND.play("click", 0.3);
+          api.say(["", "Nine in the morning. The Sun is higher in the east. The shadow points west and is shorter.", "Midday. The Sun is at its highest. The shadow is the shortest it will be all day.", "Three in the afternoon. The Sun is going down in the west. The shadow points east and is getting longer.", "Sunset. The Sun is low in the west, where it will disappear. The shadow is long again. The Sun seems to move across the sky - it rises in the east, climbs, and sets in the west."][t]);
+          if (t >= 4) setTimeout(() => { api.controls.innerHTML = ""; done(); }, 2600);
+        });
+      });
+    },
+  };
+  SIMS.newMaterial = {
+    draw(box, heat, cooled) {
+      const stage = heat >= 3 ? "cooked" : heat === 2 ? "turning white" : heat === 1 ? "warming" : "raw";
+      const white = heat >= 3 ? "#FFFDF6" : heat === 2 ? "#F7EEDC" : "rgba(255,253,246,0.55)";
+      box.innerHTML = '<svg viewBox="0 0 320 200" role="img" aria-label="An egg in a pan, ' + stage + '">' +
+        '<rect width="320" height="200" fill="#2A3A4A"/><ellipse cx="160" cy="130" rx="120" ry="44" fill="#4A5A6A"/><rect x="270" y="122" width="44" height="12" rx="6" fill="#1B2A2F"/>' +
+        (heat > 0 && !cooled ? '<g fill="#E9744F" opacity="0.7"><path d="M90 178 q10 -20 0 -40 q10 20 20 40z"/><path d="M160 180 q10 -22 0 -44 q10 22 20 44z"/><path d="M230 178 q10 -20 0 -40 q10 20 20 40z"/></g>' : "") +
+        '<ellipse cx="160" cy="126" rx="58" ry="26" fill="' + white + '" stroke="#D9D2C0" stroke-width="2"/><circle cx="160" cy="124" r="16" fill="#F4C95D"/>' +
+        '<text x="160" y="40" text-anchor="middle" fill="#fff" font-size="16" font-family="Inter, sans-serif" font-weight="800">' + (cooled ? "cooled down - still cooked" : stage) + "</text></svg>";
+    },
+    init(box) { SIMS.newMaterial.draw(box, 0, false); },
+    run(box, api) {
+      return new Promise((done) => {
+        let heat = 0, cooled = false;
+        const paint = () => {
+          api.controls.innerHTML = heat < 3
+            ? '<button type="button" class="big small" id="' + api.id + 'h">🔥 Heat it</button>'
+            : (cooled ? "" : '<button type="button" class="big teal small" id="' + api.id + 'c">❄️ Cool it down</button>');
+          const h = $(api.id + "h"), c = $(api.id + "c");
+          if (h) h.addEventListener("click", () => { heat++; SIMS.newMaterial.draw(box, heat, false); SOUND.play("kettle", 0.3); api.say(["", "The pan warms up. The clear part of the egg starts to change.", "It is turning white and going solid.", "Cooked. The runny clear egg is now white and solid. It is a different material now."][heat]); paint(); });
+          if (c) c.addEventListener("click", () => { cooled = true; SIMS.newMaterial.draw(box, heat, true); SOUND.play("click", 0.3); api.say("Cooled down, and still cooked. Cooling does not turn it back into a raw egg. Cooking made a NEW material, and there is no going back."); paint(); setTimeout(() => { api.controls.innerHTML = ""; done(); }, 2600); });
+        };
+        paint();
+      });
+    },
+  };
+
   /* ---- the sticker shelf --------------------------------------------- */
   function paintStickers() {
     const got = done.filter(Boolean).length;

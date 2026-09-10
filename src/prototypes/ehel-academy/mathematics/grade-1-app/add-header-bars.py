@@ -34,9 +34,12 @@ LESSONS = [
     ("asking-and-sorting.html", "Asking and Sorting"),
 ]
 
-CREST = ('<svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" '
-         'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>'
-         '<path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg>')
+# The real crest. Kept in step with lesson-app-tools/add-header-bars.py, which
+# superseded this file and carries the reasoning; this copy is still invoked by
+# this app's own README, so leaving the placeholder here would let a Grade 1
+# Maths rebuild put it back on pages the shared tool had just fixed.
+CREST = ('<img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" '
+         'width="32" height="32" decoding="async">')
 
 CSS = """
   /* ---- the two header bars, modelled on the English shell ---- */
@@ -46,6 +49,7 @@ CSS = """
   .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
   .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
   .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
   .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
   .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
   .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }

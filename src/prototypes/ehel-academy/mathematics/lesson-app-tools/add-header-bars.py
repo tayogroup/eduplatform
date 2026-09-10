@@ -55,9 +55,25 @@ from _app import load  # noqa: E402
 
 MARK = "eh-bar1"
 
-CREST = ('<svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" '
-         'fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path>'
-         '<path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg>')
+# The REAL crest, not a drawn approximation of one. This was a shield-and-star
+# inline SVG until 2026-09-10, and the placeholder outlived its excuse: the
+# hub's own generator (english/grade-1-app/build-hub.py) has always emitted the
+# real asset, so every app drew a hand-made mark on its lesson pages and showed
+# the true crest one click away on the unit hub. Fixing the generated HTML by
+# hand does not hold - it was done twice on the English Grade 1 pages and this
+# tool overwrote it both times, which is the whole reason the fix is here.
+#
+# alt="" on purpose: .eh-brandtext spells "Ehel Academy / Primary <subject>"
+# immediately after it, so naming the image announces the brand twice. That is
+# the same intent the aria-hidden on the old <svg> carried.
+#
+# The path is relative and the depth is uniform - every app.config.json
+# `remote` is `Ehel Primary/app/<subject>/<dir>`, so `../../shared/` resolves
+# to `app/shared/` from all nine builds. Verify that before adding an app at
+# another depth. A root-relative `/shared/...` is NOT available instead: these
+# pages are served under the `Ehel Primary/` prefix, not from the zone root.
+CREST = ('<img class="eh-crest" src="../../shared/ehel-academy-logo.png" alt="" '
+         'width="32" height="32" decoding="async">')
 
 CSS = """
   /* ---- the two header bars, modelled on the English shell ---- */
@@ -67,6 +83,7 @@ CSS = """
   .eh-bar2 { top: 56px; padding: 8px 16px; background: var(--cell); }
   .eh-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
   .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-crest { width: 32px; height: 32px; display: block; flex: 0 0 auto; }
   .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
   .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
   .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }

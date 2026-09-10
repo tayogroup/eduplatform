@@ -56,12 +56,23 @@ const SRC = path.resolve(process.cwd(), val("--app", "."));
 const SAMPLES = Number(val("--samples", 25));
 const OUT = val("--out", null);
 
+// MIRROR check-answer-keys.py's fallback rather than refusing. A build with no
+// app.config.json is a real thing to point at - ../grade-1-app, the superseded
+// five-lesson build - and the checker reads it by listing .html files. Refusing
+// here made the emitter unable to look at a build the checker can, which reads
+// as "no runtime questions there" when nothing has been asked.
 const cfgPath = path.join(SRC, "app.config.json");
-if (!fs.existsSync(cfgPath)) {
-  console.error("No app.config.json in " + SRC + "\n  pass --app <dir>");
+let lessons;
+if (fs.existsSync(cfgPath)) {
+  lessons = JSON.parse(fs.readFileSync(cfgPath, "utf8")).lessons.map((l) => l.file);
+} else if (fs.existsSync(SRC)) {
+  lessons = fs.readdirSync(SRC)
+    .filter((f) => f.endsWith(".html") && !f.endsWith("index.html")).sort();
+} else {
+  console.error("No such build: " + SRC + "\n  pass --app <dir>");
   process.exit(2);
 }
-const cfg = JSON.parse(fs.readFileSync(cfgPath, "utf8"));
+const cfg = { lessons: lessons.map((f) => ({ file: f })) };
 
 // the helpers every generator in these builds uses. Identical in all eight
 // Grade 3 lessons; `two` is a zero-pad for clock faces.
@@ -118,7 +129,7 @@ function topLevelConsts(js) {
 }
 
 const out = [];
-let files = 0, gens = 0, dropped = 0, failed = 0;
+let files = 0, gens = 0, dropped = 0, failed = 0, statics = 0;
 
 for (const lesson of cfg.lessons) {
   const p = path.join(SRC, lesson.file);
@@ -154,6 +165,13 @@ for (const lesson of cfg.lessons) {
       continue;
     }
     arr.forEach((gen, gi) => {
+      // A `QS` ARRAY IS NOT ALWAYS GENERATORS. Grade 2's sides-and-corners
+      // holds four PLAIN OBJECTS - `{ q, a, opts, why }` - under the same name,
+      // and calling one failed the whole block with "g is not a function",
+      // which reads as a broken build rather than as a build whose questions
+      // are static. They already have keys in the source, so check-answer-keys
+      // reads them by its ordinary path and there is nothing to run here.
+      if (typeof gen !== "function") { statics++; return; }
       gens++;
       const seen = new Map();
       for (let s = 0; s < SAMPLES * 20 && seen.size < SAMPLES; s++) {
@@ -168,7 +186,7 @@ for (const lesson of cfg.lessons) {
         if (!item || item.q === undefined || item.opts === undefined || item.a === undefined) continue;
         const opts = item.opts.map(String);
         if (new Set(opts).size !== opts.length) { dropped++; continue; }   // nextQ() would regenerate
-        const k = item.q + " " + opts.join("");
+        const k = JSON.stringify([item.q, opts]);
         if (!seen.has(k)) seen.set(k, { file: lesson.file, gen: gi, q: String(item.q), opts, a: String(item.a) });
       }
       out.push(...seen.values());
@@ -177,8 +195,18 @@ for (const lesson of cfg.lessons) {
 }
 
 if (!gens) {
-  console.error("REFUSED: found no runtime generators in " + SRC +
-                " - emitting an empty set would read as 'nothing to check'");
+  // SAY WHICH KIND OF NOTHING. "No runtime generators" is true of a build with
+  // no QS array at all AND of one whose QS holds plain objects - Grade 2's
+  // sides-and-corners has four - and those are different facts: the second
+  // build's questions ARE checked, by the ordinary static path. Reporting only
+  // the first invites the reading that its questions go unexamined.
+  console.error("REFUSED: nothing to run in " + SRC + " - " +
+    (statics
+      ? statics + " QS entr" + (statics === 1 ? "y is" : "ies are") +
+        " plain object(s) with keys already in the source, which" +
+        " check-answer-keys.py reads by its ordinary path"
+      : "this build declares no runtime question generators") +
+    ".\n  Emitting an empty set would read as 'nothing to check'.");
   process.exit(2);
 }
 

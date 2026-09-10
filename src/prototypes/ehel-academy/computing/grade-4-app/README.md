@@ -260,17 +260,27 @@ files, all verified on storage, all edge fresh, all three live bundles booted
 clean with a real step driven to a tick in each), so live equals HEAD for all
 four grades and all four run the same kit.
 
-## Routing
+## Routed 2026-09-10
 
-`repoint-grade.php` gained the Grade 4 row in 4185533e6 —
-`ehel-comp-g04` → `…/computing/grade-4-v2/index.html`; the script's computing
-table had rows 1 to 3 only. The staged script goes on the quraanacademy zone
-under `Ehel Primary/qa/` with a fresh filename, the operator curls it into
-`/home/ehelacad/quraantest.academy` and runs report mode before `--apply`,
-and both copies are deleted afterwards.
+`repoint-grade.php` gained the Grade 4 row in 4185533e6 — `ehel-comp-g04` →
+`…/computing/grade-4-v2/index.html`; its computing table had rows 1 to 3
+only. `check:php` green, the script staged on the quraanacademy zone under a
+fresh name and verified by storage read-back and edge hash, and the operator
+ran it from the docroot with `--subject computing --grade 4 --apply`: it read
+back clean with all **15** overrides intact, so `ehel-comp-g04` now launches
+here (`local_prequran/ehel_app_url_overrides`). That is the script's own
+read-back plus a fetch of the target URL from this machine (200, the hub, its
+fourteen cards) — not a learner launch observed from here. Both copies of the
+script are deleted.
+
+All four Computing grades are routed: `ehel-comp-g01` … `g04` →
+`grade-1-v2` … `grade-4-v2`.
 
 **Read the override map on every run.** It has dropped keys before — Computing
 Grades 1 and 2 vanished from it between two applies on 2026-09-10, because
 another hand writes that setting from a stale copy. The repoint script only
 ever adds, so a missing key means somebody else removed it, and a read-back
-proves the map for that moment only.
+proves the map for that moment only. This run's map was intact: the 11 keys of
+the last Computing read-back were all still there, with Global Perspectives
+Grades 1 and 4 and Art & Design Grade 1 added by other sessions in between,
+and Mathematics Grades 3 and 4 and Science Grade 4 still absent as they were.

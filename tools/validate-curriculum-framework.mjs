@@ -36,7 +36,7 @@ const CURRICULUM_DIR = path.join(ROOT, "src", "curriculum");
 const files = args.length
   ? args
   : (fs.existsSync(CURRICULUM_DIR)
-    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-(?:english|science|global-perspectives|mathematics)-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
+    ? fs.readdirSync(CURRICULUM_DIR).filter((f) => /^cambridge-(?:english|science|global-perspectives|mathematics|computing)-\d+\.json$/.test(f)).sort().map((f) => path.join(CURRICULUM_DIR, f))
     : []);
 if (!files.length) {
   console.error(`usage: node tools/validate-curriculum-framework.mjs [--quiet] [<framework.json> ...]\n(no framework files found in ${CURRICULUM_DIR})`);
@@ -61,7 +61,11 @@ if (!files.length) {
 // Probability) and TWM, so 7Ni.01 and 7Gg.03 are well-formed codes too. The
 // multi-letter alternatives stay ahead of the single-letter class or "SIC"
 // would match as S + "IC".
-const CODE_RE = /^([1-9])((?:SL|SIC|TWS|TWM|ES|R|W|[EBCPAFMNGS])[a-z]?)\.?(\d{1,2})$/;
+// Computing 0059 has no sub-strands: the reporting code IS the strand - CT,
+// P, MD, DC, CS - so 1CT.05 and 3DC.04 are well-formed. CT, MD, DC and CS are
+// uppercase pairs and cannot collide with Science's "Cs"/"Cp" (a lowercase
+// tail); bare P already matched via the single-letter class.
+const CODE_RE = /^([1-9])((?:SL|SIC|TWS|TWM|ES|CT|MD|DC|CS|R|W|[EBCPAFMNGS])[a-z]?)\.?(\d{1,2})$/;
 // Page furniture that has been observed glued onto objective text, plus the
 // headings that sit between sections in the source PDFs. Any of these inside an
 // objective means the parser ran past the end of the bullet.
@@ -101,7 +105,7 @@ function validate(file) {
   }
   // The unit validator resolves a framework by filename from the unit's declared
   // code, so a filename that disagrees with curriculumCode loads the wrong file.
-  const fileCode = /cambridge-(?:english|science|global-perspectives|mathematics)-(\d+)\.json$/.exec(path.basename(file))?.[1];
+  const fileCode = /cambridge-(?:english|science|global-perspectives|mathematics|computing)-(\d+)\.json$/.exec(path.basename(file))?.[1];
   if (fileCode) F(String(fw.curriculumCode) === fileCode, "metadata: curriculumCode ≠ filename", `${fw.curriculumCode} vs ${fileCode}`);
   if (!isBlank(fw.source)) F(!PLACEHOLDER.test(fw.source), "metadata: source looks like a placeholder", fw.source);
 
@@ -137,7 +141,13 @@ function validate(file) {
     if (o.subStrandCode !== subCode) subMismatch.push(`${o.code} (subStrandCode ${o.subStrandCode})`);
     if (subStrands[subCode] !== undefined && o.subStrand !== subStrands[subCode]) labelMismatch.push(`${o.code} ("${o.subStrand}" vs "${subStrands[subCode]}")`);
     F(subStrands[subCode] !== undefined, "objective: sub-strand missing from the subStrands map", `${o.code} uses ${subCode}`);
-    const strandKey = subCode.startsWith("SL") ? "SL" : subCode[0];
+    // A framework with no sub-strands (Computing 0059) keys its strands map
+    // by the whole code - CT, MD, DC, CS - so try that first. Taking the
+    // first letter there would look up "C" for both CT and CS, find nothing,
+    // and skip the strand check for four of the five strands: green because
+    // it did no work. The other frameworks never key a strand by a full
+    // sub-strand code, so they fall through to the old rule unchanged.
+    const strandKey = strands[subCode] !== undefined ? subCode : (subCode.startsWith("SL") ? "SL" : subCode[0]);
     if (strands[strandKey] !== undefined && o.strand !== strands[strandKey]) strandMismatch.push(`${o.code} ("${o.strand}" vs "${strands[strandKey]}")`);
     if (typeof o.recurring !== "boolean") flagIssues.push(`${o.code} (recurring is ${typeof o.recurring})`);
     usedSubStrands.add(subCode);

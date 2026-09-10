@@ -1,0 +1,662 @@
+# -*- coding: utf-8 -*-
+"""Build a grade's Computing standalone lesson pages.
+
+WHAT THIS IS. The Computing standalone lesson generator, one kit for every
+grade: a course in the design of the Grade 1 Mathematics, English and Science
+standalone builds (mathematics/grade-1-app/g1v2, english/grade-1-app,
+science/grade-1-app), one self-contained HTML page per lesson, carrying its
+own CSS, its own activity JS and its own copy of the voice engine, bypassing
+shell/course-app.js entirely. It is the Science kit's build-lessons.py with
+the subject's vocabulary swapped: the same page skeleton (the shared pipeline
+anchors on it), a different set of step kinds, a different set of checks.
+
+ONE KIT, ONE DIRECTORY PER GRADE. computing/grade-N-app holds app.config.json
+(grade, stage, floors, hub text) and content/lesson-N.py; everything that
+draws a page lives here.
+
+WHAT THE CONTENT IS. Cambridge Primary Computing 0059, the stage named in the
+app's config - every learning objective of it, authored against the framework
+file src/curriculum/cambridge-computing-0059.json (extracted from the
+published PDF by tools/extract-cambridge-computing-framework.py). It is NOT
+the course under computing/grade-N/data: that course is built from the
+school's Word packs and declares a different framework code. Nothing under
+computing/grade-N/ is read or written here.
+
+Every step names the objectives it exercises, and the builder refuses a code
+the framework does not publish for the stage. check-coverage.py then asks the
+BUILT pages whether every objective is reached, so a lesson that loses a step
+fails the gate rather than the syllabus.
+
+    python ../lesson-kit/build-lessons.py --app .       # from a grade directory
+    python ../lesson-kit/build-lessons.py --app . 3     # just lesson 3
+
+Then the shared pipeline, in this order (each step assumes the last):
+
+    T=../../mathematics/lesson-app-tools
+    python $T/wire-navigation.py        --app .
+    python $T/wire-platform-controls.py --app .
+    python $T/preload-platform.py       --app .
+    python $T/wire-progress.py          --app .
+    python $T/add-header-bars.py        --app .
+    python $T/check-lessons.py          --app .
+    python ../lesson-kit/check-coverage.py --app .
+
+This tool writes the page from scratch every time, so it must run BEFORE any
+of them; running it again over a wired page throws the wiring away.
+"""
+import importlib.util
+import io
+import json
+import os
+import re
+import sys
+
+from _shell import META_KINDS, expand, finder_words
+
+KIT = os.path.dirname(os.path.abspath(__file__))
+ACADEMY = os.path.abspath(os.path.join(KIT, "..", ".."))
+REPO = os.path.abspath(os.path.join(ACADEMY, "..", "..", ".."))
+FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-computing-0059.json")
+LIB = os.path.join(KIT, "lib")
+
+
+def app_dir(argv):
+    """--app <dir>, else the cwd; refuses a directory with no app.config.json."""
+    d = argv[argv.index("--app") + 1] if "--app" in argv else os.getcwd()
+    d = os.path.abspath(d)
+    if not os.path.isfile(os.path.join(d, "app.config.json")):
+        sys.exit("REFUSED: no app.config.json in %s. Run from a grade directory or pass --app <dir>." % d)
+    return d
+
+
+APP = app_dir(sys.argv[1:])
+CONTENT = os.path.join(APP, "content")
+CFG = json.load(io.open(os.path.join(APP, "app.config.json"), encoding="utf-8"))
+STAGE = int(CFG["stage"])
+GRADE_LABEL = CFG["gradeLabel"]
+
+# kind -> the renderer in lib/computing.js that draws it
+KINDS = {
+    "explore": "tapCards", "context": "tapCards",
+    "sort": "sortBins",
+    "order": "order",
+    "demo": "demo",
+    # computational thinking
+    "follow": "followSteps", "bugs": "bugHunt", "remix": "remix", "robot": "robotGrid",
+    # programming
+    "program": "blockProgram", "debug": "debugProgram",
+    # managing data
+    "form": "dataForm", "table": "dataTable", "sorter": "sortMachine", "ask": "askDevice",
+    # networks and computer systems
+    "network": "networkBuild", "offline": "offlineTest", "io": "inputOutput", "apps": "appScreen",
+    "questions": "sequence", "quiz": "sequence",
+    # the unit shell, drawn around every lesson by _shell.py
+    "overview": "unitOverview", "lecture": "lecture", "words": "computingWords",
+    "games": "gameZone", "home": "homeProjects", "world": "computingWorld", "resources": "resources",
+}
+
+# Robo's rules and the table arithmetic live in _rules.py, shared with the
+# gate, so the builder and check-coverage.py cannot disagree about either.
+from _rules import DIRS, run_robot, table_answer  # noqa: E402
+
+
+def read(name):
+    return io.open(os.path.join(LIB, name), encoding="utf-8").read()
+
+
+def load_json(path):
+    return json.load(io.open(path, encoding="utf-8"))
+
+
+def stage_codes():
+    if not os.path.isfile(FRAMEWORK):
+        sys.exit("REFUSED: %s is missing. Extract it first:\n"
+                 "  python tools/extract-cambridge-computing-framework.py --pdf <0059.pdf> "
+                 "--output src/curriculum/cambridge-computing-0059.json" % FRAMEWORK)
+    fw = load_json(FRAMEWORK)
+    stage = fw["objectivesByStage"].get(str(STAGE))
+    if not stage:
+        sys.exit("REFUSED: the framework publishes no Stage %d" % STAGE)
+    return {o["code"]: o["text"] for o in stage}
+
+
+def js_keys(src, name, indent="  "):
+    """The keys of `const NAME = { key: ..., ... };` in lib/computing.js.
+
+    Read out of the real bytes rather than kept as a list here, so a scene,
+    a block or an app renamed in the JS fails the lesson that names it at
+    build time.
+    """
+    m = re.search(r"\n%sconst %s = \{\n(.*?)\n%s\};" % (indent, name, indent), src, re.S)
+    if not m:
+        sys.exit("REFUSED: cannot find `const %s = {` in lib/computing.js" % name)
+    return set(re.findall(r"^%s  ([A-Za-z]+): " % indent, m.group(1), re.M))
+
+
+def load_lessons(wanted):
+    cfg = CFG
+    out = []
+    for n, entry in enumerate(cfg["lessons"], 1):
+        if wanted and n not in wanted:
+            continue
+        path = os.path.join(CONTENT, "lesson-%d.py" % n)
+        if not os.path.isfile(path):
+            sys.exit("REFUSED: app.config.json names lesson %d (%s) but content/lesson-%d.py does not exist"
+                     % (n, entry["title"], n))
+        spec = importlib.util.spec_from_file_location("lesson_%d" % n, path)
+        mod = importlib.util.module_from_spec(spec)
+        if KIT not in sys.path:
+            sys.path.insert(0, KIT)   # `from _kit import ...`
+        spec.loader.exec_module(mod)
+        lesson = mod.LESSON
+        if lesson["title"] != entry["title"]:
+            sys.exit("REFUSED: lesson %d is titled %r in app.config.json and %r in content/lesson-%d.py"
+                     % (n, entry["title"], lesson["title"], n))
+        out.append((n, entry["file"], lesson))
+    return out
+
+
+# ----------------------------------------------------------------------
+# checks on the content, before a page is written
+# ----------------------------------------------------------------------
+def one_ok(opts, where):
+    ts = [o["t"] for o in opts]
+    if len(opts) < 2:
+        sys.exit("REFUSED: %s has fewer than 2 options" % where)
+    if len(set(ts)) != len(ts):
+        sys.exit("REFUSED: %s repeats an option: %r" % (where, ts))
+    if sum(1 for o in opts if o.get("ok")) != 1:
+        sys.exit("REFUSED: %s must have exactly one correct option (has %d)"
+                 % (where, sum(1 for o in opts if o.get("ok"))))
+
+
+def check_step(n, k, s, codes, scenes, blocks, apps, sounds):
+    where = "lesson %d step %d (%s)" % (n, k + 1, s["title"])
+    if s["kind"] not in KINDS:
+        sys.exit("REFUSED: %s has unknown kind %r" % (where, s["kind"]))
+    if not s["objectives"] and s["kind"] not in META_KINDS:
+        sys.exit("REFUSED: %s names no objective" % where)
+    for c in s["objectives"]:
+        if c not in codes:
+            sys.exit("REFUSED: %s names %s, which 0059 does not publish for Stage %d" % (where, c, STAGE))
+    d = s["data"]
+    kind = s["kind"]
+
+    def scene_ok(name):
+        if name not in scenes:
+            sys.exit("REFUSED: %s names scene %r; lib/computing.js draws %s" % (where, name, sorted(scenes)))
+
+    def blocks_ok(ids, what):
+        for b in ids:
+            if b not in blocks:
+                sys.exit("REFUSED: %s %s uses block %r; lib/computing.js has %s" % (where, what, b, sorted(blocks)))
+
+    if kind in ("explore", "context"):
+        if not d.get("items"):
+            sys.exit("REFUSED: %s has no items" % where)
+        for it in d["items"]:
+            if it.get("sound") and it["sound"] not in sounds:
+                sys.exit("REFUSED: %s names sound %r, which SOUND does not synthesise" % (where, it["sound"]))
+        if d.get("then"):
+            one_ok(d["then"]["opts"], where + " question")
+            if not d["then"].get("why"):
+                sys.exit("REFUSED: %s question has no why" % where)
+    elif kind == "sort":
+        ids = {b["id"] for b in d["bins"]}
+        if len(ids) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 bins" % where)
+        for it in d["items"]:
+            if it["bin"] not in ids:
+                sys.exit("REFUSED: %s item %r goes to bin %r, which does not exist" % (where, it["label"], it["bin"]))
+            if not it.get("why"):
+                sys.exit("REFUSED: %s item %r has no why" % (where, it["label"]))
+    elif kind == "order":
+        if len(d["items"]) < 3:
+            sys.exit("REFUSED: %s orders fewer than 3 things" % where)
+        if d.get("scene"):
+            scene_ok(d["scene"])
+            if any("id" not in it for it in d["items"]):
+                sys.exit("REFUSED: %s draws a scene, so every item needs an id" % where)
+    elif kind == "demo":
+        if len(d["frames"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 frames" % where)
+        for f in d["frames"]:
+            if f.get("scene"):
+                scene_ok(f["scene"]["id"])
+            if f.get("sound") and f["sound"] not in sounds:
+                sys.exit("REFUSED: %s names sound %r" % (where, f["sound"]))
+    elif kind == "follow":
+        scene_ok(d["scene"])
+        if len(d["steps"]) < 3:
+            sys.exit("REFUSED: %s follows fewer than 3 steps" % where)
+        ids = [st["id"] for st in d["steps"]]
+        if len(set(ids)) != len(ids):
+            sys.exit("REFUSED: %s repeats a step id" % where)
+    elif kind == "bugs":
+        scene_ok(d["scene"])
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 algorithms to debug" % where)
+        for rd in d["rounds"]:
+            if not 0 <= rd["wrong"] < len(rd["steps"]):
+                sys.exit("REFUSED: %s round %r marks step %d wrong, of %d" % (where, rd["goal"], rd["wrong"], len(rd["steps"])))
+            if not rd.get("why"):
+                sys.exit("REFUSED: %s round %r needs a why for the bug" % (where, rd["goal"]))
+            if rd.get("swap"):
+                # a step one place too early: the page moves it down one, so
+                # there must be a step after it and no fix to choose
+                if rd.get("fix") or rd["wrong"] + 1 >= len(rd["steps"]):
+                    sys.exit("REFUSED: %s round %r is a swap: no fix options, and the step must have one after it" % (where, rd["goal"]))
+            else:
+                one_ok(rd["fix"]["opts"], where + " fix for %r" % rd["goal"])
+                if not rd["fix"].get("why"):
+                    sys.exit("REFUSED: %s round %r needs a why for the fix" % (where, rd["goal"]))
+                if any("id" not in o for o in rd["fix"]["opts"]):
+                    sys.exit("REFUSED: %s round %r fix options need ids (use choice())" % (where, rd["goal"]))
+    elif kind == "remix":
+        scene_ok(d["scene"])
+        ids = {st["id"] for st in d["steps"]}
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s changes the algorithm fewer than 2 times" % where)
+        for rd in d["rounds"]:
+            if rd.get("kind", "change") == "change":
+                if rd["change"] not in ids:
+                    sys.exit("REFUSED: %s round %r changes step %r, which the algorithm does not have" % (where, rd["target"], rd["change"]))
+                ok = next(o for o in rd["opts"] if o.get("ok"))
+                ids = (ids - {rd["change"]}) | {ok["id"]}
+            else:
+                ok = next(o for o in rd["opts"] if o.get("ok"))
+                ids = ids | {ok["id"]}
+            one_ok(rd["opts"], where + " %r" % rd["target"])
+            if not rd.get("why") or not rd.get("result"):
+                sys.exit("REFUSED: %s round %r needs a why and a result" % (where, rd["target"]))
+    elif kind == "robot":
+        rows, cols = int(d["rows"]), int(d["cols"])
+        if len(d["levels"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 levels" % where)
+        for lv in d["levels"]:
+            for c, r in [lv["start"], lv["target"]] + list(lv.get("walls", [])):
+                if not (0 <= c < cols and 0 <= r < rows):
+                    sys.exit("REFUSED: %s level %r puts something at %r, off a %dx%d grid" % (where, lv["title"], [c, r], cols, rows))
+            if lv["facing"] not in DIRS:
+                sys.exit("REFUSED: %s level %r faces %r" % (where, lv["title"], lv["facing"]))
+            if lv.get("predict"):
+                end = run_robot(lv, lv["program"], rows, cols)
+                if end is None:
+                    sys.exit("REFUSED: %s level %r: the program to predict bumps into something" % (where, lv["title"]))
+                if end != list(lv["answer"]):
+                    sys.exit("REFUSED: %s level %r: the program stops at %r, not the authored answer %r" % (where, lv["title"], end, lv["answer"]))
+            else:
+                end = run_robot(lv, lv["solution"], rows, cols)
+                if end != list(lv["target"]):
+                    sys.exit("REFUSED: %s level %r: the authored solution stops at %r, not on the target %r" % (where, lv["title"], end, lv["target"]))
+    elif kind == "program":
+        blocks_ok(d.get("blocks") or [], "palette")
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 programs" % where)
+        for rd in d["rounds"]:
+            if rd.get("given"):
+                blocks_ok(rd["given"], "given program")
+                one_ok(rd["predict"]["opts"], where + " prediction")
+                if not rd["predict"].get("why"):
+                    sys.exit("REFUSED: %s prediction has no why" % where)
+            else:
+                blocks_ok(rd["expect"], "expected program")
+                if len(rd["algorithm"]) != len(rd["expect"]):
+                    sys.exit("REFUSED: %s round %r: %d words but %d blocks" % (where, rd["algorithm"], len(rd["algorithm"]), len(rd["expect"])))
+                for b in rd["expect"]:
+                    if b not in (d.get("blocks") or blocks):
+                        sys.exit("REFUSED: %s expects block %r, which is not in the palette" % (where, b))
+    elif kind == "debug":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 programs to debug" % where)
+        for rd in d["rounds"]:
+            blocks_ok(rd["program"], "buggy program"); blocks_ok(rd["expect"], "expected program")
+            if len(rd["program"]) != len(rd["expect"]):
+                sys.exit("REFUSED: %s round %r: the fix must keep the program the same length" % (where, rd["goal"]))
+            diffs = [k2 for k2 in range(len(rd["program"])) if rd["program"][k2] != rd["expect"][k2]]
+            if diffs != [rd["bug"]]:
+                sys.exit("REFUSED: %s round %r: the program differs from the expected one at %r, but the bug is marked at %d" % (where, rd["goal"], diffs, rd["bug"]))
+            one_ok(rd["fix"]["opts"], where + " fix for %r" % rd["goal"])
+            ok = next(o for o in rd["fix"]["opts"] if o["ok"])
+            if ok["id"] != rd["expect"][rd["bug"]]:
+                sys.exit("REFUSED: %s round %r: the fix %r does not make the expected program" % (where, rd["goal"], ok["id"]))
+            blocks_ok([o["id"] for o in rd["fix"]["opts"]], "fix options")
+            if not rd.get("why") or not rd["fix"].get("why"):
+                sys.exit("REFUSED: %s round %r needs a why for the bug and a why for the fix" % (where, rd["goal"]))
+    elif kind == "form":
+        ids = {x["id"] for x in d["options"]}
+        if len(d["people"]) < 3 or len(ids) < 2:
+            sys.exit("REFUSED: %s needs 3+ people and 2+ options" % where)
+        for p in d["people"]:
+            if p["answer"] not in ids:
+                sys.exit("REFUSED: %s: %s answers %r, not an option" % (where, p["name"], p["answer"]))
+    elif kind == "table":
+        if len(d["rows"]) < 2 or len(d["items"]) < 2:
+            sys.exit("REFUSED: %s needs 2+ rows and 2+ questions" % where)
+        for it in d["items"]:
+            one_ok(it["opts"], where + " %r" % it["ask"])
+            if not it.get("why"):
+                sys.exit("REFUSED: %s %r has no why" % (where, it["ask"]))
+            want = table_answer(d["rows"], it["check"])
+            keyed = next(o["t"] for o in it["opts"] if o["ok"])
+            if want is None:
+                sys.exit("REFUSED: %s %r: the table cannot answer it (check %r)" % (where, it["ask"], it["check"]))
+            if keyed != want:
+                sys.exit("REFUSED: %s %r is keyed %r but the table says %r" % (where, it["ask"], keyed, want))
+    elif kind == "sorter":
+        if len(d["ways"]) < 2 or len(d["items"]) < 6:
+            sys.exit("REFUSED: %s needs 2+ ways and 6+ things" % where)
+        for w in d["ways"]:
+            for it in d["items"]:
+                if it.get(w["id"]) not in w["groups"]:
+                    sys.exit("REFUSED: %s: %r sorted %s is %r, not one of %s" % (where, it["label"], w["label"], it.get(w["id"]), w["groups"]))
+        if d.get("then"):
+            one_ok(d["then"]["opts"], where + " question")
+    elif kind == "ask":
+        ids = {w["id"] for w in d["ways"]}
+        if len(d["questions"]) < 3 or len(ids) < 3:
+            sys.exit("REFUSED: %s needs 3+ questions and 3+ ways" % where)
+        for qn in d["questions"]:
+            if qn["answer"] not in ids:
+                sys.exit("REFUSED: %s %r is answered by %r, not a way" % (where, qn["ask"], qn["answer"]))
+            if not qn.get("why") or not qn.get("result"):
+                sys.exit("REFUSED: %s %r needs a why and a result" % (where, qn["ask"]))
+    elif kind == "network":
+        ids = {x["id"] for x in d["devices"]}
+        if d["hub"] not in ids:
+            sys.exit("REFUSED: %s: hub %r is not a device" % (where, d["hub"]))
+        if len(ids) < 4:
+            sys.exit("REFUSED: %s has fewer than 4 devices" % where)
+        for x in d["devices"]:
+            if x["id"] != d["hub"] and "wired" not in x:
+                sys.exit("REFUSED: %s: %r does not say whether it is wired" % (where, x["label"]))
+        for t in d["send"]:
+            if t["from"] not in ids or t["to"] not in ids or t["from"] == t["to"]:
+                sys.exit("REFUSED: %s sends between %r and %r" % (where, t["from"], t["to"]))
+    elif kind == "offline":
+        if len(d["apps"]) < 4:
+            sys.exit("REFUSED: %s tries fewer than 4 apps" % where)
+        for a in d["apps"]:
+            if not isinstance(a.get("needs"), bool) or not a.get("why"):
+                sys.exit("REFUSED: %s: %r needs a boolean `needs` and a why" % (where, a["label"]))
+        if not any(a["needs"] for a in d["apps"]) or all(a["needs"] for a in d["apps"]):
+            sys.exit("REFUSED: %s: the apps must include some that need the internet and some that do not" % where)
+    elif kind == "io":
+        if len(d["devices"]) < 4:
+            sys.exit("REFUSED: %s has fewer than 4 devices" % where)
+        kinds = {x["kind"] for x in d["devices"]}
+        if kinds != {"input", "output"}:
+            sys.exit("REFUSED: %s needs both inputs and outputs (has %s)" % (where, sorted(kinds)))
+        for x in d["devices"]:
+            if not x.get("does") or not x.get("shows"):
+                sys.exit("REFUSED: %s: %r needs `does` and `shows`" % (where, x["label"]))
+    elif kind == "apps":
+        if len(d["apps"]) < 3:
+            sys.exit("REFUSED: %s has fewer than 3 programs" % where)
+        for a in d["apps"]:
+            if a["screen"] not in apps:
+                sys.exit("REFUSED: %s: %r opens screen %r; lib/computing.js has %s" % (where, a["label"], a["screen"], sorted(apps)))
+        if d.get("then"):
+            one_ok(d["then"]["opts"], where + " question")
+    elif kind == "overview":
+        if len(d["about"]) < 3:
+            sys.exit("REFUSED: %s says fewer than 3 things the lesson is about" % where)
+    elif kind == "lecture":
+        if len(d["parts"]) < 3:
+            sys.exit("REFUSED: %s has fewer than 3 parts" % where)
+        for p in d["parts"]:
+            if not (p.get("pic") and p.get("title") and p.get("say")):
+                sys.exit("REFUSED: %s has a part without a pic, a title and something to say" % where)
+    elif kind == "words":
+        if len(d["items"]) < 4:
+            sys.exit("REFUSED: %s has fewer than 4 words" % where)
+        for w in d["items"]:
+            if not (w.get("w") and w.get("pic") and w.get("meaning") and len(w.get("uses") or []) >= 1):
+                sys.exit("REFUSED: %s word %r needs a pic, a meaning and a sample use" % (where, w.get("w")))
+        ws = [w["w"].lower() for w in d["items"]]
+        if len(set(ws)) != len(ws):
+            sys.exit("REFUSED: %s repeats a word" % where)
+    elif kind == "games":
+        if len(d["games"]) < 2:
+            sys.exit("REFUSED: %s derived fewer than 2 games - the lesson needs words and questions" % where)
+        for g in d["games"]:
+            if len(g["rounds"]) < 1:
+                sys.exit("REFUSED: %s game %r has no rounds" % (where, g["id"]))
+    elif kind == "home":
+        if len(d["items"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 home projects" % where)
+        for h in d["items"]:
+            if not (h.get("title") and h.get("materials") and len(h.get("steps") or []) >= 2 and h.get("look")):
+                sys.exit("REFUSED: %s project %r needs materials, 2+ steps and something to look for" % (where, h.get("title")))
+    elif kind == "resources":
+        if not d["finder"]:
+            sys.exit("REFUSED: %s has an empty word finder" % where)
+    elif kind in ("questions", "quiz"):
+        if len(d["items"]) < (6 if kind == "quiz" else 3):
+            sys.exit("REFUSED: %s has only %d questions" % (where, len(d["items"])))
+        for it in d["items"]:
+            one_ok(it["opts"], where + " %r" % it["ask"])
+            if not it.get("why"):
+                sys.exit("REFUSED: %s %r has no why" % (where, it["ask"]))
+
+
+# ----------------------------------------------------------------------
+# the page
+# ----------------------------------------------------------------------
+def attr(s):
+    return (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("'", "&#39;"))
+
+
+def ssml_attr(s):
+    return str(s).replace("'", "&#39;")
+
+
+def text(s):
+    return str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def plain(html):
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]*>", " ", str(html))).strip()
+
+
+SLIDE = """    <section class="slide" data-objectives="%(objectives)s" data-explain='%(explain)s' data-say="%(say)s">
+      <div class="slide-head"><span class="n">%(n)d</span><h2>%(title)s</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span id="ask%(n)d">%(ask)s</span></div>
+      <div class="stage">
+        <div id="stage%(n)d"></div>
+        <div class="choices" id="ch%(n)d"></div>
+        <p class="fb" id="fb%(n)d" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="score" id="score%(n)d"></p>
+%(note)s      </div>
+    </section>
+"""
+
+STICKER_SLIDE = """    <section class="slide" data-explain='%(explain)s' data-say="Look at all the stickers you earned!">
+      <div class="slide-head"><span class="n">&#9733;</span><h2>My stickers</h2></div>
+      <div class="say"><button type="button" class="speak" aria-label="Read it to me">&#128266;</button><span>Every step you finished earned a sticker.</span></div>
+      <div class="stage">
+        <div class="stickers" id="stickers"></div>
+        <p class="fb" id="fbstick" role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="bigbtns"><button type="button" class="big ghost small" id="restart">Play again</button></div>
+      </div>
+    </section>
+"""
+
+# The skeleton is the English build's, kept line for line where the shared
+# pipeline anchors on it: the skip link stays first in the body, `<div
+# class="wrap">` is add-header-bars.py's only anchor, the deck is <main> with
+# tabindex="-1" so the skip link can move focus into it, and `<nav class="dots">`
+# is what wire-platform-controls.py hangs the hero column on.
+PAGE = """<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>%(title)s</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+%(css)s</style>
+
+<a class="skip" href="#deck">Skip to the lesson</a>
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Ehel Academy &middot; %(gradeLabel)s Computing &middot; Lesson %(unit)d</p>
+      <h1>%(h1)s</h1>
+    </div>
+    <nav class="dots" id="dots" aria-label="Steps"></nav>
+  </header>
+
+  <main class="deck" id="deck" tabindex="-1">
+%(slides)s  </main>
+
+  <div class="foot">
+    <button type="button" class="big small ghost" id="back">&#9664; Back</button>
+    <span class="mid" id="where"></span>
+    <button type="button" class="big small" id="next">Next &#9654;</button>
+  </div>
+</div>
+
+<script>
+(function () {
+
+  /* SILENT WHILE THE DECK PAINTS. Every renderer draws once at load,
+     because the deck puts all its slides in the DOM at once - so a step
+     that speaks as it draws would speak on page load, several at a time.
+     say() returns early while this is set; it is cleared immediately
+     before show(0, false), the last statement here, so only the draw
+     pass is silenced. */
+  window.__ehelPainting = true;
+
+  /* ==================================================================
+     %(title)s - %(gradeLabel)s Computing, Lesson %(unit)d.
+
+     GENERATED by computing/lesson-kit/build-lessons.py from
+     %(appName)s/content/lesson-%(unit)d.py. Do not hand-edit: the
+     next build overwrites it, and the fix for anything wrong on this page
+     is in the content module or in lesson-kit/lib/computing.js.
+
+     Objectives (Cambridge Primary Computing 0059, Stage %(stage)d): %(codes)s
+     ================================================================== */
+
+  const LESSON = %(data)s;
+
+%(voice)s
+
+%(deck)s
+
+%(computing)s
+
+  const STICKERS = %(stickers)s;
+
+%(bootstrap)s
+  window.__ehelPainting = false;   /* the draw pass is over: sound is allowed */
+  show(0, false);
+
+})();
+</script>
+"""
+
+
+def bootstrap(steps):
+    out = []
+    for i, s in enumerate(steps):
+        n = i + 1
+        el = ('{ ask: "ask%d", say: "ask%d", stage: "stage%d", ch: "ch%d", fb: "fb%d", score: "score%d" }'
+              % (n, n, n, n, n, n))
+        fn = KINDS[s["kind"]]
+        out.append('  %s(Object.assign({ el: %s, finish: %d, done: %s }, LESSON.steps[%d].data));'
+                   % (fn, el, i, json.dumps(s["done"], ensure_ascii=False), i))
+    return "\n".join(out) + "\n"
+
+
+def prepare_quiz_pics(step):
+    """sequence() takes `pic` as HTML; the content writes an emoji."""
+    if step["kind"] in ("questions", "quiz"):
+        for it in step["data"]["items"]:
+            p = it.get("pic") or ""
+            if p and not p.strip().startswith("<"):
+                it["pic"] = '<div class="askpic" aria-hidden="true">' + text(p) + "</div>"
+    return step
+
+
+def build(n, fname, lesson, codes, scenes, blocks, apps, sounds, css, voice, deck, computing, finder):
+    steps = expand(n, lesson, codes, finder, CFG)
+    for k, s in enumerate(steps):
+        check_step(n, k, s, codes, scenes, blocks, apps, sounds)
+        prepare_quiz_pics(s)
+
+    title = lesson["title"]
+    h1 = lesson.get("h1") or (
+        (" ".join(title.split(" ")[:-1]) + " <em>" + title.split(" ")[-1] + "</em>")
+        if " " in title else "<em>" + title + "</em>")
+
+    body = ""
+    for i, s in enumerate(steps):
+        say = s.get("say") or plain(s["ask"])
+        body += SLIDE % {
+            "n": i + 1, "title": text(s["title"]), "ask": s["ask"],
+            "note": ('        <p class="reviewnote">' + text(s["note"]) + "</p>\n") if s.get("note") else "",
+            "explain": ssml_attr(s["explain"]), "say": attr(say).replace('"', "&quot;"),
+            "objectives": " ".join(s["objectives"]),
+        }
+    body += STICKER_SLIDE % {"explain": ssml_attr(
+        '<mstts:express-as style="calm" styledegree="1.15"><prosody rate="-8%"><s>Nothing to work out here.</s>'
+        '<s>This is your shelf.</s><s>One sticker for every step you finished.</s></prosody></mstts:express-as>'
+        '<break time="330ms"/><mstts:express-as style="cheerful" styledegree="1.45"><s>Have a look at what you earned.</s></mstts:express-as>')}
+
+    data = {
+        "lessonNo": n, "title": title,
+        "objectives": sorted({c for s in steps for c in s["objectives"]}),
+        "steps": [{"kind": s["kind"], "title": s["title"], "objectives": s["objectives"], "data": s["data"]} for s in steps],
+    }
+    stickers = [[s["icon"], s["sticker"]] for s in steps]
+    all_codes = sorted({c for s in steps for c in s["objectives"]})
+
+    page = PAGE % {
+        "title": title, "unit": n, "h1": h1, "css": css, "slides": body,
+        "gradeLabel": text(GRADE_LABEL), "stage": STAGE, "appName": os.path.basename(APP),
+        "codes": ", ".join(all_codes),
+        "data": json.dumps(data, ensure_ascii=False, indent=2).replace("\n", "\n  "),
+        "voice": voice, "deck": deck, "computing": computing,
+        "stickers": json.dumps(stickers, ensure_ascii=False),
+        "bootstrap": bootstrap(steps),
+    }
+    io.open(os.path.join(APP, fname), "w", encoding="utf-8", newline="").write(page)
+    print("  ok   %-32s lesson %d  %2d steps + stickers  %3d objectives  %6d bytes"
+          % (fname, n, len(steps), len(all_codes), len(page)))
+    return all_codes
+
+
+def main():
+    wanted = [int(a) for a in sys.argv[1:] if a.isdigit()]
+    codes = stage_codes()
+    computing = read("computing.js")
+    scenes = js_keys(computing, "SCENES")
+    blocks = js_keys(computing, "BLOCKS")
+    apps = js_keys(computing, "APPS")
+    sounds = js_keys(computing, "BANK", indent="    ")
+    if not (scenes and blocks and apps and sounds):
+        sys.exit("REFUSED: lib/computing.js read as having no scenes, blocks, apps or sounds - the parser is broken")
+    css = read("lesson.css") + "\n" + read("computing.css")
+    voice = read("voice.js")
+    deck = read("deck.js")
+
+    print("\n  Building %s Computing lessons  (0059 Stage %d: %d objectives; %d scenes, %d blocks, %d apps, %d sounds)\n"
+          % (GRADE_LABEL, STAGE, len(codes), len(scenes), len(blocks), len(apps), len(sounds)))
+    covered = set()
+    everything = load_lessons([])
+    finder = finder_words(everything)
+    for n, fname, lesson in everything:
+        if wanted and n not in wanted:
+            continue
+        covered |= set(build(n, fname, lesson, codes, scenes, blocks, apps, sounds, css, voice, deck, computing, finder))
+    if not wanted:
+        missing = sorted(set(codes) - covered)
+        print("\n  %d of %d Stage %d objectives reached by at least one step%s\n"
+              % (len(covered), len(codes), STAGE, ("; NOT reached: " + ", ".join(missing)) if missing else ""))
+        if missing:
+            sys.exit(1)
+    print("  Now run the shared pipeline - see the docstring.\n")
+
+
+main()

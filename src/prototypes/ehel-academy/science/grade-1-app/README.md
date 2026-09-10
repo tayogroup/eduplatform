@@ -169,6 +169,22 @@ arithmetic to compute, so every key is a claim.
   make the build reachable by URL and by nobody's course; Grade 1 routing is the
   `local_prequran/ehel_app_url_overrides` Moodle setting. Not done, on purpose.
 
+## Resume on reopen (2026-09-10)
+
+A reopened lesson used to draw an empty dot rail and step 1 while the record
+said otherwise: `wire-progress.py` read the document back only as a baseline
+for the attempted/knownWords maps. It now installs `window.__ehelRestore`
+inside the deck's own scope (where `done`, `paintDots` and `show` live) and
+calls it once hydrate lands, with the stored `sectionsDone` and `resume`. Ticks
+are restored, the header percentage follows, and the page opens at the resume
+step - unless the learner has already moved off an untouched step 1, because
+hydrate is asynchronous and a child who tapped Next is not to be yanked back.
+Measured both ways: reopen lands on "Step 3 of 10" with two ticks; a Next
+tapped before the record arrives stays where the child put it. The shared gate
+asserts the hook and its call site. Pages wired before the hook existed are
+upgraded in place by re-running `wire-progress.py --app .`, so the Mathematics
+and English builds get it without a rebuild.
+
 ## Progress: `l01`..`l08`, and why not `u01`
 
 Written under `l01`..`l08` beneath the shell's own course key `ehel-sci-g01`.

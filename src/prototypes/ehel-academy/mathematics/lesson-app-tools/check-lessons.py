@@ -111,6 +111,13 @@ def main():
             fail(f, "show() does not report position - the board's pointer "
                     "will sit on the last COMPLETED step, not where the "
                     "learner is")
+        # The record was read back for its attempted/knownWords baseline for
+        # weeks while the dot rail and the step ignored it: a reopened lesson
+        # started at step 1 every time. Assert the restore hook AND its call,
+        # for the same reason the two above are asserted as call sites.
+        if "window.__ehelRestore = function" not in s or "window.__ehelRestore(doneIdx, resumeIdx)" not in s:
+            fail(f, "does not resume on reopen - a child who closes the tab "
+                    "starts the lesson from step 1 while the record says otherwise")
         if ('UNIT = "%s%02d"' % (app.cfg.get("progressUnitPrefix", "u"), unit)) not in s:
             fail(f, "reports progress under the wrong unit id")
         if ("unitNo: %d," % unit) not in s:

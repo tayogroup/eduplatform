@@ -83,6 +83,81 @@ FINISH = re.compile(
 )
 SHOW_TAIL = re.compile(r"(\n    window\.scrollTo\(\{ top: 0, behavior: \"smooth\" \}\);\n  \})")
 
+# Everything a page needs to RESUME, kept as constants because two paths
+# install it: wire() for a fresh page, upgrade() for a page wired before the
+# hook existed (2026-09-10). The upgrade anchors on the exact text the older
+# tool wrote, so a page it cannot recognise is refused, never guessed at.
+RESTORE_HOOK = (
+        '  /* RESUME ON REOPEN. The stored record already knew which steps were\n'
+        '     done and where the learner was; until this hook every reopened\n'
+        '     lesson drew an empty dot rail and step 1. Called once, after the\n'
+        '     progress document hydrates, and only if the learner has not already\n'
+        '     moved off step 1 on their own - hydrate is asynchronous and a child\n'
+        '     who tapped Next is not to be yanked back. show() is looked up by\n'
+        '     name at call time, so every wrapper the build or the pipeline puts\n'
+        '     around it (the header bar\\x27s percentage, a step\\x27s arrival line)\n'
+        '     runs exactly as it does for a tap on a dot. */\n'
+        '  window.__ehelRestore = function (doneIdx, resumeIdx) {\n'
+        '    /* read BEFORE the ticks land: the record\\x27s own step 1 must not\n'
+        '       count as the learner having touched it (measured: it did, and the\n'
+        '       page stayed on step 1 with the dots restored) */\n'
+        '    const untouched = cur === 0 && !done[0];\n'
+        '    let changed = false;\n'
+        '    for (const i of doneIdx || []) { if (i >= 0 && i < done.length - 1 && !done[i]) { done[i] = true; changed = true; } }\n'
+        '    if (changed) paintDots();\n'
+        '    const target = Number.isInteger(resumeIdx) && resumeIdx > 0 && resumeIdx < slides.length\n'
+        '      ? resumeIdx : done.findIndex((d, i) => !d && i < done.length - 1);\n'
+        '    if (untouched && target > 0) show(target, false);\n'
+        '    else if (changed) show(cur, false);\n'
+        '  };'
+)
+
+OLD_HYDRATE = """  let baseAttempted = {};
+  let baseKnown = [];
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (!u) return;
+      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
+      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
+    } catch (_) { /* never break the lesson */ }
+  })();
+"""
+
+NEW_HYDRATE = """  let baseAttempted = {};
+  let baseKnown = [];
+  /* step-NN -> the slide's 0-based index; anything else -> -1 */
+  const indexOf = (id) => {
+    const m = /^step-(\\d{2})$/.exec(String(id || ""));
+    return m ? Number(m[1]) - 1 : -1;
+  };
+  (async () => {
+    try {
+      const doc = await ws.hydrate();
+      const u = doc && doc.units && doc.units[UNIT];
+      if (!u) return;
+      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
+      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
+      /* RESUME. The sections the record says are done are done - seeded into
+         doneIds too, so unit.completed still fires on the day the LAST step
+         is finished even if the first seven were finished last week - and
+         the deck is told to tick them and open where the learner was. Without
+         this a child who closed the tab reopened to an empty dot rail and
+         step 1, while the school's record said otherwise; measured on the
+         Science build on 2026-09-10, and true of every build this tool wires. */
+      const doneIdx = (Array.isArray(u.sectionsDone) ? u.sectionsDone : []).map(indexOf).filter((i) => i >= 0);
+      for (const i of doneIdx) doneIds.add(sectionId(i));
+      const resumeIdx = indexOf(u.resume);
+      if (window.__ehelRestore && (doneIdx.length || resumeIdx > 0)) {
+        try { window.__ehelRestore(doneIdx, resumeIdx); } catch (_) { /* never break the lesson */ }
+      }
+    } catch (_) { /* never break the lesson */ }
+  })();
+
+"""
+
+
 JS = """
 <script type="module">
   /* Progress reporting - see lesson-app-tools/wire-progress.py, especially
@@ -174,18 +249,7 @@ JS = """
      repairs it; a seed would simply have missed the window. If hydrate cannot
      be reached at all the baseline stays empty, which is the behaviour without
      it. */
-  let baseAttempted = {};
-  let baseKnown = [];
-  (async () => {
-    try {
-      const doc = await ws.hydrate();
-      const u = doc && doc.units && doc.units[UNIT];
-      if (!u) return;
-      if (u.attempted && typeof u.attempted === "object") baseAttempted = u.attempted;
-      if (Array.isArray(u.knownWords)) baseKnown = u.knownWords;
-    } catch (_) { /* never break the lesson */ }
-  })();
-
+""" + NEW_HYDRATE + """
   function report(i) {
     lastAt = i;
     const ev = {
@@ -309,11 +373,34 @@ CSS = """
 """
 
 
+def upgrade(app, name, s):
+    """A page wired before 2026-09-10 reports but does not resume: it reads
+    the record back for its attempted/knownWords baseline and ignores
+    sectionsDone and resume. Add the hook after show() and swap the hydrate
+    block, anchored on the exact text the older tool wrote. Nothing else on
+    the page moves, so a build's owner can bring it up to date without a
+    rebuild - and without this path the gate's new assertion would turn every
+    older build red with no way to green it but a from-scratch rebuild."""
+    anchor = '    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }\n  }'
+    if s.count(anchor) != 1:
+        print("  REFUSED %-24s wired, but show() is not the shape this upgrades (%d matches)" % (name, s.count(anchor)))
+        return False
+    if s.count(OLD_HYDRATE) != 1:
+        print("  REFUSED %-24s wired, but the hydrate block is not the shape this upgrades (%d matches)" % (name, s.count(OLD_HYDRATE)))
+        return False
+    s = s.replace(anchor, anchor + RESTORE_HOOK, 1).replace(OLD_HYDRATE, NEW_HYDRATE, 1)
+    app.write(name, s)
+    print("  up   %-26s now resumes on reopen" % name)
+    return True
+
+
 def wire(app, unit, name, title):
     s = app.read(name)
     if MARK in s:
-        print("  skip %-26s already reports" % name)
-        return True
+        if "window.__ehelRestore = function" in s:
+            print("  skip %-26s already reports and resumes" % name)
+            return True
+        return upgrade(app, name, s)
 
     if len(FINISH.findall(s)) != 1:
         print("  REFUSED %-24s finish() is not the shape this patches (%d matches)"
@@ -328,13 +415,14 @@ def wire(app, unit, name, title):
         r"\1if (window.__ehelStep) { try { window.__ehelStep(i, done); } catch (_) {} } ", s, count=1)
     s = SHOW_TAIL.sub(
         r"\1", s, count=1)
-    # the position report goes at the END of show(), after cur has moved
+    # the position report goes at the END of show(), after cur has moved;
+    # the restore hook goes right after show(), inside the deck's own scope,
+    # because `done`, `paintDots` and `show` live there and nowhere else
     s = s.replace(
         '    window.scrollTo({ top: 0, behavior: "smooth" });\n  }',
         '    window.scrollTo({ top: 0, behavior: "smooth" });\n'
-        '    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }\n  }',
+        '    if (window.__ehelAt) { try { window.__ehelAt(cur); } catch (_) {} }\n  }\n' + RESTORE_HOOK,
         1)
-
     i = s.rfind("</style>")
     if i < 0:
         print("  REFUSED %-24s no </style>" % name)

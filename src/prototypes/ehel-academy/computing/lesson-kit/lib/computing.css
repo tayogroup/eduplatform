@@ -553,3 +553,80 @@
   .key { width: 38px; height: 40px; border-radius: 8px; border: 2px solid var(--line); background: var(--card); color: var(--ink); font-weight: 800; font-size: 16px; }
   .key.num { width: 42px; }
   .key.wrong { border-color: var(--bad); animation: shake 360ms ease; }
+
+  /* ==================================================================
+     STAGE 4 additions - same tokens, no new hue.
+     ================================================================== */
+  /* loops in an algorithm; Robo's looped program */
+  .algo li.loopbox { border-color: var(--accent); background: rgba(233,116,79,0.10); }
+  .algo li.loopbox.now { box-shadow: 0 0 0 3px rgba(233,116,79,0.35); }
+  .algo li.loopbox > b { display: block; margin-bottom: 4px; color: var(--accent-ink); }
+  .algo li span.now { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 8px; }
+  .loopchip { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; border: 2px dashed var(--accent); }
+  .loopchip.now { background: rgba(233,116,79,0.12); }
+  .loopchip > b { margin-right: 4px; font-size: 14px; }
+  .tapcard.stop { border-color: var(--bad); }
+  /* algorithms compared */
+  .algocards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; width: 100%; max-width: 680px; }
+  .algocard { display: flex; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px; border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink); text-align: left; font-family: inherit; }
+  .algocard .acname { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .algocard .acfacts { color: var(--muted); font-size: 14px; font-weight: 700; }
+  .algocard.right { border-color: var(--good); background: var(--good-soft); }
+  .algocard.wrong { border-color: var(--bad); animation: shake 360ms ease; }
+  .algocard:disabled { opacity: 0.85; }
+  /* sub-routines */
+  .subs { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: flex-start; width: 100%; }
+  .mainalgo, .subbox { padding: 10px 12px; border-radius: 16px; border: 2px solid var(--line); background: var(--card); min-width: 180px; }
+  .mainalgo > b, .subbox > b { display: block; margin-bottom: 6px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; letter-spacing: .08em; color: var(--teal); }
+  .subbox.now { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(244,201,93,0.25); }
+  .algo li.call { border-style: dashed; border-color: var(--teal); }
+  .tapcard.call { border-style: dashed; border-color: var(--teal); }
+  /* if-branches */
+  .branch { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 560px; }
+  .ifbox { padding: 10px 12px; border-radius: 16px; border: 2px solid var(--plum); background: rgba(183,139,209,0.10); }
+  .ifbox > b { display: block; margin-bottom: 6px; }
+  .arms { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .arm { padding: 8px; border-radius: 12px; border: 2px solid var(--line); opacity: 0.55; }
+  .arm.on { opacity: 1; border-color: var(--gold); }
+  .arm > i { display: block; margin-bottom: 4px; color: var(--muted); font-size: 14px; }
+  @media (max-width: 480px) { .arms { grid-template-columns: 1fr; } }
+  /* building a loop */
+  .loopbuild { width: 100%; max-width: 520px; }
+  .loopbox2 { padding: 10px 12px; border-radius: 16px; border: 2px dashed var(--accent); background: rgba(233,116,79,0.08); }
+  .loopbox2 > b { display: block; margin-bottom: 4px; }
+  .loopbox2 .algo li.dim { border-style: dashed; color: var(--muted); font-weight: 600; }
+  .algostep small { color: var(--muted); font-weight: 600; font-size: 12px; }
+  /* comments on code */
+  .commented { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 560px; }
+  .crow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .ccomment { flex: 1 1 200px; padding: 6px 10px; border-radius: 10px; background: rgba(53,191,178,0.12); color: var(--teal); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 14px; }
+  .ccomment.empty { color: var(--muted); background: transparent; border: 1px dashed var(--line); }
+  .chip.comment { font-family: ui-monospace, Menlo, Consolas, monospace; font-weight: 600; font-size: 14px; text-align: left; }
+  /* planning objects */
+  .plancard { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 18px; border: 3px solid var(--line); background: var(--card); max-width: 34em; text-align: left; }
+  .plancard .ppic { font-size: 48px; line-height: 1.1; }
+  .plancard p { margin: 4px 0 0; }
+  .planline b { color: var(--teal); }
+  /* testing part by part */
+  .parts { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 600px; }
+  .part { padding: 10px 12px; border-radius: 16px; border: 2px solid var(--line); background: var(--card); display: flex; flex-direction: column; gap: 6px; }
+  .part.ok { border-color: var(--good); } .part.bad { border-color: var(--bad); }
+  .parthead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+  .parthead span { color: var(--muted); font-size: 14px; flex: 1 1 160px; }
+  .partstat { font-size: 13px; font-weight: 700; color: var(--muted); }
+  .part.ok .partstat { color: var(--good); } .part.bad .partstat { color: var(--bad); }
+  .part .script { min-height: 0; justify-content: flex-start; }
+  /* sorting, and the parts of a table */
+  .rec .cell.sorted { border-color: var(--teal); }
+  .dbtable { border-collapse: separate; border-spacing: 4px; margin: 0 auto; }
+  .dbtable th { padding: 0; }
+  .dbtable tr.on .cellbtn { border-color: var(--good); background: var(--good-soft); }
+  .colhead.rec { text-align: left; }
+  .cellbtn.on { border-color: var(--good); background: var(--good-soft); }
+  /* Caesar and Pigpen */
+  .al.pig { width: 38px; }
+  .al.pig svg { color: var(--ink); }
+  .key.pigk { width: 40px; color: var(--ink); display: grid; place-items: center; }
+  .codecell small svg { color: var(--good); }
+  .codecell svg { color: var(--ink); }
+  .stopbtn { border-color: var(--bad); }

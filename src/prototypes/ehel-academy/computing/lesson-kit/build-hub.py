@@ -53,6 +53,9 @@ MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "order": 2,
            # Stage 3
            "trim": 3, "loopspot": 3, "whatif": 4, "inout": 5, "tidy": 5, "parallel": 6, "tweak": 4, "device": 5,
            "views": 4, "sheet": 5, "filter": 5, "cipher": 5,
+           # Stage 4
+           "loopalgo": 5, "compare": 4, "subroutine": 4, "branch": 4, "loopbuild": 4,
+           "comment": 3, "inputprog": 5, "plan": 3, "parttest": 6, "datasort": 4, "tableparts": 3,
            "questions": 3, "quiz": 4,
            # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
            "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
@@ -92,6 +95,18 @@ UNPLUGGED = {
     "sheet": "Draw a grid with lettered columns and numbered rows. Call out cells (B3!) and put things in them. Then mark one column as money and write the numbers with pounds.",
     "filter": "Lay out toy cards with a few facts each (colour, size, legs). Pick a rule (legs more than 2) and pull out only the cards that match.",
     "cipher": "Write a message with 1 = a, 2 = b. Give it to someone with the key and see if they can read it. Then try without the key.",
+    # Stage 4
+    "loopalgo": "Write a routine with a 'repeat 3 times' box in it on cards. The grown-up follows it EXACTLY, counting the turns out loud. Then write one with a 'forever' box and see who stops it.",
+    "compare": "Write two ways of doing one job (two routes to school, two ways to tidy a room). Say which is best when you are in a hurry, which when you must not forget anything, and why.",
+    "subroutine": "Write 'getting ready' as a main list that says 'do WASH', 'do DRESS', 'do BAG', and each of those as its own little list. Follow the main list, jumping into each little list and back.",
+    "branch": "Make an 'if it is raining' routine: the same start and end, a different middle. Roll a dice for the weather and follow the branch it gives you.",
+    "loopbuild": "Water the plants or lay the table, and write it as 'repeat N times' plus the steps in the box. Unroll it: how many steps is that really?",
+    "comment": "Take a card program and write a short comment on each card saying what it is FOR. Give it to someone who has never seen it. Can they explain it back?",
+    "inputprog": "Two inputs, two outputs: agree that a clap makes your partner jump and a tap on the shoulder makes them spin. Give the inputs in a random order.",
+    "plan": "Before building anything, plan each object on paper: what starts it (input) and what it does (output).",
+    "parttest": "Split a long card program into three parts and act out ONE part at a time. Which part goes wrong? Fix only that part and act it out again.",
+    "datasort": "Line up the family by age, youngest first, then oldest first, then in alphabetical order of first name. Say the field and the direction each time.",
+    "tableparts": "Make a table of your family: one row per person, columns for age and favourite food. Point to a record, a field, and one piece of data.",
 }
 
 
@@ -323,6 +338,40 @@ def keys_for(s):
     elif k == "race":
         out.append("<li><b>%s</b> <span class=\"key\">%s; %s &rarr; <b>%s</b></span></li>" % (text(s["title"]), text("; ".join("%s = %s" % (rd["ask"], rd["answer"]) for rd in d["rounds"])),
                                                                                                  text(plain(d["then"]["ask"])), text(ok_text(d["then"]["opts"]))))
+    elif k == "loopalgo":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">%s</span></li>" % (text(rd["task"]), text("follow it round the loop" if rd["mode"] == "follow" else "the wrong step is block %d%s; it should be %s" % (
+                rd["wrong"][0] + 1, (", step %d of the loop" % (rd["wrong"][1] + 1)) if rd["wrong"][1] >= 0 else "", ok_text(rd["fix"]["opts"])))) for rd in d["rounds"])))
+    elif k == "compare":
+        names = {a["id"]: a["name"] for a in d["algos"]}
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(rd["purpose"]), text(names[rd["answer"]])) for rd in d["rounds"])))
+    elif k == "subroutine":
+        out.append("<li><b>%s</b> <span class=\"key\">%s</span></li>" % (text(s["title"]), "; ".join(text(rd["task"]) + ": " + text(", ".join(("do " + bl["sub"]) if bl.get("kind") == "call" else bl["label"] for bl in rd["main"])) for rd in d["rounds"])))
+    elif k == "branch":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">%s: %s; %s: %s</span></li>" % (text(rd["task"]), text(rd["inputs"][0]["label"]), text(", ".join(st["label"] for st in rd["yes"])), text(rd["inputs"][1]["label"]), text(", ".join(st["label"] for st in rd["no"]))) for rd in d["rounds"])))
+    elif k == "loopbuild":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">repeat %d times: %s</span></li>" % (text(rd["task"]), rd["expect"]["times"], text(", ".join(next(st["label"] for st in rd["pool"] if st["id"] == b) for b in rd["expect"]["body"]))) for rd in d["rounds"])))
+    elif k == "comment":
+        out.append("<li><b>%s</b> <span class=\"key\">%s; %s &rarr; <b>%s</b></span></li>" % (text(s["title"]), "; ".join("%s: %s" % (text(d["program"][c["block"]]), text(c["text"])) for c in sorted(d["comments"], key=lambda c: c["block"])),
+                                                                                              text(plain(d["then"]["ask"])), text(ok_text(d["then"]["opts"]))))
+    elif k == "inputprog":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s</li>" % "; ".join("%s: <b>%s</b>" % (text(k2), text(", ".join(sc["expect"]))) for k2, sc in rd["scripts"].items()) for rd in d["rounds"])))
+    elif k == "plan":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">input <b>%s</b>; output <b>%s</b></span></li>" % (text(rd["object"]), text(ok_text(rd["input"]["opts"])), text(ok_text(rd["output"]["opts"]))) for rd in d["rounds"])))
+    elif k == "parttest":
+        out.append("<li><b>%s</b><ul>%s</ul></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">%s</span></li>" % (text(rd["goal"]), "; ".join("%s: %s" % (text(p["name"]), ("bug at block %d, should be <b>%s</b>" % (p["bug"] + 1, text(p["expect"][p["bug"]]))) if p.get("bug") is not None else "correct") for p in rd["parts"])) for rd in d["rounds"])))
+    elif k == "datasort":
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">by %s %s; %s &rarr; <b>%s</b></span></li>" % (text(plain(t["ask"])), text(t["field"]), text(t["dir"]), text(plain(t["then"]["ask"])), text(ok_text(t["then"]["opts"]))) for t in d["tasks"])))
+    elif k == "tableparts":
+        out.append("<li><b>%s</b><ol>%s</ol></li>" % (text(s["title"]), "".join(
+            "<li>%s <span class=\"key\">&rarr; <b>%s</b></span></li>" % (text(plain(t["ask"])), text(t["target"] if isinstance(t["target"], str) else "%s's %s" % tuple(t["target"]))) for t in d["tasks"])))
     elif k == "trim":
         out.append("<li><b>%s</b> <span class=\"key\">cut: %s; keep: %s</span></li>" % (text(s["title"]), text(", ".join(st["label"] for st in d["steps"] if st.get("waste"))),
                                                                                        text(" &rarr; ".join(st["label"] for st in d["steps"] if not st.get("waste")))))
@@ -377,8 +426,17 @@ def keys_for(s):
         items = []
         for lv in d["levels"]:
             if lv.get("predict"):
+                if lv.get("loop"):
+                    # Stage 4: a predict level with a repeat loop (4CT.05); the key
+                    # describes the loop as written and the square it ends on
+                    words = ", ".join(COMMANDS[c] for c in lv.get("before") or [])
+                    words += (", " if words else "") + "repeat %d times (%s)" % (int(lv["loop"]["times"]), ", ".join(COMMANDS[c] for c in lv["loop"]["body"]))
+                    if lv.get("after"):
+                        words += ", " + ", ".join(COMMANDS[c] for c in lv["after"])
+                else:
+                    words = ", ".join(COMMANDS[c] for c in lv["program"])
                 items.append("<li>%s <span class=\"key\">program %s stops at column %d, row %d</span></li>" % (
-                    text(lv["title"]), text(", ".join(COMMANDS[c] for c in lv["program"])), lv["answer"][0] + 1, lv["answer"][1] + 1))
+                    text(lv["title"]), text(words), lv["answer"][0] + 1, lv["answer"][1] + 1))
             else:
                 items.append("<li>%s <span class=\"key\">one solution: <b>%s</b></span></li>" % (
                     text(lv["title"]), text(", ".join(COMMANDS[c] for c in lv["solution"]))))

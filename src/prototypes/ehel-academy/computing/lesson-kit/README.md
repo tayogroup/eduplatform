@@ -20,7 +20,7 @@ subject's own. If the Mathematics engine changes, re-copy `voice.js` and
 | `build-lessons.py --app <dir>` | writes `<slug>.html` per lesson from the content; refuses a bad objective code, a quiz with no single key, a sort into a missing bin, a Robo solution that misses, a table key the rows disagree with, a debug fix that does not make the expected program (every fix of a multi-bug round), a race keyed to the wrong sum, a chart keyed against its own columns, a `mustRepeat` round whose expected program has no repeat, a precise option no drawing has, a label part no figure has, and a survey where every way works |
 | `build-hub.py --app <dir>` | writes the hub: cards with step counts and time estimates, the strands panel, the printable teachers-and-parents section with the unplugged version of every activity and the answer keys |
 | `check-coverage.py --app <dir>` | the curriculum gate on the BUILT pages: every objective of the stage reached, per-lesson floors, keys single, and Robo's routes / table answers / fixes / race sums / chart keys RE-COMPUTED from the shipped data |
-| `_rules.py` | the things the kit computes rather than trusts — Robo's Bee-Bot rules, the table arithmetic, the repeat expansion (`REPEATS`, `expand_program`; the builder refuses to run if `computing.js` disagrees about what `repeat2`/`3`/`4` mean), the race sums, and at Stage 3 the machine rules (`rule_output`), the numbered walk (`walk_end`), the 1 = a code (`code_word`, `decode_code`), the row filter (`filter_rows`), tidy-program equivalence (`same_effect`), the repeated run (`repeat_run`) and the spreadsheet state (`sheet_cells`) — each mirrored name for name in `computing.js`; imported by the builder AND the gate so they cannot disagree |
+| `_rules.py` | the things the kit computes rather than trusts — Robo's Bee-Bot rules, the table arithmetic, the repeat expansion (`REPEATS`, `expand_program`; the builder refuses to run if `computing.js` disagrees about what `repeat2`/`3`/`4` mean), the race sums, and at Stage 3 the machine rules (`rule_output`), the numbered walk (`walk_end`), the 1 = a code (`code_word`, `decode_code`), the row filter (`filter_rows`), tidy-program equivalence (`same_effect`), the repeated run (`repeat_run`) and the spreadsheet state (`sheet_cells`), and at Stage 4 the loop unroll (`expand_loop`), the loop-algorithm walk (`flatten_algo`, forever loops go round `FOREVER_CYCLES` = 2 then stop), the sub-routine walk (`sub_expand`), the branch (`branch_run`), the best algorithm for a purpose (`best_algo`), the sort (`sort_rows`), the Caesar shift (`caesar_shift`) and the Pigpen grid (`pigpen_index`) — each mirrored name for name in `computing.js`; imported by the builder AND the gate so they cannot disagree |
 | `_kit.py` | `step()`, `explain()`, `q()`, `opt()`, `s()`, `choice()`, and `part()`, `word()`, `home()` — the vocabulary the content is written in |
 | `_shell.py` | the unit shell: the seven steps drawn AROUND every lesson (overview, lecture, words, games, home, world, resources), and the games derived from the lesson's own content; used by both builders so the hub and the page agree |
 | `lib/lesson.css` | the Mathematics design system, verbatim via the Science kit's copy |
@@ -44,7 +44,7 @@ codes the builder accepts and which the gate demands.
 | `follow` | `followSteps` | taps the step the lit algorithm names next; the scene paints in the order tapped (1CT.01) |
 | `bugs` | `bugHunt` | finds the one wrong step, chooses the fix (or, on a `swap` round, the page moves the too-early step), watches the fixed algorithm run (1CT.02) |
 | `remix` | `remix` | changes or adds a step to make a named outcome; the scene redraws (1CT.07) |
-| `robot` | `robotGrid` | builds a program of forward / backwards / left / right and presses Go; `predict` levels ask where Robo stops first (1CT.03, 1P.03) |
+| `robot` | `robotGrid` | builds a program of forward / backwards / left / right and presses Go; `predict` levels ask where Robo stops first (1CT.03, 1P.03); at Stage 4 a predict level may carry a `loop` (`before`, `loop: {times, body}`, `after`) drawn as a repeat chip and unrolled by `expand_loop` (4CT.05) |
 | `program` | `blockProgram` | rebuilds an algorithm as blocks and runs it; `given` rounds predict before Run (1P.02, 1P.03, 1P.05); at Stage 2 the palette carries `repeat2`/`3`/`4` (a repeat repeats the NEXT block), a `mustRepeat` round refuses a program with no repeat block, and a round with `sprites` + `object` plans one object of several (2P.02–04, 2P.06); at Stage 3 a round with `start` leaves the sprite where a previous program put it and `mustReset` requires a `home` block first (3P.02) |
 | `debug` | `debugProgram` | runs a buggy program, taps the bug, picks the fix, runs again (1P.04–07); a round with `bugs` (a list) and `fixes` keyed by bug has more than one bug, and a `partner` adds an Ask button whose hint points at the block still wrong (2P.05, 2P.07) |
 | `form` | `dataForm` | records six people's answers on a form; the table fills itself (1MD.03) |
@@ -67,11 +67,22 @@ codes the builder accepts and which the gate demands.
 | `tidy` | `tidyProgram` | deletes unused blocks and folds runs into a repeat, then runs to prove the program still does the same thing in fewer blocks; `same_effect` decides (3P.01) |
 | `parallel` | `parallelProgram` | builds a script per object and runs them all at once; a `static` object has look blocks only (3P.03, 3P.04) |
 | `tweak` | `tweakProgram` | changes the number inside a move block until the cat stops on the flower; `walk_end` decides (3P.05) |
-| `device` | `deviceProgram` | builds a program for Bitsy - a `when` hat block naming the input, then outputs - and presses that input on the board (3P.06, 3P.10, 3CS.05) |
+| `device` | `deviceProgram` | builds a program for Bitsy - a `when` hat block naming the input, then outputs - and presses that input on the board (3P.06, 3P.10, 3CS.05); at Stage 4 the hats include the temperature and light sensors (`whenHot`, `whenDark`), the palette carries `wait`, `repeat2`/`3`/`4` (repeats the NEXT output) and `forever` (repeats everything after it, capped at five cycles on screen, ended by a Stop button), and a loop block is refused last (4P.08, 4P.09) |
 | `views` | `dataViews` | opens the same counts as a table, a bar chart and a pictogram, then answers questions keyed by `table_answer` (3MD.02) |
 | `sheet` | `spreadsheet` | finds cells by name, puts values in, formats a column or cell as text, number, date or currency (3MD.04, 3MD.05) |
 | `filter` | `dataFilter` | builds a filter from chips - field, is / is more than / is less than, value - and counts the rows it selects; `filter_rows` decides (3MD.06) |
-| `cipher` | `cipher` | decodes numbers into letters and writes words as numbers with the 1 = a code; `code_word` decides (3DC.04, 3DC.05) |
+| `cipher` | `cipher` | decodes numbers into letters and writes words as numbers with the 1 = a code; `code_word` decides (3DC.04, 3DC.05); a round with `mode: "caesar"` and a `shift` of 1-25 shows the shifted alphabet and `caesar_shift` decides, and `mode: "pigpen"` shows the grid key, draws each symbol with `pigpenSvg` and `pigpen_index` decides (4DC.06) |
+| `loopalgo` | `loopAlgo` | follows an algorithm whose blocks include `{kind: "repeat", times, body}` and `{kind: "forever", body}`: taps the next step round the loop with a counter, presses Stop after a forever loop has gone round; a `fix` round has one wrong step INSIDE a loop (`wrong: [block, index]`, index -1 for a flat step) and a choice of fix; `flatten_algo` decides (4CT.01, 4CT.02) |
+| `compare` | `compareAlgos` | reads two or more algorithms for one task, each with steps and `facts` (`minutes`, a note), and taps the one that best suits each stated purpose; a round with `check: {kind: "fewest_steps"}` or `"fastest"` is keyed by `best_algo` (4CT.04) |
+| `subroutine` | `subRoutine` | follows a main algorithm that calls named sub-routines (`{kind: "call", sub}`): taps the call, then every step of the sub-routine, then carries on after the call; `sub_expand` decides (4CT.08) |
+| `branch` | `branchAlgo` | picks one of two inputs and follows only the branch it takes (`before`, `yes`, `no`, `after`), then the other input; both inputs must run and the arms must differ; `branch_run` decides (4CT.09) |
+| `loopbuild` | `loopBuild` | builds an algorithm with a repeat: taps steps from a pool into the loop body, sets the count with a number chip, runs it; the pool must hold a step the loop does not use; `expand_loop` decides (4CT.10) |
+| `comment` | `commentBlocks` | matches one comment to each block of a program, then answers why comments help (4P.01) |
+| `inputprog` | `inputProgram` | builds a different script for each input (tabs), then presses each input and watches only its script run; two inputs may not produce the same output (4P.05) |
+| `plan` | `planObjects` | plans each object of a program by answering what its input is and what its output is (4P.06) |
+| `parttest` | `partTest` | runs a program part by part, finds the part that fails, taps the wrong block in it, picks the fix, runs the part again; at least one part per round has a bug and the fix must make the part's `expect` (4P.07) |
+| `datasort` | `dataSort` | picks a field and a direction (ascending / descending, alphabetical for text) and sorts the table, then answers who is first or last; `sort_rows` decides and a tie at the checked end is refused (4MD.04) |
+| `tableparts` | `tableParts` | taps a whole record (row), a whole field (column) or one piece of data (cell) as asked; every task kind must appear (4MD.07) |
 | `questions` / `quiz` | `sequence` | the Mathematics build's own, with pictures |
 | `overview` … `resources` (shell) | as in Science | the unit shell |
 
@@ -84,8 +95,11 @@ reading in the dark) and `internet` (numeric states). Blocks: `right`, `left`,
 control blocks `repeat2`, `repeat3`, `repeat4`. Drawings (`precise`): `house`,
 `boat`, each with its silly wrong parts. Figures (`label`): `laptop`, `tablet`.
 Mini-apps: `paint`, `game`, `write`, `video`, `call`, `search`. Bitsy's
-blocks (`device`): the hats `whenA`, `whenShake`, `whenClap` and the outputs
-`heart`, `smile`, `light`, `dark`, `beep`, `motor`, `bell` (`DEVICE_BLOCKS`).
+blocks (`device`): the hats `whenA`, `whenShake`, `whenClap`, `whenHot`, `whenDark`,
+the outputs `heart`, `smile`, `light`, `dark`, `beep`, `motor`, `bell`, `wait`, and
+the loops `repeat2`, `repeat3`, `repeat4`, `forever` (`DEVICE_BLOCKS`; the builder
+reads the hats and the loops off their `cat`). Cipher modes: `number`, `caesar`
+(a `shift`), `pigpen` (the grid, drawn by `pigpenSvg`).
 Cell formats (`sheet`): `text`, `number`, `date`, `currency` (`FORMATS`, held
 equal between the JS and the builder). The builder reads all of these out of
 `computing.js` by name, so a scene, block, drawing, figure, device block or
@@ -126,9 +140,27 @@ rather than the page.
   2026-09-10, and adding it extended the kit (five step kinds, two scenes,
   the repeat blocks, two drawings, two figures); Grade 3 the same day added
   twelve more kinds, Bitsy's blocks, the cell formats and seven computed
-  rules. Each time, the earlier grades were rebuilt on the extended kit and
+  rules; Grade 4, still the same day, added eleven more kinds, Bitsy's
+  sensors and loops, the Caesar and Pigpen modes, Robo's loops and eight
+  computed rules. Each time, the earlier grades were rebuilt on the extended kit and
   their `LESSON` data came out identical, page for page - that rebuild is
   the proof a kit change is safe, and it is not optional.
+- **A loop block on Bitsy is never last, and a repeat is followed by an
+  output.** `repeat3` repeats the ONE output after it; `forever` repeats
+  everything after it, and on screen it is capped at five cycles and ended by
+  the Stop button, so a child is never left watching a light flash with no
+  way out. The builder refuses a loop block last, two `forever`s, or a repeat
+  followed by another loop; the gate re-checks the shipped rounds.
+- **A forever loop in a followed algorithm goes round twice, then Stop.**
+  `FOREVER_CYCLES` is 2 in `_rules.py` and `computing.js` alike: the child
+  taps the body twice and then the Stop step, which is how an indefinite loop
+  can be followed to an end and still be indefinite. A `fix` round names its
+  wrong step as `[block, index]`; `index` is -1 for a step outside any loop.
+- **The hub's answer key describes a looped Robo level as written.**
+  `keys_for` in `build-hub.py` used to read `lv["program"]`; a Stage 4 predict
+  level has `before`/`loop`/`after` instead, and the first Grade 4 hub build
+  fell over on it. It now prints `repeat N times (...)` and the square the
+  unrolled program ends on.
 - **`blockBtn`'s third argument is the extra class.** It used to be passed
   as a second `class="…"` inside the attribute string, which the parser
   ignores, so the running block was never highlighted at Stages 1 and 2

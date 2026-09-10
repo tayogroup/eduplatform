@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en-GB">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grade 4 Computing</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;600;700;800&display=swap">
+<style>
+  /* ==================================================================
+     THE BASE - lifted verbatim from the Grade 1 Mathematics standalone
+     build (mathematics/grade-1-app/g1v2), because these two are meant to
+     be one product. Everything above the ENGLISH heading further down is
+     that build's design system unchanged: the same tokens, the same deck,
+     the same gold action colour, the same voice bar.
+
+     The light palette is declared first and then overridden by the Wehel
+     block below, exactly as it is there. It is kept rather than deleted
+     so a token the override forgets still resolves to something legible
+     instead of to nothing.
+     ================================================================== */
+  :root {
+    --ground: #F3F8F5; --card: #FFFFFF; --ink: #1B2A2F; --muted: #6B7F82; --line: #D6E3DE; --cell: #E4EEE9;
+    --accent: #F26B2A; --accent-ink: #FFFFFF; --accent-soft: #FDE4D6;
+    --teal: #1E8C86; --teal-soft: #D5EFEC; --plum: #8E5AA8; --gold: #C99700;
+    --good: #2E8B57; --good-soft: #DCF3E4; --bad: #C4453A; --bad-soft: #F9DEDB;
+    --shadow: 0 1px 2px rgba(27,42,47,0.06), 0 8px 24px rgba(27,42,47,0.08);
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif; font-size: 20px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  h1, h2 { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; line-height: 1.1; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+
+  /* THE SKIP LINK. Off-screen until it is focused, then a real button in the
+     top-left corner. It is not `display: none` and not `visibility: hidden` -
+     either of those would take it out of the tab order and there would be
+     nothing to focus. Moving it off-screen keeps it reachable by Tab while
+     leaving the page looking untouched.
+
+     z-index clears the two app bars, which are sticky at 40. A skip link that
+     appears UNDER the chrome it exists to skip is a skip link nobody can see
+     they have focused.
+
+     THE FILL IS --ink, NOT --teal, and that is a contrast decision rather than
+     a style one. This build is a single dark theme - the Wehel block below
+     redefines every token from bare :root, so the light palette above it never
+     renders and only the dark values matter. There --teal is #35BFB2, and the
+     obvious teal-pill-with-white-text measures 2.3:1 on it. The link renders
+     at 18px bold, which is below the 18.66px that would let it count as large
+     text, so it needs 4.5:1 and not 3:1 - it fails twice over. --ink and
+     --ground are the pair that is guaranteed to oppose each other whatever the
+     palette does, and here they give a white pill with #142B3E text at 14.5:1
+     (measured, not derived). Teal stays as the ring, which is the same 4px the
+     buttons already focus with, so the link still reads as part of this
+     product. */
+  .skip { position: absolute; left: -9999px; top: 0; z-index: 100; }
+  .skip:focus {
+    left: 8px; top: 8px; padding: 12px 18px; border-radius: 12px;
+    background: var(--ink); color: var(--ground); font-weight: 700; text-decoration: none;
+    box-shadow: var(--shadow); outline: 4px solid var(--teal); outline-offset: 2px;
+  }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 16px 16px 40px; }
+  .hero { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 4px 14px; }
+  .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal); white-space: nowrap; }
+  .hero h1 { font-size: clamp(30px, 6vw, 44px); }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  /* THE DOT IS NOT THE TARGET ANY MORE. There are 23 of these — one per step —
+     and each used to BE a 16px button with a 6px gap, so the tap area was 16px
+     across with centres 22px apart. WCAG 2.5.8 asks for 24x24, and its spacing
+     exception wants 24px between centres, so this failed on both counts in an
+     app whose users are five and six years old.
+
+     The button is now a 28px target with the dot drawn inside it by ::before,
+     which buys the tap area without turning the rail into a row of fat circles:
+     the dot a child SEES is the same 16px it always was. gap goes to 0 because
+     the spacing now lives in the button's own box — leaving the 6px there would
+     push the centres to 34px and cost a row on a phone for nothing.
+
+     Every state moved to ::before with it. Leaving `background` on the button
+     would paint the whole 28px square, which is what makes this look like a
+     grid of blocks rather than a row of dots — check the dark-theme block
+     further down if you change either one. */
+  .dots { display: flex; flex-wrap: wrap; gap: 0; justify-content: flex-end; max-width: 45%; }
+  .dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
+  .dots button::before { content: ""; width: 16px; height: 16px; box-sizing: border-box; border-radius: 50%; border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--accent); border-color: var(--accent); transform: scale(1.2); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+  /* Growing the target costs rows, and on a phone the rail is capped at 45% of
+     380px — six per row, five rows, 140px of dots above the lesson. Letting it
+     take the full width below the title puts thirteen on a row and two rows on
+     the screen, which is shorter than the 16px version ever was. The cap is
+     what needs lifting, not the target size. */
+  @media (max-width: 560px) {
+    .hero { flex-wrap: wrap; }
+    .dots { max-width: 100%; width: 100%; justify-content: flex-start; }
+  }
+
+  .deck { background: var(--card); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); padding: 22px; min-height: 520px; display: flex; flex-direction: column; }
+  /* The deck carries tabindex="-1" so the skip link can move focus into it.
+     That makes it focusable, and a browser that rings a programmatically
+     focused container would draw a 4px outline around the whole lesson. The
+     ring is kept for :focus-visible, which is what a genuine keyboard focus
+     would match, and dropped for the skip link's own arrival. */
+  .deck:focus { outline: none; }
+  .deck:focus-visible { outline: 4px solid var(--teal); outline-offset: 3px; }
+  .slide { display: none; flex: 1; flex-direction: column; gap: 14px; }
+  .slide.active { display: flex; }
+  .slide-head { display: flex; align-items: center; gap: 12px; }
+  .slide-head .n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--teal); color: #fff; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 20px; }
+  .slide h2 { font-size: clamp(26px, 5vw, 36px); }
+  .say { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 16px; background: var(--teal-soft); font-size: 21px; }
+  .say button { flex: 0 0 auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: var(--teal); color: #fff; font-size: 24px; display: grid; place-items: center; }
+  .say button:active { transform: scale(0.94); }
+  .stage { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 8px 0; }
+  .fb { min-height: 1.6em; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 600; font-size: 24px; text-align: center; }
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+  .score { color: var(--muted); font-size: 15px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; }
+
+  .bigbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .big { min-width: 64px; height: 64px; padding: 0 22px; border-radius: 18px; border: 0; background: var(--accent); color: var(--accent-ink); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 28px; box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
+  .big:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.15); }
+  .big.teal { background: var(--teal); color: #fff; }
+  .big.ghost { background: var(--card); color: var(--ink); border: 3px solid var(--line); box-shadow: none; }
+  .big.small { height: 52px; font-size: 22px; }
+  .big:disabled { opacity: 0.45; cursor: default; transform: none; }
+
+  .choices { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .choice { min-width: 96px; height: 78px; padding: 0 18px; border-radius: 20px; border: 4px solid var(--line); background: var(--card); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 34px; transition: transform 100ms ease; }
+  .choice.small { min-width: 80px; height: 64px; font-size: 24px; }
+  .choice:active { transform: scale(0.96); }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+  .choice:disabled { cursor: default; }
+
+  /* stickers */
+  .stickers { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; width: 100%; }
+  .sticker { border-radius: 18px; border: 3px solid var(--line); background: var(--card); padding: 14px 10px; text-align: center; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 15px; }
+  .sticker .ic { display: block; font-size: 38px; line-height: 1.2; }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+  .sticker:not(.got) .ic { filter: grayscale(1); opacity: 0.35; }
+
+  .foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px 0; }
+  .foot .mid { color: var(--muted); font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ==================================================================
+     The Wehel design language, applied to the deck.
+
+     One visual world on purpose: the design being adopted is a single
+     dark theme, so every token is redefined here rather than left to the
+     viewer's setting. The selector list carries the same specificity as
+     the light block above and comes later, so it wins in both light and
+     dark. The palette is Ehel Academy's own - gold #f4c95d is the action
+     colour, teal #0f766e and coral #c2482c lifted to the same hues at a
+     lightness that is legible on a dark ground.
+
+     Copied from the Grade 1 Mathematics build. Do not re-solve it here:
+     the two builds are meant to be indistinguishable in colour.
+     ================================================================== */
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #0B1D2C;
+    --card: #112A3D;
+    --cell: #17384F;
+    --line: #214560;
+    --ink: #FFFFFF;
+    --muted: #93AABE;
+    --accent: #E9744F;
+    --accent-ink: #2A1F05;
+    --accent-soft: rgba(233, 116, 79, 0.18);
+    --teal: #35BFB2;
+    --teal-soft: #143A4A;
+    --plum: #B78BD1;
+    --gold: #F4C95D;
+    --gold-press: #D0A326;
+    --good: #4FD1A0;
+    --good-soft: rgba(79, 209, 160, 0.18);
+    --bad: #F0806F;
+    --bad-soft: rgba(240, 128, 111, 0.18);
+    --red: #F0806F;
+    --blue: #6E9DE8;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  body { background: var(--ground); color: var(--ink); font-size: 18px; }
+  h1, h2 { letter-spacing: -0.02em; font-weight: 800; }
+
+  .eyebrow { color: var(--teal); letter-spacing: 0.12em; }
+  .hero h1 em { color: var(--teal); }
+
+  /* ::before, matching the block above — the button itself stays transparent
+     so the 28px tap area never paints. */
+  .dots button::before { border: 2px solid var(--line); background: var(--card); }
+  .dots button.now::before { background: var(--teal); border-color: var(--teal); }
+  .dots button.done::before { background: var(--good); border-color: var(--good); }
+
+  .deck {
+    background: linear-gradient(160deg, #0E2434, #112A3D);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    box-shadow: var(--shadow);
+  }
+  .slide-head .n { background: var(--teal); color: #06231F; font-weight: 800; }
+  .slide h2 { font-weight: 800; }
+
+  .say { background: var(--teal-soft); border: 1px solid #205468; }
+  .say button { background: var(--teal); color: #06231F; }
+
+  .big {
+    background: var(--gold); color: var(--accent-ink);
+    border-radius: 16px; font-weight: 800;
+    box-shadow: 0 5px 0 var(--gold-press);
+  }
+  .big:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--gold-press); }
+  .big.teal { background: var(--teal); color: #06231F; box-shadow: 0 5px 0 #1E8C86; }
+  .big.teal:active { box-shadow: 0 2px 0 #1E8C86; }
+  .big.ghost { background: rgba(255, 255, 255, 0.07); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
+  .big:disabled { opacity: 0.4; }
+
+  .choice { background: var(--card); border: 3px solid var(--line); color: var(--ink); border-radius: 18px; font-weight: 800; }
+  .choice.right { background: var(--good-soft); border-color: var(--good); }
+  .choice.wrong { background: var(--bad-soft); border-color: var(--bad); }
+
+  .fb.good { color: var(--good); } .fb.bad { color: var(--bad); }
+
+  .sticker { background: var(--card); border: 1px solid var(--line); }
+  .sticker.got { background: var(--good-soft); border-color: var(--good); }
+
+  .foot .mid { color: var(--muted); }
+
+  /* the fixed ground, painted by a pseudo-element rather than
+     background-attachment, which iOS Safari does not honour */
+  html { background: #183B56; }
+  body { background: transparent; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #183B56 0%, #24556B 100%);
+  }
+  :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
+    --ground: #142B3E;
+    --card: #1B3A52;
+    --cell: #22485F;
+    --line: #2B5673;
+  }
+  .deck { background: rgba(20, 43, 62, 0.88); }
+
+  /* ---- the voice bar: the speaker reads the step, Explain walks
+          through the idea behind it ---- */
+  .say button.explain {
+    flex: 0 0 auto;
+    width: auto; height: auto;
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-left: auto;
+    padding: 9px 14px;
+    border: 1px solid var(--teal, var(--accent));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--teal, var(--accent));
+    font-family: inherit;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .say button.explain:hover { background: color-mix(in srgb, var(--teal, var(--accent)) 14%, transparent); }
+  .say button.explain:active { transform: scale(0.96); }
+  body.voice-on .say button.speak {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--teal, var(--accent)) 55%, transparent);
+    animation: voicePulse 1.5s ease-out infinite;
+  }
+  @keyframes voicePulse { to { box-shadow: 0 0 0 14px transparent; } }
+  @media (prefers-reduced-motion: reduce) {
+    body.voice-on .say button.speak { animation: none; }
+  }
+  @media (max-width: 420px) {
+    .say button.explain .explain-t { display: none; }
+    .say button.explain { width: 44px; height: 44px; padding: 0; justify-content: center; font-size: 18px; }
+  }
+
+  /* ---- the hub ---- */
+  .hubhead { padding: 26px 4px 18px; }
+  .hubhead h1 { font-size: clamp(34px, 7vw, 54px); }
+  .hubhead h1 em { font-style: normal; color: var(--teal); }
+  .hubhead p { color: var(--muted); max-width: 46ch; margin-top: 10px; font-size: 19px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+  .card { display: flex; flex-direction: column; gap: 10px; padding: 20px;
+    border-radius: 22px; border: 1px solid var(--line); background: rgba(20, 43, 62, 0.88);
+    box-shadow: var(--shadow); color: var(--ink); text-decoration: none; }
+  a.card:hover, a.card:focus-visible { border-color: var(--teal); }
+  .card h2 { font-size: 25px; }
+  .card p { color: var(--muted); font-size: 16.5px; }
+  .cardno { font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+  .cardfoot { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .meta { color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .go { flex: 0 0 auto; border-radius: 999px; background: var(--gold); color: var(--accent-ink);
+    font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 16px; padding: 9px 20px; }
+  .soon { flex: 0 0 auto; color: var(--muted); font-size: 13.5px; font-weight: 700; }
+  .card.locked { opacity: 0.62; }
+  .hubfoot { color: var(--muted); font-size: 14.5px; padding: 26px 4px 0; max-width: 62ch; }
+  .strands, .grownups { padding: 30px 4px 0; }
+  .strands h2, .grownups h2 { font-size: 26px; margin-bottom: 10px; }
+  .strand { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: baseline; padding: 10px 14px;
+    border-radius: 14px; border: 1px solid var(--line); background: var(--card); margin-bottom: 8px; font-size: 16px; }
+  .strand b { color: var(--teal); font-family: "Inter", "Segoe UI", sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+  @media (max-width: 560px) { .strand { grid-template-columns: 1fr; gap: 2px; } }
+  .grownups > p { color: var(--muted); font-size: 16px; max-width: 64ch; margin-bottom: 14px; }
+  .gu { border: 1px solid var(--line); border-radius: 16px; background: var(--card); margin-bottom: 10px; }
+  .gu summary { cursor: pointer; padding: 14px 16px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 18px; }
+  .gu summary small { color: var(--muted); font-weight: 700; font-size: 13.5px; margin-left: 8px; }
+  .gu .body { padding: 0 16px 16px; font-size: 15.5px; display: flex; flex-direction: column; gap: 10px; }
+  .gu h3 { font-size: 13px; color: var(--teal); text-transform: uppercase; letter-spacing: .07em; margin: 8px 0 2px; font-family: "Inter", "Segoe UI", sans-serif; }
+  .gu ul, .gu ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+  .gu code { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 12.5px; color: var(--teal); }
+  .gu .key { color: var(--muted); }
+  .gu .key b { color: var(--ink); }
+  @media print {
+    .eh-bar1, .cards, .strands, .hubhead p { display: none; }
+    body::before { display: none; } html, body { background: #fff; }
+    .gu { break-inside: avoid; border-color: #999; } .gu summary { list-style: none; }
+    .gu .body { display: flex !important; } details:not([open]) .body { display: flex !important; }
+  }
+
+  /* ---- the header bar, the same one the lesson pages carry ---- */
+  .eh-bar1 { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px;
+    background: var(--card); border-bottom: 1px solid var(--line); padding: 8px 16px; }
+  .eh-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); flex: 0 0 auto; }
+  .eh-brand svg { width: 30px; height: 32px; color: var(--teal); display: block; }
+  .eh-brandtext { display: flex; flex-direction: column; line-height: 1.15; }
+  .eh-brandtext b { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+  .eh-brandtext i { font-style: normal; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .eh-prog { display: flex; align-items: center; gap: 9px; background: var(--cell); border: 1px solid var(--line);
+    border-radius: 999px; padding: 5px 14px 5px 6px; flex: 1 1 auto; max-width: 420px; min-width: 0; }
+  .eh-pct { background: var(--teal); color: #06231F; font-weight: 800; font-size: 13px; border-radius: 999px; padding: 4px 9px; }
+  .eh-progtext { font-size: 13.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .eh-track { flex: 1 1 auto; height: 8px; border-radius: 999px; background: var(--line); overflow: hidden; min-width: 40px; }
+  .eh-track i { display: block; height: 100%; width: 0; background: var(--teal); border-radius: 999px; transition: width .3s ease; }
+  .eh-b1right { margin-left: auto; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+  .eh-picker { font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); background: var(--card);
+    border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; max-width: 200px; }
+  .eh-round { display: inline-flex; align-items: center; gap: 7px; border-radius: 999px; border: none;
+    background: var(--teal); color: #06231F; font: inherit; font-size: 15px; font-weight: 700;
+    padding: 9px 13px; cursor: pointer; text-decoration: none; flex: 0 0 auto; }
+  @media (max-width: 720px) { .eh-progtext, .eh-brandtext { display: none; } .eh-picker { max-width: 130px; } }
+</style>
+
+<header class="eh-bar1">
+  <a class="eh-round" id="ehBack" href="#" aria-label="Back" hidden>&larr;</a>
+  <div class="eh-brand"><svg viewBox="0 0 24 26" aria-hidden="true"><path d="M12 1.5 21.5 5v8.5c0 5.4-4 9.3-9.5 11C6.5 22.8 2.5 18.9 2.5 13.5V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"></path><path d="M12 7.2l1.5 3.1 3.4.5-2.4 2.4.6 3.4-3.1-1.6-3.1 1.6.6-3.4-2.4-2.4 3.4-.5z" fill="currentColor"></path></svg><span class="eh-brandtext"><b>Ehel Academy</b><i>Primary Computing</i></span></div>
+  <div class="eh-prog" id="ehProg">
+    <span class="eh-pct" id="ehPct">0%</span>
+    <span class="eh-progtext">Course progress</span>
+    <span class="eh-track"><i id="ehFill"></i></span>
+  </div>
+  <div class="eh-b1right">
+    <select class="eh-picker" id="ehPicker" aria-label="Choose a lesson"><option value="" selected>Jump to a lesson…</option><option value="loops-in-algorithms.html">Loops in Algorithms</option><option value="predict-and-compare.html">Predict and Compare</option><option value="sub-routines.html">Sub-routines</option><option value="inputs-decide-outputs.html">Inputs Decide Outputs</option><option value="programs-with-loops.html">Programs with Loops</option><option value="inputs-outputs-and-parts.html">Inputs, Outputs and Parts</option><option value="bitsy-loops.html">Bitsy Loops</option><option value="data-and-information.html">Data and Information</option><option value="databases.html">Databases</option><option value="clients-servers-and-the-web.html">Clients, Servers and the Web</option><option value="when-networks-fail.html">When Networks Fail</option><option value="caesar-and-pigpen.html">Caesar and Pigpen</option><option value="software-sensors-and-files.html">Software, Sensors and Files</option><option value="computer-scientists-and-service-robots.html">Computer Scientists and Service Robots</option></select>
+  </div>
+</header>
+
+<div class="wrap">
+  <header class="hubhead">
+    <p class="eyebrow">Ehel Academy &middot; Computing</p>
+    <h1>Grade 4 <em>Computing</em></h1>
+    <p>14 lessons, in the order they are meant to be done. Every one has a machine in it that only does what it is told: an algorithm to follow, Robo to drive, a program to run and debug, a form to fill. About 565 minutes in all, one lesson a week.</p>
+  </header>
+
+  <main class="cards">
+      <a class="card" href="loops-in-algorithms.html?from=comp4">
+        <span class="cardno">Lesson 1</span>
+        <h2>Loops in Algorithms</h2>
+        <p>Follow algorithms that go round a repeat loop a counted number of times, or round a forever loop until something stops them; correct a wrong step inside a loop; and see why a loop makes an algorithm shorter.</p>
+        <span class="cardfoot"><span class="meta">14 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="predict-and-compare.html?from=comp4">
+        <span class="cardno">Lesson 2</span>
+        <h2>Predict and Compare</h2>
+        <p>Work out where a looped program leaves Robo before pressing Go, fold a long task into a repeat, and compare three algorithms for one task to pick the best for each purpose.</p>
+        <span class="cardfoot"><span class="meta">13 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="sub-routines.html?from=comp4">
+        <span class="cardno">Lesson 3</span>
+        <h2>Sub-routines</h2>
+        <p>Break a big task into named sub-routines, write each as its own algorithm, put the calls in order in a main algorithm, and follow an algorithm that jumps into a sub-routine and back.</p>
+        <span class="cardfoot"><span class="meta">14 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="inputs-decide-outputs.html?from=comp4">
+        <span class="cardno">Lesson 4</span>
+        <h2>Inputs Decide Outputs</h2>
+        <p>Follow an algorithm with an IF in it and see one input take one branch and another input take the other, then build algorithms of your own with a repeat loop in them.</p>
+        <span class="cardfoot"><span class="meta">13 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="programs-with-loops.html?from=comp4">
+        <span class="cardno">Lesson 5</span>
+        <h2>Programs with Loops</h2>
+        <p>Build programs with a repeat block, fold a long program into a short one that does the same thing, and add comments that say what each block is for.</p>
+        <span class="cardfoot"><span class="meta">15 steps &middot; about 45 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="inputs-outputs-and-parts.html?from=comp4">
+        <span class="cardno">Lesson 6</span>
+        <h2>Inputs, Outputs and Parts</h2>
+        <p>Give one sprite a different script for each input, plan an object by naming its input and its output, and test a program part by part to find exactly where a bug is.</p>
+        <span class="cardfoot"><span class="meta">14 steps &middot; about 45 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="bitsy-loops.html?from=comp4">
+        <span class="cardno">Lesson 7</span>
+        <h2>Bitsy Loops</h2>
+        <p>Program Bitsy from its temperature and light sensors, put a repeat loop and a forever loop into a device program, and spot the control systems that run things around you the same way.</p>
+        <span class="cardfoot"><span class="meta">14 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="data-and-information.html?from=comp4">
+        <span class="cardno">Lesson 8</span>
+        <h2>Data and Information</h2>
+        <p>Compare a paper database with a digital one, collect data with a form and weigh what forms are good and bad at, and tell raw data from the information it becomes.</p>
+        <span class="cardfoot"><span class="meta">15 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="databases.html?from=comp4">
+        <span class="cardno">Lesson 9</span>
+        <h2>Databases</h2>
+        <p>Point to the records, fields and data in a table, choose the right data type for each field, sort the table into any order, and use a filter to answer one question from the data.</p>
+        <span class="cardfoot"><span class="meta">14 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="clients-servers-and-the-web.html?from=comp4">
+        <span class="cardno">Lesson 10</span>
+        <h2>Clients, Servers and the Web</h2>
+        <p>See a client ask and a server serve on the school network, tell the World Wide Web from the internet it runs on, and weigh wi-fi against an ethernet cable for speed, security and convenience.</p>
+        <span class="cardfoot"><span class="meta">15 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="when-networks-fail.html?from=comp4">
+        <span class="cardno">Lesson 11</span>
+        <h2>When Networks Fail</h2>
+        <p>Work out what stops working when a network fails, at home, at school and in a shop, and find where encryption keeps data safe while it travels and why it is needed.</p>
+        <span class="cardfoot"><span class="meta">14 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="caesar-and-pigpen.html?from=comp4">
+        <span class="cardno">Lesson 12</span>
+        <h2>Caesar and Pigpen</h2>
+        <p>Shift the alphabet along to write and read a Caesar cipher, draw the grid shapes of the Pigpen cipher, and see how the key is what makes a cipher work and what makes it fail.</p>
+        <span class="cardfoot"><span class="meta">14 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="software-sensors-and-files.html?from=comp4">
+        <span class="cardno">Lesson 13</span>
+        <h2>Software, Sensors and Files</h2>
+        <p>Split software into the applications you use and the system software underneath, watch input devices record data and output devices communicate information, and put files in order of size.</p>
+        <span class="cardfoot"><span class="meta">15 steps &middot; about 40 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+      <a class="card" href="computer-scientists-and-service-robots.html?from=comp4">
+        <span class="cardno">Lesson 14</span>
+        <h2>Computer Scientists and Service Robots</h2>
+        <p>Meet computer scientists at work in hospitals, farms, banks, games studios and weather stations, and the service robots that deliver parcels, drive trains and help in hospitals, each one a control system.</p>
+        <span class="cardfoot"><span class="meta">14 steps &middot; about 35 min &middot; stickers</span><span class="go">Start</span></span>
+      </a>
+  </main>
+
+  <section class="strands">
+    <h2>What Stage 4 computing covers</h2>
+    <div class="strand"><b>Computational Thinking</b><span>Following, editing and correcting algorithms with repeat and forever loops and count-controlled iteration; repetition for concise algorithms; comparing algorithms for a purpose; predicting looped algorithms; decomposition into sub-routines and following them; algorithms with different outputs for different inputs; algorithms that include repetition.</span></div>
+    <div class="strand"><b>Programming</b><span>Comments on code and why they help; programs with repetition and iteration; the repeat command; different outputs from different inputs; planning objects with their inputs and outputs; testing a program part by part; programming a physical device from its input devices, with count-controlled and forever loops.</span></div>
+    <div class="strand"><b>Managing Data</b><span>Paper databases against digital ones; the pros and cons of forms; data against information; sorting data ascending, descending and alphabetically; data types for a field; using a database to answer a question; data, records and fields.</span></div>
+    <div class="strand"><b>Networks and Digital Communication</b><span>Servers and clients; the World Wide Web against the internet; wi-fi against ethernet; what goes wrong when a network fails; where and why encryption is used; the Caesar and Pigpen ciphers.</span></div>
+    <div class="strand"><b>Computer Systems</b><span>Control systems; application and systems software; the data input devices record, including sensors and data loggers; the information output devices communicate; file sizes; computer scientists across industries; robots in delivery, transport and health care.</span></div>
+  </section>
+
+  <section class="grownups" id="grown-ups">
+    <h2>For teachers and parents</h2>
+    <p>What each lesson teaches, in Cambridge's own words; the unplugged version of each activity to do at home with cards and a floor; and the answer keys. Open a lesson to read it, or print this page for the lot.</p>
+    <details class="gu"><summary>Lesson 1: Loops in Algorithms<small>14 steps &middot; about 40 minutes &middot; 3 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4CT.01</code> Follow, understand, edit and correct algorithms that use repetition, including indefinite (forever) loops.</li><li><code>4CT.02</code> Follow, understand, edit and correct algorithms that use iteration, including count-controlled loops.</li><li><code>4CT.03</code> Understand that the use of repetition can make algorithms more concise.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Two kinds of loop <span class="key">&middot; An algorithm can go round a loop. A repeat loop goes round a counted number of times. A forever loop never stops on its own. Press Next .</span></li><li>Follow the loops <span class="key">&middot; Follow each algorithm, tapping the step that comes next. Watch the counter go round the repeat loop; press Stop when the forever loop has gone round twice.</span></li><li>Correct the loop <span class="key">&middot; One step INSIDE each loop is wrong, so it goes wrong every time round. Find it, fix it, and watch the corrected algorithm run.</span></li><li>Repetition makes it concise <span class="key">&middot; Written out long, the plant algorithm is 11 steps. With a repeat loop it is 5. Tap each reason a loop is better.</span></li><li>Repeat, or forever? <span class="key">&middot; Is this loop count-controlled (repeat, then stop) or indefinite (forever, until stopped)?</span></li><li>Check: loops <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Follow the loops.</b> Write a routine with a 'repeat 3 times' box in it on cards. The grown-up follows it EXACTLY, counting the turns out loud. Then write one with a 'forever' box and see who stops it.</li><li><b>Loops on cards.</b> You need: Cards, a grown-up. Write a routine with a 'repeat 3 times' box: the steps inside on smaller cards. The grown-up follows it EXACTLY, counting the turns out loud. Now write one with a 'forever' box. Who has to stop it, and how? Look for: A count stops a repeat loop; only something outside stops a forever loop.</li><li><b>Find the forever loops.</b> You need: A walk round the house. Find five things that run in a forever loop: a clock, a fridge, a fan, a night light. For each one, say what stops it. Find three things that run a counted number of times: a microwave for 2 minutes, a washing machine's three rinses. Look for: Forever loops are everywhere, and each has a stop.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Follow the loops</b><ul><li>brush every tooth <span class="key">follow it round the loop</span></li><li>run the traffic lights <span class="key">follow it round the loop</span></li><li>water three plants <span class="key">follow it round the loop</span></li></ul></li><li><b>Correct the loop</b><ul><li>water three plants <span class="key">the wrong step is block 2, step 3 of the loop; it should be Walk to the next plant</span></li><li>lay the table for four people <span class="key">the wrong step is block 2, step 3 of the loop; it should be Knife on the right</span></li><li>run the traffic lights <span class="key">the wrong step is block 1, step 3 of the loop; it should be Red and amber</span></li></ul></li><li><b>Repetition makes it concise</b> <span class="key">Why does a repeat loop make an algorithm more concise? &rarr; <b>The repeated steps are written once, with a count, instead of over and over</b></span></li><li><b>Repeat, or forever?</b> <span class="key"><b>Forever</b>: traffic lights changing all day and night, a clock ticking, a game checking for a button press while it is switched on, a fridge keeping cold until it is unplugged; <b>Repeat N times</b>: brush the top and bottom teeth 4 times, water each of the 3 plants, lay 6 places at the table, add 5 bricks to the tower</span></li><li><b>Check: loops</b><ol><li>Repeat 4 times: brush top, brush bottom. How many brushing steps happen? <span class="key">&rarr; <b>8</b></span></li><li>What ends a forever loop? <span class="key">&rarr; <b>something outside it, like a switch or a person pressing stop</b></span></li><li>A wrong step INSIDE a repeat loop... <span class="key">&rarr; <b>goes wrong every time round</b></span></li></ol></li><li><b>Show what you know</b><ol><li>A loop that counts to 3 and then stops is... <span class="key">&rarr; <b>count-controlled</b></span></li><li>A loop with no count that goes on until stopped is... <span class="key">&rarr; <b>indefinite, a forever loop</b></span></li><li>'Repeat 3 times: fill, pour, walk' unrolled is how many steps? <span class="key">&rarr; <b>9</b></span></li><li>Which is best written as a forever loop? <span class="key">&rarr; <b>traffic lights</b></span></li><li>Why is an algorithm with a loop more concise? <span class="key">&rarr; <b>the repeated steps are written once</b></span></li><li>To water 4 plants instead of 3 with a repeat loop, you change... <span class="key">&rarr; <b>the count from 3 to 4</b></span></li><li>In 'repeat 4 times: plate, fork, hat, cup', the hat step... <span class="key">&rarr; <b>goes wrong four times, once per turn</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 2: Predict and Compare<small>13 steps &middot; about 40 minutes &middot; 3 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4CT.05</code> Predict the outcome of algorithms that contain repetition.</li><li><code>4CT.03</code> Understand that the use of repetition can make algorithms more concise.</li><li><code>4CT.04</code> Compare and contrast algorithms designed for the same task to determine which produces the outcome that is best suited to the purpose.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Where does the loop leave Robo? <span class="key">&middot; Robo's program has a repeat loop in it. Unroll it in your head, tap the square where Robo will stop, then press Go .</span></li><li>Find the repeat <span class="key">&middot; Making four pancakes, written out long. Tap the steps of the FIRST pancake; the page folds the rest into one repeat.</span></li><li>Which algorithm is best? <span class="key">&middot; Three algorithms get you from home to school. Each round names a purpose . Tap the algorithm that suits it best.</span></li><li>Compare and contrast <span class="key">&middot; Comparing means finding what is the same; contrasting means finding what is different. Tap each thing to compare algorithms on.</span></li><li>Check: predict and compare <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Where does the loop leave Robo?.</b> Make a grid on the floor with tape or paper squares. One person is Robo and only does Forward, Backwards, Turn left and Turn right; the other gives the instructions to reach a toy.</li><li><b>Find the repeat.</b> Write out a job with a part that happens again and again (brush, rinse, brush, rinse). Ask which cards you could write once with 'repeat 3 times' in front.</li><li><b>Which algorithm is best?.</b> Write two ways of doing one job (two routes to school, two ways to tidy a room). Say which is best when you are in a hurry, which when you must not forget anything, and why.</li><li><b>Predict the loop.</b> You need: A floor grid, a toy, cards. Write a program with 'repeat 3 times' and two or three arrow cards inside. Before moving the toy, put a counter on the square you predict it ends on. Run it, unrolling the loop out loud. Were you right? Look for: Unroll, then check.</li><li><b>Two ways to do it.</b> You need: A grown-up, one job. Write two algorithms for the same job: two routes to the shop, two ways to tidy a room. Compare them: steps, time, effort, how well the job gets done. Say which is best when you are in a hurry, and which when you must not miss anything. Look for: The purpose picks the algorithm.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Where does the loop leave Robo?</b><ul><li>Loop 1 <span class="key">program repeat 2 times (Forward, Forward) stops at column 1, row 1</span></li><li>Loop 2: stairs <span class="key">program repeat 3 times (Forward, Turn right, Forward, Turn left) stops at column 4, row 2</span></li><li>Loop 3, then one more <span class="key">program repeat 2 times (Forward, Forward, Turn right), Forward stops at column 4, row 3</span></li></ul></li><li><b>Find the repeat</b> <span class="key">repeat 4 times: Pour batter in the pan, Cook one side, Flip it, Cook the other side, Put it on the plate; How many times does the pancake loop go round? &rarr; <b>4</b></span></li><li><b>Which algorithm is best?</b><ol><li>the fewest steps to remember <span class="key">&rarr; <b>The short cut</b></span></li><li>getting there quickest <span class="key">&rarr; <b>The bus</b></span></li><li>staying dry on a rainy day <span class="key">&rarr; <b>The bus</b></span></li><li>spending no money and getting no mud on your shoes <span class="key">&rarr; <b>The main road</b></span></li></ol></li><li><b>Compare and contrast</b> <span class="key">Two algorithms both do the job. How do you decide which is best? &rarr; <b>Compare them on the things that matter for the purpose</b></span></li><li><b>Check: predict and compare</b><ol><li>Robo runs 'repeat 3 times: forward, forward'. How many squares forward? <span class="key">&rarr; <b>6</b></span></li><li>Four pancakes, five steps each, written with a loop is... <span class="key">&rarr; <b>repeat 4 times: pour, cook, flip, cook, plate</b></span></li><li>The quickest way to school is the bus, but it costs money. If the purpose is 'spend nothing'... <span class="key">&rarr; <b>the bus is not the best algorithm for that purpose</b></span></li></ol></li><li><b>Show what you know</b><ol><li>To predict a looped program you... <span class="key">&rarr; <b>unroll the loop in your head, that many times</b></span></li><li>'Repeat 2 times: forward, forward, turn right.' After the loop, Robo has turned... <span class="key">&rarr; <b>twice</b></span></li><li>Which makes the pancake algorithm concise? <span class="key">&rarr; <b>writing the five pancake steps once inside repeat 4 times</b></span></li><li>Comparing algorithms means... <span class="key">&rarr; <b>looking at their steps, time, cost and outcome against the purpose</b></span></li><li>The short cut has the fewest steps. For 'getting there quickest' it is... <span class="key">&rarr; <b>not necessarily best: the bus is quicker</b></span></li><li>If the purpose is 'stay dry in the rain', which fact matters most? <span class="key">&rarr; <b>whether the route is muddy or covered</b></span></li><li>Robo starts facing up and runs 'repeat 2 times: forward, forward'. Where is it? <span class="key">&rarr; <b>4 squares up from where it started</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 3: Sub-routines<small>14 steps &middot; about 40 minutes &middot; 3 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4CT.06</code> Understand that decomposition is a process that is used to break tasks into different parts (sub-routines).</li><li><code>4CT.07</code> Know how to use decomposition to break tasks into different parts, represented as algorithms.</li><li><code>4CT.08</code> Follow and understand algorithms that use a sub-routine.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>What decomposition is <span class="key">&middot; Decomposition means breaking a big task into parts. In an algorithm each part is a sub-routine : a small algorithm with a name. Tap each idea.</span></li><li>Which sub-routine does it belong to? <span class="key">&middot; Decompose 'a school morning' into four sub-routines. Put each step into the sub-routine it belongs to.</span></li><li>Write the main algorithm <span class="key">&middot; Now the main algorithm: it calls the sub-routines in order. Tap the calls in the order a school morning happens.</span></li><li>Follow the calls <span class="key">&middot; Follow the main algorithm. When it says do a sub-routine, tap the call, then that sub-routine's steps, then carry on where you left off.</span></li><li>Why sub-routines help <span class="key">&middot; The same WASH sub-routine appeared in the morning AND at bedtime. Tap each reason sub-routines help.</span></li><li>Check: sub-routines <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Follow the calls.</b> Write 'getting ready' as a main list that says 'do WASH', 'do DRESS', 'do BAG', and each of those as its own little list. Follow the main list, jumping into each little list and back.</li><li><b>Boxes on the wall.</b> You need: Paper, a pen. Write 'getting ready' as a main list of calls: do WASH, do DRESS, do BAG. Write each sub-routine in its own box. Follow the main list for a week, jumping into each box and back. Look for: Into the box, out of the box, carry on.</li><li><b>Reuse a sub-routine.</b> You need: The same boxes. Write a bedtime main list that also calls do WASH. Add one step to the WASH box. Which routines changed? (Both.) Look for: One copy, many calls.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>What decomposition is</b> <span class="key">What is a sub-routine? &rarr; <b>A named part of an algorithm, written as its own small algorithm</b></span></li><li><b>Which sub-routine does it belong to?</b> <span class="key"><b>WASH</b>: brush your teeth, brush your hair, wash your face; <b>DRESS</b>: put on your shirt, put on your shoes; <b>BREAKFAST</b>: pour the cereal, pour on the milk; <b>BAG</b>: pack your reading book, pack your lunch box, get your coat</span></li><li><b>Write the main algorithm</b> <span class="key">do WASH &amp;rarr; do DRESS &amp;rarr; do BREAKFAST &amp;rarr; do BAG &amp;rarr; Leave the house; not needed: do BEDTIME, do HOMEWORK</span></li><li><b>Follow the calls</b> <span class="key">a school morning: do WASH, do DRESS, Leave the house; a bedtime: Put on pyjamas, do WASH, do STORY, Lights off</span></li><li><b>Why sub-routines help</b> <span class="key">You add 'floss' to the WASH sub-routine. What happens to the morning and bedtime algorithms? &rarr; <b>Both get the flossing step, because both call WASH</b></span></li><li><b>Check: sub-routines</b><ol><li>Breaking 'a school morning' into wash, dress, breakfast and bag is... <span class="key">&rarr; <b>decomposition</b></span></li><li>After the last step of the WASH sub-routine, the next step is... <span class="key">&rarr; <b>the line after 'do WASH' in the main algorithm</b></span></li><li>The main algorithm says 'do WASH'. That line is... <span class="key">&rarr; <b>a call to the WASH sub-routine</b></span></li></ol></li><li><b>Show what you know</b><ol><li>A sub-routine is... <span class="key">&rarr; <b>a named part of an algorithm, written as its own algorithm</b></span></li><li>Which is a call to a sub-routine? <span class="key">&rarr; <b>do BREAKFAST</b></span></li><li>'Pour the cereal' belongs in which sub-routine? <span class="key">&rarr; <b>BREAKFAST</b></span></li><li>Why write WASH once as a sub-routine instead of in every routine? <span class="key">&rarr; <b>so it can be reused and changed in one place</b></span></li><li>You are following the main algorithm and reach 'do DRESS'. You... <span class="key">&rarr; <b>do all of DRESS's steps, then carry on after the call</b></span></li><li>The main algorithm for a school morning has five lines. Behind them are... <span class="key">&rarr; <b>all the steps of the sub-routines it calls</b></span></li><li>Who benefits from sub-routines when two people write one algorithm? <span class="key">&rarr; <b>both: each can write a sub-routine and the main joins them</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 4: Inputs Decide Outputs<small>13 steps &middot; about 40 minutes &middot; 3 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4CT.09</code> Know how to develop algorithms to produce different outputs based on different inputs.</li><li><code>4CT.10</code> Know how to develop algorithms that include repetition.</li><li><code>4CT.05</code> Predict the outcome of algorithms that contain repetition.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>If this, then that <span class="key">&middot; An algorithm can have a fork in it: IF something is true, do these steps; otherwise do those. The input decides. Tap each one.</span></li><li>Take the branch <span class="key">&middot; Choose an input, then follow the algorithm through the branch that input takes. Then try the other input.</span></li><li>Build an algorithm with a repeat <span class="key">&middot; The task needs the same steps done several times. Put those steps in the repeat box, set how many times, and run it.</span></li><li>In the loop, or outside it? <span class="key">&middot; For 'water all the plants in the garden', does this step go INSIDE the repeat loop or OUTSIDE it?</span></li><li>Check: inputs and loops <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Take the branch.</b> Make an 'if it is raining' routine: the same start and end, a different middle. Roll a dice for the weather and follow the branch it gives you.</li><li><b>Build an algorithm with a repeat.</b> Water the plants or lay the table, and write it as 'repeat N times' plus the steps in the box. Unroll it: how many steps is that really?</li><li><b>Roll for the weather.</b> You need: A dice, cards. Write a leaving-the-house algorithm with an IF: odd is raining, even is sunny. Roll the dice, then follow only the branch it gives you. Roll again. Did the output change? Look for: Same algorithm, different input, different output.</li><li><b>Build the loop.</b> You need: Cards, a real job. Pick a job that repeats: laying the table, watering plants, hanging washing. Write the repeating steps once in a 'repeat N times' box; write the once-only steps outside it. Unroll it out loud. Does it do exactly the job? Look for: Every-time steps inside, once steps outside.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>If this, then that</b> <span class="key">In 'IF it is raining, take an umbrella; otherwise take sunglasses', what is the INPUT? &rarr; <b>Whether it is raining</b></span></li><li><b>Take the branch</b><ul><li>leave for school <span class="key">Yes, it is raining: Put on your raincoat, Take the umbrella; No, it is sunny: Put on sunglasses, Take a sun hat</span></li><li>answer a quiz question <span class="key">Yes, it is right: Show a tick, Add a point, Say well done; No, it is wrong: Show a cross, Show a hint</span></li></ul></li><li><b>Build an algorithm with a repeat</b><ul><li>water 3 plants, then put the can away <span class="key">repeat 3 times: Fill the can, Pour on a plant, Walk to the next plant</span></li><li>lay 4 places at the table <span class="key">repeat 4 times: Put down a plate, Fork on the left, Knife on the right</span></li><li>make 5 pancakes <span class="key">repeat 5 times: Pour batter in the pan, Cook and flip, Put it on the plate</span></li></ul></li><li><b>In the loop, or outside it?</b> <span class="key"><b>Outside (once)</b>: get the can from the shed, put the can away, put on your gardening gloves; <b>Inside the loop</b>: fill the can, pour on the plant, walk to the next plant</span></li><li><b>Check: inputs and loops</b><ol><li>'IF it is raining take an umbrella, otherwise sunglasses.' It is sunny. The output is... <span class="key">&rarr; <b>sunglasses</b></span></li><li>Which step goes INSIDE 'repeat 3 times' for watering 3 plants? <span class="key">&rarr; <b>pour on a plant</b></span></li><li>An algorithm with an IF gives... <span class="key">&rarr; <b>different outputs for different inputs</b></span></li></ol></li><li><b>Show what you know</b><ol><li>The part of an algorithm where the input decides which steps run is... <span class="key">&rarr; <b>a branch, an IF</b></span></li><li>In the quiz algorithm, a wrong answer as input gives which output? <span class="key">&rarr; <b>a cross and a hint</b></span></li><li>With input 'raining', which steps are SKIPPED? <span class="key">&rarr; <b>the sunny branch: sunglasses and sun hat</b></span></li><li>To water 4 plants with the same loop as 3, you... <span class="key">&rarr; <b>change the count to 4</b></span></li><li>Repeat 5 times: pour, cook, plate. Then serve. How many steps unrolled? <span class="key">&rarr; <b>16</b></span></li><li>Which belongs OUTSIDE the pancake loop? <span class="key">&rarr; <b>mix the batter</b></span></li><li>Same algorithm, two inputs. The outputs are... <span class="key">&rarr; <b>different, because the branch is different</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 5: Programs with Loops<small>15 steps &middot; about 45 minutes &middot; 4 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4P.02</code> Know how to develop programs with repetition.</li><li><code>4P.03</code> Know how to develop programs with iteration.</li><li><code>4P.04</code> Know how to develop programs that produce a desired output, which includes the use of the repeat command.</li><li><code>4P.01</code> Know how to add comments to blocks of code and explain the benefits of these comments.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>The repeat block <span class="key">&middot; A program can repeat too. The repeat block runs the block after it that many times. Press Next .</span></li><li>Build it with a repeat <span class="key">&middot; Read the algorithm and build the program. When it says a number of times, use a repeat block, then Run it.</span></li><li>Fold it into a loop <span class="key">&middot; Each program works but repeats itself block by block. Fold the repeats into repeat blocks and take out the waits, then Run it to check it still does the same.</span></li><li>Why comment your code? <span class="key">&middot; A comment is a note beside a block that says what it is for. The computer ignores it; people read it. Tap each benefit.</span></li><li>Comment the program <span class="key">&middot; Here is a program and four comments. Tap a comment, then tap the block it explains.</span></li><li>Good comment, or not? <span class="key">&middot; A good comment says WHY a block is there, or what it is for. Is this a good comment?</span></li><li>Check: loops and comments <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Build it with a repeat.</b> Draw the blocks on paper cards (move right, jump, say hello). The child lays out a program; the grown-up is the computer and acts it out block by block.</li><li><b>Fold it into a loop.</b> Lay out a long program of cards with a card that does nothing and the same card three times. Make it shorter without changing what it does.</li><li><b>Comment the program.</b> Take a card program and write a short comment on each card saying what it is FOR. Give it to someone who has never seen it. Can they explain it back?</li><li><b>Fold the routine.</b> You need: Paper, a pen. Write a real routine long, step by step: brush top, brush bottom, brush top, brush bottom. Fold every run of the same step into 'repeat N times'. Count the lines before and after. Look for: Same routine, fewer lines.</li><li><b>Comment a recipe.</b> You need: A recipe, sticky notes. Pick a recipe. Beside each step, write a note that says WHY: 'so the cake rises', 'so it does not burn'. Give it to someone who has never made it. Can they follow it? Cross out any note that only repeats the step. Look for: A good comment says why.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Build it with a repeat</b><ul><li>Jump 4 times, Say hello <span class="key">&rarr; blocks <b>repeat4, jump, say</b> (a repeat block is required)</span></li><li>Go home, Move right 3 times, Grow <span class="key">&rarr; blocks <b>home, repeat3, right, grow</b> (a repeat block is required)</span></li><li>Spin 2 times, Shrink, Say hello <span class="key">&rarr; blocks <b>repeat2, spin, shrink, say</b> (a repeat block is required)</span></li></ul></li><li><b>Fold it into a loop</b><ul><li>grow 3 times, then say hello <span class="key">grow, grow, grow, wait, say &rarr; <b>repeat3, grow, say</b></span></li><li>go home, jump twice, spin 4 times <span class="key">home, jump, jump, spin, spin, spin, spin &rarr; <b>home, repeat2, jump, repeat4, spin</b></span></li><li>say hello, then move left 3 times <span class="key">say, wait, left, left, left, wait &rarr; <b>say, repeat3, left</b></span></li></ul></li><li><b>Why comment your code?</b> <span class="key">Who is a comment written for? &rarr; <b>People reading the program, including you later</b></span></li><li><b>Comment the program</b> <span class="key">home: Put the cat back at the start, so every run begins the same; repeat3: Do the next block three times; jump: The jump that gets repeated; say: Greet the player when the jumps are done; The comment says 'do the next block three times' but the block says repeat 2 times. What have you found? &rarr; <b>A bug: the block does not match what it is meant to do</b></span></li><li><b>Good comment, or not?</b> <span class="key"><b>Good comment</b>: beside go home: 'reset the cat so every run starts the same', beside repeat 3 times: 'one jump for each wall in the level', beside wait: 'give the player time to read the message'; <b>Not helpful</b>: beside jump: 'jump', beside say hello: 'the cat spins', beside grow: 'grow'</span></li><li><b>Check: loops and comments</b><ol><li>Repeat 4 times, jump. How many times does the cat jump? <span class="key">&rarr; <b>4</b></span></li><li>Which block does 'repeat 3 times' repeat? <span class="key">&rarr; <b>the one block right after it</b></span></li><li>What does the computer do with a comment? <span class="key">&rarr; <b>ignores it; it is for people</b></span></li></ol></li><li><b>Show what you know</b><ol><li>'Jump 4 times, say hello' as a program is... <span class="key">&rarr; <b>repeat 4 times, jump, say hello</b></span></li><li>Each time round a repeat block is called... <span class="key">&rarr; <b>an iteration</b></span></li><li>Grow, grow, grow folds into... <span class="key">&rarr; <b>repeat 3 times, grow</b></span></li><li>Can jump, spin, jump be folded into one repeat? <span class="key">&rarr; <b>no: the blocks are not all the same</b></span></li><li>A comment beside a block is for... <span class="key">&rarr; <b>people reading the program</b></span></li><li>The best comment beside 'wait' is... <span class="key">&rarr; <b>'give the player time to read the message'</b></span></li><li>A comment says 'jump three times' and the block says repeat 2 times. That is... <span class="key">&rarr; <b>a bug you have just found</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 6: Inputs, Outputs and Parts<small>14 steps &middot; about 45 minutes &middot; 3 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4P.05</code> Know how to develop programs that produce different outputs from different inputs.</li><li><code>4P.06</code> Know how to plan the instructions for objects within programs, including identifying inputs and outputs.</li><li><code>4P.07</code> Know how to test different parts of a program systematically, to identify and debug errors.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Inputs to a program <span class="key">&middot; A program can wait for an input - a key, a button, a click - and do something different for each. Tap each one.</span></li><li>A script for each input <span class="key">&middot; Build a script for A and a different script for B . Then press each input and watch: each one runs only its own script.</span></li><li>Plan the object <span class="key">&middot; Before you program an object, plan it: what is its INPUT, and what is its OUTPUT? Answer both for each object.</span></li><li>Test it part by part <span class="key">&middot; The program is in named parts. Run each part on its own to see which one goes wrong, fix the block in that part, and run the part again.</span></li><li>Input, output, or a part to test? <span class="key">&middot; In a game program, is this an INPUT the program waits for, an OUTPUT it makes, or a PART you would test on its own?</span></li><li>Check: inputs, outputs, parts <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>A script for each input.</b> Two inputs, two outputs: agree that a clap makes your partner jump and a tap on the shoulder makes them spin. Give the inputs in a random order.</li><li><b>Plan the object.</b> Before building anything, plan each object on paper: what starts it (input) and what it does (output).</li><li><b>Test it part by part.</b> Split a long card program into three parts and act out ONE part at a time. Which part goes wrong? Fix only that part and act it out again.</li><li><b>Two buttons.</b> You need: A friend, two 'buttons' (two coins). Decide a script for each coin: tap the gold coin, your friend claps twice; tap the silver coin, they spin. Tap coins in any order. Does each coin run only its own script? Add a third input with a new output. Look for: Each input, its own output.</li><li><b>Test the parts.</b> You need: A routine in three parts. Write a job in three parts: get ready, do it, tidy up. Have someone do ONE part at a time while you check it. When a part goes wrong, fix only that part and test it again. Look for: One part at a time finds the bug.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Inputs to a program</b> <span class="key">Pressing A makes the cat jump and pressing B makes it spin. What decides which happens? &rarr; <b>The input: which key was pressed</b></span></li><li><b>A script for each input</b><ul><li>a: <b>jump, say</b>; b: <b>spin, grow</b></li><li>a: <b>repeat2, right</b>; b: <b>repeat3, left, say</b></li><li>a: <b>grow, say</b>; b: <b>shrink, hide</b></li></ul></li><li><b>Plan the object</b><ul><li>the cat <span class="key">input <b>The A key being pressed</b>; output <b>A jump</b></span></li><li>the door <span class="key">input <b>The player touching it</b>; output <b>It opens and plays a creak</b></span></li><li>the score sign <span class="key">input <b>The ball hitting the goal</b>; output <b>The number goes up by one</b></span></li></ul></li><li><b>Test it part by part</b><ul><li>go home, jump twice, then say hello <span class="key">Part 1: reset: correct; Part 2: the jumps: bug at block 2, should be <b>jump</b>; Part 3: the greeting: correct</span></li><li>move right 3 times, grow, then move left 3 times <span class="key">Part 1: out: correct; Part 2: bigger: bug at block 1, should be <b>grow</b>; Part 3: back: bug at block 2, should be <b>left</b></span></li></ul></li><li><b>Input, output, or a part to test?</b> <span class="key"><b>Input</b>: the A key is pressed, the player clicks the door, the ball hits the goal; <b>Output</b>: the cat jumps, a creak sound plays, the score goes up by one; <b>A part to test</b>: the reset blocks at the start, the loop that does the three jumps</span></li><li><b>Check: inputs, outputs, parts</b><ol><li>Pressing A runs the jump script. Pressing B runs... <span class="key">&rarr; <b>its own, different script</b></span></li><li>Planning an object means deciding its... <span class="key">&rarr; <b>input and its output</b></span></li><li>You run each part on its own and part 2 fails. Where is the bug? <span class="key">&rarr; <b>in part 2</b></span></li></ol></li><li><b>Show what you know</b><ol><li>One sprite, two keys, two scripts. What picks the output? <span class="key">&rarr; <b>which key is pressed</b></span></li><li>Which is an INPUT to a game program? <span class="key">&rarr; <b>the space bar being pressed</b></span></li><li>Which is an OUTPUT? <span class="key">&rarr; <b>the door opening</b></span></li><li>Why plan an object's input and output BEFORE building? <span class="key">&rarr; <b>so you know what it waits for and what it must do</b></span></li><li>Testing systematically means... <span class="key">&rarr; <b>testing one part at a time</b></span></li><li>A program in three parts fails. Parts 1 and 3 pass alone. The bug is... <span class="key">&rarr; <b>in part 2</b></span></li><li>After fixing a block in part 2, you should... <span class="key">&rarr; <b>run part 2 again to check</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 7: Bitsy Loops<small>14 steps &middot; about 40 minutes &middot; 3 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4P.08</code> Know how to develop programs for a physical computing device to produce outputs from input devices.</li><li><code>4P.09</code> Know how to develop programs for a physical computing device using count-controlled and indefinite (forever) loops.</li><li><code>4CS.01</code> Identify examples where a control system is used.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Bitsy's sensors <span class="key">&middot; Bitsy has two sensors as well as its button, shake sensor and microphone. A sensor is an input that senses by itself. Tap each input.</span></li><li>When it gets hot, when it gets dark <span class="key">&middot; Build each program: a when block for the sensor first, then the outputs. Then warm Bitsy or cover it and watch.</span></li><li>Loops on the device <span class="key">&middot; Now with loops. A repeat block repeats the output after it a counted number of times; a forever block repeats everything after it until you press Stop.</span></li><li>Control systems <span class="key">&middot; A control system senses something, decides with a program, and makes something happen. Bitsy's fan is one. Tap each real one.</span></li><li>Control system, or not? <span class="key">&middot; Does a sensor and a program decide what this does, or does a person?</span></li><li>Check: Bitsy loops <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>When it gets hot, when it gets dark.</b> Find a thing at home that turns an input into an output: a doorbell, a light switch, a kettle. Say what goes in and what comes out.</li><li><b>Find the control systems.</b> You need: A walk round the house. Find three things that sense and decide by themselves: the fridge, the heating, a night light, the oven timer. For each, say the sensor, the decision and the output. Find three things a person controls every time. Look for: Sense, decide, act.</li><li><b>Be Bitsy.</b> You need: A friend, a torch. Your friend is Bitsy. Write a program: when it gets dark, forever: hands up, wait, hands down, wait. Cover their eyes with the torch off. They run the loop until you say Stop. Now write a repeat 3 times program and test that too. Look for: A forever loop needs a Stop.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Bitsy's sensors</b> <span class="key">What makes a sensor different from a button? &rarr; <b>A sensor senses by itself; nobody has to press it</b></span></li><li><b>When it gets hot, when it gets dark</b><ul><li>When it gets hot, Turn the motor, Show a smile <span class="key">&rarr; blocks <b>whenHot, motor, smile</b></span></li><li>When it gets dark, All lights on, Beep <span class="key">&rarr; blocks <b>whenDark, light, beep</b></span></li><li>When it gets hot, Beep, Ring the bell, All lights on <span class="key">&rarr; blocks <b>whenHot, beep, bell, light</b></span></li></ul></li><li><b>Loops on the device</b><ul><li>When button A is pressed, Repeat 3 times, Beep <span class="key">&rarr; blocks <b>whenA, repeat3, beep</b></span></li><li>When it gets dark, Forever, All lights on, Wait a moment, All lights off, Wait a moment <span class="key">&rarr; blocks <b>whenDark, forever, light, wait, dark, wait</b></span></li><li>When it is shaken, Repeat 4 times, Ring the bell, Show a heart <span class="key">&rarr; blocks <b>whenShake, repeat4, bell, heart</b></span></li></ul></li><li><b>Control systems</b> <span class="key">What are the three parts of a control system? &rarr; <b>A sensor, a program that decides, and an output</b></span></li><li><b>Control system, or not?</b> <span class="key"><b>Control system</b>: heating that turns on when the room gets cold, a door that opens when it sees you, a lamp that comes on at dusk by itself, a fridge keeping itself cold; <b>Not one</b>: a candle, a bicycle, a pencil, a radio you switch on by hand</span></li><li><b>Check: Bitsy loops</b><ol><li>'When it gets dark, all lights on.' What is the input? <span class="key">&rarr; <b>the light sensor sensing dark</b></span></li><li>'When A is pressed, repeat 3 times, beep.' How many beeps? <span class="key">&rarr; <b>3</b></span></li><li>A forever loop on Bitsy stops when... <span class="key">&rarr; <b>you press Stop</b></span></li></ol></li><li><b>Show what you know</b><ol><li>Which is a sensor? <span class="key">&rarr; <b>the temperature sensor</b></span></li><li>A program that starts a fan when it gets hot begins with... <span class="key">&rarr; <b>when it gets hot</b></span></li><li>Which loop is count-controlled? <span class="key">&rarr; <b>repeat 4 times</b></span></li><li>'Forever: lights on, wait, lights off, wait' makes... <span class="key">&rarr; <b>a light that keeps flashing until Stop</b></span></li><li>A control system is... <span class="key">&rarr; <b>a sensor, a program that decides, and an output</b></span></li><li>Which is a control system? <span class="key">&rarr; <b>a door that opens when a sensor sees you</b></span></li><li>Traffic lights cycle red, amber, green all day. That is... <span class="key">&rarr; <b>a forever loop in a control system</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 8: Data and Information<small>15 steps &middot; about 40 minutes &middot; 3 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4MD.01</code> Understand the differences between physical (paper-based) and digital databases.</li><li><code>4MD.02</code> Understand the advantages and disadvantages of using forms when collecting data.</li><li><code>4MD.03</code> Identify the differences between data and information.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Paper or digital? <span class="key">&middot; A database is an organised collection of data. It can live on paper - a card index, a register - or on a computer. Tap each difference.</span></li><li>Paper, or digital? <span class="key">&middot; Is this a strength of a PAPER database or of a DIGITAL one?</span></li><li>Collect it with a form <span class="key">&middot; A form asks everyone the same question with the same choices. Eight children say how they get to school. Record each on the form.</span></li><li>Forms: advantage, or disadvantage? <span class="key">&middot; Forms are good at some things and bad at others. Is this an advantage of using a form, or a disadvantage?</span></li><li>Data, or information? <span class="key">&middot; Data is the raw facts: 3, walk, red. Information is what the data means once it is organised: 'most children walk'. Tap each step from one to the other.</span></li><li>Data, or information? <span class="key">&middot; Is this a raw fact (data) or a meaning made from facts (information)?</span></li><li>Check: data and information <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Collect it with a form.</b> Ask five people a question with a few answers (favourite fruit) and tick a box on a paper form for each one. Then count the ticks into a table.</li><li><b>A form for the family.</b> You need: Paper, a pen. Write a form with one question and four choices: favourite fruit, say. Ask everyone at home. Did anyone want an answer that was not a choice? Count the answers and write one sentence of information from them. Look for: The form counts; the sentence is information.</li><li><b>Paper card index.</b> You need: Index cards, a box. Make a card for each book on a shelf: title, author, colour. Find every red book by looking through the cards. Time it. Now imagine typing 'red' into a search. Which is faster? Which works in a power cut? Look for: Paper and digital, each with strengths.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Paper or digital?</b> <span class="key">You need to find one child's record out of a thousand. Which is faster? &rarr; <b>The digital database: search by name</b></span></li><li><b>Paper, or digital?</b> <span class="key"><b>Digital</b>: finds one record in a second, sorts a thousand records by age in a blink, can be read by ten people at once in different rooms, a million records fit in a pocket, a copy for safety takes one click; <b>Paper</b>: works in a power cut, cannot be hacked from far away, needs no login to read</span></li><li><b>Collect it with a form</b> <span class="key">Amal: <b>walk</b>; Sami: <b>bus</b>; Zara: <b>car</b>; Omar: <b>bike</b>; Leo: <b>walk</b>; Nora: <b>bus</b>; Karim: <b>walk</b>; Maya: <b>car</b></span></li><li><b>Forms: advantage, or disadvantage?</b> <span class="key"><b>Advantage</b>: the answers are easy to count, everyone is asked exactly the same question, a digital form counts the answers itself, no question gets forgotten; <b>Disadvantage</b>: Maya scooters, and scooter is not a choice, it cannot ask why, a badly written question gives wrong data from everyone</span></li><li><b>Data, or information?</b> <span class="key">'Walk, bus, car, walk' is data. Which of these is INFORMATION made from it? &rarr; <b>Most of these children walk to school</b></span></li><li><b>Data, or information?</b> <span class="key"><b>Data</b>: 21, cat, dog, cat, fish, cat, size 2, size 1, size 3, size 2, walk; <b>Information</b>: it is warm enough to play outside, cats are the most common pet in the class, the shop should order more size 2 shoes, most children walk, so we need more coat pegs</span></li><li><b>Check: data and information</b><ol><li>Which database can be searched in a second? <span class="key">&rarr; <b>the digital one</b></span></li><li>A form's biggest weakness is... <span class="key">&rarr; <b>you can only answer with the choices given</b></span></li><li>'Cats are the most common pet here' is... <span class="key">&rarr; <b>information</b></span></li></ol></li><li><b>Show what you know</b><ol><li>A database is... <span class="key">&rarr; <b>an organised collection of data</b></span></li><li>Which is a strength of a PAPER database? <span class="key">&rarr; <b>it works with no power</b></span></li><li>Which is a strength of a DIGITAL database? <span class="key">&rarr; <b>it sorts a thousand records in a blink</b></span></li><li>An advantage of a form is... <span class="key">&rarr; <b>everyone answers the same question, so answers can be counted</b></span></li><li>A disadvantage of a form is... <span class="key">&rarr; <b>you can only pick from the choices given</b></span></li><li>'7, 8, 8, 9' on its own is... <span class="key">&rarr; <b>data</b></span></li><li>Data becomes information when it is... <span class="key">&rarr; <b>organised and given meaning</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 9: Databases<small>14 steps &middot; about 40 minutes &middot; 4 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4MD.07</code> Identify data, records and fields within a data table.</li><li><code>4MD.05</code> Identify appropriate data types for a field within a data table.</li><li><code>4MD.04</code> Know how to sort data into a required order, including descending or ascending numerical values and alphabetically.</li><li><code>4MD.06</code> Know how to use a database to answer a single question.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Records, fields, data <span class="key">&middot; A database table has three parts. Press Next to meet them.</span></li><li>Tap the record, the field, the data <span class="key">&middot; The class pets table. Tap what each task asks for: a whole record, a whole field, or one piece of data.</span></li><li>Which data type? <span class="key">&middot; Every field has a data type: text, number, date or currency. Which type should this field have?</span></li><li>Sort it into order <span class="key">&middot; Sort the table by a field, ascending or descending, then answer from the top or the bottom of the sorted list.</span></li><li>Answer one question <span class="key">&middot; A database answers a question when you filter it: choose the field, the test and the value, and only the matching records stay. Answer each question from what is left.</span></li><li>Check: databases <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Tap the record, the field, the data.</b> Make a table of your family: one row per person, columns for age and favourite food. Point to a record, a field, and one piece of data.</li><li><b>Sort it into order.</b> Line up the family by age, youngest first, then oldest first, then in alphabetical order of first name. Say the field and the direction each time.</li><li><b>Answer one question.</b> Lay out toy cards with a few facts each (colour, size, legs). Pick a rule (legs more than 2) and pull out only the cards that match.</li><li><b>A table of toys.</b> You need: Paper, a ruler. Draw a table: one row per toy, with fields for name, colour, size in centimetres and the year you got it. Point to one record, one field, one piece of data. Give each field a type. Which field is a number? Which is a date? Look for: Rows, columns, cells, types.</li><li><b>Sort the family.</b> You need: Everyone at home. Sort everyone by height, descending. Then by birthday, ascending. Then by first name, A to Z. Who is first each time? Does the order change? Answer one question with a filter: who is taller than 150 cm? Look for: Sorting changes the order; a filter picks records.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Tap the record, the field, the data</b><ol><li>Tap the record for Sami: everything about him. <span class="key">&rarr; <b>Sami</b></span></li><li>Tap the field that holds everyone's age. <span class="key">&rarr; <b>age</b></span></li><li>Tap the piece of data that says what pet Zara has. <span class="key">&rarr; <b>Zara's pet</b></span></li><li>Tap the field that holds the towns. <span class="key">&rarr; <b>town</b></span></li><li>Tap the piece of data that says how old Omar is. <span class="key">&rarr; <b>Omar's age</b></span></li><li>Tap Nora's whole record . <span class="key">&rarr; <b>Nora</b></span></li></ol></li><li><b>Which data type?</b> <span class="key"><b>Text</b>: the pet's name, the town it lives in; <b>Number</b>: the pet's age in years, its weight in kilograms; <b>Date</b>: the day the pet was born, the date of its last vet visit; <b>Currency</b>: what its food costs a week, how much the pet cost to buy</span></li><li><b>Sort it into order</b><ol><li>Sort by height , descending (tallest first). <span class="key">by height desc; Who is at the TOP: the tallest? &rarr; <b>Zara</b></span></li><li>Sort by age , ascending (youngest first). <span class="key">by age asc; Who is at the TOP: the youngest? &rarr; <b>Nora</b></span></li><li>Sort by pet , ascending (A to Z). <span class="key">by pet asc; Whose pet comes FIRST alphabetically? &rarr; <b>Leo</b></span></li><li>Sort by pet , descending (Z to A). <span class="key">by pet desc; Whose pet is at the TOP now? &rarr; <b>Omar</b></span></li></ol></li><li><b>Answer one question</b><ol><li>Who is older than 8 ? <span class="key">age gt 8; How many children are older than 8? &rarr; <b>3</b></span></li><li>Who has a rabbit ? <span class="key">pet eq rabbit; How many children have a rabbit? &rarr; <b>1</b></span></li><li>Who goes to the art club? <span class="key">club eq art; How many go to the art club? &rarr; <b>3</b></span></li><li>Who is younger than 9 ? <span class="key">age lt 9; How many children are younger than 9? &rarr; <b>3</b></span></li></ol></li><li><b>Check: databases</b><ol><li>One row of a table, everything about one pet, is... <span class="key">&rarr; <b>a record</b></span></li><li>The best data type for 'date of birth' is... <span class="key">&rarr; <b>date</b></span></li><li>Sorting height ASCENDING puts... <span class="key">&rarr; <b>the shortest at the top</b></span></li></ol></li><li><b>Show what you know</b><ol><li>One column of a table, one kind of fact about everyone, is... <span class="key">&rarr; <b>a field</b></span></li><li>One cell - Amal's pet, cat - is... <span class="key">&rarr; <b>one piece of data</b></span></li><li>Which field should have the currency type? <span class="key">&rarr; <b>what the pet's food costs</b></span></li><li>If ages are stored as TEXT, what goes wrong? <span class="key">&rarr; <b>they cannot be sorted or added properly</b></span></li><li>Sorting pets Z to A is... <span class="key">&rarr; <b>descending alphabetical</b></span></li><li>To answer 'who is older than 8?' you... <span class="key">&rarr; <b>filter the age field for more than 8</b></span></li><li>After a filter, the records you see are... <span class="key">&rarr; <b>only the ones that match</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 10: Clients, Servers and the Web<small>15 steps &middot; about 40 minutes &middot; 3 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4DC.01</code> Explain the role of servers and clients in a network.</li><li><code>4DC.03</code> Describe the differences between wi-fi and ethernet, including speed, security and the use of wires.</li><li><code>4DC.02</code> Describe the differences between the World Wide Web and the internet.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Clients ask, servers serve <span class="key">&middot; On a network some computers ASK and one computer SERVES. The asker is a client ; the one that answers is a server . Tap each idea.</span></li><li>The school network <span class="key">&middot; Connect every device to the router. Some use a cable (ethernet), some use wi-fi. Then send things and watch who asks and who serves.</span></li><li>Client, or server? <span class="key">&middot; In each case, is the device a CLIENT (asking) or a SERVER (answering)?</span></li><li>The internet and the web <span class="key">&middot; The internet is the network of networks: the cables, routers and servers joining the world. The World Wide Web is the pages that travel over it. Tap each.</span></li><li>The internet, or the web? <span class="key">&middot; Is this part of the INTERNET (the network itself) or part of the WORLD WIDE WEB (pages and links)?</span></li><li>Wi-fi, or ethernet? <span class="key">&middot; Devices join a network by ethernet (a cable) or wi-fi (radio). Which one is this describing?</span></li><li>Check: clients, servers, web <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>The school network.</b> Find the box with the blinking lights (the router) and follow any wires out of it. Which things at home connect with a wire, and which without?</li><li><b>Find the server.</b> You need: A grown-up. Ask: when I watch a video, where does it come from? (A server, far away.) Name three things at home that are clients. Is there anything at home that acts as a server? (A games console sharing to another, a family photo hub.) Look for: Clients ask; servers serve.</li><li><b>Cable or wi-fi?.</b> You need: The router at home. Find the router. Count the cables in it. What are they joined to? List the devices on wi-fi. Why do those use wi-fi? Stand behind a thick wall with a phone. Does the wi-fi get weaker? Look for: Cable for speed and safety; wi-fi to move.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Clients ask, servers serve</b> <span class="key">Your tablet opens a web page. Which is the client? &rarr; <b>The tablet: it asked</b></span></li><li><b>Client, or server?</b> <span class="key"><b>Client</b>: a tablet asking for a web page, a laptop opening a file from the school server, a phone asking for the weather; <b>Server</b>: the computer that holds every child's saved work, the computer that sends out a video to a million viewers, the computer that keeps your emails and hands them over when you log in</span></li><li><b>The internet and the web</b> <span class="key">Which is the best way to say the difference? &rarr; <b>The internet is the network; the web is the pages that travel over it</b></span></li><li><b>The internet, or the web?</b> <span class="key"><b>The internet</b>: a cable under the sea, the router in your house, an email travelling to Grandma, a video call; <b>The web</b>: a web page about lions, a link you click to go to another page, a website address starting www, a browser</span></li><li><b>Wi-fi, or ethernet?</b> <span class="key"><b>Ethernet</b>: a cable plugged into the wall, the fastest and steadiest connection, a stranger outside cannot join without plugging in, best for a printer that never moves; <b>Wi-fi</b>: works on a tablet in the garden, gets weaker through thick walls, needs a password so neighbours cannot join, the only choice for a phone</span></li><li><b>Check: clients, servers, web</b><ol><li>A computer that stores files and hands them out when asked is a... <span class="key">&rarr; <b>server</b></span></li><li>The World Wide Web is... <span class="key">&rarr; <b>pages and links that travel over the internet</b></span></li><li>Which is faster and harder for a stranger to join? <span class="key">&rarr; <b>ethernet</b></span></li></ol></li><li><b>Show what you know</b><ol><li>A device that ASKS for a page is a... <span class="key">&rarr; <b>client</b></span></li><li>How many clients can one server answer? <span class="key">&rarr; <b>many at once</b></span></li><li>The internet is... <span class="key">&rarr; <b>the network of networks joining the world</b></span></li><li>Which uses the internet but is NOT the web? <span class="key">&rarr; <b>an email</b></span></li><li>Which is a CONVENIENCE of wi-fi? <span class="key">&rarr; <b>no cable, so it works anywhere in range</b></span></li><li>Which is a SECURITY point for ethernet? <span class="key">&rarr; <b>you must plug in to join, so outsiders cannot</b></span></li><li>Why does the school server use a cable, not wi-fi? <span class="key">&rarr; <b>it never moves and needs the fastest, steadiest link</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 11: When Networks Fail<small>14 steps &middot; about 40 minutes &middot; 2 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4DC.04</code> Identify issues that may occur as a result of a failure in a network.</li><li><code>4DC.05</code> Identify where and why encryption is used in digital systems.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>What a failure breaks <span class="key">&middot; When a network fails - a cable is cut, the router dies, the wi-fi drops - everything that needed other devices stops. Tap each issue.</span></li><li>Switch the network off <span class="key">&middot; The router has failed. Predict what still works, then try each app.</span></li><li>Caused by the network failing? <span class="key">&middot; Something has gone wrong. Could a network failure be the cause, or is it something else?</span></li><li>Where encryption is used <span class="key">&middot; Encryption scrambles data so only someone with the key can read it. It is used wherever data must stay secret while it travels or is stored. Tap each place.</span></li><li>Encrypt it, or no need? <span class="key">&middot; Some data must be encrypted; some is public and needs no protecting. Which is this?</span></li><li>Check: failures and encryption <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Switch the network off.</b> With a grown-up, switch the wi-fi off for five minutes. Which apps still work? Switch it back on.</li><li><b>The router test.</b> You need: A grown-up, the router. With a grown-up, switch the router off for one minute. Try five things: a video, a saved photo, a game, a message, the calculator. Which stop? Switch it back on. Which come back by themselves? Look for: Only the things that need other devices stop.</li><li><b>Padlock hunt.</b> You need: A browser, a grown-up. Open five websites with a grown-up. Look beside each address for the padlock. Which sites ask for a password or a card number? Do they all have the padlock? Never type a password where there is no padlock. Look for: The padlock means encrypted.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>What a failure breaks</b> <span class="key">The wi-fi at school fails. Your laptop still turns on and runs Paint. Why? &rarr; <b>Paint runs on the laptop alone; only things that need other devices stop</b></span></li><li><b>Switch the network off</b> <span class="key">Print your story: <b>needs the internet</b>; Write a story: <b>works without it</b>; Open the class shared folder: <b>needs the internet</b>; Use the calculator: <b>works without it</b>; Watch a video online: <b>needs the internet</b>; Look at a photo saved here: <b>works without it</b>; Pay by card at the school shop: <b>needs the internet</b></span></li><li><b>Caused by the network failing?</b> <span class="key"><b>Network failure</b>: the printer says 'not found', the shared folder will not open, the video call froze, the shop can only take cash today; <b>Something else</b>: the tablet will not turn on, the keyboard stopped working after a spill, the word is spelt wrong on the page, the mouse pointer will not move</span></li><li><b>Where encryption is used</b> <span class="key">Why encrypt a card number when it is sent to the bank? &rarr; <b>So anyone who grabs it on the way sees only scrambled data</b></span></li><li><b>Encrypt it, or no need?</b> <span class="key"><b>Encrypt it</b>: your password, a card number, a private message to a friend, a patient's medical record; <b>No need</b>: the school lunch menu on the school website, the weather forecast, the bus timetable, the library opening times</span></li><li><b>Check: failures and encryption</b><ol><li>The router at school fails. Which still works? <span class="key">&rarr; <b>writing a story on the laptop</b></span></li><li>Encryption makes data... <span class="key">&rarr; <b>unreadable to anyone without the key</b></span></li><li>Which needs encrypting? <span class="key">&rarr; <b>a card number</b></span></li></ol></li><li><b>Show what you know</b><ol><li>A network failure means... <span class="key">&rarr; <b>devices cannot reach each other</b></span></li><li>Why can the shop only take cash when the network fails? <span class="key">&rarr; <b>the till cannot ask the bank's server</b></span></li><li>Which is caused by a network failure? <span class="key">&rarr; <b>the printer cannot be found</b></span></li><li>Why does a hospital keep a paper plan? <span class="key">&rarr; <b>so it can work when its network fails</b></span></li><li>The padlock beside a web address means... <span class="key">&rarr; <b>the connection to that site is encrypted</b></span></li><li>Who can read an encrypted message? <span class="key">&rarr; <b>only someone with the key</b></span></li><li>What does the wi-fi password do besides letting you join? <span class="key">&rarr; <b>it encrypts what travels through the air</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 12: Caesar and Pigpen<small>14 steps &middot; about 40 minutes &middot; 2 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4DC.06</code> Know how to write and decode messages using the Caesar Cipher and the Pigpen Cipher.</li><li><code>4DC.05</code> Identify where and why encryption is used in digital systems.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>The Caesar cipher <span class="key">&middot; Two thousand years ago Julius Caesar sent secret orders by shifting every letter along the alphabet. Press Next .</span></li><li>Caesar: write and read <span class="key">&middot; The shifted alphabet is on screen for each message. Decode the coded words back to plain letters, and encode the plain words by shifting.</span></li><li>The Pigpen cipher <span class="key">&middot; The Pigpen cipher swaps letters for SHAPES. Each letter sits in a pen in a grid, and its symbol is the shape of its pen. Press Next .</span></li><li>Pigpen: write and read <span class="key">&middot; The Pigpen key is on screen. Decode the shapes into letters, and encode the words by tapping each letter's shape.</span></li><li>The key is everything <span class="key">&middot; Both ciphers work because of a key : the shift number, or the grid. Tap each idea about keys.</span></li><li>Check: ciphers <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Caesar: write and read.</b> Write a message with 1 = a, 2 = b. Give it to someone with the key and see if they can read it. Then try without the key.</li><li><b>Secret notes.</b> You need: Paper, a friend. Agree a shift with a friend in secret. Write each other notes in Caesar cipher and decode them. Now give a third person the note but not the shift. Can they crack it by trying shifts? Look for: The key is the secret, and 25 tries breaks it.</li><li><b>Pigpen poster.</b> You need: Paper, a ruler. Draw the two grids and the two X shapes, and fill in the alphabet. Write your name in Pigpen and pin it on your door. Can anyone at home read it without the poster? Look for: The grid is the key.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Caesar: write and read</b><ol><li>cat <span class="key">&rarr; <b>f d w</b></span></li><li>k l <span class="key">&rarr; <b>hi</b></span></li><li>dog <span class="key">&rarr; <b>e p h</b></span></li><li>v h f u h w <span class="key">&rarr; <b>secret</b></span></li><li>key <span class="key">&rarr; <b>m g a</b></span></li></ol></li><li><b>Pigpen: write and read</b><ol><li>h i <span class="key">&rarr; <b>hi</b></span></li><li>cat <span class="key">&rarr; <b>c a t</b></span></li><li>c o d e <span class="key">&rarr; <b>code</b></span></li><li>spy <span class="key">&rarr; <b>s p y</b></span></li></ol></li><li><b>The key is everything</b> <span class="key">Why is a Caesar cipher easy to crack? &rarr; <b>There are only 25 possible shifts to try</b></span></li><li><b>Check: ciphers</b><ol><li>With a Caesar shift of 3, 'a' becomes... <span class="key">&rarr; <b>d</b></span></li><li>In the Pigpen cipher a letter is replaced by... <span class="key">&rarr; <b>the shape of the pen it sits in</b></span></li><li>To decode a Caesar message you... <span class="key">&rarr; <b>shift every letter back by the key</b></span></li></ol></li><li><b>Show what you know</b><ol><li>The Caesar cipher works by... <span class="key">&rarr; <b>shifting every letter the same number of places</b></span></li><li>'cat' with shift 3 is... <span class="key">&rarr; <b>fdw</b></span></li><li>'y' with shift 3 is... <span class="key">&rarr; <b>b</b></span></li><li>The Pigpen key is... <span class="key">&rarr; <b>the grids that give each letter a shape</b></span></li><li>The difference between 'a' and 'j' in Pigpen is... <span class="key">&rarr; <b>a dot in the pen</b></span></li><li>A cipher is only as secret as... <span class="key">&rarr; <b>its key</b></span></li><li>Encryption in your browser is different from Caesar's because... <span class="key">&rarr; <b>its keys are far too many to try one by one</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 13: Software, Sensors and Files<small>15 steps &middot; about 40 minutes &middot; 4 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4CS.02</code> Know the functions of application and systems software.</li><li><code>4CS.03</code> Identify a range of data recorded by input devices in computer systems, including data that is collected through sensors and data loggers.</li><li><code>4CS.04</code> Identify a range of information communicated by output devices in computer systems.</li><li><code>4CS.05</code> Identify that different types of file have different sizes, including text, audio, image, video and games.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Two kinds of software <span class="key">&middot; Application software does a job for you: draw, write, play. Systems software runs the computer itself so applications can work. Tap each.</span></li><li>Application, or systems software? <span class="key">&middot; Is this a program you use for a job, or software that runs the computer itself?</span></li><li>Data in, information out <span class="key">&middot; Input devices RECORD data, including sensors and data loggers that record by themselves. Output devices COMMUNICATE information. Tap each device.</span></li><li>Recorded, or communicated? <span class="key">&middot; Is this DATA being recorded by an input device, or INFORMATION being communicated by an output device?</span></li><li>File sizes <span class="key">&middot; Different types of file take up different amounts of space. Tap each to see roughly how big it is.</span></li><li>Smallest to biggest <span class="key">&middot; Put the four files in order of size, smallest first.</span></li><li>Check: software, sensors, files <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Data in, information out.</b> Find the inputs and outputs on a real device: what do you press or speak into, and where does the information come out?</li><li><b>Find the sizes.</b> You need: A computer, a grown-up. With a grown-up, find a text file, a photo, a song and a video on the computer. Look at each file's size: KB, MB or GB? Put them in order. Was the long story really the smallest? Look for: Text, image, audio, video.</li><li><b>Application or systems?.</b> You need: A tablet, a grown-up. List every app on the home screen. Those are applications. Ask a grown-up what the operating system is called. What happens when it updates? That is systems software changing underneath. Look for: Apps on top, systems underneath.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Two kinds of software</b> <span class="key">What does systems software do? &rarr; <b>Runs the computer itself so applications can work</b></span></li><li><b>Application, or systems software?</b> <span class="key"><b>Application</b>: a drawing program, a game, a web browser, a writing program; <b>Systems software</b>: the operating system that starts the computer, the driver that talks to the printer, the program that keeps files in folders, the program that shares the screen between open apps</span></li><li><b>Data in, information out</b> <span class="key">keyboard: <b>input</b>; temperature sensor: <b>input</b>; data logger: <b>input</b>; motion sensor: <b>input</b>; camera: <b>input</b>; microphone: <b>input</b>; screen: <b>output</b>; speaker: <b>output</b>; printer: <b>output</b></span></li><li><b>Recorded, or communicated?</b> <span class="key"><b>Recorded (input)</b>: a sensor records 21 degrees, a data logger records the temperature every minute all night, the camera takes a photo, a motion sensor notices someone at the door; <b>Communicated (output)</b>: the screen shows the weather map, the speaker says 'battery low', the printer prints the class list, a red light warns the fridge door is open</span></li><li><b>File sizes</b> <span class="key">Which is usually the BIGGEST file? &rarr; <b>A video</b></span></li><li><b>Smallest to biggest</b> <span class="key">story.txt: a ten-page story &amp;rarr; photo.jpg: one photo &amp;rarr; song.mp3: a three-minute song &amp;rarr; film.mp4: a two-hour film; not needed: an empty folder</span></li><li><b>Check: software, sensors, files</b><ol><li>The operating system is... <span class="key">&rarr; <b>systems software that runs the computer</b></span></li><li>A data logger... <span class="key">&rarr; <b>records readings over time by itself</b></span></li><li>Which file is smallest? <span class="key">&rarr; <b>a ten-page story</b></span></li></ol></li><li><b>Show what you know</b><ol><li>A web browser is... <span class="key">&rarr; <b>application software</b></span></li><li>The driver that lets the computer talk to the printer is... <span class="key">&rarr; <b>systems software</b></span></li><li>Which input device records by itself, without a person? <span class="key">&rarr; <b>a temperature sensor</b></span></li><li>Which is INFORMATION communicated by an output device? <span class="key">&rarr; <b>the screen showing 22 degrees</b></span></li><li>A file of one photo is about... <span class="key">&rarr; <b>a few megabytes</b></span></li><li>A two-hour film is about... <span class="key">&rarr; <b>gigabytes</b></span></li><li>From smallest to biggest, the usual order is... <span class="key">&rarr; <b>text, image, audio, video</b></span></li></ol></li></ul>
+      </div>
+    </details>
+    <details class="gu"><summary>Lesson 14: Computer Scientists and Service Robots<small>14 steps &middot; about 35 minutes &middot; 3 objectives</small></summary>
+      <div class="body">
+        <h3>What it teaches (Cambridge Primary Computing 0059, Stage 4)</h3><ul><li><code>4CS.06</code> Describe the role of computer scientists in a range of industries.</li><li><code>4CS.07</code> Identify the role of robots in service industries, including for delivery services, public transport and health care.</li><li><code>4CS.01</code> Identify examples where a control system is used.</li></ul>
+        <h3>The steps</h3><ol><li>What this lesson is about <span class="key">&middot; What you will be able to do by the end.</span></li><li>Unit lecture <span class="key">&middot; Listen to the lesson, one part at a time. Press Next part when you are ready.</span></li><li>Computing words <span class="key">&middot; Tap each word to hear what it means and how to use it. Then show you know them.</span></li><li>Computer scientists at work <span class="key">&middot; A computer scientist designs the programs and systems that other people rely on. They work in almost every industry. Tap each one.</span></li><li>Which industry needs this? <span class="key">&middot; A computer scientist built this. Which industry was it for?</span></li><li>Service robots <span class="key">&middot; A service robot does a job for people: delivering, driving, helping in a hospital. Tap each one to see it work.</span></li><li>Delivery, transport, or health care? <span class="key">&middot; Which service industry is this robot working in?</span></li><li>A robot is a control system <span class="key">&middot; Every service robot is a control system: sensors in, a program that decides, motors out. Tap each part of the delivery robot.</span></li><li>Check: scientists and robots <span class="key">&middot; Three quick questions.</span></li><li>Games <span class="key">&middot; Choose a game to play. Nothing here is new.</span></li><li>Unplugged at home <span class="key">&middot; Computing with no computer: cards, floors and grown-ups. Do one with a grown-up.</span></li><li>Show what you know <span class="key">&middot; Time to show what you know. Tap the answer.</span></li><li>Computing world <span class="key">&middot; Where this computing is out in the real world. This part is still being built.</span></li><li>Student resources <span class="key">&middot; Your word list, the word finder, your home projects, and a page for your grown-up.</span></li></ol>
+        <h3>Do it unplugged, for real</h3><ul><li><b>Spot the computer scientist.</b> You need: A day out, or the news. Everywhere you go, ask: what program is working here? The till, the traffic lights, the bus timetable screen, the hospital. For each one, a computer scientist wrote it. What problem did it solve? Pick the one you would most like to have built. Look for: Programs everywhere, each built by someone.</li><li><b>Design a service robot.</b> You need: Paper, pens. Choose a job: delivering library books, guiding visitors, carrying lunch trays. Draw the robot. Label its sensors, the decisions its program makes, and its outputs. What should it do if a child steps in front of it? Look for: Sense, decide, act, safely.</li></ul>
+        <h3>Answer keys</h3><ul><li><b>Computer scientists at work</b> <span class="key">What does a computer scientist do in an industry? &rarr; <b>Designs the programs and systems that solve that industry's problems</b></span></li><li><b>Which industry needs this?</b> <span class="key"><b>Health care</b>: a system that finds a patient's record in a second, software that spots a broken bone in an X-ray; <b>Farming</b>: a program that waters a field when the soil is dry, a tractor that steers itself along straight rows; <b>Banking</b>: encryption that protects money as it moves, the check that spots a stolen card being used; <b>Games</b>: the code that makes a character jump when you press A, the program that makes the enemy in a game hide and chase</span></li><li><b>Service robots</b> <span class="key">What makes all of these robots? &rarr; <b>A program controls the machine, using sensors to see and motors to act</b></span></li><li><b>Delivery, transport, or health care?</b> <span class="key"><b>Delivery</b>: a robot brings a pizza to the door, a drone flies a parcel to an island, a warehouse robot fetches your order for posting; <b>Public transport</b>: a train with no driver runs between airport terminals, a self-driving shuttle carries passengers round a park; <b>Health care</b>: a robot carries medicines to the ward, robot arms help a surgeon operate, a robot disinfects a hospital room with light</span></li><li><b>A robot is a control system</b> <span class="key">A delivery robot stops when someone steps in front of it. Which part of the control system made that happen? &rarr; <b>A sensor saw the person, the program decided to stop, the motors stopped</b></span></li><li><b>Check: scientists and robots</b><ol><li>A computer scientist on a farm might write... <span class="key">&rarr; <b>a program that waters a field when a soil sensor says it is dry</b></span></li><li>A driverless train is a robot in... <span class="key">&rarr; <b>public transport</b></span></li><li>A service robot senses, decides and acts. That makes it... <span class="key">&rarr; <b>a control system</b></span></li></ol></li><li><b>Show what you know</b><ol><li>Where do computer scientists work? <span class="key">&rarr; <b>in almost every industry</b></span></li><li>In a hospital a computer scientist might build... <span class="key">&rarr; <b>the system that keeps patient records safe and finds them fast</b></span></li><li>In a bank a computer scientist designs... <span class="key">&rarr; <b>the encryption and checks that keep money safe</b></span></li><li>A service robot is... <span class="key">&rarr; <b>a machine a program controls, doing a job for people</b></span></li><li>Which robot works in health care? <span class="key">&rarr; <b>a surgical robot holding instruments steady</b></span></li><li>A delivery robot crosses when the light is green because... <span class="key">&rarr; <b>its sensors saw green and its program decided to go</b></span></li><li>The three parts of a robot's control system are... <span class="key">&rarr; <b>sensors, a program that decides, and outputs like motors</b></span></li></ol></li></ul>
+      </div>
+    </details>
+  </section>
+
+  <p class="hubfoot">Built to Cambridge Primary Computing 0059, Stage 4 &mdash; all 39 learning objectives across the five strands. The stickers are earned, not given.</p>
+</div>
+
+<script>
+/* ---- the header bar: how far through the course, and the way out ----
+   Everything here is answered by the launch URL and by the progress document
+   the LESSONS write. This page stores nothing of its own. */
+(function () {
+  var COURSE = "ehel-comp-g04";
+  var STEPS  = {"l01": 14, "l02": 13, "l03": 14, "l04": 13, "l05": 15, "l06": 14, "l07": 14, "l08": 15, "l09": 14, "l10": 15, "l11": 14, "l12": 14, "l13": 15, "l14": 14};     /* lesson id -> slides-1, the lesson's own denominator */
+  var FILES  = {"l01": "loops-in-algorithms.html", "l02": "predict-and-compare.html", "l03": "sub-routines.html", "l04": "inputs-decide-outputs.html", "l05": "programs-with-loops.html", "l06": "inputs-outputs-and-parts.html", "l07": "bitsy-loops.html", "l08": "data-and-information.html", "l09": "databases.html", "l10": "clients-servers-and-the-web.html", "l11": "when-networks-fail.html", "l12": "caesar-and-pigpen.html", "l13": "software-sensors-and-files.html", "l14": "computer-scientists-and-service-robots.html"};     /* lesson id -> the page that teaches it */
+  var q = new URLSearchParams(location.search);
+  var doc = null;
+  try {
+    doc = JSON.parse(localStorage.getItem(
+      "ehel-progress:" + COURSE + ":" + (q.get("studentid") || "local")) || "null");
+  } catch (e) { doc = null; }
+  var unitOf = function (u) { return (doc && doc.units && doc.units[u]) || null; };
+  var done = 0, total = 0;
+  Object.keys(STEPS).forEach(function (u) {
+    var s = unitOf(u);
+    total += STEPS[u];
+    done += Math.min((s && s.sectionsDone && s.sectionsDone.length) || 0, STEPS[u]);
+  });
+  var pct = total ? Math.min(100, Math.round((done / total) * 100)) : 0;
+  var pctEl = document.getElementById("ehPct");
+  if (pctEl) pctEl.textContent = pct + "%";
+  var fill = document.getElementById("ehFill");
+  if (fill) fill.style.width = pct + "%";
+  var prog = document.getElementById("ehProg");
+  if (prog) prog.title = done + " of " + total + " steps done across the course";
+
+  /* the picker jumps to a lesson, carrying the launch parameters */
+  var picker = document.getElementById("ehPicker");
+  if (picker) picker.addEventListener("change", function () {
+    if (!picker.value) return;
+    var p = new URLSearchParams(location.search);
+    p.set("from", "comp4");
+    location.href = picker.value + "?" + p.toString();
+  });
+
+  /* THE WAY OUT, drawn only when the launch gave us one. */
+  var exit = q.get("exitUrl");
+  var back = document.getElementById("ehBack");
+  if (back && exit) { back.setAttribute("href", exit); back.hidden = false; }
+})();
+</script>
+
+<script>
+  /* wire-navigation.py :: carry
+     Keep ?pwsToken and ?pwsEndpoint alive on every in-app link. Without BOTH,
+     the class controls and Wehel do not mount at all - they guard on them and
+     return, so the symptom is silence rather than an error. Applied to every
+     same-directory link so a control added later cannot reintroduce the gap.
+     Done at run time because the values are only known then. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    q.delete("from");
+    if (!q.toString()) return;
+    document.querySelectorAll("a[href]").forEach(function (a) {
+      var href = a.getAttribute("href");
+      if (!href || /^(https?:|mailto:|tel:|#)/i.test(href)) return;   // in-app only
+      var base = href.split("?")[0];
+      var own = new URLSearchParams(href.split("?")[1] || "");
+      q.forEach(function (v, k) { if (!own.has(k)) own.set(k, v); });
+      a.setAttribute("href", base + "?" + own.toString());
+    });
+  })();
+</script>

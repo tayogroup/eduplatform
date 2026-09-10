@@ -33,8 +33,9 @@ import sys
 
 KIT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, KIT)
-from _rules import (REPEATS, code_word, decode_code, filter_rows, repeat_run, rule_output,  # noqa: E402
-                    run_robot, same_effect, sheet_cells, sum_answer, table_answer, walk_end)
+from _rules import (REPEATS, best_algo, branch_run, caesar_shift, code_word, decode_code, expand_loop,  # noqa: E402
+                    filter_rows, flatten_algo, repeat_run, rule_output, run_robot, same_effect, sheet_cells,
+                    sort_rows, sub_expand, sum_answer, table_answer, walk_end)
 
 REPO = os.path.abspath(os.path.join(KIT, "..", "..", "..", "..", ".."))
 FRAMEWORK = os.path.join(REPO, "src", "curriculum", "cambridge-computing-0059.json")
@@ -201,8 +202,9 @@ def main():
                     computed += 1
             elif kind == "device":
                 for rd in d["rounds"]:
-                    if not rd["expect"] or not rd["expect"][0].startswith("when") or any(b.startswith("when") for b in rd["expect"][1:]):
-                        fail(entry["file"], "step %d %r: one when block first, then outputs" % (k, rd.get("algorithm")))
+                    ex = rd["expect"]
+                    if not ex or not ex[0].startswith("when") or any(b.startswith("when") for b in ex[1:]) or ex[-1] in ("forever", "repeat2", "repeat3", "repeat4") or ex.count("forever") > 1:
+                        fail(entry["file"], "step %d %r: one when block first, then outputs; a loop block needs something after it" % (k, rd.get("algorithm")))
             elif kind == "views":
                 for qn in d["questions"]:
                     want = table_answer(d["columns"], qn["check"])
@@ -227,14 +229,82 @@ def main():
                     computed += 1
             elif kind == "cipher":
                 for rd in d["rounds"]:
-                    ok = decode_code(rd["code"]) == rd["answer"] if rd["kind"] == "decode" else code_word(rd["word"]) == list(rd["answer"])
+                    mode = rd.get("mode", "number")
+                    if mode == "caesar":
+                        ok = caesar_shift(rd["answer"], rd["shift"]) == rd["code"] if rd["kind"] == "decode" else caesar_shift(rd["word"], rd["shift"]) == rd["answer"]
+                    elif mode == "pigpen":
+                        ok = rd["answer"] == (rd["code"] if rd["kind"] == "decode" else rd["word"])
+                    else:
+                        ok = decode_code(rd["code"]) == rd["answer"] if rd["kind"] == "decode" else code_word(rd["word"]) == list(rd["answer"])
                     if not ok:
-                        fail(entry["file"], "step %d: a %s round's answer does not match the code" % (k, rd["kind"]))
+                        fail(entry["file"], "step %d: a %s %s round's answer does not match the code" % (k, mode, rd["kind"]))
                     computed += 1
+            elif kind == "loopalgo":
+                for rd in d["rounds"]:
+                    if len(flatten_algo(rd["blocks"])) < 4:
+                        fail(entry["file"], "step %d round %r: the algorithm is too short when followed" % (k, rd["task"]))
+                    if rd["mode"] == "fix" and not one_key(rd["fix"]["opts"]):
+                        fail(entry["file"], "step %d round %r: the fix does not have exactly one key" % (k, rd["task"]))
+                    computed += 1
+            elif kind == "compare":
+                for rd in d["rounds"]:
+                    if rd.get("check"):
+                        want = best_algo(d["algos"], rd["check"])
+                        if want != rd["answer"]:
+                            fail(entry["file"], "step %d purpose %r is keyed %r but the facts say %r" % (k, rd["purpose"], rd["answer"], want))
+                        computed += 1
+            elif kind == "subroutine":
+                for rd in d["rounds"]:
+                    if len(sub_expand(rd["main"], rd["subs"])) < 4:
+                        fail(entry["file"], "step %d round %r expands to too few steps" % (k, rd["task"]))
+            elif kind == "branch":
+                for rd in d["rounds"]:
+                    if [st["id"] for st in rd["yes"]] == [st["id"] for st in rd["no"]] or any(not branch_run(rd, inp["id"]) for inp in rd["inputs"]):
+                        fail(entry["file"], "step %d round %r: the branches do not differ, or one runs nothing" % (k, rd["task"]))
+            elif kind == "loopbuild":
+                for rd in d["rounds"]:
+                    pool = {st["id"] for st in rd["pool"]}
+                    if any(b not in pool for b in rd["expect"]["body"]) or not expand_loop([], rd["expect"]["body"], rd["expect"]["times"], []):
+                        fail(entry["file"], "step %d round %r: the expected loop uses a step the pool lacks" % (k, rd["task"]))
+                    computed += 1
+            elif kind == "comment":
+                if sorted(c["block"] for c in d["comments"]) != list(range(len(d["program"]))) or not one_key(d["then"]["opts"]):
+                    fail(entry["file"], "step %d: comments do not cover the blocks once each, or the question has no single key" % k)
+            elif kind == "inputprog":
+                for rd in d["rounds"]:
+                    exps = [tuple(expand_program(sc["expect"])) for sc in rd["scripts"].values()] if False else [tuple(sc["expect"]) for sc in rd["scripts"].values()]
+                    if len(set(exps)) != len(exps):
+                        fail(entry["file"], "step %d: two inputs produce the same script" % k)
+            elif kind == "plan":
+                for rd in d["rounds"]:
+                    if not one_key(rd["input"]["opts"]) or not one_key(rd["output"]["opts"]):
+                        fail(entry["file"], "step %d %r: a plan question does not have exactly one key" % (k, rd["object"]))
+            elif kind == "parttest":
+                for rd in d["rounds"]:
+                    for p in rd["parts"]:
+                        diffs = [i2 for i2 in range(len(p["program"])) if p["program"][i2] != p["expect"][i2]]
+                        if diffs and (diffs != [p.get("bug")] or next((o["id"] for o in p["fix"]["opts"] if o.get("ok")), None) != p["expect"][p["bug"]]):
+                            fail(entry["file"], "step %d part %r: the bug and its fix do not make the expected program" % (k, p["name"]))
+                        computed += 1
+            elif kind == "datasort":
+                for t in d["tasks"]:
+                    ordered = sort_rows(d["rows"], t["field"], t["dir"])
+                    want = ordered[0] if t["check"] == "first" else ordered[-1]
+                    keyed = next((o["t"] for o in t["then"]["opts"] if o.get("ok")), None)
+                    if keyed != want or not one_key(t["then"]["opts"]):
+                        fail(entry["file"], "step %d %r is keyed %r but sorting says %r" % (k, t["ask"], keyed, want))
+                    computed += 1
+            elif kind == "tableparts":
+                names = {rw["name"] for rw in d["rows"]}; fids = {f["id"] for f in d["fields"]}
+                for t in d["tasks"]:
+                    ok = (t["kind"] == "record" and t["target"] in names) or (t["kind"] == "field" and t["target"] in fids) or (t["kind"] == "data" and t["target"][0] in names and t["target"][1] in fids)
+                    if not ok:
+                        fail(entry["file"], "step %d task %r names a part the table lacks" % (k, t["ask"]))
             elif kind == "robot":
                 for lv in d["levels"]:
                     if lv.get("predict"):
-                        end = run_robot(lv, lv["program"], d["rows"], d["cols"])
+                        prog = expand_loop(lv.get("before"), lv["loop"]["body"], lv["loop"]["times"], lv.get("after")) if lv.get("loop") else lv["program"]
+                        end = run_robot(lv, prog, d["rows"], d["cols"])
                         if end != list(lv["answer"]):
                             fail(entry["file"], "step %d level %r: the program stops at %r, not %r" % (k, lv["title"], end, lv["answer"]))
                     else:
@@ -279,7 +349,7 @@ def main():
     if bad:
         print("  %d finding(s)\n" % len(bad)); sys.exit(1)
     print("  all %d Stage %d objectives are reached, every key is single, every sort bin exists,\n"
-          "  and %d keys were re-computed from the shipped data (Robo's routes, table answers, fixes, machines, ciphers, filters)\n" % (len(codes), stage, computed))
+          "  and %d keys were re-computed from the shipped data (Robo's routes, table answers, fixes, machines, ciphers, filters, loops, sorts)\n" % (len(codes), stage, computed))
     sys.exit(0)
 
 

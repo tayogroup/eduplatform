@@ -206,3 +206,101 @@ def sheet_cells(cols, rows, cells, tasks):
             state[t["cell"]] = t["value"]
     return state
 
+
+# ----------------------------------------------------------------------
+# Stage 4: loops, sub-routines, branches, sorting, two more ciphers. Each
+# mirrors a camelCased function in lib/computing.js, as at Stage 3.
+# ----------------------------------------------------------------------
+
+def expand_loop(before, body, times, after):
+    """The flat list a count-controlled loop makes: before, body x times, after
+    (4CT.05, 4CT.10; Robo's looped programs)."""
+    return list(before or []) + list(body or []) * int(times) + list(after or [])
+
+
+FOREVER_CYCLES = 2   # how many times a forever loop is followed before Stop
+
+
+def flatten_algo(blocks):
+    """A structured algorithm - steps, `repeat` blocks with a body and a count,
+    `forever` blocks - as the flat list of step ids a child follows (4CT.01,
+    4CT.02). A forever loop is followed FOREVER_CYCLES times and then a "stop"
+    step is expected, because that is the only way out of one."""
+    out = []
+    for b in blocks:
+        if b.get("kind") == "repeat":
+            for _ in range(int(b["times"])):
+                out.extend(st["id"] for st in b["body"])
+        elif b.get("kind") == "forever":
+            for _ in range(FOREVER_CYCLES):
+                out.extend(st["id"] for st in b["body"])
+            out.append("stop")
+        else:
+            out.append(b["id"])
+    return out
+
+
+def sub_expand(main, subs):
+    """A main algorithm with `call` blocks expanded into the sub-routines'
+    steps (4CT.08): the flat list of ids a child follows, with the call
+    itself as a step ("do WASH") before the sub-routine's own steps."""
+    out = []
+    for b in main:
+        if b.get("kind") == "call":
+            out.append("call:" + b["sub"])
+            out.extend(st["id"] for st in subs[b["sub"]])
+        else:
+            out.append(b["id"])
+    return out
+
+
+def branch_run(rd, input_id):
+    """The steps an if-algorithm takes for one input (4CT.09): before, the
+    branch that matches, after."""
+    branch = rd["yes"] if input_id == rd["inputs"][0]["id"] else rd["no"]
+    return [st["id"] for st in rd.get("before", [])] + [st["id"] for st in branch] + [st["id"] for st in rd.get("after", [])]
+
+
+def best_algo(algos, check):
+    """Which of several algorithms for one task is best for a computable
+    purpose (4CT.04): the fewest steps, or the fastest by its minutes. None
+    on a tie or an uncomputable purpose."""
+    kind = check.get("kind")
+    if kind == "fewest_steps":
+        key = lambda a: len(a["steps"])   # noqa: E731
+    elif kind == "fastest":
+        key = lambda a: float(a["facts"]["minutes"])   # noqa: E731
+    else:
+        return None
+    best = min(key(a) for a in algos)
+    winners = [a["id"] for a in algos if key(a) == best]
+    return winners[0] if len(winners) == 1 else None
+
+
+def sort_rows(rows, field, direction):
+    """Rows in the required order (4MD.04): ascending or descending, by number
+    when the values are numbers and alphabetically otherwise. Returns names."""
+    vals = [r[field] for r in rows]
+    numeric = all(isinstance(v, (int, float)) for v in vals)
+    key = (lambda r: float(r[field])) if numeric else (lambda r: str(r[field]).lower())
+    ordered = sorted(rows, key=key, reverse=(direction == "desc"))
+    return [r["name"] for r in ordered]
+
+
+def caesar_shift(text, shift):
+    """The Caesar cipher (4DC.06): every letter moved `shift` places along the
+    alphabet, wrapping from z to a. Letters only, lower case."""
+    out = []
+    for c in str(text).lower():
+        if "a" <= c <= "z":
+            out.append(chr((ord(c) - 97 + int(shift)) % 26 + 97))
+    return "".join(out)
+
+
+def pigpen_index(letter):
+    """The Pigpen cipher draws each letter from its place in the alphabet
+    (4DC.06): 0-8 the first grid, 9-17 the dotted grid, 18-21 the cross,
+    22-25 the dotted cross. The glyph is drawn from this index in the JS."""
+    c = str(letter).lower()
+    return ord(c) - 97 if "a" <= c <= "z" else None
+

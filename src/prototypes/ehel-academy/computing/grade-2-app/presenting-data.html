@@ -854,6 +854,83 @@
   .key.num { width: 42px; }
   .key.wrong { border-color: var(--bad); animation: shake 360ms ease; }
 
+  /* ==================================================================
+     STAGE 4 additions - same tokens, no new hue.
+     ================================================================== */
+  /* loops in an algorithm; Robo's looped program */
+  .algo li.loopbox { border-color: var(--accent); background: rgba(233,116,79,0.10); }
+  .algo li.loopbox.now { box-shadow: 0 0 0 3px rgba(233,116,79,0.35); }
+  .algo li.loopbox > b { display: block; margin-bottom: 4px; color: var(--accent-ink); }
+  .algo li span.now { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 8px; }
+  .loopchip { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 4px 8px; border-radius: 12px; border: 2px dashed var(--accent); }
+  .loopchip.now { background: rgba(233,116,79,0.12); }
+  .loopchip > b { margin-right: 4px; font-size: 14px; }
+  .tapcard.stop { border-color: var(--bad); }
+  /* algorithms compared */
+  .algocards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; width: 100%; max-width: 680px; }
+  .algocard { display: flex; flex-direction: column; align-items: stretch; gap: 8px; padding: 12px; border-radius: 18px; border: 3px solid var(--line); background: var(--card); color: var(--ink); text-align: left; font-family: inherit; }
+  .algocard .acname { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 17px; }
+  .algocard .acfacts { color: var(--muted); font-size: 14px; font-weight: 700; }
+  .algocard.right { border-color: var(--good); background: var(--good-soft); }
+  .algocard.wrong { border-color: var(--bad); animation: shake 360ms ease; }
+  .algocard:disabled { opacity: 0.85; }
+  /* sub-routines */
+  .subs { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: flex-start; width: 100%; }
+  .mainalgo, .subbox { padding: 10px 12px; border-radius: 16px; border: 2px solid var(--line); background: var(--card); min-width: 180px; }
+  .mainalgo > b, .subbox > b { display: block; margin-bottom: 6px; font-family: "Inter", "Segoe UI", sans-serif; font-weight: 800; font-size: 13px; letter-spacing: .08em; color: var(--teal); }
+  .subbox.now { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(244,201,93,0.25); }
+  .algo li.call { border-style: dashed; border-color: var(--teal); }
+  .tapcard.call { border-style: dashed; border-color: var(--teal); }
+  /* if-branches */
+  .branch { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 560px; }
+  .ifbox { padding: 10px 12px; border-radius: 16px; border: 2px solid var(--plum); background: rgba(183,139,209,0.10); }
+  .ifbox > b { display: block; margin-bottom: 6px; }
+  .arms { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .arm { padding: 8px; border-radius: 12px; border: 2px solid var(--line); opacity: 0.55; }
+  .arm.on { opacity: 1; border-color: var(--gold); }
+  .arm > i { display: block; margin-bottom: 4px; color: var(--muted); font-size: 14px; }
+  @media (max-width: 480px) { .arms { grid-template-columns: 1fr; } }
+  /* building a loop */
+  .loopbuild { width: 100%; max-width: 520px; }
+  .loopbox2 { padding: 10px 12px; border-radius: 16px; border: 2px dashed var(--accent); background: rgba(233,116,79,0.08); }
+  .loopbox2 > b { display: block; margin-bottom: 4px; }
+  .loopbox2 .algo li.dim { border-style: dashed; color: var(--muted); font-weight: 600; }
+  .algostep small { color: var(--muted); font-weight: 600; font-size: 12px; }
+  /* comments on code */
+  .commented { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 560px; }
+  .crow { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .ccomment { flex: 1 1 200px; padding: 6px 10px; border-radius: 10px; background: rgba(53,191,178,0.12); color: var(--teal); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 14px; }
+  .ccomment.empty { color: var(--muted); background: transparent; border: 1px dashed var(--line); }
+  .chip.comment { font-family: ui-monospace, Menlo, Consolas, monospace; font-weight: 600; font-size: 14px; text-align: left; }
+  /* planning objects */
+  .plancard { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 18px; border: 3px solid var(--line); background: var(--card); max-width: 34em; text-align: left; }
+  .plancard .ppic { font-size: 48px; line-height: 1.1; }
+  .plancard p { margin: 4px 0 0; }
+  .planline b { color: var(--teal); }
+  /* testing part by part */
+  .parts { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 600px; }
+  .part { padding: 10px 12px; border-radius: 16px; border: 2px solid var(--line); background: var(--card); display: flex; flex-direction: column; gap: 6px; }
+  .part.ok { border-color: var(--good); } .part.bad { border-color: var(--bad); }
+  .parthead { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+  .parthead span { color: var(--muted); font-size: 14px; flex: 1 1 160px; }
+  .partstat { font-size: 13px; font-weight: 700; color: var(--muted); }
+  .part.ok .partstat { color: var(--good); } .part.bad .partstat { color: var(--bad); }
+  .part .script { min-height: 0; justify-content: flex-start; }
+  /* sorting, and the parts of a table */
+  .rec .cell.sorted { border-color: var(--teal); }
+  .dbtable { border-collapse: separate; border-spacing: 4px; margin: 0 auto; }
+  .dbtable th { padding: 0; }
+  .dbtable tr.on .cellbtn { border-color: var(--good); background: var(--good-soft); }
+  .colhead.rec { text-align: left; }
+  .cellbtn.on { border-color: var(--good); background: var(--good-soft); }
+  /* Caesar and Pigpen */
+  .al.pig { width: 38px; }
+  .al.pig svg { color: var(--ink); }
+  .key.pigk { width: 40px; color: var(--ink); display: grid; place-items: center; }
+  .codecell small svg { color: var(--good); }
+  .codecell svg { color: var(--ink); }
+  .stopbtn { border-color: var(--bad); }
+
   /* --- the way back to the hub, drawn only when the learner arrived from it;
          see lesson-app-tools/wire-navigation.py --- */
   .lesson-back {
@@ -4976,6 +5053,15 @@
         '<g transform="rotate(' + ANGLE[facing] + ')"><polygon points="0,-30 9,-16 -9,-16" fill="#F4C95D"/></g>' + T(0, 11, 30, "\u{1F916}") + "</g>";
       return '<svg viewBox="0 0 ' + (cols * CELL + 16) + " " + (rows * CELL + 16) + '" class="robogrid" role="img" aria-label="Robo at ' + cellName(pos[0], pos[1]) + ", facing " + facing + '">' + g + "</svg>";
     }
+    /* Stage 4: a looped program is shown as its loop, with the turn counter */
+    function loopChips(k) {
+      const lv = level(), nb = (lv.before || []).length, nbody = lv.loop.body.length, nt = Number(lv.loop.times);
+      const chip = (cc, on) => '<span class="chip' + (on ? " now" : "") + '">' + CMD[cc].icon + " " + CMD[cc].label + "</span>";
+      const inBody = k >= nb && k < nb + nbody * nt, turn = inBody ? Math.floor((k - nb) / nbody) + 1 : 0;
+      return '<div class="prog" id="' + el.stage + 'prog">' + (lv.before || []).map((cc, j) => chip(cc, j === k)).join("") +
+        '<span class="loopchip' + (inBody ? " now" : "") + '"><b>repeat ' + nt + " times" + (inBody ? " · " + turn + " of " + nt : "") + ":</b>" + lv.loop.body.map((cc, j) => chip(cc, inBody && (k - nb) % nbody === j)).join("") + "</span>" +
+        (lv.after || []).map((cc, j) => chip(cc, k === nb + nbody * nt + j)).join("") + "</div>";
+    }
     function chips(k) {
       return '<div class="prog" id="' + el.stage + 'prog">' + (program.length ? program.map((c, j) => '<span class="chip' + (j === k ? " now" : "") + '">' + CMD[c].icon + " " + CMD[c].label + "</span>").join("") : '<span class="hint">' + (level().predict ? "" : "Tap the arrows to build a program") + "</span>") + "</div>";
     }
@@ -4990,7 +5076,7 @@
     function draw(k) {
       const lv = level();
       $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">' + esc(lv.title) + "</p>" +
-        '<div class="sim robobox" id="' + el.stage + 'g">' + gridSvg(st.pos, st.facing, predicted) + "</div>" + chips(k) + controls() + "</div>";
+        '<div class="sim robobox" id="' + el.stage + 'g">' + gridSvg(st.pos, st.facing, predicted) + "</div>" + (level().predict && level().loop ? loopChips(k) : chips(k)) + controls() + "</div>";
       $(el.score).textContent = "Level " + (L + 1) + " of " + levels.length;
       const go = $(el.stage + "go"), undo = $(el.stage + "undo"), clear = $(el.stage + "clear");
       if (go) go.addEventListener("click", run);
@@ -5003,7 +5089,7 @@
     }
     function startLevel() {
       const lv = level();
-      reset(); program = lv.predict ? lv.program.slice() : []; firstGo = true; predicted = null; running = false;
+      reset(); program = lv.predict ? (lv.loop ? expandLoop(lv.before, lv.loop.body, lv.loop.times, lv.after) : lv.program.slice()) : []; firstGo = true; predicted = null; running = false;
       $(el.ch).innerHTML = ""; $(el.fb).textContent = ""; $(el.fb).className = "fb";
       $(el.ask).innerHTML = lv.predict ? "Robo will run this program. <b>Where will Robo stop?</b> Tap the square, then press Go." : (lv.ask || "Give Robo the instructions to reach the " + (lv.targetName || "flower") + ". Then press <b>Go</b>.");
       draw();
@@ -6755,16 +6841,21 @@
     start();
   }
 
-  /* ---- a physical computing device (3P.06, 3P.10, 3CS.05) ---------------
+  /* ---- a physical computing device (3P.06, 3P.10, 3CS.05; 4P.08, 4P.09,
+     4CS.01) ---------------------------------------------------------------
      Bitsy: a small board with a 5-by-5 light grid, a speaker, a motor and
-     a bell, and three INPUTS on it - button A, a shake, a clap. A program
-     starts with a "when ..." hat block naming its input, then output
-     blocks. The child builds it, then presses the input on the board:
-     only the input the hat names makes the outputs happen. */
+     a bell, and five INPUTS on it - button A, a shake, a clap, a heat
+     sensor, a light sensor. A program starts with a "when ..." hat block
+     naming its input, then output blocks. Stage 4 adds the loop blocks: a
+     repeat N times block repeats the block after it, and a forever block
+     repeats everything after it until the child presses Stop - because
+     nothing else ends a forever loop. */
   const DEVICE_BLOCKS = {
     whenA: { label: "when button A is pressed", icon: "\u{1F170}️", cat: "hat", input: "A" },
     whenShake: { label: "when it is shaken", icon: "\u{1FAE8}", cat: "hat", input: "shake" },
     whenClap: { label: "when it hears a clap", icon: "\u{1F44F}", cat: "hat", input: "clap" },
+    whenHot: { label: "when it gets hot", icon: "\u{1F321}️", cat: "hat", input: "hot" },
+    whenDark: { label: "when it gets dark", icon: "\u{1F319}", cat: "hat", input: "dark" },
     heart: { label: "show a heart", icon: "❤️", cat: "out" },
     smile: { label: "show a smile", icon: "\u{1F642}", cat: "out" },
     light: { label: "all lights on", icon: "\u{1F4A1}", cat: "out" },
@@ -6772,6 +6863,11 @@
     beep: { label: "beep", icon: "\u{1F50A}", cat: "out" },
     motor: { label: "turn the motor", icon: "⚙️", cat: "out" },
     bell: { label: "ring the bell", icon: "\u{1F514}", cat: "out" },
+    wait: { label: "wait a moment", icon: "⏳", cat: "out" },
+    repeat2: { label: "repeat 2 times", icon: "\u{1F501}", cat: "loop", repeat: 2 },
+    repeat3: { label: "repeat 3 times", icon: "\u{1F501}", cat: "loop", repeat: 3 },
+    repeat4: { label: "repeat 4 times", icon: "\u{1F501}", cat: "loop", repeat: 4 },
+    forever: { label: "forever", icon: "♾️", cat: "loop", forever: true },
   };
   const LED = {
     heart: ["01010", "11111", "11111", "01110", "00100"],
@@ -6779,21 +6875,35 @@
     light: ["11111", "11111", "11111", "11111", "11111"],
     dark: ["00000", "00000", "00000", "00000", "00000"],
   };
-  const devBlock = (id, attr) => { const b = DEVICE_BLOCKS[id]; return '<button type="button" class="block ' + (b.cat === "hat" ? "control" : "look") + '" ' + (attr || "") + '><span class="bicon" aria-hidden="true">' + b.icon + "</span>" + esc(b.label) + "</button>"; };
+  const DEVICE_INPUTS = [["A", "\u{1F170}️ Press A"], ["shake", "\u{1FAE8} Shake it"], ["clap", "\u{1F44F} Clap"], ["hot", "\u{1F321}️ Warm it"], ["dark", "\u{1F319} Cover it"]];
+  const devBlock = (id, attr) => { const b = DEVICE_BLOCKS[id]; return '<button type="button" class="block ' + (b.cat === "out" ? "look" : "control") + '" ' + (attr || "") + '><span class="bicon" aria-hidden="true">' + b.icon + "</span>" + esc(b.label) + "</button>"; };
+  /* the plan a device script runs: [scriptIndex, outputId] with repeats
+     unrolled; a forever block marks where the plan loops back to */
+  function devicePlan(script) {
+    const plan = []; let foreverAt = -1;
+    for (let i = 1; i < script.length; i++) {
+      const b = DEVICE_BLOCKS[script[i]];
+      if (b.forever) { foreverAt = plan.length; continue; }
+      if (b.repeat) { const nx = script[i + 1]; if (nx && DEVICE_BLOCKS[nx].cat === "out") { for (let j = 0; j < b.repeat; j++) plan.push([i + 1, nx]); i++; } continue; }
+      plan.push([i, script[i]]);
+    }
+    return { plan, foreverAt };
+  }
   function deviceProgram(o) {
-    const el = o.el, rounds = o.rounds;
-    let r = 0, script = [], running = false, firstRun = true, score = 0, leds = LED.dark, motorOn = false, bellOn = false;
+    const el = o.el, rounds = o.rounds, inputs = DEVICE_INPUTS.filter(([id]) => !o.inputs || o.inputs.includes(id));
+    let r = 0, script = [], running = false, firstRun = true, score = 0, leds = LED.dark, motorOn = false, bellOn = false, stopReq = false, looping = false;
     const round = () => rounds[r];
     const hatOf = (s) => (s.length && DEVICE_BLOCKS[s[0]] && DEVICE_BLOCKS[s[0]].cat === "hat" ? DEVICE_BLOCKS[s[0]].input : null);
     function board() {
       return '<div class="board"><div class="ledgrid" role="img" aria-label="Bitsy\'s lights">' + leds.map((row) => row.split("").map((c) => '<i class="led' + (c === "1" ? " on" : "") + '"></i>').join("")).join("") + "</div>" +
         '<div class="boardparts"><span class="bpart' + (motorOn ? " on" : "") + '" aria-hidden="true">⚙️</span><span class="bpart' + (bellOn ? " on" : "") + '" aria-hidden="true">\u{1F514}</span></div>' +
-        '<div class="inputs"><button type="button" class="big small" data-in="A"' + (running ? " disabled" : "") + '>\u{1F170}️ Press A</button><button type="button" class="big small" data-in="shake"' + (running ? " disabled" : "") + '>\u{1FAE8} Shake it</button><button type="button" class="big small" data-in="clap"' + (running ? " disabled" : "") + '>\u{1F44F} Clap</button></div></div>';
+        '<div class="inputs">' + inputs.map(([id, lab]) => '<button type="button" class="big small" data-in="' + id + '"' + (running ? " disabled" : "") + ">" + lab + "</button>").join("") +
+        (looping ? '<button type="button" class="big small stopbtn" data-stop="1">⏹ Stop</button>' : "") + "</div></div>";
     }
     function draw(now) {
       const rd = round();
       $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The algorithm: <b>' + esc(rd.algorithm.join(", ")) + "</b></p>" + board() +
-        '<div class="script">' + (script.length ? script.map((id, k) => devBlock(id, 'data-k="' + k + '"' + (running ? " disabled" : ""), k === now)).join("") : '<span class="hint">Start with a "when" block, then the outputs</span>') + "</div>" +
+        '<div class="script">' + (script.length ? script.map((id, k) => devBlock(id, 'data-k="' + k + '"' + (running ? " disabled" : ""))).join("") : '<span class="hint">Start with a "when" block, then the outputs</span>') + "</div>" +
         '<div class="palette">' + (o.blocks || Object.keys(DEVICE_BLOCKS)).map((id) => devBlock(id, 'data-add="' + id + '"' + (running ? " disabled" : ""))).join("") + "</div>" +
         '<div class="bigbtns"><button type="button" class="big small ghost" id="' + el.stage + 'clear"' + (running || !script.length ? " disabled" : "") + ">Clear</button></div></div>";
       if (now >= 0) { const b = $(el.stage).querySelectorAll(".script .block")[now]; if (b) b.classList.add("now"); }
@@ -6801,7 +6911,7 @@
       $(el.stage + "clear").addEventListener("click", () => { script = []; draw(-1); });
     }
     function start() {
-      script = []; running = false; firstRun = true; leds = LED.dark; motorOn = false; bellOn = false;
+      script = []; running = false; firstRun = true; leds = LED.dark; motorOn = false; bellOn = false; stopReq = false; looping = false;
       $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
       draw(-1);
       $(el.ask).innerHTML = "Build the program: a <b>when</b> block first, then the outputs. Then press that input on the board.";
@@ -6813,28 +6923,33 @@
       if (!script.length) { const line = "There is no program yet. Build it first."; $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); return; }
       if (!hat) { const line = "The program has no when block, so nothing can start it. Put a when block first."; $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); SOUND.play("error", 0.3); firstRun = false; return; }
       if (hat !== input) { const line = "Nothing happened. The program is waiting for " + DEVICE_BLOCKS[script[0]].label.replace("when ", "") + ", not that."; $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); SOUND.play("click", 0.3); return; }
-      running = true; leds = LED.dark; motorOn = false; bellOn = false; draw(0);
-      let i = 1;
+      const { plan, foreverAt } = devicePlan(script);
+      running = true; leds = LED.dark; motorOn = false; bellOn = false; stopReq = false; looping = foreverAt >= 0; draw(0);
+      let k = 0, cycles = 0;
+      const doOne = (id) => { if (LED[id]) leds = LED[id]; if (id === "beep") SOUND.play("beep", 0.5); if (id === "motor") { motorOn = true; SOUND.play("robot", 0.4); } if (id === "bell") { bellOn = true; SOUND.play("bell", 0.5); } };
       const step = () => {
-        if (i >= script.length) return finished();
-        const id = script[i];
-        if (LED[id]) leds = LED[id];
-        if (id === "beep") SOUND.play("beep", 0.5);
-        if (id === "motor") { motorOn = true; SOUND.play("robot", 0.4); }
-        if (id === "bell") { bellOn = true; SOUND.play("bell", 0.5); }
-        draw(i); i++;
+        if (stopReq) { looping = false; return finished(cycles); }
+        if (k >= plan.length) {
+          if (foreverAt >= 0 && cycles < 5) {
+            cycles++; k = foreverAt;
+            if (cycles === 1) { const line = "It is a forever loop: it goes round and round until you press Stop."; $(el.fb).className = "fb"; $(el.fb).textContent = line; say(line); }
+          } else { looping = false; return finished(cycles); }
+        }
+        const idx = plan[k][0], id = plan[k][1];
+        doOne(id); draw(idx); k++;
         setTimeout(step, 800);
       };
       SOUND.play("click", 0.3); setTimeout(step, 400);
     }
-    function finished() {
+    function finished(cycles) {
       const rd = round();
-      running = false; draw(-1);
+      running = false; looping = false; draw(-1);
       const same = script.length === rd.expect.length && script.every((id, k) => id === rd.expect[k]);
+      const loopNote = cycles > 0 ? " The forever loop went round " + cycles + " time" + (cycles === 1 ? "" : "s") + (stopReq ? " before you stopped it." : " and would have gone on.") : "";
       if (same) {
         if (firstRun) score++;
         SOUND.play("tada", 0.5);
-        const line = cheer() + " " + DEVICE_BLOCKS[script[0]].label.replace(/^when /, "When ") + ", Bitsy did: " + script.slice(1).map((id) => DEVICE_BLOCKS[id].label).join(", ") + ". An input made an output.";
+        const line = cheer() + " " + DEVICE_BLOCKS[script[0]].label.replace(/^when /, "When ") + ", Bitsy did: " + script.slice(1).map((id) => DEVICE_BLOCKS[id].label).join(", ") + "." + loopNote + " An input made an output.";
         $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
         $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
         r++;
@@ -6844,11 +6959,12 @@
         }, 3400);
       } else {
         firstRun = false; SOUND.play("error", 0.3);
-        const line = "Bitsy did " + script.slice(1).map((id) => DEVICE_BLOCKS[id].label).join(", ") + ". The algorithm says " + rd.algorithm.join(", ").toLowerCase() + ". Change the blocks and try the input again.";
+        const line = "Bitsy did " + script.slice(1).map((id) => DEVICE_BLOCKS[id].label).join(", ") + "." + loopNote + " The algorithm says " + rd.algorithm.join(", ").toLowerCase() + ". Change the blocks and try the input again.";
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
       }
     }
     $(el.stage).addEventListener("click", (e) => {
+      const stop = e.target.closest("[data-stop]"); if (stop) { stopReq = true; SOUND.play("click", 0.3); return; }
       if (running) return;
       const inp = e.target.closest("[data-in]"); if (inp) { trigger(inp.dataset.in); return; }
       const add = e.target.closest("[data-add]");
@@ -7062,42 +7178,72 @@
     ask();
   }
 
-  /* ---- a simple cipher: 1 = a, 2 = b (3DC.04, 3DC.05) -------------------
-     The alphabet strip with its numbers stays on screen. A decode round
-     shows numbers and the child taps the letters; an encode round shows a
-     word and the child taps the numbers. codeWord / decodeCode decide,
-     mirrored in _rules.py. */
+  /* ---- ciphers: 1 = a (3DC.05), Caesar and Pigpen (4DC.06) --------------
+     The key stays on screen: the numbered strip, or the Caesar strip with
+     the shifted row under it, or the Pigpen grid. A decode round shows
+     the coded message and the child taps the letters; an encode round
+     shows a word and the child taps the code - numbers, shifted letters or
+     Pigpen glyphs. codeWord, caesarShift and pigpenIndex decide, mirrored
+     in _rules.py. */
   function cipher(o) {
     const el = o.el, rounds = o.rounds;
     let r = 0, got = [], right = 0, wrongHere = false, lock = false;
-    const strip = () => '<div class="alpha" aria-label="The code: 1 is a, 2 is b, and so on">' + ALPHA.map((c, k) => '<span class="al"><b>' + c + "</b><small>" + (k + 1) + "</small></span>").join("") + "</div>";
+    const modeOf = (rd) => rd.mode || "number";
+    const targetOf = (rd) => {
+      const m = modeOf(rd), decode = rd.kind === "decode";
+      if (m === "caesar") return (decode ? rd.answer : caesarShift(rd.word, rd.shift)).split("");
+      if (m === "pigpen") return (decode ? rd.answer : rd.word).split("");
+      return decode ? decodeCode(rd.code).split("") : codeWord(rd.word).map(String);
+    };
+    function strip(rd) {
+      const m = modeOf(rd);
+      if (m === "caesar") return '<div class="alpha" aria-label="The Caesar key: each letter moves ' + rd.shift + ' places along">' + ALPHA.map((c, k) => '<span class="al"><b>' + c + "</b><small>" + ALPHA[(k + rd.shift + 26) % 26] + "</small></span>").join("") + '</div><p class="sub">top row: the real letter · under it: the letter it becomes (shift ' + rd.shift + ")</p>";
+      if (m === "pigpen") return '<div class="alpha" aria-label="The Pigpen key">' + ALPHA.map((c, k) => '<span class="al pig"><b>' + c + "</b>" + pigpenSvg(k) + "</span>").join("") + "</div>";
+      return '<div class="alpha" aria-label="The code: 1 is a, 2 is b, and so on">' + ALPHA.map((c, k) => '<span class="al"><b>' + c + "</b><small>" + (k + 1) + "</small></span>").join("") + "</div>";
+    }
+    function shown(rd, target) {
+      const m = modeOf(rd), decode = rd.kind === "decode";
+      const cellOf = (top, k) => '<span class="codecell' + (k < got.length ? " done" : k === got.length ? " now" : "") + '">' + top + "<small>" + (k < got.length ? (m === "pigpen" && !decode ? pigpenSvg(pigpenIndex(got[k])) : esc(got[k])) : "?") + "</small></span>";
+      if (m === "pigpen" && decode) return rd.code.split("").map((c, k) => cellOf(pigpenSvg(pigpenIndex(c)), k)).join("");
+      const tops = decode ? (m === "number" ? rd.code.map(String) : rd.code.split("")) : rd.word.split("");
+      return tops.map((t, k) => cellOf(esc(t), k)).join("");
+    }
+    function keys(rd) {
+      const m = modeOf(rd), decode = rd.kind === "decode";
+      if (m === "number" && !decode) return Array.from({ length: 26 }, (_, k) => '<button type="button" class="key num" data-key="' + (k + 1) + '"' + (lock ? " disabled" : "") + ">" + (k + 1) + "</button>").join("");
+      if (m === "pigpen" && !decode) return ALPHA.map((c, k) => '<button type="button" class="key pigk" data-key="' + c + '" aria-label="pigpen ' + c + '"' + (lock ? " disabled" : "") + ">" + pigpenSvg(k) + "</button>").join("");
+      return ALPHA.map((c) => '<button type="button" class="key" data-key="' + c + '"' + (lock ? " disabled" : "") + ">" + c + "</button>").join("");
+    }
     function draw() {
-      const rd = rounds[r], decode = rd.kind === "decode";
-      const target = decode ? rd.code : codeWord(rd.word);
-      const shown = decode ? rd.code.map((n, k) => '<span class="codecell' + (k < got.length ? " done" : k === got.length ? " now" : "") + '">' + n + "<small>" + (k < got.length ? got[k] : "?") + "</small></span>").join("")
-        : rd.word.split("").map((c, k) => '<span class="codecell' + (k < got.length ? " done" : k === got.length ? " now" : "") + '">' + c + "<small>" + (k < got.length ? got[k] : "?") + "</small></span>").join("");
-      $(el.stage).innerHTML = '<div class="stagewide">' + strip() + '<p class="goal">' + (decode ? "Decode this message:" : "Write <b>" + esc(rd.word) + "</b> in code:") + '</p><div class="coderow">' + shown + "</div>" +
-        '<div class="keys">' + (decode ? ALPHA.map((c) => '<button type="button" class="key" data-key="' + c + '"' + (lock ? " disabled" : "") + ">" + c + "</button>").join("")
-          : Array.from({ length: 26 }, (_, k) => '<button type="button" class="key num" data-key="' + (k + 1) + '"' + (lock ? " disabled" : "") + ">" + (k + 1) + "</button>").join("")) + "</div></div>";
+      const rd = rounds[r], target = targetOf(rd), decode = rd.kind === "decode";
+      $(el.stage).innerHTML = '<div class="stagewide">' + strip(rd) + '<p class="goal">' + (decode ? "Decode this message:" : "Write <b>" + esc(rd.word) + "</b> in code:") + '</p><div class="coderow">' + shown(rd, target) + "</div>" +
+        '<div class="keys">' + keys(rd) + "</div></div>";
       $(el.score).textContent = "Message " + (r + 1) + " of " + rounds.length + " · " + got.length + " of " + target.length;
+    }
+    function askText(rd) {
+      const m = modeOf(rd), decode = rd.kind === "decode";
+      if (m === "caesar") return decode ? "A Caesar cipher, shift " + rd.shift + ". Find each coded letter in the BOTTOM row and tap the real letter above it to decode <b>" + esc(rd.code) + "</b>." : "A Caesar cipher, shift " + rd.shift + ". For each letter of <b>" + esc(rd.word) + "</b>, tap the letter it becomes (the one under it on the strip).";
+      if (m === "pigpen") return decode ? "A Pigpen cipher. Each symbol is a letter: find it on the grid and tap the letter." : "A Pigpen cipher. For each letter of <b>" + esc(rd.word) + "</b>, tap its symbol.";
+      return decode ? "Each number is a letter: 1 is a, 2 is b. Tap the letters to decode <b>" + esc(rd.code.join(" ")) + "</b>." : "Each letter is a number: a is 1, b is 2. Tap the numbers to write <b>" + esc(rd.word) + "</b> in code.";
     }
     function start() {
       got = []; wrongHere = false; lock = false; draw();
       const rd = rounds[r];
-      $(el.ask).innerHTML = rd.kind === "decode" ? "Each number is a letter: 1 is a, 2 is b. Tap the letters to decode <b>" + esc(rd.code.join(" ")) + "</b>." : "Each letter is a number: a is 1, b is 2. Tap the numbers to write <b>" + esc(rd.word) + "</b> in code.";
+      $(el.ask).innerHTML = askText(rd);
       $(el.fb).textContent = ""; $(el.fb).className = "fb";
-      sayHere(o.finish, plain($(el.ask).innerHTML));
+      sayHere(o.finish, plain(askText(rd)));
     }
     $(el.stage).addEventListener("click", (e) => {
       const k = e.target.closest(".key"); if (!k || lock) return;
-      const rd = rounds[r], decode = rd.kind === "decode";
-      const target = decode ? decodeCode(rd.code).split("") : codeWord(rd.word).map(String);
-      const v = k.dataset.key;
+      const rd = rounds[r], m = modeOf(rd), decode = rd.kind === "decode", target = targetOf(rd), v = k.dataset.key;
       if (v === target[got.length]) {
         got.push(v); SOUND.play("click", 0.35); draw();
         if (got.length >= target.length) {
           lock = true; if (!wrongHere) right++; SOUND.play("tada", 0.5); draw();
-          const line = decode ? cheer() + " " + rd.code.join(" ") + " says " + decodeCode(rd.code).toUpperCase() + "." + (rd.why ? " " + rd.why : "") : cheer() + " " + rd.word + " in code is " + codeWord(rd.word).join(" ") + "." + (rd.why ? " " + rd.why : "");
+          const result = m === "number" ? (decode ? rd.code.join(" ") + " says " + decodeCode(rd.code).toUpperCase() : rd.word + " in code is " + codeWord(rd.word).join(" ")) :
+            m === "caesar" ? (decode ? rd.code.toUpperCase() + " says " + rd.answer.toUpperCase() : rd.word + " with shift " + rd.shift + " is " + caesarShift(rd.word, rd.shift).toUpperCase()) :
+              (decode ? "The symbols say " + rd.answer.toUpperCase() : rd.word + " in Pigpen is written");
+          const line = cheer() + " " + result + "." + (rd.why ? " " + rd.why : "");
           $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
           r++;
           setTimeout(() => {
@@ -7107,12 +7253,751 @@
         }
       } else {
         wrongHere = true; k.classList.add("wrong"); SOUND.play("error", 0.3);
-        const line = decode ? "Look at the strip: " + rd.code[got.length] + " is the letter " + target[got.length] + "." : "Look at the strip: " + rd.word[got.length] + " is number " + target[got.length] + ".";
+        const want = target[got.length];
+        const line = m === "number" ? (decode ? "Look at the strip: " + rd.code[got.length] + " is the letter " + want + "." : "Look at the strip: " + rd.word[got.length] + " is number " + want + ".") :
+          m === "caesar" ? (decode ? "Look at the strip: " + rd.code[got.length] + " in the bottom row sits under " + want + "." : "Look at the strip: under " + rd.word[got.length] + " is " + want + ".") :
+            (decode ? "Look at the grid: that symbol is " + want + "." : "Look at the grid: the symbol for " + want + " is in its own cell.");
         $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
         setTimeout(() => k.classList.remove("wrong"), 700);
       }
     });
     start();
+  }
+  /* ==================================================================
+     STAGE 4 - algorithms with repeat and forever loops, algorithms
+     compared for a purpose, sub-routines, if-branches, a loop the child
+     builds, comments on code, one program per input, plans for objects,
+     testing part by part, sorting data, the parts of a table, and the
+     Caesar and Pigpen ciphers. The functions in the first block are
+     mirrored, name for name, in _rules.py.
+     ================================================================== */
+
+  /* rules mirrored in _rules.py */
+  function expandLoop(before, body, times, after) {
+    const out = (before || []).slice();
+    for (let i = 0; i < Number(times); i++) out.push.apply(out, body || []);
+    return out.concat(after || []);
+  }
+  const FOREVER_CYCLES = 2;
+  /* the flat list a structured algorithm makes; each item remembers where it
+     came from (block b, body index j, turn t of n) so the page can light it */
+  function flattenAlgo(blocks) {
+    const out = [];
+    blocks.forEach((bl, b) => {
+      if (bl.kind === "repeat") { for (let t = 1; t <= Number(bl.times); t++) bl.body.forEach((st, j) => out.push(Object.assign({}, st, { b, j, t, n: Number(bl.times) }))); }
+      else if (bl.kind === "forever") { for (let t = 1; t <= FOREVER_CYCLES; t++) bl.body.forEach((st, j) => out.push(Object.assign({}, st, { b, j, t, n: Infinity }))); out.push({ id: "stop", label: "Stop", pic: "\u{1F6D1}", b, j: -1, t: FOREVER_CYCLES + 1, n: Infinity }); }
+      else out.push(Object.assign({}, bl, { b, j: -1, t: 0, n: 0 }));
+    });
+    return out;
+  }
+  function subExpand(main, subs) {
+    const out = [];
+    main.forEach((bl, b) => {
+      if (bl.kind === "call") { out.push({ id: "call:" + bl.sub, label: "do " + bl.sub, pic: "\u{1F4E6}", b, j: -1, sub: bl.sub }); subs[bl.sub].forEach((st, j) => out.push(Object.assign({}, st, { b, j, sub: bl.sub }))); }
+      else out.push(Object.assign({}, bl, { b, j: -1 }));
+    });
+    return out;
+  }
+  function branchRun(rd, inputId) {
+    const branch = inputId === rd.inputs[0].id ? rd.yes : rd.no;
+    return (rd.before || []).concat(branch, rd.after || []);
+  }
+  function bestAlgo(algos, check) {
+    const kind = check && check.kind;
+    const key = kind === "fewest_steps" ? (a) => a.steps.length : kind === "fastest" ? (a) => Number(a.facts.minutes) : null;
+    if (!key) return null;
+    const best = Math.min.apply(null, algos.map(key));
+    const winners = algos.filter((a) => key(a) === best);
+    return winners.length === 1 ? winners[0].id : null;
+  }
+  function sortRows(rows, field, direction) {
+    const numeric = rows.every((r) => typeof r[field] === "number");
+    const key = numeric ? (r) => Number(r[field]) : (r) => String(r[field]).toLowerCase();
+    const ordered = rows.slice().sort((a, b) => (key(a) < key(b) ? -1 : key(a) > key(b) ? 1 : 0));
+    if (direction === "desc") ordered.reverse();
+    return ordered;
+  }
+  const caesarShift = (text, shift) => String(text).toLowerCase().split("").filter((c) => c >= "a" && c <= "z").map((c) => String.fromCharCode(((c.charCodeAt(0) - 97 + Number(shift)) % 26 + 26) % 26 + 97)).join("");
+  const pigpenIndex = (c) => (c >= "a" && c <= "z" ? c.charCodeAt(0) - 97 : null);
+  /* the Pigpen glyph for a letter, as a small SVG: 0-8 the grid, 9-17 the
+     dotted grid, 18-21 the cross, 22-25 the dotted cross */
+  function pigpenSvg(i) {
+    let d = "", dot = false;
+    if (i < 18) {
+      const k = i % 9, col = k % 3, row = Math.floor(k / 3); dot = i >= 9;
+      if (col > 0) d += "M4 4 V20 ";       // a left wall when not in the left column
+      if (col < 2) d += "M20 4 V20 ";      // a right wall when not in the right column
+      if (row > 0) d += "M4 4 H20 ";       // a top wall when not in the top row
+      if (row < 2) d += "M4 20 H20 ";      // a bottom wall when not in the bottom row
+    } else {
+      const k = (i - 18) % 4; dot = i >= 22;
+      d = ["M4 4 L12 12 L20 4", "M4 4 L12 12 L4 20", "M4 20 L12 12 L20 20", "M20 4 L12 12 L20 20"][k];   // v pointing down, right, up, left
+    }
+    return '<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="' + d + '" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' + (dot ? '<circle cx="12" cy="12" r="2.2" fill="currentColor"/>' : "") + "</svg>";
+  }
+
+  /* an algorithm list with repeat and forever boxes; `lit` is a flat item */
+  function structHtml(blocks, lit, tappable, foldTurn) {
+    const step = (st, b, j, cls) => {
+      const on = lit && lit.b === b && lit.j === j;
+      const inner = '<span class="apic" aria-hidden="true">' + small(st.pic) + "</span>" + esc(st.label);
+      return "<li" + (cls ? ' class="' + cls + '"' : "") + ">" + (tappable ? '<button type="button" class="algostep' + (on ? " lit" : "") + '" data-b="' + b + '" data-j="' + j + '">' + inner + "</button>" : '<span class="' + (on ? "now" : "") + '">' + inner + "</span>") + "</li>";
+    };
+    return '<ol class="algo' + (tappable ? " tappable" : "") + '">' + blocks.map((bl, b) => {
+      if (bl.kind === "repeat" || bl.kind === "forever") {
+        const here = lit && lit.b === b;
+        const head = bl.kind === "repeat" ? "repeat " + bl.times + " times" + (here && lit.t ? " · time " + lit.t + " of " + bl.times : "") : "forever" + (here && lit.t && lit.j >= 0 ? " · round " + lit.t : "");
+        return '<li class="loopbox' + (here ? " now" : "") + '"><b>' + esc(head) + ':</b><ol class="algo inner">' + bl.body.map((st, j) => step(st, b, j, "")).join("") + "</ol></li>";
+      }
+      return step(bl, b, -1, "");
+    }).join("") + "</ol>";
+  }
+  const distinctSteps = (items) => { const seen = new Map(); items.forEach((st) => { if (st.id !== "stop" && !seen.has(st.id)) seen.set(st.id, st); }); return Array.from(seen.values()); };
+
+  /* ---- follow, fix and understand an algorithm with loops (4CT.01, 4CT.02)
+     A structured algorithm: plain steps, repeat N times boxes, forever
+     boxes. In `follow` mode the child taps the step that comes next,
+     round and round the loop, with the turn counter on the box; a forever
+     loop is followed twice and then the child must press Stop, because
+     nothing else ends it. In `fix` mode one step inside a loop is wrong:
+     tap it, choose the fix, watch the corrected algorithm run. */
+  function loopAlgo(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, score = 0;
+    function follow(rd) {
+      const flat = flattenAlgo(rd.blocks), done = [];
+      const btns = shuffle(distinctSteps(flat)), hasForever = rd.blocks.some((b) => b.kind === "forever");
+      let i = 0, wrong = 0, lock = false;
+      function draw() {
+        const lit = flat[i];
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(rd.task) + "</b></p><div class=\"algo2\">" + structHtml(rd.blocks, lit, false) +
+          (rd.scene ? '<div class="sim scenebox">' + SCENES[rd.scene](done) + "</div>" : "") + "</div>" +
+          '<div class="actions">' + btns.map((st) => '<button type="button" class="tapcard act" data-id="' + esc(st.id) + '"' + (lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(st.pic) + "</span>" + esc(st.label) + "</button>").join("") +
+          (hasForever ? '<button type="button" class="tapcard act stop" data-id="stop"' + (lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">\u{1F6D1}</span>Stop</button>' : "") + "</div></div>";
+        $(el.score).textContent = "Round " + (r + 1) + " of " + rounds.length + " · step " + Math.min(i + 1, flat.length) + " of " + flat.length + (lit && lit.n === Infinity && lit.j >= 0 ? " · forever, round " + lit.t : lit && lit.n ? " · repeat, time " + lit.t + " of " + lit.n : "");
+      }
+      const handler = (e) => {
+        const b = e.target.closest(".act"); if (!b || lock) return;
+        const want = flat[i], id = b.dataset.id;
+        if (id === want.id) {
+          if (id !== "stop") done.push(id);
+          SOUND.play(id === "stop" ? "click" : "pop", 0.4); i++; draw();
+          const line = id === "stop" ? "Stop. A forever loop only ends when something stops it." : want.label + "." + (want.n && want.n !== Infinity ? " Time " + want.t + " of " + want.n + "." : want.n === Infinity ? " Round " + want.t + " of the forever loop." : "");
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          if (i >= flat.length) {
+            lock = true; draw(); $(el.stage).removeEventListener("click", handler);
+            reportScore(o.finish, Math.max(0, flat.length - wrong), flat.length);
+            setTimeout(next, 2400);
+          }
+        } else {
+          wrong++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+          const line = want.id === "stop" ? "The loop has gone round " + FOREVER_CYCLES + " times and would go on forever. Press Stop." :
+            "Not yet. Next comes " + want.label + (want.n && want.n !== Infinity ? " - it is inside the repeat, time " + want.t + " of " + want.n : want.n === Infinity ? " - the forever loop goes round again" : "") + ".";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          setTimeout(() => b.classList.remove("wrong"), 700);
+        }
+      };
+      $(el.stage).addEventListener("click", handler);
+      $(el.ask).innerHTML = "Follow the algorithm: tap the step that comes <b>next</b>, round and round the loop." + (hasForever ? " Press <b>Stop</b> when a forever loop has gone round twice." : "");
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      sayHere(o.finish, "Follow the algorithm. Tap the step that comes next, round and round the loop." + (hasForever ? " Press Stop when the forever loop has gone round twice." : ""));
+      draw();
+    }
+    function fix(rd) {
+      let phase = "find", missed = false, lock = false, blocks = rd.blocks.map((bl) => (bl.body ? Object.assign({}, bl, { body: bl.body.map((st) => Object.assign({}, st)) }) : Object.assign({}, bl)));
+      const stepAt = (b, j) => (j >= 0 ? blocks[b].body[j] : blocks[b]);
+      function draw(lit) {
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(rd.task) + "</b></p><div class=\"algo2\">" + structHtml(blocks, lit, phase === "find") +
+          (rd.scene ? '<div class="sim scenebox" id="' + el.stage + 'sc">' + SCENES[rd.scene]([]) + "</div>" : "") + "</div></div>";
+        $(el.score).textContent = "Round " + (r + 1) + " of " + rounds.length + " · find the wrong step";
+      }
+      const handler = (e) => {
+        const b = e.target.closest(".algostep"); if (!b || lock || phase !== "find") return;
+        const bi = Number(b.dataset.b), j = Number(b.dataset.j);
+        if (bi === rd.wrong[0] && j === rd.wrong[1]) {
+          lock = true; if (!missed) score++; SOUND.play("ding", 0.4);
+          $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + rd.why; say(cheer() + " " + rd.why + " What should it say instead?");
+          setTimeout(() => {
+            phase = "fix"; lock = false; draw({ b: bi, j });
+            $(el.ask).innerHTML = "What should that step say instead?";
+            $(el.ch).className = "choices stack";
+            $(el.ch).innerHTML = shuffle(rd.fix.opts).map((c) => '<button type="button" class="choice text" data-id="' + esc(c.id) + '" data-ok="' + (c.ok ? 1 : 0) + '">' + (c.pic ? '<span class="cpic" aria-hidden="true">' + small(c.pic) + "</span> " : "") + esc(c.t) + "</button>").join("");
+          }, 2400);
+        } else {
+          missed = true; b.classList.add("wrong"); SOUND.play("error", 0.3);
+          const line = "That step is fine" + (j >= 0 ? " - and it is inside the loop, so it happens every time" : "") + ". Which one makes the task go wrong?";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          setTimeout(() => b.classList.remove("wrong"), 700);
+        }
+      };
+      const chooser = (e) => {
+        const b = e.target.closest(".choice"); if (!b || lock || phase !== "fix") return;
+        const ok = b.dataset.ok === "1";
+        if (ok) {
+          lock = true; score++; $(el.ch).querySelectorAll(".choice").forEach((c) => { c.disabled = true; }); b.classList.add("right");
+          const opt = rd.fix.opts.find((c) => c.id === b.dataset.id), target = stepAt(rd.wrong[0], rd.wrong[1]);
+          target.id = opt.id; target.label = opt.t; if (opt.pic) target.pic = opt.pic;
+          $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + rd.fix.why; say(cheer() + " " + rd.fix.why + " Now watch it run.");
+          $(el.stage).removeEventListener("click", handler); $(el.ch).removeEventListener("click", chooser);
+          setTimeout(() => {
+            phase = "run"; $(el.ch).innerHTML = ""; $(el.ask).innerHTML = "Watch the corrected algorithm run, loop and all.";
+            const flat = flattenAlgo(blocks).filter((st) => st.id !== "stop"), done = [];
+            let k = 0;
+            const tick = () => {
+              if (k >= flat.length) { SOUND.play("tada", 0.5); reportScore(o.finish, score, rounds.length * 2); return setTimeout(next, 1600); }
+              done.push(flat[k].id); draw(flat[k]); SOUND.play("pop", 0.25);
+              if (rd.scene) $(el.stage + "sc").innerHTML = SCENES[rd.scene](done);
+              k++; setTimeout(tick, 560);
+            };
+            tick();
+          }, 2600);
+        } else {
+          missed = true; b.classList.add("wrong"); b.disabled = true; SOUND.play("error", 0.3);
+          const line = "That would not make " + rd.task + " work. Try another.";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        }
+      };
+      $(el.stage).addEventListener("click", handler); $(el.ch).addEventListener("click", chooser);
+      $(el.ask).innerHTML = "One step of this algorithm is wrong. Tap it.";
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      sayHere(o.finish, "One step of this algorithm is wrong. Tap it.");
+      draw(null);
+    }
+    function next() {
+      r++;
+      if (r >= rounds.length) endStep(o, "You followed and fixed " + rounds.length + " algorithms with loops in them. " + o.done);
+      else start();
+    }
+    function start() { const rd = rounds[r]; if (rd.mode === "fix") fix(rd); else follow(rd); }
+    start();
+  }
+
+  /* ---- compare algorithms for the same task (4CT.04) ----------------
+     Two or three algorithms that all do the job, side by side, with the
+     facts about each. Each round names a PURPOSE - fewest steps, quickest,
+     safest, best for a child - and the child picks the algorithm that fits
+     it best. Fewest steps and quickest are computed; the rest are judged. */
+  function compareAlgos(o) {
+    const el = o.el, algos = o.algos, rounds = o.rounds;
+    let r = 0, right = 0, lock = false;
+    function draw() {
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(o.task) + "</b></p><div class=\"algocards\">" + algos.map((a) =>
+        '<button type="button" class="algocard" data-algo="' + esc(a.id) + '"' + (lock ? " disabled" : "") + '><span class="acname"><span aria-hidden="true">' + small(a.pic) + "</span> " + esc(a.name) + '</span><ol class="algo small">' + a.steps.map((s) => "<li>" + esc(s) + "</li>").join("") + "</ol>" +
+        '<span class="acfacts">' + a.steps.length + " steps · " + esc(a.facts.minutes) + " minutes" + (a.facts.note ? " · " + esc(a.facts.note) : "") + "</span></button>").join("") + "</div></div>";
+      $(el.score).textContent = "Purpose " + (r + 1) + " of " + rounds.length;
+    }
+    function ask() {
+      const rd = rounds[r];
+      lock = false; draw();
+      $(el.ask).innerHTML = "All of these do the job. Which is best when the purpose is: <b>" + esc(rd.purpose) + "</b>?";
+      $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      sayHere(o.finish, "All of these do the job. Which is best when the purpose is " + rd.purpose + "?");
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const b = e.target.closest("[data-algo]"); if (!b || lock) return;
+      lock = true;
+      const rd = rounds[r], ok = b.dataset.algo === rd.answer;
+      $(el.stage).querySelectorAll(".algocard").forEach((c) => { c.disabled = true; if (c.dataset.algo === rd.answer) c.classList.add("right"); });
+      if (ok) right++; else b.classList.add("wrong");
+      SOUND.play(ok ? "ding" : "error", 0.35);
+      const line = (ok ? cheer() + " " : "Not for that purpose. ") + rd.why;
+      $(el.fb).className = "fb " + (ok ? "good" : "bad"); $(el.fb).textContent = line; say(line);
+      r++;
+      setTimeout(() => {
+        if (r >= rounds.length) { reportScore(o.finish, right, rounds.length); endStep(o, "The best algorithm depends on the purpose, and you chose it " + right + " times out of " + rounds.length + ". " + o.done); }
+        else ask();
+      }, 3200);
+    });
+    ask();
+  }
+
+  /* ---- follow an algorithm that uses a sub-routine (4CT.08) -----------
+     The main algorithm calls named sub-routines ("do WASH"); each is its
+     own short algorithm in a box. Following means: tap the call, then the
+     sub-routine's steps, then carry on in the main algorithm where you
+     left off. */
+  function subRoutine(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, score = 0;
+    function start() {
+      const rd = rounds[r], flat = subExpand(rd.main, rd.subs), done = [];
+      const btns = shuffle(distinctSteps(flat.filter((st) => !st.id.startsWith("call:"))).concat(Object.keys(rd.subs).map((name) => ({ id: "call:" + name, label: "do " + name, pic: "\u{1F4E6}" }))));
+      let i = 0, wrong = 0, lock = false;
+      function draw() {
+        const lit = flat[i];
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(rd.task) + '</b></p><div class="subs"><div class="mainalgo"><b>MAIN</b><ol class="algo">' + rd.main.map((bl, b) => {
+          const on = lit && lit.b === b && (lit.j === -1 ? true : lit.j >= 0);
+          return bl.kind === "call" ? '<li class="call' + (on ? " now" : "") + '"><span class="apic" aria-hidden="true">\u{1F4E6}</span>do ' + esc(bl.sub) + "</li>" : '<li class="' + (on ? "now" : "") + '"><span class="apic" aria-hidden="true">' + small(bl.pic) + "</span>" + esc(bl.label) + "</li>";
+        }).join("") + "</ol></div>" + Object.keys(rd.subs).map((name) => '<div class="subbox' + (lit && lit.sub === name ? " now" : "") + '"><b>' + esc(name) + '</b><ol class="algo small">' + rd.subs[name].map((st, j) => '<li class="' + (lit && lit.sub === name && lit.j === j ? "now" : "") + '"><span class="apic" aria-hidden="true">' + small(st.pic) + "</span>" + esc(st.label) + "</li>").join("") + "</ol></div>").join("") + "</div>" +
+          (rd.scene ? '<div class="sim scenebox">' + SCENES[rd.scene](done) + "</div>" : "") +
+          '<div class="actions">' + btns.map((st) => '<button type="button" class="tapcard act' + (st.id.startsWith("call:") ? " call" : "") + '" data-id="' + esc(st.id) + '"' + (lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(st.pic) + "</span>" + esc(st.label) + "</button>").join("") + "</div></div>";
+        $(el.score).textContent = "Round " + (r + 1) + " of " + rounds.length + " · step " + Math.min(i + 1, flat.length) + " of " + flat.length + (lit && lit.sub ? " · inside " + lit.sub : "");
+      }
+      const handler = (e) => {
+        const b = e.target.closest(".act"); if (!b || lock) return;
+        const want = flat[i], id = b.dataset.id;
+        if (id === want.id) {
+          if (!id.startsWith("call:")) done.push(id);
+          SOUND.play(id.startsWith("call:") ? "whoosh" : "pop", 0.4); i++; draw();
+          const line = id.startsWith("call:") ? "Do " + want.sub + ": jump into the " + want.sub + " sub-routine." : want.label + "." + (want.sub && i < flat.length && !flat[i].sub ? " That is the end of " + want.sub + ". Back to the main algorithm." : "");
+          $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+          if (i >= flat.length) { lock = true; draw(); $(el.stage).removeEventListener("click", handler); reportScore(o.finish, Math.max(0, flat.length - wrong), flat.length); setTimeout(next, 2400); }
+        } else {
+          wrong++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+          const line = want.id.startsWith("call:") ? "The main algorithm says do " + want.sub + " next: tap the call." : "Not yet. Next comes " + want.label + (want.sub ? ", inside " + want.sub : ", back in the main algorithm") + ".";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          setTimeout(() => b.classList.remove("wrong"), 700);
+        }
+      };
+      $(el.stage).addEventListener("click", handler);
+      $(el.ask).innerHTML = "Follow the main algorithm. When it says <b>do</b> a sub-routine, tap the call, then that sub-routine's steps, then carry on.";
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      sayHere(o.finish, "Follow the main algorithm. When it says do a sub-routine, tap the call, then that sub-routine's steps, then carry on where you left off.");
+      draw();
+    }
+    function next() { r++; if (r >= rounds.length) endStep(o, "You followed " + rounds.length + " algorithms with sub-routines. " + o.done); else start(); }
+    start();
+  }
+
+  /* ---- different outputs from different inputs (4CT.09) ---------------
+     An if-algorithm: the same steps before and after, and a branch in the
+     middle that depends on the input. The child chooses the input, then
+     follows the branch that input takes; then tries the other input and
+     sees a different output from the same algorithm. */
+  function branchAlgo(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, score = 0;
+    function start() {
+      const rd = rounds[r], tried = new Set();
+      let input = null, flat = [], i = 0, done = [], wrong = 0, lock = false;
+      const all = distinctSteps((rd.before || []).concat(rd.yes, rd.no, rd.after || []));
+      const btns = shuffle(all);
+      function draw() {
+        const lit = flat[i];
+        const li = (st, on) => '<li class="' + (on ? "now" : "") + '"><span class="apic" aria-hidden="true">' + small(st.pic) + "</span>" + esc(st.label) + "</li>";
+        const isLit = (st) => lit && lit.id === st.id && lit.label === st.label;
+        $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(rd.task) + '</b></p><div class="branch">' +
+          '<ol class="algo">' + (rd.before || []).map((st) => li(st, isLit(st))).join("") + "</ol>" +
+          '<div class="ifbox"><b>IF ' + esc(rd.question) + '</b><div class="arms"><div class="arm' + (input === rd.inputs[0].id ? " on" : "") + '"><i>' + esc(rd.inputs[0].label) + ':</i><ol class="algo small">' + rd.yes.map((st) => li(st, input === rd.inputs[0].id && isLit(st))).join("") + '</ol></div><div class="arm' + (input === rd.inputs[1].id ? " on" : "") + '"><i>' + esc(rd.inputs[1].label) + ':</i><ol class="algo small">' + rd.no.map((st) => li(st, input === rd.inputs[1].id && isLit(st))).join("") + "</ol></div></div></div>" +
+          '<ol class="algo">' + (rd.after || []).map((st) => li(st, isLit(st))).join("") + "</ol></div>" +
+          (input ? '<div class="actions">' + btns.map((st) => '<button type="button" class="tapcard act" data-id="' + esc(st.id) + '"' + (lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(st.pic) + "</span>" + esc(st.label) + "</button>").join("") + "</div>"
+            : '<div class="chips">' + rd.inputs.map((x) => '<button type="button" class="chip' + (tried.has(x.id) ? " tried" : "") + '" data-input="' + esc(x.id) + '"' + (tried.has(x.id) ? " disabled" : "") + '>' + small(x.pic) + " " + esc(x.label) + "</button>").join("") + "</div>") + "</div>";
+        $(el.score).textContent = "Round " + (r + 1) + " of " + rounds.length + " · " + tried.size + " of 2 inputs tried" + (input ? " · step " + Math.min(i + 1, flat.length) + " of " + flat.length : "");
+      }
+      const handler = (e) => {
+        const inp = e.target.closest("[data-input]");
+        if (inp && !input) {
+          input = inp.dataset.input; flat = branchRun(rd, input); i = 0; done = []; SOUND.play("click", 0.3); draw();
+          const chosen = rd.inputs.find((x) => x.id === input);
+          $(el.ask).innerHTML = "The input is <b>" + esc(chosen.label) + "</b>. Follow the algorithm: tap what comes next.";
+          $(el.fb).textContent = ""; $(el.fb).className = "fb"; say("The input is " + chosen.label + ". Follow the algorithm. Tap what comes next.");
+          return;
+        }
+        const b = e.target.closest(".act"); if (!b || lock || !input) return;
+        const want = flat[i];
+        if (b.dataset.id === want.id) {
+          done.push(want.id); SOUND.play("pop", 0.4); i++; draw();
+          $(el.fb).className = "fb good"; $(el.fb).textContent = want.label + "."; say(want.label);
+          if (i >= flat.length) {
+            tried.add(input); lock = true; draw();
+            const chosen = rd.inputs.find((x) => x.id === input);
+            const line = "With the input " + chosen.label + ", the output was: " + flat.map((st) => st.label).join(", ") + ".";
+            $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+            setTimeout(() => {
+              if (tried.size >= 2) { $(el.stage).removeEventListener("click", handler); reportScore(o.finish, Math.max(0, 2 * flat.length - wrong), 2 * flat.length); next(); }
+              else { input = null; lock = false; draw(); $(el.ask).innerHTML = "Now try the <b>other</b> input. Same algorithm, different output."; sayHere(o.finish, "Now try the other input. Same algorithm, different output."); }
+            }, 3400);
+          }
+        } else {
+          wrong++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+          const chosen = rd.inputs.find((x) => x.id === input);
+          const line = "Not with this input. The input is " + chosen.label + ", so next comes " + want.label + ".";
+          $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          setTimeout(() => b.classList.remove("wrong"), 700);
+        }
+      };
+      $(el.stage).addEventListener("click", handler);
+      $(el.ask).innerHTML = "Choose an <b>input</b>, then follow the algorithm to see what it outputs.";
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      sayHere(o.finish, "Choose an input, then follow the algorithm to see what it outputs.");
+      draw();
+    }
+    function next() { r++; if (r >= rounds.length) endStep(o, "One algorithm, two inputs, two different outputs - " + rounds.length + " times over. " + o.done); else start(); }
+    start();
+  }
+
+  /* ---- build an algorithm with a repeat in it (4CT.10) ------------------
+     A task that needs the same steps done N times, then something else.
+     The child puts steps into the repeat box, sets how many times, and
+     runs it: the box unrolls into the flat list and the page checks that
+     it matches the task. expandLoop decides, mirrored in _rules.py. */
+  function loopBuild(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, score = 0, body = [], times = 1, firstRun = true, lock = false;
+    const round = () => rounds[r];
+    const stepOf = (id) => round().pool.find((st) => st.id === id);
+    function draw() {
+      const rd = round();
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">The task: <b>' + esc(rd.task) + '</b></p><div class="loopbuild"><div class="loopbox2"><b>repeat <button type="button" class="numchip" id="' + el.stage + 'n" aria-label="times; tap to change"' + (lock ? " disabled" : "") + ">" + times + ' times</button>:</b>' +
+        '<ol class="algo inner" id="' + el.stage + 'body">' + (body.length ? body.map((id, k) => '<li><button type="button" class="algostep" data-rm="' + k + '"' + (lock ? " disabled" : "") + '><span class="apic" aria-hidden="true">' + small(stepOf(id).pic) + "</span>" + esc(stepOf(id).label) + ' <small>(tap to remove)</small></button></li>').join("") : '<li class="dim">tap steps below to put them in the loop</li>') + "</ol></div>" +
+        (rd.after && rd.after.length ? '<p class="sub">then: ' + rd.after.map((st) => esc(st.label)).join(", ") + "</p>" : "") + "</div>" +
+        '<div class="cardsgrid">' + rd.pool.map((st) => '<button type="button" class="tapcard" data-add="' + esc(st.id) + '"' + (lock ? " disabled" : "") + '><span class="cpic" aria-hidden="true">' + small(st.pic) + "</span>" + esc(st.label) + "</button>").join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'run"' + (lock || !body.length ? " disabled" : "") + ">&#9654; Run</button></div></div>";
+      $(el.score).textContent = "Algorithm " + (r + 1) + " of " + rounds.length + " · " + body.length + " step" + (body.length === 1 ? "" : "s") + " in the loop, " + times + " time" + (times === 1 ? "" : "s");
+      $(el.stage + "n").addEventListener("click", () => { times = (times % 5) + 1; SOUND.play("click", 0.3); draw(); });
+      $(el.stage + "run").addEventListener("click", run);
+    }
+    function start() {
+      body = []; times = 1; firstRun = true; lock = false;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      draw();
+      $(el.ask).innerHTML = "Put the steps that repeat into the <b>repeat</b> box, set how many times, then press <b>Run</b>.";
+      sayHere(o.finish, "The task: " + round().task + ". Put the steps that repeat into the repeat box, set how many times, then press Run.");
+    }
+    function run() {
+      if (lock || !body.length) return;
+      const rd = round(), after = (rd.after || []).map((st) => st.id);
+      const did = expandLoop([], body, times, after), want = expandLoop([], rd.expect.body, rd.expect.times, after);
+      const same = did.length === want.length && did.every((id, k) => id === want[k]);
+      lock = true; draw();
+      if (same) {
+        if (firstRun) score++; SOUND.play("tada", 0.5);
+        const line = cheer() + " Repeat " + times + " times, " + body.map((id) => stepOf(id).label).join(", ") + (after.length ? ", then " + rd.after.map((st) => st.label).join(", ") : "") + ". That is " + did.length + " steps written as " + (body.length + after.length + 1) + ".";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        r++;
+        setTimeout(() => { if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "You built " + rounds.length + " algorithms with a repeat in them. " + o.done); } else start(); }, 3400);
+      } else {
+        firstRun = false; lock = false; draw(); SOUND.play("error", 0.3);
+        const line = "Unrolled, that is " + did.length + " steps: " + did.map((id) => (stepOf(id) || { label: id }).label).join(", ") + ". The task needs " + want.length + ". " + (rd.hint || "Check what goes in the loop and how many times.");
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      if (lock) return;
+      const add = e.target.closest("[data-add]"); if (add) { body.push(add.dataset.add); SOUND.play("click", 0.3); draw(); return; }
+      const rm = e.target.closest("[data-rm]"); if (rm) { body.splice(Number(rm.dataset.rm), 1); SOUND.play("pop", 0.3); draw(); }
+    });
+    start();
+  }
+
+  /* ---- comments on blocks of code (4P.01) --------------------------------
+     A program and a set of comments. The child puts each comment on the
+     block it explains; the page shows them beside the code, then asks why
+     programmers write them. */
+  function commentBlocks(o) {
+    const el = o.el, program = o.program, comments = o.comments, placed = {};
+    let picked = -1, wrong = 0, lock = false;
+    function draw() {
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="commented">' + program.map((id, k) => '<div class="crow">' + (placed[k] != null ? '<span class="ccomment">' + esc(comments[placed[k]].text) + "</span>" : '<span class="ccomment empty">no comment yet</span>') + blockBtn(id, 'data-k="' + k + '"' + (lock || placed[k] != null ? " disabled" : ""), placed[k] != null ? "right" : "") + "</div>").join("") + "</div>" +
+        '<div class="chips">' + comments.map((c, i) => '<button type="button" class="chip comment' + (picked === i ? " on" : "") + '" data-c="' + i + '"' + (lock || Object.values(placed).includes(i) ? " disabled" : "") + ">" + esc(c.text) + "</button>").join("") + "</div></div>";
+      $(el.score).textContent = Object.keys(placed).length + " of " + comments.length + " comments placed";
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      if (lock) return;
+      const c = e.target.closest("[data-c]");
+      if (c) { picked = Number(c.dataset.c); SOUND.play("click", 0.3); draw(); $(el.fb).className = "fb"; $(el.fb).textContent = "Comment picked. Now tap the block it explains."; return; }
+      const b = e.target.closest(".block[data-k]"); if (!b || picked < 0) return;
+      const k = Number(b.dataset.k);
+      if (comments[picked].block === k) {
+        placed[k] = picked; picked = -1; SOUND.play("ding", 0.4); draw();
+        $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " That comment explains that block."; say(cheer() + " That comment explains that block.");
+        if (Object.keys(placed).length >= comments.length) {
+          lock = true; draw();
+          setTimeout(() => { $(el.fb).textContent = ""; askOnce(o, o.then, (ok) => { reportScore(o.finish, (ok ? 1 : 0) + Math.max(0, comments.length - wrong), comments.length + 1); endStep(o); }); }, 2200);
+        }
+      } else {
+        wrong++; b.classList.add("wrong"); SOUND.play("error", 0.3);
+        const line = "That comment does not explain " + ((BLOCKS[program[k]] || {}).label || program[k]) + ". Read the comment again: which block does it describe?";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+      }
+    });
+    draw();
+  }
+
+  /* ---- different outputs from different inputs, in a program (4P.05) ----
+     One sprite, two inputs on the stage (press A, press B). The child
+     builds a script for each input, then presses the inputs to test:
+     each input runs only its own script. */
+  function inputProgram(o) {
+    const el = o.el, rounds = o.rounds, inputs = o.inputs;
+    let r = 0, scripts = {}, active = inputs[0].id, running = false, tested = {}, firstRun = true, score = 0, sprite = null;
+    const round = () => rounds[r];
+    function draw(now) {
+      const rd = round();
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="spritestage" id="' + el.stage + 'sp"></div>' +
+        '<div class="inputs">' + inputs.map((x) => '<button type="button" class="big small" data-in="' + esc(x.id) + '"' + (running ? " disabled" : "") + ">" + small(x.pic) + " " + esc(x.label) + (tested[x.id] === true ? " ✓" : "") + "</button>").join("") + "</div>" +
+        '<div class="objtabs">' + inputs.map((x) => '<button type="button" class="objtab' + (active === x.id ? " on" : "") + '" data-tab="' + esc(x.id) + '"' + (running ? " disabled" : "") + '>when ' + esc(x.label) + "</button>").join("") + "</div>" +
+        '<p class="goal">When <b>' + esc(inputs.find((x) => x.id === active).label) + "</b>, the algorithm says: <b>" + esc(rd.scripts[active].algorithm.join(", ")) + "</b></p>" +
+        scriptHtml(scripts[active], now, !running) +
+        '<div class="palette">' + (o.blocks || Object.keys(BLOCKS)).map((id) => blockBtn(id, 'data-add="' + id + '"' + (running ? " disabled" : ""))).join("") + "</div>" +
+        '<div class="bigbtns"><button type="button" class="big small ghost" id="' + el.stage + 'clear"' + (running || !scripts[active].length ? " disabled" : "") + ">Clear</button></div></div>";
+      sprite = spriteStage($(el.stage + "sp"), o.sprite || "\u{1F431}");
+      $(el.score).textContent = "Program " + (r + 1) + " of " + rounds.length + " · " + inputs.map((x) => x.label + " " + scripts[x.id].length).join(" · ");
+      $(el.stage + "clear").addEventListener("click", () => { scripts[active] = []; tested[active] = undefined; draw(-1); });
+    }
+    function start() {
+      scripts = {}; tested = {}; inputs.forEach((x) => { scripts[x.id] = []; }); active = inputs[0].id; running = false; firstRun = true;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      draw(-1);
+      $(el.ask).innerHTML = "Build a script for <b>each</b> input (tap its tab). Then press the inputs to test them.";
+      sayHere(o.finish, "Build a script for each input. Tap an input's tab to see its algorithm. Then press the inputs on the stage to test them.");
+    }
+    function trigger(id) {
+      if (running) return;
+      const s = scripts[id];
+      if (!s.length) { const line = "Nothing happened: there is no script for " + inputs.find((x) => x.id === id).label + " yet."; $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); firstRun = false; return; }
+      running = true; sprite.reset(); draw(-1);
+      const moves = expandProgram(s), rd = round();
+      let i = 0;
+      const step = () => {
+        if (i >= moves.length) {
+          running = false;
+          const want = expandProgram(rd.scripts[id].expect);
+          const ok = moves.length === want.length && moves.every((m, j) => m === want[j]);
+          tested[id] = ok; draw(-1);
+          const lab = inputs.find((x) => x.id === id).label;
+          if (ok) { $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + lab + ": the cat did " + runWords(moves) + ", as the algorithm said."; say($(el.fb).textContent); }
+          else { firstRun = false; $(el.fb).className = "fb bad"; $(el.fb).textContent = lab + ": the cat did " + runWords(moves) + ", but the algorithm says " + rd.scripts[id].algorithm.join(", ").toLowerCase() + ". Change that script and press " + lab + " again."; say($(el.fb).textContent); SOUND.play("error", 0.3); }
+          if (inputs.every((x) => tested[x.id] === true)) {
+            if (firstRun) score++; SOUND.play("tada", 0.5);
+            $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
+            r++;
+            setTimeout(() => { if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "Two inputs, two scripts, two different outputs, " + rounds.length + " times. " + o.done); } else start(); }, 3200);
+          }
+          return;
+        }
+        draw(i < s.length ? i : -1);
+        sprite.run(moves[i]).then(() => { i++; step(); });
+      };
+      SOUND.play("click", 0.3); setTimeout(step, 300);
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      if (running) return;
+      const inp = e.target.closest("[data-in]"); if (inp) { trigger(inp.dataset.in); return; }
+      const tab = e.target.closest("[data-tab]"); if (tab) { active = tab.dataset.tab; SOUND.play("click", 0.3); draw(-1); return; }
+      const add = e.target.closest("[data-add]"); if (add) { scripts[active].push(add.dataset.add); tested[active] = undefined; SOUND.play("click", 0.3); draw(-1); return; }
+      const placed = e.target.closest(".script [data-k]"); if (placed) { scripts[active].splice(Number(placed.dataset.k), 1); tested[active] = undefined; SOUND.play("pop", 0.3); draw(-1); }
+    });
+    start();
+  }
+
+  /* ---- plan the instructions for objects: inputs and outputs (4P.06) ----
+     Before a program is built, each object gets a plan: what starts it (its
+     input) and what it does (its output). Two questions per object. */
+  function planObjects(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, right = 0;
+    function draw(stage) {
+      const rd = rounds[r];
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="plancard"><span class="ppic" aria-hidden="true">' + small(rd.pic) + '</span><div><b>' + esc(rd.object) + "</b><p>Goal: " + esc(rd.goal) + '</p><p class="planline">Input: <b>' + (stage > 0 ? esc(rd.input.opts.find((x) => x.ok).t) : "?") + '</b></p><p class="planline">Output: <b>' + (stage > 1 ? esc(rd.output.opts.find((x) => x.ok).t) : "?") + "</b></p></div></div></div>";
+      $(el.score).textContent = "Object " + (r + 1) + " of " + rounds.length;
+    }
+    function start() {
+      const rd = rounds[r];
+      draw(0); $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      askOnce(o, rd.input, (ok1) => {
+        if (ok1) right++;
+        draw(1);
+        askOnce(o, rd.output, (ok2) => {
+          if (ok2) right++;
+          draw(2);
+          r++;
+          if (r >= rounds.length) { reportScore(o.finish, right, rounds.length * 2); endStep(o, "Every object planned: an input and an output each. " + o.done); }
+          else start();
+        });
+      });
+    }
+    start();
+  }
+
+  /* ---- test a program part by part (4P.07) -------------------------------
+     A program in named parts. Each part runs on its own so the child can
+     see WHICH part goes wrong, tap the wrong block in that part, fix it,
+     and run just that part again. When every part passes, the program does. */
+  function partTest(o) {
+    const el = o.el, rounds = o.rounds;
+    let r = 0, parts = [], status = [], running = false, phase = "test", bugPart = -1, score = 0, sprite = null;
+    const round = () => rounds[r];
+    function draw(now) {
+      const rd = round();
+      $(el.stage).innerHTML = '<div class="stagewide"><p class="goal">We want: <b>' + esc(rd.goal) + '</b></p><div class="spritestage" id="' + el.stage + 'sp"></div>' +
+        '<div class="parts">' + parts.map((p, pi) => '<div class="part' + (status[pi] === true ? " ok" : status[pi] === false ? " bad" : "") + '"><div class="parthead"><b>' + esc(p.name) + "</b><span>" + esc(p.wants) + '</span><button type="button" class="big small' + (status[pi] === true ? " ghost" : " teal") + '" data-run="' + pi + '"' + (running || phase === "fix" ? " disabled" : "") + '>&#9654; Run part</button></div>' +
+          '<div class="script">' + p.program.map((id, k) => blockBtn(id, 'data-p="' + pi + '" data-k="' + k + '"' + (!(phase === "find" && bugPart === pi) ? " disabled" : ""), now && now[0] === pi && now[1] === k ? "now" : "")).join("") + "</div>" +
+          '<span class="partstat">' + (status[pi] === true ? "✓ this part works" : status[pi] === false ? "✗ this part goes wrong" : "not tested yet") + "</span></div>").join("") + "</div></div>";
+      sprite = spriteStage($(el.stage + "sp"), o.sprite || "\u{1F431}");
+      $(el.score).textContent = "Program " + (r + 1) + " of " + rounds.length + " · " + status.filter((s) => s === true).length + " of " + parts.length + " parts pass";
+    }
+    function start() {
+      parts = round().parts.map((p) => Object.assign({}, p, { program: p.program.slice() })); status = parts.map(() => undefined); running = false; phase = "test"; bugPart = -1;
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      draw(null);
+      $(el.ask).innerHTML = "Test each part on its own: press <b>Run part</b>. A part that goes wrong is where the bug is.";
+      sayHere(o.finish, "Test each part on its own. Press Run part. A part that goes wrong is where the bug is.");
+    }
+    function runPart(pi) {
+      if (running || phase === "fix") return;
+      running = true; sprite.reset(); draw(null);
+      const p = parts[pi], moves = expandProgram(p.program);
+      const owner = []; for (let i = 0, m = 0; i < p.program.length; i++) { const n = REPEAT[p.program[i]]; if (n) { const next = p.program[i + 1]; if (next && !REPEAT[next]) { for (let j = 0; j < n; j++) owner[m++] = i; i++; } } else owner[m++] = i; }
+      let i = 0;
+      const step = () => {
+        if (i >= moves.length) {
+          running = false;
+          const want = expandProgram(p.expect), ok = moves.length === want.length && moves.every((m, j) => m === want[j]);
+          status[pi] = ok;
+          if (ok) {
+            SOUND.play("ding", 0.4); draw(null);
+            $(el.fb).className = "fb good"; $(el.fb).textContent = p.name + " works: " + runWords(moves) + "."; say($(el.fb).textContent);
+            if (status.every((s) => s === true)) {
+              SOUND.play("tada", 0.5); score++;
+              $(el.stage).querySelectorAll("button").forEach((b) => { b.disabled = true; });
+              r++;
+              setTimeout(() => { if (r >= rounds.length) { reportScore(o.finish, score, rounds.length); endStep(o, "You tested " + rounds.length + " programs part by part and found every bug where it lived. " + o.done); } else start(); }, 3200);
+            }
+          } else {
+            SOUND.play("error", 0.3); phase = "find"; bugPart = pi; draw(null);
+            const line = p.name + " goes wrong: it did " + runWords(moves) + ", but it should " + p.wants.toLowerCase() + ". The bug is in this part. Tap the wrong block.";
+            $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+          }
+          return;
+        }
+        draw([pi, owner[i]]);
+        sprite.run(moves[i]).then(() => { i++; step(); });
+      };
+      setTimeout(step, 300);
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      const run = e.target.closest("[data-run]"); if (run) { runPart(Number(run.dataset.run)); return; }
+      const b = e.target.closest(".block[data-p]"); if (!b || phase !== "find") return;
+      const pi = Number(b.dataset.p), k = Number(b.dataset.k), p = parts[pi];
+      if (pi === bugPart && k === p.bug) {
+        phase = "fix"; b.classList.add("bug"); SOUND.play("ding", 0.4);
+        $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + p.why; say(cheer() + " " + p.why + " What should it be instead?");
+        $(el.ask).innerHTML = "What should that block be instead?";
+        $(el.ch).className = "choices blocks";
+        $(el.ch).innerHTML = shuffle(p.fix.opts).map((c) => blockBtn(c.id, 'data-id="' + esc(c.id) + '" data-ok="' + (c.ok ? 1 : 0) + '"')).join("");
+      } else {
+        b.classList.add("wrong"); SOUND.play("error", 0.3);
+        const line = "That block is fine. Which block in " + parts[bugPart].name + " made it go wrong?";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => b.classList.remove("wrong"), 700);
+      }
+    });
+    $(el.ch).addEventListener("click", (e) => {
+      const b = e.target.closest("[data-id]"); if (!b || phase !== "fix") return;
+      const p = parts[bugPart];
+      if (b.dataset.ok === "1") {
+        p.program[p.bug] = b.dataset.id; phase = "test"; status[bugPart] = undefined; SOUND.play("pop", 0.4);
+        $(el.ch).innerHTML = ""; draw(null);
+        $(el.ask).innerHTML = "Fixed. Now <b>run that part again</b> to test the fix.";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + p.fix.why; say(cheer() + " " + p.fix.why + " Now run that part again to test it.");
+      } else {
+        b.classList.add("wrong"); b.disabled = true; SOUND.play("error", 0.3);
+        const line = "That block would not make " + p.wants.toLowerCase() + ". Try another.";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+    });
+    start();
+  }
+
+  /* ---- sort data into a required order (4MD.04) --------------------------
+     A table; the child chooses a field and a direction, presses Sort, and
+     the rows reorder - numbers by size, words alphabetically. Then a
+     question the sorted table answers; sortRows keys it, mirrored in
+     _rules.py. */
+  function dataSort(o) {
+    const el = o.el, rows = o.rows, fields = o.fields, tasks = o.tasks;
+    let t = 0, right = 0, field = null, dir = "asc", ordered = rows.slice(), sorted = false, lock = false, wrongHere = false;
+    const fieldOf = (id) => fields.find((f) => f.id === id);
+    function draw() {
+      const f = field && fieldOf(field);
+      $(el.stage).innerHTML = '<div class="stagewide"><table class="rec small tally"><thead><tr><th>who</th>' + fields.map((x) => "<th>" + esc(x.label) + "</th>").join("") + "</tr></thead><tbody>" +
+        ordered.map((rw) => '<tr><td><span class="rowlab">' + small(rw.pic) + " " + esc(rw.name) + "</span></td>" + fields.map((x) => '<td><span class="cell filled' + (field === x.id && sorted ? " sorted" : "") + '">' + esc(rw[x.id]) + "</span></td>").join("") + "</tr>").join("") + "</tbody></table>" +
+        '<div class="filterrow"><div class="chips">' + fields.map((x) => '<button type="button" class="chip' + (field === x.id ? " on" : "") + '" data-field="' + x.id + '"' + (lock ? " disabled" : "") + ">by " + esc(x.label) + "</button>").join("") + "</div>" +
+        (f ? '<div class="chips"><button type="button" class="chip' + (dir === "asc" ? " on" : "") + '" data-dir="asc"' + (lock ? " disabled" : "") + ">" + (f.numeric ? "1 → 9 (ascending)" : "A → Z") + '</button><button type="button" class="chip' + (dir === "desc" ? " on" : "") + '" data-dir="desc"' + (lock ? " disabled" : "") + ">" + (f.numeric ? "9 → 1 (descending)" : "Z → A") + "</button></div>" : "") +
+        '<div class="bigbtns"><button type="button" class="big small teal" id="' + el.stage + 'go"' + (lock || !field ? " disabled" : "") + ">Sort</button></div></div></div>";
+      $(el.score).textContent = t < tasks.length ? "Sort " + (t + 1) + " of " + tasks.length : "";
+      $(el.stage + "go").addEventListener("click", doSort);
+    }
+    function ask() {
+      const task = tasks[t];
+      field = null; dir = "asc"; ordered = shuffle(rows); sorted = false; lock = false; wrongHere = false; draw();
+      $(el.ask).innerHTML = task.ask + " Choose the field and the order, then press <b>Sort</b>.";
+      $(el.fb).textContent = ""; $(el.fb).className = "fb"; $(el.ch).innerHTML = "";
+      sayHere(o.finish, plain(task.ask) + " Choose the field and the order, then press Sort.");
+    }
+    function doSort() {
+      if (lock || !field) return;
+      const task = tasks[t];
+      ordered = sortRows(rows, field, dir); sorted = true; SOUND.play("whoosh", 0.4); draw();
+      if (field === task.field && dir === task.dir) {
+        lock = true; if (!wrongHere) right++; draw();
+        const line = cheer() + " Sorted by " + fieldOf(field).label + ", " + (dir === "asc" ? (fieldOf(field).numeric ? "smallest first" : "A to Z") : (fieldOf(field).numeric ? "biggest first" : "Z to A")) + ": " + ordered.map((rw) => rw.name).join(", ") + ".";
+        $(el.fb).className = "fb good"; $(el.fb).textContent = line; say(line);
+        setTimeout(() => {
+          $(el.fb).textContent = "";
+          askOnce(o, task.then, (ok) => { if (ok) right++; t++; if (t >= tasks.length) { reportScore(o.finish, right, tasks.length * 2); endStep(o, "You sorted the data " + tasks.length + " ways and read off the answers. " + o.done); } else ask(); });
+        }, 3000);
+      } else {
+        wrongHere = true; SOUND.play("error", 0.3);
+        const line = "That sorted by " + fieldOf(field).label + ", " + (dir === "asc" ? "ascending" : "descending") + ". Read the task again: which field, and which way round?";
+        $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line);
+      }
+    }
+    $(el.stage).addEventListener("click", (e) => {
+      if (lock) return;
+      const f = e.target.closest("[data-field]"), d = e.target.closest("[data-dir]");
+      if (f) { field = f.dataset.field; sorted = false; SOUND.play("click", 0.3); draw(); }
+      else if (d) { dir = d.dataset.dir; sorted = false; SOUND.play("click", 0.3); draw(); }
+    });
+    ask();
+  }
+
+  /* ---- data, records and fields in a table (4MD.07) ----------------------
+     A table with the three parts a child can point at: a record is a row,
+     a field is a column, a piece of data is one cell. Tasks name one and
+     the child taps it. */
+  function tableParts(o) {
+    const el = o.el, rows = o.rows, fields = o.fields, tasks = o.tasks;
+    let t = 0, right = 0, lock = false, wrongHere = false;
+    function draw(hl) {
+      $(el.stage).innerHTML = '<div class="stagewide"><div class="sheetwrap"><table class="dbtable" role="grid"><thead><tr><th></th>' + fields.map((f) => '<th><button type="button" class="colhead' + (hl && hl.field === f.id && !hl.record ? " on" : "") + '" data-field="' + f.id + '">' + esc(f.label) + "</button></th>").join("") + "</tr></thead><tbody>" +
+        rows.map((rw) => '<tr class="' + (hl && hl.record === rw.name && !hl.field ? "on" : "") + '"><th><button type="button" class="colhead rec" data-record="' + esc(rw.name) + '">' + small(rw.pic) + " " + esc(rw.name) + "</button></th>" + fields.map((f) => '<td><button type="button" class="cellbtn' + (hl && hl.record === rw.name && hl.field === f.id ? " on" : "") + '" data-cell="' + esc(rw.name) + "|" + f.id + '">' + esc(rw[f.id]) + "</button></td>").join("") + "</tr>").join("") + "</tbody></table></div></div>";
+      $(el.score).textContent = t < tasks.length ? "Task " + (t + 1) + " of " + tasks.length : "";
+    }
+    function ask() {
+      const task = tasks[t];
+      lock = false; wrongHere = false; draw(null);
+      $(el.ask).innerHTML = task.ask; $(el.fb).textContent = ""; $(el.fb).className = "fb";
+      sayHere(o.finish, plain(task.ask));
+    }
+    function good(hl, line) {
+      lock = true; if (!wrongHere) right++; SOUND.play("ding", 0.4); draw(hl);
+      $(el.fb).className = "fb good"; $(el.fb).textContent = cheer() + " " + line; say(cheer() + " " + line);
+      t++;
+      setTimeout(() => { if (t >= tasks.length) { reportScore(o.finish, right, tasks.length); endStep(o, "Records, fields and data: you can point at all three. " + o.done); } else ask(); }, 2800);
+    }
+    function bad(line) { wrongHere = true; SOUND.play("error", 0.3); $(el.fb).className = "fb bad"; $(el.fb).textContent = line; say(line); }
+    $(el.stage).addEventListener("click", (e) => {
+      if (lock || t >= tasks.length) return;
+      const task = tasks[t];
+      const rec = e.target.closest("[data-record]"), fld = e.target.closest("[data-field]"), cell = e.target.closest("[data-cell]");
+      SOUND.play("click", 0.3);
+      if (task.kind === "record") {
+        if (rec && rec.dataset.record === task.target) good({ record: task.target }, "That row is " + task.target + "'s record: everything the table knows about " + task.target + ".");
+        else bad(rec ? "That is " + rec.dataset.record + "'s record. Find " + task.target + "'s." : fld ? "That is a whole field, a column. A record is a row." : "That is one piece of data. A record is the whole row.");
+      } else if (task.kind === "field") {
+        const f = fields.find((x) => x.id === task.target);
+        if (fld && fld.dataset.field === task.target) good({ field: task.target }, "That column is the " + f.label + " field: the same kind of fact for every record.");
+        else bad(fld ? "That is the " + fields.find((x) => x.id === fld.dataset.field).label + " field. Find the " + f.label + " field, at the top of its column." : rec ? "That is a record, a row. A field is a column." : "That is one piece of data. A field is the whole column.");
+      } else {
+        const [name, fid] = task.target, f = fields.find((x) => x.id === fid), rw = rows.find((x) => x.name === name);
+        if (cell && cell.dataset.cell === name + "|" + fid) good({ record: name, field: fid }, "That cell holds one piece of data: " + name + "'s " + f.label + " is " + rw[fid] + ".");
+        else bad(cell ? "That is " + cell.dataset.cell.split("|")[0] + "'s " + fields.find((x) => x.id === cell.dataset.cell.split("|")[1]).label + ". Find " + name + "'s " + f.label + ": their row, that column." : "A piece of data is one cell: a row and a column meeting.");
+      }
+    });
+    ask();
   }
 
   /* ==================================================================

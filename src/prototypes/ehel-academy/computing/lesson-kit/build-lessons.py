@@ -95,6 +95,10 @@ KINDS = {
     "trim": "trimSteps", "loopspot": "loopSpot", "whatif": "whatIf", "inout": "inOut", "tidy": "tidyProgram",
     "parallel": "parallelProgram", "tweak": "tweakProgram", "device": "deviceProgram",
     "views": "dataViews", "sheet": "spreadsheet", "filter": "dataFilter", "cipher": "cipher",
+    # Stage 4
+    "loopalgo": "loopAlgo", "compare": "compareAlgos", "subroutine": "subRoutine", "branch": "branchAlgo", "loopbuild": "loopBuild",
+    "comment": "commentBlocks", "inputprog": "inputProgram", "plan": "planObjects", "parttest": "partTest",
+    "datasort": "dataSort", "tableparts": "tableParts",
     "questions": "sequence", "quiz": "sequence",
     # the unit shell, drawn around every lesson by _shell.py
     "overview": "unitOverview", "lecture": "lecture", "words": "computingWords",
@@ -104,8 +108,9 @@ KINDS = {
 # Robo's rules, the table arithmetic, the repeat block and the race sums live
 # in _rules.py, shared with the gate, so the builder and check-coverage.py
 # cannot disagree about any of them.
-from _rules import (DIRS, REPEATS, code_word, decode_code, expand_program, filter_rows, repeat_run,  # noqa: E402
-                    rule_output, run_robot, same_effect, sheet_cells, sum_answer, table_answer, walk_end)
+from _rules import (DIRS, REPEATS, best_algo, branch_run, caesar_shift, code_word, decode_code, expand_loop,  # noqa: E402
+                    expand_program, filter_rows, flatten_algo, pigpen_index, repeat_run, rule_output, run_robot,
+                    same_effect, sheet_cells, sort_rows, sub_expand, sum_answer, table_answer, walk_end)
 
 FORMATS = ("text", "number", "date", "currency")   # mirrored in FORMATS in lib/computing.js
 
@@ -308,8 +313,13 @@ def check_step(n, k, s, codes, libs):
                     sys.exit("REFUSED: %s level %r puts something at %r, off a %dx%d grid" % (where, lv["title"], [c, r], cols, rows))
             if lv["facing"] not in DIRS:
                 sys.exit("REFUSED: %s level %r faces %r" % (where, lv["title"], lv["facing"]))
+            if lv.get("loop") and not lv.get("predict"):
+                sys.exit("REFUSED: %s level %r: a loop is only for a predict level" % (where, lv["title"]))
             if lv.get("predict"):
-                end = run_robot(lv, lv["program"], rows, cols)
+                prog = expand_loop(lv.get("before"), lv["loop"]["body"], lv["loop"]["times"], lv.get("after")) if lv.get("loop") else lv["program"]
+                if lv.get("loop") and (not lv["loop"]["body"] or not 2 <= int(lv["loop"]["times"]) <= 5):
+                    sys.exit("REFUSED: %s level %r: a loop needs a body and 2-5 times" % (where, lv["title"]))
+                end = run_robot(lv, prog, rows, cols)
                 if end is None:
                     sys.exit("REFUSED: %s level %r: the program to predict bumps into something" % (where, lv["title"]))
                 if end != list(lv["answer"]):
@@ -628,6 +638,12 @@ def check_step(n, k, s, codes, libs):
                 sys.exit("REFUSED: %s round %r must start with a when block" % (where, rd.get("algorithm")))
             if any(b in libs["device_hats"] for b in ex[1:]) or len(ex) < 2:
                 sys.exit("REFUSED: %s round %r: one when block first, then outputs" % (where, rd.get("algorithm")))
+            loops = libs["device_loops"]
+            if ex.count("forever") > 1 or (ex[-1] in loops):
+                sys.exit("REFUSED: %s round %r: one forever at most, and a loop block needs something after it" % (where, rd.get("algorithm")))
+            for i2, b in enumerate(ex[1:-1], 1):
+                if b in loops and b != "forever" and ex[i2 + 1] in loops:
+                    sys.exit("REFUSED: %s round %r: a repeat block must be followed by an output, not another loop" % (where, rd.get("algorithm")))
             for b in ex:
                 if b not in pal:
                     sys.exit("REFUSED: %s round expects %r, which is not in the palette" % (where, b))
@@ -700,12 +716,194 @@ def check_step(n, k, s, codes, libs):
         if len(d["rounds"]) < 3 or {rd["kind"] for rd in d["rounds"]} != {"decode", "encode"}:
             sys.exit("REFUSED: %s needs 3+ messages, some to decode and some to encode" % where)
         for rd in d["rounds"]:
-            if rd["kind"] == "decode":
+            mode = rd.get("mode", "number")
+            if mode == "caesar":
+                if not isinstance(rd.get("shift"), int) or not 1 <= rd["shift"] <= 25:
+                    sys.exit("REFUSED: %s: a Caesar round needs a shift of 1-25" % where)
+                if rd["kind"] == "decode":
+                    if caesar_shift(rd["answer"], rd["shift"]) != rd["code"] or not rd["answer"].isalpha():
+                        sys.exit("REFUSED: %s: %r with shift %d is not %r" % (where, rd["answer"], rd["shift"], rd["code"]))
+                elif caesar_shift(rd["word"], rd["shift"]) != rd["answer"] or not rd["word"].isalpha():
+                    sys.exit("REFUSED: %s: %r with shift %d is %r, not %r" % (where, rd["word"], rd["shift"], caesar_shift(rd["word"], rd["shift"]), rd["answer"]))
+            elif mode == "pigpen":
+                text_ = rd["code"] if rd["kind"] == "decode" else rd["word"]
+                if not text_.isalpha() or any(pigpen_index(c) is None for c in text_.lower()) or rd["answer"] != text_:
+                    sys.exit("REFUSED: %s: a Pigpen round's answer must be its own letters (%r)" % (where, text_))
+            elif rd["kind"] == "decode":
                 if not rd["code"] or any(not 1 <= int(n) <= 26 for n in rd["code"]) or decode_code(rd["code"]) != rd["answer"]:
                     sys.exit("REFUSED: %s: %r decodes to %r, not %r" % (where, rd["code"], decode_code(rd["code"]), rd["answer"]))
             else:
                 if not rd["word"].isalpha() or code_word(rd["word"]) != list(rd["answer"]):
                     sys.exit("REFUSED: %s: %r encodes to %r, not %r" % (where, rd["word"], code_word(rd["word"]), rd["answer"]))
+    elif kind == "loopalgo":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 rounds" % where)
+        for rd in d["rounds"]:
+            if rd.get("scene"):
+                scene_ok(rd["scene"])
+            if not rd.get("task") or rd.get("mode") not in ("follow", "fix"):
+                sys.exit("REFUSED: %s round needs a task and a mode of follow or fix" % where)
+            for bl in rd["blocks"]:
+                if bl.get("kind") in ("repeat", "forever"):
+                    if not bl.get("body"):
+                        sys.exit("REFUSED: %s: a %s block with no body" % (where, bl["kind"]))
+                    if bl["kind"] == "repeat" and not 2 <= int(bl["times"]) <= 5:
+                        sys.exit("REFUSED: %s: a repeat block needs 2-5 times" % where)
+            flat = flatten_algo(rd["blocks"])
+            if len(flat) < 4 or not any(bl.get("kind") in ("repeat", "forever") for bl in rd["blocks"]):
+                sys.exit("REFUSED: %s round %r needs a loop and at least 4 steps when followed" % (where, rd["task"]))
+            if rd["mode"] == "fix":
+                bi, j = rd["wrong"]
+                if not 0 <= bi < len(rd["blocks"]) or (j >= 0 and (rd["blocks"][bi].get("kind") not in ("repeat", "forever") or not 0 <= j < len(rd["blocks"][bi]["body"]))) or (j < 0 and rd["blocks"][bi].get("kind") in ("repeat", "forever")):
+                    sys.exit("REFUSED: %s round %r: wrong %r does not name a step" % (where, rd["task"], rd["wrong"]))
+                one_ok(rd["fix"]["opts"], where + " fix");
+                if not rd["fix"].get("why") or not rd.get("why"):
+                    sys.exit("REFUSED: %s round %r: the fix needs a why, and so does the bug" % (where, rd["task"]))
+    elif kind == "compare":
+        if len(d["algos"]) < 2 or len(d["rounds"]) < 2 or not d.get("task"):
+            sys.exit("REFUSED: %s needs a task, 2+ algorithms and 2+ purposes" % where)
+        ids = {a["id"] for a in d["algos"]}
+        for a in d["algos"]:
+            if not a.get("name") or len(a.get("steps") or []) < 2 or "minutes" not in (a.get("facts") or {}):
+                sys.exit("REFUSED: %s algorithm %r needs a name, 2+ steps and facts.minutes" % (where, a.get("id")))
+        for rd in d["rounds"]:
+            if rd["answer"] not in ids or not rd.get("why") or not rd.get("purpose"):
+                sys.exit("REFUSED: %s purpose %r needs an answer that is an algorithm and a why" % (where, rd.get("purpose")))
+            if rd.get("check"):
+                want = best_algo(d["algos"], rd["check"])
+                if want != rd["answer"]:
+                    sys.exit("REFUSED: %s purpose %r is keyed %r but the facts say %r" % (where, rd["purpose"], rd["answer"], want))
+    elif kind == "subroutine":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 rounds" % where)
+        for rd in d["rounds"]:
+            if rd.get("scene"):
+                scene_ok(rd["scene"])
+            if not rd.get("task") or not rd.get("subs") or not any(bl.get("kind") == "call" for bl in rd["main"]):
+                sys.exit("REFUSED: %s round needs a task, sub-routines, and a call in the main algorithm" % where)
+            for bl in rd["main"]:
+                if bl.get("kind") == "call" and bl["sub"] not in rd["subs"]:
+                    sys.exit("REFUSED: %s round %r calls %r, which is not a sub-routine" % (where, rd["task"], bl["sub"]))
+            for name, steps in rd["subs"].items():
+                if len(steps) < 2:
+                    sys.exit("REFUSED: %s sub-routine %r has fewer than 2 steps" % (where, name))
+            if len(sub_expand(rd["main"], rd["subs"])) < 4:
+                sys.exit("REFUSED: %s round %r is too short when expanded" % (where, rd["task"]))
+    elif kind == "branch":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 rounds" % where)
+        for rd in d["rounds"]:
+            if len(rd.get("inputs") or []) != 2 or not rd.get("question") or not rd.get("task"):
+                sys.exit("REFUSED: %s round needs a task, a question and exactly 2 inputs" % where)
+            if not rd.get("yes") or not rd.get("no"):
+                sys.exit("REFUSED: %s round %r needs both branches" % (where, rd["task"]))
+            for inp in rd["inputs"]:
+                if not branch_run(rd, inp["id"]):
+                    sys.exit("REFUSED: %s round %r runs nothing for input %r" % (where, rd["task"], inp["id"]))
+            if [st["id"] for st in rd["yes"]] == [st["id"] for st in rd["no"]]:
+                sys.exit("REFUSED: %s round %r: both branches do the same thing" % (where, rd["task"]))
+    elif kind == "loopbuild":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 rounds" % where)
+        for rd in d["rounds"]:
+            pool = {st["id"] for st in rd["pool"]}
+            ex = rd["expect"]
+            if not rd.get("task") or not 2 <= int(ex["times"]) <= 5 or not ex["body"] or any(b not in pool for b in ex["body"]):
+                sys.exit("REFUSED: %s round %r: expect needs 2-5 times and a body drawn from the pool" % (where, rd.get("task")))
+            if len(pool) <= len(ex["body"]):
+                sys.exit("REFUSED: %s round %r: the pool needs a step the loop does not use" % (where, rd["task"]))
+    elif kind == "comment":
+        blocks_ok(d["program"], "program")
+        if len(d["comments"]) != len(d["program"]) or len(d["program"]) < 3:
+            sys.exit("REFUSED: %s needs one comment per block, 3+ blocks" % where)
+        if sorted(c["block"] for c in d["comments"]) != list(range(len(d["program"]))):
+            sys.exit("REFUSED: %s: the comments must cover every block exactly once" % where)
+        one_ok(d["then"]["opts"], where + " question")
+        if not d["then"].get("why"):
+            sys.exit("REFUSED: %s question has no why" % where)
+    elif kind == "inputprog":
+        blocks_ok(d.get("blocks") or [], "palette")
+        ids = [x["id"] for x in d["inputs"]]
+        if len(ids) < 2 or len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s needs 2+ inputs and 2+ rounds" % where)
+        for rd in d["rounds"]:
+            if set(rd["scripts"]) != set(ids):
+                sys.exit("REFUSED: %s round gives scripts for %r, not the inputs %r" % (where, sorted(rd["scripts"]), ids))
+            for k2, sc in rd["scripts"].items():
+                blocks_ok(sc["expect"], "script for " + k2)
+                if not sc.get("algorithm") or not expand_program(sc["expect"]):
+                    sys.exit("REFUSED: %s round: the script for %r needs an algorithm and a program that does something" % (where, k2))
+            exps = [tuple(expand_program(sc["expect"])) for sc in rd["scripts"].values()]
+            if len(set(exps)) != len(exps):
+                sys.exit("REFUSED: %s round: two inputs produce the same output" % where)
+    elif kind == "plan":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s plans fewer than 2 objects" % where)
+        for rd in d["rounds"]:
+            if not (rd.get("object") and rd.get("pic") and rd.get("goal")):
+                sys.exit("REFUSED: %s round needs an object, a pic and a goal" % where)
+            for part_ in ("input", "output"):
+                one_ok(rd[part_]["opts"], where + " %s %s" % (rd["object"], part_))
+                if not rd[part_].get("why") or not rd[part_].get("ask"):
+                    sys.exit("REFUSED: %s %s %s needs an ask and a why" % (where, rd["object"], part_))
+    elif kind == "parttest":
+        if len(d["rounds"]) < 2:
+            sys.exit("REFUSED: %s has fewer than 2 programs" % where)
+        for rd in d["rounds"]:
+            if len(rd["parts"]) < 2 or not rd.get("goal"):
+                sys.exit("REFUSED: %s round needs a goal and 2+ parts" % where)
+            bugs = 0
+            for p in rd["parts"]:
+                blocks_ok(p["program"], "part"); blocks_ok(p["expect"], "part expect")
+                if not p.get("name") or not p.get("wants") or len(p["program"]) != len(p["expect"]):
+                    sys.exit("REFUSED: %s part %r needs a name, a wants, and program and expect of one length" % (where, p.get("name")))
+                diffs = [i2 for i2 in range(len(p["program"])) if p["program"][i2] != p["expect"][i2]]
+                if diffs:
+                    bugs += 1
+                    if diffs != [p.get("bug")]:
+                        sys.exit("REFUSED: %s part %r differs from its expect at %r but the bug is %r" % (where, p["name"], diffs, p.get("bug")))
+                    one_ok(p["fix"]["opts"], where + " fix for " + p["name"])
+                    ok = next(o for o in p["fix"]["opts"] if o["ok"])
+                    if ok["id"] != p["expect"][p["bug"]] or not p["fix"].get("why") or not p.get("why"):
+                        sys.exit("REFUSED: %s part %r: the fix must make the expected program, with a why for the bug and the fix" % (where, p["name"]))
+                    blocks_ok([o["id"] for o in p["fix"]["opts"]], "fix options")
+                elif p.get("bug") is not None:
+                    sys.exit("REFUSED: %s part %r marks a bug but program and expect agree" % (where, p["name"]))
+            if bugs < 1:
+                sys.exit("REFUSED: %s round %r has no part with a bug" % (where, rd["goal"]))
+    elif kind == "datasort":
+        if len(d["rows"]) < 4 or len(d["fields"]) < 2 or len(d["tasks"]) < 2:
+            sys.exit("REFUSED: %s needs 4+ rows, 2+ fields and 2+ tasks" % where)
+        fids = {f["id"]: f for f in d["fields"]}
+        for rw in d["rows"]:
+            if not rw.get("name") or not rw.get("pic") or any(fid not in rw for fid in fids):
+                sys.exit("REFUSED: %s: every row needs a name, a pic and every field" % where)
+        for t in d["tasks"]:
+            if t["field"] not in fids or t["dir"] not in ("asc", "desc") or t.get("check") not in ("first", "last"):
+                sys.exit("REFUSED: %s task %r needs a field, a dir of asc/desc and a check of first/last" % (where, t.get("ask")))
+            ordered = sort_rows(d["rows"], t["field"], t["dir"])
+            want = ordered[0] if t["check"] == "first" else ordered[-1]
+            vals = [rw[t["field"]] for rw in d["rows"]]
+            if vals.count(next(rw[t["field"]] for rw in d["rows"] if rw["name"] == want)) != 1:
+                sys.exit("REFUSED: %s task %r: a tie at the %s makes the answer unfair" % (where, t["ask"], t["check"]))
+            one_ok(t["then"]["opts"], where + " %r question" % t["ask"])
+            keyed = next(o["t"] for o in t["then"]["opts"] if o["ok"])
+            if keyed != want or not t["then"].get("why"):
+                sys.exit("REFUSED: %s task %r is keyed %r but sorting says %r" % (where, t["ask"], keyed, want))
+    elif kind == "tableparts":
+        names = {rw["name"] for rw in d["rows"]}
+        fids = {f["id"] for f in d["fields"]}
+        if len(names) < 3 or len(fids) < 2 or len(d["tasks"]) < 3 or {t["kind"] for t in d["tasks"]} != {"record", "field", "data"}:
+            sys.exit("REFUSED: %s needs 3+ rows, 2+ fields and tasks of all three kinds" % where)
+        for t in d["tasks"]:
+            if not t.get("ask"):
+                sys.exit("REFUSED: %s task has no ask" % where)
+            if t["kind"] == "record" and t["target"] not in names:
+                sys.exit("REFUSED: %s task names record %r" % (where, t["target"]))
+            if t["kind"] == "field" and t["target"] not in fids:
+                sys.exit("REFUSED: %s task names field %r" % (where, t["target"]))
+            if t["kind"] == "data" and (len(t["target"]) != 2 or t["target"][0] not in names or t["target"][1] not in fids):
+                sys.exit("REFUSED: %s task names data %r" % (where, t["target"]))
     elif kind == "overview":
         if len(d["about"]) < 3:
             sys.exit("REFUSED: %s says fewer than 3 things the lesson is about" % where)
@@ -960,6 +1158,7 @@ def main():
     # category (a static object may not carry a move block)
     libs["device_hats"] = set(re.findall(r'^    (\w+): \{ label: "[^"]*", icon: "[^"]*", cat: "hat"', js_block(computing, "DEVICE_BLOCKS"), re.M))
     libs["block_cats"] = dict(re.findall(r'^    (\w+): \{ label: "[^"]*", icon: "[^"]*", cat: "(\w+)"', js_block(computing, "BLOCKS"), re.M))
+    libs["device_loops"] = set(re.findall(r'^    (\w+): \{ label: "[^"]*", icon: "[^"]*", cat: "loop"', js_block(computing, "DEVICE_BLOCKS"), re.M))
     if not libs["device_hats"] or not libs["block_cats"]:
         sys.exit("REFUSED: lib/computing.js read as having no device hats or no block categories - the parser is broken")
     js_formats = tuple(re.findall(r'^  const FORMATS = \{ (.*?) \};', computing, re.M)[0].replace(":", " ").split())[::2] if re.search(r'^  const FORMATS = \{', computing, re.M) else ()

@@ -204,7 +204,7 @@ the strength of a lesson that is not that unit.
   across lessons, and the one stem repeated three times inside Lesson 1's
   quiz was reworded.
 
-## Deployed 2026-09-10; not routed
+## Deployed and routed 2026-09-10
 
 Uploaded on the owner's instruction to
 `https://ehelacademy.b-cdn.net/Ehel%20Primary/app/computing/grade-2-v2/` —
@@ -217,14 +217,20 @@ on the shipped bytes — all four rounds of Lesson 5's debug step (both two-bug
 rounds included) driven to a tick, and all six parts of the laptop tapped,
 the speaker first.
 
-**Nothing routes a learner to it.** `ehel-comp-g02` still launches wherever
-`local_prequran/ehel_app_url_overrides` points it (the shell course unless a
-Grade 2 row is added), so these bytes are reachable by URL and live to nobody
-until the map is changed. Routing needs a `2 => ['ehel-comp-g02',
-…/grade-2-v2/index.html]` row in `lesson-app-tools/repoint-grade.php`'s
-computing targets, staged on the quraanacademy zone and run by the operator
-from the docroot, as Grade 1 had. That, and redeploying Grade 1's rebuilt
-pages, are owner decisions.
+**Routed the same day.** The Grade 2 row (`2 => ['ehel-comp-g02',
+…/grade-2-v2/index.html]`) was added to `lesson-app-tools/repoint-grade.php`'s
+computing targets (`30cfbf9f1`), the script staged on the quraanacademy zone
+under a fresh name and verified by storage read-back and edge hash, and the
+operator ran it from the docroot with `--subject computing --grade 2 --apply`:
+it read back clean with all 8 overrides intact, so `ehel-comp-g02` now
+launches here (`local_prequran/ehel_app_url_overrides`). That is the script's
+own read-back, not a learner launch observed from this machine. The zone copy
+was deleted afterwards. Rollback is the pre-run map the report run printed,
+pasted into Site admin > Local plugins > Ehel app URL overrides, or removing
+the `ehel-comp-g02` key to return the course to `app/computing/index.html`.
+
+Still an owner decision: redeploying Grade 1's rebuilt pages (live is the
+previous kit; lesson data identical).
 
 ## What was deliberately not done
 

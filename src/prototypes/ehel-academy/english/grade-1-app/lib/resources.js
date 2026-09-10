@@ -222,7 +222,14 @@
           (g.intro ? '<p class="guide-intro">' + esc(g.intro) + "</p>" : "") +
           (g.sections || []).map((sx) =>
             "<section><h4>" + esc(sx.title) + "</h4>" +
-            String(sx.body).split(/\n{2,}/).map((para) => "<p>" + esc(para.trim()) + "</p>").join("") +
+            String(sx.body || "").split(/\n{2,}/).filter((para) => para.trim())
+              .map((para) => "<p>" + esc(para.trim()) + "</p>").join("") +
+            /* the section's list, where it has one - the outcomes and the word
+               groups are lists in every unit, and drew as bare headings until
+               the builder passed them across */
+            ((sx.items || []).length
+              ? "<ul>" + sx.items.map((it) => "<li>" + esc(it) + "</li>").join("") + "</ul>"
+              : "") +
             "</section>").join("") + "</div>",
           '<span class="book-page-count">For a grown-up</span>');
         finish(o.finish, o.done);

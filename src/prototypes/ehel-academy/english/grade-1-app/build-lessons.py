@@ -1713,8 +1713,14 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
             "guide": ((unit.get("grownUpGuide") or {}).get("sections") and {
                 "label": (unit["grownUpGuide"].get("label") or "Teacher & Parent Guide"),
                 "intro": (unit["grownUpGuide"].get("intro") or "").strip(),
+                # A guide section is a body, a list, or both - "What Your
+                # Child Will Be Able to Do" and "Words We Will Learn" are
+                # lists in every unit. The list used to be dropped here, so
+                # those two sections drew as bare headings in the app while
+                # the shell course drew their items.
                 "sections": [{"title": (sx.get("title") or "").strip(),
-                              "body": (sx.get("body") or "").strip()}
+                              "body": (sx.get("body") or "").strip(),
+                              "items": [str(x).strip() for x in (sx.get("items") or []) if str(x).strip()]}
                              for sx in unit["grownUpGuide"]["sections"]],
             }) or None,
         }

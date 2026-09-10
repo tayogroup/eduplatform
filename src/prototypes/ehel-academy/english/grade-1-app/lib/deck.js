@@ -40,7 +40,16 @@
   $("back").addEventListener("click", () => show(cur - 1, true));
   $("dots").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) show(Number(b.dataset.i), true); });
   document.querySelectorAll(".speak").forEach((b) => b.addEventListener("click", () => say(b.parentElement.querySelector("span").textContent)));
-  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg) say(msg); }
+  /* ONLY THE STEP ON SCREEN MAY SPEAK. Every check step answers a tap with a
+     2.2-2.7s timer that then finishes the step, and nothing cancels that timer
+     when the child presses Next inside the window - so the old step's finish
+     line arrived two seconds into the new one, and because speak() stops
+     whatever is playing first, it cut the new step's instruction off
+     (measured on the live Unit 1: "You know these words by their sound now."
+     2.13s into "Words: home and classroom"). The tick and the dots still land
+     on the step the child actually finished; only the voice asks whether that
+     step is still the one showing, the way playHere() already does for clips. */
+  function finish(i, msg) { if (!done[i]) { done[i] = true; paintDots(); } if (msg && cur === i) say(msg); }
 
   /* Hand a score to the progress client, if this page has one.
      NAMING THE PIPELINE TOOL HERE BREAKS THE BUILD, which is why this comment
@@ -106,7 +115,13 @@
           if (book) openBookReader(book, null);
         });
       }
-      say(plain(it.ask));
+      /* The same guard as finish(), for the other thing the timer does: after
+         ANY answer, not only the last, it redraws the next question and reads
+         it out - on whichever step the child is now looking at. Measured:
+         "Which classroom thing do you sit on?" 2.65s into "How English works".
+         At page load this is silenced by __ehelPainting either way, and a
+         child who comes back later is spoken to by show(), so nothing is lost. */
+      if (cur === o.finish) say(plain(it.ask));
     }
     $(el.ch).addEventListener("click", (e) => {
       const b = e.target.closest(".choice"); if (!b || lock) return;

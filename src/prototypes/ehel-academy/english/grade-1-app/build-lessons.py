@@ -809,8 +809,6 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
             "sentences": word_sentences(link),
         }
 
-    n = 0
-
     # A step is DECLARED where its content is read and ORDERED by STEP_ORDER
     # below, rather than by where its code happens to sit in this function.
     #
@@ -832,14 +830,23 @@ def build_slides(unit, cw_unit, pics, dic, games, games_meta, shelf, lecture, bo
         return kind
 
     def emit_in_order():
-        nonlocal n
         for kind in STEP_ORDER:
             spec = pending.get(kind)
             if not spec:
                 continue
-            n += 1
+            # THE NUMBER IS THE LIST'S OWN LENGTH, not a counter. This used to
+            # be a counter called `n`, and the story-questions round-robin
+            # further down reused that name in this same function scope and
+            # left it at the number of rounds it took to pick six questions -
+            # six in most units, two to four in the rest. Every slide after it
+            # was numbered from there: the child saw "7" on Unit 1's first
+            # step, finish(i) ticked the dot six steps ahead, the last six
+            # steps ticked nothing, ONSHOW and playHere never matched their
+            # own slide, and the progress report named the wrong step. Nothing
+            # could drift like that again only if there is no counter to
+            # clobber; bootstrap() refuses a list numbered anything but 1..N.
             slides.append({
-                "n": n, "kind": spec["kind"], "title": spec["title"], "icon": spec["icon"],
+                "n": len(slides) + 1, "kind": spec["kind"], "title": spec["title"], "icon": spec["icon"],
                 "ask": spec["ask"], "explain": spec["explain"], "extra": spec["extra"],
                 "say": spec["say"], "note": spec["note"],
             })
@@ -1910,9 +1917,15 @@ def bootstrap(slides, data):
     numbering rather than three that can drift.
     """
     out = []
-    for s in slides:
+    for idx, s in enumerate(slides):
         n = s["n"]
         i = n - 1
+        if i != idx:
+            # A slide numbered anything but its own position sends finish(),
+            # the dots, the stickers and the progress report to a different
+            # step - see emit_in_order() for the day that happened.
+            sys.exit("REFUSED: slide %d (%s) is numbered %d, so finish(%d) would mark "
+                     "another step's dot." % (idx, s["title"], n, i))
         # `ask` and `say` are the same element under two names. sequence() is
         # lifted verbatim from the Mathematics build and calls it `say`; the
         # English renderers call it `ask`, because on those steps it is a

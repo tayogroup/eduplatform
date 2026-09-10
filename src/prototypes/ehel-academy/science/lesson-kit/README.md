@@ -42,6 +42,7 @@ codes the builder accepts and which the gate demands.
 | `graph` (Stage 2) | `blockGraph` | stacks a block per unit in each column, then reads the pattern |
 | `lookup` (Stage 2) | `lookup` | answers questions from a fact card that stays on screen |
 | `build` (Stage 2) | `build` | assembles a model from parts, then does something with it |
+| `diagram` (Stage 3) | `makeDiagram` | places each label on the right part of a figure: a diagram the child makes |
 | `overview` (shell) | `unitOverview` | reads what the lesson is for; ticks on arrival |
 | `lecture` (shell) | `lecture` | hears the lesson in parts, one picture each; no video, and it says so |
 | `words` (shell) | `scienceWords` | taps each word for its picture, meaning and sample uses, then picks the word for each meaning |
@@ -52,9 +53,13 @@ codes the builder accepts and which the gate demands.
 
 Sims: `plantWater`, `plantLight`, `pushBall`, `floatSink`, `magnet`,
 `soundFar`, `shapeChange`, `globeCatch`, `sunShade` (Stage 1); `circuit`,
-`darkRoom`, `sunPath`, `newMaterial` (Stage 2). Figures: `plant`, `body`,
-`mouth`, `circuit`. Scenes: `plant`, `ground`, `globe`, `sky`, `zoom`,
-`habitat`, `extract`. The builder reads all of these out of `science.js` by
+`darkRoom`, `sunPath`, `newMaterial` (Stage 2); `plantWarm`, `forcemeter`,
+`friction`, `shadowSize`, `lightThrough`, `magnetPoles`, `separate`, `states`,
+`moonPhases`, `earthMoon`, `foodChain` (Stage 3). Figures: `plant`, `body`,
+`mouth`, `circuit`, `organs`, `insect`. Scenes: `plant`, `ground`, `globe`,
+`sky`, `zoom`, `habitat`, `extract`, `fossil`. Stage 3 also gave `experiment`
+an optional fifth phase, `conclude` (3TWSa.03), and `graph` a `bar: True` mode
+that draws a bar chart with an axis (3TWSa.04). The builder reads all of these out of `science.js` by
 name, so a sim written into a content module that does not exist fails the
 build rather than the page.
 

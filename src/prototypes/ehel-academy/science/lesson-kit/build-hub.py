@@ -46,7 +46,7 @@ CONTENT = os.path.join(APP, "content")
 # minutes a six-year-old spends on a step of each kind, including listening
 MINUTES = {"demo": 1.5, "explore": 2, "context": 2.5, "sort": 3, "experiment": 4, "predictEach": 5,
            "record": 2, "measure": 2.5, "label": 3, "tester": 3, "ask": 1.5, "questions": 3, "quiz": 4,
-           "order": 2, "graph": 3, "lookup": 3, "build": 3,
+           "order": 2, "graph": 3, "lookup": 3, "build": 3, "diagram": 3,
            # the unit shell (_shell.py); home projects are done off the screen and cost the page nothing
            "overview": 1, "lecture": 4, "words": 4, "games": 6, "home": 1, "world": 0.5, "resources": 1}
 
@@ -61,6 +61,16 @@ AT_HOME = {
     "shapeChange": "A ball of play dough, an elastic band and a stone. Squash, bend, twist and stretch each one. Which changed shape? Which did not?",
     "globeCatch": "Any ball with blue and green paper stuck on (or a real globe). Throw and catch it ten times and see whether a fingertip lands on water or land.",
     "sunShade": "Two cups of water, one in the sun and one in the shade. Feel them with a fingertip after an hour. Never look straight at the Sun.",
+    # Stage 3
+    "plantWarm": "Two small plants, watered the same. Keep one on a warm windowsill and one in the fridge. Compare them after five days.",
+    "forcemeter": "A forcemeter (a spring balance) if you have one, or a strong elastic band and a ruler. Hang an apple, a shoe and a book and see how far the spring or band stretches for each.",
+    "friction": "A toy car or a wooden block, and three surfaces: a smooth table, a tea towel, a doormat. Push it the same way each time and measure how far it goes in hand spans.",
+    "shadowSize": "A torch, a wall and a toy, in a dark room. Move the toy towards the torch and away from it, and watch the shadow on the wall grow and shrink.",
+    "lightThrough": "A torch and a tray of things: a glass, greaseproof paper, a book, a plastic bag, a cup. Shine the torch through each at a wall and say: all through, some through, or none.",
+    "magnetPoles": "Two bar magnets, or two fridge magnets. Bring them together each way round and feel the pull and the push.",
+    "separate": "A tray of dry sand with a few pebbles and a handful of paperclips mixed in, a sieve, a magnet; then a jug of muddy water and a coffee filter. Separate each mixture and say which property you used.",
+    "states": "A glass of water, a wooden block and a balloon. Pour the water into a different-shaped glass; turn the block every way; untie the balloon.",
+    "moonPhases": "A clear night sky and a notebook. Draw the Moon's shape every night you can see it for four weeks, with the date.",
 }
 
 

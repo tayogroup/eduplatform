@@ -89,6 +89,8 @@ KINDS = {
     "questions": "sequence", "quiz": "sequence",
     # Stage 2
     "order": "order", "graph": "blockGraph", "lookup": "lookup", "build": "build",
+    # Stage 3
+    "diagram": "makeDiagram",
     # the unit shell, drawn around every lesson by _shell.py
     "overview": "unitOverview", "lecture": "lecture", "words": "scienceWords",
     "games": "gameZone", "home": "homeProjects", "world": "scienceWorld", "resources": "resources",
@@ -205,6 +207,10 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
         one_ok(d["happened"]["opts"], where + " what-happened")
         if not d["happened"].get("why"):
             sys.exit("REFUSED: %s what-happened has no why" % where)
+        if d.get("conclude"):
+            one_ok(d["conclude"]["opts"], where + " conclusion")
+            if not d["conclude"].get("why"):
+                sys.exit("REFUSED: %s conclusion has no why" % where)
     elif kind == "predictEach":
         if d["sim"] not in sims:
             sys.exit("REFUSED: %s names sim %r" % (where, d["sim"]))
@@ -233,6 +239,11 @@ def check_step(n, k, s, codes, sims, figures, scenes, sounds):
             sys.exit("REFUSED: %s names figure %r; lib/science.js draws %s" % (where, d["figure"], sorted(figures)))
         if not d["parts"] or "%s" not in d["ask"]:
             sys.exit("REFUSED: %s needs parts and an ask with %%s" % where)
+    elif kind == "diagram":
+        if d["figure"] not in figures:
+            sys.exit("REFUSED: %s names figure %r; lib/science.js draws %s" % (where, d["figure"], sorted(figures)))
+        if len(d["parts"]) < 3:
+            sys.exit("REFUSED: %s places fewer than 3 labels" % where)
     elif kind == "demo":
         if len(d["frames"]) < 2:
             sys.exit("REFUSED: %s has fewer than 2 frames" % where)

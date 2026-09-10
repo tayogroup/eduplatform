@@ -244,7 +244,11 @@ earlier the same day (7 and 8 overrides intact at the time). Another hand
 edits this setting — the map had also lost `ehel-gp-g01` and never showed
 `ehel-math-g03`/`g04` — so a routing proved by its read-back is proved for
 that moment only. Read the map before assuming what it holds; the report
-run of `repoint-grade.php` prints it without writing anything.
+run of `repoint-grade.php` prints it without writing anything. The two
+computing keys were restored within the hour by a second operator run of
+the same script (`--subject computing --grade 1,2 --apply`, 11 overrides
+intact on read-back), so all three Computing grades route to their
+standalone builds — as of that read-back.
 
 ## What was deliberately not done
 
